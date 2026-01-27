@@ -50,4 +50,17 @@ impl Nucleus {
             queue,
         }
     }
+
+    pub fn resize(&mut self, width: u32, height: u32) {
+        if width > 0 && height > 0 {
+            println!("[Nucleus] Resized to {}x{}", width, height);
+            // Recreate surface config here in real impl
+        }
+    }
+
+    pub fn render(&mut self) -> Result<(), wgpu::SurfaceError> {
+        // println!("[Nucleus] Render Cycle"); // Commented to avoid log spam
+        // Real impl: surface.get_current_texture(), render_pass()
+        Ok(())
+    }
 }
