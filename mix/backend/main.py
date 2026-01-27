@@ -30,6 +30,20 @@ async def extract_stem(req: ExtractRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+from core.script_timeline import ScriptTimeline
+timeline = ScriptTimeline()
+
+class TranscribeRequest(BaseModel):
+    file_path: str
+
+@app.post("/transcribe")
+async def transcribe_audio(req: TranscribeRequest):
+    try:
+        result = await timeline.transcribe(req.file_path)
+        return {"status": "success", "segments": result["segments"]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/")
 async def root():
     return {"message": "CineWeave Audio Engine Online"}

@@ -83,7 +83,7 @@ export default function Home() {
           <div className="font-mono text-sm space-y-2">
             <p>State: <span className={status === "Extracting..." ? "text-yellow-400 animate-pulse" : "text-zinc-400"}>{status}</span></p>
             {result && (
-              <p className="text-green-400 break-all">> Generated: {result}</p>
+              <p className="text-green-400 break-all">&gt; Generated: {result}</p>
             )}
             <p className="text-zinc-600 text-xs mt-4">Backend: localhost:8000</p>
           </div>
