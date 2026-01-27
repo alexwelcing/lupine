@@ -7,6 +7,7 @@ export default function Home() {
   const [prompt, setPrompt] = useState("");
   const [status, setStatus] = useState("Idle");
   const [result, setResult] = useState("");
+  const [segments, setSegments] = useState([]);
 
   const handleExtract = async () => {
     setStatus("Extracting...");
