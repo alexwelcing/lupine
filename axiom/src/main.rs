@@ -5,7 +5,7 @@ mod capsule;
 use nucleus::engine::Nucleus;
 
 #[tokio::main]
-async def main() -> anyhow::Result<()> {
+async fn main() -> anyhow::Result<()> {
     println!("=== Axiom Universal Platform ===");
     println!("Initializing Nucleus...");
     
