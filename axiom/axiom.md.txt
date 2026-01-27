@@ -1,0 +1,68 @@
+Axiom Universal: The Domain-Native Platform
+"Just Click the Icon."
+Version: 3.0 (Final Draft) Scope: Universal Software Workbench Philosophy: Instant Provisioning, Domain Hyper-Specialization, Recursive Intelligence
+1. The Vision
+The era of "General Purpose" software is over. A chemist shouldn't need to fight with generic 3D modeling tools to visualize a protein. A novelist shouldn't need to misuse a code editor to manage a complex timeline.
+Axiom Universal is a platform that generates bespoke, high-performance "Workbenches" for any task. It combines the blazing-fast architecture of a game engine, the rigorous safety of a compiler, and the generative power of modern AI into a single experience.
+The Promise: You double-click the Axiom::Molecule icon. In milliseconds, you have a physics-simulated, AI-native environment specifically compiled for chemistry. No plugins, no setup, no bloat.
+2. Universal Architecture: The "Nucleus" System
+The platform is built on a modular "Kernel-Capsule" architecture.
+A. The Nucleus (The Kernel)
+The Nucleus is a tiny (<5MB), highly optimized Rust binary. It handles only the essentials:
+	•	Hardware Abstraction: Access to GPU (WGPU), NPU (Neural Processing), and Disk.
+	•	The Cortex: A unified interface for loading and running AI models.
+	•	The Store: A secure repository of "Domain Capsules."
+B. Domain Capsules (The Workbenches)
+A "Capsule" is a pre-compiled, optimized environment for a specific domain. Unlike a "Plugin," a Capsule completely reconfigures the engine's memory layout and UI.
+	•	Axiom::Game: Loads the ECS (Entity Component System), Physics Module, and Renderer.
+	•	Axiom::Narrative: Discards the Physics Module. Loads a Graph Database (for plot connections) and a Text Layout Engine.
+	•	Axiom::Molecule: Loads a High-Precision Float Module (for atomic distances) and a Fluid Dynamics Simulator.
+C. The Cortex (Universal AI)
+The Cortex is the AI runtime. It uses Recursive Language Models (RLMs) to act as a "Co-Pilot" that actually understands the domain tools.
+	•	Recursive Tool Use: The AI does not just guess answers. It writes and executes code within the Workbench to find the truth.
+	•	User (Chemistry): "Is this bond stable?"
+	•	AI: (Writes a simulation script) -> (Runs it in the Nucleus Physics engine) -> "No, it collapses at 300K."
+3. The "Ouroboros" Ingestion Pipeline
+Legacy data is the biggest barrier to entry. Ouroboros is a universal ingestion engine that "lifts" static files into interactive Axiom Objects.
+Input Data
+Ouroboros Action
+Resulting Axiom Object
+NES ROM
+Static Binary Recompilation
+A fully editable, native Game Project.
+PDF / Docx
+Semantic Text Extraction
+A "Narrative Graph" linking characters, locations, and plot points.
+.PDB / .CIF
+Molecular Geometry Parsing
+An interactive, physics-enabled 3D Molecular Simulation.
+Excel / CSV
+Data Pattern Recognition
+A 3D Data Visualization dashboard with AI SQL querying.
+4. Showcase Scenarios
+Scenario 1: Axiom::Molecule (The Chemist's Workbench)
+	•	The Goal: Design a new pharmaceutical compound.
+	•	The Environment: A 3D viewport optimized for visualizing electron clouds and atomic bonds.
+	•	The AI: A fine-tuned Science-SLM.
+	•	Feature: "Simulated Synthesis." The user draws a molecule. The AI recursively calls the engine's physics simulator to test for stability, solubility, and toxicity in real-time.
+	•	Unfair Advantage: The user gets "Game Engine" visuals (Raytraced shadows, subsurface scattering) to visualize complex protein folding in real-time, which traditional CAD tools struggle to render.
+Scenario 2: Axiom::Narrative (The Writer's Workbench)
+	•	The Goal: Write a 500-page fantasy novel with zero plot holes.
+	•	The Environment: A distraction-free, typography-focused editor. Behind the scenes, a Graph Database tracks every noun.
+	•	The AI: A Creative-SLM with access to the "World Bible."
+	•	Feature: "The Continuity Arbiter." If the user writes, "John drew his sword," the AI checks the database. If John lost his sword in Chapter 4, the text glows red: "Continuity Error: John's sword is currently in the River of Woe."
+	•	Legacy Ingestion: The user drags in their 10 previous novels. Ouroboros indexes them, so the AI knows the entire backstory of the series.
+Scenario 3: Axiom::Game (The Developer's Workbench)
+	•	The Goal: Create a high-performance open-world game.
+	•	The Environment: The original Axiom Engine design (ECS, Compiler-First).
+	•	The AI: Game-SLM for generating assets and NPC behavior.
+	•	Feature: "Asset Hallucination." The developer types "Cyberpunk Trash Can." The Cortex generates the 3D mesh and texture on the fly using a Latent Diffusion Model and places it in the scene.
+5. Technical Stack Summary
+	•	Core Language: Rust (Safety, Performance).
+	•	Graphics: WGPU (Runs on Vulkan, Metal, DX12, WebGPU).
+	•	AI Inference: ONNX Runtime / Candle (Local, NPU-accelerated).
+	•	Scripting: Luau (Sandboxed, fast) or Python (for Science modules).
+	•	Distribution: Single binary executable. The "Capsules" are downloaded or compiled on demand.
+6. Conclusion
+Axiom Universal is not just a suite of tools; it is a Compiler for Reality. Whether you are simulating atoms, compiling code, or weaving narratives, Axiom provides a pre-configured, AI-native reality in which to work.
+Just click the icon. The world is ready.
