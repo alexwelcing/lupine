@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ScriptTimeline from "./components/ScriptTimeline";
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
@@ -88,6 +89,12 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </main>
+
+
+      {/* Timeline Section */}
+      <div className="w-full max-w-5xl">
+        <ScriptTimeline segments={[]} />
+      </div>
+    </main >
   );
 }

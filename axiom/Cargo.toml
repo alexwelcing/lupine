@@ -10,8 +10,8 @@ wgpu = "0.19"
 pollster = "0.3"
 
 # AI / ML
-candle-core = "0.3.3"
-candle-nn = "0.3.3"
+# candle-core = "0.3.3"
+# candle-nn = "0.3.3"
 
 # Async & Utils
 tokio = { version = "1.36", features = ["full"] }
