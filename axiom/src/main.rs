@@ -1,6 +1,7 @@
 mod nucleus;
 // mod cortex;
 mod capsule;
+mod ouroboros;
 
 use nucleus::engine::Nucleus;
 use winit::{
@@ -11,6 +12,18 @@ use winit::{
 
 fn main() -> anyhow::Result<()> {
     println!("=== Axiom Universal Platform (WGPU Enabled) ===");
+
+    // 0. Ouroboros Ingestion (Check)
+    let rom_path = "mmref/Mega Man 64 (USA).z64";
+    if std::path::Path::new(rom_path).exists() {
+        println!("[Ouroboros] Found ROM: {}", rom_path);
+        match ouroboros::n64::N64Rom::load(rom_path) {
+            Ok(rom) => println!("[Ouroboros] Loaded: {} (CRC: {:X})", rom.name, rom.crc1),
+            Err(e) => eprintln!("[Ouroboros] Failed to load ROM: {}", e),
+        }
+    } else {
+        println!("[Ouroboros] ROM not found at {}", rom_path);
+    }
 
     // 1. Initialize Async Runtime
     let rt = tokio::runtime::Runtime::new()?;

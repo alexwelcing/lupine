@@ -1,6 +1,7 @@
 import keyring
 import os
 from dotenv import load_dotenv
+from typing import Dict
 
 # Load env as fallback
 load_dotenv()
@@ -38,8 +39,37 @@ class AuthManager:
             return False
 
     @staticmethod
+    def _load_from_env() -> Dict[str, str]:
+        """Loads secrets from .env with fallback mappings."""
+        secrets = {}
+        # Standard Keys
+        for key in ["GEMINI_API_KEY", "CLAUDE_API_KEY", "OPENAI_API_KEY", "MINIMAX_API_KEY", "ZAI_API_KEY", "HF_TOKEN"]:
+            val = os.getenv(key)
+            if val:
+                secrets[key] = val
+
+        # Custom/User Mappings (lowercase from shed/.env)
+        custom_map = {
+            "zai": "ZAI_API_KEY",
+            "hfpro": "HF_TOKEN",
+            "minimax": "MINIMAX_API_KEY"
+        }
+        
+        for env_key, system_key in custom_map.items():
+            val = os.getenv(env_key)
+            if val and system_key not in secrets:
+                secrets[system_key] = val
+                # Also set in os.environ for libraries that auto-detect
+                os.environ[system_key] = val
+                
+        return secrets
+
+    @staticmethod
     def delete_secret(key_name: str):
         try:
             keyring.delete_password(SERVICE_NAME, key_name)
         except Exception:
             pass
+
+# Initialize fallback env mappings on module load
+AuthManager._load_from_env()
