@@ -32,6 +32,29 @@ export default function Home() {
     }
   };
 
+  const handleTranscribe = async () => {
+    setStatus("Transcribing...");
+    try {
+      const response = await fetch("http://localhost:8000/transcribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          file_path: "demo_audio.wav", // Hardcoded for MVP
+        }),
+      });
+      const data = await response.json();
+      if (data.status === "success") {
+        setStatus("Transcription Complete");
+        setSegments(data.segments);
+      } else {
+        setStatus("Transcribe Error");
+      }
+    } catch (e) {
+      console.error(e);
+      setStatus("Transcribe Connection Failed");
+    }
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center p-24 bg-zinc-950 text-zinc-100 font-mono">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -67,12 +90,20 @@ export default function Home() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
             />
-            <button
-              onClick={handleExtract}
-              className="w-full py-2 bg-purple-600 hover:bg-purple-700 rounded font-bold transition-all"
-            >
-              EXTRACT STEM
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={handleExtract}
+                className="flex-1 py-2 bg-purple-600 hover:bg-purple-700 rounded font-bold transition-all"
+              >
+                EXTRACT STEM
+              </button>
+              <button
+                onClick={handleTranscribe}
+                className="flex-1 py-2 bg-zinc-700 hover:bg-zinc-600 rounded font-bold transition-all"
+              >
+                TRANSCRIBE
+              </button>
+            </div>
           </div>
         </div>
 
@@ -81,7 +112,7 @@ export default function Home() {
             Engine Status
           </h2>
           <div className="font-mono text-sm space-y-2">
-            <p>State: <span className={status === "Extracting..." ? "text-yellow-400 animate-pulse" : "text-zinc-400"}>{status}</span></p>
+            <p>State: <span className={status === "Extracting..." || status === "Transcribing..." ? "text-yellow-400 animate-pulse" : "text-zinc-400"}>{status}</span></p>
             {result && (
               <p className="text-green-400 break-all">&gt; Generated: {result}</p>
             )}
@@ -93,7 +124,7 @@ export default function Home() {
 
       {/* Timeline Section */}
       <div className="w-full max-w-5xl">
-        <ScriptTimeline segments={[]} />
+        <ScriptTimeline segments={segments} />
       </div>
     </main >
   );
