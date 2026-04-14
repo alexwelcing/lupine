@@ -1039,6 +1039,40 @@
                 background: rgba(123, 138, 224, 0.1);
             }
         }
+
+        /* ─── HUD Viewfinder Corners ─── */
+        .hud-corner {
+            position: fixed;
+            width: 24px; height: 24px;
+            border: 1px solid var(--accent-cyan);
+            opacity: 0.3;
+            z-index: 100;
+            pointer-events: none;
+        }
+        .hud-corner.tl { top: 32px; left: 32px; border-right: none; border-bottom: none; }
+        .hud-corner.tr { top: 32px; right: 32px; border-left: none; border-bottom: none; }
+        .hud-corner.bl { bottom: 32px; left: 32px; border-right: none; border-top: none; }
+        .hud-corner.br { bottom: 32px; right: 32px; border-left: none; border-top: none; }
+
+        .hud-text {
+            position: fixed;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 10px;
+            color: var(--accent-cyan);
+            letter-spacing: 0.2em;
+            opacity: 0.4;
+            z-index: 100;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+        @media (max-width: 768px) {
+            .hud-text { display: none; }
+        }
+        .hud-text.tl { top: 38px; left: 64px; }
+        .hud-text.tr { top: 38px; right: 64px; text-align: right; }
+        .hud-text.bl { bottom: 38px; left: 64px; }
+        .hud-text.br { bottom: 38px; right: 64px; text-align: right; }
+
     </style>
 </head>
 <body>
@@ -1049,6 +1083,12 @@
     <div id="global-scrim" style="position:fixed; inset:0; background:rgba(10, 11, 18, 0.5); z-index:-1; pointer-events:none;"></div>
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
+
+    <!-- ═══ HUD Viewfinder ═══ -->
+    <div class="hud-corner tl"></div><div class="hud-text tl">SYS.OPS // 89.2% OPTIMAL</div>
+    <div class="hud-corner tr"></div><div class="hud-text tr">LUPINE_GLIMPSE_V1</div>
+    <div class="hud-corner bl"></div><div class="hud-text bl" id="hudCoords">POS: [0.000, 0.000, 0.000]</div>
+    <div class="hud-corner br"></div><div class="hud-text br">ENGINE: WEBGPU // ONLINE</div>
 
     <!-- ═══ Navigation ═══ -->
     <nav id="nav">
@@ -1592,6 +1632,29 @@
         </div>
     </div>
 
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
         <p><span class="footer-brand">Lupine Materials Science</span> / 2026 / Building the infrastructure for materials discovery</p>
     </footer>
 
@@ -1980,6 +2043,11 @@ struct V {
                 cy + oy,
                 cz + oz
             ];
+
+            const hudCoords = document.getElementById('hudCoords');
+            if (hudCoords) {
+                hudCoords.textContent = `POS: [${eye[0].toFixed(3)}, ${eye[1].toFixed(3)}, ${eye[2].toFixed(3)}]`;
+            }
             
             // Look slightly ahead down the lattice bond vector
             const target = [
