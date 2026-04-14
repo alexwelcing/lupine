@@ -1,0 +1,17 @@
+{
+  "paper_id": "P05",
+  "title": "A Kokkos-accelerated Moment Tensor Potential implementation for LAMMPS",
+  "abstract_text": "",
+  "authors": [
+    "Zijian Meng",
+    "Karim Zongo",
+    "Edmanuel Torres",
+    "Christopher Maxwell",
+    "Ryan Grant",
+    "Laurent Karim Béland"
+  ],
+  "journal": "SoftwareX",
+  "year": 2026,
+  "cited_by": 0,
+  "source": "crossref:10.1016/j.softx.2026.102524"
+}
