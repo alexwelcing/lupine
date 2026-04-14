@@ -240,10 +240,57 @@
             opacity: 0.5;
         }
 
+        /* Dark center scrim for text contrast over atoms */
+        .hero.webgpu-active::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                ellipse 55% 60% at 50% 45%,
+                rgba(10, 11, 18, 0.82) 0%,
+                rgba(10, 11, 18, 0.45) 50%,
+                transparent 80%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
         .hero-content {
             position: relative;
             z-index: 2;
             max-width: 900px;
+        }
+
+        .hero.webgpu-active .hero-content *,
+        .hero.webgpu-active .hero h1,
+        .hero.webgpu-active .hero-sub {
+            text-shadow:
+                0 2px 24px rgba(10, 11, 18, 0.9),
+                0 0 80px rgba(10, 11, 18, 0.7);
+        }
+
+        /* Permutation iteration counter */
+        .iter-counter {
+            position: absolute;
+            bottom: 88px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--lupine-400);
+            opacity: 0.5;
+            z-index: 3;
+            font-variant-numeric: tabular-nums;
+            transition: opacity 0.3s;
+        }
+
+        .iter-counter .iter-num {
+            display: inline-block;
+            min-width: 24px;
+            text-align: right;
+            color: var(--accent-cyan);
         }
 
         .hero-logo {
@@ -1054,6 +1101,7 @@
                 <a href="#product" class="btn-secondary">See the Product</a>
             </div>
         </div>
+        <div class="iter-counter" id="iterCounter">MgLi Alloy &mdash; Permutation <span class="iter-num" id="iterNum">#1</span></div>
         <div class="scroll-indicator">
             <span>Scroll</span>
             <div class="scroll-line"></div>
@@ -1534,12 +1582,15 @@
             size: 96, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
         });
 
-        // ─── WGSL Shader: Sphere Impostors with Phong + Fresnel ───
+        // ─── WGSL Shader: Permutation-Animated Sphere Impostors ───
         const wgsl = `
 struct U { vp: mat4x4<f32>, eye: vec3<f32>, t: f32, res: vec2<f32> };
 struct A { p: vec3<f32>, r: f32, c: vec3<f32>, ph: f32 };
 @group(0) @binding(0) var<uniform> u: U;
 @group(0) @binding(1) var<storage,read> atoms: array<A>;
+
+// Permutation hash
+fn hash(n: f32) -> f32 { return fract(sin(n) * 43758.5453123); }
 
 struct V {
     @builtin(position) pos: vec4<f32>,
@@ -1554,6 +1605,29 @@ struct V {
     let q = array(vec2(-1.,-1.), vec2(1.,-1.), vec2(-1.,1.), vec2(1.,-1.), vec2(1.,1.), vec2(-1.,1.));
     let atom = atoms[ii];
     let l = q[vi];
+    let fi = f32(ii);
+
+    // Permutation: new alloy configuration every 3.5s
+    let iter = floor(u.t / 3.5);
+    let blend = smoothstep(0.0, 0.7, fract(u.t / 3.5));
+
+    // Hash determines Mg vs Li at each lattice site per iteration
+    let h0 = hash(fi * 127.1 + iter * 311.7);
+    let h1 = hash(fi * 127.1 + (iter + 1.0) * 311.7);
+
+    // Mg: larger indigo | Li: smaller cyan
+    let mg_c = vec3(0.482, 0.541, 0.878);
+    let li_c = vec3(0.306, 0.804, 0.769);
+    let mg_r: f32 = 0.22;
+    let li_r: f32 = 0.17;
+
+    let c0 = select(li_c, mg_c, h0 > 0.5);
+    let c1 = select(li_c, mg_c, h1 > 0.5);
+    let r0 = select(li_r, mg_r, h0 > 0.5);
+    let r1 = select(li_r, mg_r, h1 > 0.5);
+
+    let final_col = mix(c0, c1, blend);
+    let final_rad = mix(r0, r1, blend);
 
     // Thermal vibration
     let j = vec3(
@@ -1567,14 +1641,14 @@ struct V {
     let fw = normalize(u.eye - ctr);
     let rt = normalize(cross(vec3(0.,1.,0.), fw));
     let up = cross(fw, rt);
-    let wp = ctr + (rt * l.x + up * l.y) * atom.r * 1.3;
+    let wp = ctr + (rt * l.x + up * l.y) * final_rad * 1.3;
 
     var o: V;
     o.pos = u.vp * vec4(wp, 1.);
     o.lp = l;
     o.wc = ctr;
-    o.rad = atom.r;
-    o.col = atom.c;
+    o.rad = final_rad;
+    o.col = final_col;
     o.dep = length(u.eye - ctr);
     return o;
 }
@@ -1583,24 +1657,20 @@ struct V {
     let dd = length(i.lp);
     if (dd > 1.) { discard; }
 
-    // Sphere impostor normal
     let z = sqrt(1. - dd * dd);
     let n = vec3(i.lp, z);
 
-    // Phong lighting
     let ld = normalize(vec3(0.3, 0.6, 1.0));
     let diff = max(dot(n, ld), 0.);
     let vd = vec3(0., 0., 1.);
     let spec = pow(max(dot(n, normalize(ld + vd)), 0.), 80.);
-
-    // Fresnel rim
     let fr = pow(1. - max(dot(n, vd), 0.), 3.);
 
-    // Depth-based atmospheric fade
-    let fade = smoothstep(16., 4., i.dep);
+    // Atmospheric depth fade (slightly dimmer for text contrast)
+    let fade = smoothstep(16., 5., i.dep);
 
-    let col = i.col * (0.1 + diff * 0.6) + vec3(1.) * spec * 0.6 + i.col * fr * 0.3;
-    let al = fade * (0.5 + 0.4 * z);
+    let col = i.col * (0.08 + diff * 0.55) + vec3(1.) * spec * 0.5 + i.col * fr * 0.25;
+    let al = fade * (0.4 + 0.35 * z);
     return vec4(col * al, al);
 }
 `;
@@ -1660,9 +1730,14 @@ struct V {
 
         // ─── Render loop ───
         const t0 = performance.now();
+        const iterEl = document.getElementById('iterNum');
         (function loop() {
             const t = (performance.now() - t0) / 1000;
             const asp = canvas.width / canvas.height;
+
+            // Update permutation counter
+            const iter = Math.floor(t / 3.5) + 1;
+            if (iterEl) iterEl.textContent = '#' + iter;
 
             // Slow camera orbit
             const r = 11;
