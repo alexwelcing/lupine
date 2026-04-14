@@ -9,6 +9,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         deck: resolve(__dirname, 'deck.html'),
         onepager: resolve(__dirname, 'one-pager.html'),
+        lammpsvisualizer: resolve(__dirname, 'lammps-visualizer.html'),
         platformarchitecture: resolve(__dirname, 'platform-architecture.html'),
         researchmanifesto: resolve(__dirname, 'research-manifesto.html'),
         gpucompute: resolve(__dirname, 'gpu-compute.html'),
