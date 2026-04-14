@@ -60,7 +60,7 @@
 
         body {
             font-family: var(--font-sans);
-            background: var(--slate-950);
+            background: transparent;
             color: var(--slate-200);
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
@@ -223,14 +223,7 @@
         }
 
         /* ─── WebGPU Atom Canvas ─── */
-        #atom-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
+        /* Handled by inline styles on the canvas near <body> tag */
 
         .hero.webgpu-active .hero-orbits {
             display: none;
@@ -488,7 +481,8 @@
             left: -100vw;
             right: -100vw;
             bottom: 0;
-            background: linear-gradient(180deg, var(--slate-950) 0%, var(--slate-900) 50%, var(--slate-950) 100%);
+            /* Semi-transparent gradient to let global atoms peek through */
+            background: linear-gradient(180deg, rgba(10,11,18,0.7) 0%, rgba(15,17,25,0.85) 50%, rgba(10,11,18,0.7) 100%);
             z-index: -1;
         }
 
@@ -645,7 +639,8 @@
             left: -100vw;
             right: -100vw;
             bottom: 0;
-            background: linear-gradient(180deg, var(--slate-950) 0%, rgba(46, 58, 135, 0.04) 50%, var(--slate-950) 100%);
+            /* Semi-transparent to let global atoms show */
+            background: linear-gradient(180deg, rgba(10,11,18,0.4) 0%, rgba(46, 58, 135, 0.1) 50%, rgba(10,11,18,0.4) 100%);
             z-index: -1;
         }
 
@@ -1014,6 +1009,11 @@
 </head>
 <body>
 
+    <!-- ═══ Global Parallax Background ═══ -->
+    <div id="global-bg" style="position:fixed; inset:0; background:var(--slate-950); z-index:-3;"></div>
+    <canvas id="atom-canvas" style="position:fixed; inset:0; width:100vw; height:100vh; z-index:-2; pointer-events:none;"></canvas>
+    <div id="global-scrim" style="position:fixed; inset:0; background:rgba(10, 11, 18, 0.5); z-index:-1; pointer-events:none;"></div>
+
     <!-- ═══ Navigation ═══ -->
     <nav id="nav">
         <a href="#" class="nav-brand">
@@ -1049,7 +1049,6 @@
 
     <!-- ═══ Hero ═══ -->
     <section class="hero" id="hero">
-        <canvas id="atom-canvas"></canvas>
         <div class="hero-orbits">
             <div class="orbit-ring"></div>
             <div class="orbit-ring"></div>
