@@ -1072,10 +1072,65 @@
         .hud-text.tr { top: 38px; right: 64px; text-align: right; }
         .hud-text.bl { bottom: 38px; left: 64px; }
         .hud-text.br { bottom: 38px; right: 64px; text-align: right; }
+        .hud-text.br { bottom: 38px; right: 64px; text-align: right; }
+
+        /* ─── Boot Sequence ─── */
+        #boot-sequence {
+            position: fixed; inset: 0; background: var(--slate-950);
+            z-index: 10000;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 60px; font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 13px; color: var(--accent-cyan);
+            pointer-events: none;
+            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .boot-log-line { margin-top: 6px; text-shadow: 0 0 8px rgba(78,205,196,0.4); }
 
     </style>
 </head>
 <body>
+
+    <!-- ═══ System Boot Sequence ═══ -->
+    <div id="boot-sequence">
+        <div class="boot-log" id="bootLog"></div>
+    </div>
+    <script>
+        (function() {
+            if (sessionStorage.getItem('lupine_booted')) {
+                document.getElementById('boot-sequence').style.display = 'none';
+                return;
+            }
+            sessionStorage.setItem('lupine_booted', '1');
+            const seq = document.getElementById('boot-sequence');
+            const logEl = document.getElementById('bootLog');
+            const logs = [
+                "INIT: Kernel Boot sequence engaged.",
+                "WASM: Loading compiled Rust binary (4.2MB)... [OK]",
+                "OXT: Establishing secure handshake with prediction cluster... [OK]",
+                "WEBGPU: Requesting device adapter...",
+                "WEBGPU: Adapter found -> High Performance Profile.",
+                "MD: Initializing 12x12x12 MgLi supercell... (1,728 atoms)",
+                "SYS: Generating projection matrices...",
+                "SYS: Handing control to main UI thread.",
+                "BOOT COMPLETE"
+            ];
+            
+            let i = 0;
+            function pushLog() {
+                if (i >= logs.length) {
+                    setTimeout(() => { seq.style.opacity = '0'; setTimeout(() => seq.style.display = 'none', 600); }, 400);
+                    return;
+                }
+                const d = document.createElement('div');
+                d.className = 'boot-log-line';
+                d.textContent = `[${(performance.now() / 1000).toFixed(3)}] ${logs[i]}`;
+                logEl.appendChild(d);
+                i++;
+                setTimeout(pushLog, Math.random() * 60 + 20);
+            }
+            setTimeout(pushLog, 150);
+        })();
+    </script>
 
     <!-- ═══ Global Parallax Background ═══ -->
     <div id="global-bg" style="position:fixed; inset:0; background:var(--slate-950); z-index:-3;"></div>
@@ -1586,6 +1641,29 @@
 
     <!-- ═══ Footer ═══ -->
     <footer>
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
 
     <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
         <div style="text-align:left;">
