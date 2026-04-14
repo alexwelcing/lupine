@@ -1623,7 +1623,7 @@
 
         // ─── Generate MgLi B2 (CsCl-type) lattice ───
         // Mg at corners, Li at body center
-        const N = 8, a = 1.0, data = [];
+        const N = 12, a = 3.0, data = [];
         for (let i = 0; i < N; i++)
         for (let j = 0; j < N; j++)
         for (let k = 0; k < N; k++) {
@@ -1631,9 +1631,9 @@
             const by = (j - N/2 + 0.5) * a;
             const bz = (k - N/2 + 0.5) * a;
             // Mg — larger, indigo
-            data.push(bx, by, bz, 0.22, 0.482, 0.541, 0.878, Math.random() * 6.28);
+            data.push(bx, by, bz, 0.6, 0.482, 0.541, 0.878, Math.random() * 6.28);
             // Li — smaller, cyan
-            data.push(bx+.5*a, by+.5*a, bz+.5*a, 0.17, 0.306, 0.804, 0.769, Math.random() * 6.28);
+            data.push(bx+.5*a, by+.5*a, bz+.5*a, 0.45, 0.306, 0.804, 0.769, Math.random() * 6.28);
         }
         const nAtoms = data.length / 8;
 
@@ -1683,8 +1683,8 @@ struct V {
     // Mg: larger indigo | Li: smaller cyan
     let mg_c = vec3(0.482, 0.541, 0.878);
     let li_c = vec3(0.306, 0.804, 0.769);
-    let mg_r: f32 = 0.22;
-    let li_r: f32 = 0.17;
+    let mg_r: f32 = 0.6;
+    let li_r: f32 = 0.45;
 
     let c0 = select(li_c, mg_c, h0 > 0.5);
     let c1 = select(li_c, mg_c, h1 > 0.5);
@@ -1804,17 +1804,34 @@ struct V {
             const iter = Math.floor(t / 3.5) + 1;
             if (iterEl) iterEl.textContent = '#' + iter;
 
-            // Slow camera orbit
-            const r = 11;
+            // Travel path: map scroll window directly into Z depth along the [1,1,1] diagonal
+            const scrollOffset = window.scrollY * 0.015;
+            const pathStart = -18;
+            const cx = pathStart + scrollOffset;
+            const cy = pathStart + scrollOffset;
+            const cz = pathStart + scrollOffset;
+
+            // Base subtle orbit so atoms seem alive even when not scrolling
+            const ox = Math.sin(t * 0.1) * 1.5;
+            const oy = Math.sin(t * 0.15) * 0.8;
+            const oz = Math.cos(t * 0.1) * 1.5;
+
             const eye = [
-                Math.sin(t * 0.06) * r,
-                Math.sin(t * 0.04) * 1.5 + 0.5,
-                Math.cos(t * 0.06) * r
+                cx + ox,
+                cy + oy,
+                cz + oz
+            ];
+            
+            // Look slightly ahead down the lattice bond vector
+            const target = [
+                cx + 4,
+                cy + 4,
+                cz + 4
             ];
 
             // Build view-projection matrix
             const ud = new Float32Array(24);
-            ud.set(mul(perspective(0.7, asp, 0.1, 100), lookAt(eye, [0,0,0], [0,1,0])));
+            ud.set(mul(perspective(0.7, asp, 0.1, 100), lookAt(eye, target, [0,1,0])));
             ud[16] = eye[0]; ud[17] = eye[1]; ud[18] = eye[2]; ud[19] = t;
             ud[20] = canvas.width; ud[21] = canvas.height;
             device.queue.writeBuffer(uBuf, 0, ud);
