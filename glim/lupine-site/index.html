@@ -1733,6 +1733,29 @@
         </div>
     </div>
 
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
         <p><span class="footer-brand">Lupine Materials Science</span> / 2026 / Building the infrastructure for materials discovery</p>
     </footer>
 
@@ -1745,12 +1768,14 @@
 
         // ─── Generate atom grid ───
         const grid = document.getElementById('atomGrid');
-        for (let i = 0; i < 48; i++) {
-            const atom = document.createElement('div');
-            atom.className = 'fake-atom';
-            atom.style.animationDelay = `${Math.random() * 3}s`;
-            atom.style.opacity = 0.5 + Math.random() * 0.5;
-            grid.appendChild(atom);
+        if (grid) {
+            for (let i = 0; i < 48; i++) {
+                const atom = document.createElement('div');
+                atom.className = 'fake-atom';
+                atom.style.animationDelay = `${Math.random() * 3}s`;
+                atom.style.opacity = 0.5 + Math.random() * 0.5;
+                grid.appendChild(atom);
+            }
         }
 
         // ─── Scroll reveal ───
