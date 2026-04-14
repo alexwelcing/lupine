@@ -1005,6 +1005,40 @@
             width: 100%;
             height: 100%;
         }
+
+        /* ─── Custom Flair: Cursor ─── */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            a, button, .btn-primary, .btn-secondary, input, textarea { cursor: none !important; }
+            
+            .cursor-dot, .cursor-ring {
+                position: fixed;
+                top: 0; left: 0;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                mix-blend-mode: screen;
+            }
+            .cursor-dot {
+                width: 6px; height: 6px;
+                background: var(--accent-cyan);
+                transition: width 0.2s, height 0.2s, background 0.2s;
+            }
+            .cursor-ring {
+                width: 32px; height: 32px;
+                border: 1px solid rgba(78, 205, 196, 0.4);
+                transition: width 0.2s, height 0.2s, border-color 0.2s, background 0.2s;
+            }
+            body.cursor-active .cursor-dot {
+                width: 0; height: 0;
+            }
+            body.cursor-active .cursor-ring {
+                width: 48px; height: 48px;
+                border-color: var(--lupine-400);
+                background: rgba(123, 138, 224, 0.1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1013,6 +1047,8 @@
     <div id="global-bg" style="position:fixed; inset:0; background:var(--slate-950); z-index:-3;"></div>
     <canvas id="atom-canvas" style="position:fixed; inset:0; width:100vw; height:100vh; z-index:-2; pointer-events:none;"></canvas>
     <div id="global-scrim" style="position:fixed; inset:0; background:rgba(10, 11, 18, 0.5); z-index:-1; pointer-events:none;"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
 
     <!-- ═══ Navigation ═══ -->
     <nav id="nav">
@@ -1533,6 +1569,29 @@
         </div>
     </div>
 
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
         <p><span class="footer-brand">Lupine Materials Science</span> / 2026 / Building the infrastructure for materials discovery</p>
     </footer>
 
@@ -1608,6 +1667,78 @@
         }, { threshold: 0.3 });
 
         document.querySelectorAll('[data-count-to]').forEach(el => counterObserver.observe(el));
+
+        // ─── Custom Cursor & Pointer Effects ───
+        if (window.matchMedia("(pointer: fine)").matches) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorRing = document.querySelector('.cursor-ring');
+            
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let dotX = mouseX, dotY = mouseY;
+            let ringX = mouseX, ringY = mouseY;
+
+            // Global exports for WebGPU parallax tracking
+            window.parallaxX = 0;
+            window.parallaxY = 0;
+
+            window.addEventListener('mousemove', e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                window.parallaxX = (mouseX / window.innerWidth) * 2 - 1;
+                window.parallaxY = (mouseY / window.innerHeight) * 2 - 1;
+            });
+
+            function animateCursor() {
+                dotX += (mouseX - dotX) * 0.5;
+                dotY += (mouseY - dotY) * 0.5;
+                ringX += (mouseX - ringX) * 0.15;
+                ringY += (mouseY - ringY) * 0.15;
+
+                if (cursorDot && cursorRing) {
+                    cursorDot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+                    cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+                }
+                requestAnimationFrame(animateCursor);
+            }
+            requestAnimationFrame(animateCursor);
+
+            // Hover state logic
+            document.querySelectorAll('a, button, .btn-primary, .btn-secondary').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+            });
+        }
+
+        // ─── Hacker Scramble Text Flair ───
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+            btn.dataset.originalText = btn.innerText;
+            btn.addEventListener('mouseenter', e => {
+                const target = e.target;
+                let iterations = 0;
+                // Avoid interfering with icons or inner HTML if simple text
+                if (target.children.length === 0) {
+                    clearInterval(target.scrambleInterval);
+                    target.scrambleInterval = setInterval(() => {
+                        target.innerText = target.dataset.originalText.split("")
+                            .map((letter, index) => {
+                                if(index < iterations || letter === " ") return target.dataset.originalText[index];
+                                return letters[Math.floor(Math.random() * 26)];
+                            })
+                            .join("");
+                        if(iterations >= target.dataset.originalText.length) clearInterval(target.scrambleInterval);
+                        iterations += 1/2; // speed of decipher
+                    }, 30);
+                }
+            });
+            btn.addEventListener('mouseleave', e => {
+                if (e.target.children.length === 0) {
+                    clearInterval(e.target.scrambleInterval);
+                    e.target.innerText = e.target.dataset.originalText;
+                }
+            });
+        });
     </script>
 
     <!-- ═══ WebGPU MgLi Alloy Atom Background ═══ -->
@@ -1833,9 +1964,15 @@ struct V {
             const cy = pathStart + scrollOffset;
             const cz = pathStart + scrollOffset;
 
-            // Base subtle orbit so atoms seem alive even when not scrolling
-            const ox = Math.sin(t * 0.1) * 1.5;
-            const oy = Math.sin(t * 0.15) * 0.8;
+            // Smooth parallax tracking
+            window._px = window._px || 0;
+            window._py = window._py || 0;
+            window._px += ((window.parallaxX || 0) - window._px) * 0.05;
+            window._py += ((window.parallaxY || 0) - window._py) * 0.05;
+
+            // Base subtle orbit + Deep Mouse Parallax
+            const ox = Math.sin(t * 0.1) * 1.5 + window._px * 2.5;
+            const oy = Math.sin(t * 0.15) * 0.8 - window._py * 2.5;
             const oz = Math.cos(t * 0.1) * 1.5;
 
             const eye = [
