@@ -1092,12 +1092,12 @@
                 </svg>
             </div>
             <div class="hero-label">Lupine Materials Science</div>
-            <h1>The <em>Unified Engine</em><br>for Materials Discovery</h1>
+            <h1>Discover <em>New Materials</em><br>Before They Exist</h1>
             <p class="hero-sub">
-                One platform spanning quantum simulation, molecular dynamics, and machine learning potentials. The full DFT to ML to MD pipeline — no fragmentation, no vendor lock-in.
+                The first platform to unify quantum DFT, molecular dynamics, and machine-learned potentials in a single Rust codebase. From electrons to engineering insights — in one command.
             </p>
             <div class="hero-actions">
-                <a href="#contact" class="btn-primary">Request a Briefing</a>
+                <a href="#contact" class="btn-primary">Request Investor Briefing</a>
                 <a href="#product" class="btn-secondary">See the Product</a>
             </div>
         </div>
@@ -1422,12 +1422,12 @@
         </p>
         <div class="market-grid">
             <div class="market-card reveal">
-                <div class="market-number">$12B</div>
+                <div class="market-number" data-count-to="12" data-count-prefix="$" data-count-suffix="B">$0B</div>
                 <div class="market-label">Simulation Software TAM</div>
                 <div class="market-detail">Scientific computing & CAE by 2028</div>
             </div>
             <div class="market-card reveal">
-                <div class="market-number">300K+</div>
+                <div class="market-number" data-count-to="300" data-count-suffix="K+">0K+</div>
                 <div class="market-label">LAMMPS Researchers</div>
                 <div class="market-detail">Active users worldwide</div>
             </div>
@@ -1437,7 +1437,7 @@
                 <div class="market-detail">DFT + ML + MD in one system</div>
             </div>
             <div class="market-card reveal">
-                <div class="market-number">100x</div>
+                <div class="market-number" data-count-to="100" data-count-suffix="x">0x</div>
                 <div class="market-label">ML Speedup</div>
                 <div class="market-detail">Near-DFT accuracy, MD speed</div>
             </div>
@@ -1466,10 +1466,43 @@
         </div>
     </section>
 
+    <!-- ═══ Tech Credibility Strip ═══ -->
+    <section style="padding:64px 40px;max-width:1200px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:36px;" class="reveal">
+            <div class="section-label">Built On</div>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;" class="reveal">
+            <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:800;color:var(--slate-200);letter-spacing:0.05em;">Rust</div>
+                <div style="font-size:10px;color:var(--slate-500);margin-top:4px;">Memory-safe, zero-cost abstractions</div>
+            </div>
+            <div style="width:1px;height:32px;background:var(--slate-700);"></div>
+            <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:800;color:var(--slate-200);letter-spacing:0.05em;">WebGPU</div>
+                <div style="font-size:10px;color:var(--slate-500);margin-top:4px;">Native GPU compute in every browser</div>
+            </div>
+            <div style="width:1px;height:32px;background:var(--slate-700);"></div>
+            <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:800;color:var(--slate-200);letter-spacing:0.05em;">WASM</div>
+                <div style="font-size:10px;color:var(--slate-500);margin-top:4px;">Near-native speed, zero install</div>
+            </div>
+            <div style="width:1px;height:32px;background:var(--slate-700);"></div>
+            <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:800;color:var(--slate-200);letter-spacing:0.05em;">WGSL</div>
+                <div style="font-size:10px;color:var(--slate-500);margin-top:4px;">GPU shaders for the modern web</div>
+            </div>
+            <div style="width:1px;height:32px;background:var(--slate-700);"></div>
+            <div style="text-align:center;">
+                <div style="font-size:20px;font-weight:800;color:var(--slate-200);letter-spacing:0.05em;">Apache 2.0</div>
+                <div style="font-size:10px;color:var(--slate-500);margin-top:4px;">Open core, no vendor lock-in</div>
+            </div>
+        </div>
+    </section>
+
     <!-- ═══ CTA ═══ -->
     <section class="cta-section" id="contact">
-        <h2 class="reveal">The future of matter<br>starts with software.</h2>
-        <p class="reveal">We're raising to accelerate platform development. If you understand the strategic value of computational materials infrastructure, let's speak.</p>
+        <h2 class="reveal">Materials infrastructure<br>is the new frontier.</h2>
+        <p class="reveal">We are building the computational engine that will underpin the next generation of batteries, alloys, semiconductors, and advanced materials. If you invest in deep tech, we should talk.</p>
         <div class="hero-actions reveal" style="margin-top:0;">
             <a href="mailto:founders@lupine.science" class="btn-primary">founders@lupine.science</a>
             <a href="one-pager.html" class="btn-secondary">Download One-Pager</a>
@@ -1521,6 +1554,38 @@
                 if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
+
+        // ─── Animated count-up on market/research numbers ───
+        function animateCountUp(el, target, suffix = '', prefix = '', duration = 1800) {
+            const start = performance.now();
+            const isInt = Number.isInteger(target);
+            function tick(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+                const val = isInt ? Math.round(target * eased) : (target * eased).toFixed(1);
+                el.textContent = prefix + val + suffix;
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const raw = el.dataset.countTo;
+                    const prefix = el.dataset.countPrefix || '';
+                    const suffix = el.dataset.countSuffix || '';
+                    const num = parseFloat(raw);
+                    if (!isNaN(num)) {
+                        animateCountUp(el, num, suffix, prefix, 2000);
+                    }
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('[data-count-to]').forEach(el => counterObserver.observe(el));
     </script>
 
     <!-- ═══ WebGPU MgLi Alloy Atom Background ═══ -->
