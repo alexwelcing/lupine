@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@1,400;1,700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@400;700&amp;family=Newsreader:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#e3e1ec",
+                    "tertiary-fixed-dim": "#d4bbff",
+                    "surface-variant": "#34343c",
+                    "on-tertiary-fixed-variant": "#54358a",
+                    "on-secondary-container": "#00302d",
+                    "tertiary": "#d4bbff",
+                    "surface-container-highest": "#34343c",
+                    "on-primary-fixed": "#000d60",
+                    "inverse-surface": "#e3e1ec",
+                    "surface-bright": "#383941",
+                    "on-tertiary-fixed": "#260058",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "error": "#ffb4ab",
+                    "surface-tint": "#bcc3ff",
+                    "surface-container-high": "#292931",
+                    "on-tertiary": "#3d1b72",
+                    "on-tertiary-container": "#faf1ff",
+                    "surface-container-low": "#1a1b23",
+                    "on-error-container": "#ffdad6",
+                    "error-container": "#93000a",
+                    "on-secondary": "#003734",
+                    "surface": "#12131a",
+                    "inverse-primary": "#4353c2",
+                    "secondary-container": "#00a29a",
+                    "inverse-on-surface": "#2f3038",
+                    "tertiary-container": "#7f5fb7",
+                    "on-error": "#690005",
+                    "surface-dim": "#12131a",
+                    "background": "#12131a",
+                    "on-primary-container": "#f5f3ff",
+                    "on-surface": "#e3e1ec",
+                    "on-primary-fixed-variant": "#2839a9",
+                    "on-secondary-fixed": "#00201e",
+                    "primary-container": "#5565d4",
+                    "surface-container-lowest": "#0d0e15",
+                    "primary-fixed": "#dfe0ff",
+                    "outline-variant": "#454653",
+                    "on-secondary-fixed-variant": "#00504c",
+                    "tertiary-fixed": "#ebdcff",
+                    "primary": "#bcc3ff",
+                    "secondary-fixed": "#7cf6ec",
+                    "on-surface-variant": "#c6c5d5",
+                    "on-primary": "#051c93",
+                    "outline": "#8f8f9f",
+                    "surface-container": "#1e1f27",
+                    "secondary-fixed-dim": "#5dd9d0",
+                    "secondary": "#5dd9d0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Playfair Display", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Space Grotesk", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(30, 31, 39, 0.6);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .compute-trace {
+            height: 2px;
+            background: linear-gradient(90deg, #5dd9d0, #7f5fb7);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0a0b12;
+            color: #e3e1ec;
+            overflow-x: hidden;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% -20%, rgba(85, 101, 212, 0.15) 0%, transparent 60%);
+        }
+    </style>
+
+<style>
+/* QA Fix: Responsive overrides for Stitch-generated pages */
+@media (max-width: 768px) {
+  .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+  .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+  .text-8xl, .text-7xl, .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; }
+  .text-5xl { font-size: 2rem !important; }
+  .text-4xl { font-size: 1.75rem !important; }
+  .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .p-16, .p-24 { padding: 2rem !important; }
+  .md\:p-24 { padding: 2rem !important; }
+  .gap-8, .gap-12 { gap: 1.5rem !important; }
+  .hidden.md\:flex { display: none !important; }
+  table { font-size: 12px !important; }
+  table td, table th { padding: 8px !important; }
+}
+@media (max-width: 480px) {
+  .text-6xl, .text-5xl { font-size: 1.8rem !important; line-height: 1.2 !important; }
+  .text-4xl { font-size: 1.5rem !important; }
+  .text-3xl { font-size: 1.25rem !important; }
+}
+</style>
+</head>
+<body class="font-body selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#0a0b12]/60 backdrop-blur-3xl border-b border-white/15 flex justify-between items-center px-8 py-4 shadow-[0_0_64px_rgba(85,101,212,0.05)]">
+<div class="text-indigo-500 font-serif italic text-2xl tracking-tighter">
+            Lupine Materials Science
+        </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-indigo-400 font-bold border-b border-indigo-400 font-sans transition-colors duration-300 hover:text-cyan-400" href="platform-architecture.html">Research Nodes</a>
+<a class="text-slate-400 font-sans transition-colors duration-300 hover:text-cyan-400" href="docs.html">Documentation</a>
+<a class="text-slate-400 font-sans transition-colors duration-300 hover:text-cyan-400" href="docs.html">API</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary-container px-5 py-2 rounded-lg font-medium active:scale-95 transition-transform">
+                Connect Node
+            </button>
+</div>
+</nav>
+<!-- SideNavBar (Suppressed for Landing) -->
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 hero-gradient overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-20">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/20 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 blur-[120px] rounded-full"></div>
+</div>
+<div class="relative z-10 max-w-5xl">
+<span class="font-mono text-xs uppercase tracking-[0.4em] text-cyan-400 mb-6 block">[ WEBGPU COMPUTE ]</span>
+<h1 class="font-headline italic text-7xl md:text-9xl text-on-background tracking-tighter leading-none mb-8">
+                    Browser Native GPU
+                </h1>
+<p class="text-xl md:text-2xl text-on-surface-variant max-w-2xl mx-auto font-light leading-relaxed mb-12">
+                    Delivering supercomputing performance directly to your browser with <span class="italic text-indigo-400">zero installation</span>.
+                </p>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6">
+<button class="bg-gradient-to-br from-primary-container to-tertiary-container text-white px-8 py-4 rounded-xl text-lg font-medium shadow-[0_0_40px_rgba(85,101,212,0.3)] hover:scale-105 transition-all">
+                        Connect Node
+                    </button>
+<button class="border border-white/15 bg-white/5 backdrop-blur-md text-cyan-400 font-mono px-8 py-4 rounded-xl text-sm tracking-widest uppercase hover:bg-white/10 transition-all">
+                        View Whitepaper
+                    </button>
+</div>
+</div>
+<!-- Floating Micro-Data -->
+<div class="absolute bottom-12 left-8 font-mono text-[10px] text-slate-500 flex flex-col gap-1 text-left">
+<span>COORD_X: 42.0912</span>
+<span>COORD_Y: -71.0124</span>
+<span>LATENCY: 1.2ms</span>
+</div>
+<div class="absolute bottom-12 right-8 font-mono text-[10px] text-slate-500 text-right">
+<span>PROTOCOL: V4.2.0-ALPHA</span>
+<br/>
+<span>ENGINE: WEBGPU_PIPELINE_STABLE</span>
+</div>
+</section>
+<!-- Performance Benchmarks -->
+<section class="py-24 px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="glass-panel p-8 rounded-xl relative group">
+<div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></div>
+<span class="font-mono text-[10px] text-slate-500 mb-4 block uppercase tracking-widest">Sim Volume</span>
+<h3 class="font-mono text-4xl text-on-background mb-2">10M+ Atoms</h3>
+<p class="text-cyan-400 font-mono text-sm">@ 60 FPS STABLE</p>
+<div class="mt-8 space-y-3">
+<div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+<div class="bg-cyan-400 h-full w-[92%]"></div>
+</div>
+<span class="font-mono text-[9px] text-slate-600 block text-right">92% GPU UTILIZATION</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel p-8 rounded-xl relative group">
+<div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-indigo-500 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></div>
+<span class="font-mono text-[10px] text-slate-500 mb-4 block uppercase tracking-widest">Compute Speed</span>
+<h3 class="font-mono text-4xl text-on-background mb-2">100x Faster</h3>
+<p class="text-indigo-400 font-mono text-sm">THAN TRADITIONAL CPU</p>
+<div class="mt-8 space-y-3">
+<div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+<div class="bg-indigo-400 h-full w-[100%]"></div>
+</div>
+<span class="font-mono text-[9px] text-slate-600 block text-right">0.004ms LATENCY</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel p-8 rounded-xl relative group">
+<div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-tertiary-container to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></div>
+<span class="font-mono text-[10px] text-slate-500 mb-4 block uppercase tracking-widest">Barrier to Entry</span>
+<h3 class="font-mono text-4xl text-on-background mb-2">Zero Install</h3>
+<p class="text-tertiary-container font-mono text-sm">NATIVE BROWSER STACK</p>
+<div class="mt-8 space-y-3">
+<div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full w-[100%]"></div>
+</div>
+<span class="font-mono text-[9px] text-slate-600 block text-right">WASM COMPATIBLE</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Architecture Flow -->
+<section class="py-32 px-8 bg-surface-container-lowest/50">
+<div class="max-w-6xl mx-auto text-center mb-20">
+<h2 class="font-headline italic text-5xl mb-4">Atomic Architecture</h2>
+<p class="font-mono text-xs text-slate-500 tracking-widest">WASM-TO-GPU PIPELINE FLOW</p>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-4 max-w-5xl mx-auto relative">
+<!-- Trace Line (Desktop) -->
+<div class="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-white/10 -translate-y-1/2 z-0"></div>
+<div class="z-10 flex flex-col items-center gap-4">
+<div class="w-24 h-24 rounded-full glass-panel flex items-center justify-center text-cyan-400">
+<span class="material-symbols-outlined text-4xl" data-icon="language">language</span>
+</div>
+<div class="text-center">
+<p class="font-mono text-xs font-bold">Browser</p>
+<p class="text-[10px] text-slate-500">CLIENT SIDE</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-700 rotate-90 md:rotate-0" data-icon="trending_flat">trending_flat</span>
+<div class="z-10 flex flex-col items-center gap-4">
+<div class="w-24 h-24 rounded-full glass-panel flex items-center justify-center text-indigo-400">
+<span class="material-symbols-outlined text-4xl" data-icon="terminal">terminal</span>
+</div>
+<div class="text-center">
+<p class="font-mono text-xs font-bold">WebGPU API</p>
+<p class="text-[10px] text-slate-500">HARDWARE ABSTRACTION</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-700 rotate-90 md:rotate-0" data-icon="trending_flat">trending_flat</span>
+<div class="z-10 flex flex-col items-center gap-4">
+<div class="w-24 h-24 rounded-full glass-panel flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined text-4xl" data-icon="memory">memory</span>
+</div>
+<div class="text-center">
+<p class="font-mono text-xs font-bold">WGSL Shaders</p>
+<p class="text-[10px] text-slate-500">COMPUTE KERNELS</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-700 rotate-90 md:rotate-0" data-icon="trending_flat">trending_flat</span>
+<div class="z-10 flex flex-col items-center gap-4">
+<div class="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-[0_0_30px_rgba(85,101,212,0.4)]">
+<span class="material-symbols-outlined text-4xl" data-icon="molecule">matter</span>
+</div>
+<div class="text-center">
+<p class="font-mono text-xs font-bold">Rendering</p>
+<p class="text-[10px] text-slate-500">REAL-TIME SIMULATION</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Comparison Table -->
+<section class="py-32 px-8 max-w-5xl mx-auto">
+<h2 class="font-headline italic text-4xl text-center mb-16">Hardware Performance Spectrum</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-white/10 font-mono text-[10px] text-slate-500 tracking-widest">
+<th class="py-6 px-4">FEATURE</th>
+<th class="py-6 px-4">WEBGL</th>
+<th class="py-6 px-4">WEBGPU</th>
+<th class="py-6 px-4">OVITO DESKTOP</th>
+<th class="py-6 px-4 text-secondary">LUPINE</th>
+</tr>
+</thead>
+<tbody class="font-sans text-sm">
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+<td class="py-8 px-4 font-medium">Compute Capabilities</td>
+<td class="py-8 px-4 text-slate-500">Raster Only</td>
+<td class="py-8 px-4">General Compute</td>
+<td class="py-8 px-4">Full Suite</td>
+<td class="py-8 px-4 text-secondary-fixed font-mono">[ UNLIMITED ]</td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+<td class="py-8 px-4 font-medium">Max Atom Count</td>
+<td class="py-8 px-4 text-slate-500">~250k</td>
+<td class="py-8 px-4">~2.5M</td>
+<td class="py-8 px-4">100M+</td>
+<td class="py-8 px-4 text-secondary-fixed font-mono">10M+ <span class="text-[10px] opacity-60">(Native)</span></td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+<td class="py-8 px-4 font-medium">Frame Rate</td>
+<td class="py-8 px-4 text-slate-500">30fps (Instanced)</td>
+<td class="py-8 px-4">60fps (Locked)</td>
+<td class="py-8 px-4">Variable</td>
+<td class="py-8 px-4 text-secondary-fixed font-mono">144HZ <span class="text-[10px] opacity-60">(Adaptive)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Live Demo Reference -->
+<section class="py-32 px-8 bg-[#0a0b12]">
+<div class="max-w-6xl mx-auto">
+<div class="relative glass-panel rounded-2xl overflow-hidden shadow-2xl group">
+<!-- Browser Header -->
+<div class="bg-surface-container h-10 border-b border-white/10 flex items-center px-4 gap-2">
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-amber-500/50"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+</div>
+<div class="mx-auto bg-black/20 px-8 py-1 rounded text-[10px] text-slate-500 font-mono">
+                            lupine.science/workbench/simulation-084
+                        </div>
+</div>
+<!-- Simulation Content -->
+<div class="aspect-video relative bg-black flex items-center justify-center overflow-hidden">
+<img alt="3D molecular simulation of graphene" class="w-full h-full object-cover opacity-60" data-alt="3D molecular structure of graphene with glowing cyan lattice connections and deep purple metallic glints under dramatic laboratory lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCA2Yn-PEFAZgSoJ-cQDfiOpK77IylYIfOuL8K26rwafNCYzXxQfrLjT-yYPyeklLdfOyw441bEe2RmDQD4_Yo6XZPG4fvRYxODtRa8olLaE6sxAxxcmAu-V2VYaiihFA__LEdTWljqRv0a7S30yl7iMt6bjH377Fz4DQYNqLsRiVTTIoQqt_qZNm5Fsm5kowwXS1dSkgMzUcktttSTashtC3ve3ciZK9V2p163nD7Sop9JfeXTY_F_jh5SCXB3ohMz7alTz8OaWM"/>
+<div class="absolute inset-0 flex flex-col justify-between p-8 pointer-events-none">
+<div class="flex justify-between items-start">
+<div class="font-mono text-xs space-y-1">
+<p class="text-cyan-400">[ STABLE_ORBIT: ACTIVE ]</p>
+<p class="text-white/40">SAMPLES: 16,384</p>
+<p class="text-white/40">TEMP: 4.2K</p>
+</div>
+<div class="bg-black/60 backdrop-blur-md p-4 rounded-lg border border-white/10 font-mono text-[10px] text-white">
+<p class="mb-2 border-b border-white/10 pb-1">COMPUTE TRACE</p>
+<div class="flex gap-1 items-end h-12">
+<div class="w-1 bg-cyan-400" style="height: 40%"></div>
+<div class="w-1 bg-cyan-400" style="height: 60%"></div>
+<div class="w-1 bg-cyan-400" style="height: 85%"></div>
+<div class="w-1 bg-cyan-400" style="height: 45%"></div>
+<div class="w-1 bg-cyan-400" style="height: 70%"></div>
+<div class="w-1 bg-cyan-400" style="height: 90%"></div>
+</div>
+</div>
+</div>
+<div class="w-full h-1 bg-white/10 relative overflow-hidden">
+<div class="absolute inset-0 compute-trace"></div>
+</div>
+</div>
+<!-- Overlay UI Controls -->
+<div class="absolute bottom-12 left-12 flex flex-col gap-2">
+<div class="glass-panel px-4 py-2 rounded-full flex items-center gap-3">
+<span class="material-symbols-outlined text-cyan-400 text-sm" data-icon="play_arrow">play_arrow</span>
+<span class="font-mono text-[10px] tracking-widest">REAL-TIME RENDER</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center">
+<p class="font-headline italic text-2xl mb-4">Lupine View Engine</p>
+<p class="text-slate-500 text-sm max-w-xl mx-auto">Physically based rendering of molecular data using instanced WGSL shaders. Support for ambient occlusion, subsurface scattering, and metallic reflections in real-time.</p>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-40 text-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-primary-container/10 to-transparent"></div>
+<div class="relative z-10">
+<h2 class="font-headline italic text-6xl mb-12">Ready to synthesize?</h2>
+<button class="bg-gradient-to-br from-primary-container to-tertiary-container text-white px-12 py-5 rounded-full text-xl font-medium shadow-[0_0_60px_rgba(85,101,212,0.4)] active:scale-95 transition-all">
+                    Launch Workbench
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0a0b12] w-full py-12 px-8 border-t border-white/5">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div class="col-span-2 md:col-span-1">
+<p class="font-mono text-[10px] tracking-tight text-slate-600 uppercase mb-4">Legal &amp; Specs</p>
+<div class="flex flex-col gap-2">
+<a class="font-mono text-[10px] text-slate-600 hover:text-white underline decoration-amber-500/30 transition-opacity" href="index.html">Privacy</a>
+<a class="font-mono text-[10px] text-slate-600 hover:text-white underline decoration-amber-500/30 transition-opacity" href="platform-architecture.html">Security</a>
+<a class="font-mono text-[10px] text-slate-600 hover:text-white underline decoration-amber-500/30 transition-opacity" href="platform-architecture.html">Hardware Specs</a>
+<a class="font-mono text-[10px] text-slate-600 hover:text-white underline decoration-amber-500/30 transition-opacity" href="platform-architecture.html">Compliance</a>
+</div>
+</div>
+<div>
+<p class="font-mono text-[10px] tracking-tight text-slate-600 uppercase mb-4">Nodes</p>
+<div class="flex flex-col gap-2">
+<a class="font-mono text-[10px] text-slate-600 hover:text-white" href="gpu-compute.html">North America-01</a>
+<a class="font-mono text-[10px] text-slate-600 hover:text-white" href="gpu-compute.html">Europe-West-04</a>
+<a class="font-mono text-[10px] text-slate-600 hover:text-white" href="gpu-compute.html">Asia-Pacific-09</a>
+</div>
+</div>
+<div>
+<p class="font-mono text-[10px] tracking-tight text-slate-600 uppercase mb-4">Social</p>
+<div class="flex flex-col gap-2">
+<a class="font-mono text-[10px] text-slate-600 hover:text-white" href="docs.html">GitHub</a>
+<a class="font-mono text-[10px] text-slate-600 hover:text-white" href="contact.html">Discord</a>
+<a class="font-mono text-[10px] text-slate-600 hover:text-white" href="research-manifesto.html">Arxiv</a>
+</div>
+</div>
+<div class="flex flex-col items-end justify-between">
+<div class="text-amber-500 font-mono text-[10px] text-right">
+                    LMS // WEB_PROTOCOL
+                </div>
+<div class="text-slate-600 font-mono text-[10px] text-right leading-tight">
+                    © 2024 Lupine Materials Science — WebGPU Protocol
+                </div>
+</div>
+</div>
+</footer>
+</body></html>
