@@ -13,6 +13,7 @@ import {
 } from '@react-three/postprocessing';
 import { ToneMappingMode, BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
+import { MobileHUD } from './MobileHUD';
 
 import { useStore } from './store';
 import { FileDropZone } from './FileDropZone';
@@ -188,6 +189,18 @@ class ErrorBoundary extends Component<{ children: React.ReactNode }, { error: st
   }
 }
 
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) setMatches(media.matches);
+    const listener = () => setMatches(media.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [matches, query]);
+  return matches;
+}
+
 export default function App() {
   const file = useStore(s => s.file);
   const loading = useStore(s => s.loading);
@@ -228,6 +241,8 @@ export default function App() {
 
   // Spatial hash for atom picking
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
+
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   // Mouse position for inspector tooltip
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -342,8 +357,11 @@ export default function App() {
       background: `linear-gradient(180deg, ${bg.top}, ${bg.bottom})`,
       display: 'flex', flexDirection: 'column', overflow: 'hidden',
     }}>
-      {/* ─── Header ─── */}
-      <header style={{
+      {/* ─── Mobile HUD or Desktop Header ─── */}
+      {isMobile ? (
+        <MobileHUD />
+      ) : (
+        <header style={{
         height: 56, flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 20px',
@@ -444,6 +462,7 @@ export default function App() {
           </a>
         </div>
       </header>
+      )}
 
       {/* ─── Main content ─── */}
       <div style={{ flex: 1, display: 'flex', position: 'relative', minHeight: 0 }}>
@@ -616,7 +635,7 @@ export default function App() {
           )}
 
           {/* Floating toolbar */}
-          {file && !activePanel && (
+          {file && !activePanel && !isMobile && (
             <div style={{
               position: 'absolute',
               bottom: 84,
@@ -714,7 +733,7 @@ export default function App() {
       </div>
 
       {/* ─── Timeline ─── */}
-      {file && (
+      {file && !isMobile && (
         <div style={{
           height: 60, flexShrink: 0,
           display: 'flex', alignItems: 'center', gap: 16,
