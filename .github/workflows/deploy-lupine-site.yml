@@ -1,0 +1,57 @@
+name: Deploy Lupine Site to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'lupine-site/**'
+      - '.github/workflows/deploy-lupine-site.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Required for Workload Identity Federation
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: lupine-site/package-lock.json
+
+      - name: Install dependencies and Build
+        working-directory: lupine-site
+        run: |
+          npm ci
+          npm run build
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          # We recommend using Workload Identity Federation for security
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+          
+          # If you prefer using a standard service account key instead, uncomment the line below and remove the two lines above:
+          # credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          source: 'lupine-site'
+          service: 'lupine-site'
+          region: 'us-central1'
+          project_id: 'shed-489901'
+          flags: '--allow-unauthenticated'
+
+      - name: Show output
+        run: echo ${{ steps.deploy.outputs.url }}

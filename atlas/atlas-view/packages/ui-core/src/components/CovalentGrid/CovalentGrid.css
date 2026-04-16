@@ -1,0 +1,36 @@
+/* CovalentGrid — Bond-connected layout */
+
+.covalent {
+  position: relative;
+  width: 100%;
+}
+
+/* ─── Bond Lines (SVG) ─── */
+
+.covalent__bonds {
+  position: absolute;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.covalent__line {
+  stroke: rgba(85, 101, 212, 0.12);
+  stroke-width: 1;
+  stroke-dasharray: 6 6;
+  stroke-linecap: round;
+  animation: bond-flow 4s linear infinite;
+}
+
+/* ─── Grid ─── */
+
+.covalent__grid {
+  display: grid;
+  position: relative;
+  z-index: 1;
+}
+
+.covalent__node {
+  position: relative;
+  z-index: 1;
+}

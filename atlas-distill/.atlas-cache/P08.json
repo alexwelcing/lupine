@@ -1,0 +1,15 @@
+{
+  "paper_id": "P08",
+  "title": "Efficient and accurate spatial mixing of machine learned interatomic potentials for materials science",
+  "abstract_text": "<jats:title>Abstract</jats:title>\n                  <jats:p>\n                    Machine-learned interatomic potentials can offer near first-principles accuracy but are computationally expensive, limiting their application to large-scale molecular dynamics simulations. Inspired by quantum mechanics/molecular mechanics methods, we present ML-MIX, a CPU- and GPU-compatible  package to accelerate simulations by spatially mixing interatomic potentials of different complexities, allowing deployment of modern MLIPs even under restricted computational budgets. We demonstrate our method for ACE, UF3, SNAP and MACE potential architectures and demonstrate how linear ‘cheap’ potentials can be distilled from a given ‘expensive’ potential, allowing close matching in relevant regions of configuration space. The functionality of ML-MIX is demonstrated through tests on point defects in Si, Fe and W-He, in which speedups of up to 11× over ~8000 atoms are demonstrated, without sacrificing accuracy. The scientific potential of ML-MIX is demonstrated via two case studies in W, measuring the mobility of\n                    <jats:inline-formula>\n                      <jats:alternatives>\n                        <jats:tex-math>$$b=\\frac{1}{2}\\langle 111\\rangle$$</jats:tex-math>\n                        <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\">\n                          <mml:mrow>\n                            <mml:mi>b</mml:mi>\n                            <mml:mo>=</mml:mo>\n                            <mml:mfrac>\n                              <mml:mrow>\n                                <mml:mn>1</mml:mn>\n                              </mml:mrow>\n                              <mml:mrow>\n                                <mml:mn>2</mml:mn>\n                              </mml:mrow>\n                            </mml:mfrac>\n                            <mml:mo>〈</mml:mo>\n                            <mml:mn>111</mml:mn>\n                            <mml:mo>〉</mml:mo>\n                          </mml:mrow>\n                        </mml:math>\n                      </jats:alternatives>\n                    </jats:inline-formula>\n                    screw dislocations with ACE/ACE mixing and the implantation of He with MACE/SNAP mixing. The latter returns He reflection coefficients which (for the first time) match experimental observations up to an He incident energy of 80 eV—demonstrating the benefits of deploying state-of-the-art models on large, realistic systems.\n                  </jats:p>",
+  "authors": [
+    "Fraser Birks",
+    "Matthew Nutter",
+    "Thomas D. Swinburne",
+    "James R. Kermode"
+  ],
+  "journal": "npj Computational Materials",
+  "year": 2026,
+  "cited_by": 0,
+  "source": "crossref:10.1038/s41524-026-01982-6"
+}

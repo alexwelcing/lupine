@@ -1,0 +1,102 @@
+/* QuantumSection — Collapsible panel with phase-transition animation */
+
+.qsection {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg-1);
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.qsection--open {
+  border-color: rgba(85, 101, 212, 0.15);
+}
+
+/* ─── Header ─── */
+
+.qsection__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s;
+}
+
+.qsection__header:hover {
+  background: var(--glass-bg-2);
+}
+
+.qsection__header:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--lupine-500);
+}
+
+.qsection__label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qsection__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--slate-600);
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.qsection--open .qsection__dot {
+  background: var(--lupine-400);
+  box-shadow: 0 0 8px rgba(123, 138, 224, 0.5),
+              0 0 16px rgba(123, 138, 224, 0.2);
+}
+
+.qsection__label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate-300);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+}
+
+.qsection--open .qsection__label {
+  color: var(--lupine-300);
+}
+
+.qsection__chevron {
+  color: var(--slate-600);
+  transition: transform 0.35s var(--ease-out-expo), color 0.3s;
+  flex-shrink: 0;
+}
+
+.qsection--open .qsection__chevron {
+  transform: rotate(180deg);
+  color: var(--lupine-400);
+}
+
+/* ─── Body (animated height) ─── */
+
+.qsection__body {
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease-out-expo);
+}
+
+.qsection:not(.qsection--open) .qsection__body {
+  max-height: 0 !important;
+}
+
+.qsection__content {
+  padding: 0 16px 16px;
+  animation: phase-in 0.3s var(--ease-out-expo) both;
+}
+
+.qsection:not(.qsection--open) .qsection__content {
+  animation: none;
+}

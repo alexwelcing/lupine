@@ -1,0 +1,98 @@
+[
+  {
+    "paper_id": "P04",
+    "quantity": "speedup",
+    "value": 2.0,
+    "unit": "x",
+    "conditions": {},
+    "context": "introduces an optimized CPU variant--achieving up to 2x speedups over existing implementations--and two new GPU variants: a thread-parallel version for large-scale"
+  },
+  {
+    "paper_id": "P07",
+    "quantity": "system_size",
+    "value": 8000.0,
+    "unit": "atoms",
+    "conditions": {},
+    "context": "Fe and W-He, in which speedups of up to 11x over ~ 8,000 atoms are demonstrated, without sacrificing accuracy. The scientific potential of ML-MIX is demonstrated"
+  },
+  {
+    "paper_id": "P07",
+    "quantity": "energy",
+    "value": 80.0,
+    "unit": "eV",
+    "conditions": {},
+    "context": "experimental observations up to an He incident energy of 80 eV - demonstrating the benefits of deploying state-of-the-art models on large, realistic systems."
+  },
+  {
+    "paper_id": "P07",
+    "quantity": "speedup",
+    "value": 11.0,
+    "unit": "x",
+    "conditions": {},
+    "context": "defects in Si, Fe and W-He, in which speedups of up to 11x over ~ 8,000 atoms are demonstrated, without sacrificing accuracy. The scientific potential of ML-MIX"
+  },
+  {
+    "paper_id": "P08",
+    "quantity": "system_size",
+    "value": 8000.0,
+    "unit": "atoms",
+    "conditions": {},
+    "context": "Fe and W-He, in which speedups of up to 11× over ~8000 atoms are demonstrated, without sacrificing accuracy. The scientific potential of ML-MIX is demonstrated"
+  },
+  {
+    "paper_id": "P08",
+    "quantity": "energy",
+    "value": 80.0,
+    "unit": "eV",
+    "conditions": {},
+    "context": "experimental observations up to an He incident energy of 80 eV—demonstrating the benefits of deploying state-of-the-art models on large, realistic systems."
+  },
+  {
+    "paper_id": "P23",
+    "quantity": "percentage",
+    "value": 27.29,
+    "unit": "%",
+    "conditions": {},
+    "context": "the average performance improvement is 23.91 and 27.29% on ARMv8 cluster and x86_64 cluster, respectively.</jats:p>"
+  },
+  {
+    "paper_id": "P23",
+    "quantity": "percentage",
+    "value": 90.0,
+    "unit": "%",
+    "conditions": {},
+    "context": "orders of magnitude speedup on 1024, and more than 90% parallel efficiencies, demonstrating the effectiveness of our proposed optimization scheme. The adaptive"
+  },
+  {
+    "paper_id": "P37",
+    "quantity": "pressure",
+    "value": 9.8,
+    "unit": "GPa",
+    "conditions": {},
+    "context": "lowest compressive strength, ranging from 1.1 to 9.8 GPa, while Al2Cu demonstrates the highest compressive strength, ranging from 3.9 to 19.8 GPa. Within"
+  },
+  {
+    "paper_id": "P37",
+    "quantity": "pressure",
+    "value": 19.8,
+    "unit": "GPa",
+    "conditions": {},
+    "context": "highest compressive strength, ranging from 3.9 to 19.8 GPa. Within this temperature range, Al6Mn and Al3Fe show relatively poor stability. At a strain"
+  },
+  {
+    "paper_id": "P37",
+    "quantity": "temperature",
+    "value": 623.0,
+    "unit": "K",
+    "conditions": {},
+    "context": "results show that as the temperature increases from 623 K to 823 K, both the compressive strength and elastic modulus of the IMCs decrease significantly."
+  },
+  {
+    "paper_id": "P37",
+    "quantity": "temperature",
+    "value": 823.0,
+    "unit": "K",
+    "conditions": {},
+    "context": "show that as the temperature increases from 623 K to 823 K, both the compressive strength and elastic modulus of the IMCs decrease significantly. Al12Fe3Si2"
+  }
+]

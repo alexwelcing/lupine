@@ -1,0 +1,128 @@
+{
+  "dataset_id": "CN-NBSDC-001",
+  "title": "多物理场耦合下材料跨尺度去除模型与亚表面损伤抑制方法数据集",
+  "short_title": "Multi-physics Material Removal",
+  "source": "国家基础学科公共科学数据中心 (NBSDC)",
+  "cstr": "16666.11.nbsdc.6qosvoyp",
+  "url": "https://nbsdc.cn/general/dataDetail?id=683de914195d2612331895a3&type=1",
+  "institution": "中科院过程工程研究所 (IPE, CAS)",
+  "materials": [
+    {
+      "name": "Gallium Nitride",
+      "formula": "GaN",
+      "crystal_structure": "Wurtzite",
+      "applications": ["semiconductors", "LEDs", "power_electronics"]
+    },
+    {
+      "name": "Lithium Tantalate", 
+      "formula": "LiTaO3",
+      "crystal_structure": "Perovskite",
+      "applications": ["piezoelectric", "optical"]
+    },
+    {
+      "name": "Silicon Carbide",
+      "formula": "SiC",
+      "crystal_structure": "Zincblende",
+      "applications": ["power_electronics", "abrasives"]
+    },
+    {
+      "name": "Magnesium Aluminate Spinel",
+      "formula": "MgAl2O4", 
+      "crystal_structure": "Spinel",
+      "applications": ["transparent_armor", "optical"]
+    }
+  ],
+  "simulation": {
+    "software": ["LAMMPS", "Ansys Fluent", "MATLAB"],
+    "methods": {
+      "atomistic": "LAMMPS MD with nano-scratch models",
+      "continuum": "CFD for fluid dynamics",
+      "experimental": "SEM/TEM for validation"
+    },
+    "potential": "Mixed (per material)",
+    "models": ["双划痕模型 (dual-scratch)", "纳米压痕", "变载划痕"]
+  },
+  "files": {
+    "total_size_gb": 55.85,
+    "file_count": 2563,
+    "formats": ["lammps", "lmp", "log", "h5", "tiff", "msh", "dm3"],
+    "contents": [
+      {
+        "type": "lammps_dump",
+        "pattern": "*.lammps",
+        "description": "MD trajectory files from scratch simulations",
+        "estimated_gb": 40
+      },
+      {
+        "type": "cfd_results",
+        "pattern": "*.msh",
+        "description": "Ansys Fluent mesh and result files",
+        "estimated_gb": 10
+      },
+      {
+        "type": "experimental",
+        "pattern": "*.tiff, *.dm3",
+        "description": "SEM/TEM images for validation",
+        "estimated_gb": 5
+      },
+      {
+        "type": "log",
+        "pattern": "*.log",
+        "description": "Simulation logs and analysis outputs"
+      }
+    ]
+  },
+  "viewer_config": {
+    "recommended_views": [
+      {
+        "name": "nano_scratch",
+        "description": "Nano-scratch simulation with damage visualization",
+        "color_by": "displacement",
+        "show_scratch_track": true,
+        "time_series": true
+      },
+      {
+        "name": "cross_scale_comparison",
+        "description": "Side-by-side atomistic + experimental comparison",
+        "dual_view": true,
+        "left": "lammps_dump",
+        "right": "sem_image"
+      },
+      {
+        "name": "subsurface_damage",
+        "description": "Visualize dislocations and cracks beneath surface",
+        "clip_plane": "xy",
+        "show_defects_only": true
+      }
+    ],
+    "performance_notes": {
+      "max_atoms_per_frame": 10000000,
+      "streaming_required": true,
+      "hierarchical_loading": true,
+      "gpu_required": true
+    }
+  },
+  "distiller_metadata": {
+    "research_focus": "Cross-scale material removal in hard-brittle materials",
+    "key_findings": [
+      "Hard-brittle material跨尺度去除过程宏-观-微观损伤机制的系统映射",
+      "工艺参数(载荷、晶向、磨粒特性)与损伤深度的关联模型",
+      "多物理场耦合下的材料去除动力学"
+    ],
+    "methodology": [
+      "纳米划痕实验 + MD模拟 + CFD仿真 + SEM/TEM验证",
+      "跨尺度数据融合",
+      "机器学习辅助分析"
+    ],
+    "comparison_data": {
+      "has_experimental": true,
+      "experimental_methods": ["nanoindentation", "scratch_test", "SEM", "TEM", "FIB"],
+      "validation_level": "Direct comparison atomistic-to-experimental"
+    },
+    "uniqueness": "首次实现硬脆材料跨尺度去除过程的系统映射"
+  },
+  "download_status": "pending",
+  "priority": 1,
+  "quality_rating": "exceptional",
+  "notes": "Flagship Chinese dataset — massive scale, cross-scale validation"
+}

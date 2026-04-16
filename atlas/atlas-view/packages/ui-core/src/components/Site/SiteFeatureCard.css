@@ -1,0 +1,64 @@
+.lupine-site-feature-card {
+  height: 100%;
+}
+
+.lupine-site-feature-card__content {
+  padding: 40px 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.lupine-site-feature-card__glow-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--lupine-500), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  z-index: 10;
+}
+
+.lupine-site-feature-card:hover .lupine-site-feature-card__glow-edge {
+  opacity: 1;
+}
+
+.lupine-site-feature-card__icon {
+  font-size: 32px;
+  margin-bottom: 24px;
+  color: var(--lupine-300);
+}
+
+.lupine-site-feature-card__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--slate-100);
+  margin-bottom: 12px;
+}
+
+.lupine-site-feature-card__desc {
+  font-size: 14px;
+  color: var(--slate-400);
+  line-height: 1.75;
+}
+
+.lupine-site-feature-card__stat-block {
+  margin-top: 24px;
+}
+
+.lupine-site-feature-card__stat-val {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--lupine-400);
+}
+
+.lupine-site-feature-card__stat-label {
+  font-size: 11px;
+  color: var(--slate-500);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+}

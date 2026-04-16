@@ -1,0 +1,252 @@
+iority Topic
+	
+Focus Area
+	
+Key Barriers
+	
+R&D Approach Summary
+	
+1-2 Year Milestones
+	
+3-5 Year Milestones
+	
+Long-term Targets (5+ Years)
+	
+Stakeholder Roles (Inferred)
+	
+Source
+Data Quantity and Quality
+	
+Large-scale Materials & Molecular Datasets
+	
+Scarcity of high-fidelity experimental/DFT data; fragmented silos (crystals vs. proteins); inconsistent labels across datasets; proprietary barriers.
+	
+Consolidate resources (ZINC3D, PubChem3D, SAIR) using unified parameters (PBE functional, 500 eV cutoff). Leverage multi-task training (DPA-2) to merge datasets with heterogeneous labels.
+	
+Establish open datasets (JTH, SAIR with 5.2M structures); curate metallic alloy and drug-molecule datasets; develop NLP tools (MaterialsBERT) for literature data extraction.
+	
+Expand datasets to include transition-state structures, high-temperature sampling, and f-block elements; implement uncertainty-aware sampling and periodic retraining.
+	
+Achieve a universal Large Atomic Model (LAM) covering the entire periodic table; establish autonomous discovery flywheels and discovery-attribution marketplaces.
+	
+Industry: Provides project-specific SAR and experimental data. Academia: Curation of high-quality DFT/simulation datasets. National Laboratories: Maintenance of standardized FAIR repositories (NOMAD, Materials Project, NIST).
+	
+[1-17]
+Data Quantity and Quality
+	
+Machine Learning Interatomic Potentials (ML-IAPs)
+	
+High computational cost of DFT; limited generalizability of empirical potentials; difficulty characterizing short-range order and phase transitions.
+	
+Develop ML-IAPs (NEP, DP, GAP, MACE) using flexible functional forms to achieve DFT-level accuracy with linear O(N) scaling. Use active learning (DP-GEN) to avoid redundant data.
+	
+Establish stable implementations on heterogeneous hardware (CPU/GPU/DCU); produce extensive first-principles data for DPA-1/DPA-2; validate against point defect energetics.
+	
+Integrate hybrid-functional precision via delta learning; automate gap identification in chemical space; refine potentials using 'sloppy-models' theory to identify error manifolds.
+	
+Achieve predictive accuracy <1 meV/atom across the entire periodic table; enable 100-million atom simulations for industrial applications (HEAs, batteries).
+	
+Industry: Hardware optimization (GPU acceleration). Academia: Algorithm development (equivariant architectures, neuroevolution). National Laboratories: Provision of massive first-principles reference data.
+	
+[10, 11, 13-16, 18-30]
+Data Quantity and Quality
+	
+Data Management & Provenance
+	
+Lack of data standards; reproducibility crisis; withholding of negative results; IP risks in multi-institution collaboration.
+	
+Implement blockchain-based mechanisms for provenance and supply-chain traceability. Define community metrics and standard metadata schemas (material, potential, conditions).
+	
+Define provenance best practices; implement decentralized storage (DeScAI S1) and hash-based versioning; establish scientific benefits of reporting negative results.
+	
+Coupling blockchain with federated learning; implement on-chain discovery attribution; develop AI workflows to incorporate negative data.
+	
+Global self-organizing manufacturing ecosystems with embedded lifecycle traceability; full interoperability between international repositories.
+	
+Industry: Ensure secure supply chains. Academia: Change research culture to value negative results. National Laboratories: Oversee governance standards and metadata frameworks.
+	
+[3, 5, 12, 31]
+Platforms and Infrastructure
+	
+Open-Source & Unified Software Ecosystems
+	
+Fragmented software landscape; commercial licensing costs; lack of standardization; "bare assets" with opaque interfaces.
+	
+Build modular, open-source architectures (ABACUS, OpenDFT, DeePMD-kit) supporting multi-backends (PyTorch, JAX). Turn assets into "Science-as-a-Service" via the Bohrium substrate.
+	
+Achieve VASP-compatibility in open-source codes; implement modular "Lego-like" assembly for code; standardize subsystems (Reading, Computing, Experiment).
+	
+Integrate differentiable physics engines for gradient-based learning; implement cloud-edge architectures to reduce real-time analysis latency.
+	
+A unified computational engine for the AI for Science paradigm; global end-to-end infrastructure unifying experimental, computational, and literature data.
+	
+Industry: Provide scalable cloud resources (AWS, Azure). Academia: Software design and modular algorithm development. National Laboratories: Infrastructure for massive parallelization (MPI/OpenMP) and exascale-ready code.
+	
+[3, 4, 13, 15, 16, 18, 19, 29, 30, 32-35]
+Platforms and Infrastructure
+	
+High-Performance Computing & Visualization
+	
+Computational complexity of QM methods; CPU-to-GPU bottlenecks; desktop-bound visualization software with high memory overhead.
+	
+Implement GPU-native simulators (GPUMD, Isaac Lab) and WebGPU-powered visualization (ATLAS View). Optimize software-hardware co-design for E-class systems.
+	
+Fit execution time on supercomputers with <20% error using performance models (DP-perf); render 10M+ atoms at 60fps in web browsers.
+	
+Refine models to include network topology and bandwidth contention; scale to 50M+ atom interactive visualization.
+	
+Enable simulations of 10 billion atoms with nanoseconds-per-day performance on emerging architectures; real-time high-fidelity 3D generation.
+	
+Industry: Software engineering and GPU kernel optimization (NVIDIA, Microsoft). Academia: Theoretical performance modeling. National Laboratories: Maintaining top-tier supercomputers (Fugaku, Summit).
+	
+[1, 17, 22, 34, 36-39]
+AI for Specific Applications
+	
+Autonomous Discovery & Robotics
+	
+Time-consuming trial-and-error; high cost of lab automation; vast hypothesis space.
+	
+Create iterative closed-loop systems (Self-Driving Laboratories) driven by predictive modeling, active learning, and automated synthesis.
+	
+Demonstrate remote-controlled SDLs; pilot agentic evaluators (Coscientist) for specific chemical reactions; deploy mobile robots sharing human equipment.
+	
+Implement closed-loop Bayesian optimization for complex compositional spaces; integrate physics-informed digital twins to guide experiment selection.
+	
+Fully autonomous discovery of clean energy materials with 75% reduction in discovery time; achieve the 'Nobel-Turing Test' for paradigm-shifting discovery.
+	
+Industry: Robotic hardware manufacturing. Academia: Designing reasoning engines and active learning algorithms. National Laboratories: Hosting centralized robotic facilities and validation benchmarks.
+	
+[3, 5, 8, 40-43]
+AI for Specific Applications
+	
+Catalysis & Energy Materials
+	
+Complexity of electrochemical interfaces; sluggish kinetics in batteries; difficulty modeling non-adiabatic dynamics.
+	
+Combine AI-assisted methods with implicit solvation models and big data platforms (DigCat). Use MLPs to replicate QM accuracy for interfacial instabilities.
+	
+Launch platforms (DigCat 3.0) with experimental data points; benchmark MLPs for Li-ion transport; automate TS search for simple catalysts.
+	
+Develop on-the-fly microkinetic modeling; optimize quinary alloy catalysts for carbon neutrality; simulate radiation damage in fusion reactor materials.
+	
+Radical reduction in catalyst development costs; design of materials for carbon capture with DFT accuracy at O(N) cost.
+	
+Industry: Provision of performance metrics and industrial performance data. Academia: Research on reaction mechanisms and nuclear quantum effects. National Laboratories: Development of standardized benchmarks and nuclear environment testing.
+	
+[11, 15, 16, 18, 29, 30, 44-53]
+AI for Specific Applications
+	
+Structure-Based Drug Design (SBDD)
+	
+Achieving kinase selectivity; scarcity of resolved protein structures; rigid docking limitations.
+	
+Integrate deep learning (AlphaFold, ESMFold) into structure-aware pipelines. Transition to geometry-informed architectures (GNNs, Diffusion) for pose prediction.
+	
+Achieve SOTA results on QM9/GEOM-DRUG; deploy binding-site identification tools (EquiPocket); validate multi-objective optimization (CK2/CLK3).
+	
+Refine diffusion-based 3D coordinate generators; integrate co-folding models; demonstrate high-accuracy protein pocket prediction.
+	
+Enable general-purpose foundation models for automated drug design; robust flexibility modeling for dynamic and cryptic pockets.
+	
+Industry: Integration of models into pharmaceutical R&D pipelines. Academia: Publishing benchmarks for protein-ligand tasks. National Laboratories: Experimental validation of AI-designed crystals/molecules.
+	
+[1, 2, 9, 54]
+Collaboration and Education
+	
+Interdisciplinary Education & Workforce
+	
+Shortage of "centaur scientists" (AI + Physical Science); training/UX gating factors; fragmentation of research disciplines.
+	
+Establish interdisciplinary PhD pathways; reform curricula (Manufacturing Extension Partnership); build AI agents (MatSciAgent) with natural language interfaces.
+	
+Launch interdisciplinary courses; develop grammar-constrained LLM assistants for script generation; document discrete digitalization use cases.
+	
+Scale multi-university initiatives to create science-ready LLMs; formalize "Science of AI" as a distinct discipline.
+	
+Establish robust "national power" industry strategies; normalize cross-sector R&D labs; global leadership in AI-driven materials discovery.
+	
+Industry: Funding fellowships and co-investing in research centers. Academia: Curriculum development and interdisciplinary training. National Laboratories: Facilitating international collaboration and open-access toolkits.
+	
+[8, 23, 35, 55-62]
+Collaboration and Education
+	
+Open Science & Community Initiatives
+	
+Model opacity; lack of interpretability; fragmented software ecosystem; misaligned incentives.
+	
+Launch community-wide initiatives (OpenLAM); promote "Science-as-a-Service"; implement cryptoeconomic incentives (Quadratic Funding) for research.
+	
+Launch OpenLAM Initiative; provide tutorial notebooks (Bohrium); implement Sybil-hard identity for under-resourced labs.
+	
+Establish datasets with domain impact (ImageNet-style) for atomic modeling; implement automated agent-assisted capability onboarding.
+	
+Shift to computational epistemology where human-agent teams invent knowledge; transformation of the scientific social contract into a trust-minimized ecology.
+	
+Industry: Sponsoring community development and providing capital for prediction markets. Academia: Participating in pluralistic peer review and governance. National Laboratories: Data stewardship and providing public ledgers as scientific memory.
+	
+[4, 6, 7, 22, 31, 32, 36, 40, 63-65]
+[1] Unified Cross-Scale 3D Generation and Understanding via Autoregressive Modeling - arXiv
+[2] Flowr.root – A flow matching based foundation model for joint multi-purpose structure-aware 3D ligand generation and affinity prediction - arXiv.org
+[3] (PDF) AI-powered open-source infrastructure for accelerating materials discovery and advanced manufacturing - ResearchGate
+[4] DPA-2: Towards a universal large atomic model for molecular and material simulation
+[5] Advanced Manufacturing Office: Workshop on Artificial Intelligence Applied to Materials Discovery and Design - Department of Energy
+[6] (PDF) DPA-2: a large atomic model as a multi-task learner - ResearchGate
+[7] Recent advances in machine learning interatomic ... - ResearchGate
+[8] Agentic material science - OAE Publishing Inc.
+[9] (PDF) GatorAffinity: Boosting Protein-Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data - ResearchGate
+[10] (PDF) Pretraining of attention-based deep learning potential model for molecular simulation
+[11] A Machine Learning Interatomic Potential Data Set and Model for Catalysis with Local Fine-Tuning to Chemical Accuracy - PMC
+[12] atlas-distillation-hypothesis-draft.docx
+[13] ATLAS-project-plan.md
+[14] DPA-2: a large atomic model as a multi-task learner - PubMed
+[15] The Autonomous Materials Paradigm: Machine-Learned Interatomic Potentials, Agentic Science, and Decentralized Discovery Infrastructures
+[16] The Unified Discovery Paradigm: Fusing Synthetic Structural Repositories with Agentic Infrastructure and Shared Research Methodologies
+[17] 0cfe7a19-7f3d-4028-8433-b5f2afddd8f2.pptx
+[18] ABACUS: An Electronic Structure Analysis Package for the AI Era - arXiv.org
+[19] ABACUS: An Electronic Structure Analysis Package for the AI Era - arXiv
+[20] Advances in modeling complex materials: The rise of neuroevolution potentials - arXiv
+[21] (PDF) Molecular dynamics simulations of heat transport using machine-learned potentials: A mini review and tutorial on GPUMD with neuroevolution potentials - ResearchGate
+[22] Molecular dynamics simulations of heat transport using machine-learned potentials: A mini review and tutorial on GPUMD with neuroevolution potentials - arXiv.org
+[23] Recent advances in machine learning interatomic potentials for cross-scale computational simulation of materials机器学习原子间势在材料跨尺度计算模拟中的最新进展 - ResearchGate
+[24] A deep learning interatomic potential suitable for simulating radiation damage in bulk tungsten - ResearchGate
+[25] Machine learning interatomic potential: Bridge the gap between small-scale models and realistic device-scale simulations - PMC
+[26] Can recent machine learning interatomic potentials reliably predict surface stability?
+[27] A critical review of machine learning interatomic potentials and Hamiltonian
+[28] Breakouts - LAMMPS Workshop and Symposium - August 12-14, 2025
+[29] A Guide to Building Deep Potential ModelsChapter 6: Learning DeePMD-Kit
+[30] The Global Evolution of Interatomic Potentials and Molecular Dynamics: Deciphering the Ascascendance of Chinese Materials Science
+[31] DeScAI: the convergence of decentralized science and ... - Frontiers
+[32] Bohrium + SciMaster: Building the Infrastructure and Ecosystem for Agentic Science at Scale
+[33] openDFT-project-plan.md
+[34] Enabling AI Deep Potentials for Ab Initio-quality Molecular Dynamics Simulations in GROMACS Pre-print submitted for publication. - arXiv.org
+[35] Opportunities for Ancillary Software Around LAMMPS Through the Lens of 2025–2026 People, Labs, and M.pdf
+[36] Isaac Lab: A GPU-Accelerated Simulation Framework for Multi-Modal Robot Learning - Cloudfront.net
+[37] (PDF) An interpretable DeePMD-kit performance model for emerging supercomputers
+[38] GPU Accelerated Hybrid Particle‐Field Molecular Dynamics: Multi‐Node/Multi‐GPU Implementation and Large‐Scale Benchmarks of the OCCAM Code - PMC
+[39] atlas-view-web-product-plan.md
+[40] From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery - arXiv
+[41] Autonomous intelligent agents for accelerated materials discovery - PMC - NIH
+[42] AI-Accelerated Materials Discovery in 2026: How Generative Models, Graph Neural Networks, and Autonomous Labs Are Transforming R&D | Cypris
+[43] atlas-distillation-hypothesis-v2.docx
+[44] DigCat Platform - Welcome to the LI Group
+[45] LASP to the Future of Atomic Simulation: Intelligence and Automation - ResearchGate
+[46] Center for High Pressure Science & Technology Advanced Research | Changchun, China | - ResearchGate
+[47] Regular-Talk - LAMMPS Workshop and Symposium - August 12-14, 2025
+[48] The Computational Renaissance of Materials Science: Deep Learning Potentials and the Ascendance of Chinese Research Infrastructure
+[49] AI empowered multi-scale molecular modeling and simulation - CECAM
+[50] Boosting Li-CO2 Battery Performance via High-Entropy Alloy Catalysts - PubMed
+[51] DPA-2: a large atomic model as a multi-task learner - Research With Rutgers
+[52] Research Interest - Xu ShenZhen Lab - PKU
+[53] [2501.08697] ABACUS: An Electronic Structure Analysis Package for the AI Era - arXiv
+[54] Structure-informed machine learning for drug discovery: a task-centric perspective - PMC
+[55] heat transfer in composite materials: mechanisms - arXiv.org
+[56] Comments to Office of Science and Technology Policy Regarding a Strategic Plan for Advanced Manufacturing
+[57] The Future of Manufacturing: Key Trends 2025 and Strategic Roadmap 2026
+[58] Industrial Research Labs: Driving Innovation and Scale - Lab Manager
+[59] Who should govern the development of powerful AI systems—governments, companies, or an international body? | ResearchGate
+[60] 3 Questions: On the future of AI and the mathematical and physical sciences | MIT News
+[61] Implementation Opinions on the "AI + Manufacturing" Special Initiative | Center for Security and Emerging Technology - CSET
+[62] Reimagining the Future of Materials Discovery: From Automation to Collaboration | Rafik Hariri Institute for Computing and Computational Science & Engineering - Boston University
+[63] DPA-2: a large atomic model as a multi-task learner - arXiv
+[64] conversation-w-researcher.txt
+[65] EC Research Series_ Deep-Research Blueprint for the Next Report Under Ambiguous Scope.pdf

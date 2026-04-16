@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cargo build:*)",
+      "Bash(ls:*)",
+      "Bash(./target/release/atlas-view-native.exe:*)",
+      "Bash(pnpm --filter @atlas/remotion-trailer run build:*)",
+      "Bash(find /c/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages -type f \\\\\\(-name *.ts -o -name *.tsx -o -name *.wgsl \\\\\\))",
+      "Bash(find /c/Users/alexw/Downloads/shed/glim -type f -name *.wgsl)",
+      "Bash(find /c/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages/parsers/src -type f -name *.ts)",
+      "Bash(find /c/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages/ui/src -type f -name *.tsx -o -name *.ts)",
+      "Bash(find /c/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages/parsers -type f \\\\\\(-name *.rs -o -name *.wasm \\\\\\))",
+      "Bash(grep -E \"\\\\.\\(rs|wgsl\\)$\")",
+      "Bash(grep -r Bond /c/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages/ --include=*.ts --include=*.tsx)",
+      "Bash(find /c/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages/ui/src -name *.tsx -o -name *.ts)",
+      "Bash(find /c/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages/scene/src -name *.tsx -o -name *.ts)",
+      "Bash(find /c/Users/alexw/Downloads/shed/glim/atlas/atlas-view/apps -type f -name *.tsx -o -name *.ts -o -name *.html)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vite:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(start:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

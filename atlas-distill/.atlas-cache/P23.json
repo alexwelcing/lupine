@@ -1,0 +1,15 @@
+{
+  "paper_id": "P23",
+  "title": "Improving LAMMPS performance for molecular dynamic simulation on large-scale HPC systems",
+  "abstract_text": "<jats:title>Abstract</jats:title>\n               <jats:p>Large-scale atomic/molecular massively parallel simulator (LAMMPS) is a prevalent software package employed for molecular dynamics simulations, enabling the study of materials at the atomic and molecular scale. Its performance is paramount in numerous industrial applications, driving the need for ongoing enhancements in simulation speed and parallel efficiency. Previous works heavily rely on hardware accelerators, which lead to limited parallel and high costs. To address this, this work optimizes the message passing interface (MPI) and memory copy functions, while deploying LAMMPS on high-performance computing (HPC) systems. We propose a new adaptive broadcast algorithm to improve the parallelism efficiency of the interconnect topology. We also discuss how to realize the mutual hiding of computation and communication of the Packing algorithm in LAMMPS, and optimize the memory copy function and MPI operators to facilitate the execution of the program. The resulting components are integrated into the MPICH4 software and deployed on the MT-3000 HPC system. The experimental results show a significant performance improvement, with up to four orders of magnitude speedup on 1024, and more than 90% parallel efficiencies, demonstrating the effectiveness of our proposed optimization scheme. The adaptive broadcast algorithm and the portability of computation and communication hiding are also discussed. The adaptive broadcast algorithm is applied to SPEC MPI2007, and the average performance improvement is 23.91 and 27.29% on ARMv8 cluster and x86_64 cluster, respectively.</jats:p>",
+  "authors": [
+    "Du Qi",
+    "Feng Wang",
+    "Hui Huang",
+    "Jinlin Chen"
+  ],
+  "journal": "The Computer Journal",
+  "year": 2025,
+  "cited_by": 7,
+  "source": "crossref:10.1093/comjnl/bxae143"
+}

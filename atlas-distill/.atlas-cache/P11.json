@@ -1,0 +1,14 @@
+{
+  "paper_id": "P11",
+  "title": "arXiv Query: search_query=&amp;id_list=2601.00161&amp;start=0&amp;max_results=10",
+  "abstract_text": "We present an NPT extension of Ewald summation with prolates (ESP), a spectrally accurate and scalable particle-mesh method for molecular dynamics simulations of periodic, charged systems. Building on the recently introduced ESP framework, this work focuses on rigorous and thermodynamically consistent pressure/stress evaluation in the isothermal--isobaric ensemble. ESP employs prolate spheroidal wave functions as both splitting and spreading kernels, reducing the Fourier grid size needed to reach a prescribed pressure accuracy compared with current widely used mesh-Ewald methods based on Gaussian splitting and B-spline spreading. We derive a unified pressure-tensor formulation applicable to isotropic, semi-isotropic, anisotropic, and fully flexible cells, and show that the long-range pressure can be evaluated with a single forward FFT followed by diagonal scaling, whereas force evaluation requires both forward and inverse transforms. We provide production implementations in LAMMPS and GROMACS and validate pressure and force accuracy on bulk water, LiTFSI ionic liquids, and a transmembrane system. Benchmarks on up to $3\\times 10^3$ CPU cores demonstrate strong scaling and reduced communication cost at matched accuracy, particularly for NPT pressure evaluation.",
+  "authors": [
+    "Jiuyang Liang",
+    "Libin Lu",
+    "Shidong Jiang"
+  ],
+  "journal": "arXiv preprint",
+  "year": 2026,
+  "cited_by": null,
+  "source": "arxiv:2601.00161"
+}
