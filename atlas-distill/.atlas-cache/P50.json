@@ -1,0 +1,18 @@
+{
+  "paper_id": "P50",
+  "title": "Multiscale toughening mechanisms in biomimetic tendon-like hydrogels",
+  "abstract_text": "<jats:p>Mimicking hierarchical structures found in nature, such as nacre and tendon, has led to remarkable successes in the creation of biomimetic materials with exceptional properties. The depth of knowledge derived from nature extends far beyond mere trial-and-error fabrication by providing deep insights into the toughening mechanisms that are integral to natural materials. A key challenge is understanding how these toughening mechanisms can be effectively translated into biomimetic materials. Here, we characterize the multiscale mechanical behavior of tendon-like fibrous hydrogels, unraveling the intricate toughening mechanisms at play across multiple scales—from dynamic molecular interactions and nanoscale fibril sliding, to anisotropic microscale characteristics and macroscopic performance—using a combination of experimental and simulation approaches. Additionally, we address the open question of how hierarchical structures exhibit mechanical properties at different scales, demonstrating that hydrogels, fibrils, and chains take up successively lower levels of strain in a ratio of 11.5:3.2:2. This work establishes a comprehensive framework for exploring nature-inspired materials, marking a significant step forward in the advancement of biomimetic technology.</jats:p>",
+  "authors": [
+    "Xiao Guo",
+    "Xinyu Dong",
+    "Guijin Zou",
+    "Haoqi Zhang",
+    "Kaiyang Zeng",
+    "Huajian Gao",
+    "Wei Zhai"
+  ],
+  "journal": "Proceedings of the National Academy of Sciences",
+  "year": 2025,
+  "cited_by": 16,
+  "source": "crossref:10.1073/pnas.2424124122"
+}

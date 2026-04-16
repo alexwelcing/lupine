@@ -1,0 +1,15 @@
+{
+  "paper_id": "P06",
+  "title": "arXiv Query: search_query=&amp;id_list=2506.04055&amp;start=0&amp;max_results=10",
+  "abstract_text": "Machine learning potentials (MLPs) have advanced rapidly and show great promise to transform molecular dynamics (MD) simulations. However, most existing software tools are tied to specific MLP architectures, lack integration with standard MD packages, or are not parallelizable across GPUs. To address these challenges, we present chemtrain-deploy, a framework that enables model-agnostic deployment of MLPs in LAMMPS. chemtrain-deploy supports any JAX-defined semi-local potential, allowing users to exploit the functionality of LAMMPS and perform large-scale MLP-based MD simulations on multiple GPUs. It achieves state-of-the-art efficiency and scales to systems containing millions of atoms. We validate its performance and scalability using graph neural network architectures, including MACE, Allegro, and PaiNN, applied to a variety of systems, such as liquid-vapor interfaces, crystalline materials, and solvated peptides. Our results highlight the practical utility of chemtrain-deploy for real-world, high-performance simulations and provide guidance for MLP architecture selection and future design.",
+  "authors": [
+    "Paul Fuchs",
+    "Weilong Chen",
+    "Stephan Thaler",
+    "Julija Zavadlav"
+  ],
+  "journal": "arXiv preprint",
+  "year": 2025,
+  "cited_by": null,
+  "source": "arxiv:2506.04055"
+}

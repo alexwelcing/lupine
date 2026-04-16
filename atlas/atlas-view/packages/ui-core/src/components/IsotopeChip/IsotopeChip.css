@@ -1,0 +1,78 @@
+/* IsotopeChip — Periodic table style tag/chip */
+
+.isotope {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 12px;
+  background: var(--glass-bg-1);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s var(--ease-out-expo);
+}
+
+.isotope:hover {
+  background: var(--glass-bg-2);
+  border-color: var(--glass-border-hi);
+}
+
+.isotope:focus-visible {
+  box-shadow: 0 0 0 2px var(--lupine-500);
+}
+
+.isotope--selected {
+  background: rgba(85, 101, 212, 0.12);
+  border-color: rgba(85, 101, 212, 0.45);
+  box-shadow: 0 0 12px rgba(85, 101, 212, 0.12),
+              inset 0 0 12px rgba(85, 101, 212, 0.06);
+}
+
+/* ─── Atomic Number (superscript) ─── */
+
+.isotope__number {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--slate-600);
+  align-self: flex-start;
+  margin-top: -2px;
+  margin-right: -1px;
+  transition: color 0.2s;
+}
+
+.isotope--selected .isotope__number {
+  color: var(--lupine-400);
+}
+
+/* ─── Symbol ─── */
+
+.isotope__symbol {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--slate-400);
+  transition: color 0.2s;
+}
+
+.isotope--selected .isotope__symbol {
+  color: var(--slate-100);
+  font-weight: 600;
+}
+
+/* ─── Tag (subscript badge) ─── */
+
+.isotope__tag {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1px 4px;
+  background: rgba(78, 205, 196, 0.1);
+  border-radius: 3px;
+  margin-left: 2px;
+}

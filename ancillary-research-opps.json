@@ -1,0 +1,892 @@
+[
+  {
+    "id": "P01",
+    "year": 2025,
+    "title": "LAMMPS‑KOKKOS: Performance Portable Molecular Dynamics Across Exascale Architectures",
+    "doi": null,
+    "arxiv": "2508.13523",
+    "tags": [
+      "KOKKOS",
+      "GPU",
+      "HPC",
+      "SNAP",
+      "ReaxFF",
+      "LJ"
+    ],
+    "scale": "Case studies across exascale CPU/GPU architectures; performance portability",
+    "pain_points": "Hardware heterogeneity drives portability needs"
+  },
+  {
+    "id": "P02",
+    "year": 2025,
+    "title": "LAMMPS‑KOKKOS (ACM paper)",
+    "doi": "10.1145/3731599.3767498",
+    "arxiv": "1599.37674",
+    "tags": [
+      "KOKKOS",
+      "GPU",
+      "HPC",
+      "SNAP",
+      "ReaxFF",
+      "LJ"
+    ],
+    "scale": null,
+    "pain_points": "Performance portability across architectures"
+  },
+  {
+    "id": "P03",
+    "year": 2026,
+    "title": "fix pimd/langevin: Efficient PIMD in LAMMPS",
+    "doi": null,
+    "arxiv": "2602.13553",
+    "tags": [
+      "PIMD",
+      "DeePMD",
+      "GPU",
+      "HPC"
+    ],
+    "scale": "128–1024 H₂O molecules; 32 beads; dt=0.5 fs (performance/scaling reported)",
+    "pain_points": "i‑PI comparison motivates more efficient PIMD for MLIP‑driven MD"
+  },
+  {
+    "id": "P04",
+    "year": 2025,
+    "title": "Kokkos‑Accelerated Moment Tensor Potential (MTP) for LAMMPS (preprint)",
+    "doi": null,
+    "arxiv": "2510.00193",
+    "tags": [
+      "MTP",
+      "KOKKOS",
+      "GPU",
+      "HPC",
+      "ActiveLearning"
+    ],
+    "scale": null,
+    "pain_points": "Need portable high‑fidelity MLIPs at scale"
+  },
+  {
+    "id": "P05",
+    "year": 2026,
+    "title": "Kokkos‑accelerated MTP implementation for LAMMPS (peer‑reviewed)",
+    "doi": "10.1016/j.softx.2026.102524",
+    "arxiv": "2026.10252",
+    "tags": [
+      "MTP",
+      "KOKKOS",
+      "GPU",
+      "HPC",
+      "ActiveLearning"
+    ],
+    "scale": null,
+    "pain_points": "Same as above; emphasizes performance portability"
+  },
+  {
+    "id": "P06",
+    "year": 2025,
+    "title": "chemtrain‑deploy: model‑agnostic deployment of MLPs in million‑atom MD",
+    "doi": null,
+    "arxiv": "2506.04055",
+    "tags": [
+      "MLIP",
+      "MACE",
+      "Allegro",
+      "PaiNN",
+      "GPU",
+      "HPC",
+      "MillionAtoms",
+      "PythonWorkflow"
+    ],
+    "scale": "“million‑atom” scale claimed",
+    "pain_points": "Notes lack of model‑agnostic + multi‑GPU‑parallel deployment tools in standard MD"
+  },
+  {
+    "id": "P07",
+    "year": 2025,
+    "title": "ML‑MIX: spatial mixing of ML interatomic potentials in LAMMPS (preprint)",
+    "doi": null,
+    "arxiv": "2502.19081",
+    "tags": [
+      "MLIP",
+      "ACE",
+      "SNAP",
+      "MACE",
+      "GPU",
+      "KOKKOS"
+    ],
+    "scale": "8,000‑atom case studies; up to ~11× speedup reported",
+    "pain_points": "MLIP computational cost motivates spatial mixing"
+  },
+  {
+    "id": "P08",
+    "year": 2026,
+    "title": "ML‑MIX (npj Computational Materials)",
+    "doi": "10.1038/s41524-026-01982-6",
+    "arxiv": null,
+    "tags": [
+      "MLIP",
+      "ACE",
+      "SNAP",
+      "MACE",
+      "GPU",
+      "KOKKOS"
+    ],
+    "scale": null,
+    "pain_points": "MLIP cost vs accuracy tradeoff; extends feasible scales"
+  },
+  {
+    "id": "P09",
+    "year": 2025,
+    "title": "Smart Reaction Templating for the LAMMPS REACTION package (preprint)",
+    "doi": null,
+    "arxiv": "2503.02678",
+    "tags": [
+      "PythonWorkflow",
+      "REACTION",
+      "ReactiveMD"
+    ],
+    "scale": null,
+    "pain_points": "Manual reaction‑template authoring is labor intensive"
+  },
+  {
+    "id": "P10",
+    "year": 2026,
+    "title": "NAVIS: LAMMPS‑Python framework for nanochannel slip",
+    "doi": null,
+    "arxiv": "2601.11391",
+    "tags": [
+      "PythonWorkflow",
+      "Nanofluidics",
+      "ThermalTransport",
+      "InterfacialSlip"
+    ],
+    "scale": null,
+    "pain_points": "Need efficient, reproducible interfacial slip extraction workflows"
+  },
+  {
+    "id": "P11",
+    "year": 2026,
+    "title": "Fast Ewald Summation with Prolates; implementations in LAMMPS and GROMACS",
+    "doi": null,
+    "arxiv": "2601.00161",
+    "tags": [
+      "Electrostatics",
+      "FFT",
+      "HPC"
+    ],
+    "scale": null,
+    "pain_points": "Efficient long‑range electrostatics remains a scaling bottleneck"
+  },
+  {
+    "id": "P12",
+    "year": 2025,
+    "title": "Faster RANMAR RNG in LAMMPS + jump‑ahead",
+    "doi": null,
+    "arxiv": "2512.00093",
+    "tags": [
+      "RNG",
+      "HPC",
+      "Reproducibility"
+    ],
+    "scale": null,
+    "pain_points": "RNG cost and reproducibility/scaling concerns"
+  },
+  {
+    "id": "P13",
+    "year": 2025,
+    "title": "Importance of numerical integration details for homogeneous flow simulation",
+    "doi": null,
+    "arxiv": "2512.01318",
+    "tags": [
+      "Integrator",
+      "Rheology",
+      "NonEquilibrium"
+    ],
+    "scale": null,
+    "pain_points": "Small integrator details materially affect NEMD outcomes"
+  },
+  {
+    "id": "P14",
+    "year": 2026,
+    "title": "Quasi‑atom method (simultaneous atomistic + continuum)",
+    "doi": "10.1016/j.cpc.2026.110078",
+    "arxiv": "2602.14867",
+    "tags": [
+      "Multiscale",
+      "AtC",
+      "HPC"
+    ],
+    "scale": null,
+    "pain_points": "Bridging scales efficiently remains hard"
+  },
+  {
+    "id": "P15",
+    "year": 2025,
+    "title": "Tadah!: development + deployment tooling; LAMMPS integration",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "MLIP",
+      "Deployment",
+      "HPC",
+      "PythonWorkflow"
+    ],
+    "scale": null,
+    "pain_points": "Need end‑to‑end MLIP dev→deploy toolchains"
+  },
+  {
+    "id": "P16",
+    "year": 2025,
+    "title": "LAMMPS‑ANI interface (scaling ANI NN potentials with LAMMPS)",
+    "doi": "10.26434/chemrxiv-2025-8v03m",
+    "arxiv": null,
+    "tags": [
+      "MLIP",
+      "ANI",
+      "GPU",
+      "HPC"
+    ],
+    "scale": "Benchmarks reported; “up to 100 …” (detail unspecified in snippet)",
+    "pain_points": "Scaling NN potentials to large systems"
+  },
+  {
+    "id": "P17",
+    "year": 2025,
+    "title": "Heat current + thermal conductivity using MTP/LAMMPS interface",
+    "doi": "10.1021/acs.jctc.4c01659",
+    "arxiv": null,
+    "tags": [
+      "MTP",
+      "ThermalTransport",
+      "Methodology"
+    ],
+    "scale": null,
+    "pain_points": "Correct many‑body heat current definitions + interfaces matter"
+  },
+  {
+    "id": "P18",
+    "year": 2025,
+    "title": "Iterative charge equilibration for 4th‑gen HDNNPs in LAMMPS",
+    "doi": "10.1063/5.0252566",
+    "arxiv": "2502.07907",
+    "tags": [
+      "MLIP",
+      "ChargeEquilibration",
+      "HDNNP",
+      "n2p2"
+    ],
+    "scale": null,
+    "pain_points": "Charge equilibration is a deployment/accuracy friction"
+  },
+  {
+    "id": "P19",
+    "year": 2025,
+    "title": "Scymol (SoftwareX): initializing + running MD with LAMMPS",
+    "doi": "10.1016/j.softx.2025.102044",
+    "arxiv": "2025.10204",
+    "tags": [
+      "PythonWorkflow",
+      "Preprocessing",
+      "Postprocessing",
+      "Tooling"
+    ],
+    "scale": null,
+    "pain_points": "Setup friction motivates higher‑level tooling"
+  },
+  {
+    "id": "P20",
+    "year": 2026,
+    "title": "MD postprocessing tool (CPC)",
+    "doi": "10.1016/j.cpc.2025.109982",
+    "arxiv": "2025.10998",
+    "tags": [
+      "Postprocessing",
+      "MSD",
+      "PhononDOS",
+      "AnalysisToolkit"
+    ],
+    "scale": null,
+    "pain_points": "Highlights demand for standardized, reusable analysis"
+  },
+  {
+    "id": "P21",
+    "year": 2025,
+    "title": "Tutorials for the LAMMPS Simulation Package (LiveCoMS)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "Training",
+      "LAMMPS‑GUI",
+      "OVITO",
+      "Tutorials"
+    ],
+    "scale": null,
+    "pain_points": "Training/UX is still a gating factor"
+  },
+  {
+    "id": "P22",
+    "year": 2025,
+    "title": "LAMMPS software engineering case study",
+    "doi": null,
+    "arxiv": "2505.06877",
+    "tags": [
+      "SoftwareEngineering",
+      "DevWorkflow",
+      "Community"
+    ],
+    "scale": null,
+    "pain_points": "Sustaining large research software needs modern practices"
+  },
+  {
+    "id": "P23",
+    "year": 2025,
+    "title": "Improving LAMMPS performance on large‑scale HPC systems",
+    "doi": "10.1093/comjnl/bxae143",
+    "arxiv": null,
+    "tags": [
+      "HPC",
+      "Performance",
+      "Scaling",
+      "MPI"
+    ],
+    "scale": null,
+    "pain_points": "Scaling/efficiency challenges on large systems"
+  },
+  {
+    "id": "P24",
+    "year": 2025,
+    "title": "Two‑temperature model module in LAMMPS for metals",
+    "doi": "10.1007/s00894-025-06433-5",
+    "arxiv": null,
+    "tags": [
+      "ThermalTransport",
+      "EAM",
+      "MethodExtension"
+    ],
+    "scale": null,
+    "pain_points": "Extending physics requires careful module integration"
+  },
+  {
+    "id": "P25",
+    "year": 2026,
+    "title": "Polymer‑modified asphalt via MD",
+    "doi": "10.1007/s11356-026-37392-w",
+    "arxiv": null,
+    "tags": [
+      "Polymers",
+      "Asphalt",
+      "MaterialsStudio"
+    ],
+    "scale": null,
+    "pain_points": "Bridging to macroscopic properties remains challenging"
+  },
+  {
+    "id": "P26",
+    "year": 2026,
+    "title": "GO‑modified C‑S‑H under freeze‑thaw cycling",
+    "doi": "10.1007/s00894-026-06636-4",
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "Cement",
+      "GrapheneOxide"
+    ],
+    "scale": null,
+    "pain_points": "Reactive field choice + cyclic loading complexity"
+  },
+  {
+    "id": "P27",
+    "year": 2025,
+    "title": "Vanadium grain boundary migration under gradients",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "EAM",
+      "GrainBoundaries",
+      "Atomsk",
+      "OVITO"
+    ],
+    "scale": null,
+    "pain_points": "Workflow relies on multiple tools (Atomsk/OVITO)"
+  },
+  {
+    "id": "P28",
+    "year": 2025,
+    "title": "Multi‑fidelity ML prediction using LAMMPS MD + TensorFlow",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ML",
+      "EAM",
+      "Atomsk",
+      "OVITO",
+      "TensorFlow"
+    ],
+    "scale": null,
+    "pain_points": "Data‑pipeline coupling (MD→ML) adds friction"
+  },
+  {
+    "id": "P29",
+    "year": 2025,
+    "title": "FOX‑7 decomposition (ReaxFF‑lg)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "ReactiveMD",
+      "HighEnergyMaterials"
+    ],
+    "scale": "0.1 fs timesteps; multiple ensembles (details reported)",
+    "pain_points": "Small timestep + reactive complexity; heavy compute"
+  },
+  {
+    "id": "P30",
+    "year": 2025,
+    "title": "HMX/TEX decomposition via ReaxFF in LAMMPS",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "ReactiveMD",
+      "HighEnergyMaterials"
+    ],
+    "scale": null,
+    "pain_points": "Reactive MD calibration/validation remains hard"
+  },
+  {
+    "id": "P31",
+    "year": 2025,
+    "title": "Melamine decomposition via ReaxFF reactive MD",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "ReactiveMD"
+    ],
+    "scale": "1 ns total time reported",
+    "pain_points": "Reactive stability/validity checks needed"
+  },
+  {
+    "id": "P32",
+    "year": 2025,
+    "title": "ReaxFF reactive MD + experiment comparison (C/H/O/Si)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "ReactiveMD",
+      "ExperimentComparison"
+    ],
+    "scale": null,
+    "pain_points": "Need tight experiment‑simulation reconciliation"
+  },
+  {
+    "id": "P33",
+    "year": 2025,
+    "title": "Pyrolysis of polyimide and epoxy resin (ReaxFF)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "ReactiveMD",
+      "Polymers",
+      "MaterialsStudio"
+    ],
+    "scale": "1 ns; dt=1 fs reported",
+    "pain_points": "Reactive workflows depend on upstream structure prep"
+  },
+  {
+    "id": "P34",
+    "year": 2025,
+    "title": "Nitrogen‑doped graphene growth in plasma (ReaxFF)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "ReactiveMD",
+      "Graphene"
+    ],
+    "scale": "0.1 fs; long runs reported",
+    "pain_points": "Reactive time steps + long runs are expensive"
+  },
+  {
+    "id": "P35",
+    "year": 2026,
+    "title": "Polyimide arc ablation: hybrid ReaxFF/ZBL MD",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "ZBL",
+      "ReactiveMD",
+      "Polymers"
+    ],
+    "scale": null,
+    "pain_points": "Hybrid potential setup is complex"
+  },
+  {
+    "id": "P36",
+    "year": 2026,
+    "title": "Epoxy coating + concrete interface MD (CVFF/ClayFF)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "CVFF",
+      "ClayFF",
+      "Concrete",
+      "Coatings"
+    ],
+    "scale": null,
+    "pain_points": "Multi‑FF coupling and interfacial metrics friction"
+  },
+  {
+    "id": "P37",
+    "year": 2026,
+    "title": "IMCs in 3xxx Al alloys under MEAM in LAMMPS",
+    "doi": "10.3390/ma19030535",
+    "arxiv": null,
+    "tags": [
+      "MEAM",
+      "Metals",
+      "MechanicalProperties"
+    ],
+    "scale": null,
+    "pain_points": "Potential choice affects conclusions"
+  },
+  {
+    "id": "P38",
+    "year": 2025,
+    "title": "ReaxFF‑nn in GULP/LAMMPS; thermal conductivity of carbon",
+    "doi": "10.1039/D4CP00535J",
+    "arxiv": null,
+    "tags": [
+      "ReaxFF‑nn",
+      "MLIP",
+      "ThermalTransport"
+    ],
+    "scale": null,
+    "pain_points": "Reactive ML augmentation + deployment complexity"
+  },
+  {
+    "id": "P39",
+    "year": 2025,
+    "title": "HTG of polystyrene microplastics (ReaxFF)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "ReactiveMD",
+      "Polymers",
+      "Environment"
+    ],
+    "scale": null,
+    "pain_points": "Reactive MD for chemistry‑rich systems is costly"
+  },
+  {
+    "id": "P40",
+    "year": 2025,
+    "title": "Deep Potential MD for plasma etching (Si‑Cl‑Ar)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "DeePMD",
+      "PlasmaSurface",
+      "MLIP"
+    ],
+    "scale": null,
+    "pain_points": "Need transferable MLIPs beyond training set"
+  },
+  {
+    "id": "P41",
+    "year": 2025,
+    "title": "ElectroFace dataset: MLMD trajectories via LAMMPS + DeePMD",
+    "doi": "10.1038/s41597-025-05338-5",
+    "arxiv": null,
+    "tags": [
+      "Dataset",
+      "DeePMD",
+      "MLIP",
+      "Reproducibility"
+    ],
+    "scale": null,
+    "pain_points": "Dataset/provenance tooling is central"
+  },
+  {
+    "id": "P42",
+    "year": 2025,
+    "title": "EMFF‑2025 NN potential; HEM decomposition MD in LAMMPS",
+    "doi": "10.1038/s41524-025-01809-w",
+    "arxiv": null,
+    "tags": [
+      "MLIP",
+      "NNIP",
+      "ReaxFF",
+      "HighEnergyMaterials"
+    ],
+    "scale": ">1500 atoms (>32 molecules) reported",
+    "pain_points": "Robustness/extrapolation in reactive regimes"
+  },
+  {
+    "id": "P43",
+    "year": 2025,
+    "title": "Validated inverse design of FeNiCrCoCu MPEA via LAMMPS",
+    "doi": "10.1038/s41524-025-01600-x",
+    "arxiv": null,
+    "tags": [
+      "EAM",
+      "InverseDesign",
+      "Metals",
+      "Validation"
+    ],
+    "scale": "4000 atoms reported",
+    "pain_points": "Validating MD‑derived property predictors"
+  },
+  {
+    "id": "P44",
+    "year": 2025,
+    "title": "Deformation paths + fix deform method for arbitrary tensor evolution",
+    "doi": "10.1016/j.commatsci.2025.114073",
+    "arxiv": "2025.11407",
+    "tags": [
+      "Mechanical",
+      "fix_deform",
+      "Methodology"
+    ],
+    "scale": null,
+    "pain_points": "Complex deformation + LAMMPS constraints friction"
+  },
+  {
+    "id": "P45",
+    "year": 2025,
+    "title": "Reflected gas behavior in rarefied flow using LAMMPS",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "GasSurface",
+      "LJ",
+      "NonEquilibrium"
+    ],
+    "scale": "dt=0.4 fs reported",
+    "pain_points": "Accurate boundary models & analysis workflows"
+  },
+  {
+    "id": "P46",
+    "year": 2025,
+    "title": "Ion distribution at polymer/ceramic interfaces",
+    "doi": "10.1039/D5CP01988E",
+    "arxiv": null,
+    "tags": [
+      "Polymers",
+      "Interfaces",
+      "Electrolytes"
+    ],
+    "scale": null,
+    "pain_points": "Workflow chart referenced; suggests reproducibility need"
+  },
+  {
+    "id": "P47",
+    "year": 2025,
+    "title": "Sintering behavior of PLA via ReaxFF‑MD in LAMMPS",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "Polymers",
+      "Sintering",
+      "OVITO"
+    ],
+    "scale": null,
+    "pain_points": "Requires reactive FF + analysis tooling"
+  },
+  {
+    "id": "P48",
+    "year": 2025,
+    "title": "Rate‑dependent shear viscosity; fix npt/sllod validation",
+    "doi": "10.1021/acs.jctc.5c00293",
+    "arxiv": null,
+    "tags": [
+      "Rheology",
+      "Integrator",
+      "NonEquilibrium"
+    ],
+    "scale": null,
+    "pain_points": "Implementation/validation of NEMD fixes is nontrivial"
+  },
+  {
+    "id": "P49",
+    "year": 2025,
+    "title": "Integrated MD‑FEA approach using LAMMPS",
+    "doi": "10.1080/15376494.2025.2489668",
+    "arxiv": "6494.2025",
+    "tags": [
+      "MD‑FEA",
+      "Mechanical",
+      "Nanocomposites"
+    ],
+    "scale": null,
+    "pain_points": "Multiscale coupling and parameter handoffs"
+  },
+  {
+    "id": "P50",
+    "year": 2025,
+    "title": "Biomimetic tendon‑like materials: multiscale toughening",
+    "doi": "10.1073/pnas.2424124122",
+    "arxiv": null,
+    "tags": [
+      "Biomaterials",
+      "Mechanical",
+      "Multiscale"
+    ],
+    "scale": null,
+    "pain_points": "Bridging scales + validation complexity"
+  },
+  {
+    "id": "P51",
+    "year": 2025,
+    "title": "Multiple‑network elastomers: coarse‑grained MD in LAMMPS",
+    "doi": "10.1039/D5SM00045A",
+    "arxiv": null,
+    "tags": [
+      "CoarseGrained",
+      "Polymers",
+      "SoftMatter"
+    ],
+    "scale": null,
+    "pain_points": "Large ensembles + analysis pipelines"
+  },
+  {
+    "id": "P52",
+    "year": 2025,
+    "title": "Ion transport in polyamide (Science Advances) via LAMMPS",
+    "doi": "10.1126/sciadv.adu8302",
+    "arxiv": null,
+    "tags": [
+      "Membranes",
+      "Ions",
+      "Transport",
+      "Water"
+    ],
+    "scale": null,
+    "pain_points": "Nanoscale morphology ↔ transport inference friction"
+  },
+  {
+    "id": "P53",
+    "year": 2025,
+    "title": "Ions on water: LAMMPS interfaced with MBX (ChemRxiv)",
+    "doi": "10.26434/chemrxiv-2025-mgvjw",
+    "arxiv": null,
+    "tags": [
+      "Water",
+      "Ions",
+      "Coupling",
+      "MBX",
+      "Electrostatics"
+    ],
+    "scale": null,
+    "pain_points": "Cross‑code coupling and packaging complexity"
+  },
+  {
+    "id": "P54",
+    "year": 2026,
+    "title": "Electric‑field enhanced water permeation through N‑doped graphene",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "Membranes",
+      "Water",
+      "Electrostatics",
+      "AIREBO",
+      "NonEquilibrium"
+    ],
+    "scale": "multi‑ns trajectories reported",
+    "pain_points": "Electrostatics + NEMD setup complexity"
+  },
+  {
+    "id": "P55",
+    "year": 2025,
+    "title": "Fiber–NASH composite interfacial MD using LAMMPS (MDPI)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "Composites",
+      "Cement",
+      "Interfaces"
+    ],
+    "scale": "1000 ps relaxation; dt=1 fs reported",
+    "pain_points": "Long equilibration pipelines are common"
+  },
+  {
+    "id": "P56",
+    "year": 2025,
+    "title": "Tribology NEMD (MDPI Lubricants)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "Tribology",
+      "NonEquilibrium",
+      "Nanoparticles"
+    ],
+    "scale": null,
+    "pain_points": "Matching experiments via MD models is difficult"
+  },
+  {
+    "id": "P57",
+    "year": 2025,
+    "title": "Diffusion mechanisms with LAMMPS (MEAM)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "MEAM",
+      "Diffusion",
+      "Metals"
+    ],
+    "scale": null,
+    "pain_points": "Potential choice and setup complexity"
+  },
+  {
+    "id": "P58",
+    "year": 2026,
+    "title": "Reflection/sputtering under deuterium irradiation (ReaxFF)",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "ReaxFF",
+      "PlasmaSurface",
+      "RadiationDamage",
+      "HPC"
+    ],
+    "scale": null,
+    "pain_points": "Reactive damage needs expensive potentials"
+  },
+  {
+    "id": "P59",
+    "year": 2026,
+    "title": "ZIF phase transitions using LAMMPS_MACE + KOKKOS GPU",
+    "doi": null,
+    "arxiv": null,
+    "tags": [
+      "MACE",
+      "MLIP",
+      "KOKKOS",
+      "GPU",
+      "MOFs"
+    ],
+    "scale": "2176 atoms; NVIDIA V100 reported",
+    "pain_points": "Deploying/maintaining MLIP GPU integrations"
+  },
+  {
+    "id": "P60",
+    "year": 2026,
+    "title": "metatensor + metatomic interoperability; LAMMPS integrations",
+    "doi": "10.1063/5.0304911",
+    "arxiv": null,
+    "tags": [
+      "MLIP",
+      "Interoperability",
+      "MACE",
+      "Deployment",
+      "Tooling"
+    ],
+    "scale": null,
+    "pain_points": "Standardized model interchange + runtime portability gaps"
+  }
+]

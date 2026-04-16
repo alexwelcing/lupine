@@ -1,0 +1,38 @@
+.lupine-app-wrapper {
+  min-height: 100vh;
+  background-color: var(--slate-900);
+  color: var(--slate-100);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+.lupine-section {
+  padding: 80px 24px;
+}
+
+.lupine-section--alt {
+  background-color: var(--slate-800);
+  border-top: 1px solid var(--slate-700);
+  border-bottom: 1px solid var(--slate-700);
+}
+
+.lupine-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.lupine-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.lupine-footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border-subtle);
+  background-color: var(--slate-900);
+  color: var(--slate-500);
+  font-size: 13px;
+  font-family: var(--font-mono);
+}

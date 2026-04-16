@@ -1,0 +1,151 @@
+.lupine-site-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: 120px 40px 80px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.lupine-site-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 30%, rgba(46, 58, 135, 0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 70% 60%, rgba(91, 58, 140, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 30% 70%, rgba(78, 205, 196, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Animated Orbits ─── */
+.lupine-site-hero__orbits {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  pointer-events: none;
+  opacity: 0.12;
+  z-index: 1;
+}
+
+.lupine-orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid var(--lupine-500);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lupine-orbit-ring:nth-child(1) {
+  width: 300px;
+  height: 300px;
+  animation: orbital-spin 20s linear infinite;
+}
+
+.lupine-orbit-ring:nth-child(2) {
+  width: 500px;
+  height: 200px;
+  animation: orbital-spin 30s linear infinite reverse;
+}
+
+.lupine-orbit-ring:nth-child(3) {
+  width: 600px;
+  height: 250px;
+  animation: orbital-spin 25s linear infinite;
+}
+
+.lupine-site-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  animation: phase-in 0.8s ease-out both;
+}
+
+.lupine-site-hero__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--lupine-400);
+  margin-bottom: 24px;
+}
+
+.lupine-site-hero__headline {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--slate-100);
+  margin-bottom: 28px;
+}
+
+.lupine-site-hero__headline em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--lupine-400), var(--violet-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lupine-site-hero__sub {
+  font-size: 18px;
+  color: var(--slate-400);
+  max-width: 620px;
+  margin: 0 auto 48px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.lupine-site-hero__actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Buttons */
+.lupine-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 36px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.lupine-btn--primary {
+  background: linear-gradient(135deg, var(--lupine-700), var(--lupine-500));
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lupine-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 48px rgba(46, 58, 135, 0.5);
+}
+
+.lupine-btn--secondary {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--slate-200);
+  border: 1px solid var(--slate-700);
+  font-weight: 500;
+}
+
+.lupine-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--slate-600);
+}

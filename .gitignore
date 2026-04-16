@@ -1,0 +1,13 @@
+node_modules/
+target/
+.env
+dist/
+build/
+.pytest_cache/
+__pycache__/
+wasm-out/
+*.log
+.DS_Store
+*.data
+*.dump
+latest/library/model-data/**

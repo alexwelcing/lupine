@@ -1,0 +1,67 @@
+name: Deploy glim viewer to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'atlas/**'
+      - '.github/workflows/deploy-glim-viewer.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Required for Workload Identity Federation
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: atlas/atlas-view/pnpm-lock.yaml
+
+      - name: Install Dependencies
+        working-directory: atlas/atlas-view
+        run: pnpm install
+
+      - name: Build Bundle (Research Site + Web Viewer)
+        working-directory: atlas
+        run: |
+          pip install markdown
+          python -c "import deploy_slim; deploy_slim.build_research(); deploy_slim.build_web()"
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          source: 'atlas/deploy_bundle'
+          service: 'atlas-viewer'
+          region: 'us-central1'
+          project_id: 'shed-489901'
+          flags: '--allow-unauthenticated'
+
+      - name: Show output
+        run: echo ${{ steps.deploy.outputs.url }}

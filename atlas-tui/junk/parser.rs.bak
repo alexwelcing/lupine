@@ -1,0 +1,189 @@
+// ═══════════════════════════════════════════════════════════════════
+// LAMMPS Dump File Parser
+// ═══════════════════════════════════════════════════════════════════
+
+use anyhow::{Context, Result};
+
+#[derive(Debug, Clone)]
+pub struct Frame {
+    pub timestep: i64,
+    pub natoms: usize,
+    pub box_bounds: [[f64; 2]; 3], // [x, y, z][lo, hi]
+    pub atoms: Vec<Atom>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Atom {
+    pub id: i64,
+    pub atom_type: i64,
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+    pub properties: Vec<f64>,
+}
+
+pub struct DumpParser;
+
+impl DumpParser {
+    pub fn parse(content: &str) -> Result<Vec<Frame>> {
+        let mut frames = vec![];
+        let mut lines = content.lines().peekable();
+
+        while lines.peek().is_some() {
+            if let Some(frame) = Self::parse_frame(&mut lines)? {
+                frames.push(frame);
+            }
+        }
+
+        Ok(frames)
+    }
+
+    fn parse_frame<'a>(lines: &mut std::iter::Peekable<impl Iterator<Item = &'a str>>) -> Result<Option<Frame>> {
+        // Skip empty lines
+        while let Some(line) = lines.peek() {
+            if line.trim().is_empty() {
+                lines.next();
+            } else {
+                break;
+            }
+        }
+
+        let first_line = match lines.next() {
+            Some(line) => line,
+            None => return Ok(None),
+        };
+
+        if !first_line.starts_with("ITEM: TIMESTEP") {
+            anyhow::bail!("Expected ITEM: TIMESTEP, got: {}", first_line);
+        }
+
+        // Parse timestep
+        let timestep: i64 = lines
+            .next()
+            .context("Missing timestep value")?
+            .trim()
+            .parse()?;
+
+        // Parse number of atoms
+        let num_line = lines.next().context("Missing NUMBER OF ATOMS line")?;
+        if !num_line.starts_with("ITEM: NUMBER OF ATOMS") {
+            anyhow::bail!("Expected ITEM: NUMBER OF ATOMS, got: {}", num_line);
+        }
+
+        let natoms: usize = lines
+            .next()
+            .context("Missing natoms value")?
+            .trim()
+            .parse()?;
+
+        // Parse box bounds
+        let bounds_line = lines.next().context("Missing BOX BOUNDS line")?;
+        if !bounds_line.starts_with("ITEM: BOX BOUNDS") {
+            anyhow::bail!("Expected ITEM: BOX BOUNDS, got: {}", bounds_line);
+        }
+
+        let mut box_bounds = [[0.0, 0.0]; 3];
+        for i in 0..3 {
+            let parts: Vec<f64> = lines
+                .next()
+                .context("Missing box bound value")?
+                .split_whitespace()
+                .map(|s| s.parse().unwrap_or(0.0))
+                .collect();
+            if parts.len() >= 2 {
+                box_bounds[i] = [parts[0], parts[1]];
+            }
+        }
+
+        // Parse atoms header to get column names
+        let atoms_header = lines.next().context("Missing ATOMS line")?;
+        if !atoms_header.starts_with("ITEM: ATOMS") {
+            anyhow::bail!("Expected ITEM: ATOMS, got: {}", atoms_header);
+        }
+
+        let columns: Vec<&str> = atoms_header
+            .strip_prefix("ITEM: ATOMS ")
+            .unwrap_or("")
+            .split_whitespace()
+            .collect();
+
+        // Parse atoms
+        let mut atoms = Vec::with_capacity(natoms);
+        for _ in 0..natoms {
+            let line = match lines.next() {
+                Some(l) => l,
+                None => break,
+            };
+
+            let values: Vec<f64> = line
+                .split_whitespace()
+                .filter_map(|s| s.parse().ok())
+                .collect();
+
+            if values.len() < columns.len() {
+                continue;
+            }
+
+            let mut atom = Atom {
+                id: 0,
+                atom_type: 1,
+                x: 0.0,
+                y: 0.0,
+                z: 0.0,
+                properties: vec![],
+            };
+
+            for (i, col) in columns.iter().enumerate() {
+                match *col {
+                    "id" => atom.id = values[i] as i64,
+                    "type" | "atom_type" => atom.atom_type = values[i] as i64,
+                    "x" | "xs" => atom.x = values[i],
+                    "y" | "ys" => atom.y = values[i],
+                    "z" | "zs" => atom.z = values[i],
+                    _ => atom.properties.push(values[i]),
+                }
+            }
+
+            // Handle scaled coordinates (xs, ys, zs)
+            if columns.contains(&"xs") {
+                atom.x = box_bounds[0][0] + atom.x * (box_bounds[0][1] - box_bounds[0][0]);
+            }
+            if columns.contains(&"ys") {
+                atom.y = box_bounds[1][0] + atom.y * (box_bounds[1][1] - box_bounds[1][0]);
+            }
+            if columns.contains(&"zs") {
+                atom.z = box_bounds[2][0] + atom.z * (box_bounds[2][1] - box_bounds[2][0]);
+            }
+
+            atoms.push(atom);
+        }
+
+        Ok(Some(Frame {
+            timestep,
+            natoms,
+            box_bounds,
+            atoms,
+        }))
+    }
+}
+
+// Create embedded 8-atom demo data
+pub fn create_demo_8_atoms() -> Vec<Frame> {
+    let atoms = vec![
+        Atom { id: 1, atom_type: 1, x: 1.0, y: 1.0, z: 1.0, properties: vec![] },
+        Atom { id: 2, atom_type: 1, x: 1.0, y: 1.0, z: 5.0, properties: vec![] },
+        Atom { id: 3, atom_type: 1, x: 1.0, y: 5.0, z: 1.0, properties: vec![] },
+        Atom { id: 4, atom_type: 1, x: 1.0, y: 5.0, z: 5.0, properties: vec![] },
+        Atom { id: 5, atom_type: 2, x: 5.0, y: 1.0, z: 1.0, properties: vec![] },
+        Atom { id: 6, atom_type: 2, x: 5.0, y: 1.0, z: 5.0, properties: vec![] },
+        Atom { id: 7, atom_type: 2, x: 5.0, y: 5.0, z: 1.0, properties: vec![] },
+        Atom { id: 8, atom_type: 2, x: 5.0, y: 5.0, z: 5.0, properties: vec![] },
+    ];
+
+    vec![Frame {
+        timestep: 0,
+        natoms: 8,
+        box_bounds: [[0.0, 6.0], [0.0, 6.0], [0.0, 6.0]],
+        atoms,
+    }]
+}

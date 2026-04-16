@@ -1,0 +1,162 @@
+/*
+ * @lupine/ui — Design System
+ * ═══════════════════════════════════════════════════════════════════════
+ * "Atomic Understanding" — Every pixel is an atom. Every interaction
+ * is a bond. Every transition is a phase change.
+ * ═══════════════════════════════════════════════════════════════════════
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ─── Color Tokens ─────────────────────────────────────────────────── */
+:root {
+  /* Brand: The Lupine Spectrum (deep indigo → violet) */
+  --lupine-950: #12142e;
+  --lupine-900: #1a1d3d;
+  --lupine-800: #252a52;
+  --lupine-700: #2e3a87;
+  --lupine-600: #3d4db3;
+  --lupine-500: #5565d4;
+  --lupine-400: #7b8ae0;
+  --lupine-300: #9ba6ea;
+  --lupine-200: #c5cdf3;
+  --lupine-100: #e8ebfa;
+  --lupine-50:  #f4f5fd;
+
+  /* Secondary: Violet radiation */
+  --violet-700: #5b3a8c;
+  --violet-500: #8b6bc4;
+  --violet-300: #b9a0e0;
+
+  /* Neutral: The Slate Void */
+  --slate-950: #06070d;
+  --slate-900: #0c0e17;
+  --slate-850: #10121c;
+  --slate-800: #151822;
+  --slate-750: #1a1d28;
+  --slate-700: #222536;
+  --slate-600: #343850;
+  --slate-500: #525772;
+  --slate-400: #818799;
+  --slate-300: #a8adc0;
+  --slate-200: #cdd1de;
+  --slate-100: #e8eaf2;
+  --slate-50:  #f5f6fa;
+
+  /* Semantic Accents */
+  --cyan:  #4ecdc4;
+  --gold:  #d4a843;
+  --warm:  #e8834a;
+  --red:   #e85454;
+  --green: #4ecd6b;
+
+  /* Typography */
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-mono:  'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Glass Surfaces */
+  --glass-bg-1:      rgba(255, 255, 255, 0.015);
+  --glass-bg-2:      rgba(255, 255, 255, 0.03);
+  --glass-bg-3:      rgba(255, 255, 255, 0.05);
+  --glass-border:    rgba(255, 255, 255, 0.06);
+  --glass-border-hi: rgba(255, 255, 255, 0.1);
+  --glass-glow:      rgba(85, 101, 212, 0.08);
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Shadows */
+  --shadow-glass:   0 1px 2px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.15);
+  --shadow-lifted:  0 4px 24px rgba(0,0,0,0.3), 0 12px 48px rgba(0,0,0,0.15);
+  --shadow-glow:    0 0 24px rgba(85, 101, 212, 0.15);
+
+  /* Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-Index Layers */
+  --z-base:    1;
+  --z-overlay: 10;
+  --z-modal:   100;
+}
+
+/* ─── Keyframe Library ─────────────────────────────────────────────── */
+
+/* Orbital rotation — used by electron indicators */
+@keyframes orbital-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Counter-orbital for secondary shells */
+@keyframes orbital-counterspin {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+/* Nucleus pulse — the heartbeat of active state */
+@keyframes nucleus-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 4px rgba(123, 138, 224, 0.3),
+                0 0 12px rgba(123, 138, 224, 0.1);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 8px rgba(123, 138, 224, 0.5),
+                0 0 20px rgba(123, 138, 224, 0.2);
+    transform: scale(1.15);
+  }
+}
+
+/* Bond energy flow — dashed lines animate their offset */
+@keyframes bond-flow {
+  to { stroke-dashoffset: -24; }
+}
+
+/* Spectral shimmer — emission line effect */
+@keyframes spectral-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Phase transition — opacity gate for quantum sections */
+@keyframes phase-in {
+  from { opacity: 0; transform: translateY(-6px) scaleY(0.96); }
+  to   { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+/* Waveform oscillation for slider thumb */
+@keyframes wave-breathe {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(85, 101, 212, 0.2); }
+  50%      { box-shadow: 0 0 0 6px rgba(85, 101, 212, 0.1); }
+}
+
+/* Subtle noise grain overlay */
+@keyframes grain-drift {
+  0%, 100% { transform: translate(0, 0); }
+  10%  { transform: translate(-2%, -3%); }
+  30%  { transform: translate(3%, 2%); }
+  50%  { transform: translate(-1%, 4%); }
+  70%  { transform: translate(4%, -1%); }
+  90%  { transform: translate(-3%, 3%); }
+}
+
+/* ─── Custom Scrollbar ─────────────────────────────────────────────── */
+.lupine-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.lupine-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.lupine-scroll::-webkit-scrollbar-thumb {
+  background: var(--slate-700);
+  border-radius: 4px;
+}
+.lupine-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-600);
+}

@@ -1,0 +1,81 @@
+.lupine-site-table-section {
+  width: 100%;
+}
+
+.lupine-site-table-header {
+  margin-bottom: 24px;
+}
+
+.lupine-site-table-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--lupine-400);
+  margin-bottom: 8px;
+}
+
+.lupine-site-table-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  color: var(--slate-100);
+  margin-bottom: 16px;
+}
+
+.lupine-comp-table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid var(--slate-700);
+}
+
+.lupine-comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.lupine-comp-table thead {
+  background: var(--slate-800);
+}
+
+.lupine-comp-table th {
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--slate-300);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--slate-700);
+}
+
+.lupine-highlight-colHeading {
+  color: var(--lupine-300) !important;
+  background: rgba(46, 58, 135, 0.15);
+}
+
+.lupine-comp-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--slate-400);
+}
+
+.lupine-comp-feature {
+  font-weight: 600;
+  color: var(--slate-200);
+}
+
+.lupine-highlight-col {
+  color: var(--lupine-200) !important;
+  background: rgba(46, 58, 135, 0.08);
+  font-weight: 500;
+}
+
+.lupine-table-check {
+  color: var(--accent-cyan);
+  font-size: 16px;
+}
+
+.lupine-table-dash {
+  color: var(--slate-600);
+}

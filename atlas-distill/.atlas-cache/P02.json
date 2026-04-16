@@ -1,0 +1,16 @@
+{
+  "paper_id": "P02",
+  "title": "LAMMPS-KOKKOS: Performance Portable Molecular Dynamics Across Exascale Architectures",
+  "abstract_text": "",
+  "authors": [
+    "Anders Johansson",
+    "Evan Weinberg",
+    "Christian Trott",
+    "Megan McCarthy",
+    "Stan Moore"
+  ],
+  "journal": "Proceedings of the SC '25 Workshops of the International Conference for High Performance Computing, Networking, Storage and Analysis",
+  "year": 2025,
+  "cited_by": 1,
+  "source": "crossref:10.1145/3731599.3767498"
+}

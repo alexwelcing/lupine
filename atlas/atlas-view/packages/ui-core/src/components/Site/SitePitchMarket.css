@@ -1,0 +1,63 @@
+.lupine-market {
+  text-align: center;
+}
+
+.lupine-market__header {
+  margin-bottom: 56px;
+}
+
+.lupine-market__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.lupine-market-card {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.lupine-market-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(91, 58, 140, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+.lupine-market-number {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.grad-indigo {
+  background: linear-gradient(135deg, var(--lupine-300), var(--violet-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.grad-cyan {
+  background: linear-gradient(135deg, var(--accent-cyan), #2a9d8f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lupine-market-label {
+  font-size: 14px;
+  color: var(--slate-300);
+  font-weight: 600;
+}
+
+.lupine-market-detail {
+  font-size: 11px;
+  color: var(--slate-500);
+  margin-top: 6px;
+  line-height: 1.5;
+}

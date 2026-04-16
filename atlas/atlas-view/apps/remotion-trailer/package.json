@@ -1,0 +1,32 @@
+{
+  "name": "@atlas/remotion-trailer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "echo 'Skipping automatic trailer build during pnpm build. Run npm run render manually.'",
+    "render": "remotion render src/index.tsx AtlasTrailer out/trailer.mp4",
+    "render:extended": "remotion render src/index.tsx AtlasTrailerExtended out/trailer-60s.mp4",
+    "render:twitter": "remotion render src/index.tsx AtlasTrailerTwitter out/trailer-twitter.mp4",
+    "render:square": "remotion render src/index.tsx AtlasTrailerSquare out/trailer-square.mp4",
+    "render:hype": "remotion render src/index.tsx AtlasHypeTrailer out/atlas-hype-trailer.mp4",
+    "render:all": "npm run render:hype && npm run render && npm run render:extended && npm run render:twitter && npm run render:square",
+    "placeholder": "powershell -ExecutionPolicy Bypass -File ./scripts/create-placeholders.ps1",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "remotion": "^4.0.0",
+    "@remotion/cli": "^4.0.0",
+    "@remotion/player": "^4.0.0",
+    "@remotion/transitions": "^4.0.0",
+    "@remotion/animation-utils": "^4.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.6.0"
+  }
+}

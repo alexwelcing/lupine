@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "types": ["@webgpu/types"],
+    "paths": {
+      "@atlas/core": ["./packages/core/src"],
+      "@atlas/core/*": ["./packages/core/src/*"],
+      "@atlas/parsers": ["./packages/parsers/src"],
+      "@atlas/parsers/*": ["./packages/parsers/src/*"],
+      "@atlas/renderer": ["./packages/renderer/src"],
+      "@atlas/renderer/*": ["./packages/renderer/src/*"],
+      "@atlas/scene": ["./packages/scene/src"],
+      "@atlas/scene/*": ["./packages/scene/src/*"],
+      "@atlas/ui": ["./packages/ui/src"],
+      "@atlas/ui/*": ["./packages/ui/src/*"],
+      "@atlas/export": ["./packages/export/src"],
+      "@atlas/export/*": ["./packages/export/src/*"]
+    }
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "packages/*/src/**/*.tsx",
+    "apps/*/src/**/*.ts",
+    "apps/*/src/**/*.tsx"
+  ],
+  "exclude": ["node_modules", "dist", "pkg"]
+}
