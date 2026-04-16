@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Research & Methods — Lupine Materials Science</title>
+<meta name="description" content="Lupine publishes open methods, ML potential benchmarks, and field study results from our materials discovery platform."/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --surface: #fef8f5;
+    --surface-low: #f8f2ef;
+    --surface-container: #f2ede9;
+    --surface-high: #ede7e4;
+    --surface-highest: #e7e1de;
+    --surface-dim: #ded9d6;
+    --on-surface: #1d1b19;
+    --on-surface-var: #444650;
+    --primary: #475b9c;
+    --primary-container: #7b8fd4;
+    --primary-fixed: #dce1ff;
+    --secondary: #4c653d;
+    --secondary-container: #ceecb9;
+    --tertiary: #725381;
+    --outline: #757681;
+    --outline-var: #c5c6d2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--surface);
+    color: var(--on-surface);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(254, 248, 245, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0 max(2rem, calc((100% - 1200px)/2));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 1px 0 rgba(44,42,40,0.06);
+  }
+  .nav-logo {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--primary);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--on-surface-var);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+  /* HERO */
+  .hero {
+    padding: 6rem max(2rem, calc((100% - 1200px)/2)) 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+  }
+  .hero-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+  }
+  .hero-headline {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--on-surface);
+    margin-bottom: 1.5rem;
+  }
+  .hero-lede {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--on-surface-var);
+    max-width: 50ch;
+  }
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-left: 2rem;
+    border-left: 2px solid var(--primary-fixed);
+  }
+  .stat-item {}
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-surface-var);
+  }
+
+  /* SECTION WRAPPER */
+  .section { padding: 4rem max(2rem, calc((100% - 1200px)/2)); }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--on-surface-var);
+    margin-bottom: 2rem;
+  }
+
+  /* FILTER PILLS */
+  .filter-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .filter-pill {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    background: var(--surface-container);
+    color: var(--on-surface-var);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .filter-pill:hover { background: var(--primary-fixed); color: var(--primary); }
+  .filter-pill.active { background: var(--primary); color: #fff; }
+
+  /* ARTICLE GRID */
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+  .article-card {
+    background: var(--surface-low);
+    border-radius: 6px;
+    padding: 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 8px 32px rgba(44,42,40,0.04);
+  }
+  .article-card:hover {
+    background: var(--surface-container);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(44,42,40,0.07);
+  }
+  .card-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    width: fit-content;
+  }
+  .tag-ml { background: var(--primary-fixed); color: var(--primary); }
+  .tag-field { background: var(--secondary-container); color: var(--secondary); }
+  .tag-case { background: #f5d9ff; color: var(--tertiary); }
+  .tag-sim { background: #fff3cd; color: #7c5c00; }
+
+  .card-title {
+    font-family: 'Newsreader', serif;
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 1.3;
+    color: var(--on-surface);
+  }
+  .card-abstract {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--on-surface-var);
+    flex: 1;
+  }
+  .card-meta {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6875rem;
+    color: var(--outline);
+    letter-spacing: 0.04em;
+    margin-top: 0.25rem;
+  }
+
+  /* FEATURED STUDY */
+  .featured-study {
+    background: var(--primary);
+    border-radius: 8px;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-study::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .featured-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1rem;
+  }
+  .featured-title {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .featured-abstract {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    max-width: 55ch;
+  }
+  .btn-featured {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    background: #fff;
+    color: var(--primary);
+    border-radius: 4px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+  .btn-featured:hover { opacity: 0.9; transform: translateX(2px); }
+
+  /* MORE ARTICLES */
+  .more-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  /* PLATFORM CTA */
+  .platform-cta {
+    background: var(--surface-low);
+    border-radius: 6px;
+    padding: 4rem;
+    text-align: center;
+  }
+  .cta-headline {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--on-surface);
+    margin-bottom: 0.75rem;
+  }
+  .cta-sub {
+    font-size: 1rem;
+    color: var(--on-surface-var);
+    margin-bottom: 2rem;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem max(2rem, calc((100% - 1200px)/2));
+    background: var(--surface-highest);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1rem;
+  }
+  .footer-copy {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    color: var(--outline);
+    letter-spacing: 0.04em;
+  }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    color: var(--on-surface-var);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .footer-links a:hover { color: var(--primary); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; }
+    .article-grid { grid-template-columns: 1fr; }
+    .more-grid { grid-template-columns: 1fr; }
+    .featured-study { grid-template-columns: 1fr; padding: 2.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">lupine.science</a>
+  <ul class="nav-links">
+    <li><a href="glimPSE-demo.html">Platform</a></li>
+    <li><a href="research.html" class="active">Research</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <p class="hero-eyebrow">Lupine Research</p>
+    <h1 class="hero-headline">Field Notes from<br>the Atomic Scale</h1>
+    <p class="hero-lede">Lupine publishes open methods, ML potential benchmarks, and field study results from our materials discovery platform. Every simulation leaves a trace.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-number">98.2%</div>
+      <div class="stat-label">CHGNet Prediction accuracy on Ni-based alloys</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">94%</div>
+      <div class="stat-label">M3GNet confidence on novel superalloy compositions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">40×</div>
+      <div class="stat-label">Faster inference via glimPSE WebGPU compute</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE GRID -->
+<section class="section">
+  <p class="section-title">Published Research</p>
+
+  <div class="filter-row" id="filters">
+    <button class="filter-pill active" onclick="filterCards('all', this)">All</button>
+    <button class="filter-pill" onclick="filterCards('ml', this)">ML Potentials</button>
+    <button class="filter-pill" onclick="filterCards('sim', this)">Simulation Methods</button>
+    <button class="filter-pill" onclick="filterCards('field', this)">Field Studies</button>
+    <button class="filter-pill" onclick="filterCards('case', this)">Case Studies</button>
+  </div>
+
+  <div class="article-grid" id="article-grid">
+    <a href="methods/chgnet.html" class="article-card" data-tag="ml">
+      <span class="card-tag tag-ml">ML Potential</span>
+      <h2 class="card-title">CHGNet: Universal ML Potential for Superalloy Discovery</h2>
+      <p class="card-abstract">Applying the crystal Hamiltonian graph neural network to discover novel nickel-based superalloys with enhanced creep resistance at 2,400K.</p>
+      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; January 2024 &nbsp;·&nbsp; 12 min read</p>
+    </a>
+
+    <a href="methods/m3gnet.html" class="article-card" data-tag="ml">
+      <span class="card-tag tag-ml">ML Potential</span>
+      <h2 class="card-title">M3GNet: Multi-Fidelity Force Field Inference at Scale</h2>
+      <p class="card-abstract">Benchmarking M3GNet universal GNN against DFT reference data across 89 elemental systems with 94% confidence on novel compositional space.</p>
+      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; February 2024 &nbsp;·&nbsp; 9 min read</p>
+    </a>
+
+    <a href="methods/quantum-ledger.html" class="article-card" data-tag="sim">
+      <span class="card-tag tag-sim">Simulation Method</span>
+      <h2 class="card-title">The Quantum Ledger: Reproducible Provenance for ML Simulations</h2>
+      <p class="card-abstract">How Lupine's audit layer tracks every NNFF inference step, enabling full reproducibility of simulation runs across distributed compute nodes.</p>
+      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; March 2024 &nbsp;·&nbsp; 8 min read</p>
+    </a>
+
+    <a href="research-manifesto.html" class="article-card" data-tag="field">
+      <span class="card-tag tag-field">Field Study</span>
+      <h2 class="card-title">Accelerating Amorphous Carbon Simulation via MACE</h2>
+      <p class="card-abstract">Benchmarking the message-passing equivariant neural network on complex disordered carbon systems for next-generation battery anode research.</p>
+      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; January 2024 &nbsp;·&nbsp; 10 min read</p>
+    </a>
+
+    <a href="case-study-superalloys.html" class="article-card" data-tag="case">
+      <span class="card-tag tag-case">Case Study</span>
+      <h2 class="card-title">Thermal Fatigue in Offshore Alloy Castings</h2>
+      <p class="card-abstract">A longitudinal study of stress-corrosion cracking in high-salinity marine environments. Lupine's ML potential identified failure modes 18 months before field observation.</p>
+      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; December 2023 &nbsp;·&nbsp; 15 min read</p>
+    </a>
+
+    <a href="case-study-batteries.html" class="article-card" data-tag="case">
+      <span class="card-tag tag-case">Case Study</span>
+      <h2 class="card-title">Entropy-Driven Stabilization in 7-Element High-Entropy Alloys</h2>
+      <p class="card-abstract">New simulation methods for predicting phase stability in multi-principal metallic systems using combinatorial screening and the Lupine Inference Engine.</p>
+      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; November 2023 &nbsp;·&nbsp; 14 min read</p>
+    </a>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="featured-study">
+    <div>
+      <p class="featured-eyebrow">Featured Study</p>
+      <h2 class="featured-title">CHGNet Universal Potential in Superalloy Design</h2>
+      <p class="featured-abstract">Applying the crystal Hamiltonian graph neural network to discover novel nickel-based superalloys with enhanced creep resistance. Trained on 1.5M DFT trajectories, CHGNet achieves 98.2% accuracy against experimental benchmark datasets.</p>
+    </div>
+    <a href="methods/chgnet.html" class="btn-featured">
+      Read Method <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span>
+    </a>
+  </div>
+
+  <!-- MORE ARTICLES -->
+  <p class="section-title">From the Archive</p>
+  <div class="more-grid">
+    <a href="ml-potentials-guide.html" class="article-card" data-tag="ml">
+      <span class="card-tag tag-ml">ML Potential</span>
+      <h2 class="card-title">A Field Guide to Machine Learning Interatomic Potentials</h2>
+      <p class="card-abstract">Comparing MACE, CHGNet, M3GNet, and SevenNet across the Lupine benchmark suite. Which potential fits which material class?</p>
+      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; October 2023 &nbsp;·&nbsp; 18 min read</p>
+    </a>
+    <a href="platform-architecture.html" class="article-card" data-tag="sim">
+      <span class="card-tag tag-sim">Simulation Method</span>
+      <h2 class="card-title">WebGPU Compute Shaders for Molecular Dynamics at Scale</h2>
+      <p class="card-abstract">How glimPSE reduces NNFF inference time by 40× using native WebGPU compute pipelines and optimized C++ kernels for large-scale supercell calculations.</p>
+      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; September 2023 &nbsp;·&nbsp; 11 min read</p>
+    </a>
+  </div>
+</section>
+
+<!-- PLATFORM CTA -->
+<section class="section">
+  <div class="platform-cta">
+    <h2 class="cta-headline">Explore the glimPSE Platform</h2>
+    <p class="cta-sub">Run your own simulations. Apply CHGNet, M3GNet, or MACE to your material system — directly in the browser.</p>
+    <a href="glimPSE-demo.html" class="btn-primary">
+      Open Simulation Platform <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">lupine.science</span>
+  <nav class="footer-links">
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="contact.html">Contact</a>
+    <a href="glimPSE-demo.html">Platform</a>
+  </nav>
+  <span class="footer-copy">© 2024 Lupine Materials Science. All rights reserved.</span>
+</footer>
+
+<script>
+function filterCards(tag, btn) {
+  // Update pill UI
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  // Filter cards
+  document.querySelectorAll('.article-card').forEach(card => {
+    if (tag === 'all' || card.dataset.tag === tag) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
