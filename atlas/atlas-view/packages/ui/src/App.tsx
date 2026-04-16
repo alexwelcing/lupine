@@ -14,6 +14,8 @@ import {
 import { ToneMappingMode, BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import { MobileHUD } from './MobileHUD';
+import { ChronosHUD } from './ChronosHUD';
+import { VolcanicHUD } from './VolcanicHUD';
 
 import { useStore } from './store';
 import { FileDropZone } from './FileDropZone';
@@ -359,7 +361,13 @@ export default function App() {
     }}>
       {/* ─── Mobile HUD or Desktop Header ─── */}
       {isMobile ? (
-        <MobileHUD />
+        useStore.getState().viewportMode === 'chronos' ? (
+          <ChronosHUD onExit={() => useStore.getState().setViewportMode('standard')} />
+        ) : useStore.getState().viewportMode === 'volcanic' ? (
+          <VolcanicHUD onExit={() => useStore.getState().setViewportMode('standard')} />
+        ) : (
+          <MobileHUD />
+        )
       ) : (
         <header style={{
         height: 56, flexShrink: 0,

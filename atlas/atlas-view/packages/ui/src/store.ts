@@ -60,6 +60,9 @@ export interface AppState {
   cameraFov: number;
   cameraPreset: 'free' | 'front' | 'side' | 'top' | 'iso';
 
+  // ─── Viewport Modes ───
+  viewportMode: 'standard' | 'chronos' | 'volcanic';
+
   // ─── Publication ───
   showScaleBar: boolean;
   colorblindMode: boolean;
@@ -83,6 +86,7 @@ export interface AppState {
   setCameraPreset: (preset: AppState['cameraPreset']) => void;
   setShowScaleBar: (show: boolean) => void;
   setColorblindMode: (enabled: boolean) => void;
+  setViewportMode: (mode: AppState['viewportMode']) => void;
 
   // ─── Actions ───
   setFile: (file: LoadedFile) => void;
@@ -165,6 +169,7 @@ const DEFAULTS = {
   hoveredAtom: null as number | null,
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
+  viewportMode: 'standard' as const,
 };
 
 export const useStore = create<AppState>()(
@@ -186,6 +191,7 @@ export const useStore = create<AppState>()(
     }),
 
     setError: (error) => set({ error, loading: false }),
+    setViewportMode: (viewportMode) => set({ viewportMode }),
 
     setFrame: (frame) => {
       const f = get().file;
