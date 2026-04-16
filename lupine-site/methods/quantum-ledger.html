@@ -1,164 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>The Quantum Ledger: Reproducible Simulation Provenance — Lupine Research</title>
-<meta name="description" content="How Lupine's Quantum Ledger tracks every NNFF inference step, enabling full reproducibility of ML-driven simulation runs across distributed compute nodes."/>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<title>The Quantum Ledger: Reproducible Simulation Provenance | Lupine Research</title>
+<meta name="description" content="How Lupine's Quantum Ledger tracks every NNFF inference step with cryptographic hash chaining and IPFS permanence."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@300;400;500&family=Newsreader:ital,wght@1,400;1,700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-surface-variant":"#c6c5d5","primary-container":"#5565d4","surface-container-high":"#292931","primary":"#bcc3ff","outline-variant":"#454653","surface":"#12131a","background":"#12131a","surface-container-lowest":"#0d0e15","surface-container-low":"#1a1b23","secondary":"#5dd9d0","error-container":"#93000a","surface-tint":"#bcc3ff","error":"#ffb4ab","surface-container-highest":"#34343c","on-primary-container":"#f5f3ff","outline":"#8f8f9f","primary-fixed":"#dfe0ff","on-primary":"#051c93","surface-variant":"#34343c","on-surface":"#e3e1ec","surface-container":"#1e1f27","tertiary":"#d4bbff","accent-gold":"#d4a843"},
+  "fontFamily":{"headline":["Newsreader","serif"],"body":["Inter","sans-serif"],"mono":["JetBrains Mono","monospace"]}}}}
+</script>
 <style>
-  :root{--surface:#fef8f5;--surface-low:#f8f2ef;--surface-container:#f2ede9;--surface-high:#ede7e4;--surface-highest:#e7e1de;--on-surface:#1d1b19;--on-surface-var:#444650;--primary:#475b9c;--primary-container:#7b8fd4;--primary-fixed:#dce1ff;--secondary:#4c653d;--tertiary:#725381;--outline:#757681;--outline-var:#c5c6d2;}
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--surface);color:var(--on-surface);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
-  nav.site-nav{position:sticky;top:0;z-index:100;background:rgba(254,248,245,0.92);backdrop-filter:blur(12px);padding:0 max(2rem,calc((100% - 1200px)/2));display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 1px 0 rgba(44,42,40,0.06);}
-  .nav-left{display:flex;align-items:center;gap:1.5rem;}
-  .nav-back{display:flex;align-items:center;gap:0.375rem;font-family:'Space Grotesk',sans-serif;font-size:0.75rem;font-weight:500;color:var(--on-surface-var);text-decoration:none;letter-spacing:0.04em;text-transform:uppercase;transition:color 0.2s;}
-  .nav-back:hover{color:var(--primary);} .nav-back .material-symbols-outlined{font-size:1rem;}
-  .nav-breadcrumb{font-family:'Space Grotesk',sans-serif;font-size:0.6875rem;color:var(--outline);letter-spacing:0.04em;}
-  .nav-logo{font-family:'Newsreader',serif;font-style:italic;font-weight:700;font-size:1.125rem;color:var(--primary);text-decoration:none;}
-  .article-hero{padding:5rem max(2rem,calc((100% - 1200px)/2)) 4rem;max-width:1200px;margin:0 auto;}
-  .hero-tags{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
-  .tag-chip{font-family:'Space Grotesk',sans-serif;font-size:0.625rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;padding:0.25rem 0.625rem;border-radius:3px;}
-  .tag-sim{background:#fff3cd;color:#7c5c00;} .tag-case{background:#ceecb9;color:var(--secondary);}
-  h1.article-title{font-family:'Newsreader',serif;font-style:italic;font-weight:700;font-size:clamp(2rem,4vw,3.25rem);line-height:1.15;letter-spacing:-0.03em;color:var(--on-surface);margin-bottom:2rem;max-width:22ch;}
-  .article-meta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;padding-bottom:2rem;border-bottom:1px solid var(--outline-var);}
-  .meta-name{font-weight:600;font-size:0.9375rem;} .meta-org{font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:var(--secondary);letter-spacing:0.04em;}
-  .meta-divider{width:1px;height:2rem;background:var(--outline-var);}
-  .meta-label{font-family:'Space Grotesk',sans-serif;font-size:0.625rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--outline);}
-  .meta-value{font-family:'Space Grotesk',sans-serif;font-size:0.875rem;color:var(--on-surface-var);}
-  .article-layout{display:grid;grid-template-columns:1fr 280px;gap:4rem;padding:3rem max(2rem,calc((100% - 1200px)/2)) 6rem;max-width:1200px;margin:0 auto;align-items:start;}
-  .article-body h2{font-family:'Newsreader',serif;font-style:italic;font-weight:700;font-size:1.625rem;line-height:1.2;color:var(--on-surface);margin-top:3rem;margin-bottom:1rem;}
-  .article-body h2:first-child{margin-top:0;}
-  .article-body p{font-size:1rem;line-height:1.8;color:var(--on-surface-var);margin-bottom:1.25rem;max-width:68ch;}
-  .article-body strong{color:var(--on-surface);font-weight:600;}
-
-  /* Ledger entry visualization */
-  .ledger-entry{background:var(--surface-low);border-radius:6px;padding:1.5rem;margin:2rem 0;font-family:'Space Grotesk',sans-serif;font-size:0.8125rem;border-left:3px solid var(--primary);}
-  .ledger-entry-label{font-size:0.625rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--primary);margin-bottom:0.75rem;}
-  .ledger-row{display:flex;justify-content:space-between;align-items:baseline;padding:0.4rem 0;border-bottom:1px solid rgba(197,198,210,0.4);}
-  .ledger-row:last-child{border-bottom:none;}
-  .ledger-key{color:var(--on-surface-var);}
-  .ledger-val{color:var(--on-surface);font-weight:500;font-size:0.75rem;}
-
-  .article-sidebar{position:sticky;top:80px;display:flex;flex-direction:column;gap:1.5rem;}
-  .sidebar-card{background:var(--surface-low);border-radius:6px;padding:1.5rem;box-shadow:0 4px 16px rgba(44,42,40,0.04);}
-  .sidebar-label{font-family:'Space Grotesk',sans-serif;font-size:0.625rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--outline);margin-bottom:1rem;}
-  .toc-list{list-style:none;display:flex;flex-direction:column;gap:0.625rem;}
-  .toc-list a{font-family:'Space Grotesk',sans-serif;font-size:0.8125rem;color:var(--on-surface-var);text-decoration:none;display:flex;align-items:center;gap:0.375rem;transition:color 0.2s;}
-  .toc-list a:hover{color:var(--primary);}
-  .toc-list a::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--outline-var);flex-shrink:0;}
-  .principles-list{list-style:none;display:flex;flex-direction:column;gap:0.75rem;}
-  .principles-list li{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.8125rem;color:var(--on-surface-var);line-height:1.5;}
-  .principles-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--tertiary);flex-shrink:0;margin-top:0.4rem;}
-  .related-list{list-style:none;display:flex;flex-direction:column;gap:1rem;}
-  .related-list li a{display:flex;flex-direction:column;gap:0.25rem;text-decoration:none;}
-  .related-tag{font-family:'Space Grotesk',sans-serif;font-size:0.5625rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--secondary);}
-  .related-title{font-size:0.875rem;font-weight:500;color:var(--on-surface);line-height:1.4;}
-  .related-list li a:hover .related-title{color:var(--primary);}
-  .article-cta{background:var(--tertiary);padding:4rem max(2rem,calc((100% - 1200px)/2));text-align:center;}
-  .article-cta h2{font-family:'Newsreader',serif;font-style:italic;font-weight:700;font-size:2rem;color:#fff;margin-bottom:0.75rem;}
-  .article-cta p{color:rgba(255,255,255,0.75);margin-bottom:2rem;}
-  .btn-cta{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Space Grotesk',sans-serif;font-size:0.8125rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.875rem 2rem;background:#fff;color:var(--tertiary);border-radius:4px;text-decoration:none;transition:opacity 0.2s;}
-  .btn-cta:hover{opacity:0.9;}
-  footer{padding:3rem max(2rem,calc((100% - 1200px)/2));background:var(--surface-highest);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-  .footer-brand{font-family:'Newsreader',serif;font-style:italic;font-weight:700;color:var(--primary);font-size:1rem;}
-  .footer-copy{font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:var(--outline);}
-  @media(max-width:900px){.article-layout{grid-template-columns:1fr;}.article-sidebar{position:static;}.nav-breadcrumb{display:none;}}
+  body{background-color:#0a0b12;}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;}
+  .glass-card{background:rgba(30,31,39,0.5);backdrop-filter:blur(24px);border:1px solid rgba(188,195,255,0.1);}
 </style>
 </head>
-<body>
-<nav class="site-nav">
-  <div class="nav-left">
-    <a href="../research.html" class="nav-back"><span class="material-symbols-outlined">arrow_back</span>Research</a>
-    <span class="nav-breadcrumb">/ Methods / Quantum Ledger</span>
+<body class="text-on-surface font-body overflow-x-hidden">
+
+<nav class="fixed top-0 w-full z-50 bg-[#12131a]/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex justify-between items-center px-12 py-6">
+  <div class="flex items-center gap-6">
+    <a href="../research.html" class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-tertiary hover:text-on-surface transition-colors">
+      <span class="material-symbols-outlined text-sm">arrow_back</span>Research
+    </a>
+    <span class="text-outline-variant/50 font-mono text-[10px]">/ Methods / Quantum Ledger</span>
   </div>
-  <a href="../index.html" class="nav-logo">lupine.science</a>
+  <div class="text-lg font-headline italic text-[#bcc3ff]">Lupine Materials Science</div>
 </nav>
 
-<header class="article-hero">
-  <div class="hero-tags">
-    <span class="tag-chip tag-sim">Simulation Method</span>
-    <span class="tag-chip tag-case">Reproducibility</span>
+<section class="relative pt-40 pb-16 px-12 overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-tertiary/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-primary/5 blur-[100px] rounded-full"></div>
   </div>
-  <h1 class="article-title">The Quantum Ledger: Reproducible Provenance for ML Simulations</h1>
-  <div class="article-meta">
-    <div><div class="meta-name">Alex Welcing</div><div class="meta-org">Lupine Research</div></div>
-    <div class="meta-divider"></div>
-    <div><div class="meta-label">Published</div><div class="meta-value">March 2024</div></div>
-    <div class="meta-divider"></div>
-    <div><div class="meta-label">Read Time</div><div class="meta-value">8 min</div></div>
+  <div class="max-w-5xl mx-auto relative z-10">
+    <div class="flex flex-wrap gap-2 mb-8">
+      <span class="px-3 py-1 font-mono text-[10px] uppercase tracking-widest rounded glass-card text-tertiary border-tertiary/30">Simulation Method</span>
+      <span class="px-3 py-1 font-mono text-[10px] uppercase tracking-widest rounded glass-card text-secondary border-secondary/30">Reproducibility</span>
+    </div>
+    <h1 class="text-5xl md:text-6xl font-headline italic font-bold leading-[1.1] tracking-tight mb-10 max-w-4xl">
+      The Quantum Ledger: Reproducible Provenance for ML Simulations
+    </h1>
+    <div class="flex flex-wrap items-center gap-6 pb-10 border-b border-outline-variant/30">
+      <div><div class="font-mono text-sm text-on-surface font-semibold">Alex Welcing</div><div class="font-mono text-[10px] uppercase tracking-wider text-tertiary">Lupine Research</div></div>
+      <div class="w-px h-8 bg-outline-variant/40"></div>
+      <div><div class="font-mono text-[10px] uppercase tracking-wider text-outline">Published</div><div class="font-mono text-sm text-on-surface-variant">March 2024</div></div>
+      <div class="w-px h-8 bg-outline-variant/40"></div>
+      <div><div class="font-mono text-[10px] uppercase tracking-wider text-outline">Read Time</div><div class="font-mono text-sm text-on-surface-variant">8 min</div></div>
+    </div>
   </div>
-</header>
-
-<div class="article-layout">
-  <article class="article-body">
-    <h2 id="overview">The Reproducibility Problem in ML-Driven MD</h2>
-    <p>The publication of machine-learning molecular dynamics results faces a structural reproducibility crisis. Unlike classical force-field simulations with deterministic initial conditions, NNFF-driven trajectories carry an additional layer of non-reproducibility: model version, hardware floating-point behavior, batch parallelization order, and PRNG seed all affect the precise trajectory — even when the input structure and potential parameters appear identical.</p>
-    <p>Lupine's Quantum Ledger is our answer to this problem. It is a cryptographically-linked provenance layer embedded inside the glimPSE simulation engine that records <strong>every inference step</strong> of every simulation run — from force predictions and energy evaluations to the hardware context and model checkpoint hash used at runtime.</p>
-    <p>Every trajectory exported from glimPSE carries a Ledger Manifest: a compact JSON document that enables full bit-for-bit reproduction of any simulation, in any browser, on any hardware — given the same WASM bundle version and hardware floating-point standard.</p>
-
-    <h2 id="ledger-structure">Ledger Entry Schema</h2>
-    <p>Each simulation step writes a single Ledger Entry to the in-memory append-only log. At trajectory export, these entries are serialized and embedded in the XDATCAR file header as a Base64-encoded JSON block.</p>
-
-    <div class="ledger-entry">
-      <div class="ledger-entry-label">Example Ledger Entry — Step 1,247</div>
-      <div class="ledger-row"><span class="ledger-key">step_id</span><span class="ledger-val">1247</span></div>
-      <div class="ledger-row"><span class="ledger-key">timestamp_ns</span><span class="ledger-val">1710432847293810432</span></div>
-      <div class="ledger-row"><span class="ledger-key">potential</span><span class="ledger-val">CHGNet@v0.3.3.sha256:a4f9c2</span></div>
-      <div class="ledger-row"><span class="ledger-key">energy_eV</span><span class="ledger-val">-847.234192</span></div>
-      <div class="ledger-row"><span class="ledger-key">max_force_eV_A</span><span class="ledger-val">0.04128</span></div>
-      <div class="ledger-row"><span class="ledger-key">temperature_K</span><span class="ledger-val">2400.0</span></div>
-      <div class="ledger-row"><span class="ledger-key">hardware_ctx</span><span class="ledger-val">WebGPU/Apple M3 Pro</span></div>
-      <div class="ledger-row"><span class="ledger-key">entry_hash</span><span class="ledger-val">sha256:9e3f1a…</span></div>
-    </div>
-
-    <p>Each entry is chained to the previous via its SHA-256 hash, forming a tamper-evident linked list. Any modification to a historical step will invalidate every subsequent hash — making post-hoc trajectory manipulation detectable without requiring a trusted third party.</p>
-
-    <h2 id="synchronization">Quantum Ledger Synchronization</h2>
-    <p>When a simulation completes in glimPSE, the Ledger Manifest is written to Lupine's distributed Ledger network — a content-addressed storage layer built on IPFS. This gives every Lupine simulation a permanent, globally-addressable proof of computation that can be cited in publications using a standard DOI-equivalent URI:</p>
-    <p><strong>lupine://ledger/sha256:9e3f1a7c…</strong></p>
-    <p>Reviewers and collaborators can independently verify a simulation's integrity by fetching the manifest and re-running the trajectory from its recorded initial conditions through the pinned WASM bundle version referenced in the manifest header.</p>
-  </article>
-
-  <aside class="article-sidebar">
-    <div class="sidebar-card">
-      <p class="sidebar-label">In This Article</p>
-      <ul class="toc-list">
-        <li><a href="#overview">The Reproducibility Problem</a></li>
-        <li><a href="#ledger-structure">Ledger Entry Schema</a></li>
-        <li><a href="#synchronization">Ledger Synchronization</a></li>
-      </ul>
-    </div>
-    <div class="sidebar-card">
-      <p class="sidebar-label">Core Principles</p>
-      <ul class="principles-list">
-        <li>Tamper-evident hash chaining</li>
-        <li>Hardware context capture</li>
-        <li>Cryptographic model pinning</li>
-        <li>IPFS-backed permanence</li>
-        <li>Zero-trust verification</li>
-      </ul>
-    </div>
-    <div class="sidebar-card">
-      <p class="sidebar-label">Related Research</p>
-      <ul class="related-list">
-        <li><a href="chgnet.html"><span class="related-tag">ML Potential</span><span class="related-title">CHGNet Universal Potential</span></a></li>
-        <li><a href="m3gnet.html"><span class="related-tag">ML Potential</span><span class="related-title">M3GNet Benchmark Results</span></a></li>
-        <li><a href="../platform-architecture.html"><span class="related-tag">Platform</span><span class="related-title">glimPSE WebGPU Architecture</span></a></li>
-      </ul>
-    </div>
-  </aside>
-</div>
-
-<section class="article-cta">
-  <h2>Every Simulation, Proven</h2>
-  <p>Run a Quantum Ledger-backed simulation in glimPSE. Your trajectory is verifiable from the first timestep.</p>
-  <a href="../glimPSE-demo.html" class="btn-cta">Open glimPSE <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span></a>
 </section>
-<footer>
-  <span class="footer-brand">lupine.science</span>
-  <span class="footer-copy">© 2024 Lupine Materials Science. All rights reserved.</span>
+
+<section class="py-12 px-12">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-16 items-start">
+    <article class="max-w-3xl">
+
+      <h2 id="overview" class="text-3xl font-headline italic mb-6 text-tertiary">The Reproducibility Problem</h2>
+      <p class="text-on-surface-variant leading-relaxed mb-6">The publication of machine-learning molecular dynamics results faces a structural reproducibility crisis. Unlike classical force-field simulations with deterministic initial conditions, NNFF-driven trajectories carry an additional layer of non-reproducibility: model version, hardware floating-point behavior, batch parallelization order, and PRNG seed all affect the precise trajectory — even when the input structure and potential parameters appear identical.</p>
+      <p class="text-on-surface-variant leading-relaxed mb-12">Lupine's Quantum Ledger is our answer. It is a cryptographically-linked provenance layer embedded inside the glimPSE simulation engine that records <span class="font-mono text-tertiary">every inference step</span> of every simulation run — from force predictions and energy evaluations to the hardware context and model checkpoint hash used at runtime.</p>
+
+      <h2 id="ledger-structure" class="text-3xl font-headline italic mb-6 text-tertiary">Ledger Entry Schema</h2>
+      <p class="text-on-surface-variant leading-relaxed mb-8">Each simulation step writes a single Ledger Entry to the in-memory append-only log. At trajectory export, entries are serialized and embedded in the XDATCAR file header as a Base64-encoded JSON block.</p>
+
+      <!-- Code block -->
+      <div class="glass-card rounded-lg overflow-hidden mb-12">
+        <div class="bg-surface-container-highest px-6 py-3 flex items-center gap-2 border-b border-outline-variant/20">
+          <div class="w-2 h-2 rounded-full bg-error/40"></div>
+          <div class="w-2 h-2 rounded-full bg-secondary/40"></div>
+          <div class="w-2 h-2 rounded-full bg-primary/40"></div>
+          <span class="ml-4 font-mono text-[10px] text-on-surface-variant/50">LEDGER ENTRY SCHEMA // STEP 1,247</span>
+        </div>
+        <div class="p-8 font-mono text-sm leading-relaxed overflow-x-auto">
+<pre class="text-on-surface-variant"><span class="text-tertiary">{</span>
+  <span class="text-primary">"step_id"</span>: <span class="text-secondary">1247</span>,
+  <span class="text-primary">"timestamp_ns"</span>: <span class="text-secondary">1710432847293810432</span>,
+  <span class="text-primary">"potential"</span>: <span class="text-[#d4a843]">"CHGNet@v0.3.3.sha256:a4f9c2"</span>,
+  <span class="text-primary">"energy_eV"</span>: <span class="text-secondary">-847.234192</span>,
+  <span class="text-primary">"max_force_eV_A"</span>: <span class="text-secondary">0.04128</span>,
+  <span class="text-primary">"temperature_K"</span>: <span class="text-secondary">2400.0</span>,
+  <span class="text-primary">"hardware_ctx"</span>: <span class="text-[#d4a843]">"WebGPU/Apple M3 Pro"</span>,
+  <span class="text-primary">"prev_hash"</span>: <span class="text-[#d4a843]">"sha256:7b2c4f…"</span>,
+  <span class="text-primary">"entry_hash"</span>: <span class="text-[#d4a843]">"sha256:9e3f1a…"</span>
+<span class="text-tertiary">}</span></pre>
+        </div>
+      </div>
+
+      <p class="text-on-surface-variant leading-relaxed mb-12">Each entry is chained to the previous via its SHA-256 hash, forming a tamper-evident linked list. Any modification to a historical step will invalidate every subsequent hash — making post-hoc trajectory manipulation detectable without a trusted third party.</p>
+
+      <h2 id="synchronization" class="text-3xl font-headline italic mb-6 text-tertiary">Quantum Ledger Synchronization</h2>
+      <p class="text-on-surface-variant leading-relaxed mb-6">When a simulation completes in glimPSE, the Ledger Manifest is written to Lupine's distributed Ledger network — a content-addressed storage layer built on IPFS. This gives every Lupine simulation a permanent, globally-addressable proof of computation that can be cited in publications:</p>
+
+      <div class="glass-card p-6 rounded-lg mb-8 border-tertiary/20">
+        <div class="font-mono text-[10px] text-tertiary uppercase tracking-widest mb-3">Lupine Ledger URI // Permanent Reference</div>
+        <div class="font-mono text-sm text-on-surface">lupine://ledger/<span class="text-secondary">sha256:9e3f1a7c4d8b2e6f…</span></div>
+      </div>
+
+      <p class="text-on-surface-variant leading-relaxed mb-8">Reviewers and collaborators can independently verify a simulation's integrity by fetching the manifest and re-running the trajectory from its recorded initial conditions through the pinned WASM bundle version referenced in the manifest header.</p>
+
+    </article>
+
+    <aside class="sticky top-28 flex flex-col gap-6">
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-[10px] uppercase tracking-widest text-outline mb-4">In This Article</div>
+        <ul class="flex flex-col gap-3">
+          <li><a href="#overview" class="font-mono text-xs text-on-surface-variant hover:text-tertiary transition-colors flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-outline-variant flex-shrink-0"></span>The Reproducibility Problem</a></li>
+          <li><a href="#ledger-structure" class="font-mono text-xs text-on-surface-variant hover:text-tertiary transition-colors flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-outline-variant flex-shrink-0"></span>Ledger Entry Schema</a></li>
+          <li><a href="#synchronization" class="font-mono text-xs text-on-surface-variant hover:text-tertiary transition-colors flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-outline-variant flex-shrink-0"></span>Ledger Synchronization</a></li>
+        </ul>
+      </div>
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-[10px] uppercase tracking-widest text-outline mb-4">Core Principles</div>
+        <ul class="flex flex-col gap-3">
+          <li class="flex items-start gap-2 font-mono text-xs text-on-surface-variant"><span class="w-1 h-1 rounded-full bg-tertiary flex-shrink-0 mt-1.5"></span>Tamper-evident hash chaining</li>
+          <li class="flex items-start gap-2 font-mono text-xs text-on-surface-variant"><span class="w-1 h-1 rounded-full bg-tertiary flex-shrink-0 mt-1.5"></span>Hardware context capture</li>
+          <li class="flex items-start gap-2 font-mono text-xs text-on-surface-variant"><span class="w-1 h-1 rounded-full bg-tertiary flex-shrink-0 mt-1.5"></span>Cryptographic model pinning</li>
+          <li class="flex items-start gap-2 font-mono text-xs text-on-surface-variant"><span class="w-1 h-1 rounded-full bg-tertiary flex-shrink-0 mt-1.5"></span>IPFS-backed permanence</li>
+          <li class="flex items-start gap-2 font-mono text-xs text-on-surface-variant"><span class="w-1 h-1 rounded-full bg-tertiary flex-shrink-0 mt-1.5"></span>Zero-trust verification</li>
+        </ul>
+      </div>
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-[10px] uppercase tracking-widest text-outline mb-4">Related Research</div>
+        <ul class="flex flex-col gap-4">
+          <li><a href="chgnet.html" class="flex flex-col gap-1 group"><span class="font-mono text-[10px] text-secondary uppercase tracking-widest">ML Potential</span><span class="text-sm text-on-surface-variant group-hover:text-tertiary transition-colors leading-snug">CHGNet Universal Potential</span></a></li>
+          <li><a href="m3gnet.html" class="flex flex-col gap-1 group"><span class="font-mono text-[10px] text-primary uppercase tracking-widest">ML Potential</span><span class="text-sm text-on-surface-variant group-hover:text-tertiary transition-colors leading-snug">M3GNet Benchmark Results</span></a></li>
+          <li><a href="../platform-architecture.html" class="flex flex-col gap-1 group"><span class="font-mono text-[10px] text-[#d4a843] uppercase tracking-widest">Platform</span><span class="text-sm text-on-surface-variant group-hover:text-tertiary transition-colors leading-snug">glimPSE WebGPU Architecture</span></a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="py-32 px-12 relative overflow-hidden">
+  <div class="absolute inset-0 bg-primary-container/10"></div>
+  <div class="max-w-4xl mx-auto text-center relative z-10 glass-card p-20 rounded-lg">
+    <h2 class="text-4xl font-headline italic mb-6">Every Simulation, Proven</h2>
+    <p class="text-on-surface-variant text-lg mb-10 max-w-2xl mx-auto">Run a Quantum Ledger-backed simulation in glimPSE. Your trajectory is cryptographically verifiable from the first timestep.</p>
+    <a href="../glimPSE-demo.html" class="inline-flex items-center gap-3 bg-primary-container text-on-primary-container font-mono text-sm px-12 py-5 rounded-lg tracking-widest hover:brightness-110 transition-all">
+      EXECUTE PROTOCOL <span class="material-symbols-outlined text-base">arrow_forward</span>
+    </a>
+  </div>
+</section>
+
+<footer class="w-full border-t border-[#5565d4]/10 bg-[#12131a] flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8">
+  <div class="flex flex-col gap-4">
+    <div class="text-lg font-headline italic text-[#d4a843]">Lupine Materials Science</div>
+    <p class="font-mono text-[10px] tracking-tighter uppercase text-[#5565d4]">© 2024 LUPINE MATERIALS SCIENCE | QUANTUM LABORATORY PROTOCOL v4.0.2</p>
+  </div>
+  <div class="flex gap-6">
+    <a class="font-mono text-[10px] uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="../research.html">Research</a>
+    <a class="font-mono text-[10px] uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="../glimPSE-demo.html">Platform</a>
+    <a class="font-mono text-[10px] uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="../contact.html">Contact</a>
+  </div>
 </footer>
-</body>
-</html>
+</body></html>

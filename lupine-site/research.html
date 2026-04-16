@@ -1,547 +1,368 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Research & Methods — Lupine Materials Science</title>
+<title>Lupine Materials Science | Research & Methods</title>
 <meta name="description" content="Lupine publishes open methods, ML potential benchmarks, and field study results from our materials discovery platform."/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@1,400;1,700&family=JetBrains+Mono:wght@300;400;500&family=Newsreader:ital,wght@1,400;1,700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-surface-variant": "#c6c5d5",
+          "primary-container": "#5565d4",
+          "surface-bright": "#383941",
+          "on-secondary": "#003734",
+          "tertiary-fixed-dim": "#d4bbff",
+          "on-primary-fixed-variant": "#2839a9",
+          "on-tertiary": "#3d1b72",
+          "surface-container-high": "#292931",
+          "tertiary-container": "#7f5fb7",
+          "primary-fixed-dim": "#bcc3ff",
+          "tertiary-fixed": "#ebdcff",
+          "primary": "#bcc3ff",
+          "on-secondary-fixed-variant": "#00504c",
+          "outline-variant": "#454653",
+          "surface": "#12131a",
+          "secondary-fixed-dim": "#5dd9d0",
+          "background": "#12131a",
+          "on-secondary-container": "#00302d",
+          "on-error": "#690005",
+          "surface-container-lowest": "#0d0e15",
+          "surface-dim": "#12131a",
+          "on-background": "#e3e1ec",
+          "on-tertiary-fixed-variant": "#54358a",
+          "secondary-container": "#00a29a",
+          "surface-container-low": "#1a1b23",
+          "secondary": "#5dd9d0",
+          "on-tertiary-container": "#faf1ff",
+          "inverse-primary": "#4353c2",
+          "on-primary-fixed": "#000d60",
+          "error-container": "#93000a",
+          "surface-tint": "#bcc3ff",
+          "inverse-surface": "#e3e1ec",
+          "error": "#ffb4ab",
+          "on-tertiary-fixed": "#260058",
+          "surface-container-highest": "#34343c",
+          "on-primary-container": "#f5f3ff",
+          "on-error-container": "#ffdad6",
+          "inverse-on-surface": "#2f3038",
+          "outline": "#8f8f9f",
+          "primary-fixed": "#dfe0ff",
+          "secondary-fixed": "#7cf6ec",
+          "on-primary": "#051c93",
+          "on-secondary-fixed": "#00201e",
+          "surface-variant": "#34343c",
+          "on-surface": "#e3e1ec",
+          "surface-container": "#1e1f27",
+          "tertiary": "#d4bbff",
+          "accent-gold": "#d4a843"
+        },
+        "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+        "fontFamily": {
+          "headline": ["Newsreader", "serif"],
+          "body": ["Inter", "sans-serif"],
+          "label": ["Space Grotesk", "sans-serif"],
+          "mono": ["JetBrains Mono", "monospace"],
+          "serif-display": ["Playfair Display", "serif"]
+        }
+      }
+    }
+  }
+</script>
 <style>
-  :root {
-    --surface: #fef8f5;
-    --surface-low: #f8f2ef;
-    --surface-container: #f2ede9;
-    --surface-high: #ede7e4;
-    --surface-highest: #e7e1de;
-    --surface-dim: #ded9d6;
-    --on-surface: #1d1b19;
-    --on-surface-var: #444650;
-    --primary: #475b9c;
-    --primary-container: #7b8fd4;
-    --primary-fixed: #dce1ff;
-    --secondary: #4c653d;
-    --secondary-container: #ceecb9;
-    --tertiary: #725381;
-    --outline: #757681;
-    --outline-var: #c5c6d2;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--surface);
-    color: var(--on-surface);
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* NAV */
-  nav.site-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(254, 248, 245, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 0 max(2rem, calc((100% - 1200px)/2));
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-    box-shadow: 0 1px 0 rgba(44,42,40,0.06);
-  }
-  .nav-logo {
-    font-family: 'Newsreader', serif;
-    font-style: italic;
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--primary);
-    text-decoration: none;
-    letter-spacing: -0.02em;
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--on-surface-var);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover, .nav-links a.active { color: var(--primary); }
-
-  /* HERO */
-  .hero {
-    padding: 6rem max(2rem, calc((100% - 1200px)/2)) 4rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: end;
-  }
-  .hero-eyebrow {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--secondary);
-    margin-bottom: 1.25rem;
-  }
-  .hero-headline {
-    font-family: 'Newsreader', serif;
-    font-style: italic;
-    font-weight: 700;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    color: var(--on-surface);
-    margin-bottom: 1.5rem;
-  }
-  .hero-lede {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    color: var(--on-surface-var);
-    max-width: 50ch;
-  }
-  .hero-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding-left: 2rem;
-    border-left: 2px solid var(--primary-fixed);
-  }
-  .stat-item {}
-  .stat-number {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: var(--primary);
-    line-height: 1;
-    margin-bottom: 0.25rem;
-  }
-  .stat-label {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--on-surface-var);
-  }
-
-  /* SECTION WRAPPER */
-  .section { padding: 4rem max(2rem, calc((100% - 1200px)/2)); }
-  .section-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--on-surface-var);
-    margin-bottom: 2rem;
-  }
-
-  /* FILTER PILLS */
-  .filter-row {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 3rem;
-  }
-  .filter-pill {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.4rem 1rem;
-    border-radius: 4px;
-    background: var(--surface-container);
-    color: var(--on-surface-var);
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-  .filter-pill:hover { background: var(--primary-fixed); color: var(--primary); }
-  .filter-pill.active { background: var(--primary); color: #fff; }
-
-  /* ARTICLE GRID */
-  .article-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-bottom: 4rem;
-  }
-  .article-card {
-    background: var(--surface-low);
-    border-radius: 6px;
-    padding: 1.75rem;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    transition: background 0.2s, transform 0.2s;
-    box-shadow: 0 8px 32px rgba(44,42,40,0.04);
-  }
-  .article-card:hover {
-    background: var(--surface-container);
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(44,42,40,0.07);
-  }
-  .card-tag {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.625rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    border-radius: 3px;
-    width: fit-content;
-  }
-  .tag-ml { background: var(--primary-fixed); color: var(--primary); }
-  .tag-field { background: var(--secondary-container); color: var(--secondary); }
-  .tag-case { background: #f5d9ff; color: var(--tertiary); }
-  .tag-sim { background: #fff3cd; color: #7c5c00; }
-
-  .card-title {
-    font-family: 'Newsreader', serif;
-    font-weight: 700;
-    font-size: 1.125rem;
-    line-height: 1.3;
-    color: var(--on-surface);
-  }
-  .card-abstract {
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--on-surface-var);
-    flex: 1;
-  }
-  .card-meta {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.6875rem;
-    color: var(--outline);
-    letter-spacing: 0.04em;
-    margin-top: 0.25rem;
-  }
-
-  /* FEATURED STUDY */
-  .featured-study {
-    background: var(--primary);
-    border-radius: 8px;
-    padding: 4rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    align-items: center;
-    margin-bottom: 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .featured-study::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-  }
-  .featured-eyebrow {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 1rem;
-  }
-  .featured-title {
-    font-family: 'Newsreader', serif;
-    font-style: italic;
-    font-weight: 700;
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    line-height: 1.2;
-    color: #fff;
-    margin-bottom: 1rem;
-  }
-  .featured-abstract {
-    font-size: 0.9375rem;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.75);
-    max-width: 55ch;
-  }
-  .btn-featured {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 1rem 2rem;
-    background: #fff;
-    color: var(--primary);
-    border-radius: 4px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: opacity 0.2s, transform 0.2s;
-    flex-shrink: 0;
-  }
-  .btn-featured:hover { opacity: 0.9; transform: translateX(2px); }
-
-  /* MORE ARTICLES */
-  .more-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-bottom: 4rem;
-  }
-
-  /* PLATFORM CTA */
-  .platform-cta {
-    background: var(--surface-low);
-    border-radius: 6px;
-    padding: 4rem;
-    text-align: center;
-  }
-  .cta-headline {
-    font-family: 'Newsreader', serif;
-    font-style: italic;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--on-surface);
-    margin-bottom: 0.75rem;
-  }
-  .cta-sub {
-    font-size: 1rem;
-    color: var(--on-surface-var);
-    margin-bottom: 2rem;
-  }
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.875rem 2rem;
-    background: var(--primary);
-    color: #fff;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .btn-primary:hover { opacity: 0.88; }
-
-  /* FOOTER */
-  footer {
-    padding: 3rem max(2rem, calc((100% - 1200px)/2));
-    background: var(--surface-highest);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  .footer-brand {
-    font-family: 'Newsreader', serif;
-    font-style: italic;
-    font-weight: 700;
-    color: var(--primary);
-    font-size: 1rem;
-  }
-  .footer-copy {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.75rem;
-    color: var(--outline);
-    letter-spacing: 0.04em;
-  }
-  .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.75rem;
-    color: var(--on-surface-var);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-  }
-  .footer-links a:hover { color: var(--primary); }
-
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; gap: 2rem; }
-    .article-grid { grid-template-columns: 1fr; }
-    .more-grid { grid-template-columns: 1fr; }
-    .featured-study { grid-template-columns: 1fr; padding: 2.5rem; }
-    .nav-links { display: none; }
-  }
+  body { background-color: #0a0b12; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+  .glass-card { background: rgba(30, 31, 39, 0.5); backdrop-filter: blur(24px); border: 1px solid rgba(188, 195, 255, 0.1); }
+  .spectral-gradient { background: linear-gradient(90deg, #5565d4 0%, #5dd9d0 50%, #d4bbff 100%); }
+  .glow-soft { filter: drop-shadow(0 0 15px rgba(85, 101, 212, 0.15)); }
+  .glow-teal { box-shadow: 0 0 20px rgba(93, 217, 208, 0.15); }
+</style>
+<style>
+@media (max-width: 768px) {
+  .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+  .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+  .text-8xl, .text-7xl, .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; }
+  .text-5xl { font-size: 2rem !important; }
+  .text-4xl { font-size: 1.75rem !important; }
+  .px-12 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+  .hidden.md\:flex { display: none !important; }
+}
 </style>
 </head>
-<body>
+<body class="text-on-surface font-body overflow-x-hidden">
 
-<nav class="site-nav">
-  <a class="nav-logo" href="index.html">lupine.science</a>
-  <ul class="nav-links">
-    <li><a href="glimPSE-demo.html">Platform</a></li>
-    <li><a href="research.html" class="active">Research</a></li>
-    <li><a href="team.html">Team</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-50 bg-[#12131a]/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex justify-between items-center px-12 py-6">
+  <div class="text-xl font-headline italic text-[#bcc3ff]">Lupine Materials Science</div>
+  <div class="hidden md:flex gap-10">
+    <a class="text-[#5dd9d0] border-b border-[#5dd9d0] pb-1 font-mono text-xs uppercase tracking-widest" href="research.html">Research</a>
+    <a class="text-[#bcc3ff]/70 font-mono text-xs uppercase tracking-widest hover:text-[#d4bbff] transition-colors duration-300" href="ml-potentials-guide.html">ML Architectures</a>
+    <a class="text-[#bcc3ff]/70 font-mono text-xs uppercase tracking-widest hover:text-[#d4bbff] transition-colors duration-300" href="platform-architecture.html">Pipeline</a>
+    <a class="text-[#bcc3ff]/70 font-mono text-xs uppercase tracking-widest hover:text-[#d4bbff] transition-colors duration-300" href="docs.html">Documentation</a>
+  </div>
+  <a href="glimPSE-demo.html" class="bg-primary-container text-on-primary-container px-6 py-2 text-xs font-mono uppercase tracking-tighter rounded-lg hover:brightness-110 transition-all">Execute Protocol</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div>
-    <p class="hero-eyebrow">Lupine Research</p>
-    <h1 class="hero-headline">Field Notes from<br>the Atomic Scale</h1>
-    <p class="hero-lede">Lupine publishes open methods, ML potential benchmarks, and field study results from our materials discovery platform. Every simulation leaves a trace.</p>
+<!-- Hero -->
+<section class="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-24 px-6 overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-secondary/5 blur-[100px] rounded-full"></div>
+    <div class="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-tertiary/5 blur-[80px] rounded-full -translate-x-1/2 -translate-y-1/2"></div>
   </div>
-  <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-number">98.2%</div>
-      <div class="stat-label">CHGNet Prediction accuracy on Ni-based alloys</div>
+  <div class="z-10 text-center max-w-5xl mx-auto">
+    <div class="inline-block px-4 py-1 mb-8 glass-card border-[#d4a843]/30">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-[#d4a843] uppercase">Research & Methods // Open Publication</span>
     </div>
-    <div class="stat-item">
-      <div class="stat-number">94%</div>
-      <div class="stat-label">M3GNet confidence on novel superalloy compositions</div>
+    <h1 class="text-5xl md:text-7xl font-headline italic font-bold tracking-tight text-on-surface mb-8 leading-[1.1]">
+      Field Notes from<br/>the Atomic Scale
+    </h1>
+    <p class="text-xl md:text-2xl text-on-surface-variant font-light leading-relaxed max-w-3xl mx-auto mb-12">
+      Lupine publishes open methods, ML potential benchmarks, and field study results from our materials discovery platform. Every simulation leaves a trace.
+    </p>
+    <div class="flex flex-wrap justify-center gap-6 mb-20">
+      <a href="methods/chgnet.html" class="bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-mono text-sm px-10 py-4 rounded-lg tracking-widest hover:opacity-90 transition-all">
+        READ CHGNET METHOD
+      </a>
+      <a href="glimPSE-demo.html" class="glass-card text-on-surface font-mono text-sm px-10 py-4 rounded-lg tracking-widest hover:bg-surface-variant/20 transition-all">
+        OPEN GLIMPSE PLATFORM
+      </a>
     </div>
-    <div class="stat-item">
-      <div class="stat-number">40×</div>
-      <div class="stat-label">Faster inference via glimPSE WebGPU compute</div>
+    <!-- Stats row -->
+    <div class="grid grid-cols-3 gap-8 max-w-3xl mx-auto">
+      <div class="glass-card p-6 rounded-lg text-center">
+        <div class="font-mono text-3xl text-secondary mb-2">98.2%</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">CHGNet Accuracy<br/>vs Ni-Co benchmark</div>
+      </div>
+      <div class="glass-card p-6 rounded-lg text-center">
+        <div class="font-mono text-3xl text-primary mb-2">94%</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">M3GNet Confidence<br/>novel compositions</div>
+      </div>
+      <div class="glass-card p-6 rounded-lg text-center">
+        <div class="font-mono text-3xl text-tertiary mb-2">40×</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Faster inference<br/>via WebGPU compute</div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-24 w-full max-w-7xl px-12">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent"></div>
+  </div>
+</section>
+
+<!-- Filter + Article Grid -->
+<section class="py-24 px-12 bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <h2 class="text-4xl font-headline italic mb-4 border-l-4 border-primary pl-8">Published Research</h2>
+        <p class="text-on-surface-variant font-mono text-xs uppercase tracking-widest pl-8">Open methods // Benchmarks // Field studies</p>
+      </div>
+      <!-- Filter -->
+      <div class="flex flex-wrap gap-2" id="filters">
+        <button onclick="filterCards('all',this)" class="filter-pill active px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest rounded bg-primary-container text-on-primary-container transition-all">All</button>
+        <button onclick="filterCards('ml',this)" class="filter-pill px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest rounded glass-card text-on-surface-variant hover:text-primary transition-all">ML Potentials</button>
+        <button onclick="filterCards('sim',this)" class="filter-pill px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest rounded glass-card text-on-surface-variant hover:text-primary transition-all">Simulation Methods</button>
+        <button onclick="filterCards('field',this)" class="filter-pill px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest rounded glass-card text-on-surface-variant hover:text-primary transition-all">Field Studies</button>
+        <button onclick="filterCards('case',this)" class="filter-pill px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest rounded glass-card text-on-surface-variant hover:text-primary transition-all">Case Studies</button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="article-grid">
+
+      <!-- CHGNet -->
+      <a href="methods/chgnet.html" data-tag="ml" class="article-card glass-card p-8 rounded-lg hover:border-secondary/40 transition-all group flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-secondary tracking-widest uppercase">01 // ML Potential</div>
+        <h3 class="font-headline italic text-xl text-on-surface group-hover:text-primary transition-colors leading-snug">CHGNet: Universal ML Potential for Superalloy Discovery</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed flex-grow">Applying the crystal Hamiltonian graph neural network to discover novel nickel-based superalloys with enhanced creep resistance at 2,400K.</p>
+        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+          <span class="font-mono text-[10px] text-outline uppercase tracking-wider">Alex Welcing · Jan 2024</span>
+          <span class="font-mono text-[10px] text-secondary uppercase tracking-wider">98.2% accuracy →</span>
+        </div>
+      </a>
+
+      <!-- M3GNet -->
+      <a href="methods/m3gnet.html" data-tag="ml" class="article-card glass-card p-8 rounded-lg hover:border-primary/40 transition-all group flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-primary tracking-widest uppercase">02 // ML Potential</div>
+        <h3 class="font-headline italic text-xl text-on-surface group-hover:text-secondary transition-colors leading-snug">M3GNet: Multi-Fidelity Force Field Inference at Scale</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed flex-grow">Benchmarking M3GNet universal GNN across 89 elemental systems with 94% confidence on novel compositional space outside training distribution.</p>
+        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+          <span class="font-mono text-[10px] text-outline uppercase tracking-wider">Alex Welcing · Feb 2024</span>
+          <span class="font-mono text-[10px] text-primary uppercase tracking-wider">94% confidence →</span>
+        </div>
+      </a>
+
+      <!-- Quantum Ledger -->
+      <a href="methods/quantum-ledger.html" data-tag="sim" class="article-card glass-card p-8 rounded-lg hover:border-tertiary/40 transition-all group flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-tertiary tracking-widest uppercase">03 // Simulation Method</div>
+        <h3 class="font-headline italic text-xl text-on-surface group-hover:text-tertiary transition-colors leading-snug">The Quantum Ledger: Reproducible Provenance for ML Simulations</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed flex-grow">How Lupine's audit layer tracks every NNFF inference step, enabling full reproducibility via cryptographic hash chaining and IPFS permanence.</p>
+        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+          <span class="font-mono text-[10px] text-outline uppercase tracking-wider">Alex Welcing · Mar 2024</span>
+          <span class="font-mono text-[10px] text-tertiary uppercase tracking-wider">Read method →</span>
+        </div>
+      </a>
+
+      <!-- MACE Field Study -->
+      <a href="research-manifesto.html" data-tag="field" class="article-card glass-card p-8 rounded-lg hover:border-secondary/40 transition-all group flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-secondary tracking-widest uppercase">04 // Field Study</div>
+        <h3 class="font-headline italic text-xl text-on-surface group-hover:text-primary transition-colors leading-snug">Accelerating Amorphous Carbon Simulation via MACE</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed flex-grow">Benchmarking the message-passing equivariant neural network on complex disordered carbon systems for next-generation battery anode research.</p>
+        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+          <span class="font-mono text-[10px] text-outline uppercase tracking-wider">Alex Welcing · Jan 2024</span>
+          <span class="font-mono text-[10px] text-secondary uppercase tracking-wider">10 min read →</span>
+        </div>
+      </a>
+
+      <!-- Marine Alloys Case Study -->
+      <a href="case-study-superalloys.html" data-tag="case" class="article-card glass-card p-8 rounded-lg hover:border-primary/40 transition-all group flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-[#d4a843] tracking-widest uppercase">05 // Case Study</div>
+        <h3 class="font-headline italic text-xl text-on-surface group-hover:text-primary transition-colors leading-snug">Thermal Fatigue in Offshore Alloy Castings</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed flex-grow">Longitudinal study of stress-corrosion cracking in high-salinity environments. Lupine's ML potential identified failure modes 18 months before field observation.</p>
+        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+          <span class="font-mono text-[10px] text-outline uppercase tracking-wider">Alex Welcing · Dec 2023</span>
+          <span class="font-mono text-[10px] text-[#d4a843] uppercase tracking-wider">15 min read →</span>
+        </div>
+      </a>
+
+      <!-- HEA Entropy -->
+      <a href="case-study-batteries.html" data-tag="case" class="article-card glass-card p-8 rounded-lg hover:border-tertiary/40 transition-all group flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-[#d4a843] tracking-widest uppercase">06 // Case Study</div>
+        <h3 class="font-headline italic text-xl text-on-surface group-hover:text-tertiary transition-colors leading-snug">Entropy-Driven Stabilization in 7-Element High-Entropy Alloys</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed flex-grow">New simulation methods for predicting phase stability in multi-principal metallic systems using combinatorial screening and the Lupine Inference Engine.</p>
+        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+          <span class="font-mono text-[10px] text-outline uppercase tracking-wider">Alex Welcing · Nov 2023</span>
+          <span class="font-mono text-[10px] text-tertiary uppercase tracking-wider">14 min read →</span>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
 
-<!-- ARTICLE GRID -->
-<section class="section">
-  <p class="section-title">Published Research</p>
-
-  <div class="filter-row" id="filters">
-    <button class="filter-pill active" onclick="filterCards('all', this)">All</button>
-    <button class="filter-pill" onclick="filterCards('ml', this)">ML Potentials</button>
-    <button class="filter-pill" onclick="filterCards('sim', this)">Simulation Methods</button>
-    <button class="filter-pill" onclick="filterCards('field', this)">Field Studies</button>
-    <button class="filter-pill" onclick="filterCards('case', this)">Case Studies</button>
+<!-- Featured Study -->
+<section class="py-32 px-12 bg-surface-container-low relative overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 blur-[150px] rounded-full"></div>
+    <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary/5 blur-[120px] rounded-full"></div>
   </div>
-
-  <div class="article-grid" id="article-grid">
-    <a href="methods/chgnet.html" class="article-card" data-tag="ml">
-      <span class="card-tag tag-ml">ML Potential</span>
-      <h2 class="card-title">CHGNet: Universal ML Potential for Superalloy Discovery</h2>
-      <p class="card-abstract">Applying the crystal Hamiltonian graph neural network to discover novel nickel-based superalloys with enhanced creep resistance at 2,400K.</p>
-      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; January 2024 &nbsp;·&nbsp; 12 min read</p>
-    </a>
-
-    <a href="methods/m3gnet.html" class="article-card" data-tag="ml">
-      <span class="card-tag tag-ml">ML Potential</span>
-      <h2 class="card-title">M3GNet: Multi-Fidelity Force Field Inference at Scale</h2>
-      <p class="card-abstract">Benchmarking M3GNet universal GNN against DFT reference data across 89 elemental systems with 94% confidence on novel compositional space.</p>
-      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; February 2024 &nbsp;·&nbsp; 9 min read</p>
-    </a>
-
-    <a href="methods/quantum-ledger.html" class="article-card" data-tag="sim">
-      <span class="card-tag tag-sim">Simulation Method</span>
-      <h2 class="card-title">The Quantum Ledger: Reproducible Provenance for ML Simulations</h2>
-      <p class="card-abstract">How Lupine's audit layer tracks every NNFF inference step, enabling full reproducibility of simulation runs across distributed compute nodes.</p>
-      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; March 2024 &nbsp;·&nbsp; 8 min read</p>
-    </a>
-
-    <a href="research-manifesto.html" class="article-card" data-tag="field">
-      <span class="card-tag tag-field">Field Study</span>
-      <h2 class="card-title">Accelerating Amorphous Carbon Simulation via MACE</h2>
-      <p class="card-abstract">Benchmarking the message-passing equivariant neural network on complex disordered carbon systems for next-generation battery anode research.</p>
-      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; January 2024 &nbsp;·&nbsp; 10 min read</p>
-    </a>
-
-    <a href="case-study-superalloys.html" class="article-card" data-tag="case">
-      <span class="card-tag tag-case">Case Study</span>
-      <h2 class="card-title">Thermal Fatigue in Offshore Alloy Castings</h2>
-      <p class="card-abstract">A longitudinal study of stress-corrosion cracking in high-salinity marine environments. Lupine's ML potential identified failure modes 18 months before field observation.</p>
-      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; December 2023 &nbsp;·&nbsp; 15 min read</p>
-    </a>
-
-    <a href="case-study-batteries.html" class="article-card" data-tag="case">
-      <span class="card-tag tag-case">Case Study</span>
-      <h2 class="card-title">Entropy-Driven Stabilization in 7-Element High-Entropy Alloys</h2>
-      <p class="card-abstract">New simulation methods for predicting phase stability in multi-principal metallic systems using combinatorial screening and the Lupine Inference Engine.</p>
-      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; November 2023 &nbsp;·&nbsp; 14 min read</p>
-    </a>
-  </div>
-
-  <!-- FEATURED -->
-  <div class="featured-study">
-    <div>
-      <p class="featured-eyebrow">Featured Study</p>
-      <h2 class="featured-title">CHGNet Universal Potential in Superalloy Design</h2>
-      <p class="featured-abstract">Applying the crystal Hamiltonian graph neural network to discover novel nickel-based superalloys with enhanced creep resistance. Trained on 1.5M DFT trajectories, CHGNet achieves 98.2% accuracy against experimental benchmark datasets.</p>
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="mb-4">
+      <span class="font-mono text-[10px] text-[#d4a843] uppercase tracking-[0.3em]">Featured Study</span>
     </div>
-    <a href="methods/chgnet.html" class="btn-featured">
-      Read Method <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span>
-    </a>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <h2 class="text-5xl font-headline italic font-bold leading-tight mb-8">
+          CHGNet Universal Potential<br/>in Superalloy Design
+        </h2>
+        <p class="text-on-surface-variant text-lg leading-relaxed mb-10">
+          Applying the crystal Hamiltonian graph neural network to discover novel nickel-based superalloys with enhanced creep resistance. Trained on 1.5M DFT trajectories, CHGNet achieves 98.2% accuracy against experimental benchmark datasets at 2,400K operating temperatures.
+        </p>
+        <a href="methods/chgnet.html" class="inline-flex items-center gap-3 bg-primary-container text-on-primary-container font-mono text-sm px-10 py-4 rounded-lg tracking-widest hover:brightness-110 transition-all">
+          READ METHOD
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="glass-card p-6 rounded-lg glow-teal col-span-2">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-secondary mb-4">Benchmark Results // CHGNet vs DFT</div>
+          <table class="w-full font-mono text-xs">
+            <thead><tr class="text-on-surface-variant border-b border-outline-variant/30">
+              <th class="text-left pb-3">Metric</th><th class="text-right pb-3">CHGNet</th><th class="text-right pb-3">M3GNet</th><th class="text-right pb-3">MACE</th>
+            </tr></thead>
+            <tbody class="text-on-surface-variant">
+              <tr class="border-b border-outline-variant/10">
+                <td class="py-3">Force MAE (eV/Å)</td><td class="text-right py-3 text-secondary">0.040</td><td class="text-right py-3">0.067</td><td class="text-right py-3">0.058</td>
+              </tr>
+              <tr class="border-b border-outline-variant/10">
+                <td class="py-3">Energy MAE (eV/atom)</td><td class="text-right py-3 text-secondary">0.012</td><td class="text-right py-3">0.022</td><td class="text-right py-3">0.019</td>
+              </tr>
+              <tr>
+                <td class="py-3">Accuracy vs Experiment</td><td class="text-right py-3 text-secondary font-bold">98.2%</td><td class="text-right py-3">94.0%</td><td class="text-right py-3">96.1%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- MORE ARTICLES -->
-  <p class="section-title">From the Archive</p>
-  <div class="more-grid">
-    <a href="ml-potentials-guide.html" class="article-card" data-tag="ml">
-      <span class="card-tag tag-ml">ML Potential</span>
-      <h2 class="card-title">A Field Guide to Machine Learning Interatomic Potentials</h2>
-      <p class="card-abstract">Comparing MACE, CHGNet, M3GNet, and SevenNet across the Lupine benchmark suite. Which potential fits which material class?</p>
-      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; October 2023 &nbsp;·&nbsp; 18 min read</p>
-    </a>
-    <a href="platform-architecture.html" class="article-card" data-tag="sim">
-      <span class="card-tag tag-sim">Simulation Method</span>
-      <h2 class="card-title">WebGPU Compute Shaders for Molecular Dynamics at Scale</h2>
-      <p class="card-abstract">How glimPSE reduces NNFF inference time by 40× using native WebGPU compute pipelines and optimized C++ kernels for large-scale supercell calculations.</p>
-      <p class="card-meta">Alex Welcing &nbsp;·&nbsp; September 2023 &nbsp;·&nbsp; 11 min read</p>
+<!-- Archive -->
+<section class="py-32 px-12 bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl font-headline italic mb-16 border-l-4 border-secondary pl-8">From the Archive</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <a href="ml-potentials-guide.html" data-tag="ml" class="article-card glass-card p-8 rounded-lg hover:border-primary/40 transition-all group flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-primary tracking-widest uppercase">Field Guide // ML Potentials</div>
+        <h3 class="font-headline italic text-xl text-on-surface group-hover:text-primary transition-colors leading-snug">A Field Guide to Machine Learning Interatomic Potentials</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed flex-grow">Comparing MACE, CHGNet, M3GNet, and SevenNet across the Lupine benchmark suite. Which potential fits which material class?</p>
+        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+          <span class="font-mono text-[10px] text-outline uppercase tracking-wider">Alex Welcing · Oct 2023</span>
+          <span class="font-mono text-[10px] text-primary uppercase tracking-wider">18 min read →</span>
+        </div>
+      </a>
+      <a href="platform-architecture.html" data-tag="sim" class="article-card glass-card p-8 rounded-lg hover:border-tertiary/40 transition-all group flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-tertiary tracking-widest uppercase">Platform // WebGPU</div>
+        <h3 class="font-headline italic text-xl text-on-surface group-hover:text-tertiary transition-colors leading-snug">WebGPU Compute Shaders for Molecular Dynamics at Scale</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed flex-grow">How glimPSE reduces NNFF inference time by 40× using native WebGPU compute pipelines and optimized C++ kernels for large-scale supercell calculations.</p>
+        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+          <span class="font-mono text-[10px] text-outline uppercase tracking-wider">Alex Welcing · Sep 2023</span>
+          <span class="font-mono text-[10px] text-tertiary uppercase tracking-wider">11 min read →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Platform CTA -->
+<section class="py-32 px-12 relative overflow-hidden">
+  <div class="absolute inset-0 bg-primary-container/10"></div>
+  <div class="max-w-4xl mx-auto text-center relative z-10 glass-card p-20 rounded-lg border-primary/20">
+    <h2 class="text-5xl font-headline italic mb-8">Explore the glimPSE Platform</h2>
+    <p class="text-on-surface-variant text-lg mb-12 max-w-2xl mx-auto">
+      Run your own simulations. Apply CHGNet, M3GNet, or MACE to your material system — directly in the browser, backed by WebGPU compute and the Quantum Ledger.
+    </p>
+    <a href="glimPSE-demo.html" class="inline-flex items-center gap-3 bg-primary-container text-on-primary-container font-mono text-sm px-12 py-5 rounded-lg tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-primary-container/20">
+      EXECUTE PROTOCOL
+      <span class="material-symbols-outlined text-base">arrow_forward</span>
     </a>
   </div>
 </section>
 
-<!-- PLATFORM CTA -->
-<section class="section">
-  <div class="platform-cta">
-    <h2 class="cta-headline">Explore the glimPSE Platform</h2>
-    <p class="cta-sub">Run your own simulations. Apply CHGNet, M3GNet, or MACE to your material system — directly in the browser.</p>
-    <a href="glimPSE-demo.html" class="btn-primary">
-      Open Simulation Platform <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span>
-    </a>
+<!-- Footer -->
+<footer class="w-full border-t border-[#5565d4]/10 bg-[#12131a] flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8">
+  <div class="flex flex-col gap-4">
+    <div class="text-lg font-headline italic text-[#d4a843]">Lupine Materials Science</div>
+    <p class="font-mono text-[10px] tracking-tighter uppercase text-[#5565d4]">© 2024 LUPINE MATERIALS SCIENCE | QUANTUM LABORATORY PROTOCOL v4.0.2</p>
   </div>
-</section>
-
-<footer>
-  <span class="footer-brand">lupine.science</span>
-  <nav class="footer-links">
-    <a href="research.html">Research</a>
-    <a href="team.html">Team</a>
-    <a href="contact.html">Contact</a>
-    <a href="glimPSE-demo.html">Platform</a>
-  </nav>
-  <span class="footer-copy">© 2024 Lupine Materials Science. All rights reserved.</span>
+  <div class="flex gap-12">
+    <div class="flex flex-col gap-3">
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="ml-potentials-guide.html">ML Architectures</a>
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="research-manifesto.html">Research Manifesto</a>
+    </div>
+    <div class="flex flex-col gap-3">
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="glimPSE-demo.html">glimPSE Platform</a>
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="contact.html">Contact Director</a>
+    </div>
+  </div>
 </footer>
 
 <script>
 function filterCards(tag, btn) {
-  // Update pill UI
-  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  // Filter cards
+  document.querySelectorAll('.filter-pill').forEach(p => {
+    p.classList.remove('active','bg-primary-container','text-on-primary-container');
+    p.classList.add('glass-card','text-on-surface-variant');
+  });
+  btn.classList.add('active','bg-primary-container','text-on-primary-container');
+  btn.classList.remove('glass-card','text-on-surface-variant');
   document.querySelectorAll('.article-card').forEach(card => {
-    if (tag === 'all' || card.dataset.tag === tag) {
-      card.style.display = 'flex';
-    } else {
-      card.style.display = 'none';
-    }
+    card.style.display = (tag === 'all' || card.dataset.tag === tag) ? 'flex' : 'none';
   });
 }
 </script>
-</body>
-</html>
+</body></html>

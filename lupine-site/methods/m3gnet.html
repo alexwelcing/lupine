@@ -1,167 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>M3GNet: Multi-Fidelity Force Field Inference — Lupine Research</title>
+<title>M3GNet: Multi-Fidelity Force Field Inference | Lupine Research</title>
 <meta name="description" content="M3GNet achieves 94% confidence on novel superalloy compositions. Lupine's field benchmark of the universal graph force field across 89 elemental systems."/>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@300;400;500&family=Newsreader:ital,wght@1,400;1,700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-surface-variant":"#c6c5d5","primary-container":"#5565d4","surface-container-high":"#292931","primary":"#bcc3ff","outline-variant":"#454653","surface":"#12131a","background":"#12131a","surface-container-lowest":"#0d0e15","surface-container-low":"#1a1b23","secondary":"#5dd9d0","error-container":"#93000a","surface-tint":"#bcc3ff","error":"#ffb4ab","surface-container-highest":"#34343c","on-primary-container":"#f5f3ff","outline":"#8f8f9f","primary-fixed":"#dfe0ff","on-primary":"#051c93","surface-variant":"#34343c","on-surface":"#e3e1ec","surface-container":"#1e1f27","tertiary":"#d4bbff","accent-gold":"#d4a843"},
+  "fontFamily":{"headline":["Newsreader","serif"],"body":["Inter","sans-serif"],"mono":["JetBrains Mono","monospace"]}}}}
+</script>
 <style>
-  :root {
-    --surface:#fef8f5;--surface-low:#f8f2ef;--surface-container:#f2ede9;
-    --surface-high:#ede7e4;--surface-highest:#e7e1de;
-    --on-surface:#1d1b19;--on-surface-var:#444650;
-    --primary:#475b9c;--primary-container:#7b8fd4;--primary-fixed:#dce1ff;
-    --secondary:#4c653d;--tertiary:#725381;
-    --outline:#757681;--outline-var:#c5c6d2;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--surface);color:var(--on-surface);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
-  nav.site-nav{position:sticky;top:0;z-index:100;background:rgba(254,248,245,0.92);backdrop-filter:blur(12px);padding:0 max(2rem,calc((100% - 1200px)/2));display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 1px 0 rgba(44,42,40,0.06);}
-  .nav-left{display:flex;align-items:center;gap:1.5rem;}
-  .nav-back{display:flex;align-items:center;gap:0.375rem;font-family:'Space Grotesk',sans-serif;font-size:0.75rem;font-weight:500;color:var(--on-surface-var);text-decoration:none;letter-spacing:0.04em;text-transform:uppercase;transition:color 0.2s;}
-  .nav-back:hover{color:var(--primary);}
-  .nav-back .material-symbols-outlined{font-size:1rem;}
-  .nav-breadcrumb{font-family:'Space Grotesk',sans-serif;font-size:0.6875rem;color:var(--outline);letter-spacing:0.04em;}
-  .nav-logo{font-family:'Newsreader',serif;font-style:italic;font-weight:700;font-size:1.125rem;color:var(--primary);text-decoration:none;}
-  .article-hero{padding:5rem max(2rem,calc((100% - 1200px)/2)) 4rem;max-width:1200px;margin:0 auto;}
-  .hero-tags{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
-  .tag-chip{font-family:'Space Grotesk',sans-serif;font-size:0.625rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;padding:0.25rem 0.625rem;border-radius:3px;}
-  .tag-ml{background:var(--primary-fixed);color:var(--primary);}
-  .tag-sim{background:#fff3cd;color:#7c5c00;}
-  h1.article-title{font-family:'Newsreader',serif;font-style:italic;font-weight:700;font-size:clamp(2rem,4vw,3.25rem);line-height:1.15;letter-spacing:-0.03em;color:var(--on-surface);margin-bottom:2rem;max-width:22ch;}
-  .article-meta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;padding-bottom:2rem;border-bottom:1px solid var(--outline-var);}
-  .meta-name{font-weight:600;font-size:0.9375rem;}
-  .meta-org{font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:var(--secondary);letter-spacing:0.04em;}
-  .meta-divider{width:1px;height:2rem;background:var(--outline-var);}
-  .meta-label{font-family:'Space Grotesk',sans-serif;font-size:0.625rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--outline);}
-  .meta-value{font-family:'Space Grotesk',sans-serif;font-size:0.875rem;color:var(--on-surface-var);}
-  .article-layout{display:grid;grid-template-columns:1fr 280px;gap:4rem;padding:3rem max(2rem,calc((100% - 1200px)/2)) 6rem;max-width:1200px;margin:0 auto;align-items:start;}
-  .article-body h2{font-family:'Newsreader',serif;font-style:italic;font-weight:700;font-size:1.625rem;line-height:1.2;color:var(--on-surface);margin-top:3rem;margin-bottom:1rem;}
-  .article-body h2:first-child{margin-top:0;}
-  .article-body p{font-size:1rem;line-height:1.8;color:var(--on-surface-var);margin-bottom:1.25rem;max-width:68ch;}
-  .article-body strong{color:var(--on-surface);font-weight:600;}
-  .benchmark-table{width:100%;border-collapse:collapse;margin:2rem 0;background:var(--surface-low);border-radius:6px;overflow:hidden;font-family:'Space Grotesk',sans-serif;font-size:0.875rem;}
-  .benchmark-table thead{background:var(--primary);color:#fff;}
-  .benchmark-table th{padding:0.875rem 1.25rem;text-align:left;font-size:0.6875rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;}
-  .benchmark-table td{padding:0.875rem 1.25rem;color:var(--on-surface-var);border-bottom:1px solid var(--outline-var);}
-  .benchmark-table tr:last-child td{border-bottom:none;}
-  .metric-val{color:var(--primary);font-weight:600;}
-  .benchmark-highlight{background:rgba(71,91,156,0.04);}
-  .article-sidebar{position:sticky;top:80px;display:flex;flex-direction:column;gap:1.5rem;}
-  .sidebar-card{background:var(--surface-low);border-radius:6px;padding:1.5rem;box-shadow:0 4px 16px rgba(44,42,40,0.04);}
-  .sidebar-label{font-family:'Space Grotesk',sans-serif;font-size:0.625rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--outline);margin-bottom:1rem;}
-  .toc-list{list-style:none;display:flex;flex-direction:column;gap:0.625rem;}
-  .toc-list a{font-family:'Space Grotesk',sans-serif;font-size:0.8125rem;color:var(--on-surface-var);text-decoration:none;display:flex;align-items:center;gap:0.375rem;transition:color 0.2s;}
-  .toc-list a:hover{color:var(--primary);}
-  .toc-list a::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--outline-var);flex-shrink:0;}
-  .metric-highlight{text-align:center;padding:2rem 1.5rem;}
-  .metric-big{font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;color:var(--primary);line-height:1;margin-bottom:0.5rem;}
-  .metric-desc{font-size:0.8125rem;color:var(--on-surface-var);line-height:1.5;}
-  .related-list{list-style:none;display:flex;flex-direction:column;gap:1rem;}
-  .related-list li a{display:flex;flex-direction:column;gap:0.25rem;text-decoration:none;transition:color 0.2s;}
-  .related-tag{font-family:'Space Grotesk',sans-serif;font-size:0.5625rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--secondary);}
-  .related-title{font-size:0.875rem;font-weight:500;color:var(--on-surface);line-height:1.4;}
-  .related-list li a:hover .related-title{color:var(--primary);}
-  .article-cta{background:var(--secondary);padding:4rem max(2rem,calc((100% - 1200px)/2));text-align:center;}
-  .article-cta h2{font-family:'Newsreader',serif;font-style:italic;font-weight:700;font-size:2rem;color:#fff;margin-bottom:0.75rem;}
-  .article-cta p{color:rgba(255,255,255,0.75);margin-bottom:2rem;}
-  .btn-cta{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Space Grotesk',sans-serif;font-size:0.8125rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.875rem 2rem;background:#fff;color:var(--secondary);border-radius:4px;text-decoration:none;transition:opacity 0.2s;}
-  .btn-cta:hover{opacity:0.9;}
-  footer{padding:3rem max(2rem,calc((100% - 1200px)/2));background:var(--surface-highest);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-  .footer-brand{font-family:'Newsreader',serif;font-style:italic;font-weight:700;color:var(--primary);font-size:1rem;}
-  .footer-copy{font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:var(--outline);}
-  @media(max-width:900px){.article-layout{grid-template-columns:1fr;}.article-sidebar{position:static;}.nav-breadcrumb{display:none;}}
+  body{background-color:#0a0b12;}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;}
+  .glass-card{background:rgba(30,31,39,0.5);backdrop-filter:blur(24px);border:1px solid rgba(188,195,255,0.1);}
 </style>
 </head>
-<body>
-<nav class="site-nav">
-  <div class="nav-left">
-    <a href="../research.html" class="nav-back"><span class="material-symbols-outlined">arrow_back</span>Research</a>
-    <span class="nav-breadcrumb">/ ML Potentials / M3GNet</span>
+<body class="text-on-surface font-body overflow-x-hidden">
+
+<nav class="fixed top-0 w-full z-50 bg-[#12131a]/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex justify-between items-center px-12 py-6">
+  <div class="flex items-center gap-6">
+    <a href="../research.html" class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-secondary hover:text-on-surface transition-colors">
+      <span class="material-symbols-outlined text-sm">arrow_back</span>Research
+    </a>
+    <span class="text-outline-variant/50 font-mono text-[10px]">/ ML Potentials / M3GNet</span>
   </div>
-  <a href="../index.html" class="nav-logo">lupine.science</a>
+  <div class="text-lg font-headline italic text-[#bcc3ff]">Lupine Materials Science</div>
 </nav>
 
-<header class="article-hero">
-  <div class="hero-tags">
-    <span class="tag-chip tag-ml">ML Potential</span>
-    <span class="tag-chip tag-sim">Benchmark</span>
+<section class="relative pt-40 pb-16 px-12 overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-1/4 right-1/3 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-tertiary/5 blur-[100px] rounded-full"></div>
   </div>
-  <h1 class="article-title">M3GNet: Multi-Fidelity Force Field Inference at Scale</h1>
-  <div class="article-meta">
-    <div>
-      <div class="meta-name">Alex Welcing</div>
-      <div class="meta-org">Lupine Research</div>
+  <div class="max-w-5xl mx-auto relative z-10">
+    <div class="flex flex-wrap gap-2 mb-8">
+      <span class="px-3 py-1 font-mono text-[10px] uppercase tracking-widest rounded glass-card text-primary border-primary/30">ML Potential</span>
+      <span class="px-3 py-1 font-mono text-[10px] uppercase tracking-widest rounded glass-card text-tertiary border-tertiary/30">Benchmark</span>
     </div>
-    <div class="meta-divider"></div>
-    <div><div class="meta-label">Published</div><div class="meta-value">February 2024</div></div>
-    <div class="meta-divider"></div>
-    <div><div class="meta-label">Read Time</div><div class="meta-value">9 min</div></div>
+    <h1 class="text-5xl md:text-6xl font-headline italic font-bold leading-[1.1] tracking-tight mb-10 max-w-4xl">
+      M3GNet: Multi-Fidelity Force Field Inference at Scale
+    </h1>
+    <div class="flex flex-wrap items-center gap-6 pb-10 border-b border-outline-variant/30">
+      <div><div class="font-mono text-sm text-on-surface font-semibold">Alex Welcing</div><div class="font-mono text-[10px] uppercase tracking-wider text-primary">Lupine Research</div></div>
+      <div class="w-px h-8 bg-outline-variant/40"></div>
+      <div><div class="font-mono text-[10px] uppercase tracking-wider text-outline">Published</div><div class="font-mono text-sm text-on-surface-variant">February 2024</div></div>
+      <div class="w-px h-8 bg-outline-variant/40"></div>
+      <div><div class="font-mono text-[10px] uppercase tracking-wider text-outline">Read Time</div><div class="font-mono text-sm text-on-surface-variant">9 min</div></div>
+    </div>
   </div>
-</header>
-
-<div class="article-layout">
-  <article class="article-body">
-    <h2 id="overview">Method Overview</h2>
-    <p>M3GNet (Materials 3-body Graph Network) is a universal machine learning interatomic potential designed to model the full energy landscape of crystalline materials across the periodic table. Unlike potential-specific models trained on a single material class, M3GNet uses a unified training set derived from the Materials Project — enabling direct inference on novel compositional spaces with no fine-tuning required.</p>
-    <p>The core innovation in M3GNet is its explicit encoding of <strong>three-body angular interactions</strong> alongside the standard two-body radial terms. This structural choice dramatically improves accuracy for systems where bond angles are mechanistically significant — including the distorted perovskites and intermetallic phases central to Lupine's high-entropy alloy discovery workflows.</p>
-    <p>On Lupine's benchmark suite spanning 89 elemental systems and 6,200 novel compositions, M3GNet achieves <strong>94% confidence</strong> on force predictions in previously unseen chemical spaces — outperforming classical force fields by 3.2× while running at a fraction of the cost of full DFT.</p>
-
-    <h2 id="benchmarks">Benchmark Results</h2>
-    <p>We evaluated M3GNet on the Lupine Compositional Benchmark, a curated held-out set emphasizing novel multi-principal element alloys outside the training distribution. Performance was measured against DFT-computed reference values from the VASP 6.3 implementation with PBE-GGA functionals and a 500 eV plane-wave cutoff.</p>
-
-    <table class="benchmark-table">
-      <thead>
-        <tr><th>System</th><th>Force MAE (eV/Å)</th><th>Energy MAE (eV/atom)</th><th>M3GNet Confidence</th></tr>
-      </thead>
-      <tbody>
-        <tr class="benchmark-highlight"><td>Ni-Co-Cr Ternary</td><td class="metric-val">0.067</td><td class="metric-val">0.022</td><td class="metric-val">96.1%</td></tr>
-        <tr><td>Fe-Mn-Si HEA</td><td class="metric-val">0.071</td><td class="metric-val">0.025</td><td class="metric-val">94.4%</td></tr>
-        <tr class="benchmark-highlight"><td>Al-Ti-V Refractory</td><td class="metric-val">0.089</td><td class="metric-val">0.031</td><td class="metric-val">91.8%</td></tr>
-        <tr><td>Novel 7-Element HEA</td><td class="metric-val">0.094</td><td class="metric-val">0.038</td><td class="metric-val">94.0%</td></tr>
-      </tbody>
-    </table>
-
-    <h2 id="integration">glimPSE Integration</h2>
-    <p>M3GNet is deployed in glimPSE as a first-class inference backend alongside CHGNet. Users select their preferred potential from the simulation control panel — each is loaded from a pre-compiled WASM bundle and executed on the WebGPU compute pipeline. Switching between potentials requires no page reload; trajectories can be compared side-by-side in the dual-viewport mode of the Field Studies interface.</p>
-    <p>The M3GNet confidence score — displayed as the <strong>M3GNet Confidence: 94%</strong> metric in the glimPSE Field Studies HUD — reflects a rolling average of force prediction uncertainty across the most recent 500 simulation steps, computed using an ensemble of 5 independently initialized model snapshots via Monte Carlo Dropout.</p>
-  </article>
-
-  <aside class="article-sidebar">
-    <div class="sidebar-card">
-      <p class="sidebar-label">In This Article</p>
-      <ul class="toc-list">
-        <li><a href="#overview">Method Overview</a></li>
-        <li><a href="#benchmarks">Benchmark Results</a></li>
-        <li><a href="#integration">glimPSE Integration</a></li>
-      </ul>
-    </div>
-    <div class="sidebar-card metric-highlight">
-      <p class="metric-big">94%</p>
-      <p class="metric-desc">M3GNet confidence on novel superalloy compositions outside training distribution</p>
-      <p class="sidebar-label" style="margin-top:1rem;">M3GNet Confidence</p>
-    </div>
-    <div class="sidebar-card">
-      <p class="sidebar-label">Related Research</p>
-      <ul class="related-list">
-        <li><a href="chgnet.html"><span class="related-tag">ML Potential</span><span class="related-title">CHGNet Universal Potential</span></a></li>
-        <li><a href="../ml-potentials-guide.html"><span class="related-tag">Field Guide</span><span class="related-title">ML Potential Comparison Survey</span></a></li>
-        <li><a href="quantum-ledger.html"><span class="related-tag">Method</span><span class="related-title">The Quantum Ledger</span></a></li>
-      </ul>
-    </div>
-  </aside>
-</div>
-
-<section class="article-cta">
-  <h2>Run M3GNet in glimPSE</h2>
-  <p>Apply M3GNet to your alloy system and compare against CHGNet — inside the browser, zero setup.</p>
-  <a href="../glimPSE-demo.html" class="btn-cta">Open glimPSE <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span></a>
 </section>
-<footer>
-  <span class="footer-brand">lupine.science</span>
-  <span class="footer-copy">© 2024 Lupine Materials Science. All rights reserved.</span>
+
+<section class="py-12 px-12">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-16 items-start">
+    <article class="max-w-3xl">
+
+      <h2 id="overview" class="text-3xl font-headline italic mb-6 text-primary">Method Overview</h2>
+      <p class="text-on-surface-variant leading-relaxed mb-6">M3GNet (Materials 3-body Graph Network) is a universal machine learning interatomic potential designed to model the full energy landscape of crystalline materials across the periodic table. Unlike potential-specific models trained on a single material class, M3GNet uses a unified training set derived from the Materials Project — enabling direct inference on novel compositional spaces with no fine-tuning required.</p>
+      <p class="text-on-surface-variant leading-relaxed mb-6">The core innovation is the explicit encoding of <span class="font-mono text-primary">three-body angular interactions</span> alongside standard two-body radial terms. This dramatically improves accuracy for systems where bond angles are mechanistically significant — including the distorted perovskites and intermetallic phases central to Lupine's high-entropy alloy discovery workflows.</p>
+      <p class="text-on-surface-variant leading-relaxed mb-12">On Lupine's benchmark suite spanning 89 elemental systems and 6,200 novel compositions, M3GNet achieves <span class="font-mono text-secondary">94% confidence</span> on force predictions in previously unseen chemical spaces — outperforming classical force fields by 3.2× while running at a fraction of full DFT cost.</p>
+
+      <h2 id="benchmarks" class="text-3xl font-headline italic mb-6 text-primary">Benchmark Results</h2>
+      <p class="text-on-surface-variant leading-relaxed mb-8">We evaluated M3GNet on the Lupine Compositional Benchmark — a held-out set emphasizing novel multi-principal element alloys outside the training distribution. Performance measured against DFT-computed references using VASP 6.3 with PBE-GGA functionals and a 500 eV plane-wave cutoff.</p>
+
+      <div class="glass-card rounded-lg overflow-hidden mb-12">
+        <div class="bg-surface-container-highest px-6 py-3 flex items-center gap-2 border-b border-outline-variant/20">
+          <div class="w-2 h-2 rounded-full bg-error/40"></div>
+          <div class="w-2 h-2 rounded-full bg-secondary/40"></div>
+          <div class="w-2 h-2 rounded-full bg-primary/40"></div>
+          <span class="ml-4 font-mono text-[10px] text-on-surface-variant/50">LUPINE COMPOSITIONAL BENCHMARK // HELD-OUT TEST SET</span>
+        </div>
+        <div class="overflow-x-auto p-6">
+          <table class="w-full font-mono text-sm">
+            <thead><tr class="text-on-surface-variant border-b border-outline-variant/30">
+              <th class="text-left pb-4 text-[10px] uppercase tracking-widest">System</th>
+              <th class="text-right pb-4 text-[10px] uppercase tracking-widest">Force MAE (eV/Å)</th>
+              <th class="text-right pb-4 text-[10px] uppercase tracking-widest">Energy MAE (eV/atom)</th>
+              <th class="text-right pb-4 text-[10px] uppercase tracking-widest text-primary">M3GNet Confidence</th>
+            </tr></thead>
+            <tbody class="text-on-surface-variant">
+              <tr class="border-b border-outline-variant/10 hover:bg-surface-container-low/30 transition-colors">
+                <td class="py-4">Ni-Co-Cr Ternary</td><td class="text-right py-4">0.067</td><td class="text-right py-4">0.022</td><td class="text-right py-4 text-primary font-bold">96.1%</td>
+              </tr>
+              <tr class="border-b border-outline-variant/10 hover:bg-surface-container-low/30 transition-colors">
+                <td class="py-4">Fe-Mn-Si HEA</td><td class="text-right py-4">0.071</td><td class="text-right py-4">0.025</td><td class="text-right py-4 text-primary font-bold">94.4%</td>
+              </tr>
+              <tr class="border-b border-outline-variant/10 hover:bg-surface-container-low/30 transition-colors">
+                <td class="py-4">Al-Ti-V Refractory</td><td class="text-right py-4">0.089</td><td class="text-right py-4">0.031</td><td class="text-right py-4 text-primary font-bold">91.8%</td>
+              </tr>
+              <tr class="hover:bg-surface-container-low/30 transition-colors">
+                <td class="py-4 text-on-surface">Novel 7-Element HEA</td><td class="text-right py-4">0.094</td><td class="text-right py-4">0.038</td><td class="text-right py-4 text-secondary font-bold text-base">94.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h2 id="integration" class="text-3xl font-headline italic mb-6 text-primary">glimPSE Integration</h2>
+      <p class="text-on-surface-variant leading-relaxed mb-6">M3GNet is deployed in glimPSE as a first-class inference backend alongside CHGNet. Users select their preferred potential from the simulation control panel — each loaded from a pre-compiled WASM bundle and executed on the WebGPU compute pipeline. Switching between potentials requires no page reload; trajectories can be compared side-by-side in the dual-viewport mode of the Field Studies interface.</p>
+      <p class="text-on-surface-variant leading-relaxed mb-8">The M3GNet confidence score displayed in the glimPSE Field Studies HUD reflects a rolling average of force prediction uncertainty across the most recent 500 simulation steps, computed using an ensemble of 5 independently initialized model snapshots via Monte Carlo Dropout.</p>
+
+    </article>
+
+    <aside class="sticky top-28 flex flex-col gap-6">
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-[10px] uppercase tracking-widest text-outline mb-4">In This Article</div>
+        <ul class="flex flex-col gap-3">
+          <li><a href="#overview" class="font-mono text-xs text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-outline-variant flex-shrink-0"></span>Method Overview</a></li>
+          <li><a href="#benchmarks" class="font-mono text-xs text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-outline-variant flex-shrink-0"></span>Benchmark Results</a></li>
+          <li><a href="#integration" class="font-mono text-xs text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-outline-variant flex-shrink-0"></span>glimPSE Integration</a></li>
+        </ul>
+      </div>
+      <div class="glass-card p-8 rounded-lg text-center">
+        <div class="font-mono text-5xl text-primary mb-3">94%</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant leading-relaxed">M3GNet confidence on novel superalloy compositions outside training distribution</div>
+        <div class="mt-4 font-mono text-[10px] text-outline uppercase tracking-widest">M3GNet Confidence</div>
+      </div>
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-[10px] uppercase tracking-widest text-outline mb-4">Related Research</div>
+        <ul class="flex flex-col gap-4">
+          <li><a href="chgnet.html" class="flex flex-col gap-1 group"><span class="font-mono text-[10px] text-secondary uppercase tracking-widest">ML Potential</span><span class="text-sm text-on-surface-variant group-hover:text-primary transition-colors leading-snug">CHGNet Universal Potential</span></a></li>
+          <li><a href="../ml-potentials-guide.html" class="flex flex-col gap-1 group"><span class="font-mono text-[10px] text-[#d4a843] uppercase tracking-widest">Field Guide</span><span class="text-sm text-on-surface-variant group-hover:text-primary transition-colors leading-snug">ML Potential Comparison Survey</span></a></li>
+          <li><a href="quantum-ledger.html" class="flex flex-col gap-1 group"><span class="font-mono text-[10px] text-tertiary uppercase tracking-widest">Method</span><span class="text-sm text-on-surface-variant group-hover:text-primary transition-colors leading-snug">The Quantum Ledger</span></a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="py-32 px-12 relative overflow-hidden">
+  <div class="absolute inset-0 bg-primary-container/10"></div>
+  <div class="max-w-4xl mx-auto text-center relative z-10 glass-card p-20 rounded-lg">
+    <h2 class="text-4xl font-headline italic mb-6">Run M3GNet in glimPSE</h2>
+    <p class="text-on-surface-variant text-lg mb-10 max-w-2xl mx-auto">Apply M3GNet to your alloy system and compare against CHGNet — inside the browser, zero setup.</p>
+    <a href="../glimPSE-demo.html" class="inline-flex items-center gap-3 bg-primary-container text-on-primary-container font-mono text-sm px-12 py-5 rounded-lg tracking-widest hover:brightness-110 transition-all">
+      OPEN GLIMPSE <span class="material-symbols-outlined text-base">arrow_forward</span>
+    </a>
+  </div>
+</section>
+
+<footer class="w-full border-t border-[#5565d4]/10 bg-[#12131a] flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8">
+  <div class="flex flex-col gap-4">
+    <div class="text-lg font-headline italic text-[#d4a843]">Lupine Materials Science</div>
+    <p class="font-mono text-[10px] tracking-tighter uppercase text-[#5565d4]">© 2024 LUPINE MATERIALS SCIENCE | QUANTUM LABORATORY PROTOCOL v4.0.2</p>
+  </div>
+  <div class="flex gap-6">
+    <a class="font-mono text-[10px] uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="../research.html">Research</a>
+    <a class="font-mono text-[10px] uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="../glimPSE-demo.html">Platform</a>
+    <a class="font-mono text-[10px] uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="../contact.html">Contact</a>
+  </div>
 </footer>
-</body>
-</html>
+</body></html>
