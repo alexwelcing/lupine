@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Chronos Monolith</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,700;6..72,800&amp;family=Space+Grotesk:wght@300;400;500;700&amp;family=Inter:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#f7e1a6",
+                    "outline": "#99907c",
+                    "on-primary-fixed": "#241a00",
+                    "on-secondary-fixed": "#241a00",
+                    "error-container": "#93000a",
+                    "error": "#ffb4ab",
+                    "on-tertiary-container": "#254188",
+                    "on-primary": "#3c2f00",
+                    "surface-container-highest": "#353534",
+                    "surface": "#131313",
+                    "secondary-container": "#544519",
+                    "secondary": "#dac58d",
+                    "on-background": "#e5e2e1",
+                    "surface-tint": "#e9c349",
+                    "on-primary-container": "#554300",
+                    "primary-fixed": "#ffe088",
+                    "inverse-on-surface": "#313030",
+                    "surface-bright": "#3a3939",
+                    "outline-variant": "#4d4635",
+                    "background": "#131313",
+                    "primary-container": "#d4af37",
+                    "surface-container-high": "#2a2a2a",
+                    "primary": "#f2ca50",
+                    "on-secondary": "#3c2f05",
+                    "on-surface-variant": "#d0c5af",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-surface": "#e5e2e1",
+                    "on-tertiary": "#082b72",
+                    "tertiary-fixed-dim": "#b4c5ff",
+                    "surface-dim": "#131313",
+                    "on-secondary-container": "#c8b37d",
+                    "surface-container-low": "#1c1b1b",
+                    "on-tertiary-fixed": "#00174b",
+                    "tertiary-fixed": "#dbe1ff",
+                    "inverse-surface": "#e5e2e1",
+                    "tertiary": "#bfcdff",
+                    "tertiary-container": "#97b0ff",
+                    "on-secondary-fixed-variant": "#544519",
+                    "surface-container": "#201f1f",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#353534",
+                    "on-primary-fixed-variant": "#574500",
+                    "on-tertiary-fixed-variant": "#27438a",
+                    "on-error": "#690005",
+                    "inverse-primary": "#735c00",
+                    "primary-fixed-dim": "#e9c349",
+                    "secondary-fixed-dim": "#dac58d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Inter"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .monolith-gradient {
+            background: linear-gradient(to bottom, 
+                #1c1b1b 0%, 
+                #353534 30%, 
+                #544519 60%, 
+                #131313 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-[#131313]/80 backdrop-blur-xl border-b border-[#E9C349]/10 shadow-[0_40px_60px_-15px_rgba(233,195,73,0.06)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#D4AF37]">menu</span>
+</div>
+<h1 class="font-serif font-black tracking-widest uppercase text-2xl text-[#D4AF37] drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">SOVEREIGN</h1>
+<div class="w-8 h-8 bg-surface-container-highest border border-primary-container/20 overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover grayscale brightness-75" data-alt="Close up portrait of a futuristic user with golden holographic eye implants and sharp high-fashion metallic clothing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUvom5G51LDIMAl5wa-F34THQ7zWhkIjn-NNPevkJE4GuHKBxzqpVCb21QCqPLHqUDQCFI7FFS9zMc9ZPBQoBgUFAbTj6ctFBcawwAPDN1vFhVxMqqc73bJPQ6jSUdVXpSE_gagEP8UIQNUSSi8HXk_Ysa_WNgwWD2Slt_iNLRppMz9oBtjGN7LMj8xYxWgjAVW2hgrD7kJ7ticdSIOrWc6LleDpE66GcwFswDwkGycmodyLz1A3-O6ybbH8mMNQj6u28F2n2To4g"/>
+</div>
+</header>
+<main class="relative pt-24 pb-32 min-h-screen flex flex-col items-center">
+<!-- Background Monolith Simulation -->
+<div class="fixed inset-0 flex justify-center pointer-events-none z-0">
+<div class="w-64 h-[1768px] monolith-gradient border-x border-outline-variant/10 shadow-[0_0_100px_rgba(0,0,0,0.8)] relative">
+<!-- Top: Polished Metal -->
+<div class="absolute top-0 w-full h-1/3 bg-gradient-to-b from-[#1c1b1b] to-transparent opacity-80 border-t border-primary/20"></div>
+<!-- Middle: Oxidation Texture -->
+<div class="absolute top-1/3 w-full h-1/3 opacity-40 mix-blend-overlay">
+<div class="w-full h-full bg-[radial-gradient(circle_at_50%_50%,_#544519,_transparent_70%)]"></div>
+</div>
+<!-- Bottom: Crystalline Fracture -->
+<div class="absolute bottom-0 w-full h-1/3 border-b border-primary/40 bg-[linear-gradient(45deg,_rgba(212,175,55,0.05)_25%,_transparent_25%)] bg-[length:10px_10px]"></div>
+</div>
+</div>
+<!-- HERO CONTENT -->
+<section class="relative z-10 w-full px-8 mt-12 mb-40 text-center">
+<p class="font-label text-[10px] tracking-[0.4em] text-primary uppercase mb-4 text-glow">Temporal Instrument 001</p>
+<h2 class="font-headline font-black text-8xl md:text-9xl tracking-tighter uppercase leading-none text-on-surface mb-2">CHRONOS</h2>
+<div class="flex justify-center items-center gap-4">
+<span class="h-[1px] w-12 bg-primary/30"></span>
+<p class="font-label text-xs tracking-widest text-on-surface-variant uppercase">The Eternal Monolith</p>
+<span class="h-[1px] w-12 bg-primary/30"></span>
+</div>
+</section>
+<!-- DATA PANELS: Floating Glassmorphism -->
+<section class="relative z-10 w-full px-6 flex flex-col gap-24 items-start">
+<!-- PANEL 1: INTEGRITY -->
+<div class="w-full flex justify-end">
+<div class="w-48 p-6 bg-surface-container-highest/40 backdrop-blur-2xl border-t border-primary/30 shadow-2xl">
+<p class="font-label text-[10px] text-primary mb-2 tracking-widest">SYSTEM STATUS</p>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-label text-[10px] text-on-surface-variant uppercase">Corrosion</span>
+<span class="font-label text-lg text-primary text-glow leading-none">82%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-low">
+<div class="h-full bg-primary-container w-[82%] shadow-[0_0_8px_rgba(242,202,80,0.4)]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-label text-[10px] text-on-surface-variant uppercase">Stability</span>
+<span class="font-label text-[10px] text-error font-bold tracking-tighter">DEGRADING</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- PANEL 2: CORE METRICS -->
+<div class="w-full space-y-16">
+<div class="max-w-xs">
+<p class="font-headline italic text-4xl text-on-surface leading-tight mb-6">
+                        "Time does not pass, it <span class="text-primary">erodes</span> the frame of reality."
+                    </p>
+<div class="flex items-center gap-4">
+<div class="h-10 w-[2px] bg-primary"></div>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                            The monolith stands as a testament to the entropic force of the void. Visual data suggests cellular fracturing at the base.
+                        </p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 border border-outline-variant/20 bg-surface-container-lowest/50 backdrop-blur-md">
+<span class="material-symbols-outlined text-primary mb-2" style="font-variation-settings: 'FILL' 1;">radar</span>
+<p class="font-label text-[9px] text-on-surface-variant uppercase tracking-widest mb-1">Atmosphere</p>
+<p class="font-label text-sm text-on-surface uppercase font-bold">Xenon-Rich</p>
+</div>
+<div class="p-4 border border-outline-variant/20 bg-surface-container-lowest/50 backdrop-blur-md">
+<span class="material-symbols-outlined text-primary mb-2">hourglass_empty</span>
+<p class="font-label text-[9px] text-on-surface-variant uppercase tracking-widest mb-1">Age</p>
+<p class="font-label text-sm text-on-surface uppercase font-bold">Infinite</p>
+</div>
+</div>
+</div>
+<!-- PANEL 3: BOTTOM DEGRADATION DATA -->
+<div class="w-full pt-40 pb-20">
+<div class="border-l-4 border-primary pl-6 py-2">
+<p class="font-label text-[10px] text-primary uppercase tracking-[0.3em] mb-2">Base Observation</p>
+<h3 class="font-headline text-5xl text-on-surface font-black uppercase mb-4">Fracture Point</h3>
+<p class="font-body text-on-surface-variant max-w-xs text-sm">
+                        Crystalline structures at the base are emitting low-frequency vibrations. Structural integrity compromised by 14.2% since last pulse.
+                    </p>
+</div>
+<div class="mt-12 space-y-2">
+<div class="flex items-center justify-between py-3 border-b border-outline-variant/10">
+<span class="font-label text-xs text-on-surface uppercase tracking-widest">Thermal Output</span>
+<span class="font-label text-xs text-primary font-bold">4.2K</span>
+</div>
+<div class="flex items-center justify-between py-3 border-b border-outline-variant/10">
+<span class="font-label text-xs text-on-surface uppercase tracking-widest">Radiation</span>
+<span class="font-label text-xs text-primary font-bold">LETHAL</span>
+</div>
+<div class="flex items-center justify-between py-3 border-b border-outline-variant/10">
+<span class="font-label text-xs text-on-surface uppercase tracking-widest">Entity Signature</span>
+<span class="font-label text-xs text-on-surface-variant">NONE DETECTED</span>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="relative z-10 w-full px-6 mb-20">
+<button class="w-full py-6 bg-primary-container text-on-primary-fixed font-label font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-4 hover:shadow-[0_0_20px_rgba(242,202,80,0.5)] transition-all">
+                INITIATE SCAN
+                <span class="material-symbols-outlined text-xl">shrine</span>
+</button>
+</section>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center h-20 px-8 bg-[#353534]/40 backdrop-blur-2xl w-[90%] mx-auto mb-8 rounded-none border border-[#E9C349]/20 shadow-[0_20px_50px_rgba(212,175,55,0.15)]">
+<a class="flex items-center justify-center text-[#353534] opacity-60 hover:opacity-100 hover:scale-105 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined text-2xl">hourglass_empty</span>
+</a>
+<a class="flex items-center justify-center text-[#F2CA50] drop-shadow-[0_0_12px_rgba(242,202,80,0.8)] scale-110 ring-1 ring-[#D4AF37]/50" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">shrine</span>
+</a>
+<a class="flex items-center justify-center text-[#353534] opacity-60 hover:opacity-100 hover:scale-105 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined text-2xl">radar</span>
+</a>
+<a class="flex items-center justify-center text-[#353534] opacity-60 hover:opacity-100 hover:scale-105 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+</a>
+</nav>
+</body></html>

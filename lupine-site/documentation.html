@@ -1,10 +1,216 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="refresh" content="0; url=docs.html">
-    <title>Redirecting...</title>
-</head>
-<body>
-    <p>Redirecting to <a href="docs.html">docs.html</a>...</p>
-</body>
-</html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Inter:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#bbbaa7",
+                    "primary-fixed": "#e3e3dd",
+                    "primary-fixed-dim": "#d4d5cf",
+                    "on-secondary-fixed": "#3d4039",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#eae9d5",
+                    "on-primary-fixed-variant": "#5a5c57",
+                    "on-secondary-fixed-variant": "#595d54",
+                    "surface-tint": "#5d5f5a",
+                    "on-error-container": "#742410",
+                    "on-secondary-container": "#50534b",
+                    "inverse-surface": "#0e0e0a",
+                    "error-dim": "#5c1202",
+                    "surface": "#feffd6",
+                    "surface-container-highest": "#eae9d5",
+                    "surface-container-high": "#f0efdd",
+                    "primary-container": "#e3e3dd",
+                    "on-primary": "#f8f8f2",
+                    "surface-container": "#f6f4e5",
+                    "on-surface": "#38392b",
+                    "secondary-fixed-dim": "#d3d5cb",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#4e4739",
+                    "surface-bright": "#feffd6",
+                    "tertiary-dim": "#5f5848",
+                    "surface-container-low": "#fcf9ee",
+                    "on-primary-fixed": "#3e403c",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#e5e4cd",
+                    "primary": "#5d5f5a",
+                    "error-container": "#fe8b70",
+                    "tertiary-fixed": "#fbf0db",
+                    "primary-dim": "#51534e",
+                    "on-tertiary-fixed-variant": "#6b6454",
+                    "secondary-container": "#e1e4d9",
+                    "tertiary": "#6b6454",
+                    "error": "#a54731",
+                    "inverse-on-surface": "#9f9d95",
+                    "secondary-fixed": "#e1e4d9",
+                    "tertiary-fixed-dim": "#ece1cd",
+                    "tertiary-container": "#fbf0db",
+                    "secondary": "#62655d",
+                    "on-surface-variant": "#656555",
+                    "background": "#feffd6",
+                    "secondary-dim": "#565951",
+                    "on-background": "#38392b",
+                    "inverse-primary": "#fdfdf6",
+                    "on-primary-container": "#51524e",
+                    "on-tertiary-container": "#60594a",
+                    "on-error": "#ffffff",
+                    "outline": "#828271"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Newsreader"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #feffd6;
+            color: #38392b;
+            font-family: 'Newsreader', serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 99;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .text-balanced { text-wrap: balance; }
+        .ink-gradient {
+            background: linear-gradient(135deg, #5d5f5a 0%, #3e403c 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="selection:bg-tertiary-container selection:text-on-tertiary-container">
+<div class="grain-overlay"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 z-50 w-full bg-[#feffd6] dark:bg-stone-900 shadow-[0_4px_20px_rgba(56,57,43,0.05)] flex items-center justify-between px-6 py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#38392b] dark:text-stone-200">menu</span>
+<h1 class="font-serif font-bold text-[#38392b] dark:text-stone-100 text-sm tracking-widest uppercase">Quantum Ledger // Documentation</h1>
+</div>
+<span class="material-symbols-outlined text-[#38392b] dark:text-stone-200">history_edu</span>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 px-6 max-w-2xl mx-auto">
+<!-- Editorial Header Section -->
+<section class="mb-12">
+<div class="flex justify-between items-baseline mb-4">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-semibold">Protocol A-42 // Bio-Digital Systems</span>
+<span class="font-serif italic text-sm text-on-surface-variant">Revised: Oct 2024</span>
+</div>
+<h2 class="font-serif text-6xl italic leading-[1.1] tracking-tight text-on-surface mb-8 text-balanced">Organic Synthesis Protocols</h2>
+<p class="font-serif text-xl italic text-on-surface-variant leading-relaxed">Defining the methodology for carbon-based computational substrates and their neural-interfacing capabilities within the Glimpse ecosystem.</p>
+</section>
+<!-- Featured Abstract Card -->
+<div class="bg-surface-container-low rounded-xl p-8 mb-16 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 opacity-5 translate-x-8 -translate-y-8">
+<span class="material-symbols-outlined text-[120px]">science</span>
+</div>
+<h3 class="font-label text-[10px] uppercase tracking-widest text-primary mb-4 block">Executive Abstract</h3>
+<p class="font-serif text-lg leading-relaxed text-on-surface">
+                The shift from silicon-static to organic-fluid architecture represents the core objective of the <span class="italic">glimPSE</span> initiative. By leveraging biosynthetic neural nodes, we achieve data densities previously theoretical, housed within substrates that self-repair and evolve under systemic pressure.
+            </p>
+</div>
+<!-- Body Article -->
+<article class="space-y-12">
+<section>
+<h4 class="font-serif text-3xl font-bold tracking-tight mb-6">I. Substrate Initialization</h4>
+<p class="font-serif text-xl leading-relaxed text-on-surface/90 mb-6">
+                    Initialization begins with the deposition of a synthetic mycelium lattice. Unlike traditional lithography, this protocol utilizes a <span class="bg-tertiary-container px-1">growth-vectoring catalyst</span> that aligns cellular growth with the desired computational pathways. 
+                </p>
+<div class="my-8 aspect-[4/5] bg-surface-container-high rounded-xl overflow-hidden relative">
+<img alt="Abstract macro shot of biosynthetic mycelium" class="w-full h-full object-cover mix-blend-multiply opacity-80" data-alt="Macro photography of glowing green bioluminescent mycelium networks inside a sterile dark glass laboratory environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbxyRXXaPlPc9gsZdOYqJg7CE1Dwo_IspNhRPhv9v2sNrPxswHaIFWFPKmcEBodYu2CbgH6vyfY2gqwD33ZyF8e070Ob3M_4_dke0S7rv9A36egXgQFZNRdM7rBMLmsxGRvPtM8B8y455CsZwig86OJeSwBfJ2GvEDC9t3IwqzVxA14kiBsKnjT0S-sZOgIz3b0Urw0_dhpYlTsmySK27rxTeQ2GoeBHt_OhIisbrT2e3lckNMhn66y0Av9bxHCru_VwWggItZFoE"/>
+<div class="absolute bottom-4 left-4 right-4 bg-white/70 backdrop-blur-md p-3 rounded-lg">
+<p class="font-label text-[10px] uppercase tracking-tighter text-on-surface-variant font-bold leading-none">Fig 1.1: Accelerated Mycelium Patterning under UV stimulation</p>
+</div>
+</div>
+<p class="font-serif text-xl leading-relaxed text-on-surface/90">
+                    The resulting "web" acts as both data bus and energy conduit. The latency observed in organic nodes is mitigated by massive parallelism, effectively creating a 1:1 ratio between processing power and memory storage.
+                </p>
+</section>
+<!-- Observation Note (Custom Component) -->
+<aside class="bg-tertiary-fixed rotate-1 p-6 shadow-lg rounded-lg border-l-4 border-tertiary mx-2">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-tertiary text-sm">sticky_note_2</span>
+<span class="font-label text-[10px] uppercase font-bold tracking-widest text-tertiary">Researcher Observation</span>
+</div>
+<p class="font-serif italic text-on-tertiary-container text-lg">"The system appears to remember stimulus even after the primary power state is cycled. It is no longer just a machine; it possesses a shadow of metabolic memory."</p>
+</aside>
+<section>
+<h4 class="font-serif text-3xl font-bold tracking-tight mb-6">II. Neural Flux &amp; Annotations</h4>
+<p class="font-serif text-xl leading-relaxed text-on-surface/90 mb-6">
+                    Neural flux monitoring requires continuous calibration of the glimPSE interface. Each node transition must be mapped back to the Ledger to prevent "semantic drift" where the substrate interprets data as sensory experience rather than binary instruction.
+                </p>
+<div class="grid grid-cols-2 gap-4 py-4">
+<div class="bg-surface-container-highest p-4 rounded-xl">
+<span class="font-label text-[9px] uppercase font-bold text-outline">Metric 01</span>
+<div class="font-serif text-2xl font-bold">98.4%</div>
+<div class="font-serif text-sm italic text-on-surface-variant">Synaptic Coherence</div>
+</div>
+<div class="bg-surface-container-highest p-4 rounded-xl">
+<span class="font-label text-[9px] uppercase font-bold text-outline">Metric 02</span>
+<div class="font-serif text-2xl font-bold">12.2ms</div>
+<div class="font-serif text-sm italic text-on-surface-variant">Latency Recovery</div>
+</div>
+</div>
+</section>
+</article>
+<!-- Chapter Navigation Trigger -->
+<div class="mt-20 pt-12 border-t border-surface-variant flex flex-col items-center">
+<button class="ink-gradient text-on-primary font-label text-[11px] uppercase tracking-[0.25em] px-8 py-4 rounded-xl shadow-xl flex items-center gap-3 transform active:scale-95 transition-all">
+<span>Chapter Navigation</span>
+<span class="material-symbols-outlined text-sm">unfold_more</span>
+</button>
+<p class="mt-4 font-serif italic text-on-surface-variant text-sm">Next: Material Systems Architecture</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#feffd6]/90 backdrop-blur-xl dark:bg-stone-900/90 rounded-t-[1.5rem] shadow-[0_-10px_40px_rgba(56,57,43,0.08)]">
+<!-- Active Item: Current -->
+<a class="flex flex-col items-center justify-center bg-[#eae9d5] dark:bg-stone-700 text-[#38392b] dark:text-white rounded-2xl px-5 py-2 transition-all" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">import_contacts</span>
+<span class="font-sans uppercase text-[10px] tracking-widest Inter">Current</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#38392b]/50 dark:text-stone-500 px-5 py-2 hover:opacity-80 active:scale-98 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">menu_book</span>
+<span class="font-sans uppercase text-[10px] tracking-widest Inter">Chapters</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#38392b]/50 dark:text-stone-500 px-5 py-2 hover:opacity-80 active:scale-98 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">edit_note</span>
+<span class="font-sans uppercase text-[10px] tracking-widest Inter">Annotations</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#38392b]/50 dark:text-stone-500 px-5 py-2 hover:opacity-80 active:scale-98 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">inventory_2</span>
+<span class="font-sans uppercase text-[10px] tracking-widest Inter">Archive</span>
+</a>
+</nav>
+</body></html>

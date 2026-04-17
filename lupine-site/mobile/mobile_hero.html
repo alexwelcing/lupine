@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Quantum Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#3a3000",
+                    "primary-container": "#d2b100",
+                    "secondary-container": "#af8d11",
+                    "on-secondary-fixed-variant": "#574500",
+                    "inverse-on-surface": "#313030",
+                    "on-secondary-container": "#342800",
+                    "on-error": "#690005",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#353534",
+                    "tertiary": "#c0d0e2",
+                    "on-secondary-fixed": "#241a00",
+                    "background": "#131313",
+                    "on-tertiary": "#223240",
+                    "surface-container-highest": "#353534",
+                    "secondary-fixed-dim": "#e9c349",
+                    "surface-container-high": "#2a2a2a",
+                    "on-tertiary-container": "#374755",
+                    "surface-tint": "#e9c400",
+                    "on-secondary": "#3c2f00",
+                    "inverse-surface": "#e5e2e1",
+                    "on-surface-variant": "#d0c5af",
+                    "on-primary-fixed-variant": "#544600",
+                    "primary-fixed-dim": "#e9c400",
+                    "surface": "#131313",
+                    "outline": "#99907c",
+                    "tertiary-fixed-dim": "#b8c8da",
+                    "error-container": "#93000a",
+                    "inverse-primary": "#705d00",
+                    "primary-fixed": "#ffe16d",
+                    "tertiary-container": "#a5b5c6",
+                    "surface-dim": "#131313",
+                    "on-tertiary-fixed-variant": "#394857",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e5e2e1",
+                    "on-primary-container": "#524400",
+                    "primary": "#f2cc00",
+                    "surface-container": "#201f1f",
+                    "secondary": "#e9c349",
+                    "on-tertiary-fixed": "#0d1d2a",
+                    "on-primary-fixed": "#221b00",
+                    "secondary-fixed": "#ffe088",
+                    "on-surface": "#e5e2e1",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-bright": "#3a3939",
+                    "tertiary-fixed": "#d4e4f6",
+                    "outline-variant": "#4d4635"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Newsreader", "serif"
+                    ],
+                    "body": [
+                            "Inter", "sans-serif"
+                    ],
+                    "label": [
+                            "Space Grotesk", "monospace"
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface-container-lowest');
+            color: theme('colors.on-surface');
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Utility for zero-radius elements */
+        .rounded-none-all * {
+            border-radius: 0 !important;
+        }
+        
+        /* Glassmorphism utility */
+        .glass-panel {
+            background-color: theme('colors.surface-container-low');
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        
+        /* Sovereign Gradient Button */
+        .btn-primary-sovereign {
+            background: linear-gradient(135deg, theme('colors.primary') 0%, theme('colors.primary-container') 100%);
+            color: theme('colors.on-primary');
+            box-shadow: 0 0 40px rgba(242, 204, 0, 0.15);
+        }
+        
+        /* Ghost Border Outline */
+        .ghost-border {
+            border: 1px solid rgba(77, 70, 53, 0.2);
+        }
+        
+        .ambient-shadow {
+            box-shadow: 0 20px 60px -10px rgba(229, 226, 225, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen relative overflow-x-hidden font-body flex flex-col md:flex-row">
+<!-- Top Navigation (Web) -->
+<header class="hidden md:flex justify-between items-center px-6 py-4 w-full fixed top-0 z-50 bg-black/60 backdrop-blur-xl shadow-none bg-gradient-to-b from-black/20 to-transparent">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white/70" data-icon="menu">menu</span>
+<span class="font-headline tracking-tighter uppercase text-2xl font-black text-primary tracking-widest">SOVEREIGN</span>
+</div>
+<nav class="flex gap-8">
+<a class="text-primary font-label text-sm uppercase tracking-widest hover:text-primary-container transition-colors" href="#">Intelligence</a>
+<a class="text-white/70 font-label text-sm uppercase tracking-widest hover:text-primary transition-colors" href="#">Operations</a>
+<a class="text-white/70 font-label text-sm uppercase tracking-widest hover:text-primary transition-colors" href="#">Research</a>
+</nav>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-white/70" data-icon="account_circle">account_circle</span>
+</div>
+</header>
+<!-- Navigation Drawer (Web) -->
+<aside class="hidden md:flex flex-col justify-center items-start px-12 gap-8 h-full w-64 fixed left-0 top-0 bg-[#0E0E0E] z-40 border-r ghost-border border-outline-variant/20 pt-24">
+<h2 class="font-headline italic text-5xl lowercase tracking-tighter text-white/30 mb-8">THE INDEX</h2>
+<nav class="flex flex-col gap-6 w-full">
+<a class="flex items-center gap-4 text-primary font-bold hover:translate-x-4 hover:text-white transition-all duration-500 group" href="#">
+<span class="material-symbols-outlined text-primary group-hover:text-white transition-colors" data-icon="insights">insights</span>
+<span class="font-label tracking-widest uppercase text-sm">INTELLIGENCE</span>
+</a>
+<a class="flex items-center gap-4 text-white/30 hover:translate-x-4 hover:text-white transition-all duration-500 group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-label tracking-widest uppercase text-sm">OPERATIONS</span>
+</a>
+<a class="flex items-center gap-4 text-white/30 hover:translate-x-4 hover:text-white transition-all duration-500 group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors" data-icon="science">science</span>
+<span class="font-label tracking-widest uppercase text-sm">RESEARCH</span>
+</a>
+<a class="flex items-center gap-4 text-white/30 hover:translate-x-4 hover:text-white transition-all duration-500 group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors" data-icon="history_edu">history_edu</span>
+<span class="font-label tracking-widest uppercase text-sm">ARCHIVE</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full min-h-screen relative md:ml-64 pt-20 md:pt-0 pb-24 md:pb-0 flex flex-col justify-center rounded-none-all">
+<!-- Ambient Background Effect -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-surface-variant/20 rounded-full blur-[100px] opacity-30 mix-blend-screen"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[120px] opacity-20 mix-blend-screen"></div>
+</div>
+<div class="px-6 md:px-16 z-10 w-full max-w-[1400px] mx-auto flex flex-col gap-16">
+<!-- Hero Header section -->
+<section class="flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-surface-container-highest text-primary font-label text-xs uppercase tracking-[0.2em] ghost-border">PROJECT OMEGA</span>
+<span class="w-12 h-px bg-outline-variant/40"></span>
+<span class="text-on-surface-variant font-label text-xs tracking-widest uppercase">CLASS: ALPHA</span>
+</div>
+<h1 class="font-headline text-[4rem] leading-[0.9] md:text-[6rem] lg:text-[8rem] tracking-tighter text-on-surface">
+                    The Quantum<br/>
+<span class="italic text-primary drop-shadow-[0_0_15px_rgba(242,204,0,0.3)]">Ledger</span>
+</h1>
+<p class="font-body text-on-surface-variant max-w-xl text-lg md:text-xl font-light leading-relaxed mt-4">
+                    Establishing an immutable record of cryptographic transactions across hyper-dimensional states. A paradigm shift in sovereign data architectures.
+                </p>
+<div class="flex items-center gap-6 mt-8">
+<button class="btn-primary-sovereign font-label text-sm uppercase tracking-widest px-8 py-4 font-bold active:scale-95 transition-transform duration-300">
+                        INITIALIZE SEQUENCE
+                    </button>
+<a class="text-primary font-label text-sm uppercase tracking-widest flex items-center gap-2 hover:text-white transition-colors" href="#">
+                        VIEW PROTOCOLS <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- Data Modules (Bento-style layout) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-1">
+<!-- Main KPI Card -->
+<div class="glass-panel p-8 md:col-span-2 flex flex-col justify-between min-h-[300px] relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-variant/10 to-transparent pointer-events-none"></div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[40px] group-hover:bg-primary/10 transition-colors duration-700"></div>
+<div class="flex justify-between items-start mb-12 relative z-10">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant">STRUCTURAL INTEGRITY</span>
+<span class="material-symbols-outlined text-primary/50" data-icon="architecture">architecture</span>
+</div>
+<div class="relative z-10">
+<div class="font-label text-sm text-primary mb-2 tracking-widest">CURRENT STATE</div>
+<div class="font-headline text-5xl md:text-7xl tracking-tighter">99.998%</div>
+<div class="font-body text-sm text-on-surface-variant mt-2 max-w-md">Deviation variance remains below acceptable threshold levels for continued operation.</div>
+</div>
+</div>
+<!-- Secondary Data Stack -->
+<div class="flex flex-col gap-1 h-full">
+<!-- Data Point 1 -->
+<div class="bg-surface-container-high p-6 flex-1 flex flex-col justify-center relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary/20"></div>
+<span class="font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant mb-4 block">THERMAL RESISTANCE</span>
+<div class="font-label text-2xl md:text-3xl text-white tracking-tight flex items-baseline gap-2">
+                             3,400 <span class="text-sm text-primary/70">K</span>
+</div>
+</div>
+<!-- Data Point 2 -->
+<div class="bg-surface-container p-6 flex-1 flex flex-col justify-center relative overflow-hidden group hover:bg-surface-container-highest transition-colors duration-500">
+<span class="font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant mb-4 block">NETWORK LATENCY</span>
+<div class="font-label text-2xl md:text-3xl text-white tracking-tight flex items-baseline gap-2">
+                             0.004 <span class="text-sm text-on-surface-variant">ms</span>
+</div>
+<div class="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<span class="material-symbols-outlined text-primary" data-icon="trending_down">trending_down</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile) -->
+<nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm z-50 flex justify-around items-center py-4 bg-[#1C1B1B]/80 backdrop-blur-2xl ghost-border border-outline-variant shadow-[0_0_40px_rgba(212,175,55,0.1)] rounded-none">
+<a class="flex flex-col items-center justify-center text-yellow-500 drop-shadow-[0_0_8px_rgba(242,204,0,0.8)] scale-110 group transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view" data-weight="fill" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-white/90 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-white/90 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-white/90 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</a>
+</nav>
+</body></html>
