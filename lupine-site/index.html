@@ -1,16 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupine Materials Science â The Future of Computational Materials</title>
-    <meta name="description" content="Lupine Materials Science is building the unified computational platform for materials discovery. From quantum DFT to molecular dynamics to ML potentials â one system, zero fragmentation.">
+    <title>Lupine Materials Science — The Future of Computational Materials</title>
+    <meta name="description" content="Lupine Materials Science is building the unified computational platform for materials discovery. From quantum DFT to molecular dynamics to ML potentials — one system, zero fragmentation.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        /* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-           LUPINE MATERIALS SCIENCE â VC LANDING PAGE
+        /* ═══════════════════════════════════════════════════════════════
+           LUPINE MATERIALS SCIENCE — VC LANDING PAGE
            Brand: Deep Indigo / Lupine Violet / Warm Slate
-           âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+           ═══════════════════════════════════════════════════════════════ */
 
         :root {
             --lupine-900: #1a1d3d;
@@ -73,7 +73,7 @@
             color: white;
         }
 
-        /* âââ Navigation âââ */
+        /* ─── Navigation ─── */
         nav {
             position: fixed;
             top: 0;
@@ -149,7 +149,7 @@
             box-shadow: 0 8px 32px rgba(46, 58, 135, 0.4);
         }
 
-        /* âââ Hero Section âââ */
+        /* ─── Hero Section ─── */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -222,7 +222,7 @@
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        /* âââ WebGPU Atom Canvas âââ */
+        /* ─── WebGPU Atom Canvas ─── */
         /* Handled by inline styles on the canvas near <body> tag */
 
         .hero.webgpu-active .hero-orbits {
@@ -403,7 +403,7 @@
             border-color: var(--slate-600);
         }
 
-        /* âââ Scroll indicator âââ */
+        /* ─── Scroll indicator ─── */
         .scroll-indicator {
             position: absolute;
             bottom: 40px;
@@ -435,7 +435,7 @@
             50% { opacity: 0.7; }
         }
 
-        /* âââ Section styling âââ */
+        /* ─── Section styling ─── */
         section {
             padding: 120px 40px;
             max-width: 1200px;
@@ -469,7 +469,7 @@
             margin-bottom: 64px;
         }
 
-        /* âââ Problem Section âââ */
+        /* ─── Problem Section ─── */
         .problem-section {
             position: relative;
         }
@@ -558,7 +558,7 @@
             margin-top: 4px;
         }
 
-        /* âââ Pipeline Section âââ */
+        /* ─── Pipeline Section ─── */
         .pipeline-section {
             text-align: center;
         }
@@ -627,7 +627,7 @@
             font-family: var(--font-sans);
         }
 
-        /* âââ Beachhead Section (glimPSE) âââ */
+        /* ─── Beachhead Section (glimPSE) ─── */
         .beachhead-section {
             position: relative;
         }
@@ -758,7 +758,7 @@
             display: inline-block;
         }
 
-        /* âââ Competitive Edge âââ */
+        /* ─── Competitive Edge ─── */
         .comp-table-wrapper {
             overflow-x: auto;
             margin-top: 48px;
@@ -813,7 +813,7 @@
             font-weight: 500;
         }
 
-        /* âââ Market Section âââ */
+        /* ─── Market Section ─── */
         .market-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -859,7 +859,7 @@
             margin-top: 6px;
         }
 
-        /* âââ Team / Founder Section âââ */
+        /* ─── Team / Founder Section ─── */
         .team-section {
             text-align: center;
         }
@@ -916,7 +916,7 @@
             line-height: 1.85;
         }
 
-        /* âââ CTA Section âââ */
+        /* ─── CTA Section ─── */
         .cta-section {
             text-align: center;
             padding: 160px 40px;
@@ -950,7 +950,7 @@
             font-weight: 300;
         }
 
-        /* âââ Footer âââ */
+        /* ─── Footer ─── */
         footer {
             padding: 48px 40px;
             text-align: center;
@@ -968,7 +968,7 @@
             color: var(--slate-500);
         }
 
-        /* âââ Responsive âââ */
+        /* ─── Responsive ─── */
         @media (max-width: 1024px) {
             .problem-grid { grid-template-columns: 1fr; gap: 20px; }
             .beachhead-layout { grid-template-columns: 1fr; gap: 48px; }
@@ -988,7 +988,7 @@
             .founder-header { flex-direction: column; text-align: center; }
         }
 
-        /* âââ Animations on scroll âââ */
+        /* ─── Animations on scroll ─── */
         .reveal {
             opacity: 0;
             transform: translateY(32px);
@@ -1000,13 +1000,13 @@
             transform: translateY(0);
         }
 
-        /* âââ SVG Logo âââ */
+        /* ─── SVG Logo ─── */
         .lupine-svg-logo {
             width: 100%;
             height: 100%;
         }
 
-        /* âââ Custom Flair: Cursor âââ */
+        /* ─── Custom Flair: Cursor ─── */
         @media (pointer: fine) {
             body { cursor: none; }
             a, button, .btn-primary, .btn-secondary, input, textarea { cursor: none !important; }
@@ -1040,7 +1040,7 @@
             }
         }
 
-        /* âââ HUD Viewfinder Corners âââ */
+        /* ─── HUD Viewfinder Corners ─── */
         .hud-corner {
             position: fixed;
             width: 24px; height: 24px;
@@ -1074,7 +1074,7 @@
         .hud-text.br { bottom: 38px; right: 64px; text-align: right; }
         .hud-text.br { bottom: 38px; right: 64px; text-align: right; }
 
-        /* âââ Boot Sequence âââ */
+        /* ─── Boot Sequence ─── */
         #boot-sequence {
             position: fixed; inset: 0; background: var(--slate-950);
             z-index: 10000;
@@ -1090,7 +1090,7 @@
 </head>
 <body>
 
-    <!-- âââ System Boot Sequence âââ -->
+    <!-- ═══ System Boot Sequence ═══ -->
     <div id="boot-sequence">
         <div class="boot-log" id="bootLog"></div>
     </div>
@@ -1132,20 +1132,20 @@
         })();
     </script>
 
-    <!-- âââ Global Parallax Background âââ -->
+    <!-- ═══ Global Parallax Background ═══ -->
     <div id="global-bg" style="position:fixed; inset:0; background:var(--slate-950); z-index:-3;"></div>
     <canvas id="atom-canvas" style="position:fixed; inset:0; width:100vw; height:100vh; z-index:-2; pointer-events:none;"></canvas>
     <div id="global-scrim" style="position:fixed; inset:0; background:rgba(10, 11, 18, 0.5); z-index:-1; pointer-events:none;"></div>
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
 
-    <!-- âââ HUD Viewfinder âââ -->
+    <!-- ═══ HUD Viewfinder ═══ -->
     <div class="hud-corner tl"></div><div class="hud-text tl">SYS.OPS // 89.2% OPTIMAL</div>
     <div class="hud-corner tr"></div><div class="hud-text tr">LUPINE_GLIMPSE_V1</div>
     <div class="hud-corner bl"></div><div class="hud-text bl" id="hudCoords">POS: [0.000, 0.000, 0.000]</div>
     <div class="hud-corner br"></div><div class="hud-text br">ENGINE: WEBGPU // ONLINE</div>
 
-    <!-- âââ Navigation âââ -->
+    <!-- ═══ Navigation ═══ -->
     <nav id="nav">
         <a href="research-manifesto.html" class="nav-brand">
             <svg class="logo-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1178,7 +1178,7 @@
         </div>
     </nav>
 
-    <!-- âââ Hero âââ -->
+    <!-- ═══ Hero ═══ -->
     <section class="hero" id="hero">
         <div class="hero-orbits">
             <div class="orbit-ring"></div>
@@ -1224,7 +1224,7 @@
             <div class="hero-label">Lupine Materials Science</div>
             <h1>Discover <em>New Materials</em><br>Before They Exist</h1>
             <p class="hero-sub">
-                The first platform to unify quantum DFT, molecular dynamics, and machine-learned potentials in a single Rust codebase. From electrons to engineering insights â in one command.
+                The first platform to unify quantum DFT, molecular dynamics, and machine-learned potentials in a single Rust codebase. From electrons to engineering insights — in one command.
             </p>
             <div class="hero-actions">
                 <a href="#contact" class="btn-primary">Request Investor Briefing</a>
@@ -1238,46 +1238,46 @@
         </div>
     </section>
 
-    <!-- âââ Problem âââ -->
+    <!-- ═══ Problem ═══ -->
     <section class="problem-section" id="problem">
         <div class="section-label reveal">The Problem</div>
         <h2 class="section-title reveal">Materials science runs on<br>a fractured toolchain</h2>
         <p class="section-subtitle reveal">
-            Researchers stitch together 4â6 disconnected tools for a single workflow. File conversions lose metadata. Validation is manual. The pipeline is broken.
+            Researchers stitch together 4–6 disconnected tools for a single workflow. File conversions lose metadata. Validation is manual. The pipeline is broken.
         </p>
         <div class="problem-grid">
             <div class="problem-card reveal">
 
                 <h3>Commercially Locked</h3>
-                <p>VASP â the gold-standard quantum solver â is proprietary and expensive. Entire research groups share a single license.</p>
+                <p>VASP — the gold-standard quantum solver — is proprietary and expensive. Entire research groups share a single license.</p>
                 <div class="problem-stat">$4,500</div>
                 <div class="problem-stat-label">Per VASP Academic License</div>
             </div>
             <div class="problem-card reveal">
 
                 <h3>30 Years Old</h3>
-                <p>LAMMPS is brilliant but ancient â Fortran-era C++ patterns, no native ML support, GPU acceleration bolted on as an afterthought.</p>
+                <p>LAMMPS is brilliant but ancient — Fortran-era C++ patterns, no native ML support, GPU acceleration bolted on as an afterthought.</p>
                 <div class="problem-stat">1995</div>
                 <div class="problem-stat-label">Year LAMMPS was first released</div>
             </div>
             <div class="problem-card reveal">
 
                 <h3>No Integration</h3>
-                <p>The DFT to ML potential to production MD pipeline requires expertise in 4â6 separate packages, each with its own data model and community.</p>
+                <p>The DFT to ML potential to production MD pipeline requires expertise in 4–6 separate packages, each with its own data model and community.</p>
                 <div class="problem-stat">6+</div>
                 <div class="problem-stat-label">Tools in a typical workflow</div>
             </div>
         </div>
     </section>
 
-    <!-- âââ Platform / Pipeline âââ -->
+    <!-- ═══ Platform / Pipeline ═══ -->
     <section class="pipeline-section" id="platform">
         <div class="section-label reveal">The Platform</div>
         <h2 class="section-title reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
             From electrons to engineering.<br>One unified system.
         </h2>
         <p class="section-subtitle reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
-            Lupine replaces the fragmented stack with a single, modern codebase written in Rust â memory-safe, GPU-accelerated, and with ML potentials as a first-class citizen.
+            Lupine replaces the fragmented stack with a single, modern codebase written in Rust — memory-safe, GPU-accelerated, and with ML potentials as a first-class citizen.
         </p>
 
         <div class="pipeline-visual reveal">
@@ -1302,7 +1302,7 @@
             <div class="pipeline-step">
                 <div class="pipeline-node">D</div>
                 <div class="pipeline-label">Materials Discovery</div>
-                <div class="pipeline-desc">Properties at near-DFT accuracy, 1000Ã speed</div>
+                <div class="pipeline-desc">Properties at near-DFT accuracy, 1000× speed</div>
             </div>
         </div>
 
@@ -1322,36 +1322,36 @@
                     <tr>
                         <td>Plane-wave DFT</td>
                         <td>Yes</td>
-                        <td>â</td>
+                        <td>—</td>
                         <td>Yes</td>
                         <td>Yes</td>
                     </tr>
                     <tr>
                         <td>Classical MD</td>
-                        <td>â</td>
+                        <td>—</td>
                         <td>Yes</td>
-                        <td>â</td>
+                        <td>—</td>
                         <td>Yes</td>
                     </tr>
                     <tr>
                         <td>ML potentials (native)</td>
-                        <td>â</td>
+                        <td>—</td>
                         <td>Plugin</td>
-                        <td>â</td>
+                        <td>—</td>
                         <td>Yes, Core</td>
                     </tr>
                     <tr>
                         <td>DFT / ML / MD pipeline</td>
-                        <td>â</td>
-                        <td>â</td>
-                        <td>â</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
                         <td>Yes, one command</td>
                     </tr>
                     <tr>
                         <td>Differentiable simulation</td>
-                        <td>â</td>
-                        <td>â</td>
-                        <td>â</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
                         <td>Yes</td>
                     </tr>
                     <tr>
@@ -1373,11 +1373,11 @@
         </div>
     </section>
 
-    <!-- âââ Beachhead Product âââ -->
+    <!-- ═══ Beachhead Product ═══ -->
     <section class="beachhead-section" id="product">
         <div class="beachhead-layout">
             <div class="beachhead-visual reveal">
-                <div class="demo-badge">â Live Product</div>
+                <div class="demo-badge">● Live Product</div>
                 <div class="beachhead-visual-inner">
                     <div class="fake-atoms" id="atomGrid">
                         <!-- Generated by JS -->
@@ -1388,28 +1388,28 @@
                 <div class="section-label">Shipping Now</div>
                 <h3>Lupine <span>View</span></h3>
                 <p>
-                    Our beachhead product: a WebGPU-powered molecular visualization platform. Drag a LAMMPS dump file into your browser â get publication-quality 3D in two seconds. No install. No license. No Python scripts.
+                    Our beachhead product: a WebGPU-powered molecular visualization platform. Drag a LAMMPS dump file into your browser — get publication-quality 3D in two seconds. No install. No license. No Python scripts.
                 </p>
                 <ul class="feature-list">
-                    <li><span class="check"></span> WebGPU rendering â 10M+ atoms at 60fps</li>
-                    <li><span class="check"></span> Rust/WASM parsers â 10x faster than JavaScript</li>
-                    <li><span class="check"></span> SSAO, depth of field, bloom â publication quality</li>
-                    <li><span class="check"></span> URL sharing â send a link, not a file</li>
-                    <li><span class="check"></span> Free forever â replaces $$/yr OVITO Pro seats</li>
-                    <li><span class="check"></span> WebCodecs video export â hardware-accelerated</li>
+                    <li><span class="check"></span> WebGPU rendering — 10M+ atoms at 60fps</li>
+                    <li><span class="check"></span> Rust/WASM parsers — 10x faster than JavaScript</li>
+                    <li><span class="check"></span> SSAO, depth of field, bloom — publication quality</li>
+                    <li><span class="check"></span> URL sharing — send a link, not a file</li>
+                    <li><span class="check"></span> Free forever — replaces $$/yr OVITO Pro seats</li>
+                    <li><span class="check"></span> WebCodecs video export — hardware-accelerated</li>
                 </ul>
                 <a href="glimPSE-demo.html" class="btn-primary" style="margin-top:8px;">Try Lupine View</a>
             </div>
         </div>
     </section>
 
-    <!-- âââ Research Intelligence âââ -->
+    <!-- ═══ Research Intelligence ═══ -->
     <section id="research" style="position:relative;">
         <div style="position:absolute;top:0;left:-100vw;right:-100vw;bottom:0;background:linear-gradient(180deg,var(--slate-950) 0%,rgba(91,58,140,0.06) 50%,var(--slate-950) 100%);z-index:-1;"></div>
         <div class="section-label reveal">Research Intelligence</div>
         <h2 class="section-title reveal">Not just simulations.<br>Autonomous <em style="font-family:var(--font-serif);background:linear-gradient(135deg,var(--lupine-400),var(--violet-300));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">discovery</em>.</h2>
         <p class="section-subtitle reveal">
-            The Lupine Distill engine mines published MD research to extract, validate, and discover mathematical relationships â automating what takes researchers months.
+            The Lupine Distill engine mines published MD research to extract, validate, and discover mathematical relationships — automating what takes researchers months.
         </p>
 
         <!-- Live Corpus Stats -->
@@ -1417,7 +1417,7 @@
             <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px 24px;text-align:center;transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(91,58,140,0.25)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(255,255,255,0.06)'">
                 <div style="font-family:var(--font-serif);font-size:48px;font-weight:700;background:linear-gradient(135deg,var(--lupine-300),var(--violet-300));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">60</div>
                 <div style="font-size:13px;color:var(--slate-400);font-weight:500;">Papers Analyzed</div>
-                <div style="font-size:11px;color:var(--slate-500);margin-top:4px;">2025â2026 corpus</div>
+                <div style="font-size:11px;color:var(--slate-500);margin-top:4px;">2025–2026 corpus</div>
             </div>
             <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px 24px;text-align:center;transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(91,58,140,0.25)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(255,255,255,0.06)'">
                 <div style="font-family:var(--font-serif);font-size:48px;font-weight:700;background:linear-gradient(135deg,var(--lupine-300),var(--violet-300));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">15</div>
@@ -1427,7 +1427,7 @@
             <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px 24px;text-align:center;transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(91,58,140,0.25)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(255,255,255,0.06)'">
                 <div style="font-family:var(--font-serif);font-size:48px;font-weight:700;background:linear-gradient(135deg,var(--lupine-300),var(--violet-300));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">6</div>
                 <div style="font-size:13px;color:var(--slate-400);font-weight:500;">Fitting Algorithms</div>
-                <div style="font-size:11px;color:var(--slate-500);margin-top:4px;">Linear â Symbolic GP</div>
+                <div style="font-size:11px;color:var(--slate-500);margin-top:4px;">Linear → Symbolic GP</div>
             </div>
             <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px 24px;text-align:center;transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(91,58,140,0.25)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(255,255,255,0.06)'">
                 <div style="font-family:var(--font-serif);font-size:48px;font-weight:700;background:linear-gradient(135deg,var(--accent-cyan),#2a9d8f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">49</div>
@@ -1441,27 +1441,27 @@
             <!-- Left: Discovered Relationships -->
             <div style="background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:36px;">
                 <div style="font-size:10px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--lupine-400);margin-bottom:16px;">Canonical Laws Recovered</div>
-                <p style="font-size:13px;color:var(--slate-400);margin-bottom:20px;line-height:1.7;">The Distill engine autonomously recovers known physical laws from generated data â validating the fitting pipeline with ground truth before applying it to unknown relationships.</p>
+                <p style="font-size:13px;color:var(--slate-400);margin-bottom:20px;line-height:1.7;">The Distill engine autonomously recovers known physical laws from generated data — validating the fitting pipeline with ground truth before applying it to unknown relationships.</p>
                 <div style="display:flex;flex-direction:column;gap:8px;">
                     <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(46,58,135,0.08);border-radius:8px;border-left:3px solid var(--lupine-500);">
                         <span style="font-size:12px;color:var(--slate-200);font-weight:600;flex:1;">Stokes-Einstein Diffusion</span>
-                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">RÂ²=1.000</span>
+                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">R²=1.000</span>
                     </div>
                     <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(46,58,135,0.08);border-radius:8px;border-left:3px solid var(--lupine-500);">
                         <span style="font-size:12px;color:var(--slate-200);font-weight:600;flex:1;">Hall-Petch Grain Strengthening</span>
-                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">RÂ²=0.997</span>
+                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">R²=0.997</span>
                     </div>
                     <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(46,58,135,0.08);border-radius:8px;border-left:3px solid var(--lupine-500);">
                         <span style="font-size:12px;color:var(--slate-200);font-weight:600;flex:1;">Flory Polymer Scaling</span>
-                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">RÂ²=1.000</span>
+                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">R²=1.000</span>
                     </div>
                     <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(46,58,135,0.08);border-radius:8px;border-left:3px solid var(--lupine-500);">
                         <span style="font-size:12px;color:var(--slate-200);font-weight:600;flex:1;">Hertz Contact Mechanics</span>
-                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">RÂ²=1.000</span>
+                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">R²=1.000</span>
                     </div>
                     <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(46,58,135,0.08);border-radius:8px;border-left:3px solid var(--lupine-500);">
                         <span style="font-size:12px;color:var(--slate-200);font-weight:600;flex:1;">Vegard's Law (Alloys)</span>
-                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">RÂ²=1.000</span>
+                        <span style="font-size:10px;color:var(--accent-cyan);font-weight:700;background:rgba(78,205,196,0.1);padding:2px 8px;border-radius:4px;">R²=1.000</span>
                     </div>
                     <div style="text-align:center;font-size:11px;color:var(--slate-500);padding:6px 0;">+ 10 more canonical relationships</div>
                 </div>
@@ -1470,7 +1470,7 @@
             <!-- Right: Literature Corpus -->
             <div style="background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:36px;">
                 <div style="font-size:10px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--lupine-400);margin-bottom:16px;">Live Literature Corpus</div>
-                <p style="font-size:13px;color:var(--slate-400);margin-bottom:20px;line-height:1.7;">We continuously ingest and analyze the latest MD research â across ReaxFF, MLIP, HPC, GPU acceleration, KOKKOS, and polymer science â to surface quantitative relationships.</p>
+                <p style="font-size:13px;color:var(--slate-400);margin-bottom:20px;line-height:1.7;">We continuously ingest and analyze the latest MD research — across ReaxFF, MLIP, HPC, GPU acceleration, KOKKOS, and polymer science — to surface quantitative relationships.</p>
                 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">
                     <div style="background:rgba(46,58,135,0.12);border:1px solid rgba(85,101,212,0.2);border-radius:8px;padding:10px 8px;text-align:center;">
                         <div style="font-size:18px;font-weight:700;color:var(--lupine-300);">14</div>
@@ -1518,22 +1518,22 @@
                     <div style="font-size:11px;font-weight:700;color:var(--slate-200);letter-spacing:0.05em;">CORPUS</div>
                     <div style="font-size:9px;color:var(--slate-500);margin-top:2px;">60 papers</div>
                 </div>
-                <div style="color:var(--slate-600);font-size:16px;">âº</div>
+                <div style="color:var(--slate-600);font-size:16px;">›</div>
                 <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 20px;text-align:center;">
                     <div style="font-size:11px;font-weight:700;color:var(--slate-200);letter-spacing:0.05em;">FETCH</div>
                     <div style="font-size:9px;color:var(--slate-500);margin-top:2px;">CrossRef + arXiv</div>
                 </div>
-                <div style="color:var(--slate-600);font-size:16px;">âº</div>
+                <div style="color:var(--slate-600);font-size:16px;">›</div>
                 <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 20px;text-align:center;">
                     <div style="font-size:11px;font-weight:700;color:var(--slate-200);letter-spacing:0.05em;">EXTRACT</div>
                     <div style="font-size:9px;color:var(--slate-500);margin-top:2px;">15+ quantities</div>
                 </div>
-                <div style="color:var(--slate-600);font-size:16px;">âº</div>
+                <div style="color:var(--slate-600);font-size:16px;">›</div>
                 <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 20px;text-align:center;">
                     <div style="font-size:11px;font-weight:700;color:var(--slate-200);letter-spacing:0.05em;">FIT</div>
                     <div style="font-size:9px;color:var(--slate-500);margin-top:2px;">6 algorithms</div>
                 </div>
-                <div style="color:var(--slate-600);font-size:16px;">âº</div>
+                <div style="color:var(--slate-600);font-size:16px;">›</div>
                 <div style="background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.2);border-radius:10px;padding:14px 20px;text-align:center;">
                     <div style="font-size:11px;font-weight:700;color:var(--accent-cyan);letter-spacing:0.05em;">DISCOVER</div>
                     <div style="font-size:9px;color:var(--slate-500);margin-top:2px;">New equations</div>
@@ -1543,7 +1543,7 @@
         </div>
     </section>
 
-    <!-- âââ Market âââ -->
+    <!-- ═══ Market ═══ -->
     <section id="market">
         <div class="section-label reveal">The Market</div>
         <h2 class="section-title reveal">A sovereign-scale opportunity</h2>
@@ -1574,7 +1574,7 @@
         </div>
     </section>
 
-    <!-- âââ Why Now âââ -->
+    <!-- ═══ Why Now ═══ -->
     <section>
         <div style="max-width:800px; margin:0 auto; text-align:center;">
             <div class="section-label reveal">Why Now</div>
@@ -1582,7 +1582,7 @@
             <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:48px; text-align:left;">
                 <div class="reveal" style="padding:24px 0; border-top:2px solid var(--lupine-700);">
                     <h4 style="color:var(--slate-100);font-size:15px;margin-bottom:8px;">ML Potentials are proven</h4>
-                    <p style="font-size:13px;color:var(--slate-400);">MACE, NequIP, and Allegro have demonstrated near-DFT accuracy at classical MD speed. The science is settled â the tooling isn't.</p>
+                    <p style="font-size:13px;color:var(--slate-400);">MACE, NequIP, and Allegro have demonstrated near-DFT accuracy at classical MD speed. The science is settled — the tooling isn't.</p>
                 </div>
                 <div class="reveal" style="padding:24px 0; border-top:2px solid var(--violet-700);">
                     <h4 style="color:var(--slate-100);font-size:15px;margin-bottom:8px;">WebGPU is here</h4>
@@ -1596,7 +1596,7 @@
         </div>
     </section>
 
-    <!-- âââ Tech Credibility Strip âââ -->
+    <!-- ═══ Tech Credibility Strip ═══ -->
     <section style="padding:64px 40px;max-width:1200px;margin:0 auto;">
         <div style="text-align:center;margin-bottom:36px;" class="reveal">
             <div class="section-label">Built On</div>
@@ -1629,7 +1629,7 @@
         </div>
     </section>
 
-    <!-- âââ CTA âââ -->
+    <!-- ═══ CTA ═══ -->
     <section class="cta-section" id="contact">
         <h2 class="reveal">Materials infrastructure<br>is the new frontier.</h2>
         <p class="reveal">We are building the computational engine that will underpin the next generation of batteries, alloys, semiconductors, and advanced materials. If you invest in deep tech, we should talk.</p>
@@ -1639,7 +1639,7 @@
         </div>
     </section>
 
-    <!-- âââ Footer âââ -->
+    <!-- ═══ Footer ═══ -->
     <footer>
 
     <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
@@ -1760,13 +1760,13 @@
     </footer>
 
     <script>
-        // âââ Nav scroll behavior âââ
+        // ─── Nav scroll behavior ───
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => {
             nav.classList.toggle('scrolled', window.scrollY > 60);
         });
 
-        // âââ Generate atom grid âââ
+        // ─── Generate atom grid ───
         const grid = document.getElementById('atomGrid');
         if (grid) {
             for (let i = 0; i < 48; i++) {
@@ -1778,7 +1778,7 @@
             }
         }
 
-        // âââ Scroll reveal âââ
+        // ─── Scroll reveal ───
         const reveals = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1793,7 +1793,7 @@
         });
         reveals.forEach(el => observer.observe(el));
 
-        // âââ Smooth anchor scrolling âââ
+        // ─── Smooth anchor scrolling ───
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
@@ -1802,7 +1802,7 @@
             });
         });
 
-        // âââ Animated count-up on market/research numbers âââ
+        // ─── Animated count-up on market/research numbers ───
         function animateCountUp(el, target, suffix = '', prefix = '', duration = 1800) {
             const start = performance.now();
             const isInt = Number.isInteger(target);
@@ -1834,7 +1834,7 @@
 
         document.querySelectorAll('[data-count-to]').forEach(el => counterObserver.observe(el));
 
-        // âââ Custom Cursor & Pointer Effects âââ
+        // ─── Custom Cursor & Pointer Effects ───
         if (window.matchMedia("(pointer: fine)").matches) {
             const cursorDot = document.querySelector('.cursor-dot');
             const cursorRing = document.querySelector('.cursor-ring');
@@ -1876,7 +1876,7 @@
             });
         }
 
-        // âââ Hacker Scramble Text Flair âââ
+        // ─── Hacker Scramble Text Flair ───
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
             btn.dataset.originalText = btn.innerText;
@@ -1907,7 +1907,7 @@
         });
     </script>
 
-    <!-- âââ WebGPU MgLi Alloy Atom Background âââ -->
+    <!-- ═══ WebGPU MgLi Alloy Atom Background ═══ -->
     <script>
     (async function initAtoms() {
         const canvas = document.getElementById('atom-canvas');
@@ -1921,7 +1921,7 @@
         const fmt = navigator.gpu.getPreferredCanvasFormat();
         const dfmt = 'depth24plus';
 
-        // Activate WebGPU mode â hides CSS orbits
+        // Activate WebGPU mode — hides CSS orbits
         canvas.closest('.hero').classList.add('webgpu-active');
 
         let depthTex;
@@ -1940,7 +1940,7 @@
         resize();
         addEventListener('resize', resize);
 
-        // âââ Generate MgLi B2 (CsCl-type) lattice âââ
+        // ─── Generate MgLi B2 (CsCl-type) lattice ───
         // Mg at corners, Li at body center
         const N = 12, a = 3.0, data = [];
         for (let i = 0; i < N; i++)
@@ -1949,9 +1949,9 @@
             const bx = (i - N/2 + 0.5) * a;
             const by = (j - N/2 + 0.5) * a;
             const bz = (k - N/2 + 0.5) * a;
-            // Mg â larger, indigo
+            // Mg — larger, indigo
             data.push(bx, by, bz, 0.6, 0.482, 0.541, 0.878, Math.random() * 6.28);
-            // Li â smaller, cyan
+            // Li — smaller, cyan
             data.push(bx+.5*a, by+.5*a, bz+.5*a, 0.45, 0.306, 0.804, 0.769, Math.random() * 6.28);
         }
         const nAtoms = data.length / 8;
@@ -1966,7 +1966,7 @@
             size: 96, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
         });
 
-        // âââ WGSL Shader: Permutation-Animated Sphere Impostors âââ
+        // ─── WGSL Shader: Permutation-Animated Sphere Impostors ───
         const wgsl = `
 struct U { vp: mat4x4<f32>, eye: vec3<f32>, t: f32, res: vec2<f32> };
 struct A { p: vec3<f32>, r: f32, c: vec3<f32>, ph: f32 };
@@ -2085,7 +2085,7 @@ struct V {
             { binding: 1, resource: { buffer: iBuf } },
         ]});
 
-        // âââ Matrix helpers âââ
+        // ─── Matrix helpers ───
         const V3 = {
             sub: (a,b) => [a[0]-b[0], a[1]-b[1], a[2]-b[2]],
             cross: (a,b) => [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]],
@@ -2112,7 +2112,7 @@ struct V {
             return o;
         }
 
-        // âââ Render loop âââ
+        // ─── Render loop ───
         const t0 = performance.now();
         const iterEl = document.getElementById('iterNum');
         (function loop() {
@@ -2191,4 +2191,3 @@ struct V {
     </script>
 </body>
 </html>
-
