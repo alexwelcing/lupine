@@ -1,236 +1,479 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
+<html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<title>Lupine Materials Science — ML-Driven Materials Discovery</title>
+<meta name="description" content="Lupine builds machine learning interatomic potentials and cloud-native simulation infrastructure for next-generation materials discovery. Run DFT-accuracy simulations in your browser."/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@1,400;1,700&family=JetBrains+Mono:wght@300;400;500&family=Newsreader:ital,wght@1,400;1,700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-container-lowest": "#ffffff",
-                    "on-primary-fixed": "#0f2008",
-                    "on-surface-variant": "#444840",
-                    "outline-variant": "#c4c8bd",
-                    "primary-container": "#4b5e40",
-                    "primary": "#34462a",
-                    "on-primary": "#ffffff",
-                    "on-primary-container": "#c0d6b1",
-                    "on-background": "#1d1c16",
-                    "surface-tint": "#516445",
-                    "on-surface": "#1d1c16",
-                    "inverse-primary": "#b7cda8",
-                    "on-secondary-container": "#706349",
-                    "surface-bright": "#fef9ef",
-                    "inverse-surface": "#32302a",
-                    "on-primary-fixed-variant": "#394c2f",
-                    "on-secondary-fixed-variant": "#51452e",
-                    "tertiary-fixed-dim": "#a6cecf",
-                    "tertiary-container": "#395f60",
-                    "surface": "#fef9ef",
-                    "on-secondary-fixed": "#231a07",
-                    "error": "#ba1a1a",
-                    "on-secondary": "#ffffff",
-                    "background": "#fef9ef",
-                    "on-tertiary-fixed-variant": "#264d4e",
-                    "outline": "#74786f",
-                    "tertiary": "#204748",
-                    "on-tertiary": "#ffffff",
-                    "inverse-on-surface": "#f5f0e6",
-                    "tertiary-fixed": "#c1eaeb",
-                    "primary-fixed": "#d3e9c3",
-                    "surface-variant": "#e7e2d8",
-                    "surface-container-highest": "#e7e2d8",
-                    "on-tertiary-container": "#afd7d8",
-                    "on-tertiary-fixed": "#002021",
-                    "surface-dim": "#dedad0",
-                    "primary-fixed-dim": "#b7cda8",
-                    "on-error": "#ffffff",
-                    "surface-container-low": "#f8f3e9",
-                    "secondary-fixed-dim": "#d6c4a6",
-                    "error-container": "#ffdad6",
-                    "secondary-container": "#f3e0c0",
-                    "surface-container": "#f2ede3",
-                    "surface-container-high": "#ece8de",
-                    "secondary": "#6a5d44",
-                    "on-error-container": "#93000a",
-                    "secondary-fixed": "#f3e0c0"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "fontFamily": {
-                    "headline": ["Newsreader"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
-          },
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-surface-variant": "#c6c5d5",
+          "primary-container": "#5565d4",
+          "surface-bright": "#383941",
+          "surface-container-high": "#292931",
+          "tertiary-container": "#7f5fb7",
+          "primary-fixed-dim": "#bcc3ff",
+          "primary": "#bcc3ff",
+          "outline-variant": "#454653",
+          "surface": "#12131a",
+          "background": "#12131a",
+          "surface-container-lowest": "#0d0e15",
+          "surface-dim": "#12131a",
+          "on-background": "#e3e1ec",
+          "secondary-container": "#00a29a",
+          "surface-container-low": "#1a1b23",
+          "secondary": "#5dd9d0",
+          "inverse-primary": "#4353c2",
+          "on-primary-fixed": "#000d60",
+          "error-container": "#93000a",
+          "surface-tint": "#bcc3ff",
+          "inverse-surface": "#e3e1ec",
+          "error": "#ffb4ab",
+          "surface-container-highest": "#34343c",
+          "on-primary-container": "#f5f3ff",
+          "inverse-on-surface": "#2f3038",
+          "outline": "#8f8f9f",
+          "primary-fixed": "#dfe0ff",
+          "on-primary": "#051c93",
+          "surface-variant": "#34343c",
+          "on-surface": "#e3e1ec",
+          "surface-container": "#1e1f27",
+          "tertiary": "#d4bbff",
+          "accent-gold": "#d4a843"
         },
+        "borderRadius": {
+          "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+        },
+        "fontFamily": {
+          "headline": ["Newsreader", "serif"],
+          "body": ["Inter", "sans-serif"],
+          "label": ["Space Grotesk", "sans-serif"],
+          "mono": ["JetBrains Mono", "monospace"],
+          "serif-display": ["Playfair Display", "serif"]
+        }
       }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-            font-size: 20px;
-        }
-        .paper-grain {
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.04;
-            pointer-events: none;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
     }
-  </style>
-  </head>
-<body class="bg-surface text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
-<!-- Top Navigation Shell -->
-<nav class="fixed top-0 w-full z-50 bg-[#fef9ef]/85 backdrop-blur-md">
-<div class="flex justify-between items-center px-6 py-4 w-full max-w-screen-2xl mx-auto">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-[#34462a]">menu</span>
-</div>
-<h1 class="font-serif italic text-2xl text-[#34462a] tracking-tighter">Lupine Materials</h1>
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-[#34462a]">search</span>
-</div>
-</div>
+  }
+</script>
+<style>
+  body { background-color: #0a0b12; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+  .glass-card { background: rgba(30, 31, 39, 0.5); backdrop-filter: blur(24px); border: 1px solid rgba(188, 195, 255, 0.1); }
+  .spectral-gradient { background: linear-gradient(90deg, #5565d4 0%, #5dd9d0 50%, #d4bbff 100%); }
+  .glow-soft { filter: drop-shadow(0 0 15px rgba(85, 101, 212, 0.15)); }
+  .glow-teal { box-shadow: 0 0 30px rgba(93, 217, 208, 0.12); }
+  .text-glow { text-shadow: 0 0 40px rgba(188, 195, 255, 0.3); }
+  @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+  .float { animation: float 6s ease-in-out infinite; }
+  @keyframes pulse-glow { 0%, 100% { opacity: 0.05; } 50% { opacity: 0.12; } }
+  .pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
+</style>
+<style>
+@media (max-width: 768px) {
+  .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+  .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+  .text-8xl, .text-7xl { font-size: 2.75rem !important; line-height: 1.15 !important; }
+  .text-6xl { font-size: 2.25rem !important; }
+  .text-5xl { font-size: 2rem !important; }
+  .px-12 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+  .hidden.md\:flex { display: none !important; }
+  table { font-size: 12px !important; }
+  table td, table th { padding: 8px !important; }
+}
+</style>
+</head>
+<body class="text-on-surface font-body overflow-x-hidden">
+
+<!-- ═══════════════════════════════════════ NAV ═══ -->
+<nav class="fixed top-0 w-full z-50 bg-[#12131a]/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex justify-between items-center px-12 py-6">
+  <div class="text-xl font-headline italic text-[#bcc3ff]">Lupine Materials Science</div>
+  <div class="hidden md:flex gap-10">
+    <a class="text-[#bcc3ff]/70 font-mono text-xs uppercase tracking-widest hover:text-[#d4bbff] transition-colors duration-300" href="ml-potentials-guide.html">ML Architectures</a>
+    <a class="text-[#bcc3ff]/70 font-mono text-xs uppercase tracking-widest hover:text-[#d4bbff] transition-colors duration-300" href="platform-architecture.html">Pipeline</a>
+    <a class="text-[#bcc3ff]/70 font-mono text-xs uppercase tracking-widest hover:text-[#d4bbff] transition-colors duration-300" href="research-manifesto.html">Research</a>
+    <a class="text-[#bcc3ff]/70 font-mono text-xs uppercase tracking-widest hover:text-[#d4bbff] transition-colors duration-300" href="docs.html">Documentation</a>
+  </div>
+  <a href="glimPSE-demo.html" class="active:scale-95 transition-transform bg-primary-container text-on-primary-container px-6 py-2 text-xs font-mono uppercase tracking-tighter rounded-lg hover:brightness-110">Execute Protocol</a>
 </nav>
-<main class="relative pt-20 pb-32">
-<div class="absolute inset-0 paper-grain"></div>
-<!-- Hero Section -->
-<header class="px-6 pt-12 pb-16 overflow-hidden">
-<div class="max-w-md mx-auto">
-<span class="font-label tracking-widest uppercase text-xs text-outline mb-4 block">Archive Issue No. 04</span>
-<h2 class="font-headline italic text-6xl md:text-7xl leading-[0.9] text-primary tracking-tighter mb-8">
-                    The Living <br/> Archive
-                </h2>
-<div class="relative w-full aspect-[4/5] rounded-lg overflow-hidden bg-surface-container-high">
-<img alt="Crystalline structure" class="w-full h-full object-cover mix-blend-multiply opacity-90" data-alt="Macro photography of translucent quartz-like minerals with organic moss-like inclusions under soft morning sunlight, ethereal and tactile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYFD8LmkzTUYP1GlIbFUQj5RIg07Aw59CIzoRma_g80jZZAa_7BMi_UwLQ54ZhSYvdSH7Ordb-SsFlf0dWh3eZkakzeVPAgkSSsFRyi29lARPOZQrtaDLwE8PCKergEzN9IDhO_Ubyydc2bXcnwfPTXlmEIeWFKp_2xNZLDa8D1q66GCeoHBkjN1eDTTCfEhK4n8hRVYiOubN0h0B9DLmse_f4jae7pU8THmjZIK9jrrTSekc2QvS3bdxT3Ip9WeaPkW2tcznJIkI"/>
-<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-40"></div>
-</div>
-<p class="mt-8 font-body text-lg leading-relaxed text-on-surface-variant max-w-sm">
-                    A curated synthesis of botanical architecture and geological permanence. Exploring the intersection of synthetic craft and biological heritage.
-                </p>
-<div class="mt-8">
-<button class="bg-primary text-on-primary px-6 py-3 rounded-DEFAULT flex items-center gap-3 transition-transform active:scale-95">
-<span class="font-label text-sm tracking-wide">Enter the Repository</span>
-<span class="material-symbols-outlined text-sm">arrow_forward</span>
-</button>
-</div>
-</div>
-</header>
-<!-- Specimen Catalog Section -->
-<section class="bg-surface-container-low py-20 px-6">
-<div class="max-w-md mx-auto">
-<div class="flex justify-between items-end mb-12">
-<div>
-<span class="font-label tracking-widest uppercase text-xs text-outline block mb-2">Inventory</span>
-<h3 class="font-headline italic text-4xl text-primary">Specimen Catalog</h3>
-</div>
-<span class="font-headline text-primary text-lg italic">01—03</span>
-</div>
-<div class="space-y-12">
-<!-- Specimen Card 1 -->
-<div class="group">
-<div class="aspect-square bg-surface-container-lowest rounded-xl overflow-hidden mb-4 relative p-8">
-<img alt="Material Sample" class="w-full h-full object-contain mix-blend-darken" data-alt="High-resolution close up of a calcified leaf skeleton with metallic gold mineral deposits in its veins on a white vellum background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkXVVHciRJXEckTRnr6jJwsMcMBBAQwm49FjxB3F6--6KUaUwpwY2Ss_kNU2MpjqyDMauE2LUB6AmlDZsBCyC0-nKvXZ5LvgJfbf3eK4f_tqVOtchLAK1QgMfaYgPAhOC6NuAIm44xCPh6SnlsHf85Nb8NaMcc2Bc_k3LIdl1krF_KN1aeP-EtfJpT2QzaSbrz13Xntf8dC2RbQToNNe_DrUC1IzcIwv90EMj3ZJ4y39wtXBW0wcRWCwOyKUGM7OARTPYuyDxVmGA"/>
-</div>
-<div class="flex justify-between items-start">
-<div>
-<p class="font-label text-[10px] tracking-widest uppercase text-outline mb-1">Ref. #LM-042</p>
-<h4 class="font-headline text-xl text-primary font-medium tracking-tight">Calcified Willow Vein</h4>
-</div>
-<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-label font-bold tracking-widest uppercase">Organic</span>
-</div>
-</div>
-<!-- Specimen Card 2 -->
-<div class="group">
-<div class="aspect-square bg-surface-container-highest rounded-xl overflow-hidden mb-4 relative p-8">
-<img alt="Material Sample" class="w-full h-full object-contain mix-blend-darken" data-alt="Macro detail of translucent amber resin containing air bubbles and microscopic botanical spores, warm golden light filtering through" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1Df0dMQfeE81Q-XSOGRyMR4u1pF3YFeDL7C5dznKy4A_konNgob4k1EZD5OHsYzZjdZqgNUFa7SuQaEA9cxz_oPzUoXb5QHrMhsdHZSm-zpAA1pGxkTmuLdPd0jTvWDWBDYjLqygX8-uGK2_Ez4qUUa_x5kCUIfrgy6_AhSE-z7lJHMvOebSAPlxDlhXG95SAZcIOls0R7xqUWwmV59m8KS6S9geqAEDHseQPMYZJZjWc53OKl507Y2MAU8SceILikaypNZKwJAg"/>
-</div>
-<div class="flex justify-between items-start">
-<div>
-<p class="font-label text-[10px] tracking-widest uppercase text-outline mb-1">Ref. #LM-089</p>
-<h4 class="font-headline text-xl text-primary font-medium tracking-tight">Amber Spore Suspension</h4>
-</div>
-<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-label font-bold tracking-widest uppercase">Hybrid</span>
-</div>
-</div>
-</div>
-</div>
+
+<!-- ═══════════════════════════════════════ HERO ═══ -->
+<section class="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-24 px-6 overflow-hidden">
+  <!-- Atmosphere -->
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-1/4 left-1/4 w-[700px] h-[700px] bg-primary/5 blur-[140px] rounded-full pulse-glow"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-secondary/5 blur-[120px] rounded-full pulse-glow" style="animation-delay:2s"></div>
+    <div class="absolute top-1/2 right-1/3 w-[400px] h-[400px] bg-tertiary/4 blur-[100px] rounded-full pulse-glow" style="animation-delay:4s"></div>
+  </div>
+
+  <div class="z-10 text-center max-w-6xl mx-auto">
+    <div class="inline-block px-4 py-1 mb-8 glass-card">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-[#d4a843] uppercase">Quantum Laboratory Protocol v4.0.2 // Now in Public Beta</span>
+    </div>
+
+    <h1 class="text-6xl md:text-8xl font-headline italic font-bold tracking-tight text-on-surface mb-8 leading-[1.05] text-glow">
+      Materials Discovery<br/>
+      <span class="text-transparent bg-clip-text" style="background: linear-gradient(90deg, #bcc3ff, #5dd9d0);">at Quantum Speed</span>
+    </h1>
+
+    <p class="text-xl md:text-2xl text-on-surface-variant font-light leading-relaxed max-w-3xl mx-auto mb-14">
+      Lupine deploys machine learning interatomic potentials with DFT accuracy at 40× the speed of ab-initio methods. Run superalloy simulations directly in your browser — no cluster required.
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-6 mb-24">
+      <a href="glimPSE-demo.html" class="bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-mono text-sm px-12 py-4 rounded-lg tracking-widest hover:opacity-90 transition-all shadow-xl shadow-primary/10">
+        INITIATE SIMULATION
+      </a>
+      <a href="ml-potentials-guide.html" class="glass-card text-on-surface font-mono text-sm px-12 py-4 rounded-lg tracking-widest hover:bg-surface-variant/20 transition-all">
+        VIEW ARCHITECTURES
+      </a>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-3xl text-secondary mb-2">40×</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Faster than<br/>DFT methods</div>
+      </div>
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-3xl text-primary mb-2">98.2%</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">CHGNet accuracy<br/>vs experiment</div>
+      </div>
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-3xl text-tertiary mb-2">1.5M</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">DFT trajectories<br/>in training set</div>
+      </div>
+      <div class="glass-card p-6 rounded-lg">
+        <div class="font-mono text-3xl text-[#d4a843] mb-2">89</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Elemental systems<br/>benchmarked</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-24 w-full max-w-7xl px-12">
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent"></div>
+  </div>
 </section>
-<!-- Field Notes (Bento-style layout for mobile) -->
-<section class="py-20 px-6">
-<div class="max-w-md mx-auto">
-<h3 class="font-headline italic text-4xl text-primary mb-10">Field Notes</h3>
-<div class="grid grid-cols-2 gap-4">
-<div class="col-span-2 bg-surface-container p-6 rounded-xl border-l-[0.5px] border-outline-variant/30">
-<span class="material-symbols-outlined text-primary mb-4" data-weight="fill">edit_note</span>
-<p class="font-headline italic text-xl text-primary leading-tight mb-4">"The sample exhibited a self-healing properties when exposed to humidity above 60%..."</p>
-<p class="font-body text-xs text-on-surface-variant uppercase tracking-widest">— Oct 14, Site B</p>
-</div>
-<div class="bg-[#f3e0c0]/40 p-4 rounded-xl flex flex-col justify-between aspect-square">
-<span class="font-label text-[10px] tracking-tighter text-secondary uppercase font-bold">Weather Condition</span>
-<p class="font-headline text-3xl text-secondary italic">Foggy</p>
-<p class="font-body text-[10px] text-secondary/70">Dew point critical for harvest.</p>
-</div>
-<div class="bg-primary p-4 rounded-xl flex flex-col justify-between aspect-square">
-<span class="font-label text-[10px] tracking-tighter text-primary-fixed uppercase font-bold">PH Analysis</span>
-<p class="font-headline text-3xl text-primary-fixed italic">4.2</p>
-<p class="font-body text-[10px] text-primary-fixed/70">Highly acidic substrate detected.</p>
-</div>
-</div>
-</div>
+
+<!-- ═══════════════════════════════════════ ACCURACY GAP ═══ -->
+<section class="py-32 px-12 bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-20 text-center">
+      <h2 class="text-3xl font-headline italic text-primary mb-4">Bridging the Accuracy Gap</h2>
+      <p class="text-on-surface-variant font-mono text-xs uppercase tracking-widest">Quantum accuracy · Classical speed · ML-native infrastructure</p>
+    </div>
+    <div class="relative py-24">
+      <div class="absolute top-1/2 left-0 w-full h-[2px] spectral-gradient opacity-30 transform -translate-y-1/2"></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-16 relative z-10">
+        <!-- Left: Empirical -->
+        <div class="flex flex-col items-center text-center space-y-6">
+          <div class="w-16 h-16 rounded-lg glass-card flex items-center justify-center">
+            <span class="material-symbols-outlined text-outline">speed</span>
+          </div>
+          <div>
+            <h3 class="font-headline italic text-xl mb-2">Empirical Potentials</h3>
+            <div class="font-mono text-[10px] space-y-1 text-on-surface-variant/60">
+              <div>SPEED: 10⁷ ATOMS/SEC</div>
+              <div class="text-error/60">ACCURACY: LOW (EMPIRICAL)</div>
+            </div>
+          </div>
+        </div>
+        <!-- Center: Lupine -->
+        <div class="flex flex-col items-center text-center -mt-8">
+          <div class="w-24 h-24 rounded-lg bg-surface border-2 border-secondary flex items-center justify-center shadow-[0_0_40px_rgba(93,217,208,0.25)] float">
+            <span class="material-symbols-outlined text-secondary text-4xl" style="font-variation-settings:'FILL' 1">insights</span>
+          </div>
+          <div class="mt-6">
+            <h3 class="font-headline italic text-3xl text-secondary mb-2">Lupine ML-Potentials</h3>
+            <div class="font-mono text-xs space-y-1 text-secondary">
+              <div>PARALLEL SCALING: LINEAR</div>
+              <div>PRECISION: &lt; 1 meV/ATOM</div>
+            </div>
+          </div>
+        </div>
+        <!-- Right: Ab-Initio -->
+        <div class="flex flex-col items-center text-center space-y-6">
+          <div class="w-16 h-16 rounded-lg glass-card flex items-center justify-center">
+            <span class="material-symbols-outlined text-outline">biotech</span>
+          </div>
+          <div>
+            <h3 class="font-headline italic text-xl mb-2">Ab-Initio / DFT</h3>
+            <div class="font-mono text-[10px] space-y-1 text-on-surface-variant/60">
+              <div class="text-error/60">SPEED: 10² ATOMS/SEC</div>
+              <div>ACCURACY: QUANTUM TRUTH</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Material Provenance -->
-<section class="pb-20 px-6 bg-surface">
-<div class="max-w-md mx-auto border-t-[0.5px] border-outline-variant/50 pt-12">
-<div class="flex items-start gap-6">
-<div class="shrink-0 w-16 h-16 rounded-full overflow-hidden bg-surface-container-high">
-<img alt="Founder" class="w-full h-full object-cover grayscale opacity-80" data-alt="Portrait of a female materials scientist in a soft-lit studio, wearing linen clothing, focused look, natural aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfrktj6k62O3uWN30HNbcep1tQ1K5g_9jRJZE2J8IVzkCiMckbzmkVxX_f6ul8mMBkGBEo8s5RHZ7YXsK3HJDHQ_ROKV-fEn-28gwZnjd4eO7DuDmKBcI2prlK3dQ4snbiDjPHG936sSFayF4h2uY507LvyO3Pb56JWaV2qJ_AvihlBmEc9Sqjnk5t50_uwvkymNMcgUMPH17Eiob2657UhTaVzlxCKJR5L4eEvZ3XFKaVzoDjFIT_sdUMoKd3QEk5kfRYU7J92w0"/>
-</div>
-<div>
-<h3 class="font-headline italic text-2xl text-primary mb-2">Material Provenance</h3>
-<p class="font-body text-sm leading-relaxed text-on-surface-variant">
-                            Every sample in the Lupine collection is ethically harvested from the High Alpine plateaus of the Southern Range. We believe in transparency of origin—tracking the molecular journey from soil to surface.
-                        </p>
-<a class="inline-block mt-4 font-headline text-primary italic border-b border-primary/30 pb-0.5" href="#">Read our Sourcing Ethos</a>
-</div>
-</div>
-</div>
+
+<!-- ═══════════════════════════════════════ ML POTENTIALS ═══ -->
+<section class="py-32 px-12 bg-surface-container-low">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl font-headline italic mb-4 border-l-4 border-primary pl-8">Supported Architectures</h2>
+    <p class="text-on-surface-variant font-mono text-xs uppercase tracking-widest mb-16 pl-8">Production-ready neural network force fields</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <!-- CHGNet -->
+      <a href="ml-potentials-guide.html" class="glass-card p-8 rounded-lg hover:border-secondary/50 transition-all group">
+        <div class="font-mono text-[10px] text-secondary mb-6 tracking-widest">01 // UNIVERSAL</div>
+        <h4 class="text-2xl font-headline italic mb-8 group-hover:text-secondary transition-colors">CHGNet</h4>
+        <div class="space-y-4 font-mono text-[11px] text-on-surface-variant">
+          <div class="flex justify-between border-b border-outline-variant/10 pb-2">
+            <span>ACCURACY</span><span class="text-secondary">&lt; 1 meV/atom</span>
+          </div>
+          <div class="flex justify-between pb-2">
+            <span>CONFIDENCE</span><span class="text-secondary">98.2%</span>
+          </div>
+        </div>
+      </a>
+      <!-- M3GNet -->
+      <a href="ml-potentials-guide.html" class="glass-card p-8 rounded-lg hover:border-primary/50 transition-all group">
+        <div class="font-mono text-[10px] text-primary mb-6 tracking-widest">02 // GRAPH NET</div>
+        <h4 class="text-2xl font-headline italic mb-8 group-hover:text-primary transition-colors">M3GNet</h4>
+        <div class="space-y-4 font-mono text-[11px] text-on-surface-variant">
+          <div class="flex justify-between border-b border-outline-variant/10 pb-2">
+            <span>ACCURACY</span><span class="text-secondary">&lt; 1.2 meV/atom</span>
+          </div>
+          <div class="flex justify-between pb-2">
+            <span>CONFIDENCE</span><span class="text-primary">94.0%</span>
+          </div>
+        </div>
+      </a>
+      <!-- MACE -->
+      <a href="ml-potentials-guide.html" class="glass-card p-8 rounded-lg hover:border-primary/50 transition-all group border-secondary/40 shadow-[0_0_20px_rgba(93,217,208,0.08)]">
+        <div class="font-mono text-[10px] text-secondary mb-6 tracking-widest">03 // EQUIVARIANT</div>
+        <h4 class="text-2xl font-headline italic mb-8 group-hover:text-secondary transition-colors">MACE</h4>
+        <div class="space-y-4 font-mono text-[11px] text-on-surface-variant">
+          <div class="flex justify-between border-b border-outline-variant/10 pb-2">
+            <span>ACCURACY</span><span class="text-secondary">&lt; 1 meV/atom</span>
+          </div>
+          <div class="flex justify-between pb-2">
+            <span>SCALE</span><span class="text-secondary">Universal</span>
+          </div>
+        </div>
+      </a>
+      <!-- NequIP -->
+      <a href="ml-potentials-guide.html" class="glass-card p-8 rounded-lg hover:border-primary/50 transition-all group">
+        <div class="font-mono text-[10px] text-tertiary mb-6 tracking-widest">04 // E(3)-INVARIANT</div>
+        <h4 class="text-2xl font-headline italic mb-8 group-hover:text-tertiary transition-colors">NequIP</h4>
+        <div class="space-y-4 font-mono text-[11px] text-on-surface-variant">
+          <div class="flex justify-between border-b border-outline-variant/10 pb-2">
+            <span>ACCURACY</span><span class="text-secondary">~0.8 meV/atom</span>
+          </div>
+          <div class="flex justify-between pb-2">
+            <span>DATA REQ</span><span class="text-on-surface">500–2k</span>
+          </div>
+        </div>
+      </a>
+      <!-- Allegro -->
+      <a href="ml-potentials-guide.html" class="glass-card p-8 rounded-lg hover:border-primary/50 transition-all group">
+        <div class="font-mono text-[10px] text-tertiary mb-6 tracking-widest">05 // STRICTLY LOCAL</div>
+        <h4 class="text-2xl font-headline italic mb-8 group-hover:text-tertiary transition-colors">Allegro</h4>
+        <div class="space-y-4 font-mono text-[11px] text-on-surface-variant">
+          <div class="flex justify-between border-b border-outline-variant/10 pb-2">
+            <span>ACCURACY</span><span class="text-secondary">&lt; 1.2 meV/atom</span>
+          </div>
+          <div class="flex justify-between pb-2">
+            <span>INFERENCE</span><span class="text-secondary">4.1 ms/step</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="mt-10 text-center">
+      <a href="ml-potentials-guide.html" class="font-mono text-xs text-primary/70 hover:text-primary uppercase tracking-widest transition-colors">Compare all architectures →</a>
+    </div>
+  </div>
 </section>
-</main>
-<!-- Bottom Navigation Bar -->
-<footer class="fixed bottom-0 left-0 w-full z-50">
-<div class="bg-[#fef9ef] dark:bg-[#1d1c16] flex justify-around items-center px-4 pb-6 pt-2 shadow-[0_-10px_30px_rgba(29,28,22,0.04)] border-t-[0.5px] border-[#c4c8bd]/30">
-<!-- Active Tab: Specimens -->
-<a class="flex flex-col items-center justify-center text-[#74786f] px-3 py-1 hover:text-[#34462a]" href="#">
-<span class="material-symbols-outlined mb-1">inventory_2</span>
-<span class="font-sans text-[10px] font-medium tracking-wide">Archive</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-[#f3e0c0] text-[#34462a] rounded-xl px-3 py-1" href="#">
-<span class="material-symbols-outlined mb-1" data-weight="fill">magnification_small</span>
-<span class="font-sans text-[10px] font-medium tracking-wide">Specimens</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#74786f] px-3 py-1 hover:text-[#34462a]" href="#">
-<span class="material-symbols-outlined mb-1">edit_note</span>
-<span class="font-sans text-[10px] font-medium tracking-wide">Field Notes</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#74786f] px-3 py-1 hover:text-[#34462a]" href="#">
-<span class="material-symbols-outlined mb-1">auto_stories</span>
-<span class="font-sans text-[10px] font-medium tracking-wide">Library</span>
-</a>
-</div>
+
+<!-- ═══════════════════════════════════════ PLATFORM ═══ -->
+<section class="py-32 px-12 bg-surface">
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-24 items-center">
+    <div class="lg:w-1/2">
+      <div class="font-mono text-[10px] text-[#d4a843] uppercase tracking-[0.3em] mb-6">glimPSE Platform</div>
+      <h2 class="text-5xl font-headline italic font-bold leading-tight mb-8">
+        Molecular Dynamics<br/>in the Browser
+      </h2>
+      <p class="text-on-surface-variant leading-relaxed mb-8 text-lg">
+        glimPSE brings NNFF-powered molecular dynamics to the web via WebGPU compute shaders and optimized WASM kernels. Run full-scale superalloy simulations at 512+ atoms with zero cluster configuration.
+      </p>
+      <ul class="space-y-4 mb-10">
+        <li class="flex items-center gap-3 font-mono text-sm text-on-surface-variant">
+          <span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+          WebGPU-accelerated force field inference — 40× faster than PyTorch
+        </li>
+        <li class="flex items-center gap-3 font-mono text-sm text-on-surface-variant">
+          <span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+          Quantum Ledger provenance — every trajectory cryptographically verifiable
+        </li>
+        <li class="flex items-center gap-3 font-mono text-sm text-on-surface-variant">
+          <span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+          CHGNet, M3GNet, MACE — switch potentials without page reload
+        </li>
+        <li class="flex items-center gap-3 font-mono text-sm text-on-surface-variant">
+          <span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+          Export XDATCAR trajectories for VESTA, OVITO, and LAMMPS
+        </li>
+      </ul>
+      <a href="glimPSE-demo.html" class="inline-flex items-center gap-3 bg-primary-container text-on-primary-container font-mono text-sm px-10 py-4 rounded-lg tracking-widest hover:brightness-110 transition-all">
+        LAUNCH GLIMPSE
+        <span class="material-symbols-outlined text-base">arrow_forward</span>
+      </a>
+    </div>
+    <div class="lg:w-1/2 w-full">
+      <!-- Terminal mock -->
+      <div class="glass-card rounded-lg overflow-hidden glow-teal">
+        <div class="bg-surface-container-highest px-6 py-3 flex items-center gap-2 border-b border-outline-variant/20">
+          <div class="w-2.5 h-2.5 rounded-full bg-error/50"></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-[#d4a843]/50"></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-secondary/50"></div>
+          <span class="ml-4 font-mono text-[10px] text-on-surface-variant/50">GLIMPSE // SIMULATION RUNTIME v4.0.2</span>
+        </div>
+        <div class="p-8 font-mono text-sm leading-loose">
+          <div class="text-outline mb-1">$ glimpse init --potential chgnet --supercell 4x4x4</div>
+          <div class="text-secondary mb-1">✓ CHGNet@v0.3.3 loaded (WebGPU backend)</div>
+          <div class="text-on-surface-variant mb-1">  Supercell: Ni₃Al · 256 atoms · FCC structure</div>
+          <div class="text-on-surface-variant mb-1">  Temperature: 2400K · NPT ensemble</div>
+          <div class="text-outline mb-1">$ glimpse run --steps 10000 --timestep 1fs</div>
+          <div class="text-secondary mb-1">✓ WebGPU compute pipeline initialized</div>
+          <div class="text-primary mb-1">  Step 1000  │ E: -847.23 eV │ T: 2401K │ ✓</div>
+          <div class="text-primary mb-1">  Step 5000  │ E: -846.91 eV │ T: 2398K │ ✓</div>
+          <div class="text-secondary mb-1">  Step 10000 │ E: -847.08 eV │ T: 2400K │ ✓</div>
+          <div class="text-[#d4a843] mb-1">✓ Quantum Ledger: sha256:9e3f1a7c… committed</div>
+          <div class="text-secondary">✓ Trajectory exported → NiAl_2400K.xdatcar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ USE CASES ═══ -->
+<section class="py-32 px-12 bg-surface-container-low">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl font-headline italic mb-4 border-l-4 border-secondary pl-8">Materials Discovery at Scale</h2>
+    <p class="text-on-surface-variant font-mono text-xs uppercase tracking-widest mb-16 pl-8">From superalloys to solid-state batteries</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <a href="case-study-superalloys.html" class="glass-card p-10 rounded-lg hover:border-secondary/40 transition-all group">
+        <span class="material-symbols-outlined text-secondary mb-6 block" style="font-size:2rem">diamond</span>
+        <h3 class="font-headline italic text-2xl mb-4 group-hover:text-secondary transition-colors">Superalloy Design</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">Simulate nickel-based superalloys at 2,400K operating temperatures. Identify creep-resistant compositions in hours, not months.</p>
+        <span class="font-mono text-[10px] text-secondary uppercase tracking-widest">Read case study →</span>
+      </a>
+      <a href="case-study-batteries.html" class="glass-card p-10 rounded-lg hover:border-primary/40 transition-all group">
+        <span class="material-symbols-outlined text-primary mb-6 block" style="font-size:2rem">electric_bolt</span>
+        <h3 class="font-headline italic text-2xl mb-4 group-hover:text-primary transition-colors">Solid-State Batteries</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">Model ionic transport in solid electrolytes and predict lithium dendrite formation — with quantum-accurate forces at scale.</p>
+        <span class="font-mono text-[10px] text-primary uppercase tracking-widest">Read case study →</span>
+      </a>
+      <a href="defense-aerospace.html" class="glass-card p-10 rounded-lg hover:border-tertiary/40 transition-all group">
+        <span class="material-symbols-outlined text-tertiary mb-6 block" style="font-size:2rem">rocket_launch</span>
+        <h3 class="font-headline italic text-2xl mb-4 group-hover:text-tertiary transition-colors">Aerospace & Defense</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">High-entropy alloys for hypersonic thermal protection systems. ML-driven screening of refractory compositions under extreme gradients.</p>
+        <span class="font-mono text-[10px] text-tertiary uppercase tracking-widest">Read case study →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ BENCHMARK TABLE ═══ -->
+<section class="py-32 px-12 bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl font-headline italic mb-4 text-center">Performance Benchmarks</h2>
+    <p class="text-on-surface-variant font-mono text-xs uppercase tracking-widest mb-16 text-center">Lupine superalloy dataset · Ni-Co-Cr-Al quaternary compositions</p>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-outline-variant/30">
+            <th class="py-6 font-mono text-xs text-on-surface-variant uppercase tracking-widest">Architecture</th>
+            <th class="py-6 font-mono text-xs text-on-surface-variant uppercase tracking-widest">Force MAE (eV/Å)</th>
+            <th class="py-6 font-mono text-xs text-on-surface-variant uppercase tracking-widest">Energy MAE (eV/atom)</th>
+            <th class="py-6 font-mono text-xs text-on-surface-variant uppercase tracking-widest">Inference (ms/step)</th>
+            <th class="py-6 font-mono text-xs text-on-surface-variant uppercase tracking-widest">Accuracy</th>
+          </tr>
+        </thead>
+        <tbody class="font-mono text-sm">
+          <tr class="border-b border-outline-variant/10 bg-surface-container-high/20 hover:bg-surface-container-low transition-colors">
+            <td class="py-6 text-secondary font-bold italic">CHGNet</td>
+            <td class="py-6 text-secondary">0.040</td>
+            <td class="py-6 text-secondary">0.012</td>
+            <td class="py-6 text-on-surface-variant">12.4</td>
+            <td class="py-6 text-secondary font-bold">98.2%</td>
+          </tr>
+          <tr class="border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors">
+            <td class="py-6 text-on-surface font-bold italic">M3GNet</td>
+            <td class="py-6 text-on-surface-variant">0.067</td>
+            <td class="py-6 text-on-surface-variant">0.022</td>
+            <td class="py-6 text-on-surface-variant">8.1</td>
+            <td class="py-6 text-primary">94.0%</td>
+          </tr>
+          <tr class="border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors">
+            <td class="py-6 text-on-surface font-bold italic">MACE-MP-0</td>
+            <td class="py-6 text-on-surface-variant">0.058</td>
+            <td class="py-6 text-on-surface-variant">0.019</td>
+            <td class="py-6 text-on-surface-variant">28.8</td>
+            <td class="py-6 text-primary">96.1%</td>
+          </tr>
+          <tr class="hover:bg-surface-container-low transition-colors">
+            <td class="py-6 text-on-surface font-bold italic">Allegro</td>
+            <td class="py-6 text-on-surface-variant">0.055</td>
+            <td class="py-6 text-on-surface-variant">0.018</td>
+            <td class="py-6 text-tertiary">4.1</td>
+            <td class="py-6 text-primary">97.0%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-8 text-center">
+      <a href="ml-potentials-guide.html" class="font-mono text-xs text-primary/70 hover:text-primary uppercase tracking-widest transition-colors">Full benchmark methodology →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CTA ═══ -->
+<section class="py-32 px-12 relative overflow-hidden">
+  <div class="absolute inset-0 bg-primary-container/10"></div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/8 blur-[100px] rounded-full"></div>
+  <div class="max-w-4xl mx-auto text-center relative z-10 glass-card p-20 rounded-lg border-primary/20">
+    <h2 class="text-5xl font-headline italic mb-8">Ready to evolve your<br/>simulation suite?</h2>
+    <p class="text-on-surface-variant text-lg mb-12 max-w-2xl mx-auto">
+      Join the quantum-classical revolution. Deploy state-of-the-art machine learned potentials with Lupine Materials Science today.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="glimPSE-demo.html" class="bg-primary-container text-on-primary-container font-mono text-sm px-12 py-5 rounded-lg tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-primary-container/20">
+        INITIATE TRAINING PROTOCOL
+      </a>
+      <a href="pricing.html" class="glass-card text-on-surface font-mono text-sm px-12 py-5 rounded-lg tracking-widest hover:bg-surface-variant/20 transition-all">
+        VIEW PRICING
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FOOTER ═══ -->
+<footer class="w-full border-t border-[#5565d4]/10 bg-[#12131a] flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8">
+  <div class="flex flex-col gap-4">
+    <div class="text-lg font-headline italic text-[#d4a843]">Lupine Materials Science</div>
+    <p class="font-mono text-[10px] tracking-tighter uppercase text-[#5565d4]">© 2024 LUPINE MATERIALS SCIENCE | QUANTUM LABORATORY PROTOCOL v4.0.2</p>
+  </div>
+  <div class="flex gap-12">
+    <div class="flex flex-col gap-3">
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="ml-potentials-guide.html">ML Architectures</a>
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="platform-architecture.html">Pipeline</a>
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="research-manifesto.html">Research</a>
+    </div>
+    <div class="flex flex-col gap-3">
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="pricing.html">Pricing</a>
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="glimPSE-demo.html">glimPSE</a>
+      <a class="font-mono text-[10px] tracking-tighter uppercase text-[#bcc3ff]/40 hover:text-[#bcc3ff] transition-all" href="contact.html">Contact</a>
+    </div>
+  </div>
 </footer>
+
 </body></html>
