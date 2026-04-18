@@ -265,7 +265,7 @@ export function AtomsOptimized({
       ref={meshRef}
       args={[geometry, material, maxAtoms]}
       frustumCulled={false}
-      count={0} // Start empty, updated in effect
+      count={frame.natoms} // Correctly sync count via React Three Fiber
     >
       <instancedBufferAttribute attach="instanceColor" args={[colorArray, 3]} />
     </instancedMesh>
