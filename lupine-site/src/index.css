@@ -63,3 +63,79 @@ body {
     background: var(--lupine-600);
     color: white;
 }
+
+/* ─── Navigation ─── */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+nav.scrolled {
+    background: rgba(10, 11, 18, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(91, 58, 140, 0.15);
+    padding: 14px 40px;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+}
+
+.nav-brand .logo-mark {
+    width: 36px;
+    height: 36px;
+}
+
+.nav-brand-text {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--slate-100);
+    letter-spacing: 0.02em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--slate-400);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--lupine-400);
+}
+
+.nav-cta {
+    background: linear-gradient(135deg, var(--lupine-700), var(--violet-700));
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s !important;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(46, 58, 135, 0.4);
+}

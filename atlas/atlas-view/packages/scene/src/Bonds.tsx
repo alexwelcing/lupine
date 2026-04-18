@@ -194,7 +194,7 @@ export function Bonds({
 
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-    mesh.frustumCulled = false;
+     mesh.frustumCulled = false;
     group.add(mesh);
 
     // Cleanup on re-run or unmount: remove mesh from group

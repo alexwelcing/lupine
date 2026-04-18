@@ -519,7 +519,7 @@ export default function App() {
                   frame={file!.trajectory.frames[interpState.frameIndex]}
                   nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
                   interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
-                  colorMode={colorMode === 'uniform' ? 'type' : colorMode}
+                  colorMode={colorMode}
                   colorProperty={colorProperty ?? undefined}
                   colormap={colormap}
                   scale={atomScale}
@@ -535,7 +535,7 @@ export default function App() {
                     maxBondLength={bondCutoff}
                     renderStyle={renderStyle}
                     colormap={colormap}
-                    colorMode={colorMode === 'uniform' ? 'type' : colorMode}
+                    colorMode={colorMode}
                     radius={0.12}
                     opacity={0.85}
                   />
