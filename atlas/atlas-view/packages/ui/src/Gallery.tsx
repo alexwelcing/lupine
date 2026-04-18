@@ -82,7 +82,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '32,000',
     frames: '50',
     file: 'gallery/al_polycrystal_32k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#c0c0c0', '#a0a0a0', '#ff6b6b'],
     metadata: {
       method: 'MD with grain boundary analysis',
@@ -100,7 +100,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '108,000',
     frames: '1',
     file: 'gallery/ni_superalloy_108k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#4a90d9', '#f5a623', '#d0021b'],
     metadata: {
       method: 'Monte Carlo + MD hybrid',
@@ -117,7 +117,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '24,000',
     frames: '200',
     file: 'gallery/ti_hcp_tension_24k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#7ed321', '#50e3c2', '#b8e986'],
     metadata: {
       method: 'Deformation MD',
@@ -154,7 +154,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '28,800',
     frames: '1',
     file: 'gallery/cu_dislocation_28k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#b87333', '#cd853f', '#d4af37'],
     metadata: {
       method: 'Energy minimization + MD',
@@ -170,7 +170,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '256,000',
     frames: '150',
     file: 'gallery/al_nanoindent_256k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#c0c0c0', '#808080', '#ff6b6b'],
     metadata: {
       method: 'Indenter MD',
@@ -187,7 +187,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '64,000',
     frames: '100',
     file: 'gallery/cu_void_growth_64k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#ff6b6b', '#ffa500', '#ffff00'],
     metadata: {
       method: 'Cavitation MD',
@@ -274,7 +274,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '147',
     frames: '200',
     file: 'gallery/au147_melt.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#ffd700', '#ffb700', '#ff8c00'],
     metadata: {
       method: 'Caloric curve MD',
@@ -291,7 +291,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '24,000',
     frames: '50',
     file: 'gallery/mos2_monolayer_24k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#4a90d9', '#f5a623', '#7ed321'],
     metadata: {
       method: '2D materials MD',
@@ -310,7 +310,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '24,000',
     frames: '100',
     file: 'gallery/sio2_glass_24k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#87ceeb', '#b0e0e6', '#ffd700'],
     metadata: {
       method: 'Melt-quench with Vashishta potential',
@@ -327,7 +327,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '18,000',
     frames: '1',
     file: 'gallery/al2o3_sapphire_18k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#e6e6fa', '#d8bfd8', '#dda0dd'],
     metadata: {
       method: 'Crystal structure',
@@ -343,7 +343,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '32,768',
     frames: '50',
     file: 'gallery/zro2_ysz_32k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#f0e68c', '#daa520', '#b8860b'],
     metadata: {
       method: 'Oxide MD',
@@ -362,7 +362,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '3,000',
     frames: '200',
     file: 'gallery/pe_chain_3k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#ff69b4', '#ff1493', '#dc143c'],
     metadata: {
       method: 'Polymer MD',
@@ -380,7 +380,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '12,000',
     frames: '50',
     file: 'gallery/pe_crystal_12k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#ffb6c1', '#ffc0cb', '#ff69b4'],
     metadata: {
       method: 'Crystal MD',
@@ -399,7 +399,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '16,384',
     frames: '150',
     file: 'gallery/li_dendrite_16k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#c0c0c0', '#a9a9a9', '#808080'],
     metadata: {
       method: 'Electrodeposition MD',
@@ -416,7 +416,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '8,000',
     frames: '100',
     file: 'gallery/li_s_cathode_8k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#ffff00', '#ffd700', '#ffa500'],
     metadata: {
       method: 'Reactive MD',
@@ -435,7 +435,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '12,000',
     frames: '100',
     file: 'gallery/water_tip4p_12k.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#4169e1', '#1e90ff', '#87cefa'],
     metadata: {
       method: 'Liquid MD',
@@ -453,7 +453,7 @@ const EXAMPLES: GalleryExample[] = [
     atoms: '66',
     frames: '1000',
     file: 'gallery/ala_dipeptide.lammpstrj',
-    available: true,
+    available: false,
     colors: ['#ff6347', '#ff4500', '#ffd700'],
     metadata: {
       method: 'Biomolecular MD',
