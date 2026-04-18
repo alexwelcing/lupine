@@ -60,6 +60,22 @@ export const COLORMAPS: Record<ColormapName, (t: number) => [number, number, num
   vaporwave: makeColormap([0.05, 0.85, 0.85],    [0.55, 0.30, 0.95],    [1.0, 0.40, 0.70],     [1.0, 0.85, 0.40]),
 };
 
+function toHexChannel(value: number): string {
+  const clamped = Math.max(0, Math.min(255, Math.round(value)));
+  return clamped.toString(16).padStart(2, '0');
+}
+
+function toHexColor(rgb: [number, number, number], brightness = 1): string {
+  return `#${toHexChannel(rgb[0] * 255 * brightness)}${toHexChannel(rgb[1] * 255 * brightness)}${toHexChannel(rgb[2] * 255 * brightness)}`;
+}
+
+export function getBackgroundFromColormap(colormapName: ColormapName): { top: string; bottom: string } {
+  const map = COLORMAPS[colormapName] ?? COLORMAPS.viridis;
+  const top = toHexColor(map(0.05), 0.22);
+  const bottom = toHexColor(map(0.65), 0.4);
+  return { top, bottom };
+}
+
 export function getTypeColorFromColormap(atomType: number, colormapName: ColormapName): [number, number, number] {
   const maxType = 8.0;
   const t = Math.max(0, Math.min(1, (atomType - 1) / Math.max(maxType - 1.0, 1.0)));

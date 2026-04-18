@@ -9,7 +9,7 @@ import { useRef, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import type { Frame, ColormapName } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
-import { TYPE_COLORS, DEFAULT_TYPE_COLOR, getTypeColorFromColormap } from './constants';
+import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap } from './constants';
 
 interface BondsProps {
   frame: Frame;
@@ -203,7 +203,7 @@ export function Bonds({
         group.remove(group.children[0]);
       }
     };
-  }, [frame, maxBondLength, typeCutoffs, periodic, cellBounds, tubeGeo, material, radius, dummy]);
+  }, [frame, colormap, colorMode, maxBondLength, typeCutoffs, periodic, cellBounds, tubeGeo, material, radius, dummy]);
 
   return <group ref={groupRef} />;
 }
