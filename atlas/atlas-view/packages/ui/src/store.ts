@@ -241,7 +241,7 @@ export const useStore = create<AppState>()(
 
     setColorMode: (colorMode) => set({ colorMode }),
     setColorProperty: (colorProperty) => set({ colorProperty }),
-    setColormap: (colormap) => set({ colormap }),
+    setColormap: (colormap) => set({ colormap, backgroundPreset: `palette:${colormap}` }),
 
     toggleSSAO: () => set(s => ({ ssao: !s.ssao })),
     toggleBloom: () => set(s => ({ bloom: !s.bloom })),
