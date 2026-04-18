@@ -25,6 +25,7 @@ import { Bonds } from '@atlas/scene/Bonds';
 import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
 import { ScaleBar } from '@atlas/scene/ScaleBar';
+import { getBackgroundFromColormap } from '@atlas/scene';
 import { StylePanel } from './panels/StylePanel';
 import { EffectsPanel } from './panels/EffectsPanel';
 import { FigureExportPanel } from './panels/FigureExportPanel';
@@ -33,6 +34,7 @@ import { MeasurementPanel } from './panels/MeasurementPanel';
 import { AtomsPanel } from './panels/AtomsPanel';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
 import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
+import type { ColormapName } from '@atlas/core/types';
 import { ExportManager } from './ExportManager';
 
 // ─── Icons ────────────────────────────────────────────────────────────
@@ -139,10 +141,17 @@ const BG_PRESETS: Record<string, { top: string; bottom: string; label: string }>
   fog:      { top: '#101418', bottom: '#1c2028', label: 'Fog' },
 };
 
+function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string } {
+  if (backgroundPreset.startsWith('palette:')) {
+    const [, palette] = backgroundPreset.split(':');
+    return getBackgroundFromColormap((palette as ColormapName) ?? colormap);
+  }
+  return BG_PRESETS[backgroundPreset] ?? BG_PRESETS.void;
+}
+
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ preset }: { preset: string }) {
+function SceneBackground({ top, bottom }: { top: string; bottom: string }) {
   const { scene } = useThree();
-  const bg = BG_PRESETS[preset] ?? BG_PRESETS.void;
 
   useEffect(() => {
     const canvas = document.createElement('canvas');
@@ -150,8 +159,8 @@ function SceneBackground({ preset }: { preset: string }) {
     canvas.height = 256;
     const ctx = canvas.getContext('2d')!;
     const grad = ctx.createLinearGradient(0, 0, 0, 256);
-    grad.addColorStop(0, bg.top);
-    grad.addColorStop(1, bg.bottom);
+    grad.addColorStop(0, top);
+    grad.addColorStop(1, bottom);
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 2, 256);
 
@@ -161,7 +170,7 @@ function SceneBackground({ preset }: { preset: string }) {
       tex.dispose();
       scene.background = null;
     };
-  }, [scene, bg.top, bg.bottom]);
+  }, [scene, top, bottom]);
 
   return null;
 }
@@ -352,7 +361,7 @@ export default function App() {
     ? Array.from(currentFrame.properties?.keys() ?? [])
     : [];
 
-  const bg = BG_PRESETS[backgroundPreset] ?? BG_PRESETS.void;
+  const bg = resolveBackground(backgroundPreset, colormap);
 
   return (
     <div style={{
@@ -488,7 +497,7 @@ export default function App() {
             style={{ background: 'transparent' }}
           >
             <ExportManager />
-            <SceneBackground preset={backgroundPreset} />
+            <SceneBackground top={bg.top} bottom={bg.bottom} />
 
             <ambientLight intensity={0.35} />
             <directionalLight position={[5, 8, 6]} intensity={1.2} />
