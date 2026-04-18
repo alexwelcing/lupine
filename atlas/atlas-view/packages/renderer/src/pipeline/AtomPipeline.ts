@@ -257,21 +257,25 @@ export class AtomPipeline {
 
   /** Update culling uniforms (frustum planes, color mode, etc.) */
   updateCullUniforms(cam: CameraUniforms, state: RenderState) {
-    const data = new Float32Array(48); // 192 bytes / 4
+    const buffer = new ArrayBuffer(192);
+    const floatData = new Float32Array(buffer);
+    const uintData = new Uint32Array(buffer);
+
     // viewProj matrix
-    data.set(cam.viewProj, 0);
+    floatData.set(cam.viewProj, 0);
     // Frustum planes (6 * vec4) — extracted from viewProj
     const planes = extractFrustumPlanes(cam.viewProj);
     for (let i = 0; i < 6; i++) {
-      data.set(planes[i], 16 + i * 4);
+      floatData.set(planes[i], 16 + i * 4);
     }
     // Remaining uniforms
-    data[40] = this.currentAtomCount;  // atomCount (as float, cast in shader)
-    data[41] = state.colorMode;
-    data[42] = state.propMin;
-    data[43] = state.propMax;
-    data[44] = state.colormapType;
-    this.device.queue.writeBuffer(this.cullUniformBuffer, 0, data as any);
+    uintData[40] = this.currentAtomCount; // atomCount (u32)
+    uintData[41] = state.colorMode;       // colorMode (u32)
+    floatData[42] = state.propMin;        // propMin (f32)
+    floatData[43] = state.propMax;        // propMax (f32)
+    uintData[44] = state.colormapType;    // colormapType (u32)
+
+    this.device.queue.writeBuffer(this.cullUniformBuffer, 0, buffer);
   }
 
   /**
