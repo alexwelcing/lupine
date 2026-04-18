@@ -9,6 +9,17 @@ import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
 
+export interface ExportRequest {
+  type: 'image' | 'video' | 'complete' | null;
+  resolution?: { width: number; height: number; flexAspect?: boolean };
+  format?: 'png' | 'jpeg' | 'webp' | 'mp4' | 'webm';
+  transparent?: boolean;
+  durationSeconds?: number;
+  orbit?: boolean;
+  baseName?: string;
+  onComplete?: (success: boolean) => void;
+}
+
 export interface LoadedFile {
   name: string;
   size: number;
@@ -81,6 +92,11 @@ export interface AppState {
   // ─── Atom visibility ───
   hiddenAtomTypes: Set<number>;
   atomTypeScales: Record<number, number>; // per-type scale overrides
+
+  // ─── Export Pipeline ───
+  exportRequest: ExportRequest;
+  triggerExport: (req: Partial<ExportRequest>) => void;
+  clearExportRequest: () => void;
 
   // ─── Actions: Camera ───
   setCameraPreset: (preset: AppState['cameraPreset']) => void;
@@ -170,6 +186,7 @@ const DEFAULTS = {
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
   viewportMode: 'standard' as const,
+  exportRequest: { type: null } as ExportRequest,
 };
 
 export const useStore = create<AppState>()(
@@ -253,7 +270,11 @@ export const useStore = create<AppState>()(
       loadProgress: 0,
       error: null,
       activePanel: null,
+      exportRequest: { type: null },
     }),
+
+    triggerExport: (req) => set(s => ({ exportRequest: { ...req, type: req.type ?? null } as ExportRequest })),
+    clearExportRequest: () => set({ exportRequest: { type: null } }),
 
     reset: () => set(DEFAULTS as any),
 

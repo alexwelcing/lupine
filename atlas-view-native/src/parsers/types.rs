@@ -24,6 +24,8 @@ pub struct Frame {
     pub positions: Vec<f32>,
     /// All extra per-atom properties as named Float32 arrays
     pub properties: Vec<(String, Vec<f32>)>,
+    /// Explicit bonds mapped to 0-indexed positions (atom_index1, atom_index2)
+    pub topological_bonds: Option<Vec<(u32, u32)>>,
 }
 
 /// Result of parsing a LAMMPS log file — thermo data from one or more runs.

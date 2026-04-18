@@ -392,4 +392,11 @@ ITEM: ATOMS id type xs ys zs
         assert!((f.positions[1] - 10.0).abs() < 1e-5);
         assert!((f.positions[2] - 15.0).abs() < 1e-5);
     }
+    
+    #[test]
+    fn test_ti_hcp_real() {
+        let content = std::fs::read_to_string("../../../apps/web/public/gallery/ti_hcp_tension_13k.lammpstrj").unwrap();
+        let frames = parse_dump_frames(&content).unwrap();
+        println!("test_ti_hcp_real parsed frames: {}", frames.len());
+    }
 }

@@ -18,7 +18,22 @@ impl EguiRenderer {
         window: &Window,
     ) -> Self {
         let context = Context::default();
-        context.set_visuals(Visuals::dark());
+        
+        // ─── Lupine Visual Identity: High-Fidelity ───
+        let mut visuals = Visuals::dark();
+        visuals.window_fill = egui::Color32::from_rgba_premultiplied(18, 18, 22, 230); // Glass-dark
+        visuals.panel_fill = egui::Color32::from_rgba_premultiplied(12, 12, 14, 210);
+        visuals.window_rounding = 16.0.into();
+        visuals.window_shadow.blur = 32.0;
+        visuals.window_shadow.spread = 4.0;
+        visuals.window_shadow.offset = [0.0, 12.0].into();
+        visuals.window_shadow.color = egui::Color32::from_black_alpha(150);
+        
+        let mut style = (*context.style()).clone();
+        style.visuals = visuals;
+        style.spacing.window_margin = egui::Margin::same(16.0);
+        style.spacing.item_spacing = egui::vec2(10.0, 16.0);
+        context.set_style(style);
         
         // Disable pixels per point as the winit integration sets it automatically.
         let state = State::new(

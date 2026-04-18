@@ -1,0 +1,65 @@
+/* ═══════════════════════════════════════════════════════════════
+   LUPINE MATERIALS SCIENCE — VC LANDING PAGE
+   Brand: Deep Indigo / Lupine Violet / Warm Slate
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+    --lupine-900: #1a1d3d;
+    --lupine-800: #252a52;
+    --lupine-700: #2e3a87;
+    --lupine-600: #3d4db3;
+    --lupine-500: #5565d4;
+    --lupine-400: #7b8ae0;
+    --lupine-300: #9ba6ea;
+    --lupine-200: #c5cdf3;
+    --lupine-100: #e8ebfa;
+    --lupine-50: #f4f5fd;
+
+    --violet-700: #5b3a8c;
+    --violet-500: #8b6bc4;
+    --violet-300: #b9a0e0;
+
+    --slate-950: #0a0b12;
+    --slate-900: #0f1119;
+    --slate-800: #181b28;
+    --slate-700: #252838;
+    --slate-600: #3a3e52;
+    --slate-500: #646880;
+    --slate-400: #9096ab;
+    --slate-300: #b4b9cc;
+    --slate-200: #d4d7e3;
+    --slate-100: #eceef4;
+
+    --accent-gold: #d4a843;
+    --accent-cyan: #4ecdc4;
+    --accent-warm: #e8834a;
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--slate-950);
+    color: var(--slate-200);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+::selection {
+    background: var(--lupine-600);
+    color: white;
+}

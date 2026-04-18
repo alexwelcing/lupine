@@ -258,6 +258,7 @@ where
         types,
         positions,
         properties,
+        topological_bonds: None,
     })
 }
 

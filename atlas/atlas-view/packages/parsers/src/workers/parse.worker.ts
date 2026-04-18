@@ -45,18 +45,20 @@ self.onmessage = async (e: MessageEvent) => {
         return {
           timestep: f.timestep,
           natoms: f.natoms,
-          boxBounds: f.boxBounds,
-          boxTilt: f.boxTilt,
+          boxBounds: f.boxBounds || f.box_bounds,
+          boxTilt: f.boxTilt || f.box_tilt,
           triclinic: f.triclinic,
           columns: f.columns,
           ids: f.ids,
           types: f.types,
           positions: f.positions,
           bonds: f.bonds,
-          properties: f.propertyNames?.map((name: string) => ({
-            name,
-            data: f.getProperty(name),
-          })) ?? [],
+          properties: (f.propertyNames && f.getProperty) ? 
+            f.propertyNames.map((name: string) => ({
+              name,
+              data: f.getProperty(name),
+            })) : 
+            (f.properties ? f.properties.map(([name, data]: [string, any]) => ({ name, data })) : []),
         };
       });
 

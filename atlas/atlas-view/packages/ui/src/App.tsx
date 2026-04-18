@@ -33,6 +33,7 @@ import { MeasurementPanel } from './panels/MeasurementPanel';
 import { AtomsPanel } from './panels/AtomsPanel';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
 import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
+import { ExportManager } from './ExportManager';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -486,6 +487,7 @@ export default function App() {
             gl={{ antialias: true, preserveDrawingBuffer: true }}
             style={{ background: 'transparent' }}
           >
+            <ExportManager />
             <SceneBackground preset={backgroundPreset} />
 
             <ambientLight intensity={0.35} />
@@ -523,6 +525,8 @@ export default function App() {
                     frame={currentFrame}
                     maxBondLength={bondCutoff}
                     renderStyle={renderStyle}
+                    colormap={colormap}
+                    colorMode={colorMode === 'uniform' ? 'type' : colorMode}
                     radius={0.12}
                     opacity={0.85}
                   />

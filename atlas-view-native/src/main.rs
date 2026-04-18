@@ -89,8 +89,14 @@ async fn run() -> anyhow::Result<()> {
         }
     };
 
-    let mut all_frames = dump::parse_dump_frames(&content)
-        .map_err(|e| anyhow::anyhow!("Demo parse error: {}", e))?;
+    let mut all_frames = if file_path.as_ref().map(|p| p.ends_with(".data")).unwrap_or(false) {
+        let lammps_data = parsers::data::parse_data_string(&content)
+            .map_err(|e| anyhow::anyhow!("Data parse error: {}", e))?;
+        vec![lammps_data.into()]
+    } else {
+        dump::parse_dump_frames(&content)
+            .map_err(|e| anyhow::anyhow!("Demo parse error: {}", e))?
+    };
     println!("[Init] Loaded {} frames ({} atoms)", all_frames.len(), all_frames.first().map_or(0, |f| f.natoms));
 
     // 1. Event Loop

@@ -143,25 +143,30 @@ fn fs_main(in: VertexOutput) -> FragOutput {
     let hitClip = camera.projection * vec4<f32>(hitPoint, 1.0);
     out.depth = hitClip.z / hitClip.w;
 
-    // ── Phong lighting ──
+    // ─── High-Fidelity Atomic Glass Lighting ───
     let lightDirView = normalize((camera.view * vec4<f32>(lighting.direction, 0.0)).xyz);
-
+    let viewDir = normalize(-hitPoint); // towards camera
+    
     let NdotL = max(dot(normal, lightDirView), 0.0);
+    
+    // Core diffuse 
     let diffuse = NdotL * lighting.intensity;
 
-    // Specular (Blinn-Phong)
-    let viewDir = normalize(-hitPoint); // towards camera
+    // Crisp Specular (Blinn-Phong) for glossy surface
     let halfDir = normalize(lightDirView + viewDir);
-    let spec = pow(max(dot(normal, halfDir), 0.0), lighting.shininess) * lighting.specular;
+    let spec = pow(max(dot(normal, halfDir), 0.0), 128.0) * 0.8;
 
-    // Rim lighting for depth cue
-    let rim = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0) * 0.15;
+    // Strong Fresnel / Rim Light for 'Atomic UI' depth
+    let fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 4.0);
+    let rim = fresnel * 0.5;
 
-    // Final color
+    // Subsurface glow approximation (softer core)
     let baseColor = in.color.rgb;
-    let lit = baseColor * (lighting.ambient + diffuse) + vec3<f32>(spec + rim);
+    let ambient = baseColor * (lighting.ambient + 0.15 * (1.0 - NdotL));
 
-    out.color = vec4<f32>(lit, in.color.a);
+    let lit = baseColor * diffuse + ambient + vec3<f32>(spec + rim);
+
+    out.color = vec4<f32>(min(lit, vec3<f32>(1.0)), in.color.a);
 
     return out;
 }

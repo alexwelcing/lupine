@@ -155,7 +155,7 @@ const IconCheck = () => (
 );
 
 export function FigureExportPanel() {
-  const { setActivePanel, file, frame } = useStore();
+  const { setActivePanel, file, frame, triggerExport } = useStore();
   const [selectedPreset, setSelectedPreset] = useState(JOURNAL_PRESETS[0]);
   const [customWidth, setCustomWidth] = useState(1920);
   const [customHeight, setCustomHeight] = useState(1080);
@@ -173,73 +173,32 @@ export function FigureExportPanel() {
     }
   }, [exportSuccess]);
 
+  const handleComplete = useCallback(() => {
+    setExporting(false);
+    setExportSuccess(true);
+  }, []);
+
   const handleExport = useCallback(async () => {
     setExporting(true);
     setExportSuccess(false);
     
-    try {
-      const width = selectedPreset.id === 'custom' ? customWidth : selectedPreset.width;
-      const height = selectedPreset.id === 'custom' ? customHeight : selectedPreset.height;
-      
-      const canvas = document.querySelector('canvas');
-      if (!canvas) throw new Error('No canvas found');
+    // Scale bar is drawn by native R3F component now, if requested
+    useStore.getState().setShowScaleBar(includeScaleBar);
 
-      // Create high-res canvas
-      const exportCanvas = document.createElement('canvas');
-      exportCanvas.width = width;
-      exportCanvas.height = height;
-      const ctx = exportCanvas.getContext('2d');
-      if (!ctx) throw new Error('Could not get context');
+    triggerExport({
+        type: 'image',
+        resolution: {
+            width: selectedPreset.id === 'custom' ? customWidth : selectedPreset.width,
+            height: selectedPreset.id === 'custom' ? customHeight : selectedPreset.height,
+            flexAspect: selectedPreset.id === 'presentation',
+        },
+        format: transparentBg ? 'png' : 'jpeg',
+        transparent: transparentBg,
+        baseName: `figure-${selectedPreset.id}`,
+        onComplete: handleComplete
+    });
 
-      // Fill background if not transparent
-      if (!transparentBg) {
-        // Try to match current background
-        const computedStyle = window.getComputedStyle(document.body);
-        const bg = computedStyle.backgroundColor;
-        ctx.fillStyle = bg || '#08090e';
-        ctx.fillRect(0, 0, width, height);
-      }
-
-      // Draw the main canvas scaled to target size
-      ctx.drawImage(canvas, 0, 0, width, height);
-
-      // Add scale bar if requested
-      if (includeScaleBar && file) {
-        const barHeight = Math.max(4, Math.floor(height * 0.008));
-        const barWidth = Math.floor(width * 0.15);
-        const margin = Math.floor(width * 0.04);
-        const barX = margin;
-        const barY = height - margin - barHeight - 20;
-        
-        // Draw bar
-        ctx.fillStyle = 'white';
-        ctx.fillRect(barX, barY, barWidth, barHeight);
-        
-        // Draw label
-        ctx.font = `600 ${Math.max(10, Math.floor(height * 0.025))}px system-ui, sans-serif`;
-        ctx.fillStyle = 'white';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'bottom';
-        ctx.fillText('Scale bar', barX, barY - 4);
-      }
-
-      // Export
-      const format = transparentBg ? 'image/png' : 'image/jpeg';
-      const quality = transparentBg ? undefined : 0.95;
-      const dataUrl = exportCanvas.toDataURL(format, quality);
-      
-      const link = document.createElement('a');
-      link.download = `figure-${selectedPreset.id}-frame${frame + 1}.${transparentBg ? 'png' : 'jpg'}`;
-      link.href = dataUrl;
-      link.click();
-      
-      setExportSuccess(true);
-    } catch (err: any) {
-      console.error('Export failed:', err);
-    } finally {
-      setExporting(false);
-    }
-  }, [selectedPreset, customWidth, customHeight, customDpi, transparentBg, includeScaleBar, file, frame]);
+  }, [selectedPreset, customWidth, customHeight, transparentBg, includeScaleBar, triggerExport, handleComplete]);
 
   const effectiveWidth = selectedPreset.id === 'custom' ? customWidth : selectedPreset.width;
   const effectiveHeight = selectedPreset.id === 'custom' ? customHeight : selectedPreset.height;

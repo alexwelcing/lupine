@@ -7,12 +7,14 @@
 
 import { useRef, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
-import type { Frame } from '@atlas/core/types';
+import type { Frame, ColormapName } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
-import { TYPE_COLORS, DEFAULT_TYPE_COLOR } from './constants';
+import { TYPE_COLORS, DEFAULT_TYPE_COLOR, getTypeColorFromColormap } from './constants';
 
 interface BondsProps {
   frame: Frame;
+  colormap?: ColormapName;
+  colorMode?: 'type' | 'uniform' | 'property';
   maxBondLength?: number;
   typeCutoffs?: Map<string, number>;
   periodic?: boolean;
@@ -24,6 +26,8 @@ interface BondsProps {
 
 export function Bonds({
   frame,
+  colormap = 'viridis',
+  colorMode = 'type',
   maxBondLength = 2.5,
   typeCutoffs,
   periodic = false,
@@ -71,7 +75,7 @@ export function Bonds({
     const group = groupRef.current;
     if (!group || !frame || frame.natoms < 2) return;
 
-    // Clear previous bond meshes (don't dispose shared geo/material)
+    // Clear previous bond meshes
     while (group.children.length > 0) {
       group.remove(group.children[0]);
     }
@@ -95,7 +99,6 @@ export function Bonds({
       );
     }
 
-    // Use InstancedMesh for performance: 2 half-cylinders per bond (one per atom color)
     const halfCount = bondPairs.length * 2;
     if (halfCount === 0) return;
 
@@ -121,6 +124,23 @@ export function Bonds({
         frame.positions[b * 3 + 1],
         frame.positions[b * 3 + 2]
       );
+
+      // Handle periodic wrap for visual rendering if bond is "unreasonably" long
+      if (periodic && cellBounds) {
+        let dx = posB.x - posA.x;
+        let dy = posB.y - posA.y;
+        let dz = posB.z - posA.z;
+        const lx = cellBounds[1] - cellBounds[0];
+        const ly = cellBounds[3] - cellBounds[2];
+        const lz = cellBounds[5] - cellBounds[4];
+        
+        if (Math.abs(dx) > lx * 0.5) dx -= Math.sign(dx) * lx;
+        if (Math.abs(dy) > ly * 0.5) dy -= Math.sign(dy) * ly;
+        if (Math.abs(dz) > lz * 0.5) dz -= Math.sign(dz) * lz;
+        
+        posB.set(posA.x + dx, posA.y + dy, posA.z + dz);
+      }
+
       mid.lerpVectors(posA, posB, 0.5);
       const bondLen = posA.distanceTo(posB);
       const halfLen = bondLen / 2;
@@ -138,7 +158,13 @@ export function Bonds({
       }
       dummy.updateMatrix();
       mesh.setMatrixAt(i * 2, dummy.matrix);
-      const tcA = TYPE_COLORS[frame.types[a]] ?? DEFAULT_TYPE_COLOR;
+      
+      let tcA: [number, number, number];
+      if (colorMode === 'uniform') {
+        tcA = getTypeColorFromColormap(1, colormap);
+      } else {
+        tcA = frame.types ? getTypeColorFromColormap(frame.types[a], colormap) : DEFAULT_TYPE_COLOR;
+      }
       color.setRGB(tcA[0], tcA[1], tcA[2]);
       mesh.setColorAt(i * 2, color);
 
@@ -155,7 +181,13 @@ export function Bonds({
       }
       dummy.updateMatrix();
       mesh.setMatrixAt(i * 2 + 1, dummy.matrix);
-      const tcB = TYPE_COLORS[frame.types[b]] ?? DEFAULT_TYPE_COLOR;
+      
+      let tcB: [number, number, number];
+      if (colorMode === 'uniform') {
+        tcB = getTypeColorFromColormap(1, colormap);
+      } else {
+        tcB = frame.types ? getTypeColorFromColormap(frame.types[b], colormap) : DEFAULT_TYPE_COLOR;
+      }
       color.setRGB(tcB[0], tcB[1], tcB[2]);
       mesh.setColorAt(i * 2 + 1, color);
     }

@@ -95,17 +95,82 @@ fn coolwarm(t: f32) -> vec3<f32> {
     }
 }
 
-fn typeColor(atomType: i32) -> vec3<f32> {
-    // Default type → color mapping (matches common conventions)
-    switch(atomType) {
-        case 1: { return vec3<f32>(0.302, 0.722, 1.0); }   // Blue (Cu-like)
-        case 2: { return vec3<f32>(1.0, 0.420, 0.541); }    // Red (O-like)
-        case 3: { return vec3<f32>(0.490, 0.875, 0.392); }  // Green (Zr-like)
-        case 4: { return vec3<f32>(1.0, 0.843, 0.0); }      // Gold
-        case 5: { return vec3<f32>(0.678, 0.545, 0.878); }  // Purple
-        case 6: { return vec3<f32>(1.0, 0.549, 0.259); }    // Orange
-        default: { return vec3<f32>(0.6, 0.6, 0.6); }       // Gray
+fn plasma(t: f32) -> vec3<f32> {
+    let c0 = vec3<f32>(0.050, 0.030, 0.530);
+    let c1 = vec3<f32>(0.494, 0.012, 0.658);
+    let c2 = vec3<f32>(0.798, 0.280, 0.470);
+    let c3 = vec3<f32>(0.940, 0.975, 0.131);
+    if (t < 0.33) {
+        return mix(c0, c1, t / 0.33);
+    } else if (t < 0.66) {
+        return mix(c1, c2, (t - 0.33) / 0.33);
+    } else {
+        return mix(c2, c3, (t - 0.66) / 0.34);
     }
+}
+
+fn neon_map(t: f32) -> vec3<f32> {
+    let c0 = vec3<f32>(0.0, 1.0, 0.4);
+    let c1 = vec3<f32>(0.0, 0.8, 1.0);
+    let c2 = vec3<f32>(0.6, 0.0, 1.0);
+    let c3 = vec3<f32>(1.0, 0.0, 0.6);
+    if (t < 0.33) {
+        return mix(c0, c1, t / 0.33);
+    } else if (t < 0.66) {
+        return mix(c1, c2, (t - 0.33) / 0.33);
+    } else {
+        return mix(c2, c3, (t - 0.66) / 0.34);
+    }
+}
+
+fn sunset_map(t: f32) -> vec3<f32> {
+    let c0 = vec3<f32>(0.12, 0.0, 0.30);
+    let c1 = vec3<f32>(0.80, 0.15, 0.40);
+    let c2 = vec3<f32>(1.0, 0.55, 0.15);
+    let c3 = vec3<f32>(1.0, 0.92, 0.50);
+    if (t < 0.33) {
+        return mix(c0, c1, t / 0.33);
+    } else if (t < 0.66) {
+        return mix(c1, c2, (t - 0.33) / 0.33);
+    } else {
+        return mix(c2, c3, (t - 0.66) / 0.34);
+    }
+}
+
+fn vaporwave_map(t: f32) -> vec3<f32> {
+    let c0 = vec3<f32>(0.05, 0.85, 0.85);
+    let c1 = vec3<f32>(0.55, 0.30, 0.95);
+    let c2 = vec3<f32>(1.0, 0.40, 0.70);
+    let c3 = vec3<f32>(1.0, 0.85, 0.40);
+    if (t < 0.33) {
+        return mix(c0, c1, t / 0.33);
+    } else if (t < 0.66) {
+        return mix(c1, c2, (t - 0.33) / 0.33);
+    } else {
+        return mix(c2, c3, (t - 0.66) / 0.34);
+    }
+}
+
+// Sample any colormap by index
+fn sampleColormap(cmapType: u32, t: f32) -> vec3<f32> {
+    switch(cmapType) {
+        case 0u: { return viridis(t); }
+        case 1u: { return inferno(t); }
+        case 2u: { return coolwarm(t); }
+        case 3u: { return plasma(t); }
+        case 4u: { return neon_map(t); }
+        case 5u: { return sunset_map(t); }
+        case 6u: { return vaporwave_map(t); }
+        default: { return viridis(t); }
+    }
+}
+
+fn typeColor(atomType: i32, cmapType: u32) -> vec3<f32> {
+    // Map atom type to a position on the active colormap
+    // Types 1-8 are distributed evenly across the palette range
+    let maxType = 8.0;
+    let t = clamp(f32(atomType - 1) / max(maxType - 1.0, 1.0), 0.0, 1.0);
+    return sampleColormap(cmapType, t);
 }
 
 fn typeRadius(atomType: i32) -> f32 {
@@ -171,20 +236,15 @@ fn main(@builtin(global_invocation_id) gid: vec3<u32>) {
     var color: vec3<f32>;
     switch(uniforms.colorMode) {
         case 0u: {
-            // Color by type
-            color = typeColor(atomType);
+            // Color by type — uses the active palette
+            color = typeColor(atomType, uniforms.colormapType);
         }
         case 1u: {
             // Color by property value
             let val = propertyValues[atomIndex];
             let range = uniforms.propMax - uniforms.propMin;
             let t = clamp((val - uniforms.propMin) / max(range, 0.0001), 0.0, 1.0);
-            switch(uniforms.colormapType) {
-                case 0u: { color = viridis(t); }
-                case 1u: { color = inferno(t); }
-                case 2u: { color = coolwarm(t); }
-                default: { color = viridis(t); }
-            }
+            color = sampleColormap(uniforms.colormapType, t);
         }
         default: {
             color = vec3<f32>(0.5, 0.7, 0.9);

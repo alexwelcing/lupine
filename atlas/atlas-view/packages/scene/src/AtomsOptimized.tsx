@@ -14,64 +14,7 @@ import * as THREE from 'three';
 import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
 
-// ─── Element colors (CPK) ────────────────────────────────────────────
-const TYPE_COLORS: Record<number, [number, number, number]> = {
-  1: [0.30, 0.72, 1.0],    // Cyan blue
-  2: [1.0, 0.35, 0.48],    // Coral red
-  3: [0.42, 0.88, 0.44],   // Emerald green
-  4: [1.0, 0.82, 0.16],    // Gold
-  5: [0.64, 0.50, 0.92],   // Lavender
-  6: [1.0, 0.58, 0.30],    // Orange
-  7: [0.85, 0.32, 0.68],   // Magenta
-  8: [0.28, 0.86, 0.82],   // Teal
-};
-
-const TYPE_RADII: Record<number, number> = {
-  1: 1.28, 2: 0.73, 3: 1.60, 4: 1.44,
-  5: 1.20, 6: 1.10, 7: 1.35, 8: 1.50,
-};
-
-// ─── Colormaps ───────────────────────────────────────────────────────
-function lerpColor(a: [number, number, number], b: [number, number, number], t: number): [number, number, number] {
-  return [
-    a[0] + (b[0] - a[0]) * t,
-    a[1] + (b[1] - a[1]) * t,
-    a[2] + (b[2] - a[2]) * t,
-  ];
-}
-
-function makeColormap(
-  c0: [number, number, number],
-  c1: [number, number, number],
-  c2: [number, number, number],
-  c3: [number, number, number],
-): (t: number) => [number, number, number] {
-  return (t: number) => {
-    t = Math.max(0, Math.min(1, t));
-    if (t < 0.33) return lerpColor(c0, c1, t / 0.33);
-    if (t < 0.66) return lerpColor(c1, c2, (t - 0.33) / 0.33);
-    return lerpColor(c2, c3, (t - 0.66) / 0.34);
-  };
-}
-
-const COLORMAPS: Record<ColormapName, (t: number) => [number, number, number]> = {
-  viridis:   makeColormap([0.267, 0.004, 0.329], [0.282, 0.140, 0.458], [0.127, 0.566, 0.551], [0.993, 0.906, 0.144]),
-  inferno:   makeColormap([0.001, 0.0, 0.014],   [0.416, 0.065, 0.432], [0.891, 0.298, 0.159], [0.988, 0.998, 0.644]),
-  coolwarm:  (t: number) => {
-    t = Math.max(0, Math.min(1, t));
-    const cold: [number, number, number] = [0.230, 0.299, 0.754];
-    const mid: [number, number, number] = [0.865, 0.865, 0.865];
-    const warm: [number, number, number] = [0.706, 0.016, 0.150];
-    if (t < 0.5) return lerpColor(cold, mid, t * 2);
-    return lerpColor(mid, warm, (t - 0.5) * 2);
-  },
-  plasma:    makeColormap([0.050, 0.030, 0.530], [0.494, 0.012, 0.658], [0.798, 0.280, 0.470], [0.940, 0.975, 0.131]),
-  magma:     makeColormap([0.001, 0.0, 0.014],   [0.416, 0.065, 0.432], [0.871, 0.287, 0.381], [0.988, 0.991, 0.750]),
-  cividis:   makeColormap([0.0, 0.135, 0.305],   [0.345, 0.376, 0.388], [0.725, 0.660, 0.320], [0.995, 0.883, 0.150]),
-  neon:      makeColormap([0.0, 1.0, 0.4],       [0.0, 0.8, 1.0],       [0.6, 0.0, 1.0],       [1.0, 0.0, 0.6]),
-  sunset:    makeColormap([0.12, 0.0, 0.30],     [0.80, 0.15, 0.40],    [1.0, 0.55, 0.15],     [1.0, 0.92, 0.50]),
-  vaporwave: makeColormap([0.05, 0.85, 0.85],    [0.55, 0.30, 0.95],    [1.0, 0.40, 0.70],     [1.0, 0.85, 0.40]),
-};
+import { TYPE_COLORS, TYPE_RADII, COLORMAPS } from './constants';
 
 // ─── Types ───────────────────────────────────────────────────────────
 interface AtomsOptimizedProps {
@@ -121,13 +64,20 @@ export function AtomsOptimized({
   const _scale = useMemo(() => new THREE.Vector3(), []);
   const _quaternion = useMemo(() => new THREE.Quaternion(), []);
 
-  // Geometry & Material (cached, never recreated)
+  // Geometry & Material (cached, LOD based on atom count)
   const geometry = useMemo(() => {
-    // Reduced segments for better performance (16, 12 instead of 24, 16)
-    return renderStyle === 'toon'
-      ? new THREE.IcosahedronGeometry(1, 1)
-      : new THREE.SphereGeometry(1, 16, 12);
-  }, [renderStyle]);
+    if (renderStyle === 'toon') {
+      return new THREE.IcosahedronGeometry(1, 1);
+    }
+    // LOD: reduce geometry for large systems
+    if (frame.natoms > 20000) {
+      return new THREE.SphereGeometry(1, 6, 4);   // Ultra-low for massive systems
+    }
+    if (frame.natoms > 5000) {
+      return new THREE.SphereGeometry(1, 8, 6);   // Low-poly for medium systems
+    }
+    return new THREE.SphereGeometry(1, 16, 12);    // Full quality for small systems
+  }, [renderStyle, frame.natoms > 20000, frame.natoms > 5000]);
 
   const material = useMemo(() => {
     if (renderStyle === 'toon') {
@@ -170,14 +120,38 @@ export function AtomsOptimized({
   const pMax = propRange?.[1] ?? autoMax;
   const mapFn = COLORMAPS[colormap] ?? COLORMAPS.viridis;
 
+  // Pre-compute palette-mapped colors for each atom type
+  // This maps each unique type to a position on the active colormap
+  const typeColorLookup = useMemo(() => {
+    const typeSet = new Set<number>();
+    for (let i = 0; i < frame.natoms; i++) typeSet.add(frame.types[i]);
+    const sortedTypes = Array.from(typeSet).sort((a, b) => a - b);
+    const lookup = new Map<number, [number, number, number]>();
+    for (let i = 0; i < sortedTypes.length; i++) {
+      const t = sortedTypes.length > 1 ? i / (sortedTypes.length - 1) : 0.5;
+      lookup.set(sortedTypes[i], mapFn(t));
+    }
+    return lookup;
+  }, [frame.types, frame.natoms, mapFn]);
+
   // Build spatial hash and update instance buffers
   useEffect(() => {
     const mesh = meshRef.current;
     if (!mesh) return;
 
-    // Rebuild spatial hash for picking
-    spatialHashRef.current.build(frame.positions, frame.natoms);
-    onSpatialHash?.(spatialHashRef.current);
+    // Defer spatial hash rebuild to idle time (avoid blocking render loop)
+    const idleCallback = (typeof requestIdleCallback !== 'undefined')
+      ? requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 0);
+    const cancelIdle = (typeof cancelIdleCallback !== 'undefined')
+      ? cancelIdleCallback
+      : clearTimeout;
+    const idleId = idleCallback(() => {
+      spatialHashRef.current.build(frame.positions, frame.natoms);
+      onSpatialHash?.(spatialHashRef.current);
+    });
+    // Capture for cleanup
+    const cleanupIdle = () => cancelIdle(idleId as any);
 
     // Update matrices and colors - direct buffer manipulation for speed
     const positions = frame.positions;
@@ -236,9 +210,9 @@ export function AtomsOptimized({
         colorArray[i * 3 + 1] = g;
         colorArray[i * 3 + 2] = b;
       } else {
-        // Type-based color with highlight
+        // Type-based color using active palette
         const isHighlighted = highlightedAtoms?.has(i);
-        const tc = TYPE_COLORS[types[i]] ?? [0.6, 0.6, 0.6];
+        const tc = typeColorLookup.get(types[i]) ?? [0.6, 0.6, 0.6];
         
         if (isHighlighted) {
           // Brighten highlighted atoms
@@ -263,9 +237,12 @@ export function AtomsOptimized({
     }
     
     mesh.count = frame.natoms;
+
+    // Cleanup: cancel pending idle hash build if effect re-runs
+    return cleanupIdle;
   }, [
     frame, nextFrame, interpolationFactor, colorMode, propData, pMin, pMax, scale, highlightedAtoms,
-    hiddenAtomTypes, atomTypeScales,
+    hiddenAtomTypes, atomTypeScales, typeColorLookup,
     matrixArray, colorArray, _matrix, _position, _scale, _quaternion, mapFn, onSpatialHash
   ]);
 

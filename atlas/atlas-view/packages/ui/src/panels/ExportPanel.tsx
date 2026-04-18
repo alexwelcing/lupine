@@ -55,6 +55,7 @@ export function ExportPanel() {
   const [exporting, setExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [format, setFormat] = useState<'png' | 'jpeg' | 'webp'>('png');
+  const triggerExport = useStore(s => s.triggerExport);
   const totalFrames = file?.trajectory.totalFrames ?? 0;
 
   // Clear success message after delay
@@ -65,25 +66,25 @@ export function ExportPanel() {
     }
   }, [exportSuccess]);
 
+  // Temporary local success handler to map from ExportManager
+  const handleComplete = useCallback(() => {
+    setExporting(false);
+    setExportSuccess(true);
+  }, []);
+
   const handleExportPNG = useCallback(async () => {
     setExporting(true);
     setExportSuccess(false);
-    try {
-      const canvas = document.querySelector('canvas');
-      if (!canvas) throw new Error('No canvas found');
-
-      const dataUrl = canvas.toDataURL(`image/${format}`, format === 'png' ? undefined : 0.95);
-      const link = document.createElement('a');
-      link.download = `glimPSE-frame-${frame + 1}.${format}`;
-      link.href = dataUrl;
-      link.click();
-      setExportSuccess(true);
-    } catch (err) {
-      console.error('Export failed:', err);
-    } finally {
-      setExporting(false);
-    }
-  }, [frame, format]);
+    
+    triggerExport({
+        type: 'image',
+        resolution: { width: resolution.width, height: resolution.height, flexAspect: true },
+        format: format,
+        transparent: true,
+        baseName: 'glimPSE',
+        onComplete: handleComplete
+    });
+  }, [format, resolution, triggerExport, handleComplete]);
 
   return (
     <div style={{
@@ -281,10 +282,14 @@ export function ExportPanel() {
               onClick={() => {
                 setExporting(true);
                 setExportSuccess(false);
-                setTimeout(() => {
-                  setExporting(false);
-                  setExportSuccess(true);
-                }, 2500);
+                triggerExport({
+                  type: 'video',
+                  format: 'webm',
+                  orbit: cameraPreset === 'orbit' || cameraPreset === 'spin',
+                  durationSeconds: 5,
+                  baseName: 'glimPSE-120fps',
+                  onComplete: handleComplete
+                });
               }}
               disabled={exporting}
               style={{

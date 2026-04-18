@@ -664,13 +664,29 @@ impl Engine {
         }
 
         if self.show_bonds {
-            let cutoff = 3.2; // Generous cutoff for most crystal/melt pairs like CuZr
-            let (bond_positions, bond_colors) = crate::bonds::compute_bonds(
-                &frame.positions[..natoms as usize * 3],
-                &frame.types[..natoms as usize],
-                &self.hidden_types,
-                cutoff,
-            );
+            let (bond_positions, bond_colors) = if let Some(ref topo) = frame.topological_bonds {
+                let mut p = Vec::with_capacity(topo.len() * 6);
+                let mut c = Vec::with_capacity(topo.len() * 8);
+                for &(i1, i2) in topo {
+                    let idx1 = i1 as usize;
+                    let idx2 = i2 as usize;
+                    if idx1 < n && idx2 < n {
+                        p.extend_from_slice(&frame.positions[idx1*3 .. idx1*3+3]);
+                        c.extend_from_slice(&colors[idx1]);
+                        p.extend_from_slice(&frame.positions[idx2*3 .. idx2*3+3]);
+                        c.extend_from_slice(&colors[idx2]);
+                    }
+                }
+                (p, c)
+            } else {
+                let cutoff = 3.2; // Generous cutoff for most crystal/melt pairs like CuZr
+                crate::bonds::compute_bonds(
+                    &frame.positions[..natoms as usize * 3],
+                    &frame.types[..natoms as usize],
+                    &self.hidden_types,
+                    cutoff,
+                )
+            };
             
             let num_verts = bond_positions.len() / 3;
             let limit = 5_000_000;
@@ -791,19 +807,23 @@ impl Engine {
                     .default_pos([20.0, 20.0])
                     .show(ctx, |ui| {
                         // ─── Playback Controls ───
+                        let has_animation = total_frames > 1;
                         ui.heading("Playback");
-                        ui.horizontal(|ui| {
-                            if ui.button(if is_playing { "⏸ Pause" } else { "▶ Play" }).clicked() {
-                                is_playing = !is_playing;
-                            }
-                            ui.label(format!("Frame {}/{}", current_frame + 1, total_frames));
+                        ui.add_enabled_ui(has_animation, |ui| {
+                            ui.horizontal(|ui| {
+                                if ui.button(if is_playing { "⏸ Pause" } else { "▶ Play" }).clicked() {
+                                    is_playing = !is_playing;
+                                }
+                                ui.label(format!("Frame {}/{}", current_frame + 1, total_frames));
+                            });
+                            ui.add(egui::Slider::new(&mut playback_fps, 1.0..=120.0).text("FPS"));
                         });
-                        ui.add(egui::Slider::new(&mut playback_fps, 1.0..=120.0).text("FPS"));
 
                         ui.separator();
 
                         // ─── Coloring Mode ───
                         ui.heading("Coloring");
+                        // Only disable velocity/energy toggles if we had a flag for it, but for static .data files we naturally fallback to By Type. We will let the user click them, but they just act as fallback, which is standard. 
                         egui::ComboBox::from_label("Mode")
                             .selected_text(match color_mode_idx {
                                 0 => "By Type",
