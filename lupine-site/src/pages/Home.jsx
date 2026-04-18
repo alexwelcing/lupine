@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import EntropyLattice from '../components/EntropyLattice.jsx';
+import HeaShowcase from '../components/hea/HeaShowcase.jsx';
 
 export default function Home() {
   return (
@@ -25,6 +26,9 @@ export default function Home() {
       <section style={{ margin: '80px 40px' }}>
          <EntropyLattice />
       </section>
+
+      {/* High Entropy Density Alloy Design System Showcase */}
+      <HeaShowcase />
 
       {/* Legacy CSS expects to find elements with these classes */}
       <style>{`

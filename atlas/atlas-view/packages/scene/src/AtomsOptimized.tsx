@@ -21,7 +21,7 @@ interface AtomsOptimizedProps {
   frame: Frame;
   nextFrame?: Frame;
   interpolationFactor?: number;
-  colorMode?: 'type' | 'property';
+  colorMode?: 'type' | 'uniform' | 'property';
   colorProperty?: string;
   colormap?: ColormapName;
   propRange?: [number, number];
@@ -210,9 +210,14 @@ export function AtomsOptimized({
         colorArray[i * 3 + 1] = g;
         colorArray[i * 3 + 2] = b;
       } else {
-        // Type-based color using active palette
+        // Type-based or uniform color using active palette
         const isHighlighted = highlightedAtoms?.has(i);
-        const tc = typeColorLookup.get(types[i]) ?? [0.6, 0.6, 0.6];
+        let tc: [number, number, number] = [0.6, 0.6, 0.6];
+        if (colorMode === 'uniform') {
+          tc = mapFn(0.0);
+        } else {
+          tc = typeColorLookup.get(types[i]) ?? [0.6, 0.6, 0.6];
+        }
         
         if (isHighlighted) {
           // Brighten highlighted atoms
