@@ -71,7 +71,11 @@ async function readFileAsText(file: File): Promise<string> {
       })
     );
   }
-  return file.text();
+  const text = await file.text();
+  if (text.trim().toLowerCase().startsWith('<html') || text.trim().toLowerCase().startsWith('<!doctype html>')) {
+    throw new Error('Received HTML instead of molecular data (file not found on server).');
+  }
+  return text;
 }
 
 /** Parse a LAMMPS dump file and return a Trajectory */
