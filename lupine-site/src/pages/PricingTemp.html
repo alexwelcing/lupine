@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Space+Grotesk:wght@300..700&amp;family=JetBrains+Mono:wght@300;400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#9cf0ff",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-bright": "#37393e",
+                    "primary-fixed-dim": "#00daf3",
+                    "surface": "#111318",
+                    "surface-container-highest": "#333539",
+                    "outline-variant": "#3b494c",
+                    "surface-container": "#1e2024",
+                    "on-secondary-fixed": "#07006c",
+                    "surface-tint": "#00daf3",
+                    "on-surface": "#e2e2e8",
+                    "secondary-fixed": "#e1e0ff",
+                    "surface-container-lowest": "#0c0e12",
+                    "error": "#ffb4ab",
+                    "on-secondary": "#1000a9",
+                    "tertiary-container": "#f4cd52",
+                    "error-container": "#93000a",
+                    "on-error": "#690005",
+                    "surface-container-low": "#1a1c20",
+                    "on-tertiary": "#3c2f00",
+                    "on-background": "#e2e2e8",
+                    "tertiary-fixed": "#ffe088",
+                    "on-secondary-container": "#b0b2ff",
+                    "on-surface-variant": "#bac9cc",
+                    "secondary-fixed-dim": "#c0c1ff",
+                    "on-secondary-fixed-variant": "#2f2ebe",
+                    "secondary": "#c0c1ff",
+                    "inverse-primary": "#006875",
+                    "inverse-surface": "#e2e2e8",
+                    "on-primary-container": "#00626e",
+                    "tertiary-fixed-dim": "#e9c349",
+                    "surface-variant": "#333539",
+                    "outline": "#849396",
+                    "inverse-on-surface": "#2f3035",
+                    "tertiary": "#ffecbb",
+                    "primary-container": "#00e5ff",
+                    "on-primary-fixed": "#001f24",
+                    "on-primary": "#00363d",
+                    "secondary-container": "#3131c0",
+                    "primary": "#c3f5ff",
+                    "on-tertiary-container": "#6d5600",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "surface-container-high": "#282a2e",
+                    "on-primary-fixed-variant": "#004f58",
+                    "background": "#111318",
+                    "surface-dim": "#111318",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader", "serif"],
+                    "body": ["Space Grotesk", "sans-serif"],
+                    "label": ["Space Grotesk", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 32, 36, 0.6);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        .tonal-shift-row:nth-child(even) {
+            background-color: rgba(26, 28, 32, 0.4);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-slate-900/60 backdrop-blur-xl flex justify-between items-center px-12 h-20 max-w-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] tonal-shift bg-slate-800/20">
+<div class="text-3xl font-serif italic text-white">Lupine</div>
+<div class="hidden md:flex items-center space-x-10">
+<a class="text-slate-400 font-mono hover:text-white hover:text-cyan-300 transition-colors duration-300" href="#">Compute</a>
+<a class="text-slate-400 font-mono hover:text-white hover:text-cyan-300 transition-colors duration-300" href="#">Network</a>
+<a class="text-slate-400 font-mono hover:text-white hover:text-cyan-300 transition-colors duration-300" href="#">Storage</a>
+<a class="text-slate-400 font-mono hover:text-white hover:text-cyan-300 transition-colors duration-300" href="#">Docs</a>
+</div>
+<div class="flex items-center space-x-6">
+<span class="material-symbols-outlined text-slate-400 hover:text-cyan-300 cursor-pointer">account_circle</span>
+<button class="bg-primary text-on-primary px-6 py-2 font-label text-sm font-bold uppercase tracking-widest hover:opacity-80 transition-all">Execute</button>
+</div>
+</nav>
+<main class="pt-32 pb-24 overflow-x-hidden">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-12 mb-32 relative">
+<!-- Decorative Glow -->
+<div class="absolute -top-40 -right-20 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="max-w-4xl">
+<p class="font-mono text-xs uppercase tracking-[0.4em] text-primary-fixed-dim mb-8">Quantum Ledger Pricing Protocol</p>
+<h1 class="font-headline text-7xl md:text-9xl leading-[0.9] text-white italic mb-12">
+                    Precision Compute.<br/>
+<span class="text-primary/90">Priced for Impact.</span>
+</h1>
+<p class="text-xl md:text-2xl text-on-surface-variant font-light max-w-2xl leading-relaxed">
+                    Sovereign-grade infrastructure for the next epoch of materials science. Scale your simulations on a decentralized quantum mesh designed for absolute fidelity and zero latency.
+                </p>
+</div>
+</section>
+<!-- Tiers Section -->
+<section class="max-w-7xl mx-auto px-12 grid grid-cols-1 md:grid-cols-3 gap-8 mb-40">
+<!-- Explorer Tier -->
+<div class="glass-panel p-12 flex flex-col justify-between border-t border-white/5 relative group">
+<div>
+<h3 class="font-headline text-3xl text-white mb-2">Explorer</h3>
+<p class="font-mono text-[10px] uppercase tracking-widest text-slate-500 mb-8">Single Node Access</p>
+<div class="flex items-baseline gap-2 mb-10">
+<span class="font-headline text-6xl text-primary font-bold drop-shadow-[0_0_15px_rgba(0,218,243,0.3)]">$0</span>
+<span class="font-mono text-xs text-slate-500">/mo</span>
+</div>
+<ul class="space-y-4 mb-12">
+<li class="flex items-center gap-3 text-sm text-on-surface-variant font-mono">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span> 12 Compute Threads
+                        </li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant font-mono">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span> 16GB Memory Allocation
+                        </li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant font-mono">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span> Public WebGPU Clusters
+                        </li>
+</ul>
+</div>
+<button class="w-full py-4 bg-surface-container-high text-white font-label uppercase text-xs tracking-widest border border-outline-variant/20 hover:bg-surface-container-highest transition-colors">Initialize</button>
+</div>
+<!-- Research Tier (Featured) -->
+<div class="glass-panel p-12 flex flex-col justify-between border-t-2 border-primary/40 relative shadow-[0_24px_64px_rgba(0,0,0,0.6)] z-10 scale-105">
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline text-3xl text-white">Research</h3>
+<span class="bg-primary text-on-primary font-mono text-[8px] px-2 py-1 uppercase tracking-tighter">Recommended</span>
+</div>
+<p class="font-mono text-[10px] uppercase tracking-widest text-primary/60 mb-8">Multi-Node Cluster</p>
+<div class="flex items-baseline gap-2 mb-10">
+<span class="font-headline text-6xl text-primary font-bold drop-shadow-[0_0_20px_rgba(0,218,243,0.4)]">$2,400</span>
+<span class="font-mono text-xs text-slate-500">/yr</span>
+</div>
+<ul class="space-y-4 mb-12">
+<li class="flex items-center gap-3 text-sm text-white font-mono">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span> 128 Compute Threads
+                        </li>
+<li class="flex items-center gap-3 text-sm text-white font-mono">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span> 512GB Memory Allocation
+                        </li>
+<li class="flex items-center gap-3 text-sm text-white font-mono">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span> Private WebGPU Clusters
+                        </li>
+<li class="flex items-center gap-3 text-sm text-white font-mono">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span> Sovereign Encryption
+                        </li>
+</ul>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-label uppercase text-xs font-bold tracking-[0.2em] hover:shadow-[0_0_20px_rgba(0,218,243,0.3)] transition-all">Execute Protocol</button>
+</div>
+<!-- Enterprise Tier -->
+<div class="glass-panel p-12 flex flex-col justify-between border-t border-white/5 relative group">
+<div>
+<h3 class="font-headline text-3xl text-white mb-2">Enterprise</h3>
+<p class="font-mono text-[10px] uppercase tracking-widest text-slate-500 mb-8">Infrastructure Dedicated</p>
+<div class="flex items-baseline gap-2 mb-10">
+<span class="font-headline text-6xl text-tertiary font-bold drop-shadow-[0_0_15px_rgba(255,236,187,0.2)]">Custom</span>
+</div>
+<ul class="space-y-4 mb-12">
+<li class="flex items-center gap-3 text-sm text-on-surface-variant font-mono">
+<span class="material-symbols-outlined text-tertiary text-sm">check_circle</span> Unlimited Threads
+                        </li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant font-mono">
+<span class="material-symbols-outlined text-tertiary text-sm">check_circle</span> Petabyte Memory Mesh
+                        </li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant font-mono">
+<span class="material-symbols-outlined text-tertiary text-sm">check_circle</span> 24/7 Quantum Oversight
+                        </li>
+</ul>
+</div>
+<button class="w-full py-4 bg-tertiary text-on-tertiary font-headline italic font-bold text-lg hover:opacity-90 transition-colors">Establish Connection</button>
+</div>
+</section>
+<!-- Technical Feature Matrix -->
+<section class="max-w-7xl mx-auto px-12">
+<div class="mb-16 flex flex-col items-start">
+<h2 class="font-headline text-5xl text-white mb-4">Technical Specifications</h2>
+<div class="h-0.5 w-24 bg-primary-fixed-dim/40"></div>
+</div>
+<div class="bg-surface-container-low overflow-hidden">
+<!-- Header -->
+<div class="grid grid-cols-4 px-8 py-6 font-mono text-[10px] uppercase tracking-widest text-slate-500">
+<div class="col-span-1">Parameter</div>
+<div class="text-center">Explorer</div>
+<div class="text-center text-primary">Research</div>
+<div class="text-center">Enterprise</div>
+</div>
+<!-- Rows -->
+<div class="tonal-shift-row grid grid-cols-4 px-8 py-8 items-center">
+<div class="col-span-1 font-body text-sm text-white">Compute Threads</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">12</div>
+<div class="text-center font-mono text-sm text-primary-fixed font-bold">128</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">Unlimited</div>
+</div>
+<div class="tonal-shift-row grid grid-cols-4 px-8 py-8 items-center">
+<div class="col-span-1 font-body text-sm text-white">Memory Allocation</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">16GB RAM</div>
+<div class="text-center font-mono text-sm text-primary-fixed font-bold">512GB ECC</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">Petabyte Mesh</div>
+</div>
+<div class="tonal-shift-row grid grid-cols-4 px-8 py-8 items-center">
+<div class="col-span-1 font-body text-sm text-white">WebGPU Clusters</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">Shared (Tier 3)</div>
+<div class="text-center font-mono text-sm text-primary-fixed font-bold">Priority (Tier 1)</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">Isolated Bare-Metal</div>
+</div>
+<div class="tonal-shift-row grid grid-cols-4 px-8 py-8 items-center">
+<div class="col-span-1 font-body text-sm text-white">Security Protocol</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">Standard TLS</div>
+<div class="text-center font-mono text-sm text-primary-fixed font-bold">AES-4096 Quantum</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">Hardware HSM Key</div>
+</div>
+<div class="tonal-shift-row grid grid-cols-4 px-8 py-8 items-center">
+<div class="col-span-1 font-body text-sm text-white">Sovereignty Control</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">Lupine Managed</div>
+<div class="text-center font-mono text-sm text-primary-fixed font-bold">Joint Protocol</div>
+<div class="text-center font-mono text-xs text-on-surface-variant">Full Sovereign Self-Host</div>
+</div>
+</div>
+</section>
+<!-- Visual Anchor: Large Decorative Image -->
+<section class="max-w-7xl mx-auto px-12 mt-40">
+<div class="relative h-[600px] w-full overflow-hidden">
+<img class="w-full h-full object-cover grayscale opacity-40 mix-blend-screen" data-alt="Abstract microscopic crystal structure visualization in deep cyan and obsidian lighting with sharp geometric fractures and atmospheric particles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBttpneA4Lwd2sKKXudMYkj8DjJqmy2iphAY9HTXdfaNYO_x_mbKde8e1aKaXLLFVwLKglJoDWTD_C1-KsvxG73HP0rLQNxQ58BBTHNXGSinPCUkli5t95bfzt6wwRS-fWsWpJf2LL7cSCstGL1IAt0TYGX0iStLwptsWP7odeLDsy9M_ukYRp7d3rNHtG4sxF2y2A3WGZ2AYi9wXP4pBKHT-x4YnLDt0LvUbU2i8QO9USKqsyNfKuZwsAGghYBwqy6kDldXJ5UXe0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+<div class="absolute bottom-20 left-20 max-w-xl">
+<h2 class="font-headline text-6xl text-white italic mb-6">Built for the Void.</h2>
+<p class="font-mono text-xs text-primary-fixed-dim uppercase tracking-[0.3em]">Hardware-Accelerated Material Discovery</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-slate-950 w-full py-16 px-12 border-t border-slate-800/30 tonal-shift bg-slate-900">
+<div class="grid grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div>
+<div class="text-lg font-serif text-slate-200 mb-8">Lupine Materials Science</div>
+<p class="font-mono text-[10px] tracking-tighter text-slate-500 uppercase">Sovereign Void Protocol.</p>
+</div>
+<div class="flex flex-col space-y-3">
+<h4 class="font-serif text-lg text-slate-200 mb-4">Ecosystem</h4>
+<a class="text-slate-500 font-mono text-[10px] hover:text-white underline underline-offset-4 uppercase tracking-tighter" href="#">Architecture</a>
+<a class="text-slate-500 font-mono text-[10px] hover:text-white underline underline-offset-4 uppercase tracking-tighter" href="#">Governance</a>
+</div>
+<div class="flex flex-col space-y-3">
+<h4 class="font-serif text-lg text-slate-200 mb-4">Operations</h4>
+<a class="text-cyan-400 font-mono text-[10px] hover:text-white underline underline-offset-4 uppercase tracking-tighter" href="#">System Status: Operational</a>
+<a class="text-slate-500 font-mono text-[10px] hover:text-white underline underline-offset-4 uppercase tracking-tighter" href="#">Legal</a>
+</div>
+<div>
+<p class="text-slate-500 font-mono text-[10px] tracking-tighter leading-relaxed">
+                    © 2024 Lupine Materials Science.<br/>
+                    Engineered in the sub-arctic cluster.
+                </p>
+</div>
+</div>
+</footer>
+</body></html>

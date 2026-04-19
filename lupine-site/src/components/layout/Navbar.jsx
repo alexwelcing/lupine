@@ -19,8 +19,8 @@ export default function Navbar() {
           <path d="M16 2L2 9.5V22.5L16 30L30 22.5V9.5L16 2Z" fill="url(#brandGrad)" />
           <defs>
             <linearGradient id="brandGrad" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
-              <stop stopColor="var(--lupine-500)" />
-              <stop offset="1" stopColor="var(--violet-500)" />
+              <stop stopColor="var(--color-primary)" />
+              <stop offset="1" stopColor="var(--color-primary-container)" />
             </linearGradient>
           </defs>
         </svg>
