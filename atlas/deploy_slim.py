@@ -179,7 +179,14 @@ def build_web():
     subprocess.run("pnpm build", cwd=ATLAS_VIEW_DIR, shell=True, check=True)
     if os.path.exists(DEPLOY_WEB): shutil.rmtree(DEPLOY_WEB)
     shutil.copytree(WEB_DIST, DEPLOY_WEB)
-    print("  OK web viewer built")
+    
+    # OVERWRITE the root public index and assets so it serves nicely at the apex domain
+    shutil.copy2(os.path.join(WEB_DIST, "index.html"), os.path.join(DEPLOY_PUBLIC, "index.html"))
+    dest_assets = os.path.join(DEPLOY_PUBLIC, "assets")
+    if os.path.exists(dest_assets):
+        shutil.rmtree(dest_assets)
+    shutil.copytree(os.path.join(WEB_DIST, "assets"), dest_assets)
+    print("  OK web viewer built and deployed to root")
 
 def deploy_and_verify():
     section("Step 3/3: Deploy + Verify")
