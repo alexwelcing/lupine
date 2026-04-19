@@ -69,15 +69,16 @@ export function AtomsOptimized({
     if (renderStyle === 'toon') {
       return new THREE.IcosahedronGeometry(1, 1);
     }
-    // LOD: reduce geometry for large systems
-    if (frame.natoms > 20000) {
-      return new THREE.SphereGeometry(1, 6, 4);   // Ultra-low for massive systems
+    // LOD: Instanced drawing is highly vertex-throughput efficient on modern GPUs.
+    // We can safely push high segment counts to maintain perfect circles.
+    if (frame.natoms > 100000) {
+      return new THREE.SphereGeometry(1, 12, 8);    // V-low for massive systems
     }
-    if (frame.natoms > 5000) {
-      return new THREE.SphereGeometry(1, 8, 6);   // Low-poly for medium systems
+    if (frame.natoms > 25000) {
+      return new THREE.IcosahedronGeometry(1, 2);   // 162 verts, highly uniform sphere
     }
-    return new THREE.SphereGeometry(1, 16, 12);    // Full quality for small systems
-  }, [renderStyle, frame.natoms > 20000, frame.natoms > 5000]);
+    return new THREE.SphereGeometry(1, 32, 32);     // Perfect circle silhouettes for normal files
+  }, [renderStyle, frame.natoms > 100000, frame.natoms > 25000]);
 
   const material = useMemo(() => {
     if (renderStyle === 'toon') {
