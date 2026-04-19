@@ -18,16 +18,7 @@ import { useThree, useFrame } from '@react-three/fiber';
 import { useStore } from './store';
 import * as THREE from 'three';
 
-// ─── Dynamic imports (tree-shaken when unused) ────────────────────
-let Muxer: any = null;
-let ArrayBufferTarget: any = null;
-
-async function loadMp4Muxer() {
-  if (Muxer) return;
-  const mod = await import('mp4-muxer');
-  Muxer = mod.Muxer;
-  ArrayBufferTarget = mod.ArrayBufferTarget;
-}
+// Native MediaRecorder requires no dynamic muxer loads
 // ─── MP4 → GIF converter ─────────────────────────────────────────
 /**
  * Decodes an MP4 blob frame-by-frame via a <video> element, then encodes
@@ -123,10 +114,10 @@ export function ExportManager() {
   const frameCount = useRef(0);
   const onCompleteRef = useRef<((success: boolean) => void) | null>(null);
 
-  // MP4 encoder state (used for both MP4 and GIF output)
-  const videoEncoder = useRef<VideoEncoder | null>(null);
-  const muxer = useRef<any>(null);
-  const mp4Target = useRef<any>(null);
+  // MediaRecorder state
+  const mediaRecorder = useRef<MediaRecorder | null>(null);
+  const recordedChunks = useRef<Blob[]>([]);
+  const finalMimeType = useRef<string>('');
 
   // Orbit state
   const originalCameraPosition = useRef<THREE.Vector3 | null>(null);
@@ -192,13 +183,34 @@ export function ExportManager() {
     const fps = 60;
     const duration = req.durationSeconds || 5;
 
-    // Check WebCodecs
-    if (typeof VideoEncoder === 'undefined') {
-      console.error('WebCodecs VideoEncoder not available in this browser.');
+    // Check MediaRecorder
+    if (typeof MediaRecorder === 'undefined') {
+      console.error('MediaRecorder not available in this browser.');
       if (req.onComplete) req.onComplete(false);
       clearExportRequest();
       return;
     }
+
+    let selectedMime = '';
+    const mimeMap = [
+      'video/mp4;codecs=h264',
+      'video/webm;codecs=vp9',
+      'video/webm',
+      'video/mp4'
+    ];
+    for (const m of mimeMap) {
+      if (MediaRecorder.isTypeSupported(m)) {
+        selectedMime = m;
+        break;
+      }
+    }
+    if (!selectedMime) {
+      console.error('No supported MediaRecorder MIME type found.');
+      if (req.onComplete) req.onComplete(false);
+      clearExportRequest();
+      return;
+    }
+    finalMimeType.current = selectedMime;
 
     outputFormat.current = userFormat;
     recordingWidth.current = width;
@@ -207,30 +219,7 @@ export function ExportManager() {
     recordingDuration.current = duration;
     frameCount.current = 0;
     onCompleteRef.current = req.onComplete || null;
-
-    // Always init the MP4 encoder (GIF will convert from the MP4 after)
-    await loadMp4Muxer();
-    mp4Target.current = new ArrayBufferTarget();
-    muxer.current = new Muxer({
-      target: mp4Target.current,
-      video: { codec: 'avc', width, height },
-      fastStart: 'in-memory',
-    });
-
-    videoEncoder.current = new VideoEncoder({
-      output: (chunk: any, meta: any) => {
-        muxer.current?.addVideoChunk(chunk, meta);
-      },
-      error: (e: any) => console.error('VideoEncoder error:', e),
-    });
-
-    videoEncoder.current.configure({
-      codec: 'avc1.640028', // H.264 High Profile Level 4.0
-      width,
-      height,
-      bitrate: 16_000_000, // 16 Mbps
-      framerate: fps,
-    });
+    recordedChunks.current = [];
 
     // Setup orbit
     if (req.orbit) {
@@ -250,90 +239,82 @@ export function ExportManager() {
       camera.updateProjectionMatrix();
     }
 
+    // Force an immediate render to guarantee the canvas has content
+    gl.render(scene, camera);
+
+    const stream = gl.domElement.captureStream(fps);
+    const recorder = new MediaRecorder(stream, {
+      mimeType: selectedMime,
+      videoBitsPerSecond: 16_000_000,
+    });
+    
+    recorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) {
+        recordedChunks.current.push(e.data);
+      }
+    };
+    
+    recorder.onstop = async () => {
+      const finalBlob = new Blob(recordedChunks.current, { type: selectedMime });
+      const ext = selectedMime.includes('mp4') ? 'mp4' : 'webm';
+      const baseName = req.baseName || 'glimPSE';
+
+      let success = false;
+      try {
+        if (outputFormat.current === 'mp4') { // 'mp4' represents the native video stream, could be WebM
+          downloadBlob(finalBlob, `${baseName}.${ext}`);
+          success = true;
+        } else if (outputFormat.current === 'gif') {
+          try {
+            const gifBlob = await convertMp4ToGif(finalBlob, 15);
+            downloadBlob(gifBlob, `${baseName}.gif`);
+            success = true;
+          } catch (err) {
+            console.error('GIF conversion failed, downloading video instead:', err);
+            downloadBlob(finalBlob, `${baseName}.${ext}`);
+            success = true;
+          }
+        }
+      } catch (err) {
+        console.error('Failed to finalize video export:', err);
+        success = false;
+      } finally {
+        mediaRecorder.current = null;
+        recordedChunks.current = [];
+
+        // Restore camera if orbit was used
+        if (originalCameraPosition.current && file) {
+          const { min, max } = file.trajectory.globalBounds;
+          const center = new THREE.Vector3(
+            (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
+          );
+          camera.position.copy(originalCameraPosition.current);
+          camera.lookAt(center);
+          originalCameraPosition.current = null;
+        }
+
+        if (originalSize.current) {
+          gl.setSize(originalSize.current.width, originalSize.current.height, false);
+          if (camera instanceof THREE.PerspectiveCamera) {
+            camera.aspect = originalSize.current.aspect;
+            camera.updateProjectionMatrix();
+          }
+          originalSize.current = null;
+        }
+
+        isRecording.current = false;
+        outputFormat.current = null;
+        if (onCompleteRef.current) onCompleteRef.current(success);
+        clearExportRequest();
+      }
+    };
+
+    recorder.start(100);
+    mediaRecorder.current = recorder;
+
     recordingStartTime.current = performance.now();
     isRecording.current = true;
-  }, [exportRequest, camera, gl, size, clearExportRequest]);
-
-  // ─── Finalize Recording ───────────────────────────────────────
-  const finalizeRecording = useCallback(async () => {
-    isRecording.current = false;
-    const userFormat = outputFormat.current;
-    const baseName = exportRequest?.baseName || 'glimPSE';
-
-    if (!videoEncoder.current || !muxer.current) {
-      console.error('No active encoder to finalize');
-      if (onCompleteRef.current) onCompleteRef.current(false);
-      clearExportRequest();
-      return;
-    }
-
-    let success = false;
-    try {
-      if (videoEncoder.current.state === 'closed') {
-        throw new Error('VideoEncoder closed unexpectedly before finalize.');
-      }
-      
-      // Flush and finalize the MP4
-      await videoEncoder.current.flush();
-      muxer.current.finalize();
-      const buffer = mp4Target.current.buffer;
-      const mp4Blob = new Blob([buffer], { type: 'video/mp4' });
-
-      if (userFormat === 'mp4') {
-        // Direct MP4 download
-        downloadBlob(mp4Blob, `${baseName}.mp4`);
-        success = true;
-      } else if (userFormat === 'gif') {
-        // Convert MP4 → GIF (15fps is standard for smooth GIF loops)
-        try {
-          const gifBlob = await convertMp4ToGif(mp4Blob, 15);
-          downloadBlob(gifBlob, `${baseName}.gif`);
-          success = true;
-        } catch (err) {
-          console.error('GIF conversion failed, downloading MP4 instead:', err);
-          downloadBlob(mp4Blob, `${baseName}.mp4`);
-          success = true;
-        }
-      }
-    } catch (err) {
-      console.error('Failed to finalize video export:', err);
-      success = false;
-    } finally {
-      // Cleanup encoder
-      if (videoEncoder.current && videoEncoder.current.state !== 'closed') {
-        try {
-          videoEncoder.current.close();
-        } catch(e) {}
-      }
-      videoEncoder.current = null;
-      muxer.current = null;
-      mp4Target.current = null;
-
-      // Restore camera if orbit was used
-      if (originalCameraPosition.current && file) {
-        const { min, max } = file.trajectory.globalBounds;
-        const center = new THREE.Vector3(
-          (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
-        );
-        camera.position.copy(originalCameraPosition.current);
-        camera.lookAt(center);
-        originalCameraPosition.current = null;
-      }
-
-      if (originalSize.current) {
-        gl.setSize(originalSize.current.width, originalSize.current.height, false);
-        if (camera instanceof THREE.PerspectiveCamera) {
-          camera.aspect = originalSize.current.aspect;
-          camera.updateProjectionMatrix();
-        }
-        originalSize.current = null;
-      }
-
-      outputFormat.current = null;
-      if (onCompleteRef.current) onCompleteRef.current(success);
-      clearExportRequest();
-    }
-  }, [exportRequest, camera, file, clearExportRequest, gl]);
+  }, [exportRequest, camera, gl, scene, size, clearExportRequest, file]);
 
   // ─── Effect: Dispatch export actions ──────────────────────────
   useEffect(() => {
@@ -349,14 +330,16 @@ export function ExportManager() {
 
   // ─── Per-frame: orbit + capture ───────────────────────────────
   useFrame(() => {
-    if (!isRecording.current || !videoEncoder.current) return;
+    if (!isRecording.current || !mediaRecorder.current) return;
 
     const elapsed = (performance.now() - recordingStartTime.current) / 1000;
     const duration = recordingDuration.current;
 
     // Check if recording is complete
     if (elapsed >= duration) {
-      finalizeRecording();
+      if (mediaRecorder.current.state === 'recording') {
+        mediaRecorder.current.stop();
+      }
       return;
     }
 
@@ -375,29 +358,8 @@ export function ExportManager() {
       camera.lookAt(center);
     }
 
-    // Only capture at target FPS intervals (skip if ahead)
-    const targetInterval = 1 / recordingFps.current;
-    const expectedFrames = Math.floor(elapsed / targetInterval);
-    if (frameCount.current >= expectedFrames) return;
-    frameCount.current = expectedFrames;
-
-    // Encode frame via WebCodecs (same path for MP4 and GIF)
-    const canvas = gl.domElement;
-    try {
-      const videoFrame = new VideoFrame(canvas, {
-        timestamp: Math.round(elapsed * 1_000_000), // microseconds
-      });
-      // Ensure the very first frame encoded is ALWAYS a keyFrame, plus every 60th frame
-      const isFirstFrame = muxer.current && !muxer.current._hasEncodedFirst; // custom flag 
-      if (muxer.current) muxer.current._hasEncodedFirst = true;
-      
-      videoEncoder.current!.encode(videoFrame, {
-        keyFrame: isFirstFrame || (frameCount.current % 60 === 0),
-      });
-      videoFrame.close();
-    } catch (e) {
-      console.warn('VideoFrame encode failed, skipping frame', e);
-    }
+    // MediaRecorder automatically captures the canvas stream, 
+    // so we only need to manually orchestrate the Orbit camera angle per-frame!
   });
 
   return null;

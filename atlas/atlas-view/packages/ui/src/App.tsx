@@ -536,7 +536,7 @@ export default function App() {
               rotateSpeed={0.5}
               panSpeed={0.4}
               zoomSpeed={0.8}
-              onEnd={(e) => {
+              onEnd={(e: any) => {
                 if (e?.target?.object && e?.target?.target) {
                   useStore.getState().setCameraState(
                     e.target.object.position.toArray(),
