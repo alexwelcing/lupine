@@ -489,6 +489,20 @@ export default function App() {
             </button>
           )}
           <a
+            href="https://lupine.science"
+            style={{
+              padding: '8px 12px',
+              fontSize: 13, fontWeight: 500,
+              color: 'var(--text-primary)',
+              background: 'transparent',
+              border: '1px solid var(--border-default)',
+              borderRadius: 'var(--radius-sm)',
+              textDecoration: 'none',
+            }}
+          >
+            Lupine Home
+          </a>
+          <a
             href="https://github.com/alexwelcing/lupine"
             target="_blank"
             rel="noopener noreferrer"
