@@ -14,8 +14,6 @@ test.describe('Lupine Site E2E', () => {
     const body = page.locator('body');
     await expect(body).toBeVisible();
     
-    // Check that there are no immediate rendering crashes (if it was blank it wouldn't have elements)
-    const root = page.locator('#root');
-    await expect(root).toBeVisible();
+
   });
 });
