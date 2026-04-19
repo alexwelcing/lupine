@@ -110,6 +110,12 @@ importers:
       '@react-three/postprocessing':
         specifier: ^2.16.0
         version: 2.19.1(@react-three/fiber@8.18.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.170.0))(@types/three@0.170.0)(react@19.2.4)(three@0.170.0)
+      gifenc:
+        specifier: ^1.0.3
+        version: 1.0.3
+      mp4-muxer:
+        specifier: ^5.2.2
+        version: 5.2.2
       postprocessing:
         specifier: ^6.36.0
         version: 6.38.3(three@0.170.0)
@@ -234,6 +240,12 @@ importers:
       '@react-three/postprocessing':
         specifier: ^3.0.0
         version: 3.0.4(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.170.0))(@types/three@0.170.0)(react@19.2.4)(three@0.170.0)
+      gifenc:
+        specifier: ^1.0.3
+        version: 1.0.3
+      mp4-muxer:
+        specifier: ^5.2.2
+        version: 5.2.2
       postprocessing:
         specifier: ^6.36.0
         version: 6.38.3(three@0.170.0)
@@ -1474,6 +1486,9 @@ packages:
   '@types/webxr@0.5.24':
     resolution: {integrity: sha512-h8fgEd/DpoS9CBrjEQXR+dIDraopAEfu4wYVNY2tEPwk60stPWhvZMf4Foo5FakuQ7HFZoa8WceaWFervK2Ovg==}
 
+  '@types/wicg-file-system-access@2020.9.8':
+    resolution: {integrity: sha512-ggMz8nOygG7d/stpH40WVaNvBwuyYLnrg5Mbyf6bmsj/8+gb6Ei4ZZ9/4PNpcPNTT8th9Q8sM8wYmWGjMWLX/A==}
+
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
 
@@ -1915,6 +1930,9 @@ packages:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
     engines: {node: '>=10'}
 
+  gifenc@1.0.3:
+    resolution: {integrity: sha512-xdr6AdrfGBcfzncONUOlXMBuc5wJDtOueE3c5rdG0oNgtINLD+f2iFZltrBRZYzACRbKr+mSVU/x98zv2u3jmw==}
+
   glob-to-regexp@0.4.1:
     resolution: {integrity: sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==}
 
@@ -2100,6 +2118,10 @@ packages:
 
   minimist@1.2.6:
     resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
+
+  mp4-muxer@5.2.2:
+    resolution: {integrity: sha512-dhozjTywI0h2qFzeShagt8YYw811fh1XlwiDCE2f6Aeqf6xG2CyuShoSa5E0AZDO8pPF0JOZ3wOmWBNWIGdSpQ==}
+    deprecated: This library is superseded by Mediabunny. Please migrate to it.
 
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -3875,6 +3897,8 @@ snapshots:
 
   '@types/webxr@0.5.24': {}
 
+  '@types/wicg-file-system-access@2020.9.8': {}
+
   '@types/yauzl@2.10.3':
     dependencies:
       '@types/node': 22.19.15
@@ -4390,6 +4414,8 @@ snapshots:
 
   get-stream@6.0.1: {}
 
+  gifenc@1.0.3: {}
+
   glob-to-regexp@0.4.1: {}
 
   glsl-noise@0.0.0: {}
@@ -4536,6 +4562,11 @@ snapshots:
       brace-expansion: 1.1.14
 
   minimist@1.2.6: {}
+
+  mp4-muxer@5.2.2:
+    dependencies:
+      '@types/dom-webcodecs': 0.1.13
+      '@types/wicg-file-system-access': 2020.9.8
 
   ms@2.0.0: {}
 
@@ -4878,7 +4909,7 @@ snapshots:
 
   tapable@2.3.0: {}
 
-  terser-webpack-plugin@5.4.0(esbuild@0.25.0)(webpack@5.105.0):
+  terser-webpack-plugin@5.4.0(esbuild@0.25.0)(webpack@5.105.0(esbuild@0.25.0)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
@@ -5085,7 +5116,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.4.0(esbuild@0.25.0)(webpack@5.105.0)
+      terser-webpack-plugin: 5.4.0(esbuild@0.25.0)(webpack@5.105.0(esbuild@0.25.0))
       watchpack: 2.5.1
       webpack-sources: 3.3.4
     transitivePeerDependencies:

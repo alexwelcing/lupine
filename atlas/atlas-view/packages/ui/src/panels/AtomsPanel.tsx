@@ -1,71 +1,48 @@
-/**
- * AtomsPanel — Per-type visibility, sizing, and statistics
- *
- * Features:
- * - Toggle visibility per atom type (eye icon)
- * - Solo mode (double-click hides all others)
- * - Per-type size scaling with sliders
- * - Global atom size slider
- * - Live statistics (counts per type, total, bbox)
- * 
- * Fully integrated with @lupine/ui "Atomic Understanding" component library.
- */
-
 import { useMemo } from 'react';
 import { useStore } from '../store';
 import {
   QuantumSection,
   AtomicGlass,
-  CovalentGrid,
   IsotopeChip,
   WaveformSlider
 } from '@lupine/ui';
+import { getElementSpec, ElementData } from '@atlas/core';
 
-// CPK colors matching AtomsOptimized.tsx
-const TYPE_COLORS: Record<number, string> = {
-  1: '#4db8ff',   // Cyan blue
-  2: '#ff5a7a',   // Coral red
-  3: '#6be06f',   // Emerald green
-  4: '#ffd129',   // Gold
-  5: '#a380eb',   // Lavender
-  6: '#ff9440',   // Orange
-  7: '#d952ad',   // Magenta
-  8: '#47dbd1',   // Teal
-};
-
-const TYPE_NAMES: Record<number, string> = {
-  1: 'Type 1', 2: 'Type 2', 3: 'Type 3', 4: 'Type 4',
-  5: 'Type 5', 6: 'Type 6', 7: 'Type 7', 8: 'Type 8',
-};
-
-// ─── Icons ────────────────────────────────────────────────────────────
+// ─── Icons (0px, sharp geometries) ────────────────────────────────────
 const IconClose = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
     <path d="M18 6L6 18M6 6l12 12" />
   </svg>
 );
 
 const IconEye = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M2.062 12.348a1 1 0 010-.696 10.75 10.75 0 0119.876 0 1 1 0 010 .696 10.75 10.75 0 01-19.876 0z" />
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
+    <path d="M2 12L12 4l10 8-10 8-10-8z" />
     <circle cx="12" cy="12" r="3" />
   </svg>
 );
 
 const IconEyeOff = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
     <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
     <line x1="1" y1="1" x2="23" y2="23" />
   </svg>
 );
 
 const IconTarget = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <circle cx="12" cy="12" r="10" />
-    <circle cx="12" cy="12" r="6" />
-    <circle cx="12" cy="12" r="2" />
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
+    <rect x="3" y="3" width="18" height="18" />
+    <rect x="9" y="9" width="6" height="6" />
+    <line x1="12" y1="0" x2="12" y2="3" />
+    <line x1="12" y1="21" x2="12" y2="24" />
+    <line x1="0" y1="12" x2="3" y2="12" />
+    <line x1="21" y1="12" x2="24" y2="12" />
   </svg>
 );
+
+// ─── UI Overrides for Brutalist Aesthetics ────────────────────────────
+// By overriding border-radius to 0px, removing drop shadows, and relying on harsh lines,
+// we realize "The Precision Instrument" North Star layout.
 
 export function AtomsPanel() {
   const file = useStore(s => s.file);
@@ -80,7 +57,7 @@ export function AtomsPanel() {
 
   const currentFrame = file?.trajectory.frames[frame];
 
-  // Compute per-type statistics
+  // Compute per-type statistics and map to chemical data
   const typeStats = useMemo(() => {
     if (!currentFrame) return [];
     const counts = new Map<number, number>();
@@ -90,23 +67,25 @@ export function AtomsPanel() {
     }
     return Array.from(counts.entries())
       .sort((a, b) => a[0] - b[0])
-      .map(([type, count]) => ({
-        type,
-        count,
-        pct: (count / currentFrame.natoms * 100),
-        color: TYPE_COLORS[type] ?? '#999',
-        name: TYPE_NAMES[type] ?? `Type ${type}`,
-      }));
+      .map(([type, count]) => {
+        const spec = getElementSpec(type);
+        return {
+          type,
+          count,
+          pct: (count / currentFrame.natoms * 100),
+          ...spec
+        };
+      });
   }, [currentFrame]);
 
-  // Compute bbox
+  // Compute bounding box
   const bbox = useMemo(() => {
     if (!currentFrame?.boxBounds) return null;
     const b = currentFrame.boxBounds;
     return {
-      x: (b[1] - b[0]).toFixed(1),
-      y: (b[3] - b[2]).toFixed(1),
-      z: (b[5] - b[4]).toFixed(1),
+      x: (b[1] - b[0]).toFixed(3),
+      y: (b[3] - b[2]).toFixed(3),
+      z: (b[5] - b[4]).toFixed(3),
     };
   }, [currentFrame]);
 
@@ -125,226 +104,229 @@ export function AtomsPanel() {
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', height: '100%',
-      background: 'var(--slate-900)',
-      borderLeft: '1px solid var(--glass-border)',
-      boxShadow: '-8px 0 32px rgba(0,0,0,0.3), -2px 0 8px rgba(0,0,0,0.15)',
+      background: '#0a0a0c', // Obsidian
+      borderLeft: '1px solid #1f2937', 
     }}>
       {/* ─── Header ─── */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '14px 18px',
-        borderBottom: '1px solid var(--glass-border)',
-        background: 'var(--glass-bg-2)',
+        padding: '12px 16px',
+        borderBottom: '1px solid #1f2937',
+        background: '#121318',
         flexShrink: 0,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{
-            width: 3, height: 14, borderRadius: 2,
-            background: 'linear-gradient(180deg, var(--lupine-400), var(--violet-500))',
+            width: 4, height: 14, borderRadius: 0, // 0px radius!
+            background: '#1edce0', // Cyan
           }} />
           <span style={{
-            fontSize: 11, fontWeight: 700,
-            fontFamily: 'var(--font-mono)',
+            fontSize: 12, fontWeight: 700,
+            fontFamily: 'Space Grotesk, sans-serif',
             textTransform: 'uppercase',
-            letterSpacing: '0.12em',
-            color: 'var(--lupine-300)',
+            letterSpacing: '0.15em',
+            color: '#e2e8f0',
           }}>
-            Atoms
+            Atoms & Elements
           </span>
         </div>
         <button
           onClick={() => useStore.getState().setActivePanel(null)}
-          className="lupine-glass lupine-glass--1 lupine-glass--interactive"
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            width: 28, height: 28,
-            background: 'transparent', border: '1px solid var(--glass-border)',
-            borderRadius: 'var(--radius-xs)',
-            color: 'var(--slate-500)', cursor: 'pointer',
+            width: 24, height: 24,
+            background: 'transparent',
+            border: '1px solid #334155',
+            borderRadius: 0,
+            color: '#94a3b8', cursor: 'pointer',
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#1edce0'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = '#334155'; }}
         >
           <IconClose />
         </button>
       </div>
 
       {/* ─── Content ─── */}
-      <div className="lupine-scroll" style={{ flex: 1, overflowY: 'auto', padding: '12px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div className="lupine-scroll" style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 
-          {/* ─── Summary Stats ─── */}
-          <CovalentGrid columns={2} gap={8}>
-            <StatBox label="Total Atoms" value={currentFrame ? currentFrame.natoms.toLocaleString() : '—'} />
-            <StatBox label="Visible Atoms" value={visibleCount.toLocaleString()} accent={!allVisible} />
-            <StatBox label="Unique Types" value={typeStats.length.toString()} />
-            <StatBox label="Active Frame" value={`${frame + 1} / ${file?.trajectory.totalFrames ?? 0}`} />
-          </CovalentGrid>
+          {/* ─── Global Composition Summary ─── */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+            <DataBlock label="Total Atoms" value={currentFrame ? currentFrame.natoms.toLocaleString() : '—'} />
+            <DataBlock label="Visible" value={visibleCount.toLocaleString()} accent={!allVisible} />
+            <DataBlock label="Unique Elements" value={typeStats.length.toString()} />
+            <DataBlock label="Trajectory Frame" value={`${frame + 1} / ${file?.trajectory.totalFrames ?? 0}`} />
+          </div>
 
           {bbox && (
-            <AtomicGlass level={1} flush style={{ padding: '10px 14px', marginTop: 4 }}>
-              <div style={{
-                fontSize: 12, fontFamily: 'var(--font-mono)', color: 'var(--slate-400)',
-              }}>
-                <span style={{ color: 'var(--slate-500)', marginRight: 8, letterSpacing: '0.04em' }}>BBOX</span>
-                <span style={{ color: 'var(--slate-100)' }}>{bbox.x}</span>
-                <span style={{ margin: '0 4px', color: 'var(--slate-500)' }}>×</span>
-                <span style={{ color: 'var(--slate-100)' }}>{bbox.y}</span>
-                <span style={{ margin: '0 4px', color: 'var(--slate-500)' }}>×</span>
-                <span style={{ color: 'var(--slate-100)' }}>{bbox.z}</span>
-                <span style={{ color: 'var(--slate-500)', marginLeft: 8 }}>Å</span>
+            <div style={{
+              background: '#0d1117',
+              border: '1px solid #1f2937',
+              padding: '12px',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 11,
+              marginTop: 4,
+            }}>
+              <div style={{ color: '#64748b', letterSpacing: '0.08em', marginBottom: 6 }}>LATTICE BOUNDARIES [Å]</div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: '#e2e8f0' }}>
+                <span>X: {bbox.x}</span>
+                <span>Y: {bbox.y}</span>
+                <span>Z: {bbox.z}</span>
               </div>
-            </AtomicGlass>
+            </div>
           )}
 
-          <div style={{ height: 8 }} />
-
-          {/* ─── Global Atom Size ─── */}
-          <QuantumSection label="Global Atom Scaling" defaultOpen={true}>
-            <div style={{ padding: '4px 0' }}>
-              <WaveformSlider
-                label="Scale Factor"
-                value={atomScale}
-                min={0.1}
-                max={3.0}
-                step={0.05}
-                format={(v) => v.toFixed(2)}
-                onChange={setAtomScale}
-              />
-              {/* Quick size chips */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-                {[0.3, 0.5, 0.75, 1.0, 1.5, 2.0].map(s => (
-                  <IsotopeChip
-                    key={s}
-                    label={`${s}×`}
-                    selected={atomScale === s}
-                    onClick={() => setAtomScale(s)}
-                  />
-                ))}
-            </div>
-            </div>
-          </QuantumSection>
-
-          {/* ─── Per-Type Controls ─── */}
-          <QuantumSection 
-            label="Atom Types" 
-            defaultOpen={true}
-            action={
-              <div style={{ display: 'flex', gap: 6 }}>
+          {/* ─── Per-Element Breakdown ─── */}
+          <div style={{ marginTop: 8 }}>
+            <div style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8
+            }}>
+              <h3 style={{
+                fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: '0.1em',
+                color: '#94a3b8', textTransform: 'uppercase', margin: 0
+              }}>
+                Elemental Composition
+              </h3>
+              <div style={{ display: 'flex', gap: 4 }}>
                 {!allVisible && (
-                  <MiniButton label="Show All" onClick={showAllAtomTypes} />
+                  <CommandButton label="RESET VISIBILITY" onClick={showAllAtomTypes} />
                 )}
                 {hasScaleOverrides && (
-                  <MiniButton label="Reset Sizes" onClick={resetAtomTypeScales} />
+                  <CommandButton label="RESET SIZES" onClick={resetAtomTypeScales} />
                 )}
               </div>
-            }
-          >
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {typeStats.map(({ type, count, pct, color, name }) => {
-                const isHidden = hiddenAtomTypes.has(type);
-                const typeScaleValue = atomTypeScales[type] ?? 1.0;
+              {typeStats.map((stat) => {
+                const isHidden = hiddenAtomTypes.has(stat.type);
+                const typeScaleValue = atomTypeScales[stat.type] ?? 1.0;
 
                 return (
-                  <AtomicGlass 
-                    key={type} 
-                    level={isHidden ? 1 : 2} 
-                    flush 
-                    style={{ 
-                      padding: '10px 12px',
-                      opacity: isHidden ? 0.6 : 1,
-                      borderColor: isHidden ? 'var(--glass-border)' : 'var(--glass-border-hi)',
-                    }}
-                  >
-                    {/* Top row: color dot, name, count, actions */}
-                    <div style={{
-                      display: 'flex', alignItems: 'center', gap: 10,
-                    }}>
-                      {/* Color indicator */}
-                      <div style={{
-                        width: 14, height: 14,
-                        borderRadius: '50%',
-                        background: color,
-                        flexShrink: 0,
-                        boxShadow: isHidden ? 'none' : `0 0 10px ${color}60`,
-                      }} />
-
-                      {/* Name & count */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{
-                          fontSize: 13, fontWeight: 600,
-                          color: isHidden ? 'var(--slate-400)' : 'var(--slate-100)',
-                        }}>
-                          {name}
+                  <div key={stat.type} style={{
+                    background: isHidden ? '#0a0a0c' : '#121418',
+                    border: `1px solid ${isHidden ? '#1e293b' : '#334155'}`,
+                    borderLeft: `3px solid ${isHidden ? '#334155' : stat.color}`,
+                    padding: '12px',
+                    opacity: isHidden ? 0.5 : 1,
+                    transition: 'opacity 150ms ease'
+                  }}>
+                    {/* Header Row */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+                      
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                          <span style={{ fontSize: 18, fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif', color: '#f8fafc' }}>
+                            {stat.symbol}
+                          </span>
+                          <span style={{ fontSize: 13, color: '#94a3b8', fontWeight: 500 }}>
+                            {stat.name}
+                          </span>
                         </div>
-                        <div style={{
-                          fontSize: 11,
-                          fontFamily: 'var(--font-mono)',
-                          color: isHidden ? 'var(--slate-500)' : 'var(--slate-300)',
+                        
+                        {/* Chemical Attributes Row */}
+                        <div style={{ 
+                          display: 'flex', flexWrap: 'wrap', gap: '8px', 
+                          marginTop: 6, fontSize: 10, fontFamily: 'var(--font-mono)', color: '#64748b' 
                         }}>
-                          {count.toLocaleString()} atoms · {pct.toFixed(1)}%
+                          <span>M: {stat.mass.toFixed(2)}</span>
+                          <span>|</span>
+                          <span>Rc: {stat.radius}Å</span>
+                          <span>|</span>
+                          <span style={{ color: '#0ea5e9' }}>[{stat.block}-block]</span>
                         </div>
                       </div>
 
-                      {/* Solo button */}
-                      <button
-                        onClick={() => soloAtomType(type)}
-                        title="Solo (show only this type)"
-                        className="lupine-glass--interactive"
-                        style={{
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          width: 26, height: 26,
-                          background: 'var(--glass-bg-1)',
-                          border: '1px solid var(--glass-border)',
-                          borderRadius: 'var(--radius-sm)',
-                          color: 'var(--slate-400)',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <IconTarget />
-                      </button>
-
-                      {/* Visibility toggle */}
-                      <button
-                        onClick={() => toggleAtomType(type)}
-                        title={isHidden ? 'Show type' : 'Hide type'}
-                        className="lupine-glass--interactive"
-                        style={{
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          width: 28, height: 28,
-                          background: isHidden ? 'var(--glass-bg-1)' : 'rgba(85, 101, 212, 0.1)',
-                          border: `1px solid ${isHidden ? 'var(--glass-border)' : 'rgba(85, 101, 212, 0.4)'}`,
-                          borderRadius: 'var(--radius-sm)',
-                          color: isHidden ? 'var(--slate-500)' : 'var(--lupine-300)',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {isHidden ? <IconEyeOff /> : <IconEye />}
-                      </button>
+                      {/* Actions */}
+                      <div style={{ display: 'flex', gap: 4 }}>
+                        <button
+                          onClick={() => soloAtomType(stat.type)}
+                          title="Isolate"
+                          style={{
+                            width: 24, height: 24, background: '#1e293b', border: '1px solid #334155',
+                            color: '#94a3b8', cursor: 'pointer', display: 'grid', placeItems: 'center'
+                          }}
+                        >
+                          <IconTarget />
+                        </button>
+                        <button
+                          onClick={() => toggleAtomType(stat.type)}
+                          title={isHidden ? 'Show' : 'Hide'}
+                          style={{
+                            width: 24, height: 24, 
+                            background: isHidden ? '#0f172a' : 'rgba(30, 220, 224, 0.1)', 
+                            border: `1px solid ${isHidden ? '#334155' : 'rgba(30, 220, 224, 0.3)'}`,
+                            color: isHidden ? '#64748b' : '#1edce0', 
+                            cursor: 'pointer', display: 'grid', placeItems: 'center'
+                          }}
+                        >
+                          {isHidden ? <IconEyeOff /> : <IconEye />}
+                        </button>
+                      </div>
                     </div>
 
-                    {/* Per-type size slider (only when visible) */}
-                    {!isHidden && (
-                      <div style={{ marginTop: 12, paddingLeft: 24, paddingRight: 4, paddingBottom: 4 }}>
-                         <WaveformSlider
-                            label="Specific Size"
+                    {/* Stats & Sliders Row */}
+                    <div style={{ display: 'flex', alignItems: 'center', marginTop: 12, gap: 12 }}>
+                      <div style={{ 
+                        flexShrink: 0, 
+                        fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#1edce0' 
+                      }}>
+                        {stat.pct.toFixed(1)}% <span style={{ color: '#64748b', fontWeight: 400 }}>({stat.count.toLocaleString()})</span>
+                      </div>
+                      
+                      {!isHidden && (
+                        <div style={{ flex: 1, paddingLeft: 8, borderLeft: '1px solid #334155' }}>
+                          <WaveformSlider
+                            label="RADIUS MULTIPLIER"
                             value={typeScaleValue}
                             min={0.1}
                             max={3.0}
                             step={0.05}
                             format={(v) => v.toFixed(2)}
-                            onChange={(val) => setAtomTypeScale(type, val)}
+                            onChange={(val) => setAtomTypeScale(stat.type, val)}
                           />
-                      </div>
-                    )}
-                  </AtomicGlass>
+                        </div>
+                      )}
+                    </div>
+
+                  </div>
                 );
               })}
             </div>
-          </QuantumSection>
+          </div>
 
-          {/* ─── Properties ─── */}
+          <div style={{ height: 4 }} />
+
+          {/* ─── Global Atom Size ─── */}
+          <div style={{
+              background: '#0d1117', border: '1px solid #1f2937', padding: '12px',
+          }}>
+            <h3 style={{
+                fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: '0.1em',
+                color: '#94a3b8', textTransform: 'uppercase', margin: '0 0 12px 0'
+            }}>
+              Global Rendering Scale
+            </h3>
+            <WaveformSlider
+              label="Van der Waals Scaling"
+              value={atomScale}
+              min={0.1} max={3.0} step={0.05}
+              format={(v) => v.toFixed(2)}
+              onChange={setAtomScale}
+            />
+          </div>
+
+          {/* ─── Analyzed Data Fields ─── */}
           {currentFrame && currentFrame.properties && currentFrame.properties.size > 0 && (
-            <QuantumSection label="Available Data Fields" defaultOpen={true}>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            <div style={{ marginTop: 8 }}>
+              <h3 style={{
+                  fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: '0.1em',
+                  color: '#94a3b8', textTransform: 'uppercase', margin: '0 0 8px 0'
+              }}>
+                Analyzed Atomic Properties
+              </h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {Array.from(currentFrame.properties.keys()).map(prop => {
                   const vals = currentFrame.properties!.get(prop)!;
                   let min = Infinity, max = -Infinity;
@@ -353,24 +335,30 @@ export function AtomsPanel() {
                     if (vals[i] > max) max = vals[i];
                   }
                   return (
-                    <AtomicGlass key={prop} level={2} interactive flush style={{ padding: '8px 12px' }} onClick={() => {
+                    <button 
+                      key={prop}
+                      onClick={() => {
                         useStore.getState().setColorMode('property');
                         useStore.getState().setColorProperty(prop);
                       }}
+                      style={{
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        width: '100%', padding: '10px 12px',
+                        background: '#121418', border: '1px solid #334155', borderRadius: 0,
+                        cursor: 'pointer', textAlign: 'left',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.borderColor = '#1edce0'}
+                      onMouseLeave={(e) => e.currentTarget.style.borderColor = '#334155'}
                     >
-                      <div style={{ fontWeight: 600, color: 'var(--slate-100)', marginBottom: 2 }}>
-                        {prop}
-                      </div>
-                      <div style={{
-                        fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--lupine-300)'
-                      }}>
-                        {min.toFixed(2)} <span style={{ color: 'var(--slate-500)' }}>→</span> {max.toFixed(2)}
-                      </div>
-                    </AtomicGlass>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: '#e2e8f0' }}>{prop}</span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#1edce0' }}>
+                        {min.toFixed(2)} <span style={{ color: '#475569' }}>→</span> {max.toFixed(2)}
+                      </span>
+                    </button>
                   );
                 })}
               </div>
-            </QuantumSection>
+            </div>
           )}
 
         </div>
@@ -379,41 +367,46 @@ export function AtomsPanel() {
   );
 }
 
-// ─── Helper components ────────────────────────────────────────────────
+// ─── Technical Subcomponents ──────────────────────────────────────────────
 
-function StatBox({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+function DataBlock({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
-    <AtomicGlass level={1} flush style={{ padding: '10px 14px' }}>
+    <div style={{
+      background: '#0d1117',
+      border: '1px solid #1f2937',
+      padding: '8px 12px',
+    }}>
       <div style={{
-        fontSize: 10, color: 'var(--slate-500)',
-        fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.08em',
+        fontSize: 10, color: '#64748b',
+        fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em',
         marginBottom: 4,
       }}>{label}</div>
       <div style={{
-        fontSize: 16, fontWeight: 600,
+        fontSize: 16, fontWeight: 700,
         fontFamily: 'var(--font-mono)',
-        color: accent ? 'var(--lupine-400)' : 'var(--slate-100)',
+        color: accent ? '#1edce0' : '#f8fafc',
         fontVariantNumeric: 'tabular-nums',
       }}>{value}</div>
-    </AtomicGlass>
+    </div>
   );
 }
 
-function MiniButton({ label, onClick }: { label: string; onClick: () => void }) {
+function CommandButton({ label, onClick }: { label: string; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
       style={{
-        padding: '3px 8px',
-        fontSize: 10, fontWeight: 600,
-        fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.04em',
-        color: 'var(--lupine-300)',
-        background: 'rgba(85, 101, 212, 0.1)',
-        border: '1px solid rgba(85, 101, 212, 0.3)',
-        borderRadius: '4px',
+        padding: '4px 8px',
+        fontSize: 9, fontWeight: 600,
+        fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.1em',
+        color: '#94a3b8',
+        background: '#1e293b',
+        border: '1px solid #334155',
+        borderRadius: 0,
         cursor: 'pointer',
-        transition: 'all 100ms ease-out',
       }}
+      onMouseEnter={(e) => { e.currentTarget.style.color = '#1edce0'; e.currentTarget.style.borderColor = '#1edce0'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = '#334155'; }}
     >
       {label}
     </button>

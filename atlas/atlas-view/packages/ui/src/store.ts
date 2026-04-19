@@ -12,7 +12,7 @@ import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyl
 export interface ExportRequest {
   type: 'image' | 'video' | 'complete' | null;
   resolution?: { width: number; height: number; flexAspect?: boolean };
-  format?: 'png' | 'jpeg' | 'webp' | 'mp4' | 'webm';
+  format?: 'png' | 'jpeg' | 'webp' | 'mp4' | 'webm' | 'gif';
   transparent?: boolean;
   durationSeconds?: number;
   orbit?: boolean;
