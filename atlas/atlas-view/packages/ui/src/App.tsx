@@ -35,6 +35,7 @@ import { AtomsPanel } from './panels/AtomsPanel';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
 import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
 import type { ColormapName } from '@atlas/core/types';
+import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
 
 // ─── Icons ────────────────────────────────────────────────────────────
@@ -369,17 +370,8 @@ export default function App() {
       background: `linear-gradient(180deg, ${bg.top}, ${bg.bottom})`,
       display: 'flex', flexDirection: 'column', overflow: 'hidden',
     }}>
-      {/* ─── Mobile HUD or Desktop Header ─── */}
-      {isMobile ? (
-        useStore.getState().viewportMode === 'chronos' ? (
-          <ChronosHUD onExit={() => useStore.getState().setViewportMode('standard')} />
-        ) : useStore.getState().viewportMode === 'volcanic' ? (
-          <VolcanicHUD onExit={() => useStore.getState().setViewportMode('standard')} />
-        ) : (
-          <MobileHUD />
-        )
-      ) : (
-        <header style={{
+      {/* ─── Desktop Header ─── */}
+      <header style={{
         height: 56, flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 20px',
@@ -480,7 +472,6 @@ export default function App() {
           </a>
         </div>
       </header>
-      )}
 
       {/* ─── Main content ─── */}
       <div style={{ flex: 1, display: 'flex', position: 'relative', minHeight: 0 }}>
@@ -716,10 +707,10 @@ export default function App() {
               minWidth: 160,
             }}>
               <div style={{ color: 'var(--accent)', fontWeight: 600, marginBottom: 4 }}>
-                Atom #{currentFrame.ids?.[hoveredAtom] ?? hoveredAtom + 1}
+                {(() => { const spec = getElementSpec(currentFrame.types[hoveredAtom]); return `${spec.symbol} — ${spec.name}`; })()}
               </div>
               <div style={{ color: 'var(--text-muted)' }}>
-                Type {currentFrame.types[hoveredAtom]}
+                Atom #{currentFrame.ids?.[hoveredAtom] ?? hoveredAtom + 1} · {(() => { const spec = getElementSpec(currentFrame.types[hoveredAtom]); return `${spec.mass.toFixed(2)} u · ${spec.role}`; })()}
               </div>
               <div style={{ color: 'var(--text-dim)', marginTop: 4 }}>
                 x: {currentFrame.positions[hoveredAtom * 3].toFixed(2)}<br />
@@ -742,7 +733,7 @@ export default function App() {
             top: 0,
             right: 0,
             bottom: 0,
-            width: isMobile ? '100%' : 320,
+            width: isMobile ? '100%' : (activePanel === 'export' ? 360 : 320),
             borderLeft: '1px solid var(--border-subtle)',
             background: 'var(--bg-surface)',
             overflowY: 'auto',

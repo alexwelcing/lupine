@@ -17,6 +17,8 @@
     "@react-three/drei": "^9.115.0",
     "@react-three/fiber": "^8.17.0",
     "@react-three/postprocessing": "^2.16.0",
+    "gifenc": "^1.0.3",
+    "mp4-muxer": "^5.2.2",
     "postprocessing": "^6.36.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
