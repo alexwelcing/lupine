@@ -25,6 +25,7 @@ export interface LoadedFile {
   size: number;
   trajectory: Trajectory;
   thermo: ThermoData | null;
+  sourceUrl?: string;
 }
 
 export interface AppState {
@@ -99,6 +100,7 @@ export interface AppState {
   clearExportRequest: () => void;
 
   // ─── Actions: Camera ───
+  setCameraState: (position: [number, number, number], target: [number, number, number]) => void;
   setCameraPreset: (preset: AppState['cameraPreset']) => void;
   setShowScaleBar: (show: boolean) => void;
   setColorblindMode: (enabled: boolean) => void;
@@ -312,6 +314,8 @@ export const useStore = create<AppState>()(
     })),
 
     resetAtomTypeScales: () => set({ atomTypeScales: {} }),
+
+    setCameraState: (position, target) => set({ cameraPosition: position, cameraTarget: target }),
 
     setCameraPreset: (cameraPreset) => {
       const state = get();
