@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lupine Materials | Platform Architecture</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&amp;family=Inter:wght@300;400;600&amp;family=Space+Grotesk:wght@300;400;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#000d60",
+                    "inverse-surface": "#e3e1ec",
+                    "surface-tint": "#bcc3ff",
+                    "inverse-on-surface": "#2f3038",
+                    "on-primary-fixed-variant": "#2839a9",
+                    "outline": "#8f8f9f",
+                    "on-primary": "#051c93",
+                    "error": "#ffb4ab",
+                    "background": "#12131a",
+                    "tertiary-container": "#8e6a00",
+                    "on-tertiary-fixed-variant": "#5b4300",
+                    "on-surface": "#e3e1ec",
+                    "on-secondary-fixed-variant": "#00504c",
+                    "surface-variant": "#34343c",
+                    "surface": "#12131a",
+                    "on-tertiary-container": "#fff3e1",
+                    "on-background": "#e3e1ec",
+                    "primary-container": "#5565d4",
+                    "surface-container-low": "#1a1b23",
+                    "secondary": "#5dd9d0",
+                    "surface-dim": "#12131a",
+                    "secondary-container": "#00a29a",
+                    "surface-container": "#1e1f27",
+                    "on-surface-variant": "#c6c5d5",
+                    "tertiary": "#eec058",
+                    "surface-bright": "#383941",
+                    "primary": "#bcc3ff",
+                    "outline-variant": "#454653",
+                    "surface-container-high": "#292931",
+                    "on-tertiary-fixed": "#261a00",
+                    "on-tertiary": "#402d00",
+                    "secondary-fixed": "#7cf6ec",
+                    "inverse-primary": "#4353c2",
+                    "on-error": "#690005",
+                    "tertiary-fixed": "#ffdf9f",
+                    "primary-fixed": "#dfe0ff",
+                    "on-secondary": "#003734",
+                    "surface-container-highest": "#34343c",
+                    "tertiary-fixed-dim": "#eec058",
+                    "surface-container-lowest": "#0d0e15",
+                    "secondary-fixed-dim": "#5dd9d0",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-container": "#00302d",
+                    "on-primary-container": "#f5f3ff",
+                    "error-container": "#93000a",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "on-secondary-fixed": "#00201e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Space Grotesk", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body { background-color: #12131a; color: #e3e1ec; font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(41, 41, 49, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#12131a]/40 backdrop-blur-xl bg-gradient-to-b from-[#12131a] to-transparent shadow-[0_40px_80px_rgba(85,101,212,0.06)]">
+<div class="flex justify-between items-center w-full px-12 py-6">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-serif italic text-white Newsreader">Lupine Materials</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-sans text-sm uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Architecture</a>
+<a class="font-sans text-sm uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Quantum Logic</a>
+<a class="text-[#bcc3ff] border-b border-[#5565d4]/50 pb-1 font-sans text-sm uppercase tracking-widest" href="#">Specifications</a>
+<a class="font-sans text-sm uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Terminal</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#bcc3ff] hover:text-white transition-all"><span class="material-symbols-outlined" data-icon="terminal">terminal</span></button>
+<button class="text-[#bcc3ff] hover:text-white transition-all"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
+<button class="px-6 py-2 bg-gradient-to-br from-primary to-primary-container text-on-primary font-label text-xs uppercase tracking-tighter font-bold rounded-lg active:scale-[0.98] transition-all">Initialize Access</button>
+</div>
+</div>
+</nav>
+<main class="pt-32">
+<!-- Hero Section -->
+<section class="px-12 py-24 min-h-[716px] flex flex-col justify-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-container/10 blur-[120px] rounded-full -mr-48 -mt-48"></div>
+<div class="relative z-10 max-w-6xl">
+<div class="inline-block mb-8 border-l-2 border-primary pl-4">
+<span class="font-mono text-xs uppercase tracking-[0.3em] text-primary">System Architecture Codex v1.0</span>
+</div>
+<h1 class="text-8xl md:text-[10rem] font-headline italic tracking-tighter leading-[0.85] text-white mb-12">
+                    Deep Tech <br/>Stack
+                </h1>
+<p class="max-w-2xl text-2xl font-light text-on-surface-variant leading-relaxed">
+                    Unifying <span class="text-primary italic">DFT</span>, <span class="text-secondary italic">ML</span>, and <span class="text-tertiary italic">MD</span> into a single <br/>memory-safe <span class="font-mono text-white bg-surface-container-high px-2 py-1">Rust kernel</span>.
+                </p>
+</div>
+</section>
+<!-- Architecture Diagram -->
+<section class="px-12 py-32 bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+<div class="md:col-span-4">
+<h2 class="text-4xl font-headline italic text-white mb-6">Structural Integrity</h2>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8">
+                        The Lupine Architecture is a vertical integration of compute layers, designed to eliminate latency between physical simulation and neural inference.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 text-xs font-mono uppercase tracking-widest text-slate-500">
+<span class="w-8 h-[1px] bg-outline-variant"></span>
+<span>Memory Safe Runtime</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono uppercase tracking-widest text-slate-500">
+<span class="w-8 h-[1px] bg-outline-variant"></span>
+<span>Asynchronous Scheduling</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-8 flex flex-col gap-4">
+<!-- Layer 04 -->
+<div class="glass-panel p-8 rounded-xl shadow-[0_20px_50px_rgba(85,101,212,0.1)] group hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-center">
+<div>
+<span class="font-mono text-[10px] text-primary tracking-tighter block mb-1">04 INTERFACE LAYER</span>
+<h3 class="text-2xl font-headline italic text-white">Web / CLI / API Endpoints</h3>
+</div>
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="hub">hub</span>
+</div>
+</div>
+<!-- Layer 03 -->
+<div class="glass-panel p-10 rounded-xl shadow-[0_25px_60px_rgba(93,217,208,0.1)] group hover:bg-surface-container-high transition-colors -ml-4">
+<div class="flex justify-between items-center">
+<div>
+<span class="font-mono text-[10px] text-secondary tracking-tighter block mb-1">03 INTELLIGENCE LAYER</span>
+<h3 class="text-3xl font-headline italic text-white">ML Potentials &amp; Neural Networks</h3>
+</div>
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="psychology">psychology</span>
+</div>
+</div>
+<!-- Layer 02 -->
+<div class="glass-panel p-12 rounded-xl shadow-[0_30px_70px_rgba(238,192,88,0.08)] group hover:bg-surface-container-high transition-colors -ml-8">
+<div class="flex justify-between items-center">
+<div>
+<span class="font-mono text-[10px] text-tertiary tracking-tighter block mb-1">02 COMPUTE LAYER</span>
+<h3 class="text-4xl font-headline italic text-white">WebGPU / CUDA Accelerated Kernels</h3>
+</div>
+<span class="material-symbols-outlined text-tertiary text-5xl" data-icon="memory">memory</span>
+</div>
+</div>
+<!-- Layer 01 -->
+<div class="glass-panel p-16 rounded-xl shadow-[0_40px_80px_rgba(255,255,255,0.03)] group hover:bg-surface-container-high transition-colors -ml-12 border-l-4 border-primary">
+<div class="flex justify-between items-center">
+<div>
+<span class="font-mono text-[10px] text-white tracking-tighter block mb-1">01 KERNEL LAYER</span>
+<h3 class="text-5xl font-headline italic text-white">Rust / WASM Core Runtime</h3>
+</div>
+<span class="material-symbols-outlined text-white text-6xl" data-icon="settings_input_component">settings_input_component</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Specs Matrix -->
+<section class="px-12 py-32 grid grid-cols-1 md:grid-cols-3 gap-0 border-y border-outline-variant/10">
+<div class="p-12 border-r border-outline-variant/10 flex flex-col gap-6 group hover:bg-surface-container-low transition-colors">
+<span class="font-mono text-[10px] uppercase tracking-widest text-primary">Efficiency</span>
+<h4 class="text-4xl font-headline italic text-white leading-tight">100% Zero-Cost Abstractions</h4>
+<p class="text-sm text-slate-500 font-body">Leveraging LLVM backends to ensure the highest hardware affinity without manual memory management.</p>
+</div>
+<div class="p-12 border-r border-outline-variant/10 flex flex-col gap-6 group hover:bg-surface-container-low transition-colors">
+<span class="font-mono text-[10px] uppercase tracking-widest text-secondary">Throughput</span>
+<h4 class="text-4xl font-headline italic text-white leading-tight">10M+ Atoms <br/>@ 60fps</h4>
+<p class="text-sm text-slate-500 font-body">Real-time visualization of atomic trajectories using massively parallelized WebGPU compute shaders.</p>
+</div>
+<div class="p-12 flex flex-col gap-6 group hover:bg-surface-container-low transition-colors">
+<span class="font-mono text-[10px] uppercase tracking-widest text-tertiary">Precision</span>
+<h4 class="text-4xl font-headline italic text-white leading-tight">&lt; 1meV Sub-meV Accuracy</h4>
+<p class="text-sm text-slate-500 font-body">Refined hybrid DFT potentials validated against experimental synchrotron benchmarks.</p>
+</div>
+</section>
+<!-- Technical Terminal -->
+<section class="px-12 py-32 flex justify-center">
+<div class="w-full max-w-5xl rounded-xl overflow-hidden bg-surface-container-lowest shadow-2xl">
+<div class="bg-surface-container-high px-6 py-4 flex items-center justify-between border-b border-outline-variant/15">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-error"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+</div>
+<div class="text-xs font-mono text-slate-400">src/kernel/synthesis.rs — 64-bit</div>
+<div></div>
+</div>
+<div class="p-8 font-mono text-sm md:text-base leading-relaxed overflow-x-auto">
+<pre class="text-slate-300"><span class="text-primary italic">// Lupine Materials Core Synthesis Engine</span>
+<span class="text-secondary">use</span> lupine_core::{Atom, Lattice, Energy};
+
+<span class="text-tertiary">#[kernel_compute]</span>
+<span class="text-secondary">pub fn</span> <span class="text-white">synthesize_structure</span>(lattice: Lattice) -&gt; Result&lt;Energy, SynthesisError&gt; {
+    <span class="text-slate-500">/* Initialize quantum ledger for state tracking */</span>
+    <span class="text-secondary">let mut</span> state = QuantumLedger::<span class="text-secondary">new</span>(lattice.precision());
+    
+    <span class="text-secondary">for</span> atom <span class="text-secondary">in</span> lattice.atoms() {
+        state.apply_potential(atom.id, MLPotential::DeepForceV4);
+        state.validate_stability()?;
+    }
+
+    <span class="text-primary italic">// Execute memory-safe convergence</span>
+    <span class="text-secondary">match</span> state.converge_asynchronous() {
+        Ok(energy) =&gt; {
+            <span class="text-secondary">log_event!</span>(<span class="text-tertiary">"Lattice convergence successful: {:?}"</span>, energy);
+            Ok(energy)
+        },
+        Err(e) =&gt; <span class="text-secondary">return</span> Err(SynthesisError::Divergence(e))
+    }
+}</pre>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0d0e15] w-full py-16 px-12 border-t border-[#454653]/10">
+<div class="flex flex-col md:flex-row justify-between items-center w-full max-w-[1920px] mx-auto">
+<div class="mb-8 md:mb-0">
+<p class="font-mono text-[10px] tracking-widest text-slate-500 JetBrains Mono uppercase">
+                    © 2024 Lupine Materials Science. Engineered for Quantum Precision.
+                </p>
+</div>
+<div class="flex gap-12">
+<a class="font-mono text-[10px] tracking-widest text-slate-600 hover:text-[#5565d4] transition-opacity uppercase" href="#">Privacy Protocol</a>
+<a class="font-mono text-[10px] tracking-widest text-slate-600 hover:text-[#5565d4] transition-opacity uppercase" href="#">System Architecture</a>
+<a class="font-mono text-[10px] tracking-widest text-slate-600 hover:text-[#5565d4] transition-opacity uppercase" href="#">Research Archive</a>
+</div>
+</div>
+</footer>
+</body></html>
