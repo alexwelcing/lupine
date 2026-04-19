@@ -4,7 +4,11 @@ from ase.cluster import Icosahedron
 from ase.io import write
 from urllib.request import urlretrieve
 
-gallery_dir = r"c:\Users\alexw\Downloads\shed\glim\atlas\atlas-view\apps\web\public\gallery"
+import os
+
+# Automatically resolve relative to current script
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+gallery_dir = os.path.join(BASE_DIR, "atlas", "atlas-view", "apps", "web", "public", "gallery")
 os.makedirs(gallery_dir, exist_ok=True)
 
 # 1. Alanine Dipeptide (Fetch REAL XYZ from PubChem)

@@ -1,6 +1,7 @@
 const fs = require('fs');
 
-const galleryPath = 'c:/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages/ui/src/Gallery.tsx';
+const path = require('path');
+const galleryPath = path.join(__dirname, 'atlas', 'atlas-view', 'packages', 'ui', 'src', 'Gallery.tsx');
 const content = fs.readFileSync(galleryPath, 'utf8');
 
 const startIdx = content.indexOf('const EXAMPLES');
@@ -34,7 +35,8 @@ try {
       }
     });
 
-    fs.writeFileSync('c:/Users/alexw/Downloads/shed/glim/atlas/atlas-view/packages/ui/src/gallery-data.json', JSON.stringify(EXAMPLES, null, 2));
+    const outPath = path.join(__dirname, 'atlas', 'atlas-view', 'packages', 'ui', 'src', 'gallery-data.json');
+    fs.writeFileSync(outPath, JSON.stringify(EXAMPLES, null, 2));
     console.log(`Successfully extracted ${EXAMPLES.length} examples to gallery-data.json`);
 } catch (e) {
     console.error('Extraction failed:', e);

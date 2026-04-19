@@ -39,18 +39,15 @@ jobs:
           # We recommend using Workload Identity Federation for security
           workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
           service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
-          
-          # If you prefer using a standard service account key instead, uncomment the line below and remove the two lines above:
-          # credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: Deploy to Cloud Run
         id: deploy
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
           source: 'lupine-site'
-          service: 'lupine-site'
-          region: 'us-central1'
-          project_id: 'shed-489901'
+          service: '${{ secrets.GCP_SERVICE_NAME_SITE }}'
+          region: '${{ secrets.GCP_REGION }}'
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
           flags: '--allow-unauthenticated'
 
       - name: Show output
