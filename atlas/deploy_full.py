@@ -365,7 +365,15 @@ def build_web_viewer():
     if os.path.exists(DEPLOY_WEB):
         shutil.rmtree(DEPLOY_WEB)
     shutil.copytree(WEB_DIST, DEPLOY_WEB)
-    print("  ✅ glimPSE built and copied")
+    
+    # Overwrite the root public index and assets to ensure it serves at the apex domain
+    shutil.copy2(os.path.join(WEB_DIST, "index.html"), os.path.join(DEPLOY_PUBLIC, "index.html"))
+    dest_assets = os.path.join(DEPLOY_PUBLIC, "assets")
+    if os.path.exists(dest_assets):
+        shutil.rmtree(dest_assets)
+    shutil.copytree(os.path.join(WEB_DIST, "assets"), dest_assets)
+    
+    print("  ✅ glimPSE built and copied to root")
     
     trailer_src = os.path.join(ATLAS_VIEW_DIR, "apps", "remotion-trailer", "out", "trailer.mp4")
     trailer_dst = os.path.join(DEPLOY_PUBLIC, "trailer.mp4")
