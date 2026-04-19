@@ -100,6 +100,7 @@ export function Gallery() {
           size: blob.size,
           trajectory: result.trajectory,
           thermo: result.thermo ?? null,
+          sourceUrl: url,
         });
       }
     } catch (err: any) {

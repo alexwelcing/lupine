@@ -75,6 +75,15 @@ const IconClose = () => (
     <path d="M18 6L6 18M6 6l12 12" />
   </svg>
 );
+const IconShare = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="18" cy="5" r="3" />
+    <circle cx="6" cy="12" r="3" />
+    <circle cx="18" cy="19" r="3" />
+    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+  </svg>
+);
 
 // ─── Friendly Toolbar Icons ───────────────────────────────────────────
 const IconStyle = () => (
@@ -330,6 +339,7 @@ export default function App() {
               size: blob.size,
               trajectory: result.trajectory,
               thermo: result.thermo ?? null,
+              sourceUrl: loadUrl,
             });
           } else {
             throw new Error('No trajectory data found');
@@ -434,6 +444,30 @@ export default function App() {
 
         {/* Simple top-right actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {file?.sourceUrl && (
+            <button
+              onClick={() => {
+                const s = useStore.getState().encodeToURL();
+                const link = `${window.location.origin}${window.location.pathname}?load=${encodeURIComponent(file.sourceUrl!)}&s=${encodeURIComponent(s)}`;
+                navigator.clipboard.writeText(link);
+                alert('View copied to clipboard! Anyone with this link can view the exact state and orientation.');
+              }}
+              title="Copy shareable link"
+              style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '8px 12px',
+                fontSize: 13, fontWeight: 500,
+                color: 'var(--text-primary)',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-default)',
+                borderRadius: 'var(--radius-sm)',
+                cursor: 'pointer',
+              }}
+            >
+              <IconShare />
+              Share
+            </button>
+          )}
           {!file && (
             <button
               onClick={async () => {
@@ -502,6 +536,14 @@ export default function App() {
               rotateSpeed={0.5}
               panSpeed={0.4}
               zoomSpeed={0.8}
+              onEnd={(e) => {
+                if (e?.target?.object && e?.target?.target) {
+                  useStore.getState().setCameraState(
+                    e.target.object.position.toArray(),
+                    e.target.target.toArray()
+                  );
+                }
+              }}
             />
 
             {currentFrame && (
@@ -650,7 +692,7 @@ export default function App() {
           {file && !activePanel && (
             <div style={{
               position: 'absolute',
-              bottom: isMobile ? 320 : 84, // Push above MobileHUD on mobile
+              bottom: isMobile ? 'max(24px, env(safe-area-inset-bottom))' : 84, // Push above Timeline on desktop
               left: 0,
               right: 0,
               display: 'flex',
