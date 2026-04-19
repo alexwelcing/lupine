@@ -15,6 +15,9 @@ jobs:
       contents: 'read'
       id-token: 'write' # Required for Workload Identity Federation
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -52,6 +55,21 @@ jobs:
         with:
           workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
           service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Validate Secrets Pre-flight
+        run: |
+          if [ -z "${{ secrets.GCP_SERVICE_NAME_VIEWER }}" ]; then
+            echo "::error::MISSING SECRET: GCP_SERVICE_NAME_VIEWER is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_PROJECT_ID }}" ]; then
+            echo "::error::MISSING SECRET: GCP_PROJECT_ID is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_REGION }}" ]; then
+            echo "::error::MISSING SECRET: GCP_REGION is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
 
       - name: Deploy to Cloud Run
         id: deploy
