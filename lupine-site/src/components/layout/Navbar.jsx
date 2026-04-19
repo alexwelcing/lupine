@@ -30,6 +30,7 @@ export default function Navbar() {
         <Link to="/platform-architecture">Platform</Link>
         <Link to="/team">Team</Link>
         <Link to="/docs">Docs</Link>
+        <a href="https://lupinematerials.science" target="_blank" rel="noopener noreferrer">Viewer</a>
         <Link to="/pricing" className="nav-cta">Early Access</Link>
       </div>
     </nav>
