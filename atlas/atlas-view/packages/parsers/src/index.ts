@@ -82,6 +82,9 @@ async function readFileAsText(file: File): Promise<string> {
 export async function parseDumpFile(file: File): Promise<Trajectory> {
   const text = await readFileAsText(file);
   const result = await send('parse-dump', text);
+  if (!result.frames || result.frames.length === 0) {
+    throw new Error('No frames parsed; possibly wrong format.');
+  }
 
   const frames: Frame[] = result.frames.map((f: any) => ({
     timestep: f.timestep,
@@ -126,6 +129,9 @@ export async function parseDumpFile(file: File): Promise<Trajectory> {
 export async function parseLogFile(file: File): Promise<ThermoData> {
   const text = await readFileAsText(file);
   const result = await send('parse-log', text);
+  if (!result.runs || result.runs.length === 0) {
+    throw new Error('No thermo runs parsed; possibly wrong format.');
+  }
 
   return {
     numRuns: result.runs.length,
@@ -160,6 +166,9 @@ export function detectFileType(filename: string): 'dump' | 'log' | 'data' | 'xyz
 export async function parseXyzFile(file: File): Promise<Trajectory> {
   const text = await readFileAsText(file);
   const result = await send('parse-xyz', text);
+  if (!result.frames || result.frames.length === 0) {
+    throw new Error('No frames parsed; possibly wrong format.');
+  }
 
   const frames: Frame[] = result.frames.map((f: any) => ({
     timestep: f.timestep,
@@ -203,6 +212,9 @@ export async function parseXyzFile(file: File): Promise<Trajectory> {
 export async function parseDataFile(file: File): Promise<Trajectory> {
   const text = await readFileAsText(file);
   const result = await send('parse-data', text);
+  if (!result.frames || result.frames.length === 0) {
+    throw new Error('No frames parsed; possibly wrong format.');
+  }
 
   const frames: Frame[] = result.frames.map((f: any) => ({
     timestep: f.timestep,

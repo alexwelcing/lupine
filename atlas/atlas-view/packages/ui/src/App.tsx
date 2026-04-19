@@ -656,29 +656,42 @@ export default function App() {
           )}
 
           {/* Floating toolbar */}
-          {file && !activePanel && !isMobile && (
+          {file && !activePanel && (
             <div style={{
               position: 'absolute',
-              bottom: 84,
-              left: '50%',
-              transform: 'translateX(-50%)',
+              bottom: isMobile ? 320 : 84, // Push above MobileHUD on mobile
+              left: 0,
+              right: 0,
               display: 'flex',
-              gap: 8,
-              padding: 8,
-              background: 'rgba(0,0,0,0.5)',
-              borderRadius: 16,
-              backdropFilter: 'blur(12px)',
+              justifyContent: 'center',
+              pointerEvents: 'none',
               zIndex: 150,
+              padding: '0 16px',
             }}>
-              <ToolButton icon={<IconStyle />} label="Style" active={activePanel === 'style'} onClick={() => setActivePanel('style')} />
-              <ToolButton icon={<IconAtoms />} label="Atoms" active={activePanel === 'atoms'} onClick={() => setActivePanel('atoms')} />
-              <ToolButton icon={<IconEffects />} label="Effects" active={activePanel === 'effects'} onClick={() => setActivePanel('effects')} />
-              <ToolButton icon={<IconMeasure />} label="Measure" active={activePanel === 'measurement'} onClick={() => setActivePanel('measurement')} />
-              <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export'} onClick={() => setActivePanel('export')} />
-              <div style={{ width: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />
-              <ToolButton icon={<IconReset />} label="Reset" onClick={() => {
-                useStore.getState().reset();
-              }} />
+              <div style={{
+                pointerEvents: 'auto',
+                display: 'flex',
+                gap: 8,
+                padding: 8,
+                background: 'rgba(0,0,0,0.5)',
+                borderRadius: 16,
+                backdropFilter: 'blur(12px)',
+                maxWidth: '100%',
+                overflowX: 'auto',
+                WebkitOverflowScrolling: 'touch',
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none'
+              }}>
+                <ToolButton icon={<IconStyle />} label="Style" active={activePanel === 'style'} onClick={() => setActivePanel('style')} />
+                <ToolButton icon={<IconAtoms />} label="Atoms" active={activePanel === 'atoms'} onClick={() => setActivePanel('atoms')} />
+                <ToolButton icon={<IconEffects />} label="Effects" active={activePanel === 'effects'} onClick={() => setActivePanel('effects')} />
+                <ToolButton icon={<IconMeasure />} label="Measure" active={activePanel === 'measurement'} onClick={() => setActivePanel('measurement')} />
+                <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export'} onClick={() => setActivePanel('export')} />
+                <div style={{ width: 1, minWidth: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />
+                <ToolButton icon={<IconReset />} label="Reset" onClick={() => {
+                  useStore.getState().reset();
+                }} />
+              </div>
             </div>
           )}
 
@@ -729,7 +742,7 @@ export default function App() {
             top: 0,
             right: 0,
             bottom: 0,
-            width: 320,
+            width: isMobile ? '100%' : 320,
             borderLeft: '1px solid var(--border-subtle)',
             background: 'var(--bg-surface)',
             overflowY: 'auto',
@@ -881,6 +894,7 @@ function ToolButton({ icon, label, active, onClick }: {
         transition: 'all 150ms ease-out',
         fontSize: 13,
         fontWeight: 500,
+        flexShrink: 0,
       }}
       onMouseEnter={(e) => {
         if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
