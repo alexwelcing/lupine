@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -829,21 +829,35 @@
             border-bottom: 1px solid var(--slate-700);
         }
 
-        .comp-table th:last-child {
-            color: var(--lupine-300);
-            background: rgba(46, 58, 135, 0.15);
+        .comp-table th:nth-child(3) {
+            color: var(--slate-100);
+            background: linear-gradient(180deg, rgba(85, 101, 212, 0.25) 0%, rgba(46, 58, 135, 0.15) 100%);
+            border-left: 1px solid rgba(123, 138, 224, 0.3);
+            border-right: 1px solid rgba(123, 138, 224, 0.3);
+            border-top: 1px solid rgba(123, 138, 224, 0.3);
+            text-align: center;
+            font-size: 13px;
         }
 
         .comp-table td {
-            padding: 14px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             color: var(--slate-400);
         }
 
-        .comp-table td:last-child {
+        .comp-table td:nth-child(3) {
             color: var(--lupine-200);
             font-weight: 600;
-            background: rgba(46, 58, 135, 0.06);
+            background: rgba(46, 58, 135, 0.08);
+            border-left: 1px solid rgba(123, 138, 224, 0.2);
+            border-right: 1px solid rgba(123, 138, 224, 0.2);
+            text-align: center;
+            font-size: 14px;
+            box-shadow: 0 0 16px rgba(46, 58, 135, 0.1) inset;
+        }
+
+        .comp-table tbody tr:last-child td:nth-child(3) {
+            border-bottom: 1px solid rgba(123, 138, 224, 0.3);
         }
 
         .comp-table tbody tr:hover {
@@ -1502,67 +1516,60 @@
             </div>
         </div>
 
-        <!-- Competitive table -->
+        <!-- Enhancement table -->
         <div class="comp-table-wrapper reveal" style="margin-top:80px;">
             <table class="comp-table">
                 <thead>
                     <tr>
-                        <th>Capability</th>
-                        <th>VASP</th>
-                        <th>LAMMPS</th>
-                        <th>Quantum ESPRESSO</th>
-                        <th>Lupine</th>
+                        <th style="width:20%">Workflow Step</th>
+                        <th style="width:20%; text-align:center;">VASP / QE<br><span style="font-size:9px;color:var(--slate-500);font-weight:400;letter-spacing:0.1em;display:block;margin-top:4px;">QUANTUM ENGINES</span></th>
+                        <th style="width:20%;">Lupine Platform<br><span style="font-size:9px;color:var(--accent-cyan);font-weight:700;letter-spacing:0.1em;display:block;margin-top:4px;">THE INTEGRATION LAYER</span></th>
+                        <th style="width:20%; text-align:center;">LAMMPS<br><span style="font-size:9px;color:var(--slate-500);font-weight:400;letter-spacing:0.1em;display:block;margin-top:4px;">CLASSICAL ENGINES</span></th>
+                        <th style="width:20%; text-align:center;">The Enhancement</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Plane-wave DFT</td>
-                        <td>Yes</td>
-                        <td>—</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
+                        <td style="text-align:center;">Foundation</td>
+                        <td>GPU-Accelerated Parsing</td>
+                        <td style="text-align:center;">—</td>
+                        <td style="text-align:center; color:var(--lupine-300);">10x Faster Ingestion</td>
                     </tr>
                     <tr>
-                        <td>Classical MD</td>
-                        <td>—</td>
-                        <td>Yes</td>
-                        <td>—</td>
-                        <td>Yes</td>
+                        <td>Molecular Dynamics</td>
+                        <td style="text-align:center;">—</td>
+                        <td>Unified Graph API</td>
+                        <td style="text-align:center;">Foundation</td>
+                        <td style="text-align:center; color:var(--lupine-300);">Zero-scripting Execution</td>
                     </tr>
                     <tr>
-                        <td>ML potentials (native)</td>
-                        <td>—</td>
-                        <td>Plugin</td>
-                        <td>—</td>
-                        <td>Yes, Core</td>
+                        <td>ML Potentials</td>
+                        <td style="text-align:center;">External Scripts</td>
+                        <td>Native Framework Bridges</td>
+                        <td style="text-align:center;">Plugins</td>
+                        <td style="text-align:center; color:var(--lupine-300);">Immediate Topology</td>
                     </tr>
                     <tr>
-                        <td>DFT / ML / MD pipeline</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>Yes, one command</td>
+                        <td>Data Pipeline</td>
+                        <td style="text-align:center;">Disconnected</td>
+                        <td>The Connective Tissue</td>
+                        <td style="text-align:center;">Disconnected</td>
+                        <td style="text-align:center; color:var(--lupine-300);">One-Command Flow</td>
                     </tr>
                     <tr>
-                        <td>Differentiable simulation</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>Yes</td>
+                        <td>Visualization</td>
+                        <td style="text-align:center;">—</td>
+                        <td>Real-time WebGPU</td>
+                        <td style="text-align:center;">External Export</td>
+                        <td style="text-align:center; color:var(--lupine-300);">Publish-ready Viewer</td>
                     </tr>
                     <tr>
-                        <td>License</td>
-                        <td>Commercial</td>
-                        <td>GPL</td>
-                        <td>GPL</td>
-                        <td>Apache 2.0</td>
-                    </tr>
-                    <tr>
-                        <td>Language</td>
-                        <td>Fortran</td>
-                        <td>C++</td>
-                        <td>Fortran</td>
-                        <td>Rust</td>
+                        <td>Licensing & Scale</td>
+                        <td style="text-align:center;">Proprietary</td>
+                        <td>Apache 2.0 Core</td>
+                        <td style="text-align:center;">GPL</td>
+                        <td style="text-align:center; color:var(--lupine-300);">Unrestricted Scaling</td>
                     </tr>
                 </tbody>
             </table>
