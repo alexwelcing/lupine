@@ -180,13 +180,18 @@ def build_web():
     if os.path.exists(DEPLOY_WEB): shutil.rmtree(DEPLOY_WEB)
     shutil.copytree(WEB_DIST, DEPLOY_WEB)
     
-    # OVERWRITE the root public index and assets so it serves nicely at the apex domain
-    shutil.copy2(os.path.join(WEB_DIST, "index.html"), os.path.join(DEPLOY_PUBLIC, "index.html"))
-    dest_assets = os.path.join(DEPLOY_PUBLIC, "assets")
-    if os.path.exists(dest_assets):
-        shutil.rmtree(dest_assets)
-    shutil.copytree(os.path.join(WEB_DIST, "assets"), dest_assets)
-    print("  OK web viewer built and deployed to root")
+    # OVERWRITE the root public deployment so it serves nicely at the apex domain
+    # We must copy all contents including gallery/, models, and raw sample files
+    for item in os.listdir(WEB_DIST):
+        src_path = os.path.join(WEB_DIST, item)
+        dst_path = os.path.join(DEPLOY_PUBLIC, item)
+        if os.path.isdir(src_path):
+            if os.path.exists(dst_path):
+                shutil.rmtree(dst_path)
+            shutil.copytree(src_path, dst_path)
+        else:
+            shutil.copy2(src_path, dst_path)
+    print("  OK web viewer built and deployed to root (including all assets and data)")
 
 def deploy_and_verify():
     section("Step 3/3: Deploy + Verify")
