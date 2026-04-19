@@ -84,8 +84,9 @@ export function Gallery() {
     useStore.getState().setLoading(true, 0);
     try {
       const base = (import.meta as any).env?.BASE_URL || '/';
-      // example.file contains the correct path relative to public/
-      const url = `${base}${example.file}`.replace(/\/\/+/g, '/');
+      const cleanFile = example.file.replace(/^\/+/, '');
+      const cleanBase = base.endsWith('/') ? base : `${base}/`;
+      const url = `${cleanBase}${cleanFile}`;
 
       const resp = await fetch(url);
       if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
