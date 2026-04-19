@@ -6,24 +6,7 @@ const Platform = () => {
     <>
       
 
-<nav className="fixed top-0 w-full z-50 bg-[#12131a]/40 backdrop-blur-xl bg-gradient-to-b from-[#12131a] to-transparent shadow-[0_40px_80px_rgba(85,101,212,0.06)]">
-<div className="flex justify-between items-center w-full px-12 py-6">
-<div className="flex items-center gap-8">
-<span className="text-2xl font-serif italic text-white Newsreader">Lupine Materials</span>
-<div className="hidden md:flex gap-6 items-center">
-<a className="font-sans text-sm uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Architecture</a>
-<a className="font-sans text-sm uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Quantum Logic</a>
-<a className="text-[#bcc3ff] border-b border-[#5565d4]/50 pb-1 font-sans text-sm uppercase tracking-widest" href="#">Specifications</a>
-<a className="font-sans text-sm uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Terminal</a>
-</div>
-</div>
-<div className="flex items-center gap-6">
-<button className="text-[#bcc3ff] hover:text-white transition-all"><span className="material-symbols-outlined" data-icon="terminal">terminal</span></button>
-<button className="text-[#bcc3ff] hover:text-white transition-all"><span className="material-symbols-outlined" data-icon="settings">settings</span></button>
-<button className="px-6 py-2 bg-gradient-to-br from-primary to-primary-container text-on-primary font-label text-xs uppercase tracking-tighter font-bold rounded-lg active:scale-[0.98] transition-all">Initialize Access</button>
-</div>
-</div>
-</nav>
+
 <main className="pt-32">
 
 <section className="px-12 py-24 min-h-[716px] flex flex-col justify-center relative overflow-hidden">
@@ -135,46 +118,33 @@ const Platform = () => {
 </div>
 <div className="p-8 font-mono text-sm md:text-base leading-relaxed overflow-x-auto">
 <pre className="text-slate-300"><span className="text-primary italic">// Lupine Materials Core Synthesis Engine</span>
-<span className="text-secondary">use</span> lupine_core::{Atom, Lattice, Energy};
+<span className="text-secondary">use</span> lupine_core::{"::"}{"{"}Atom, Lattice, Energy{"}"};
 
 <span className="text-tertiary">#[kernel_compute]</span>
-<span className="text-secondary">pub fn</span> <span className="text-white">synthesize_structure</span>(lattice: Lattice) -&gt; Result&lt;Energy, SynthesisError&gt; {
+<span className="text-secondary">pub fn</span> <span className="text-white">synthesize_structure</span>(lattice: Lattice) -&gt; Result&lt;Energy, SynthesisError&gt; {"{"}
     <span className="text-slate-500">/* Initialize quantum ledger for state tracking */</span>
-    <span className="text-secondary">let mut</span> state = QuantumLedger::<span className="text-secondary">new</span>(lattice.precision());
+    <span className="text-secondary">let mut</span> state = QuantumLedger::{"::"}<span className="text-secondary">new</span>(lattice.precision());
     
-    <span className="text-secondary">for</span> atom <span className="text-secondary">in</span> lattice.atoms() {
-        state.apply_potential(atom.id, MLPotential::DeepForceV4);
+    <span className="text-secondary">for</span> atom <span className="text-secondary">in</span> lattice.atoms() {"{"}
+        state.apply_potential(atom.id, MLPotential::{"::"}DeepForceV4);
         state.validate_stability()?;
-    }
+    {"}"}
 
     <span className="text-primary italic">// Execute memory-safe convergence</span>
-    <span className="text-secondary">match</span> state.converge_asynchronous() {
-        Ok(energy) =&gt; {
-            <span className="text-secondary">log_event!</span>(<span className="text-tertiary">"Lattice convergence successful: {:?}"</span>, energy);
+    <span className="text-secondary">match</span> state.converge_asynchronous() {"{"}
+        Ok(energy) =&gt; {"{"}
+            <span className="text-secondary">log_event!</span>(<span className="text-tertiary">{"\"Lattice convergence successful: {:?}\""}</span>, energy);
             Ok(energy)
-        },
-        Err(e) =&gt; <span className="text-secondary">return</span> Err(SynthesisError::Divergence(e))
-    }
-}</pre>
+        {"}"},
+        Err(e) =&gt; <span className="text-secondary">return</span> Err(SynthesisError::{"::"}Divergence(e))
+    {"}"}
+{"}"}</pre>
 </div>
 </div>
 </section>
 </main>
 
-<footer className="bg-[#0d0e15] w-full py-16 px-12 border-t border-[#454653]/10">
-<div className="flex flex-col md:flex-row justify-between items-center w-full max-w-[1920px] mx-auto">
-<div className="mb-8 md:mb-0">
-<p className="font-mono text-[10px] tracking-widest text-slate-500 JetBrains Mono uppercase">
-                    © 2024 Lupine Materials Science. Engineered for Quantum Precision.
-                </p>
-</div>
-<div className="flex gap-12">
-<a className="font-mono text-[10px] tracking-widest text-slate-600 hover:text-[#5565d4] transition-opacity uppercase" href="#">Privacy Protocol</a>
-<a className="font-mono text-[10px] tracking-widest text-slate-600 hover:text-[#5565d4] transition-opacity uppercase" href="#">System Architecture</a>
-<a className="font-mono text-[10px] tracking-widest text-slate-600 hover:text-[#5565d4] transition-opacity uppercase" href="#">Research Archive</a>
-</div>
-</div>
-</footer>
+
 
     </>
   );

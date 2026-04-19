@@ -6,16 +6,7 @@ const Docs = () => {
     <>
       
 
-<header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-12 py-4 bg-[#12131a]/60 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(188,195,255,0.05)] bg-gradient-to-b from-[#12131a] to-transparent">
-<div className="font-serif italic text-2xl text-[#e3e1ec]">LUPINE MATERIALS</div>
-<nav className="hidden md:flex items-center gap-8">
-<a className="text-[#e3e1ec]/70 hover:text-[#e3e1ec] transition-colors" href="#">Solutions</a>
-<a className="text-[#e3e1ec]/70 hover:text-[#e3e1ec] transition-colors" href="#">Simulation</a>
-<a className="text-[#bcc3ff] font-medium border-b border-[#bcc3ff] pb-1" href="#">Documentation</a>
-<a className="text-[#e3e1ec]/70 hover:text-[#e3e1ec] transition-colors" href="#">Pricing</a>
-</nav>
-<button className="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2 font-mono text-xs uppercase tracking-widest rounded-sm hover:opacity-90 transition-all">Launch Console</button>
-</header>
+
 
 <aside className="fixed left-0 top-0 h-full pt-24 flex flex-col z-40 bg-[#12131a] w-72">
 <div className="px-6 mb-8">
@@ -101,11 +92,11 @@ const Docs = () => {
 <p className="text-on-surface-variant mb-6 leading-relaxed">Define covalent radii and dynamic bond detection parameters. The engine computes neighbors in real-time.</p>
 </div>
 <div className="glass-panel p-6 rounded-lg ghost-border-top">
-<pre className="font-mono text-xs text-primary/80 overflow-x-auto whitespace-pre-wrap"><code>{
+<pre className="font-mono text-xs text-primary/80 overflow-x-auto whitespace-pre-wrap"><code>{`{
   "bond_threshold": 2.45,
   "renderer": "quantum_field",
   "occlusion": true
-}</code></pre>
+}`}</code></pre>
 </div>
 </div>
 </div>
@@ -143,14 +134,14 @@ const Docs = () => {
 <div className="w-2 h-2 rounded-full bg-secondary/40"></div>
 <span className="font-mono text-[10px] text-outline ml-4 uppercase tracking-widest">POST /v1/simulation/initialize</span>
 </div>
-<pre className="font-mono text-sm text-primary-fixed-dim leading-relaxed"><code>curl -X POST "https://api.lupine.dev/v1/simulation" \
-  -H "Authorization: Bearer $LUPINE_TOKEN" \
-  -H "Content-Type: application/json" \
+<pre className="font-mono text-sm text-primary-fixed-dim leading-relaxed"><code>{`curl -X POST "https://api.lupine.dev/v1/simulation" \\
+  -H "Authorization: Bearer $LUPINE_TOKEN" \\
+  -H "Content-Type: application/json" \\
   -d '{
     "element_id": "MoS2",
     "layer_count": 3,
     "strain_tensor": [0.01, 0, 0, 0, 0.01, 0, 0, 0, 0]
-  }'</code></pre>
+  }'`}</code></pre>
 </div>
 </div>
 </section>
@@ -252,17 +243,7 @@ const Docs = () => {
 </section>
 </main>
 
-<footer className="w-full py-12 px-12 flex justify-between items-center border-t border-[#e3e1ec]/10 bg-[#12131a]">
-<div className="font-mono text-[10px] tracking-[0.2em] text-[#e3e1ec]/40 uppercase">
-            © 2024 LUPINE MATERIALS SCIENCE. THE QUANTUM LEDGER.
-        </div>
-<div className="flex gap-8">
-<a className="font-mono text-[10px] tracking-[0.2em] text-[#e3e1ec]/40 hover:text-[#bcc3ff] transition-colors" href="#">Terms of Service</a>
-<a className="font-mono text-[10px] tracking-[0.2em] text-[#e3e1ec]/40 hover:text-[#bcc3ff] transition-colors" href="#">Privacy Protocol</a>
-<a className="font-mono text-[10px] tracking-[0.2em] text-[#e3e1ec]/40 hover:text-[#bcc3ff] transition-colors" href="#">Whitepapers</a>
-<a className="font-mono text-[10px] tracking-[0.2em] text-[#e3e1ec]/40 hover:text-[#bcc3ff] transition-colors" href="#">Global Support</a>
-</div>
-</footer>
+
 
     </>
   );
