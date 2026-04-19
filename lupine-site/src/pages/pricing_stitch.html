@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Infrastructure &amp; Licensing - Lupine Materials Science</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#593b68",
+                    "on-surface": "#1d1b19",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#e7e1de",
+                    "surface-container": "#f2ede9",
+                    "tertiary-fixed": "#f5d9ff",
+                    "inverse-surface": "#32302e",
+                    "on-background": "#1d1b19",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#b5c4ff",
+                    "on-tertiary-fixed": "#2a0f3a",
+                    "surface": "#fef8f5",
+                    "background": "#fef8f5",
+                    "surface-variant": "#e7e1de",
+                    "secondary-fixed": "#ceecb9",
+                    "primary-fixed": "#dce1ff",
+                    "outline-variant": "#c5c6d2",
+                    "inverse-on-surface": "#f5f0ec",
+                    "on-secondary-container": "#526b43",
+                    "on-surface-variant": "#444650",
+                    "on-secondary-fixed-variant": "#354d28",
+                    "primary-fixed-dim": "#b5c4ff",
+                    "surface-container-low": "#f8f2ef",
+                    "secondary-fixed-dim": "#b2cf9e",
+                    "surface-container-high": "#ede7e4",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#0a2002",
+                    "on-tertiary-container": "#3a1f4a",
+                    "secondary": "#4c653d",
+                    "on-primary-container": "#0c2665",
+                    "tertiary-container": "#a885b7",
+                    "on-primary-fixed": "#00164d",
+                    "surface-tint": "#475b9c",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#ceecb9",
+                    "surface-bright": "#fef8f5",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#dfb9ef",
+                    "outline": "#757681",
+                    "tertiary": "#725381",
+                    "surface-dim": "#ded9d6",
+                    "primary": "#475b9c",
+                    "primary-container": "#7b8fd4",
+                    "on-primary-fixed-variant": "#2e4383"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Newsreader"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label": [
+                            "Space Grotesk"
+                    ]
+            }
+        },
+        },
+      }
+    </script>
+<style>
+        /* Signature Texture */
+        .bg-grain {
+            position: relative;
+        }
+        .bg-grain::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* Botanical Shadow */
+        .shadow-botanical {
+            box-shadow: 0 8px 32px rgba(44,42,40,0.04);
+        }
+
+        /* Ghost Border */
+        .border-ghost {
+            border: 1px solid rgba(197, 198, 210, 0.15); /* outline-variant at 15% */
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased bg-grain selection:bg-primary-container selection:text-on-primary-container relative">
+<!-- TopNavBar component translated from JSON -->
+<nav class="docked full-width top-0 sticky z-50 flex justify-between items-center px-12 py-6 w-full bg-[#fef8f5]/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(44,42,40,0.04)] tonal shift via bg-[#f4ebe6] 3% opacity grain overlay border-b-0">
+<div class="text-2xl font-serif italic text-[#475b9c]">
+            Lupine Materials
+        </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-[#475b9c] font-bold border-b border-[#475b9c]/30 pb-0.5 hover:text-[#475b9c] transition-colors duration-300 scale-95 active:opacity-80 transition-transform" href="#">Explorer</a>
+<a class="text-[#2C2A28]/60 font-sans uppercase tracking-widest text-[11px] hover:text-[#475b9c] transition-colors duration-300 scale-95 active:opacity-80 transition-transform" href="#">Research</a>
+<a class="text-[#2C2A28]/60 font-sans uppercase tracking-widest text-[11px] hover:text-[#475b9c] transition-colors duration-300 scale-95 active:opacity-80 transition-transform" href="#">Enterprise</a>
+<a class="text-[#2C2A28]/60 font-sans uppercase tracking-widest text-[11px] hover:text-[#475b9c] transition-colors duration-300 scale-95 active:opacity-80 transition-transform" href="#">Manuscripts</a>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search Bar placeholder -->
+<button class="text-primary hover:text-primary-container transition-colors p-2">
+<span class="material-symbols-outlined" data-icon="search" style="font-variation-settings: 'FILL' 0;">search</span>
+</button>
+<a class="font-label text-sm text-[#475b9c] hover:bg-primary/5 px-4 py-2 rounded-DEFAULT transition-colors" href="#">Sign In</a>
+</div>
+</nav>
+<main class="max-w-screen-2xl mx-auto px-6 md:px-12 pt-24 pb-32">
+<!-- Header -->
+<header class="mb-24 md:w-2/3 ml-auto text-right md:pr-12">
+<h1 class="font-headline text-5xl md:text-7xl italic tracking-tight text-primary mb-6 leading-tight">Infrastructure <br/> &amp; Licensing</h1>
+<p class="font-body text-lg text-on-surface-variant max-w-xl ml-auto">Establish your research parameters. Our licensing tiers are calibrated to support computational material science at every scale of discovery.</p>
+</header>
+<!-- Pricing Tiers (Bento/Asymmetrical) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-32 relative">
+<!-- Graphic Element Overlay -->
+<div class="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 opacity-10 pointer-events-none hidden lg:block">
+<svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.1,-46.3C90.4,-33.5,96.1,-18,94.9,-3.1C93.7,11.8,85.6,26,76.5,38.8C67.4,51.6,57.3,63,44.5,70.5C31.7,78,16.2,81.6,1.4,79.1C-13.4,76.6,-27.5,68.1,-40.5,60.2C-53.5,52.3,-65.4,45.1,-73.8,33.9C-82.2,22.7,-87.1,7.5,-84.9,-6.6C-82.7,-20.7,-73.4,-33.7,-62.4,-43.3C-51.4,-52.9,-38.7,-59.1,-26,-67C-13.3,-74.9,-0.6,-84.5,13.2,-83.4C27,-82.3,40.8,-70.5,44.7,-76.4Z" fill="#475b9c" transform="translate(100 100)"></path>
+</svg>
+</div>
+<!-- Tier 1: Explorer -->
+<div class="md:col-span-4 bg-surface-container-low p-10 rounded-lg relative overflow-hidden flex flex-col justify-between group h-[500px]">
+<div>
+<h3 class="font-headline text-3xl italic text-primary mb-2">Explorer</h3>
+<div class="font-label text-4xl mb-8">$0<span class="text-sm text-on-surface-variant font-body">/mo</span></div>
+<ul class="space-y-6 font-body text-sm">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-lg">radio_button_checked</span>
+<span>100 Atoms per Simulation</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-lg">radio_button_checked</span>
+<span>Community Support</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-lg">radio_button_checked</span>
+<span>WebGPU Acceleration</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-lg">radio_button_checked</span>
+<span>Single-user License</span>
+</li>
+</ul>
+</div>
+<a class="mt-8 inline-flex items-center justify-center font-label text-sm uppercase tracking-widest text-primary border border-outline-variant/30 py-3 px-6 rounded-DEFAULT hover:bg-primary/5 transition-colors" href="#">
+                    Start Free
+                </a>
+</div>
+<!-- Tier 2: Research (Highlighted) -->
+<div class="md:col-span-5 bg-surface-container-lowest shadow-botanical p-10 rounded-lg relative overflow-hidden flex flex-col justify-between group h-[560px] md:-mt-8 z-10">
+<!-- Subtle Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline text-4xl italic text-primary">Research</h3>
+<span class="font-label text-xs uppercase bg-secondary/10 text-secondary px-3 py-1 rounded-sm">Recommended</span>
+</div>
+<div class="font-label text-5xl mb-8 text-on-surface">$2,400<span class="text-sm text-on-surface-variant font-body">/yr</span></div>
+<ul class="space-y-6 font-body text-sm text-on-surface-variant">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg">scatter_plot</span>
+<span>50,000 Atoms</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg">scatter_plot</span>
+<span>LAMMPS integration</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg">scatter_plot</span>
+<span>ML Interatomic Potentials</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg">scatter_plot</span>
+<span>5 dedicated seats</span>
+</li>
+</ul>
+</div>
+<a class="mt-8 inline-flex items-center justify-center font-label text-sm uppercase tracking-widest text-on-primary bg-primary py-4 px-6 rounded-DEFAULT hover:bg-primary-container transition-colors shadow-sm" href="#">
+                    Start Simulation
+                </a>
+</div>
+<!-- Tier 3: Enterprise -->
+<div class="md:col-span-3 bg-surface-container-low p-10 rounded-lg relative overflow-hidden flex flex-col justify-between group h-[500px]">
+<div>
+<h3 class="font-headline text-3xl italic text-tertiary mb-2">Enterprise</h3>
+<div class="font-label text-2xl mb-8 mt-2">Custom</div>
+<ul class="space-y-6 font-body text-sm">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-lg">all_inclusive</span>
+<span>Unlimited Atoms</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-lg">all_inclusive</span>
+<span>On-Premise Deployment</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-lg">all_inclusive</span>
+<span>SOC2 / ITAR Compliance</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-lg">all_inclusive</span>
+<span>Custom API Integration</span>
+</li>
+</ul>
+</div>
+<a class="mt-8 inline-flex items-center justify-start font-label text-sm text-tertiary hover:opacity-80 transition-opacity" href="#">
+<span class="border-b border-tertiary border-dotted pb-1">Enquire Now</span>
+<span class="material-symbols-outlined ml-2 text-sm">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- Technical Specifications Table -->
+<section class="mb-32">
+<h2 class="font-headline text-4xl italic text-on-surface mb-12">Technical Specifications</h2>
+<div class="bg-surface-container-low rounded-lg p-8 md:p-12">
+<!-- Category 1 -->
+<div class="mb-16">
+<h4 class="font-label text-sm uppercase tracking-widest text-on-surface-variant mb-6 pb-2 border-b border-outline-variant/20">Compute &amp; Physics</h4>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 hover:bg-surface/50 transition-colors rounded-sm px-4 -mx-4">
+<div class="font-body font-medium">Atomic Limit</div>
+<div class="font-label text-sm text-on-surface-variant">100</div>
+<div class="font-label text-sm text-primary">50,000</div>
+<div class="font-label text-sm text-tertiary">Unlimited</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 hover:bg-surface/50 transition-colors rounded-sm px-4 -mx-4">
+<div class="font-body font-medium">Acceleration</div>
+<div class="font-label text-sm text-on-surface-variant">WebGPU</div>
+<div class="font-label text-sm text-primary">CUDA / Cloud</div>
+<div class="font-label text-sm text-tertiary">On-Prem GPU Cluster</div>
+</div>
+</div>
+<!-- Category 2 -->
+<div>
+<h4 class="font-label text-sm uppercase tracking-widest text-on-surface-variant mb-6 pb-2 border-b border-outline-variant/20">Data &amp; Security</h4>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 hover:bg-surface/50 transition-colors rounded-sm px-4 -mx-4">
+<div class="font-body font-medium">Data Sovereignty</div>
+<div class="font-label text-sm text-on-surface-variant">Public Shared</div>
+<div class="font-label text-sm text-primary">Private Cloud Tenant</div>
+<div class="font-label text-sm text-tertiary">Self-Hosted</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-4 hover:bg-surface/50 transition-colors rounded-sm px-4 -mx-4">
+<div class="font-body font-medium">Compliance</div>
+<div class="font-label text-sm text-on-surface-variant">-</div>
+<div class="font-label text-sm text-primary">Standard</div>
+<div class="font-label text-sm text-tertiary">SOC2 / ITAR</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="max-w-3xl">
+<h2 class="font-headline text-4xl italic text-on-surface mb-12">Frequently Asked Inquiries</h2>
+<div class="space-y-12">
+<div class="pl-6 border-l-2 border-primary/20">
+<h4 class="font-body font-medium text-lg mb-3">Do you offer academic or institutional discounts?</h4>
+<p class="font-body text-on-surface-variant leading-relaxed">Yes. We believe in supporting fundamental research. Verified academic institutions are eligible for a 40% reduction on the Research tier. Please contact our liaison team with your institutional email.</p>
+</div>
+<div class="pl-6 border-l-2 border-primary/20">
+<h4 class="font-body font-medium text-lg mb-3">How is data sovereignty handled on the Research tier?</h4>
+<p class="font-body text-on-surface-variant leading-relaxed">All simulation data on the Research tier is siloed within a private cloud tenant (AWS or GCP, based on your preference). Data is encrypted at rest and in transit using AES-256 standards.</p>
+</div>
+<div class="pl-6 border-l-2 border-primary/20">
+<h4 class="font-body font-medium text-lg mb-3">Can we integrate existing LAMMPS scripts?</h4>
+<p class="font-body text-on-surface-variant leading-relaxed">The Research and Enterprise tiers fully support direct import of LAMMPS input scripts. Our parser translates standard potentials and boundary conditions into our proprietary framework automatically.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer component translated from JSON -->
+<footer class="full-width mt-24 bg-[#f4ebe6] grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-16 max-w-screen-2xl mx-auto asymmetric spacing and negative space flat no shadows fade-in transition-opacity duration-500">
+<div class="col-span-1 md:col-span-1">
+<div class="text-lg font-serif italic text-[#475b9c] mb-6">
+                Lupine Materials
+            </div>
+<p class="font-mono text-xs uppercase tracking-tighter text-[#2C2A28]/50">
+                © 2024 The Living Laboratory. All research recorded in biological sequence.
+            </p>
+</div>
+<div class="col-span-1 md:col-span-3 flex flex-wrap gap-8 md:justify-end items-start font-mono text-xs uppercase tracking-tighter">
+<a class="text-[#2C2A28]/50 hover:text-[#4c653d] hover:bg-[#4c653d]/5 px-2 py-1 rounded-sm transition-colors" href="#">Ethics &amp; Protocol</a>
+<a class="text-[#2C2A28]/50 hover:text-[#4c653d] hover:bg-[#4c653d]/5 px-2 py-1 rounded-sm transition-colors" href="#">Methodology</a>
+<a class="text-[#2C2A28]/50 hover:text-[#4c653d] hover:bg-[#4c653d]/5 px-2 py-1 rounded-sm transition-colors" href="#">Archive</a>
+<a class="text-[#2C2A28]/50 hover:text-[#4c653d] hover:bg-[#4c653d]/5 px-2 py-1 rounded-sm transition-colors" href="#">Field Notes</a>
+</div>
+</footer>
+</body></html>
