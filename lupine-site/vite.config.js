@@ -1,15 +1,31 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
+import fs from 'fs';
 import tailwindcss from '@tailwindcss/vite';
 
+// Automatically construct input map for all HTML files in the project root
+const getHtmlInputs = () => {
+  const inputs = {};
+  const files = fs.readdirSync(__dirname);
+  for (const file of files) {
+    if (file.endsWith('.html')) {
+       const name = file.replace('.html', '');
+       inputs[name] = resolve(__dirname, file);
+    }
+  }
+  return inputs;
+};
+
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [tailwindcss()],
   server: {
     port: 3000,
     open: true,
   },
   build: {
     outDir: 'dist',
-    // We remove the massive multi-page rollup mapping since React Router will handle paths.
+    rollupOptions: {
+      input: getHtmlInputs()
+    }
   }
 });

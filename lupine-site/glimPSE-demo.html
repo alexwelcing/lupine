@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>glimPSE | Lupine Materials Science</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;family=JetBrains+Mono:wght@400;700&amp;family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&amp;family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#5dd9d0",
+                      "primary": "#bcc3ff",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#5b4300",
+                      "secondary-fixed": "#7cf6ec",
+                      "on-tertiary": "#402d00",
+                      "surface": "#12131a",
+                      "on-secondary-container": "#00302d",
+                      "surface-container-lowest": "#0d0e15",
+                      "on-tertiary-fixed": "#261a00",
+                      "on-secondary": "#003734",
+                      "tertiary-fixed": "#ffdf9f",
+                      "surface-container": "#1e1f27",
+                      "primary-fixed-dim": "#bcc3ff",
+                      "on-primary-container": "#f5f3ff",
+                      "surface-container-highest": "#34343c",
+                      "background": "#12131a",
+                      "secondary": "#5dd9d0",
+                      "on-surface-variant": "#c6c5d5",
+                      "tertiary-container": "#8e6a00",
+                      "surface-variant": "#34343c",
+                      "on-tertiary-container": "#fff3e1",
+                      "on-secondary-fixed": "#00201e",
+                      "primary-fixed": "#dfe0ff",
+                      "inverse-surface": "#e3e1ec",
+                      "error": "#ffb4ab",
+                      "tertiary-fixed-dim": "#eec058",
+                      "surface-tint": "#bcc3ff",
+                      "outline": "#8f8f9f",
+                      "on-primary-fixed-variant": "#2839a9",
+                      "surface-bright": "#383941",
+                      "surface-container-low": "#1a1b23",
+                      "secondary-container": "#00a29a",
+                      "inverse-on-surface": "#2f3038",
+                      "primary-container": "#5565d4",
+                      "inverse-primary": "#4353c2",
+                      "on-surface": "#e3e1ec",
+                      "on-background": "#e3e1ec",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-fixed": "#000d60",
+                      "tertiary": "#eec058",
+                      "outline-variant": "#454653",
+                      "surface-container-high": "#292931",
+                      "on-primary": "#051c93",
+                      "surface-dim": "#12131a",
+                      "on-secondary-fixed-variant": "#00504c",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Newsreader", "serif"],
+                      "body": ["Inter", "sans-serif"],
+                      "label": ["Space Grotesk", "sans-serif"],
+                      "mono": ["JetBrains Mono", "monospace"]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .signature-gradient {
+            background: linear-gradient(135deg, #5565d4 0%, #7f5fb7 100%);
+        }
+        .glass-panel {
+            background: rgba(52, 52, 60, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .tonal-transition {
+            transition: background-color 0.4s ease;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #12131a; }
+        ::-webkit-scrollbar-thumb { background: #34343c; }
+    </style>
+
+<style>
+/* QA Fix: Responsive overrides for Stitch-generated pages */
+@media (max-width: 768px) {
+  .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+  .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+  .text-8xl, .text-7xl, .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; }
+  .text-5xl { font-size: 2rem !important; }
+  .text-4xl { font-size: 1.75rem !important; }
+  .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .p-16, .p-24 { padding: 2rem !important; }
+  .md\:p-24 { padding: 2rem !important; }
+  .gap-8, .gap-12 { gap: 1.5rem !important; }
+  .hidden.md\:flex { display: none !important; }
+  table { font-size: 12px !important; }
+  table td, table th { padding: 8px !important; }
+}
+@media (max-width: 480px) {
+  .text-6xl, .text-5xl { font-size: 1.8rem !important; line-height: 1.2 !important; }
+  .text-4xl { font-size: 1.5rem !important; }
+  .text-3xl { font-size: 1.25rem !important; }
+}
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#12131a]/60 backdrop-blur-xl flex justify-between items-center px-8 py-4 max-w-full shadow-[0_0_40px_rgba(227,225,236,0.1)]">
+<div class="flex items-center gap-8">
+<span class="font-['JetBrains_Mono'] font-bold text-[#bcc3ff] tracking-tighter text-xl">glimPSE</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#e3e1ec]/70 hover:text-[#bcc3ff] transition-colors duration-300 font-label text-sm uppercase tracking-widest" href="research-manifesto.html">Science</a>
+<a class="text-[#e3e1ec]/70 hover:text-[#bcc3ff] transition-colors duration-300 font-label text-sm uppercase tracking-widest" href="research-manifesto.html">Materials</a>
+<a class="text-[#e3e1ec]/70 hover:text-[#bcc3ff] transition-colors duration-300 font-label text-sm uppercase tracking-widest text-[#bcc3ff] border-b border-[#bcc3ff]" href="platform-architecture.html">Infrastructure</a>
+<a class="text-[#e3e1ec]/70 hover:text-[#bcc3ff] transition-colors duration-300 font-label text-sm uppercase tracking-widest" href="platform-architecture.html">Security</a>
+</div>
+</div>
+<button class="signature-gradient text-white px-6 py-2 font-mono text-xs font-bold uppercase tracking-widest scale-95 active:opacity-80 transition-all" onclick="alert('Feature Coming Soon')">
+            Launch Demo
+        </button>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="px-8 md:px-20 py-24 min-h-screen flex flex-col justify-center overflow-hidden">
+<div class="grid md:grid-cols-12 gap-12 items-center">
+<div class="md:col-span-6 z-10">
+<span class="font-mono text-primary text-sm mb-4 block tracking-[0.3em] uppercase">Browser-Native Compute</span>
+<h1 class="text-6xl md:text-8xl font-headline leading-tight mb-8">
+                        See Atoms <span class="italic font-newsreader">Move</span>. In Your Browser.
+                    </h1>
+<p class="text-xl text-on-surface-variant max-w-xl mb-12 leading-relaxed">
+                        glimPSE renders million-atom LAMMPS trajectories at 60fps using WebGPU compute shaders. No downloads. No plugins. <span class="italic">Just science.</span>
+</p>
+<div class="flex flex-wrap gap-6">
+<button class="signature-gradient text-white px-8 py-4 font-mono text-sm font-bold uppercase tracking-widest shadow-xl hover:scale-105 transition-transform" onclick="alert('Feature Coming Soon')">
+                            Launch Live Demo
+                        </button>
+<button class="bg-surface-container-high text-on-surface px-8 py-4 font-mono text-sm font-bold uppercase tracking-widest border border-outline-variant/20 hover:bg-surface-container-highest transition-colors" onclick="alert('Feature Coming Soon')">
+                            Watch 90-Second Tour
+                        </button>
+</div>
+</div>
+<div class="md:col-span-6 relative">
+<div class="absolute -inset-4 signature-gradient opacity-10 blur-3xl rounded-full"></div>
+<div class="relative glass-panel p-2 rounded-lg border-t border-white/10 shadow-2xl overflow-hidden">
+<img alt="glimPSE Interface" class="w-full rounded h-auto object-cover aspect-[16/10]" data-alt="A dark user interface showing a complex 3D molecular lattice structure in neon cyan and violet colors with technical data overlays" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc1G2gvOC-WhjEMaZozqCmB0auC4SPWnl43phE4FEwcy4CkwjPNFzR43ZtiGppbv_t2Q1ZQPDDqmMO6FBcNrYcSeGSQaFJKtDiLHo4uHvV-IudOgekYiC3KxykD6qrq4YvKivwQ_5tUof0rEUGACbQ-mn_YoPeu6uiKUi8NVtC0UtsAphbCYjo0TLHs6q_EQIBNcxlkIxKVpZrlbiwBFzkNsy-474m2sGZw63Xfz9UzsK-78Bfigj9Alz91CGMnHZ4X5UnQGQOmPg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-30"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Capability Showcase -->
+<section class="bg-surface-container-low py-32 px-8 md:px-20">
+<div class="mb-20">
+<h2 class="text-4xl font-headline italic mb-4">Unprecedented Fidelity.</h2>
+<div class="w-24 h-1 bg-primary"></div>
+</div>
+<div class="grid md:grid-cols-3 gap-12">
+<!-- Column 1 -->
+<div class="space-y-6 group">
+<div class="w-12 h-12 flex items-center justify-center bg-surface-container rounded">
+<span class="material-symbols-outlined text-secondary text-3xl">play_circle</span>
+</div>
+<h3 class="text-2xl font-headline">Real-Time Trajectory Playback</h3>
+<p class="text-on-surface-variant leading-relaxed">Streaming high-frequency MD data directly from HDF5 and LAMMPS formats with sub-millisecond latency.</p>
+<div class="font-mono text-xs text-primary/60 pt-4 uppercase tracking-tighter">Latency: <span class="text-primary">&lt;2ms</span></div>
+</div>
+<!-- Column 2 -->
+<div class="space-y-6 group">
+<div class="w-12 h-12 flex items-center justify-center bg-surface-container rounded">
+<span class="material-symbols-outlined text-tertiary text-3xl">palette</span>
+</div>
+<h3 class="text-2xl font-headline">Intelligent Style Engine</h3>
+<p class="text-on-surface-variant leading-relaxed">Dynamic CPK, Ball-and-Stick, and Polyhedral representations computed on-the-fly via WebGPU kernels.</p>
+<div class="font-mono text-xs text-tertiary/60 pt-4 uppercase tracking-tighter">GPU Compute: <span class="text-tertiary">Active</span></div>
+</div>
+<!-- Column 3 -->
+<div class="space-y-6 group">
+<div class="w-12 h-12 flex items-center justify-center bg-surface-container rounded">
+<span class="material-symbols-outlined text-primary text-3xl">cloud_done</span>
+</div>
+<h3 class="text-2xl font-headline">Zero-Install Architecture</h3>
+<p class="text-on-surface-variant leading-relaxed">Your entire simulation analysis suite, living in a single browser tab. Secure, sandboxed, and instantly sharable.</p>
+<div class="font-mono text-xs text-primary/60 pt-4 uppercase tracking-tighter">Deployment: <span class="text-primary">Instant</span></div>
+</div>
+</div>
+</section>
+<!-- Technical Specs Panel -->
+<section class="py-32 px-8 md:px-20 bg-surface">
+<div class="bg-surface-container-lowest p-12 rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-12 opacity-5">
+<span class="material-symbols-outlined text-[160px]">precision_manufacturing</span>
+</div>
+<div class="grid md:grid-cols-2 gap-20">
+<div>
+<h2 class="text-4xl font-headline mb-8">Performance <span class="italic">Benchmarks</span></h2>
+<div class="flex gap-3 mb-12">
+<span class="px-3 py-1 bg-secondary/10 text-secondary font-mono text-[10px] uppercase tracking-widest border border-secondary/20 rounded-full">WebGPU V1.0</span>
+<span class="px-3 py-1 bg-primary/10 text-primary font-mono text-[10px] uppercase tracking-widest border border-primary/20 rounded-full">Atomic Status: Stable</span>
+</div>
+<p class="text-on-surface-variant mb-8 font-body">Lupine's proprietary shader pipeline bypasses traditional CPU bottlenecks, enabling direct rendering of massive ensembles.</p>
+</div>
+<div>
+<table class="w-full font-mono text-sm border-separate border-spacing-y-4">
+<tbody><tr class="text-on-surface-variant/40 uppercase text-[10px] tracking-widest">
+<th class="text-left font-normal pb-2">Metric</th>
+<th class="text-right font-normal pb-2">Value</th>
+</tr>
+<tr class="bg-surface-container/50">
+<td class="p-4 border-l-2 border-primary">Max Atoms</td>
+<td class="p-4 text-right text-primary">12,400,000</td>
+</tr>
+<tr class="bg-surface-container/50">
+<td class="p-4 border-l-2 border-secondary">Frame Rate</td>
+<td class="p-4 text-right text-secondary">60.2 FPS</td>
+</tr>
+<tr class="bg-surface-container/50">
+<td class="p-4 border-l-2 border-tertiary">Load Time</td>
+<td class="p-4 text-right text-tertiary">1.4s (100MB)</td>
+</tr>
+<tr class="bg-surface-container/50">
+<td class="p-4 border-l-2 border-error">VRAM Usage</td>
+<td class="p-4 text-right text-error">420MB</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow -->
+<section class="py-32 px-8 md:px-20 bg-surface-container-low">
+<div class="text-center mb-24">
+<h2 class="text-5xl font-headline italic mb-4">From Raw Data to Insight.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="p-8 bg-surface-container-high/40 hover:bg-surface-container-high transition-colors">
+<span class="font-mono text-primary text-4xl mb-6 block">01</span>
+<h4 class="text-xl font-headline mb-4">Upload</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Drag-and-drop .xyz, .pdb, or .lammps files directly into the viewport.</p>
+</div>
+<div class="p-8 bg-surface-container-high/40 hover:bg-surface-container-high transition-colors">
+<span class="font-mono text-secondary text-4xl mb-6 block">02</span>
+<h4 class="text-xl font-headline mb-4">Visualize</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Apply molecular surface mappings and thermal vibration overlays.</p>
+</div>
+<div class="p-8 bg-surface-container-high/40 hover:bg-surface-container-high transition-colors">
+<span class="font-mono text-tertiary text-4xl mb-6 block">03</span>
+<h4 class="text-xl font-headline mb-4">Analyze</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Extract RDF plots and mean-squared displacement metrics in real-time.</p>
+</div>
+<div class="p-8 bg-surface-container-high/40 hover:bg-surface-container-high transition-colors">
+<span class="font-mono text-primary-fixed text-4xl mb-6 block">04</span>
+<h4 class="text-xl font-headline mb-4">Share</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Generate a persistent link to your interactive simulation view.</p>
+</div>
+</div>
+</section>
+<!-- Premium Authenticated Physics Data Library -->
+<section class="py-32 px-8 md:px-20 bg-surface relative">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-surface to-surface opacity-50 pointer-events-none"></div>
+    
+    <div class="relative mb-20 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-surface-container-highest pb-8 gap-8">
+        <div>
+            <span class="font-mono text-sm text-secondary tracking-[0.3em] uppercase block mb-4 flex items-center gap-3">
+                <span class="w-8 h-[2px] bg-secondary"></span> Reference Archives
+            </span>
+            <h2 class="text-5xl md:text-6xl font-headline mb-4"><span class="italic font-newsreader">Authenticated</span> Topologies.</h2>
+            <p class="text-on-surface-variant font-body text-lg max-w-2xl leading-relaxed">
+                Directly access our curated library of high-fidelity atomic geometries. Every structure is rigorously verified against standard crystallographic parameterizations or generated via state-of-the-art exact spacegroup derivations. 
+            </p>
+        </div>
+        <div class="flex items-center gap-3 bg-surface-container-low px-6 py-3 rounded-full border border-secondary/20 shadow-[0_0_20px_rgba(124,246,236,0.1)]">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-full w-full bg-secondary"></span>
+            </span>
+            <span class="font-mono text-xs uppercase tracking-widest text-secondary font-bold">124 Assets Verified</span>
+        </div>
+    </div>
+
+    <!-- 12-Item Showcase Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 relative z-10">
+        <!-- Item -->
+        <a href="https://view.lupinematerials.science/?load=/dump.CuZr_melt.lammpstrj" class="group flex flex-col bg-surface-container-lowest p-8 rounded-2xl border border-white/5 hover:border-secondary/50 hover:bg-surface-container-low hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mb-8 border border-secondary/20">
+                <span class="material-symbols-outlined text-secondary text-2xl">hexagon</span>
+            </div>
+            <h4 class="text-2xl font-headline text-on-surface mb-2">Cu₆₄Zr₃₆ Metallic Glass</h4>
+            <p class="text-secondary/80 font-mono text-xs tracking-widest uppercase mb-6 flex-grow">Metals & Alloys • 5,000 Atoms</p>
+            <div class="flex items-center justify-between text-on-surface-variant text-sm border-t border-white/5 pt-4">
+                <span class="font-mono text-[10px] uppercase">load .lammpstrj</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300">arrow_forward</span>
+            </div>
+        </a>
+        <!-- Item -->
+        <a href="https://view.lupinematerials.science/?load=/gallery/al_polycrystal_32k.lammpstrj" class="group flex flex-col bg-surface-container-lowest p-8 rounded-2xl border border-white/5 hover:border-secondary/50 hover:bg-surface-container-low hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mb-8 border border-secondary/20">
+                <span class="material-symbols-outlined text-secondary text-2xl">polyline</span>
+            </div>
+            <h4 class="text-2xl font-headline text-on-surface mb-2">Al Polycrystal (Voronoi)</h4>
+            <p class="text-secondary/80 font-mono text-xs tracking-widest uppercase mb-6 flex-grow">Metals & Alloys • 32,000 Atoms</p>
+            <div class="flex items-center justify-between text-on-surface-variant text-sm border-t border-white/5 pt-4">
+                <span class="font-mono text-[10px] uppercase">load .lammpstrj</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300">arrow_forward</span>
+            </div>
+        </a>
+        <!-- Item -->
+        <a href="https://view.lupinematerials.science/?load=/gallery/ti_hcp_tension_13k.lammpstrj" class="group flex flex-col bg-surface-container-lowest p-8 rounded-2xl border border-white/5 hover:border-secondary/50 hover:bg-surface-container-low hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mb-8 border border-secondary/20">
+                <span class="material-symbols-outlined text-secondary text-2xl">broken_image</span>
+            </div>
+            <h4 class="text-2xl font-headline text-on-surface mb-2">Titanium HCP Deformation</h4>
+            <p class="text-secondary/80 font-mono text-xs tracking-widest uppercase mb-6 flex-grow">Metals & Alloys • 24,000 Atoms</p>
+            <div class="flex items-center justify-between text-on-surface-variant text-sm border-t border-white/5 pt-4">
+                <span class="font-mono text-[10px] uppercase">load .lammpstrj</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300">arrow_forward</span>
+            </div>
+        </a>
+        <!-- Item -->
+        <a href="https://view.lupinematerials.science/?load=/advanced_samples/dump.multielement_nanoparticle.lammpstrj" class="group flex flex-col bg-surface-container-lowest p-8 rounded-2xl border border-white/5 hover:border-tertiary-fixed-dim/50 hover:bg-surface-container-low hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-full bg-tertiary-fixed-dim/10 flex items-center justify-center mb-8 border border-tertiary-fixed-dim/20">
+                <span class="material-symbols-outlined text-tertiary-fixed-dim text-2xl">diamond</span>
+            </div>
+            <h4 class="text-2xl font-headline text-on-surface mb-2">High-Entropy Alloy Nanoparticle</h4>
+            <p class="text-tertiary-fixed-dim/80 font-mono text-xs tracking-widest uppercase mb-6 flex-grow">Nanomaterials • 85,000+ Atoms</p>
+            <div class="flex items-center justify-between text-on-surface-variant text-sm border-t border-white/5 pt-4">
+                <span class="font-mono text-[10px] uppercase">load .lammpstrj</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300">arrow_forward</span>
+            </div>
+        </a>
+        <!-- Item -->
+        <a href="https://view.lupinematerials.science/?load=/cnt_bundle_12k.xyz" class="group flex flex-col bg-surface-container-lowest p-8 rounded-2xl border border-white/5 hover:border-tertiary-fixed-dim/50 hover:bg-surface-container-low hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-full bg-tertiary-fixed-dim/10 flex items-center justify-center mb-8 border border-tertiary-fixed-dim/20">
+                <span class="material-symbols-outlined text-tertiary-fixed-dim text-2xl">architecture</span>
+            </div>
+            <h4 class="text-2xl font-headline text-on-surface mb-2">Carbon Nanotube Bundle</h4>
+            <p class="text-tertiary-fixed-dim/80 font-mono text-xs tracking-widest uppercase mb-6 flex-grow">Nanomaterials • 1,200 Atoms</p>
+            <div class="flex items-center justify-between text-on-surface-variant text-sm border-t border-white/5 pt-4">
+                <span class="font-mono text-[10px] uppercase">load .xyz</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300">arrow_forward</span>
+            </div>
+        </a>
+        <!-- Item -->
+        <a href="https://view.lupinematerials.science/?load=/gallery/sio2_glass_24k.lammpstrj" class="group flex flex-col bg-surface-container-lowest p-8 rounded-2xl border border-white/5 hover:border-primary/50 hover:bg-surface-container-low hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-8 border border-primary/20">
+                <span class="material-symbols-outlined text-primary text-2xl">hive</span>
+            </div>
+            <h4 class="text-2xl font-headline text-on-surface mb-2">SiO₂ Amorphous Silica</h4>
+            <p class="text-primary/80 font-mono text-xs tracking-widest uppercase mb-6 flex-grow">Ceramics & Oxides • 24,000 Atoms</p>
+            <div class="flex items-center justify-between text-on-surface-variant text-sm border-t border-white/5 pt-4">
+                <span class="font-mono text-[10px] uppercase">load .lammpstrj</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300">arrow_forward</span>
+            </div>
+        </a>
+        <!-- Item -->
+        <a href="https://view.lupinematerials.science/?load=/gallery/pe_chain_3k.lammpstrj" class="group flex flex-col bg-surface-container-lowest p-8 rounded-2xl border border-white/5 hover:border-[#ffe66d]/50 hover:bg-surface-container-low hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-full bg-[#ffe66d]/10 flex items-center justify-center mb-8 border border-[#ffe66d]/20">
+                <span class="material-symbols-outlined text-[#ffe66d] text-2xl">blur_on</span>
+            </div>
+            <h4 class="text-2xl font-headline text-on-surface mb-2">Polyethylene Chain</h4>
+            <p class="text-[#ffe66d]/80 font-mono text-xs tracking-widest uppercase mb-6 flex-grow">Polymers & Soft Matter • 3,000 Atoms</p>
+            <div class="flex items-center justify-between text-on-surface-variant text-sm border-t border-white/5 pt-4">
+                <span class="font-mono text-[10px] uppercase">load .lammpstrj</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300">arrow_forward</span>
+            </div>
+        </a>
+        <!-- Item -->
+        <a href="https://view.lupinematerials.science/?load=/gallery/ala_dipeptide.lammpstrj" class="group flex flex-col bg-surface-container-lowest p-8 rounded-2xl border border-white/5 hover:border-[#8fd785]/50 hover:bg-surface-container-low hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-full bg-[#8fd785]/10 flex items-center justify-center mb-8 border border-[#8fd785]/20">
+                <span class="material-symbols-outlined text-[#8fd785] text-2xl">biotech</span>
+            </div>
+            <h4 class="text-2xl font-headline text-on-surface mb-2">Alanine Dipeptide</h4>
+            <p class="text-[#8fd785]/80 font-mono text-xs tracking-widest uppercase mb-6 flex-grow">Biomolecules • 66 Atoms</p>
+            <div class="flex items-center justify-between text-on-surface-variant text-sm border-t border-white/5 pt-4">
+                <span class="font-mono text-[10px] uppercase">load .lammpstrj</span>
+                <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300">arrow_forward</span>
+            </div>
+        </a>
+    </div>
+</section>
+<!-- Testimonials -->
+<section class="py-32 px-8 md:px-20 overflow-hidden relative">
+<div class="grid md:grid-cols-3 gap-8">
+<div class="glass-panel p-10 rounded-lg flex flex-col justify-between">
+<p class="text-lg italic font-newsreader mb-12">"glimPSE has fundamentally changed how we present simulation results to stakeholders. No more waiting for renders."</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container"></div>
+<div>
+<div class="font-bold text-sm">Dr. Aris Thorne</div>
+<div class="text-[10px] font-mono text-on-surface-variant uppercase">MIT Materials Research</div>
+</div>
+</div>
+</div>
+<div class="glass-panel p-10 rounded-lg flex flex-col justify-between">
+<p class="text-lg italic font-newsreader mb-12">"The WebGPU implementation is flawless. Million-atom systems that used to crash my workstation now run on my laptop browser."</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container"></div>
+<div>
+<div class="font-bold text-sm">Sarah Jenkins</div>
+<div class="text-[10px] font-mono text-on-surface-variant uppercase">Quantum Dynamics Lead</div>
+</div>
+</div>
+</div>
+<div class="glass-panel p-10 rounded-lg flex flex-col justify-between">
+<p class="text-lg italic font-newsreader mb-12">"Collaborating on complex trajectories is now as easy as sharing a URL. This is the future of collaborative science."</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container"></div>
+<div>
+<div class="font-bold text-sm">Prof. Kenzo Sato</div>
+<div class="text-[10px] font-mono text-on-surface-variant uppercase">Tokyo Tech Informatics</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-40 px-8 text-center bg-surface">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-5xl md:text-7xl font-headline mb-12 leading-tight">
+                    Your Simulation Data Deserves Better Than a <span class="italic text-primary">Static Image</span>.
+                </h2>
+<button class="signature-gradient text-white px-12 py-5 font-mono text-lg font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-2xl">
+                    Try glimPSE Free
+                </button>
+<p class="mt-8 text-on-surface-variant font-mono text-xs uppercase tracking-widest opacity-50">Enterprise licensing and on-premise clusters available</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#12131a] w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="text-[#e3e1ec] font-['Newsreader'] italic text-2xl">glimPSE</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest text-[#e3e1ec]/40">© 2024 Lupine Materials Science. The Quantum Ledger.</span>
+</div>
+<div class="flex gap-8">
+<a class="text-[#e3e1ec]/40 font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest hover:text-[#bcc3ff] underline underline-offset-4 transition-all" href="index.html">Privacy</a>
+<a class="text-[#e3e1ec]/40 font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest hover:text-[#bcc3ff] underline underline-offset-4 transition-all" href="index.html">Terms</a>
+<a class="text-[#e3e1ec]/40 font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest hover:text-[#bcc3ff] underline underline-offset-4 transition-all" href="docs.html">API Documentation</a>
+<a class="text-[#e3e1ec]/40 font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest hover:text-[#bcc3ff] underline underline-offset-4 transition-all" href="contact.html">Contact</a>
+</div>
+</footer>
+</body></html>
