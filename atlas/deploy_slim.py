@@ -7,7 +7,7 @@ DEPLOY_WEB = os.path.join(DEPLOY_PUBLIC, "web")
 DEPLOY_RESEARCH = os.path.join(DEPLOY_PUBLIC, "research")
 ATLAS_VIEW_DIR = os.path.join(BASE_DIR, "atlas", "atlas-view")
 WEB_DIST = os.path.join(ATLAS_VIEW_DIR, "apps", "web", "dist")
-CLOUD_URL = "https://atlas-viewer-350452481649.us-central1.run.app"
+CLOUD_URL = os.environ.get("CLOUD_URL", "https://atlas-viewer-placeholder.run.app")
 
 def section(t): print(f"\n{'='*60}\n {t}\n{'='*60}\n")
 
@@ -190,7 +190,8 @@ def build_web():
 
 def deploy_and_verify():
     section("Step 3/3: Deploy + Verify")
-    subprocess.run("gcloud run deploy atlas-viewer --source . --project shed-489901 --region us-central1 --allow-unauthenticated --port=8080 --memory=512Mi",
+    project_id = os.environ.get("GCP_PROJECT_ID", "shed-489901")
+    subprocess.run(f"gcloud run deploy atlas-viewer --source . --project {project_id} --region us-central1 --allow-unauthenticated --port=8080 --memory=512Mi",
         cwd=DEPLOY_DIR, shell=True, check=True)
     time.sleep(5)
     for url in [f"{CLOUD_URL}/", f"{CLOUD_URL}/web/", f"{CLOUD_URL}/research/", f"{CLOUD_URL}/research/style.css",

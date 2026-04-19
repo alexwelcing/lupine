@@ -58,9 +58,9 @@ jobs:
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
           source: 'atlas/deploy_bundle'
-          service: 'atlas-viewer'
-          region: 'us-central1'
-          project_id: 'shed-489901'
+          service: '${{ secrets.GCP_SERVICE_NAME_VIEWER }}'
+          region: '${{ secrets.GCP_REGION }}'
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
           flags: '--allow-unauthenticated'
 
       - name: Show output
