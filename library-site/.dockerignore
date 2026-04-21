@@ -1,7 +1,9 @@
 node_modules
+.git
+.github
 src
 scripts
-package-lock.json
-package.json
-README.md
+*.md
 .gitignore
+.dockerignore
+.gcloudignore
