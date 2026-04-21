@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0b12" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Lupine Library" />
+  <title>Lupine Library — Research On The Go</title>
+  <meta name="description" content="Mobile-first reader for Lupine Materials Science research: UQ, benchmarking, MLIPs, and computational materials theory." />
+
+  <link rel="manifest" href="/manifest.webmanifest?v=__VERSION__" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/icon-180.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css?v=__VERSION__" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="topbar" id="topbar">
+    <button class="icon-btn" id="back-btn" aria-label="Back to library" hidden>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <a href="#/" class="brand" id="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="nucleus"></span>
+        <span class="orbit"></span>
+      </span>
+      <span class="brand-text">
+        <span class="brand-title">Lupine Library</span>
+        <span class="brand-sub">research.on.the.go</span>
+      </span>
+    </a>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="search-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="icon-btn" id="settings-btn" aria-label="Reader settings">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="view" class="view" aria-live="polite"></main>
+
+  <!-- Reader progress bar -->
+  <div class="progress" id="progress" aria-hidden="true"><span id="progress-fill"></span></div>
+
+  <!-- Search overlay -->
+  <dialog id="search-dialog" class="dialog">
+    <div class="dialog-head">
+      <input type="search" id="search-input" placeholder="Search the library…" autocomplete="off" />
+      <button class="icon-btn" id="search-close" aria-label="Close search">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <ul id="search-results" class="search-results"></ul>
+    <p class="search-hint" id="search-hint">Title, subtitle, and tags. Tap a result to open.</p>
+  </dialog>
+
+  <!-- Settings drawer -->
+  <dialog id="settings-dialog" class="dialog settings-dialog">
+    <h2 class="dialog-title">Reader</h2>
+    <div class="setting">
+      <span class="setting-label">Text size</span>
+      <div class="segmented" role="group" aria-label="Text size">
+        <button data-size="sm">A-</button>
+        <button data-size="md" class="active">A</button>
+        <button data-size="lg">A+</button>
+        <button data-size="xl">A++</button>
+      </div>
+    </div>
+    <div class="setting">
+      <span class="setting-label">Theme</span>
+      <div class="segmented" role="group" aria-label="Theme">
+        <button data-theme="dark" class="active">Dark</button>
+        <button data-theme="sepia">Sepia</button>
+        <button data-theme="light">Light</button>
+      </div>
+    </div>
+    <div class="setting">
+      <span class="setting-label">Line width</span>
+      <div class="segmented" role="group" aria-label="Line width">
+        <button data-width="narrow" class="active">Narrow</button>
+        <button data-width="wide">Wide</button>
+      </div>
+    </div>
+    <div class="setting">
+      <span class="setting-label">Offline</span>
+      <button id="cache-btn" class="pill-btn">Save entire library for offline</button>
+    </div>
+    <button id="settings-close" class="close-btn">Done</button>
+  </dialog>
+
+  <script src="/app.js?v=__VERSION__" type="module"></script>
+</body>
+</html>
