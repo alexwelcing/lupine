@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-distillation-factory.org/schemas/operator-pack.schema.json",
+  "title": "OperatorPack",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "domain": { "type": "string" },
+    "inputFeatures": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "outputFeatures": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "formula": { "type": "string" },
+    "modelSpec": { "type": "object" },
+    "numericalEvidence": { "type": "object" },
+    "proofObligations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "proofStatus": {
+      "type": "string",
+      "enum": ["pending", "proved", "disproved"]
+    },
+    "counterExamples": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "authors": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name",
+    "domain",
+    "inputFeatures",
+    "outputFeatures",
+    "proofStatus",
+    "authors",
+    "timestamp"
+  ],
+  "oneOf": [
+    { "required": ["formula"] },
+    { "required": ["modelSpec"] }
+  ]
+}

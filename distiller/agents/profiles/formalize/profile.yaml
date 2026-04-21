@@ -1,0 +1,16 @@
+name: formalize
+description: Lean formalization and proof workflow profile.
+memory:
+  project_memory: agents/profiles/formalize/MEMORY.md
+workers:
+- FormalizationAgent
+- ProofAgent
+tools:
+- shell
+- lean
+model_routing:
+  primary_provider: minimax
+  primary_model: MiniMax-M2.7
+  fallback_provider: zai
+  fallback_model: glm-5.1
+  routing_rationale: Deep thinking for Lean theorem proving

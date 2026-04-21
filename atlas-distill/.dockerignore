@@ -1,0 +1,34 @@
+# Rust build artifacts
+target/
+Cargo.lock
+
+# Generated artifacts
+*.json
+*.log
+
+# Benchmark outputs (we copy benchmarks/ selectively)
+# but ignore any locally generated files in that dir
+benchmarks/*.json
+benchmarks/*.log
+
+# Version control
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (not needed in container)
+docs/
+*.md
+
+# Test data not part of release
+*.dump
+*.lammpstrj

@@ -135,6 +135,8 @@ export function AtomPicker({
   // Click handler
   const handleClick = useCallback((e: MouseEvent) => {
     if (!enabled) return;
+    // Strictly isolate canvas clicks (prevent UI panel clicks from triggering deselection)
+    if (!(e.target instanceof HTMLCanvasElement)) return;
     
     const picked = pickAtom(e.clientX, e.clientY);
     const index = picked?.index ?? null;
@@ -160,7 +162,7 @@ export function AtomPicker({
             // Collect up to 4 atoms for measurement
             measureAtomsRef.current.push(index);
             if (measureAtomsRef.current.length > 4) {
-              measureAtomsRef.current.shift();
+               measureAtomsRef.current.shift();
             }
             onSelect?.(measureAtomsRef.current);
             return new Set(measureAtomsRef.current);
@@ -169,6 +171,13 @@ export function AtomPicker({
         onSelect?.(Array.from(next));
         return next;
       });
+    } else {
+      // We missed all atoms but hit the canvas. Clear selection!
+      if (selectionMode === 'single' || selectionMode === 'measure') {
+        setSelectedAtoms(new Set());
+        measureAtomsRef.current = [];
+        onSelect?.([]);
+      }
     }
   }, [enabled, onClick, onSelect, pickAtom, selectionMode]);
 

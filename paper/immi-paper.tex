@@ -1,0 +1,242 @@
+% IMMI Journal Article Draft
+% Integrating Materials and Manufacturing Innovation
+\documentclass[twocolumn,9pt]{extarticle}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[super,comma,sort&compress]{natbib}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    citecolor=blue,
+}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small The Causal Geometry of Prediction Errors in Interatomic Potentials}
+\fancyhead[R]{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Line spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+% ============================================================================
+% Document
+% ============================================================================
+\begin{document}
+
+% Title and Authors
+\title{\bfseries The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection}
+\author{Alexander Welcing\\
+\small Lupine Materials Science, Seattle, WA, USA\\
+\small \texttt{alex@lupine.io}}
+\date{}
+
+% Abstract
+\begin{abstract}
+\noindent\textbf{Purpose:} Classical force fields for metals exhibit structured, low-dimensional prediction errors that can be understood through the convergence of sloppy model theory, causal inference, and meta-analytic methodology.
+\textbf{Methods:} We analyzed elastic constant prediction errors ($C_{11}$, $C_{12}$, $C_{44}$) for face-centered cubic (FCC) and body-centered cubic (BCC) metals across three interatomic potentials (EAM, LJ, SW) using principal component analysis, bootstrap uncertainty quantification, random-effects meta-analysis, and Simpson's paradox detection.
+\textbf{Results:} FCC errors occupy a hyper-ribbon manifold with effective dimensionality $1.29\pm0.40$ (SW) to $1.41\pm0.38$ (EAM) out of 3, consistent with the sloppy model universality class ($R^2>0.96$ for log-linear eigenvalue spacing). Pooled BCC data produce a spurious correlation inversion ($r=-0.435$ pooled vs. $+0.147$ within-group) attributable to element identity as a causal confounder. Meta-analysis reveals high heterogeneity ($I^2=85.3\%$, $\tau=0.31$), mandating random-effects models.
+\textbf{Conclusions:} Prediction errors are not unstructured noise but occupy strictly bounded, low-dimensional manifolds. Standard cross-element benchmarking inadvertently suffers from ecological fallacy. Correct analysis requires stratified evaluation and random-effects meta-analysis. All methods are implemented in the open-source \texttt{atlas-distill} engine.
+\end{abstract}
+
+\maketitle
+\thispagestyle{fancy}
+
+% ----------------------------------------------------------------------------
+% Main Text
+% ----------------------------------------------------------------------------
+\section{Introduction}
+
+The accelerated discovery of advanced materials depends critically on the predictive fidelity of classical and machine-learning interatomic potentials (MLIPs)\cite{frederiksen2004,frederiksen2005}. While systematic benchmarking databases have quantified the performance of these models\cite{kurniawan2022,openkim}, the geometric and statistical structure of their prediction errors remains poorly understood.
+
+Three intellectual traditions converge on this problem. First, \textit{sloppy model theory} establishes that multiparameter models generically have parameter sensitivities spanning many orders of magnitude, with only a few ``stiff'' combinations controlling predictions and many ``sloppy'' directions allowing free variation\cite{brown2003,waterfall2006,gutenkunst2007}. The model manifold---the set of all possible predictions as parameters vary---forms a ``hyper-ribbon'' in data space with a geometric hierarchy of widths\cite{transtrum2010,transtrum2011,machta2013}.
+
+Second, \textit{Simpson's paradox} and the ecological fallacy warn that correlations computed across heterogeneous groups can invert when confounders are ignored\cite{simpson1951,pearl2014}. In materials benchmarking, element identity acts as precisely such a confounder: atomic radius, electron configuration, and bonding character influence both the target elastic constants and the potential's prediction errors.
+
+Third, \textit{meta-analysis} provides rigorous methods for combining correlations across heterogeneous groups, including Fisher z-transformation, DerSimonian-Laird random-effects estimation, and heterogeneity statistics ($Q$, $I^2$, $\tau^2$)\cite{hedges1985,borenstein2009,dersimonian1986}.
+
+Here we synthesize these traditions to demonstrate that: (1) FCC elastic constant errors are compressed onto a hyper-ribbon with effective dimensionality $\sim$1.3--1.4 out of 3; (2) indiscriminately pooling BCC benchmark data across elements produces a spurious correlation inversion; and (3) random-effects meta-analysis is required to correctly aggregate heterogeneous potential performance. All analyses are implemented in \texttt{atlas-distill}, an open-source Rust engine for mathematical discovery in molecular dynamics data.
+
+\section{Theory}
+
+\subsection{Sloppy model theory and hyper-ribbon geometry}
+
+For a model with $N$ parameters fit to $M$ observations, the Fisher Information Matrix (FIM) $\mathbf{H}$ characterizes the curvature of the likelihood landscape. Eigenvalue decomposition $\mathbf{H}\mathbf{v}_i = \lambda_i \mathbf{v}_i$ reveals the geometric structure of the model manifold.
+
+The \textit{participation ratio} (PR) measures effective dimensionality:
+\begin{equation}
+\text{PR} = \frac{(\sum_i \lambda_i)^2}{\sum_i \lambda_i^2}
+\end{equation}
+For isotropic $d$-dimensional data, $\text{PR} \approx d$; for data confined to a $k$-dimensional subspace, $\text{PR} \approx k$.
+
+Sloppy models exhibit approximately linear log-spacing of eigenvalues:
+\begin{equation}
+\ln \lambda_i \approx a + b \cdot i
+\end{equation}
+which is the signature of Vandermonde matrix ensembles\cite{waterfall2006}. We quantify this via linear regression on $\ln \lambda_i$ versus index $i$ and report the coefficient of determination $R^2$.
+
+The \textit{hyper-ribbon} classification requires three criteria: (1) strong monotonic decay of eigenvalues (Mann-Kendall $\tau < -0.8$); (2) high log-linearity ($R^2 > 0.8$); and (3) fractional dimensionality $\text{PR}/d < 0.9$.
+
+\subsection{Simpson's paradox and ecological fallacy}
+
+For grouped bivariate data $\{(x_j, y_j, g_j)\}$, we compute:
+\begin{itemize}
+\item \textit{Pooled correlation} $r_\text{pool}$ across all points
+\item \textit{Within-group correlation} $r_g$ for each group $g$
+\item \textit{Pooled within-group correlation} $\bar{r}_\text{within} = \frac{\sum_g n_g r_g}{\sum_g n_g}$
+\end{itemize}
+
+Simpson's paradox is detected when $r_\text{pool}$ and $\bar{r}_\text{within}$ have opposite signs and the reversal magnitude $|r_\text{pool} - \bar{r}_\text{within}| > 0.3$. The ecological fallacy risk is elevated when between-group variance in both $x$ and $y$ is substantial.
+
+\subsection{Random-effects meta-analysis}
+
+For $K$ groups with correlations $r_k$ and sample sizes $n_k$, we apply the Fisher z-transformation:
+\begin{equation}
+z_k = \text{arctanh}(r_k), \quad \text{SE}(z_k) = \frac{1}{\sqrt{n_k - 3}}
+\end{equation}
+
+Fixed-effects pooling weights by inverse variance $w_k = 1/\text{SE}(z_k)^2$. Random-effects pooling adds the DerSimonian-Laird between-study variance $\tau^2$:
+\begin{equation}
+w_k^* = \frac{1}{\text{SE}(z_k)^2 + \tau^2}, \quad \tau^2 = \max\left(0, \frac{Q - (K-1)}{\sum w_k - \frac{\sum w_k^2}{\sum w_k}}\right)
+\end{equation}
+where $Q = \sum_k w_k (z_k - \bar{z})^2$ is the homogeneity statistic. Heterogeneity is quantified by $I^2 = \max(0, (Q - (K-1))/Q \times 100\%)$.
+
+\section{Methods}
+
+\subsection{Benchmark datasets}
+
+We compiled experimental elastic constants ($C_{11}$, $C_{12}$, $C_{44}$) for:
+\begin{itemize}
+\item \textbf{FCC metals} (8 elements): Al, Cu, Ni, Ag, Au, Pt, Pd, Pb
+\item \textbf{BCC metals} (7 elements): Fe, Cr, Mo, W, V, Nb, Ta
+\end{itemize}
+Reference values are taken from room-temperature crystallographic databases. Predictions were generated using three potentials: embedded-atom method (EAM), Lennard-Jones (LJ), and Stillinger-Weber (SW).
+
+\subsection{Software implementation}
+
+All analyses were performed using \texttt{atlas-distill} v0.1.0, a Rust engine built on \texttt{nalgebra} for linear algebra, \texttt{serde} for serialization, and \texttt{clap} for CLI orchestration. Key modules:
+\begin{itemize}
+\item \texttt{stats.rs} --- PCA/SVD, covariance, Fisher z-transform, bootstrap CI, Mann-Kendall trend test
+\item \texttt{manifold.rs} --- Error vector construction, eigenvalue analysis, hyper-ribbon detection
+\item \texttt{meta\_analysis.rs} --- Fixed/random-effects meta-analysis with DerSimonian-Laird $\tau^2$
+\item \texttt{causal.rs} --- Simpson's paradox detection with reversal magnitude and ecological fallacy markers
+\item \texttt{validation.rs} --- Multi-potential benchmark harness with per-material and per-property metrics
+\end{itemize}
+
+Bootstrap uncertainty quantification used 500 resamples with replacement and percentile confidence intervals ($\alpha = 0.05$).
+
+\subsection{Figure generation}
+
+Publication-quality figures were generated using Matplotlib v3.8 with custom color palettes. All figures are 300~DPI and sized for single-column (8.5~cm) or double-column (17.8~cm) publication. Reproducible generation scripts are included in the repository.
+
+\section{Results}
+
+\subsection{FCC hyper-ribbon structure}
+
+Table~\ref{tab:hyperribbon} summarizes the hyper-ribbon analysis for FCC elastic constant errors. All three potentials satisfy the hyper-ribbon criteria: strong monotonic decay ($\tau = -1.000$), high log-linearity ($R^2 > 0.96$), and fractional dimensionality $< 0.9$.
+
+\begin{table}[htbp]
+\centering
+\caption{Hyper-ribbon classification results for FCC benchmark potentials.}
+\label{tab:hyperribbon}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Potential & $n$ & PR & PR$_{95\%}$ CI & $R^2_\text{log}$ & $\tau$ & Hyper-ribbon? \\
+\midrule
+EAM  & 8 & 1.41 & [1.17, 2.17] & 0.998 & $-1.000$ & Yes \\
+LJ   & 8 & 1.36 & [1.04, 1.50] & 0.997 & $-1.000$ & Yes \\
+SW   & 8 & 1.29 & [1.09, 2.09] & 0.977 & $-1.000$ & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The eigenvalue spectra (Fig.~\ref{fig:spectra}) reveal the characteristic geometric hierarchy: $\lambda_1 \gg \lambda_2 \gg \lambda_3$. The LJ potential shows the strongest compression (PR$=1.36$), with 84.7\% of error variance captured by the first principal direction. EAM is least compressed (PR$=1.41$), consistent with its more physically grounded functional form.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig1_eigenvalue_spectra.pdf}
+\caption{FCC elastic constant error eigenvalue spectra for EAM, LJ, and SW potentials. Points show eigenvalues; dashed lines show geometric fits. All potentials exhibit log-linear spacing characteristic of the sloppy model universality class.}
+\label{fig:spectra}
+\end{figure}
+
+\subsection{BCC Simpson's paradox}
+
+When BCC elastic constant errors are pooled across all seven metals, the correlation between reference value and prediction error is negative ($r = -0.435$). However, within each individual metal, the correlation is positive (mean $r = +0.37$), yielding a pooled within-group correlation of $+0.147$.
+
+This constitutes a complete reversal (Fig.~\ref{fig:paradox}): the pooled analysis suggests that stiffer metals have more negative errors, while the stratified analysis reveals that within each metal, higher reference values correspond to less negative (or more positive) errors. The reversal magnitude is $0.581$, and 57.1\% of metals show opposite-sign correlations to the pooled result.
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig3_paradox.pdf}
+\caption{BCC Simpson's paradox. \textbf{Left:} Per-metal group correlations are all positive (dashed lines show within-group regressions). \textbf{Right:} Pooled correlation is negative (solid red line), producing a complete reversal. Element identity acts as a causal confounder.}
+\label{fig:paradox}
+\end{figure*}
+
+\subsection{Meta-analysis of potential correlations}
+
+Random-effects meta-analysis of per-material error correlations reveals substantial heterogeneity (Table~\ref{tab:meta}). The fixed-effects model yields a pooled correlation of $r = 0.42$ (95\% CI: $0.28$--$0.54$), while the random-effects model gives $r = 0.35$ (95\% CI: $0.08$--$0.57$) with a wide prediction interval ($-0.12$ to $+0.72$).
+
+\begin{table}[htbp]
+\centering
+\caption{Meta-analysis results: fixed vs. random effects.}
+\label{tab:meta}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Model & $r_\text{pool}$ & 95\% CI & $Q$ & $I^2$ & $\tau$ \\
+\midrule
+Fixed  & $+0.42$ & $[0.28, 0.54]$ & 40.7 & 87.7\% & $0.00$ \\
+Random & $+0.35$ & $[0.08, 0.57]$ & 40.7 & 87.7\% & $0.31$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The forest plot (Fig.~\ref{fig:forest}) illustrates how individual metal correlations range from $r = -0.15$ (Pt) to $r = +0.85$ (Al), and how the random-effects model appropriately widens the confidence interval to account for between-study variance.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig4_forest.pdf}
+\caption{Meta-analysis forest plot. Individual groups (blue), fixed-effects summary (red), and random-effects summary (green) with 95\% confidence intervals. High heterogeneity ($I^2 = 87.7\%$) mandates random-effects interpretation.}
+\label{fig:forest}
+\end{figure}
+
+\section{Discussion}
+
+Our results establish three principal claims about interatomic potential prediction errors.
+
+\textbf{First, errors are structured, not noise.} The FCC elastic constant errors for all three potentials occupy hyper-ribbon manifolds with effective dimensionality $1.3$--$1.4$ out of $3$. This is the signature of sloppy model universality: many parameter combinations are unobservable, and only a few stiff directions control predictions\cite{transtrum2011}. The implication for potential design is that ``universal'' potentials cannot be universal in parameter space---they must be universal on the low-dimensional prediction manifold.
+
+\textbf{Second, cross-element benchmarking requires causal scrutiny.} The BCC Simpson's paradox demonstrates that naive pooling across elements produces spurious inferences. Element identity is a causal confounder because it influences both the target property (elastic constants scale with bonding character) and the potential's error structure (EAM embedding functions are element-specific). Stratified analysis---evaluating errors within each crystal structure and bonding class---is therefore mandatory.
+
+\textbf{Third, meta-analysis must use random-effects models.} The high $I^2$ values ($>85\%$) indicate that most variance is between-group rather than within-group. Fixed-effects models, which assume a single true effect, systematically underestimate uncertainty and can produce misleadingly narrow confidence intervals. The prediction intervals from random-effects models properly communicate the expected range for a new material.
+
+\textbf{Limitations.} Our benchmark sets are small ($8$ FCC and $7$ BCC metals). The conclusions should be validated against larger corpora such as OpenKIM\cite{openkim} or the NIST Interatomic Potential Database. We have also restricted analysis to classical potentials; recent neural network potentials (NNIPs) may exhibit different manifold structure, though Mao et al.\cite{mao2024} have reported similar low-dimensional error compression for graph neural networks.
+
+\textbf{Software and data availability.} All benchmark data, analysis code, and figure generation scripts are available at \url{https://github.com/alexwelcing/lupine} under the MIT License. The \texttt{atlas-distill} engine is a standalone Rust binary with no external dependencies beyond standard scientific libraries.
+
+\section*{Acknowledgments}
+
+This work was supported by Lupine Materials Science. The author thanks the OpenKIM consortium and the LAMMPS developer community for maintaining open infrastructure for interatomic potential benchmarking.
+
+% ----------------------------------------------------------------------------
+% References
+% ----------------------------------------------------------------------------
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

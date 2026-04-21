@@ -16,7 +16,9 @@ export interface ExportRequest {
   transparent?: boolean;
   durationSeconds?: number;
   orbit?: boolean;
+  cinematic?: boolean;
   baseName?: string;
+  fileStream?: FileSystemWritableFileStream;
   onComplete?: (success: boolean) => void;
 }
 
@@ -50,6 +52,7 @@ export interface AppState {
   renderStyle: RenderStyle;
   atomScale: number;
   backgroundPreset: string;
+  backgroundStyle: 'linear' | 'radial' | 'spotlight';
 
   // ─── Effects ───
   ssao: boolean;
@@ -132,6 +135,7 @@ export interface AppState {
   setRenderStyle: (style: RenderStyle) => void;
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
+  setBackgroundStyle: (style: AppState['backgroundStyle']) => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
   clearFile: () => void;
   reset: () => void;
@@ -163,6 +167,7 @@ const DEFAULTS = {
   renderStyle: 'standard' as RenderStyle,
   atomScale: 1.0,
   backgroundPreset: 'deep',
+  backgroundStyle: 'linear' as const,
   ssao: true,
   ssaoIntensity: 0.5,
   bloom: false,
@@ -260,6 +265,7 @@ export const useStore = create<AppState>()(
     setRenderStyle: (renderStyle) => set({ renderStyle }),
     setAtomScale: (atomScale) => set({ atomScale }),
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
+    setBackgroundStyle: (backgroundStyle) => set({ backgroundStyle }),
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),
@@ -381,6 +387,7 @@ export const useStore = create<AppState>()(
         axes: s.showAxes ? 1 : 0,
         as: s.atomScale,
         bg: s.backgroundPreset,
+        bgs: s.backgroundStyle,
         cp3: s.cameraPosition,
         ct: s.cameraTarget,
         fov: s.cameraFov,
@@ -411,6 +418,7 @@ export const useStore = create<AppState>()(
           showAxes: s.axes !== 0,
           atomScale: s.as ?? 1.0,
           backgroundPreset: s.bg ?? 'deep',
+          backgroundStyle: s.bgs ?? 'linear',
           cameraPosition: s.cp3 ?? [0, 0, 50],
           cameraTarget: s.ct ?? [0, 0, 0],
           cameraFov: s.fov ?? 50,

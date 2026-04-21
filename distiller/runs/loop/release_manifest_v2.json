@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "date": "2026-04-13",
+  "artifacts": {
+    "corpus": [
+      {"filename": "run5.log", "size_bytes": 11765},
+      {"filename": "literature_scan_v2.json", "size_bytes": 9820},
+      {"filename": "run4.log", "size_bytes": 16722},
+      {"filename": "literature_summary_v1.md", "size_bytes": 4297},
+      {"filename": "literature_scan_v1.json", "size_bytes": 5969},
+      {"filename": "literature_search_v2.txt", "size_bytes": 50034}
+    ],
+    "distill": [
+      {"filename": "run2.log", "size_bytes": 16657},
+      {"filename": "test_results_v1.txt", "size_bytes": 6690},
+      {"filename": "test_operators.py", "size_bytes": 8092},
+      {"filename": "run.log", "size_bytes": 18376},
+      {"filename": "distill_summary_v1.md", "size_bytes": 2599},
+      {"filename": "operator_proposals_v2.json", "size_bytes": 8912},
+      {"filename": "mathlib_analysis_v2.txt", "size_bytes": 306347},
+      {"filename": "operator_proposals_v1.json", "size_bytes": 1171}
+    ],
+    "counterexample": [
+      {"filename": "failure_summary_v1.md", "size_bytes": 4696},
+      {"filename": "failure_analysis_v1.json", "size_bytes": 9189}
+    ],
+    "loop": [
+      {"filename": "run2.log", "size_bytes": 7754},
+      {"filename": "run.log", "size_bytes": 16041},
+      {"filename": "release_notes_v1.md", "size_bytes": 3684},
+      {"filename": "release_manifest_v1.json", "size_bytes": 2919}
+    ]
+  },
+  "pipeline_metrics": {
+    "profiles_completed": 3,
+    "total_runs": 5,
+    "improvement_delta": {
+      "corpus_v1_to_v2": "added per_metal_errors, citation_count, doi_verified",
+      "distill_v1_to_v2": "added test_operators.py with MAE=1.756 GPa",
+      "new_counterexample": "failure_analysis with 11 identified failures"
+    }
+  }
+}

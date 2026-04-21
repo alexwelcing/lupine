@@ -1,0 +1,12 @@
+# corpus profile — primary route (provider A: MiniMax)
+# Literature ingestion + extraction. Bulk text → favor MiniMax M2.7's 5-hr
+# rolling window over per-call billing.
+extends: ../../hermes/cli-config.base.yaml
+
+model:
+  default: "MiniMax-M2.7"
+  provider: "minimax"
+  base_url: "https://api.minimax.io/v1"
+
+memory:
+  project_memory: agents/profiles/corpus/MEMORY.md

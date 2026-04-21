@@ -1,0 +1,11 @@
+# loop profile — primary route (provider A: MiniMax M2.7)
+# Internal success-loop closure: reports, packs, artifacts.
+extends: ../../hermes/cli-config.base.yaml
+
+model:
+  default: "MiniMax-M2.7"
+  provider: "minimax"
+  base_url: "https://api.minimax.io/v1"
+
+memory:
+  project_memory: agents/profiles/loop/MEMORY.md

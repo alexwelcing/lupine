@@ -1,5 +1,100 @@
 [
   {
+    "id": "oscillation_timeseries",
+    "title": "Time-Series Oscillation",
+    "subtitle": "Test dataset for 60fps property interpolation",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1,000",
+    "frames": "30",
+    "file": "archive/oscillation_timeseries.lammpstrj",
+    "available": true,
+    "colors": [
+      "#f542d4",
+      "#87247a",
+      "#c78aba"
+    ],
+    "metadata": {
+      "method": "Synthetic Oscillation",
+      "potential": "N/A",
+      "temperature": "Oscillating",
+      "ensemble": "N/A",
+      "reference": "Used to validate playback extrapolation logic."
+    },
+    "featured": true
+  },
+  {
+    "id": "dang_cu_dislocation",
+    "title": "FCC Cu Dislocation-GB Tracking",
+    "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation–grain-boundary interactions matrix",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "Variable",
+    "frames": "100+",
+    "file": "archive/DisGB_data.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4287f5",
+      "#244a87",
+      "#8aa1c7"
+    ],
+    "metadata": {
+      "method": "Dislocation-GB dynamics MD",
+      "potential": "EAM (Mishin/Cu)",
+      "temperature": "Analytical Time-Series",
+      "ensemble": "NPT / Dynamic Strain",
+      "reference": "Perfect testbed for GNN Topology Error Mapping to characterize complex GB network transitions.",
+      "doi": "10.1038/s41597-025-05256-6"
+    },
+    "featured": true
+  },
+  {
+    "id": "chen_ti_grip",
+    "title": "hcp Ti Grand-Canonical GB Optimization",
+    "subtitle": "Enze Chen et al. (Nat Commun 2024): Automated phase discovery using GRIP",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "Variable",
+    "frames": "Multi-phase",
+    "file": "archive/GRIP_snapshot.lammpstrj",
+    "available": true,
+    "colors": [
+      "#87f542",
+      "#40751f",
+      "#abd68b"
+    ],
+    "metadata": {
+      "method": "Grand-canonical evolutionary optimization",
+      "potential": "MEAM",
+      "temperature": "Variable",
+      "ensemble": "SGC",
+      "reference": "Requires Phonon Benchmarking (PDOS) to validate the dynamical stability of newly discovered hcp Ti GB phases.",
+      "doi": "10.1038/s41467-024-51330-9"
+    },
+    "featured": true
+  },
+  {
+    "id": "devulapalli_segregation",
+    "title": "Topological GB Segregation Transitions",
+    "subtitle": "Vivek Devulapalli et al. (Science 2024): SGC MD/MC thermodynamic excess mapping",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "Variable",
+    "frames": "Phase Transition",
+    "file": "archive/MDMC-SGC.lammpstrj",
+    "available": true,
+    "colors": [
+      "#f54242",
+      "#802121",
+      "#c28080"
+    ],
+    "metadata": {
+      "method": "Semi-grand canonical MD/MC workflow",
+      "potential": "Multi-component EAM",
+      "temperature": "Variable",
+      "ensemble": "SGC / MDMC",
+      "reference": "Candidate for Multi-Fidelity UQ (glimMER) to correct biases in the calculated segregation thermodynamic excess properties.",
+      "doi": "10.1126/science.adq4147"
+    },
+    "featured": true
+  },
+  {
     "id": "cuzr_melt",
     "title": "Cu₆₄Zr₃₆ Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",

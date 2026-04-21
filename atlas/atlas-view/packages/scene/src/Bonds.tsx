@@ -13,6 +13,8 @@ import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap } from './constants';
 
 interface BondsProps {
   frame: Frame;
+  nextFrame?: Frame;
+  interpolationFactor?: number;
   colormap?: ColormapName;
   colorMode?: 'type' | 'uniform' | 'property';
   maxBondLength?: number;
@@ -26,6 +28,8 @@ interface BondsProps {
 
 export function Bonds({
   frame,
+  nextFrame,
+  interpolationFactor,
   colormap = 'viridis',
   colorMode = 'type',
   maxBondLength = 2.5,
@@ -71,39 +75,52 @@ export function Bonds({
   }, [material]);
 
   // Rebuild bonds when frame or cutoff changes
-  useEffect(() => {
-    const group = groupRef.current;
-    if (!group || !frame || frame.natoms < 2) return;
+  // Find bonds only when topology changes
+  const bondPairs = useMemo(() => {
+    if (!frame || frame.natoms < 2) return [];
 
-    // Clear previous bond meshes
-    while (group.children.length > 0) {
-      group.remove(group.children[0]);
-    }
-
-    // Build spatial hash and find bonds
-    let bondPairs: Array<[number, number]> = [];
     if (frame.bonds && frame.bonds.length > 0) {
+      const pairs: Array<[number, number]> = [];
       for (let i = 0; i < frame.bonds.length; i += 2) {
-        bondPairs.push([frame.bonds[i], frame.bonds[i + 1]]);
+        pairs.push([frame.bonds[i], frame.bonds[i + 1]]);
       }
-    } else {
-      spatialHashRef.current = new SpatialHash3D(maxBondLength);
-      spatialHashRef.current.build(frame.positions, frame.natoms);
-      bondPairs = findBondsFast(
-        frame,
-        spatialHashRef.current,
-        maxBondLength,
-        typeCutoffs,
-        periodic,
-        cellBounds
-      );
+      return pairs;
     }
 
-    const halfCount = bondPairs.length * 2;
-    if (halfCount === 0) return;
+    spatialHashRef.current = new SpatialHash3D(maxBondLength);
+    spatialHashRef.current.build(frame.positions, frame.natoms);
+    return findBondsFast(
+      frame,
+      spatialHashRef.current,
+      maxBondLength,
+      typeCutoffs,
+      periodic,
+      cellBounds
+    );
+  }, [frame, maxBondLength, typeCutoffs, periodic, cellBounds]);
 
-    const mesh = new THREE.InstancedMesh(tubeGeo, material, halfCount);
-    const color = new THREE.Color();
+  // Dynamic capacity mapping (vector-style growth) starting at 20k bonds minimum
+  const MIN_BOND_CAPACITY = 20000;
+  const halfCount = bondPairs.length * 2;
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const capacityRef = useRef(Math.max(MIN_BOND_CAPACITY, Math.ceil(halfCount * 1.2)));
+  
+  if (halfCount > capacityRef.current) {
+    capacityRef.current = Math.max(capacityRef.current * 1.5, Math.ceil(halfCount * 1.2));
+  }
+  const capacity = capacityRef.current;
+
+  // Update instance matrices smoothly using requestAnimationFrame/useEffect
+  useEffect(() => {
+    const mesh = meshRef.current;
+    if (!mesh || halfCount === 0) return;
+
+    if (!mesh.instanceMatrix) return;
+    
+    // Bounds check to prevent drawing beyond pre-allocated memory
+    const drawCount = Math.min(halfCount, capacity);
+    mesh.count = drawCount;
+
     const posA = new THREE.Vector3();
     const posB = new THREE.Vector3();
     const mid = new THREE.Vector3();
@@ -111,21 +128,66 @@ export function Bonds({
     const UP = new THREE.Vector3(0, 1, 0);
     const midPoint = new THREE.Vector3();
     const axisVec = new THREE.Vector3(1, 0, 0);
+    const color = new THREE.Color();
 
-    for (let i = 0; i < bondPairs.length; i++) {
+    for (let i = 0; i < drawCount / 2; i++) {
       const [a, b] = bondPairs[i];
-      posA.set(
-        frame.positions[a * 3],
-        frame.positions[a * 3 + 1],
-        frame.positions[a * 3 + 2]
-      );
-      posB.set(
-        frame.positions[b * 3],
-        frame.positions[b * 3 + 1],
-        frame.positions[b * 3 + 2]
-      );
+      let ax = frame.positions[a * 3];
+      let ay = frame.positions[a * 3 + 1];
+      let az = frame.positions[a * 3 + 2];
+      let bx = frame.positions[b * 3];
+      let by = frame.positions[b * 3 + 1];
+      let bz = frame.positions[b * 3 + 2];
 
-      // Handle periodic wrap for visual rendering if bond is "unreasonably" long
+      const t = interpolationFactor ?? 0;
+      const canInterpolate = nextFrame && t > 0 && nextFrame.positions && nextFrame.positions.length >= frame.positions.length;
+      
+      if (canInterpolate) {
+          let next_ax = nextFrame.positions[a * 3];
+          let next_ay = nextFrame.positions[a * 3 + 1];
+          let next_az = nextFrame.positions[a * 3 + 2];
+          let d_ax = next_ax - ax;
+          let d_ay = next_ay - ay;
+          let d_az = next_az - az;
+          
+          let next_bx = nextFrame.positions[b * 3];
+          let next_by = nextFrame.positions[b * 3 + 1];
+          let next_bz = nextFrame.positions[b * 3 + 2];
+          let d_bx = next_bx - bx;
+          let d_by = next_by - by;
+          let d_bz = next_bz - bz;
+
+          if (frame.boxBounds) {
+              const bsx = frame.boxBounds[1] - frame.boxBounds[0];
+              const bsy = frame.boxBounds[3] - frame.boxBounds[2];
+              const bsz = frame.boxBounds[5] - frame.boxBounds[4];
+              
+              if (d_ax > bsx / 2) d_ax -= bsx;
+              if (d_ax < -bsx / 2) d_ax += bsx;
+              if (d_bx > bsx / 2) d_bx -= bsx;
+              if (d_bx < -bsx / 2) d_bx += bsx;
+              
+              if (d_ay > bsy / 2) d_ay -= bsy;
+              if (d_ay < -bsy / 2) d_ay += bsy;
+              if (d_by > bsy / 2) d_by -= bsy;
+              if (d_by < -bsy / 2) d_by += bsy;
+              
+              if (d_az > bsz / 2) d_az -= bsz;
+              if (d_az < -bsz / 2) d_az += bsz;
+              if (d_bz > bsz / 2) d_bz -= bsz;
+              if (d_bz < -bsz / 2) d_bz += bsz;
+          }
+          ax += d_ax * t;
+          ay += d_ay * t;
+          az += d_az * t;
+          bx += d_bx * t;
+          by += d_by * t;
+          bz += d_bz * t;
+      }
+
+      posA.set(ax, ay, az);
+      posB.set(bx, by, bz);
+
       if (periodic && cellBounds) {
         let dx = posB.x - posA.x;
         let dy = posB.y - posA.y;
@@ -145,7 +207,6 @@ export function Bonds({
       const bondLen = posA.distanceTo(posB);
       const halfLen = bondLen / 2;
 
-      // Half A: from atom A to midpoint
       dir.subVectors(mid, posA).normalize();
       midPoint.lerpVectors(posA, mid, 0.5);
       dummy.position.copy(midPoint);
@@ -168,7 +229,6 @@ export function Bonds({
       color.setRGB(tcA[0], tcA[1], tcA[2]);
       mesh.setColorAt(i * 2, color);
 
-      // Half B: from midpoint to atom B
       dir.subVectors(posB, mid).normalize();
       midPoint.lerpVectors(mid, posB, 0.5);
       dummy.position.copy(midPoint);
@@ -194,18 +254,16 @@ export function Bonds({
 
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-     mesh.frustumCulled = false;
-    group.add(mesh);
+  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy]);
 
-    // Cleanup on re-run or unmount: remove mesh from group
-    return () => {
-      while (group.children.length > 0) {
-        group.remove(group.children[0]);
-      }
-    };
-  }, [frame, colormap, colorMode, maxBondLength, typeCutoffs, periodic, cellBounds, tubeGeo, material, radius, dummy]);
-
-  return <group ref={groupRef} />;
+  return (
+    <instancedMesh
+      ref={meshRef}
+      args={[tubeGeo, material, capacity]}
+      frustumCulled={false}
+      visible={halfCount > 0}
+    />
+  );
 }
 
 /**

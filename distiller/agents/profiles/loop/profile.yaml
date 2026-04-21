@@ -1,0 +1,14 @@
+name: loop
+description: Internal success-loop closure profile for reports, packs, and artifacts.
+memory:
+  project_memory: agents/profiles/loop/MEMORY.md
+workers:
+- ReleaseAgent
+tools:
+- shell
+model_routing:
+  primary_provider: minimax
+  primary_model: MiniMax-M2.7
+  fallback_provider: zai
+  fallback_model: glm-5.1
+  routing_rationale: Fast anthropic-compat (554ms) for packaging

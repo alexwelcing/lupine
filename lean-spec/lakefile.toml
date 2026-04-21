@@ -1,0 +1,10 @@
+name = "OpenDistillationFactory"
+defaultTargets = ["OpenDistillationFactory"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "master"
+
+[[lean_lib]]
+name = "OpenDistillationFactory"

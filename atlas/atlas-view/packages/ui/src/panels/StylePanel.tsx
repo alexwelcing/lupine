@@ -46,10 +46,11 @@ export function StylePanel({ availableProperties, bgPresets }: StylePanelProps) 
   const {
     colorMode, colorProperty, colormap, atomScale,
     showCell, showAxes, showBonds, bondCutoff,
-    backgroundPreset,
+    backgroundPreset, setBackgroundPreset,
+    backgroundStyle, setBackgroundStyle,
     setColorMode, setColorProperty, setColormap,
     setAtomScale, toggleCell, toggleAxes, toggleBonds,
-    setBondCutoff, setRenderStyle, setBackgroundPreset,
+    setBondCutoff, setRenderStyle,
   } = useStore();
 
   return (
@@ -253,6 +254,21 @@ export function StylePanel({ availableProperties, bgPresets }: StylePanelProps) 
 
           {/* ═══ Background ═══ */}
           <QuantumSection label="Background" defaultOpen={false}>
+            <div style={{ display: 'flex', gap: 4, marginBottom: 12 }}>
+              {([
+                { id: 'linear' as const, label: 'Linear' },
+                { id: 'radial' as const, label: 'Radial' },
+                { id: 'spotlight' as const, label: 'Spotlight' },
+              ]).map(bs => (
+                <IsotopeChip
+                  key={bs.id}
+                  label={bs.label}
+                  selected={backgroundStyle === bs.id}
+                  onClick={() => setBackgroundStyle(bs.id)}
+                />
+              ))}
+            </div>
+
             <CovalentGrid columns={2} gap={8}>
               {Object.entries(bgPresets).map(([key, preset]) => (
                 <AtomicGlass

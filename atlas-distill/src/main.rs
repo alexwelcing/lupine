@@ -1,9 +1,18 @@
 mod discovery;
+pub mod domain;
 mod fitting;
 mod ingest;
 mod literature;
 mod observables;
+mod pipeline;
 mod report;
+mod validation;
+mod formalize;
+mod stats;
+mod manifold;
+mod meta_analysis;
+mod causal;
+mod benchmark;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
@@ -75,6 +84,88 @@ enum Commands {
         #[command(subcommand)]
         action: LitAction,
     },
+    /// Compute FCC elastic properties from C11, C12, C44
+    Elastic {
+        /// Elastic constant C11 (GPa)
+        #[arg(long)]
+        c11: f64,
+        /// Elastic constant C12 (GPa)
+        #[arg(long)]
+        c12: f64,
+        /// Elastic constant C44 (GPa)
+        #[arg(long)]
+        c44: f64,
+        /// Optional: compare against reference C11
+        #[arg(long)]
+        ref_c11: Option<f64>,
+        /// Optional: compare against reference C12
+        #[arg(long)]
+        ref_c12: Option<f64>,
+        /// Optional: compare against reference C44
+        #[arg(long)]
+        ref_c44: Option<f64>,
+        /// Optional: material name for provenance tagging
+        #[arg(long, default_value = "unknown")]
+        material: String,
+    },
+    /// Run EAM ensemble operator validation harness
+    Validate {
+        /// Run full multi-potential benchmark report
+        #[arg(long)]
+        full: bool,
+        /// Use BCC metals instead of FCC
+        #[arg(long)]
+        bcc: bool,
+    },
+    /// Analyze error manifold structure of benchmark data
+    Manifold {
+        /// Analyze BCC metals instead of FCC
+        #[arg(long)]
+        bcc: bool,
+    },
+    /// Run meta-analysis on grouped correlations
+    MetaAnalyze {
+        /// Group data as JSON array of {group, n, r}
+        #[arg(long)]
+        groups: Option<PathBuf>,
+    },
+    /// Detect Simpson's paradox in grouped data
+    DetectParadox {
+        /// Data file: CSV with columns group,x,y
+        #[arg(long)]
+        data: Option<PathBuf>,
+        /// Use built-in reversal example
+        #[arg(long)]
+        example: bool,
+        /// Use real BCC elastic constant data (EAM predictions vs reference)
+        #[arg(long)]
+        bcc: bool,
+    },
+    /// Load and analyze an external benchmark database (CSV or JSON)
+    Benchmark {
+        /// Path to benchmark file (.csv or .json)
+        path: PathBuf,
+        /// Run manifold analysis
+        #[arg(long)]
+        manifold: bool,
+        /// Run meta-analysis on per-material error correlations
+        #[arg(long)]
+        meta: bool,
+        /// Run full validation report
+        #[arg(long)]
+        full: bool,
+    },
+    /// Run Hermes pipeline orchestrator
+    Pipeline {
+        /// Hermes provider
+        #[arg(long, default_value = "minimax")]
+        provider: String,
+        /// Dry run mode
+        #[arg(long)]
+        dry_run: bool,
+    },
+    /// Export computationally validated relationships into Lean 4 specification
+    Formalize,
 }
 
 #[derive(Subcommand)]
@@ -134,6 +225,21 @@ fn main() -> Result<()> {
             degree,
         } => cmd_fit(&data, &model, degree),
         Commands::Literature { action } => cmd_literature(action),
+        Commands::Elastic {
+            c11, c12, c44,
+            ref_c11, ref_c12, ref_c44,
+            material,
+        } => cmd_elastic(c11, c12, c44, ref_c11, ref_c12, ref_c44, &material),
+        Commands::Validate { full, bcc } => cmd_validate(full, bcc),
+        Commands::Manifold { bcc } => cmd_manifold(bcc),
+        Commands::MetaAnalyze { groups } => cmd_meta_analyze(groups.as_ref()),
+        Commands::DetectParadox { data, example, bcc } => cmd_detect_paradox(data.as_ref(), example, bcc),
+        Commands::Benchmark { path, manifold, meta, full } => cmd_benchmark(&path, manifold, meta, full),
+        Commands::Pipeline { provider, dry_run } => cmd_pipeline(&provider, dry_run),
+        Commands::Formalize => {
+            formalize::write_lean_spec()?;
+            Ok(())
+        }
     }
 }
 
@@ -470,4 +576,331 @@ fn cmd_literature(action: LitAction) -> Result<()> {
             Ok(())
         }
     }
+}
+
+fn cmd_elastic(
+    c11: f64, c12: f64, c44: f64,
+    ref_c11: Option<f64>, ref_c12: Option<f64>, ref_c44: Option<f64>,
+    material: &str,
+) -> Result<()> {
+    use observables::elasticity::{bulk_modulus_k, shear_modulus_g, anisotropy_a, relative_error};
+    use domain::provenance::fnv1a64_hex;
+
+    let k = bulk_modulus_k(c11, c12);
+    let g = shear_modulus_g(c11, c12, c44);
+    let a = anisotropy_a(c11, c12, c44);
+
+    // Provenance digest of inputs
+    let input_str = format!("{material}:C11={c11},C12={c12},C44={c44}");
+    let digest = fnv1a64_hex(input_str.as_bytes());
+
+    eprintln!("  ╔══════════════════════════════════════════════════════════╗");
+    eprintln!("  ║  FCC Elastic Properties: {:30} ║", material);
+    eprintln!("  ╠══════════════════════════════════════════════════════════╣");
+    eprintln!("  ║  Input:");
+    eprintln!("  ║    C11 = {c11:8.2} GPa");
+    eprintln!("  ║    C12 = {c12:8.2} GPa");
+    eprintln!("  ║    C44 = {c44:8.2} GPa");
+    eprintln!("  ║");
+    eprintln!("  ║  Derived:");
+    eprintln!("  ║    Bulk modulus  K = {k:8.3} GPa");
+    eprintln!("  ║    Shear modulus G = {g:8.3} GPa");
+    eprintln!("  ║    Anisotropy    A = {a:8.6}");
+    eprintln!("  ║    K/G ratio       = {:.6}", k / g);
+
+    // If reference values provided, compute relative errors
+    if let (Some(rc11), Some(rc12), Some(rc44)) = (ref_c11, ref_c12, ref_c44) {
+        let ref_k = bulk_modulus_k(rc11, rc12);
+        let ref_g = shear_modulus_g(rc11, rc12, rc44);
+        let ref_a = anisotropy_a(rc11, rc12, rc44);
+
+        eprintln!("  ║");
+        eprintln!("  ║  vs Reference (C11={rc11}, C12={rc12}, C44={rc44}):");
+        eprintln!("  ║    ΔK = {:+.3} GPa ({:+.2}%)", k - ref_k, relative_error(k, ref_k) * 100.0);
+        eprintln!("  ║    ΔG = {:+.3} GPa ({:+.2}%)", g - ref_g, relative_error(g, ref_g) * 100.0);
+        eprintln!("  ║    ΔA = {:+.6}   ({:+.2}%)", a - ref_a, relative_error(a, ref_a) * 100.0);
+    }
+
+    eprintln!("  ║");
+    eprintln!("  ║  Provenance: {digest}");
+    eprintln!("  ╚══════════════════════════════════════════════════════════╝");
+
+    // JSON output to stdout
+    let json = serde_json::json!({
+        "material": material,
+        "input": { "C11": c11, "C12": c12, "C44": c44 },
+        "derived": {
+            "bulk_modulus_K": k,
+            "shear_modulus_G": g,
+            "anisotropy_A": a,
+            "K_over_G": k / g,
+        },
+        "provenance_digest": digest,
+    });
+    println!("{}", serde_json::to_string_pretty(&json)?);
+
+    Ok(())
+}
+
+fn cmd_pipeline(provider: &str, dry_run: bool) -> Result<()> {
+    pipeline::run_pipeline(provider, dry_run);
+    Ok(())
+}
+
+fn cmd_validate(full: bool, use_bcc: bool) -> Result<()> {
+    if full {
+        if use_bcc {
+            let entries = validation::build_bcc_benchmark_entries();
+            let metrics = validation::compute_potential_metrics(&entries);
+            let correlations = validation::error_correlations(&entries);
+            let ranking = validation::rank_potentials(&metrics, "mae");
+
+            let props = vec!["C11".to_string(), "C12".to_string(), "C44".to_string()];
+            let vectors = manifold::build_error_vectors(&entries, &props);
+            let manifold = manifold::analyze_manifold(&vectors);
+            let manifold_json = manifold::export_json(&manifold);
+
+            let report = validation::ValidationReport {
+                n_potentials: 2,
+                n_materials: 7,
+                n_properties: 3,
+                n_entries: entries.len(),
+                metrics,
+                error_correlations: correlations,
+                manifold_json,
+                ranking_by_mae: ranking,
+            };
+            validation::print_validation_report(&report);
+            crate::manifold::print_summary(&manifold);
+
+            let json = serde_json::to_string_pretty(&report)?;
+            std::fs::write("bcc_validation_report.json", &json)?;
+            eprintln!("\n  ✦ BCC validation report → bcc_validation_report.json");
+        } else {
+            let report = validation::run_full_validation();
+            validation::print_validation_report(&report);
+
+            // Also run manifold analysis output
+            eprintln!();
+            let manifold: Vec<crate::manifold::ManifoldAnalysis> =
+                serde_json::from_str(&report.manifold_json).unwrap_or_default();
+            crate::manifold::print_summary(&manifold);
+
+            // Save report
+            let json = serde_json::to_string_pretty(&report)?;
+            std::fs::write("validation_report.json", &json)?;
+            eprintln!("\n  ✦ Full validation report → validation_report.json");
+        }
+    } else {
+        let res = validation::run_validation();
+        eprintln!();
+        eprintln!("  ╔══════════════════════════════════════════════════════════╗");
+        eprintln!("  ║   EAM Ensemble Operator Validation (Rust Port)         ║");
+        eprintln!("  ╚══════════════════════════════════════════════════════════╝");
+        eprintln!();
+
+        for msg in &res.gate_messages {
+            let badge = if msg.contains("PASS") { "✅" } else { "❌" };
+            eprintln!("  {} {}", badge, msg);
+        }
+
+        let agg = &res.ensemble_metrics;
+        eprintln!("\n  Ensemble MAE:  {:.3} GPa", agg.mae);
+        eprintln!("  Ensemble RMSE: {:.3} GPa", agg.rmse);
+        eprintln!("  Worst-case:    {:.3} GPa", agg.max_error);
+
+        eprintln!("\n  {:>5}  {:>8}  {:>8}  {:>8}  {:>8}", "Metal", "MAE", "C11 Err", "C12 Err", "C44 Err");
+        eprintln!("  {:>5}  {:>8}  {:>8}  {:>8}  {:>8}", "─────", "────────", "────────", "────────", "────────");
+        let mut metals: Vec<_> = res.per_metal.keys().collect();
+        metals.sort();
+        for m in metals {
+            let pm = &res.per_metal[m];
+            eprintln!("  {:>5}  {:8.3}  {:8.3}  {:8.3}  {:8.3}", m, pm.mae, pm.c11, pm.c12, pm.c44);
+        }
+
+        eprintln!("\n  {:>15}  {:>8}  {:>8}  {:>8}", "Operator", "MAE", "RMSE", "Max Err");
+        eprintln!("  {:>15}  {:>8}  {:>8}  {:>8}", "───────────────", "────────", "────────", "────────");
+        let mut ops: Vec<_> = res.operator_metrics.keys().collect();
+        ops.sort();
+        for op in ops {
+            let m = &res.operator_metrics[op];
+            eprintln!("  {:>15}  {:8.4}  {:8.4}  {:8.4}", op, m.mae, m.rmse, m.max_error);
+        }
+
+        let status = if res.pass_status { "PASS ✅" } else { "FAIL ❌" };
+        eprintln!("\n  Overall: {}", status);
+        eprintln!();
+    }
+
+    Ok(())
+}
+
+fn cmd_manifold(use_bcc: bool) -> Result<()> {
+    let manifold: Vec<crate::manifold::ManifoldAnalysis>;
+
+    if use_bcc {
+        let entries = validation::build_bcc_benchmark_entries();
+        let props = vec!["C11".to_string(), "C12".to_string(), "C44".to_string()];
+        let vectors = manifold::build_error_vectors(&entries, &props);
+        manifold = manifold::analyze_manifold(&vectors);
+        eprintln!("  ✦ Analyzing BCC metal error manifold ({} entries)", entries.len());
+    } else {
+        let report = validation::run_full_validation();
+        manifold = serde_json::from_str(&report.manifold_json).unwrap_or_default();
+        eprintln!("  ✦ Analyzing FCC metal error manifold");
+    }
+
+    crate::manifold::print_summary(&manifold);
+
+    // Save detailed JSON
+    let json = serde_json::to_string_pretty(&manifold)?;
+    let out_path = if use_bcc { "bcc_manifold_analysis.json" } else { "manifold_analysis.json" };
+    std::fs::write(out_path, &json)?;
+    eprintln!("\n  ✦ Manifold analysis → {}", out_path);
+
+    Ok(())
+}
+
+fn cmd_meta_analyze(groups_path: Option<&PathBuf>) -> Result<()> {
+    let groups: Vec<crate::meta_analysis::GroupCorrelation>;
+
+    if let Some(path) = groups_path {
+        let content = std::fs::read_to_string(path)?;
+        groups = serde_json::from_str(&content)
+            .map_err(|e| anyhow::anyhow!("Failed to parse group correlations: {}", e))?;
+    } else {
+        // Default: synthetic example showing heterogeneity
+        groups = vec![
+            crate::meta_analysis::GroupCorrelation { group_id: "Al".to_string(), n: 50, r: 0.85 },
+            crate::meta_analysis::GroupCorrelation { group_id: "Cu".to_string(), n: 50, r: 0.72 },
+            crate::meta_analysis::GroupCorrelation { group_id: "Ni".to_string(), n: 50, r: 0.68 },
+            crate::meta_analysis::GroupCorrelation { group_id: "Ag".to_string(), n: 50, r: 0.45 },
+            crate::meta_analysis::GroupCorrelation { group_id: "Au".to_string(), n: 50, r: 0.30 },
+            crate::meta_analysis::GroupCorrelation { group_id: "Pt".to_string(), n: 50, r: -0.15 },
+        ];
+    }
+
+    let fixed = crate::meta_analysis::fixed_effects_meta(&groups);
+    let random = crate::meta_analysis::random_effects_meta(&groups);
+
+    eprintln!();
+    eprintln!("  ╔════════════════════════════════════════════════════════════╗");
+    eprintln!("  ║  Meta-Analysis Comparison: Fixed vs Random Effects         ║");
+    eprintln!("  ╚════════════════════════════════════════════════════════════╝");
+
+    crate::meta_analysis::print_summary(&fixed);
+    crate::meta_analysis::print_summary(&random);
+
+    let json = serde_json::json!({
+        "fixed_effects": fixed,
+        "random_effects": random,
+    });
+    std::fs::write("meta_analysis.json", serde_json::to_string_pretty(&json)?)?;
+    eprintln!("\n  ✦ Meta-analysis results → meta_analysis.json");
+
+    Ok(())
+}
+
+fn cmd_detect_paradox(data_path: Option<&PathBuf>, use_example: bool, use_bcc: bool) -> Result<()> {
+    let data: Vec<crate::causal::GroupedPoint>;
+
+    if let Some(path) = data_path {
+        let content = std::fs::read_to_string(path)?;
+        let mut points = Vec::new();
+        for line in content.lines() {
+            let line = line.trim();
+            if line.is_empty() || line.starts_with('#') {
+                continue;
+            }
+            let parts: Vec<&str> = line.split(',').map(|s| s.trim()).collect();
+            if parts.len() >= 3 {
+                if let (Ok(x), Ok(y)) = (parts[1].parse::<f64>(), parts[2].parse::<f64>()) {
+                    points.push(crate::causal::GroupedPoint {
+                        group: parts[0].to_string(),
+                        x,
+                        y,
+                    });
+                }
+            }
+        }
+        data = points;
+    } else if use_bcc {
+        data = crate::causal::generate_bcc_paradox_example();
+    } else if use_example {
+        data = crate::causal::generate_reversal_example();
+    } else {
+        data = crate::causal::generate_simpsons_example();
+    }
+
+    let result = crate::causal::detect_simpsons_paradox(&data);
+    crate::causal::print_summary(&result);
+
+    let json = serde_json::to_string_pretty(&result)?;
+    std::fs::write("paradox_detection.json", &json)?;
+    eprintln!("\n  ✦ Paradox detection results → paradox_detection.json");
+
+    Ok(())
+}
+
+fn cmd_benchmark(
+    path: &PathBuf,
+    do_manifold: bool,
+    do_meta: bool,
+    do_full: bool,
+) -> Result<()> {
+    eprintln!("  ✦ Loading benchmark database: {}", path.display());
+    let entries = benchmark::load_auto(path)?;
+    let summary = benchmark::summarize(&entries);
+    benchmark::print_summary(&summary);
+
+    if do_manifold || do_full {
+        let props: Vec<String> = summary.properties.clone();
+        let vectors = manifold::build_error_vectors(&entries, &props);
+        if vectors.len() >= 3 {
+            let analysis = manifold::analyze_manifold(&vectors);
+            manifold::print_summary(&analysis);
+            let json = serde_json::to_string_pretty(&analysis)?;
+            std::fs::write("benchmark_manifold.json", &json)?;
+            eprintln!("\n  ✦ Manifold analysis → benchmark_manifold.json");
+        } else {
+            eprintln!("  ⚠ Not enough data for manifold analysis (need ≥3 material×potential groups)");
+        }
+    }
+
+    if do_meta || do_full {
+        // Build per-material group correlations (reference vs predicted)
+        use std::collections::HashMap;
+        let mut by_material: HashMap<String, Vec<(f64, f64)>> = HashMap::new();
+        for e in &entries {
+            by_material.entry(e.material.clone()).or_default().push((e.reference, e.predicted));
+        }
+        let mut groups = Vec::new();
+        for (mat, pts) in &by_material {
+            if pts.len() >= 3 {
+                let xs: Vec<f64> = pts.iter().map(|(x, _)| *x).collect();
+                let ys: Vec<f64> = pts.iter().map(|(_, y)| *y).collect();
+                let r = stats::pearson_r(&xs, &ys);
+                if r.is_finite() {
+                    groups.push(meta_analysis::GroupCorrelation {
+                        group_id: mat.clone(),
+                        n: pts.len(),
+                        r,
+                    });
+                }
+            }
+        }
+        if groups.len() >= 2 {
+            let fixed = meta_analysis::fixed_effects_meta(&groups);
+            let random = meta_analysis::random_effects_meta(&groups);
+            meta_analysis::print_summary(&fixed);
+            meta_analysis::print_summary(&random);
+            let json = serde_json::json!({"fixed_effects": fixed, "random_effects": random});
+            std::fs::write("benchmark_meta.json", serde_json::to_string_pretty(&json)?)?;
+            eprintln!("\n  ✦ Meta-analysis → benchmark_meta.json");
+        } else {
+            eprintln!("  ⚠ Not enough groups for meta-analysis (need ≥2 materials with ≥3 points each)");
+        }
+    }
+
+    Ok(())
 }

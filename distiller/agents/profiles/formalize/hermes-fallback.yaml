@@ -1,0 +1,13 @@
+# formalize profile — fallback route (provider B: Z.ai GLM-5.1)
+# Hardest fallback tier — GLM-5.1 matches deep-reasoning ceiling. Lean on
+# Z.ai memory mechanism (docs.z.ai/devpack/resources/memory-mechanism) for
+# multi-turn proof state.
+extends: ../../hermes/cli-config.base.yaml
+
+model:
+  default: "glm-5.1"
+  provider: "zai"
+  base_url: "https://api.z.ai/api/coding/paas/v4"
+
+memory:
+  project_memory: agents/profiles/formalize/MEMORY.md

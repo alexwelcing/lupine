@@ -35,7 +35,8 @@ interface AtomsOptimizedProps {
 }
 
 // Pre-allocate maximum buffer size (avoid reallocation)
-const DEFAULT_MAX_ATOMS = 500000;
+// Initial allocation buffer
+const MIN_CAPACITY = 50000;
 
 export function AtomsOptimized({
   frame,
@@ -47,7 +48,7 @@ export function AtomsOptimized({
   propRange,
   scale = 1.0,
   renderStyle = 'standard',
-  maxAtoms = DEFAULT_MAX_ATOMS,
+  maxAtoms, // Optional cap, if omitted we scale infinitely
   onSpatialHash,
   highlightedAtoms,
   hiddenAtomTypes,
@@ -56,9 +57,19 @@ export function AtomsOptimized({
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
   
+  // Dynamic capacity mapping (vector-style growth)
+  const capacityRef = useRef(Math.max(MIN_CAPACITY, Math.ceil(frame.natoms * 1.2)));
+  if (frame.natoms > capacityRef.current) {
+    capacityRef.current = Math.max(capacityRef.current * 1.5, Math.ceil(frame.natoms * 1.2));
+  }
+  let capacity = capacityRef.current;
+  if (maxAtoms !== undefined && capacity > maxAtoms) {
+    capacity = maxAtoms;
+  }
+
   // Pre-allocated working buffers
-  const matrixArray = useMemo(() => new Float32Array(maxAtoms * 16), [maxAtoms]);
-  const colorArray = useMemo(() => new Float32Array(maxAtoms * 3), [maxAtoms]);
+  const matrixArray = useMemo(() => new Float32Array(capacity * 16), [capacity]);
+  const colorArray = useMemo(() => new Float32Array(capacity * 3), [capacity]);
   const _matrix = useMemo(() => new THREE.Matrix4(), []);
   const _position = useMemo(() => new THREE.Vector3(), []);
   const _scale = useMemo(() => new THREE.Vector3(), []);
@@ -205,7 +216,17 @@ export function AtomsOptimized({
 
       // Color
       if (colorMode === 'property' && propData) {
-        const norm = pMax > pMin ? (propData[i] - pMin) / (pMax - pMin) : 0.5;
+        let val = propData[i];
+        
+        // Interpolate property if next frame is available and has the property
+        if (nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!)) {
+          const nextPropData = nextFrame.properties.get(colorProperty!);
+          if (nextPropData && nextPropData.length > i) {
+            val = val + (nextPropData[i] - val) * t;
+          }
+        }
+        
+        const norm = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
         const [r, g, b] = mapFn(norm);
         colorArray[i * 3] = r;
         colorArray[i * 3 + 1] = g;
@@ -234,15 +255,16 @@ export function AtomsOptimized({
     }
 
     // Upload to GPU - single operation
-    mesh.instanceMatrix.array.set(matrixArray.subarray(0, frame.natoms * 16));
+    const safeAtomCount = Math.min(frame.natoms, capacity);
+    mesh.instanceMatrix.array.set(matrixArray.subarray(0, safeAtomCount * 16));
     mesh.instanceMatrix.needsUpdate = true;
     
     if (mesh.instanceColor) {
-      mesh.instanceColor.array.set(colorArray.subarray(0, frame.natoms * 3));
+      mesh.instanceColor.array.set(colorArray.subarray(0, safeAtomCount * 3));
       mesh.instanceColor.needsUpdate = true;
     }
     
-    mesh.count = frame.natoms;
+    mesh.count = safeAtomCount;
 
     // Cleanup: cancel pending idle hash build if effect re-runs
     return cleanupIdle;
@@ -264,7 +286,7 @@ export function AtomsOptimized({
   return (
     <instancedMesh
       ref={meshRef}
-      args={[geometry, material, maxAtoms]}
+      args={[geometry, material, capacity]}
       frustumCulled={false}
     >
       <instancedBufferAttribute attach="instanceColor" args={[colorArray, 3]} />

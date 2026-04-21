@@ -235,3 +235,5 @@ class KnowledgeBase(BaseModel):
 
     def _touch(self) -> None:
         self.metadata.last_updated = datetime.now(timezone.utc).isoformat()
+
+

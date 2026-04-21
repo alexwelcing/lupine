@@ -5,7 +5,7 @@
  * glassmorphic UI, side panels, and publication-quality rendering.
  */
 
-import { useEffect, useCallback, useRef, useState, Component } from 'react';
+import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import {
@@ -160,27 +160,52 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 }
 
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ top, bottom }: { top: string; bottom: string }) {
+function SceneBackground({ top, bottom, style = 'linear' }: { top: string; bottom: string; style?: 'linear' | 'radial' | 'spotlight' }) {
   const { scene } = useThree();
 
   useEffect(() => {
     const canvas = document.createElement('canvas');
-    canvas.width = 2;
-    canvas.height = 256;
+    // We need a square / higher-res canvas for beautiful radial gradients
+    const size = 1024;
+    canvas.width = size;
+    canvas.height = size;
     const ctx = canvas.getContext('2d')!;
-    const grad = ctx.createLinearGradient(0, 0, 0, 256);
-    grad.addColorStop(0, top);
-    grad.addColorStop(1, bottom);
+
+    let grad;
+    if (style === 'radial') {
+      // Center out (bottom color on edge, top color in center)
+      grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/1.5);
+      grad.addColorStop(0, top);
+      grad.addColorStop(1, bottom);
+    } else if (style === 'spotlight') {
+      // Top-down spotlight effect
+      grad = ctx.createRadialGradient(size/2, 0, 0, size/2, 0, size/1.2);
+      grad.addColorStop(0, top);
+      grad.addColorStop(1, bottom);
+    } else {
+      // Standard linear fallback
+      grad = ctx.createLinearGradient(0, 0, 0, size);
+      grad.addColorStop(0, top);
+      grad.addColorStop(1, bottom);
+    }
+
     ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 2, 256);
+    ctx.fillRect(0, 0, size, size);
 
     const tex = new THREE.CanvasTexture(canvas);
+    // Important: for non-linear, we want it to map across the whole view gracefully
+    tex.mapping = THREE.EquirectangularReflectionMapping; 
+    
     scene.background = tex;
+    // Add subtle fog to match background edge for depth
+    scene.fog = new THREE.FogExp2(bottom, 0.0015);
+
     return () => {
       tex.dispose();
       scene.background = null;
+      scene.fog = null;
     };
-  }, [scene, top, bottom]);
+  }, [scene, top, bottom, style]);
 
   return null;
 }
@@ -223,6 +248,51 @@ function useMediaQuery(query: string) {
   return matches;
 }
 
+function CameraManager({
+  fileId,
+  center,
+  distance,
+}: {
+  fileId?: string;
+  center: [number, number, number];
+  distance: number;
+}) {
+  const { camera, controls } = useThree((s) => ({ camera: s.camera, controls: s.controls as any }));
+
+  // Fit on load
+  useEffect(() => {
+    if (!fileId) return;
+    camera.position.set(center[0], center[1], center[2] + distance);
+    camera.lookAt(center[0], center[1], center[2]);
+    camera.updateProjectionMatrix();
+    if (controls && controls.target) {
+      controls.target.set(center[0], center[1], center[2]);
+      controls.update();
+    }
+    useStore.getState().setCameraState(camera.position.toArray() as any, center);
+  }, [fileId, center, distance, camera, controls]);
+
+  // Sync with presets
+  useEffect(() => {
+    const unsub = useStore.subscribe(
+      (s) => s.cameraPreset,
+      (preset) => {
+        const { cameraPosition, cameraTarget } = useStore.getState();
+        camera.position.set(...cameraPosition);
+        camera.lookAt(...cameraTarget);
+        camera.updateProjectionMatrix();
+        if (controls && controls.target) {
+          controls.target.set(...cameraTarget);
+          controls.update();
+        }
+      }
+    );
+    return unsub;
+  }, [camera, controls]);
+
+  return null;
+}
+
 export default function App() {
   const file = useStore(s => s.file);
   const loading = useStore(s => s.loading);
@@ -245,6 +315,7 @@ export default function App() {
   const atomScale = useStore(s => s.atomScale);
   const activePanel = useStore(s => s.activePanel);
   const backgroundPreset = useStore(s => s.backgroundPreset);
+  const backgroundStyle = useStore(s => s.backgroundStyle);
   const ssaoIntensity = useStore(s => s.ssaoIntensity);
   const showScaleBar = useStore(s => s.showScaleBar);
   const cameraPreset = useStore(s => s.cameraPreset);
@@ -354,19 +425,23 @@ export default function App() {
   const currentFrame = file?.trajectory.frames[frame];
   const totalFrames = file?.trajectory.totalFrames ?? 0;
 
-  const cameraDistance = file
+  const cameraDistance = useMemo(() => file
     ? (() => {
         const { min, max } = file.trajectory.globalBounds;
         const dx = max[0] - min[0], dy = max[1] - min[1], dz = max[2] - min[2];
-        return Math.max(dx, dy, dz) * 1.5;
+        const diagonal = Math.hypot(dx, dy, dz);
+        // Field of view is 50 deg. To fit bounding sphere with radius (diagonal/2):
+        // D = (diagonal / 2) / Math.sin(25 * Math.PI / 180) ≈ diagonal * 1.18
+        // Multiply by an extra margin to give breathing room.
+        return diagonal * 1.4;
       })()
-    : 50;
+    : 50, [file?.name]);
 
-  const center = file
+  const center = useMemo(() => file
     ? file.trajectory.globalBounds.min.map(
         (v, i) => (v + file.trajectory.globalBounds.max[i]) / 2
       ) as [number, number, number]
-    : [0, 0, 0] as [number, number, number];
+    : [0, 0, 0] as [number, number, number], [file?.name]);
 
   const availableProperties = currentFrame
     ? Array.from(currentFrame.properties?.keys() ?? [])
@@ -534,16 +609,19 @@ export default function App() {
             }}
             gl={{ antialias: true, preserveDrawingBuffer: true }}
             style={{ background: 'transparent' }}
+            onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
             <ExportManager />
-            <SceneBackground top={bg.top} bottom={bg.bottom} />
+            <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} />
 
             <ambientLight intensity={0.35} />
             <directionalLight position={[5, 8, 6]} intensity={1.2} />
             <directionalLight position={[-3, -2, 4]} intensity={0.35} />
             <directionalLight position={[0, -5, -3]} intensity={0.15} color="#8888ff" />
 
+            <CameraManager fileId={file?.name} center={center} distance={cameraDistance} />
             <OrbitControls
+              makeDefault
               target={center}
               enableDamping
               dampingFactor={0.08}
@@ -579,6 +657,8 @@ export default function App() {
                 {showBonds && (
                   <Bonds
                     frame={currentFrame}
+                    nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
+                    interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
                     maxBondLength={bondCutoff}
                     renderStyle={renderStyle}
                     colormap={colormap}
@@ -732,6 +812,7 @@ export default function App() {
                 <ToolButton icon={<IconStyle />} label="Style" active={activePanel === 'style'} onClick={() => setActivePanel('style')} />
                 <ToolButton icon={<IconAtoms />} label="Atoms" active={activePanel === 'atoms'} onClick={() => setActivePanel('atoms')} />
                 <ToolButton icon={<IconEffects />} label="Effects" active={activePanel === 'effects'} onClick={() => setActivePanel('effects')} />
+                <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis'} onClick={() => setActivePanel('analysis')} />
                 <ToolButton icon={<IconMeasure />} label="Measure" active={activePanel === 'measurement'} onClick={() => setActivePanel('measurement')} />
                 <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export'} onClick={() => setActivePanel('export')} />
                 <div style={{ width: 1, minWidth: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />

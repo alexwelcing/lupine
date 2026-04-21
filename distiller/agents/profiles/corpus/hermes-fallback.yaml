@@ -1,0 +1,11 @@
+# corpus profile — fallback route (provider B: Z.ai GLM-4.7)
+# Used when MiniMax 5-hr quota is depleted or hard-rate-limited.
+extends: ../../hermes/cli-config.base.yaml
+
+model:
+  default: "glm-4.7"
+  provider: "zai"
+  base_url: "https://api.z.ai/api/coding/paas/v4"
+
+memory:
+  project_memory: agents/profiles/corpus/MEMORY.md

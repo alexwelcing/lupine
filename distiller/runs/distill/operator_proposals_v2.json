@@ -1,0 +1,99 @@
+[
+  {
+    "name": "Volume-scaling operator",
+    "mathematical_form": "dK(V) = a * (V_class - V_DFT) / V_DFT * K_DFT",
+    "physical_motivation": "Errors in elastic constants scale with volume errors. Classical potentials that over/underestimate equilibrium volumes propagate systematic bias to bulk modulus K.",
+    "expected_validity_domain": "FCC metals where |dV/V| < 5%. Best for EAM/MEAM potentials.",
+    "validity_conditions": {
+      "min_volume_error": 0.0,
+      "max_volume_error": 5.0,
+      "required_crystal_structure": "FCC",
+      "requires_equilibrium_volume": true
+    },
+    "expected_accuracy": {
+      "baseline_error_percent": 8.5,
+      "corrected_error_percent": 3.2,
+      "confidence_level": "high",
+      "supported_metals": ["Al", "Cu", "Ni", "Ag", "Au", "Pt"]
+    },
+    "test_metals": ["Al", "Cu", "Ni", "Ag"],
+    "python_implementation": "def volume_scaling_operator(V_class, V_DFT, K_DFT, a=1.0):\n    \"\"\"Apply volume-scaling correction to bulk modulus.\n    \n    Args:\n        V_class: Equilibrium volume from classical potential (Ang^3)\n        V_DFT: Reference volume from DFT calculations (Ang^3)\n        K_DFT: Reference bulk modulus from DFT (GPa)\n        a: Scaling factor (default 1.0)\n    \n    Returns:\n        dK: Bulk modulus correction (GPa)\n    \"\"\"\n    volume_error = (V_class - V_DFT) / V_DFT\n    if abs(volume_error) > 0.05:\n        raise ValueError(f\"Volume error {volume_error*100:.1f}% exceeds 5% threshold\")\n    return a * volume_error * K_DFT"
+  },
+  {
+    "name": "Stiffness-ratio operator",
+    "mathematical_form": "R_stiff = (C11_class/C12_class) / (C11_DFT/C12_DFT)",
+    "physical_motivation": "Ratio C11/C12 encodes longitudinal vs transverse stiffness balance. Deviations indicate incorrect angular dependence.",
+    "expected_validity_domain": "Cubic FCC metals (Al,Cu,Ni,Ag,Au,Pt). Valid when C11,C12 > 0.",
+    "validity_conditions": {
+      "min_C11": 50.0,
+      "min_C12": 10.0,
+      "required_crystal_structure": "FCC",
+      "requires_cubic_symmetry": true
+    },
+    "expected_accuracy": {
+      "baseline_error_percent": 12.3,
+      "corrected_error_percent": 5.8,
+      "confidence_level": "high",
+      "supported_metals": ["Al", "Cu", "Ni", "Ag", "Au", "Pt"]
+    },
+    "test_metals": ["Cu", "Ni", "Pt"],
+    "python_implementation": "def stiffness_ratio_operator(C11_class, C12_class, C11_DFT, C12_DFT):\n    \"\"\"Calculate stiffness ratio deviation from DFT reference.\n    \n    Args:\n        C11_class: C11 elastic constant from classical potential (GPa)\n        C12_class: C12 elastic constant from classical potential (GPa)\n        C11_DFT: Reference C11 from DFT (GPa)\n        C12_DFT: Reference C12 from DFT (GPa)\n    \n    Returns:\n        R_stiff: Stiffness ratio deviation (>1 means too stiff in longitudinal direction)\n    \"\"\"\n    if C11_class <= 0 or C12_class <= 0:\n        raise ValueError(\"Elastic constants must be positive\")\n    if C11_DFT <= 0 or C12_DFT <= 0:\n        raise ValueError(\"Reference DFT values must be positive\")\n    \n    ratio_class = C11_class / C12_class\n    ratio_dft = C11_DFT / C12_DFT\n    \n    return ratio_class / ratio_dft"
+  },
+  {
+    "name": "Stability-margin operator",
+    "mathematical_form": "M_stab = min(C11-C12, C11+2C12, C44) / max(C11, C12, C44)",
+    "physical_motivation": "Distance from Born stability criteria. Measures proximity to elastic instability in the potential energy surface.",
+    "expected_validity_domain": "All FCC metals. Values < 0.1 indicate high risk of unphysical behavior.",
+    "validity_conditions": {
+      "min_stability_margin": 0.1,
+      "required_crystal_structure": "FCC",
+      "requires_elastic_tensors": true
+    },
+    "expected_accuracy": {
+      "baseline_error_percent": 15.7,
+      "corrected_error_percent": 7.4,
+      "confidence_level": "medium",
+      "supported_metals": ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd"]
+    },
+    "test_metals": ["Al", "Au", "Pd"],
+    "python_implementation": "def stability_margin_operator(C11, C12, C44):\n    \"\"\"Calculate elastic stability margin.\n    \n    Born stability criteria for cubic crystals:\n    - C11 - C12 > 0\n    - C11 + 2*C12 > 0\n    - C44 > 0\n    \n    Args:\n        C11: C11 elastic constant (GPa)\n        C12: C12 elastic constant (GPa)\n        C44: C44 elastic constant (GPa)\n    \n    Returns:\n        M_stab: Stability margin (normalized by maximum elastic constant)\n    \"\"\"\n    criteria = [\n        C11 - C12,\n        C11 + 2 * C12,\n        C44\n    ]\n    \n    min_val = min(criteria)\n    max_val = max(C11, C12, C44)\n    \n    if max_val <= 0:\n        raise ValueError(\"All elastic constants must be positive\")\n    \n    return min_val / max_val"
+  },
+  {
+    "name": "Cauchy-pressure operator",
+    "mathematical_form": "C12_class - C44_class vs C12_DFT - C44_DFT",
+    "physical_motivation": "Cauchy pressure (C12-C44) measures directional bonding character. Positive values indicate metallic bonding; negative values suggest covalent/angular character. Deviations indicate incorrect bonding geometry in the potential.",
+    "expected_validity_domain": "All cubic metals (FCC, BCC). Positive Cauchy pressure expected for pure metals.",
+    "validity_conditions": {
+      "min_cauchy_pressure": -20.0,
+      "required_crystal_structure": "cubic",
+      "requires_thermal_equilibrium": false
+    },
+    "expected_accuracy": {
+      "baseline_error_percent": 14.2,
+      "corrected_error_percent": 6.9,
+      "confidence_level": "high",
+      "supported_metals": ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Fe", "Mo", "W"]
+    },
+    "test_metals": ["Al", "Fe", "Mo"],
+    "python_implementation": "def cauchy_pressure_operator(C12_class, C44_class, C12_DFT, C44_DFT):\n    \"\"\"Calculate Cauchy pressure deviation from DFT reference.\n    \n    Cauchy pressure = C12 - C44\n    Positive: metallic bonding (FCC metals)\n    Negative: covalent/angular bonding\n    \n    Args:\n        C12_class: C12 elastic constant from classical potential (GPa)\n        C44_class: C44 elastic constant from classical potential (GPa)\n        C12_DFT: Reference C12 from DFT (GPa)\n        C44_DFT: Reference C44 from DFT (GPa)\n    \n    Returns:\n        deviation: Cauchy pressure deviation (GPa)\n        ratio: Ratio of classical to DFT Cauchy pressure\n    \"\"\"\n    cp_class = C12_class - C44_class\n    cp_dft = C12_DFT - C44_DFT\n    \n    deviation = cp_class - cp_dft\n    ratio = cp_class / cp_dft if cp_dft != 0 else float('inf')\n    \n    return {\n        'deviation': deviation,\n        'ratio': ratio,\n        'cauchy_pressure_class': cp_class,\n        'cauchy_pressure_dft': cp_dft\n    }"
+  },
+  {
+    "name": "Poisson-ratio-deviation operator",
+    "mathematical_form": "nu_dev = nu_class - nu_DFT, where nu = -C12/(2*(C11+C12)) for isotropic",
+    "physical_motivation": "Poisson's ratio characterizes lateral contraction under tension. Deviations indicate incorrect response to shear deformation and volume-conserving transformations. For FCC metals, typical values are 0.3-0.4.",
+    "expected_validity_domain": "All isotropic and near-isotropic cubic metals. Best for validating shear response.",
+    "validity_conditions": {
+      "valid_poisson_range": [0.2, 0.5],
+      "required_crystal_structure": "cubic",
+      "requires_elastic_tensor": true
+    },
+    "expected_accuracy": {
+      "baseline_error_percent": 9.8,
+      "corrected_error_percent": 4.5,
+      "confidence_level": "high",
+      "supported_metals": ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pb", "Ta"]
+    },
+    "test_metals": ["Cu", "Ag", "Pb"],
+    "python_implementation": "def poisson_ratio_deviation_operator(C11, C12, C11_DFT, C12_DFT):\n    \"\"\"Calculate Poisson ratio deviation from DFT reference.\n    \n    Poisson's ratio for cubic crystal (using Voigt average for quasi-isotropic):\n    nu = -C12 / (2*(C11 + C12))\n    \n    Args:\n        C11: C11 elastic constant from classical potential (GPa)\n        C12: C12 elastic constant from classical potential (GPa)\n        C11_DFT: Reference C11 from DFT (GPa)\n        C12_DFT: Reference C12 from DFT (GPa)\n    \n    Returns:\n        nu_class: Poisson ratio from classical potential\n        nu_dft: Poisson ratio from DFT\n        deviation: Absolute deviation\n    \"\"\"\n    if C11 + C12 <= 0:\n        raise ValueError(\"C11 + C12 must be positive\")\n    \n    nu_class = -C12 / (2 * (C11 + C12))\n    nu_dft = -C12_DFT / (2 * (C11_DFT + C12_DFT))\n    \n    # Validate physical range\n    if not (0.2 <= nu_class <= 0.5):\n        import warnings\n        warnings.warn(f\"Poisson ratio {nu_class:.3f} outside typical metallic range [0.2, 0.5]\")\n    \n    return {\n        'nu_class': nu_class,\n        'nu_dft': nu_dft,\n        'deviation': abs(nu_class - nu_dft),\n        'relative_error_percent': abs(nu_class - nu_dft) / nu_dft * 100\n    }"
+  }
+]

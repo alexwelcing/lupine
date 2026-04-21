@@ -243,9 +243,6 @@ def cmd_stats(args: argparse.Namespace) -> None:
         bar = "█" * min(count, 30)
         print(f"    {method:20s} {bar} ({count})")
 
-    print()
-
-
 # ── Main ─────────────────────────────────────────────────────────────────────
 
 
@@ -301,6 +298,6 @@ def main() -> None:
     }
     commands[args.command](args)
 
-
 if __name__ == "__main__":
     main()
+

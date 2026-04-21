@@ -14,6 +14,13 @@ wasm-out/
 # Archive for old internal research, docs, and plans
 _research_archive/
 
-latest/library/model-data/** 
- . c l a u d e / s e t t i n g s . l o c a l . j s o n  
- 
+latest/library/model-data/**
+.claude/settings.local.json
+
+# Lean 4 build artifacts
+lean-spec/.lake/
+lean-spec/build/
+
+# Distiller run artifacts
+distiller/runs/*/run_latest.log
+distiller/runs/pipeline_report.json

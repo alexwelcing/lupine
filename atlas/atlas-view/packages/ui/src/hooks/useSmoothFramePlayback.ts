@@ -99,17 +99,14 @@ export function useSmoothFramePlayback(
     const delta = time - lastTimeRef.current;
     lastTimeRef.current = time;
 
-    // Accumulate time scaled by playback speed
-    accumulatorRef.current += delta * speed;
-
-    // Calculate how many MD frames to advance
-    const mdFramesToAdvance = Math.floor(accumulatorRef.current / mdFrameTime);
-
-    if (mdFramesToAdvance >= 1) {
+    // Fractional frames to advance based on elapsed wall-time, speed, and desired target MD framerate
+    const effectiveDeltaFrames = (delta * speed) / mdFrameTime;
+    
+    if (effectiveDeltaFrames > 0) {
       const start = performance.now();
 
       setCurrentState(prev => {
-        let newEffectiveFrame = prev.effectiveFrame + mdFramesToAdvance;
+        let newEffectiveFrame = prev.effectiveFrame + effectiveDeltaFrames;
         const totalFrames = frames.length;
 
         // Handle loop modes
@@ -143,7 +140,6 @@ export function useSmoothFramePlayback(
 
       totalInterpolationTimeRef.current += performance.now() - start;
       frameCountRef.current++;
-      accumulatorRef.current -= mdFramesToAdvance * mdFrameTime; // [FIXED] Keep remainder
     }
 
     // Stats reporting

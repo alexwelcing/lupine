@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-distillation-factory.org/schemas/risk-register.schema.json",
+  "title": "RiskRegister",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": { "type": "string" },
+      "risk": { "type": "string" },
+      "impact": { "type": "string", "enum": ["low", "medium", "high"] },
+      "likelihood": { "type": "string", "enum": ["low", "medium", "high"] },
+      "mitigation": { "type": "string" },
+      "owner": { "type": "string" }
+    },
+    "required": ["id", "risk", "impact", "likelihood", "mitigation"]
+  }
+}

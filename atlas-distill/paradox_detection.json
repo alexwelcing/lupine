@@ -1,0 +1,125 @@
+{
+  "n_groups": 7,
+  "n_total": 21,
+  "pooled_r": -0.434538278427737,
+  "pooled_direction": "negative",
+  "group_correlations": [
+    {
+      "group": "Cr",
+      "n": 3,
+      "r": -0.9384054568377332,
+      "x_mean": 172.66666666666666,
+      "y_mean": -3.6666666666666665,
+      "x_range": [
+        67.0,
+        350.0
+      ],
+      "y_range": [
+        -6.0,
+        -2.0
+      ]
+    },
+    {
+      "group": "Mo",
+      "n": 3,
+      "r": -0.9956435718576169,
+      "x_mean": 239.33333333333334,
+      "y_mean": -6.0,
+      "x_range": [
+        106.0,
+        440.0
+      ],
+      "y_range": [
+        -10.0,
+        -3.0
+      ]
+    },
+    {
+      "group": "Ta",
+      "n": 3,
+      "r": 0.9974558959451575,
+      "x_mean": 170.33333333333334,
+      "y_mean": 4.666666666666667,
+      "x_range": [
+        87.0,
+        266.0
+      ],
+      "y_range": [
+        2.0,
+        8.0
+      ]
+    },
+    {
+      "group": "Nb",
+      "n": 3,
+      "r": 0.9744190732726649,
+      "x_mean": 137.0,
+      "y_mean": 7.0,
+      "x_range": [
+        29.0,
+        247.0
+      ],
+      "y_range": [
+        4.0,
+        11.0
+      ]
+    },
+    {
+      "group": "V",
+      "n": 3,
+      "r": 0.9968935747085834,
+      "x_mean": 131.0,
+      "y_mean": 5.666666666666667,
+      "x_range": [
+        44.0,
+        230.0
+      ],
+      "y_range": [
+        3.0,
+        9.0
+      ]
+    },
+    {
+      "group": "Fe",
+      "n": 3,
+      "r": 0.9829929014205622,
+      "x_mean": 160.66666666666666,
+      "y_mean": 4.666666666666667,
+      "x_range": [
+        117.0,
+        230.0
+      ],
+      "y_range": [
+        2.0,
+        8.0
+      ]
+    },
+    {
+      "group": "W",
+      "n": 3,
+      "r": -0.9911270307302271,
+      "x_mean": 295.6666666666667,
+      "y_mean": -7.333333333333333,
+      "x_range": [
+        161.0,
+        522.0
+      ],
+      "y_range": [
+        -12.0,
+        -4.0
+      ]
+    }
+  ],
+  "simpsons_detected": true,
+  "ecological_fallacy": true,
+  "pattern": "Complete reversal: pooled r=-0.435 but within-group r=+0.147",
+  "confounder": "group_identity",
+  "recommendation": "stratified",
+  "markers": {
+    "opposite_sign_fraction": 0.5714285714285714,
+    "between_group_var_x": 3559.8518518518526,
+    "between_group_var_y": 37.386243386243386,
+    "pooled_within_r": 0.14665505513162724,
+    "correlation_reversal_magnitude": 0.5811933335593642
+  }
+}
