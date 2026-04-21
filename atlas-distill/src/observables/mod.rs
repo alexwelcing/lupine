@@ -1,3 +1,4 @@
+pub mod elasticity;
 pub mod msd;
 pub mod rdf;
 pub mod stress_strain;

@@ -1,0 +1,25 @@
+ODF Capacity Test — Endpoint Sweep
+====================================================================================================
+PROV    CATEGORY              MODEL                       STATUS               LAT(ms)    TTFT     TPS
+----------------------------------------------------------------------------------------------------
+minimax text                  MiniMax-M2.7                ok                      1087       -    29.4
+minimax text/stream           MiniMax-M2.7                ok                      1008     992  2331.4
+minimax anthropic_compat      MiniMax-M2.7                ok                       554       -    57.7
+minimax tts                   speech-2.8-hd               ok                       835       -       -
+minimax image                 image-01                    ok                     15219       -       -
+minimax music                 music-2.6                   ok                     65995       -       -
+minimax lyrics                minimax-music-lyrics        http_error                93       -       -
+zai     text                  glm-5.1                     ok                      2043       -    15.7
+zai     text                  glm-5-turbo                 ok                      1672       -    19.1
+zai     text                  glm-4.7                     ok                      1842       -    17.4
+zai     text/stream           glm-5.1                     ok                     42408   42407       -
+zai     text/tools            glm-5.1                     ok                      3874       -     6.5
+zai     anthropic_compat      glm-5.1                     ok                      1825       -     1.1
+zai     image                 cogView-4-250304            quota_exceeded           983       -       -
+----------------------------------------------------------------------------------------------------
+OK: 12/14
+Status breakdown: http_error=1, ok=12, quota_exceeded=1
+
+First error per failing endpoint:
+  [minimax] lyrics minimax-music-lyrics: <html> <head><title>404 Not Found</title></head> <body> <center><h1>404 Not Found</h1></center> <hr><center>nginx</c
+  [zai] image cogView-4-250304: {"error":{"code":"1113","message":"Insufficient balance or no resource package. Please recharge."}}

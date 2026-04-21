@@ -1,0 +1,33 @@
+# Hermes Agent — base config for open-distillation-factory.
+# Profile-specific overrides live in agents/profiles/<name>/hermes-{primary,fallback}.yaml.
+# Run with: scripts/hermes/run-profile.sh <profile> [--fallback]
+#
+# Provider env vars (loaded from project .env):
+#   MINIMAX_API_KEY  — provider A (MiniMax Token Plan)
+#   GLM_API_KEY      — provider B (Z.ai coding pro plan)
+
+model:
+  default: "MiniMax-M2.7"
+  provider: "minimax"
+  base_url: "https://api.minimax.io/v1"
+
+terminal:
+  backend: "local"
+  cwd: "."
+  timeout: 240
+  lifetime_seconds: 600
+
+# Memory mechanism is load-bearing for distillation work — keep history long
+# and lean on Hermes' built-in skill/insight loop. Per-profile MEMORY.md files
+# under agents/profiles/<name>/MEMORY.md hold project memory.
+memory:
+  enabled: true
+  insights: true
+  honcho: true
+
+# Smart routing disabled by default — current MiniMax Token Plan only
+# includes MiniMax-M2.7 (no highspeed tier), so there is no cheaper sibling
+# to route short turns to. Real A/B failover happens at the wrapper-script
+# level via scripts/hermes/run-profile.sh --fallback.
+smart_model_routing:
+  enabled: false

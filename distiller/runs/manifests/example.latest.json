@@ -1,0 +1,16 @@
+{
+  "runId": "mvp-20260403T160502Z",
+  "profile": "distill",
+  "startedAt": "2026-04-03T16:05:02Z",
+  "status": "success",
+  "checks": {
+    "rustTests": "passed",
+    "leanBuild": "skipped-no-lake"
+  },
+  "inputHashes": [
+    "38aff957419792aff2df4249f445bf799a596d42f0158a8ec202a0c3b807386b",
+    "eed199dc219c5f1eb9fa4560466cd8ef7a34142ccbb77a31212c70d31916bd2c",
+    "6cb0407f0cc05cc085f48db83aa26ba3258413604a0018aacc2c15c160a88f21"
+  ],
+  "outputHashes": []
+}

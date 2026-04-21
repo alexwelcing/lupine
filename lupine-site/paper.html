@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manifold Analysis of Interatomic Potential Errors &mdash; IMMI Preprint</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:wght@400;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #e5e5e5;
+      font-family: 'Source Serif 4', Georgia, serif;
+      color: #1a1a1a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #root {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      gap: 16px;
+      min-height: 100vh;
+    }
+
+    @media print {
+      @page { size: letter; margin: 0; }
+      body { background: white; }
+      #root { padding: 0; gap: 0; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div style="padding:40px; font:10pt sans-serif; color:#666;">
+      Loading paper renderer&hellip;
+    </div>
+  </div>
+  <script type="module" src="/src/paper/main.ts"></script>
+</body>
+</html>

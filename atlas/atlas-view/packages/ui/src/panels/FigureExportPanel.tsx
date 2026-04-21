@@ -42,7 +42,7 @@ const VIDEO_RESOLUTIONS = [
   { label: '4K',    width: 3840, height: 2160 },
 ];
 
-const DURATION_OPTIONS = [3, 5, 8, 10, 15];
+const DURATION_OPTIONS = [3, 5, 10, 30, 60, 120];
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconClose = () => (
@@ -80,6 +80,7 @@ export function FigureExportPanel() {
   const [videoRes, setVideoRes] = useState(VIDEO_RESOLUTIONS[1]); // 1080p default
   const [duration, setDuration] = useState(5);
   const [orbit, setOrbit] = useState(true);
+  const [cinematic, setCinematic] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -145,19 +146,26 @@ export function FigureExportPanel() {
     });
   }, [selectedPreset, format, transparentBg, triggerExport, handleComplete]);
 
-  const handleExportVideo = useCallback(() => {
+  const handleExportVideo = useCallback(async () => {
+    // In-memory export by default. File System Access API streaming
+    // can be added as an explicit opt-in toggle in the future.
+    const fileStream: FileSystemWritableFileStream | undefined = undefined;
+
     setExporting(true);
     setExportSuccess(false);
+
     triggerExport({
       type: 'video',
       resolution: { width: videoRes.width, height: videoRes.height },
       format: mode === 'gif' ? 'gif' as any : 'mp4',
       orbit,
+      cinematic,
       durationSeconds: duration,
       baseName: `glimPSE-${mode === 'gif' ? 'anim' : 'orbit'}-${videoRes.label}`,
+      fileStream,
       onComplete: handleComplete,
     });
-  }, [mode, videoRes, orbit, duration, triggerExport, handleComplete]);
+  }, [mode, videoRes, orbit, cinematic, duration, triggerExport, handleComplete]);
 
   // Estimate file sizes
   const estimatedSize = useMemo(() => {
@@ -168,12 +176,12 @@ export function FigureExportPanel() {
       return `~${mb.toFixed(1)} MB`;
     }
     if (mode === 'mp4') {
-      const bitrate = 16; // Mbps
+      const bitrate = 80; // Mbps (upgraded for ultra quality)
       return `~${(bitrate * duration / 8).toFixed(0)} MB`;
     }
     if (mode === 'gif') {
-      // MP4→GIF conversion samples at 15fps
-      const fps = 15;
+      // MP4→GIF conversion samples at 30fps
+      const fps = 30;
       const frames = fps * duration;
       const pixelsPerFrame = videoRes.width * videoRes.height;
       // After 256-color quantize + LZW ~0.12 bytes/pixel for molecular renders
@@ -371,18 +379,24 @@ export function FigureExportPanel() {
                 </div>
               </Section>
 
-              <Section title="CAMERA PATH">
+              <Section title="CAMERA & ANIMATION">
                 <ToggleRow
                   label="360° Orbit"
                   hint="Spin around structure centroid"
                   active={orbit}
                   onToggle={() => setOrbit(!orbit)}
                 />
+                <ToggleRow
+                  label="Cinematic Sequence"
+                  hint="Dynamically animate structure properties"
+                  active={cinematic}
+                  onToggle={() => setCinematic(!cinematic)}
+                />
               </Section>
 
               <InfoBlock>
                 <InfoRow label="Codec" value="H.264 High (avc1.640028)" />
-                <InfoRow label="Bitrate" value="16 Mbps" />
+                <InfoRow label="Bitrate" value="80 Mbps (HQ)" />
                 <InfoRow label="FPS" value="60" />
                 <InfoRow label="Frames" value={`${60 * duration}`} />
                 <InfoRow label="Est. Size" value={estimatedSize} />
@@ -443,13 +457,19 @@ export function FigureExportPanel() {
                   active={orbit}
                   onToggle={() => setOrbit(!orbit)}
                 />
+                <ToggleRow
+                  label="Cinematic Sequence"
+                  hint="Dynamically animate structure properties"
+                  active={cinematic}
+                  onToggle={() => setCinematic(!cinematic)}
+                />
               </Section>
 
               <InfoBlock>
                 <InfoRow label="Pipeline" value="MP4 → GIF" />
                 <InfoRow label="Palette" value="256 colors (adaptive)" />
-                <InfoRow label="FPS" value="15" />
-                <InfoRow label="Frames" value={`${15 * duration}`} />
+                <InfoRow label="FPS" value="30" />
+                <InfoRow label="Frames" value={`${30 * duration}`} />
                 <InfoRow label="Est. Size" value={estimatedSize} />
               </InfoBlock>
 

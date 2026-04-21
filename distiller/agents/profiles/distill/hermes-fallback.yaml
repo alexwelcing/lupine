@@ -1,0 +1,11 @@
+# distill profile — fallback route (provider B: Z.ai GLM-5-Turbo)
+# Lighter/faster GLM tier matches highspeed primary's latency profile.
+extends: ../../hermes/cli-config.base.yaml
+
+model:
+  default: "glm-5-turbo"
+  provider: "zai"
+  base_url: "https://api.z.ai/api/coding/paas/v4"
+
+memory:
+  project_memory: agents/profiles/distill/MEMORY.md

@@ -1,0 +1,38 @@
+{
+  "ensemble_weights": {
+    "stiffness_ratio": 0.6,
+    "stability_margin": 0.12,
+    "poisson_ratio": 0.13,
+    "volume_scaling": 0.08,
+    "cauchy_pressure": 0.07
+  },
+  "per_metal_mae": {
+    "individual": {
+      "Al": 0.8084137970893417,
+      "Cu": 1.4696574198845125,
+      "Ni": 2.717025331736836,
+      "Ag": 1.6337458806133003,
+      "Au": 1.719780329718299
+    },
+    "ensemble": {
+      "Al": 0.36400586325727136,
+      "Cu": 0.6252238595272335,
+      "Ni": 1.0420726935757907,
+      "Ag": 0.794474549769388,
+      "Au": 0.6711776842418036
+    }
+  },
+  "operator_mae": {
+    "volume_scaling": 3.1170281124498045,
+    "stiffness_ratio": 0.025669526703392027,
+    "stability_margin": 1.1743300529304241,
+    "cauchy_pressure": 3.8400000000000007,
+    "poisson_ratio": 0.19159506695866857
+  },
+  "aggregate_mae": {
+    "individual": 1.6697245518084578,
+    "ensemble": 0.6993909300742974
+  },
+  "improvement_pct": 58.113394852055336,
+  "target_achieved": true
+}

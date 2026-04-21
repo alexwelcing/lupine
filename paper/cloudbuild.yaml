@@ -1,0 +1,45 @@
+# Cloud Build configuration for compiling the IMMI paper
+# Usage: cd paper && gcloud builds submit --config=cloudbuild.yaml .
+
+steps:
+  # Step 1: Compile LaTeX paper with TeX Live
+  - name: 'texlive/texlive:latest-full'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        set -e
+        echo "=== First pdflatex pass ==="
+        pdflatex -interaction=nonstopmode immi-paper.tex || true
+        echo "=== BibTeX pass ==="
+        bibtex immi-paper || true
+        echo "=== Second pdflatex pass ==="
+        pdflatex -interaction=nonstopmode immi-paper.tex || true
+        echo "=== Final pdflatex pass ==="
+        pdflatex -interaction=nonstopmode immi-paper.tex
+        echo "=== Compilation complete ==="
+        ls -la immi-paper.pdf
+
+  # Step 2: Copy PDF to GCS artifacts bucket
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args:
+      - 'cp'
+      - 'immi-paper.pdf'
+      - 'gs://${_PROJECT_ID}-atlas-artifacts/paper/immi-paper-${COMMIT_SHA}.pdf'
+
+  # Step 3: Also copy as latest
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args:
+      - 'cp'
+      - 'immi-paper.pdf'
+      - 'gs://${_PROJECT_ID}-atlas-artifacts/paper/immi-paper-latest.pdf'
+
+substitutions:
+  _PROJECT_ID: shed-489901
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
+  diskSizeGb: '20'
+
+timeout: 600s

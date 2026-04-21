@@ -1,0 +1,100 @@
+{
+  "failures": [
+    {
+      "metal": "Au",
+      "operator": "volume_scaling",
+      "residual_error": 5.3205,
+      "failure_reason": "Au has exceptionally high d-electron relativistic effects causing extremely soft volume response compared to lighter FCC metals. The universal -0.3205 correction is too aggressive for Au's 5d electronic structure where relativistic contraction increases density and reduces thermal expansion coefficient. The EAM potential predicts wrong volume scaling trend for heavy elements.",
+      "proposed_fix": "Add element-specific scaling factor for 5d metals: a(Au) = 0.15 instead of 1.0. Include relativistic correction term: dK_rel = -beta * Z^2 / r_s^3 where Z is atomic number and r_s is Wigner-Seitz radius. Consider separate training set for lanthanide/actinide-adjacent elements."
+    },
+    {
+      "metal": "Ni",
+      "operator": "cauchy_pressure",
+      "residual_error": 4.8000,
+      "failure_reason": "Ni exhibits strong ferromagnetism below Curie temperature (627K), causing anomalous Cauchy pressure (C12-C44=22 GPa DFT vs 10 GPa EAM). The magnetic contribution to elastic anisotropy is not captured by standard EAM potentials which lack explicit spin-polarization. The large positive Cauchy pressure indicates directional bonding from d-band splitting that EAM cannot reproduce without magnetic corrections.",
+      "proposed_fix": "Implement magnetic correction term: Cp_corr = alpha * (T_Curie - T) / T_Curie * mu_sat where mu_sat is saturation magnetization. For 0K calculations, add empirical ferromagnetism correction of +8 GPa to C12-C44. Use modified EAM with embedded-atom correction for magnetic materials."
+    },
+    {
+      "metal": "Ni",
+      "operator": "volume_scaling",
+      "residual_error": 4.6795,
+      "failure_reason": "Ni's ferromagnetic ordering causes volume contraction at low temperatures (Invar-like effect). The EAM potential mispredicts the equilibrium volume due to missing spin-lattice coupling. Volume error of ~4.7% is borderline for the operator's 5% validity domain but exceeds confidence threshold.",
+      "proposed_fix": "Add magnetic volume correction: dV_mag = gamma * lambda^2 * V_eq where lambda is magnetic order parameter. Calibrate a=0.3 for ferromagnetic FCC metals. Consider separate volume-scaling operator for materials with T_Curie > 300K."
+    },
+    {
+      "metal": "Ag",
+      "operator": "stability_margin",
+      "residual_error": 3.6725,
+      "failure_reason": "Ag has unusually low C44/C11 ratio (46/124 = 0.37) compared to typical FCC metals, making the Born stability criterion for C44 particularly sensitive. EAM potentials typically overpredict C44 for Ag while underpredicting C11-C12 anisotropy, causing the stability margin operator to fail. Ag's nearly-free-electron behavior is poorly captured by embedded-atom method.",
+      "proposed_fix": "Weight stability margin by elastic anisotropy ratio: M_stab_weighted = M_stab * (C44/C11)_class / (C44/C11)_DFT. Add C44-specific correction: delta_C44 = eta * (C44_class - C44_DFT) / C44_DFT. Consider modified operator form for noble metals with strong transversely isotropic character."
+    },
+    {
+      "metal": "Cu",
+      "operator": "volume_scaling",
+      "residual_error": 3.6538,
+      "failure_reason": "Cu has intermediate 3d occupation with partially filled d-band causing subtle many-body effects not captured by volume-scaling operator. The scaling assumes linear volume-elasticity relationship, but Cu's d-band contribution creates nonlinear volume dependence of bulk modulus. Error approaches 4% due to electron-phonon interactions at finite temperature.",
+      "proposed_fix": "Add nonlinear correction term: dK_nl = b * (dV/V)^2 * K_DFT with b=0.5 for 3d transition metals. Include temperature correction: K(T) = K_0 + alpha_T * (T - T_ref). Use element-specific calibration for d-band metals: a_Cu = 0.4."
+    },
+    {
+      "metal": "Au",
+      "operator": "cauchy_pressure",
+      "residual_error": 3.2000,
+      "failure_reason": "Au's 5d10 electron configuration with relativistic effects creates anomalously low C44 (42 GPa) compared to C12 (163 GPa), yielding large Cauchy pressure (121 GPa). Standard EAM potentials cannot reproduce this extreme ratio because they lack relativistic corrections and cannot capture the subtle d-electron bonding anisotropy in heavy noble metals.",
+      "proposed_fix": "Implement relativistic correction: Cp_corr = Cp_dft * (1 - delta_rel) where delta_rel accounts for s-d rehybridization. Add anisotropic bonding term: gamma_aniso = (C12-C44)_DFT / (C12+C44)_DFT. Use Au-specific EAM potential with fitted relativistic parameters."
+    },
+    {
+      "metal": "Al",
+      "operator": "poisson_ratio",
+      "residual_error": 2.8060,
+      "failure_reason": "Al is nearly free-electron metal where Poisson ratio is sensitive to subtle details of volume conservation. The EAM potential predicts C11=114, C12=58 giving nu=-0.256, which is negative and outside metallic range [0.2, 0.5]. This indicates fundamental misrepresentation of shear response. The warning messages in test output confirm negative Poisson ratios for Al.",
+      "proposed_fix": "Clamp Poisson ratio to physical range [0.2, 0.5] before computing deviation. Add free-electron correction: nu_corr = nu + 0.1 * ln(V/V_DFT). Recalibrate Al EAM potential using embedded-atom method with better electron-gas description. Consider separate operator for free-electron metals with weak angular forces."
+    },
+    {
+      "metal": "Al",
+      "operator": "cauchy_pressure",
+      "residual_error": 2.8000,
+      "failure_reason": "Al's nearly-free-electron nature creates small Cauchy pressure (C12-C44=33 GPa) where small absolute errors translate to large percentage errors. EAM predicts C44=32 vs DFT=28, overestimating shear resistance. The operator assumes metallic bonding characterized by Cauchy pressure, but Al's electron gas bonding has fundamentally different character.",
+      "proposed_fix": "Scale Cauchy pressure corrections by electron-density parameter: Cp_corr_scaled = Cp_corr * (rho / rho_free_electron). Add minimum threshold: reject corrections when |Cp| < 10 GPa. Use modified operator for free-electron metals: nu_based_correction instead of Cauchy pressure."
+    },
+    {
+      "metal": "Ag",
+      "operator": "cauchy_pressure",
+      "residual_error": 2.8000,
+      "failure_reason": "Ag exhibits strong relativistic effects similar to Au but to lesser degree, causing Cauchy pressure anomaly (C12-C44=48 GPa). EAM potentials systematically overestimate C44 for Ag due to inadequate treatment of 4d orbital overlap and hybridization. The 2.8% error is borderline but still significant for precision applications.",
+      "proposed_fix": "Add d-orbital hybridization correction: Cp_corr = Cp + chi * (d_occupation - d_free_electron). Include relativistic scaling for 4d/5d metals. Implement Ag-specific calibration: correction_factor = 0.85 for Ag group elements."
+    },
+    {
+      "metal": "Ag",
+      "operator": "poisson_ratio",
+      "residual_error": 2.4800,
+      "failure_reason": "Ag's nearly isotropic elastic response makes Poisson ratio extremely sensitive to small C11/C12 errors. EAM predicts C11=130, C12=89 vs DFT=124,94 giving nu=-0.255 (negative, outside metallic range). The operator cannot correct unphysical Poisson ratios - it merely measures the deviation.",
+      "proposed_fix": "Similar to Al: clamp Poisson ratio to [0.2, 0.5] before computing deviation. Add stability check: if nu_class < 0, apply correction nu_corr = 0.3 (typical metallic value). Implement joint Poisson-stability correction for near-free-electron metals."
+    },
+    {
+      "metal": "Cu",
+      "operator": "cauchy_pressure",
+      "residual_error": 2.4000,
+      "failure_reason": "Cu's partially filled 3d band creates moderate Cauchy pressure (C12-C44=46 GPa) that is sensitive to d-band occupancy. EAM potentials systematically overestimate C44 for Cu due to inadequate angular momentum representation. The 2.4% error reflects known limitations of embedded-atom methods for transition metals.",
+      "proposed_fix": "Add d-band occupation correction: Cp_corr = Cp * f(d_occupancy). Include element-specific C44 correction: delta_C44 = 0.9 * (C44_class - C44_DFT). For 3d metals, apply hybridization scaling factor of 0.92."
+    }
+  ],
+  "metadata": {
+    "total_failures_above_5pct": 1,
+    "total_near_failures_2to5pct": 10,
+    "total_cases_analyzed": 25,
+    "failure_rate": "44%",
+    "primary_failure_patterns": [
+      "Ferromagnetic materials (Ni) with missing spin corrections",
+      "Heavy 5d elements (Au) with relativistic effects",
+      "Near-free-electron metals (Al, Ag) with negative Poisson ratios",
+      "Noble metals with d-electron bonding anomalies"
+    ],
+    "recommended_actions": [
+      "Implement magnetic correction operators for ferromagnetic metals",
+      "Add relativistic corrections for 4d/5d elements",
+      "Clamp Poisson ratio to physical range in all calculations",
+      "Create element-specific scaling factors for d-band metals",
+      "Consider separate operator families for free-electron vs transition metals"
+    ]
+  }
+}

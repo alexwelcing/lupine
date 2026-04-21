@@ -102,19 +102,44 @@ export async function parseDumpFile(file: File): Promise<Trajectory> {
     ),
   }));
 
-  // Compute global bounds
+  // Compute global bounds and structural properties (e.g. Displacement)
   let minX = Infinity, minY = Infinity, minZ = Infinity;
   let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
   const allTypes = new Set<number>();
 
+  // To handle Displacement, we map atom IDs from Frame 0 to their current positions.
+  const f0 = frames[0];
+  const f0IdToIndex = new Map<number, number>();
+  if (f0) {
+    for (let i = 0; i < f0.natoms; i++) {
+      f0IdToIndex.set(f0.ids[i], i);
+    }
+  }
+
   for (const frame of frames) {
+    const displacement = new Float32Array(frame.natoms);
     for (let i = 0; i < frame.natoms; i++) {
       const x = frame.positions[i * 3], y = frame.positions[i * 3 + 1], z = frame.positions[i * 3 + 2];
       if (x < minX) minX = x; if (x > maxX) maxX = x;
       if (y < minY) minY = y; if (y > maxY) maxY = y;
       if (z < minZ) minZ = z; if (z > maxZ) maxZ = z;
       allTypes.add(frame.types[i]);
+
+      // Compute Displacement from Frame 0
+      const f0Index = f0IdToIndex.get(frame.ids[i]);
+      if (f0Index !== undefined && f0) {
+        const dx = x - f0.positions[f0Index * 3];
+        const dy = y - f0.positions[f0Index * 3 + 1];
+        const dz = z - f0.positions[f0Index * 3 + 2];
+        displacement[i] = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      } else {
+        displacement[i] = 0;
+      }
     }
+    if (!frame.properties) {
+      frame.properties = new Map();
+    }
+    frame.properties.set('Displacement', displacement);
   }
 
   return {
@@ -186,18 +211,44 @@ export async function parseXyzFile(file: File): Promise<Trajectory> {
     ),
   }));
 
+  // Compute global bounds and structural properties (e.g. Displacement)
   let minX = Infinity, minY = Infinity, minZ = Infinity;
   let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
   const allTypes = new Set<number>();
 
+  // To handle Displacement, we map atom IDs from Frame 0 to their current positions.
+  const f0 = frames[0];
+  const f0IdToIndex = new Map<number, number>();
+  if (f0) {
+    for (let i = 0; i < f0.natoms; i++) {
+      f0IdToIndex.set(f0.ids[i], i);
+    }
+  }
+
   for (const frame of frames) {
+    const displacement = new Float32Array(frame.natoms);
     for (let i = 0; i < frame.natoms; i++) {
       const x = frame.positions[i * 3], y = frame.positions[i * 3 + 1], z = frame.positions[i * 3 + 2];
       if (x < minX) minX = x; if (x > maxX) maxX = x;
       if (y < minY) minY = y; if (y > maxY) maxY = y;
       if (z < minZ) minZ = z; if (z > maxZ) maxZ = z;
       allTypes.add(frame.types[i]);
+
+      // Compute Displacement from Frame 0
+      const f0Index = f0IdToIndex.get(frame.ids[i]);
+      if (f0Index !== undefined && f0) {
+        const dx = x - f0.positions[f0Index * 3];
+        const dy = y - f0.positions[f0Index * 3 + 1];
+        const dz = z - f0.positions[f0Index * 3 + 2];
+        displacement[i] = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      } else {
+        displacement[i] = 0;
+      }
     }
+    if (!frame.properties) {
+      frame.properties = new Map();
+    }
+    frame.properties.set('Displacement', displacement);
   }
 
   return {

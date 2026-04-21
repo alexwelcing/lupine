@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-distillation-factory.org/schemas/run-manifest.schema.json",
+  "title": "RunManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "runId": { "type": "string" },
+    "profile": { "type": "string", "enum": ["corpus", "distill", "formalize", "loop"] },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "finishedAt": { "type": "string", "format": "date-time" },
+    "inputHashes": { "type": "array", "items": { "type": "string" } },
+    "outputHashes": { "type": "array", "items": { "type": "string" } },
+    "status": { "type": "string", "enum": ["success", "failed", "partial"] }
+  },
+  "required": ["runId", "profile", "startedAt", "status"]
+}

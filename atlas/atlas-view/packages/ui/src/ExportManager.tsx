@@ -13,7 +13,7 @@
  * All video modes support 360° orbit around the structure centroid.
  */
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 import { useStore } from './store';
 import * as THREE from 'three';
@@ -28,7 +28,7 @@ import * as THREE from 'three';
  */
 async function convertMp4ToGif(
   mp4Blob: Blob,
-  targetFps: number = 15,
+  targetFps: number = 30, // Upgraded from 15fps to 30fps for butter-smooth GIF looping
 ): Promise<Blob> {
   const { GIFEncoder, quantize, applyPalette } = await import('gifenc');
 
@@ -95,6 +95,199 @@ async function convertMp4ToGif(
   return new Blob([encoder.bytes().buffer as ArrayBuffer], { type: 'image/gif' });
 }
 
+// ─── Video Capture Loop Component ──────────────────────────────────
+// By isolating the priority=2 useFrame into a conditionally mounted component,
+// we prevent React Three Fiber from permanently disabling its native Priority 0 
+// gl.render loop (which happens if any hooked component has priority > 0).
+function VideoCaptureLoop({
+  encoderRef,
+  muxerRef,
+  requestRef,
+  frameCount,
+  totalFrames,
+  originalCameraPosition,
+  originalSize,
+  originalPixelRatio,
+  outputFormat,
+  onCompleteRef,
+  clearExportRequest,
+  file,
+  isRecording,
+  setIsCapturing,
+  originalStoreState
+}: any) {
+  const { gl, camera } = useThree();
+
+  useFrame(() => {
+    if (!isRecording.current || !encoderRef.current || !muxerRef.current) return;
+
+    // --- Backpressure Protocol (Prevents crashes on long exports or fast displays) ---
+    // If the browser pushes frames into the WebCodecs queue faster than the hardware 
+    // encoder can compress them (e.g., 144Hz monitor playing 80Mbps 4K video), RAM fills
+    // instantly and the browser silently crashes with an OOM. 
+    // By returning early, we pause frame extraction until the GPU drains the queue.
+    if (encoderRef.current.encodeQueueSize > 4) {
+      return; 
+    }
+
+    const req = requestRef.current;
+    if (!req) return;
+
+    const i = frameCount.current;
+    const total = totalFrames.current;
+    const fps = 60;
+
+    // 1. Capture the completed canvas frame from the PREVIOUS loop computations
+    // We do this immediately to grab what EffectComposer just dumped to gl.domElement.
+    try {
+      const frameData = new VideoFrame(gl.domElement, { timestamp: (i * 1e6) / fps });
+      encoderRef.current.encode(frameData, { keyFrame: i % 60 === 0 });
+      frameData.close();
+    } catch (e) {
+      console.error("Frame encode error", e);
+    }
+
+    frameCount.current++;
+
+    // 2. Setup the camera strictly for the NEXT loop computation
+    if (req.orbit && originalCameraPosition.current && file) {
+      const { min, max } = file.trajectory.globalBounds;
+      const center = new THREE.Vector3(
+        (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
+      );
+      const radius = originalCameraPosition.current.distanceTo(center);
+      
+      // Calculate angle based on the *next* frame about to be rendered
+      const angle = (frameCount.current / total) * Math.PI * 2;
+      camera.position.x = center.x + Math.sin(angle) * radius;
+      camera.position.z = center.z + Math.cos(angle) * radius;
+      camera.position.y = originalCameraPosition.current.y;
+      camera.lookAt(center);
+    }
+
+    if (req.cinematic && file) {
+      const progress = frameCount.current / total;
+      
+      // Advance trajectory if there is one
+      if (file.trajectory.totalFrames > 1) {
+        // Run from start to the absolute end frame
+        const targetFrame = Math.floor(progress * file.trajectory.totalFrames);
+        const safeFrame = Math.min(targetFrame, file.trajectory.totalFrames - 1);
+        if (useStore.getState().frame !== safeFrame) {
+          useStore.getState().setFrame(safeFrame);
+        }
+      }
+
+      // Cinematic bond pulse (breathes in to reveal bonds, breathes out)
+      const pulse = Math.sin(progress * Math.PI); // 0 -> 1 -> 0
+      useStore.getState().setBondCutoff(Math.max(0, pulse * 2.5));
+
+      // Subtle atom scaling
+      useStore.getState().setAtomScale(0.85 + pulse * 0.15);
+    }
+
+    // 3. Finalize when finished
+    if (frameCount.current >= total) {
+      isRecording.current = false;
+      setIsCapturing(false); // Unmount hook IMMEDIATELY to restore normal Fiber rendering
+      
+      // Detach async completion from the synchronous render thread
+      (async () => {
+        try {
+          await encoderRef.current!.flush();
+          
+          // Finalize the MP4 container. Catch colorSpace crash as a last resort.
+          try {
+            muxerRef.current!.finalize();
+          } catch (finalizeErr: any) {
+            if (finalizeErr?.message?.includes('colorSpace') || finalizeErr?.message?.includes('null')) {
+              console.warn('[ExportManager] finalize() colorSpace fallback — salvaging buffer', finalizeErr);
+            } else {
+              throw finalizeErr;
+            }
+          }
+
+          let success = false;
+
+          // If we streamed to disk, no buffer exists to download. Just close the stream!
+          if (req.fileStream) {
+            await req.fileStream.close();
+            success = true;
+          } else {
+            // Memory target: Pull the array buffer and spawn a client-side download
+            const finalBuffer = muxerRef.current!.target.buffer;
+            const finalBlob = new Blob([finalBuffer], { type: 'video/mp4' });
+            const baseName = req.baseName || 'glimPSE';
+            const userFormat = outputFormat.current;
+
+            if (userFormat === 'mp4') {
+              downloadBlob(finalBlob, `${baseName}.mp4`);
+              success = true;
+            } else if (userFormat === 'gif') {
+              try {
+                const gifBlob = await convertMp4ToGif(finalBlob, 30); 
+                downloadBlob(gifBlob, `${baseName}.gif`);
+                success = true;
+              } catch (err) {
+                console.error('GIF conversion failed, downloading pristine MP4 fallback:', err);
+                downloadBlob(finalBlob, `${baseName}.mp4`);
+                success = true;
+              }
+            }
+          } // close else
+
+          if (onCompleteRef.current) onCompleteRef.current(success);
+
+        } catch (err) {
+          console.error("Finalization failed", err);
+          if (onCompleteRef.current) onCompleteRef.current(false);
+        } finally {
+          encoderRef.current = null;
+          muxerRef.current = null;
+          
+          // Restore Scene State securely
+          if (originalCameraPosition.current && file) {
+            const { min, max } = file.trajectory.globalBounds;
+            const center = new THREE.Vector3(
+              (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
+            );
+            camera.position.copy(originalCameraPosition.current);
+            camera.lookAt(center);
+            originalCameraPosition.current = null;
+          }
+
+          if (originalSize.current) {
+            gl.setSize(originalSize.current.width, originalSize.current.height, false);
+            if (camera instanceof THREE.PerspectiveCamera) {
+              camera.aspect = originalSize.current.aspect;
+              camera.updateProjectionMatrix();
+            }
+            originalSize.current = null;
+          }
+          
+          // Restore Retina super-sampling
+          if (originalPixelRatio.current) {
+            gl.setPixelRatio(originalPixelRatio.current);
+          }
+
+          // Restore Cinematic Mutations
+          if (originalStoreState.current) {
+            useStore.getState().setBondCutoff(originalStoreState.current.bondCutoff);
+            useStore.getState().setAtomScale(originalStoreState.current.atomScale);
+            useStore.getState().setFrame(originalStoreState.current.frame);
+            originalStoreState.current = null;
+          }
+
+          outputFormat.current = null;
+          clearExportRequest();
+        }
+      })();
+    }
+  }, 2); // Priority 2 execution!
+
+  return null;
+}
+
 // ─── ExportManager component ─────────────────────────────────────
 export function ExportManager() {
   const { gl, scene, camera, size } = useThree();
@@ -105,23 +298,20 @@ export function ExportManager() {
 
   // Recording state
   const isRecording = useRef(false);
-  const outputFormat = useRef<'mp4' | 'gif' | null>(null); // What the user requested
-  const recordingStartTime = useRef(0);
-  const recordingDuration = useRef(5);
-  const recordingFps = useRef(60);
-  const recordingWidth = useRef(1920);
-  const recordingHeight = useRef(1080);
-  const frameCount = useRef(0);
+  const [isCapturing, setIsCapturing] = useState(false);
+  const outputFormat = useRef<'mp4' | 'gif' | null>(null);
   const onCompleteRef = useRef<((success: boolean) => void) | null>(null);
 
-  // MediaRecorder state
-  const mediaRecorder = useRef<MediaRecorder | null>(null);
-  const recordedChunks = useRef<Blob[]>([]);
-  const finalMimeType = useRef<string>('');
-
-  // Orbit state
+  // WebCodecs / Pipeline state
+  const encoderRef = useRef<VideoEncoder | null>(null);
+  const muxerRef = useRef<any>(null);
+  const requestRef = useRef<any>(null);
+  const totalFrames = useRef(0);
+  const frameCount = useRef(0);
+  const originalPixelRatio = useRef<number>(1);
   const originalCameraPosition = useRef<THREE.Vector3 | null>(null);
   const originalSize = useRef<{ width: number; height: number; aspect: number } | null>(null);
+  const originalStoreState = useRef<{ bondCutoff: number; atomScale: number; frame: number } | null>(null);
 
   // ─── Image Export ─────────────────────────────────────────────
   const handleImageExport = useCallback(() => {
@@ -153,8 +343,31 @@ export function ExportManager() {
     gl.render(scene, camera);
 
     const mime = `image/${format}`;
-    const dataUrl = gl.domElement.toDataURL(mime, format === 'png' ? undefined : 0.95);
+    const quality = format === 'png' ? undefined : 1.0;
+    const ext = format === 'jpeg' ? 'jpg' : format;
+    const filename = `${req.baseName || 'glimPSE-export'}-frame${frame + 1}.${ext}`;
 
+    // Use toBlob for reliable downloads with correct file extensions.
+    // toDataURL + link.click() fails in modern Chrome when the <a> isn't in the DOM,
+    // causing missing/wrong file extensions.
+    // Note: toBlob captures pixels synchronously per spec — the callback is just for
+    // delivering the encoded blob. Safe to restore renderer state immediately after.
+    gl.domElement.toBlob(
+      (blob) => {
+        if (blob) {
+          downloadBlob(blob, filename);
+          if (req.onComplete) req.onComplete(true);
+        } else {
+          console.error('[ExportManager] toBlob returned null — canvas may be tainted or context lost');
+          if (req.onComplete) req.onComplete(false);
+        }
+        clearExportRequest();
+      },
+      mime,
+      quality,
+    );
+
+    // Restore renderer state immediately — pixels already captured above
     gl.setRenderTarget(originalRenderTarget);
     gl.setSize(oldWidth, oldHeight, false);
     if (camera instanceof THREE.PerspectiveCamera) {
@@ -162,17 +375,9 @@ export function ExportManager() {
       camera.updateProjectionMatrix();
     }
     gl.setClearAlpha(originalClearAlpha);
-
-    const link = document.createElement('a');
-    link.download = `${req.baseName || 'glimPSE-export'}-frame${frame + 1}.${format === 'jpeg' ? 'jpg' : format}`;
-    link.href = dataUrl;
-    link.click();
-
-    if (req.onComplete) req.onComplete(true);
-    clearExportRequest();
   }, [exportRequest, gl, scene, camera, size, clearExportRequest, frame]);
 
-  // ─── Start Video Recording (unified for MP4 and GIF) ─────────
+  // ─── Start Video Recording (Post-processing Aware 80Mbps) ─────────
   const startVideoRecording = useCallback(async () => {
     const req = exportRequest;
     if (!req || isRecording.current) return;
@@ -180,189 +385,180 @@ export function ExportManager() {
     const userFormat = req.format === 'gif' ? 'gif' : 'mp4';
     const width = req.resolution?.width || 1920;
     const height = req.resolution?.height || 1080;
-    const fps = 60;
+    const fps = 60; 
     const duration = req.durationSeconds || 5;
 
-    // Check MediaRecorder
-    if (typeof MediaRecorder === 'undefined') {
-      console.error('MediaRecorder not available in this browser.');
+    if (typeof VideoEncoder === 'undefined') {
+      console.error('WebCodecs VideoEncoder not available in this browser.');
       if (req.onComplete) req.onComplete(false);
       clearExportRequest();
       return;
     }
-
-    let selectedMime = '';
-    const mimeMap = [
-      'video/mp4;codecs=h264',
-      'video/webm;codecs=vp9',
-      'video/webm',
-      'video/mp4'
-    ];
-    for (const m of mimeMap) {
-      if (MediaRecorder.isTypeSupported(m)) {
-        selectedMime = m;
-        break;
-      }
-    }
-    if (!selectedMime) {
-      console.error('No supported MediaRecorder MIME type found.');
-      if (req.onComplete) req.onComplete(false);
-      clearExportRequest();
-      return;
-    }
-    finalMimeType.current = selectedMime;
 
     outputFormat.current = userFormat;
-    recordingWidth.current = width;
-    recordingHeight.current = height;
-    recordingFps.current = fps;
-    recordingDuration.current = duration;
-    frameCount.current = 0;
     onCompleteRef.current = req.onComplete || null;
-    recordedChunks.current = [];
+    requestRef.current = req;
 
-    // Setup orbit
+    // Capture standard canvas size bounds to restore later
     if (req.orbit) {
       originalCameraPosition.current = camera.position.clone();
     }
 
-    // Set Canvas Size for Video
+    if (req.cinematic) {
+      const state = useStore.getState();
+      originalStoreState.current = {
+        bondCutoff: state.bondCutoff,
+        atomScale: state.atomScale,
+        frame: state.frame,
+      };
+    }
+
     originalSize.current = {
       width: size.width,
       height: size.height,
       aspect: (camera as THREE.PerspectiveCamera).aspect
     };
     
+    // EXTREMELY IMPORTANT: Force pixel ratio to exactly 1.0!
+    originalPixelRatio.current = gl.getPixelRatio();
+    gl.setPixelRatio(1);
+
+    // Size the engine precisely to export dimensions
     gl.setSize(width, height, false);
     if (camera instanceof THREE.PerspectiveCamera) {
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
     }
 
-    // Force an immediate render to guarantee the canvas has content
-    gl.render(scene, camera);
+    try {
+      const mp4Muxer = await import('mp4-muxer');
+      const Muxer = mp4Muxer.Muxer || (mp4Muxer as any).default?.Muxer || (mp4Muxer as any).default;
+      const ArrayBufferTarget = mp4Muxer.ArrayBufferTarget || (mp4Muxer as any).default?.ArrayBufferTarget;
+      const FileSystemWritableFileStreamTarget = mp4Muxer.FileSystemWritableFileStreamTarget || (mp4Muxer as any).default?.FileSystemWritableFileStreamTarget;
 
-    const stream = gl.domElement.captureStream(fps);
-    const recorder = new MediaRecorder(stream, {
-      mimeType: selectedMime,
-      videoBitsPerSecond: 16_000_000,
-    });
-    
-    recorder.ondataavailable = (e) => {
-      if (e.data && e.data.size > 0) {
-        recordedChunks.current.push(e.data);
-      }
-    };
-    
-    recorder.onstop = async () => {
-      const finalBlob = new Blob(recordedChunks.current, { type: selectedMime });
-      const ext = selectedMime.includes('mp4') ? 'mp4' : 'webm';
-      const baseName = req.baseName || 'glimPSE';
+      const target = req.fileStream 
+        ? new FileSystemWritableFileStreamTarget(req.fileStream) 
+        : new ArrayBufferTarget();
 
-      let success = false;
-      try {
-        if (outputFormat.current === 'mp4') { // 'mp4' represents the native video stream, could be WebM
-          downloadBlob(finalBlob, `${baseName}.${ext}`);
-          success = true;
-        } else if (outputFormat.current === 'gif') {
-          try {
-            const gifBlob = await convertMp4ToGif(finalBlob, 15);
-            downloadBlob(gifBlob, `${baseName}.gif`);
-            success = true;
-          } catch (err) {
-            console.error('GIF conversion failed, downloading video instead:', err);
-            downloadBlob(finalBlob, `${baseName}.${ext}`);
-            success = true;
+      const muxer = new Muxer({
+        target,
+        video: { codec: 'avc', width, height },
+        // IMPORTANT: Must be false when streaming to disk with a file stream!
+        fastStart: req.fileStream ? false : 'in-memory',
+      });
+      muxerRef.current = muxer;
+
+      let firstChunkSeen = false;
+      const videoEncoder = new VideoEncoder({
+        output: (chunk, meta) => {
+          // mp4-muxer 5.x crashes in finalize() if track.info.decoderConfig is null
+          // or if decoderConfig.colorSpace is missing. We inject colorSpace on the
+          // first chunk if the encoder doesn't provide it.
+          // CRITICAL: Use muxerRef.current (not local muxer) to avoid stale closure
+          // when React strict mode or HMR causes double-initialization.
+          if (!firstChunkSeen) {
+            firstChunkSeen = true;
+            if (meta?.decoderConfig) {
+              if (!meta.decoderConfig.colorSpace) {
+                meta = {
+                  ...meta,
+                  decoderConfig: {
+                    ...meta.decoderConfig,
+                    colorSpace: {
+                      primaries: 'bt709',
+                      transfer: 'bt709',
+                      matrix: 'bt709',
+                      fullRange: false,
+                    },
+                  },
+                };
+              }
+            } else {
+              meta = {
+                ...(meta || {}),
+                decoderConfig: {
+                  codec: 'avc1.640028',
+                  description: new Uint8Array(0),
+                  colorSpace: {
+                    primaries: 'bt709',
+                    transfer: 'bt709',
+                    matrix: 'bt709',
+                    fullRange: false,
+                  },
+                },
+              } as EncodedVideoChunkMetadata;
+            }
           }
-        }
-      } catch (err) {
-        console.error('Failed to finalize video export:', err);
-        success = false;
-      } finally {
-        mediaRecorder.current = null;
-        recordedChunks.current = [];
-
-        // Restore camera if orbit was used
-        if (originalCameraPosition.current && file) {
-          const { min, max } = file.trajectory.globalBounds;
-          const center = new THREE.Vector3(
-            (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
-          );
-          camera.position.copy(originalCameraPosition.current);
-          camera.lookAt(center);
-          originalCameraPosition.current = null;
-        }
-
-        if (originalSize.current) {
-          gl.setSize(originalSize.current.width, originalSize.current.height, false);
-          if (camera instanceof THREE.PerspectiveCamera) {
-            camera.aspect = originalSize.current.aspect;
-            camera.updateProjectionMatrix();
+          if (muxerRef.current) {
+            muxerRef.current.addVideoChunk(chunk, meta);
           }
-          originalSize.current = null;
-        }
+        },
+        error: (e) => console.error('VideoEncoder error:', e),
+      });
 
-        isRecording.current = false;
-        outputFormat.current = null;
-        if (onCompleteRef.current) onCompleteRef.current(success);
-        clearExportRequest();
-      }
-    };
+      videoEncoder.configure({
+        codec: 'avc1.640028',
+        width,
+        height,
+        bitrate: 80_000_000, 
+        framerate: fps,
+        hardwareAcceleration: 'prefer-hardware',
+      } as VideoEncoderConfig);
+      encoderRef.current = videoEncoder;
 
-    recorder.start(100);
-    mediaRecorder.current = recorder;
+      totalFrames.current = fps * duration;
+      frameCount.current = 0;
+      isRecording.current = true;
+      setIsCapturing(true);
 
-    recordingStartTime.current = performance.now();
-    isRecording.current = true;
-  }, [exportRequest, camera, gl, scene, size, clearExportRequest, file]);
+    } catch (err) {
+      console.error('Failed to init WebCodecs video:', err);
+      if (onCompleteRef.current) onCompleteRef.current(false);
+      isRecording.current = false;
+      gl.setPixelRatio(originalPixelRatio.current);
+      clearExportRequest();
+    }
+  }, [exportRequest, camera, gl, size, clearExportRequest]);
 
   // ─── Effect: Dispatch export actions ──────────────────────────
+  // IMPORTANT: Only depend on exportRequest. We use refs for the handlers
+  // to break the React dependency cycle that causes "Maximum update depth exceeded".
+  const handleImageExportRef = useRef(handleImageExport);
+  handleImageExportRef.current = handleImageExport;
+  const startVideoRecordingRef = useRef(startVideoRecording);
+  startVideoRecordingRef.current = startVideoRecording;
+
   useEffect(() => {
     if (!exportRequest || !exportRequest.type) return;
 
     if (exportRequest.type === 'image') {
-      handleImageExport();
+      handleImageExportRef.current();
     }
     if (exportRequest.type === 'video') {
-      startVideoRecording();
+      startVideoRecordingRef.current();
     }
-  }, [exportRequest, handleImageExport, startVideoRecording]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [exportRequest]);
 
-  // ─── Per-frame: orbit + capture ───────────────────────────────
-  useFrame(() => {
-    if (!isRecording.current || !mediaRecorder.current) return;
-
-    const elapsed = (performance.now() - recordingStartTime.current) / 1000;
-    const duration = recordingDuration.current;
-
-    // Check if recording is complete
-    if (elapsed >= duration) {
-      if (mediaRecorder.current.state === 'recording') {
-        mediaRecorder.current.stop();
-      }
-      return;
-    }
-
-    // Orbit camera around structure centroid
-    if (originalCameraPosition.current && file) {
-      const { min, max } = file.trajectory.globalBounds;
-      const center = new THREE.Vector3(
-        (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
-      );
-      const radius = originalCameraPosition.current.distanceTo(center);
-      const height = originalCameraPosition.current.y;
-      const angle = (elapsed / duration) * Math.PI * 2; // Full 360°
-      camera.position.x = center.x + Math.sin(angle) * radius;
-      camera.position.z = center.z + Math.cos(angle) * radius;
-      camera.position.y = height;
-      camera.lookAt(center);
-    }
-
-    // MediaRecorder automatically captures the canvas stream, 
-    // so we only need to manually orchestrate the Orbit camera angle per-frame!
-  });
-
-  return null;
+  return isCapturing ? (
+    <VideoCaptureLoop 
+      encoderRef={encoderRef}
+      muxerRef={muxerRef}
+      requestRef={requestRef}
+      frameCount={frameCount}
+      totalFrames={totalFrames}
+      originalCameraPosition={originalCameraPosition}
+      originalSize={originalSize}
+      originalPixelRatio={originalPixelRatio}
+      outputFormat={outputFormat}
+      onCompleteRef={onCompleteRef}
+      clearExportRequest={clearExportRequest}
+      file={file}
+      isRecording={isRecording}
+      setIsCapturing={setIsCapturing}
+      originalStoreState={originalStoreState}
+    />
+  ) : null;
 }
 
 // ─── Utility ─────────────────────────────────────────────────────

@@ -1,0 +1,17 @@
+name: distill
+description: Distillation profile for Rust transforms and Python operator discovery.
+memory:
+  project_memory: agents/profiles/distill/MEMORY.md
+workers:
+- PhysicsAgent
+- OperatorAgent
+- CounterexampleAgent
+tools:
+- shell
+- python
+model_routing:
+  primary_provider: minimax
+  primary_model: MiniMax-M2.7
+  fallback_provider: zai
+  fallback_model: glm-5-turbo
+  routing_rationale: Fast TPS (29.4) for bulk operator extraction

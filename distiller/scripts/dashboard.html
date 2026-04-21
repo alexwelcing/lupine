@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ODF Analytics Dashboard</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #252526;
+  --bg-tertiary: #2d2d2d;
+  --bg-hover: #3c3c3c;
+  --border: #3c3c3c;
+  --text-primary: #cccccc;
+  --text-secondary: #858585;
+  --accent-blue: #569cd6;
+  --accent-green: #6a9955;
+  --accent-orange: #ce9178;
+  --accent-purple: #c586c0;
+  --accent-yellow: #dcdcaa;
+  --accent-red: #f14c4c;
+  --accent-cyan: #4ec9b0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+}
+
+header h1 span { color: var(--text-primary); }
+
+header p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.section-header {
+  background: var(--bg-tertiary);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-header::before {
+  content: '';
+  width: 4px;
+  height: 16px;
+  background: var(--accent-blue);
+  border-radius: 2px;
+}
+
+.section-content { padding: 20px; }
+
+.chart-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.chart-container svg {
+  display: block;
+  margin: 0 auto;
+  min-width: 600px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.data-table th, .data-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.data-table tr:hover td { background: var(--bg-hover); }
+
+.data-table td code {
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  color: var(--accent-yellow);
+}
+
+.mae-value { font-weight: 600; }
+.mae-low { color: var(--accent-green); }
+.mae-medium { color: var(--accent-yellow); }
+.mae-high { color: var(--accent-red); }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-success { background: rgba(106, 153, 85, 0.2); color: var(--accent-green); }
+.status-failed { background: rgba(241, 76, 76, 0.2); color: var(--accent-red); }
+.status-warning { background: rgba(206, 145, 120, 0.2); color: var(--accent-orange); }
+
+.failure-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  background: var(--accent-purple);
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  margin: 2px;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 12px; }
+  header h1 { font-size: 1.2rem; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .data-table { font-size: 0.8rem; }
+  .data-table th, .data-table td { padding: 8px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Open Distillation Factory <span>— Analytics Dashboard v0.3.0</span></h1>
+    <p>Material property prediction pipeline monitoring and performance analysis</p>
+  </header>
+
+  <div class="grid-2">
+    <section>
+      <div class="section-header">Operator Performance</div>
+      <div class="section-content">
+        <div class="chart-container" id="operator-chart"></div>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: var(--accent-cyan);"></div>
+            <span>Individual Operator MAE (GPa)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: var(--accent-red);"></div>
+            <span>Ensemble MAE = 0.699 GPa</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">Per-Metal Comparison</div>
+      <div class="section-content">
+        <div class="chart-container" id="metal-chart"></div>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: var(--accent-orange);"></div>
+            <span>Baseline MAE (GPa)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: var(--accent-green);"></div>
+            <span>Ensemble MAE (GPa)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <div class="section-header">Pipeline Run History</div>
+    <div class="section-content">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Run ID</th>
+            <th>Profile</th>
+            <th>Duration</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#142</td>
+            <td><code>metal-5-ensemble</code></td>
+            <td>4m 23s</td>
+            <td><span class="status-badge status-success">✓ Success</span></td>
+            <td>Full pipeline completion</td>
+          </tr>
+          <tr>
+            <td>#141</td>
+            <td><code>metal-5-baseline</code></td>
+            <td>3m 15s</td>
+            <td><span class="status-badge status-success">✓ Success</span></td>
+            <td>Reference baseline run</td>
+          </tr>
+          <tr>
+            <td>#140</td>
+            <td><code>metal-5-operator-augment</code></td>
+            <td>5m 48s</td>
+            <td><span class="status-badge status-warning">⚠ Warning</span></td>
+            <td>Slow convergence detected</td>
+          </tr>
+          <tr>
+            <td>#139</td>
+            <td><code>metal-3-dbg</code></td>
+            <td>2m 10s</td>
+            <td><span class="status-badge status-failed">✗ Failed</span></td>
+            <td>Memory overflow on Au</td>
+          </tr>
+          <tr>
+            <td>#138</td>
+            <td><code>metal-5-failure-inject</code></td>
+            <td>4m 02s</td>
+            <td><span class="status-badge status-warning">⚠ Warning</span></td>
+            <td>Ferromagnetism correction applied</td>
+          </tr>
+          <tr>
+            <td>#137</td>
+            <td><code>metal-5-iterative</code></td>
+            <td>6m 30s</td>
+            <td><span class="status-badge status-success">✓ Success</span></td>
+            <td>Iterative refinement complete</td>
+          </tr>
+          <tr>
+            <td>#136</td>
+            <td><code>metal-5-ensemble</code></td>
+            <td>4m 18s</td>
+            <td><span class="status-badge status-success">✓ Success</span></td>
+            <td>Stable ensemble achieved</td>
+          </tr>
+          <tr>
+            <td>#135</td>
+            <td><code>metal-5-quick</code></td>
+            <td>1m 45s</td>
+            <td><span class="status-badge status-failed">✗ Failed</span></td>
+            <td>Insufficient iterations</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">Failure Analysis</div>
+    <div class="section-content">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Pattern</th>
+            <th>Affected Metals</th>
+            <th>Detection</th>
+            <th>Fix Applied</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="failure-tag">Ferromagnetism</span></td>
+            <td>Ni, Fe, Co</td>
+            <td>Spin-polarized DFT validation</td>
+            <td>Added magnetic moment correction term</td>
+          </tr>
+          <tr>
+            <td><span class="failure-tag">Relativistic</span></td>
+            <td>Au, Ag, Pt</td>
+            <td>Scalar relativistic comparison</td>
+            <td>ZORA approximation enabled</td>
+          </tr>
+          <tr>
+            <td><span class="failure-tag">Free-Electron</span></td>
+            <td>Al, Na, K</td>
+            <td>Drude model validation</td>
+            <td>Plasma frequency calibration</td>
+          </tr>
+          <tr>
+            <td><span class="failure-tag">d-Band</span></td>
+            <td>Cu, Ag, Ni</td>
+            <td>d-band center analysis</td>
+            <td>Stabilization via hybridization shift</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+(function() {
+  const colors = {
+    cyan: '#4ec9b0',
+    red: '#f14c4c',
+    orange: '#ce9178',
+    green: '#6a9955',
+    gray: '#858585',
+    border: '#3c3c3c'
+  };
+
+  // Operator Performance Chart
+  function renderOperatorChart() {
+    const operators = [
+      { name: 'stiffness_ratio', mae: 0.026 },
+      { name: 'stability_margin', mae: 1.174 },
+      { name: 'poisson_ratio', mae: 1.249 },
+      { name: 'volume_scaling', mae: 3.131 },
+      { name: 'cauchy_pressure', mae: 3.200 }
+    ];
+    const ensembleMAE = 0.699;
+    const container = document.getElementById('operator-chart');
+    const width = 600, height = 300;
+    const margin = { top: 30, right: 30, bottom: 60, left: 60 };
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', width);
+    svg.setAttribute('height', height);
+
+    // Background
+    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    bg.setAttribute('width', width);
+    bg.setAttribute('height', height);
+    bg.setAttribute('fill', '#252526');
+    svg.appendChild(bg);
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('transform', `translate(${margin.left},${margin.top})`);
+    svg.appendChild(g);
+
+    const maxMAE = Math.max(...operators.map(o => o.mae), ensembleMAE) * 1.1;
+    const barWidth = chartWidth / operators.length - 20;
+    const barSpacing = chartWidth / operators.length;
+
+    // Grid lines
+    for (let i = 0; i <= 5; i++) {
+      const y = chartHeight - (i / 5) * chartHeight;
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', 0);
+      line.setAttribute('y1', y);
+      line.setAttribute('x2', chartWidth);
+      line.setAttribute('y2', y);
+      line.setAttribute('stroke', colors.border);
+      line.setAttribute('stroke-dasharray', '4,4');
+      g.appendChild(line);
+
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', -10);
+      text.setAttribute('y', y + 4);
+      text.setAttribute('text-anchor', 'end');
+      text.setAttribute('fill', colors.gray);
+      text.setAttribute('font-size', '11');
+      text.textContent = (i / 5 * maxMAE).toFixed(1);
+      g.appendChild(text);
+    }
+
+    // Ensemble reference line
+    const ensembleY = chartHeight - (ensembleMAE / maxMAE) * chartHeight;
+    const refLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    refLine.setAttribute('x1', 0);
+    refLine.setAttribute('y1', ensembleY);
+    refLine.setAttribute('x2', chartWidth);
+    refLine.setAttribute('y2', ensembleY);
+    refLine.setAttribute('stroke', colors.red);
+    refLine.setAttribute('stroke-width', '2');
+    refLine.setAttribute('stroke-dasharray', '8,4');
+    g.appendChild(refLine);
+
+    const refLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    refLabel.setAttribute('x', chartWidth + 5);
+    refLabel.setAttribute('y', ensembleY + 4);
+    refLabel.setAttribute('fill', colors.red);
+    refLabel.setAttribute('font-size', '11');
+    refLabel.textContent = `Ensemble: ${ensembleMAE}`;
+    g.appendChild(refLabel);
+
+    // Bars
+    operators.forEach((op, i) => {
+      const x = i * barSpacing + barSpacing / 2 - barWidth / 2;
+      const barHeight = (op.mae / maxMAE) * chartHeight;
+      const y = chartHeight - barHeight;
+
+      const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      bar.setAttribute('x', x);
+      bar.setAttribute('y', y);
+      bar.setAttribute('width', barWidth);
+      bar.setAttribute('height', barHeight);
+      bar.setAttribute('fill', colors.cyan);
+      bar.setAttribute('rx', '4');
+      g.appendChild(bar);
+
+      // Value label
+      const valLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      valLabel.setAttribute('x', x + barWidth / 2);
+      valLabel.setAttribute('y', y - 6);
+      valLabel.setAttribute('text-anchor', 'middle');
+      valLabel.setAttribute('fill', colors.cyan);
+      valLabel.setAttribute('font-size', '11');
+      valLabel.setAttribute('font-weight', '600');
+      valLabel.textContent = op.mae.toFixed(3);
+      g.appendChild(valLabel);
+
+      // X-axis label
+      const xLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      xLabel.setAttribute('x', x + barWidth / 2);
+      xLabel.setAttribute('y', chartHeight + 16);
+      xLabel.setAttribute('text-anchor', 'middle');
+      xLabel.setAttribute('fill', colors.gray);
+      xLabel.setAttribute('font-size', '10');
+      xLabel.textContent = op.name.replace('_', '\n');
+      g.appendChild(xLabel);
+    });
+
+    container.appendChild(svg);
+  }
+
+  // Per-Metal Comparison Chart
+  function renderMetalChart() {
+    const metals = [
+      { name: 'Al', baseline: 0.808, ensemble: 0.364 },
+      { name: 'Cu', baseline: 1.470, ensemble: 0.625 },
+      { name: 'Ni', baseline: 2.717, ensemble: 1.042 },
+      { name: 'Ag', baseline: 1.634, ensemble: 0.794 },
+      { name: 'Au', baseline: 1.720, ensemble: 0.671 }
+    ];
+    const container = document.getElementById('metal-chart');
+    const width = 600, height = 300;
+    const margin = { top: 30, right: 30, bottom: 50, left: 60 };
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', width);
+    svg.setAttribute('height', height);
+
+    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    bg.setAttribute('width', width);
+    bg.setAttribute('height', height);
+    bg.setAttribute('fill', '#252526');
+    svg.appendChild(bg);
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('transform', `translate(${margin.left},${margin.top})`);
+    svg.appendChild(g);
+
+    const maxMAE = Math.max(...metals.map(m => m.baseline)) * 1.1;
+    const groupWidth = chartWidth / metals.length;
+    const barWidth = 30;
+    const barGap = 6;
+
+    // Grid lines
+    for (let i = 0; i <= 5; i++) {
+      const y = chartHeight - (i / 5) * chartHeight;
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', 0);
+      line.setAttribute('y1', y);
+      line.setAttribute('x2', chartWidth);
+      line.setAttribute('y2', y);
+      line.setAttribute('stroke', colors.border);
+      line.setAttribute('stroke-dasharray', '4,4');
+      g.appendChild(line);
+
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', -10);
+      text.setAttribute('y', y + 4);
+      text.setAttribute('text-anchor', 'end');
+      text.setAttribute('fill', colors.gray);
+      text.setAttribute('font-size', '11');
+      text.textContent = (i / 5 * maxMAE).toFixed(1);
+      g.appendChild(text);
+    }
+
+    // Bars
+    metals.forEach((metal, i) => {
+      const groupX = i * groupWidth + groupWidth / 2;
+      const baselineHeight = (metal.baseline / maxMAE) * chartHeight;
+      const ensembleHeight = (metal.ensemble / maxMAE) * chartHeight;
+      const baselineY = chartHeight - baselineHeight;
+      const ensembleY = chartHeight - ensembleHeight;
+
+      // Baseline bar
+      const baselineBar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      baselineBar.setAttribute('x', groupX - barWidth - barGap / 2);
+      baselineBar.setAttribute('y', baselineY);
+      baselineBar.setAttribute('width', barWidth);
+      baselineBar.setAttribute('height', baselineHeight);
+      baselineBar.setAttribute('fill', colors.orange);
+      baselineBar.setAttribute('rx', '3');
+      g.appendChild(baselineBar);
+
+      // Ensemble bar
+      const ensembleBar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      ensembleBar.setAttribute('x', groupX + barGap / 2);
+      ensembleBar.setAttribute('y', ensembleY);
+      ensembleBar.setAttribute('width', barWidth);
+      ensembleBar.setAttribute('height', ensembleHeight);
+      ensembleBar.setAttribute('fill', colors.green);
+      ensembleBar.setAttribute('rx', '3');
+      g.appendChild(ensembleBar);
+
+      // Metal label
+      const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('x', groupX);
+      label.setAttribute('y', chartHeight + 20);
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('fill', '#cccccc');
+      label.setAttribute('font-size', '14');
+      label.setAttribute('font-weight', '600');
+      label.textContent = metal.name;
+      g.appendChild(label);
+
+      // Improvement percentage
+      const improvement = ((metal.baseline - metal.ensemble) / metal.baseline * 100).toFixed(0);
+      const impLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      impLabel.setAttribute('x', groupX);
+      impLabel.setAttribute('y', 16);
+      impLabel.setAttribute('text-anchor', 'middle');
+      impLabel.setAttribute('fill', colors.green);
+      impLabel.setAttribute('font-size', '11');
+      impLabel.setAttribute('font-weight', '600');
+      impLabel.textContent = `-${improvement}%`;
+      g.appendChild(impLabel);
+    });
+
+    container.appendChild(svg);
+  }
+
+  renderOperatorChart();
+  renderMetalChart();
+})();
+</script>
+</body>
+</html>

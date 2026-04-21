@@ -19,7 +19,8 @@ type Domain =
   | 'Biomolecules'
   | 'Energy Materials'
   | 'Defects & Mechanics'
-  | 'Methods';
+  | 'Methods'
+  | 'Advanced Theory & Validation';
 
 interface GalleryExample {
   id: string;
@@ -53,6 +54,7 @@ const DOMAIN_COLORS: Record<Domain, string> = {
   'Energy Materials': '#7fd8be',
   'Defects & Mechanics': '#ffd93d',
   'Methods': '#c7ceea',
+  'Advanced Theory & Validation': '#bf5cf0',
 };
 
 const EXAMPLES: GalleryExample[] = galleryData as GalleryExample[];

@@ -1,0 +1,13 @@
+# distill profile — primary route (provider A: MiniMax M2.7)
+# Operator discovery + Rust transforms. Highspeed tier not on current plan,
+# so distill shares the same M2.7 primary as the other profiles; the Z.ai
+# fallback (glm-5-turbo) keeps the latency-light fallback character intact.
+extends: ../../hermes/cli-config.base.yaml
+
+model:
+  default: "MiniMax-M2.7"
+  provider: "minimax"
+  base_url: "https://api.minimax.io/v1"
+
+memory:
+  project_memory: agents/profiles/distill/MEMORY.md

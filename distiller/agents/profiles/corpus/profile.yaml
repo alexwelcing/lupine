@@ -1,0 +1,16 @@
+name: corpus
+description: Literature ingestion and extraction profile for MD/materials sources.
+memory:
+  project_memory: agents/profiles/corpus/MEMORY.md
+workers:
+- LiteratureAgent
+- ExtractionAgent
+schedule:
+- cron: 0 */6 * * *
+  task: refresh_source_queue
+model_routing:
+  primary_provider: minimax
+  primary_model: MiniMax-M2.7
+  fallback_provider: zai
+  fallback_model: glm-5.1
+  routing_rationale: Agentic memory for cross-session literature recall

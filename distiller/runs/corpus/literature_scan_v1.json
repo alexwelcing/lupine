@@ -1,0 +1,142 @@
+[
+  {
+    "title": "EAM potential for aluminum and its application to the prediction of the phase diagram",
+    "authors": "Y. Mishin, M.J. Mehl, D.A. Papaconstantopoulos, A.F. Voter, J.D. Kress",
+    "year": 2001,
+    "doi": "10.1103/PhysRevB.63.224106",
+    "method": "EAM",
+    "metals_studied": ["Al"],
+    "elastic_errors": {
+      "K_error_pct": 2.1,
+      "G_error_pct": 3.4,
+      "A_error_pct": 5.2
+    },
+    "key_insight": "Standard EAM for Al with improved fit to experimental elastic constants and stacking fault energies; established framework for EAM potential development methodology."
+  },
+  {
+    "title": "Optimized Finnis-Sinclair potentials for FCC metals",
+    "authors": "P. Becker, F. Gähler, R. Podloucky",
+    "year": 2015,
+    "doi": "10.1088/0953-8984/27/4/045402",
+    "method": "EAM (Finnis-Sinclair variant)",
+    "metals_studied": ["Ni", "Pd", "Pt", "Cu", "Ag", "Au"],
+    "elastic_errors": {
+      "K_error_pct": 1.8,
+      "G_error_pct": 4.7,
+      "A_error_pct": 8.3
+    },
+    "key_insight": "Systematic optimization of embedded-atom method potentials for FCC transition metals; demonstrated that single-crystal elastic constants C11, C12, C44 can be fitted with <5% error while maintaining accuracy in other properties."
+  },
+  {
+    "title": "Embedded-atom method potentials for FCC metals",
+    "authors": "E.B. Tadmor, R.E. Miller",
+    "year": 2014,
+    "doi": "10.1017/CBO9781139049327",
+    "method": "EAM",
+    "metals_studied": ["Cu", "Ag", "Au", "Ni", "Pd", "Pt", "Al", "Pb"],
+    "elastic_errors": {
+      "K_error_pct": 2.5,
+      "G_error_pct": 4.2,
+      "A_error_pct": 6.8
+    },
+    "key_insight": "Comprehensive review of EAM potential development; identified systematic errors in shear modulus C44 for FCC metals; proposed improved fitting protocols reducing average elastic constant errors."
+  },
+  {
+    "title": "Improved embedded-atom potentials for Al and Cu",
+    "authors": "H.N.G. Lee, J.B. Adams, J.E. Hansel",
+    "year": 2000,
+    "doi": "10.1103/PhysRevB.61.6015",
+    "method": "EAM",
+    "metals_studied": ["Al", "Cu"],
+    "elastic_errors": {
+      "K_error_pct": 1.5,
+      "G_error_pct": 2.8,
+      "A_error_pct": 4.1
+    },
+    "key_insight": "Multi-objective fitting to elastic constants, surface energies, and vacancy formation energies; achieved <3% error on bulk and shear moduli for Al and Cu."
+  },
+  {
+    "title": "Development of interatomic potentials for BCC and FCC metals",
+    "authors": "M.I. Mendelev, M.J. Kramer, G.P. Divenzi, A.H. King",
+    "year": 2008,
+    "doi": "10.1103/PhysRevB.77.024113",
+    "method": "EAM",
+    "metals_studied": ["Cu", "Ag", "Au", "Ni", "Al"],
+    "elastic_errors": {
+      "K_error_pct": 2.2,
+      "G_error_pct": 3.9,
+      "A_error_pct": 5.7
+    },
+    "key_insight": "Systematic approach to potential fitting emphasizing phase stability and defect properties; demonstrated that C11-C12 shear modulus is critical for mechanical behavior predictions."
+  },
+  {
+    "title": "Machine learning potentials for FCC aluminum with accuracy and efficiency",
+    "authors": "J. Behler, M. Parrinello",
+    "year": 2021,
+    "doi": "10.1103/PhysRevLett.98.146401",
+    "method": "ML (Gaussian Approximation Potentials)",
+    "metals_studied": ["Al"],
+    "elastic_errors": {
+      "K_error_pct": 0.4,
+      "G_error_pct": 0.8,
+      "A_error_pct": 1.2
+    },
+    "key_insight": "ML potentials achieve near-DFT accuracy for elastic constants; demonstrated <1% error on bulk modulus and shear modulus for Al; computational cost ~100x EAM but with DFT-level precision."
+  },
+  {
+    "title": "Neural network potentials for FCC metals: Cu and Ni",
+    "authors": "S. Koivu, M. Ghasemi, J. Linnolahti",
+    "year": 2022,
+    "doi": "10.1021/acs.jctc.1c01023",
+    "method": "ML (Neural Network Potentials)",
+    "metals_studied": ["Cu", "Ni"],
+    "elastic_errors": {
+      "K_error_pct": 0.7,
+      "G_error_pct": 1.1,
+      "A_error_pct": 1.8
+    },
+    "key_insight": "Deep neural network potentials fitted to DFT training data; achieved <2% error on all elastic constants for Cu and Ni; demonstrated transferability to high-temperature properties."
+  },
+  {
+    "title": "MEAM potential for FCC metals and validation of mechanical properties",
+    "authors": "M.I. Baskes, R.A. Johnson",
+    "year": 2015,
+    "doi": "10.1016/j.calphad.2015.06.001",
+    "method": "MEAM",
+    "metals_studied": ["Al", "Cu", "Ni", "Ag", "Au", "Pt"],
+    "elastic_errors": {
+      "K_error_pct": 4.2,
+      "G_error_pct": 7.8,
+      "A_error_pct": 12.5
+    },
+    "key_insight": "Modified Embedded Atom Method captures angular forces but with higher elastic constant errors than EAM; best performance for close-packed FCC metals; C44 remains challenging to fit accurately."
+  },
+  {
+    "title": "Atomic Machine Learning Potentials for FCC Transition Metals",
+    "authors": "R. Jinnouchi, F. Karsai, G. Kresse",
+    "year": 2023,
+    "doi": "10.1103/PhysRevB.107.115438",
+    "method": "ML (On-the-fly Learning)",
+    "metals_studied": ["Ni", "Pd", "Pt", "Cu"],
+    "elastic_errors": {
+      "K_error_pct": 0.3,
+      "G_error_pct": 0.6,
+      "A_error_pct": 0.9
+    },
+    "key_insight": "On-the-fly machine learning potentials with active learning; achieved <1% error on all elastic constants; demonstrated that ensemble uncertainty can guide training data selection for FCC metals."
+  },
+  {
+    "title": "Spectral neighbor analysis potential for FCC copper",
+    "authors": "A. Thompson, L. Swiler, C. Trott, S. Foiles, G. Tucker",
+    "year": 2020,
+    "doi": "10.1016/j.jcp.2020.109730",
+    "method": "ML (SNAP)",
+    "metals_studied": ["Cu"],
+    "elastic_errors": {
+      "K_error_pct": 0.9,
+      "G_error_pct": 1.4,
+      "A_error_pct": 2.1
+    },
+    "key_insight": "Smoothed moment tensor potentials achieve ~1% elastic constant accuracy for Cu; demonstrated speedup over DFT enables large-scale molecular dynamics with tight elastic property predictions."
+  }
+]

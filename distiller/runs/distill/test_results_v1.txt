@@ -1,0 +1,113 @@
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.183 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.169 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.209 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.206 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.187 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.188 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.216 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.203 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.229 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+/workspaces/open-distillation-factory/runs/distill/test_operators.py:97: UserWarning: Poisson ratio -0.228 outside typical metallic range [0.2, 0.5]
+  warnings.warn(f"Poisson ratio {nu:.3f} outside typical metallic range [0.2, 0.5]")
+==========================================================================================
+OPERATOR TEST RESULTS - EAM Elastic Constant Corrections
+==========================================================================================
+
+METAL: Al
+--------------------------------------------------
+  Reference: C11=106.0, C12=61.0, C44=28.0 GPa
+  EAM:       C11=114.0, C12=58.0, C44=32.0 GPa
+
+  Operator              | Correction  | Residual Error
+  ------------------------------------------------
+  volume_scaling         |    -0.3205 |     0.3462
+  stiffness_ratio        |    +0.2278 |     0.0683
+  stability_margin       |    +0.0166 |     0.8275
+  cauchy_pressure        |    -7.0000 |     2.8000
+  poisson_ratio          |    +0.0140 |     2.8060
+
+METAL: Cu
+--------------------------------------------------
+  Reference: C11=170.0, C12=122.0, C44=76.0 GPa
+  EAM:       C11=168.0, C12=118.0, C44=78.0 GPa
+
+  Operator              | Correction  | Residual Error
+  ------------------------------------------------
+  volume_scaling         |    -0.3205 |     3.6538
+  stiffness_ratio        |    +0.0303 |     0.0091
+  stability_margin       |    +0.0153 |     0.7633
+  cauchy_pressure        |    -6.0000 |     2.4000
+  poisson_ratio          |    +0.0026 |     0.5221
+
+METAL: Ni
+--------------------------------------------------
+  Reference: C11=247.0, C12=147.0, C44=125.0 GPa
+  EAM:       C11=252.0, C12=152.0, C44=118.0 GPa
+
+  Operator              | Correction  | Residual Error
+  ------------------------------------------------
+  volume_scaling         |    -0.3205 |     4.6795
+  stiffness_ratio        |    -0.0224 |     0.0067
+  stability_margin       |    -0.0080 |     0.4016
+  cauchy_pressure        |   +12.0000 |     4.8000
+  poisson_ratio          |    -0.0016 |     0.3141
+
+METAL: Ag
+--------------------------------------------------
+  Reference: C11=124.0, C12=94.0, C44=46.0 GPa
+  EAM:       C11=130.0, C12=89.0, C44=48.0 GPa
+
+  Operator              | Correction  | Residual Error
+  ------------------------------------------------
+  volume_scaling         |    -0.3205 |     1.6538
+  stiffness_ratio        |    +0.1415 |     0.0425
+  stability_margin       |    +0.0734 |     3.6725
+  cauchy_pressure        |    -7.0000 |     2.8000
+  poisson_ratio          |    +0.0124 |     2.4800
+
+METAL: Au
+--------------------------------------------------
+  Reference: C11=193.0, C12=163.0, C44=42.0 GPa
+  EAM:       C11=188.0, C12=158.0, C44=45.0 GPa
+
+  Operator              | Correction  | Residual Error
+  ------------------------------------------------
+  volume_scaling         |    -0.3205 |     5.3205
+  stiffness_ratio        |    +0.0058 |     0.0017
+  stability_margin       |    +0.0041 |     0.2067
+  cauchy_pressure        |    -8.0000 |     3.2000
+  poisson_ratio          |    +0.0006 |     0.1218
+
+==========================================================================================
+AGGREGATE MAE (Mean Absolute Error) per Operator
+==========================================================================================
+
+  volume_scaling        : MAE = 3.1308
+  stiffness_ratio       : MAE = 0.0257
+  stability_margin      : MAE = 1.1743
+  cauchy_pressure       : MAE = 3.2000
+  poisson_ratio         : MAE = 1.2488
+
+==========================================================================================
+OVERALL AGGREGATE MAE: 1.7559
+==========================================================================================
+
+SUMMARY TABLE: Corrections and Residual Errors per Metal per Operator
+------------------------------------------------------------------------------------------
+Metal  | volume_scaling | stiffness_rati | stability_marg | cauchy_pressur | poisson_ratio 
+------------------------------------------------------------------------------------------
+Al     | -0.320/ 0.346 | +0.228/ 0.068 | +0.017/ 0.828 | -7.000/ 2.800 | +0.014/ 2.806
+Cu     | -0.320/ 3.654 | +0.030/ 0.009 | +0.015/ 0.763 | -6.000/ 2.400 | +0.003/ 0.522
+Ni     | -0.320/ 4.680 | -0.022/ 0.007 | -0.008/ 0.402 | +12.000/ 4.800 | -0.002/ 0.314
+Ag     | -0.320/ 1.654 | +0.142/ 0.042 | +0.073/ 3.672 | -7.000/ 2.800 | +0.012/ 2.480
+Au     | -0.320/ 5.320 | +0.006/ 0.002 | +0.004/ 0.207 | -8.000/ 3.200 | +0.001/ 0.122
+------------------------------------------------------------------------------------------
