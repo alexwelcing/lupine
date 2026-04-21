@@ -61,6 +61,12 @@ function headingsToToc(md) {
   return toc;
 }
 
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 // Ensure each rendered heading has an id matching slugify(text) so TOC anchors work.
 const renderer = new marked.Renderer();
 renderer.heading = (text, level) => {
@@ -68,10 +74,132 @@ renderer.heading = (text, level) => {
   const id = slugify(plain);
   return `<h${level} id="${id}">${text}</h${level}>`;
 };
+// Wrap tables in a scroll container and inject data-label on each <td> so
+// the CSS can stack rows as labeled cards on narrow screens.
 renderer.table = (header, body) => {
-  return `<div class="table-wrap"><table><thead>${header}</thead><tbody>${body}</tbody></table></div>`;
+  const labels = [];
+  header.replace(/<th[^>]*>([\s\S]*?)<\/th>/g, (_, inner) => {
+    labels.push(stripTags(inner));
+    return _;
+  });
+  let col = 0;
+  const bodyWithLabels = body.replace(/<tr>([\s\S]*?)<\/tr>/g, (_, inner) => {
+    col = 0;
+    const injected = inner.replace(/<td([^>]*)>/g, (_, attrs) => {
+      const label = labels[col] != null ? labels[col] : '';
+      col++;
+      return `<td${attrs} data-label="${escapeHtml(label)}">`;
+    });
+    return `<tr>${injected}</tr>`;
+  });
+  return `<div class="table-wrap"><table><thead>${header}</thead><tbody>${bodyWithLabels}</tbody></table></div>`;
 };
 marked.setOptions({ renderer, headerIds: false, mangle: false, gfm: true, breaks: false });
+
+// ───────────────────────────────────────────────────────────────
+// Per-source preprocessors
+// ───────────────────────────────────────────────────────────────
+
+// tda_error_landscapes_report.md was extracted from a PDF with every line
+// wrapped in "quotes" and its tables flattened into sequences of quoted
+// lines surrounded by a `"Table"` opener and a `"Table N: caption"` closer.
+// Reconstruct those blocks into proper HTML tables.
+function preprocessTdaReport(md) {
+  // Strip outer quote wrappers line-by-line (safe across the whole file:
+  // 98% of lines have them and they're always extraction residue).
+  const lines = md.split('\n').map((raw) => {
+    const trimmed = raw.replace(/^\s*"|"\s*$/g, '');
+    return trimmed;
+  });
+
+  const out = [];
+  let i = 0;
+  while (i < lines.length) {
+    if (lines[i].trim() === 'Table') {
+      // Seek closing caption within a reasonable window.
+      let end = i + 1;
+      const MAX_BLOCK = 80;
+      while (end < lines.length && end - i < MAX_BLOCK) {
+        const m = lines[end].trim().match(/^Table\s+(\d+):\s*(.+)$/);
+        if (m) break;
+        end++;
+      }
+      if (end < lines.length && end - i < MAX_BLOCK) {
+        const cells = lines
+          .slice(i + 1, end)
+          .map((s) => s.trim())
+          .filter(Boolean);
+        const capMatch = lines[end].trim().match(/^Table\s+(\d+):\s*(.+)$/);
+        const caption = `Table ${capMatch[1]}: ${capMatch[2]}`;
+        out.push(reconstructTable(caption, cells));
+        out.push('');
+        i = end + 1;
+        continue;
+      }
+    }
+    out.push(lines[i]);
+    i++;
+  }
+  return out.join('\n');
+}
+
+function reconstructTable(caption, cells) {
+  // The PDF extractor often split parentheticals and em-dashed clauses onto
+  // their own lines, producing orphan "cells" that belong with the next
+  // cell. Merge them forward so the grid divides cleanly.
+  const merged = [];
+  for (let i = 0; i < cells.length; i++) {
+    const c = cells[i];
+    const next = cells[i + 1];
+    if (next && /^[(—–\-]/.test(c)) {
+      merged.push(`${next} ${c}`.trim());
+      i++; // consume next
+    } else {
+      merged.push(c);
+    }
+  }
+  cells = merged;
+
+  // Try a sensible column count. Prefer 4 → 3 → 5 → 2. Must have at least 2 rows.
+  let cols = 0;
+  for (const n of [4, 3, 5, 2]) {
+    if (cells.length >= n * 2 && cells.length % n === 0) { cols = n; break; }
+  }
+  if (!cols) {
+    // Fallback: render as a captioned data list — still readable on mobile.
+    const items = cells.map((c) => `<li>${escapeHtml(c)}</li>`).join('');
+    return (
+      `<figure class="ll-datablock">` +
+      `<figcaption>${escapeHtml(caption)}</figcaption>` +
+      `<ul>${items}</ul>` +
+      `</figure>`
+    );
+  }
+  const headers = cells.slice(0, cols);
+  const rows = [];
+  for (let r = cols; r < cells.length; r += cols) {
+    rows.push(cells.slice(r, r + cols));
+  }
+  let html = '<div class="table-wrap"><table>';
+  html += `<caption>${escapeHtml(caption)}</caption>`;
+  html += '<thead><tr>';
+  for (const h of headers) html += `<th>${escapeHtml(h)}</th>`;
+  html += '</tr></thead><tbody>';
+  for (const row of rows) {
+    html += '<tr>';
+    for (let c = 0; c < row.length; c++) {
+      html += `<td data-label="${escapeHtml(headers[c] || '')}">${escapeHtml(row[c] || '')}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table></div>';
+  return html;
+}
+
+function preprocess(md, source) {
+  if (/tda_error_landscapes/i.test(source || '')) return preprocessTdaReport(md);
+  return md;
+}
 
 function estimateReadMinutes(words) {
   return Math.max(1, Math.round(words / 220));
@@ -107,7 +235,8 @@ function build() {
       console.warn(`[skip] ${entry.source} not found`);
       continue;
     }
-    const md = fs.readFileSync(absPath, 'utf8');
+    const rawMd = fs.readFileSync(absPath, 'utf8');
+    const md = preprocess(rawMd, entry.source);
     const id = entry.id || slugify(path.basename(entry.source, path.extname(entry.source)));
     const title = entry.title || extractTitle(md, id);
     const subtitle = entry.subtitle || extractSubtitle(md);
