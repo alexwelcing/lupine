@@ -376,10 +376,133 @@ body {
 .reader .content pre code { background: none; padding: 0; color: var(--text); }
 .reader .content hr { border: none; border-top: 1px solid var(--border); margin: 1.6em 0; }
 
-.reader .content .table-wrap { overflow-x: auto; margin: 1em 0; }
-.reader .content table { border-collapse: collapse; font-size: 0.9em; width: 100%; min-width: 420px; }
-.reader .content th, .reader .content td { padding: 8px 10px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
-.reader .content th { background: var(--glass-2); font-weight: 600; font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-dim); }
+/* ── Tables ──
+   Desktop: compact bordered table with optional caption and horizontal
+   scroll if the table overflows. Mobile: each row becomes a labeled card
+   (labels come from data-label set by the build-time marked renderer). */
+.reader .content .table-wrap {
+  margin: 1.1em 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--glass-1);
+}
+.reader .content table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9em;
+  min-width: 520px;
+}
+.reader .content caption {
+  caption-side: top;
+  text-align: left;
+  padding: 10px 14px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lupine-300);
+  border-bottom: 1px solid var(--border);
+  background: var(--glass-2);
+}
+.reader .content thead th {
+  background: var(--glass-2);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+.reader .content tbody td {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.45;
+}
+.reader .content tbody tr:first-child td { border-top: none; }
+.reader .content tbody tr:nth-child(even) td { background: rgba(255, 255, 255, 0.012); }
+
+/* Narrow screens: transform rows into stacked labeled cards. */
+@media (max-width: 639px) {
+  .reader .content .table-wrap {
+    overflow: visible;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+  }
+  .reader .content table { display: block; min-width: 0; font-size: 0.95em; }
+  .reader .content caption {
+    display: block;
+    padding: 0 0 10px;
+    background: transparent;
+    border-bottom: none;
+  }
+  .reader .content thead { display: none; }
+  .reader .content tbody { display: block; }
+  .reader .content tbody tr {
+    display: block;
+    margin: 0 0 10px;
+    padding: 10px 12px;
+    background: var(--glass-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .reader .content tbody tr:nth-child(even) td { background: transparent; }
+  .reader .content tbody td {
+    display: block;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+  }
+  .reader .content tbody tr td:first-child { padding-top: 2px; border-top: none; }
+  .reader .content tbody td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+  }
+  .reader .content tbody td[data-label=""]::before,
+  .reader .content tbody td:not([data-label])::before { display: none; }
+}
+
+/* Data block — fallback when a pseudo-table can't be reconstructed as a grid. */
+.reader .content .ll-datablock {
+  margin: 1.1em 0;
+  padding: 12px 14px;
+  background: var(--glass-1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.reader .content .ll-datablock figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lupine-300);
+  padding-bottom: 8px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.reader .content .ll-datablock ul { list-style: none; margin: 0; padding: 0; }
+.reader .content .ll-datablock li {
+  padding: 7px 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.reader .content .ll-datablock li:first-child { border-top: none; padding-top: 3px; }
 
 .reader .content img { max-width: 100%; height: auto; border-radius: 8px; }
 
