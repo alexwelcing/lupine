@@ -90,6 +90,71 @@ body {
   mix-blend-mode: overlay;
 }
 
+/* Drifting radial orbs — the "GSAP feel" without the JS. Three fixed
+   lupine/cyan/violet gradients that slowly translate across the viewport
+   on long GPU-composited cycles. Low opacity so they read as atmosphere,
+   not content. Suppressed in the light theme to preserve paper feel.  */
+.bg-fx {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  will-change: transform;
+}
+.bg-fx .orb {
+  position: absolute;
+  width: 70vmin; height: 70vmin;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.38;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.bg-fx .orb-a {
+  top: -20vmin; left: -18vmin;
+  background: radial-gradient(circle at 40% 40%, rgba(123, 138, 224, 0.9), rgba(123, 138, 224, 0) 62%);
+  animation: orb-drift-a 48s ease-in-out infinite;
+}
+.bg-fx .orb-b {
+  bottom: -22vmin; right: -18vmin;
+  background: radial-gradient(circle at 50% 50%, rgba(78, 205, 196, 0.8), rgba(78, 205, 196, 0) 62%);
+  animation: orb-drift-b 62s ease-in-out infinite;
+}
+.bg-fx .orb-c {
+  top: 40%; left: 55%;
+  width: 50vmin; height: 50vmin;
+  background: radial-gradient(circle at 50% 50%, rgba(139, 107, 196, 0.7), rgba(139, 107, 196, 0) 65%);
+  animation: orb-drift-c 74s ease-in-out infinite;
+  opacity: 0.28;
+}
+
+@keyframes orb-drift-a {
+  0%,100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%     { transform: translate3d(14vmin, 10vmin, 0) scale(1.08); }
+}
+@keyframes orb-drift-b {
+  0%,100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%     { transform: translate3d(-12vmin, -8vmin, 0) scale(0.92); }
+}
+@keyframes orb-drift-c {
+  0%,100% { transform: translate3d(-50%, -50%, 0) scale(1); }
+  50%     { transform: translate3d(-40%, -60%, 0) scale(1.12); }
+}
+
+/* Light theme: suppress the orbs so the page reads like paper. */
+[data-theme="light"] .bg-fx { display: none; }
+/* Sepia: warm them down a touch to sit under the amber cast. */
+[data-theme="sepia"] .bg-fx .orb { opacity: 0.14; }
+
+/* Dim behind the reader so long-form reading stays calm. */
+[data-view="reader"] .bg-fx .orb { opacity: 0.18; }
+[data-view="reader"] .bg-fx .orb-c { opacity: 0.12; }
+
+/* Respect the reduced-motion preference by parking orbs in place. */
+@media (prefers-reduced-motion: reduce) {
+  .bg-fx .orb { animation: none; }
+}
+
 ::selection { background: var(--lupine-500); color: white; }
 
 /* ─── Topbar ───────────────────────────────────────────── */
