@@ -114,6 +114,7 @@ function cardFor(article, opts = {}) {
 
 async function renderHome() {
   STATE.view = 'home';
+  document.documentElement.dataset.view = 'home';
   BACK_BTN.hidden = true;
   setProgress(0);
   VIEW.innerHTML = '<div class="loading">Loading library…</div>';
@@ -174,6 +175,7 @@ async function renderHome() {
 // ───────────────────────────────────────────────────────────────
 async function renderReader(id) {
   STATE.view = 'reader';
+  document.documentElement.dataset.view = 'reader';
   STATE.currentId = id;
   BACK_BTN.hidden = false;
   setProgress(0);
