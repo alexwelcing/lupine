@@ -6,7 +6,7 @@
  */
 
 import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import {
   EffectComposer, SSAO, Bloom, ToneMapping, Vignette, DepthOfField
@@ -272,6 +272,26 @@ function CameraManager({
   distance: number;
 }) {
   const { camera, controls } = useThree((s) => ({ camera: s.camera, controls: s.controls as any }));
+  const flythroughPreview = useStore(s => s.flythroughPreview);
+
+  // Sync continuously during flythrough preview
+  useFrame(() => {
+    if (flythroughPreview) {
+      const state = useStore.getState();
+      camera.position.set(...state.cameraPosition);
+      camera.lookAt(...state.cameraTarget);
+      
+      if (camera instanceof THREE.PerspectiveCamera) {
+        camera.fov = state.cameraFov;
+        camera.updateProjectionMatrix();
+      }
+
+      if (controls && controls.target) {
+        controls.target.set(...state.cameraTarget);
+        controls.update();
+      }
+    }
+  });
 
   // Fit on load
   useEffect(() => {
@@ -323,6 +343,7 @@ export default function App() {
   const toneMapping = useStore(s => s.toneMapping);
   const showCell = useStore(s => s.showCell);
   const showAxes = useStore(s => s.showAxes);
+  const flythroughPreview = useStore(s => s.flythroughPreview);
   const showBonds = useStore(s => s.showBonds);
   const bondCutoff = useStore(s => s.bondCutoff);
   const renderStyle = useStore(s => s.renderStyle);
@@ -646,6 +667,7 @@ export default function App() {
             <CameraManager fileId={file?.name} center={center} distance={cameraDistance} />
             <OrbitControls
               makeDefault
+              enabled={!flythroughPreview}
               target={center}
               enableDamping
               dampingFactor={0.08}
