@@ -596,7 +596,7 @@
     "domain": "Biomolecules",
     "atoms": "21",
     "frames": "1",
-    "file": "pubchem/aspirin.xyz",
+    "file": "gallery/pubchem/aspirin.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -615,7 +615,7 @@
     "domain": "Biomolecules",
     "atoms": "24",
     "frames": "1",
-    "file": "pubchem/caffeine.xyz",
+    "file": "gallery/pubchem/caffeine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -634,7 +634,7 @@
     "domain": "Biomolecules",
     "atoms": "32",
     "frames": "1",
-    "file": "pubchem/adenosine.xyz",
+    "file": "gallery/pubchem/adenosine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -653,7 +653,7 @@
     "domain": "Biomolecules",
     "atoms": "25",
     "frames": "1",
-    "file": "pubchem/serotonin.xyz",
+    "file": "gallery/pubchem/serotonin.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -672,7 +672,7 @@
     "domain": "Biomolecules",
     "atoms": "22",
     "frames": "1",
-    "file": "pubchem/dopamine.xyz",
+    "file": "gallery/pubchem/dopamine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -691,7 +691,7 @@
     "domain": "Biomolecules",
     "atoms": "41",
     "frames": "1",
-    "file": "pubchem/penicillin_g.xyz",
+    "file": "gallery/pubchem/penicillin_g.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -710,7 +710,7 @@
     "domain": "Biomolecules",
     "atoms": "24",
     "frames": "1",
-    "file": "pubchem/glucose.xyz",
+    "file": "gallery/pubchem/glucose.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -729,7 +729,7 @@
     "domain": "Biomolecules",
     "atoms": "74",
     "frames": "1",
-    "file": "pubchem/cholesterol.xyz",
+    "file": "gallery/pubchem/cholesterol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -748,7 +748,7 @@
     "domain": "Biomolecules",
     "atoms": "49",
     "frames": "1",
-    "file": "pubchem/testosterone.xyz",
+    "file": "gallery/pubchem/testosterone.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -767,7 +767,7 @@
     "domain": "Biomolecules",
     "atoms": "44",
     "frames": "1",
-    "file": "pubchem/estradiol.xyz",
+    "file": "gallery/pubchem/estradiol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -786,7 +786,7 @@
     "domain": "Biomolecules",
     "atoms": "26",
     "frames": "1",
-    "file": "pubchem/adrenaline.xyz",
+    "file": "gallery/pubchem/adrenaline.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -805,7 +805,7 @@
     "domain": "Biomolecules",
     "atoms": "33",
     "frames": "1",
-    "file": "pubchem/melatonin.xyz",
+    "file": "gallery/pubchem/melatonin.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -824,7 +824,7 @@
     "domain": "Biomolecules",
     "atoms": "56",
     "frames": "1",
-    "file": "pubchem/cortisol.xyz",
+    "file": "gallery/pubchem/cortisol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -843,7 +843,7 @@
     "domain": "Biomolecules",
     "atoms": "26",
     "frames": "1",
-    "file": "pubchem/nicotine.xyz",
+    "file": "gallery/pubchem/nicotine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -862,7 +862,7 @@
     "domain": "Biomolecules",
     "atoms": "40",
     "frames": "1",
-    "file": "pubchem/morphine.xyz",
+    "file": "gallery/pubchem/morphine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -881,7 +881,7 @@
     "domain": "Biomolecules",
     "atoms": "53",
     "frames": "1",
-    "file": "pubchem/cannabidiol.xyz",
+    "file": "gallery/pubchem/cannabidiol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -900,7 +900,7 @@
     "domain": "Biomolecules",
     "atoms": "31",
     "frames": "1",
-    "file": "pubchem/menthol.xyz",
+    "file": "gallery/pubchem/menthol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -919,7 +919,7 @@
     "domain": "Biomolecules",
     "atoms": "19",
     "frames": "1",
-    "file": "pubchem/vanillin.xyz",
+    "file": "gallery/pubchem/vanillin.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -938,7 +938,7 @@
     "domain": "Biomolecules",
     "atoms": "24",
     "frames": "1",
-    "file": "pubchem/eugenol.xyz",
+    "file": "gallery/pubchem/eugenol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -957,7 +957,7 @@
     "domain": "Biomolecules",
     "atoms": "49",
     "frames": "1",
-    "file": "pubchem/capsaicin.xyz",
+    "file": "gallery/pubchem/capsaicin.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -976,7 +976,7 @@
     "domain": "Biomolecules",
     "atoms": "18",
     "frames": "1",
-    "file": "pubchem/cinnamaldehyde.xyz",
+    "file": "gallery/pubchem/cinnamaldehyde.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -995,7 +995,7 @@
     "domain": "Biomolecules",
     "atoms": "26",
     "frames": "1",
-    "file": "pubchem/limonene.xyz",
+    "file": "gallery/pubchem/limonene.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1014,7 +1014,7 @@
     "domain": "Biomolecules",
     "atoms": "29",
     "frames": "1",
-    "file": "pubchem/linalool.xyz",
+    "file": "gallery/pubchem/linalool.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1033,7 +1033,7 @@
     "domain": "Biomolecules",
     "atoms": "26",
     "frames": "1",
-    "file": "pubchem/pinene.xyz",
+    "file": "gallery/pubchem/pinene.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1052,7 +1052,7 @@
     "domain": "Biomolecules",
     "atoms": "27",
     "frames": "1",
-    "file": "pubchem/citral.xyz",
+    "file": "gallery/pubchem/citral.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1071,7 +1071,7 @@
     "domain": "Biomolecules",
     "atoms": "26",
     "frames": "1",
-    "file": "pubchem/myrcene.xyz",
+    "file": "gallery/pubchem/myrcene.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1090,7 +1090,7 @@
     "domain": "Biomolecules",
     "atoms": "29",
     "frames": "1",
-    "file": "pubchem/geraniol.xyz",
+    "file": "gallery/pubchem/geraniol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1109,7 +1109,7 @@
     "domain": "Biomolecules",
     "atoms": "31",
     "frames": "1",
-    "file": "pubchem/citronellol.xyz",
+    "file": "gallery/pubchem/citronellol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1128,7 +1128,7 @@
     "domain": "Biomolecules",
     "atoms": "27",
     "frames": "1",
-    "file": "pubchem/camphor.xyz",
+    "file": "gallery/pubchem/camphor.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1147,7 +1147,7 @@
     "domain": "Biomolecules",
     "atoms": "25",
     "frames": "1",
-    "file": "pubchem/thymol.xyz",
+    "file": "gallery/pubchem/thymol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1166,7 +1166,7 @@
     "domain": "Biomolecules",
     "atoms": "25",
     "frames": "1",
-    "file": "pubchem/carvacrol.xyz",
+    "file": "gallery/pubchem/carvacrol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1185,7 +1185,7 @@
     "domain": "Biomolecules",
     "atoms": "29",
     "frames": "1",
-    "file": "pubchem/eucalyptol.xyz",
+    "file": "gallery/pubchem/eucalyptol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1204,7 +1204,7 @@
     "domain": "Biomolecules",
     "atoms": "39",
     "frames": "1",
-    "file": "pubchem/farnesene.xyz",
+    "file": "gallery/pubchem/farnesene.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1223,7 +1223,7 @@
     "domain": "Biomolecules",
     "atoms": "42",
     "frames": "1",
-    "file": "pubchem/nerolidol.xyz",
+    "file": "gallery/pubchem/nerolidol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1242,7 +1242,7 @@
     "domain": "Biomolecules",
     "atoms": "42",
     "frames": "1",
-    "file": "pubchem/bisabolol.xyz",
+    "file": "gallery/pubchem/bisabolol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1261,7 +1261,7 @@
     "domain": "Biomolecules",
     "atoms": "39",
     "frames": "1",
-    "file": "pubchem/humulene.xyz",
+    "file": "gallery/pubchem/humulene.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1280,7 +1280,7 @@
     "domain": "Biomolecules",
     "atoms": "39",
     "frames": "1",
-    "file": "pubchem/caryophyllene.xyz",
+    "file": "gallery/pubchem/caryophyllene.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1299,7 +1299,7 @@
     "domain": "Biomolecules",
     "atoms": "80",
     "frames": "1",
-    "file": "pubchem/squalene.xyz",
+    "file": "gallery/pubchem/squalene.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1318,7 +1318,7 @@
     "domain": "Biomolecules",
     "atoms": "51",
     "frames": "1",
-    "file": "pubchem/retinol.xyz",
+    "file": "gallery/pubchem/retinol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1337,7 +1337,7 @@
     "domain": "Biomolecules",
     "atoms": "73",
     "frames": "1",
-    "file": "pubchem/ergocalciferol.xyz",
+    "file": "gallery/pubchem/ergocalciferol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1356,7 +1356,7 @@
     "domain": "Biomolecules",
     "atoms": "78",
     "frames": "1",
-    "file": "pubchem/tocopherol.xyz",
+    "file": "gallery/pubchem/tocopherol.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1375,7 +1375,7 @@
     "domain": "Biomolecules",
     "atoms": "79",
     "frames": "1",
-    "file": "pubchem/phylloquinone.xyz",
+    "file": "gallery/pubchem/phylloquinone.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1394,7 +1394,7 @@
     "domain": "Biomolecules",
     "atoms": "35",
     "frames": "1",
-    "file": "pubchem/thiamine.xyz",
+    "file": "gallery/pubchem/thiamine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1413,7 +1413,7 @@
     "domain": "Biomolecules",
     "atoms": "47",
     "frames": "1",
-    "file": "pubchem/riboflavin.xyz",
+    "file": "gallery/pubchem/riboflavin.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1432,7 +1432,7 @@
     "domain": "Biomolecules",
     "atoms": "14",
     "frames": "1",
-    "file": "pubchem/niacin.xyz",
+    "file": "gallery/pubchem/niacin.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1451,7 +1451,7 @@
     "domain": "Biomolecules",
     "atoms": "32",
     "frames": "1",
-    "file": "pubchem/pantothenic_acid.xyz",
+    "file": "gallery/pubchem/pantothenic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1470,7 +1470,7 @@
     "domain": "Biomolecules",
     "atoms": "23",
     "frames": "1",
-    "file": "pubchem/pyridoxine.xyz",
+    "file": "gallery/pubchem/pyridoxine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1489,7 +1489,7 @@
     "domain": "Biomolecules",
     "atoms": "32",
     "frames": "1",
-    "file": "pubchem/biotin.xyz",
+    "file": "gallery/pubchem/biotin.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1508,7 +1508,7 @@
     "domain": "Biomolecules",
     "atoms": "51",
     "frames": "1",
-    "file": "pubchem/folic_acid.xyz",
+    "file": "gallery/pubchem/folic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1527,7 +1527,7 @@
     "domain": "Biomolecules",
     "atoms": "20",
     "frames": "1",
-    "file": "pubchem/ascorbic_acid.xyz",
+    "file": "gallery/pubchem/ascorbic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1546,7 +1546,7 @@
     "domain": "Biomolecules",
     "atoms": "21",
     "frames": "1",
-    "file": "pubchem/citric_acid.xyz",
+    "file": "gallery/pubchem/citric_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1565,7 +1565,7 @@
     "domain": "Biomolecules",
     "atoms": "15",
     "frames": "1",
-    "file": "pubchem/malic_acid.xyz",
+    "file": "gallery/pubchem/malic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1584,7 +1584,7 @@
     "domain": "Biomolecules",
     "atoms": "12",
     "frames": "1",
-    "file": "pubchem/fumaric_acid.xyz",
+    "file": "gallery/pubchem/fumaric_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1603,7 +1603,7 @@
     "domain": "Biomolecules",
     "atoms": "14",
     "frames": "1",
-    "file": "pubchem/succinic_acid.xyz",
+    "file": "gallery/pubchem/succinic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1622,7 +1622,7 @@
     "domain": "Biomolecules",
     "atoms": "13",
     "frames": "1",
-    "file": "pubchem/oxaloacetic_acid.xyz",
+    "file": "gallery/pubchem/oxaloacetic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1641,7 +1641,7 @@
     "domain": "Biomolecules",
     "atoms": "10",
     "frames": "1",
-    "file": "pubchem/pyruvic_acid.xyz",
+    "file": "gallery/pubchem/pyruvic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1660,7 +1660,7 @@
     "domain": "Biomolecules",
     "atoms": "12",
     "frames": "1",
-    "file": "pubchem/lactic_acid.xyz",
+    "file": "gallery/pubchem/lactic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1679,7 +1679,7 @@
     "domain": "Biomolecules",
     "atoms": "8",
     "frames": "1",
-    "file": "pubchem/acetic_acid.xyz",
+    "file": "gallery/pubchem/acetic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1698,7 +1698,7 @@
     "domain": "Biomolecules",
     "atoms": "5",
     "frames": "1",
-    "file": "pubchem/formic_acid.xyz",
+    "file": "gallery/pubchem/formic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1717,7 +1717,7 @@
     "domain": "Biomolecules",
     "atoms": "11",
     "frames": "1",
-    "file": "pubchem/propionic_acid.xyz",
+    "file": "gallery/pubchem/propionic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1736,7 +1736,7 @@
     "domain": "Biomolecules",
     "atoms": "14",
     "frames": "1",
-    "file": "pubchem/butyric_acid.xyz",
+    "file": "gallery/pubchem/butyric_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1755,7 +1755,7 @@
     "domain": "Biomolecules",
     "atoms": "17",
     "frames": "1",
-    "file": "pubchem/valeric_acid.xyz",
+    "file": "gallery/pubchem/valeric_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1774,7 +1774,7 @@
     "domain": "Biomolecules",
     "atoms": "20",
     "frames": "1",
-    "file": "pubchem/caproic_acid.xyz",
+    "file": "gallery/pubchem/caproic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1793,7 +1793,7 @@
     "domain": "Biomolecules",
     "atoms": "26",
     "frames": "1",
-    "file": "pubchem/caprylic_acid.xyz",
+    "file": "gallery/pubchem/caprylic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1812,7 +1812,7 @@
     "domain": "Biomolecules",
     "atoms": "32",
     "frames": "1",
-    "file": "pubchem/capric_acid.xyz",
+    "file": "gallery/pubchem/capric_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1831,7 +1831,7 @@
     "domain": "Biomolecules",
     "atoms": "38",
     "frames": "1",
-    "file": "pubchem/lauric_acid.xyz",
+    "file": "gallery/pubchem/lauric_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1850,7 +1850,7 @@
     "domain": "Biomolecules",
     "atoms": "44",
     "frames": "1",
-    "file": "pubchem/myristic_acid.xyz",
+    "file": "gallery/pubchem/myristic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1869,7 +1869,7 @@
     "domain": "Biomolecules",
     "atoms": "50",
     "frames": "1",
-    "file": "pubchem/palmitic_acid.xyz",
+    "file": "gallery/pubchem/palmitic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1888,7 +1888,7 @@
     "domain": "Biomolecules",
     "atoms": "54",
     "frames": "1",
-    "file": "pubchem/oleic_acid.xyz",
+    "file": "gallery/pubchem/oleic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1907,7 +1907,7 @@
     "domain": "Biomolecules",
     "atoms": "52",
     "frames": "1",
-    "file": "pubchem/linoleic_acid.xyz",
+    "file": "gallery/pubchem/linoleic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1926,7 +1926,7 @@
     "domain": "Biomolecules",
     "atoms": "50",
     "frames": "1",
-    "file": "pubchem/linolenic_acid.xyz",
+    "file": "gallery/pubchem/linolenic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1945,7 +1945,7 @@
     "domain": "Biomolecules",
     "atoms": "54",
     "frames": "1",
-    "file": "pubchem/arachidonic_acid.xyz",
+    "file": "gallery/pubchem/arachidonic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1964,7 +1964,7 @@
     "domain": "Biomolecules",
     "atoms": "52",
     "frames": "1",
-    "file": "pubchem/eicosapentaenoic_acid.xyz",
+    "file": "gallery/pubchem/eicosapentaenoic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -1983,7 +1983,7 @@
     "domain": "Biomolecules",
     "atoms": "56",
     "frames": "1",
-    "file": "pubchem/docosahexaenoic_acid.xyz",
+    "file": "gallery/pubchem/docosahexaenoic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2002,7 +2002,7 @@
     "domain": "Biomolecules",
     "atoms": "10",
     "frames": "1",
-    "file": "pubchem/glycine.xyz",
+    "file": "gallery/pubchem/glycine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2021,7 +2021,7 @@
     "domain": "Biomolecules",
     "atoms": "13",
     "frames": "1",
-    "file": "pubchem/alanine.xyz",
+    "file": "gallery/pubchem/alanine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2040,7 +2040,7 @@
     "domain": "Biomolecules",
     "atoms": "19",
     "frames": "1",
-    "file": "pubchem/valine.xyz",
+    "file": "gallery/pubchem/valine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2059,7 +2059,7 @@
     "domain": "Biomolecules",
     "atoms": "22",
     "frames": "1",
-    "file": "pubchem/leucine.xyz",
+    "file": "gallery/pubchem/leucine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2078,7 +2078,7 @@
     "domain": "Biomolecules",
     "atoms": "22",
     "frames": "1",
-    "file": "pubchem/isoleucine.xyz",
+    "file": "gallery/pubchem/isoleucine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2097,7 +2097,7 @@
     "domain": "Biomolecules",
     "atoms": "17",
     "frames": "1",
-    "file": "pubchem/proline.xyz",
+    "file": "gallery/pubchem/proline.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2116,7 +2116,7 @@
     "domain": "Biomolecules",
     "atoms": "23",
     "frames": "1",
-    "file": "pubchem/phenylalanine.xyz",
+    "file": "gallery/pubchem/phenylalanine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2135,7 +2135,7 @@
     "domain": "Biomolecules",
     "atoms": "24",
     "frames": "1",
-    "file": "pubchem/tyrosine.xyz",
+    "file": "gallery/pubchem/tyrosine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2154,7 +2154,7 @@
     "domain": "Biomolecules",
     "atoms": "27",
     "frames": "1",
-    "file": "pubchem/tryptophan.xyz",
+    "file": "gallery/pubchem/tryptophan.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2173,7 +2173,7 @@
     "domain": "Biomolecules",
     "atoms": "14",
     "frames": "1",
-    "file": "pubchem/serine.xyz",
+    "file": "gallery/pubchem/serine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2192,7 +2192,7 @@
     "domain": "Biomolecules",
     "atoms": "17",
     "frames": "1",
-    "file": "pubchem/threonine.xyz",
+    "file": "gallery/pubchem/threonine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2211,7 +2211,7 @@
     "domain": "Biomolecules",
     "atoms": "14",
     "frames": "1",
-    "file": "pubchem/cysteine.xyz",
+    "file": "gallery/pubchem/cysteine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2230,7 +2230,7 @@
     "domain": "Biomolecules",
     "atoms": "20",
     "frames": "1",
-    "file": "pubchem/methionine.xyz",
+    "file": "gallery/pubchem/methionine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2249,7 +2249,7 @@
     "domain": "Biomolecules",
     "atoms": "17",
     "frames": "1",
-    "file": "pubchem/asparagine.xyz",
+    "file": "gallery/pubchem/asparagine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2268,7 +2268,7 @@
     "domain": "Biomolecules",
     "atoms": "20",
     "frames": "1",
-    "file": "pubchem/glutamine.xyz",
+    "file": "gallery/pubchem/glutamine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2287,7 +2287,7 @@
     "domain": "Biomolecules",
     "atoms": "16",
     "frames": "1",
-    "file": "pubchem/aspartic_acid.xyz",
+    "file": "gallery/pubchem/aspartic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2306,7 +2306,7 @@
     "domain": "Biomolecules",
     "atoms": "19",
     "frames": "1",
-    "file": "pubchem/glutamic_acid.xyz",
+    "file": "gallery/pubchem/glutamic_acid.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2325,7 +2325,7 @@
     "domain": "Biomolecules",
     "atoms": "24",
     "frames": "1",
-    "file": "pubchem/lysine.xyz",
+    "file": "gallery/pubchem/lysine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2344,7 +2344,7 @@
     "domain": "Biomolecules",
     "atoms": "26",
     "frames": "1",
-    "file": "pubchem/arginine.xyz",
+    "file": "gallery/pubchem/arginine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2363,7 +2363,7 @@
     "domain": "Biomolecules",
     "atoms": "20",
     "frames": "1",
-    "file": "pubchem/histidine.xyz",
+    "file": "gallery/pubchem/histidine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2382,7 +2382,7 @@
     "domain": "Biomolecules",
     "atoms": "12",
     "frames": "1",
-    "file": "pubchem/uracil.xyz",
+    "file": "gallery/pubchem/uracil.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2401,7 +2401,7 @@
     "domain": "Biomolecules",
     "atoms": "15",
     "frames": "1",
-    "file": "pubchem/thymine.xyz",
+    "file": "gallery/pubchem/thymine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2420,7 +2420,7 @@
     "domain": "Biomolecules",
     "atoms": "13",
     "frames": "1",
-    "file": "pubchem/cytosine.xyz",
+    "file": "gallery/pubchem/cytosine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2439,7 +2439,7 @@
     "domain": "Biomolecules",
     "atoms": "15",
     "frames": "1",
-    "file": "pubchem/adenine.xyz",
+    "file": "gallery/pubchem/adenine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
@@ -2458,7 +2458,7 @@
     "domain": "Biomolecules",
     "atoms": "16",
     "frames": "1",
-    "file": "pubchem/guanine.xyz",
+    "file": "gallery/pubchem/guanine.xyz",
     "available": true,
     "colors": [
       "#3eb3ff",
