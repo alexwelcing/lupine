@@ -215,6 +215,101 @@
     "featured": true
   },
   {
+    "id": "c60_buckyball",
+    "title": "Buckminsterfullerene",
+    "subtitle": "C60 Truncated Icosahedron: The iconic carbon allotrope discovered by Kroto, Smalley, and Curl.",
+    "domain": "Nanomaterials",
+    "atoms": "60",
+    "frames": "1",
+    "file": "gallery/curated/c60_buckyball.xyz",
+    "available": true,
+    "colors": [
+      "#444444"
+    ],
+    "metadata": {
+      "method": "Theoretical Geometry",
+      "potential": "DFT Optimized",
+      "temperature": "0 K",
+      "reference": "Nobel Prize in Chemistry 1996."
+    },
+    "featured": true
+  },
+  {
+    "id": "cnt_6_6",
+    "title": "Carbon Nanotube",
+    "subtitle": "(6,6) Armchair Single-Walled Carbon Nanotube.",
+    "domain": "Nanomaterials",
+    "atoms": "96",
+    "frames": "1",
+    "file": "gallery/curated/carbon_nanotube.xyz",
+    "available": true,
+    "colors": [
+      "#333333"
+    ],
+    "metadata": {
+      "method": "Geometry Construction",
+      "potential": "ASE Builder",
+      "chirality": "(6,6) Armchair"
+    },
+    "featured": true
+  },
+  {
+    "id": "graphene_ribbon",
+    "title": "Graphene Nanoribbon",
+    "subtitle": "Armchair Graphene Nanoribbon with Hydrogen-passivated edges.",
+    "domain": "Nanomaterials",
+    "atoms": "86",
+    "frames": "1",
+    "file": "gallery/curated/graphene_ribbon.xyz",
+    "available": true,
+    "colors": [
+      "#222222",
+      "#cccccc"
+    ],
+    "metadata": {
+      "method": "Geometry Construction",
+      "potential": "ASE Builder"
+    },
+    "featured": true
+  },
+  {
+    "id": "au_nanocluster",
+    "title": "Gold Nanocluster",
+    "subtitle": "Au FCC 3x3x3 Bulk Supercell representing a tiny nanocluster fragment.",
+    "domain": "Metals & Alloys",
+    "atoms": "108",
+    "frames": "1",
+    "file": "gallery/curated/gold_nanocluster.xyz",
+    "available": true,
+    "colors": [
+      "#ffd700"
+    ],
+    "metadata": {
+      "method": "Crystallography",
+      "potential": "FCC Lattice"
+    },
+    "featured": true
+  },
+  {
+    "id": "water_cluster_64",
+    "title": "Ice/Water Cluster",
+    "subtitle": "A generated cluster of 64 water molecules.",
+    "domain": "Fluids & Solvents",
+    "atoms": "192",
+    "frames": "1",
+    "file": "gallery/curated/water_cluster.xyz",
+    "available": true,
+    "colors": [
+      "#0000ff",
+      "#ffaaaa"
+    ],
+    "metadata": {
+      "method": "Geometry Construction",
+      "potential": "ASE Builder"
+    },
+    "featured": true
+  },
+  {
     "id": "cuzr_melt",
     "title": "Cu₆₄Zr₃₆ Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
