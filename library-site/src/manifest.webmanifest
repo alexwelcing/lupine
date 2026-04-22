@@ -1,0 +1,15 @@
+{
+  "name": "Lupine Library",
+  "short_name": "Lupine Lib",
+  "description": "Mobile-first reader for Lupine Materials Science research.",
+  "start_url": "/?v=__VERSION__",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06070d",
+  "theme_color": "#06070d",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
