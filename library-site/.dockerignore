@@ -1,0 +1,9 @@
+node_modules
+.git
+.github
+src
+scripts
+*.md
+.gitignore
+.dockerignore
+.gcloudignore
