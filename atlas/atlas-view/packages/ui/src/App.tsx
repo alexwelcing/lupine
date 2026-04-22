@@ -32,7 +32,9 @@ import { FigureExportPanel } from './panels/FigureExportPanel';
 import { AnalysisPanel } from './panels/AnalysisPanel';
 import { MeasurementPanel } from './panels/MeasurementPanel';
 import { AtomsPanel } from './panels/AtomsPanel';
+import { FlythroughPanel } from './panels/FlythroughPanel';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
+import { decodeFlythrough } from './flythrough';
 import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
 import type { ColormapName } from '@atlas/core/types';
 import { getElementSpec } from '@atlas/core';
@@ -138,6 +140,18 @@ const IconAtoms = () => (
     <line x1="12" y1="7" x2="12" y2="9" />
     <line x1="16.9" y1="14.5" x2="14.6" y2="13.3" />
     <line x1="7.1" y1="14.5" x2="9.4" y2="13.3" />
+  </svg>
+);
+const IconFlythrough = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="2" />
+    <path d="M7 2v20" />
+    <path d="M17 2v20" />
+    <path d="M2 12h20" />
+    <path d="M2 7h5" />
+    <path d="M2 17h5" />
+    <path d="M17 7h5" />
+    <path d="M17 17h5" />
   </svg>
 );
 
@@ -391,6 +405,16 @@ export default function App() {
     const params = new URLSearchParams(window.location.search);
     const state = params.get('s');
     if (state) useStore.getState().decodeFromURL(state);
+
+    // Restore flythrough from URL
+    const flyParam = params.get('fly');
+    if (flyParam) {
+      const seq = decodeFlythrough(flyParam);
+      if (seq) {
+        useStore.getState().setFlythrough(seq);
+        useStore.getState().setActivePanel('flythrough');
+      }
+    }
 
     const loadUrl = params.get('load');
     if (loadUrl && !file) {
@@ -815,6 +839,7 @@ export default function App() {
                 <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis'} onClick={() => setActivePanel('analysis')} />
                 <ToolButton icon={<IconMeasure />} label="Measure" active={activePanel === 'measurement'} onClick={() => setActivePanel('measurement')} />
                 <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export'} onClick={() => setActivePanel('export')} />
+                <ToolButton icon={<IconFlythrough />} label="Path" active={activePanel === 'flythrough'} onClick={() => setActivePanel('flythrough')} />
                 <div style={{ width: 1, minWidth: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />
                 <ToolButton icon={<IconReset />} label="Reset" onClick={() => {
                   useStore.getState().reset();
@@ -870,7 +895,7 @@ export default function App() {
             top: 0,
             right: 0,
             bottom: 0,
-            width: isMobile ? '100%' : (activePanel === 'export' ? 360 : 320),
+            width: isMobile ? '100%' : (activePanel === 'export' || activePanel === 'flythrough' ? 360 : 320),
             borderLeft: '1px solid var(--border-subtle)',
             background: 'var(--bg-surface)',
             overflowY: 'auto',
@@ -889,6 +914,7 @@ export default function App() {
               {activePanel === 'analysis' && <AnalysisPanel />}
               {activePanel === 'measurement' && <MeasurementPanel />}
               {activePanel === 'export' && <FigureExportPanel />}
+              {activePanel === 'flythrough' && <FlythroughPanel />}
             </ErrorBoundary>
           </div>
         )}
