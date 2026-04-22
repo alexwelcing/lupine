@@ -224,6 +224,8 @@
     "file": "gallery/curated/c60_buckyball.xyz",
     "available": true,
     "colors": [
+      "#444444",
+      "#444444",
       "#444444"
     ],
     "metadata": {
@@ -244,6 +246,8 @@
     "file": "gallery/curated/carbon_nanotube.xyz",
     "available": true,
     "colors": [
+      "#333333",
+      "#333333",
       "#333333"
     ],
     "metadata": {
@@ -264,7 +268,8 @@
     "available": true,
     "colors": [
       "#222222",
-      "#cccccc"
+      "#cccccc",
+      "#222222"
     ],
     "metadata": {
       "method": "Geometry Construction",
@@ -282,6 +287,8 @@
     "file": "gallery/curated/gold_nanocluster.xyz",
     "available": true,
     "colors": [
+      "#ffd700",
+      "#ffd700",
       "#ffd700"
     ],
     "metadata": {
@@ -301,7 +308,8 @@
     "available": true,
     "colors": [
       "#0000ff",
-      "#ffaaaa"
+      "#ffaaaa",
+      "#0000ff"
     ],
     "metadata": {
       "method": "Geometry Construction",

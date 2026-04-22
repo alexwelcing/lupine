@@ -20,6 +20,7 @@ type Domain =
   | 'Energy Materials'
   | 'Defects & Mechanics'
   | 'Methods'
+  | 'Fluids & Solvents'
   | 'Advanced Theory & Validation';
 
 interface GalleryExample {
@@ -54,6 +55,7 @@ const DOMAIN_COLORS: Record<Domain, string> = {
   'Energy Materials': '#7fd8be',
   'Defects & Mechanics': '#ffd93d',
   'Methods': '#c7ceea',
+  'Fluids & Solvents': '#82b1ff',
   'Advanced Theory & Validation': '#bf5cf0',
 };
 
@@ -294,7 +296,10 @@ function GalleryCard({
 
     const w = canvas.width;
     const h = canvas.height;
-    const [c1, c2, c3] = example.colors;
+    // Fallback in case colors array is too short
+    const c1 = example.colors[0] || '#444444';
+    const c2 = example.colors[1] || c1;
+    const c3 = example.colors[2] || c1;
 
     // Gradient background
     const grad = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w * 0.7);
