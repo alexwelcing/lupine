@@ -132,6 +132,11 @@ export default function App() {
               title="Predictive Scaling"
               description="Machine learning predicts atomic decay before it manifests physically."
             />
+            <SiteFeatureCard 
+              icon="grid"
+              title="Cinematic Flythroughs"
+              description="Compose and export high-fidelity, keyframe-based camera paths through complex molecular systems."
+            />
           </div>
         </div>
       </section>

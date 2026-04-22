@@ -8,11 +8,13 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
+import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 
 export interface ExportRequest {
   type: 'image' | 'video' | 'complete' | null;
   resolution?: { width: number; height: number; flexAspect?: boolean };
   format?: 'png' | 'jpeg' | 'webp' | 'mp4' | 'webm' | 'gif';
+  flythrough?: FlythroughSequence;
   transparent?: boolean;
   durationSeconds?: number;
   orbit?: boolean;
@@ -83,7 +85,7 @@ export interface AppState {
   colorblindMode: boolean;
 
   // ─── UI ───
-  activePanel: 'style' | 'effects' | 'export' | 'analysis' | 'measurement' | 'atoms' | null;
+  activePanel: 'style' | 'effects' | 'export' | 'analysis' | 'measurement' | 'atoms' | 'flythrough' | null;
   showStats: boolean;
   showThermo: boolean;
 
@@ -101,6 +103,18 @@ export interface AppState {
   exportRequest: ExportRequest;
   triggerExport: (req: Partial<ExportRequest>) => void;
   clearExportRequest: () => void;
+
+  // ─── Flythrough ───
+  flythrough: FlythroughSequence | null;
+  flythroughPreview: boolean;
+  flythroughTime: number;
+  setFlythrough: (seq: FlythroughSequence | null) => void;
+  setFlythroughPreview: (active: boolean) => void;
+  setFlythroughTime: (time: number) => void;
+  addFlythroughKeyframe: (kf: FlythroughKeyframe) => void;
+  removeFlythroughKeyframe: (index: number) => void;
+  updateFlythroughKeyframe: (index: number, patch: Partial<FlythroughKeyframe>) => void;
+  setFlythroughLoop: (loop: boolean) => void;
 
   // ─── Actions: Camera ───
   setCameraState: (position: [number, number, number], target: [number, number, number]) => void;
@@ -194,6 +208,9 @@ const DEFAULTS = {
   atomTypeScales: {} as Record<number, number>,
   viewportMode: 'standard' as const,
   exportRequest: { type: null } as ExportRequest,
+  flythrough: null as FlythroughSequence | null,
+  flythroughPreview: false,
+  flythroughTime: 0,
 };
 
 export const useStore = create<AppState>()(
@@ -283,6 +300,44 @@ export const useStore = create<AppState>()(
 
     triggerExport: (req) => set(s => ({ exportRequest: { ...req, type: req.type ?? null } as ExportRequest })),
     clearExportRequest: () => set({ exportRequest: { type: null } }),
+
+    // ─── Flythrough Actions ───
+    setFlythrough: (flythrough) => set({ flythrough }),
+    setFlythroughPreview: (flythroughPreview) => set({ flythroughPreview }),
+    setFlythroughTime: (flythroughTime) => set({ flythroughTime }),
+
+    addFlythroughKeyframe: (kf) => set((s) => {
+      if (!s.flythrough) {
+        return { flythrough: { keyframes: [kf], loop: false } };
+      }
+      if (s.flythrough.keyframes.length >= 5) return {}; // Max 5
+      return {
+        flythrough: {
+          ...s.flythrough,
+          keyframes: [...s.flythrough.keyframes, kf],
+        },
+      };
+    }),
+
+    removeFlythroughKeyframe: (index) => set((s) => {
+      if (!s.flythrough) return {};
+      const next = s.flythrough.keyframes.filter((_, i) => i !== index);
+      if (next.length < 2) return { flythrough: null }; // Need at least 2
+      return { flythrough: { ...s.flythrough, keyframes: next } };
+    }),
+
+    updateFlythroughKeyframe: (index, patch) => set((s) => {
+      if (!s.flythrough) return {};
+      const keyframes = s.flythrough.keyframes.map((kf, i) =>
+        i === index ? { ...kf, ...patch } : kf
+      );
+      return { flythrough: { ...s.flythrough, keyframes } };
+    }),
+
+    setFlythroughLoop: (loop) => set((s) => {
+      if (!s.flythrough) return {};
+      return { flythrough: { ...s.flythrough, loop } };
+    }),
 
     reset: () => set(DEFAULTS as any),
 
@@ -375,37 +430,55 @@ export const useStore = create<AppState>()(
 
     encodeToURL: () => {
       const s = get();
-      const state = {
-        f: s.frame,
-        cm: s.colorMode,
-        cp: s.colorProperty,
-        cmap: s.colormap,
-        ssao: s.ssao ? 1 : 0,
-        bloom: s.bloom ? 1 : 0,
-        dof: s.dof ? 1 : 0,
-        cell: s.showCell ? 1 : 0,
-        axes: s.showAxes ? 1 : 0,
-        as: s.atomScale,
-        bg: s.backgroundPreset,
-        bgs: s.backgroundStyle,
-        cp3: s.cameraPosition,
-        ct: s.cameraTarget,
-        fov: s.cameraFov,
-        spd: s.playbackSpeed,
-        si: s.ssaoIntensity,
-        bi: s.bloomIntensity,
-        df: s.dofFocus,
-        tm: s.toneMapping,
-        bonds: s.showBonds ? 1 : 0,
-        bc: s.bondCutoff,
-        rs: s.renderStyle,
-      };
-      return btoa(JSON.stringify(state));
+      // ── Delta encoding: only include values that differ from defaults ──
+      const delta: Record<string, unknown> = {};
+
+      // Helper: truncate floats to 2 decimal places
+      const r = (n: number) => Math.round(n * 100) / 100;
+      const rArr = (a: number[]) => a.map(r);
+
+      // Helper: arrays are "equal" if same length and all elements within epsilon
+      const arrEq = (a: number[], b: number[]) =>
+        a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) < 0.01);
+
+      if (s.frame !== 0)                              delta.f = s.frame;
+      if (s.colorMode !== 'type')                     delta.cm = s.colorMode;
+      if (s.colorProperty !== null)                    delta.cp = s.colorProperty;
+      if (s.colormap !== 'viridis')                    delta.cmap = s.colormap;
+      if (!s.ssao)                                     delta.ssao = 0;
+      if (s.bloom)                                     delta.bloom = 1;
+      if (s.dof)                                       delta.dof = 1;
+      if (!s.showCell)                                 delta.cell = 0;
+      if (!s.showAxes)                                 delta.axes = 0;
+      if (r(s.atomScale) !== 1.0)                      delta.as = r(s.atomScale);
+      if (s.backgroundPreset !== 'deep')               delta.bg = s.backgroundPreset;
+      if (s.backgroundStyle !== 'linear')              delta.bgs = s.backgroundStyle;
+      if (!arrEq(s.cameraPosition, [0, 0, 50]))       delta.cp3 = rArr(s.cameraPosition);
+      if (!arrEq(s.cameraTarget, [0, 0, 0]))          delta.ct = rArr(s.cameraTarget);
+      if (s.cameraFov !== 50)                          delta.fov = s.cameraFov;
+      if (r(s.playbackSpeed) !== 1.0)                  delta.spd = r(s.playbackSpeed);
+      if (r(s.ssaoIntensity) !== 0.5)                  delta.si = r(s.ssaoIntensity);
+      if (r(s.bloomIntensity) !== 0.3)                 delta.bi = r(s.bloomIntensity);
+      if (s.dofFocus !== 50)                           delta.df = s.dofFocus;
+      if (s.toneMapping !== 'aces')                    delta.tm = s.toneMapping;
+      if (s.showBonds)                                 delta.bonds = 1;
+      if (r(s.bondCutoff) !== 2.5)                     delta.bc = r(s.bondCutoff);
+      if (s.renderStyle !== 'standard')                delta.rs = s.renderStyle;
+
+      const json = JSON.stringify(delta);
+      // URL-safe base64: replace +/= with -_. for shorter, URL-friendly tokens
+      return btoa(json).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
     },
 
     decodeFromURL: (params) => {
       try {
-        const s = JSON.parse(atob(params));
+        // Restore URL-safe base64 back to standard base64
+        let b64 = params.replace(/-/g, '+').replace(/_/g, '/');
+        // Re-pad if needed
+        while (b64.length % 4) b64 += '=';
+
+        const s = JSON.parse(atob(b64));
+        // Merge delta onto defaults — missing keys stay at their default values
         set({
           frame: s.f ?? 0,
           colorMode: s.cm ?? 'type',

@@ -17,6 +17,7 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 import { useStore } from './store';
 import * as THREE from 'three';
+import { sampleFlythrough, getSequenceDuration } from './flythrough';
 
 // Native MediaRecorder requires no dynamic muxer loads
 // ─── MP4 → GIF converter ─────────────────────────────────────────
@@ -150,7 +151,20 @@ function VideoCaptureLoop({
     frameCount.current++;
 
     // 2. Setup the camera strictly for the NEXT loop computation
-    if (req.orbit && originalCameraPosition.current && file) {
+    // Flythrough path takes priority over orbit
+    if (req.flythrough && req.flythrough.keyframes.length >= 2) {
+      const flyDuration = getSequenceDuration(req.flythrough);
+      const flyTime = (frameCount.current / total) * flyDuration;
+      const sample = sampleFlythrough(req.flythrough, flyTime);
+      if (sample) {
+        camera.position.set(...sample.position);
+        camera.lookAt(...sample.target);
+        if (camera instanceof THREE.PerspectiveCamera && sample.fov) {
+          camera.fov = sample.fov;
+          camera.updateProjectionMatrix();
+        }
+      }
+    } else if (req.orbit && originalCameraPosition.current && file) {
       const { min, max } = file.trajectory.globalBounds;
       const center = new THREE.Vector3(
         (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
