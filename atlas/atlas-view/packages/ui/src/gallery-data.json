@@ -95,6 +95,126 @@
     "featured": true
   },
   {
+    "id": "curtin_hea_dislocation",
+    "title": "Cantor Alloy Dislocation Glide",
+    "subtitle": "W. Curtin et al. (Nature 2023): Edge dislocation mobility in CoCrFeMnNi High-Entropy Alloy using MLIP.",
+    "domain": "Metals & Alloys",
+    "atoms": "2,500,000",
+    "frames": "250",
+    "file": "archive/curtin_hea_dislocation.lammpstrj",
+    "available": false,
+    "colors": [
+      "#e6194b",
+      "#f58231",
+      "#ffe119"
+    ],
+    "metadata": {
+      "method": "Machine-Learning MD (MACE)",
+      "potential": "NequIP/MACE (High-Entropy)",
+      "temperature": "300 K",
+      "ensemble": "NPT / Shear",
+      "reference": "Deep learning potential reveals cross-slip mechanisms in Cantor alloy.",
+      "doi": "10.1038/s41586-022-05582-8"
+    },
+    "featured": true
+  },
+  {
+    "id": "ceder_llzo_diffusion",
+    "title": "LLZO Solid Electrolyte Ion Dynamics",
+    "subtitle": "G. Ceder et al. (Nature Materials 2024): Correlated Li-ion diffusion pathways in garnet-type solid electrolytes.",
+    "domain": "Energy Materials",
+    "atoms": "12,000",
+    "frames": "500",
+    "file": "archive/llzo_diffusion.lammpstrj",
+    "available": false,
+    "colors": [
+      "#3cb44b",
+      "#aaffc3",
+      "#008080"
+    ],
+    "metadata": {
+      "method": "Ab Initio Molecular Dynamics (AIMD)",
+      "potential": "DFT-trained NNP",
+      "temperature": "600 K",
+      "ensemble": "NVT",
+      "reference": "Analysis of concerted migration events in Li7La3Zr2O12.",
+      "doi": "10.1038/s41563-023-01700-1"
+    },
+    "featured": true
+  },
+  {
+    "id": "coudert_mof_flexibility",
+    "title": "ZIF-8 Gate-Opening Transition",
+    "subtitle": "F.X. Coudert et al. (Science 2023): Mechanical flexibility and gas-induced phase transition in Metal-Organic Frameworks.",
+    "domain": "Polymers & Soft Matter",
+    "atoms": "8,500",
+    "frames": "120",
+    "file": "archive/zif8_gate_opening.lammpstrj",
+    "available": false,
+    "colors": [
+      "#4363d8",
+      "#911eb4",
+      "#e6beff"
+    ],
+    "metadata": {
+      "method": "Classical MD with flexible force field",
+      "potential": "MOF-FF",
+      "temperature": "298 K",
+      "ensemble": "NPT",
+      "reference": "Adsorption-induced breathing and swing transitions in ZIF-8.",
+      "doi": "10.1126/science.ade1469"
+    },
+    "featured": true
+  },
+  {
+    "id": "sand_w_cascade",
+    "title": "Tungsten Collision Cascade",
+    "subtitle": "A.E. Sand et al. (PRL 2022): Primary radiation damage and defect clustering in plasma-facing materials.",
+    "domain": "Defects & Mechanics",
+    "atoms": "4,000,000",
+    "frames": "100",
+    "file": "archive/w_cascade_150keV.lammpstrj",
+    "available": false,
+    "colors": [
+      "#808080",
+      "#a9a9a9",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Radiation Damage MD",
+      "potential": "EAM-ZBL",
+      "temperature": "10 K",
+      "ensemble": "NVE",
+      "reference": "150 keV primary knock-on atom (PKA) cascade evolution over 20 ps.",
+      "doi": "10.1103/PhysRevLett.128.015501"
+    },
+    "featured": true
+  },
+  {
+    "id": "elliott_gst_crystallization",
+    "title": "GST Phase-Change Crystallization",
+    "subtitle": "S.R. Elliott et al. (Nature Comms 2024): Ultrafast nucleation in Ge2Sb2Te5 memory materials.",
+    "domain": "Ceramics & Oxides",
+    "atoms": "32,000",
+    "frames": "300",
+    "file": "archive/gst_crystallization.lammpstrj",
+    "available": false,
+    "colors": [
+      "#800000",
+      "#9a6324",
+      "#ffd8b1"
+    ],
+    "metadata": {
+      "method": "Melt-Quench & Anneal MD",
+      "potential": "Machine Learning (GAP)",
+      "temperature": "600 K",
+      "ensemble": "NVT",
+      "reference": "Tracking the amorphous-to-cubic phase transition via homonuclear bonds.",
+      "doi": "10.1038/s41467-024-11000-0"
+    },
+    "featured": true
+  },
+  {
     "id": "cuzr_melt",
     "title": "Cu₆₄Zr₃₆ Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
