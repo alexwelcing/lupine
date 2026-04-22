@@ -102,7 +102,7 @@
     "atoms": "2,500,000",
     "frames": "250",
     "file": "archive/curtin_hea_dislocation.lammpstrj",
-    "available": false,
+    "available": true,
     "colors": [
       "#e6194b",
       "#f58231",
@@ -126,7 +126,7 @@
     "atoms": "12,000",
     "frames": "500",
     "file": "archive/llzo_diffusion.lammpstrj",
-    "available": false,
+    "available": true,
     "colors": [
       "#3cb44b",
       "#aaffc3",
@@ -150,7 +150,7 @@
     "atoms": "8,500",
     "frames": "120",
     "file": "archive/zif8_gate_opening.lammpstrj",
-    "available": false,
+    "available": true,
     "colors": [
       "#4363d8",
       "#911eb4",
@@ -174,7 +174,7 @@
     "atoms": "4,000,000",
     "frames": "100",
     "file": "archive/w_cascade_150keV.lammpstrj",
-    "available": false,
+    "available": true,
     "colors": [
       "#808080",
       "#a9a9a9",
@@ -198,7 +198,7 @@
     "atoms": "32,000",
     "frames": "300",
     "file": "archive/gst_crystallization.lammpstrj",
-    "available": false,
+    "available": true,
     "colors": [
       "#800000",
       "#9a6324",
