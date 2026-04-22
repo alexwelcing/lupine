@@ -190,24 +190,75 @@ export function Gallery() {
       </div>
 
       {/* Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-        gap: 16,
-      }}>
-        {filteredExamples.map((ex, i) => (
-          <GalleryCard
-            key={ex.id}
-            example={ex}
-            hovered={hoveredId === ex.id}
-            loading={loadingId === ex.id}
-            onHover={() => setHoveredId(ex.id)}
-            onLeave={() => setHoveredId(null)}
-            onClick={() => handleLoad(ex)}
-            dataDemo={i === 0 ? 'crack2d' : undefined}
-          />
-        ))}
-      </div>
+      {filter === 'All' && !search ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+          {(Object.keys(DOMAIN_COLORS) as Domain[]).map(domain => {
+            const domainExamples = filteredExamples.filter(ex => ex.domain === domain);
+            if (domainExamples.length === 0) return null;
+            
+            // Limit to 6 items in the "All" overview, except if they search
+            const isTruncated = domainExamples.length > 6;
+            const displayExamples = isTruncated ? domainExamples.slice(0, 6) : domainExamples;
+
+            return (
+              <div key={domain}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                  <div style={{ width: 12, height: 12, borderRadius: 6, background: DOMAIN_COLORS[domain] }} />
+                  <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: 'var(--text-primary)' }}>{domain}</h3>
+                  <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>{domainExamples.length} simulations</span>
+                  {isTruncated && (
+                    <button 
+                      onClick={() => setFilter(domain)}
+                      style={{ 
+                        marginLeft: 'auto', background: 'transparent', border: 'none', 
+                        color: 'var(--accent)', cursor: 'pointer', fontSize: 13, fontWeight: 500 
+                      }}
+                    >
+                      View all {domainExamples.length} →
+                    </button>
+                  )}
+                </div>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                  gap: 16,
+                }}>
+                  {displayExamples.map((ex, i) => (
+                    <GalleryCard
+                      key={ex.id}
+                      example={ex}
+                      hovered={hoveredId === ex.id}
+                      loading={loadingId === ex.id}
+                      onHover={() => setHoveredId(ex.id)}
+                      onLeave={() => setHoveredId(null)}
+                      onClick={() => handleLoad(ex)}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: 16,
+        }}>
+          {filteredExamples.map((ex, i) => (
+            <GalleryCard
+              key={ex.id}
+              example={ex}
+              hovered={hoveredId === ex.id}
+              loading={loadingId === ex.id}
+              onHover={() => setHoveredId(ex.id)}
+              onLeave={() => setHoveredId(null)}
+              onClick={() => handleLoad(ex)}
+              dataDemo={i === 0 ? 'crack2d' : undefined}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
