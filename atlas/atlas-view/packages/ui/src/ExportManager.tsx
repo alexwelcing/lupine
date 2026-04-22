@@ -155,6 +155,10 @@ function VideoCaptureLoop({
     if (req.flythrough && req.flythrough.keyframes.length >= 2) {
       const flyDuration = getSequenceDuration(req.flythrough);
       const flyTime = (frameCount.current / total) * flyDuration;
+      
+      // Update store for UI progress bar
+      useStore.getState().setFlythroughTime(flyTime);
+
       const sample = sampleFlythrough(req.flythrough, flyTime);
       if (sample) {
         camera.position.set(...sample.position);

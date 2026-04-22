@@ -3,6 +3,7 @@ import { AtlasTrailer } from './AtlasTrailer';
 import { AtlasTrailerExtended } from './AtlasTrailerExtended';
 import { AtlasTrailerTwitter } from './AtlasTrailerTwitter';
 import { AtlasHypeTrailer } from './AtlasHypeTrailer';
+import { AtlasFlythroughTrailer } from './AtlasFlythroughTrailer';
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -61,6 +62,16 @@ export const RemotionRoot: React.FC = () => {
         durationInFrames={15 * 60}
         fps={60}
         width={1080}
+        height={1080}
+      />
+
+      {/* Flythrough feature showcase */}
+      <Composition
+        id="AtlasFlythroughTrailer"
+        component={AtlasFlythroughTrailer}
+        durationInFrames={14 * 60}
+        fps={60}
+        width={1920}
         height={1080}
       />
     </>

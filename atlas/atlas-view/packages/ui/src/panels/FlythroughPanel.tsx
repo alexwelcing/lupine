@@ -92,6 +92,12 @@ export function FlythroughPanel() {
   const flythroughPreview = useStore(s => s.flythroughPreview);
   const setFlythroughPreview = useStore(s => s.setFlythroughPreview);
   const setFlythroughTime = useStore(s => s.setFlythroughTime);
+  const flythroughTime = useStore(s => s.flythroughTime);
+  const isExporting = useStore(s => s.exportRequest.type === 'video');
+
+  const activeSample = (flythroughPreview || isExporting) && flythrough
+    ? sampleFlythrough(flythrough, flythroughTime, cameraFov)
+    : null;
 
   const [expandedKf, setExpandedKf] = useState<number | null>(null);
   const [importValue, setImportValue] = useState('');
@@ -282,6 +288,7 @@ export function FlythroughPanel() {
               keyframe={kf}
               isLast={i === keyframes.length - 1}
               expanded={expandedKf === i}
+              activeSample={activeSample}
               onToggle={() => setExpandedKf(expandedKf === i ? null : i)}
               onUpdate={(patch) => updateFlythroughKeyframe(i, patch)}
               onRemove={() => removeFlythroughKeyframe(i)}
@@ -368,11 +375,12 @@ export function FlythroughPanel() {
 }
 
 // ─── Keyframe Card ─────────────────────────────────────────────────
-function KeyframeCard({ index, keyframe, isLast, expanded, onToggle, onUpdate, onRemove, onRecapture, onJumpTo }: {
+function KeyframeCard({ index, keyframe, isLast, expanded, activeSample, onToggle, onUpdate, onRemove, onRecapture, onJumpTo }: {
   index: number;
   keyframe: FlythroughKeyframe;
   isLast: boolean;
   expanded: boolean;
+  activeSample: any;
   onToggle: () => void;
   onUpdate: (patch: Partial<FlythroughKeyframe>) => void;
   onRemove: () => void;
@@ -396,10 +404,12 @@ function KeyframeCard({ index, keyframe, isLast, expanded, onToggle, onUpdate, o
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{
             width: 20, height: 20,
-            background: expanded ? '#f59e0b' : '#334155',
+            background: expanded ? '#f59e0b' : (activeSample?.segment === index ? '#1edce0' : '#334155'),
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 10, fontWeight: 700, color: expanded ? '#0a0a0c' : '#94a3b8',
+            fontSize: 10, fontWeight: 700, 
+            color: expanded ? '#0a0a0c' : (activeSample?.segment === index ? '#0a0a0c' : '#94a3b8'),
             fontFamily: 'var(--font-mono)',
+            transition: 'background 150ms, color 150ms'
           }}>{index + 1}</div>
           <span style={{
             fontSize: 12, fontWeight: 600, color: '#e2e8f0',
@@ -412,6 +422,17 @@ function KeyframeCard({ index, keyframe, isLast, expanded, onToggle, onUpdate, o
           [{r(keyframe.position[0])}, {r(keyframe.position[1])}, {r(keyframe.position[2])}]
         </span>
       </button>
+
+      {/* Progress Bar overlay */}
+      {activeSample?.segment === index && (
+        <div style={{ height: 2, background: 'rgba(30,220,224,0.1)', width: '100%' }}>
+          <div style={{
+            height: '100%',
+            background: '#1edce0', // cyan
+            width: `${Math.max(0, activeSample.segmentProgress) * 100}%`,
+          }} />
+        </div>
+      )}
 
       {expanded && (
         <div style={{ padding: '8px 12px 12px', display: 'flex', flexDirection: 'column', gap: 8 }}>

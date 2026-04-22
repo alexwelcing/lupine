@@ -141,6 +141,32 @@ export default function App() {
         </div>
       </section>
 
+      {/* 2.5 Flythrough Video Preview */}
+      <section className="lupine-section" style={{ paddingTop: 0 }}>
+        <div className="lupine-container" style={{ textAlign: 'center' }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1)',
+            background: '#06080d'
+          }}>
+            <video 
+              src="https://storage.googleapis.com/shed-489901-atlas-artifacts/flythrough.mp4" 
+              autoPlay 
+              muted 
+              loop 
+              playsInline
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+          </div>
+          <p style={{ marginTop: '1rem', color: 'var(--lupine-300)', fontFamily: 'var(--font-mono)', fontSize: '0.9rem', letterSpacing: '0.05em' }}>
+            Powered by the new Cinematic Flythrough Sequencer
+          </p>
+        </div>
+      </section>
+
       {/* 3. The Pipeline visualization */}
       <section className="lupine-section lupine-section--alt">
         <div className="lupine-container">
