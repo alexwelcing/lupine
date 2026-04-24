@@ -260,8 +260,9 @@ pub fn execute_lammps(
     potential: &NistPotential,
     input_path: &Path,
     run_dir: &Path,
+    log_filename: &str,
 ) -> Result<PathBuf> {
-    let log_path = run_dir.join("log.lammps");
+    let log_path = run_dir.join(log_filename);
 
     let mut cmd = if config.mpi_ranks > 1 {
         let mut c = Command::new("mpirun");
@@ -289,59 +290,6 @@ pub fn execute_lammps(
     }
 
     Ok(log_path)
-}
-
-// ───────────────────────────────────────────────────────────
-// Output parsing (placeholder — full implementation needs thermo.rs)
-// ───────────────────────────────────────────────────────────
-
-/// Parse elastic constants from LAMMPS log.
-/// This is a simplified placeholder; real implementation uses
-/// the stress-strain finite difference method or LAMMPS elastic package.
-pub fn parse_elastic_constants(log_path: &Path) -> Result<(f64, f64, f64)> {
-    // TODO: Implement full elastic constant extraction.
-    // For now, return placeholder values that indicate "needs implementation".
-    //
-    // The real implementation would:
-    // 1. Read the thermo output from the log
-    // 2. Apply 6 independent strain directions (εxx, εyy, εzz, εxy, εxz, εyz)
-    // 3. Measure stress response for each
-    // 4. Solve linear system: σ_i = C_ij · ε_j
-    // 5. Extract C11, C12, C44 for cubic crystals
-    //
-    // LAMMPS has an `examples/ELASTIC` directory with scripts for this.
-
-    let content = std::fs::read_to_string(log_path)
-        .with_context(|| format!("Failed to read log: {}", log_path.display()))?;
-
-    // Look for pressure values in the log
-    let mut pxx: Option<f64> = None;
-    let mut _pyy: Option<f64> = None;
-    let mut _pzz: Option<f64> = None;
-
-    for line in content.lines() {
-        let parts: Vec<&str> = line.split_whitespace().collect();
-        if parts.len() >= 10 && parts[0].parse::<usize>().is_ok() {
-            // This looks like a thermo output line
-            // Try to find pxx, pyy, pzz columns
-            // Format: Step Temp Press ... Pxx Pyy Pzz Pxy Pxz Pyz
-            if let (Some(px), Some(_py), Some(_pz)) = (
-                parts.get(parts.len().saturating_sub(6)).and_then(|s| s.parse::<f64>().ok()),
-                parts.get(parts.len().saturating_sub(5)).and_then(|s| s.parse::<f64>().ok()),
-                parts.get(parts.len().saturating_sub(4)).and_then(|s| s.parse::<f64>().ok()),
-            ) {
-                pxx = Some(px);
-            }
-        }
-    }
-
-    // For now, we can't compute elastic constants from just equilibrium pressure.
-    // Return zeros with a clear indication this needs work.
-    if pxx.is_some() {
-        eprintln!("    ⚠ Equilibrium pressure found, but elastic constant extraction needs strain application");
-    }
-
-    anyhow::bail!("Elastic constant extraction not yet implemented. Needs LAMMPS ELASTIC package or manual strain application.")
 }
 
 // ───────────────────────────────────────────────────────────
@@ -466,62 +414,118 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
         let input_path = run_dir.join("in.statics");
         std::fs::write(&input_path, &input)?;
 
-        // Run LAMMPS
-        let log_path = match execute_lammps(config, pot, &input_path, &run_dir) {
+        // Run LAMMPS for statics
+        let log_path = match execute_lammps(config, pot, &input_path, &run_dir, "log.lammps.statics") {
             Ok(p) => p,
             Err(e) => {
-                eprintln!("    ✗ LAMMPS execution failed: {}", e);
+                eprintln!("    ✗ LAMMPS execution failed for statics: {}", e);
                 results.push(ComputationResult {
                     potential: (*pot).clone(),
                     trace: dummy_trace(pot, &config.structure, lattice),
                     c11: None, c12: None, c44: None,
                     a0: None, ecoh: None,
                     success: false,
-                    error_message: Some(format!("Execution error: {}", e)),
+                    error_message: Some(format!("Statics execution error: {}", e)),
                 });
                 continue;
             }
         };
 
-        // Parse results using lupine_ops
+        // Parse statics results
         let log_content = std::fs::read_to_string(&log_path).unwrap_or_default();
-        let statics_res = lupine_ops::statics::parse_statics_output(&log_content);
+        let statics_res_opt = lupine_ops::statics::parse_statics_output(&log_content);
         
-        match statics_res {
-            Some(res) => {
-                eprintln!("    ✓ a0={:.4} Å, Ecoh={:.4} eV/atom", res.a0, res.ecoh);
+        if statics_res_opt.is_none() {
+            eprintln!("    ✗ Parsing statics failed.");
+            results.push(ComputationResult {
+                potential: (*pot).clone(),
+                trace: dummy_trace(pot, &config.structure, lattice),
+                c11: None, c12: None, c44: None,
+                a0: None, ecoh: None,
+                success: false,
+                error_message: Some("Parse statics error".to_string()),
+            });
+            continue;
+        }
 
+        let statics_res = statics_res_opt.unwrap();
+        eprintln!("    ✓ a0={:.4} Å, Ecoh={:.4} eV/atom", statics_res.a0, statics_res.ecoh);
+
+        // Now run elastics using the equilibrium a0 from statics!
+        let elastic_config = lupine_ops::elastic::ElasticCalcConfig {
+            element: config.element.clone(),
+            lattice_type,
+            lattice_constant: statics_res.a0,
+            strain_delta: 1e-6,
+            nist_id: pot.id.clone(),
+        };
+
+        let elastic_input = match lupine_ops::elastic::generate_elastic_script(&elastic_config, &deployment) {
+            Ok(script) => script,
+            Err(e) => {
+                eprintln!("    ✗ Elastic script generation failed: {:?}", e);
+                // Still return statics
                 let trace = build_trace(pot, &config.structure, lattice, &run_dir);
                 let result = ComputationResult {
                     potential: (*pot).clone(),
                     trace,
-                    c11: None, // Elastic constants not run in this block
-                    c12: None,
-                    c44: None,
-                    a0: Some(res.a0),
-                    ecoh: Some(res.ecoh),
-                    success: true,
-                    error_message: None,
-                };
-
-                // Save result for resume support
-                let json = serde_json::to_string_pretty(&result)?;
-                std::fs::write(&result_path, json)?;
-
-                results.push(result);
-            }
-            None => {
-                eprintln!("    ✗ Parsing statics failed.");
-                results.push(ComputationResult {
-                    potential: (*pot).clone(),
-                    trace: dummy_trace(pot, &config.structure, lattice),
                     c11: None, c12: None, c44: None,
-                    a0: None, ecoh: None,
-                    success: false,
-                    error_message: Some("Parse statics error".to_string()),
-                });
+                    a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+                    success: true,
+                    error_message: Some(format!("Elastic script error: {:?}", e)),
+                };
+                results.push(result);
+                continue;
             }
-        }
+        };
+
+        let elastic_input_path = run_dir.join("in.elastic");
+        std::fs::write(&elastic_input_path, &elastic_input)?;
+
+        let elastic_log_path = match execute_lammps(config, pot, &elastic_input_path, &run_dir, "log.lammps.elastic") {
+            Ok(p) => p,
+            Err(e) => {
+                eprintln!("    ✗ LAMMPS execution failed for elastic: {}", e);
+                let trace = build_trace(pot, &config.structure, lattice, &run_dir);
+                let result = ComputationResult {
+                    potential: (*pot).clone(),
+                    trace,
+                    c11: None, c12: None, c44: None,
+                    a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+                    success: true,
+                    error_message: Some(format!("Elastic execution error: {}", e)),
+                };
+                results.push(result);
+                continue;
+            }
+        };
+
+        let elastic_log_content = std::fs::read_to_string(&elastic_log_path).unwrap_or_default();
+        let elastic_res_opt = lupine_ops::elastic::parse_elastic_output(&elastic_log_content);
+
+        let (c11, c12, c44) = if let Some(eres) = elastic_res_opt {
+            eprintln!("    ✓ C11={:.1}, C12={:.1}, C44={:.1} GPa", eres.c11, eres.c12, eres.c44);
+            (Some(eres.c11), Some(eres.c12), Some(eres.c44))
+        } else {
+            eprintln!("    ✗ Parsing elastic failed.");
+            (None, None, None)
+        };
+
+        let trace = build_trace(pot, &config.structure, lattice, &run_dir);
+        let result = ComputationResult {
+            potential: (*pot).clone(),
+            trace,
+            c11, c12, c44,
+            a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+            success: true,
+            error_message: if c11.is_none() { Some("Elastic parse failed".to_string()) } else { None },
+        };
+
+        // Save result for resume support
+        let json = serde_json::to_string_pretty(&result)?;
+        std::fs::write(&result_path, json)?;
+
+        results.push(result);
     }
 
     // Summary
