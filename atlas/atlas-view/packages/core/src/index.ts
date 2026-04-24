@@ -24,3 +24,4 @@ export {
 } from './types';
 
 export * from './elements';
+export * from './generators/ProceduralLupine';

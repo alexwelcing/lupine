@@ -13,6 +13,33 @@ for (const [typeStr, data] of Object.entries(ELEMENT_DATA)) {
 
 export const DEFAULT_TYPE_COLOR: [number, number, number] = [0.6, 0.6, 0.6];
 
+/**
+ * Botanical color palette for the Lupine Bluebonnet molecule.
+ * Maps atomic numbers to true-to-life Lupinus texensis plant colors.
+ * Hidden mode — only available when viewing the brand molecule.
+ */
+export const BOTANICAL_COLORS: Record<number, [number, number, number]> = {
+  // N (7) — Blue-violet petals (banner + wing petals)
+  7:  [0.28, 0.38, 0.85],
+  // H (1) — Cream-white bonnet spot (the diagnostic "white eye")
+  1:  [0.97, 0.96, 0.90],
+  // C (6) — Warm olive-brown stem (woody pedicel)
+  6:  [0.35, 0.28, 0.18],
+  // F (9) — Lush leafy green (palmate leaflets)
+  9:  [0.22, 0.58, 0.20],
+  // S (16) — Golden-yellow stamen accents
+  16: [0.92, 0.78, 0.18],
+};
+
+/** Scale overrides for botanical mode (make leaves/petals feel organic) */
+export const BOTANICAL_RADII: Record<number, number> = {
+  7:  0.85,   // petals: slightly plumper
+  1:  0.55,   // bonnet: small bright spots
+  6:  0.72,   // stem: thinner, structural
+  9:  0.65,   // leaves: medium, flat feel
+  16: 0.50,   // stamen: tiny golden dots
+};
+
 export function lerpColor(a: [number, number, number], b: [number, number, number], t: number): [number, number, number] {
   return [
     a[0] + (b[0] - a[0]) * t,

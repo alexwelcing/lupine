@@ -6,10 +6,11 @@
  */
 
 import { useRef, useMemo, useEffect } from 'react';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Frame, ColormapName } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
-import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap } from './constants';
+import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS } from './constants';
 
 interface BondsProps {
   frame: Frame;
@@ -24,6 +25,7 @@ interface BondsProps {
   radius?: number;
   opacity?: number;
   renderStyle?: 'standard' | 'toon';
+  botanicalMode?: boolean;
 }
 
 export function Bonds({
@@ -39,6 +41,7 @@ export function Bonds({
   radius = 0.12,
   opacity = 0.85,
   renderStyle = 'standard',
+  botanicalMode = false,
 }: BondsProps) {
   const groupRef = useRef<THREE.Group>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(maxBondLength));
@@ -50,7 +53,64 @@ export function Bonds({
     []
   );
 
+  const uniformsRef = useRef({ uTime: { value: 0 } });
+  useFrame((state) => {
+    if (botanicalMode) {
+      uniformsRef.current.uTime.value = state.clock.elapsedTime;
+    }
+  });
+
   const material = useMemo(() => {
+    if (botanicalMode) {
+      const mat = new THREE.MeshPhysicalMaterial({
+        metalness: 0.05,
+        roughness: 0.65,
+        clearcoat: 0.2, // waxy cuticle
+        clearcoatRoughness: 0.3,
+        transmission: 0.3, // fake SSS via transmission
+        thickness: 1.5,
+        ior: 1.4, // organic tissue
+      });
+      mat.onBeforeCompile = (shader) => {
+        shader.uniforms.uTime = uniformsRef.current.uTime;
+        
+        // Inject vertex sway (must perfectly match AtomsOptimized to keep bonds connected)
+        shader.vertexShader = `
+          uniform float uTime;
+          ${shader.vertexShader}
+        `;
+        shader.vertexShader = shader.vertexShader.replace(
+          '#include <begin_vertex>',
+          `
+          #include <begin_vertex>
+          // Organic wind sway based on world height (instanceMatrix[3].y)
+          float heightFactor = max(0.0, instanceMatrix[3].y - 2.0); 
+          float swayAmount = heightFactor * 0.04;
+          float noise = sin(uTime * 1.2 + instanceMatrix[3].x * 0.5 + instanceMatrix[3].z * 0.5);
+          transformed.x += noise * swayAmount;
+          transformed.z += cos(uTime * 0.9 + instanceMatrix[3].x) * swayAmount;
+          `
+        );
+        
+        // Inject velvet/fuzz subsurface rim light
+        shader.fragmentShader = `
+          ${shader.fragmentShader}
+        `;
+        shader.fragmentShader = shader.fragmentShader.replace(
+          '#include <dithering_fragment>',
+          `
+          #include <dithering_fragment>
+          // Velvet rim/fuzz (Schlick approximation)
+          vec3 viewDir = normalize(vViewPosition);
+          float ndotv = max(0.0, dot(geometryNormal, viewDir));
+          float fresnel = pow(1.0 - ndotv, 3.0);
+          gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb + vec3(0.15, 0.2, 0.05), fresnel * 0.6);
+          `
+        );
+      };
+      return mat;
+    }
+
     if (renderStyle === 'toon') {
       return new THREE.MeshToonMaterial({
         transparent: opacity < 1,
@@ -63,7 +123,7 @@ export function Bonds({
       transparent: opacity < 1,
       opacity,
     });
-  }, [renderStyle, opacity]);
+  }, [renderStyle, opacity, botanicalMode]);
 
   // Dispose shared resources on unmount or when they change
   useEffect(() => {
@@ -221,7 +281,9 @@ export function Bonds({
       mesh.setMatrixAt(i * 2, dummy.matrix);
       
       let tcA: [number, number, number];
-      if (colorMode === 'uniform') {
+      if (botanicalMode && frame.types) {
+        tcA = BOTANICAL_COLORS[frame.types[a]] ?? [0.3, 0.5, 0.2];
+      } else if (colorMode === 'uniform') {
         tcA = getTypeColorFromColormap(1, colormap);
       } else {
         tcA = frame.types ? getTypeColorFromColormap(frame.types[a], colormap) : DEFAULT_TYPE_COLOR;
@@ -243,7 +305,9 @@ export function Bonds({
       mesh.setMatrixAt(i * 2 + 1, dummy.matrix);
       
       let tcB: [number, number, number];
-      if (colorMode === 'uniform') {
+      if (botanicalMode && frame.types) {
+        tcB = BOTANICAL_COLORS[frame.types[b]] ?? [0.3, 0.5, 0.2];
+      } else if (colorMode === 'uniform') {
         tcB = getTypeColorFromColormap(1, colormap);
       } else {
         tcB = frame.types ? getTypeColorFromColormap(frame.types[b], colormap) : DEFAULT_TYPE_COLOR;
@@ -254,7 +318,7 @@ export function Bonds({
 
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy]);
+  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode]);
 
   return (
     <instancedMesh

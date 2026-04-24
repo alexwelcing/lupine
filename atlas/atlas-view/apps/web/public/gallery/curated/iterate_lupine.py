@@ -82,171 +82,88 @@ def generate_molecule():
     atoms = []
     
     # ═══════════════════════════════════════════════════════════
-    # 1. MAIN STEM (RACHIS)
+    # 1. MAIN STEM (RACHIS) - Minimalist abstract line
     # ═══════════════════════════════════════════════════════════
     n_stem = int(STEM_HEIGHT / STEM_SPACING)
     for i in range(n_stem):
         t = i / max(1, n_stem - 1)
         y = t * STEM_HEIGHT
-        x = 0.06 * math.sin(t * math.pi * 2.2)
-        z = 0.04 * math.cos(t * math.pi * 1.8)
+        x = 0.1 * math.sin(t * math.pi * 3.0)
+        z = 0.1 * math.cos(t * math.pi * 3.0)
         atoms.append(('C', x, y, z))
     
     # ═══════════════════════════════════════════════════════════
-    # 2. FLOWER RACEME
+    # 2. THE BLUEBONNET RACEME (Pure Abstract Phyllotaxis)
     # ═══════════════════════════════════════════════════════════
-    raceme_base = STEM_HEIGHT * RACEME_START_PCT
-    raceme_top  = STEM_HEIGHT * RACEME_END_PCT
+    raceme_base = STEM_HEIGHT * 0.35
+    raceme_top  = STEM_HEIGHT * 0.95
     raceme_len  = raceme_top - raceme_base
     
-    for w in range(N_WHORLS):
-        wt = w / max(1, N_WHORLS - 1)  # 0=bottom, 1=top
-        whorl_y = raceme_base + wt * raceme_len
+    total_florets = 250
+    golden_angle = 137.508 * math.pi / 180.0
+    
+    for i in range(total_florets):
+        t = i / (total_florets - 1)  # 0 to 1
         
-        # CYLINDRICAL shape — only taper at very top
-        if wt > 0.93:
-            taper = 1.0 - ((wt - 0.93) / 0.07) * (1.0 - RACEME_TOP_TAPER)
+        # Golden spiral distribution
+        angle = i * golden_angle
+        
+        # Abstract silhouette: wide bottom, cylindrical middle, sharp taper at top
+        if t < 0.2:
+            taper = 0.5 + 0.5 * (t / 0.2)  # flare out at base
+        elif t > 0.8:
+            taper = 1.0 - ((t - 0.8) / 0.2) ** 1.5 # sharp taper at apex
         else:
             taper = 1.0
+            
         radius = RACEME_RADIUS * taper
+        y = raceme_base + t * raceme_len
         
-        # Maturity: bottom=open, top=bud
-        maturity = 1.0 - wt
+        # Central coordinate
+        cx = radius * math.cos(angle)
+        cz = radius * math.sin(angle)
         
-        # Golden angle phyllotaxis
-        base_angle = w * 137.508 * math.pi / 180
+        # The White Cap is the top 20% of the flower
+        is_white_cap = t > 0.80
         
-        nf = FLORETS_PER_WHORL if wt < 0.9 else 3
-        
-        for fi in range(nf):
-            angle = base_angle + (fi / nf) * 2 * math.pi
-            ca, sa = math.cos(angle), math.sin(angle)
+        if is_white_cap:
+            # Dense white apex
+            atoms.append(('H', cx, y, cz))
+            atoms.append(('H', cx*0.6, y+0.2, cz*0.6))
+        else:
+            # Abstract mature floret: Blue ('N') outer, White ('H') spot, Yellow ('S') core
+            # We construct a geometric "V" shape projecting outward
+            out_x = math.cos(angle)
+            out_z = math.sin(angle)
+            perp_x = -out_z
+            perp_z = out_x
             
-            # ─── Stem position at this height ───
-            st = whorl_y / STEM_HEIGHT
-            sx = 0.06 * math.sin(st * math.pi * 2.2)
-            sz = 0.04 * math.cos(st * math.pi * 1.8)
+            # The blue body
+            atoms.append(('N', cx, y, cz))
+            atoms.append(('N', cx + perp_x*1.5, y + 0.5, cz + perp_z*1.5))
+            atoms.append(('N', cx - perp_x*1.5, y + 0.5, cz - perp_z*1.5))
+            atoms.append(('N', cx + out_x*2.0, y - 0.5, cz + out_z*2.0))
             
-            # ---- Pedicel (C chain: stem -> floret base) ----
-            # Just 2 atoms for minimal visibility
-            ped_len = radius * 0.5
-            n_ped = 2
-            for pi in range(n_ped):
-                pt = (pi + 1) / n_ped
-                px = sx + ca * ped_len * pt
-                pz = sz + sa * ped_len * pt
-                py = whorl_y + pt * 0.1
-                atoms.append(('C', px, py, pz))
+            # The white spot on the banner
+            atoms.append(('H', cx + out_x*0.5, y + 1.2, cz + out_z*0.5))
             
-            # ---- Floret center ----
-            fx = sx + ca * radius
-            fz = sz + sa * radius
-            fy = whorl_y
+            # A touch of yellow stamen in older florets
+            if t < 0.5 and i % 3 == 0:
+                atoms.append(('S', cx + out_x*1.0, y, cz + out_z*1.0))
             
-            # Petal spread scales with maturity
-            ps = FLORET_INNER_SPACING * (0.4 + 0.6 * maturity)
-            
-            # ALL petals extend OUTWARD from stem center (away from center)
-            # This prevents neighboring floret atoms from bonding
-            out_ca, out_sa = ca, sa  # outward direction
-            
-            # ---- BANNER PETAL (top, outward) ----
-            b1x = fx + out_ca * ps * 0.3
-            b1z = fz + out_sa * ps * 0.3
-            b1y = fy + ps * 0.55
-            atoms.append(('N', b1x, b1y, b1z))
-            
-            b2x = fx + out_ca * ps * 0.5
-            b2z = fz + out_sa * ps * 0.5
-            b2y = fy + ps * 0.40
-            atoms.append(('N', b2x, b2y, b2z))
-            
-            # Banner width atoms
-            perp_ca = math.cos(angle + math.pi/2)
-            perp_sa = math.sin(angle + math.pi/2)
-            b3x = fx + out_ca * ps * 0.25 + perp_ca * ps * 0.25
-            b3z = fz + out_sa * ps * 0.25 + perp_sa * ps * 0.25
-            b3y = fy + ps * 0.50
-            atoms.append(('N', b3x, b3y, b3z))
-            
-            b4x = fx + out_ca * ps * 0.25 - perp_ca * ps * 0.25
-            b4z = fz + out_sa * ps * 0.25 - perp_sa * ps * 0.25
-            b4y = fy + ps * 0.50
-            atoms.append(('N', b4x, b4y, b4z))
-            
-            # ---- WHITE BONNET SPOT ----
-            if maturity > 0.30:
-                hx = fx + out_ca * ps * 0.55
-                hz = fz + out_sa * ps * 0.55
-                hy = fy + ps * 0.70
-                atoms.append(('H', hx, hy, hz))
-                
-                h2x = fx + out_ca * ps * 0.40
-                h2z = fz + out_sa * ps * 0.40
-                h2y = fy + ps * 0.80
-                atoms.append(('H', h2x, h2y, h2z))
-                
-                h3x = fx + out_ca * ps * 0.30 + perp_ca * ps * 0.15
-                h3z = fz + out_sa * ps * 0.30 + perp_sa * ps * 0.15
-                h3y = fy + ps * 0.65
-                atoms.append(('H', h3x, h3y, h3z))
-            
-            # ---- WING PETALS (outward + lateral) ----
-            for side in [-1, 1]:
-                # Wing extends outward and to the side
-                wx = fx + out_ca * ps * 0.2 + perp_ca * side * ps * 0.4
-                wz = fz + out_sa * ps * 0.2 + perp_sa * side * ps * 0.4
-                wy = fy + ps * 0.1
-                atoms.append(('N', wx, wy, wz))
-                
-                w2x = fx + out_ca * ps * 0.35 + perp_ca * side * ps * 0.5
-                w2z = fz + out_sa * ps * 0.35 + perp_sa * side * ps * 0.5
-                w2y = fy + ps * 0.05
-                atoms.append(('N', w2x, w2y, w2z))
-            
-            # ---- KEEL PETAL (outward, below) ----
-            kx = fx + out_ca * ps * 0.15
-            kz = fz + out_sa * ps * 0.15
-            ky = fy - ps * 0.25
-            atoms.append(('N', kx, ky, kz))
-            
-            k2x = fx + out_ca * ps * 0.30
-            k2z = fz + out_sa * ps * 0.30
-            k2y = fy - ps * 0.15
-            atoms.append(('N', k2x, k2y, k2z))
-            
-            # ---- CALYX (green F, at floret base) ----
-            clx = fx - out_ca * ps * 0.1
-            clz = fz - out_sa * ps * 0.1
-            cly = fy - ps * 0.35
-            atoms.append(('F', clx, cly, clz))
-            
-            # ---- STAMEN ----
-            if maturity > 0.7 and fi % 2 == 0:
-                atoms.append(('S', fx + out_ca * ps * 0.1, fy + ps * 0.05, fz + out_sa * ps * 0.1))
-    
+            # Pedicel connecting to stem
+            atoms.append(('C', cx*0.3, y - 0.5, cz*0.3))
+
     # ═══════════════════════════════════════════════════════════
-    # 3. BUD CLUSTER AT APEX
+    # 3. PALMATE COMPOUND LEAVES (Abstracted geometric fans)
     # ═══════════════════════════════════════════════════════════
-    apex_y = raceme_top
-    for i in range(6):
-        a = (i * 137.508) * math.pi / 180
-        r = max(0.4, 0.9 - i * 0.08)
-        atoms.append(('N', r * math.cos(a), apex_y + i * 0.6, r * math.sin(a)))
-        atoms.append(('N', r * 0.5 * math.cos(a + 0.8), apex_y + i * 0.6 + 0.3, r * 0.5 * math.sin(a + 0.8)))
-    # Tip
-    atoms.append(('N', 0, apex_y + 4.0, 0))
-    atoms.append(('N', 0.08, apex_y + 4.5, 0.05))
-    
-    # ═══════════════════════════════════════════════════════════
-    # 4. PALMATE COMPOUND LEAVES
-    # ═══════════════════════════════════════════════════════════
-    def palmate_leaf(attach_y, angle, n_leaflets=5, length=5.0, droop=1.0):
+    def palmate_leaf(attach_y, angle, n_leaflets=5, length=6.0, droop=1.2):
         la = []
         st = attach_y / STEM_HEIGHT
         bx = 0.06 * math.sin(st * math.pi * 2.2)
         bz = 0.04 * math.cos(st * math.pi * 1.8)
         ca, sa = math.cos(angle), math.sin(angle)
+
         
         # Petiole (C chain → bonds to stem)
         pet_len = 3.0

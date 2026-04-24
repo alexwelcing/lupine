@@ -44,6 +44,7 @@ interface StylePanelProps {
 
 export function StylePanel({ availableProperties, bgPresets }: StylePanelProps) {
   const {
+    file,
     colorMode, colorProperty, colormap, atomScale,
     showCell, showAxes, showBonds, bondCutoff,
     backgroundPreset, setBackgroundPreset,
@@ -121,6 +122,12 @@ export function StylePanel({ availableProperties, bgPresets }: StylePanelProps) 
                 setColorMode('uniform'); setColormap('viridis');
                 setRenderStyle('standard'); setBackgroundPreset('fog'); setAtomScale(0.9);
               }} />
+              {file?.name?.toLowerCase().includes('lupine') && (
+                <PresetButton label="🌿 Botanical" onClick={() => {
+                  setColorMode('type'); setColormap('viridis');
+                  setRenderStyle('botanical'); setBackgroundPreset('studio'); setAtomScale(1.0);
+                }} />
+              )}
             </CovalentGrid>
           </QuantumSection>
 

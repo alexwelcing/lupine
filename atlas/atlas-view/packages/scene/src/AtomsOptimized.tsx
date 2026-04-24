@@ -10,11 +10,12 @@
  */
 
 import { useRef, useMemo, useEffect, useCallback } from 'react';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
 
-import { TYPE_COLORS, TYPE_RADII, COLORMAPS } from './constants';
+import { TYPE_COLORS, TYPE_RADII, COLORMAPS, BOTANICAL_COLORS, BOTANICAL_RADII } from './constants';
 
 // ─── Types ───────────────────────────────────────────────────────────
 interface AtomsOptimizedProps {
@@ -32,6 +33,7 @@ interface AtomsOptimizedProps {
   highlightedAtoms?: Set<number>; // For selection
   hiddenAtomTypes?: Set<number>; // Types to hide
   atomTypeScales?: Record<number, number>; // Per-type scale overrides
+  botanicalMode?: boolean; // Hidden mode for Lupine brand asset
 }
 
 // Pre-allocate maximum buffer size (avoid reallocation)
@@ -53,6 +55,7 @@ export function AtomsOptimized({
   highlightedAtoms,
   hiddenAtomTypes,
   atomTypeScales,
+  botanicalMode = false,
 }: AtomsOptimizedProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
@@ -91,7 +94,85 @@ export function AtomsOptimized({
     return new THREE.SphereGeometry(1, 32, 32);     // Perfect circle silhouettes for normal files
   }, [renderStyle, frame.natoms > 100000, frame.natoms > 25000]);
 
+  const uniformsRef = useRef({ uTime: { value: 0 } });
+  useFrame((state) => {
+    if (botanicalMode) {
+      uniformsRef.current.uTime.value = state.clock.elapsedTime;
+    }
+  });
+
   const material = useMemo(() => {
+    if (botanicalMode) {
+      const mat = new THREE.MeshPhysicalMaterial({
+        metalness: 0.1,
+        roughness: 0.4,
+        clearcoat: 0.4, // waxy cuticle
+        clearcoatRoughness: 0.25,
+        transmission: 0.4, // fake SSS via transmission
+        thickness: 2.5,
+        ior: 1.45, // organic tissue
+      });
+      mat.onBeforeCompile = (shader) => {
+        shader.uniforms.uTime = uniformsRef.current.uTime;
+        
+        // Inject vertex sway
+        shader.vertexShader = `
+          uniform float uTime;
+          ${shader.vertexShader}
+        `;
+        shader.vertexShader = shader.vertexShader.replace(
+          '#include <begin_vertex>',
+          `
+          #include <begin_vertex>
+          // Analytically compute the ground height at this instance's world position
+          // This matches the Math.exp(-distSq / 600.0) from ProceduralLupine
+          float distSq = instanceMatrix[3].x * instanceMatrix[3].x + instanceMatrix[3].z * instanceMatrix[3].z;
+          float groundY = 15.0 * exp(-distSq / 600.0);
+          
+          // Compute local height relative to the hill surface
+          float localY = instanceMatrix[3].y - groundY;
+          
+          // Organic wind sway based on local height.
+          // The higher up the plant, the more it sways. Pin the roots to the ground.
+          float heightFactor = max(0.0, localY + 8.0); // Stem base is around -10 localY, so we start sway above it
+          float swayAmount = pow(heightFactor, 1.2) * 0.005; // Non-linear sway for realistic bending
+          
+          // Wave function based on world position and time
+          float noise = sin(uTime * 1.5 + instanceMatrix[3].x * 0.3 + instanceMatrix[3].z * 0.3);
+          
+          transformed.x += noise * swayAmount;
+          transformed.z += cos(uTime * 1.1 + instanceMatrix[3].x * 0.4) * swayAmount;
+          `
+        );
+        
+        // Inject velvet/fuzz subsurface rim light
+        shader.fragmentShader = `
+          ${shader.fragmentShader}
+        `;
+        shader.fragmentShader = shader.fragmentShader.replace(
+          '#include <dithering_fragment>',
+          `
+          #include <dithering_fragment>
+          // Velvet rim/fuzz (Schlick approximation)
+          vec3 viewDir = normalize(vViewPosition);
+          float ndotv = max(0.0, dot(geometryNormal, viewDir));
+          float fresnel = pow(1.0 - ndotv, 4.0);
+          
+          // Subsurface Scattering Wrap Lighting
+          vec3 lightDir = normalize(vec3(0.5, 0.8, 0.5)); // Fake directional light
+          float wrap = 0.6;
+          float NdotL = max(0.0, (dot(geometryNormal, lightDir) + wrap) / (1.0 + wrap));
+          vec3 sssColor = gl_FragColor.rgb * vec3(1.2, 1.4, 0.8) * NdotL * 0.4;
+          
+          // Mix SSS and Fuzz
+          gl_FragColor.rgb += sssColor;
+          gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb + vec3(0.2, 0.25, 0.1), fresnel * 0.8);
+          `
+        );
+      };
+      return mat;
+    }
+
     if (renderStyle === 'toon') {
       const gradientMap = new THREE.DataTexture(
         new Uint8Array([40, 40, 40, 255, 120, 120, 120, 255, 255, 255, 255, 255]),
@@ -109,7 +190,7 @@ export function AtomsOptimized({
       clearcoatRoughness: 0.5,
       envMapIntensity: 0.8,
     });
-  }, [renderStyle]);
+  }, [renderStyle, botanicalMode]);
 
   // Get property data for coloring
   const propData = useMemo(() => {
@@ -207,7 +288,13 @@ export function AtomsOptimized({
       // Scale by atom type (hidden = 0, otherwise per-type override or global)
       const isHidden = hiddenAtomTypes?.has(types[i]) ?? false;
       const typeScale = atomTypeScales?.[types[i]] ?? 1.0;
-      const radius = isHidden ? 0 : (TYPE_RADII[types[i]] ?? 1.2) * scale * typeScale;
+      let baseRadius = 1.2;
+      if (botanicalMode) {
+        baseRadius = BOTANICAL_RADII[types[i]] ?? baseRadius;
+      } else {
+        baseRadius = TYPE_RADII[types[i]] ?? baseRadius;
+      }
+      const radius = isHidden ? 0 : baseRadius * scale * typeScale;
       _scale.setScalar(radius);
       
       // Build matrix
@@ -215,7 +302,19 @@ export function AtomsOptimized({
       _matrix.toArray(matrixArray, i * 16);
 
       // Color
-      if (colorMode === 'property' && propData) {
+      if (botanicalMode) {
+        const isHighlighted = highlightedAtoms?.has(i);
+        const tc = BOTANICAL_COLORS[types[i]] ?? [0.3, 0.5, 0.2]; // default fallback
+        if (isHighlighted) {
+          colorArray[i * 3] = Math.min(1, tc[0] * 1.5);
+          colorArray[i * 3 + 1] = Math.min(1, tc[1] * 1.5);
+          colorArray[i * 3 + 2] = Math.min(1, tc[2] * 1.5);
+        } else {
+          colorArray[i * 3] = tc[0];
+          colorArray[i * 3 + 1] = tc[1];
+          colorArray[i * 3 + 2] = tc[2];
+        }
+      } else if (colorMode === 'property' && propData) {
         let val = propData[i];
         
         // Interpolate property if next frame is available and has the property
@@ -270,7 +369,7 @@ export function AtomsOptimized({
     return cleanupIdle;
   }, [
     frame, nextFrame, interpolationFactor, colorMode, propData, pMin, pMax, scale, highlightedAtoms,
-    hiddenAtomTypes, atomTypeScales, typeColorLookup,
+    hiddenAtomTypes, atomTypeScales, typeColorLookup, botanicalMode,
     matrixArray, colorArray, _matrix, _position, _scale, _quaternion, mapFn, onSpatialHash
   ]);
 

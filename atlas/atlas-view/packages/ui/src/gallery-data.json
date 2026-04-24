@@ -1,8 +1,30 @@
 [
   {
+    "id": "lupine_brand_asset",
+    "title": "Lupine Brand Asset (Procedural Hill)",
+    "subtitle": "Procedurally generated rolling hill of Texas state flowers with dynamic GPU wind sway.",
+    "domain": "Nanomaterials",
+    "atoms": "150,000+",
+    "frames": "1",
+    "file": "procedural",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#1ff01f",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Procedural Math Sculpture",
+      "potential": "Brand Identity Architecture",
+      "temperature": "0 K",
+      "reference": "Lupine Materials Science — lupine.science"
+    },
+    "featured": true
+  },
+  {
     "id": "lupine_bluebonnet",
-    "title": "Lupine Bluebonnet",
-    "subtitle": "Lupinus texensis brand molecule — atomic sculpture of the Texas state flower with nitrogen petals, fluorine leaves, and sulfur stamen accents.",
+    "title": "Lupine Bluebonnet (Scientific)",
+    "subtitle": "Lupinus texensis scientific molecular model (.xyz dataset) showing strict atomic arrangement.",
     "domain": "Nanomaterials",
     "atoms": "930",
     "frames": "1",
@@ -14,8 +36,8 @@
       "#ffffff"
     ],
     "metadata": {
-      "method": "Procedural Atomic Sculpture",
-      "potential": "Brand Identity Architecture",
+      "method": "Ab Initio Assembly",
+      "potential": "Lennard-Jones",
       "temperature": "0 K",
       "reference": "Lupine Materials Science — lupine.science"
     },
