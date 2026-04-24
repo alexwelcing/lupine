@@ -50,9 +50,9 @@
 % Abstract
 \begin{abstract}
 \noindent\textbf{Purpose:} Classical force fields for metals exhibit structured, low-dimensional prediction errors that can be understood through the convergence of sloppy model theory, causal inference, and meta-analytic methodology.
-\textbf{Methods:} We analyzed elastic constant prediction errors ($C_{11}$, $C_{12}$, $C_{44}$) for face-centered cubic (FCC) and body-centered cubic (BCC) metals across three interatomic potentials (EAM, LJ, SW) using principal component analysis, bootstrap uncertainty quantification, random-effects meta-analysis, and Simpson's paradox detection.
-\textbf{Results:} FCC errors occupy a hyper-ribbon manifold with effective dimensionality $1.17\pm0.24$ (LJ) to $1.38\pm0.50$ (SW) out of 3, consistent with the sloppy model universality class ($R^2>0.94$ for log-linear eigenvalue spacing). Pooled BCC data produce a spurious correlation inversion ($r=-0.435$ pooled vs. $+0.147$ within-group) attributable to element identity as a causal confounder. Meta-analysis reveals high heterogeneity ($I^2=91.4\%$, $\tau=0.48$), mandating random-effects models.
-\textbf{Conclusions:} Prediction errors are not unstructured noise but occupy strictly bounded, low-dimensional manifolds. Standard cross-element benchmarking inadvertently suffers from ecological fallacy. Correct analysis requires stratified evaluation and random-effects meta-analysis. All methods are implemented in the open-source \texttt{atlas-distill} engine.
+\textbf{Methods:} We analyzed elastic constant prediction errors ($C_{11}$, $C_{12}$, $C_{44}$) for 15 benchmark metals (8 FCC, 7 BCC) across 559 interatomic potentials spanning 13 pair\_style families, using principal component analysis, bootstrap uncertainty quantification, random-effects meta-analysis, and ecological fallacy detection. All predictions were obtained from the OpenKIM repository and cross-referenced against the NIST Interatomic Potentials Repository.
+\textbf{Results:} Prediction errors universally occupy hyper-ribbon manifolds with effective dimensionality $1.05$--$1.86$ out of 3, consistent with the sloppy model universality class. A striking crystal-structure dichotomy emerges: all 7 BCC metals show reference--prediction correlations $r>0.70$ (mean $r=0.89$), while 7 of 8 FCC metals show $r<0.40$ (mean $r=0.16$). Meta-analysis across 15 elements ($N=1{,}677$) reveals extreme heterogeneity ($I^2=98.6\%$, $\tau=0.80$), with a 95\% prediction interval spanning $[-0.64, +0.99]$.
+\textbf{Conclusions:} Prediction errors are not unstructured noise but occupy strictly bounded, low-dimensional manifolds whose geometry is element- and crystal-structure-dependent. Standard cross-element benchmarking suffers from ecological fallacy; correct analysis requires stratified evaluation and random-effects meta-analysis. All methods are implemented in the open-source \texttt{atlas-distill} engine.
 \end{abstract}
 
 \maketitle
@@ -71,7 +71,7 @@ Second, \textit{Simpson's paradox} and the ecological fallacy warn that correlat
 
 Third, \textit{meta-analysis} provides rigorous methods for combining correlations across heterogeneous groups, including Fisher z-transformation, DerSimonian-Laird random-effects estimation, and heterogeneity statistics ($Q$, $I^2$, $\tau^2$)\cite{hedges1985,borenstein2009,borenstein2010,dersimonian1986,higgins2003}.
 
-Here we synthesize these traditions to demonstrate that: (1) FCC elastic constant errors are compressed onto a hyper-ribbon with effective dimensionality $\sim$1.2--1.4 out of 3; (2) indiscriminately pooling BCC benchmark data across elements produces a spurious correlation inversion; and (3) random-effects meta-analysis is required to correctly aggregate heterogeneous potential performance. All analyses are implemented in \texttt{atlas-distill}, an open-source Rust engine for mathematical discovery in molecular dynamics data.
+Here we synthesize these traditions to demonstrate that: (1) elastic constant errors across 559 real potentials are universally compressed onto hyper-ribbons with effective dimensionality $1.05$--$1.86$ out of 3; (2) a crystal-structure-dependent dichotomy governs error correlations, with BCC metals showing near-perfect agreement ($r>0.70$) while FCC metals show near-zero correlation ($r<0.40$); and (3) random-effects meta-analysis is required to correctly aggregate heterogeneous potential performance ($I^2=98.6\%$). All analyses are implemented in \texttt{atlas-distill}, an open-source Rust engine for mathematical discovery in molecular dynamics data.
 
 \section{Theory}
 
@@ -121,12 +121,12 @@ where $Q = \sum_k w_k (z_k - \bar{z})^2$ is the homogeneity statistic. Heterogen
 
 \subsection{Benchmark datasets}
 
-We compiled experimental elastic constants ($C_{11}$, $C_{12}$, $C_{44}$) for:
+We compiled experimental elastic constants ($C_{11}$, $C_{12}$, $C_{44}$) for 15 benchmark metals:
 \begin{itemize}
 \item \textbf{FCC metals} (8 elements): Al, Cu, Ni, Ag, Au, Pt, Pd, Pb
 \item \textbf{BCC metals} (7 elements): Fe, Cr, Mo, W, V, Nb, Ta
 \end{itemize}
-Reference values are taken from the single-crystal elastic constants handbook of Simmons and Wang\cite{simmons1971} and supplemented by data from the OpenKIM repository\cite{openkim}. Predictions were generated using three potentials: embedded-atom method (EAM), Lennard-Jones (LJ), and Stillinger-Weber (SW).
+Reference values are taken from the single-crystal elastic constants handbook of Simmons and Wang\cite{simmons1971}. Predictions were obtained by querying the OpenKIM repository\cite{openkim} for pre-computed isothermal elastic constants across all available KIM-verified interatomic models. A total of 965 KIM models were queried, yielding 559 physically reasonable elastic constant sets after Born stability filtering ($C_{11}>0$, $C_{44}>0$, $C_{11}>|C_{12}|$). Each result was cross-referenced against the NIST Interatomic Potentials Repository (IPR) using fuzzy author/year matching, producing 345 high-confidence matches with pair\_style provenance across 13 potential families: EAM, EAM/alloy, EAM/fs, MEAM, ADP, Tersoff, Tersoff/ZBL, BOP, hybrid/overlay, and others. The final benchmark dataset comprises 1,677 rows (559 potentials $\times$ 3 elastic constants).
 
 \subsection{Software implementation}
 
@@ -139,7 +139,7 @@ All analyses were performed using \texttt{atlas-distill} v0.1.0, a Rust engine b
 \item \texttt{validation.rs} --- Multi-potential benchmark harness with per-material and per-property metrics
 \end{itemize}
 
-Bootstrap uncertainty quantification used 500 resamples with replacement and percentile confidence intervals ($\alpha = 0.05$).
+Bootstrap uncertainty quantification used 500 resamples with replacement and percentile confidence intervals ($\alpha = 0.05$). Data acquisition scripts \texttt{openkim\_elastic\_fetch.py} implement rate-limited API querying with local caching for full reproducibility.
 
 \subsection{Figure generation}
 
@@ -147,91 +147,117 @@ Publication-quality figures were generated using Matplotlib v3.8 with custom col
 
 \section{Results}
 
-\subsection{FCC hyper-ribbon structure}
+\subsection{Universal hyper-ribbon structure}
 
-Table~\ref{tab:hyperribbon} summarizes the hyper-ribbon analysis for FCC elastic constant errors. All three potentials satisfy the hyper-ribbon criteria: strong monotonic decay ($\tau = -1.000$), high log-linearity ($R^2 > 0.94$), and fractional dimensionality $< 0.9$.
+Table~\ref{tab:hyperribbon} summarizes the hyper-ribbon analysis for representative potentials from the 559-potential dataset. All potentials satisfy the hyper-ribbon criteria: strong monotonic decay ($\tau = -1.000$), high log-linearity ($R^2 > 0.82$), and fractional dimensionality $< 0.9$. Across the full dataset, the participation ratio ranges from $1.05$ to $1.86$ out of $3$, with a median of $1.38$.
 
 \begin{table}[htbp]
 \centering
-\caption{Hyper-ribbon classification results for FCC benchmark potentials.}
+\caption{Hyper-ribbon classification for representative multi-element potentials from the 559-potential NIST/OpenKIM dataset.}
 \label{tab:hyperribbon}
 \begin{tabular}{@{}lcccccc@{}}
 \toprule
-Potential & $n$ & PR & PR$_{95\%}$ CI & $R^2_\text{log}$ & $\tau$ & Hyper-ribbon? \\
+Potential & $n$ & PR & PR$_{95\%}$ CI & $R^2_\text{log}$ & $\tau$ & Ribbon? \\
 \midrule
-EAM  & 8 & 1.37 & [1.14, 2.16] & 0.940 & $-1.000$ & Yes \\
-LJ   & 8 & 1.17 & [1.04, 1.51] & 0.991 & $-1.000$ & Yes \\
-SW   & 8 & 1.38 & [1.09, 2.08] & 0.985 & $-1.000$ & Yes \\
+Mahata-2022    & 3  & 1.05 & [1.00, 1.92] & 0.995 & $-1.000$ & Yes \\
+Etesami-2018   & 4  & 1.11 & [1.02, 1.95] & 0.873 & $-1.000$ & Yes \\
+Bonny-2013     & 5  & 1.20 & [1.01, 2.04] & 0.969 & $-1.000$ & Yes \\
+Bonny-2009     & 3  & 1.64 & [1.00, 1.78] & 0.854 & $-1.000$ & Yes \\
+Zhou-2004      & 12 & 1.86 & [1.01, 1.98] & 0.824 & $-1.000$ & Yes \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The eigenvalue spectra (Fig.~\ref{fig:spectra}) reveal the characteristic geometric hierarchy: $\lambda_1 \gg \lambda_2 \gg \lambda_3$. The LJ potential shows the strongest compression (PR$=1.17$), with 92.3\% of error variance captured by the first principal direction. SW is least compressed (PR$=1.38$), consistent with its three-body functional form providing an additional degree of freedom.
+The eigenvalue spectra (Fig.~\ref{fig:spectra}) reveal the characteristic geometric hierarchy: $\lambda_1 \gg \lambda_2 \gg \lambda_3$. The most compressed potential (Mahata-2022, PR$=1.05$) captures 97.5\% of error variance in the first principal direction, while the least compressed (Zhou-2004, PR$=1.86$) still shows clear dimensional reduction from the full 3D space.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig1_eigenvalue_spectra.pdf}
-\caption{FCC elastic constant error eigenvalue spectra for EAM, LJ, and SW potentials. Points show eigenvalues; dashed lines show geometric fits. All potentials exhibit log-linear spacing characteristic of the sloppy model universality class.}
+\caption{Elastic constant error eigenvalue spectra for representative potentials from the 559-potential dataset. Points show eigenvalues; dashed lines show geometric fits. All potentials exhibit log-linear spacing characteristic of the sloppy model universality class.}
 \label{fig:spectra}
 \end{figure}
 
-\subsection{BCC Simpson's paradox}
+Figure~\ref{fig:dimensionality} shows the distribution of effective dimensionality across all 559 potentials, confirming that hyper-ribbon confinement is universal rather than potential-specific.
 
-When BCC elastic constant errors are pooled across all seven metals, the correlation between reference value and prediction error is negative ($r = -0.435$). However, within each individual metal, the correlation is positive (mean $r = +0.37$), yielding a pooled within-group correlation of $+0.147$.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig2_dimensionality.pdf}
+\caption{Distribution of effective dimensionality (participation ratio) across all 559 potentials. Median PR $= 1.38$ out of 3; no potential approaches the full 3D space.}
+\label{fig:dimensionality}
+\end{figure}
 
-This constitutes a complete reversal (Fig.~\ref{fig:paradox}): the pooled analysis suggests that stiffer metals have more negative errors, while the stratified analysis reveals that within each metal, higher reference values correspond to less negative (or more positive) errors. The reversal magnitude is $0.581$, and 57.1\% of metals show opposite-sign correlations to the pooled result.
+\subsection{BCC/FCC correlation dichotomy}
+
+A striking crystal-structure-dependent pattern emerges from the 15-element meta-analysis (Fig.~\ref{fig:dichotomy}). All seven BCC metals show strong positive correlations between reference and predicted elastic constants (mean $r = 0.89$, range $0.70$--$0.99$), while seven of eight FCC metals show weak correlations (mean $r = 0.16$, range $0.05$--$0.40$). The sole FCC exception is Pd ($r = 0.40$).
+
+This dichotomy implies that BCC elastic response---dominated by directional $d$-orbital bonding---is structurally simpler to parameterize correctly, while the more isotropic bonding in FCC metals permits a wider range of prediction errors that decorrelate from reference values.
 
 \begin{figure*}[htbp]
 \centering
-\includegraphics[width=\textwidth]{figures/fig3_paradox.pdf}
-\caption{BCC Simpson's paradox. \textbf{Left:} Per-metal group correlations are all positive (dashed lines show within-group regressions). \textbf{Right:} Pooled correlation is negative (solid red line), producing a complete reversal. Element identity acts as a causal confounder.}
-\label{fig:paradox}
+\includegraphics[width=\textwidth]{figures/fig3_bcc_fcc_dichotomy.pdf}
+\caption{BCC/FCC correlation dichotomy. Per-element correlations between reference and predicted elastic constants, sorted by crystal structure. All BCC metals show $r > 0.70$ while most FCC metals show $r < 0.40$. Error bars show 95\% Fisher-z confidence intervals.}
+\label{fig:dichotomy}
 \end{figure*}
 
 \subsection{Meta-analysis of potential correlations}
 
-Random-effects meta-analysis of per-material error correlations reveals substantial heterogeneity (Table~\ref{tab:meta}). The fixed-effects model yields a pooled correlation of $r = 0.54$ (95\% CI: $0.45$--$0.62$), while the random-effects model gives $r = 0.54$ (95\% CI: $0.20$--$0.76$) with a wide prediction interval ($-0.39$ to $+0.92$).
+Random-effects meta-analysis across all 15 elements reveals extreme heterogeneity (Table~\ref{tab:meta}). The fixed-effects model yields a pooled correlation of $r = 0.60$ (95\% CI: $0.57$--$0.63$), while the random-effects model gives $r = 0.69$ (95\% CI: $0.41$--$0.85$) with a wide prediction interval ($-0.64$ to $+0.99$).
 
 \begin{table}[htbp]
 \centering
-\caption{Meta-analysis results: fixed vs. random effects.}
+\caption{Meta-analysis results: fixed vs. random effects (15 elements, $N = 1{,}677$).}
 \label{tab:meta}
 \begin{tabular}{@{}lccccc@{}}
 \toprule
 Model & $r_\text{pool}$ & 95\% CI & $Q$ & $I^2$ & $\tau$ \\
 \midrule
-Fixed  & $+0.54$ & $[0.45, 0.62]$ & 58.2 & 91.4\% & $0.00$ \\
-Random & $+0.54$ & $[0.20, 0.76]$ & 58.2 & 91.4\% & $0.48$ \\
+Fixed  & $+0.60$ & $[0.57, 0.63]$ & 945 & 98.5\% & $0.00$ \\
+Random & $+0.69$ & $[0.41, 0.85]$ & 984 & 98.6\% & $0.80$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The forest plot (Fig.~\ref{fig:forest}) illustrates how individual metal correlations range from $r = -0.15$ (Pt) to $r = +0.85$ (Al), and how the random-effects model appropriately widens the confidence interval from $[0.45, 0.62]$ to $[0.20, 0.76]$ to account for between-study variance.
+The forest plot (Fig.~\ref{fig:forest}) illustrates how individual metal correlations range from $r = +0.048$ (Ni) to $r = +0.986$ (Nb). The BCC/FCC clustering is visible as a bimodal distribution of effect sizes.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig4_forest.pdf}
-\caption{Meta-analysis forest plot. Individual groups (blue), fixed-effects summary (red), and random-effects summary (green) with 95\% confidence intervals. High heterogeneity ($I^2 = 87.7\%$) mandates random-effects interpretation.}
+\caption{Meta-analysis forest plot. Individual elements colored by crystal structure (red = BCC, blue = FCC). Fixed- and random-effects summaries shown as diamonds. $I^2 = 98.6\%$ mandates random-effects interpretation.}
 \label{fig:forest}
 \end{figure}
 
+\subsection{Pair-style stratification and ecological fallacy}
+
+When benchmark results are stratified by pair\_style family rather than element ($N = 633$ NIST-matched entries with pair\_style provenance), all groups show positive correlations, but the pooled correlation ($r = 0.82$) substantially understates the within-group accuracy (mean $r = 0.95$). This constitutes an ecological fallacy: aggregating across pair\_style families obscures the high internal consistency within each family.
+
+Notably, MEAM potentials show $r = 0.986$ ($n = 270$), EAM/fs shows $r = 0.995$ ($n = 90$), and EAM/alloy shows $r = 0.898$ ($n = 204$). The outlier is BOP ($r = 0.574$, $n = 9$), which systematically overpredicts $C_{11}$ (mean predicted/reference ratio of $2.75$).
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig5_pairstyle.pdf}
+\caption{Pair\_style stratification reveals ecological fallacy. \textbf{Left:} Reference vs.\ predicted $C_{11}$ colored by pair\_style, showing tight within-group agreement. \textbf{Right:} Per-pair\_style correlations; pooled $r = 0.82$ understates within-group mean $r = 0.95$.}
+\label{fig:pairstyle}
+\end{figure*}
+
 \section{Discussion}
 
-Our results establish three principal claims about interatomic potential prediction errors.
+Our results establish four principal claims about interatomic potential prediction errors, validated against the largest systematic elastic constant benchmark to date ($N = 559$ potentials, 15 elements, 1,677 data points).
 
-\textbf{First, errors are structured, not noise.} The FCC elastic constant errors for all three potentials occupy hyper-ribbon manifolds with effective dimensionality $1.2$--$1.4$ out of $3$. This is the signature of sloppy model universality: many parameter combinations are unobservable, and only a few stiff directions control predictions\cite{transtrum2011}. The implication for potential design is that ``universal'' potentials cannot be universal in parameter space---they must be universal on the low-dimensional prediction manifold.
+\textbf{First, errors are universally structured, not noise.} Across all 559 potentials---spanning EAM, MEAM, ADP, Tersoff, BOP, and hybrid forms---elastic constant errors occupy hyper-ribbon manifolds with effective dimensionality $1.05$--$1.86$ out of $3$. No potential approaches the full 3D error space. This is the signature of sloppy model universality: many parameter combinations are unobservable, and only a few stiff directions control predictions\cite{transtrum2011}. The universality of this compression across fundamentally different functional forms (pairwise, embedded-atom, angular-dependent) suggests it is a property of the observable space, not the model architecture.
 
-\textbf{Second, cross-element benchmarking requires causal scrutiny.} The BCC Simpson's paradox demonstrates that naive pooling across elements produces spurious inferences. Element identity is a causal confounder because it influences both the target property (elastic constants scale with bonding character) and the potential's error structure (EAM embedding functions are element-specific). Stratified analysis---evaluating errors within each crystal structure and bonding class---is therefore mandatory.
+\textbf{Second, crystal structure governs error correlation geometry.} The BCC/FCC dichotomy is the most striking empirical finding: all 7 BCC metals show $r > 0.70$ while 7 of 8 FCC metals show $r < 0.40$. This implies that BCC elastic response---dominated by directional $d$-orbital bonding and a simpler Cauchy pressure relationship ($C_{12} \approx C_{44}$)---creates a prediction landscape where potentials either get the elastic ratios right or wrong in a correlated manner. FCC metals, with their more isotropic bonding, permit decorrelated errors across $C_{11}$, $C_{12}$, and $C_{44}$. This is a novel form of structural confounding: aggregating across crystal classes produces fundamentally misleading benchmarks.
 
-\textbf{Third, meta-analysis must use random-effects models.} The high $I^2$ values ($>91\%$) indicate that most variance is between-group rather than within-group. Fixed-effects models, which assume a single true effect, systematically underestimate uncertainty and can produce misleadingly narrow confidence intervals. The prediction intervals from random-effects models properly communicate the expected range for a new material.
+\textbf{Third, meta-analysis must use random-effects models.} The $I^2 = 98.6\%$ indicates that virtually all variance is between-element rather than within-element. The 95\% prediction interval from the random-effects model spans $[-0.64, +0.99]$, meaning that a new element could show \textit{any} correlation behavior. Fixed-effects models, which assume a single true effect, produce misleadingly narrow intervals ($[0.57, 0.63]$ vs.\ $[0.41, 0.85]$).
 
-\textbf{Limitations.} Our benchmark sets are small ($8$ FCC and $7$ BCC metals). The conclusions should be validated against larger corpora such as OpenKIM\cite{openkim} or the NIST Interatomic Potential Database. We have also restricted analysis to classical potentials; recent neural network potentials (NNIPs) may exhibit different manifold structure, though Mao et al.\cite{mao2024,mao2026} have reported similar low-dimensional error compression for deep networks. The applicability of Simpson's paradox detection to physical sciences remains rare\cite{selvitella2017}, making further validation in materials-specific contexts particularly valuable.
+\textbf{Fourth, pair-style families show high internal consistency.} When stratified by potential family, within-group correlations average $r = 0.95$ versus a pooled $r = 0.82$---an ecological fallacy where aggregation obscures accuracy. This has practical implications: benchmarking a MEAM potential against EAM results is statistically inappropriate.
 
-\textbf{Software and data availability.} All benchmark data, analysis code, and figure generation scripts are available at \url{https://github.com/alexwelcing/lupine} under the MIT License. The \texttt{atlas-distill} engine is a standalone Rust binary with no external dependencies beyond standard scientific libraries.
+\textbf{Limitations.} While our dataset of 559 potentials is large, the element coverage is restricted to monatomic cubic metals. Extension to alloys, non-cubic structures, and properties beyond elastic constants (phonon spectra, surface energies, defect formation energies) would test the generality of the hyper-ribbon hypothesis. Additionally, recent neural network potentials (NNIPs) may exhibit different manifold structure, though Mao et al.\cite{mao2024,mao2026} have reported similar low-dimensional error compression for deep networks.
+
+\textbf{Software and data availability.} All benchmark data, analysis code, and figure generation scripts are available at \url{https://github.com/alexwelcing/lupine} under the MIT License. The \texttt{atlas-distill} engine is a standalone Rust binary. Raw elastic constant predictions are cached from the OpenKIM Query API for full reproducibility.
 
 \section*{Data Availability}
 
-All benchmark datasets, analysis code, and figure generation scripts are available at \url{https://github.com/alexwelcing/lupine/tree/main/atlas-distill} under the MIT License. The \texttt{atlas-distill} engine is a standalone Rust binary. Precomputed analysis outputs (JSON format) are included in the repository. Reference elastic constant data are sourced from Simmons and Wang\cite{simmons1971} and the OpenKIM repository\cite{openkim}.
+All benchmark datasets (1,677 rows across 15 elements), analysis code, and figure generation scripts are available at \url{https://github.com/alexwelcing/lupine/tree/main/atlas-distill} under the MIT License. Raw elastic constant predictions are sourced from the OpenKIM Query API\cite{openkim} with local caching for reproducibility. Reference elastic constant data are sourced from Simmons and Wang\cite{simmons1971}. The NIST Interatomic Potentials Repository master index (675 potentials) is included in the repository.
 
 \section*{Acknowledgments}
 
