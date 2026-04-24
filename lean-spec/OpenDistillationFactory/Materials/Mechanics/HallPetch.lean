@@ -1,4 +1,5 @@
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Real.Sqrt
 import Mathlib.Tactic.Linarith
 
 namespace OpenDistillationFactory.Materials.Mechanics.HallPetch

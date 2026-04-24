@@ -29,6 +29,11 @@ export const CATALOG = {
       blurb: 'The people, labs, and programs behind computational materials.',
     },
     {
+      id: 'formalization',
+      label: 'Formalization',
+      blurb: 'Theorem-driven validation, build-locking contracts, and the epistemic gap.',
+    },
+    {
       id: 'meta',
       label: 'Meta',
       blurb: 'Navigation, extraction logs, and how this library was built.',
@@ -172,6 +177,40 @@ export const CATALOG = {
       subtitle: 'NSF DMREF, DOE BES, DARPA SURGE/PRIME, and MGI strategic priorities.',
       category: 'ecosystem',
       tags: ['funding', 'policy'],
+    },
+
+    // ── Formalization ───────────────────────────────────────────────
+    {
+      id: 'formal-manifesto',
+      source: 'docs/formal-manifesto.md',
+      title: 'The Executable Manifesto',
+      subtitle: '47 theorems, 1,499 build targets, and a build-locking epistemic contract.',
+      category: 'formalization',
+      tags: ['lean', 'formal-spec', 'manifesto'],
+    },
+    {
+      id: 'formal-methodology',
+      source: 'docs/formal-methodology.md',
+      title: 'In the In Between',
+      subtitle: 'Why we formalize before we simulate. A methodology for theorem-driven validation.',
+      category: 'formalization',
+      tags: ['lean', 'methodology', 'epistemology'],
+    },
+    {
+      id: 'formal-audit',
+      source: 'docs/formal-audit.md',
+      title: 'Formal Audit Report',
+      subtitle: 'Split verdict: Simpson\'s paradox fabricated, hyper-ribbon consistent but ungrounded.',
+      category: 'formalization',
+      tags: ['lean', 'audit', 'verification'],
+    },
+    {
+      id: 'formal-hypotheses',
+      source: 'docs/formal-hypotheses.md',
+      title: 'Six Meta-Scientific Hypotheses',
+      subtitle: 'From validation incompleteness to bootstrap collapse — the new research agenda.',
+      category: 'formalization',
+      tags: ['lean', 'hypotheses', 'meta-science'],
     },
 
     // ── Meta ────────────────────────────────────────────────────────

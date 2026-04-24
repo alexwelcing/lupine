@@ -1,4 +1,5 @@
 import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.Linarith
 import OpenDistillationFactory.Materials.Distillation.Operator
 
 namespace OpenDistillationFactory.Materials.Distillation.Extracted
