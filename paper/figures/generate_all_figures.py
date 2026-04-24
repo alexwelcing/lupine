@@ -152,7 +152,7 @@ def fig2_dimensionality(manifold):
     ax2.set_title("All potentials, sorted by PR")
     ax2.set_xlim(0, 3.2)
 
-    fig.suptitle("Hyper-ribbon dimensionality across 559 real potentials", fontweight="bold", y=1.02)
+    fig.suptitle(f"Hyper-ribbon dimensionality across {len(prs)} multi-element potentials", fontweight="bold", y=1.02)
     plt.tight_layout()
     save(fig, "fig2_dimensionality")
 
@@ -294,6 +294,8 @@ def fig5_pairstyle(bench_csv):
         if len(refs) < 3:
             continue
         r = np.corrcoef(refs, preds)[0, 1] if len(refs) > 2 else 0
+        if np.isnan(r):
+            continue
         ps_stats.append((ps, r, len(refs)))
         ax1.scatter(refs, preds, color=color, alpha=0.5, s=15, label=f"{ps} (n={len(refs)}, r={r:.2f})")
 
