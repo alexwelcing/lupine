@@ -113,6 +113,24 @@ export default function App() {
         secondaryAction={{ label: 'Research Portal' }}
       />
       
+      {/* 1.5. Paper Banner */}
+      <div style={{ textAlign: 'center', padding: '16px', background: 'rgba(37, 99, 235, 0.1)', borderBottom: '1px solid rgba(37, 99, 235, 0.2)', color: 'white', fontFamily: 'var(--font-sans)' }}>
+        <span style={{ 
+          background: 'var(--lupine-500)', 
+          color: 'white', 
+          padding: '2px 8px', 
+          borderRadius: '4px', 
+          fontSize: '0.75rem', 
+          fontWeight: 'bold', 
+          marginRight: '12px',
+          textTransform: 'uppercase'
+        }}>New</span>
+        <strong style={{ color: 'var(--lupine-100)' }}>The Causal Geometry of Prediction Errors</strong> — Our latest preprint on interatomic potentials is now available. 
+        <a href="/immi_paper.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--lupine-400)', marginLeft: '12px', textDecoration: 'none', fontWeight: 'bold' }}>
+          Read the PDF &rarr;
+        </a>
+      </div>
+      
       {/* 2. Features Grid */}
       <section className="lupine-section">
         <div className="lupine-container">

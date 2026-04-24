@@ -135,6 +135,15 @@ async function renderHome() {
     hero.append(stats);
     VIEW.append(hero);
 
+    // Preprint Banner
+    const paperBanner = el('section', { class: 'continue', style: 'background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.2); padding: 16px; border-radius: 8px; margin: 0 16px 24px 16px; display: block; text-decoration: none;' });
+    const bannerLink = el('a', { href: '/immi_paper.pdf', target: '_blank', style: 'text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 4px;' });
+    bannerLink.append(el('span', { style: 'font-size: 0.75rem; text-transform: uppercase; color: #60a5fa; font-weight: bold; letter-spacing: 0.05em;' }, 'NEW PREPRINT'));
+    bannerLink.append(el('strong', { style: 'font-size: 1.1rem; color: #fff;' }, 'The Causal Geometry of Prediction Errors'));
+    bannerLink.append(el('span', { style: 'font-size: 0.9rem; color: #9ca3af;' }, 'Read the finalized manuscript on interatomic potentials →'));
+    paperBanner.append(bannerLink);
+    VIEW.append(paperBanner);
+
     // Continue reading
     const inProgress = Object.entries(STATE.progress)
       .map(([id, v]) => ({ id, ...v }))
