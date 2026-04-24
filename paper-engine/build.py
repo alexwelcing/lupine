@@ -146,7 +146,7 @@ def convert_tex_to_html():
     content = '\n'.join(formatted_blocks)
 
     # References section
-    ref_html = "<h2>References</h2><ol>"
+    ref_html = "<h2>References</h2><ol class=\"references-list\">"
     for r in refs.keys():
         ref_html += f"<li>{r}</li>"
     ref_html += "</ol>"
@@ -159,86 +159,150 @@ def convert_tex_to_html():
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
     
     :root {{
         --bg: #ffffff;
         --fg: #111827;
-        --accent: #2563eb;
+        --text-muted: #4b5563;
+        --accent: #0f172a;
         --border: #e5e7eb;
+        --link: #2563eb;
     }}
     
     body {{
-        font-family: 'Merriweather', serif;
-        line-height: 1.6;
+        font-family: 'Lora', serif;
+        line-height: 1.7;
         color: var(--fg);
-        background: var(--bg);
+        background: #f3f4f6; /* Outer background, page is white */
         margin: 0;
-        padding: 0;
+        padding: 40px;
     }}
     
     .page {{
-        max-width: 900px;
+        max-width: 850px;
         margin: 0 auto;
-        padding: 40px;
+        padding: 60px 80px;
         background: white;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
     }}
 
+    /* =======================================================================
+       Header / Title
+       ======================================================================= */
     header {{
-        text-align: center;
-        margin-bottom: 40px;
+        text-align: left;
+        margin-bottom: 30px;
         font-family: 'Inter', sans-serif;
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 24px;
+    }}
+
+    .journal-tag {{
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: block;
     }}
 
     h1 {{
-        font-size: 2.5rem;
-        font-weight: 800;
-        line-height: 1.2;
-        margin-bottom: 20px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1.25;
+        margin: 0 0 16px 0;
+        color: var(--accent);
+        letter-spacing: -0.02em;
     }}
 
     .authors {{
-        font-size: 1.1rem;
-        color: #4b5563;
+        font-size: 1.05rem;
+        color: var(--accent);
+        font-weight: 500;
+    }}
+    
+    .affiliation {{
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-weight: 400;
+        margin-top: 4px;
     }}
 
+    /* =======================================================================
+       Abstract
+       ======================================================================= */
     .abstract {{
         font-family: 'Inter', sans-serif;
-        background: #f9fafb;
-        padding: 24px;
-        border-radius: 8px;
-        border-left: 4px solid var(--accent);
+        background: #f8fafc;
+        padding: 24px 32px;
+        border-left: 3px solid var(--accent);
         margin-bottom: 40px;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #334155;
     }}
 
+    .abstract p {{
+        margin: 0;
+        text-indent: 0;
+    }}
+
+    /* =======================================================================
+       Body Content & Typography
+       ======================================================================= */
     .content {{
         column-count: 2;
         column-gap: 40px;
         text-align: justify;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }}
 
-    h2, h3 {{
+    h2, h3, h4 {{
         font-family: 'Inter', sans-serif;
+        color: var(--accent);
         break-after: avoid;
         column-break-after: avoid;
-        margin-top: 2em;
+        margin-top: 1.8em;
+        margin-bottom: 0.8em;
     }}
 
-    h2 {{ font-size: 1.4rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }}
-    h3 {{ font-size: 1.1rem; }}
+    h2 {{ 
+        font-size: 1.2rem; 
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 4px;
+    }}
+
+    h3 {{ 
+        font-size: 1.05rem; 
+        font-weight: 600;
+    }}
 
     p {{
-        margin-bottom: 1em;
+        margin-top: 0;
+        margin-bottom: 0;
         text-indent: 1.5em;
     }}
     
-    p:first-of-type {{
+    /* Remove indent for first paragraphs after headers */
+    h2 + p, h3 + p, h4 + p, .abstract + p, .content > p:first-child {{
         text-indent: 0;
     }}
 
+    a {{
+        color: var(--link);
+        text-decoration: none;
+    }}
+
+    /* =======================================================================
+       Figures & Tables (Booktabs style)
+       ======================================================================= */
     .figure, .table-container {{
         break-inside: avoid;
         margin: 24px 0;
@@ -248,16 +312,17 @@ def convert_tex_to_html():
     img {{
         width: 100%;
         height: auto;
-        border-radius: 4px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        display: block;
+        border: 1px solid var(--border);
+        background: white;
     }}
 
     .caption {{
         font-family: 'Inter', sans-serif;
         font-size: 0.8rem;
-        color: #6b7280;
-        margin-top: 8px;
-        text-align: center;
+        color: var(--text-muted);
+        margin-top: 10px;
+        text-align: justify;
         line-height: 1.4;
     }}
 
@@ -266,54 +331,80 @@ def convert_tex_to_html():
         border-collapse: collapse;
         font-family: 'Inter', sans-serif;
         font-size: 0.8rem;
+        margin-top: 8px;
     }}
 
+    /* Booktabs emulation */
     th, td {{
-        border-bottom: 1px solid var(--border);
         padding: 8px 4px;
         text-align: center;
+        border: none;
     }}
 
-    th {{ font-weight: 600; border-bottom: 2px solid var(--fg); border-top: 2px solid var(--fg); }}
+    th {{ 
+        font-weight: 600; 
+        border-top: 2px solid var(--accent); 
+        border-bottom: 1px solid var(--accent);
+    }}
     
+    tr:last-child td {{
+        border-bottom: 2px solid var(--accent);
+    }}
+
     .equation {{
         text-align: center;
-        font-style: italic;
         margin: 16px 0;
-        font-family: 'Times New Roman', serif;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 1.1em;
     }}
 
+    /* =======================================================================
+       Lists & Formatting
+       ======================================================================= */
     ul {{
-        padding-left: 20px;
-        margin-bottom: 16px;
+        padding-left: 1.5em;
+        margin: 12px 0;
     }}
     
-    li {{ margin-bottom: 8px; }}
+    li {{ margin-bottom: 6px; }}
     
     code {{
-        font-family: monospace;
-        background: #f1f5f9;
-        padding: 2px 4px;
-        border-radius: 3px;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
         font-size: 0.85em;
+        padding: 0.1em 0.3em;
+        border-radius: 3px;
+        background-color: #f1f5f9;
+        color: #0f172a;
     }}
 
+    ol.references-list {{
+        padding-left: 2em;
+        font-size: 0.85rem;
+    }}
+
+    ol.references-list li {{
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }}
+
+    /* =======================================================================
+       Print Media Query
+       ======================================================================= */
     @media print {{
-        .page {{ max-width: 100%; padding: 0; }}
-        body {{ font-size: 10pt; }}
-        @page {{ size: letter; margin: 2cm; }}
+        body {{ background: white; padding: 0; font-size: 10pt; }}
+        .page {{ box-shadow: none; max-width: 100%; padding: 0; }}
+        @page {{ size: letter; margin: 2.5cm; }}
+        .content {{ column-gap: 8mm; }}
     }}
 </style>
 </head>
 <body>
 <div class="page">
     <header>
+        <span class="journal-tag">Preprint • Materials Science & Inference</span>
         <h1>{title}</h1>
-        <div class="authors">
-            Alexander Welcing<br>
-            Lupine Materials Science, Seattle, WA, USA<br>
-            alex@lupine.io
-        </div>
+        <div class="authors">Alexander Welcing</div>
+        <div class="affiliation">Lupine Materials Science, Seattle, WA, USA • alex@lupine.io</div>
     </header>
     
     <div class="abstract">
