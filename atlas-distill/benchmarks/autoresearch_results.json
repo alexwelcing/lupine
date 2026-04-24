@@ -1,0 +1,57 @@
+[
+  {
+    "nist_id": "1999--Mishin-Y--Al--LAMMPS--ipr1",
+    "potid": "1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al",
+    "doi": "10.1103/physrevb.59.3393",
+    "element": "Al",
+    "pair_style": "eam/alloy",
+    "paper_title": "Interatomic potentials for monoatomic metals from experimental data and<i>ab initio</i>calculations",
+    "values_found": [],
+    "success": true,
+    "error": null
+  },
+  {
+    "nist_id": "2000--Sturgeon-J-B--Al--LAMMPS--ipr1",
+    "potid": "2000--Sturgeon-J-B-Laird-B-B--Al",
+    "doi": "10.1103/physrevb.62.14720",
+    "element": "Al",
+    "pair_style": "eam/fs",
+    "paper_title": "Adjusting the melting point of a model system via Gibbs-Duhem integration: Application to a model of aluminum",
+    "values_found": [],
+    "success": true,
+    "error": null
+  },
+  {
+    "nist_id": "2003--Zope-R-R--Al--LAMMPS--ipr1",
+    "potid": "2003--Zope-R-R-Mishin-Y--Al",
+    "doi": "10.1103/physrevb.68.024102",
+    "element": "Al",
+    "pair_style": "eam/alloy",
+    "paper_title": "Interatomic potentials for atomistic simulations of the Ti-Al system",
+    "values_found": [],
+    "success": true,
+    "error": null
+  },
+  {
+    "nist_id": "2004--Liu-X-Y--Al--LAMMPS--ipr1",
+    "potid": "2004--Liu-X-Y-Ercolessi-F-Adams-J-B--Al",
+    "doi": "10.1088/0965-0393/12/4/007",
+    "element": "Al",
+    "pair_style": "eam/alloy",
+    "paper_title": "Aluminium interatomic potential from density functional theory calculations with improved stacking fault energy",
+    "values_found": [],
+    "success": true,
+    "error": null
+  },
+  {
+    "nist_id": "2004--Zhou-X-W--Al--LAMMPS--ipr1",
+    "potid": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Al",
+    "doi": "10.1103/physrevb.69.144113",
+    "element": "Al",
+    "pair_style": "eam/alloy",
+    "paper_title": "Misfit-energy-increasing dislocations in vapor-deposited CoFe/NiFe multilayers",
+    "values_found": [],
+    "success": true,
+    "error": null
+  }
+]

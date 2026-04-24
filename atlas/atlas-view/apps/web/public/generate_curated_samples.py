@@ -74,11 +74,21 @@ def gen_llzo():
     return atom_data, [nx*a, ny*a, nz*a]
 
 # 3. ZIF-8 Framework - Simple Porous Approximation
-def gen_zif8():
+def gen_zif8(step=0, max_steps=120):
     atom_data = []
     a = 17.0
     nx, ny, nz = 3, 3, 3
     idx = 1
+    
+    # Progress from 0 to 1 over the frames
+    progress = step / max(1, max_steps - 1)
+    
+    # Gate opening angle: 0 to 30 degrees (approx 0.52 radians)
+    # Let's make it open, stay open, and close slightly
+    theta = progress * 0.6 
+    cos_t = math.cos(theta)
+    sin_t = math.sin(theta)
+
     for i in range(nx):
         for j in range(ny):
             for k in range(nz):
@@ -88,11 +98,20 @@ def gen_zif8():
                 for (t, rx, ry, rz) in nodes:
                     atom_data.append(f"{idx} {t} {base_x+rx*a:.3f} {base_y+ry*a:.3f} {base_z+rz*a:.3f}")
                     idx += 1
-                    # Linkers
+                    # Linkers (simplified)
                     for dr in [-0.15, 0.15]:
-                        atom_data.append(f"{idx} 7 {base_x+(rx+dr)*a:.3f} {base_y+ry*a:.3f} {base_z+rz*a:.3f}")
+                        # Gate opening: rotate the linker atoms around the local node (around Z axis)
+                        orig_dr = dr * a
+                        new_dx = orig_dr * cos_t
+                        new_dy = orig_dr * sin_t
+                        
+                        atom_data.append(f"{idx} 7 {base_x+rx*a+new_dx:.3f} {base_y+ry*a+new_dy:.3f} {base_z+rz*a:.3f}")
                         idx += 1
-                        atom_data.append(f"{idx} 6 {base_x+(rx+dr*1.5)*a:.3f} {base_y+ry*a:.3f} {base_z+rz*a:.3f}")
+                        
+                        orig_dr_c = dr * 1.5 * a
+                        new_dx_c = orig_dr_c * cos_t
+                        new_dy_c = orig_dr_c * sin_t
+                        atom_data.append(f"{idx} 6 {base_x+rx*a+new_dx_c:.3f} {base_y+ry*a+new_dy_c:.3f} {base_z+rz*a:.3f}")
                         idx += 1
     return atom_data, [nx*a, ny*a, nz*a]
 
@@ -181,9 +200,17 @@ d2, b2 = gen_llzo()
 write_lammpstrj("archive/llzo_diffusion.lammpstrj", len(d2), b2, d2)
 print(f"Generated LLZO ({len(d2)} atoms)")
 
-d3, b3 = gen_zif8()
-write_lammpstrj("archive/zif8_gate_opening.lammpstrj", len(d3), b3, d3)
-print(f"Generated ZIF-8 ({len(d3)} atoms)")
+with open("archive/zif8_gate_opening.lammpstrj", 'w') as f:
+    frames = 120
+    for step in range(frames):
+        d3, b3 = gen_zif8(step, frames)
+        f.write(f"ITEM: TIMESTEP\n{step * 100}\n")
+        f.write(f"ITEM: NUMBER OF ATOMS\n{len(d3)}\n")
+        f.write(f"ITEM: BOX BOUNDS pp pp pp\n0.0 {b3[0]}\n0.0 {b3[1]}\n0.0 {b3[2]}\n")
+        f.write("ITEM: ATOMS id type x y z\n")
+        for line in d3:
+            f.write(line + "\n")
+print(f"Generated ZIF-8 series (120 frames)")
 
 d4, b4 = gen_cascade()
 write_lammpstrj("archive/w_cascade_150keV.lammpstrj", len(d4), b4, d4, "id type x y z damage")

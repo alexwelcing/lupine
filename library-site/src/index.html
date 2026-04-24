@@ -19,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css?v=__VERSION__" />
+  <script src="https://unpkg.com/force-graph" defer></script>
 </head>
 <body>
   <div class="bg-fx" aria-hidden="true">
@@ -43,6 +44,9 @@
       </span>
     </a>
     <div class="topbar-actions">
+      <button class="icon-btn" id="graph-btn" aria-label="Knowledge Graph">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      </button>
       <button class="icon-btn" id="search-btn" aria-label="Search">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>
@@ -66,7 +70,18 @@
       </button>
     </div>
     <ul id="search-results" class="search-results"></ul>
-    <p class="search-hint" id="search-hint">Title, subtitle, and tags. Tap a result to open.</p>
+    <p class="search-hint" id="search-hint">Title, subtitle, tags, and extracted entities. Tap a result to open.</p>
+  </dialog>
+
+  <!-- Knowledge Graph overlay -->
+  <dialog id="graph-dialog" class="dialog graph-dialog">
+    <div class="dialog-head">
+      <h2>Entity Graph</h2>
+      <button class="icon-btn" id="graph-close" aria-label="Close graph">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="graph-container" style="width: 100%; height: calc(100% - 60px);"></div>
   </dialog>
 
   <!-- Settings drawer -->

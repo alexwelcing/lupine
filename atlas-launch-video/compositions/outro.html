@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    .outro-container {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 28px;
+    }
+    .logo-main { display: flex; align-items: baseline; gap: 4px; opacity: 0; }
+    .logo-glim { font-size: 80px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.03em; }
+    .logo-pse { font-size: 80px; font-weight: 500; color: var(--accent); }
+    .price-row { display: flex; align-items: baseline; gap: 12px; opacity: 0; }
+    .price-amount { font-size: 72px; font-weight: 900; color: var(--emerald); letter-spacing: -0.03em; }
+    .price-label { font-size: 28px; font-weight: 400; color: var(--text-muted); }
+    .features-row { display: flex; gap: 24px; opacity: 0; }
+    .feat { padding: 10px 24px; font-size: 16px; font-weight: 500; color: var(--text-secondary); background: var(--bg-glass); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; }
+    .tagline-final { font-size: 32px; font-weight: 300; color: var(--text-secondary); opacity: 0; margin-top: 8px; }
+    .tagline-final em { font-style: normal; color: var(--accent); font-weight: 600; }
+    .url-display { font-family: var(--font-mono); font-size: 24px; font-weight: 500; color: var(--accent); opacity: 0; margin-top: 16px; padding: 12px 32px; border: 1px solid rgba(0,200,240,0.3); border-radius: 12px; background: rgba(0,200,240,0.05); }
+    .glow-backdrop { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(0,200,240,0.08), transparent 70%); filter: blur(60px); opacity: 0; }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="outro" data-start="0" data-duration="12" data-width="1920" data-height="1080">
+    <div class="grid-bg clip" id="grid" data-start="0" data-duration="12" data-track-index="0"></div>
+    <div class="glow-backdrop clip" id="glow" data-start="0" data-duration="12" data-track-index="1"></div>
+
+    <div class="outro-container clip" id="outro" data-start="0" data-duration="12" data-track-index="2">
+      <div class="logo-main" id="logo"><span class="logo-glim">glim</span><span class="logo-pse">PSE</span></div>
+      <div class="price-row" id="price"><span class="price-amount">$0</span><span class="price-label">Forever Free</span></div>
+      <div class="features-row" id="feats">
+        <div class="feat">Apache 2.0</div>
+        <div class="feat">No Install</div>
+        <div class="feat">No Login</div>
+        <div class="feat">No Limits</div>
+      </div>
+      <div class="tagline-final" id="tagline"><em>Publication quality</em> in 2 seconds.</div>
+      <div class="url-display" id="url">lupinematerials.science</div>
+    </div>
+
+    <div class="scanlines clip" id="scan" data-start="0" data-duration="12" data-track-index="3"></div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    // Glow
+    tl.to("#glow", { opacity: 1, duration: 1 }, 0);
+
+    // Logo
+    tl.to("#logo", { opacity: 1, duration: 0.01 }, 0.5);
+    tl.from("#logo", { scale: 0.8, duration: 0.6, ease: "power2.out" }, 0.5);
+
+    // Price
+    tl.to("#price", { opacity: 1, duration: 0.5 }, 1.5);
+    tl.from("#price", { y: 20, duration: 0.5, ease: "power2.out" }, 1.5);
+
+    // Feature pills
+    tl.to("#feats", { opacity: 1, duration: 0.5 }, 3.0);
+    tl.from("#feats", { y: 15, duration: 0.5, ease: "power2.out" }, 3.0);
+
+    // Tagline
+    tl.to("#tagline", { opacity: 1, duration: 0.5 }, 5.0);
+    tl.from("#tagline", { y: 10, duration: 0.5 }, 5.0);
+
+    // URL
+    tl.to("#url", { opacity: 1, duration: 0.5 }, 7.0);
+    tl.from("#url", { y: 10, duration: 0.5 }, 7.0);
+
+    // Hold everything visible until end
+    tl.set({}, {}, 12);
+    window.__timelines["outro"] = tl;
+  </script>
+</body>
+</html>

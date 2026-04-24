@@ -19,6 +19,8 @@ pub enum MlipBackend {
     FitSnap,
     Mace,
     MlIapKokkos,
+    Meam,
+    EamAlloy,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -26,6 +28,8 @@ pub struct MlipDeployment {
     pub backend: MlipBackend,
     pub model_identifier: String,
     pub model_path: Option<String>,
+    #[serde(default)]
+    pub auxiliary_paths: Vec<String>,
 }
 
 impl MlipDeployment {
@@ -34,11 +38,17 @@ impl MlipDeployment {
             backend,
             model_identifier: identifier.into(),
             model_path: None,
+            auxiliary_paths: Vec::new(),
         }
     }
 
     pub fn with_path(mut self, path: impl Into<String>) -> Self {
         self.model_path = Some(path.into());
+        self
+    }
+
+    pub fn with_auxiliary_path(mut self, path: impl Into<String>) -> Self {
+        self.auxiliary_paths.push(path.into());
         self
     }
 
@@ -86,6 +96,23 @@ impl MlipDeployment {
                     path, element_str
                 ))
             }
+            MlipBackend::EamAlloy => {
+                let path = self.model_path.as_ref().ok_or(MlipOpsError::MissingModelPath)?;
+                Ok(format!(
+                    "pair_style eam/alloy\npair_coeff * * {} {}",
+                    path, element_str
+                ))
+            }
+            MlipBackend::Meam => {
+                let path = self.model_path.as_ref().ok_or(MlipOpsError::MissingModelPath)?;
+                let aux_path = self.auxiliary_paths.first().ok_or(MlipOpsError::MissingModelPath)?;
+                // MEAM syntax: pair_coeff * * library.meam elements... parameter.meam elements...
+                // Assuming auxiliary[0] is the library.meam and model_path is the parameter.meam
+                Ok(format!(
+                    "pair_style meam\npair_coeff * * {} {} {} {}",
+                    aux_path, element_str, path, element_str
+                ))
+            }
         }
     }
 
@@ -93,6 +120,11 @@ impl MlipDeployment {
         if let Some(path_str) = &self.model_path {
             if !Path::new(path_str).exists() {
                 return Err(MlipOpsError::PathNotFound(path_str.clone()));
+            }
+        }
+        for aux_path in &self.auxiliary_paths {
+            if !Path::new(aux_path).exists() {
+                return Err(MlipOpsError::PathNotFound(aux_path.clone()));
             }
         }
         Ok(())

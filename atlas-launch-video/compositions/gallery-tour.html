@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    .overlay-text {
+      position: absolute; bottom: 80px; left: 80px;
+      display: flex; flex-direction: column; gap: 12px; opacity: 0;
+    }
+    .overlay-text .big { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; }
+    .overlay-text .sub { font-size: 20px; font-weight: 500; color: var(--text-muted); }
+    .counter { position: absolute; top: 80px; right: 100px; opacity: 0; display: flex; gap: 32px; }
+    .counter .item { text-align: center; }
+    .counter .num { font-size: 52px; font-weight: 800; color: var(--accent); }
+    .counter .lbl { font-size: 14px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="gallery-tour" data-start="0" data-duration="6" data-width="1920" data-height="1080">
+    <video id="gallery-video" data-start="0" data-duration="6" data-track-index="0"
+           src="../assets/gallery-recording.mp4" muted playsinline
+           style="position:absolute;inset:0;width:1920px;height:1080px;object-fit:cover;">
+    </video>
+
+    <div class="counter clip" id="counter" data-start="0.5" data-duration="5.5" data-track-index="1">
+      <div class="item"><div class="num">60+</div><div class="lbl">Simulations</div></div>
+      <div class="item"><div class="num">10</div><div class="lbl">Domains</div></div>
+    </div>
+
+    <div class="overlay-text clip" id="overlay" data-start="1" data-duration="5" data-track-index="2">
+      <div class="big">Example Library</div>
+      <div class="sub">Metals · Ceramics · Nanomaterials · Biomolecules · Energy Materials</div>
+    </div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.to("#counter", { opacity: 1, duration: 0.4 }, 0.5);
+    tl.to("#overlay", { opacity: 1, duration: 0.4 }, 1);
+    tl.from("#overlay", { y: 20, duration: 0.4, ease: "power2.out" }, 1);
+    tl.to("#overlay, #counter", { opacity: 0, duration: 0.3 }, 5.5);
+    tl.set({}, {}, 6);
+    window.__timelines["gallery-tour"] = tl;
+  </script>
+</body>
+</html>
