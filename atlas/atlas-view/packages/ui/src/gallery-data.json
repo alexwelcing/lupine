@@ -1,5 +1,27 @@
 [
   {
+    "id": "lupine_bluebonnet",
+    "title": "Lupine Bluebonnet",
+    "subtitle": "Lupinus texensis brand molecule — atomic sculpture of the Texas state flower with nitrogen petals, fluorine leaves, and sulfur stamen accents.",
+    "domain": "Nanomaterials",
+    "atoms": "930",
+    "frames": "1",
+    "file": "gallery/curated/lupine_bluebonnet.xyz",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#1ff01f",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Procedural Atomic Sculpture",
+      "potential": "Brand Identity Architecture",
+      "temperature": "0 K",
+      "reference": "Lupine Materials Science — lupine.science"
+    },
+    "featured": true
+  },
+  {
     "id": "oscillation_timeseries",
     "title": "Time-Series Oscillation",
     "subtitle": "Test dataset for 60fps property interpolation",
