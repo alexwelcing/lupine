@@ -92,6 +92,30 @@ export function Gallery() {
       const cleanBase = base.endsWith('/') ? base : `${base}/`;
       const url = `${cleanBase}${cleanFile}`;
 
+      if (example.id === 'lupine_brand_asset') {
+        const { generateLupineFrame } = await import('@atlas/core');
+        const frame = generateLupineFrame();
+        
+        useStore.getState().setFile({
+          name: example.title,
+          size: 1024,
+          trajectory: {
+            frames: [frame],
+            totalFrames: 1,
+            atomTypes: [1, 6, 7, 9, 16],
+            globalBounds: { min: [-15, -20, -15] as any, max: [15, 20, 15] as any },
+          },
+          thermo: null,
+          sourceUrl: 'procedural',
+        });
+        
+        // Force botanical preset for perfect detailed view
+        useStore.getState().setRenderStyle('botanical');
+        useStore.getState().setAtomScale(1.4);
+        setLoadingId(null);
+        return;
+      }
+
       const resp = await fetch(url);
       if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
       const blob = await resp.blob();

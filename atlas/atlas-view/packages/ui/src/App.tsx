@@ -699,6 +699,7 @@ export default function App() {
                   highlightedAtoms={new Set(selectedAtoms)}
                   hiddenAtomTypes={hiddenAtomTypes}
                   atomTypeScales={atomTypeScales}
+                  botanicalMode={renderStyle === 'botanical'}
                 />
                 {showBonds && (
                   <Bonds
@@ -711,6 +712,7 @@ export default function App() {
                     colorMode={colorMode}
                     radius={0.12}
                     opacity={0.85}
+                    botanicalMode={renderStyle === 'botanical'}
                   />
                 )}
                 {showCell && (

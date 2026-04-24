@@ -75,7 +75,7 @@ export interface ThermoData {
 
 export type ColorMode = 'type' | 'property' | 'uniform';
 export type ColormapName = 'viridis' | 'inferno' | 'coolwarm' | 'plasma' | 'magma' | 'cividis' | 'neon' | 'sunset' | 'vaporwave';
-export type RenderStyle = 'standard' | 'toon';
+export type RenderStyle = 'standard' | 'toon' | 'botanical';
 
 export interface VisualizationState {
   /** Current frame index */
