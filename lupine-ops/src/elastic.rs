@@ -80,8 +80,8 @@ pub fn lattice_data(element: &str) -> Option<(LatticeType, f64)> {
         "Fe" => Some((LatticeType::Bcc, 2.87)),
         "Cr" => Some((LatticeType::Bcc, 2.91)),
         "Mo" => Some((LatticeType::Bcc, 3.147)),
-        "W"  => Some((LatticeType::Bcc, 3.165)),
-        "V"  => Some((LatticeType::Bcc, 3.03)),
+        "W" => Some((LatticeType::Bcc, 3.165)),
+        "V" => Some((LatticeType::Bcc, 3.03)),
         "Nb" => Some((LatticeType::Bcc, 3.30)),
         "Ta" => Some((LatticeType::Bcc, 3.30)),
         _ => None,
@@ -113,7 +113,7 @@ pub fn generate_elastic_script(
     // The script uses LAMMPS variables and the change_box command to apply
     // small strains and measure the stress response.
     let script = format!(
-r#"# ══════════════════════════════════════════════════════════════
+        r#"# ══════════════════════════════════════════════════════════════
 # Elastic Constant Calculation: {element} ({lattice})
 # NIST ID: {nist_id}
 # Method: Stress-strain finite differences (delta = {delta:.1e})
@@ -363,8 +363,8 @@ mod tests {
     #[test]
     fn test_elastic_script_generation() {
         let config = ElasticCalcConfig::for_element("Al", "test--Al--LAMMPS--ipr1").unwrap();
-        let deployment = MlipDeployment::new(MlipBackend::EamAlloy, "test")
-            .with_path("/path/to/Al.eam.alloy");
+        let deployment =
+            MlipDeployment::new(MlipBackend::EamAlloy, "test").with_path("/path/to/Al.eam.alloy");
         let script = generate_elastic_script(&config, &deployment).unwrap();
 
         assert!(script.contains("lattice fcc 4.05"));
@@ -414,6 +414,9 @@ ELASTIC_DONE
     #[test]
     fn test_incomplete_output() {
         let log = "ELASTIC_C11 = 100.0\nSome noise\n";
-        assert!(parse_elastic_output(log).is_none(), "Should return None without ELASTIC_DONE");
+        assert!(
+            parse_elastic_output(log).is_none(),
+            "Should return None without ELASTIC_DONE"
+        );
     }
 }

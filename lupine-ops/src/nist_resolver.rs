@@ -58,7 +58,7 @@ fn pair_style_to_backend(pair_style: &str) -> Option<MlipBackend> {
     match pair_style {
         "eam/alloy" => Some(MlipBackend::EamAlloy),
         "eam/fs" => Some(MlipBackend::EamAlloy), // Same LAMMPS interface
-        "eam" => Some(MlipBackend::EamAlloy),     // Single-file EAM
+        "eam" => Some(MlipBackend::EamAlloy),    // Single-file EAM
         "meam" => Some(MlipBackend::Meam),
         "meam/spline" => Some(MlipBackend::Meam),
         // These pair_styles exist in the mirror but need custom handling:
@@ -115,8 +115,7 @@ pub fn resolve_potential(
         MlipBackend::EamAlloy => {
             // EAM/alloy, EAM/fs, EAM: single parameter file
             let primary = param_files.first()?;
-            MlipDeployment::new(MlipBackend::EamAlloy, nist_id)
-                .with_path(primary.to_string_lossy())
+            MlipDeployment::new(MlipBackend::EamAlloy, nist_id).with_path(primary.to_string_lossy())
         }
         MlipBackend::Meam => {
             // MEAM requires two files: library.meam and a parameter file.
@@ -128,16 +127,17 @@ pub fn resolve_potential(
                     .unwrap_or(false)
             });
             let param_file = param_files.iter().find(|p| {
-                let fname = p.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
+                let fname = p
+                    .file_name()
+                    .map(|f| f.to_string_lossy().to_string())
+                    .unwrap_or_default();
                 fname.ends_with(".meam") && !fname.contains("library")
             });
 
             match (library_file, param_file) {
-                (Some(lib), Some(param)) => {
-                    MlipDeployment::new(MlipBackend::Meam, nist_id)
-                        .with_path(param.to_string_lossy())
-                        .with_auxiliary_path(lib.to_string_lossy())
-                }
+                (Some(lib), Some(param)) => MlipDeployment::new(MlipBackend::Meam, nist_id)
+                    .with_path(param.to_string_lossy())
+                    .with_auxiliary_path(lib.to_string_lossy()),
                 _ => {
                     // Some MEAM potentials have non-standard naming.
                     // Fall back to first two .meam files.
@@ -201,7 +201,10 @@ mod tests {
 
     #[test]
     fn test_backend_mapping() {
-        assert_eq!(pair_style_to_backend("eam/alloy"), Some(MlipBackend::EamAlloy));
+        assert_eq!(
+            pair_style_to_backend("eam/alloy"),
+            Some(MlipBackend::EamAlloy)
+        );
         assert_eq!(pair_style_to_backend("meam"), Some(MlipBackend::Meam));
         assert_eq!(pair_style_to_backend("tersoff"), None);
         assert_eq!(pair_style_to_backend("sw"), None);

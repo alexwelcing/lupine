@@ -52,9 +52,12 @@ impl MlipDeployment {
         self
     }
 
-    /// Generates the strict LAMMPS setup instructions, completely walling off 
+    /// Generates the strict LAMMPS setup instructions, completely walling off
     /// any arbitrary user string injection that could compromise reproducibility.
-    pub fn construct_pair_style(&self, type_map: &BTreeMap<u32, String>) -> Result<String, MlipOpsError> {
+    pub fn construct_pair_style(
+        &self,
+        type_map: &BTreeMap<u32, String>,
+    ) -> Result<String, MlipOpsError> {
         let elements: Vec<String> = type_map.values().cloned().collect();
         let element_str = elements.join(" ");
 
@@ -68,44 +71,62 @@ impl MlipDeployment {
             }
             MlipBackend::DeepMd => {
                 // DeePMD version 3 plugin path
-                let path = self.model_path.as_ref().ok_or(MlipOpsError::MissingModelPath)?;
-                Ok(format!(
-                    "pair_style deepmd {}\npair_coeff * *",
-                    path
-                ))
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
+                Ok(format!("pair_style deepmd {}\npair_coeff * *", path))
             }
             MlipBackend::MlIapKokkos => {
                 // Highly performant Kokkos dispatch bridging PyTorch
-                let path = self.model_path.as_ref().ok_or(MlipOpsError::MissingModelPath)?;
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
                 Ok(format!(
                     "pair_style mliap unified\npair_coeff * * {} {}",
                     path, element_str
                 ))
             }
             MlipBackend::FitSnap => {
-                let path = self.model_path.as_ref().ok_or(MlipOpsError::MissingModelPath)?;
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
                 Ok(format!(
                     "pair_style snap\npair_coeff * * {} {} {}",
                     path, self.model_identifier, element_str
                 ))
             }
             MlipBackend::Mace => {
-                let path = self.model_path.as_ref().ok_or(MlipOpsError::MissingModelPath)?;
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
                 Ok(format!(
                     "pair_style mace no_domain_decomposition\npair_coeff * * {} {}",
                     path, element_str
                 ))
             }
             MlipBackend::EamAlloy => {
-                let path = self.model_path.as_ref().ok_or(MlipOpsError::MissingModelPath)?;
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
                 Ok(format!(
                     "pair_style eam/alloy\npair_coeff * * {} {}",
                     path, element_str
                 ))
             }
             MlipBackend::Meam => {
-                let path = self.model_path.as_ref().ok_or(MlipOpsError::MissingModelPath)?;
-                let aux_path = self.auxiliary_paths.first().ok_or(MlipOpsError::MissingModelPath)?;
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
+                let aux_path = self
+                    .auxiliary_paths
+                    .first()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
                 // MEAM syntax: pair_coeff * * library.meam elements... parameter.meam elements...
                 // Assuming auxiliary[0] is the library.meam and model_path is the parameter.meam
                 Ok(format!(
@@ -141,7 +162,7 @@ mod tests {
         let mut map = BTreeMap::new();
         map.insert(1, "Si".to_string());
         map.insert(2, "O".to_string());
-        
+
         let style = deployment.construct_pair_style(&map).unwrap();
         assert_eq!(style, "pair_style kim MO_123456789\npair_coeff * * Si O");
     }
@@ -150,6 +171,9 @@ mod tests {
     fn test_missing_path() {
         let deployment = MlipDeployment::new(MlipBackend::DeepMd, "my_model");
         let map = BTreeMap::new();
-        assert!(matches!(deployment.construct_pair_style(&map), Err(MlipOpsError::MissingModelPath)));
+        assert!(matches!(
+            deployment.construct_pair_style(&map),
+            Err(MlipOpsError::MissingModelPath)
+        ));
     }
 }

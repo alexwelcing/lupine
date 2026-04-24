@@ -87,7 +87,8 @@ mod tests {
     #[test]
     fn test_script_compilation() {
         let manifest = LupineManifest::default();
-        let script = manifest.compile_lammps_script("pair_style kim openkim_id\npair_coeff * * C H");
+        let script =
+            manifest.compile_lammps_script("pair_style kim openkim_id\npair_coeff * * C H");
         assert!(script.contains("units metal"));
         assert!(script.contains("pair_style kim"));
     }
