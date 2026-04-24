@@ -436,13 +436,25 @@ pub fn run_full_validation() -> ValidationReport {
         ("SW", sw),
     ];
 
-    let entries = build_benchmark_entries(&ref_data, &predictions);
+    let mut entries = build_benchmark_entries(&ref_data, &predictions);
+
+    // Stitch statics data
+    let statics_ref = fcc_statics_reference_data();
+    let statics_pred = vec![
+        ("EAM", fcc_statics_eam_data()),
+    ];
+    let statics_entries = build_statics_benchmark_entries(&statics_ref, &statics_pred);
+    entries.extend(statics_entries);
+
     let metrics = compute_potential_metrics(&entries);
     let correlations = error_correlations(&entries);
     let ranking = rank_potentials(&metrics, "mae");
 
     // Manifold analysis
-    let props = vec!["C11".to_string(), "C12".to_string(), "C44".to_string()];
+    let props = vec![
+        "C11".to_string(), "C12".to_string(), "C44".to_string(),
+        "a0".to_string(), "Ecoh".to_string(),
+    ];
     let error_vectors = build_error_vectors(&entries, &props);
     let manifold = analyze_manifold(&error_vectors);
     let manifold_json = crate::manifold::export_json(&manifold);
@@ -450,7 +462,7 @@ pub fn run_full_validation() -> ValidationReport {
     ValidationReport {
         n_potentials: predictions.len(),
         n_materials: ref_data.len(),
-        n_properties: 3,
+        n_properties: 5,
         n_entries: entries.len(),
         metrics,
         error_correlations: correlations,
