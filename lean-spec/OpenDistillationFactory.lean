@@ -19,6 +19,7 @@ import OpenDistillationFactory.Materials.Computation.LammpsTrace
 -- Theory layer: first-principles conjectures and bounds
 import OpenDistillationFactory.Materials.Theory.ParameterBound
 import OpenDistillationFactory.Materials.Theory.MetaScience
+import OpenDistillationFactory.Materials.Theory.HyperRibbon
 
 -- Validation layer: experiment design, integrity checks, and audit
 import OpenDistillationFactory.Materials.Validation.Experiment
