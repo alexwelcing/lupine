@@ -726,3 +726,124 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
+
+/* ─── Knowledge Panel ──────────────────────────────────── */
+.knowledge-panel {
+  margin: 1.5em 0 2em;
+  padding: 16px 20px;
+  background: var(--glass-1);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.knowledge-panel .kp-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.knowledge-panel .kp-title::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+.knowledge-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 600px) {
+  .knowledge-grid { grid-template-columns: 1fr 1fr; }
+}
+.knowledge-item {
+  display: flex; flex-direction: column;
+  background: var(--glass-2);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.knowledge-item .k-key {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.knowledge-item .k-val {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ─── Graph Dialog ─────────────────────────────────────── */
+.graph-dialog {
+  max-width: 90vw !important;
+  max-height: 90vh !important;
+  width: 90vw !important;
+  height: 90vh !important;
+  display: flex;
+  flex-direction: column;
+}
+.graph-dialog .dialog-head {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 0;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.graph-dialog .dialog-head h2 {
+  font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700;
+}
+#graph-container {
+  flex: 1;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+}
+
+/* ─── Marketing / Formalization stat cards ───────────────────── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.stat-card {
+  background: var(--glass-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.stat-number {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+@media (min-width: 720px) {
+  .stat-row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .stat-number {
+    font-size: 2.6rem;
+  }
+}
