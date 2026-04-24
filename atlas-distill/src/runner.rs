@@ -95,7 +95,7 @@ pub struct LammpsTrace {
     pub properties: Vec<String>,
 }
 
-/// Result of a single-potential elastic constant computation.
+/// Result of a single-potential computation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ComputationResult {
     pub potential: NistPotential,
@@ -103,6 +103,8 @@ pub struct ComputationResult {
     pub c11: Option<f64>,
     pub c12: Option<f64>,
     pub c44: Option<f64>,
+    pub a0: Option<f64>,
+    pub ecoh: Option<f64>,
     pub success: bool,
     pub error_message: Option<String>,
 }
@@ -408,6 +410,7 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
                     potential: (*pot).clone(),
                     trace: dummy_trace(pot, &config.structure, lattice),
                     c11: None, c12: None, c44: None,
+                    a0: None, ecoh: None,
                     success: false,
                     error_message: Some(format!("Potential file error: {}", e)),
                 });
@@ -415,16 +418,52 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
             }
         };
 
-        // Generate input script
-        let input = generate_elastic_input(
-            &config.element,
-            &config.structure,
-            lattice,
-            config.supercell,
-            &pot.pair_style,
-            &pot_file,
-        );
-        let input_path = run_dir.join("in.elastic");
+        // Build StaticsCalcConfig
+        let lattice_type = match config.structure.as_str() {
+            "bcc" => lupine_ops::elastic::LatticeType::Bcc,
+            _ => lupine_ops::elastic::LatticeType::Fcc,
+        };
+        let statics_config = lupine_ops::statics::StaticsCalcConfig {
+            element: config.element.clone(),
+            lattice_type,
+            lattice_constant_guess: lattice,
+            nist_id: pot.id.clone(),
+        };
+
+        // Determine MLIP Backend
+        let backend = if pot.pair_style.contains("eam/alloy") {
+            lupine_ops::mlip_ops::MlipBackend::EamAlloy
+        } else if pot.pair_style.contains("eam/fs") {
+            lupine_ops::mlip_ops::MlipBackend::EamFs
+        } else if pot.pair_style == "eam" {
+            lupine_ops::mlip_ops::MlipBackend::Eam
+        } else if pot.pair_style.contains("meam") {
+            lupine_ops::mlip_ops::MlipBackend::Meam
+        } else if pot.pair_style.contains("adp") {
+            lupine_ops::mlip_ops::MlipBackend::Adp
+        } else {
+            lupine_ops::mlip_ops::MlipBackend::Eam // fallback
+        };
+
+        let deployment = lupine_ops::mlip_ops::MlipDeployment::new(backend, "test").with_path(&pot_file);
+
+        // Generate input script using lupine_ops for statics (a0, Ecoh)
+        let input = match lupine_ops::statics::generate_statics_script(&statics_config, &deployment) {
+            Ok(script) => script,
+            Err(e) => {
+                eprintln!("    ✗ Script generation failed: {:?}", e);
+                results.push(ComputationResult {
+                    potential: (*pot).clone(),
+                    trace: dummy_trace(pot, &config.structure, lattice),
+                    c11: None, c12: None, c44: None,
+                    a0: None, ecoh: None,
+                    success: false,
+                    error_message: Some(format!("Script error: {:?}", e)),
+                });
+                continue;
+            }
+        };
+        let input_path = run_dir.join("in.statics");
         std::fs::write(&input_path, &input)?;
 
         // Run LAMMPS
@@ -436,6 +475,7 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
                     potential: (*pot).clone(),
                     trace: dummy_trace(pot, &config.structure, lattice),
                     c11: None, c12: None, c44: None,
+                    a0: None, ecoh: None,
                     success: false,
                     error_message: Some(format!("Execution error: {}", e)),
                 });
@@ -443,18 +483,23 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
             }
         };
 
-        // Parse results
-        match parse_elastic_constants(&log_path) {
-            Ok((c11, c12, c44)) => {
-                eprintln!("    ✓ C11={:.2} C12={:.2} C44={:.2} GPa", c11, c12, c44);
+        // Parse results using lupine_ops
+        let log_content = std::fs::read_to_string(&log_path).unwrap_or_default();
+        let statics_res = lupine_ops::statics::parse_statics_output(&log_content);
+        
+        match statics_res {
+            Some(res) => {
+                eprintln!("    ✓ a0={:.4} Å, Ecoh={:.4} eV/atom", res.a0, res.ecoh);
 
                 let trace = build_trace(pot, &config.structure, lattice, &run_dir);
                 let result = ComputationResult {
                     potential: (*pot).clone(),
                     trace,
-                    c11: Some(c11),
-                    c12: Some(c12),
-                    c44: Some(c44),
+                    c11: None, // Elastic constants not run in this block
+                    c12: None,
+                    c44: None,
+                    a0: Some(res.a0),
+                    ecoh: Some(res.ecoh),
                     success: true,
                     error_message: None,
                 };
@@ -465,14 +510,15 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
 
                 results.push(result);
             }
-            Err(e) => {
-                eprintln!("    ✗ Parsing failed: {}", e);
+            None => {
+                eprintln!("    ✗ Parsing statics failed.");
                 results.push(ComputationResult {
                     potential: (*pot).clone(),
                     trace: dummy_trace(pot, &config.structure, lattice),
                     c11: None, c12: None, c44: None,
+                    a0: None, ecoh: None,
                     success: false,
-                    error_message: Some(format!("Parse error: {}", e)),
+                    error_message: Some("Parse statics error".to_string()),
                 });
             }
         }
@@ -602,6 +648,27 @@ pub fn export_benchmark_csv(results: &[ComputationResult], element: &str, path: 
                 &ref_data.c44.to_string(), &c44.to_string(), "GPa",
                 &pot.id, &result.trace.potential_doi, &pot.pair_style,
             ])?;
+        }
+        
+        let ref_statics = crate::validation::fcc_statics_reference_data();
+        if let Some(ref_s) = ref_statics.get(element) {
+            let ref_a0 = ref_s[0];
+            let ref_ecoh = ref_s[1];
+
+            if let Some(a0) = result.a0 {
+                wtr.write_record(&[
+                    element, &pot.short_label(), "a0",
+                    &ref_a0.to_string(), &a0.to_string(), "A",
+                    &pot.id, &result.trace.potential_doi, &pot.pair_style,
+                ])?;
+            }
+            if let Some(ecoh) = result.ecoh {
+                wtr.write_record(&[
+                    element, &pot.short_label(), "Ecoh",
+                    &ref_ecoh.to_string(), &ecoh.to_string(), "eV/atom",
+                    &pot.id, &result.trace.potential_doi, &pot.pair_style,
+                ])?;
+            }
         }
     }
 

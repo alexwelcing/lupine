@@ -21,6 +21,9 @@ pub enum MlipBackend {
     MlIapKokkos,
     Meam,
     EamAlloy,
+    Eam,
+    EamFs,
+    Adp,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -132,6 +135,36 @@ impl MlipDeployment {
                 Ok(format!(
                     "pair_style meam\npair_coeff * * {} {} {} {}",
                     aux_path, element_str, path, element_str
+                ))
+            }
+            MlipBackend::EamFs => {
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
+                Ok(format!(
+                    "pair_style eam/fs\npair_coeff * * {} {}",
+                    path, element_str
+                ))
+            }
+            MlipBackend::Adp => {
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
+                Ok(format!(
+                    "pair_style adp\npair_coeff * * {} {}",
+                    path, element_str
+                ))
+            }
+            MlipBackend::Eam => {
+                let path = self
+                    .model_path
+                    .as_ref()
+                    .ok_or(MlipOpsError::MissingModelPath)?;
+                Ok(format!(
+                    "pair_style eam\npair_coeff * * {}",
+                    path // eam pair_coeff often just takes the file, elements implicit, but let's be safe. Wait, single-element eam usually takes just the file.
                 ))
             }
         }
