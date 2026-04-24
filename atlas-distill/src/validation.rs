@@ -66,6 +66,38 @@ pub fn sw_prediction_data() -> HashMap<&'static str, [f64; 3]> {
 }
 
 // ───────────────────────────────────────────────────────────
+// FCC metals: Statics data (Lattice Constant, Cohesive Energy)
+// ───────────────────────────────────────────────────────────
+
+/// Reference experimental data for FCC statics (a0 in Angstroms, Ecoh in eV/atom).
+pub fn fcc_statics_reference_data() -> HashMap<&'static str, [f64; 2]> {
+    HashMap::from([
+        ("Al", [4.05, -3.39]),
+        ("Cu", [3.615, -3.49]),
+        ("Ni", [3.524, -4.44]),
+        ("Ag", [4.085, -2.95]),
+        ("Au", [4.078, -3.81]),
+        ("Pt", [3.924, -5.84]),
+        ("Pd", [3.89, -3.89]),
+        ("Pb", [4.95, -2.03]),
+    ])
+}
+
+/// EAM predictions for FCC statics.
+pub fn fcc_statics_eam_data() -> HashMap<&'static str, [f64; 2]> {
+    HashMap::from([
+        ("Al", [4.049, -3.36]),
+        ("Cu", [3.615, -3.54]),
+        ("Ni", [3.52, -4.45]),
+        ("Ag", [4.09, -2.85]),
+        ("Au", [4.08, -3.93]),
+        ("Pt", [3.92, -5.77]),
+        ("Pd", [3.89, -3.91]),
+        ("Pb", [4.95, -1.96]),
+    ])
+}
+
+// ───────────────────────────────────────────────────────────
 // BCC metals: reference and predictions for paradox demo
 // ───────────────────────────────────────────────────────────
 
@@ -127,6 +159,35 @@ pub fn build_benchmark_entries(
                         reference: ref_vals[i],
                         predicted: pred_vals[i],
                         unit: "GPa".to_string(),
+                    });
+                }
+            }
+        }
+    }
+
+    entries
+}
+
+/// Build benchmark entries from reference and prediction maps for statics.
+pub fn build_statics_benchmark_entries(
+    reference: &HashMap<&str, [f64; 2]>,
+    predictions: &[(&str, HashMap<&str, [f64; 2]>)],
+) -> Vec<BenchmarkEntry> {
+    let props = ["a0", "Ecoh"];
+    let units = ["A", "eV/atom"];
+    let mut entries = Vec::new();
+
+    for (potential_name, pred_map) in predictions {
+        for (metal, ref_vals) in reference {
+            if let Some(pred_vals) = pred_map.get(metal) {
+                for (i, prop) in props.iter().enumerate() {
+                    entries.push(BenchmarkEntry {
+                        material: metal.to_string(),
+                        potential: potential_name.to_string(),
+                        property: prop.to_string(),
+                        reference: ref_vals[i],
+                        predicted: pred_vals[i],
+                        unit: units[i].to_string(),
                     });
                 }
             }
