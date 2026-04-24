@@ -93,8 +93,19 @@ export function Gallery() {
       const url = `${cleanBase}${cleanFile}`;
 
       if (example.id === 'lupine_brand_asset') {
+        // Fetch and parse the scientific XYZ molecule first
+        const scientificUrl = `${cleanBase}gallery/curated/lupine_bluebonnet.xyz`.replace(/([^:]\/)\/+/g, "$1");
+        const resp = await fetch(scientificUrl);
+        const blob = await resp.blob();
+        const fileObj = new File([blob], 'lupine_bluebonnet.xyz');
+        const { parseFile } = await import('@atlas/parsers');
+        const parseResult = await parseFile(fileObj);
+        if (!parseResult.trajectory) throw new Error("No trajectory found in scientific prefab");
+        const scientificFrame = parseResult.trajectory.frames[0];
+
+        // Pass the scientific frame to the procedural instancer
         const { generateLupineFrame } = await import('@atlas/core');
-        const frame = generateLupineFrame();
+        const frame = generateLupineFrame(scientificFrame);
         
         useStore.getState().setFile({
           name: example.title,
@@ -102,8 +113,11 @@ export function Gallery() {
           trajectory: {
             frames: [frame],
             totalFrames: 1,
-            atomTypes: [1, 6, 7, 9, 16],
-            globalBounds: { min: [-15, -20, -15] as any, max: [15, 20, 15] as any },
+            atomTypes: parseResult.trajectory.atomTypes,
+            globalBounds: {
+              min: [frame.boxBounds[0], frame.boxBounds[2], frame.boxBounds[4]] as any,
+              max: [frame.boxBounds[1], frame.boxBounds[3], frame.boxBounds[5]] as any,
+            },
           },
           thermo: null,
           sourceUrl: 'procedural',

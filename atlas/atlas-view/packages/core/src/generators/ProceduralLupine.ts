@@ -1,12 +1,24 @@
 import { Frame } from '../types';
 
-export function generateLupineFrame(): Frame {
+export function generateLupineFrame(scientificPrefab?: any): Frame {
   const atoms: { type: number; x: number; y: number; z: number }[] = [];
   
   const STEM_HEIGHT = 20.0;
   
   // 1. GENERATE PREFAB (A single perfect Lupine)
   const prefab: { type: number; x: number; y: number; z: number }[] = [];
+
+  if (scientificPrefab) {
+    // USE SCIENTIFIC PREFAB
+    for (let i = 0; i < scientificPrefab.natoms; i++) {
+      prefab.push({
+        type: scientificPrefab.types[i],
+        x: scientificPrefab.positions[i * 3],
+        y: scientificPrefab.positions[i * 3 + 1] + 9.46, // Align stem base to -8.0 for shader
+        z: scientificPrefab.positions[i * 3 + 2]
+      });
+    }
+  } else {
   
   // Stop stem slightly before the apex so it doesn't poke out
   const n_stem = Math.floor((STEM_HEIGHT * 0.9) / 0.4);
@@ -139,10 +151,11 @@ export function generateLupineFrame(): Frame {
     }
   };
 
-  palmateLeaf(-1.0, 0.2, 5, 4.0, 1.2);
-  palmateLeaf(-3.5, 2.5, 5, 5.0, 1.5);
-  palmateLeaf(-5.5, 4.8, 7, 5.5, 1.8);
-  palmateLeaf(-8.0, 1.2, 7, 6.0, 2.2);
+    palmateLeaf(-1.0, 0.2, 5, 4.0, 1.2);
+    palmateLeaf(-3.5, 2.5, 5, 5.0, 1.5);
+    palmateLeaf(-5.5, 4.8, 7, 5.5, 1.8);
+    palmateLeaf(-8.0, 1.2, 7, 6.0, 2.2);
+  }
 
   // 4. INSTANCE THE PREFAB ACROSS A HILL
   const FIELD_RADIUS = 60; // 120x120 area
