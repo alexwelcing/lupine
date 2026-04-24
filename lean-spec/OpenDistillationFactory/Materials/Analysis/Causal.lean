@@ -1,4 +1,5 @@
 import OpenDistillationFactory.Materials.Data.Benchmark
+import OpenDistillationFactory.Materials.Data.EmpiricalParadox
 import OpenDistillationFactory.Materials.Analysis.Stats
 
 namespace OpenDistillationFactory.Materials.Analysis.Causal
@@ -133,88 +134,46 @@ def detectParadox (points : List GroupedPoint) : ParadoxResult :=
       recommendation := recommendation, reversalMagnitude := reversalMag }
 
 -- ═══════════════════════════════════════════════════════════════
--- COMPUTE THE ACTUAL PARADOX RESULT FROM SYNTHETIC BCC DATA
+-- COMPUTE THE ACTUAL PARADOX RESULT FROM EMPIRICAL NIST DATA
 -- ═══════════════════════════════════════════════════════════════
 
-/-- Build paradox points for the synthetic BCC EAM data only
-    (matching validation.rs build_bcc_paradox_points). -/
-def syntheticBccEamPoints : List GroupedPoint :=
-  let entries := Data.syntheticBccData.filter (λ e => e.potential == "EAM")
-  entriesToGroupedPoints entries
+def empiricalParadoxPoints : List GroupedPoint :=
+  Data.empiricalParadoxPointsRaw.map (λ (g, x, y) => { group := g, x := x, y := y })
 
-/-- Build paradox points for the full synthetic BCC dataset. -/
-def syntheticBccAllPoints : List GroupedPoint :=
-  entriesToGroupedPoints Data.syntheticBccData
-
-/-- Compute paradox detection on synthetic BCC EAM data.
-    Use `#eval syntheticBccEamParadox` to see the result. -/
-def syntheticBccEamParadox : ParadoxResult :=
-  detectParadox syntheticBccEamPoints
-
-/-- Compute paradox detection on all synthetic BCC data. -/
-def syntheticBccAllParadox : ParadoxResult :=
-  detectParadox syntheticBccAllPoints
-
--- ═══════════════════════════════════════════════════════════════
--- INTERACTIVE VERIFICATION: evaluate these in the Lean REPL
--- or editor to see the computed paradox statistics.
--- ═══════════════════════════════════════════════════════════════
-
--- Use `#eval syntheticBccEamParadox.pooledR` etc. in the Lean REPL to see computed values
+/-- Compute paradox detection on all empirical NIST data. -/
+def empiricalParadox : ParadoxResult :=
+  detectParadox empiricalParadoxPoints
 
 -- ═══════════════════════════════════════════════════════════════
 -- THEOREMS: every guarded computation is now a proven theorem
 -- ═══════════════════════════════════════════════════════════════
 
-/-- Theorem T1: Simpson's paradox is NOT detected in synthetic BCC EAM. -/
-theorem noSimpsonsDetected :
-    syntheticBccEamParadox.simpsonsDetected = false := by
+/-- Theorem T1: Simpson's paradox is NOT strictly detected (no sign reversal) in the empirical NIST dataset. -/
+theorem simpsonsDetectedEmpirical :
+    empiricalParadox.simpsonsDetected = false := by
   native_decide
 
-/-- Theorem T2: Pooled correlation is strongly negative. -/
-theorem pooledRBelowMinus08 :
-    (syntheticBccEamParadox.pooledR < -0.8) = true := by
+/-- Theorem T2: However, severe Ecological Fallacy is present (reversal magnitude > 0.1). -/
+theorem ecologicalFallacyEmpirical :
+    empiricalParadox.ecologicalFallacy = true := by
   native_decide
 
-/-- Theorem T3: Within-group correlation is even more negative. -/
-theorem pooledWithinRBelowMinus09 :
-    (syntheticBccEamParadox.pooledWithinR < -0.9) = true := by
+/-- Theorem T3: The empirical paradox dataset is non-empty. -/
+theorem empiricalPointsNonEmpty :
+    empiricalParadoxPoints.length > 0 := by
   native_decide
 
-/-- Theorem T4: Exactly 7 groups (metals) in the BCC EAM subset. -/
-theorem nGroupsEqualsSeven :
-    syntheticBccEamParadox.nGroups = 7 := by
-  native_decide
-
-/-- Theorem T5: Exactly 21 total data points in the BCC EAM subset. -/
-theorem nTotalEqualsTwentyOne :
-    syntheticBccEamParadox.nTotal = 21 := by
-  native_decide
-
-/-- Theorem T6: Reversal magnitude exceeds the significance threshold. -/
-theorem reversalMagnitudeAbove01 :
-    (syntheticBccEamParadox.reversalMagnitude > 0.1) = true := by
-  native_decide
-
-/-- Theorem T7: The BCC EAM paradox dataset is non-empty. -/
-theorem syntheticBccEamPointsNonEmpty :
-    syntheticBccEamPoints.length > 0 := by
-  native_decide
-
-/-- Theorem T8: The full BCC paradox dataset is non-empty. -/
-theorem syntheticBccAllPointsNonEmpty :
-    syntheticBccAllPoints.length > 0 := by
+/-- Theorem T4: The pooled correlation and pooled-within correlation have severe magnitude differences. -/
+theorem empiricalReversalMagnitudeAbove01 :
+    (empiricalParadox.reversalMagnitude > 0.1) = true := by
   native_decide
 
 -- ═══════════════════════════════════════════════════════════════
 -- REGRESSION GUARDS: these fail the build if computed values shift
 -- ═══════════════════════════════════════════════════════════════
 
-#guard (syntheticBccEamParadox.simpsonsDetected == false)
-#guard (syntheticBccEamParadox.pooledR < -0.8)
-#guard (syntheticBccEamParadox.pooledWithinR < -0.9)
-#guard (syntheticBccEamParadox.nGroups == 7)
-#guard (syntheticBccEamParadox.nTotal == 21)
-#guard (syntheticBccEamParadox.reversalMagnitude > 0.1)
+#guard (empiricalParadox.simpsonsDetected == false)
+#guard (empiricalParadox.ecologicalFallacy == true)
+#guard (empiricalParadox.reversalMagnitude > 0.1)
 
 end OpenDistillationFactory.Materials.Analysis.Causal

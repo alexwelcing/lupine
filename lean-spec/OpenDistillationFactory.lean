@@ -7,6 +7,7 @@ import OpenDistillationFactory.Materials.Scope.Validity
 -- Data layer: provenance, benchmark entries, embedded datasets
 import OpenDistillationFactory.Materials.Data.Provenance
 import OpenDistillationFactory.Materials.Data.Benchmark
+import OpenDistillationFactory.Materials.Data.EmpiricalParadox
 
 -- Analysis layer: statistics, causal inference, and manifold geometry
 import OpenDistillationFactory.Materials.Analysis.Stats
