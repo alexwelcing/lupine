@@ -5,6 +5,7 @@ cd "$PSScriptRoot"
 # Ensure dependencies are installed
 python -m pip install matplotlib seaborn > $null
 python plot_year_stratified.py
+python simulate_5d_observables.py
 
 Write-Host "2. Moving figures to paper directory..." -ForegroundColor Cyan
 cd ../../
@@ -34,7 +35,7 @@ git add lupine-site/public/immi_paper.pdf
 git add library-site/src/immi_paper.pdf
 git add atlas-distill/scripts/
 
-$commitMsg = "feat: Automated publishing pipeline update - Year-stratified analysis"
+$commitMsg = "feat: Automated publishing pipeline update - 5D Observables Expansion"
 git commit -m "$commitMsg"
 
 Write-Host "6. Pushing to GitHub..." -ForegroundColor Cyan
