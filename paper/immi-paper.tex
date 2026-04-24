@@ -239,6 +239,21 @@ Notably, MEAM potentials show $r = 0.986$ ($n = 270$), EAM/fs shows $r = 0.995$ 
 \label{fig:pairstyle}
 \end{figure*}
 
+\subsection{Temporal evolution of the hyper-ribbon}
+
+To investigate whether the error manifold dimensionality has evolved alongside advancements in potential development (from basic pairwise to complex MLIPs), we stratified the 559 potentials by publication year (Fig.~\ref{fig:temporal}). Over the past 40 years, while the raw accuracy of potentials has generally improved, the \textit{effective dimensionality} of their prediction errors has remained rigidly bounded between $1.0$ and $1.9$, showing no statistically significant upward trend. 
+
+Similarly, the log-eigenvalue linearity ($R^2$), which is the mathematical hallmark of the Vandermonde universality class, remains consistently high ($>0.80$) across all decades. This indicates that the low-dimensional "sloppy" structure of prediction errors is an invariant property of the target observable landscape, not an artifact of early, simplistic functional forms.
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{figures/year_stratified_dim.pdf}
+\hfill
+\includegraphics[width=0.48\textwidth]{figures/year_stratified_r2.pdf}
+\caption{Temporal evolution of prediction error geometry (1980--2025). \textbf{Left:} Effective dimensionality (Participation Ratio) remains rigidly bounded below 2.0 regardless of publication year or model complexity. \textbf{Right:} Log-eigenvalue linearity ($R^2$) remains consistently high, confirming the persistence of the Vandermonde universality class across all generations of interatomic potentials.}
+\label{fig:temporal}
+\end{figure*}
+
 \section{Discussion}
 
 Our results establish four principal claims about interatomic potential prediction errors, validated against the largest systematic elastic constant benchmark to date ($N = 559$ potentials, 15 elements, 1,677 data points).

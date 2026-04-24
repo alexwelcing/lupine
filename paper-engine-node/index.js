@@ -89,9 +89,14 @@ async function buildPaper() {
     }
 
     // Figures
-    mainText = mainText.replace(/\\begin\{figure[\s\S]*?\\includegraphics(?:\[.*?\])?\{([^}]+)\}[\s\S]*?\\caption\{([\s\S]*?)\}[\s\S]*?\\end\{figure.*?\}/g, (match, imgPath, caption) => {
-        imgPath = imgPath.replace('.pdf', '.png');
-        return `<div class="figure"><img src="../paper/${imgPath}" alt="Figure"><div class="caption">${caption}</div></div>`;
+    mainText = mainText.replace(/\\begin\{figure\*?\}[\s\S]*?\\caption\{([\s\S]*?)\}[\s\S]*?\\end\{figure\*?\}/g, (match, caption) => {
+        let imgsHtml = '';
+        const imgMatches = match.matchAll(/\\includegraphics(?:\[.*?\])?\{([^}]+)\}/g);
+        for (const imgMatch of imgMatches) {
+            let imgPath = imgMatch[1].replace('.pdf', '.png');
+            imgsHtml += `<img src="../paper/${imgPath}" alt="Figure" style="margin-bottom: 10px;">`;
+        }
+        return `<div class="figure">${imgsHtml}<div class="caption">${caption}</div></div>`;
     });
 
     // Paragraphs
