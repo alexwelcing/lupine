@@ -8,7 +8,7 @@
 import { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import type { Frame, ColormapName } from '@atlas/core/types';
+import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
 import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS } from './constants';
 
@@ -24,7 +24,7 @@ interface BondsProps {
   cellBounds?: [number, number, number, number, number, number];
   radius?: number;
   opacity?: number;
-  renderStyle?: 'standard' | 'toon';
+  renderStyle?: RenderStyle;
   botanicalMode?: boolean;
 }
 

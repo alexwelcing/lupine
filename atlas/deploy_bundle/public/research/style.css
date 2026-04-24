@@ -1,0 +1,103 @@
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    line-height: 1.9;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: #000;
+    color: #fff;
+}
+
+.container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 40px 100px;
+}
+
+nav.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 40px;
+    max-width: 640px;
+    margin: 0 auto;
+}
+nav.top-bar .logo { font-size: 14px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #000; text-decoration: none; }
+nav.top-bar .logo span { font-style: italic; font-weight: 400; color: #666; }
+nav.top-bar .links { display: flex; gap: 24px; }
+nav.top-bar .links a { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #666; text-decoration: none; transition: color 0.3s ease; }
+nav.top-bar .links a:hover { color: #000; }
+
+.hero {
+    text-align: center;
+    margin-bottom: 80px;
+    padding-top: 60px;
+    max-width: 640px;
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.hero h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; color: #000; }
+.hero .sub { font-size: 13px; letter-spacing: 0.3em; color: #666; text-transform: uppercase; font-style: italic; }
+.hero .badge { display: block; font-size: 12px; color: #999; margin-top: 40px; letter-spacing: 0.2em; text-transform: uppercase; }
+
+.category { margin-top: 80px; }
+.category-header { text-align: center; margin-bottom: 40px; }
+.category-header .bar { display: none; }
+.category-header h2 { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #666; font-weight: 600; }
+
+.card-grid { display: flex; flex-direction: column; gap: 20px; }
+.card { display: block; padding: 30px 40px; background: #f5f5f5; border-left: 3px solid #000; text-decoration: none; color: inherit; transition: background 0.3s ease; }
+.card:hover { background: #eee; }
+.card h3 { font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: #000; margin-bottom: 16px; font-weight: 600; }
+.card p { font-size: 15px; color: #444; margin-bottom: 0; line-height: 1.8; text-align: left; }
+
+.article { max-width: 640px; margin: 0 auto; padding: 60px 40px 120px; }
+.article .back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #666; text-decoration: none; display: inline-block; margin-bottom: 60px; transition: color 0.3s ease; }
+.article .back:hover { color: #000; }
+.article h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 30px; color: #000; line-height: 1.3; text-align: center; }
+.article h2 { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #666; margin-top: 80px; margin-bottom: 40px; font-weight: 600; border: none; }
+.article h3 { font-size: 16px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #000; margin-top: 40px; margin-bottom: 20px; }
+.article h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: #666; margin-top: 30px; margin-bottom: 15px; }
+
+.article p { margin-bottom: 28px; text-align: justify; hyphens: auto; }
+.article a { color: #000; font-weight: 600; text-decoration: none; border-bottom: 1px solid #000; transition: opacity 0.3s ease; }
+.article a:hover { opacity: 0.6; }
+
+.article ul, .article ol { list-style: none; padding: 0; margin: 40px 0; }
+.article li { padding: 20px 0; padding-left: 40px; position: relative; border-bottom: 1px solid #e5e5e5; }
+.article li::before { content: ''; position: absolute; left: 0; top: 28px; width: 20px; height: 1px; background: #000; }
+
+.article strong { font-weight: 600; color: #000; }
+
+.article code { font-family: monospace; background: #f5f5f5; padding: 2px 6px; font-size: 14px; color: #000; }
+.article pre { background: #f5f5f5; border-left: 3px solid #000; padding: 30px 40px; margin: 40px 0; overflow-x: auto; font-family: monospace; font-size: 14px; line-height: 1.6; color: #333; }
+.article pre code { padding: 0; background: none; border: none; }
+
+.article blockquote { border-left: 3px solid #000; padding: 30px 40px; margin: 60px 0; background: #f5f5f5; color: #222; font-style: italic; font-size: 18px; line-height: 1.8; }
+
+.article table { width: 100%; border-collapse: collapse; margin-bottom: 40px; font-size: 15px; }
+.article th, .article td { border: 1px solid #e5e5e5; padding: 16px 20px; text-align: left; }
+.article th { background: #f5f5f5; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; color: #666; }
+.article tr:hover td { background: #fafafa; }
+
+.article hr { border: 0; text-align: center; margin: 80px 0; color: #ccc; letter-spacing: 3em; font-size: 14px; overflow: visible; height: auto; background: transparent; }
+.article hr::after { content: "* * *"; }
+
+.article img { max-width: 100%; border-radius: 0; margin: 40px 0; display: block; border: 1px solid #e5e5e5; }
+
+footer { text-align: center; padding: 60px 24px; margin-top: 80px; border-top: 1px solid #e5e5e5; }
+footer p { font-size: 12px; color: #999; letter-spacing: 0.2em; text-transform: uppercase; }
+
+@media (max-width: 640px) {
+    .hero h1 { font-size: 24px; letter-spacing: 0.1em; }
+    .container, .article, .hero, nav.top-bar { padding-left: 24px; padding-right: 24px; }
+    .article blockquote, .article pre, .card { padding: 24px; }
+}

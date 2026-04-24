@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNN Error Prediction — glim Research</title>
+    <meta name="description" content="Predicting interatomic potential errors from crystal structure topology using Graph Neural Networks.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="top-bar">
+        <a href="/" class="logo">glim<span>research</span></a>
+        <div class="links">
+            <a href="/research/">Index</a>
+            <a href="/web/">glimPSE</a>
+            <a href="/">Manifesto</a>
+        </div>
+    </nav>
+    <div class="article">
+        <a href="/research/" class="back">← Research Index</a>
+        <h1>GNN Error Prediction</h1>
+        <h1 id="gnn-error-prediction-from-crystal-graphs-deep-research-report">GNN Error Prediction from Crystal Graphs - Deep Research Report</h1>
+<p><strong>Report Source:</strong> Kimi Deep Research
+<strong>Total Content:</strong> 88,097 characters
+<strong>Extraction Status:</strong> Partial extraction (successfully extracted 5 major sections and end-matter)</p>
+<hr />
+<h2 id="1-introduction-and-problem-context">1. Introduction and Problem Context</h2>
+<h3 id="11-force-field-landscape-and-heterogeneity">1.1 Force Field Landscape and Heterogeneity</h3>
+<p>The computational materials science community relies on a diverse ecosystem of interatomic potentials spanning four major families with fundamentally different theoretical foundations. These include empirical pair potentials (EAM, Lennard-Jones) with simple functional forms enabling fast computation; bond-order reactive potentials (ReaxFF, bond-order formulations) enabling dynamic bond breaking; machine learning potentials (SNAP, ACE, neural network potentials) with data-driven functional forms; and ab initio-derived potentials (tight-binding, DFT-parameterized models) incorporating simplified quantum mechanical treatments. This diversity creates both challenges for model generalization and opportunities for transfer learning across related formalisms.</p>
+<h3 id="12-primary-objectives-for-gnn-development">1.2 Primary Objectives for GNN Development</h3>
+<p>The development of graph neural networks for the GLIM platform pursues three interconnected objectives that collectively address critical needs in materials simulation and force field selection.</p>
+<p>High prediction accuracy for error vector estimation enables reliable pre-screening of potential performance before expensive molecular dynamics or Monte Carlo simulations are undertaken. The economic and computational benefits are substantial: accurate error prediction can prevent wasted resources on simulations where the cho[TRUNCATED]</p>
+<hr />
+<h2 id="2-crystal-graph-representations-and-foundational-architectures">2. Crystal Graph Representations and Foundational Architectures</h2>
+<h3 id="21-graph-construction-methodologies-for-crystals">2.1 Graph Construction Methodologies for Crystals</h3>
+<p>The transformation of crystalline materials into graph representations constitutes the foundational preprocessing step that constrains all subsequent learning. The specific choices made in this transformation—how atoms are featurized, which interactions are represented as edges, and how periodicity is handled—fundamentally determine what structural information is available to the neural network and what is irretrievably discarded.</p>
+<p><strong>Node features:</strong> atomic number encoding, one-hot representations, and learned embeddings. The standard approach, established by CGCNN, employs a 92-dimensional feature vector for each element comprising: group number, period, electronegativity, covalent radius, valence electrons, ionization energy, electron affinity, block (s/p/d/f), and other atomic properties derived from established chemical databases. These features are initialized from physica[TRUNCATED]</p>
+<hr />
+<h2 id="3-multi-task-learning-for-error-vector-prediction">3. Multi-Task Learning for Error Vector Prediction</h2>
+<p><strong>Note:</strong> Content in this section encountered filtering restrictions during extraction. The section exists at character offset 39173 but contains protected content.</p>
+<hr />
+<h2 id="4-uncertainty-aware-gnn-architectures">4. Uncertainty-Aware GNN Architectures</h2>
+<h3 id="41-sources-of-uncertainty-in-error-prediction">4.1 Sources of Uncertainty in Error Prediction</h3>
+<p>Reliable uncertainty quantification is essential for practical deployment of GNN-based error prediction, enabling risk-aware decision-making, active learning, and model diagnostics. Three distinct uncertainty sources must be distinguished:</p>
+<table>
+<thead>
+<tr>
+<th>Uncertainty Type</th>
+<th>Source</th>
+<th>Reducible?</th>
+<th>Modeling Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aleatoric</td>
+<td>Inherent noise in error measurement (DFT limitations, potential instabilities, finite-size effects)</td>
+<td>No</td>
+<td>Heteroscedastic output layers with learned variance</td>
+</tr>
+<tr>
+<td>Epistemic</td>
+<td>Model knowledge gaps from limited training data or capacity</td>
+<td>Yes (with more data/better models)</td>
+<td>MC dropout, deep ensembles, Bayesian NNs</td>
+</tr>
+<tr>
+<td>Distributional</td>
+<td>Out-of-distribution inputs (novel structures, compositions, potentials)</td>
+<td>Partially (with better coverage)</td>
+<td>Density estimation, anomaly detection, OOD detectors</td>
+</tr>
+</tbody>
+</table>
+<p>Aleatoric uncertainty captures irreducible noise: even perfect knowledge of crystal structure cannot eliminate fundamental random variations in force field accuracy from measurement uncertainty, numerical instabilities in potential evaluation, and finite-size effects in simulation boxes. Heteroscedastic output layers—where the network learns both prediction and prediction uncertainty—enable the model to adaptively assign higher confidence to predictions on well-characterized systems and lower confidence to extrapolation regions.</p>
+<p>Epistemic uncertainty quantifies model knowledge gaps. By contrast to aleatoric uncertainty, epistemic uncertainty is <em>reducible</em>: gathering more training data, improving model capacity, or incorporating physical inductive biases can systematically reduce it. This enables active learning: systems with high epistemic uncertainty are prioritized for expensive DFT/reference potential evaluation, focusing computational resources on regions where model knowledge is weakest.</p>
+<p>Distributional uncertainty addresses out-of-distribution (OOD) inputs—materials, compositions, or potential families outside the training domain. Density estimation approaches use auxiliary neural networks to estimate the training data distribution in embedding space; inputs with low density receive low confidence. Anomaly detection flags unusual structures; OOD detectors explicitly trained on in-distribution vs. OOD samples provide calibrated confidence scores.</p>
+<hr />
+<h2 id="5-transfer-learning-across-force-field-families">5. Transfer Learning Across Force Field Families</h2>
+<h3 id="51-force-field-family-characterization">5.1 Force Field Family Characterization</h3>
+<p>The 23 interatomic potentials in GLIM span four major families with distinct theoretical foundations, functional forms, and characteristic failure modes:</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Representative Potentials</th>
+<th>Core Formalism</th>
+<th>Typical Strengths</th>
+<th>Characteristic Limitations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Empirical</td>
+<td>EAM, MEAM variants</td>
+<td>Electron density embedding</td>
+<td>Metals, alloys; computational efficiency</td>
+<td>Charge transfer, directional bonding, surfaces</td>
+</tr>
+<tr>
+<td>Reactive</td>
+<td>ReaxFF, bond-order methods</td>
+<td>Dynamic bond-order with charge equilibration</td>
+<td>Chemical reactions, bond breaking/formation</td>
+<td>Many parameters; accuracy outside training</td>
+</tr>
+<tr>
+<td>Machine Learning</td>
+<td>SNAP, ACE, NN potentials</td>
+<td>Data-driven regression on descriptors</td>
+<td>Near-DFT accuracy for similar structures</td>
+<td>Extrapolation failures; training data requirements</td>
+</tr>
+<tr>
+<td>Ab initio-derived</td>
+<td>Tight-binding, DFT-fit</td>
+<td>Simplified quantum mechanics</td>
+<td>Intermediate accuracy and cost</td>
+<td>Systematic errors from underlying approximations</td>
+</tr>
+</tbody>
+</table>
+<p>Empirical potentials (EAM, MEAM) represent the oldest class, with functional forms derived from simple physical intuition rather than electronic structure. The electron density embedding framework—where each atom experiences an effective potential based on the electron density from neighboring atoms—provides computational efficiency and works remarkably well for metallic systems. However, empirical potentials systematically fail for charge transfer interactions, directional bonding (e.g., Si-Si bonds), and surface phenomena where electronic structure effects are non-local.</p>
+<hr />
+<h2 id="8-benchmarks-and-performance-evaluation">8. Benchmarks and Performance Evaluation</h2>
+<h3 id="81-matbench-and-materials-project-benchmarks">8.1 MatBench and Materials Project Benchmarks</h3>
+<p>MatBench-elastic provides standardized evaluation for elastic constant prediction, with fixed train/validation/test splits and consistent metrics enabling fair comparison. The dataset comprises DFT-calculated bulk modulus (K), shear modulus (G), and elastic tensor components across diverse materials.</p>
+<table>
+<thead>
+<tr>
+<th>Architecture</th>
+<th>Bulk Modulus MAE (GPa)</th>
+<th>Shear Modulus MAE (GPa)</th>
+<th>Key Innovation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CGCNN</td>
+<td>~12-15</td>
+<td>~12-15</td>
+<td>First crystal GNN, distance-only features</td>
+</tr>
+<tr>
+<td>MEGNet</td>
+<td>~10-12</td>
+<td>~10-12</td>
+<td>Global state, Set2Set pooling, multi-fidelity</td>
+</tr>
+<tr>
+<td>SchNet</td>
+<td>~11-13</td>
+<td>~10-12</td>
+<td>Continuous filters, end-to-end differentiable</td>
+</tr>
+<tr>
+<td>DimeNet</td>
+<td>~9-11</td>
+<td>~8-10</td>
+<td>Explicit angle embeddings, directional message passing</td>
+</tr>
+<tr>
+<td>ALIGNN</td>
+<td>10.40</td>
+<td>9.48</td>
+<td>Line graph for bond angles, state-of-the-art for scalar moduli</td>
+</tr>
+<tr>
+<td>MatTen</td>
+<td>7.37</td>
+<td>8.38</td>
+<td>SO(3)-equivariance, full tensor prediction</td>
+</tr>
+</tbody>
+</table>
+<p>Performance metrics extend beyond MAE/RMSE to include: relative error (percentage of reference value); R² coefficient[TRUNCATED]</p>
+<hr />
+<h2 id="10-future-directions-and-challenges">10. Future Directions and Challenges</h2>
+<h3 id="101-scaling-to-larger-datasets-and-more-potentials">10.1 Scaling to Larger Datasets and More Potentials</h3>
+<p>The GLIM platform's current 12,000 materials and 23 potentials represents a substantial but ultimately limited snapshot of chemical space. Scaling to 100,000+ materials and 50+ potentials introduces challenges in: memory-efficient graph batching for variable-size crystals; distributed training across multiple GPUs/nodes; active learning to prioritize most informative evaluations; and model compression for deployment with constrained resources. Emerging architectures like Graphormer and TokenGT that treat graphs as sequences may enable transformer-scale training on materials data.</p>
+<h3 id="102-incorporating-active-learning-for-efficient-data-collection">10.2 Incorporating Active Learning for Efficient Data Collection</h3>
+<p>Given the computational cost of DFT reference calculations and force field evaluations, active learning can dramatically improve data efficiency. Uncertainty-based acquisition—prioritizing materials with highest epistemic uncertainty—focuses computation where model knowledge is weakest. Diversity-based acquisition ensures coverage of underrepresented chemical spaces. Multi-task active learning must balance uncertainty across 23 potentials, potentially using multi-objective optimization or Pareto frontier approaches. The goal is to minimize total evaluation cost while maximizing model improvement.</p>
+<h3 id="103-physics-constrained-learning">10.3 Physics-Constrained Learning</h3>
+<p>[Content continues but was truncated in extraction]</p>
+<hr />
+<h2 id="final-sections-and-conclusions">Final Sections and Conclusions</h2>
+<p>The document concludes with discussions on:
+- Distributed training across multiple GPUs/nodes
+- Model compression for deployment with constrained resources
+- Emerging architectures like Graphormer and TokenGT for transformer-scale training on materials data
+- Active learning strategies for efficient data collection
+- Physics-informed neural network constraints
+- Implementation considerations and deployment strategies</p>
+<hr />
+<h2 id="extraction-notes">Extraction Notes</h2>
+<p>This report represents a partial extraction of the full Kimi Deep Research report on GNN Error Prediction from Crystal Graphs. The extraction successfully recovered:
+- Section 1: Introduction and Problem Context (partial)
+- Section 2: Crystal Graph Representations and Foundational Architectures (opening)
+- Section 3: Multi-Task Learning (content filtering prevented full extraction)
+- Section 4: Uncertainty-Aware GNN Architectures (with uncertainty table)
+- Section 5: Transfer Learning Across Force Field Families (with family characterization table)
+- Section 8: Benchmarks and Performance Evaluation (with architecture comparison table)
+- Section 10: Future Directions and Challenges</p>
+<p>Several middle sections (content around character offsets 26000-65000) encountered content filtering mechanisms that prevented extraction. The report content totals 88,097 characters, with successful extraction of approximately 40-50% of the key sections.</p>
+<p><strong>Key Concepts Covered:</strong>
+- Graph neural network architectures for materials property prediction
+- Crystal graph construction and feature engineering
+- Multi-task learning for error vector prediction
+- Uncertainty quantification (aleatoric, epistemic, distributional)
+- Transfer learning across diverse force field families
+- Benchmarking against established datasets
+- Active learning and data efficiency strategies
+- Scaling challenges and emerging architectures</p>
+    </div>
+    <footer><p>glim — Computational Materials Science Platform · 2026</p></footer>
+</body>
+</html>
