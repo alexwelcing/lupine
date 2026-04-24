@@ -119,6 +119,9 @@ enum Commands {
         /// Use BCC metals instead of FCC
         #[arg(long)]
         bcc: bool,
+        /// Validate statics (a0, Ecoh) instead of elastic constants
+        #[arg(long)]
+        statics: bool,
     },
     /// Analyze error manifold structure of benchmark data
     Manifold {
@@ -299,7 +302,7 @@ fn main() -> Result<()> {
             ref_c11, ref_c12, ref_c44,
             material,
         } => cmd_elastic(c11, c12, c44, ref_c11, ref_c12, ref_c44, &material),
-        Commands::Validate { full, bcc } => cmd_validate(full, bcc),
+        Commands::Validate { full, bcc, statics } => cmd_validate(full, bcc, statics),
         Commands::Manifold { bcc } => cmd_manifold(bcc),
         Commands::MetaAnalyze { groups } => cmd_meta_analyze(groups.as_ref()),
         Commands::DetectParadox { data, example, bcc } => cmd_detect_paradox(data.as_ref(), example, bcc),
@@ -747,7 +750,34 @@ fn cmd_pipeline(provider: &str, dry_run: bool) -> Result<()> {
     Ok(())
 }
 
-fn cmd_validate(full: bool, use_bcc: bool) -> Result<()> {
+fn cmd_validate(full: bool, use_bcc: bool, statics: bool) -> Result<()> {
+    if statics {
+        let reference = validation::fcc_statics_reference_data();
+        let predictions = vec![
+            ("EAM", validation::fcc_statics_eam_data()),
+        ];
+        let entries = validation::build_statics_benchmark_entries(&reference, &predictions);
+        let metrics = validation::compute_potential_metrics(&entries);
+        
+        let report = validation::ValidationReport {
+            n_potentials: 1,
+            n_materials: reference.len(),
+            n_properties: 2,
+            n_entries: entries.len(),
+            metrics: metrics.clone(),
+            error_correlations: Vec::new(),
+            manifold_json: "[]".to_string(), // Manifold requires at least 3 properties usually
+            ranking_by_mae: validation::rank_potentials(&metrics, "mae"),
+        };
+        
+        validation::print_validation_report(&report);
+        
+        let json = serde_json::to_string_pretty(&report)?;
+        std::fs::write("statics_validation_report.json", &json)?;
+        eprintln!("\n  ✦ Statics validation report → statics_validation_report.json");
+        return Ok(());
+    }
+
     if full {
         if use_bcc {
             let entries = validation::build_bcc_benchmark_entries();
