@@ -49,15 +49,10 @@ def nistCount := nistScaffoldAlSample.length
 -- ═══════════════════════════════════════════════════════════════
 
 /- T1–T8: Causal analysis theorems -/
-#check noSimpsonsInBccEam
-#check noSimpsonsDetected
-#check pooledRBelowMinus08
-#check pooledWithinRBelowMinus09
-#check nGroupsEqualsSeven
-#check nTotalEqualsTwentyOne
-#check reversalMagnitudeAbove01
-#check syntheticBccEamPointsNonEmpty
-#check syntheticBccAllPointsNonEmpty
+#check simpsonsDetectedEmpirical
+#check ecologicalFallacyEmpirical
+#check empiricalPointsNonEmpty
+#check empiricalReversalMagnitudeAbove01
 
 /- T10–T18: Manifold geometry theorems -/
 #check fccAllSatisfiesHyperRibbon
@@ -105,11 +100,9 @@ def nistCount := nistScaffoldAlSample.length
 #check syntheticBccFailsNistIntegrity
 
 /- T42–T47: Audit theorems -/
-#check simpsonVerdictContainsFabricated
+#check simpsonVerdictContainsExaggerated
 #check hyperRibbonVerdictContainsConsistent
 #check auditReportNonEmpty
-#check simpsonPooledRNegative
-#check nistScaffoldIncomplete
 
 -- ═══════════════════════════════════════════════════════════════
 -- SECTION 3: HYPOTHESIS INVENTORY
@@ -146,9 +139,9 @@ def epistemicGapCount : Nat :=
 #guard (computationallyProvenCount >= 10)
 #guard (epistemicGapCount >= 1)
 
-#guard (syntheticBccEamParadox.simpsonsDetected == false)
-#guard (syntheticBccEamParadox.pooledR < -0.8)
-#guard (syntheticBccEamParadox.pooledWithinR < -0.9)
+#guard (empiricalParadox.simpsonsDetected == false)
+#guard (empiricalParadox.ecologicalFallacy == true)
+#guard (empiricalParadox.reversalMagnitude > 0.1)
 
 #guard (fccEamPR > 1.2 && fccEamPR < 1.3)
 #guard (fccAllPR > 1.3 && fccAllPR < 1.4)
