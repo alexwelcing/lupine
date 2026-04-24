@@ -13,6 +13,9 @@ mod manifold;
 mod meta_analysis;
 mod causal;
 mod benchmark;
+mod nist;
+mod runner;
+mod autoresearch;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
@@ -166,6 +169,72 @@ enum Commands {
     },
     /// Export computationally validated relationships into Lean 4 specification
     Formalize,
+    /// Query the NIST Interatomic Potentials Repository catalog
+    Nist {
+        /// Path to master_index.json
+        #[arg(long, default_value = "atlas/nist_ipr/index/master_index.json")]
+        index: PathBuf,
+        /// Filter by element (e.g. Al, Cu, Fe)
+        #[arg(long)]
+        element: Option<String>,
+        /// Filter by pair_style (e.g. eam/alloy, meam, tersoff)
+        #[arg(long)]
+        pair_style: Option<String>,
+        /// Show only single-element potentials
+        #[arg(long)]
+        single: bool,
+        /// Generate benchmark scaffold CSV (pipe to file)
+        #[arg(long)]
+        scaffold: bool,
+    },
+    /// Run LAMMPS computations for NIST potentials and produce benchmark CSV
+    RunNist {
+        /// Path to master_index.json
+        #[arg(long, default_value = "atlas/nist_ipr/index/master_index.json")]
+        index: PathBuf,
+        /// Target element (e.g. Al, Fe)
+        #[arg(long)]
+        element: String,
+        /// Crystal structure: fcc or bcc
+        #[arg(long, default_value = "fcc")]
+        structure: String,
+        /// LAMMPS executable path
+        #[arg(long, default_value = "lmp")]
+        lammps_exe: String,
+        /// Working directory for LAMMPS runs
+        #[arg(long, default_value = "atlas-distill/lammps_runs")]
+        work_dir: PathBuf,
+        /// Output CSV path
+        #[arg(long, default_value = "nist_benchmark.csv")]
+        output: PathBuf,
+        /// Supercell size (NxNxN)
+        #[arg(long, default_value_t = 3)]
+        supercell: usize,
+        /// Number of MPI ranks
+        #[arg(long, default_value_t = 1)]
+        mpi: usize,
+    },
+    /// Run automated research campaign: NIST → CrossRef → Extract → Benchmark → Analyze
+    AutoResearch {
+        /// Path to master_index.json
+        #[arg(long, default_value = "atlas/nist_ipr/index/master_index.json")]
+        index: PathBuf,
+        /// Target elements (comma-separated, e.g. Al,Cu,Fe). Default: all benchmark metals
+        #[arg(long)]
+        elements: Option<String>,
+        /// Only process EAM-family potentials
+        #[arg(long)]
+        eam_only: bool,
+        /// Maximum papers to fetch per run
+        #[arg(long, default_value = "50")]
+        max_fetches: usize,
+        /// Skip analysis after extraction
+        #[arg(long)]
+        no_analyze: bool,
+        /// Output directory for results
+        #[arg(long, default_value = "atlas-distill/benchmarks")]
+        output_dir: PathBuf,
+    },
 }
 
 #[derive(Subcommand)]
@@ -238,6 +307,37 @@ fn main() -> Result<()> {
         Commands::Pipeline { provider, dry_run } => cmd_pipeline(&provider, dry_run),
         Commands::Formalize => {
             formalize::write_lean_spec()?;
+            Ok(())
+        }
+        Commands::Nist { index, element, pair_style, single, scaffold } => {
+            cmd_nist(&index, element.as_deref(), pair_style.as_deref(), single, scaffold)
+        }
+        Commands::RunNist { index, element, structure, lammps_exe, work_dir, output, supercell, mpi } => {
+            let config = runner::RunnerConfig {
+                nist_index: index,
+                element,
+                structure,
+                lammps_executable: lammps_exe,
+                work_dir,
+                supercell,
+                mpi_ranks: mpi,
+                ..Default::default()
+            };
+            let results = runner::run_campaign(&config)?;
+            runner::export_benchmark_csv(&results, &config.element, &output)?;
+            Ok(())
+        }
+        Commands::AutoResearch { index, elements, eam_only, max_fetches, no_analyze, output_dir } => {
+            let config = autoresearch::CampaignConfig {
+                nist_index: index,
+                elements: elements.map(|e| e.split(',').map(|s| s.trim().to_string()).collect()).unwrap_or_default(),
+                eam_only,
+                max_fetches,
+                analyze: !no_analyze,
+                output_dir,
+                ..Default::default()
+            };
+            autoresearch::run_campaign(&config)?;
             Ok(())
         }
     }
@@ -900,6 +1000,110 @@ fn cmd_benchmark(
         } else {
             eprintln!("  ⚠ Not enough groups for meta-analysis (need ≥2 materials with ≥3 points each)");
         }
+    }
+
+    Ok(())
+}
+
+fn cmd_nist(
+    index_path: &PathBuf,
+    element: Option<&str>,
+    pair_style: Option<&str>,
+    single_only: bool,
+    scaffold: bool,
+) -> Result<()> {
+    eprintln!("  ✦ Loading NIST catalog: {}", index_path.display());
+    let catalog = nist::NistCatalog::load(index_path)?;
+    eprintln!("  ✦ Loaded {} potentials", catalog.len());
+
+    // Scaffold mode: generate CSV to stdout and exit
+    if scaffold {
+        let props = &["C11", "C12", "C44"];
+        if let Some(el) = element {
+            let rows = nist::generate_scaffold(&catalog, el, props);
+            if rows.is_empty() {
+                anyhow::bail!("No single-element potentials found for {}", el);
+            }
+            eprintln!("  ✦ Generating scaffold for {} ({} potentials × {} properties = {} rows)",
+                el, rows.len() / props.len(), props.len(), rows.len());
+            nist::write_scaffold_csv(&rows)?;
+        } else {
+            // Scaffold for all benchmark metals
+            let metals = [
+                "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb",
+                "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta",
+            ];
+            let mut all_rows = Vec::new();
+            for &m in &metals {
+                all_rows.extend(nist::generate_scaffold(&catalog, m, props));
+            }
+            if all_rows.is_empty() {
+                anyhow::bail!("No single-element potentials found for any benchmark metal");
+            }
+            eprintln!("  ✦ Generating scaffold for {} metals ({} rows)",
+                metals.len(), all_rows.len());
+            nist::write_scaffold_csv(&all_rows)?;
+        }
+        return Ok(());
+    }
+
+    // Query mode: filter and display
+    let mut results: Vec<&nist::NistPotential> = Vec::new();
+    let filtered;
+
+    if let Some(el) = element {
+        if single_only {
+            results = catalog.single_element(el);
+        } else {
+            results = catalog.by_element(el);
+        }
+        eprintln!("  ✦ Filter: element={}{}", el, if single_only { " (single-element only)" } else { "" });
+    } else if let Some(ps) = pair_style {
+        results = catalog.by_pair_style(ps);
+        if single_only {
+            results.retain(|p| p.is_single_element());
+        }
+        eprintln!("  ✦ Filter: pair_style={}{}", ps, if single_only { " (single-element only)" } else { "" });
+    }
+
+    if !results.is_empty() {
+        filtered = true;
+        nist::print_potentials(&results);
+    } else if element.is_some() || pair_style.is_some() {
+        filtered = true;
+        eprintln!("  No potentials matched the filter.");
+    } else {
+        filtered = false;
+    }
+
+    // Always print summary when no filter, or after filter results
+    if !filtered {
+        let summary = catalog.summary();
+        nist::print_summary(&summary);
+
+        // Also show benchmark metal coverage
+        let metals = [
+            "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb",
+            "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta",
+        ];
+        eprintln!();
+        eprintln!("  Benchmark metal coverage (single-element potentials):");
+        eprintln!("  {:4} {:>6} {:>6} {:>6}", "Metal", "Total", "EAM", "MEAM");
+        eprintln!("  {:4} {:>6} {:>6} {:>6}", "────", "──────", "──────", "──────");
+        let mut total_se = 0;
+        let mut total_eam = 0;
+        let mut total_meam = 0;
+        for &m in &metals {
+            let se = catalog.single_element(m).len();
+            let eam = catalog.eam_for_element(m).len();
+            let meam = catalog.meam_for_element(m).len();
+            total_se += se;
+            total_eam += eam;
+            total_meam += meam;
+            eprintln!("  {:4} {:>6} {:>6} {:>6}", m, se, eam, meam);
+        }
+        eprintln!("  {:4} {:>6} {:>6} {:>6}", "────", "──────", "──────", "──────");
+        eprintln!("  {:4} {:>6} {:>6} {:>6}", "SUM", total_se, total_eam, total_meam);
     }
 
     Ok(())

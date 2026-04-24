@@ -1,0 +1,110 @@
+NIST IPR Local Mirror — Summary
+Generated: 2026-04-22T18:32:58.024554+00:00
+
+Total LAMMPS implementations: 675
+Unique pair_styles: 35
+Unique elements: 63
+
+--- pair_style counts ---
+  meam                        264
+  eam/alloy                   140
+  eam/fs                      112
+  adp                          29
+  tersoff                      21
+  eam                          17
+  hybrid/overlay               14
+  bop                          11
+  vashishta                     8
+  meam/spline                   6
+  sw                            5
+  tersoff/zbl                   5
+  quip                          5
+  reax/c                        4
+  comb3                         4
+  rann                          4
+  tersoff/mod/c                 3
+  eam/cd                        2
+  agni                          2
+  pinn                          2
+  eam/he                        2
+  pace                          2
+  edip                          1
+  lcbop                         1
+  tersoff/mod                   1
+  eim                           1
+  edip/multi                    1
+  extep                         1
+  polymorphic                   1
+  hybrid                        1
+  table                         1
+  aenet                         1
+  hdnnp                         1
+  ream                          1
+  morse                         1
+
+--- element counts ---
+  Ni      132
+  Fe      124
+  Al      116
+  Cu      106
+  Ti       72
+  Cr       71
+  Co       70
+  W        42
+  Mn       42
+  Zr       37
+  C        36
+  Si       33
+  Au       28
+  Ta       28
+  H        27
+  Ag       26
+  Pd       26
+  Mg       25
+  Pt       21
+  Mo       21
+  Nb       21
+  O        19
+  V        16
+  Pb       12
+  N        12
+  Li       11
+  Ga       10
+  U         9
+  Zn        8
+  In        7
+  Ge        6
+  Cd        6
+  Te        6
+  P         6
+  Hf        6
+  Na        6
+  He        6
+  Se        5
+  Re        5
+  B         4
+  K         4
+  Y         4
+  As        3
+  Rb        3
+  Cs        3
+  Cl        3
+  Ce        3
+  Ca        3
+  Sn        3
+  Rh        3
+  Ba        3
+  Be        2
+  Xe        2
+  S         2
+  Sm        2
+  Ru        1
+  F         1
+  Br        1
+  I         1
+  Hg        1
+  Nd        1
+  Tb        1
+  Bi        1
+
+Filters: none (full mirror)

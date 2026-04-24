@@ -200,6 +200,24 @@ async function renderReader(id) {
     head.append(meta);
     root.append(head);
 
+    // Extracted Knowledge Panel
+    if (article.extracted_knowledge && Object.keys(article.extracted_knowledge).length > 0) {
+      const panel = el('div', { class: 'knowledge-panel' });
+      panel.append(el('h3', { class: 'kp-title' }, 'Extracted Knowledge'));
+      const grid = el('div', { class: 'knowledge-grid' });
+      for (const [key, val] of Object.entries(article.extracted_knowledge)) {
+        const item = el('div', { class: 'knowledge-item' });
+        item.append(el('span', { class: 'k-key' }, key));
+        let displayVal = val;
+        if (Array.isArray(val)) displayVal = val.join(', ');
+        else if (typeof val === 'object') displayVal = JSON.stringify(val);
+        item.append(el('span', { class: 'k-val' }, String(displayVal)));
+        grid.append(item);
+      }
+      panel.append(grid);
+      root.append(panel);
+    }
+
     const body = el('div', { class: 'content' });
     body.innerHTML = article.html;
     root.append(body);
@@ -321,17 +339,102 @@ function scoreMatch(a, q) {
   const title = (a.title || '').toLowerCase();
   const sub   = (a.subtitle || '').toLowerCase();
   const tags  = (a.tags || []).join(' ').toLowerCase();
+  
+  let extractedTokens = '';
+  if (a.extracted_knowledge) {
+     extractedTokens = Object.values(a.extracted_knowledge)
+        .map(v => typeof v === 'object' ? JSON.stringify(v) : String(v))
+        .join(' ')
+        .toLowerCase();
+  }
+
   let s = 0;
   if (title.includes(q)) s += 10;
   if (title.startsWith(q)) s += 5;
   if (sub.includes(q)) s += 4;
   if (tags.includes(q)) s += 3;
+  if (extractedTokens.includes(q)) s += 5;
+
   // Token overlap
   for (const token of q.split(/\s+/).filter(Boolean)) {
     if (title.includes(token)) s += 1;
     if (sub.includes(token))   s += 0.5;
+    if (extractedTokens.includes(token)) s += 0.8;
   }
   return s;
+}
+
+// ───────────────────────────────────────────────────────────────
+// Knowledge Graph Dialog
+// ───────────────────────────────────────────────────────────────
+const graphDialog = document.getElementById('graph-dialog');
+const graphContainer = document.getElementById('graph-container');
+document.getElementById('graph-btn').addEventListener('click', openGraph);
+document.getElementById('graph-close').addEventListener('click', () => graphDialog.close());
+graphDialog.addEventListener('click', (e) => { if (e.target === graphDialog) graphDialog.close(); });
+
+let graphInstance = null;
+
+async function openGraph() {
+  await fetchManifest();
+  if (typeof graphDialog.showModal === 'function') graphDialog.showModal();
+  else graphDialog.setAttribute('open', '');
+  
+  if (!window.ForceGraph) return; // Script not loaded yet
+
+  const nodes = [];
+  const links = [];
+  const m = STATE.manifest;
+
+  const getOrAddNode = (id, group, label) => {
+    let n = nodes.find(x => x.id === id);
+    if (!n) {
+      n = { id, group, name: label, val: group === 'article' ? 3 : 1 };
+      nodes.push(n);
+    }
+    return n;
+  };
+
+  for (const a of m.articles) {
+    getOrAddNode(a.id, 'article', a.title);
+
+    if (a.extracted_knowledge) {
+      for (const [k, v] of Object.entries(a.extracted_knowledge)) {
+        let vals = Array.isArray(v) ? v : [v];
+        for (let val of vals) {
+          if (typeof val === 'object') continue;
+          const entId = `ent:${k}:${val}`;
+          getOrAddNode(entId, 'entity', `${val}`);
+          links.push({ source: a.id, target: entId });
+        }
+      }
+    }
+  }
+
+  if (!graphInstance) {
+    const isDark = document.documentElement.dataset.theme !== 'light';
+    graphInstance = ForceGraph()(graphContainer)
+      .backgroundColor('transparent')
+      .nodeAutoColorBy('group')
+      .nodeLabel('name')
+      .linkColor(() => isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)')
+      .nodeRelSize(4)
+      .onNodeClick(node => {
+        if (node.group === 'article') {
+           graphDialog.close();
+           location.hash = `#/read/${node.id}`;
+        }
+      });
+  }
+
+  // Set sizing correctly after dialog opens
+  setTimeout(() => {
+    const rect = graphContainer.getBoundingClientRect();
+    graphInstance
+      .width(rect.width)
+      .height(rect.height)
+      .graphData({ nodes, links });
+  }, 50);
 }
 
 // ───────────────────────────────────────────────────────────────

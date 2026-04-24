@@ -63,27 +63,31 @@ docker run --rm atlas-distill validate --full
 |---------|--------|------------|------------|
 | FCC | Al, Cu, Ni, Ag, Au, Pt, Pd, Pb | EAM, LJ, SW | C₁₁, C₁₂, C₄₄ |
 | BCC | Fe, Cr, Mo, W, V, Nb, Ta | EAM, LJ | C₁₁, C₁₂, C₄₄ |
+| **NIST** | **15 metals** | **170 real NIST potentials** | **C₁₁, C₁₂, C₄₄** |
 
 All values in GPa. Reference data from room-temperature experimental crystallographic databases.
+NIST data sourced from the [NIST Interatomic Potentials Repository](https://www.ctcms.nist.gov/potentials/) via local mirror.
 
 ## Architecture
 
 ```
 atlas-distill/
 ├── src/
-│   ├── main.rs           # CLI entrypoint (14 subcommands)
+│   ├── main.rs           # CLI entrypoint (16 subcommands)
 │   ├── stats.rs          # PCA, covariance, Fisher z, bootstrap CI
 │   ├── manifold.rs       # Error vector analysis, hyper-ribbon detection
 │   ├── meta_analysis.rs  # Fixed/random-effects meta-analysis
 │   ├── causal.rs         # Simpson's paradox detection
 │   ├── validation.rs     # Multi-potential benchmark harness
 │   ├── benchmark.rs      # CSV/JSON benchmark database loader
+│   ├── nist.rs           # NIST IPR catalog loader + scaffold generator
+│   ├── autoresearch.rs   # Automated DOI→fetch→extract→benchmark pipeline
 │   ├── fitting/          # Linear, power-law, Arrhenius, polynomial, symbolic regression
 │   ├── observables/      # RDF, MSD, VACF, elastic constants
 │   ├── ingest/           # LAMMPS log and dump parsers
 │   ├── literature/       # CrossRef/arXiv fetch and extract
 │   └── formalize.rs      # Lean 4 specification export
-├── benchmarks/           # FCC and BCC reference data
+├── benchmarks/           # FCC, BCC, and NIST scaffold data
 ├── Dockerfile
 └── cloudbuild.yaml       # GCP Cloud Run Job deployment
 ```
@@ -97,6 +101,8 @@ atlas-distill/
 | `meta-analyze [--groups]` | Run meta-analysis on correlations |
 | `detect-paradox [--bcc] [--example]` | Detect Simpson's paradox |
 | `benchmark <file> [--manifold] [--meta]` | Load external benchmark database |
+| `nist [--element] [--pair-style] [--scaffold]` | Query NIST IPR catalog (675 potentials) |
+| `auto-research [--elements] [--eam-only]` | Automated DOI→extract→benchmark pipeline |
 | `thermo <log> [--x] [--y]` | Analyze LAMMPS thermo log |
 | `trajectory <dump> [--msd] [--rdf] [--vacf]` | Analyze trajectory data |
 | `fit <csv> [--model] [--degree]` | Fit model to CSV data |
@@ -112,9 +118,9 @@ atlas-distill/
 
 | Potential | PR / 3 | 95% CI | R²_log | Hyper-ribbon? |
 |-----------|--------|--------|--------|---------------|
-| EAM | 1.41 | [1.17, 2.17] | 0.998 | ✅ Yes |
-| LJ | 1.36 | [1.04, 1.50] | 0.997 | ✅ Yes |
-| SW | 1.29 | [1.09, 2.09] | 0.977 | ✅ Yes |
+| EAM | 1.37 | [1.14, 2.16] | 0.940 | ✅ Yes |
+| LJ | 1.17 | [1.04, 1.51] | 0.991 | ✅ Yes |
+| SW | 1.38 | [1.09, 2.08] | 0.985 | ✅ Yes |
 
 ### BCC Simpson's Paradox
 

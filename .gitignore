@@ -24,3 +24,10 @@ lean-spec/build/
 # Distiller run artifacts
 distiller/runs/*/run_latest.log
 distiller/runs/pipeline_report.json
+
+# NIST IPR local mirror (large binary parameter files)
+atlas/nist_ipr/files/
+atlas/nist_ipr/mirror.log
+
+# OpenKIM API cache
+.atlas-cache/

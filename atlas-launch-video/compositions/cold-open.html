@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    .terminal-window {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px;
+      background: #0a0c10;
+      border: 1px solid #1a1e28;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      background: #0e1018;
+      border-bottom: 1px solid #1a1e28;
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .terminal-body {
+      padding: 28px 32px;
+      min-height: 260px;
+    }
+
+    .terminal-body .line {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      line-height: 2.2;
+      opacity: 0;
+    }
+
+    .terminal-body .line .prompt { color: #6b7080; }
+    .terminal-body .line .cmd { color: #40ff80; }
+    .terminal-body .line .error { color: #ff5472; }
+    .terminal-body .line .path { color: #f0b840; }
+
+    .bottom-text {
+      position: absolute;
+      bottom: 120px;
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      opacity: 0;
+    }
+
+    .cursor-blink {
+      display: inline-block;
+      width: 10px;
+      height: 20px;
+      background: #40ff80;
+      margin-left: 4px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="cold-open" data-start="0" data-duration="4" data-width="1920" data-height="1080">
+
+    <div class="grid-bg clip" id="grid" data-start="0" data-duration="4" data-track-index="0"></div>
+
+    <div class="terminal-window clip" id="terminal" data-start="0" data-duration="4" data-track-index="1">
+      <div class="terminal-titlebar">
+        <div class="terminal-dot" style="background: #ff5f57;"></div>
+        <div class="terminal-dot" style="background: #febc2e;"></div>
+        <div class="terminal-dot" style="background: #28c840;"></div>
+        <span style="margin-left: 12px; font-size: 13px; color: #6b7080; font-family: var(--font-mono);">researcher@cluster ~ </span>
+      </div>
+      <div class="terminal-body">
+        <div class="line" id="line1">
+          <span class="prompt">$ </span><span class="cmd">scp user@hpc-cluster:/scratch/output/<span class="path">dump.lammpstrj</span> .</span>
+        </div>
+        <div class="line" id="line2">
+          <span class="prompt">$ </span><span class="cmd">ovito dump.lammpstrj</span>
+        </div>
+        <div class="line" id="line3">
+          <span class="error">ERROR: cannot open display :0</span>
+        </div>
+        <div class="line" id="line4">
+          <span class="error">ERROR: X11 forwarding not available</span><span class="cursor-blink"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-text clip" id="bottom-msg" data-start="2.5" data-duration="1.5" data-track-index="2">
+      Scientific visualization shouldn't require a PhD in software.
+    </div>
+
+    <div class="scanlines clip" id="scan" data-start="0" data-duration="4" data-track-index="3"></div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    // Terminal window fades in
+    tl.from("#terminal", { opacity: 0, y: 20, duration: 0.4, ease: "power2.out" }, 0);
+
+    // Lines type in sequentially
+    tl.to("#line1", { opacity: 1, duration: 0.15 }, 0.3);
+    tl.to("#line2", { opacity: 1, duration: 0.15 }, 1.0);
+    tl.to("#line3", { opacity: 1, duration: 0.1 }, 1.8);
+    tl.to("#line4", { opacity: 1, duration: 0.1 }, 2.2);
+
+    // Error lines flash red
+    tl.from("#line3", { color: "#ffffff", duration: 0.3 }, 1.8);
+    tl.from("#line4", { color: "#ffffff", duration: 0.3 }, 2.2);
+
+    // Bottom tagline fades in
+    tl.to("#bottom-msg", { opacity: 1, duration: 0.5, ease: "power2.out" }, 2.5);
+
+    // Everything fades out
+    tl.to("#terminal, #bottom-msg", { opacity: 0, duration: 0.3 }, 3.6);
+
+    // Extend to 4s
+    tl.set({}, {}, 4);
+
+    window.__timelines["cold-open"] = tl;
+  </script>
+</body>
+</html>

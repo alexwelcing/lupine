@@ -1,0 +1,173 @@
+/* ═══════════════════════════════════════════════════════════════
+   glimPSE Launch Video — Design Tokens & Global Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ── Lupine Palette ── */
+  --lupine-50:  #f0f0ff;
+  --lupine-100: #e0e0ff;
+  --lupine-200: #c4c4ff;
+  --lupine-300: #a0a0ff;
+  --lupine-400: #7c7cff;
+  --lupine-500: #5a5aff;
+  --lupine-600: #4040e0;
+  --lupine-700: #3030b0;
+
+  /* ── glimPSE Accent ── */
+  --accent:       #00c8f0;
+  --accent-glow:  rgba(0, 200, 240, 0.3);
+  --accent-dim:   rgba(0, 200, 240, 0.08);
+
+  /* ── Feature Accents ── */
+  --cyan:    #00c8f0;
+  --violet:  #a855f7;
+  --amber:   #f0b840;
+  --emerald: #5de8a0;
+  --rose:    #ff5472;
+
+  /* ── Backgrounds ── */
+  --bg-void:    #06080d;
+  --bg-deep:    #0c1220;
+  --bg-surface: #0e1018;
+  --bg-glass:   rgba(14, 16, 24, 0.85);
+
+  /* ── Text ── */
+  --text-primary:  #e8eaf0;
+  --text-secondary: #a0a8b8;
+  --text-muted:    #6b7080;
+  --text-dim:      #3a3f50;
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--bg-void);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Reusable Elements ── */
+
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.badge--cyan    { color: var(--cyan);    background: rgba(0, 200, 240, 0.08); border-color: rgba(0, 200, 240, 0.2); }
+.badge--violet  { color: var(--violet);  background: rgba(168, 85, 247, 0.08); border-color: rgba(168, 85, 247, 0.2); }
+.badge--amber   { color: var(--amber);   background: rgba(240, 184, 64, 0.08); border-color: rgba(240, 184, 64, 0.2); }
+.badge--emerald { color: var(--emerald); background: rgba(93, 232, 160, 0.08); border-color: rgba(93, 232, 160, 0.2); }
+
+.stat-value {
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--lupine-400) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.terminal-text {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 2;
+  color: #40ff80;
+}
+
+.terminal-text .error {
+  color: var(--rose);
+}
+
+.terminal-text .prompt {
+  color: var(--text-muted);
+}
+
+/* ── Particle field background ── */
+.particle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.particle-field .particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* ── Glow effects ── */
+.glow-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0;
+  filter: blur(1px);
+}
+
+/* ── Feature pill ── */
+.feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-glass);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.feature-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* ── Scanlines overlay ── */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 200, 240, 0.015) 2px,
+    rgba(0, 200, 240, 0.015) 4px
+  );
+  pointer-events: none;
+}
+
+/* ── Grid overlay ── */
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
