@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Open Distillation Factory — Executable Vision</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-top: 20px; border-bottom: 1px solid #000; padding-bottom: 40px; }
+        .symbol { font-size: 24px; margin-bottom: 20px; color: #333; letter-spacing: 0.5em; }
+        h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.05em; color: #000; margin-bottom: 16px; line-height: 1.3; }
+        h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.05em; color: #222; margin-top: 60px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        h3 { font-size: 18px; font-weight: 400; letter-spacing: 0.05em; color: #333; margin-top: 40px; margin-bottom: 15px; }
+        h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #555; margin-top: 30px; margin-bottom: 10px; }
+        p { margin-bottom: 24px; text-align: left; }
+        a { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+        a:hover { color: #555; }
+        ul, ol { margin-bottom: 24px; padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        code { font-family: monospace; background: #eee; padding: 2px 6px; font-size: 14px; border-radius: 3px; }
+        pre { background: #111; color: #ccc; padding: 24px; overflow-x: auto; margin-bottom: 30px; font-size: 13px; border-radius: 4px; font-family: monospace; }
+        pre code { background: none; padding: 0; color: inherit; border-radius: 0; }
+        blockquote { border-left: 3px solid #000; padding: 20px 30px; margin: 40px 0; background: #f5f5f5; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 16px; text-align: left; }
+        th { background: #eaeaea; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .nav-link { display: inline-block; margin-bottom: 40px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 4px; transition: all 0.2s; }
+        .nav-link:hover { opacity: 0.6; }
+        .content { padding-bottom: 100px; }
+        
+        .index-list { list-style: none; padding: 0; }
+        .index-list li { padding: 20px 0; border-bottom: 1px solid #eee; margin: 0; }
+        .index-list a { text-decoration: none; font-size: 18px; display: block; margin-bottom: 8px; }
+        .index-list a:hover { text-decoration: underline; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; letter-spacing: 0.05em; }
+        
+        hr { border: 0; border-top: 1px solid #ddd; margin: 60px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/research/" class="nav-link">← Research Index</a>
+        <header>
+            <div class="symbol">———</div>
+            <h1>The Open Distillation Factory — Executable Vision</h1>
+        </header>
+        <div class="content">
+            <h1>The Open Distillation Factory — Executable Vision</h1>
+<blockquote>
+<p><em>A formal specification is not a presentation. It is a contract that compiles.</em></p>
+</blockquote>
+<p>This project is the first attempt to treat interatomic potential validation as a <strong>theorem-driven engineering discipline</strong>. Rather than running every simulation and hoping the statistics converge, we formalize what it means to validate — and we lock that formalization into the build.</p>
+<hr />
+<h2>Build Status</h2>
+<div class="stat-row">
+  <div class="stat-card">
+    <div class="stat-number">1,499</div>
+    <div class="stat-label">Build targets passed</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">47</div>
+    <div class="stat-label">Theorems proven</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">6</div>
+    <div class="stat-label">Meta-scientific hypotheses</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">5</div>
+    <div class="stat-label">Documented epistemic gaps</div>
+  </div>
+</div>
+
+<hr />
+<h2>What Is a Build-Locking Contract?</h2>
+<p>In conventional materials informatics, a "claim" lives in a PDF. In this project, a claim lives in a Lean 4 module — and if the claim breaks, <strong>the build breaks</strong>.</p>
+<p>Our vision file (<code>Vision.lean</code>) contains <code>#guard</code> statements that are evaluated at compile time:</p>
+<pre><code class="language-lean">#guard (hypothesisCount &gt;= 6)
+#guard (computationallyProvenCount &gt;= 10)
+#guard (epistemicGapCount &gt;= 1)
+</code></pre>
+<p>These are not tests. They are <strong>epistemic minimums</strong>. A future commit cannot silently drop below 6 formally stated hypotheses, remove all computationally proven theorems, or close every epistemic gap without justification.</p>
+<hr />
+<h2>Theorem Inventory</h2>
+<h3>Data Layer (9 theorems)</h3>
+<ul>
+<li><code>syntheticFccCount</code> — 72 FCC entries embedded</li>
+<li><code>syntheticBccCount</code> — 42 BCC entries embedded</li>
+<li><code>nistScaffoldCount</code> — 9 NIST scaffold rows</li>
+<li><code>nistScaffoldAlMissing</code> — NIST predictions are absent</li>
+<li><code>syntheticFccIsSynthetic</code> — all FCC entries carry synthetic provenance</li>
+<li><code>syntheticBccIsSynthetic</code> — all BCC entries carry synthetic provenance</li>
+<li><code>syntheticFccNonEmpty</code> / <code>syntheticBccNonEmpty</code> — datasets are non-empty</li>
+<li><code>nistScaffoldPredictionsMissing_bool</code> — structural check on missing data</li>
+</ul>
+<h3>Analysis: Causal Inference (9 theorems)</h3>
+<ul>
+<li><code>noSimpsonsDetected</code> — Simpson's paradox is <strong>fabricated</strong> in synthetic BCC</li>
+<li><code>pooledRBelowMinus08</code> — pooled correlation &lt; −0.8</li>
+<li><code>pooledWithinRBelowMinus09</code> — within-group correlation &lt; −0.9</li>
+<li><code>nGroupsEqualsSeven</code> — exactly 7 metal groups</li>
+<li><code>nTotalEqualsTwentyOne</code> — exactly 21 data points</li>
+<li><code>reversalMagnitudeAbove01</code> — reversal exceeds significance threshold</li>
+<li><code>syntheticBccEamPointsNonEmpty</code> / <code>syntheticBccAllPointsNonEmpty</code></li>
+</ul>
+<h3>Analysis: Manifold Geometry (10 theorems)</h3>
+<ul>
+<li><code>fccEamPRBounded</code> — EAM PR ∈ (1.2, 1.3)</li>
+<li><code>fccLjPRBounded</code> — LJ PR ∈ (1.1, 1.2)</li>
+<li><code>fccSwPRBounded</code> — SW PR ∈ (1.1, 1.2)</li>
+<li><code>fccAllPRBounded</code> — All FCC PR ∈ (1.3, 1.4)</li>
+<li><code>paperClaimHolds</code> — hyper-ribbon claim satisfied</li>
+<li><code>fccEamPRGreaterThanLj</code> — EAM PR &gt; LJ PR</li>
+<li><code>fccAllSatisfiesHyperRibbon</code> — PR/n &lt; 0.5 for full FCC set</li>
+<li><code>fccEamVectorCount</code> / <code>fccAllVectorCount</code> — structural counts</li>
+<li><code>fccAllMoreThanEam</code> — full dataset larger than EAM subset</li>
+</ul>
+<h3>Theory: Parameter Bound (1 theorem)</h3>
+<ul>
+<li><code>syntheticEamSatisfiesBound</code> — EAM participation ratio ≤ min(params, observables)</li>
+</ul>
+<h3>Theory: Meta-Science (5 theorems)</h3>
+<ul>
+<li><code>hypothesisBoardLength</code> — exactly 6 hypotheses registered</li>
+<li><code>cubicIrrepSum</code> — cubic irrep dimensions sum to 4</li>
+<li><code>trueCausalGraphNoConfounder</code> — nature: element → structure → error (no bypass)</li>
+<li><code>syntheticCausalGraphHasConfounder</code> — synthetic data: element → error (confounder)</li>
+<li><code>printStatusBoardNonEmpty</code> — status board renders</li>
+</ul>
+<h3>Computation: LAMMPS Trace (3 theorems)</h3>
+<ul>
+<li><code>allPredictionsHaveTraces_empty</code> — empty benchmark needs no traces</li>
+<li><code>allPredictionsHaveTraces_nil_traces</code> — nil trace list behavior</li>
+<li><code>syntheticEntryNeedsNoTrace</code> — synthetic provenance needs no LAMMPS run</li>
+</ul>
+<h3>Validation: Experiment (5 theorems)</h3>
+<ul>
+<li><code>actualExperimentIsNotNistBacked</code> — our experiment lacks NIST provenance</li>
+<li><code>actualExperimentUsesSyntheticData</code> — all predictions are synthetic</li>
+<li><code>actualExperimentNotPreRegistered</code> — no pre-registration record exists</li>
+<li><code>syntheticFccFailsNistIntegrity</code> — synthetic FCC fails NIST integrity check</li>
+<li><code>syntheticBccFailsNistIntegrity</code> — synthetic BCC fails NIST integrity check</li>
+</ul>
+<h3>Validation: Audit (5 theorems)</h3>
+<ul>
+<li><code>simpsonVerdictContainsFabricated</code> — audit string contains "FABRICATED"</li>
+<li><code>hyperRibbonVerdictContainsConsistent</code> — audit string contains "CONSISTENT"</li>
+<li><code>auditReportNonEmpty</code> — report renders</li>
+<li><code>simpsonPooledRNegative</code> — pooled correlation is negative</li>
+<li><code>nistScaffoldIncomplete</code> — NIST scaffold has no predictions</li>
+</ul>
+<hr />
+<h2>The Epistemic Gap (5 Documented Gaps)</h2>
+<p>Every theorem in the specification is <strong>fully proven</strong> — there are no <code>sorry</code> proofs. But not every claim is grounded in NIST-backed data. Five documented gaps in <code>Validation.Experiment</code> mark the boundary between what we can compute on synthetic data and what requires ground-truth LAMMPS traces:</p>
+<ol>
+<li><strong>All predicted values are hand-typed</strong>, not computed from NIST IPR potentials via LAMMPS</li>
+<li><strong>Reference values lack DOI citations</strong></li>
+<li><strong>Experiment was not pre-registered</strong></li>
+<li><strong>No formal data provenance tracking</strong> in the original Rust code</li>
+<li><strong>Bootstrap CIs rely on non-deterministic random sampling</strong></li>
+</ol>
+<p>These gaps are not bugs. They are <strong>features of honesty</strong>. They prevent the build from pretending to know what it does not know.</p>
+<hr />
+<h2>Why This Matters</h2>
+<p>Most interatomic potential papers publish:
+- A table of RMSE values
+- A convergence plot
+- A claim that the potential is "transferable"</p>
+<p>This project publishes:
+- A <strong>formal specification</strong> of what "transferable" means
+- <strong>Build-locking guards</strong> that fail if the statistics shift
+- <strong>Meta-scientific hypotheses</strong> about why validation is hard
+- An <strong>explicit boundary</strong> between proven theorems and documented gaps</p>
+<blockquote>
+<p><em>Proof or reproducible trace. Everything else is marketing.</em></p>
+</blockquote>
+<hr />
+<h2>Related</h2>
+<ul>
+<li><a href="/#/article/formal-methodology">In the In Between</a> — the methodology behind theorem-driven validation</li>
+<li><a href="/#/article/formal-audit">Formal Audit Report</a> — split verdict with computational evidence</li>
+<li><a href="/#/article/formal-hypotheses">Six Meta-Scientific Hypotheses</a> — the new research agenda</li>
+</ul>
+        </div>
+    </div>
+</body>
+</html>

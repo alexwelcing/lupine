@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "2003--Han-S--W--LAMMPS--ipr1",
+    "potid": "2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--W",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "W"
+    ],
+    "symbols": [
+      "W"
+    ],
+    "dois": [
+      "10.1063/1.1555275"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2003--Han-S--W--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--W",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--W/2/W.eam.fs",
+        "filename": "W.eam.fs",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--W/2/conversion_check.pdf",
+        "filename": "conversion_check.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "8b17e33dc7ebb1a7",
+    "nist_potential_id": "2003--Han-S--W--LAMMPS--ipr1",
+    "potential_doi": "10.1063/1.1555275",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.165,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 532.612621061878,
+  "c12": 205.015564047227,
+  "c44": 163.198757526744,
+  "a0": 3.16520000158138,
+  "ecoh": -8.90999981066576,
+  "success": true,
+  "error_message": null
+}

@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2004--Zhou-X-W--Ag--LAMMPS--ipr1",
+    "potid": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ag",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "superseded",
+    "elements": [
+      "Ag"
+    ],
+    "symbols": [
+      "Ag"
+    ],
+    "dois": [
+      "10.1103/physrevb.69.144113"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2004--Zhou-X-W--Ag--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ag",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ag/2/Ag.set",
+        "filename": "Ag.set",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "575f54c8e4218c99",
+    "nist_potential_id": "2004--Zhou-X-W--Ag--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.69.144113",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.09,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 122.875623800978,
+  "c12": 92.9240393189821,
+  "c44": 45.1238943711337,
+  "a0": 4.08964974687949,
+  "ecoh": -2.84999503731192,
+  "success": true,
+  "error_message": null
+}

@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2018--Howells-C-A--Cr--LAMMPS--ipr1",
+    "potid": "2018--Howells-C-A-Mishin-Y--Cr",
+    "pair_style": "adp",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Cr"
+    ],
+    "symbols": [
+      "Cr"
+    ],
+    "dois": [
+      "10.1088/1361-651x/aae400"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2018--Howells-C-A--Cr--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2018--Howells-C-A-Mishin-Y--Cr",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2018--Howells-C-A-Mishin-Y--Cr/1/Cr.adp.txt",
+        "filename": "Cr.adp.txt",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "5cc8a505305f3bf3",
+    "nist_potential_id": "2018--Howells-C-A--Cr--LAMMPS--ipr1",
+    "potential_doi": "10.1088/1361-651x/aae400",
+    "pair_style": "adp",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.88,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 415.935931513793,
+  "c12": 110.017402681323,
+  "c44": 105.091574829876,
+  "a0": 2.88003994320936,
+  "ecoh": -4.10001902821036,
+  "success": true,
+  "error_message": null
+}

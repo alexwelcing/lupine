@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2022--Sun-Y--Fe--LAMMPS--ipr1",
+    "potid": "2022--Sun-Y-Zhang-F-Mendelev-M-I-et-al--Fe",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1073/pnas.2113059119"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2022--Sun-Y--Fe--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2022--Sun-Y-Zhang-F-Mendelev-M-I-et-al--Fe",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2022--Sun-Y-Zhang-F-Mendelev-M-I-et-al--Fe/1/Fe_Earth_core.eam.fs",
+        "filename": "Fe_Earth_core.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "aaa629b10297bd0f",
+    "nist_potential_id": "2022--Sun-Y--Fe--LAMMPS--ipr1",
+    "potential_doi": "10.1073/pnas.2113059119",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 245.671257693587,
+  "c12": 141.434773038422,
+  "c44": 103.251643259241,
+  "a0": 2.84364258498378,
+  "ecoh": -4.0216424821751,
+  "success": true,
+  "error_message": null
+}

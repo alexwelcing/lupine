@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2016--Stoller-R-E--Ni--LAMMPS--ipr1",
+    "potid": "2016--Stoller-R-E-Tamm-A-Beland-L-K-et-al--Ni",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Ni"
+    ],
+    "symbols": [
+      "Ni"
+    ],
+    "dois": [
+      "10.1021/acs.jctc.5b01194"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2016--Stoller-R-E--Ni--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2016--Stoller-R-E-Tamm-A-Beland-L-K-et-al--Ni",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2016--Stoller-R-E-Tamm-A-Beland-L-K-et-al--Ni/1/Ni_v6_2.0.eam",
+        "filename": "Ni_v6_2.0.eam",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "5dcfdfe209632e13",
+    "nist_potential_id": "2016--Stoller-R-E--Ni--LAMMPS--ipr1",
+    "potential_doi": "10.1021/acs.jctc.5b01194",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.524,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 240.913567191331,
+  "c12": 150.493462702583,
+  "c44": 127.136927389289,
+  "a0": 3.51999999914572,
+  "ecoh": -4.44999998574003,
+  "success": true,
+  "error_message": null
+}

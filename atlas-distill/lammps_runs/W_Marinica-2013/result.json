@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2013--Marinica-M-C--W-2--LAMMPS--ipr1",
+    "potid": "2013--Marinica-M-C-Ventelon-L-Gilbert-M-R-et-al--W-2",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "W"
+    ],
+    "symbols": [
+      "W"
+    ],
+    "dois": [
+      "10.1088/0953-8984/25/39/395502"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2013--Marinica-M-C--W-2--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2013--Marinica-M-C-Ventelon-L-Gilbert-M-R-et-al--W-2",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2013--Marinica-M-C-Ventelon-L-Gilbert-M-R-et-al--W-2/1/w_eam2.fs",
+        "filename": "w_eam2.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "88a83f4994a59f70",
+    "nist_potential_id": "2013--Marinica-M-C--W-2--LAMMPS--ipr1",
+    "potential_doi": "10.1088/0953-8984/25/39/395502",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.165,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 522.997374098956,
+  "c12": 202.989283665779,
+  "c44": 160.008744219445,
+  "a0": 3.13999988214294,
+  "ecoh": -8.89998000655766,
+  "success": true,
+  "error_message": null
+}

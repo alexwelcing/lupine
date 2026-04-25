@@ -137,6 +137,6 @@ That is what it means to be **in the in between**.
 
 ## Related
 
-- [The Executable Manifesto](/#/article/formal-manifesto) — build-locking contract and theorem inventory
+- [The Executable Vision](/#/article/formal-vision) — build-locking contract and theorem inventory
 - [Formal Audit Report](/#/article/formal-audit) — split verdict with computational evidence
 - [Six Meta-Scientific Hypotheses](/#/article/formal-hypotheses) — the new research agenda

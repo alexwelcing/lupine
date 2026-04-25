@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1986--Foiles-S-M--Cu--LAMMPS--ipr1",
+    "potid": "1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Cu",
+    "pair_style": "eam",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Cu"
+    ],
+    "symbols": [
+      "Cu"
+    ],
+    "dois": [
+      "10.1103/physrevb.33.7983"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1986--Foiles-S-M--Cu--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Cu",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Cu/1/Cu_u3.eam",
+        "filename": "Cu_u3.eam",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "5f0919401ab17a33",
+    "nist_potential_id": "1986--Foiles-S-M--Cu--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.33.7983",
+    "pair_style": "eam",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.615,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 167.264598078078,
+  "c12": 124.153277823469,
+  "c44": 76.4468176717373,
+  "a0": 3.61499997576462,
+  "ecoh": -3.54000000228145,
+  "success": true,
+  "error_message": null
+}

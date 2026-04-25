@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "2006--Williams-P-L--Ag--LAMMPS--ipr1",
+    "potid": "2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Ag",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Ag"
+    ],
+    "symbols": [
+      "Ag"
+    ],
+    "dois": [
+      "10.1088/0965-0393/14/5/002"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2006--Williams-P-L--Ag--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Ag",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Ag/2/Ag.eam.alloy",
+        "filename": "Ag.eam.alloy",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Ag/2/Ag06_releaseNotes_1.pdf",
+        "filename": "Ag06_releaseNotes_1.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "f5efdae2378e37a5",
+    "nist_potential_id": "2006--Williams-P-L--Ag--LAMMPS--ipr1",
+    "potential_doi": "10.1088/0965-0393/14/5/002",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.09,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 124.239179798937,
+  "c12": 93.87369668605,
+  "c44": 46.4193055928319,
+  "a0": 4.090000144871,
+  "ecoh": -2.84999997472566,
+  "success": true,
+  "error_message": null
+}

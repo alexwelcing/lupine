@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>glim Repo Navigation Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-top: 20px; border-bottom: 1px solid #000; padding-bottom: 40px; }
+        .symbol { font-size: 24px; margin-bottom: 20px; color: #333; letter-spacing: 0.5em; }
+        h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.05em; color: #000; margin-bottom: 16px; line-height: 1.3; }
+        h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.05em; color: #222; margin-top: 60px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        h3 { font-size: 18px; font-weight: 400; letter-spacing: 0.05em; color: #333; margin-top: 40px; margin-bottom: 15px; }
+        h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #555; margin-top: 30px; margin-bottom: 10px; }
+        p { margin-bottom: 24px; text-align: left; }
+        a { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+        a:hover { color: #555; }
+        ul, ol { margin-bottom: 24px; padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        code { font-family: monospace; background: #eee; padding: 2px 6px; font-size: 14px; border-radius: 3px; }
+        pre { background: #111; color: #ccc; padding: 24px; overflow-x: auto; margin-bottom: 30px; font-size: 13px; border-radius: 4px; font-family: monospace; }
+        pre code { background: none; padding: 0; color: inherit; border-radius: 0; }
+        blockquote { border-left: 3px solid #000; padding: 20px 30px; margin: 40px 0; background: #f5f5f5; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 16px; text-align: left; }
+        th { background: #eaeaea; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .nav-link { display: inline-block; margin-bottom: 40px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 4px; transition: all 0.2s; }
+        .nav-link:hover { opacity: 0.6; }
+        .content { padding-bottom: 100px; }
+        
+        .index-list { list-style: none; padding: 0; }
+        .index-list li { padding: 20px 0; border-bottom: 1px solid #eee; margin: 0; }
+        .index-list a { text-decoration: none; font-size: 18px; display: block; margin-bottom: 8px; }
+        .index-list a:hover { text-decoration: underline; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; letter-spacing: 0.05em; }
+        
+        hr { border: 0; border-top: 1px solid #ddd; margin: 60px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/research/" class="nav-link">← Research Index</a>
+        <header>
+            <div class="symbol">———</div>
+            <h1>glim Repo Navigation Guide</h1>
+        </header>
+        <div class="content">
+            <h1>glim Repo Navigation Guide</h1>
+<p>Quick-search codemap for finding things fast. All paths are relative to the repo root
+(<code>C:\Users\alexw\Downloads\shed\glim</code>).</p>
+<blockquote>
+<p><strong>Note:</strong> TypeScript LSP (go-to-definition, find-references, hover types) is not available
+in this environment. Use <code>grep</code> for symbol search and <code>glob</code> for file discovery — those
+are the reliable tools here.</p>
+</blockquote>
+<hr />
+<h2>Top-Level Layout</h2>
+<pre><code>glim/
+├── atlas/                         # All glim content
+│   ├── atlas-view/                # Production monorepo (TypeScript + Rust WASM)
+│   ├── glim-architecture.jsx      # Presentation artifact
+│   ├── glim-presentation.jsx      # Presentation artifact
+│   ├── glimPSE-*.jsx              # Prototype/demo artifacts (NOT production app)
+│   ├── glim-project-plan.md       # Full-stack glim platform plan
+│   ├── openDFT-project-plan.md    # OpenDFT (VASP-compatible DFT) plan
+│   ├── glimPSE-product-plan.md    # Python library product strategy (superseded)
+│   ├── glimPSE-web-product-plan.md # Web app product strategy (current)
+│   └── glimPSE-example-gallery.md  # Curated LAMMPS example datasets
+├── docs/                          # This directory
+├── deep-research-report.md        # LAMMPS ecosystem research (see research-index.md)
+├── ancillary-research-opps.md     # 2025–2026 people/labs/methods landscape
+├── foundational-research.md       # Original brief + advisory council prospectus
+└── example-research-papers.md     # Curated downloadable LAMMPS simulation files
+</code></pre>
+<hr />
+<h2>atlas/atlas-view — Monorepo Structure</h2>
+<p>Package manager: <strong>pnpm 9</strong> · Build orchestration: <strong>turbo 2</strong></p>
+<pre><code>atlas/atlas-view/
+├── apps/
+│   └── web/                       # @glim/web — Vite app (browser entry point)
+│       ├── src/main.tsx           # React root; dynamic imports @glim/ui/App
+│       ├── src/styles/global.css
+│       ├── index.html
+│       ├── vite.config.ts
+│       └── package.json
+├── packages/
+│   ├── core/                      # @glim/core — shared types only
+│   │   └── src/
+│   │       ├── types.ts           # Frame, Trajectory, ThermoData, VisualizationState, ColormapName, UnitStyle
+│   │       └── index.ts
+│   ├── parsers/                   # @glim/parsers — file parsing (JS + WASM)
+│   │   └── src/
+│   │       ├── index.ts           # Public API: parseDumpFile, parseLogFile, parseFile, detectFileType
+│   │       └── workers/
+│   │           └── parse.worker.ts  # Web worker: receives text, calls WASM, posts typed arrays
+│   │   └── wasm/src/              # Rust WASM (wasm-bindgen)
+│   │       ├── lib.rs             # Entry: init, re-exports dump/log/data/types
+│   │       ├── dump.rs            # LAMMPS dump parser (parse_dump, count_dump_frames)
+│   │       ├── log.rs             # LAMMPS log/thermo parser (parse_log)
+│   │       ├── data.rs            # LAMMPS data file parser
+│   │       └── types.rs           # Rust Frame struct, serde
+│   ├── renderer/                  # @glim/renderer — WebGPU pipeline (low-level, optional)
+│   │   └── src/
+│   │       ├── pipeline/
+│   │       │   └── AtomPipeline.ts  # GPU buffers, compute culling, indirect draw
+│   │       └── shaders/
+│   │           ├── atom.wgsl      # Vertex/fragment: impostor sphere rendering
+│   │           └── culling.wgsl   # Compute: frustum culling + color mapping
+│   ├── scene/                     # @glim/scene — React Three Fiber components
+│   │   └── src/
+│   │       ├── Atoms.tsx          # &lt;Atoms /&gt; InstancedMesh renderer; colormaps; CPK colors
+│   │       ├── SimulationCell.tsx # &lt;SimulationCell /&gt; box wireframe
+│   │       └── index.ts
+│   └── ui/                        # @glim/ui — app shell + state
+│       └── src/
+│           ├── App.tsx            # Root component: Canvas, panels, timeline, keyboard shortcuts
+│           ├── store.ts           # Zustand store (useStore): all app state + actions
+│           ├── FileDropZone.tsx   # Drag-and-drop overlay
+│           └── panels/
+│               ├── StylePanel.tsx   # Color mode, colormap, atom scale, background
+│               ├── EffectsPanel.tsx # SSAO, bloom, DOF, tone mapping, antialiasing
+│               └── ExportPanel.tsx  # PNG/video export
+├── package.json                   # Root workspace scripts (pnpm + turbo)
+├── pnpm-workspace.yaml
+├── turbo.json
+└── tsconfig.json
+</code></pre>
+<hr />
+<h2>Important Files by Concern</h2>
+<h3>File Parsing</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>packages/parsers/src/index.ts</code></td>
+<td>JS orchestration: reads File → sends to worker → hydrates typed arrays. Exports <code>parseDumpFile</code>, <code>parseLogFile</code>, <code>parseFile</code>, <code>detectFileType</code>. Handles <code>.gz</code> decompression.</td>
+</tr>
+<tr>
+<td><code>packages/parsers/src/workers/parse.worker.ts</code></td>
+<td>Web worker; loads WASM, dispatches <code>parse-dump</code> / <code>parse-log</code> messages, emits progress events via <code>glim:parse-progress</code> CustomEvent</td>
+</tr>
+<tr>
+<td><code>packages/parsers/wasm/src/dump.rs</code></td>
+<td>Rust: parses LAMMPS dump (atom/custom format), supports Cartesian and scaled coords, triclinic boxes</td>
+</tr>
+<tr>
+<td><code>packages/parsers/wasm/src/log.rs</code></td>
+<td>Rust: parses LAMMPS log thermo data (multi-run)</td>
+</tr>
+<tr>
+<td><code>packages/parsers/wasm/src/lib.rs</code></td>
+<td>WASM entry; sets panic hook; re-exports <code>dump</code>, <code>log</code>, <code>data</code>, <code>types</code></td>
+</tr>
+</tbody>
+</table>
+<h3>App State</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>packages/ui/src/store.ts</code></td>
+<td>Single Zustand store (<code>useStore</code>). Holds: file, frame, colorMode, colormap, propRange, display flags (showCell, showAxes, showBonds), effects (ssao, bloom, dof, toneMapping, antialiasing), playback (playing, playbackSpeed, loopMode), camera, activePanel. Actions: <code>setFrame</code>, <code>nextFrame</code>, <code>prevFrame</code>, <code>togglePlay</code>, <code>encodeToURL</code>, <code>decodeFromURL</code>, <code>reset</code>, plus per-field setters/toggles. URL state serialized as base64 JSON into <code>?s=</code> query param.</td>
+</tr>
+<tr>
+<td><code>packages/core/src/types.ts</code></td>
+<td><code>VisualizationState</code> and <code>DEFAULT_STATE</code> (the canonical type; <code>store.ts</code> has its own flat <code>AppState</code> but mirrors these fields)</td>
+</tr>
+</tbody>
+</table>
+<h3>Shared Types</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Key exports</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>packages/core/src/types.ts</code></td>
+<td><code>Frame</code> (timestep, natoms, boxBounds, positions Float32Array, types Int32Array, properties Map), <code>Trajectory</code> (frames[], totalFrames, atomTypes[], globalBounds), <code>ThermoData</code>, <code>ThermoRun</code>, <code>VisualizationState</code>, <code>ColorMode</code>, <code>ColormapName</code>, <code>UnitStyle</code>, <code>UNIT_LABELS</code>, <code>THERMO_QUANTITIES</code>, <code>encodeState</code>, <code>decodeState</code></td>
+</tr>
+</tbody>
+</table>
+<h3>3D Scene (React Three Fiber)</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>packages/scene/src/Atoms.tsx</code></td>
+<td><code>&lt;Atoms frame colorMode colorProperty colormap propRange scale /&gt;</code> — THREE.InstancedMesh, CPK-inspired type colors (8 types), per-type radii, colormaps: viridis/inferno/coolwarm/plasma/magma/cividis</td>
+</tr>
+<tr>
+<td><code>packages/scene/src/SimulationCell.tsx</code></td>
+<td><code>&lt;SimulationCell bounds color opacity /&gt;</code> — draws simulation box wireframe</td>
+</tr>
+</tbody>
+</table>
+<h3>WebGPU Renderer (low-level pipeline)</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>packages/renderer/src/pipeline/AtomPipeline.ts</code></td>
+<td><code>AtomPipeline</code> class: allocates GPU storage buffers (positions, types, properties, visible-*, indirect draw), creates compute pipelines (reset + culling), creates render pipeline (impostor spheres, triangle-strip). Methods: <code>uploadFrame</code>, <code>updateCamera</code>, <code>updateCullUniforms</code>, <code>encode</code>. Also exports <code>initWebGPU</code>.</td>
+</tr>
+<tr>
+<td><code>packages/renderer/src/shaders/culling.wgsl</code></td>
+<td>Compute shader: frustum cull atoms, map colors, write to visiblePosition/Radii/Color buffers, atomic-increment indirect draw count</td>
+</tr>
+<tr>
+<td><code>packages/renderer/src/shaders/atom.wgsl</code></td>
+<td>Vertex/fragment: renders each visible atom as an impostor sphere quad (triangle-strip, 4 vertices per instance)</td>
+</tr>
+</tbody>
+</table>
+<h3>UI Shell &amp; Panels</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>packages/ui/src/App.tsx</code></td>
+<td>Full app: top bar (logo, file info, panel buttons, GitHub link), Canvas with OrbitControls + EffectComposer (SSAO, Bloom, ToneMapping, Vignette), stats overlay, timeline with transport controls + scrubber + speed selector. Keyboard: Space=play, ←/→=frames, S/E/X=panels</td>
+</tr>
+<tr>
+<td><code>packages/ui/src/FileDropZone.tsx</code></td>
+<td>Drag-and-drop overlay; calls <code>parseFile</code> from <code>@glim/parsers</code>, dispatches to store</td>
+</tr>
+<tr>
+<td><code>packages/ui/src/panels/StylePanel.tsx</code></td>
+<td>Color mode (type/property/uniform), colormap selector, property selector, atom scale, background preset</td>
+</tr>
+<tr>
+<td>`packages/ui/src/panels/EffectsPanel.tsx"</td>
+<td>SSAO intensity, bloom intensity, DOF focus, tone mapping, antialiasing</td>
+</tr>
+<tr>
+<td><code>packages/ui/src/panels/ExportPanel.tsx</code></td>
+<td>Image/video export controls</td>
+</tr>
+</tbody>
+</table>
+<h3>App Entry</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>apps/web/src/main.tsx</code></td>
+<td><code>createRoot</code> → dynamic <code>import('@glim/ui/App')</code> → <code>&lt;Suspense&gt;&lt;App/&gt;&lt;/Suspense&gt;</code>. Has graceful error rendering if import fails.</td>
+</tr>
+<tr>
+<td><code>apps/web/vite.config.ts</code></td>
+<td>Vite config; includes <code>vite-plugin-wasm</code> and <code>vite-plugin-top-level-await</code> for WASM support</td>
+</tr>
+</tbody>
+</table>
+<h3>Plans &amp; Presentations (atlas/ root)</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>atlas/glim-project-plan.md</code></td>
+<td>Full-stack platform charter: DFT + MD + ML unified pipeline</td>
+</tr>
+<tr>
+<td><code>atlas/openDFT-project-plan.md</code></td>
+<td>VASP-compatible DFT engine plan with Delta Codes benchmark strategy</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-product-plan.md</code></td>
+<td>Earlier Python library strategy (superseded by web app approach)</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-web-product-plan.md</code></td>
+<td>Current web app product strategy; competitive analysis vs OVITO</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-example-gallery.md</code></td>
+<td>12 curated LAMMPS example datasets (crack, indent, LJ melt, granular, etc.)</td>
+</tr>
+<tr>
+<td><code>atlas/glim-*.jsx</code> + <code>atlas/glimPSE-*.jsx</code></td>
+<td>Presentation and prototype artifacts — see below</td>
+</tr>
+</tbody>
+</table>
+<h3>JSX Presentation Files (atlas/ root)</h3>
+<p>These are <strong>standalone presentation/prototype artifacts</strong>, not part of the production app.
+They are self-contained React components (no build step needed for viewing in tools like
+Claude artifacts or CodeSandbox) used for design exploration and stakeholder communication.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>atlas/glim-architecture.jsx</code></td>
+<td>System architecture diagram / slide</td>
+</tr>
+<tr>
+<td><code>atlas/glim-presentation.jsx</code></td>
+<td>Full slide deck presentation</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-app.jsx</code></td>
+<td>App UI prototype mockup</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-demo.jsx</code></td>
+<td>Interactive demo concept</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-preview.jsx</code></td>
+<td>Preview/landing concept</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-gallery.jsx</code></td>
+<td>Gallery UI prototype</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-mobile.jsx</code></td>
+<td>Mobile layout prototype (v1)</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-mobile-v2.jsx</code></td>
+<td>Mobile layout prototype (v2)</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-publication.jsx</code></td>
+<td>Publication-quality output prototype</td>
+</tr>
+<tr>
+<td>`atlas/glimPSE-real-data.jsx"</td>
+<td>Real data visualization concept</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-timeseries.jsx</code></td>
+<td>Timeseries/thermo plot concept</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-3d-melt.jsx</code></td>
+<td>3D melt simulation visualization concept</td>
+</tr>
+<tr>
+<td><code>atlas/glimPSE-3d-smooth.jsx</code></td>
+<td>3D smooth rendering concept</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Common Commands</h2>
+<p>Run from <code>atlas/atlas-view/</code> (the monorepo root):</p>
+<pre><code class="language-bash">pnpm dev              # turbo run dev — start Vite dev server (hot reload)
+pnpm build            # turbo run build — tsc + vite build all packages
+pnpm build:wasm       # wasm-pack build Rust parser → packages/parsers/pkg/
+pnpm test             # turbo run test
+pnpm test:rust        # cargo test (in packages/parsers/wasm/)
+pnpm lint             # turbo run lint
+pnpm clean            # turbo run clean
+</code></pre>
+<p>Run from <code>atlas/atlas-view/apps/web/</code> (app only):</p>
+<pre><code class="language-bash">pnpm dev              # vite (dev server only)
+pnpm build            # tsc &amp;&amp; vite build
+pnpm preview          # vite preview (serve built dist/)
+</code></pre>
+<p>The built output lands in <code>apps/web/dist/</code>. The compiled WASM asset is
+<code>apps/web/dist/assets/glim_parsers_bg-*.wasm</code>.</p>
+<hr />
+<h2>Quick Grep / Glob Recipes</h2>
+<h3>"Where is file parsing?"</h3>
+<pre><code class="language-bash"># JS orchestration layer
+grep -r &quot;parseDumpFile\|parseLogFile\|detectFileType&quot; atlas/atlas-view/packages/parsers/src/index.ts
+
+# Web worker (WASM bridge)
+grep -r &quot;parse-dump\|parse-log\|parseDump\|parseLog&quot; atlas/atlas-view/packages/parsers/src/workers/
+
+# Rust WASM implementations
+grep -rn &quot;pub fn\|#\[wasm_bindgen\]&quot; atlas/atlas-view/packages/parsers/wasm/src/
+</code></pre>
+<h3>"Where is app state?"</h3>
+<pre><code class="language-bash"># All state fields and actions in one file
+grep -n &quot;^\s\+\(set\|toggle\|next\|prev\|encode\|decode\|reset\|file\|frame\|playing\|colorMode\|ssao\|bloom\)&quot; \
+  atlas/atlas-view/packages/ui/src/store.ts
+
+# Find every useStore call in the app
+grep -rn &quot;useStore&quot; atlas/atlas-view/packages/
+</code></pre>
+<h3>"Where is rendering?"</h3>
+<pre><code class="language-bash"># WebGPU pipeline class
+grep -n &quot;class AtomPipeline\|uploadFrame\|encode\|createBuffers\|createPipelines&quot; \
+  atlas/atlas-view/packages/renderer/src/pipeline/AtomPipeline.ts
+
+# WGSL shaders
+glob &quot;**/*.wgsl&quot; atlas/atlas-view
+
+# R3F scene components (Three.js)
+grep -rn &quot;InstancedMesh\|&lt;Atoms\|&lt;SimulationCell\|useRef.*Mesh&quot; atlas/atlas-view/packages/scene/
+</code></pre>
+<h3>"Where is the 3D canvas set up?"</h3>
+<pre><code class="language-bash">grep -n &quot;&lt;Canvas\|OrbitControls\|EffectComposer\|&lt;SSAO\|&lt;Bloom&quot; \
+  atlas/atlas-view/packages/ui/src/App.tsx
+</code></pre>
+<h3>"What fields does Frame have?"</h3>
+<pre><code class="language-bash">grep -A 15 &quot;interface Frame&quot; atlas/atlas-view/packages/core/src/types.ts
+</code></pre>
+<h3>"What are all exported types from core?"</h3>
+<pre><code class="language-bash">grep &quot;^export&quot; atlas/atlas-view/packages/core/src/types.ts
+</code></pre>
+<h3>"Where does URL state serialize?"</h3>
+<pre><code class="language-bash">grep -n &quot;encodeToURL\|decodeFromURL\|btoa\|atob&quot; atlas/atlas-view/packages/ui/src/store.ts
+</code></pre>
+<h3>"What colormaps are available?"</h3>
+<pre><code class="language-bash">grep -n &quot;ColormapName\|COLORMAPS\|viridis\|inferno\|coolwarm\|plasma\|magma\|cividis&quot; \
+  atlas/atlas-view/packages/core/src/types.ts \
+  atlas/atlas-view/packages/scene/src/Atoms.tsx
+</code></pre>
+<h3>"Where does drag-and-drop file loading happen?"</h3>
+<pre><code class="language-bash">grep -rn &quot;FileDropZone\|drop\|glim:parse-progress\|parseFile&quot; atlas/atlas-view/packages/ui/src/
+</code></pre>
+<h3>"What WASM functions are exported to JS?"</h3>
+<pre><code class="language-bash">grep -n &quot;wasm_bindgen\|js_name&quot; atlas/atlas-view/packages/parsers/wasm/src/dump.rs
+grep -n &quot;wasm_bindgen\|js_name&quot; atlas/atlas-view/packages/parsers/wasm/src/log.rs
+</code></pre>
+<h3>"What research doc covers X?"</h3>
+<pre><code class="language-bash"># Full-text search across all root research docs
+grep -rn &quot;keyword&quot; deep-research-report.md ancillary-research-opps.md \
+  foundational-research.md example-research-papers.md
+
+# Search planning docs
+grep -rn &quot;keyword&quot; atlas/glim-project-plan.md atlas/openDFT-project-plan.md \
+  atlas/glimPSE-product-plan.md atlas/glimPSE-web-product-plan.md
+</code></pre>
+<h3>Find all source files by type</h3>
+<pre><code class="language-bash"># All TypeScript/TSX in atlas-view
+glob &quot;**/*.ts&quot; atlas/atlas-view/packages
+glob &quot;**/*.tsx&quot; atlas/atlas-view/packages
+
+# All Rust source
+glob &quot;**/*.rs&quot; atlas/atlas-view/packages/parsers/wasm/src
+
+# All WGSL shaders
+glob &quot;**/*.wgsl&quot; atlas/atlas-view
+
+# All JSX presentation artifacts
+glob &quot;*.jsx&quot; atlas
+</code></pre>
+<hr />
+<h2>Package Dependency Graph</h2>
+<pre><code>@glim/web (apps/web)
+  └── @glim/ui        → App.tsx, store.ts, panels
+       ├── @glim/scene → Atoms.tsx, SimulationCell.tsx
+       │    └── @glim/core  → types.ts
+       ├── @glim/parsers → index.ts + parse.worker.ts + WASM
+       │    └── @glim/core
+       └── @glim/renderer → AtomPipeline.ts + WGSL
+            └── (no internal deps)
+</code></pre>
+<p><code>@glim/core</code> is the only package with no internal dependencies.
+<code>@glim/renderer</code> is the WebGPU low-level path; the current production app uses
+`@glim/scene" (React Three Fiber / Three.js) for actual rendering.</p>
+<hr />
+<h2>Key Runtime Data Flow</h2>
+<pre><code>User drops .lammpstrj
+       ↓
+FileDropZone (packages/ui/src/FileDropZone.tsx)
+       ↓
+parseDumpFile (packages/parsers/src/index.ts)
+  → readFileAsText (handles .gz decompression)
+  → Worker.postMessage('parse-dump', text)
+       ↓
+parse.worker.ts (web worker)
+  → ensureWasm() → init() [loads glim_parsers_bg.wasm]
+  → parseDump(text) [Rust: dump.rs]
+  → postProgress events → window 'glim:parse-progress'
+  → postMessage('frames', result)
+       ↓
+parseDumpFile resolves → Trajectory (typed arrays)
+       ↓
+useStore.getState().setFile({ name, size, trajectory, thermo })
+       ↓
+App.tsx re-renders → currentFrame → &lt;Atoms frame=... /&gt;
+       ↓
+Atoms.tsx → InstancedMesh matrices + colors updated
+</code></pre>
+        </div>
+    </div>
+</body>
+</html>

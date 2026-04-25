@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "2001--Mishin-Y--Cu-1--LAMMPS--ipr1",
+    "potid": "2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Cu"
+    ],
+    "symbols": [
+      "Cu"
+    ],
+    "dois": [
+      "10.1103/physrevb.63.224106"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2001--Mishin-Y--Cu-1--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1/2/Cu01.eam.alloy",
+        "filename": "Cu01.eam.alloy",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1/2/Cu01_releaseNotes_1.pdf",
+        "filename": "Cu01_releaseNotes_1.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "e99dbca11fe84187",
+    "nist_potential_id": "2001--Mishin-Y--Cu-1--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.63.224106",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.615,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 169.881109635064,
+  "c12": 122.604214854317,
+  "c44": 76.1899581257661,
+  "a0": 3.61500005821549,
+  "ecoh": -3.53999996837948,
+  "success": true,
+  "error_message": null
+}

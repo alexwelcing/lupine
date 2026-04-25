@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1989--Adams-J-B--Pt--LAMMPS--ipr1",
+    "potid": "1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Pt",
+    "pair_style": "eam",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Pt"
+    ],
+    "symbols": [
+      "Pt"
+    ],
+    "dois": [
+      "10.1557/jmr.1989.0102"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1989--Adams-J-B--Pt--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Pt",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Pt/1/ptu6.txt",
+        "filename": "ptu6.txt",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "672597f6956fdb56",
+    "nist_potential_id": "1989--Adams-J-B--Pt--LAMMPS--ipr1",
+    "potential_doi": "10.1557/jmr.1989.0102",
+    "pair_style": "eam",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.924,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 304.085116076076,
+  "c12": 272.588701908922,
+  "c44": 71.908856418869,
+  "a0": 3.92000005507854,
+  "ecoh": -5.769999999232,
+  "success": true,
+  "error_message": null
+}

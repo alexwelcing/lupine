@@ -198,6 +198,8 @@ variable C12 equal -(v_pyy_pos-v_pyy_neg)/(2*v_delta)/10000
 # Shear strain xy → C44
 # ══════════════════════════════════════════════════════════════
 
+change_box all triclinic
+
 # Positive xy tilt
 variable delta_xy equal ${{ly0}}*${{delta}}
 change_box all xy delta ${{delta_xy}} remap units box

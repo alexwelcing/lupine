@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1987--Ackland-G-J--Nb--LAMMPS--ipr1",
+    "potid": "1987--Ackland-G-J-Thetford-R--Nb",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Nb"
+    ],
+    "symbols": [
+      "Nb"
+    ],
+    "dois": [
+      "10.1080/01418618708204464"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1987--Ackland-G-J--Nb--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1987--Ackland-G-J-Thetford-R--Nb",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Thetford-R--Nb/2/Ackland_Thetford_1987_Nb.eam.fs",
+        "filename": "Ackland_Thetford_1987_Nb.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "9fe57070a50ae453",
+    "nist_potential_id": "1987--Ackland-G-J--Nb--LAMMPS--ipr1",
+    "potential_doi": "10.1080/01418618708204464",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.3,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 246.648322323583,
+  "c12": 133.239934953728,
+  "c44": 28.1327907869002,
+  "a0": 3.30079958376588,
+  "ecoh": -7.57000080171142,
+  "success": true,
+  "error_message": null
+}

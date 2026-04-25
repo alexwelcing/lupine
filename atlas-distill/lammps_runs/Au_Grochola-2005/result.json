@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "2005--Grochola-G--Au--LAMMPS--ipr1",
+    "potid": "2005--Grochola-G-Russo-S-P-Snook-I-K--Au",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Au"
+    ],
+    "symbols": [
+      "Au"
+    ],
+    "dois": [
+      "10.1063/1.2124667"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2005--Grochola-G--Au--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2005--Grochola-G-Russo-S-P-Snook-I-K--Au",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/2/Au-Grochola-JCP05.eam.alloy",
+        "filename": "Au-Grochola-JCP05.eam.alloy",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/2/Au-Grochola-JCP05-conversion-notes_v2.pdf",
+        "filename": "Au-Grochola-JCP05-conversion-notes_v2.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "656e49e933cf3778",
+    "nist_potential_id": "2005--Grochola-G--Au--LAMMPS--ipr1",
+    "potential_doi": "10.1063/1.2124667",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.078,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 201.648483629458,
+  "c12": 169.531929910043,
+  "c44": 45.9689794915927,
+  "a0": 4.07011043949149,
+  "ecoh": -3.92421790603845,
+  "success": true,
+  "error_message": null
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonon Benchmarking Report: Key Findings Relevant to GLIM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-top: 20px; border-bottom: 1px solid #000; padding-bottom: 40px; }
+        .symbol { font-size: 24px; margin-bottom: 20px; color: #333; letter-spacing: 0.5em; }
+        h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.05em; color: #000; margin-bottom: 16px; line-height: 1.3; }
+        h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.05em; color: #222; margin-top: 60px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        h3 { font-size: 18px; font-weight: 400; letter-spacing: 0.05em; color: #333; margin-top: 40px; margin-bottom: 15px; }
+        h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #555; margin-top: 30px; margin-bottom: 10px; }
+        p { margin-bottom: 24px; text-align: left; }
+        a { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+        a:hover { color: #555; }
+        ul, ol { margin-bottom: 24px; padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        code { font-family: monospace; background: #eee; padding: 2px 6px; font-size: 14px; border-radius: 3px; }
+        pre { background: #111; color: #ccc; padding: 24px; overflow-x: auto; margin-bottom: 30px; font-size: 13px; border-radius: 4px; font-family: monospace; }
+        pre code { background: none; padding: 0; color: inherit; border-radius: 0; }
+        blockquote { border-left: 3px solid #000; padding: 20px 30px; margin: 40px 0; background: #f5f5f5; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 16px; text-align: left; }
+        th { background: #eaeaea; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .nav-link { display: inline-block; margin-bottom: 40px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 4px; transition: all 0.2s; }
+        .nav-link:hover { opacity: 0.6; }
+        .content { padding-bottom: 100px; }
+        
+        .index-list { list-style: none; padding: 0; }
+        .index-list li { padding: 20px 0; border-bottom: 1px solid #eee; margin: 0; }
+        .index-list a { text-decoration: none; font-size: 18px; display: block; margin-bottom: 8px; }
+        .index-list a:hover { text-decoration: underline; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; letter-spacing: 0.05em; }
+        
+        hr { border: 0; border-top: 1px solid #ddd; margin: 60px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/research/" class="nav-link">← Research Index</a>
+        <header>
+            <div class="symbol">———</div>
+            <h1>Phonon Benchmarking Report: Key Findings Relevant to GLIM</h1>
+        </header>
+        <div class="content">
+            <h1>Phonon Benchmarking Report: Key Findings Relevant to GLIM</h1>
+<h2>Executive Summary</h2>
+<p>The Phonon Frequency Spectrum Benchmarking Deep Research report provides a comprehensive technical framework for assessing 23 interatomic potentials across 12,000 materials (276,000 phonon calculations total). The report establishes systematic methodologies, performance metrics, and computational strategies essential for the GLIM project.</p>
+<h2>Critical Findings for GLIM Implementation</h2>
+<h3>1. Phonon Accuracy as the Gold Standard for Potential Validation</h3>
+<p><strong>Key Insight:</strong> Phonon frequencies probe second-order energy derivatives, making them exponentially more sensitive to potential errors than energies/forces (which depend on zeroth/first derivatives).</p>
+<ul>
+<li>Phonon benchmarks reveal "force-constant collapse" in neural network potentials: models can predict reasonable forces yet severely inaccurate force constants</li>
+<li>PhononBench evaluation of 108,843 AI-generated structures: only 25.83% dynamically stable</li>
+<li>Phonon validation is essential before deploying potentials for thermodynamic property prediction and materials discovery</li>
+</ul>
+<p><strong>GLIM Application:</strong> Phonon errors directly translate to property errors (~1% frequency error → ~1% entropy/free energy error, ~2% heat capacity error at room temperature). Explicit phonon testing prevents catastrophic failures in derived property predictions.</p>
+<h3>2. Accuracy Hierarchy Across Potential Families</h3>
+<p><strong>Clear Performance Ranking:</strong>
+- Universal MLIPs: 2–10 meV typical accuracy
+- Fine-tuned MLIPs: &lt;2 meV (sub-meV achievable)
+- Classical potentials: 20–100+ meV for general systems</p>
+<p><strong>Top Performers:</strong>
+- <strong>ORB v3:</strong> Highest ranking in uMLIP benchmark, ~10× more efficient than OMat24
+- <strong>SevenNet-0:</strong> Top-tier accuracy with favorable computational scaling
+- <strong>MatterSim:</strong> DFT-level accuracy across &gt;10,000 materials
+- <strong>OMat24:</strong> Top-tier accuracy but drastically steeper scaling (CPU cost)
+- <strong>eqV2-M (fine-tuned):</strong> 0.174 log(W/m·K) MAE for thermal conductivity</p>
+<p><strong>GLIM Implication:</strong> Pareto frontier analysis enables optimal potential selection based on accuracy vs. computational cost constraints.</p>
+<h3>3. Composition-Dependent Performance Variations</h3>
+<p><strong>Systematic Accuracy Pattern:</strong>
+Main-group compounds &gt; Transition metals &gt; Heavy elements/Rare earths</p>
+<p><strong>Challenging Systems:</strong>
+- Van der Waals materials: Large errors for PBE-trained models without dispersion corrections
+- Systems with H + heavy elements: Unusual coordination patterns difficult to model
+- Late transition metal oxides: Strong correlation effects not captured</p>
+<p><strong>GLIM Strategy:</strong> Stratified benchmarking by crystal system, chemistry (binary/ternary/quaternary), and bonding type enables identification of hidden failure modes and targeted improvements.</p>
+<h3>4. Displacement-Dependent Phonon Errors</h3>
+<p><strong>Critical Discovery:</strong> ORB and OMat show dramatic MAE increase at small displacements (attributed to direct force output vs. Hessian-based approaches).</p>
+<p><strong>Implication:</strong> Displacement magnitude selection (standard 0.01–0.03 Å) is architecture-dependent. Quality control requires validation of force constant behavior across displacement ranges.</p>
+<h3>5. Reference Data and Functional Sensitivity</h3>
+<p><strong>JARVIS-DFT Database:</strong>
+- ~90,000 materials with ~17,400 having complete phonon data
+- Uses vdW-DF-optB88 functional (not PBE)
+- Functional-induced frequency shifts: 2–6% (dense solids) to 20%+ (van der Waals)</p>
+<p><strong>GLIM Consideration:</strong> Functional mismatch between PBE-trained models and optB88 reference creates systematic bias. Recommendation: functional-corrected metrics or materials-specific comparison subsets.</p>
+<h3>6. Fine-Tuning Delivers Substantial Improvements</h3>
+<p><strong>Phonon Force Constant Tuning (PFT):</strong>
+- 55% average improvement in phonon properties
+- Sub-meV errors achievable (ω_max MAE ~0.9 meV, S_vib MAE ~11 J/mol·K)
+- Cost-effective: 60–140 GPU-hours training investment
+- Transfer learning benefit: improves anharmonic properties (thermal conductivity κ: 0.446 → 0.306 log(W/m·K) SRME, 31% improvement)</p>
+<p><strong>GLIM Application:</strong> Fine-tuning pathways enable rapid accuracy optimization for top-performing potentials. The transfer from harmonic Hessian training to anharmonic properties suggests curvature supervision captures essential physics beyond harmonic regime.</p>
+<h3>7. Dynamical Stability Prediction Challenges</h3>
+<p><strong>Key Result:</strong> 25.83% baseline stability rate in AI-generated structures (high class imbalance).</p>
+<p><strong>Metric Interpretation:</strong>
+- Random guessing: 25% accuracy
+- Perfect prediction: 100% accuracy
+- Skill scores (improvement over baseline) enable fair comparison
+- MatterSim achieves ~95% true-positive rate with validated false-positive/negative characterization</p>
+<p><strong>GLIM Use Case:</strong> Potentials must reliably identify imaginary modes for structure screening in materials discovery pipelines.</p>
+<h3>8. Computational Resource Planning</h3>
+<p><strong>Efficiency Metrics:</strong>
+- Classical potentials: O(N) scaling, fastest per-calculation
+- Efficient MLIPs (ORB, MACE): 10–100× speedup vs. DFT full workflow
+- Large architectures (OMat24): Drastically steeper scaling than MACE/SevenNet</p>
+<p><strong>Cost Estimation for GLIM:</strong>
+- Base estimate: ~10⁶ GPU-hours for complete 23 × 12,000 benchmark
+- With contingency (+50% for failures/restarts): ~1.5 × 10⁶ GPU-hours
+- Parallelization strategy: GPU acceleration for NN inference, CPU clusters for classical potentials</p>
+<p><strong>Optimization Strategy:</strong>
+- Phase 1: All 23 potentials on 1,000-material representative subset (statistical power &amp; ranking)
+- Phase 2: Top 10 potentials on full 12,000-material set (definitive comparison)
+- Specialized analysis (fine-tuning, failure modes) on priority subsets</p>
+<h3>9. Hierarchical Metrics Enable Multi-Level Diagnosis</h3>
+<p><strong>Primary Metrics (Global Ranking):</strong>
+- Frequency MAE/RMSE across all q-points/branches
+- Maximum frequency error (ω_max)
+- Stability prediction accuracy (F1, ROC-AUC)</p>
+<p><strong>Secondary Metrics (Pattern Analysis):</strong>
+- PDOS Wasserstein distance and KL divergence
+- Thermodynamic properties: S_vib, Helmholtz F, C_V accuracy
+- Band-resolved MAE identifies mode-specific weaknesses</p>
+<p><strong>Diagnostic Metrics (Improvement Guidance):</strong>
+- Composition/structure-dependent error patterns
+- Failure mode clustering
+- Spectral feature accuracy (acoustic vs. optical, soft modes)</p>
+<h3>10. Community-Driven Benchmark Evolution</h3>
+<p><strong>Framework Design:</strong>
+- Annual major releases with new potentials, expanded materials, refined metrics
+- Steering committee with academic, national lab, industry representation
+- Specialized spin-off benchmarks for specific applications (battery materials, nuclear fuels, quantum materials)
+- Open data release: 276,000 calculations with clear documentation
+- Containerized code for portability and reproducibility</p>
+<p><strong>Ultimate Goal:</strong> Living benchmark that continuously improves with community contribution, enabling sustained progress in interatomic potential development.</p>
+<h2>GLIM Strategic Recommendations</h2>
+<ol>
+<li>
+<p><strong>Adopt stratified sampling:</strong> By crystal system, chemistry type, bonding character to ensure balanced coverage and reveal hidden failure modes.</p>
+</li>
+<li>
+<p><strong>Implement functional sensitivity analysis:</strong> Systematic PBE-PBEsol-optB88 comparisons on representative subsets to quantify functional bias.</p>
+</li>
+<li>
+<p><strong>Prioritize fine-tuning:</strong> Top performers benefit from Hessian-targeted training with modest computational investment.</p>
+</li>
+<li>
+<p><strong>Multi-level metric reporting:</strong> Provide frequency-level details (band structure), PDOS-level summaries, and property-level impacts simultaneously.</p>
+</li>
+<li>
+<p><strong>Composition-specific skill scores:</strong> Report baseline-corrected metrics stratified by chemistry to enable fair multi-material comparison.</p>
+</li>
+<li>
+<p><strong>Documentation of failure modes:</strong> Catalog systematic error patterns (displacement-dependent, mode-specific, chemistry-specific) to guide potential development.</p>
+</li>
+<li>
+<p><strong>Benchmark versioning:</strong> Maintain backward compatibility while enabling evolving methodology through version tracking.</p>
+</li>
+</ol>
+<h2>Expected Timeline and Deliverables</h2>
+<ul>
+<li>Phase 1 (1000 materials, 23 potentials): Initial ranking &amp; statistical power assessment</li>
+<li>Phase 2 (12,000 materials, top 10 potentials): Comprehensive comparison</li>
+<li>Specialized analyses: Fine-tuning opportunities, failure mode deep dives</li>
+<li>Final deliverable: 276,000 phonon calculations + complete analysis framework</li>
+</ul>
+<h2>File Location</h2>
+<p>Full report: <code>/sessions/friendly-gracious-hamilton/breadth_exploration/dr_reports/phonon_benchmarking_report.md</code></p>
+        </div>
+    </div>
+</body>
+</html>

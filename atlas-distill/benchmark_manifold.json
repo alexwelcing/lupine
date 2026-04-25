@@ -1,2060 +1,272 @@
 [
   {
-    "n_materials": 7,
-    "n_properties": 3,
-    "potential": "Jacobsen-1996",
+    "n_materials": 4,
+    "n_properties": 5,
+    "potential": "Foiles-1986",
     "eigenvalues": [
-      1038.0650907751485,
-      189.2214497614025,
-      96.65662983381854
+      83.59867041404343,
+      19.39802006234792,
+      9.008762020665435,
+      0.0
     ],
     "eigenvectors": [
       [
-        0.8499879515041859,
-        0.34364594592358455,
-        -0.3992842923882716
+        -0.8735318519173512,
+        0.32975880915558936,
+        -0.35799736777423574,
+        -0.006243133119987124,
+        -0.00037339750330515274
       ],
       [
-        0.42184627695182486,
-        0.009986515432980866,
-        0.9066123692799427
+        -0.3583413213758206,
+        -0.9334113326894145,
+        0.014774296257554921,
+        -0.010787394479662118,
+        0.00036563921786156257
       ],
       [
-        0.3155411239753103,
-        -0.9390461827619516,
-        -0.13647734508190767
+        0.3294272149145643,
+        -0.1410339280883008,
+        -0.9334128645385354,
+        -0.018098768362618464,
+        -9.96693047924769e-6
+      ],
+      [
+        -0.0033162980842788947,
+        -0.010552320992602046,
+        -0.01884259464552648,
+        0.9937014375793825,
+        -0.10990932748579153
       ]
     ],
-    "effective_dimensionality": 1.561222331645811,
-    "fractional_dimensionality": 0.5204074438819369,
+    "effective_dimensionality": 1.6847865118796006,
+    "fractional_dimensionality": 0.33695730237592014,
     "cumulative_variance": [
-      0.7840707320426394,
-      0.926993369506352,
+      0.7463803640830806,
+      0.9195685404609909,
+      1.0,
       1.0
     ],
-    "log_slope": -1.1869744850095973,
-    "log_intercept": 6.773373348434871,
-    "log_r_squared": 0.9409077430588417,
+    "log_slope": -1.1139149771190493,
+    "log_intercept": 4.310380403663343,
+    "log_r_squared": 0.968676780506515,
     "decay_monotonicity": -1.0,
     "width_ratios": [
-      5.48598000958184,
-      1.957666536550368
+      4.309649652147267,
+      2.1532392594953995,
+      null
     ],
-    "mean_width_ratio": 3.721823273066104,
+    "mean_width_ratio": 3.2314444558213333,
     "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.56 / 3) Moderate dimensional compression: ~1.6 of 3 dimensions are active. Log-spacing is highly linear (R² = 0.941), consistent with Vandermonde universality class. First principal direction captures 78.4% of error variance.",
-    "pr_ci_lower": 1.1771047197744444,
-    "pr_ci_upper": 2.282672711496328,
-    "log_r2_ci_lower": 0.8152183745035505,
-    "log_r2_ci_upper": 0.9999227541584745
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Pun-2015",
-    "eigenvalues": [
-      31.00481280743877,
-      6.364543963464437,
-      0.00034322909677919703
-    ],
-    "eigenvectors": [
-      [
-        -0.9114768402832113,
-        0.31008335571660345,
-        0.270292956132533
-      ],
-      [
-        -0.13066161548682936,
-        0.4048098505139618,
-        -0.9050174181557148
-      ],
-      [
-        -0.39004808917068795,
-        -0.8602193310048284,
-        -0.32845881126847654
-      ]
-    ],
-    "effective_dimensionality": 1.3939771822314087,
-    "fractional_dimensionality": 0.46465906074380287,
-    "cumulative_variance": [
-      0.8296778622102607,
-      0.999990815310351,
-      1.0
-    ],
-    "log_slope": -5.70562742870334,
-    "log_intercept": 4.808218299730054,
-    "log_r_squared": 0.8517926501776352,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      4.871490084037663,
-      18543.13641584652
-    ],
-    "mean_width_ratio": 9274.003952965279,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.39 / 3) Errors are strongly confined: only ~1.4 effective dimensions control all 3 properties. Moderate log-linearity (R² = 0.852) — may be an intermediate regime. First principal direction captures 83.0% of error variance.",
+    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.68 / 5) Errors are strongly confined: only ~1.7 effective dimensions control all 5 properties. Log-spacing is highly linear (R² = 0.969), consistent with Vandermonde universality class. First principal direction captures 74.6% of error variance.",
     "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.8229547987778423,
+    "pr_ci_upper": 1.972246228383309,
     "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Maresca-2020",
-    "eigenvalues": [
-      399.55935444024465,
-      105.83028056657834,
-      14.890531659844028
-    ],
-    "eigenvectors": [
-      [
-        0.9840022633356397,
-        0.022327553621706527,
-        -0.17675131145088693
-      ],
-      [
-        0.16440996348579132,
-        -0.49594553402435054,
-        0.8526472841614539
-      ],
-      [
-        0.06862149558949708,
-        0.8680665341035627,
-        0.49168240024683507
-      ]
-    ],
-    "effective_dimensionality": 1.5823482544336738,
-    "fractional_dimensionality": 0.5274494181445579,
-    "cumulative_variance": [
-      0.7679696056840741,
-      0.9713797822522339,
-      1.0
-    ],
-    "log_slope": -1.6448183870475794,
-    "log_intercept": 6.095793241076002,
-    "log_r_squared": 0.9878241042333655,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      3.775472882630033,
-      7.107219740983169
-    ],
-    "mean_width_ratio": 5.441346311806601,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.58 / 3) Moderate dimensional compression: ~1.6 of 3 dimensions are active. Log-spacing is highly linear (R² = 0.988), consistent with Vandermonde universality class. First principal direction captures 76.8% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.751360272028942,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Park-2012",
-    "eigenvalues": [
-      907.7718442462277,
-      487.2914231537248,
-      0.5287326000486519
-    ],
-    "eigenvectors": [
-      [
-        0.5125211192985004,
-        0.8171052258195186,
-        0.26393399214850277
-      ],
-      [
-        0.8015314707245516,
-        -0.565509004071958,
-        0.19428553150370984
-      ],
-      [
-        0.30800877213343986,
-        0.1119759628312061,
-        -0.9447708611281758
-      ]
-    ],
-    "effective_dimensionality": 1.834829628855963,
-    "fractional_dimensionality": 0.6116098762853209,
-    "cumulative_variance": [
-      0.6504564688291613,
-      0.9996211409924615,
-      1.0
-    ],
-    "log_slope": -3.724132765521464,
-    "log_intercept": 7.844993754268398,
-    "log_r_squared": 0.8121719044958966,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      1.862893129477173,
-      921.621672484137
-    ],
-    "mean_width_ratio": 461.74228280680705,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.83 / 3) Moderate dimensional compression: ~1.8 of 3 dimensions are active. Moderate log-linearity (R² = 0.812) — may be an intermediate regime. First principal direction captures 65.0% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.963064516465413,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Li-2018",
-    "eigenvalues": [
-      621.0607910116986,
-      5.131523823407418,
-      0.0009851648933237134
-    ],
-    "eigenvectors": [
-      [
-        0.8053191397538766,
-        -0.5643607440355725,
-        -0.18154347616395136
-      ],
-      [
-        0.5448443118165947,
-        0.5838589974436414,
-        0.601874859904621
-      ],
-      [
-        0.23367875176655933,
-        0.5836142747532147,
-        -0.777681566759237
-      ]
-    ],
-    "effective_dimensionality": 1.0165270995492128,
-    "fractional_dimensionality": 0.33884236651640426,
-    "cumulative_variance": [
-      0.9918036347749157,
-      0.9999984267399645,
-      1.0
-    ],
-    "log_slope": -6.677065247841938,
-    "log_intercept": 7.058441947685925,
-    "log_r_squared": 0.974227100435014,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      121.02853117016298,
-      5208.796880789033
-    ],
-    "mean_width_ratio": 2664.912705979598,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.02 / 3) Errors are strongly confined: only ~1.0 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.974), consistent with Vandermonde universality class. First principal direction captures 99.2% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.2252345270136564,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 5,
-    "n_properties": 3,
-    "potential": "Sharifi-2025",
-    "eigenvalues": [
-      602.1750718984102,
-      147.5436989656433,
-      42.61132080261362
-    ],
-    "eigenvectors": [
-      [
-        0.8817930749094759,
-        -0.30628830317891587,
-        0.3586480843075444
-      ],
-      [
-        0.4715783402586402,
-        0.5606398094868892,
-        -0.6806591459882183
-      ],
-      [
-        0.007405541208921926,
-        0.7693311896409021,
-        0.638807231177855
-      ]
-    ],
-    "effective_dimensionality": 1.625550197410485,
-    "fractional_dimensionality": 0.5418500658034949,
-    "cumulative_variance": [
-      0.7600053036376977,
-      0.9462202417265503,
-      1.0
-    ],
-    "log_slope": -1.3242141278127615,
-    "log_intercept": 6.373144988054119,
-    "log_r_squared": 0.9987169286434825,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      4.081333707369173,
-      3.4625469519966985
-    ],
-    "mean_width_ratio": 3.771940329682936,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.63 / 3) Moderate dimensional compression: ~1.6 of 3 dimensions are active. Log-spacing is highly linear (R² = 0.999), consistent with Vandermonde universality class. First principal direction captures 76.0% of error variance.",
-    "pr_ci_lower": 1.047919319686526,
-    "pr_ci_upper": 2.259243950123622,
-    "log_r2_ci_lower": 0.801568985416685,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Farkas-2018",
-    "eigenvalues": [
-      19808.651936463386,
-      48.927529883080766,
-      0.008100320211132
-    ],
-    "eigenvectors": [
-      [
-        0.835645174979575,
-        -0.520186203455352,
-        -0.1763617171272236
-      ],
-      [
-        0.5482005173612928,
-        0.7698342491866876,
-        0.3268507634134879
-      ],
-      [
-        0.03425396762663451,
-        0.3698128479567416,
-        -0.9284746217253098
-      ]
-    ],
-    "effective_dimensionality": 1.0049408058475118,
-    "fractional_dimensionality": 0.33498026861583724,
-    "cumulative_variance": [
-      0.9975356709349007,
-      0.9999995920793407,
-      1.0
-    ],
-    "log_slope": -7.354862886787614,
-    "log_intercept": 10.344317094534711,
-    "log_r_squared": 0.9888726396716262,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      404.8569789604943,
-      6040.197005525941
-    ],
-    "mean_width_ratio": 3222.5269922432176,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.00 / 3) Errors are strongly confined: only ~1.0 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.989), consistent with Vandermonde universality class. First principal direction captures 99.8% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.6971458188484645,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Asadi-2015",
-    "eigenvalues": [
-      158.78960235859955,
-      52.84295455241101,
-      0.05197642232245653
-    ],
-    "eigenvectors": [
-      [
-        0.8863584162441568,
-        -0.4254835457099767,
-        -0.18257193180556544
-      ],
-      [
-        0.4269658198781404,
-        0.598629154679686,
-        0.6777487173158442
-      ],
-      [
-        0.17907804613893114,
-        0.6786802542416799,
-        -0.7122669203981833
-      ]
-    ],
-    "effective_dimensionality": 1.5999968674872762,
-    "fractional_dimensionality": 0.5333322891624254,
-    "cumulative_variance": [
-      0.7501237802223297,
-      0.9997544628249215,
-      1.0
-    ],
-    "log_slope": -4.012272575219595,
-    "log_intercept": 6.038252369686305,
-    "log_r_squared": 0.8506408296039945,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      3.004934218829644,
-      1016.671640548451
-    ],
-    "mean_width_ratio": 509.8382873836403,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.60 / 3) Moderate dimensional compression: ~1.6 of 3 dimensions are active. Moderate log-linearity (R² = 0.851) — may be an intermediate regime. First principal direction captures 75.0% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 2.1302132887760017,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 5,
-    "n_properties": 3,
-    "potential": "Ackland-1987",
-    "eigenvalues": [
-      273.95612281183156,
-      89.59459044391082,
-      7.372722855368621
-    ],
-    "eigenvectors": [
-      [
-        0.7920796280352507,
-        -0.5401509585701431,
-        -0.2843357255205445
-      ],
-      [
-        0.5884061575242396,
-        0.5516670052903089,
-        0.591135948036982
-      ],
-      [
-        0.16244401078248014,
-        0.6355316335398087,
-        -0.7547923463649613
-      ]
-    ],
-    "effective_dimensionality": 1.6549788874336082,
-    "fractional_dimensionality": 0.551659629144536,
-    "cumulative_variance": [
-      0.7385786287436616,
-      0.9801233296750758,
-      1.0
-    ],
-    "log_slope": -1.8075904343337197,
-    "log_intercept": 5.842940431221845,
-    "log_r_squared": 0.9536894563377859,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      3.0577306225127194,
-      12.152171212928534
-    ],
-    "mean_width_ratio": 7.604950917720627,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.65 / 3) Moderate dimensional compression: ~1.7 of 3 dimensions are active. Log-spacing is highly linear (R² = 0.954), consistent with Vandermonde universality class. First principal direction captures 73.9% of error variance.",
-    "pr_ci_lower": 1.0116040571081373,
-    "pr_ci_upper": 2.048337790338184,
-    "log_r2_ci_lower": 0.7864438597521808,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 5,
-    "n_properties": 3,
-    "potential": "Derlet-2007",
-    "eigenvalues": [
-      245.53405357501174,
-      18.71238070008624,
-      4.410840724902618
-    ],
-    "eigenvectors": [
-      [
-        -0.9201474209495191,
-        0.38935128742242336,
-        0.04164491208359684
-      ],
-      [
-        -0.07660947759320677,
-        -0.2832998446320334,
-        0.9559666238809605
-      ],
-      [
-        -0.38400483286391707,
-        -0.8764398285187458,
-        -0.29050562012323916
-      ]
-    ],
-    "effective_dimensionality": 1.1899241797897582,
-    "fractional_dimensionality": 0.3966413932632527,
-    "cumulative_variance": [
-      0.9139304103155635,
-      0.983581904771041,
-      1.0
-    ],
-    "log_slope": -2.0096851684291432,
-    "log_intercept": 5.315247280057174,
-    "log_r_squared": 0.9743685018567145,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      13.121475963444894,
-      4.242361460580594
-    ],
-    "mean_width_ratio": 8.681918712012743,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.19 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.974), consistent with Vandermonde universality class. First principal direction captures 91.4% of error variance.",
-    "pr_ci_lower": 1.0374465531915709,
-    "pr_ci_upper": 1.5590827296908336,
-    "log_r2_ci_lower": 0.8168432318303059,
     "log_r2_ci_upper": 1.0
   },
   {
     "n_materials": 4,
-    "n_properties": 3,
-    "potential": "Zhou-2001",
+    "n_properties": 5,
+    "potential": "Adams-1989",
     "eigenvalues": [
-      2155.298912553139,
-      225.3211191381998,
-      19.953594234588365
+      60.44946604958434,
+      22.01043604217136,
+      9.238433502284575,
+      0.0
     ],
     "eigenvectors": [
       [
-        -0.8441188817157054,
-        0.19218149433264764,
-        -0.5005293066016192
+        0.957118314559545,
+        -0.23737299492836883,
+        0.16586850853614515,
+        0.008128780727657745,
+        0.0003924452944359261
       ],
       [
-        -0.018808935097704746,
-        -0.9435913423895379,
-        -0.33057768002089905
+        -0.1195672015094156,
+        -0.8457671081375219,
+        -0.5198478084873482,
+        -0.011822011653250648,
+        0.00042328155218328056
       ],
       [
-        -0.5358260328609624,
-        -0.26963243833704476,
-        0.8001179979883609
+        0.26380435169849875,
+        0.47783561072939806,
+        -0.8378121266544283,
+        -0.012293320202643716,
+        -0.000328409770389135
+      ],
+      [
+        -0.005954464115177702,
+        -0.0021868006184739097,
+        -0.01779660512326394,
+        0.9997280131381491,
+        0.013672704673595652
       ]
     ],
-    "effective_dimensionality": 1.227036486077826,
-    "fractional_dimensionality": 0.409012162025942,
+    "effective_dimensionality": 1.9906942374940477,
+    "fractional_dimensionality": 0.39813884749880957,
     "cumulative_variance": [
-      0.897826623302094,
-      0.9916879890626591,
+      0.6592209734013221,
+      0.8992518954413279,
+      1.0,
       1.0
     ],
-    "log_slope": -2.3411377050983915,
-    "log_intercept": 7.703344561625479,
-    "log_r_squared": 0.9995814131974902,
+    "log_slope": -0.9392177035994589,
+    "log_intercept": 4.078116632741847,
+    "log_r_squared": 0.9980948402706267,
     "decay_monotonicity": -1.0,
     "width_ratios": [
-      9.56545449799224,
-      11.292257248953128
+      2.746400204601349,
+      2.3824857359993326,
+      null
     ],
-    "mean_width_ratio": 10.428855873472685,
+    "mean_width_ratio": 2.564442970300341,
     "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.23 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 1.000), consistent with Vandermonde universality class. First principal direction captures 89.8% of error variance.",
-    "pr_ci_lower": 1.0018942533628654,
-    "pr_ci_upper": 2.033587094492249,
-    "log_r2_ci_lower": 0.7619127101158005,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Bonny-2011",
-    "eigenvalues": [
-      3677.9631395209763,
-      153.88018126452087,
-      0.010012547839743645
-    ],
-    "eigenvectors": [
-      [
-        0.4183092421455847,
-        -0.9043986754908429,
-        -0.08414519419429894
-      ],
-      [
-        0.8985002605797594,
-        0.42558926335471625,
-        -0.10756886471137733
-      ],
-      [
-        0.13309642998101448,
-        -0.030607428634234872,
-        0.9906303678157202
-      ]
-    ],
-    "effective_dimensionality": 1.0835362939798525,
-    "fractional_dimensionality": 0.36117876465995086,
-    "cumulative_variance": [
-      0.9598392264981365,
-      0.9999973870221617,
-      1.0
-    ],
-    "log_slope": -6.407015285915033,
-    "log_intercept": 9.28780610274146,
-    "log_r_squared": 0.9217620188470208,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      23.901473921443706,
-      15368.733685716974
-    ],
-    "mean_width_ratio": 7696.317579819209,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.08 / 3) Errors are strongly confined: only ~1.1 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.922), consistent with Vandermonde universality class. First principal direction captures 96.0% of error variance.",
+    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.99 / 5) Errors are strongly confined: only ~2.0 effective dimensions control all 5 properties. Log-spacing is highly linear (R² = 0.998), consistent with Vandermonde universality class. First principal direction captures 65.9% of error variance.",
     "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.8680473754085034,
+    "pr_ci_upper": 1.9906942374940473,
     "log_r2_ci_lower": 0.0,
     "log_r2_ci_upper": 1.0
   },
   {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Farkas-2020",
-    "eigenvalues": [
-      19792.72980854074,
-      58.0066189689451,
-      1.1079391569911283
-    ],
-    "eigenvectors": [
-      [
-        0.8375990310217261,
-        -0.5200189566866215,
-        -0.16735635009769786
-      ],
-      [
-        0.5462444568794789,
-        0.8010214964828992,
-        0.24491132170796023
-      ],
-      [
-        0.006697504005858967,
-        -0.2965549643132867,
-        0.9549923018439662
-      ]
-    ],
-    "effective_dimensionality": 1.0059736375723565,
-    "fractional_dimensionality": 0.33532454585745214,
-    "cumulative_variance": [
-      0.9970222132999795,
-      0.9999441896109738,
-      1.0
-    ],
-    "log_slope": -4.895284146756869,
-    "log_intercept": 9.580660402227572,
-    "log_r_squared": 0.9879290940763151,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      341.2150227052043,
-      52.35541916081009
-    ],
-    "mean_width_ratio": 196.7852209330072,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.01 / 3) Errors are strongly confined: only ~1.0 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.988), consistent with Vandermonde universality class. First principal direction captures 99.7% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.4625953175161668,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Chen-2020",
-    "eigenvalues": [
-      1093.9479174864052,
-      117.5421989966392,
-      0.09745018362223656
-    ],
-    "eigenvectors": [
-      [
-        0.8091658405486091,
-        -0.5698398873476195,
-        0.1432939122116333
-      ],
-      [
-        0.5677415875091183,
-        0.8210748643233341,
-        0.05920774433335927
-      ],
-      [
-        0.1513939638885546,
-        -0.03344502898893516,
-        -0.9879075350122807
-      ]
-    ],
-    "effective_dimensionality": 1.2126378187305629,
-    "fractional_dimensionality": 0.40421260624352096,
-    "cumulative_variance": [
-      0.9029045424228701,
-      0.9999195681878031,
-      1.0
-    ],
-    "log_slope": -4.662981171595635,
-    "log_intercept": 7.808291776655241,
-    "log_r_squared": 0.9168505594447931,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      9.306852575709287,
-      1206.1772962100192
-    ],
-    "mean_width_ratio": 607.7420743928643,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.21 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.917), consistent with Vandermonde universality class. First principal direction captures 90.3% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.320491834783422,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Mendelev-2007",
-    "eigenvalues": [
-      95.60901981109915,
-      51.9357629714136,
-      0.42611721748745274
-    ],
-    "eigenvectors": [
-      [
-        0.8342483097817155,
-        0.5391756957112759,
-        -0.11540938774905947
-      ],
-      [
-        -0.09538312166609017,
-        -0.06503362807787146,
-        -0.9933139923107198
-      ],
-      [
-        0.5430762540634444,
-        -0.8396786268408236,
-        0.0028259333195095673
-      ]
-    ],
-    "effective_dimensionality": 1.8494928672806479,
-    "fractional_dimensionality": 0.6164976224268827,
-    "cumulative_variance": [
-      0.6461339345175234,
-      0.9971202633930898,
-      1.0
-    ],
-    "log_slope": -2.70665398861793,
-    "log_intercept": 5.25906531542367,
-    "log_r_squared": 0.8333559511572597,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      1.8409091219806304,
-      121.88139985904907
-    ],
-    "mean_width_ratio": 61.86115449051485,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.85 / 3) Moderate dimensional compression: ~1.8 of 3 dimensions are active. Moderate log-linearity (R² = 0.833) — may be an intermediate regime. First principal direction captures 64.6% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 2.25409545416743,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 12,
-    "n_properties": 3,
+    "n_materials": 5,
+    "n_properties": 5,
     "potential": "Zhou-2004",
     "eigenvalues": [
-      144.71033934014608,
-      8.960802331306995,
-      1.9009674194559536
+      28.069741312596406,
+      1.9798453631747541,
+      0.12530631109127355,
+      0.00024307825797654348,
+      0.0
     ],
     "eigenvectors": [
       [
-        0.9798504883364965,
-        -0.03503919699512382,
-        0.19663487783367964
+        0.7893381364976958,
+        0.5647310918947372,
+        0.24085947768204113,
+        -0.0032748459554461126,
+        -0.00029582499110594854
       ],
       [
-        0.16482401595288346,
-        0.697898633442416,
-        -0.6969724106479197
+        0.2268065083749962,
+        -0.6325946043163068,
+        0.7393621888109722,
+        -0.04152353908158911,
+        -0.0014912435838017484
       ],
       [
-        0.11280985893038253,
-        -0.715338907171381,
-        -0.6896116179524248
+        0.5544792589530233,
+        -0.5180591455564186,
+        -0.5989815203983241,
+        0.25571033983365393,
+        -0.0009129182487081308
+      ],
+      [
+        -0.1334398648802682,
+        0.1111436033652358,
+        0.18958586318434384,
+        0.958163035184891,
+        -0.12578434074896494
+      ],
+      [
+        0.015832494456943493,
+        -0.012832831862776294,
+        -0.024669910201337727,
+        -0.12165891333372426,
+        -0.9920560240645522
       ]
     ],
-    "effective_dimensionality": 1.1511386622366504,
-    "fractional_dimensionality": 0.3837128874122168,
+    "effective_dimensionality": 1.1498940321391153,
+    "fractional_dimensionality": 0.22997880642782306,
     "cumulative_variance": [
-      0.9301817670645844,
-      0.987780795474431,
+      0.9302274976331378,
+      0.9958393099179966,
+      0.9999919444188271,
+      1.0,
       1.0
     ],
-    "log_slope": -2.166185579994479,
-    "log_intercept": 4.7695045061016765,
-    "log_r_squared": 0.9737777656328434,
+    "log_slope": -3.773047066790877,
+    "log_intercept": 4.0642180374611545,
+    "log_r_squared": 0.9493400587720291,
     "decay_monotonicity": -1.0,
     "width_ratios": [
-      16.14926141541603,
-      4.71381163064411
+      14.177744299981871,
+      15.800045073010153,
+      515.4978159476744,
+      null
     ],
-    "mean_width_ratio": 10.43153652303007,
+    "mean_width_ratio": 181.82520177355548,
     "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.15 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.974), consistent with Vandermonde universality class. First principal direction captures 93.0% of error variance.",
-    "pr_ci_lower": 1.0325867745976876,
-    "pr_ci_upper": 2.0633733944403057,
-    "log_r2_ci_lower": 0.8099331115130575,
-    "log_r2_ci_upper": 0.9998897360047769
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Zuo-2019",
-    "eigenvalues": [
-      799.433317734059,
-      367.28118870113894,
-      28.00309356480281
-    ],
-    "eigenvectors": [
-      [
-        0.3865833828149555,
-        -0.9125197597334688,
-        0.1336449633443699
-      ],
-      [
-        0.9191051886758854,
-        0.3931620645504075,
-        0.02586973419897546
-      ],
-      [
-        0.07615077334085381,
-        -0.11283296989104524,
-        -0.9906915668487122
-      ]
-    ],
-    "effective_dimensionality": 1.8422810789273558,
-    "fractional_dimensionality": 0.6140936929757853,
-    "cumulative_variance": [
-      0.6691399856619324,
-      0.9765609098210298,
-      1.0
-    ],
-    "log_slope": -1.6757940676528023,
-    "log_intercept": 6.983242683919046,
-    "log_r_squared": 0.9126409062147618,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      2.176624728756711,
-      13.115736225756715
-    ],
-    "mean_width_ratio": 7.646180477256713,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.84 / 3) Moderate dimensional compression: ~1.8 of 3 dimensions are active. Log-spacing is highly linear (R² = 0.913), consistent with Vandermonde universality class. First principal direction captures 66.9% of error variance.",
+    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.15 / 5) Errors are strongly confined: only ~1.1 effective dimensions control all 5 properties. Log-spacing is highly linear (R² = 0.949), consistent with Vandermonde universality class. First principal direction captures 93.0% of error variance.",
     "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.9254802449794926,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Deluigi-2021",
-    "eigenvalues": [
-      22404.828705718566,
-      167.48515514099367,
-      0.1659724737991492
-    ],
-    "eigenvectors": [
-      [
-        -0.8411777609624786,
-        0.4903042102093824,
-        0.22808278302648244
-      ],
-      [
-        -0.1873881413103295,
-        0.13135434763938486,
-        -0.9734637742887463
-      ],
-      [
-        -0.5072530521923071,
-        -0.8615960868105111,
-        -0.01861516141221968
-      ]
-    ],
-    "effective_dimensionality": 1.0149648990713493,
-    "fractional_dimensionality": 0.3383216330237831,
-    "cumulative_variance": [
-      0.9925727643195315,
-      0.9999926471315946,
-      1.0
-    ],
-    "log_slope": -5.906482553346909,
-    "log_intercept": 10.353813612774488,
-    "log_r_squared": 0.9903407069584583,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      133.77202706029414,
-      1009.1140495000094
-    ],
-    "mean_width_ratio": 571.4430382801518,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.01 / 3) Errors are strongly confined: only ~1.0 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.990), consistent with Vandermonde universality class. First principal direction captures 99.3% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.9389590243162194,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 9,
-    "n_properties": 3,
-    "potential": "Morse_Shifted_GirifalcoWeizer_1959LowCut",
-    "eigenvalues": [
-      18654.419250083545,
-      609.4960682816287,
-      190.40261913483516
-    ],
-    "eigenvectors": [
-      [
-        0.7691014230405145,
-        -0.4692537008302821,
-        -0.4339170028175207
-      ],
-      [
-        -0.44081120546478253,
-        0.10213203185334523,
-        -0.891770446474984
-      ],
-      [
-        0.46278340745292645,
-        0.8771373964930418,
-        -0.12830239849538003
-      ]
-    ],
-    "effective_dimensionality": 1.086325526883796,
-    "fractional_dimensionality": 0.3621085089612653,
-    "cumulative_variance": [
-      0.9588832314766182,
-      0.9902128350247728,
-      1.0
-    ],
-    "log_slope": -2.2923487379440863,
-    "log_intercept": 9.45755264811312,
-    "log_r_squared": 0.9252112578219709,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      30.606299565929163,
-      3.201090778325949
-    ],
-    "mean_width_ratio": 16.903695172127556,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.09 / 3) Errors are strongly confined: only ~1.1 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.925), consistent with Vandermonde universality class. First principal direction captures 95.9% of error variance.",
-    "pr_ci_lower": 1.0314766176245993,
-    "pr_ci_upper": 1.3381498279226822,
-    "log_r2_ci_lower": 0.7940906282639282,
-    "log_r2_ci_upper": 0.999828653834545
-  },
-  {
-    "n_materials": 5,
-    "n_properties": 3,
-    "potential": "EAM_Dynamo_AdamsFoilesWolfer_1989Univers",
-    "eigenvalues": [
-      845.9486785620738,
-      77.41373280689321,
-      13.463994186589108
-    ],
-    "eigenvectors": [
-      [
-        0.7660821761406206,
-        -0.6394511197833929,
-        0.06496433488781898
-      ],
-      [
-        0.4617951640336167,
-        0.6178949185648991,
-        0.636357679365027
-      ],
-      [
-        0.44706076306785913,
-        0.4575020601258998,
-        -0.7686537185922812
-      ]
-    ],
-    "effective_dimensionality": 1.2159042156296531,
-    "fractional_dimensionality": 0.4053014052098844,
-    "cumulative_variance": [
-      0.902994059033178,
-      0.9856280799657812,
-      1.0
-    ],
-    "log_slope": -2.070219834506957,
-    "log_intercept": 6.633433804688624,
-    "log_r_squared": 0.9920459250746285,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      10.927630639802288,
-      5.749685549032813
-    ],
-    "mean_width_ratio": 8.33865809441755,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.22 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.992), consistent with Vandermonde universality class. First principal direction captures 90.3% of error variance.",
-    "pr_ci_lower": 1.0319792731384692,
-    "pr_ci_upper": 1.9410798920446486,
-    "log_r2_ci_lower": 0.7965662239722425,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 9,
-    "n_properties": 3,
-    "potential": "Morse_Shifted_GirifalcoWeizer_1959MedCut",
-    "eigenvalues": [
-      20722.563499131516,
-      1365.7177628134639,
-      287.4952213883768
-    ],
-    "eigenvectors": [
-      [
-        -0.7373234308620218,
-        0.34544322034055436,
-        0.5805369409629366
-      ],
-      [
-        -0.05368038697726291,
-        -0.8866103357125081,
-        0.4593914764791838
-      ],
-      [
-        -0.6734037231526333,
-        -0.30755665190091486,
-        -0.6722621003118283
-      ]
-    ],
-    "effective_dimensionality": 1.1606567421992133,
-    "fractional_dimensionality": 0.3868855807330711,
-    "cumulative_variance": [
-      0.9261159501913492,
-      0.9871514974417751,
-      1.0
-    ],
-    "log_slope": -2.1388860854398573,
-    "log_intercept": 9.745426102620733,
-    "log_r_squared": 0.9760225765762162,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      15.173386524930116,
-      4.750401610914144
-    ],
-    "mean_width_ratio": 9.961894067922131,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.16 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.976), consistent with Vandermonde universality class. First principal direction captures 92.6% of error variance.",
-    "pr_ci_lower": 1.0325490067115288,
-    "pr_ci_upper": 1.3760658399259629,
-    "log_r2_ci_lower": 0.8110651752808261,
-    "log_r2_ci_upper": 0.9997988202128517
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Wu-2017",
-    "eigenvalues": [
-      1409.245533476785,
-      110.1426646668166,
-      0.5874685230659452
-    ],
-    "eigenvectors": [
-      [
-        0.5550498275201917,
-        -0.7294477506893092,
-        -0.3997820255890856
-      ],
-      [
-        0.8311374050803338,
-        0.466918529845388,
-        0.30198956995788845
-      ],
-      [
-        0.03361997689074637,
-        0.49989305406389517,
-        -0.8654343601062632
-      ]
-    ],
-    "effective_dimensionality": 1.1562587275723497,
-    "fractional_dimensionality": 0.3854195758574499,
-    "cumulative_variance": [
-      0.9271500619265072,
-      0.9996135013632459,
-      1.0
-    ],
-    "log_slope": -3.891371184841544,
-    "log_intercept": 7.6982557256276705,
-    "log_r_squared": 0.9618491599257546,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      12.794728888571711,
-      187.4869211579064
-    ],
-    "mean_width_ratio": 100.14082502323906,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.16 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.962), consistent with Vandermonde universality class. First principal direction captures 92.7% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.5480434313565095,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 8,
-    "n_properties": 3,
-    "potential": "Elliott-2015",
-    "eigenvalues": [
-      2473663.6580785015,
-      917246.2756926772,
-      383.34221294718003
-    ],
-    "eigenvectors": [
-      [
-        0.8385075793929705,
-        0.4701997438034031,
-        0.2753493058421534
-      ],
-      [
-        -0.26327209243853406,
-        -0.09282697656565869,
-        0.9602452591732565
-      ],
-      [
-        0.47706691841247767,
-        -0.8776647157935045,
-        0.04595434699274607
-      ]
-    ],
-    "effective_dimensionality": 1.6523401130533784,
-    "fractional_dimensionality": 0.5507800376844595,
-    "cumulative_variance": [
-      0.729416024145144,
-      0.9998869628245773,
-      1.0
-    ],
-    "log_slope": -4.386141387703046,
-    "log_intercept": 15.852564804563166,
-    "log_r_squared": 0.8336136165689498,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      2.6968369604013533,
-      2392.760944955109
-    ],
-    "mean_width_ratio": 1197.7288909577553,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.65 / 3) Moderate dimensional compression: ~1.7 of 3 dimensions are active. Moderate log-linearity (R² = 0.834) — may be an intermediate regime. First principal direction captures 72.9% of error variance.",
-    "pr_ci_lower": 1.0229255048259451,
-    "pr_ci_upper": 1.9760395734009348,
-    "log_r2_ci_lower": 0.7759236153509907,
-    "log_r2_ci_upper": 0.9949581618745558
-  },
-  {
-    "n_materials": 8,
-    "n_properties": 3,
-    "potential": "Lee-2003",
-    "eigenvalues": [
-      55.26211875563326,
-      11.21072395884416,
-      2.519809666474839
-    ],
-    "eigenvectors": [
-      [
-        0.5403467727429861,
-        -0.43771108951095816,
-        -0.7186336808871188
-      ],
-      [
-        0.8402766101304768,
-        0.3256361856820503,
-        0.4334700601449646
-      ],
-      [
-        0.04427847845030001,
-        -0.8380752213814552,
-        0.5437548525324176
-      ]
-    ],
-    "effective_dimensionality": 1.4940641442257827,
-    "fractional_dimensionality": 0.49802138140859425,
-    "cumulative_variance": [
-      0.8009855665570877,
-      0.9634771301071109,
-      1.0
-    ],
-    "log_slope": -1.5439521454223193,
-    "log_intercept": 3.9949994275397427,
-    "log_r_squared": 0.9996326430018724,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      4.929397865695987,
-      4.449036015695475
-    ],
-    "mean_width_ratio": 4.689216940695731,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.49 / 3) Errors are strongly confined: only ~1.5 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 1.000), consistent with Vandermonde universality class. First principal direction captures 80.1% of error variance.",
-    "pr_ci_lower": 1.2408566531572864,
-    "pr_ci_upper": 2.332298912099792,
-    "log_r2_ci_lower": 0.8423039925275633,
-    "log_r2_ci_upper": 0.9999432710920907
-  },
-  {
-    "n_materials": 6,
-    "n_properties": 3,
-    "potential": "Jeong-2018",
-    "eigenvalues": [
-      190.18364205992577,
-      35.52421810995328,
-      2.6394064967872906
-    ],
-    "eigenvectors": [
-      [
-        0.7894232176445084,
-        -0.6052722552569982,
-        0.1022569335541531
-      ],
-      [
-        0.4894116071351563,
-        0.7211499553907005,
-        0.4903254232052165
-      ],
-      [
-        0.37052295778423083,
-        0.3370285430881164,
-        -0.8655197853883682
-      ]
-    ],
-    "effective_dimensionality": 1.3927406305056274,
-    "fractional_dimensionality": 0.4642468768352091,
-    "cumulative_variance": [
-      0.8328702367939856,
-      0.9884412608247235,
-      1.0
-    ],
-    "log_slope": -2.138718031230224,
-    "log_intercept": 5.401637660147519,
-    "log_r_squared": 0.9847527164624343,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      5.353633441594019,
-      13.459169003786904
-    ],
-    "mean_width_ratio": 9.406401222690462,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.39 / 3) Errors are strongly confined: only ~1.4 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.985), consistent with Vandermonde universality class. First principal direction captures 83.3% of error variance.",
-    "pr_ci_lower": 1.034179459997736,
-    "pr_ci_upper": 1.9327734600696196,
-    "log_r2_ci_lower": 0.8306205405378186,
-    "log_r2_ci_upper": 0.9999997522917948
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Jelinek-2012",
-    "eigenvalues": [
-      51.04116358900083,
-      2.686599323613374,
-      1.0344704207192654
-    ],
-    "eigenvectors": [
-      [
-        -0.7064755506421685,
-        0.14606246775018636,
-        0.6925013009804177
-      ],
-      [
-        -0.2974797056139467,
-        0.8265555060775833,
-        -0.4778198615803552
-      ],
-      [
-        -0.6421823114137329,
-        -0.543573132970676,
-        -0.540490636384905
-      ]
-    ],
-    "effective_dimensionality": 1.1474710525386287,
-    "fractional_dimensionality": 0.3824903508462096,
-    "cumulative_variance": [
-      0.9320504384530344,
-      0.9811097839194665,
-      1.0
-    ],
-    "log_slope": -1.94937140570015,
-    "log_intercept": 3.6009708267724894,
-    "log_r_squared": 0.9200981833681915,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      18.99842791605873,
-      2.597076987223459
-    ],
-    "mean_width_ratio": 10.797752451641095,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.15 / 3) Errors are strongly confined: only ~1.1 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.920), consistent with Vandermonde universality class. First principal direction captures 93.2% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.624403545118391,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 7,
-    "n_properties": 3,
-    "potential": "Kim-2017",
-    "eigenvalues": [
-      786.9515410787611,
-      199.43821272231776,
-      3.2050350878097995
-    ],
-    "eigenvectors": [
-      [
-        0.8659198270175754,
-        0.31764727903707457,
-        0.3863716595432364
-      ],
-      [
-        0.3717819276112702,
-        -0.9254968970890797,
-        -0.07234425879179303
-      ],
-      [
-        0.3346058150712566,
-        0.20629032841805403,
-        -0.9195016307335575
-      ]
-    ],
-    "effective_dimensionality": 1.4858589624734335,
-    "fractional_dimensionality": 0.4952863208244778,
-    "cumulative_variance": [
-      0.7952260358629675,
-      0.9967612651927882,
-      1.0
-    ],
-    "log_slope": -2.7517218170707607,
-    "log_intercept": 7.127853213114316,
-    "log_r_squared": 0.9227464968824696,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      3.945841322667944,
-      62.22653021206278
-    ],
-    "mean_width_ratio": 33.08618576736536,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.49 / 3) Errors are strongly confined: only ~1.5 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.923), consistent with Vandermonde universality class. First principal direction captures 79.5% of error variance.",
-    "pr_ci_lower": 1.0203531968952664,
-    "pr_ci_upper": 2.01392881343654,
-    "log_r2_ci_lower": 0.79160963330213,
-    "log_r2_ci_upper": 0.9998409708996134
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Choi-2017",
-    "eigenvalues": [
-      925.6996355129874,
-      124.27073907360393,
-      1.4391587467430895
-    ],
-    "eigenvectors": [
-      [
-        -0.363993002333838,
-        0.8238506592663604,
-        0.43448726733747034
-      ],
-      [
-        -0.1659191363967063,
-        -0.5163802329713668,
-        0.8401323081359315
-      ],
-      [
-        -0.9165041922595716,
-        -0.23371252902405704,
-        -0.32465138125042625
-      ]
-    ],
-    "effective_dimensionality": 1.2672010870649426,
-    "fractional_dimensionality": 0.42240036235498085,
-    "cumulative_variance": [
-      0.8804367909602238,
-      0.9986312101030885,
-      1.0
-    ],
-    "log_slope": -3.2332455375536036,
-    "log_intercept": 7.238935910445697,
-    "log_r_squared": 0.9543246465663304,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      7.449055525168379,
-      86.34957009074694
-    ],
-    "mean_width_ratio": 46.899312807957656,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.27 / 3) Errors are strongly confined: only ~1.3 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.954), consistent with Vandermonde universality class. First principal direction captures 88.0% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.5029060737366957,
+    "pr_ci_upper": 1.442148724300791,
     "log_r2_ci_lower": 0.0,
     "log_r2_ci_upper": 1.0
   },
   {
     "n_materials": 4,
-    "n_properties": 3,
-    "potential": "Li-2019",
+    "n_properties": 5,
+    "potential": "Ackland-1987",
     "eigenvalues": [
-      3121.7277730860133,
-      1318.991830012593,
-      7.838915419915178
+      1611.4232611104565,
+      390.71029039581634,
+      0.176498096521275,
+      0.0
     ],
     "eigenvectors": [
       [
-        0.39513920980922485,
-        0.3801349092568993,
-        -0.8362789341096609
+        0.5589061786365793,
+        0.5852877522035277,
+        0.587419820011524,
+        0.00029267619622311053,
+        -8.197102134984447e-7
       ],
       [
-        0.8269953709406311,
-        0.24913088616014692,
-        0.5039964861026588
+        0.3245614658240724,
+        -0.8062782363818419,
+        0.4945450511489241,
+        -0.0006728156818865727,
+        -0.000011928222469233561
       ],
       [
-        0.3999295704422332,
-        -0.8907475805890855,
-        -0.21592842879199983
+        0.7626993708492288,
+        -0.08568610228080016,
+        -0.6402868816894415,
+        -0.031294009854918765,
+        0.000977581570546109
+      ],
+      [
+        0.0239459391404173,
+        -0.003397574989574756,
+        -0.01989614295474232,
+        0.9990177179485215,
+        -0.03134950084654073
       ]
     ],
-    "effective_dimensionality": 1.7230908506249685,
-    "fractional_dimensionality": 0.5743636168749895,
+    "effective_dimensionality": 1.45825772020313,
+    "fractional_dimensionality": 0.291651544040626,
     "cumulative_variance": [
-      0.7017391723837827,
-      0.9982378751707361,
+      0.8047820872846942,
+      0.9999118527639831,
+      1.0,
       1.0
     ],
-    "log_slope": -2.9935207077282953,
-    "log_intercept": 8.756809156084921,
-    "log_r_squared": 0.8553742842273294,
+    "log_slope": -4.559659133915039,
+    "log_intercept": 8.432457211715933,
+    "log_r_squared": 0.8632925139254521,
     "decay_monotonicity": -1.0,
     "width_ratios": [
-      2.3667529260254847,
-      168.26203107914964
+      4.124343025309044,
+      2213.6799098494544,
+      null
     ],
-    "mean_width_ratio": 85.31439200258757,
+    "mean_width_ratio": 1108.9021264373816,
     "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.72 / 3) Moderate dimensional compression: ~1.7 of 3 dimensions are active. Moderate log-linearity (R² = 0.855) — may be an intermediate regime. First principal direction captures 70.2% of error variance.",
-    "pr_ci_lower": 1.0353285691145824,
-    "pr_ci_upper": 1.964457227405984,
-    "log_r2_ci_lower": 0.7996315728530765,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Zhou-2018",
-    "eigenvalues": [
-      8257.416022977246,
-      4319.3137250814725,
-      999.0129519412934
-    ],
-    "eigenvectors": [
-      [
-        0.8768520302275159,
-        -0.31206830564151583,
-        -0.3657101170324896
-      ],
-      [
-        0.4259751411495114,
-        0.8569725386757591,
-        0.2900745543447051
-      ],
-      [
-        0.2228804527286717,
-        -0.4101358806172153,
-        0.8843714509310011
-      ]
-    ],
-    "effective_dimensionality": 2.098155879215949,
-    "fractional_dimensionality": 0.699385293071983,
-    "cumulative_variance": [
-      0.6082478288997949,
-      0.9264119117445198,
-      1.0
-    ],
-    "log_slope": -1.056049621977363,
-    "log_intercept": 9.15487846850399,
-    "log_r_squared": 0.9525962591518479,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      1.9117425935115402,
-      4.3235813076178164
-    ],
-    "mean_width_ratio": 3.1176619505646785,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 2.10 / 3) Moderate dimensional compression: ~2.1 of 3 dimensions are active. Log-spacing is highly linear (R² = 0.953), consistent with Vandermonde universality class. First principal direction captures 60.8% of error variance.",
+    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.46 / 5) Errors are strongly confined: only ~1.5 effective dimensions control all 5 properties. Moderate log-linearity (R² = 0.863) — may be an intermediate regime. First principal direction captures 80.5% of error variance.",
     "pr_ci_lower": 1.0,
-    "pr_ci_upper": 2.1115386217771106,
+    "pr_ci_upper": 1.697249414364924,
     "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Olsson-2009",
-    "eigenvalues": [
-      35.175346915878876,
-      5.159618199802703,
-      0.227401550985076
-    ],
-    "eigenvectors": [
-      [
-        0.9573633393352906,
-        -0.12000190084225137,
-        -0.26278314308765655
-      ],
-      [
-        0.2882174531267889,
-        0.45863715226724167,
-        0.8405847145132384
-      ],
-      [
-        0.019650348849028058,
-        -0.8804836775059726,
-        0.47366903786892156
-      ]
-    ],
-    "effective_dimensionality": 1.3016880564465088,
-    "fractional_dimensionality": 0.43389601881550294,
-    "cumulative_variance": [
-      0.8671916805284755,
-      0.9943937800066298,
-      1.0
-    ],
-    "log_slope": -2.5206916713476697,
-    "log_intercept": 3.7607483956199093,
-    "log_r_squared": 0.9813906227516548,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      6.8174321342660456,
-      22.689459141557574
-    ],
-    "mean_width_ratio": 14.75344563791181,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.30 / 3) Errors are strongly confined: only ~1.3 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.981), consistent with Vandermonde universality class. First principal direction captures 86.7% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.5010552595440818,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 7,
-    "n_properties": 3,
-    "potential": "Lee-2001",
-    "eigenvalues": [
-      656.3845533549817,
-      253.87245025102914,
-      2.2245926902847315
-    ],
-    "eigenvectors": [
-      [
-        0.5635364369959626,
-        -0.8227509817620166,
-        -0.07421257432223782
-      ],
-      [
-        0.8257452213811277,
-        0.5636225282817908,
-        0.02178244659065999
-      ],
-      [
-        0.023906349452155785,
-        -0.07355588095373501,
-        0.9970045229751926
-      ]
-    ],
-    "effective_dimensionality": 1.6810578559804847,
-    "fractional_dimensionality": 0.5603526186601616,
-    "cumulative_variance": [
-      0.7193400458915606,
-      0.9975620410325927,
-      1.0
-    ],
-    "log_slope": -2.843586494129346,
-    "log_intercept": 7.117970707933755,
-    "log_r_squared": 0.8712110540183611,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      2.5854894956343175,
-      114.12086866946206
-    ],
-    "mean_width_ratio": 58.35317908254819,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.68 / 3) Moderate dimensional compression: ~1.7 of 3 dimensions are active. Moderate log-linearity (R² = 0.871) — may be an intermediate regime. First principal direction captures 71.9% of error variance.",
-    "pr_ci_lower": 1.0498641825453514,
-    "pr_ci_upper": 1.9486567827211485,
-    "log_r2_ci_lower": 0.8063439648334778,
-    "log_r2_ci_upper": 0.9999108580922731
-  },
-  {
-    "n_materials": 6,
-    "n_properties": 3,
-    "potential": "Voter-1993",
-    "eigenvalues": [
-      80.67009934628399,
-      35.66709471034174,
-      6.526659276707643
-    ],
-    "eigenvectors": [
-      [
-        0.040087906998176964,
-        0.9751808819238884,
-        -0.21775033235945496
-      ],
-      [
-        0.9616579880430925,
-        0.021517464511747075,
-        0.2734061315221313
-      ],
-      [
-        0.2713058675101162,
-        -0.22036162608569898,
-        -0.9369278947728319
-      ]
-    ],
-    "effective_dimensionality": 1.9297810156402162,
-    "fractional_dimensionality": 0.6432603385467387,
-    "cumulative_variance": [
-      0.656581225133999,
-      0.9468789306241224,
-      1.0
-    ],
-    "log_slope": -1.2572363871503416,
-    "log_intercept": 4.53740030500738,
-    "log_r_squared": 0.9605861134181666,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      2.261751342558707,
-      5.464831730626808
-    ],
-    "mean_width_ratio": 3.8632915365927576,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.93 / 3) Moderate dimensional compression: ~1.9 of 3 dimensions are active. Log-spacing is highly linear (R² = 0.961), consistent with Vandermonde universality class. First principal direction captures 65.7% of error variance.",
-    "pr_ci_lower": 1.2340789007867117,
-    "pr_ci_upper": 2.5449017869147896,
-    "log_r2_ci_lower": 0.7924653534792188,
-    "log_r2_ci_upper": 0.999972925554901
-  },
-  {
-    "n_materials": 6,
-    "n_properties": 3,
-    "potential": "EAM_Dynamo_FoilesBaskesDaw_1986Universal",
-    "eigenvalues": [
-      465.3722828853337,
-      33.93357296777068,
-      11.665550813562186
-    ],
-    "eigenvectors": [
-      [
-        0.8801138130731008,
-        -0.4048709855464127,
-        0.24794991651662926
-      ],
-      [
-        0.4603441967270474,
-        0.6000217070878304,
-        -0.6542607825348656
-      ],
-      [
-        0.11611587564866539,
-        0.6899662572083376,
-        0.714467401171153
-      ]
-    ],
-    "effective_dimensionality": 1.198444211048289,
-    "fractional_dimensionality": 0.39948140368276297,
-    "cumulative_variance": [
-      0.9107599306215591,
-      0.9771698559618773,
-      1.0
-    ],
-    "log_slope": -1.8430987849658678,
-    "log_intercept": 5.884393016520607,
-    "log_r_squared": 0.9442983035313448,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      13.714214041867429,
-      2.908870186251303
-    ],
-    "mean_width_ratio": 8.311542114059366,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.20 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.944), consistent with Vandermonde universality class. First principal direction captures 91.1% of error variance.",
-    "pr_ci_lower": 1.0415279189027935,
-    "pr_ci_upper": 2.173295426910305,
-    "log_r2_ci_lower": 0.8134451967940406,
-    "log_r2_ci_upper": 0.9999984407545429
-  },
-  {
-    "n_materials": 9,
-    "n_properties": 3,
-    "potential": "Morse_Shifted_GirifalcoWeizer_1959HighCu",
-    "eigenvalues": [
-      20024.121318556983,
-      837.1077082202482,
-      306.1765065561158
-    ],
-    "eigenvectors": [
-      [
-        0.7710362091106169,
-        -0.4628779610428433,
-        -0.4373181421129811
-      ],
-      [
-        0.5747829760063535,
-        0.21028476306460858,
-        0.7908254225277164
-      ],
-      [
-        0.27409431722239125,
-        0.8611180590393409,
-        -0.42819153852301817
-      ]
-    ],
-    "effective_dimensionality": 1.1152407839686187,
-    "fractional_dimensionality": 0.37174692798953957,
-    "cumulative_variance": [
-      0.9459884579158282,
-      0.9855354731086923,
-      1.0
-    ],
-    "log_slope": -2.0902655686417617,
-    "log_intercept": 9.543201366003283,
-    "log_r_squared": 0.9176625224380196,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      23.920603193500295,
-      2.7340690428408942
-    ],
-    "mean_width_ratio": 13.327336118170594,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.12 / 3) Errors are strongly confined: only ~1.1 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.918), consistent with Vandermonde universality class. First principal direction captures 94.6% of error variance.",
-    "pr_ci_lower": 1.030997470936403,
-    "pr_ci_upper": 1.4265557121121049,
-    "log_r2_ci_lower": 0.8197802951990941,
-    "log_r2_ci_upper": 0.9998126381591375
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Choi-2018",
-    "eigenvalues": [
-      1392.2655304814045,
-      123.71735029752415,
-      1.6547192210725459
-    ],
-    "eigenvectors": [
-      [
-        0.5595605726426235,
-        -0.7047128691627604,
-        -0.43620148736593023
-      ],
-      [
-        0.8192293407600356,
-        0.5500112468300145,
-        0.16232965101413516
-      ],
-      [
-        0.12551992981888127,
-        -0.44818232941168445,
-        0.8850860674654073
-      ]
-    ],
-    "effective_dimensionality": 1.1788963018382692,
-    "fractional_dimensionality": 0.39296543394608974,
-    "cumulative_variance": [
-      0.9173899819570914,
-      0.9989096743378837,
-      1.0
-    ],
-    "log_slope": -3.367528118932126,
-    "log_intercept": 7.554300934769624,
-    "log_r_squared": 0.9743248308027498,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      11.25359965383341,
-      74.76637046455156
-    ],
-    "mean_width_ratio": 43.00998505919248,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.18 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.974), consistent with Vandermonde universality class. First principal direction captures 91.7% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.5860479409582364,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Bonny-2009",
-    "eigenvalues": [
-      103.27621298639161,
-      37.15483115891984,
-      0.07935585468879408
-    ],
-    "eigenvectors": [
-      [
-        0.9438011194049144,
-        0.3003722650111429,
-        -0.13789833001927926
-      ],
-      [
-        0.28749459917925047,
-        -0.9519187006409133,
-        -0.1058189151941974
-      ],
-      [
-        0.1630530663704074,
-        -0.060226985498116475,
-        0.9847773391813079
-      ]
-    ],
-    "effective_dimensionality": 1.6389184908484105,
-    "fractional_dimensionality": 0.5463061636161368,
-    "cumulative_variance": [
-      0.7350076078809215,
-      0.9994352314512748,
-      1.0
-    ],
-    "log_slope": -3.5856100650280798,
-    "log_intercept": 5.491839343078602,
-    "log_r_squared": 0.854442880419067,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      2.779617340868951,
-      468.2052925348495
-    ],
-    "mean_width_ratio": 235.4924549378592,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.64 / 3) Moderate dimensional compression: ~1.6 of 3 dimensions are active. Moderate log-linearity (R² = 0.854) — may be an intermediate regime. First principal direction captures 73.5% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.7804258956575743,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 5,
-    "n_properties": 3,
-    "potential": "Bonny-2013",
-    "eigenvalues": [
-      2546.4325504620083,
-      197.9601376171778,
-      51.87037580970552
-    ],
-    "eigenvectors": [
-      [
-        -0.30152736307005856,
-        0.9534228905717417,
-        0.00812656470113691
-      ],
-      [
-        -0.17316790426554737,
-        -0.06314321510393932,
-        0.9828661207502352
-      ],
-      [
-        -0.9376001953137035,
-        -0.29495376946254204,
-        -0.1841416509851651
-      ]
-    ],
-    "effective_dimensionality": 1.1981076483225406,
-    "fractional_dimensionality": 0.3993692161075135,
-    "cumulative_variance": [
-      0.9106555757742506,
-      0.9814501087256193,
-      1.0
-    ],
-    "log_slope": -1.9468504126299482,
-    "log_intercept": 7.639937805176519,
-    "log_r_squared": 0.9685602322010525,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      12.863360174998403,
-      3.816439239681338
-    ],
-    "mean_width_ratio": 8.339899707339871,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.20 / 3) Errors are strongly confined: only ~1.2 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.969), consistent with Vandermonde universality class. First principal direction captures 91.1% of error variance.",
-    "pr_ci_lower": 1.0101848225187662,
-    "pr_ci_upper": 2.035368682767227,
-    "log_r2_ci_lower": 0.8028236158572395,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Shim-2013",
-    "eigenvalues": [
-      140.6538665925208,
-      35.71177972145279,
-      0.14312035269303117
-    ],
-    "eigenvectors": [
-      [
-        0.770497225432458,
-        -0.6165373578220421,
-        0.16191266785121752
-      ],
-      [
-        0.5521243741553818,
-        0.7724269402699735,
-        0.3138714663818535
-      ],
-      [
-        0.3185791911980624,
-        0.15244116358445353,
-        -0.9355581171582056
-      ]
-    ],
-    "effective_dimensionality": 1.4794410488635628,
-    "fractional_dimensionality": 0.49314701628785423,
-    "cumulative_variance": [
-      0.7968661797866556,
-      0.999189160088783,
-      1.0
-    ],
-    "log_slope": -3.4451857004538016,
-    "log_intercept": 5.637756783293025,
-    "log_r_squared": 0.8921851657805291,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      3.9385846264062603,
-      249.52272021051047
-    ],
-    "mean_width_ratio": 126.73065241845836,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.48 / 3) Errors are strongly confined: only ~1.5 effective dimensions control all 3 properties. Moderate log-linearity (R² = 0.892) — may be an intermediate regime. First principal direction captures 79.7% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.8855261903180704,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 12,
-    "n_properties": 3,
-    "potential": "EAM_Dynamo_ZhouJohnsonWadley_2004NISTret",
-    "eigenvalues": [
-      1165.158712264767,
-      655.107734965244,
-      3.4948679215050586
-    ],
-    "eigenvectors": [
-      [
-        -0.8972513013151224,
-        -0.4357773272713027,
-        -0.0709804432544553
-      ],
-      [
-        -0.20882689385607767,
-        0.5605005266636555,
-        -0.8013928425012213
-      ],
-      [
-        -0.3890134068264762,
-        0.7042281453094905,
-        0.5939118526037459
-      ]
-    ],
-    "effective_dimensionality": 1.8615151412437345,
-    "fractional_dimensionality": 0.6205050470812449,
-    "cumulative_variance": [
-      0.6388767557381635,
-      0.9980837032277906,
-      1.0
-    ],
-    "log_slope": -2.90465850307618,
-    "log_intercept": 7.836894462299298,
-    "log_r_squared": 0.823537187155058,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      1.7785757213301459,
-      187.44849581701018
-    ],
-    "mean_width_ratio": 94.61353576917017,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.86 / 3) Moderate dimensional compression: ~1.9 of 3 dimensions are active. Moderate log-linearity (R² = 0.824) — may be an intermediate regime. First principal direction captures 63.9% of error variance.",
-    "pr_ci_lower": 1.0105149330391987,
-    "pr_ci_upper": 1.9821675232475264,
-    "log_r2_ci_lower": 0.7791086197403694,
-    "log_r2_ci_upper": 0.9998527792133841
-  },
-  {
-    "n_materials": 3,
-    "n_properties": 3,
-    "potential": "Mahata-2022",
-    "eigenvalues": [
-      4501.750884087935,
-      115.08084331383326,
-      1.0987725982322687
-    ],
-    "eigenvectors": [
-      [
-        -0.9755461583819162,
-        0.21338622591192427,
-        0.05268786821793827
-      ],
-      [
-        -0.11662709810607681,
-        -0.29936592122853967,
-        -0.9469837196036388
-      ],
-      [
-        -0.18630032971962543,
-        -0.9299711628852012,
-        0.3169318907088808
-      ]
-    ],
-    "effective_dimensionality": 1.0515940614350685,
-    "fractional_dimensionality": 0.3505313538116895,
-    "cumulative_variance": [
-      0.9748416274536688,
-      0.9997620638512787,
-      1.0
-    ],
-    "log_slope": -4.159013974206052,
-    "log_intercept": 8.576364070600983,
-    "log_r_squared": 0.9953488825276515,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      39.11816036845816,
-      104.73581476183337
-    ],
-    "mean_width_ratio": 71.92698756514577,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.05 / 3) Errors are strongly confined: only ~1.1 effective dimensions control all 3 properties. Log-spacing is highly linear (R² = 0.995), consistent with Vandermonde universality class. First principal direction captures 97.5% of error variance.",
-    "pr_ci_lower": 1.0,
-    "pr_ci_upper": 1.9204284164461924,
-    "log_r2_ci_lower": 0.0,
-    "log_r2_ci_upper": 1.0
-  },
-  {
-    "n_materials": 4,
-    "n_properties": 3,
-    "potential": "Etesami-2018",
-    "eigenvalues": [
-      327.7886533174036,
-      11.782811139156877,
-      5.990272580476198
-    ],
-    "eigenvectors": [
-      [
-        0.9252707827087923,
-        -0.3757496147200762,
-        0.05182861857287719
-      ],
-      [
-        0.3271503465417165,
-        0.7214067325219663,
-        -0.6103646262928539
-      ],
-      [
-        0.19195475879251644,
-        0.5817083060346441,
-        0.7904231887205816
-      ]
-    ],
-    "effective_dimensionality": 1.1095779761157836,
-    "fractional_dimensionality": 0.36985932537192784,
-    "cumulative_variance": [
-      0.948567558804324,
-      0.9826651161328254,
-      1.0
-    ],
-    "log_slope": -2.0011160670225343,
-    "log_intercept": 5.350831985165603,
-    "log_r_squared": 0.8725598543485817,
-    "decay_monotonicity": -1.0,
-    "width_ratios": [
-      27.819223226627958,
-      1.9669908140006878
-    ],
-    "mean_width_ratio": 14.893107020314323,
-    "is_hyper_ribbon": true,
-    "interpretation": "Hyper-ribbon structure confirmed (PR = 1.11 / 3) Errors are strongly confined: only ~1.1 effective dimensions control all 3 properties. Moderate log-linearity (R² = 0.873) — may be an intermediate regime. First principal direction captures 94.9% of error variance.",
-    "pr_ci_lower": 1.0152777970759408,
-    "pr_ci_upper": 1.9505324651283436,
-    "log_r2_ci_lower": 0.8016343854768071,
     "log_r2_ci_upper": 1.0
   }
 ]

@@ -48,9 +48,10 @@ pub fn correlation_matrix(data: &DMatrix<f64>) -> DMatrix<f64> {
 ///
 /// Eigenvalues are the variances along each principal component.
 pub fn pca(data: &DMatrix<f64>) -> (DVector<f64>, DMatrix<f64>) {
-    let means = data.column_mean();
+    let means: Vec<f64> = (0..data.ncols())
+        .map(|j| data.column(j).iter().sum::<f64>() / data.nrows() as f64)
+        .collect();
     let centered = data - DMatrix::from_fn(data.nrows(), data.ncols(), |_i, j| means[j]);
-
     let svd = SVD::new(centered.clone(), true, true);
     let _u = svd.u.expect("SVD U matrix missing");
     let s = svd.singular_values;

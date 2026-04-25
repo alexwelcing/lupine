@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2003--Han-S--V--LAMMPS--ipr1",
+    "potid": "2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--V",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "V"
+    ],
+    "symbols": [
+      "V"
+    ],
+    "dois": [
+      "10.1063/1.1555275"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2003--Han-S--V--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--V",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--V/2/V.eam.fs",
+        "filename": "V.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "ecc8bafff885ba4d",
+    "nist_potential_id": "2003--Han-S--V--LAMMPS--ipr1",
+    "potential_doi": "10.1063/1.1555275",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.03,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 227.565631707683,
+  "c12": 119.098197081419,
+  "c44": 43.1550400923076,
+  "a0": 3.0299999301794,
+  "ecoh": -5.30000022795161,
+  "success": true,
+  "error_message": null
+}

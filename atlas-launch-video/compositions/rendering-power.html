@@ -2,101 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
   <link rel="stylesheet" href="../styles/global.css" />
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <style>
-    .features-grid {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 40px;
-      padding: 80px 120px;
-    }
-    .section-title { font-size: 48px; font-weight: 800; letter-spacing: -0.02em; opacity: 0; text-align: center; }
-    .section-title .accent { color: var(--accent); }
-    .pills-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
-    .pill { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; font-size: 18px; font-weight: 600; color: var(--text-primary); background: var(--bg-glass); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; opacity: 0; }
-    .pill .icon { width: 10px; height: 10px; border-radius: 50%; }
-    .stat-row { display: flex; gap: 60px; margin-top: 20px; }
-    .stat-item { text-align: center; opacity: 0; }
-    .stat-number { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(135deg, var(--accent), var(--lupine-400)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .stat-label { font-size: 15px; color: var(--text-muted); margin-top: 8px; }
-    .bottom-badge { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); opacity: 0; }
+    .center-text { font-size: 100px; color: white; font-weight: 900; text-align: center; position: absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0;}
+    .number { font-size: 200px; color: #28c840; line-height:1; }
   </style>
 </head>
 <body>
   <div id="root" data-composition-id="rendering-power" data-start="0" data-duration="10" data-width="1920" data-height="1080">
-    <div class="grid-bg clip" id="grid" data-start="0" data-duration="10" data-track-index="0"></div>
-
-    <div class="features-grid clip" id="features" data-start="0" data-duration="10" data-track-index="1">
-      <div class="section-title" id="title">
-        Rendering <span class="accent">Power</span>
-      </div>
-
-      <div class="pills-row" id="pills">
-        <div class="pill" id="p1"><div class="icon" style="background: var(--cyan);"></div>WebGPU Native</div>
-        <div class="pill" id="p2"><div class="icon" style="background: var(--violet);"></div>4× MSAA</div>
-        <div class="pill" id="p3"><div class="icon" style="background: var(--emerald);"></div>GPU-Driven Culling</div>
-        <div class="pill" id="p4"><div class="icon" style="background: var(--amber);"></div>Impostor Spheres</div>
-        <div class="pill" id="p5"><div class="icon" style="background: var(--rose);"></div>SSAO</div>
-        <div class="pill" id="p6"><div class="icon" style="background: var(--cyan);"></div>Depth of Field</div>
-        <div class="pill" id="p7"><div class="icon" style="background: var(--violet);"></div>16 Scientific Colormaps</div>
-        <div class="pill" id="p8"><div class="icon" style="background: var(--emerald);"></div>Velocity Coloring</div>
-      </div>
-
-      <div class="stat-row">
-        <div class="stat-item" id="s1">
-          <div class="stat-number">64×</div>
-          <div class="stat-label">Less Geometry</div>
-        </div>
-        <div class="stat-item" id="s2">
-          <div class="stat-number">1</div>
-          <div class="stat-label">Draw Call</div>
-        </div>
-        <div class="stat-item" id="s3">
-          <div class="stat-number">0</div>
-          <div class="stat-label">CPU Per-Atom Work</div>
-        </div>
-        <div class="stat-item" id="s4">
-          <div class="stat-number">50M+</div>
-          <div class="stat-label">Atoms Rendered</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bottom-badge badge badge--cyan clip" id="badge" data-start="5" data-duration="5" data-track-index="2">
-      All rendering happens in your browser — no server, no install
-    </div>
-
-    <div class="scanlines clip" id="scan" data-start="0" data-duration="10" data-track-index="3"></div>
+    <div class="center-text" id="t1">PROVING THE<br><span style="color:var(--lupine-300);">HYPER-RIBBON</span></div>
+    <div class="center-text" id="t2"><div class="number">48</div>THEOREMS<br>FORMALLY VERIFIED.</div>
   </div>
-
   <script>
     window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
-
-    tl.to("#title", { opacity: 1, duration: 0.5 }, 0);
-    tl.from("#title", { y: -20, duration: 0.5, ease: "power2.out" }, 0);
-
-    // Pills stagger in
-    const pills = ["#p1","#p2","#p3","#p4","#p5","#p6","#p7","#p8"];
-    pills.forEach((p, i) => {
-      tl.to(p, { opacity: 1, duration: 0.25 }, 1.0 + i * 0.3);
-      tl.from(p, { y: 15, scale: 0.9, duration: 0.3, ease: "power2.out" }, 1.0 + i * 0.3);
-    });
-
-    // Stats counter
-    const stats = ["#s1","#s2","#s3","#s4"];
-    stats.forEach((s, i) => {
-      tl.to(s, { opacity: 1, duration: 0.4 }, 5 + i * 0.5);
-      tl.from(s, { y: 20, duration: 0.4, ease: "power2.out" }, 5 + i * 0.5);
-    });
-
-    // Badge
-    tl.to("#badge", { opacity: 1, duration: 0.4 }, 7.5);
-
-    // Fade out
-    tl.to("#features, #badge", { opacity: 0, duration: 0.3 }, 9.5);
-
+    tl.to("#t1", { opacity:1, scale:1.05, duration: 0.5, ease: "power2.out" }, 1.0);
+    tl.to("#t1", { opacity:0, scale:1.1, duration: 0.5 }, 4.5);
+    tl.fromTo("#t2", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out" }, 5.0);
+    tl.to("#t2", { opacity:0, duration: 0.5 }, 9.0);
     tl.set({}, {}, 10);
     window.__timelines["rendering-power"] = tl;
   </script>

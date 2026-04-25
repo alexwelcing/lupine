@@ -3,42 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phonon Frequency Benchmarking — glim Research</title>
-    <meta name="description" content="Using second-order energy derivatives as the gold standard for potential validation across 12,000 materials.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Phonon Frequency Spectrum Benchmarking for Interatomic Potentials: A Technical Review for the GLIM Project</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-top: 20px; border-bottom: 1px solid #000; padding-bottom: 40px; }
+        .symbol { font-size: 24px; margin-bottom: 20px; color: #333; letter-spacing: 0.5em; }
+        h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.05em; color: #000; margin-bottom: 16px; line-height: 1.3; }
+        h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.05em; color: #222; margin-top: 60px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        h3 { font-size: 18px; font-weight: 400; letter-spacing: 0.05em; color: #333; margin-top: 40px; margin-bottom: 15px; }
+        h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #555; margin-top: 30px; margin-bottom: 10px; }
+        p { margin-bottom: 24px; text-align: left; }
+        a { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+        a:hover { color: #555; }
+        ul, ol { margin-bottom: 24px; padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        code { font-family: monospace; background: #eee; padding: 2px 6px; font-size: 14px; border-radius: 3px; }
+        pre { background: #111; color: #ccc; padding: 24px; overflow-x: auto; margin-bottom: 30px; font-size: 13px; border-radius: 4px; font-family: monospace; }
+        pre code { background: none; padding: 0; color: inherit; border-radius: 0; }
+        blockquote { border-left: 3px solid #000; padding: 20px 30px; margin: 40px 0; background: #f5f5f5; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 16px; text-align: left; }
+        th { background: #eaeaea; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .nav-link { display: inline-block; margin-bottom: 40px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 4px; transition: all 0.2s; }
+        .nav-link:hover { opacity: 0.6; }
+        .content { padding-bottom: 100px; }
+        
+        .index-list { list-style: none; padding: 0; }
+        .index-list li { padding: 20px 0; border-bottom: 1px solid #eee; margin: 0; }
+        .index-list a { text-decoration: none; font-size: 18px; display: block; margin-bottom: 8px; }
+        .index-list a:hover { text-decoration: underline; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; letter-spacing: 0.05em; }
+        
+        hr { border: 0; border-top: 1px solid #ddd; margin: 60px 0; }
+    </style>
 </head>
 <body>
-    <nav class="top-bar">
-        <a href="/" class="logo">glim<span>research</span></a>
-        <div class="links">
-            <a href="/research/">Index</a>
-            <a href="/web/">glimPSE</a>
-            <a href="/">Manifesto</a>
-        </div>
-    </nav>
-    <div class="article">
-        <a href="/research/" class="back">← Research Index</a>
-        <h1>Phonon Frequency Benchmarking</h1>
-        <h1 id="phonon-frequency-spectrum-benchmarking-for-interatomic-potentials-a-technical-review-for-the-glim-project">Phonon Frequency Spectrum Benchmarking for Interatomic Potentials: A Technical Review for the GLIM Project</h1>
-<h2 id="1-foundational-concepts-and-scope">1. Foundational Concepts and Scope</h2>
-<h3 id="11-phonon-frequency-spectrum-as-a-critical-validation-target">1.1 Phonon Frequency Spectrum as a Critical Validation Target</h3>
-<h4 id="111-physical-significance-of-harmonic-phonon-properties-in-materials-characterization">1.1.1 Physical significance of harmonic phonon properties in materials characterization</h4>
+    <div class="container">
+        <a href="/research/" class="nav-link">← Research Index</a>
+        <header>
+            <div class="symbol">———</div>
+            <h1>Phonon Frequency Spectrum Benchmarking for Interatomic Potentials: A Technical Review for the GLIM Project</h1>
+        </header>
+        <div class="content">
+            <h1>Phonon Frequency Spectrum Benchmarking for Interatomic Potentials: A Technical Review for the GLIM Project</h1>
+<h2>1. Foundational Concepts and Scope</h2>
+<h3>1.1 Phonon Frequency Spectrum as a Critical Validation Target</h3>
+<h4>1.1.1 Physical significance of harmonic phonon properties in materials characterization</h4>
 <p>The phonon frequency spectrum represents one of the most fundamental and stringent tests of interatomic potential accuracy, as it directly probes the curvature of the potential energy surface (PES) at equilibrium configurations. Unlike total energies and atomic forces—which depend on zeroth and first derivatives of the PES—phonon frequencies emerge from second derivatives of energy with respect to atomic displacements, making them exponentially more sensitive to subtle errors in potential parameterization. This heightened sensitivity explains why phonon benchmarks have become indispensable for validating both classical empirical potentials and modern machine learning interatomic potentials (MLIPs).</p>
 <p>Performance in data-scarce regimes represents a critical second benchmark role: assessing how reliably models predict on systems outside training distributions. This role is particularly critical for universal MLIPs, which claim zero-shot generalization across chemical space yet may exhibit composition-dependent failure modes not evident from energy-focused validation. The phenomenon of "force-constant collapse"—where neural network potentials predict reasonable forces but severely inaccurate curvatures—has been documented across multiple architectures, underscoring the necessity of explicit phonon validation.</p>
 <p>The reliability assessment enabled by phonon benchmarks extends to dynamical stability prediction, which is fundamental for materials discovery. A potential's ability to correctly identify imaginary frequency modes—indicating mechanical instability—directly impacts its utility for structure screening. Large-scale studies reveal significant variation: the PhononBench evaluation of 108,843 AI-generated structures found that only 25.83% were dynamically stable, with top performers achieving higher prediction accuracy.</p>
-<h3 id="112-hierarchical-representation-of-phonon-information">1.1.2 Hierarchical representation of phonon information</h3>
+<h3>1.1.2 Hierarchical representation of phonon information</h3>
 <p>Phonon information exists across three distinct hierarchical levels, each capturing distinct physics and enabling different applications:</p>
 <p><strong>Band structure level</strong> enables direct comparison with inelastic neutron scattering (INS) and inelastic X-ray scattering (IXS) experiments. This level captures directional anisotropy, mode crossings, and critical points in the Brillouin zone, but requires substantial computational investment for dense q-point sampling.</p>
 <p>At the intermediate level, the phonon density of states (PDOS) g(ω) integrates over wavevectors to yield a frequency distribution that preserves statistical mode weighting while losing q-point specificity. The PDOS enables efficient calculation of thermodynamic properties through frequency integrals and facilitates comparison with Raman spectroscopy and specific heat measurements. Critically, PDOS agreement does not guarantee accurate individual frequencies—systematic shifts or mode misassignments may be masked in the integrated representation.</p>
 <p>At the coarsest but most application-relevant level, derived thermodynamic quantities—including vibrational entropy S_vib, Helmholtz free energy F, and heat capacity C_V—emerge from phonon frequency integrals weighted by Bose-Einstein occupation factors. These properties directly impact phase stability, thermal transport predictions, and equation-of-state models critical for high-pressure materials discovery and geological applications.</p>
-<h3 id="12-scope-and-coverage-of-benchmarking-targets">1.2 Scope and Coverage of Benchmarking Targets</h3>
-<h4 id="121-motivation-for-comprehensive-assessment-across-potential-families-and-chemical-space">1.2.1 Motivation for comprehensive assessment across potential families and chemical space</h4>
+<h3>1.2 Scope and Coverage of Benchmarking Targets</h3>
+<h4>1.2.1 Motivation for comprehensive assessment across potential families and chemical space</h4>
 <p>The GLIM project targets 23 diverse potentials spanning classical empirical methods through state-of-the-art machine learning approaches. This diversity reflects the evolving landscape of materials modeling and reveals systematic performance patterns across architecture paradigms, enabling evidence-based guidance for potential selection across use cases.</p>
 <p>Different bonding characters present distinct methodological challenges: van der Waals materials demand long-range dispersion-corrected functionals; metals exhibit Fermi surface-driven screening effects; covalent semiconductors demand precise bond-angle description; ionics require accurate charge transfer and polarization effects.</p>
-<h4 id="122-chemical-space-sampling-main-group-compounds-transition-metals-and-outlier-systems">1.2.2 Chemical space sampling: main-group compounds, transition metals, and outlier systems</h4>
+<h4>1.2.2 Chemical space sampling: main-group compounds, transition metals, and outlier systems</h4>
 <p>Structural diversity in crystalline inorganic materials spans elemental metals (simple EAM-compatible systems), covalent semiconductors (directional bonding challenges), van der Waals materials (extreme frequency range, interlayer softness), ionic oxides (polar coupling, LO-TO splitting), and complex ceramics with large unit cell variations, with phonon spectra reflecting both mass disorder effects and chemical ordering.</p>
 <table>
 <thead>
@@ -82,54 +107,54 @@
 </tr>
 </tbody>
 </table>
-<h4 id="123-challenges-in-phonon-calculations-for-materials-with-varying-bonding-character">1.2.3 Challenges in phonon calculations for materials with varying bonding character</h4>
+<h4>1.2.3 Challenges in phonon calculations for materials with varying bonding character</h4>
 <p>Materials with directional bonds demand precise description of bond-angle dependencies; the flat transverse acoustic (TA) branch characteristic of 2D materials proves challenging across many potential families. MLIPs trained on PBE data without explicit dispersion corrections exhibit substantially larger errors. Complex systems with rare earths or heavy elements face f-electron challenges. The data-scarce regime—materials lacking converged DFT phonons in public databases—tests potential generalization without serving as reference.</p>
-<h3 id="13-benchmark-scope-and-objectives">1.3 Benchmark Scope and Objectives</h3>
-<h4 id="131-the-23-potential-12000-material-computational-target">1.3.1 The 23-potential × 12,000-material computational target</h4>
+<h3>1.3 Benchmark Scope and Objectives</h3>
+<h4>1.3.1 The 23-potential × 12,000-material computational target</h4>
 <p>The GLIM project's 23 potentials × 12,000 materials = 276,000 phonon spectra computational target demands strategic optimization. Full explicit DFT validation at all scales infeasible; hybrid approach: JARVIS-DFT phonons as primary reference, selective Materials Project comparisons for PBE-trained models, experimental data for key validation systems (Debye temperatures, thermal expansion, specific heat).</p>
-<h4 id="132-objectives-systematic-accuracy-assessment-and-computational-efficiency-evaluation">1.3.2 Objectives: systematic accuracy assessment and computational efficiency evaluation</h4>
+<h4>1.3.2 Objectives: systematic accuracy assessment and computational efficiency evaluation</h4>
 <p>The dual objectives of accuracy and efficiency assessment reflect practical constraints in materials modeling. Accuracy metrics must span hierarchical levels: primary metrics (frequency MAE, ω_max error, stability prediction accuracy) for global ranking; secondary metrics (PDOS correlation, thermodynamic property errors) for detailed pattern analysis; and diagnostic metrics (composition-dependent errors, failure mode categorization) for improvement guidance.</p>
-<h2 id="2-phonon-calculation-methodology">2. Phonon Calculation Methodology</h2>
-<h3 id="21-structure-preparation-and-supercell-construction">2.1 Structure Preparation and Supercell Construction</h3>
-<h4 id="211-supercell-generation-with-minimum-dimension-12-a-and-symmetry-reduction">2.1.1 Supercell generation with minimum dimension ≥12 Å and symmetry reduction</h4>
+<h2>2. Phonon Calculation Methodology</h2>
+<h3>2.1 Structure Preparation and Supercell Construction</h3>
+<h4>2.1.1 Supercell generation with minimum dimension ≥12 Å and symmetry reduction</h4>
 <p>Phonopy constructs force constant matrices by systematic atomic displacement and force calculation. Supercell dimensions must exceed the cutoff radius of interatomic interactions, with ≥12 Å minimum dimension standard for converged long-range forces. Symmetry analysis via spglib reduces independent displacements by identifying equivalent atoms, achieving 2–10× reduction depending on crystal symmetry. For high-throughput execution across 12,000 materials, automated supercell generation with fallback handling for low-symmetry or large-cell systems is essential.</p>
-<h4 id="212-atomic-displacement-magnitudes-standard-001003-a-range-and-convergence-considerations">2.1.2 Atomic displacement magnitudes: standard 0.01–0.03 Å range and convergence considerations</h4>
+<h4>2.1.2 Atomic displacement magnitudes: standard 0.01–0.03 Å range and convergence considerations</h4>
 <p>Displacement magnitude selection balances numerical stability against harmonic approximation validity. Standard range: 0.01–0.03 Å, with 0.01 Å typical for DFT (low force noise) and 0.02–0.03 Å for empirical potentials (larger signal-to-noise). Critical architecture-dependent behavior affects accuracy across displacement ranges.</p>
-<h3 id="22-structural-relaxation-protocol">2.2 Structural Relaxation Protocol</h3>
-<h4 id="221-fixed-lattice-constant-approach-maintaining-reference-geometry-for-accuracy-assessment">2.2.1 Fixed lattice constant approach: maintaining reference geometry for accuracy assessment</h4>
+<h3>2.2 Structural Relaxation Protocol</h3>
+<h4>2.2.1 Fixed lattice constant approach: maintaining reference geometry for accuracy assessment</h4>
 <p>The comprehensive uMLIP benchmark explicitly adopted this protocol: "we did not relax the volume or shape of the unit cells...because our goal was to benchmark and compare the phonon properties calculated on the same crystal structures". This ensures that frequency differences reflect force constant accuracy rather than Grüneisen-parameter-shifted volumes. The FIRE algorithm with 0.005 eV/Å force convergence provides efficient, robust relaxation.</p>
-<h3 id="23-force-constant-and-phonon-calculation">2.3 Force Constant and Phonon Calculation</h3>
-<h4 id="231-force-constant-matrix-computation-via-supercell-derivatives">2.3.1 Force constant matrix computation via supercell derivatives</h4>
+<h3>2.3 Force Constant and Phonon Calculation</h3>
+<h4>2.3.1 Force constant matrix computation via supercell derivatives</h4>
 <p>Force constants emerge from second-order energy derivatives. Numerical differentiation: F(i,j,α,β) = [E(+δ) - 2E(0) + E(-δ)] / δ², with typical δ = 0.01 Å. Symmetry constraints reduce independent calculations through spglib equivalence identification. Quality validation: acoustic sum rules preservation checks; rotational invariance testing; LO-TO splitting verification for polar materials.</p>
-<h4 id="232-q-point-mesh-sampling-and-fourier-interpolation">2.3.2 Q-point mesh sampling and Fourier interpolation</h4>
+<h4>2.3.2 Q-point mesh sampling and Fourier interpolation</h4>
 <p>Fourier interpolation extends discrete force constants to arbitrary q-points. Standard density: 1000 points/Å⁻³ ensures converged PDOS and thermodynamic properties. Convergence verification: explicit supercell calculations at commensurate q-points should match interpolated values within tolerance. Adaptive refinement benefits materials with sharp spectral features or flat bands.</p>
-<h4 id="233-phonon-density-of-states-calculation-via-uniform-q-point-meshes">2.3.3 Phonon density of states calculation via uniform q-point meshes</h4>
+<h4>2.3.3 Phonon density of states calculation via uniform q-point meshes</h4>
 <p>PDOS integration via uniform meshes (20×20×20 to 40×40×40 typical) with tetrahedron method or Gaussian smearing (σ ~ 0.1–0.5 THz). Tetrahedron methods preserve van Hove singularities; Gaussian smearing provides robustness for coarse meshes.</p>
-<h2 id="3-reference-data-jarvis-dft-phonon-database">3. Reference Data: JARVIS-DFT Phonon Database</h2>
-<h3 id="31-database-characteristics-and-coverage">3.1 Database Characteristics and Coverage</h3>
-<h4 id="311-vdw-df-optb88-functional-basis-for-phonon-calculations">3.1.1 vdW-DF-optB88 functional basis for phonon calculations</h4>
+<h2>3. Reference Data: JARVIS-DFT Phonon Database</h2>
+<h3>3.1 Database Characteristics and Coverage</h3>
+<h4>3.1.1 vdW-DF-optB88 functional basis for phonon calculations</h4>
 <p>JARVIS-DFT employs vdW-DF-optB88, distinguishing it from PBE-dominant Materials Project. The optB88 exchange optimization improves van der Waals binding while maintaining reasonable performance for covalent/ionic materials. Functional consequences: 1–2% lattice parameter differences versus PBE for dense solids, substantially larger for layered materials; corresponding phonon frequency shifts of 2–6% (dense) to 20%+ (van der Waals).</p>
-<h4 id="312-material-diversity-and-chemical-space-representation">3.1.2 Material diversity and chemical space representation</h4>
+<h4>3.1.2 Material diversity and chemical space representation</h4>
 <p>JARVIS-DFT encompasses ~90,000 materials with 17,402 having elastic tensors and phonons. Coverage spans bulk crystals (metals, semiconductors, insulators), van der Waals materials, and complex multicomponent systems.</p>
-<h2 id="4-metrics-and-evaluation-framework">4. Metrics and Evaluation Framework</h2>
-<h3 id="41-hierarchical-accuracy-metrics">4.1 Hierarchical Accuracy Metrics</h3>
-<h4 id="411-primary-frequency-metrics-mean-absolute-error-mae-and-root-mean-square-error-rmse">4.1.1 Primary frequency metrics: mean absolute error (MAE) and root mean square error (RMSE)</h4>
+<h2>4. Metrics and Evaluation Framework</h2>
+<h3>4.1 Hierarchical Accuracy Metrics</h3>
+<h4>4.1.1 Primary frequency metrics: mean absolute error (MAE) and root mean square error (RMSE)</h4>
 <p>Mean absolute error (MAE): average |ω_predicted - ω_reference| across all q-points and branches, most interpretable for physical insight. RMSE provides per-material weighting to high-error outliers; sensitivity to outliers aids failure mode detection. Units: meV (milli-electron volts), with 1 THz ≈ 4.136 meV conversion.</p>
 <p>Materiality thresholds:
 - &lt;2 meV: excellent
 - 2–5 meV: good
 - 5–15 meV: acceptable for exploratory screening
 - &gt;15 meV: problematic for property transfer</p>
-<h3 id="42-stability-metrics">4.2 Stability Metrics</h3>
-<h4 id="421-dynamical-stability-imaginary-frequency-absence-and-phonon-stability-score">4.2.1 Dynamical stability: imaginary frequency absence and phonon stability score</h4>
+<h3>4.2 Stability Metrics</h3>
+<h4>4.2.1 Dynamical stability: imaginary frequency absence and phonon stability score</h4>
 <p>Binary outcome: imaginary frequency present (unstable, score = 0) or absent (stable, score = 1). Stability score = (N_modes_real / N_modes_total): soft modes with ω &lt; 1 THz may indicate marginal stability or finite-temperature effects absent from harmonic model.</p>
-<h4 id="423-stability-prediction-accuracy-metrics">4.2.3 Stability prediction accuracy metrics</h4>
+<h4>4.2.3 Stability prediction accuracy metrics</h4>
 <p>Binary classification metrics: precision, recall, F1, ROC-AUC. Class imbalance (baseline ~25% stable) requires careful interpretation: random guessing achieves 25% accuracy; perfect prediction achieves 100%. Skill scores (improvement over baseline) enable fair comparison.</p>
-<h2 id="5-potential-family-performance-comparison">5. Potential Family Performance Comparison</h2>
-<h3 id="51-universal-machine-learning-interatomic-potentials-umlips">5.1 Universal Machine Learning Interatomic Potentials (uMLIPs)</h3>
-<h4 id="511-mattersim-dft-level-accuracy-demonstrated-across-10000-materials">5.1.1 MatterSim: DFT-level accuracy demonstrated across &gt;10,000 materials</h4>
+<h2>5. Potential Family Performance Comparison</h2>
+<h3>5.1 Universal Machine Learning Interatomic Potentials (uMLIPs)</h3>
+<h4>5.1.1 MatterSim: DFT-level accuracy demonstrated across &gt;10,000 materials</h4>
 <p>MatterSim represents leading uMLIP performance with explicit phonon-focused validation enabling rigorous benchmarking at unprecedented scale.</p>
-<h4 id="514-sevennet-0-orb-eqv2-m-and-emerging-architectures">5.1.4 SevenNet-0, ORB, eqV2-M, and emerging architectures</h4>
+<h4>5.1.4 SevenNet-0, ORB, eqV2-M, and emerging architectures</h4>
 <table>
 <thead>
 <tr>
@@ -172,50 +197,50 @@
 </tr>
 </tbody>
 </table>
-<h3 id="52-fine-tuning-and-domain-adaptation">5.2 Fine-Tuning and Domain Adaptation</h3>
-<h4 id="521-phonon-force-constant-tuning-pft-methodology">5.2.1 Phonon force constant tuning (PFT) methodology</h4>
+<h3>5.2 Fine-Tuning and Domain Adaptation</h3>
+<h4>5.2.1 Phonon force constant tuning (PFT) methodology</h4>
 <p>PFT methodology: direct Hessian supervision with stochastic column sampling for scalability. Co-training with original data prevents catastrophic forgetting. Results: 55% average phonon property improvement, state-of-the-art thermodynamic and transport predictions.</p>
-<h4 id="523-accuracy-gains-sub-mev-errors-achievable-with-targeted-optimization">5.2.3 Accuracy gains: sub-meV errors achievable with targeted optimization</h4>
+<h4>5.2.3 Accuracy gains: sub-meV errors achievable with targeted optimization</h4>
 <p>Fine-tuned achievements: ω_max MAE 10 K (~0.9 meV), S_vib MAE 11 J/mol·K, F MAE 4 kJ/mol, C_V MAE 2 J/mol·K. Approaching practical limits set by reference data quality and numerical precision.</p>
-<h3 id="53-classical-empirical-potentials">5.3 Classical Empirical Potentials</h3>
-<h4 id="531-embedded-atom-method-eam-and-modified-eam-meam-performance">5.3.1 Embedded atom method (EAM) and modified EAM (MEAM) performance</h4>
+<h3>5.3 Classical Empirical Potentials</h3>
+<h4>5.3.1 Embedded atom method (EAM) and modified EAM (MEAM) performance</h4>
 <p>EAM/MEAM potentials achieve computational efficiency through simple functional form but face challenges in generalization across chemical space.</p>
-<h3 id="54-cross-family-comparative-analysis">5.4 Cross-Family Comparative Analysis</h3>
-<h4 id="541-systematic-accuracy-hierarchies-mlips-classical-potentials-for-general-systems">5.4.1 Systematic accuracy hierarchies: MLIPs &gt; classical potentials for general systems</h4>
+<h3>5.4 Cross-Family Comparative Analysis</h3>
+<h4>5.4.1 Systematic accuracy hierarchies: MLIPs &gt; classical potentials for general systems</h4>
 <p>Clear hierarchy emerges: universal MLIPs achieve 2–10 meV typical accuracy, fine-tuned variants &lt;2 meV, classical potentials 20–100+ meV for general systems. Gap largest for systems far from classical fitting domains. Computational cost hierarchy inverts: classical potentials fastest, efficient MLIPs (ORB, MACE) intermediate, large architectures (OMat) slowest.</p>
-<h4 id="542-composition-dependent-performance-variations">5.4.2 Composition-dependent performance variations</h4>
+<h4>5.4.2 Composition-dependent performance variations</h4>
 <p>Systematic patterns: main-group compounds &lt; transition metals &lt; heavy elements/rare earths in typical accuracy. Van der Waals materials: large errors for PBE-trained models without dispersion corrections.</p>
-<h2 id="6-computational-cost-analysis">6. Computational Cost Analysis</h2>
-<h3 id="61-dft-based-phonon-calculation-costs">6.1 DFT-Based Phonon Calculation Costs</h3>
-<h4 id="613-speedup-factors-10100-for-harmonic-phonon-properties">6.1.3 Speedup factors: 10–100× for harmonic phonon properties</h4>
+<h2>6. Computational Cost Analysis</h2>
+<h3>6.1 DFT-Based Phonon Calculation Costs</h3>
+<h4>6.1.3 Speedup factors: 10–100× for harmonic phonon properties</h4>
 <p>Fully pre-trained uMLIPs enable 10³–10⁶× single-point speedup versus DFT, 10–100× full workflow speedup accounting for phonon calculation overhead. Absolute time: seconds to minutes per material for complete harmonic phonon analysis with efficient implementations.</p>
-<h3 id="62-interatomic-potential-evaluation-costs">6.2 Interatomic Potential Evaluation Costs</h3>
-<h4 id="621-classical-potential-computational-efficiency-near-linear-scaling-with-system-size">6.2.1 Classical potential computational efficiency: near-linear scaling with system size</h4>
+<h3>6.2 Interatomic Potential Evaluation Costs</h3>
+<h4>6.2.1 Classical potential computational efficiency: near-linear scaling with system size</h4>
 <p>Classical potentials maintain near-linear O(N) scaling with minimal overhead. Millions of atoms feasible for molecular dynamics; phonon calculations limited by supercell size for force constant convergence rather than per-evaluation cost.</p>
-<h3 id="63-hardware-requirements-and-parallelization">6.3 Hardware Requirements and Parallelization</h3>
-<h4 id="632-automated-convergence-testing-and-adaptive-q-point-sampling">6.3.2 Automated convergence testing and adaptive q-point sampling</h4>
+<h3>6.3 Hardware Requirements and Parallelization</h3>
+<h4>6.3.2 Automated convergence testing and adaptive q-point sampling</h4>
 <p>Adaptive protocols optimize accuracy-cost trade-off: coarse initial sampling, refinement where variance high, early termination for converged properties. Convergence criteria: frequency change &lt;0.1 THz with sampling doubling, PDOS integral change &lt;1%.</p>
-<h2 id="8-machine-learning-potential-phonon-benchmarks-state-of-the-art">8. Machine Learning Potential Phonon Benchmarks: State of the Art</h2>
-<h3 id="81-large-scale-benchmarking-initiatives">8.1 Large-Scale Benchmarking Initiatives</h3>
-<h4 id="811-mattersim-benchmark-10000-materials-seven-umlips">8.1.1 MatterSim benchmark: &gt;10,000 materials, seven uMLIPs</h4>
+<h2>8. Machine Learning Potential Phonon Benchmarks: State of the Art</h2>
+<h3>8.1 Large-Scale Benchmarking Initiatives</h3>
+<h4>8.1.1 MatterSim benchmark: &gt;10,000 materials, seven uMLIPs</h4>
 <p>Pioneering scale: &gt;10,000 materials with DFT-level accuracy demonstration. Key finding: phonon errors smaller than PBE-PBEsol functional differences establishes achievable target.</p>
-<h4 id="812-phononbench-108843-ai-generated-structures-for-stability-assessment">8.1.2 PhononBench: 108,843 AI-generated structures for stability assessment</h4>
+<h4>8.1.2 PhononBench: 108,843 AI-generated structures for stability assessment</h4>
 <p>Unprecedented scale: 108,843 structures with MatterSim-v1 phonon evaluation. Key result: only 25.83% dynamically stable, with top generative model (MatterGen) at 41.0%.</p>
-<h3 id="83-fine-tuning-and-domain-adaptation">8.3 Fine-Tuning and Domain Adaptation</h3>
-<h4 id="831-phonon-targeted-training-strategies">8.3.1 Phonon-targeted training strategies</h4>
+<h3>8.3 Fine-Tuning and Domain Adaptation</h3>
+<h4>8.3.1 Phonon-targeted training strategies</h4>
 <p>PFT methodology: direct Hessian supervision with stochastic column sampling for scalability. Results: 55% average phonon property improvement, state-of-the-art thermodynamic and transport predictions. Cost-effectiveness: modest training investment (60–140 GPU-hours) for substantial accuracy gains.</p>
-<h2 id="9-evaluation-protocol-and-statistical-considerations">9. Evaluation Protocol and Statistical Considerations</h2>
-<h3 id="93-computational-resource-planning">9.3 Computational Resource Planning</h3>
-<h4 id="931-cost-estimation-for-12000-23-phonon-calculations">9.3.1 Cost estimation for 12,000 × 23 phonon calculations</h4>
+<h2>9. Evaluation Protocol and Statistical Considerations</h2>
+<h3>9.3 Computational Resource Planning</h3>
+<h4>9.3.1 Cost estimation for 12,000 × 23 phonon calculations</h4>
 <p>Base estimate: ~10⁶ GPU-hours for complete benchmark with efficient implementation (assuming ~1 minute per material per potential on modern GPU, parallel efficiency ~80%). Contingency: +50% for convergence failures, restarts, extended analysis. Total: ~1.5×10⁶ GPU-hours or equivalent CPU-GPU mixed resources.</p>
-<h4 id="932-prioritization-strategies-for-material-and-potential-subsets">9.3.2 Prioritization strategies for material and potential subsets</h4>
+<h4>9.3.2 Prioritization strategies for material and potential subsets</h4>
 <p>Phase 1: all 23 potentials on 1000-material representative subset for statistical power and initial ranking. Phase 2: top 10 potentials on full 12,000-material set for definitive comparison.</p>
-<h2 id="10-community-engagement-and-benchmark-evolution">10. Community Engagement and Benchmark Evolution</h2>
-<h3 id="101-open-data-and-code-release">10.1 Open Data and Code Release</h3>
+<h2>10. Community Engagement and Benchmark Evolution</h2>
+<h3>10.1 Open Data and Code Release</h3>
 <p>Data release: structures, phonon frequencies, PDOS, thermodynamic properties for all 276,000 calculations (compressed, with clear documentation). Code release: complete workflow from structure input to metric calculation, containerized for portability.</p>
-<h3 id="102-living-benchmark-framework">10.2 Living Benchmark Framework</h3>
+<h3>10.2 Living Benchmark Framework</h3>
 <p>Collaborative governance: steering committee with academic, national lab, industry representation. Update cycles: annual major releases with new potentials, expanded materials, refined metrics. Specialized benchmarks: spin-off initiatives for specific applications (e.g., battery materials, nuclear fuels, quantum materials) building on GLIM infrastructure. Ultimate goal: living benchmark that continuously improves with community contribution, enabling sustained progress in interatomic potential development.</p>
+        </div>
     </div>
-    <footer><p>glim — Computational Materials Science Platform · 2026</p></footer>
 </body>
 </html>

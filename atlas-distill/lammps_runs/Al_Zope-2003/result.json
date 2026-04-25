@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "2003--Zope-R-R--Al--LAMMPS--ipr1",
+    "potid": "2003--Zope-R-R-Mishin-Y--Al",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Al"
+    ],
+    "symbols": [
+      "Al"
+    ],
+    "dois": [
+      "10.1103/physrevb.68.024102"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2003--Zope-R-R--Al--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2003--Zope-R-R-Mishin-Y--Al",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/2/Al03.eam.alloy",
+        "filename": "Al03.eam.alloy",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/2/Al03_releaseNotes_1.pdf",
+        "filename": "Al03_releaseNotes_1.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "d264914529b9d7d6",
+    "nist_potential_id": "2003--Zope-R-R--Al--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.68.024102",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.05,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 116.815477508487,
+  "c12": 60.1172244765783,
+  "c44": 31.6596214477491,
+  "a0": 4.04999996753358,
+  "ecoh": -3.36000002290445,
+  "success": true,
+  "error_message": null
+}

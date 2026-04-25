@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1998--Meyer-R--Fe--LAMMPS--ipr1",
+    "potid": "1998--Meyer-R-Entel-P--Fe",
+    "pair_style": "eam",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1103/physrevb.57.5140"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1998--Meyer-R--Fe--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1998--Meyer-R-Entel-P--Fe",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1998--Meyer-R-Entel-P--Fe/1/Fe_MeyerEntel.eam",
+        "filename": "Fe_MeyerEntel.eam",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "95fbea2c2a88c702",
+    "nist_potential_id": "1998--Meyer-R--Fe--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.57.5140",
+    "pair_style": "eam",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 267.177101069759,
+  "c12": 145.594042558076,
+  "c44": 124.596115836521,
+  "a0": 2.86699221838036,
+  "ecoh": -4.29134884863543,
+  "success": true,
+  "error_message": null
+}

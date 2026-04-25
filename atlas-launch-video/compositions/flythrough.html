@@ -2,37 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
   <link rel="stylesheet" href="../styles/global.css" />
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <style>
-    .overlay-text {
-      position: absolute; bottom: 80px; left: 80px;
-      display: flex; flex-direction: column; gap: 12px; opacity: 0;
-    }
-    .overlay-text .big { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; }
-    .overlay-text .sub { font-size: 20px; font-weight: 500; color: var(--text-muted); }
-    .overlay-text .sub em { font-style: normal; color: var(--accent); }
+    .huge-squad { font-size: 140px; font-weight: 900; color: white; text-align: center; position: absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity: 0;}
+    .bg-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity: 0.4; z-index: -1; filter: grayscale(100%) contrast(120%);}
   </style>
 </head>
 <body>
   <div id="root" data-composition-id="flythrough" data-start="0" data-duration="10" data-width="1920" data-height="1080">
-    <!-- Embeds the existing flythrough.mp4 from GCS -->
-    <video id="fly-video" data-start="0" data-duration="10" data-track-index="0"
-           src="../assets/flythrough.mp4" muted playsinline
-           style="position:absolute;inset:0;width:1920px;height:1080px;object-fit:cover;">
-    </video>
-
-    <div class="overlay-text clip" id="overlay" data-start="1" data-duration="8" data-track-index="1">
-      <div class="big">Causal Geometry of Prediction Errors</div>
-      <div class="sub">5D Hyper-Ribbon Visualization · <em>Sloppy Model Universality</em></div>
-    </div>
+    <div class="grid-bg"></div>
+    <div class="huge-squad" id="squad">FOR THE SQUAD.<br><span style="color:var(--accent-gold);">LET'S BUILD.</span></div>
   </div>
   <script>
     window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
-    tl.to("#overlay", { opacity: 1, duration: 0.5 }, 1);
-    tl.from("#overlay", { y: 20, duration: 0.5, ease: "power2.out" }, 1);
-    tl.to("#overlay", { opacity: 0, duration: 0.3 }, 9.5);
+    tl.to("#squad", { opacity: 1, scale: 1.1, duration: 2, ease: "power2.out" }, 2.0);
+    tl.to("#squad", { opacity: 0, scale: 1.2, duration: 1 }, 8.0);
     tl.set({}, {}, 10);
     window.__timelines["flythrough"] = tl;
   </script>

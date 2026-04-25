@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupine Materials Science — Design Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-top: 20px; border-bottom: 1px solid #000; padding-bottom: 40px; }
+        .symbol { font-size: 24px; margin-bottom: 20px; color: #333; letter-spacing: 0.5em; }
+        h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.05em; color: #000; margin-bottom: 16px; line-height: 1.3; }
+        h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.05em; color: #222; margin-top: 60px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        h3 { font-size: 18px; font-weight: 400; letter-spacing: 0.05em; color: #333; margin-top: 40px; margin-bottom: 15px; }
+        h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #555; margin-top: 30px; margin-bottom: 10px; }
+        p { margin-bottom: 24px; text-align: left; }
+        a { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+        a:hover { color: #555; }
+        ul, ol { margin-bottom: 24px; padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        code { font-family: monospace; background: #eee; padding: 2px 6px; font-size: 14px; border-radius: 3px; }
+        pre { background: #111; color: #ccc; padding: 24px; overflow-x: auto; margin-bottom: 30px; font-size: 13px; border-radius: 4px; font-family: monospace; }
+        pre code { background: none; padding: 0; color: inherit; border-radius: 0; }
+        blockquote { border-left: 3px solid #000; padding: 20px 30px; margin: 40px 0; background: #f5f5f5; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 16px; text-align: left; }
+        th { background: #eaeaea; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .nav-link { display: inline-block; margin-bottom: 40px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 4px; transition: all 0.2s; }
+        .nav-link:hover { opacity: 0.6; }
+        .content { padding-bottom: 100px; }
+        
+        .index-list { list-style: none; padding: 0; }
+        .index-list li { padding: 20px 0; border-bottom: 1px solid #eee; margin: 0; }
+        .index-list a { text-decoration: none; font-size: 18px; display: block; margin-bottom: 8px; }
+        .index-list a:hover { text-decoration: underline; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; letter-spacing: 0.05em; }
+        
+        hr { border: 0; border-top: 1px solid #ddd; margin: 60px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/research/" class="nav-link">← Research Index</a>
+        <header>
+            <div class="symbol">———</div>
+            <h1>Lupine Materials Science — Design Guide</h1>
+        </header>
+        <div class="content">
+            <h1>Lupine Materials Science — Design Guide</h1>
+<h2>"Atomic Understanding" Design System v2</h2>
+<p>This document defines the visual identity, design tokens, interaction paradigms, and component architecture for all Lupine Materials Science user interfaces. Every element in this system is inspired by the physics of materials science itself.</p>
+<p><strong>Core Philosophy:</strong> <em>Everything is an atom. Every interaction is a bond. Every transition is a phase change.</em></p>
+<hr />
+<h2>1. Color Tokens</h2>
+<h3>Brand: The Lupine Spectrum</h3>
+<p>A deep indigo-to-violet range that evokes the luminescence of rare earth elements under UV excitation.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Hex</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--lupine-950</code></td>
+<td><code>#12142e</code></td>
+<td>Deepest brand tint</td>
+</tr>
+<tr>
+<td><code>--lupine-700</code></td>
+<td><code>#2e3a87</code></td>
+<td>Ambient backgrounds</td>
+</tr>
+<tr>
+<td><code>--lupine-500</code></td>
+<td><code>#5565d4</code></td>
+<td>Primary accent</td>
+</tr>
+<tr>
+<td><code>--lupine-400</code></td>
+<td><code>#7b8ae0</code></td>
+<td>Active states, nucleus glow</td>
+</tr>
+<tr>
+<td><code>--lupine-300</code></td>
+<td><code>#9ba6ea</code></td>
+<td>Section labels, header text</td>
+</tr>
+</tbody>
+</table>
+<h3>Neutral: The Slate Void</h3>
+<p>12-step neutral scale from near-black (<code>#06070d</code>) to near-white, providing the dark-mode backbone.</p>
+<h3>Semantic Accents</h3>
+<ul>
+<li><strong>Cyan</strong> (<code>#4ecdc4</code>): Electron indicators, success hints</li>
+<li><strong>Gold</strong> (<code>#d4a843</code>): Code values, numerical highlights</li>
+<li><strong>Green</strong> (<code>#4ecd6b</code>): "Shipped" status, positive confirmations</li>
+<li><strong>Red</strong> (<code>#e85454</code>): Destructive actions, errors</li>
+</ul>
+<h3>Glass Surfaces</h3>
+<p>All containers use transparent white composites over the dark void:
+- <strong>Level 1</strong> (Surface): <code>rgba(255,255,255,0.015)</code> — barely visible, for grouping
+- <strong>Level 2</strong> (Interior): <code>rgba(255,255,255,0.03)</code> + <code>backdrop-filter: blur(12px)</code>
+- <strong>Level 3</strong> (Deep Core): <code>rgba(255,255,255,0.05)</code> + <code>backdrop-filter: blur(24px)</code> + grain noise</p>
+<hr />
+<h2>2. Typography</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Family</th>
+<th>Weight</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Body / UI</td>
+<td>Inter</td>
+<td>300–700</td>
+<td>All body text, labels, controls</td>
+</tr>
+<tr>
+<td>Editorial / Stats</td>
+<td>Playfair Display</td>
+<td>400, 700, italic</td>
+<td>Hero headings, stat values</td>
+</tr>
+<tr>
+<td>Data / Code</td>
+<td>JetBrains Mono</td>
+<td>400–600</td>
+<td>Numerical readouts, mono labels, terminal aesthetics</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Animation Keyframes</h2>
+<p>All animations are pure CSS (zero JS runtime). The library provides:</p>
+<table>
+<thead>
+<tr>
+<th>Keyframe</th>
+<th>Duration</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>orbital-spin</code></td>
+<td>3s linear ∞</td>
+<td>Electron orbiting nucleus on active toggles</td>
+</tr>
+<tr>
+<td><code>orbital-counterspin</code></td>
+<td>—</td>
+<td>Secondary shell, opposite direction</td>
+</tr>
+<tr>
+<td><code>nucleus-pulse</code></td>
+<td>2s ease ∞</td>
+<td>Heartbeat glow on active nucleus dots</td>
+</tr>
+<tr>
+<td><code>bond-flow</code></td>
+<td>4s linear ∞</td>
+<td>Dashed bond lines flowing between grid nodes</td>
+</tr>
+<tr>
+<td><code>wave-breathe</code></td>
+<td>3s ease ∞</td>
+<td>Slider thumb breathing glow ring</td>
+</tr>
+<tr>
+<td><code>phase-in</code></td>
+<td>0.3s</td>
+<td>Content materialization on section expand</td>
+</tr>
+<tr>
+<td><code>grain-drift</code></td>
+<td>8s steps(6) ∞</td>
+<td>Noise texture overlay micro-movement</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. Component Library (<code>@lupine/ui</code>)</h2>
+<h3><code>AtomicGlass</code></h3>
+<p>Glassmorphic container with 3 depth levels. Level 2+ adds grain noise overlay (inline SVG <code>feTurbulence</code>). Top-edge refraction highlight line. Interactive variant lifts on hover with lupine glow.</p>
+<h3><code>OrbitalToggle</code></h3>
+<p>Boolean toggle where state is represented by electron behavior. Inactive: dim nucleus, dormant orbit paths. Active: glowing nucleus with <code>nucleus-pulse</code>, cyan electron dot tracing the orbit via <code>orbital-spin</code>. Two SVG elliptical rings at different angles create the atom cross-hatch. Pure CSS — zero JS animation.</p>
+<h3><code>WaveformSlider</code></h3>
+<p>Range input styled as a spectral emission line. Track is a 3px slate line. Filled portion glows with a lupine gradient. Thumb is a 14px circle with breathing box-shadow (<code>wave-breathe</code>). On drag, the thumb scales up and glow intensifies.</p>
+<h3><code>QuantumSection</code></h3>
+<p>Collapsible accordion panel with phase-transition animation. Header has a tiny nucleus dot indicator (glows when expanded), uppercase mono label, and rotating chevron. Content materializes with <code>phase-in</code> animation. Height animated via <code>max-height</code> + <code>ease-out-expo</code>.</p>
+<h3><code>IsotopeChip</code></h3>
+<p>Periodic-table-inspired tag/chip. Optional superscript atomic number (top-left), main symbol text, optional subscript badge tag (e.g., "NEW"). Selected state glows with lupine accent border.</p>
+<h3><code>CovalentGrid</code></h3>
+<p>CSS Grid layout that draws animated dashed SVG "bond" lines between adjacent children. Horizontal bonds connect row siblings. Vertical bonds connect column neighbors. Uses <code>ResizeObserver</code> for responsive recalculation. Bond dashes animate with <code>bond-flow</code> keyframe.</p>
+<hr />
+<h2>5. Integration Points</h2>
+<h3>Atlas-View WebGPU Viewer (<code>StylePanel.tsx</code>)</h3>
+<p>Every section is a <code>QuantumSection</code>. All boolean toggles are <code>OrbitalToggles</code>. All sliders are <code>WaveformSliders</code>. Color mode selection uses <code>IsotopeChips</code>. Quick presets use <code>CovalentGrid</code> + <code>AtomicGlass</code> interactive cards.</p>
+<h3>Lupine Marketing Site (<code>lupine-site/</code>)</h3>
+<p>Deck slides and one-pager should progressively adopt the Lupine/Slate tokens and glass surfaces. The <code>deck.html</code> pipeline visualization is a prime candidate for <code>CovalentGrid</code>.</p>
+<hr />
+<h2>6. Performance Contract</h2>
+<ul>
+<li><strong>Zero JS animation runtime</strong> — no framer-motion, no GSAP, no spring libraries</li>
+<li>All motion is CSS <code>@keyframes</code> composited on the GPU</li>
+<li>Glass <code>backdrop-filter</code> usage is limited to Level 2+ panels (not used on frequently-rerendered elements)</li>
+<li>The <code>App</code> bundle shrank 28% (428KB → 307KB) after migration to <code>@lupine/ui</code></li>
+<li>SVG noise texture is inline data-URI (no network request)</li>
+</ul>
+        </div>
+    </div>
+</body>
+</html>
