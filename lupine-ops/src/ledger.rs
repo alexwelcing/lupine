@@ -166,6 +166,20 @@ pub enum ClaimType {
         n_experiments: usize,
         strategy: String,
     },
+    /// A competing physical hypothesis generated to explain an observed pattern.
+    PhysicalHypothesis {
+        observation_claim_id: String,
+        explanation: String,
+        prediction: String,
+        test_strategy: String,
+    },
+    /// Result of testing a physical hypothesis against experiment.
+    HypothesisTested {
+        hypothesis_claim_id: String,
+        observation_claim_id: String,
+        result_summary: String,
+        supported: bool,
+    },
 }
 
 /// Verification status for a claim.
