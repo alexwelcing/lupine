@@ -105,15 +105,6 @@ export function FileDropZone() {
   const onDragLeave = useCallback(() => setDragOver(false), []);
   const onClick = useCallback(() => inputRef.current?.click(), []);
 
-  // Load demo when triggered from header
-  useEffect(() => {
-    const handler = () => {
-      const btn = document.querySelector('[data-demo="crack2d"]') as HTMLButtonElement | null;
-      btn?.click();
-    };
-    window.addEventListener('atlas:load-demo', handler);
-    return () => window.removeEventListener('atlas:load-demo', handler);
-  }, []);
 
   if (file && !loading) return null;
 
@@ -124,14 +115,15 @@ export function FileDropZone() {
       onDragLeave={onDragLeave}
       onClick={loading ? undefined : onClick}
       style={{
-        position: 'absolute',
-        inset: 0,
+        position: 'relative',
+        width: '100%',
+        minHeight: 'calc(100vh - 56px)', // Header is 56px
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: file || loading ? 'center' : 'flex-start',
         paddingTop: file || loading ? 0 : 80,
-        overflowY: 'auto',
+        paddingBottom: 80,
         background: dragOver
           ? 'radial-gradient(ellipse at center, rgba(15,98,254,0.08) 0%, rgba(0,0,0,0.96) 70%)'
           : 'radial-gradient(ellipse at center, rgba(15,98,254,0.02) 0%, rgba(0,0,0,0.98) 70%)',

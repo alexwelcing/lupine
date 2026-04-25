@@ -82,8 +82,15 @@ export function Gallery() {
     return true;
   });
 
-  const handleLoad = useCallback(async (example: GalleryExample) => {
+  const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
     if (!example.available) return;
+    
+    if (!isPopState) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('sim', example.id);
+      window.history.pushState({}, '', url);
+    }
+
     setLoadingId(example.id);
     useStore.getState().setLoading(true, 0);
     try {
@@ -155,6 +162,25 @@ export function Gallery() {
       setLoadingId(null);
     }
   }, []);
+
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const params = new URLSearchParams(window.location.search);
+      const sim = params.get('sim');
+      if (sim) {
+        const ex = EXAMPLES.find(e => e.id === sim);
+        if (ex && ex.available) handleLoad(ex, true);
+      } else {
+        useStore.getState().clearFile();
+      }
+    };
+    
+    // Initial check on mount
+    handleUrlChange();
+
+    window.addEventListener('popstate', handleUrlChange);
+    return () => window.removeEventListener('popstate', handleUrlChange);
+  }, [handleLoad]);
 
   return (
     <div style={{ width: '100%', maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
@@ -271,7 +297,7 @@ export function Gallery() {
                       loading={loadingId === ex.id}
                       onHover={() => setHoveredId(ex.id)}
                       onLeave={() => setHoveredId(null)}
-                      onClick={() => handleLoad(ex)}
+                      onClick={() => handleLoad(ex, false)}
                     />
                   ))}
                 </div>
@@ -293,7 +319,7 @@ export function Gallery() {
               loading={loadingId === ex.id}
               onHover={() => setHoveredId(ex.id)}
               onLeave={() => setHoveredId(null)}
-              onClick={() => handleLoad(ex)}
+              onClick={() => handleLoad(ex, false)}
               dataDemo={i === 0 ? 'crack2d' : undefined}
             />
           ))}
@@ -424,13 +450,27 @@ function GalleryCard({
       }}
     >
       {/* Thumbnail */}
+      <img
+        src={`/gallery/snapshots/${example.id}.jpg`}
+        alt={example.title}
+        onError={(e) => {
+          e.currentTarget.style.display = 'none';
+          if (canvasRef.current) canvasRef.current.style.display = 'block';
+        }}
+        style={{
+          width: '100%', height: 130,
+          objectFit: 'cover',
+          display: 'block',
+          borderBottom: '1px solid var(--border-subtle)',
+        }}
+      />
       <canvas
         ref={canvasRef}
         width={300}
         height={130}
         style={{
           width: '100%', height: 130,
-          display: 'block',
+          display: 'none',
           borderBottom: '1px solid var(--border-subtle)',
         }}
       />

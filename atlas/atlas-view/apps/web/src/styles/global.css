@@ -23,7 +23,7 @@
   --text-primary: #f4f4f4;
   --text-secondary: #a8a8a8;
   --text-muted: #6f6f6f;
-  --text-dim: #393939;
+  --text-dim: #8a8a8a;
 
   --accent: #0f62fe;
   --accent-hover: #0353e9;
@@ -90,8 +90,7 @@
 
 html, body, #root {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
   background: var(--bg-root);
 }
 

@@ -496,9 +496,11 @@ export default function App() {
 
   return (
     <div style={{
-      width: '100vw', height: '100vh',
+      width: '100%', minHeight: '100vh',
+      height: file ? '100vh' : 'auto',
+      overflow: file ? 'hidden' : 'visible',
       background: `linear-gradient(180deg, ${bg.top}, ${bg.bottom})`,
-      display: 'flex', flexDirection: 'column', overflow: 'hidden',
+      display: 'flex', flexDirection: 'column',
     }}>
       {/* ─── Desktop Header ─── */}
       <header style={{
@@ -514,7 +516,14 @@ export default function App() {
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <button
-            onClick={() => { if (file) useStore.getState().clearFile(); }}
+            onClick={() => { 
+              if (file) {
+                useStore.getState().clearFile(); 
+                const url = new URL(window.location.href);
+                url.searchParams.delete('sim');
+                window.history.pushState({}, '', url);
+              }
+            }}
             style={{
               display: 'flex', alignItems: 'baseline', gap: 4,
               background: 'none', border: 'none', padding: 0,
@@ -544,7 +553,12 @@ export default function App() {
                 {file.name}
               </span>
               <button
-                onClick={() => useStore.getState().clearFile()}
+                onClick={() => {
+                  useStore.getState().clearFile();
+                  const url = new URL(window.location.href);
+                  url.searchParams.delete('sim');
+                  window.history.pushState({}, '', url);
+                }}
                 title="Close"
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -590,10 +604,11 @@ export default function App() {
           )}
           {!file && (
             <button
-              onClick={async () => {
-                const { Gallery } = await import('./Gallery');
-                // Trigger the first example load via a custom event handled by FileDropZone
-                window.dispatchEvent(new CustomEvent('atlas:load-demo'));
+              onClick={() => {
+                const url = new URL(window.location.href);
+                url.searchParams.set('sim', 'au_nanocluster');
+                window.history.pushState({}, '', url);
+                window.dispatchEvent(new PopStateEvent('popstate'));
               }}
               style={{
                 padding: '8px 14px',
@@ -642,9 +657,14 @@ export default function App() {
       </header>
 
       {/* ─── Main content ─── */}
-      <div style={{ flex: 1, display: 'flex', position: 'relative', minHeight: 0 }}>
+      <div style={{ flex: 1, display: 'flex', position: 'relative' }}>
         {/* 3D viewport */}
-        <div style={{ flex: 1, position: 'relative' }}>
+        <div style={{ 
+          position: file ? 'absolute' : 'fixed', 
+          inset: 0, 
+          top: file ? 0 : 56, // below header when fixed
+          zIndex: 0 
+        }}>
           <Canvas
             camera={{
               position: [center[0], center[1], center[2] + cameraDistance],
@@ -780,7 +800,9 @@ export default function App() {
           </Canvas>
 
           {/* File drop zone overlay */}
-          <FileDropZone />
+          <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
+            <FileDropZone />
+          </div>
 
           {/* Scale bar for publication figures */}
           {file && currentFrame && showScaleBar && (
