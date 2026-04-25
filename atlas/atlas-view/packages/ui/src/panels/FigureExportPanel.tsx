@@ -84,14 +84,15 @@ export function FigureExportPanel() {
   const [exporting, setExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [readyBlob, setReadyBlob] = useState<{ blob: Blob, name: string } | null>(null);
 
   // Auto-clear success
   useEffect(() => {
-    if (exportSuccess) {
+    if (exportSuccess && !readyBlob) {
       const timer = setTimeout(() => setExportSuccess(false), 4000);
       return () => clearTimeout(timer);
     }
-  }, [exportSuccess]);
+  }, [exportSuccess, readyBlob]);
 
   // Progress simulation during recording
   useEffect(() => {
@@ -125,11 +126,53 @@ export function FigureExportPanel() {
     };
   }, [file, frame]);
 
-  const handleComplete = useCallback((success?: boolean) => {
+  const handleComplete = useCallback((success?: boolean, blob?: Blob, filename?: string) => {
     setExporting(false);
     setProgress(100);
     setExportSuccess(success !== false);
+    if (success && blob && filename) {
+      setReadyBlob({ blob, name: filename });
+    }
   }, []);
+
+  // ─── Utility ─────────────────────────────────────────────────────
+  const downloadReadyBlob = useCallback(async () => {
+    if (!readyBlob) return;
+    const { blob, name: filename } = readyBlob;
+    
+    // Try Web Share API for mobile devices (especially iOS to save to Photos)
+    if (navigator.share) {
+      const fileObj = new File([blob], filename, { type: blob.type });
+      if (navigator.canShare && navigator.canShare({ files: [fileObj] })) {
+        try {
+          await navigator.share({
+            files: [fileObj],
+            title: filename,
+          });
+          setReadyBlob(null);
+          setExportSuccess(true);
+          setTimeout(() => setExportSuccess(false), 4000);
+          return;
+        } catch (err) {
+          console.warn('Web Share failed or cancelled:', err);
+        }
+      }
+    }
+
+    // Fallback to standard anchor download
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 10_000);
+    
+    setReadyBlob(null);
+    setExportSuccess(true);
+    setTimeout(() => setExportSuccess(false), 4000);
+  }, [readyBlob]);
 
   // ─── Export handlers ──────────────────────────────────────────
   const handleExportFigure = useCallback(() => {
@@ -328,12 +371,21 @@ export function FigureExportPanel() {
                 <InfoRow label="Est. Size" value={estimatedSize} />
               </InfoBlock>
 
-              <ExportButton
-                onClick={handleExportFigure}
-                exporting={exporting}
-                success={exportSuccess}
-                label="Export Figure"
-              />
+              {readyBlob ? (
+                <ExportButton
+                  onClick={downloadReadyBlob}
+                  exporting={false}
+                  success={false}
+                  label="Save to Device"
+                />
+              ) : (
+                <ExportButton
+                  onClick={handleExportFigure}
+                  exporting={exporting}
+                  success={exportSuccess}
+                  label="Export Figure"
+                />
+              )}
             </>
           )}
 
@@ -402,14 +454,23 @@ export function FigureExportPanel() {
                 <InfoRow label="Est. Size" value={estimatedSize} />
               </InfoBlock>
 
-              <ExportButton
-                onClick={handleExportVideo}
-                exporting={exporting}
-                success={exportSuccess}
-                label="Record MP4"
-                recordMode
-                progress={progress}
-              />
+              {readyBlob ? (
+                <ExportButton
+                  onClick={downloadReadyBlob}
+                  exporting={false}
+                  success={false}
+                  label="Save to Device"
+                />
+              ) : (
+                <ExportButton
+                  onClick={handleExportVideo}
+                  exporting={exporting}
+                  success={exportSuccess}
+                  label="Record MP4"
+                  recordMode
+                  progress={progress}
+                />
+              )}
             </>
           )}
 
@@ -473,14 +534,23 @@ export function FigureExportPanel() {
                 <InfoRow label="Est. Size" value={estimatedSize} />
               </InfoBlock>
 
-              <ExportButton
-                onClick={handleExportVideo}
-                exporting={exporting}
-                success={exportSuccess}
-                label="Record GIF"
-                recordMode
-                progress={progress}
-              />
+              {readyBlob ? (
+                <ExportButton
+                  onClick={downloadReadyBlob}
+                  exporting={false}
+                  success={false}
+                  label="Save to Device"
+                />
+              ) : (
+                <ExportButton
+                  onClick={handleExportVideo}
+                  exporting={exporting}
+                  success={exportSuccess}
+                  label="Record GIF"
+                  recordMode
+                  progress={progress}
+                />
+              )}
             </>
           )}
 

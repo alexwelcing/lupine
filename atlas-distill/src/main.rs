@@ -1,3 +1,4 @@
+mod agents;
 mod discovery;
 pub mod domain;
 mod fitting;
@@ -242,6 +243,18 @@ enum Commands {
         #[arg(long, default_value = "atlas-distill/benchmarks")]
         output_dir: PathBuf,
     },
+    /// Run multi-agent discovery campaign on interatomic potentials
+    DiscoverAgents {
+        /// Maximum discovery iterations
+        #[arg(long, default_value_t = 3)]
+        iterations: usize,
+        /// Target elements (comma-separated). Default: Al,Cu,Ni,Fe
+        #[arg(long)]
+        elements: Option<String>,
+        /// Ledger output directory
+        #[arg(long, default_value = "atlas-distill/discovery_ledger")]
+        ledger_dir: PathBuf,
+    },
 }
 
 #[derive(Subcommand)]
@@ -346,6 +359,9 @@ fn main() -> Result<()> {
             };
             autoresearch::run_campaign(&config)?;
             Ok(())
+        }
+        Commands::DiscoverAgents { iterations, elements, ledger_dir } => {
+            cmd_discover_agents(iterations, elements.as_deref(), &ledger_dir)
         }
     }
 }
@@ -1139,6 +1155,65 @@ fn cmd_nist(
         eprintln!("  {:4} {:>6} {:>6} {:>6}", "────", "──────", "──────", "──────");
         eprintln!("  {:4} {:>6} {:>6} {:>6}", "SUM", total_se, total_eam, total_meam);
     }
+
+    Ok(())
+}
+
+fn cmd_discover_agents(
+    iterations: usize,
+    elements: Option<&str>,
+    ledger_dir: &PathBuf,
+) -> Result<()> {
+    use agents::{
+        lammps_agent::LammpsAgent,
+        literature_agent::LiteratureAgent,
+        manifold_agent::ManifoldAgent,
+        null_model_agent::NullModelAgent,
+        orchestrator::{CampaignConfig, Orchestrator},
+        paradox_agent::ParadoxAgent,
+    };
+
+    // Default: empty = use ALL available metals (8 FCC + 7 BCC = 15)
+    // Previous default of 4 elements created degenerate 3×3 PCA matrices.
+    let target_elements: Vec<String> = elements
+        .map(|e| e.split(',').map(|s| s.trim().to_string()).collect())
+        .unwrap_or_default();
+
+    eprintln!("\n  ╔════════════════════════════════════════════════════════════╗");
+    eprintln!("  ║  Multi-Agent Interatomic Potential Discovery System       ║");
+    eprintln!("  ║  ⚠ Null model agent (ε) active — confirmation bias guard  ║");
+    eprintln!("  ╚════════════════════════════════════════════════════════════╝\n");
+    eprintln!("  Target elements: {:?}", target_elements);
+    eprintln!("  Max iterations:  {}", iterations);
+    eprintln!("  Ledger dir:      {}\n", ledger_dir.display());
+
+    let config = CampaignConfig {
+        ledger_dir: ledger_dir.clone(),
+        max_iterations: iterations,
+        elements: target_elements.clone(),
+        nist_index: PathBuf::from("atlas/nist_ipr/index/master_index.json"),
+    };
+
+    let mut orchestrator = Orchestrator::new(&config)?;
+
+    // Register agents — note: NullModelAgent (ε) runs AFTER ManifoldAgent (γ)
+    // so it can compare real claims against random baselines.
+    orchestrator.add_agent(Box::new(LammpsAgent::new(target_elements.clone())));
+    orchestrator.add_agent(Box::new(LiteratureAgent::new()));
+    orchestrator.add_agent(Box::new(ManifoldAgent::new()));
+    orchestrator.add_agent(Box::new(NullModelAgent::new()));
+    orchestrator.add_agent(Box::new(ParadoxAgent::new()));
+
+    let summary = orchestrator.run()?;
+
+    // Final report
+    eprintln!("\n  ════════════════════════════════════════════════════════════");
+    eprintln!("  Discovery campaign complete.");
+    eprintln!("  {} records, {} claims, {} unique potentials across {} elements",
+        summary.total_records, summary.total_claims,
+        summary.unique_potentials, summary.unique_elements);
+    eprintln!("  Confirmed: {} | Refuted: {}", summary.confirmed_claims, summary.refuted_claims);
+    eprintln!("  Ledger saved to: {}\n", ledger_dir.display());
 
     Ok(())
 }

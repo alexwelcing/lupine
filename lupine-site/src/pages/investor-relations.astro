@@ -12,17 +12,17 @@ import Header from '../components/Header.astro';
       <div class="max-w-screen-2xl mx-auto w-full grid md:grid-cols-12 gap-12 items-center">
         <div class="md:col-span-8">
           <span class="font-mono-tech text-tertiary text-xs tracking-[0.3em] uppercase mb-6 block">INVESTOR RELATIONS</span>
-          <h1 class="text-6xl md:text-8xl font-serif-italic text-on-surface leading-[1.1] mb-8">
+          <h1 class="text-6xl md:text-8xl font-serif-italic text-on-surface leading-[1.1] mb-8 tech-reveal glitch-decode" data-text="Investor Relations">
             Investor Relations
           </h1>
           <p class="text-xl md:text-2xl text-on-surface-variant max-w-2xl leading-relaxed font-light">
             Unified computational platform for next-century materials. Access secure data rooms, capitalization details, and deep-tech diligence materials.
           </p>
-          <div class="mt-12 flex gap-6">
-            <button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 font-mono-tech text-sm uppercase tracking-widest hover:opacity-90 transition-all" onclick="alert('Feature Coming Soon')">
+          <div class="mt-12 flex gap-6 tech-reveal" style="animation-delay: 0.2s">
+            <button class="kinetic-hover bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 font-mono-tech text-sm uppercase tracking-widest hover:opacity-90 transition-all" onclick="alert('Feature Coming Soon')">
               Request Diligence
             </button>
-            <button class="bg-surface-container-high border border-outline-variant/20 text-on-surface px-8 py-4 font-mono-tech text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-all" onclick="alert('Feature Coming Soon')">
+            <button class="kinetic-hover bg-surface-container-high border border-outline-variant/20 text-on-surface px-8 py-4 font-mono-tech text-sm uppercase tracking-widest transition-all" onclick="alert('Feature Coming Soon')">
               View Roadmap
             </button>
           </div>
@@ -72,30 +72,30 @@ import Header from '../components/Header.astro';
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Card 1 -->
-          <div class="glass-pane p-8 relative group overflow-hidden transition-all duration-500 hover:translate-y-[-4px]">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-secondary/20 transition-all"></div>
-            <div class="font-mono-tech text-4xl text-primary mb-2">$12B</div>
+          <div class="spotlight-card glass-pane p-8 relative group overflow-hidden transition-all duration-500 hover:translate-y-[-4px] kinetic-hover">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-secondary/20 transition-all cyan-glow"></div>
+            <div class="font-mono-tech text-4xl text-primary mb-2 scramble-target" data-final="12B">0</div>
             <div class="font-mono-tech text-[10px] uppercase tracking-tighter text-on-surface-variant mb-6">TAM by 2028</div>
             <p class="text-sm text-on-surface-variant/80 font-light">Rapid expansion across aerospace, battery tech, and semiconductor verticals.</p>
           </div>
           <!-- Card 2 -->
-          <div class="glass-pane p-8 relative group overflow-hidden transition-all duration-500 hover:translate-y-[-4px]">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-violet-500/20 transition-all"></div>
-            <div class="font-mono-tech text-4xl text-violet-400 mb-2">300K+</div>
+          <div class="spotlight-card glass-pane p-8 relative group overflow-hidden transition-all duration-500 hover:translate-y-[-4px] kinetic-hover">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-violet-500/20 transition-all cyan-glow"></div>
+            <div class="font-mono-tech text-4xl text-violet-400 mb-2 scramble-target" data-final="300K+">0</div>
             <div class="font-mono-tech text-[10px] uppercase tracking-tighter text-on-surface-variant mb-6">LAMMPS researchers</div>
             <p class="text-sm text-on-surface-variant/80 font-light">Massive existing user base awaiting modern computational orchestration.</p>
           </div>
           <!-- Card 3 -->
-          <div class="glass-pane p-8 relative group overflow-hidden transition-all duration-500 hover:translate-y-[-4px]">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-tertiary/20 transition-all"></div>
-            <div class="font-mono-tech text-4xl text-secondary mb-2">0</div>
+          <div class="spotlight-card glass-pane p-8 relative group overflow-hidden transition-all duration-500 hover:translate-y-[-4px] kinetic-hover">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-tertiary/20 transition-all cyan-glow"></div>
+            <div class="font-mono-tech text-4xl text-secondary mb-2 scramble-target" data-final="0">0</div>
             <div class="font-mono-tech text-[10px] uppercase tracking-tighter text-on-surface-variant mb-6">unified competitors</div>
             <p class="text-sm text-on-surface-variant/80 font-light">Fragmented legacy tools create a unique vacuum for Lupine's OS.</p>
           </div>
           <!-- Card 4 -->
-          <div class="glass-pane p-8 relative group overflow-hidden transition-all duration-500 hover:translate-y-[-4px]">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-primary/20 transition-all"></div>
-            <div class="font-mono-tech text-4xl text-tertiary mb-2">100x</div>
+          <div class="spotlight-card glass-pane p-8 relative group overflow-hidden transition-all duration-500 hover:translate-y-[-4px] kinetic-hover">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/10 blur-[60px] rounded-full -mr-16 -mt-16 group-hover:bg-primary/20 transition-all cyan-glow"></div>
+            <div class="font-mono-tech text-4xl text-tertiary mb-2 scramble-target" data-final="100x">0</div>
             <div class="font-mono-tech text-[10px] uppercase tracking-tighter text-on-surface-variant mb-6">ML speedup vs DFT</div>
             <p class="text-sm text-on-surface-variant/80 font-light">Proprietary neural potentials bypass traditional quantum bottlenecks.</p>
           </div>
@@ -215,8 +215,8 @@ import Header from '../components/Header.astro';
               Access detailed capitalization tables, IP filings, and 3rd party computational validation reports. Requires signed MNDA.
             </p>
             <form class="flex flex-col md:flex-row gap-4 max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Feature Coming Soon');">
-              <input class="flex-grow bg-surface-container-lowest border-none border-b border-outline-variant/30 text-on-surface px-6 py-4 focus:ring-0 focus:border-primary transition-all font-mono-tech text-sm" placeholder="Institutional Email" type="email"/>
-              <button class="bg-primary text-on-primary px-8 py-4 font-mono-tech text-sm uppercase tracking-widest hover:bg-primary-container transition-all">
+              <input class="flex-grow bg-surface-container-lowest border-none border-b border-outline-variant/30 text-on-surface px-6 py-4 focus:ring-0 focus:border-[#00daf3] focus:shadow-[0_4px_16px_rgba(0,218,243,0.2)] transition-all font-mono-tech text-sm" placeholder="Institutional Email" type="email"/>
+              <button class="kinetic-hover bg-primary text-on-primary px-8 py-4 font-mono-tech text-sm uppercase tracking-widest transition-all">
                 Submit Request
               </button>
             </form>
@@ -237,6 +237,56 @@ import Header from '../components/Header.astro';
       </div>
     </section>
   </main>
+
+  <!-- Data Hydration Script -->
+  <script>
+    document.addEventListener("astro:page-load", () => {
+      const targets = document.querySelectorAll('.scramble-target');
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+      
+      // Spotlight Logic
+      const spotlights = document.querySelectorAll('.spotlight-card');
+      document.addEventListener('mousemove', (e) => {
+        spotlights.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            const el = entry.target;
+            const final = el.getAttribute('data-final');
+            if (!final || el.hasAttribute('data-scrambled')) return;
+            el.setAttribute('data-scrambled', 'true');
+            
+            let iteration = 0;
+            const interval = setInterval(() => {
+              el.innerText = final.split("")
+                .map((letter, index) => {
+                  if(index < iteration) {
+                    return final[index];
+                  }
+                  return chars[Math.floor(Math.random() * chars.length)];
+                })
+                .join("");
+              
+              if(iteration >= final.length){
+                clearInterval(interval);
+              }
+              iteration += 1 / 3;
+            }, 30);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      targets.forEach(t => observer.observe(t));
+    });
+  </script>
 
   <!-- Footer -->
   <footer class="bg-[#12131a] w-full py-16 px-12 border-t border-[#e3e1ec]/10">

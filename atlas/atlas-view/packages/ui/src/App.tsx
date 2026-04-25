@@ -799,11 +799,6 @@ export default function App() {
             </EffectComposer>
           </Canvas>
 
-          {/* File drop zone overlay */}
-          <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
-            <FileDropZone />
-          </div>
-
           {/* Scale bar for publication figures */}
           {file && currentFrame && showScaleBar && (
             <ScaleBar
@@ -856,7 +851,7 @@ export default function App() {
           {file && !activePanel && (
             <div style={{
               position: 'absolute',
-              bottom: isMobile ? 'max(24px, env(safe-area-inset-bottom))' : 84, // Push above Timeline on desktop
+              bottom: 84, // Push above Timeline
               left: 0,
               right: 0,
               display: 'flex',
@@ -964,10 +959,15 @@ export default function App() {
             </ErrorBoundary>
           </div>
         )}
+
+        {/* File drop zone overlay (placed inside relative main content wrapper to allow document scrolling) */}
+        <div style={{ position: 'relative', width: '100%', zIndex: 10, pointerEvents: file ? 'none' : 'auto' }}>
+          <FileDropZone />
+        </div>
       </div>
 
       {/* ─── Timeline ─── */}
-      {file && !isMobile && (
+      {file && (
         <div style={{
           height: 60, flexShrink: 0,
           display: 'flex', alignItems: 'center', gap: 16,
@@ -976,6 +976,8 @@ export default function App() {
           background: 'var(--bg-glass)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
+          overflowX: 'auto',
+          scrollbarWidth: 'none',
         }}>
           {/* Transport controls */}
           <div style={{ display: 'flex', gap: 4 }}>

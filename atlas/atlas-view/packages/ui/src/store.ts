@@ -21,7 +21,7 @@ export interface ExportRequest {
   cinematic?: boolean;
   baseName?: string;
   fileStream?: FileSystemWritableFileStream;
-  onComplete?: (success: boolean) => void;
+  onComplete?: (success: boolean, blob?: Blob, filename?: string) => void;
 }
 
 export interface LoadedFile {

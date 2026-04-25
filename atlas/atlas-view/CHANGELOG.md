@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.1] - 2026-04-25
+
+### Fixed
+- **Gallery Scroll Bug:** Fixed an issue where the Gallery component was unscrollable on the live site. The `FileDropZone` wrapper was inadvertently trapped inside a fixed WebGL container context. Moved the layout structure to restore document flow and allow the gallery to be reached.
+
 ## [0.2.0] - 2026-04-25
 
 ### GlimPSE Atomic Viewer - Performance & UX Remediation

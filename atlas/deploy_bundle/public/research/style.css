@@ -1,49 +1,17 @@
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    font-family: Georgia, 'Times New Roman', serif;
-    background: #fafafa;
-    color: #1a1a1a;
-    line-height: 1.9;
-    font-size: 17px;
-    -webkit-font-smoothing: antialiased;
-}
+body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; -webkit-font-smoothing: antialiased; }
+::selection { background: #000; color: #fff; }
 
-::selection {
-    background: #000;
-    color: #fff;
-}
-
-.container {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0 40px 100px;
-}
-
-nav.top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 30px 40px;
-    max-width: 640px;
-    margin: 0 auto;
-}
+.container { max-width: 640px; margin: 0 auto; padding: 0 40px 100px; }
+nav.top-bar { display: flex; align-items: center; justify-content: space-between; padding: 30px 40px; max-width: 640px; margin: 0 auto; }
 nav.top-bar .logo { font-size: 14px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #000; text-decoration: none; }
 nav.top-bar .logo span { font-style: italic; font-weight: 400; color: #666; }
 nav.top-bar .links { display: flex; gap: 24px; }
 nav.top-bar .links a { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #666; text-decoration: none; transition: color 0.3s ease; }
 nav.top-bar .links a:hover { color: #000; }
 
-.hero {
-    text-align: center;
-    margin-bottom: 80px;
-    padding-top: 60px;
-    max-width: 640px;
-    margin: 0 auto;
-    padding-left: 40px;
-    padding-right: 40px;
-}
+.hero { text-align: center; margin-bottom: 80px; padding-top: 60px; max-width: 640px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
 .hero h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; color: #000; }
 .hero .sub { font-size: 13px; letter-spacing: 0.3em; color: #666; text-transform: uppercase; font-style: italic; }
 .hero .badge { display: block; font-size: 12px; color: #999; margin-top: 40px; letter-spacing: 0.2em; text-transform: uppercase; }
@@ -76,7 +44,6 @@ nav.top-bar .links a:hover { color: #000; }
 .article li::before { content: ''; position: absolute; left: 0; top: 28px; width: 20px; height: 1px; background: #000; }
 
 .article strong { font-weight: 600; color: #000; }
-
 .article code { font-family: monospace; background: #f5f5f5; padding: 2px 6px; font-size: 14px; color: #000; }
 .article pre { background: #f5f5f5; border-left: 3px solid #000; padding: 30px 40px; margin: 40px 0; overflow-x: auto; font-family: monospace; font-size: 14px; line-height: 1.6; color: #333; }
 .article pre code { padding: 0; background: none; border: none; }
@@ -96,8 +63,4 @@ nav.top-bar .links a:hover { color: #000; }
 footer { text-align: center; padding: 60px 24px; margin-top: 80px; border-top: 1px solid #e5e5e5; }
 footer p { font-size: 12px; color: #999; letter-spacing: 0.2em; text-transform: uppercase; }
 
-@media (max-width: 640px) {
-    .hero h1 { font-size: 24px; letter-spacing: 0.1em; }
-    .container, .article, .hero, nav.top-bar { padding-left: 24px; padding-right: 24px; }
-    .article blockquote, .article pre, .card { padding: 24px; }
-}
+@media (max-width: 640px) { .hero h1 { font-size: 24px; letter-spacing: 0.1em; } .container, .article, .hero, nav.top-bar { padding-left: 24px; padding-right: 24px; } .article blockquote, .article pre, .card { padding: 24px; } }
