@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 interface Props {
   title?: string;
   description?: string;
@@ -16,11 +17,12 @@ const { title = "Lupine Materials Science", description = "Bridging classical ph
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     
     <!-- Tailwind CSS (via CDN to support legacy classes) -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" is:inline></script>
+    <ClientRouter />
     <script id="tailwind-config" is:inline>
       tailwind.config = {
         darkMode: "class",
@@ -127,9 +129,72 @@ const { title = "Lupine Materials Science", description = "Bridging classical ph
         .hero-gradient {
             background: radial-gradient(circle at 50% -20%, rgba(85, 101, 212, 0.15) 0%, rgba(10, 11, 18, 0) 70%);
         }
+        
+        /* ─── Kinetic Blueprint Animations ─── */
+        @keyframes terminal-flash {
+            0% { background-color: transparent; }
+            50% { background-color: rgba(0, 218, 243, 0.1); box-shadow: 0 0 12px rgba(0, 218, 243, 0.4); }
+            100% { background-color: transparent; }
+        }
+        .kinetic-hover:hover {
+            animation: terminal-flash 0.15s cubic-bezier(0,0,0.2,1) 1;
+            box-shadow: inset 2px 0 0 #00daf3;
+            transition: none; /* Instant terminal response */
+        }
+        @keyframes cyan-glow-pulse {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(0, 218, 243, 0.2)); }
+            50% { filter: drop-shadow(0 0 16px rgba(0, 218, 243, 0.6)); }
+        }
+        .cyan-glow { animation: cyan-glow-pulse 3s infinite; }
+        
+        @keyframes tech-slide-up {
+            from { transform: translateY(20px); opacity: 0; filter: blur(4px); }
+            to { transform: translateY(0); opacity: 1; filter: blur(0); }
+        }
+        .tech-reveal { animation: tech-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
   </head>
-  <body class="selection:bg-primary-container selection:text-white">
+  <body class="selection:bg-primary-container selection:text-white cursor-none">
+    <!-- Hardware Cursor -->
+    <div id="hardware-cursor" class="hardware-cursor hidden md:block"></div>
+
+    <!-- Persistent Scroll Variable & HUD Updater -->
+    <script>
+      // Scroll handling
+      document.addEventListener('scroll', () => {
+        document.body.style.setProperty('--scroll-y', `${window.scrollY}px`);
+        const hudReadout = document.getElementById('hud-y-pos');
+        if(hudReadout) hudReadout.textContent = `Y:${String(Math.round(window.scrollY)).padStart(4, '0')}`;
+      });
+      
+      // HUD Time
+      setInterval(() => {
+        const hudTime = document.getElementById('hud-time');
+        if(hudTime) hudTime.textContent = new Date().toISOString().substring(11,19) + ' UTC';
+      }, 1000);
+
+      // Hardware Cursor Logic
+      const cursor = document.getElementById('hardware-cursor');
+      if (cursor) {
+        document.addEventListener('mousemove', (e) => {
+          cursor.style.left = `${e.clientX}px`;
+          cursor.style.top = `${e.clientY}px`;
+        });
+        document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
+        document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
+      }
+    </script>
+
+    <!-- Tactical HUD Overlays -->
+    <div class="fixed top-4 left-4 z-50 font-mono-tech text-[10px] text-[#00daf3] opacity-60 tracking-widest pointer-events-none hidden md:block">
+      LAT:30.2672°N // LON:97.7431°W <br/>
+      <span id="hud-time">00:00:00 UTC</span>
+    </div>
+    <div class="fixed bottom-4 right-4 z-50 font-mono-tech text-[10px] text-[#00daf3] opacity-60 tracking-widest pointer-events-none hidden md:block text-right">
+      LUPINE_MONOLITH_v3.0 <br/>
+      <span id="hud-y-pos">Y:0000</span> / Z:001
+    </div>
+
     <slot />
   </body>
 </html>
