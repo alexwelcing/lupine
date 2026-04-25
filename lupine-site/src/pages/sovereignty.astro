@@ -281,7 +281,7 @@ import Header from '../components/Header.astro';
   <script>
     document.addEventListener("astro:page-load", () => {
       // Spotlight Logic
-      const spotlights = document.querySelectorAll('.spotlight-card');
+      const spotlights = document.querySelectorAll<HTMLElement>('.spotlight-card');
       document.addEventListener('mousemove', (e) => {
         spotlights.forEach((card) => {
           const rect = card.getBoundingClientRect();

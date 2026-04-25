@@ -296,6 +296,193 @@ pub fn execute_lammps(
 }
 
 // ───────────────────────────────────────────────────────────
+// Single-potential execution
+// ───────────────────────────────────────────────────────────
+
+/// Run a single NIST potential for a pre-configured element.
+/// This is the primitive that the autoresearch loop calls.
+pub fn run_single_potential(
+    config: &RunnerConfig,
+    pot: &NistPotential,
+) -> Result<ComputationResult> {
+    let refs = reference_data();
+    let ref_data = refs.get(&config.element)
+        .with_context(|| format!("No reference data for element {}", config.element))?;
+    let lattice = config.lattice_constant.unwrap_or(ref_data.lattice);
+
+    let run_dir = config.work_dir.join(format!("{}_{}", config.element, pot.short_label()));
+    std::fs::create_dir_all(&run_dir)?;
+
+    let result_path = run_dir.join("result.json");
+    if config.resume && result_path.exists() {
+        let content = std::fs::read_to_string(&result_path)?;
+        if let Ok(result) = serde_json::from_str::<ComputationResult>(&content) {
+            return Ok(result);
+        }
+    }
+
+    let pot_file = match prepare_potential_file(pot, &run_dir) {
+        Ok(f) => f,
+        Err(e) => {
+            return Ok(ComputationResult {
+                potential: pot.clone(),
+                trace: dummy_trace(pot, &config.structure, lattice),
+                c11: None, c12: None, c44: None,
+                a0: None, ecoh: None,
+                success: false,
+                error_message: Some(format!("Potential file error: {}", e)),
+            });
+        }
+    };
+
+    let lattice_type = match config.structure.as_str() {
+        "bcc" => lupine_ops::elastic::LatticeType::Bcc,
+        _ => lupine_ops::elastic::LatticeType::Fcc,
+    };
+    let statics_config = lupine_ops::statics::StaticsCalcConfig {
+        element: config.element.clone(),
+        lattice_type,
+        lattice_constant_guess: lattice,
+        nist_id: pot.id.clone(),
+    };
+
+    let backend = if pot.pair_style.contains("eam/alloy") {
+        lupine_ops::mlip_ops::MlipBackend::EamAlloy
+    } else if pot.pair_style.contains("eam/fs") {
+        lupine_ops::mlip_ops::MlipBackend::EamFs
+    } else if pot.pair_style == "eam" {
+        lupine_ops::mlip_ops::MlipBackend::Eam
+    } else if pot.pair_style.contains("meam") {
+        lupine_ops::mlip_ops::MlipBackend::Meam
+    } else if pot.pair_style.contains("adp") {
+        lupine_ops::mlip_ops::MlipBackend::Adp
+    } else {
+        lupine_ops::mlip_ops::MlipBackend::Eam
+    };
+
+    let deployment = lupine_ops::mlip_ops::MlipDeployment::new(backend, "test").with_path(&pot_file);
+
+    // Statics
+    let input = match lupine_ops::statics::generate_statics_script(&statics_config, &deployment) {
+        Ok(script) => script,
+        Err(e) => {
+            return Ok(ComputationResult {
+                potential: pot.clone(),
+                trace: dummy_trace(pot, &config.structure, lattice),
+                c11: None, c12: None, c44: None,
+                a0: None, ecoh: None,
+                success: false,
+                error_message: Some(format!("Script error: {:?}", e)),
+            });
+        }
+    };
+    let input_path = run_dir.join("in.statics");
+    std::fs::write(&input_path, &input)?;
+
+    let log_path = match execute_lammps(config, pot, &input_path, &run_dir, "log.lammps.statics") {
+        Ok(p) => p,
+        Err(e) => {
+            return Ok(ComputationResult {
+                potential: pot.clone(),
+                trace: dummy_trace(pot, &config.structure, lattice),
+                c11: None, c12: None, c44: None,
+                a0: None, ecoh: None,
+                success: false,
+                error_message: Some(format!("Statics execution error: {}", e)),
+            });
+        }
+    };
+
+    let log_content = std::fs::read_to_string(&log_path).unwrap_or_default();
+    let statics_res_opt = lupine_ops::statics::parse_statics_output(&log_content);
+
+    if statics_res_opt.is_none() {
+        return Ok(ComputationResult {
+            potential: pot.clone(),
+            trace: dummy_trace(pot, &config.structure, lattice),
+            c11: None, c12: None, c44: None,
+            a0: None, ecoh: None,
+            success: false,
+            error_message: Some("Parse statics error".to_string()),
+        });
+    }
+
+    let statics_res = statics_res_opt.unwrap();
+
+    // Elastics
+    let elastic_config = lupine_ops::elastic::ElasticCalcConfig {
+        element: config.element.clone(),
+        lattice_type,
+        lattice_constant: statics_res.a0,
+        strain_delta: 1e-6,
+        nist_id: pot.id.clone(),
+    };
+
+    let elastic_input = match lupine_ops::elastic::generate_elastic_script(&elastic_config, &deployment) {
+        Ok(script) => script,
+        Err(e) => {
+            let trace = build_trace(pot, &config.structure, lattice, &run_dir);
+            let result = ComputationResult {
+                potential: pot.clone(),
+                trace,
+                c11: None, c12: None, c44: None,
+                a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+                success: true,
+                error_message: Some(format!("Elastic script error: {:?}", e)),
+            };
+            let json = serde_json::to_string_pretty(&result)?;
+            std::fs::write(&result_path, json)?;
+            return Ok(result);
+        }
+    };
+
+    let elastic_input_path = run_dir.join("in.elastic");
+    std::fs::write(&elastic_input_path, &elastic_input)?;
+
+    let elastic_log_path = match execute_lammps(config, pot, &elastic_input_path, &run_dir, "log.lammps.elastic") {
+        Ok(p) => p,
+        Err(e) => {
+            let trace = build_trace(pot, &config.structure, lattice, &run_dir);
+            let result = ComputationResult {
+                potential: pot.clone(),
+                trace,
+                c11: None, c12: None, c44: None,
+                a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+                success: true,
+                error_message: Some(format!("Elastic execution error: {}", e)),
+            };
+            let json = serde_json::to_string_pretty(&result)?;
+            std::fs::write(&result_path, json)?;
+            return Ok(result);
+        }
+    };
+
+    let elastic_log_content = std::fs::read_to_string(&elastic_log_path).unwrap_or_default();
+    let elastic_res_opt = lupine_ops::elastic::parse_elastic_output(&elastic_log_content);
+
+    let (c11, c12, c44) = if let Some(eres) = elastic_res_opt {
+        (Some(eres.c11), Some(eres.c12), Some(eres.c44))
+    } else {
+        (None, None, None)
+    };
+
+    let trace = build_trace(pot, &config.structure, lattice, &run_dir);
+    let result = ComputationResult {
+        potential: pot.clone(),
+        trace,
+        c11, c12, c44,
+        a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+        success: true,
+        error_message: if c11.is_none() { Some("Elastic parse failed".to_string()) } else { None },
+    };
+
+    let json = serde_json::to_string_pretty(&result)?;
+    std::fs::write(&result_path, json)?;
+
+    Ok(result)
+}
+
+// ───────────────────────────────────────────────────────────
 // Campaign orchestration
 // ───────────────────────────────────────────────────────────
 

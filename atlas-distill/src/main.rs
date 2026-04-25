@@ -17,6 +17,7 @@ mod benchmark;
 mod nist;
 mod runner;
 mod autoresearch;
+mod surrogate;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
@@ -255,6 +256,39 @@ enum Commands {
         #[arg(long, default_value = "atlas-distill/discovery_ledger")]
         ledger_dir: PathBuf,
     },
+    /// Run active-learning-driven experiment selection on unvalidated claims
+    ActiveLearn {
+        /// Acquisition strategy: max-entropy, expected-improvement, alignment-stress
+        #[arg(long, default_value = "alignment-stress")]
+        strategy: String,
+        /// Maximum experiments to propose
+        #[arg(long, default_value_t = 5)]
+        n: usize,
+        /// Target element
+        #[arg(long, default_value = "Al")]
+        element: String,
+        /// Ledger directory to read claims from
+        #[arg(long, default_value = "atlas-distill/discovery_ledger")]
+        ledger_dir: PathBuf,
+        /// LAMMPS executable
+        #[arg(long, default_value = "lmp")]
+        lammps_exe: String,
+    },
+    /// Run reactive autoresearch: close the loop between claims and experiments
+    React {
+        /// Maximum reactive iterations
+        #[arg(long, default_value_t = 3)]
+        iterations: usize,
+        /// Target elements (comma-separated)
+        #[arg(long)]
+        elements: Option<String>,
+        /// Ledger directory
+        #[arg(long, default_value = "atlas-distill/discovery_ledger")]
+        ledger_dir: PathBuf,
+        /// LAMMPS executable
+        #[arg(long, default_value = "lmp")]
+        lammps_exe: String,
+    },
 }
 
 #[derive(Subcommand)]
@@ -363,6 +397,12 @@ fn main() -> Result<()> {
         Commands::DiscoverAgents { iterations, elements, ledger_dir } => {
             cmd_discover_agents(iterations, elements.as_deref(), &ledger_dir)
         }
+        Commands::ActiveLearn { strategy, n, element, ledger_dir, lammps_exe } => {
+            cmd_active_learn(&strategy, n, &element, &ledger_dir, &lammps_exe)
+        }
+        Commands::React { iterations, elements, ledger_dir, lammps_exe } => {
+            cmd_react(iterations, elements.as_deref(), &ledger_dir, &lammps_exe)
+        }
     }
 }
 
@@ -391,6 +431,108 @@ fn cmd_thermo(path: &PathBuf, x_col: &str, y_col: Option<&str>) -> Result<()> {
             }
         }
     }
+
+    Ok(())
+}
+
+fn cmd_active_learn(
+    strategy: &str,
+    n: usize,
+    element: &str,
+    ledger_dir: &PathBuf,
+    lammps_exe: &str,
+) -> Result<()> {
+    use agents::experiment_agent::{ExperimentAgent, ExperimentAgentConfig};
+    use agents::{Action, DiscoveryAgent};
+    use lupine_ops::ledger::DiscoveryLedger;
+
+    eprintln!("  ╔════════════════════════════════════════════════════════════╗");
+    eprintln!("  ║  Active Learning Experiment Selector                       ║");
+    eprintln!("  ╚════════════════════════════════════════════════════════════╝");
+
+    let ledger = if ledger_dir.exists() {
+        DiscoveryLedger::load(ledger_dir).unwrap_or_default()
+    } else {
+        DiscoveryLedger::new()
+    };
+
+    let mut agent = ExperimentAgent::new(ExperimentAgentConfig {
+        lammps_exe: lammps_exe.into(),
+        work_dir: PathBuf::from("atlas-distill/lammps_runs/auto"),
+        min_score: 0.0,
+        max_per_iteration: n,
+        supercell: 3,
+    });
+
+    let action = Action::DesignExperiments {
+        strategy: strategy.into(),
+        max_experiments: n,
+    };
+
+    let result = agent.execute(&action, &ledger)?;
+    eprintln!("\n  ℹ {}", result.action_description);
+    for note in &result.notes {
+        eprintln!("    {}", note);
+    }
+    eprintln!("  📋 {} claims produced", result.claims_produced.len());
+    eprintln!("  📊 {} records produced", result.records_produced.len());
+
+    Ok(())
+}
+
+fn cmd_react(
+    iterations: usize,
+    elements: Option<&str>,
+    ledger_dir: &PathBuf,
+    lammps_exe: &str,
+) -> Result<()> {
+    use agents::{
+        causal_agent::CausalAgent,
+        experiment_agent::{ExperimentAgent, ExperimentAgentConfig},
+        manifold_agent::ManifoldAgent,
+        null_model_agent::NullModelAgent,
+        orchestrator::{CampaignConfig, Orchestrator},
+    };
+
+    let target_elements: Vec<String> = elements
+        .map(|e| e.split(',').map(|s| s.trim().to_string()).collect())
+        .unwrap_or_default();
+
+    eprintln!("\n  ╔════════════════════════════════════════════════════════════╗");
+    eprintln!("  ║  Reactive Autoresearch Loop (Karpathy-style)              ║");
+    eprintln!("  ║  Claims → Experiments → Records → New Claims              ║");
+    eprintln!("  ╚════════════════════════════════════════════════════════════╝\n");
+
+    let config = CampaignConfig {
+        ledger_dir: ledger_dir.clone(),
+        max_iterations: iterations,
+        elements: target_elements.clone(),
+        nist_index: PathBuf::from("atlas/nist_ipr/index/master_index.json"),
+    };
+
+    let mut orchestrator = Orchestrator::new(&config)?;
+
+    // Reactive agents: Manifold detects → Causal screens → Experiment validates
+    orchestrator.add_agent(Box::new(ManifoldAgent::new()));
+    orchestrator.add_agent(Box::new(CausalAgent::new()));
+    orchestrator.add_agent(Box::new(NullModelAgent::new()));
+    orchestrator.add_agent(Box::new(ExperimentAgent::new(ExperimentAgentConfig {
+        lammps_exe: lammps_exe.into(),
+        work_dir: PathBuf::from("atlas-distill/lammps_runs/auto"),
+        min_score: 0.3,
+        max_per_iteration: 3,
+        supercell: 3,
+    })));
+
+    let summary = orchestrator.run()?;
+
+    eprintln!("\n  ════════════════════════════════════════════════════════════");
+    eprintln!("  Reactive loop complete.");
+    eprintln!("  {} records, {} claims, {} unique potentials across {} elements",
+        summary.total_records, summary.total_claims,
+        summary.unique_potentials, summary.unique_elements);
+    eprintln!("  Confirmed: {} | Refuted: {}", summary.confirmed_claims, summary.refuted_claims);
+    eprintln!("  Ledger saved to: {}\n", ledger_dir.display());
 
     Ok(())
 }
@@ -1165,12 +1307,13 @@ fn cmd_discover_agents(
     ledger_dir: &PathBuf,
 ) -> Result<()> {
     use agents::{
+        causal_agent::CausalAgent,
+        experiment_agent::{ExperimentAgent, ExperimentAgentConfig},
         lammps_agent::LammpsAgent,
         literature_agent::LiteratureAgent,
         manifold_agent::ManifoldAgent,
         null_model_agent::NullModelAgent,
         orchestrator::{CampaignConfig, Orchestrator},
-        paradox_agent::ParadoxAgent,
     };
 
     // Default: empty = use ALL available metals (8 FCC + 7 BCC = 15)
@@ -1202,7 +1345,14 @@ fn cmd_discover_agents(
     orchestrator.add_agent(Box::new(LiteratureAgent::new()));
     orchestrator.add_agent(Box::new(ManifoldAgent::new()));
     orchestrator.add_agent(Box::new(NullModelAgent::new()));
-    orchestrator.add_agent(Box::new(ParadoxAgent::new()));
+    orchestrator.add_agent(Box::new(CausalAgent::new()));
+    orchestrator.add_agent(Box::new(ExperimentAgent::new(ExperimentAgentConfig {
+        lammps_exe: "lmp".into(),
+        work_dir: PathBuf::from("atlas-distill/lammps_runs/auto"),
+        min_score: 0.3,
+        max_per_iteration: 2,
+        supercell: 3,
+    })));
 
     let summary = orchestrator.run()?;
 

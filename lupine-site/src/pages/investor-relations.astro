@@ -245,7 +245,7 @@ import Header from '../components/Header.astro';
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
       
       // Spotlight Logic
-      const spotlights = document.querySelectorAll('.spotlight-card');
+      const spotlights = document.querySelectorAll<HTMLElement>('.spotlight-card');
       document.addEventListener('mousemove', (e) => {
         spotlights.forEach((card) => {
           const rect = card.getBoundingClientRect();
@@ -259,7 +259,7 @@ import Header from '../components/Header.astro';
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if(entry.isIntersecting) {
-            const el = entry.target;
+            const el = entry.target as HTMLElement;
             const final = el.getAttribute('data-final');
             if (!final || el.hasAttribute('data-scrambled')) return;
             el.setAttribute('data-scrambled', 'true');

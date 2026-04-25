@@ -227,6 +227,12 @@ impl NistCatalog {
         self.potentials.iter().find(|p| p.id == id)
     }
 
+    /// Find a potential by its short label (e.g. "Mishin-1999").
+    /// Returns the first match; labels are not guaranteed unique.
+    pub fn find_by_label(&self, label: &str) -> Option<&NistPotential> {
+        self.potentials.iter().find(|p| p.short_label() == label)
+    }
+
     /// All unique elements in the catalog.
     pub fn elements(&self) -> Vec<&str> {
         let mut els: Vec<&str> = self.by_element.keys().map(|s| s.as_str()).collect();
