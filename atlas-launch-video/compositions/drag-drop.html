@@ -2,38 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
   <link rel="stylesheet" href="../styles/global.css" />
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <style>
-    .overlay-text {
-      position: absolute; bottom: 80px; left: 80px;
-      display: flex; flex-direction: column; gap: 12px; opacity: 0;
-    }
-    .overlay-text .big { font-size: 48px; font-weight: 800; letter-spacing: -0.02em; }
-    .overlay-text .sub { font-size: 20px; font-weight: 500; color: var(--text-muted); }
-    .overlay-text .sub em { font-style: normal; color: var(--accent); }
+    .huge { font-size: 150px; font-weight: 900; color: #4ecdc4; text-transform: uppercase; position: absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; }
   </style>
 </head>
 <body>
   <div id="root" data-composition-id="drag-drop" data-start="0" data-duration="6" data-width="1920" data-height="1080">
-    <!-- Screen recording will be placed here as a <video> element -->
-    <!-- For now, use a placeholder message -->
-    <video id="drag-drop-video" data-start="0" data-duration="6" data-track-index="0"
-           src="../assets/drag-drop-recording.mp4" muted playsinline
-           style="position:absolute;inset:0;width:1920px;height:1080px;object-fit:cover;">
-    </video>
-
-    <div class="overlay-text clip" id="overlay" data-start="1" data-duration="5" data-track-index="1">
-      <div class="big">Drag. Drop. Done.</div>
-      <div class="sub">10× faster parsing via <em>Rust → WebAssembly</em></div>
-    </div>
+    <div class="huge" id="t1">GPU ACCELERATED</div>
+    <div class="huge" id="t2" style="color: #ff5472;">RUST KERNEL</div>
+    <div class="huge" id="t3" style="color: #f0b840;">LEAN 4 FORMALIZED</div>
   </div>
   <script>
     window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
-    tl.to("#overlay", { opacity: 1, duration: 0.4 }, 1);
-    tl.from("#overlay", { y: 20, duration: 0.4, ease: "power2.out" }, 1);
-    tl.to("#overlay", { opacity: 0, duration: 0.3 }, 5.5);
+    tl.to("#t1", { opacity:1, scale:1.1, duration:0.2 }, 0.5);
+    tl.to("#t1", { opacity:0, duration:0.2 }, 2.0);
+    tl.to("#t2", { opacity:1, scale:1.1, duration:0.2 }, 2.2);
+    tl.to("#t2", { opacity:0, duration:0.2 }, 3.8);
+    tl.to("#t3", { opacity:1, scale:1.1, duration:0.2 }, 4.0);
+    tl.to("#t3", { opacity:0, duration:0.2 }, 5.8);
     tl.set({}, {}, 6);
     window.__timelines["drag-drop"] = tl;
   </script>

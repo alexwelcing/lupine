@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2004--Zhou-X-W--Al--LAMMPS--ipr1",
+    "potid": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Al",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "superseded",
+    "elements": [
+      "Al"
+    ],
+    "symbols": [
+      "Al"
+    ],
+    "dois": [
+      "10.1103/physrevb.69.144113"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2004--Zhou-X-W--Al--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Al",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Al/2/Al.set",
+        "filename": "Al.set",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "b2fcc38ea29cc0de",
+    "nist_potential_id": "2004--Zhou-X-W--Al--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.69.144113",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.05,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 112.284286650737,
+  "c12": 63.7972585442165,
+  "c44": 30.9299402944162,
+  "a0": 4.05018069032533,
+  "ecoh": -3.58000247151857,
+  "success": true,
+  "error_message": null
+}

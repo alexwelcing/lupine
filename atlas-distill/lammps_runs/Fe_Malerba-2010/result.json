@@ -1,0 +1,55 @@
+{
+  "potential": {
+    "id": "2010--Malerba-L--Fe--LAMMPS--ipr1",
+    "potid": "2010--Malerba-L-Marinica-M-C-Anento-N-et-al--Fe",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1016/j.jnucmat.2010.05.017",
+      "10.1103/physrevlett.108.025501"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2010--Malerba-L--Fe--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2010--Malerba-L-Marinica-M-C-Anento-N-et-al--Fe",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2010--Malerba-L-Marinica-M-C-Anento-N-et-al--Fe/1/M07_eam.fs",
+        "filename": "M07_eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "a9952076f3679079",
+    "nist_potential_id": "2010--Malerba-L--Fe--LAMMPS--ipr1",
+    "potential_doi": "10.1016/j.jnucmat.2010.05.017",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 243.364739627166,
+  "c12": 145.00673520606,
+  "c44": 116.00827448472,
+  "a0": 2.85527973080511,
+  "ecoh": -4.12239788365399,
+  "success": true,
+  "error_message": null
+}

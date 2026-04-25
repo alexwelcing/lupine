@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2004--Liu-X-Y--Al--LAMMPS--ipr1",
+    "potid": "2004--Liu-X-Y-Ercolessi-F-Adams-J-B--Al",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Al"
+    ],
+    "symbols": [
+      "Al"
+    ],
+    "dois": [
+      "10.1088/0965-0393/12/4/007"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2004--Liu-X-Y--Al--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2004--Liu-X-Y-Ercolessi-F-Adams-J-B--Al",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2004--Liu-X-Y-Ercolessi-F-Adams-J-B--Al/2/Al-LEA.eam.alloy",
+        "filename": "Al-LEA.eam.alloy",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "1e9500bf507db5e3",
+    "nist_potential_id": "2004--Liu-X-Y--Al--LAMMPS--ipr1",
+    "potential_doi": "10.1088/0965-0393/12/4/007",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.05,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 118.93868000055,
+  "c12": 62.8996320228488,
+  "c44": 32.9722106744811,
+  "a0": 4.03196044031461,
+  "ecoh": -3.36000036977678,
+  "success": true,
+  "error_message": null
+}

@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2006--Chamati-H--Fe--LAMMPS--ipr1",
+    "potid": "2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1016/j.susc.2006.02.010"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2006--Chamati-H--Fe--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/2/Fe_Mishin2006.eam.alloy",
+        "filename": "Fe_Mishin2006.eam.alloy",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "40d3c0a8a7c35fd6",
+    "nist_potential_id": "2006--Chamati-H--Fe--LAMMPS--ipr1",
+    "potential_doi": "10.1016/j.susc.2006.02.010",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 241.106317555285,
+  "c12": 146.843762344199,
+  "c44": 114.042978530876,
+  "a0": 2.86650002861362,
+  "ecoh": -4.28000006934753,
+  "success": true,
+  "error_message": null
+}

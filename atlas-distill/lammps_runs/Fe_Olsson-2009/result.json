@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2009--Olsson-P-A-T--Fe--LAMMPS--ipr1",
+    "potid": "2009--Olsson-P-A-T--Fe",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1016/j.commatsci.2009.06.025"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2009--Olsson-P-A-T--Fe--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2009--Olsson-P-A-T--Fe",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--Fe/2/Fe_Olsson_CMS2009.eam.alloy",
+        "filename": "Fe_Olsson_CMS2009.eam.alloy",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "ddec97227018d83a",
+    "nist_potential_id": "2009--Olsson-P-A-T--Fe--LAMMPS--ipr1",
+    "potential_doi": "10.1016/j.commatsci.2009.06.025",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 239.549921329721,
+  "c12": 135.749970006566,
+  "c44": 120.749993267088,
+  "a0": 2.8700000688892,
+  "ecoh": -4.2799999304658,
+  "success": true,
+  "error_message": null
+}

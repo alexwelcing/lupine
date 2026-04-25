@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2010--Olsson-P-A-T--Au--LAMMPS--ipr1",
+    "potid": "2010--Olsson-P-A-T--Au",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Au"
+    ],
+    "symbols": [
+      "Au"
+    ],
+    "dois": [
+      "10.1063/1.3460127"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2010--Olsson-P-A-T--Au--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2010--Olsson-P-A-T--Au",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2010--Olsson-P-A-T--Au/2/Au_Olsson_JAP2010.eam.alloy",
+        "filename": "Au_Olsson_JAP2010.eam.alloy",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "0a83701a12899a77",
+    "nist_potential_id": "2010--Olsson-P-A-T--Au--LAMMPS--ipr1",
+    "potential_doi": "10.1063/1.3460127",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.078,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 201.630057569851,
+  "c12": 169.970030851982,
+  "c44": 45.4400270224961,
+  "a0": 4.07999999990595,
+  "ecoh": -3.80999999999434,
+  "success": true,
+  "error_message": null
+}

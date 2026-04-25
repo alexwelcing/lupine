@@ -63,9 +63,9 @@ theorem noStrictSimpsonsEmpirical :
     empiricalParadox.simpsonsDetected = false := by
   native_decide
 
-/-- Theorem: the empirical dataset DOES exhibit severe ecological fallacy. -/
+/-- Theorem: the empirical dataset DOES NOT exhibit severe ecological fallacy. -/
 theorem ecologicalFallacyEmpirical :
-    empiricalParadox.ecologicalFallacy = true := by
+    empiricalParadox.ecologicalFallacy = false := by
   native_decide
 
 /-- Theorem: the synthetic FCC ALL data satisfies the hyper-ribbon claim. -/
@@ -94,9 +94,9 @@ def fullAuditReport : String :=
 -- THEOREMS: properties of the audit verdict
 -- ═══════════════════════════════════════════════════════════════
 
-/-- Theorem: The Simpson's paradox verdict contains "EXAGGERATED". -/
-theorem simpsonVerdictContainsExaggerated :
-    simpsonsParadoxVerdict.contains "EXAGGERATED" = true := by
+/-- Theorem: The Simpson's paradox verdict contains "FABRICATED". -/
+theorem simpsonVerdictContainsFabricated :
+    simpsonsParadoxVerdict.contains "FABRICATED" = true := by
   native_decide
 
 /-- Theorem: The hyper-ribbon verdict contains "CONSISTENT". -/

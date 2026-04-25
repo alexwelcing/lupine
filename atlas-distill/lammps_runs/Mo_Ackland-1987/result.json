@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1987--Ackland-G-J--Mo--LAMMPS--ipr4",
+    "potid": "1987--Ackland-G-J-Thetford-R--Mo",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Mo"
+    ],
+    "symbols": [
+      "Mo"
+    ],
+    "dois": [
+      "10.1080/01418618708204464"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1987--Ackland-G-J--Mo--LAMMPS--ipr4",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1987--Ackland-G-J-Thetford-R--Mo",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Thetford-R--Mo/5/Ackland_Thetford_1987_Mo.eam.fs",
+        "filename": "Ackland_Thetford_1987_Mo.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "aa24a795f86f3fbf",
+    "nist_potential_id": "1987--Ackland-G-J--Mo--LAMMPS--ipr4",
+    "potential_doi": "10.1080/01418618708204464",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.147,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 464.715426546305,
+  "c12": 161.521296186047,
+  "c44": 108.91589967207,
+  "a0": 3.14719125181208,
+  "ecoh": -6.82027767008895,
+  "success": true,
+  "error_message": null
+}

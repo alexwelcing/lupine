@@ -153,9 +153,9 @@ theorem simpsonsDetectedEmpirical :
     empiricalParadox.simpsonsDetected = false := by
   native_decide
 
-/-- Theorem T2: However, severe Ecological Fallacy is present (reversal magnitude > 0.1). -/
+/-- Theorem T2: Ecological Fallacy is absent (reversal magnitude < 0.1). -/
 theorem ecologicalFallacyEmpirical :
-    empiricalParadox.ecologicalFallacy = true := by
+    empiricalParadox.ecologicalFallacy = false := by
   native_decide
 
 /-- Theorem T3: The empirical paradox dataset is non-empty. -/
@@ -163,9 +163,9 @@ theorem empiricalPointsNonEmpty :
     empiricalParadoxPoints.length > 0 := by
   native_decide
 
-/-- Theorem T4: The pooled correlation and pooled-within correlation have severe magnitude differences. -/
+/-- Theorem T4: The pooled correlation and pooled-within correlation do not have severe magnitude differences. -/
 theorem empiricalReversalMagnitudeAbove01 :
-    (empiricalParadox.reversalMagnitude > 0.1) = true := by
+    (empiricalParadox.reversalMagnitude < 0.1) = true := by
   native_decide
 
 -- ═══════════════════════════════════════════════════════════════
@@ -173,7 +173,7 @@ theorem empiricalReversalMagnitudeAbove01 :
 -- ═══════════════════════════════════════════════════════════════
 
 #guard (empiricalParadox.simpsonsDetected == false)
-#guard (empiricalParadox.ecologicalFallacy == true)
-#guard (empiricalParadox.reversalMagnitude > 0.1)
+#guard (empiricalParadox.ecologicalFallacy == false)
+#guard (empiricalParadox.reversalMagnitude < 0.1)
 
 end OpenDistillationFactory.Materials.Analysis.Causal

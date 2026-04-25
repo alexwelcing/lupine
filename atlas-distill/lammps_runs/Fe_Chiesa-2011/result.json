@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2011--Chiesa-S--Fe-33--LAMMPS--ipr1",
+    "potid": "2011--Chiesa-S-Derlet-P-M-Dudarev-S-L-Swygenhoven-H-V--Fe-33",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1088/0953-8984/23/20/206001"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2011--Chiesa-S--Fe-33--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2011--Chiesa-S-Derlet-P-M-Dudarev-S-L-Swygenhoven-H-V--Fe-33",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2011--Chiesa-S-Derlet-P-M-Dudarev-S-L-Swygenhoven-H-V--Fe-33/1/Fe_Fe.CS3_33.alloy",
+        "filename": "Fe_Fe.CS3_33.alloy",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "fe0240b1b2acdad0",
+    "nist_potential_id": "2011--Chiesa-S--Fe-33--LAMMPS--ipr1",
+    "potential_doi": "10.1088/0953-8984/23/20/206001",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 243.58416947773,
+  "c12": 138.443321940157,
+  "c44": 122.220221823163,
+  "a0": 2.8665045923542,
+  "ecoh": -13.8836145013156,
+  "success": true,
+  "error_message": null
+}

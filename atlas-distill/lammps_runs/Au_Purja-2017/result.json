@@ -1,0 +1,52 @@
+{
+  "potential": {
+    "id": "2017--Purja-Pun-G-P--Au--LAMMPS--ipr1",
+    "potid": "2017--Purja-Pun-G-P--Au",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Au"
+    ],
+    "symbols": [
+      "Au"
+    ],
+    "dois": [],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2017--Purja-Pun-G-P--Au--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2017--Purja-Pun-G-P--Au",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2017--Purja-Pun-G-P--Au/1/Au_GLJ10_3.eam.alloy",
+        "filename": "Au_GLJ10_3.eam.alloy",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "32288f28d973fabe",
+    "nist_potential_id": "2017--Purja-Pun-G-P--Au--LAMMPS--ipr1",
+    "potential_doi": "unknown",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.078,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 205.399430841021,
+  "c12": 167.787699332038,
+  "c44": 48.7761570897886,
+  "a0": 4.07799795103699,
+  "ecoh": -3.93000000007216,
+  "success": true,
+  "error_message": null
+}

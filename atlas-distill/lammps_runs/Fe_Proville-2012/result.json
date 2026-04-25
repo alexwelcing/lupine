@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2012--Proville-L--Fe--LAMMPS--ipr1",
+    "potid": "2012--Proville-L-Rodney-D-Marinica-M-C--Fe",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1038/nmat3401"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2012--Proville-L--Fe--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2012--Proville-L-Rodney-D-Marinica-M-C--Fe",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2012--Proville-L-Rodney-D-Marinica-M-C--Fe/1/MCM2011_eam.fs",
+        "filename": "MCM2011_eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "3428517b842e8056",
+    "nist_potential_id": "2012--Proville-L--Fe--LAMMPS--ipr1",
+    "potential_doi": "10.1038/nmat3401",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 243.389100277123,
+  "c12": 145.007846404603,
+  "c44": 115.988395950611,
+  "a0": 2.81477868482921,
+  "ecoh": -4.12245070203508,
+  "success": true,
+  "error_message": null
+}

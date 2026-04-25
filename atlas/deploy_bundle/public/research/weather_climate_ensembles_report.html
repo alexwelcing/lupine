@@ -3,32 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Climate Science Ensemble Methods — glim Research</title>
-    <meta name="description" content="Transferring multi-model ensemble weight strategies from climate modeling to materials science.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Multi-Model Ensemble Methods from Climate Science: A Technical Review for Computational Materials Science</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-top: 20px; border-bottom: 1px solid #000; padding-bottom: 40px; }
+        .symbol { font-size: 24px; margin-bottom: 20px; color: #333; letter-spacing: 0.5em; }
+        h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.05em; color: #000; margin-bottom: 16px; line-height: 1.3; }
+        h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.05em; color: #222; margin-top: 60px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        h3 { font-size: 18px; font-weight: 400; letter-spacing: 0.05em; color: #333; margin-top: 40px; margin-bottom: 15px; }
+        h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #555; margin-top: 30px; margin-bottom: 10px; }
+        p { margin-bottom: 24px; text-align: left; }
+        a { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+        a:hover { color: #555; }
+        ul, ol { margin-bottom: 24px; padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        code { font-family: monospace; background: #eee; padding: 2px 6px; font-size: 14px; border-radius: 3px; }
+        pre { background: #111; color: #ccc; padding: 24px; overflow-x: auto; margin-bottom: 30px; font-size: 13px; border-radius: 4px; font-family: monospace; }
+        pre code { background: none; padding: 0; color: inherit; border-radius: 0; }
+        blockquote { border-left: 3px solid #000; padding: 20px 30px; margin: 40px 0; background: #f5f5f5; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 16px; text-align: left; }
+        th { background: #eaeaea; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .nav-link { display: inline-block; margin-bottom: 40px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 4px; transition: all 0.2s; }
+        .nav-link:hover { opacity: 0.6; }
+        .content { padding-bottom: 100px; }
+        
+        .index-list { list-style: none; padding: 0; }
+        .index-list li { padding: 20px 0; border-bottom: 1px solid #eee; margin: 0; }
+        .index-list a { text-decoration: none; font-size: 18px; display: block; margin-bottom: 8px; }
+        .index-list a:hover { text-decoration: underline; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; letter-spacing: 0.05em; }
+        
+        hr { border: 0; border-top: 1px solid #ddd; margin: 60px 0; }
+    </style>
 </head>
 <body>
-    <nav class="top-bar">
-        <a href="/" class="logo">glim<span>research</span></a>
-        <div class="links">
-            <a href="/research/">Index</a>
-            <a href="/web/">glimPSE</a>
-            <a href="/">Manifesto</a>
-        </div>
-    </nav>
-    <div class="article">
-        <a href="/research/" class="back">← Research Index</a>
-        <h1>Climate Science Ensemble Methods</h1>
-        <h1 id="multi-model-ensemble-methods-from-climate-science-a-technical-review-for-computational-materials-science">Multi-Model Ensemble Methods from Climate Science: A Technical Review for Computational Materials Science</h1>
+    <div class="container">
+        <a href="/research/" class="nav-link">← Research Index</a>
+        <header>
+            <div class="symbol">———</div>
+            <h1>Multi-Model Ensemble Methods from Climate Science: A Technical Review for Computational Materials Science</h1>
+        </header>
+        <div class="content">
+            <h1>Multi-Model Ensemble Methods from Climate Science: A Technical Review for Computational Materials Science</h1>
 <p><strong>Source:</strong> Kimi Deep Research Report
 <strong>Total Report Length:</strong> 69,857 characters
 <strong>Extraction Date:</strong> 2026-03-28</p>
 <p><strong>Note:</strong> This is a partial extraction of key sections from a comprehensive technical review exploring multi-model ensemble methods from climate science—particularly those used in CMIP5/CMIP6—and assessing their potential transfer to computational materials science. Sections have been extracted using JavaScript-based character offset navigation to ensure accuracy.</p>
 <hr />
-<h2 id="table-of-contents">Table of Contents</h2>
+<h2>Table of Contents</h2>
 <ol>
 <li>Introduction and Cross-Domain Structural Parallels</li>
 <li>Bayesian Model Averaging (BMA) for Weighted Ensemble Combination</li>
@@ -41,10 +66,10 @@
 <li>Key Literature and References</li>
 </ol>
 <hr />
-<h2 id="section-1-introduction-and-cross-domain-structural-parallels">Section 1: Introduction and Cross-Domain Structural Parallels</h2>
-<h3 id="11-glim-cmip6-analogy-continued-from-char-16936">1.1 GLIM-CMIP6 Analogy (Continued from char 16936)</h3>
+<h2>Section 1: Introduction and Cross-Domain Structural Parallels</h2>
+<h3>1.1 GLIM-CMIP6 Analogy (Continued from char 16936)</h3>
 <p>The critical insight is that both domains involve high-dimensional prediction spaces where model performance varies systematically across the prediction domain, and where this variation must inform ensemble combination and uncertainty quantification.</p>
-<h4 id="table-1-structural-parallels-between-cmip6-climate-ensembles-and-glim-materials-ensembles">Table 1: Structural parallels between CMIP6 climate ensembles and GLIM materials ensembles</h4>
+<h4>Table 1: Structural parallels between CMIP6 climate ensembles and GLIM materials ensembles</h4>
 <table>
 <thead>
 <tr>
@@ -86,16 +111,16 @@
 </tr>
 </tbody>
 </table>
-<h3 id="12-core-challenges-in-both-domains">1.2 Core Challenges in Both Domains</h3>
-<h4 id="121-model-diversity-vs-redundancy-in-ensemble-construction">1.2.1 Model Diversity vs. Redundancy in Ensemble Construction</h4>
+<h3>1.2 Core Challenges in Both Domains</h3>
+<h4>1.2.1 Model Diversity vs. Redundancy in Ensemble Construction</h4>
 <p>A persistent tension in both fields arises when constructing ensembles: should all available models be included, or should redundant models be filtered out? CMIP includes ~30 climate models with varying independence—some are variants of the same core model with different initializations or parameterizations. Similarly, in GLIM, some potentials are variants of others (e.g., SNAP variants with different training data or hyperparameters).</p>
 <hr />
-<h2 id="section-2-bayesian-model-averaging-bma-for-weighted-ensemble-combination">Section 2: Bayesian Model Averaging (BMA) for Weighted Ensemble Combination</h2>
-<h3 id="21-theoretical-foundation">2.1 Theoretical Foundation</h3>
-<h4 id="211-posterior-model-probability-framework">2.1.1 Posterior Model Probability Framework</h4>
+<h2>Section 2: Bayesian Model Averaging (BMA) for Weighted Ensemble Combination</h2>
+<h3>2.1 Theoretical Foundation</h3>
+<h4>2.1.1 Posterior Model Probability Framework</h4>
 <p>Bayesian Model Averaging (BMA) provides a principled statistical framework for combining ensemble predictions that explicitly accounts for model uncertainty through probabilistic weighting. Unlike ad hoc weighting schemes or simple averaging, BMA treats model selection as an inference problem, where the probability of each model given the data determines its contribution to the final prediction. This approach is particularly valuable when multiple models show comparable but imperfect performance, and when the goal is robust prediction rather than model identification.</p>
 <p>The foundational insight of BMA, developed by Raftery, Gneiting, and colleagues, is that conditioning on a single "best" model ignores uncertainty about model structure, leading to overconfident predictions and underestimated uncertainty. By averaging over the model space, BMA incorporates structural model uncertainty directly into the ensemble prediction and its associated uncertainty quantification.</p>
-<h4 id="bma-variance-decomposition">BMA Variance Decomposition</h4>
+<h4>BMA Variance Decomposition</h4>
 <p>For K models with means μₖ and variances σₖ², the BMA predictive distribution has:</p>
 <ul>
 <li>
@@ -106,24 +131,24 @@
 </li>
 </ul>
 <p>where wₖ = p(Mₖ|D). This explicit variance decomposition is critical for uncertainty quantification: it separates irreducible uncertainty from model disagreement, guiding targeted investments in model improvement.</p>
-<h3 id="23-climate-science-applications-and-extensions">2.3 Climate Science Applications and Extensions</h3>
-<h4 id="231-handling-exchangeable-and-missing-ensemble-members">2.3.1 Handling Exchangeable and Missing Ensemble Members</h4>
+<h3>2.3 Climate Science Applications and Extensions</h3>
+<h4>2.3.1 Handling Exchangeable and Missing Ensemble Members</h4>
 <p>A critical extension developed by Fraley, Raftery, and Gneiting (2010) addresses exchangeable and missing ensemble members—common complications in operational forecasting and CMIP archives. Exchangeability arises when subsets of ensemble members are statistically indistinguishable, such as multiple runs from the same modeling center or perturbations around a single model initialization. The extended framework treats exchangeable members as drawn from a common predictive distribution, with group-level weights that pool information and reduce effective parameter count.</p>
 <p>Missing data is ubiquitous in CMIP: not all models provide output for all variables, scenarios, or time periods. The BMA extension uses imputation strategies that marginalize over missing values or use available subset information for partial likelihood evaluation, maximizing use of expensive computed data.</p>
-<h4 id="232-stratified-bma-for-precipitation-forecasting">2.3.2 Stratified BMA for Precipitation Forecasting</h4>
+<h4>2.3.2 Stratified BMA for Precipitation Forecasting</h4>
 <p>Standard BMA with Gaussian components is inappropriate for precipitation, which is nonnegative, often zero, and right-skewed. Sloughter et al. (2007) developed stratified BMA using gamma-Gaussian mixture models: a point mass at zero for dry events and a gamma distribution for positive precipitation amounts. This regime-specific adaptation—different statistical treatment for different prediction domains—parallels the materials science challenge of treating different bonding types or structure classes with appropriately tailored models.</p>
-<h4 id="233-performance-in-cmip5cmip6-multi-model-ensembles">2.3.3 Performance in CMIP5/CMIP6 Multi-Model Ensembles</h4>
+<h4>2.3.3 Performance in CMIP5/CMIP6 Multi-Model Ensembles</h4>
 <p>BMA applications to CMIP5/CMIP6 demonstrate consistent improvements over equal-weight averaging. For temperature projections, BMA reduces mean squared error by 10-20% compared to the multi-model mean, with larger improvements for precipitation where model disagreement is greater. Perhaps more importantly, BMA produces well-calibrated probabilistic predictions: prediction intervals contain observed outcomes at the stated confidence level.</p>
-<h3 id="24-materials-science-adaptations-and-implementation-strategies">2.4 Materials Science Adaptations and Implementation Strategies</h3>
-<h4 id="241-adaptive-weighting-by-material-class">2.4.1 Adaptive Weighting by Material Class</h4>
+<h3>2.4 Materials Science Adaptations and Implementation Strategies</h3>
+<h4>2.4.1 Adaptive Weighting by Material Class</h4>
 <p>In GLIM contexts, a key advantage is adaptive weighting by material class: BMA can estimate separate weights for metals, oxides, semiconductors, etc., if performance varies systematically. This is implemented through stratified estimation or by including material descriptors as covariates in the likelihood specification.</p>
-<h4 id="242-addressing-missing-data-in-incomplete-potential-benchmarks">2.4.2 Addressing Missing Data in Incomplete Potential Benchmarks</h4>
+<h4>2.4.2 Addressing Missing Data in Incomplete Potential Benchmarks</h4>
 <p>Missing data is common in potential benchmarking: not all potentials support all elements or crystal structures. The Fraley et al. (2010) extension for exchangeable and missing members is directly applicable, using available subset information for partial likelihood evaluation. For materials where only 15 of 23 potentials provide predictions, BMA weights are estimated from this incomplete set, with appropriate uncertainty inflation to account for reduced information.</p>
-<h4 id="243-computational-tractability-for-large-scale-materials-databases">2.4.3 Computational Tractability for Large-Scale Materials Databases</h4>
+<h4>2.4.3 Computational Tractability for Large-Scale Materials Databases</h4>
 <p>The EM algorithm for BMA weight estimation scales well, enabling rapid recomputation of weights as benchmark datasets grow. This is essential for continuously updated GLIM repositories where new DFT calculations or experimental values arrive regularly, and the ensemble weights should adapt to improve predictions on newly added materials.</p>
 <hr />
-<h2 id="section-3-emosngr-and-extended-methods">Section 3: EMOS/NGR and Extended Methods</h2>
-<h3 id="overview-of-emos-and-nonhomogeneous-gaussian-regression">Overview of EMOS and Nonhomogeneous Gaussian Regression</h3>
+<h2>Section 3: EMOS/NGR and Extended Methods</h2>
+<h3>Overview of EMOS and Nonhomogeneous Gaussian Regression</h3>
 <p>Ensemble Model Output Statistics (EMOS) and Nonhomogeneous Gaussian Regression (NGR) represent crucial post-processing techniques alongside rank histograms for verifying forecast reliability. These statistical methods provide location and scale parameter calibration for ensemble predictions, enabling the translation of raw model outputs into probabilistic forecasts with well-specified uncertainty characteristics.</p>
 <p>The key mathematical formulation involves specifying location (mean) and scale (standard deviation) parameters as functions of ensemble member outputs:</p>
 <ul>
@@ -132,15 +157,15 @@
 </ul>
 <p>This approach naturally extends to materials science applications, where ensemble spread in potential predictions can be used to adaptively estimate prediction uncertainty.</p>
 <hr />
-<h2 id="section-9-verification-and-calibration-diagnostics">Section 9: Verification and Calibration Diagnostics</h2>
-<h3 id="94-verification-and-calibration-diagnostics">9.4 Verification and Calibration Diagnostics</h3>
+<h2>Section 9: Verification and Calibration Diagnostics</h2>
+<h3>9.4 Verification and Calibration Diagnostics</h3>
 <p>Key references and methodologies for ensemble verification:</p>
 <p><strong>Hamill, T. M. (2001).</strong> Interpretation of rank histograms for verifying ensemble forecasts. <em>Monthly Weather Review</em>, 129(3), 550–560. https://doi.org/10.1175/1520-0493(2001)129&lt;0550:IORHFV&gt;2.0.CO;2</p>
 <p><strong>Hamill, T. M., &amp; Juras, J. (2006).</strong> Measuring forecast skill: Is it real skill or is it the varying climatology? <em>Quarterly Journal of the Royal Meteorological Society</em>, 132(621C), 2905–2923. https://doi.org/10.1256/qj.06.25</p>
 <p><strong>Wilks, D. S. (2019).</strong> Statistical methods in the atmospheric sciences (4th ed.). Academic Press. https://doi.org/10.1016/C2017-0-03921-6</p>
 <p><strong>Dimitriadis, T., Gneiting, T., Jordan, A. I., &amp; Vogel, P. (2023).</strong> Stable reliability diagrams for probabilistic classifiers. <em>Proceedings of the National Academy of Sciences</em>, 120(8), e2016191118. https://doi.org/10.1073/pnas.2016191118</p>
 <hr />
-<h2 id="key-findings-and-transferability-assessment">Key Findings and Transferability Assessment</h2>
+<h2>Key Findings and Transferability Assessment</h2>
 <p>The report systematically maps ensemble methods from climate science to materials science contexts:</p>
 <ol>
 <li>
@@ -163,7 +188,7 @@
 </li>
 </ol>
 <hr />
-<h2 id="report-metadata">Report Metadata</h2>
+<h2>Report Metadata</h2>
 <ul>
 <li><strong>Report Type:</strong> Technical Review / Cross-Domain Methodology Transfer</li>
 <li><strong>Primary Domains:</strong> Climate Science (CMIP5/CMIP6), Materials Science (GLIM)</li>
@@ -174,7 +199,7 @@
 <p><strong>Note on Extraction:</strong> Due to content filtering on extended sections, this report captures the key structural and technical sections. The full 69,857-character report contains additional detail on rank histograms, independence testing, prediction intervals, and comprehensive implementation roadmaps. All major methodological frameworks and climate science applications have been extracted for reference.</p>
 <hr />
 <p><em>Generated from Kimi Deep Research report on 2026-03-28</em></p>
+        </div>
     </div>
-    <footer><p>glim — Computational Materials Science Platform · 2026</p></footer>
 </body>
 </html>

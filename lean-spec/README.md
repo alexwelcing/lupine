@@ -27,11 +27,11 @@ Rather than running every LAMMPS simulation and hoping the statistics converge, 
 | `Theory.MetaScience` | 5 | Hypothesis board, causal graph structure, irrep sums |
 | `Validation.Experiment` | 5 | Experiment design, integrity checks, documented gaps |
 | `Validation.Audit` | 5 | Verdict strings, report generation |
-| **Manifesto** | — | Build-locking `#guard` contract; imports all modules |
+| **Vision** | — | Build-locking `#guard` contract; imports all modules |
 
 ## Build-Locking Contract
 
-The `Manifesto.lean` file contains `#guard` statements that are evaluated at compile time. If any fail, the build fails:
+The `Vision.lean` file contains `#guard` statements that are evaluated at compile time. If any fail, the build fails:
 
 ```lean
 #guard (hypothesisCount >= 6)
@@ -58,5 +58,5 @@ lake build
 
 ## Related
 
-- [`../docs/formal-manifesto.md`](../docs/formal-manifesto.md) — Marketing page with full theorem inventory
+- [`../docs/formal-vision.md`](../docs/formal-vision.md) — Marketing page with full theorem inventory
 - [`../docs/formal-audit.md`](../docs/formal-audit.md) — Split verdict: Simpson's fabricated, hyper-ribbon consistent but ungrounded

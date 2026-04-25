@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2010--Mendelev-M-I--fictional-Al-1--LAMMPS--ipr1",
+    "potid": "2010--Mendelev-M-I-Rahman-M-J-Hoyt-J-J-Asta-M--fictional-Al-1",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Al"
+    ],
+    "symbols": [
+      "Al"
+    ],
+    "dois": [
+      "10.1088/0965-0393/18/7/074002"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2010--Mendelev-M-I--fictional-Al-1--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2010--Mendelev-M-I-Rahman-M-J-Hoyt-J-J-Asta-M--fictional-Al-1",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2010--Mendelev-M-I-Rahman-M-J-Hoyt-J-J-Asta-M--fictional-Al-1/1/Fictional-Al1-1.eam.fs",
+        "filename": "Fictional-Al1-1.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "df07eea43aef6601",
+    "nist_potential_id": "2010--Mendelev-M-I--fictional-Al-1--LAMMPS--ipr1",
+    "potential_doi": "10.1088/0965-0393/18/7/074002",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.05,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 106.259743575141,
+  "c12": 62.9252405029575,
+  "c44": 30.1717200727219,
+  "a0": 4.0440809363764,
+  "ecoh": -3.6047346522245,
+  "success": true,
+  "error_message": null
+}

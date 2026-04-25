@@ -171,7 +171,11 @@ enum Commands {
         dry_run: bool,
     },
     /// Export computationally validated relationships into Lean 4 specification
-    Formalize,
+    Formalize {
+        /// Optional path to empirical benchmark data (e.g. nist_benchmark.csv)
+        #[arg(long)]
+        empirical: Option<PathBuf>,
+    },
     /// Query the NIST Interatomic Potentials Repository catalog
     Nist {
         /// Path to master_index.json
@@ -308,8 +312,8 @@ fn main() -> Result<()> {
         Commands::DetectParadox { data, example, bcc } => cmd_detect_paradox(data.as_ref(), example, bcc),
         Commands::Benchmark { path, manifold, meta, full } => cmd_benchmark(&path, manifold, meta, full),
         Commands::Pipeline { provider, dry_run } => cmd_pipeline(&provider, dry_run),
-        Commands::Formalize => {
-            formalize::write_lean_spec()?;
+        Commands::Formalize { empirical } => {
+            formalize::write_lean_spec(empirical.as_ref())?;
             Ok(())
         }
         Commands::Nist { index, element, pair_style, single, scaffold } => {

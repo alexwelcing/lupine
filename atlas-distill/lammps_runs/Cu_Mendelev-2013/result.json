@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2012--Mendelev-M-I--Cu--LAMMPS--ipr1",
+    "potid": "2013--Mendelev-M-I-King-A-H--Cu",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Cu"
+    ],
+    "symbols": [
+      "Cu"
+    ],
+    "dois": [
+      "10.1080/14786435.2012.747012"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2012--Mendelev-M-I--Cu--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2013--Mendelev-M-I-King-A-H--Cu",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2013--Mendelev-M-I-King-A-H--Cu/1/Mendelev_Cu2_2012.eam.fs",
+        "filename": "Mendelev_Cu2_2012.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "805135fa5e943010",
+    "nist_potential_id": "2012--Mendelev-M-I--Cu--LAMMPS--ipr1",
+    "potential_doi": "10.1080/14786435.2012.747012",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.615,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 174.127924867968,
+  "c12": 127.190062960752,
+  "c44": 83.7176221216318,
+  "a0": 3.63902984582228,
+  "ecoh": -3.42271916296482,
+  "success": true,
+  "error_message": null
+}

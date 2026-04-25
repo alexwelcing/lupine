@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "1987--Ackland-G-J--Au--LAMMPS--ipr1",
+    "potid": "1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Au"
+    ],
+    "symbols": [
+      "Au"
+    ],
+    "dois": [
+      "10.1080/01418618708204485"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1987--Ackland-G-J--Au--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au/2/Au.eam.fs",
+        "filename": "Au.eam.fs",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au/2/conversion_check.pdf",
+        "filename": "conversion_check.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "b5f7e82c1c9ece1f",
+    "nist_potential_id": "1987--Ackland-G-J--Au--LAMMPS--ipr1",
+    "potential_doi": "10.1080/01418618708204485",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.078,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 256.787858247189,
+  "c12": 227.623830237274,
+  "c44": 100.815992238289,
+  "a0": 4.07800072611969,
+  "ecoh": -3.78904529320799,
+  "success": true,
+  "error_message": null
+}

@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1986--Foiles-S-M--Ag--LAMMPS--ipr1",
+    "potid": "1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ag",
+    "pair_style": "eam",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Ag"
+    ],
+    "symbols": [
+      "Ag"
+    ],
+    "dois": [
+      "10.1103/physrevb.33.7983"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1986--Foiles-S-M--Ag--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ag",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ag/1/Ag_u3.eam",
+        "filename": "Ag_u3.eam",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "ace87df6244917ad",
+    "nist_potential_id": "1986--Foiles-S-M--Ag--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.33.7983",
+    "pair_style": "eam",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.09,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 129.136132645198,
+  "c12": 91.0422691235999,
+  "c44": 56.7867003518529,
+  "a0": 4.08999992358538,
+  "ecoh": -2.85000000156613,
+  "success": true,
+  "error_message": null
+}

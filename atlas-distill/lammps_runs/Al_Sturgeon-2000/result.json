@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2000--Sturgeon-J-B--Al--LAMMPS--ipr1",
+    "potid": "2000--Sturgeon-J-B-Laird-B-B--Al",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Al"
+    ],
+    "symbols": [
+      "Al"
+    ],
+    "dois": [
+      "10.1103/physrevb.62.14720"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2000--Sturgeon-J-B--Al--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2000--Sturgeon-J-B-Laird-B-B--Al",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2000--Sturgeon-J-B-Laird-B-B--Al/1/MDSL.eam.fs",
+        "filename": "MDSL.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "5aea9cf1a6e7c235",
+    "nist_potential_id": "2000--Sturgeon-J-B--Al--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.62.14720",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.05,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 94.6182749190722,
+  "c12": 68.1798349332263,
+  "c44": 42.4708883959332,
+  "a0": 4.05001021751104,
+  "ecoh": -3.3900019328239,
+  "success": true,
+  "error_message": null
+}

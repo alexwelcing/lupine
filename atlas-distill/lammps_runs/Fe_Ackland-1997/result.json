@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "1997--Ackland-G-J--Fe--LAMMPS--ipr1",
+    "potid": "1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1080/01418619708207198"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1997--Ackland-G-J--Fe--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe/2/Fe.eam.fs",
+        "filename": "Fe.eam.fs",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe/2/conversion_check.pdf",
+        "filename": "conversion_check.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "ac69be73555cf966",
+    "nist_potential_id": "1997--Ackland-G-J--Fe--LAMMPS--ipr1",
+    "potential_doi": "10.1080/01418619708207198",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 243.417740826845,
+  "c12": 145.060112396444,
+  "c44": 116.028658852028,
+  "a0": 2.86649996446957,
+  "ecoh": -4.31600004948109,
+  "success": true,
+  "error_message": null
+}

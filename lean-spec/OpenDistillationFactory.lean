@@ -21,10 +21,11 @@ import OpenDistillationFactory.Materials.Computation.LammpsTrace
 import OpenDistillationFactory.Materials.Theory.ParameterBound
 import OpenDistillationFactory.Materials.Theory.MetaScience
 import OpenDistillationFactory.Materials.Theory.HyperRibbon
+import OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
 
 -- Validation layer: experiment design, integrity checks, and audit
 import OpenDistillationFactory.Materials.Validation.Experiment
 import OpenDistillationFactory.Materials.Validation.Audit
 
--- Executable manifesto: the build-locking epistemic contract
-import OpenDistillationFactory.Materials.Manifesto
+-- Executable vision: the build-locking epistemic contract
+import OpenDistillationFactory.Materials.Vision

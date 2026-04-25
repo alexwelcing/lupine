@@ -273,8 +273,8 @@ pub fn execute_lammps(
         Command::new(&config.lammps_executable)
     };
 
-    cmd.arg("-in").arg(input_path)
-        .arg("-log").arg(&log_path)
+    cmd.arg("-in").arg(input_path.file_name().unwrap())
+        .arg("-log").arg(log_filename)
         .current_dir(run_dir)
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
@@ -285,8 +285,11 @@ pub fn execute_lammps(
         .with_context(|| format!("Failed to execute LAMMPS for {}", potential.id))?;
 
     if !output.status.success() {
-        let stderr = String::from_utf8_lossy(&output.stderr);
-        anyhow::bail!("LAMMPS failed for {}: {}", potential.id, stderr);
+        let mut stderr = String::from_utf8_lossy(&output.stderr).into_owned();
+        if stderr.trim().is_empty() {
+            stderr = String::from_utf8_lossy(&output.stdout).into_owned();
+        }
+        anyhow::bail!("LAMMPS failed for {}: {}", potential.id, stderr.trim());
     }
 
     Ok(log_path)
@@ -618,10 +621,19 @@ fn uuid() -> String {
 /// Export computation results as a benchmark CSV.
 /// This CSV can be loaded by `atlas-distill benchmark <path> --full`.
 pub fn export_benchmark_csv(results: &[ComputationResult], element: &str, path: &Path) -> Result<()> {
-    let mut wtr = csv::Writer::from_path(path)?;
+    let file_exists = path.exists();
+    let file = std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .append(true)
+        .open(path)?;
+        
+    let mut wtr = csv::Writer::from_writer(file);
 
-    // Header
-    wtr.write_record(&["material", "potential", "property", "reference", "predicted", "unit", "nist_id", "doi", "pair_style"])?;
+    // Header (only if new file)
+    if !file_exists {
+        wtr.write_record(&["material", "potential", "property", "reference", "predicted", "unit", "nist_id", "doi", "pair_style"])?;
+    }
 
     let refs = reference_data();
     let ref_data = refs.get(element).context("No reference data")?;

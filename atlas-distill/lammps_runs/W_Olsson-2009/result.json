@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2009--Olsson-P-A-T--W--LAMMPS--ipr1",
+    "potid": "2009--Olsson-P-A-T--W",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "W"
+    ],
+    "symbols": [
+      "W"
+    ],
+    "dois": [
+      "10.1016/j.commatsci.2009.06.025"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2009--Olsson-P-A-T--W--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2009--Olsson-P-A-T--W",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--W/2/W_Olsson_CMS2009.eam.alloy",
+        "filename": "W_Olsson_CMS2009.eam.alloy",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "2e205d87a2c803d7",
+    "nist_potential_id": "2009--Olsson-P-A-T--W--LAMMPS--ipr1",
+    "potential_doi": "10.1016/j.commatsci.2009.06.025",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.165,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 532.5505077326,
+  "c12": 204.949590716737,
+  "c44": 163.12961803319,
+  "a0": 3.15999893434946,
+  "ecoh": -8.90000479020594,
+  "success": true,
+  "error_message": null
+}

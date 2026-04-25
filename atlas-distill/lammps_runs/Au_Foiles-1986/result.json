@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1986--Foiles-S-M--Au--LAMMPS--ipr1",
+    "potid": "1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Au",
+    "pair_style": "eam",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Au"
+    ],
+    "symbols": [
+      "Au"
+    ],
+    "dois": [
+      "10.1103/physrevb.33.7983"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1986--Foiles-S-M--Au--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Au",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Au/1/Au_u3.eam",
+        "filename": "Au_u3.eam",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "868059ab0cb9eff7",
+    "nist_potential_id": "1986--Foiles-S-M--Au--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.33.7983",
+    "pair_style": "eam",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.078,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 183.165779077391,
+  "c12": 158.757218404039,
+  "c44": 44.7253255221637,
+  "a0": 4.08000001830507,
+  "ecoh": -3.93000000017703,
+  "success": true,
+  "error_message": null
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lit Review</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-top: 20px; border-bottom: 1px solid #000; padding-bottom: 40px; }
+        .symbol { font-size: 24px; margin-bottom: 20px; color: #333; letter-spacing: 0.5em; }
+        h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.05em; color: #000; margin-bottom: 16px; line-height: 1.3; }
+        h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.05em; color: #222; margin-top: 60px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        h3 { font-size: 18px; font-weight: 400; letter-spacing: 0.05em; color: #333; margin-top: 40px; margin-bottom: 15px; }
+        h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #555; margin-top: 30px; margin-bottom: 10px; }
+        p { margin-bottom: 24px; text-align: left; }
+        a { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+        a:hover { color: #555; }
+        ul, ol { margin-bottom: 24px; padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        code { font-family: monospace; background: #eee; padding: 2px 6px; font-size: 14px; border-radius: 3px; }
+        pre { background: #111; color: #ccc; padding: 24px; overflow-x: auto; margin-bottom: 30px; font-size: 13px; border-radius: 4px; font-family: monospace; }
+        pre code { background: none; padding: 0; color: inherit; border-radius: 0; }
+        blockquote { border-left: 3px solid #000; padding: 20px 30px; margin: 40px 0; background: #f5f5f5; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 16px; text-align: left; }
+        th { background: #eaeaea; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .nav-link { display: inline-block; margin-bottom: 40px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 4px; transition: all 0.2s; }
+        .nav-link:hover { opacity: 0.6; }
+        .content { padding-bottom: 100px; }
+        
+        .index-list { list-style: none; padding: 0; }
+        .index-list li { padding: 20px 0; border-bottom: 1px solid #eee; margin: 0; }
+        .index-list a { text-decoration: none; font-size: 18px; display: block; margin-bottom: 8px; }
+        .index-list a:hover { text-decoration: underline; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; letter-spacing: 0.05em; }
+        
+        hr { border: 0; border-top: 1px solid #ddd; margin: 60px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/research/" class="nav-link">← Research Index</a>
+        <header>
+            <div class="symbol">———</div>
+            <h1>Lit Review</h1>
+        </header>
+        <div class="content">
+            <p>Literature review: error structure in interatomic</p>
+<p>potential predictions</p>
+<p>Classical force fields for metals exhibit structured, low-dimensional prediction errors that</p>
+<p>can be understood through the convergence of three distinct intellectual traditions: sloppy</p>
+<p>model theory from statistical physics, Simpson’s paradox from meta-analytic methodology,</p>
+<p>and systematic interatomic potential benchmarking. This review assembles the key</p>
+<p>references across these areas to support a paper showing that FCC elastic constant errors</p>
+<p>(C11, C12, C44) occupy a manifold with effective dimensionality ~1.66/3, while pooled BCC</p>
+<p>data produce a spurious correlation inversion attributable to Simpson’s paradox.</p>
+<p>Area 1: Sloppy model theory and the geometry of poorly</p>
+<p>constrained models</p>
+<p>Foundational framework</p>
+<p>The sloppy model framework emerged from computational biology and statistical physics,</p>
+<p>establishing that multiparameter models generically have parameter sensitivities spanning</p>
+<p>many orders of magnitude. Brown and Sethna (2003) introduced the concept, showing</p>
+<p>that biochemical signaling models with ~48 parameters have Hessian eigenvalue spectra</p>
+<p>spanning many decades, with only a few “stiff” parameter combinations controlling</p>
+<p>predictions and many “sloppy” directions allowing parameters to vary freely (Brown KS,</p>
+<p>Sethna JP, “Statistical mechanical approaches to models with many poorly known</p>
+<p>parameters,” Physical Review E 68, 021904, 2003). PubMed</p>
+<p>Waterfall et al. (2006) demonstrated that sloppiness constitutes a universality class by</p>
+<p>connecting the characteristic eigenvalue spectrum to Vandermonde matrix ensembles. The</p>
+<p>logarithms of eigenvalues are roughly uniformly spaced — a signature now recognized</p>
+<p>across physics, biology, and engineering. PubMed American Physical Society Crucially, this</p>
+<p>paper explicitly noted that sloppiness had also been demonstrated “in three multiparameter</p>
+<p>interatomic potentials fit to electronic structure” Cornell (Waterfall JJ, Casey FP,</p>
+<p>Gutenkunst RN, Brown KS, Myers CR, Brouwer PW, Elser V, Sethna JP, “Sloppy-model</p>
+<p>universality class and the Vandermonde matrix,” Physical Review Letters 97, 150601, 2006).</p>
+<p>Gutenkunst et al. (2007) tested 17 systems biology models and found that every one</p>
+<p>exhibited sloppy parameter sensitivities, cementing the universality claim. They argued that</p>
+<p>collective fits yield well-constrained predictions even when individual parameters remain</p>
+<p>poorly determined, and that direct parameter measurements must be “formidably precise</p>
+<p>and complete” to be more useful than collective fitting PubMed (Gutenkunst RN, Waterfall</p>
+<p>JJ, Casey FP, Brown KS, Myers CR, Sethna JP, “Universally sloppy parameter sensitivities in</p>
+<p>systems biology models,” PLoS Computational Biology 3(10), e189, 2007).</p>
+<p>Geometric and information-theoretic development</p>
+<p>The geometric interpretation of sloppiness matured through a series of papers by</p>
+<p>Transtrum, Machta, and Sethna. Transtrum et al. (2010) introduced the model manifold</p>
+<p>perspective: the set of all possible predictions as parameters vary forms a “hyper-ribbon” in</p>
+<p>data space with a geometric hierarchy of widths. This narrowness explains both why fitting</p>
+<p>is computationally difficult and why predictions are low-dimensional arXiv (Transtrum MK,</p>
+<p>Machta BB, Sethna JP, “Why are nonlinear fits to data so challenging?” Physical Review</p>
+<p>Letters 104, 060201, 2010). Transtrum et al. (2011) provided the comprehensive</p>
+<p>geometric treatment, showing that model manifolds universally exhibit a geometric series of</p>
+<p>widths, extrinsic curvatures, and parameter-effect curvatures American Physical Society</p>
+<p>(Transtrum MK, Machta BB, Sethna JP, “Geometry of nonlinear least squares with</p>
+<p>applications to sloppy models and optimization,” Physical Review E 83, 036701, 2011).</p>
+<p>Machta et al. (2013) connected sloppiness to fundamental physics by showing that</p>
+<p>parameter space compression underlies emergent theories. Using the Fisher Information</p>
+<p>Matrix (FIM) as a Riemannian metric on parameter space, they demonstrated that the</p>
+<p>emergence of effective theories — continuum limits, renormalization group fixed points —</p>
+<p>corresponds to compression from many microscopic parameters to few macroscopic ones.</p>
+<p>AIP Publishing PubMed Stiff FIM directions become emergent parameters; sloppy</p>
+<p>directions correspond to irrelevant microscopic detail arXiv (Machta BB, Chachra R,</p>
+<p>Transtrum MK, Sethna JP, “Parameter space compression underlies emergent theories and</p>
+<p>predictive models,” Science 342(6158), 604–607, 2013). This framework directly implies</p>
+<p>that the ~1.66 effective dimensions for elastic constant errors correspond to approximately</p>
+<p>two emergent combinations of potential parameters dominating elastic response.</p>
+<p>Transtrum et al. (2014) introduced the Manifold Boundary Approximation Method (MBAM)</p>
+<p>for systematic model reduction by following geodesics to the manifold boundary, removing</p>
+<p>sloppy parameter combinations while preserving stiff predictions PubMed (Transtrum MK,</p>
+<p>Qiu P, “Model reduction by manifold boundaries,” Physical Review Letters 113, 098701,</p>
+<p>2014). The comprehensive review by Transtrum et al. (2015) synthesized the full program,</p>
+<p>including FIM-based analysis, hyperribbon structure, MBAM, and connections to emergent</p>
+<p>theories across physics and biology AIP Publishing ADS (Transtrum MK, Machta BB, Brown</p>
+<p>KS, Daniels BC, Myers CR, Sethna JP, “Perspective: Sloppiness and emergent theories in</p>
+<p>physics, biology, and beyond,” Journal of Chemical Physics 143(1), 010901, 2015).</p>
+<p>Quinn et al. (2019) provided the first rigorous mathematical explanation for sloppiness,</p>
+<p>using Chebyshev approximation theory to derive universal bounds on model manifold widths</p>
+<p>as a consequence of model smoothness alone American Physical Society (Quinn KN, Wilber H,</p>
+<p>Townsend A, Sethna JP, “Chebyshev approximation and the global geometry of model</p>
+<p>predictions,” Physical Review Letters 122, 158302, 2019). The most recent comprehensive</p>
+<p>review is Quinn et al. (2023), covering model manifold structure, MBAM, information</p>
+<p>topology, optimal Bayesian priors, and visualization via intensive PCA PubMed Central</p>
+<p>(Quinn KN, Abbott MC, Transtrum MK, Machta BB, Sethna JP, “Information geometry for</p>
+<p>multiparameter models: New perspectives on the origin of simplicity,” Reports on Progress</p>
+<p>in Physics 86, 035901, 2023).</p>
+<p>Applications to interatomic potentials</p>
+<p>The seminal application of sloppy model theory to force fields is Frederiksen et al. (2004),</p>
+<p>which developed a Bayesian ensemble approach for estimating prediction errors from</p>
+<p>interatomic potentials. Working with EAM-type potentials for molybdenum fitted to DFT</p>
+<p>force databases, they showed that the potentials exhibit sloppy eigenvalue spectra identical</p>
+<p>in character to biological models, and that Bayesian error bars on elastic constants,</p>
+<p>gamma-surface energies, structural energies, and dislocation properties provided realistic</p>
+<p>uncertainty estimates. PubMed Parameters varied wildly across the ensemble while</p>
+<p>predictions remained constrained Cornell — the hallmark of low-dimensional prediction</p>
+<p>structure PLOS (Frederiksen SL, Jacobsen KW, Brown KS, Sethna JP, “Bayesian ensemble</p>
+<p>approach to error estimation of interatomic potentials,” Physical Review Letters 93, 165501,</p>
+<p>2004).</p>
+<p>Wen et al. (2017) applied Fisher information theory to a Stillinger-Weber potential for MoS₂,</p>
+<p>computing the FIM eigenvalue spectrum and verifying parameter identifiability. They used</p>
+<p>the geodesic Levenberg-Marquardt algorithm for fitting and demonstrated that the FIM</p>
+<p>analysis provides uncertainty bounds for elastic constants and other predicted properties</p>
+<p>(Wen M, Li J, Brommer P, Elliott RS, Sethna JP, Tadmor EB, “A force-matching Stillinger-</p>
+<p>Weber potential for MoS₂: Parameterization and Fisher information theory based sensitivity</p>
+<p>analysis,” Journal of Applied Physics 122, 244301, 2017).</p>
+<p>Kurniawan et al. (2022) provided the most thorough study of parametric uncertainty in</p>
+<p>classical potentials using the OpenKIM framework. Working with Lennard-Jones, Morse, and</p>
+<p>Stillinger-Weber potentials, they confirmed that interatomic potentials are sloppy models</p>
+<p>arXiv with bounded manifolds exhibiting a hierarchy of widths DNTB and low effective</p>
+<p>dimensionality. arXiv Many parameter combinations are unidentifiable, ResearchGate yet</p>
+<p>predictions remain constrained (Kurniawan Y, Petrie CL, Williams KJ, Transtrum MK, Tadmor</p>
+<p>EB, Elliott RS, Karls DS, Wen M, “Bayesian, frequentist, and information geometric</p>
+<p>approaches to parametric uncertainty quantification of classical empirical interatomic</p>
+<p>potentials,” Journal of Chemical Physics 156(21), 214103, 2022).</p>
+<p>Mortensen et al. (2005) extended the Bayesian sloppy-model framework to density</p>
+<p>functional theory itself, showing that DFT exchange-correlation functionals are also sloppy</p>
+<p>— sloppiness pervades the entire hierarchy of computational materials science (Mortensen</p>
+<p>JJ, Kaasbjerg K, Frederiksen SL, Nørskov JK, Sethna JP, Jacobsen KW, “Bayesian error</p>
+<p>estimation in density-functional theory,” Physical Review Letters 95, 216401, 2005).</p>
+<p>Neural networks and modern potentials</p>
+<p>Mao et al. (2024) showed that deep neural networks with widely different architectures,</p>
+<p>sizes, optimizers, and regularization all traverse the same low-dimensional manifold</p>
+<p>during training, with hyper-ribbon structure characteristic of sloppy models. ADS This</p>
+<p>suggests that neural network potentials (NequIP, MACE, etc.) should also produce low-</p>
+<p>dimensional elastic constant error patterns regardless of architecture (Mao J, Griniasty I,</p>
+<p>Teoh HK, Ramesh R, Yang R, Transtrum MK, Sethna JP, Chaudhari P, “The training process</p>
+<p>of many deep networks explores the same low-dimensional manifold,” Proceedings of the</p>
+<p>National Academy of Sciences 121(12), e2310002121, 2024). An analytical treatment</p>
+<p>followed in Mao et al. (2026), deriving conditions for hyper-ribbon emergence in linear</p>
+<p>models and characterizing phase boundaries (Mao J, Griniasty I, Sun Y, Transtrum MK,</p>
+<p>Sethna JP, Chaudhari P, “Analytical characterization of sloppiness in neural networks:</p>
+<p>Insights from linear models,” Physical Review E 113, 015306, 2026).</p>
+<p>Area 2: Simpson’s paradox and meta-analytic methodology for</p>
+<p>grouped correlations</p>
+<p>Foundational references</p>
+<p>Simpson (1951) demonstrated that collapsing two-way contingency tables can reverse</p>
+<p>associations, establishing the foundational paradox Wiley Online Library (Simpson EH, “The</p>
+<p>interpretation of interaction in contingency tables,” Journal of the Royal Statistical Society:</p>
+<p>Series B 13(2), 238–241, 1951). Blyth (1972) formalized the paradox and connected it to</p>
+<p>Savage’s sure-thing principle, Wikipedia providing the probabilistic framework (Blyth CR,</p>
+<p>“On Simpson’s paradox and the sure-thing principle,” Journal of the American Statistical</p>
+<p>Association 67(338), 364–366, 1972).</p>
+<p>The most celebrated real-world demonstration is the Berkeley admissions case (Bickel et</p>
+<p>al., 1975), where aggregate data showed apparent bias against women that reversed at the</p>
+<p>department level Science ResearchGate — women applied disproportionately to</p>
+<p>competitive departments, a confounding structure directly analogous to pooling elastic</p>
+<p>constant errors across elements with different physical properties (Bickel PJ, Hammel EA,</p>
+<p>O’Connell JW, “Sex bias in graduate admissions: Data from Berkeley,” Science 187(4175),</p>
+<p>398–404, 1975).</p>
+<p>Pearl (2014) argued that Simpson’s paradox can only be resolved through causal</p>
+<p>reasoning, introducing the do-calculus and back-door criterion for determining whether</p>
+<p>pooled or stratified analysis gives the correct inference. In the interatomic potential context,</p>
+<p>element identity acts as a causal confounder through distinct physical properties — atomic</p>
+<p>radius, electron configuration, bonding character — that independently influence both the</p>
+<p>potential’s error structure and the target elastic constants (Pearl J, “Comment:</p>
+<p>Understanding Simpson’s paradox,” The American Statistician 68(1), 8–13, 2014; also Pearl</p>
+<p>J, Causality: Models, Reasoning, and Inference, 2nd ed., Cambridge University Press,</p>
+<p>2009).</p>
+<p>Robinson (1950) established the closely related ecological fallacy, showing that state-level</p>
+<p>correlations between demographic variables can completely reverse from individual-level</p>
+<p>correlations. Wikipedia The pooled interatomic potential error correlation across elements</p>
+<p>is precisely this type of “ecological correlation” (Robinson WS, “Ecological correlations and</p>
+<p>the behavior of individuals,” American Sociological Review 15(3), 351–357, 1950).</p>
+<p>Correlation testing methodology</p>
+<p>Jackson and Somers (1991) is the key methodological reference for handling spurious</p>
+<p>correlations in grouped data. They demonstrated that ratios and indices sharing common</p>
+<p>components generate correlations even from random data, and advocated randomization</p>
+<p>(permutation) tests that generate a null distribution accounting for mathematical coupling.</p>
+<p>Their central recommendation is that the appropriate null correlation is frequently non-zero,</p>
+<p>and standard tests against r = 0 are inappropriate when variables share structural</p>
+<p>components PubMed Springer (Jackson DA, Somers KM, “The spectre of ‘spurious’</p>
+<p>correlations,” Oecologia 86(1), 147–151, 1991. DOI: 10.1007/BF00317404).</p>
+<p>Archie (1981) established the mathematical coupling problem: when derived variables</p>
+<p>share components (e.g., X/Z versus Y/Z), significant correlations arise even from</p>
+<p>uncorrelated raw data. This is the foundational reference for the non-zero null hypothesis</p>
+<p>issue — physical constraints among elastic constants (e.g., the Cauchy relation, stability</p>
+<p>requirements) create inherent baseline correlations that must not be attributed to</p>
+<p>systematic potential errors (Archie JP, “Mathematic coupling of data: A common source of</p>
+<p>error,” Annals of Surgery 193(3), 296–303, 1981).</p>
+<p>Kievit et al. (2013) provided a practical detection guide for Simpson’s paradox in</p>
+<p>continuous bivariate data with categorical grouping variables, including an R toolbox and</p>
+<p>statistical markers for the paradox. Frontiers Their methods are directly applicable to</p>
+<p>elastic constant error data grouped by element (Kievit RA, Frankenhuis WE, Waldorp LJ,</p>
+<p>Borsboom D, “Simpson’s paradox in psychological science: A practical guide,” Frontiers in</p>
+<p>Psychology 4, Article 513, 2013).</p>
+<p>Random-effects meta-analysis for correlations</p>
+<p>The standard methodology for properly combining correlations across heterogeneous</p>
+<p>groups uses Fisher’s z-transformation within a random-effects framework. Hedges and</p>
+<p>Olkin (1985) established the foundational approach: transform each group-specific</p>
+<p>correlation using z = arctanh(r), combine via inverse-variance weighting, and back-</p>
+<p>transform (Hedges LV, Olkin I, Statistical Methods for Meta-Analysis, Academic Press,</p>
+<p>1985). Borenstein et al. (2009) is the standard textbook reference, explaining fixed versus</p>
+<p>random-effects models, heterogeneity assessment (Q-statistic, I²</p>
+<p>, τ²), and interpretation</p>
+<p>(Borenstein M, Hedges LV, Higgins JPT, Rothstein HR, Introduction to Meta-Analysis, Wiley,</p>
+<p>2009). Borenstein et al. (2010) clarified when random-effects models are appropriate —</p>
+<p>specifically when group-specific effects (element-specific correlations) are expected to</p>
+<p>differ, as they do for different BCC metals (Borenstein M, Hedges LV, Higgins JPT, Rothstein</p>
+<p>HR, “A basic introduction to fixed-effect and random-effects models for meta-analysis,”</p>
+<p>Research Synthesis Methods 1(2), 97–111, 2010).</p>
+<p>Welz et al. (2022) proposed improved confidence intervals for the Fisher z approach in</p>
+<p>random-effects meta-analysis of correlations, showing that standard intervals can be</p>
+<p>unsatisfactory and providing enhanced variance estimators (Welz T, Viechtbauer W, Pauly</p>
+<p>M, “Fisher transformation based confidence intervals of correlations in fixed- and random-</p>
+<p>effects meta-analysis,” British Journal of Mathematical and Statistical Psychology 75(1), 1–</p>
+<p>38, 2022). DerSimonian and Laird (1986) provide the most widely used random-effects</p>
+<p>estimator for between-study variance (DerSimonian R, Laird N, “Meta-analysis in clinical</p>
+<p>trials,” Controlled Clinical Trials 7, 177–188, 1986). Higgins et al. (2003) introduced the I²</p>
+<p>statistic for quantifying heterogeneity (Higgins JPT, Thompson SG, Deeks JJ, Altman DG,</p>
+<p>“Measuring inconsistency in meta-analyses,” BMJ 327, 557–560, 2003).</p>
+<p>Simpson’s paradox in the physical sciences</p>
+<p>Examples of Simpson’s paradox in hard sciences remain rare, making instances in materials</p>
+<p>science especially noteworthy. Selvitella (2017) demonstrated the paradox in quantum</p>
+<p>mechanics (quantum harmonic oscillator, nonlinear Schrödinger equation) and in geometric</p>
+<p>and linear algebraic settings (Selvitella A, “The ubiquity of the Simpson’s paradox,” Journal</p>
+<p>of Statistical Distributions and Applications 4, Article 2, 2017). Chuang et al. (2009)</p>
+        </div>
+    </div>
+</body>
+</html>

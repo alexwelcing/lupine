@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2008--Mendelev-M-I--Cu--LAMMPS--ipr1",
+    "potid": "2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Cu"
+    ],
+    "symbols": [
+      "Cu"
+    ],
+    "dois": [
+      "10.1080/14786430802206482"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2008--Mendelev-M-I--Cu--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu/1/Cu1.eam.fs",
+        "filename": "Cu1.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "d23831e5731ca977",
+    "nist_potential_id": "2008--Mendelev-M-I--Cu--LAMMPS--ipr1",
+    "potential_doi": "10.1080/14786430802206482",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.615,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 174.475291781671,
+  "c12": 127.838540493126,
+  "c44": 84.4380046054193,
+  "a0": 3.63908745701191,
+  "ecoh": -3.28311620915219,
+  "success": true,
+  "error_message": null
+}

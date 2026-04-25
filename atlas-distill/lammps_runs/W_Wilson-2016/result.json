@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2016--Wilson-S-R--fictional-W--LAMMPS--ipr1",
+    "potid": "2016--Wilson-S-R-Mendelev-M-I--fictional-W",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "W"
+    ],
+    "symbols": [
+      "W"
+    ],
+    "dois": [
+      "10.1063/1.4946032"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2016--Wilson-S-R--fictional-W--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2016--Wilson-S-R-Mendelev-M-I--fictional-W",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2016--Wilson-S-R-Mendelev-M-I--fictional-W/1/W2.eam.fs",
+        "filename": "W2.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "be2a8503f59cb2ac",
+    "nist_potential_id": "2016--Wilson-S-R--fictional-W--LAMMPS--ipr1",
+    "potential_doi": "10.1063/1.4946032",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.165,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 522.098200867283,
+  "c12": 203.998945929554,
+  "c44": 160.584412151429,
+  "a0": 3.16556548286416,
+  "ecoh": -8.88311684743723,
+  "success": true,
+  "error_message": null
+}

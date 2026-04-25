@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2016--Borovikov-V--fictional-Cu-31--LAMMPS--ipr1",
+    "potid": "2016--Borovikov-V-Mendelev-M-I-King-A-H--fictional-Cu-31",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Cu"
+    ],
+    "symbols": [
+      "Cu"
+    ],
+    "dois": [
+      "10.1088/0965-0393/24/8/085017"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2016--Borovikov-V--fictional-Cu-31--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2016--Borovikov-V-Mendelev-M-I-King-A-H--fictional-Cu-31",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2016--Borovikov-V-Mendelev-M-I-King-A-H--fictional-Cu-31/1/MCu31.eam.fs",
+        "filename": "MCu31.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "da7ed08b9fc403c6",
+    "nist_potential_id": "2016--Borovikov-V--fictional-Cu-31--LAMMPS--ipr1",
+    "potential_doi": "10.1088/0965-0393/24/8/085017",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.615,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 168.019556051428,
+  "c12": 131.336520692225,
+  "c44": 85.9310810570669,
+  "a0": 3.63856840057982,
+  "ecoh": -3.4066625256964,
+  "success": true,
+  "error_message": null
+}

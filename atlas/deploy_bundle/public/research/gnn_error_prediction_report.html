@@ -3,47 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GNN Error Prediction — glim Research</title>
-    <meta name="description" content="Predicting interatomic potential errors from crystal structure topology using Graph Neural Networks.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>GNN Error Prediction from Crystal Graphs - Deep Research Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-top: 20px; border-bottom: 1px solid #000; padding-bottom: 40px; }
+        .symbol { font-size: 24px; margin-bottom: 20px; color: #333; letter-spacing: 0.5em; }
+        h1 { font-size: 32px; font-weight: 400; letter-spacing: 0.05em; color: #000; margin-bottom: 16px; line-height: 1.3; }
+        h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.05em; color: #222; margin-top: 60px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        h3 { font-size: 18px; font-weight: 400; letter-spacing: 0.05em; color: #333; margin-top: 40px; margin-bottom: 15px; }
+        h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #555; margin-top: 30px; margin-bottom: 10px; }
+        p { margin-bottom: 24px; text-align: left; }
+        a { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+        a:hover { color: #555; }
+        ul, ol { margin-bottom: 24px; padding-left: 20px; }
+        li { margin-bottom: 12px; }
+        code { font-family: monospace; background: #eee; padding: 2px 6px; font-size: 14px; border-radius: 3px; }
+        pre { background: #111; color: #ccc; padding: 24px; overflow-x: auto; margin-bottom: 30px; font-size: 13px; border-radius: 4px; font-family: monospace; }
+        pre code { background: none; padding: 0; color: inherit; border-radius: 0; }
+        blockquote { border-left: 3px solid #000; padding: 20px 30px; margin: 40px 0; background: #f5f5f5; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 16px; text-align: left; }
+        th { background: #eaeaea; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .nav-link { display: inline-block; margin-bottom: 40px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; text-decoration: none; border-bottom: 1px solid #000; padding-bottom: 4px; transition: all 0.2s; }
+        .nav-link:hover { opacity: 0.6; }
+        .content { padding-bottom: 100px; }
+        
+        .index-list { list-style: none; padding: 0; }
+        .index-list li { padding: 20px 0; border-bottom: 1px solid #eee; margin: 0; }
+        .index-list a { text-decoration: none; font-size: 18px; display: block; margin-bottom: 8px; }
+        .index-list a:hover { text-decoration: underline; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; letter-spacing: 0.05em; }
+        
+        hr { border: 0; border-top: 1px solid #ddd; margin: 60px 0; }
+    </style>
 </head>
 <body>
-    <nav class="top-bar">
-        <a href="/" class="logo">glim<span>research</span></a>
-        <div class="links">
-            <a href="/research/">Index</a>
-            <a href="/web/">glimPSE</a>
-            <a href="/">Manifesto</a>
-        </div>
-    </nav>
-    <div class="article">
-        <a href="/research/" class="back">← Research Index</a>
-        <h1>GNN Error Prediction</h1>
-        <h1 id="gnn-error-prediction-from-crystal-graphs-deep-research-report">GNN Error Prediction from Crystal Graphs - Deep Research Report</h1>
+    <div class="container">
+        <a href="/research/" class="nav-link">← Research Index</a>
+        <header>
+            <div class="symbol">———</div>
+            <h1>GNN Error Prediction from Crystal Graphs - Deep Research Report</h1>
+        </header>
+        <div class="content">
+            <h1>GNN Error Prediction from Crystal Graphs - Deep Research Report</h1>
 <p><strong>Report Source:</strong> Kimi Deep Research
 <strong>Total Content:</strong> 88,097 characters
 <strong>Extraction Status:</strong> Partial extraction (successfully extracted 5 major sections and end-matter)</p>
 <hr />
-<h2 id="1-introduction-and-problem-context">1. Introduction and Problem Context</h2>
-<h3 id="11-force-field-landscape-and-heterogeneity">1.1 Force Field Landscape and Heterogeneity</h3>
+<h2>1. Introduction and Problem Context</h2>
+<h3>1.1 Force Field Landscape and Heterogeneity</h3>
 <p>The computational materials science community relies on a diverse ecosystem of interatomic potentials spanning four major families with fundamentally different theoretical foundations. These include empirical pair potentials (EAM, Lennard-Jones) with simple functional forms enabling fast computation; bond-order reactive potentials (ReaxFF, bond-order formulations) enabling dynamic bond breaking; machine learning potentials (SNAP, ACE, neural network potentials) with data-driven functional forms; and ab initio-derived potentials (tight-binding, DFT-parameterized models) incorporating simplified quantum mechanical treatments. This diversity creates both challenges for model generalization and opportunities for transfer learning across related formalisms.</p>
-<h3 id="12-primary-objectives-for-gnn-development">1.2 Primary Objectives for GNN Development</h3>
+<h3>1.2 Primary Objectives for GNN Development</h3>
 <p>The development of graph neural networks for the GLIM platform pursues three interconnected objectives that collectively address critical needs in materials simulation and force field selection.</p>
 <p>High prediction accuracy for error vector estimation enables reliable pre-screening of potential performance before expensive molecular dynamics or Monte Carlo simulations are undertaken. The economic and computational benefits are substantial: accurate error prediction can prevent wasted resources on simulations where the cho[TRUNCATED]</p>
 <hr />
-<h2 id="2-crystal-graph-representations-and-foundational-architectures">2. Crystal Graph Representations and Foundational Architectures</h2>
-<h3 id="21-graph-construction-methodologies-for-crystals">2.1 Graph Construction Methodologies for Crystals</h3>
+<h2>2. Crystal Graph Representations and Foundational Architectures</h2>
+<h3>2.1 Graph Construction Methodologies for Crystals</h3>
 <p>The transformation of crystalline materials into graph representations constitutes the foundational preprocessing step that constrains all subsequent learning. The specific choices made in this transformation—how atoms are featurized, which interactions are represented as edges, and how periodicity is handled—fundamentally determine what structural information is available to the neural network and what is irretrievably discarded.</p>
 <p><strong>Node features:</strong> atomic number encoding, one-hot representations, and learned embeddings. The standard approach, established by CGCNN, employs a 92-dimensional feature vector for each element comprising: group number, period, electronegativity, covalent radius, valence electrons, ionization energy, electron affinity, block (s/p/d/f), and other atomic properties derived from established chemical databases. These features are initialized from physica[TRUNCATED]</p>
 <hr />
-<h2 id="3-multi-task-learning-for-error-vector-prediction">3. Multi-Task Learning for Error Vector Prediction</h2>
+<h2>3. Multi-Task Learning for Error Vector Prediction</h2>
 <p><strong>Note:</strong> Content in this section encountered filtering restrictions during extraction. The section exists at character offset 39173 but contains protected content.</p>
 <hr />
-<h2 id="4-uncertainty-aware-gnn-architectures">4. Uncertainty-Aware GNN Architectures</h2>
-<h3 id="41-sources-of-uncertainty-in-error-prediction">4.1 Sources of Uncertainty in Error Prediction</h3>
+<h2>4. Uncertainty-Aware GNN Architectures</h2>
+<h3>4.1 Sources of Uncertainty in Error Prediction</h3>
 <p>Reliable uncertainty quantification is essential for practical deployment of GNN-based error prediction, enabling risk-aware decision-making, active learning, and model diagnostics. Three distinct uncertainty sources must be distinguished:</p>
 <table>
 <thead>
@@ -79,8 +104,8 @@
 <p>Epistemic uncertainty quantifies model knowledge gaps. By contrast to aleatoric uncertainty, epistemic uncertainty is <em>reducible</em>: gathering more training data, improving model capacity, or incorporating physical inductive biases can systematically reduce it. This enables active learning: systems with high epistemic uncertainty are prioritized for expensive DFT/reference potential evaluation, focusing computational resources on regions where model knowledge is weakest.</p>
 <p>Distributional uncertainty addresses out-of-distribution (OOD) inputs—materials, compositions, or potential families outside the training domain. Density estimation approaches use auxiliary neural networks to estimate the training data distribution in embedding space; inputs with low density receive low confidence. Anomaly detection flags unusual structures; OOD detectors explicitly trained on in-distribution vs. OOD samples provide calibrated confidence scores.</p>
 <hr />
-<h2 id="5-transfer-learning-across-force-field-families">5. Transfer Learning Across Force Field Families</h2>
-<h3 id="51-force-field-family-characterization">5.1 Force Field Family Characterization</h3>
+<h2>5. Transfer Learning Across Force Field Families</h2>
+<h3>5.1 Force Field Family Characterization</h3>
 <p>The 23 interatomic potentials in GLIM span four major families with distinct theoretical foundations, functional forms, and characteristic failure modes:</p>
 <table>
 <thead>
@@ -125,8 +150,8 @@
 </table>
 <p>Empirical potentials (EAM, MEAM) represent the oldest class, with functional forms derived from simple physical intuition rather than electronic structure. The electron density embedding framework—where each atom experiences an effective potential based on the electron density from neighboring atoms—provides computational efficiency and works remarkably well for metallic systems. However, empirical potentials systematically fail for charge transfer interactions, directional bonding (e.g., Si-Si bonds), and surface phenomena where electronic structure effects are non-local.</p>
 <hr />
-<h2 id="8-benchmarks-and-performance-evaluation">8. Benchmarks and Performance Evaluation</h2>
-<h3 id="81-matbench-and-materials-project-benchmarks">8.1 MatBench and Materials Project Benchmarks</h3>
+<h2>8. Benchmarks and Performance Evaluation</h2>
+<h3>8.1 MatBench and Materials Project Benchmarks</h3>
 <p>MatBench-elastic provides standardized evaluation for elastic constant prediction, with fixed train/validation/test splits and consistent metrics enabling fair comparison. The dataset comprises DFT-calculated bulk modulus (K), shear modulus (G), and elastic tensor components across diverse materials.</p>
 <table>
 <thead>
@@ -178,15 +203,15 @@
 </table>
 <p>Performance metrics extend beyond MAE/RMSE to include: relative error (percentage of reference value); R² coefficient[TRUNCATED]</p>
 <hr />
-<h2 id="10-future-directions-and-challenges">10. Future Directions and Challenges</h2>
-<h3 id="101-scaling-to-larger-datasets-and-more-potentials">10.1 Scaling to Larger Datasets and More Potentials</h3>
+<h2>10. Future Directions and Challenges</h2>
+<h3>10.1 Scaling to Larger Datasets and More Potentials</h3>
 <p>The GLIM platform's current 12,000 materials and 23 potentials represents a substantial but ultimately limited snapshot of chemical space. Scaling to 100,000+ materials and 50+ potentials introduces challenges in: memory-efficient graph batching for variable-size crystals; distributed training across multiple GPUs/nodes; active learning to prioritize most informative evaluations; and model compression for deployment with constrained resources. Emerging architectures like Graphormer and TokenGT that treat graphs as sequences may enable transformer-scale training on materials data.</p>
-<h3 id="102-incorporating-active-learning-for-efficient-data-collection">10.2 Incorporating Active Learning for Efficient Data Collection</h3>
+<h3>10.2 Incorporating Active Learning for Efficient Data Collection</h3>
 <p>Given the computational cost of DFT reference calculations and force field evaluations, active learning can dramatically improve data efficiency. Uncertainty-based acquisition—prioritizing materials with highest epistemic uncertainty—focuses computation where model knowledge is weakest. Diversity-based acquisition ensures coverage of underrepresented chemical spaces. Multi-task active learning must balance uncertainty across 23 potentials, potentially using multi-objective optimization or Pareto frontier approaches. The goal is to minimize total evaluation cost while maximizing model improvement.</p>
-<h3 id="103-physics-constrained-learning">10.3 Physics-Constrained Learning</h3>
+<h3>10.3 Physics-Constrained Learning</h3>
 <p>[Content continues but was truncated in extraction]</p>
 <hr />
-<h2 id="final-sections-and-conclusions">Final Sections and Conclusions</h2>
+<h2>Final Sections and Conclusions</h2>
 <p>The document concludes with discussions on:
 - Distributed training across multiple GPUs/nodes
 - Model compression for deployment with constrained resources
@@ -195,7 +220,7 @@
 - Physics-informed neural network constraints
 - Implementation considerations and deployment strategies</p>
 <hr />
-<h2 id="extraction-notes">Extraction Notes</h2>
+<h2>Extraction Notes</h2>
 <p>This report represents a partial extraction of the full Kimi Deep Research report on GNN Error Prediction from Crystal Graphs. The extraction successfully recovered:
 - Section 1: Introduction and Problem Context (partial)
 - Section 2: Crystal Graph Representations and Foundational Architectures (opening)
@@ -214,7 +239,7 @@
 - Benchmarking against established datasets
 - Active learning and data efficiency strategies
 - Scaling challenges and emerging architectures</p>
+        </div>
     </div>
-    <footer><p>glim — Computational Materials Science Platform · 2026</p></footer>
 </body>
 </html>
