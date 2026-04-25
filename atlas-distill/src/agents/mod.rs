@@ -16,6 +16,7 @@ pub mod manifold_agent;
 pub mod null_model_agent;
 pub mod orchestrator;
 pub mod paradox_agent;
+pub mod theorist_agent;
 
 use anyhow::Result;
 use lupine_ops::ledger::{AgentClaim, BenchmarkRecord, DiscoveryLedger};
@@ -70,6 +71,10 @@ pub enum Action {
     /// Screen multiple groupings for causal anomalies (Simpson's paradox, etc.).
     ScreenCausalAnomalies {
         groupings: Vec<String>,
+    },
+    /// Generate competing physical hypotheses for observed statistical patterns.
+    Theorize {
+        target_claim_ids: Vec<String>,
     },
 }
 

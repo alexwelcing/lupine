@@ -288,6 +288,9 @@ enum Commands {
         /// LAMMPS executable
         #[arg(long, default_value = "lmp")]
         lammps_exe: String,
+        /// Fast mode: skip null-model validation (much faster for direction-finding)
+        #[arg(long)]
+        fast: bool,
     },
 }
 
@@ -400,8 +403,8 @@ fn main() -> Result<()> {
         Commands::ActiveLearn { strategy, n, element, ledger_dir, lammps_exe } => {
             cmd_active_learn(&strategy, n, &element, &ledger_dir, &lammps_exe)
         }
-        Commands::React { iterations, elements, ledger_dir, lammps_exe } => {
-            cmd_react(iterations, elements.as_deref(), &ledger_dir, &lammps_exe)
+        Commands::React { iterations, elements, ledger_dir, lammps_exe, fast } => {
+            cmd_react(iterations, elements.as_deref(), &ledger_dir, &lammps_exe, fast)
         }
     }
 }
@@ -480,11 +483,85 @@ fn cmd_active_learn(
     Ok(())
 }
 
+/// Seed the discovery ledger from existing benchmark CSVs.
+fn seed_ledger(ledger_dir: &PathBuf) -> Result<usize> {
+    use lupine_ops::ledger::{BenchmarkRecord, DiscoveryLedger, Provenance, generate_record_id, now_iso8601};
+
+    let mut ledger = if ledger_dir.exists() {
+        DiscoveryLedger::load(ledger_dir).unwrap_or_default()
+    } else {
+        DiscoveryLedger::new()
+    };
+
+    let mut count = 0;
+    let ts = now_iso8601();
+    let provenance = Provenance::AgentInference {
+        method: "ledger_seed_from_csv".into(),
+        confidence: 0.95,
+        basis: vec!["fcc_elastic_constants.csv".into(), "bcc_elastic_constants.csv".into(), "nist_populated.csv".into()],
+    };
+
+    let files = vec![
+        ("benchmarks/fcc_elastic_constants.csv", 6),
+        ("benchmarks/bcc_elastic_constants.csv", 6),
+        ("benchmarks/nist_populated.csv", 10),
+    ];
+
+    for (path, n_cols) in files {
+        if !std::path::Path::new(path).exists() {
+            continue;
+        }
+        let content = std::fs::read_to_string(path)?;
+        let mut lines = content.lines();
+        let header = lines.next().unwrap_or("");
+        let headers: Vec<&str> = header.split(',').collect();
+
+        for line in lines {
+            let cols: Vec<&str> = line.split(',').collect();
+            if cols.len() < n_cols {
+                continue;
+            }
+
+            let material = cols[0].trim().to_string();
+            let potential = cols[1].trim().to_string();
+            let property = cols[2].trim().to_string();
+            let reference: f64 = cols[3].trim().parse().unwrap_or(0.0);
+            let predicted: f64 = cols[4].trim().parse().unwrap_or(0.0);
+            let unit = cols[5].trim().to_string();
+
+            let nist_id = if cols.len() > 6 { cols[6].trim().to_string() } else { potential.clone() };
+            let pair_style = if cols.len() > 7 { cols[7].trim().to_string() } else { "unknown".into() };
+
+            let record = BenchmarkRecord {
+                record_id: generate_record_id("seed"),
+                potential_id: nist_id,
+                potential_label: potential,
+                pair_style,
+                element: material.clone(),
+                property,
+                reference,
+                predicted,
+                unit,
+                provenance: provenance.clone(),
+                agent_id: "seed".into(),
+                timestamp: ts.clone(),
+            };
+
+            ledger.append_record(record, ledger_dir)?;
+            count += 1;
+        }
+    }
+
+    eprintln!("  ✦ Seeded ledger with {} records from existing benchmarks", count);
+    Ok(count)
+}
+
 fn cmd_react(
     iterations: usize,
     elements: Option<&str>,
     ledger_dir: &PathBuf,
     lammps_exe: &str,
+    fast: bool,
 ) -> Result<()> {
     use agents::{
         causal_agent::CausalAgent,
@@ -492,6 +569,7 @@ fn cmd_react(
         manifold_agent::ManifoldAgent,
         null_model_agent::NullModelAgent,
         orchestrator::{CampaignConfig, Orchestrator},
+        theorist_agent::TheoristAgent,
     };
 
     let target_elements: Vec<String> = elements
@@ -503,6 +581,17 @@ fn cmd_react(
     eprintln!("  ║  Claims → Experiments → Records → New Claims              ║");
     eprintln!("  ╚════════════════════════════════════════════════════════════╝\n");
 
+    // Auto-seed if ledger is empty
+    let ledger = if ledger_dir.exists() {
+        lupine_ops::ledger::DiscoveryLedger::load(ledger_dir).unwrap_or_default()
+    } else {
+        lupine_ops::ledger::DiscoveryLedger::new()
+    };
+    if ledger.records.is_empty() {
+        eprintln!("  ℹ Ledger empty — seeding from existing benchmark CSVs...");
+        seed_ledger(ledger_dir)?;
+    }
+
     let config = CampaignConfig {
         ledger_dir: ledger_dir.clone(),
         max_iterations: iterations,
@@ -512,10 +601,13 @@ fn cmd_react(
 
     let mut orchestrator = Orchestrator::new(&config)?;
 
-    // Reactive agents: Manifold detects → Causal screens → Experiment validates
+    // Reactive agents: Manifold detects → Causal screens → Theorist explains → Experiment validates
     orchestrator.add_agent(Box::new(ManifoldAgent::new()));
     orchestrator.add_agent(Box::new(CausalAgent::new()));
-    orchestrator.add_agent(Box::new(NullModelAgent::new()));
+    if !fast {
+        orchestrator.add_agent(Box::new(NullModelAgent::new()));
+    }
+    orchestrator.add_agent(Box::new(TheoristAgent::new()));
     orchestrator.add_agent(Box::new(ExperimentAgent::new(ExperimentAgentConfig {
         lammps_exe: lammps_exe.into(),
         work_dir: PathBuf::from("atlas-distill/lammps_runs/auto"),
@@ -1314,6 +1406,7 @@ fn cmd_discover_agents(
         manifold_agent::ManifoldAgent,
         null_model_agent::NullModelAgent,
         orchestrator::{CampaignConfig, Orchestrator},
+        theorist_agent::TheoristAgent,
     };
 
     // Default: empty = use ALL available metals (8 FCC + 7 BCC = 15)
@@ -1346,6 +1439,7 @@ fn cmd_discover_agents(
     orchestrator.add_agent(Box::new(ManifoldAgent::new()));
     orchestrator.add_agent(Box::new(NullModelAgent::new()));
     orchestrator.add_agent(Box::new(CausalAgent::new()));
+    orchestrator.add_agent(Box::new(TheoristAgent::new()));
     orchestrator.add_agent(Box::new(ExperimentAgent::new(ExperimentAgentConfig {
         lammps_exe: "lmp".into(),
         work_dir: PathBuf::from("atlas-distill/lammps_runs/auto"),

@@ -109,6 +109,14 @@ impl Orchestrator {
                 }
                 key
             }
+            Action::Theorize { target_claim_ids } => {
+                let mut key = format!("{}:theorize:", agent_id);
+                for cid in target_claim_ids {
+                    key.push_str(cid);
+                    key.push(',');
+                }
+                key
+            }
         }
     }
 

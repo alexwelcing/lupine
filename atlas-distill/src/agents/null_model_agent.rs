@@ -19,7 +19,9 @@ use lupine_ops::ledger::{
 use rand::Rng;
 
 /// Number of null trials for establishing the null distribution.
-const NULL_TRIALS: usize = 500;
+/// Reduced from 500 → 50 for fast iterative loops.  For publication-quality
+/// null comparisons, override to 500.
+const NULL_TRIALS: usize = 50;
 
 pub struct NullModelAgent {
     properties: Vec<String>,
