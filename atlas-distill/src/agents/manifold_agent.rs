@@ -92,6 +92,52 @@ impl ManifoldAgent {
                 });
             }
         }
+
+        // Cross-potential Universal Alignment Analysis
+        for i in 0..analyses.len() {
+            for j in (i + 1)..analyses.len() {
+                let ma_a = &analyses[i];
+                let ma_b = &analyses[j];
+                
+                if !ma_a.eigenvectors.is_empty() && !ma_b.eigenvectors.is_empty() {
+                    let v_a = &ma_a.eigenvectors[0];
+                    let v_b = &ma_b.eigenvectors[0];
+                    
+                    if v_a.len() == v_b.len() && v_a.len() > 0 {
+                        let dot: f64 = v_a.iter().zip(v_b.iter()).map(|(a, b)| a * b).sum();
+                        let mag_a: f64 = v_a.iter().map(|x| x * x).sum::<f64>().sqrt();
+                        let mag_b: f64 = v_b.iter().map(|x| x * x).sum::<f64>().sqrt();
+                        
+                        if mag_a > 1e-10 && mag_b > 1e-10 {
+                            let cosine_sim = dot / (mag_a * mag_b);
+                            
+                            // If highly aligned (e.g., > 0.95), they share the same physical error manifold
+                            if cosine_sim.abs() > 0.90 {
+                                claims.push(AgentClaim {
+                                    claim_id: generate_record_id(self.agent_id()),
+                                    agent_id: self.agent_id().into(),
+                                    claim_type: ClaimType::UniversalAlignment {
+                                        potential_a: ma_a.potential.clone(),
+                                        potential_b: ma_b.potential.clone(),
+                                        cosine_similarity: cosine_sim.abs(),
+                                    },
+                                    evidence_ids: vec![],
+                                    confidence: cosine_sim.abs() * 0.95,
+                                    lean_theorem: Some("universal_ribbon_alignment".into()),
+                                    status: ClaimStatus::Proposed,
+                                    timestamp: now_iso8601(),
+                                    description: format!(
+                                        "Universal Alignment: {} and {} share principal error axis (|S|={:.3})",
+                                        ma_a.potential, ma_b.potential, cosine_sim.abs()
+                                    ),
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         claims
     }
 }

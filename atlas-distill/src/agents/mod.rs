@@ -8,6 +8,8 @@
 //! - **Null Model Agent (ε)**: Devil's advocate — tests claims against random baselines
 //! - **Orchestrator**: Coordinates agents, manages the discovery loop
 
+pub mod causal_agent;
+pub mod experiment_agent;
 pub mod lammps_agent;
 pub mod literature_agent;
 pub mod manifold_agent;
@@ -29,6 +31,7 @@ pub enum Capability {
     MineLiterature,
     AnalyzeManifold,
     DetectParadox,
+    DesignExperiment,
     FormalVerify,
     FitModels,
 }
@@ -58,6 +61,15 @@ pub enum Action {
     /// Propose a new hypothesis
     ProposeHypothesis {
         description: String,
+    },
+    /// Design and execute a batch of LAMMPS experiments driven by surrogate acquisition.
+    DesignExperiments {
+        strategy: String,
+        max_experiments: usize,
+    },
+    /// Screen multiple groupings for causal anomalies (Simpson's paradox, etc.).
+    ScreenCausalAnomalies {
+        groupings: Vec<String>,
     },
 }
 

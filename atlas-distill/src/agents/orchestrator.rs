@@ -1,12 +1,19 @@
-//! Discovery Orchestrator — coordinates multiple agents in a discovery loop.
+//! Discovery Orchestrator — coordinates multiple agents in a dynamic loop.
 //!
-//! The loop: Select → Evaluate → Analyze → Test → Report
-//! Each iteration adds data and claims to the shared ledger.
+//! The old fixed pipeline (Select → Evaluate → Analyze → Test → Report)
+//! has been replaced by a dynamic action queue.  Agents no longer run in
+//! rigid sequence; instead they submit actions to a shared priority queue.
+//! The orchestrator deduplicates, schedules, and executes actions until
+//! the queue is empty or a maximum iteration budget is exhausted.
+//!
+//! This is the orchestrator's submission to autoresearch: it stops being
+//! a deterministic for-loop and becomes a reactive scheduler.
 
 use super::{Action, ActionResult, DiscoveryAgent};
 use anyhow::Result;
 use lupine_ops::ledger::{DiscoveryLedger, LedgerSummary};
-use std::path::{Path, PathBuf};
+use std::collections::{HashSet, VecDeque};
+use std::path::PathBuf;
 
 /// Configuration for a discovery campaign.
 pub struct CampaignConfig {
@@ -31,13 +38,23 @@ impl Default for CampaignConfig {
     }
 }
 
-/// The orchestrator manages agents and the discovery loop.
+/// A pending action in the queue, annotated with its source agent.
+struct PendingAction {
+    agent_idx: usize,
+    action: Action,
+    /// Human-readable key for deduplication.
+    dedup_key: String,
+}
+
+/// The orchestrator manages agents and the discovery loop via a dynamic queue.
 pub struct Orchestrator {
     agents: Vec<Box<dyn DiscoveryAgent>>,
     ledger: DiscoveryLedger,
     ledger_dir: PathBuf,
     max_iterations: usize,
     iteration: usize,
+    /// Actions we have already executed (deduplication).
+    executed_keys: HashSet<String>,
 }
 
 impl Orchestrator {
@@ -54,6 +71,7 @@ impl Orchestrator {
             ledger_dir: config.ledger_dir.clone(),
             max_iterations: config.max_iterations,
             iteration: 0,
+            executed_keys: HashSet::new(),
         })
     }
 
@@ -62,59 +80,111 @@ impl Orchestrator {
         self.agents.push(agent);
     }
 
-    /// Run the discovery loop.
+    /// Generate a deduplication key for an action.
+    fn dedup_key(agent_id: &str, action: &Action) -> String {
+        match action {
+            Action::EvaluatePotential { nist_id, element, .. } => {
+                format!("{}:eval:{}:{}", agent_id, nist_id, element)
+            }
+            Action::FetchPaper { doi, .. } => {
+                format!("{}:fetch:{}", agent_id, doi)
+            }
+            Action::RunManifoldAnalysis { element } => {
+                format!("{}:manifold:{}", agent_id, element)
+            }
+            Action::CheckParadox { grouping } => {
+                format!("{}:paradox:{}", agent_id, grouping)
+            }
+            Action::ProposeHypothesis { description } => {
+                format!("{}:hypo:{}", agent_id, description)
+            }
+            Action::DesignExperiments { strategy, max_experiments } => {
+                format!("{}:exp:{}:{}", agent_id, strategy, max_experiments)
+            }
+            Action::ScreenCausalAnomalies { groupings } => {
+                let mut key = format!("{}:causal:", agent_id);
+                for g in groupings {
+                    key.push_str(g);
+                    key.push(',');
+                }
+                key
+            }
+        }
+    }
+
+    /// Run the dynamic discovery loop.
     pub fn run(&mut self) -> Result<LedgerSummary> {
         eprintln!("\n  ╔════════════════════════════════════════════════════════════╗");
-        eprintln!("  ║  Multi-Agent Discovery Campaign                           ║");
+        eprintln!("  ║  Dynamic Autoresearch Orchestrator                        ║");
         eprintln!("  ║  Agents: {}                                                ", self.agents.len());
         eprintln!("  ║  Ledger: {}                          ", self.ledger_dir.display());
         eprintln!("  ╚════════════════════════════════════════════════════════════╝\n");
 
         for iter in 0..self.max_iterations {
             self.iteration = iter + 1;
-            eprintln!("  ━━━ Iteration {}/{} ━━━", self.iteration, self.max_iterations);
+
+            // ── Phase 1: Collect proposals from all agents ──
+            let mut queue: VecDeque<PendingAction> = VecDeque::new();
+            for (idx, agent) in self.agents.iter().enumerate() {
+                let proposed = agent.propose_actions(&self.ledger);
+                for action in proposed {
+                    let key = Self::dedup_key(agent.agent_id(), &action);
+                    if !self.executed_keys.contains(&key) {
+                        queue.push_back(PendingAction {
+                            agent_idx: idx,
+                            action,
+                            dedup_key: key,
+                        });
+                    }
+                }
+            }
+
+            if queue.is_empty() {
+                eprintln!("  ℹ No new actions proposed — stopping early.");
+                break;
+            }
+
+            eprintln!("  ━━━ Iteration {}/{} | {} pending action(s) ━━━",
+                self.iteration, self.max_iterations, queue.len());
 
             let mut total_records = 0;
             let mut total_claims = 0;
 
-            // Each agent proposes and executes actions
-            for agent_idx in 0..self.agents.len() {
-                let proposed = self.agents[agent_idx].propose_actions(&self.ledger);
-                if proposed.is_empty() {
-                    continue;
-                }
+            // ── Phase 2: Execute actions in queue order ──
+            while let Some(pending) = queue.pop_front() {
+                let agent_id = self.agents[pending.agent_idx].agent_id().to_string();
+                eprintln!("\n  ▸ {} executes {}", agent_id,
+                    format!("{:?}", pending.action).chars().take(60).collect::<String>());
 
-                let agent_id = self.agents[agent_idx].agent_id().to_string();
-                eprintln!("\n  ▸ {} proposes {} action(s)", agent_id, proposed.len());
-
-                for action in &proposed {
-                    match self.agents[agent_idx].execute(action, &self.ledger) {
-                        Ok(result) => {
-                            // Ingest records
-                            for record in result.records_produced {
-                                if let Err(e) = self.ledger.append_record(record, &self.ledger_dir) {
-                                    eprintln!("    ⚠ Failed to write record: {}", e);
-                                }
-                                total_records += 1;
+                match self.agents[pending.agent_idx].execute(&pending.action, &self.ledger) {
+                    Ok(result) => {
+                        // Ingest records
+                        for record in result.records_produced {
+                            if let Err(e) = self.ledger.append_record(record, &self.ledger_dir) {
+                                eprintln!("    ⚠ Failed to write record: {}", e);
                             }
-                            // Ingest claims
-                            for claim in result.claims_produced {
-                                eprintln!("    📋 Claim: {}", claim.description);
-                                if let Err(e) = self.ledger.append_claim(claim, &self.ledger_dir) {
-                                    eprintln!("    ⚠ Failed to write claim: {}", e);
-                                }
-                                total_claims += 1;
-                            }
-                            // Print notes
-                            for note in &result.notes {
-                                eprintln!("    ℹ {}", note);
-                            }
+                            total_records += 1;
                         }
-                        Err(e) => {
-                            eprintln!("    ❌ Action failed: {}", e);
+                        // Ingest claims
+                        for claim in result.claims_produced {
+                            eprintln!("    📋 Claim: {}", claim.description);
+                            if let Err(e) = self.ledger.append_claim(claim, &self.ledger_dir) {
+                                eprintln!("    ⚠ Failed to write claim: {}", e);
+                            }
+                            total_claims += 1;
+                        }
+                        // Print notes
+                        for note in &result.notes {
+                            eprintln!("    ℹ {}", note);
                         }
                     }
+                    Err(e) => {
+                        eprintln!("    ❌ Action failed: {}", e);
+                    }
                 }
+
+                // Mark as executed regardless of success (don't retry same action).
+                self.executed_keys.insert(pending.dedup_key);
             }
 
             eprintln!("\n  Iteration {} summary: +{} records, +{} claims (total: {} records, {} claims)",
@@ -140,7 +210,7 @@ impl Orchestrator {
 
     fn print_final_summary(&self, summary: &LedgerSummary) {
         eprintln!("\n  ╔════════════════════════════════════════════════════════════╗");
-        eprintln!("  ║  Discovery Campaign Complete                               ║");
+        eprintln!("  ║  Autoresearch Campaign Complete                            ║");
         eprintln!("  ╚════════════════════════════════════════════════════════════╝");
         eprintln!();
         eprintln!("  Total records:     {}", summary.total_records);

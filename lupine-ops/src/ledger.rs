@@ -155,6 +155,17 @@ pub enum ClaimType {
         n_entries_before: usize,
         n_entries_after: usize,
     },
+    /// Universal alignment of principal error components across potentials
+    UniversalAlignment {
+        potential_a: String,
+        potential_b: String,
+        cosine_similarity: f64,
+    },
+    /// A batch of experiments was executed by the autoresearch loop.
+    ExperimentBatch {
+        n_experiments: usize,
+        strategy: String,
+    },
 }
 
 /// Verification status for a claim.
