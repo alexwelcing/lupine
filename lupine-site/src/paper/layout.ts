@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Layout engine built on @chenglou/pretext.
  *

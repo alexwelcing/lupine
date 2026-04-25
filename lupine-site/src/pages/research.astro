@@ -1,168 +1,36 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormalBrief from '../components/LayoutPrimitives/FormalBrief.astro';
 import '../styles/global.css';
 ---
 
-<Layout title="Causal Geometry Research | Lupine">
-  <main class="reference-container">
-    <header class="formal-header">
-      <div class="seal">PEER REVIEWED // THEORETICAL FOUNDATIONS</div>
-      <h1>The Causal Geometry of Prediction Errors</h1>
-      <p class="subtitle">A framework for hyper-ribbon dimensionality in interatomic potentials</p>
-    </header>
+<BaseLayout title="Causal Geometry Research | Lupine">
+  <FormalBrief 
+    title="The Causal Geometry of Prediction Errors"
+    subtitle="A framework for hyper-ribbon dimensionality in interatomic potentials"
+    sealText="PEER REVIEWED // THEORETICAL FOUNDATIONS"
+  >
+    <Fragment slot="marginalia">
+      <span class="citation-note">[1] Daw, M. S., & Baskes, M. I. (1984). Embedded-atom method: Derivation and application to impurities, surfaces, and other defects in metals. <em>Physical Review B</em>, 29(12), 6443.</span>
+      <span class="citation-note">[2] Plimpton, S. (1995). Fast Parallel Algorithms for Short-Range Molecular Dynamics. <em>Journal of Computational Physics</em>, 117(1), 1-19.</span>
+      <span class="citation-note">[3] <strong>Lupine Internal Note:</strong> See section 4 for the resolution of the Simpson's Paradox reversal observed in MEAM-Al datasets.</span>
+    </Fragment>
 
-    <section class="reading-layout">
-      <div class="marginalia">
-        <span class="citation-note">[1] Daw, M. S., & Baskes, M. I. (1984). Embedded-atom method: Derivation and application to impurities, surfaces, and other defects in metals. <em>Physical Review B</em>, 29(12), 6443.</span>
-        <span class="citation-note">[2] Plimpton, S. (1995). Fast Parallel Algorithms for Short-Range Molecular Dynamics. <em>Journal of Computational Physics</em>, 117(1), 1-19.</span>
-        <span class="citation-note">[3] <strong>Lupine Internal Note:</strong> See section 4 for the resolution of the Simpson's Paradox reversal observed in MEAM-Al datasets.</span>
+    <h2>1. Abstract & Introduction</h2>
+    <p>For forty years, the parameterization of interatomic potentials has relied on localized fitting to ab-initio datasets. While the Embedded-Atom Method (EAM) and Modified EAM (MEAM) successfully capture fundamental metallic bonding behaviors, they persistently exhibit non-linear error manifolds when extrapolated to unobserved thermodynamic regimes.</p>
+    
+    <p>Our research proposes a novel topological framework—<em>Causal Geometry</em>—that maps the predictive failures of these classical potentials. By representing prediction errors as a hyper-ribbon manifold across phase space, we can deterministically isolate structural anomalies.</p>
+    
+    <div class="equation-block">
+      <span class="math-label">Eq. 1.1 — Error Manifold Dimensionality</span>
+      <div class="math-body">
+        {String.raw`\mathcal{E}(P, T) = \int_{\Omega} \left| \Psi_{DFT}(\mathbf{R}) - \hat{\Psi}_{MEAM}(\mathbf{R}, \theta) \right|^2 d\mathbf{R}`}
       </div>
-      <article class="manuscript">
-        <h2>1. Abstract & Introduction</h2>
-        <p>For forty years, the parameterization of interatomic potentials has relied on localized fitting to ab-initio datasets. While the Embedded-Atom Method (EAM) and Modified EAM (MEAM) successfully capture fundamental metallic bonding behaviors, they persistently exhibit non-linear error manifolds when extrapolated to unobserved thermodynamic regimes.</p>
-        
-        <p>Our research proposes a novel topological framework—<em>Causal Geometry</em>—that maps the predictive failures of these classical potentials. By representing prediction errors as a hyper-ribbon manifold across phase space, we can deterministically isolate structural anomalies.</p>
-        
-        <div class="equation-block">
-          <span class="math-label">Eq. 1.1 — Error Manifold Dimensionality</span>
-          <div class="math-body">
-            \mathcal{E}(P, T) = \int_{\Omega} \left| \Psi_{DFT}(\mathbf{R}) - \hat{\Psi}_{MEAM}(\mathbf{R}, \theta) \right|^2 d\mathbf{R}
-          </div>
-        </div>
-        
-        <h2>2. Methodological Rigor</h2>
-        <p>We systematically ingested 675+ verified potentials from the NIST Interatomic Potentials Repository. Using our proprietary <em>Atlas Distill</em> engine, each potential is run through a standardized high-throughput validation harness constructed in Rust.</p>
+    </div>
+    
+    <h2>2. Methodological Rigor</h2>
+    <p>We systematically ingested 675+ verified potentials from the NIST Interatomic Potentials Repository. Using our proprietary <em>Atlas Distill</em> engine, each potential is run through a standardized high-throughput validation harness constructed in Rust.</p>
 
-        <p>This deterministic approach eliminates human bias in potential selection and ensures that all derived causal geometries are grounded in mathematically verifiable, reproducible states, ultimately documented via Lean 4 formal specifications.</p>
-      </article>
-    </section>
-  </main>
+    <p>This deterministic approach eliminates human bias in potential selection and ensures that all derived causal geometries are grounded in mathematically verifiable, reproducible states, ultimately documented via Lean 4 formal specifications.</p>
+  </FormalBrief>
 </Layout>
-
-<style>
-  .reference-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--space-2xl) var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3xl);
-  }
-
-  .formal-header {
-    border-bottom: 1px solid var(--outline-variant);
-    padding-bottom: var(--space-lg);
-    margin-bottom: var(--space-xl);
-  }
-
-  .seal {
-    font-family: 'Space Grotesk', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    color: var(--primary);
-    margin-bottom: var(--space-sm);
-  }
-
-  .formal-header h1 {
-    font-family: 'Newsreader', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 400;
-    line-height: 1.1;
-    color: var(--on-surface);
-    margin: 0 0 var(--space-xs);
-  }
-
-  .subtitle {
-    font-family: 'Inter', sans-serif;
-    color: var(--on-surface-variant);
-    font-size: 1.1rem;
-  }
-
-  .reading-layout {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: var(--space-2xl);
-    align-items: start;
-  }
-
-  .marginalia {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding-top: var(--space-xl);
-    position: sticky;
-    top: var(--space-xl);
-  }
-
-  .citation-note {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    color: var(--on-surface-variant);
-    line-height: 1.5;
-    border-left: 2px solid var(--primary-container);
-    padding-left: var(--space-sm);
-  }
-
-  .manuscript h2 {
-    font-family: 'Newsreader', serif;
-    font-size: 2rem;
-    font-weight: 400;
-    color: var(--on-surface);
-    margin-top: var(--space-2xl);
-    margin-bottom: var(--space-md);
-  }
-
-  .manuscript h2:first-child {
-    margin-top: 0;
-  }
-
-  .manuscript p {
-    font-family: 'Newsreader', serif;
-    font-size: 1.25rem;
-    line-height: 1.7;
-    color: var(--on-surface);
-    margin-bottom: var(--space-lg);
-    max-width: 65ch;
-  }
-
-  .equation-block {
-    background: var(--surface-container-low);
-    padding: var(--space-xl);
-    margin: var(--space-xl) 0;
-    position: relative;
-    max-width: 65ch;
-  }
-
-  .math-label {
-    position: absolute;
-    top: var(--space-sm);
-    left: var(--space-sm);
-    font-family: 'Space Grotesk', monospace;
-    font-size: 0.75rem;
-    color: var(--on-surface-variant);
-    text-transform: uppercase;
-  }
-
-  .math-body {
-    font-family: 'Newsreader', serif;
-    font-style: italic;
-    font-size: 1.5rem;
-    text-align: center;
-    color: var(--on-surface);
-    margin-top: var(--space-md);
-  }
-
-  @media (max-width: 800px) {
-    .reading-layout {
-      grid-template-columns: 1fr;
-    }
-    .marginalia {
-      position: static;
-      flex-direction: row;
-      flex-wrap: wrap;
-      border-top: 1px solid var(--outline-variant);
-      padding-top: var(--space-md);
-      margin-top: var(--space-md);
-    }
-  }
-</style>

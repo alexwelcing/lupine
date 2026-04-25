@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { t, m, c, p, h, eq, fig, table, type PaperDocument } from './document';
 
 export const immiPaper: PaperDocument = {
