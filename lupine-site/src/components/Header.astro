@@ -1,0 +1,39 @@
+---
+---
+
+<header class="site-header sticky top-0 z-50 bg-[var(--surface)]/90 backdrop-blur-md border-b border-[var(--outline-variant)]">
+  <div class="container mx-auto px-[var(--section-pad-x)] h-20 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 no-underline group">
+      <div class="w-8 h-8 rounded-full bg-[var(--primary)] flex items-center justify-center shadow-sm transition-transform group-hover:scale-105">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="6" stroke="white" stroke-width="1.5" />
+          <circle cx="8" cy="8" r="2" fill="white" />
+        </svg>
+      </div>
+      <span class="font-serif italic text-xl font-semibold text-[var(--on-surface)] tracking-tight">Lupine</span>
+    </a>
+    
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="/research" class="nav-link">Research</a>
+      <a href="/docs" class="nav-link">Documentation</a>
+      <a href="/docs/ml-potentials" class="nav-link">ML Potentials</a>
+      <a href="/atlas-viewer" class="nav-link text-[var(--primary)] font-bold relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-[var(--primary)]">Atlas Viewer</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  .nav-link:hover {
+    color: var(--primary);
+  }
+</style>

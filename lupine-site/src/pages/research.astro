@@ -1,36 +1,133 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormalBrief from '../components/LayoutPrimitives/FormalBrief.astro';
+import ValidationTable from '../components/LayoutPrimitives/ValidationTable.astro';
 import '../styles/global.css';
+
+const table1Rows = [
+  { parameter: 'FCC EAM', reference: '1.41 [1.17, 2.17]', observed: '0.92 [0.85, 0.97]', delta: '-0.93', deltaState: 'good' as const },
+  { parameter: 'FCC LJ', reference: '1.36 [1.04, 1.50]', observed: '0.89 [0.81, 0.94]', delta: '-0.91', deltaState: 'good' as const },
+  { parameter: 'FCC SW', reference: '1.29 [1.09, 2.09]', observed: '0.87 [0.78, 0.93]', delta: '-0.89', deltaState: 'good' as const },
+  { parameter: 'BCC EAM', reference: '1.55 [1.06, 1.96]', observed: '0.85 [0.74, 0.91]', delta: '-0.86', deltaState: 'good' as const },
+  { parameter: 'BCC LJ', reference: '1.12 [1.03, 1.52]', observed: '0.82 [0.71, 0.89]', delta: '-0.84', deltaState: 'good' as const },
+];
 ---
 
-<BaseLayout title="Causal Geometry Research | Lupine">
+<BaseLayout title="Hyper-Ribbon Geometry of Error Manifolds | Lupine">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script is:inline defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script is:inline defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
   <FormalBrief 
-    title="The Causal Geometry of Prediction Errors"
-    subtitle="A framework for hyper-ribbon dimensionality in interatomic potentials"
-    sealText="PEER REVIEWED // THEORETICAL FOUNDATIONS"
+    title="Hyper-Ribbon Geometry of Interatomic Potential Error Manifolds"
+    subtitle="A Statistical Framework for Universal Potential Design"
+    sealText="IMMI PREPRINT // LUPINE SYSTEMS"
   >
     <Fragment slot="marginalia">
-      <span class="citation-note">[1] Daw, M. S., & Baskes, M. I. (1984). Embedded-atom method: Derivation and application to impurities, surfaces, and other defects in metals. <em>Physical Review B</em>, 29(12), 6443.</span>
-      <span class="citation-note">[2] Plimpton, S. (1995). Fast Parallel Algorithms for Short-Range Molecular Dynamics. <em>Journal of Computational Physics</em>, 117(1), 1-19.</span>
-      <span class="citation-note">[3] <strong>Lupine Internal Note:</strong> See section 4 for the resolution of the Simpson's Paradox reversal observed in MEAM-Al datasets.</span>
+      <div class="mb-6 pb-4 border-b border-outline-variant/30">
+        <p class="font-mono text-[10px] tracking-widest text-secondary mb-2">AUTHORS</p>
+        <p>A. Welcing, Lupine Systems</p>
+      </div>
+      <p class="font-mono text-[10px] tracking-widest text-secondary mb-2 mt-4">ABSTRACT SUMMARY</p>
+      <p>Interatomic potentials (IPs) are the foundation of large-scale molecular dynamics. We introduce a geometric framework that treats IP errors as points on a high-dimensional manifold and characterize its dimensionality. Results show that error manifolds are low-dimensional hyper-ribbons, suggesting that universal potentials need only capture a small number of orthogonal error modes.</p>
     </Fragment>
 
-    <h2>1. Abstract & Introduction</h2>
-    <p>For forty years, the parameterization of interatomic potentials has relied on localized fitting to ab-initio datasets. While the Embedded-Atom Method (EAM) and Modified EAM (MEAM) successfully capture fundamental metallic bonding behaviors, they persistently exhibit non-linear error manifolds when extrapolated to unobserved thermodynamic regimes.</p>
-    
-    <p>Our research proposes a novel topological framework—<em>Causal Geometry</em>—that maps the predictive failures of these classical potentials. By representing prediction errors as a hyper-ribbon manifold across phase space, we can deterministically isolate structural anomalies.</p>
-    
-    <div class="equation-block">
-      <span class="math-label">Eq. 1.1 — Error Manifold Dimensionality</span>
-      <div class="math-body">
-        {String.raw`\mathcal{E}(P, T) = \int_{\Omega} \left| \Psi_{DFT}(\mathbf{R}) - \hat{\Psi}_{MEAM}(\mathbf{R}, \theta) \right|^2 d\mathbf{R}`}
-      </div>
-    </div>
-    
-    <h2>2. Methodological Rigor</h2>
-    <p>We systematically ingested 675+ verified potentials from the NIST Interatomic Potentials Repository. Using our proprietary <em>Atlas Distill</em> engine, each potential is run through a standardized high-throughput validation harness constructed in Rust.</p>
+    <section class="manuscript-section">
+      <h2>1. Introduction</h2>
+      <p>The accuracy of molecular dynamics (MD) simulations depends critically on the choice of interatomic potential (IP). Despite decades of development, systematic comparison of potentials remains ad hoc: researchers typically evaluate a handful of properties on a small set of materials and declare one potential "better" without quantifying how errors generalize.</p>
+      <p is:raw>We propose treating IP errors as points on a \(d\)-dimensional error manifold \(\mathcal{M} \subset \mathbb{R}^d\). Each point corresponds to a potential; each coordinate corresponds to the prediction error for a specific material-property pair. The geometry of this manifold—its dimensionality, curvature, and clustering—reveals fundamental constraints on transferability.</p>
+      <p is:raw>Our central hypothesis is that \(\mathcal{M}\) is a <em>hyper-ribbon</em>: a manifold whose local dimensionality is much smaller than the ambient space, with eigenvalue spectra decaying exponentially. If true, a universal potential need only capture a small number of dominant error modes.</p>
+    </section>
 
-    <p>This deterministic approach eliminates human bias in potential selection and ensures that all derived causal geometries are grounded in mathematically verifiable, reproducible states, ultimately documented via Lean 4 formal specifications.</p>
+    <section class="manuscript-section mt-12">
+      <h2>2. Theory</h2>
+      <h3>2.1 Sloppy Model Theory</h3>
+      <p>In sloppy models, the Fisher information matrix has eigenvalues spanning many orders of magnitude. The participation ratio (PR) measures effective dimensionality:</p>
+      <div is:raw class="equation-block my-6 p-6 glass-card text-center rounded-lg border border-outline-variant/30">
+        \[\text{PR} = \frac{(\sum_i \lambda_i)^2}{\sum_i \lambda_i^2}\]
+      </div>
+      <p is:raw>where \(\lambda_i\) are eigenvalues of the error covariance matrix. \(\text{PR} \ll d\) indicates that most variance concentrates in a few directions.</p>
+
+      <h3>2.2 Simpson's Paradox in Materials Data</h3>
+      <p>When pooling data across materials, a correlation between two properties may reverse sign relative to within-material correlations. We detect this by comparing pooled Pearson \(r\) with weighted within-group \(r_w\). A sign reversal indicates ecological fallacy risk.</p>
+
+      <h3>2.3 Random-Effects Meta-Analysis</h3>
+      <p is:raw>For \(k\) independent effect sizes \(y_i\) with variances \(\sigma_i^2\), the DerSimonian-Laird estimator is:</p>
+      <div is:raw class="equation-block my-6 p-6 glass-card text-center rounded-lg border border-outline-variant/30">
+        \[\tau^2 = \max\Bigl(0, \frac{Q - (k-1)}{\sum w_i - \frac{\sum w_i^2}{\sum w_i}}\Bigr), \quad w_i = \frac{1}{\sigma_i^2}\]
+      </div>
+      <p is:raw>where \(Q = \sum w_i(y_i - \bar{y})^2\). The \(I^2\) statistic quantifies between-study heterogeneity:</p>
+      <div is:raw class="equation-block my-6 p-6 glass-card text-center rounded-lg border border-outline-variant/30">
+        \[I^2 = \max\Bigl(0, \frac{Q - (k-1)}{Q}\Bigr) \times 100\%\]
+      </div>
+    </section>
+
+    <section class="manuscript-section mt-12">
+      <h2>3. Methods</h2>
+      <h3>3.1 Benchmark Data</h3>
+      <p is:raw>FCC metals (Al, Cu, Ag, Au, Ni, Pd, Pt, Pb): elastic constants \(C_{11}, C_{12}, C_{44}\) from DFT references. BCC metals (Fe, Cr, Mo, W, V, Nb, Ta): same properties. Errors are computed as \(\epsilon = (y_{\text{pred}} - y_{\text{ref}}) / y_{\text{ref}}\).</p>
+
+      <h3>3.2 Geometric Analysis</h3>
+      <p is:raw>For each potential, errors are assembled into a matrix \(X \in \mathbb{R}^{n \times m}\) (\(n\) materials, \(m\) properties). PCA via SVD yields eigenvalues \(\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_m\). A geometric fit \(\log \lambda_i = a + b i\) tests exponential decay. Hyper-ribbon classification requires:</p>
+      <div is:raw class="equation-block my-6 p-6 glass-card text-center rounded-lg border border-outline-variant/30">
+        \[\tau_{\text{MK}} &lt; -0.8 \quad \wedge \quad R^2_{\log} &gt; 0.8 \quad \wedge \quad \text{PR}/m &lt; 0.9\]
+      </div>
+
+      <h3>3.3 Bootstrap Uncertainty</h3>
+      <p is:raw>Non-parametric bootstrap (\(B = 500\)) resamples materials with replacement. Percentile confidence intervals report the 2.5th and 97.5th quantiles of PR and \(R^2_{\log}\) distributions.</p>
+    </section>
+
+    <section class="manuscript-section mt-12">
+      <h2>4. Results</h2>
+      <h3>4.1 Eigenvalue Spectra and Hyper-Ribbon Detection</h3>
+      <p>Table 1 summarizes dimensionality metrics. All potentials satisfy the hyper-ribbon criterion.</p>
+      
+      <div class="my-8">
+        <ValidationTable 
+          title="Dimensionality Metrics"
+          summary="Table 1: Dimensionality metrics and hyper-ribbon classification for FCC and BCC benchmark sets."
+          headers={['Potential', 'PR [95% CI]', 'R²log [95% CI]', 'τMK']}
+          rows={table1Rows}
+        />
+      </div>
+
+      <p>Figure 1 shows eigenvalue spectra on log scale with geometric fits. The near-linear decay confirms the hyper-ribbon structure.</p>
+      <div class="my-8 text-center p-8 glass-card border-dashed border-outline-variant/30 rounded-lg">
+        <p class="font-mono text-xs text-on-surface-variant mb-2">[FIGURE 1 PLACEHOLDER]</p>
+        <p class="text-sm italic text-on-surface-variant">Eigenvalue spectra for FCC (top) and BCC (bottom) potentials. Dashed lines show geometric fits.</p>
+      </div>
+
+      <h3>4.2 Bootstrap Confidence Intervals</h3>
+      <p>Figure 2 displays PR with 95% CIs. All intervals exclude the maximal dimensionality (3.0), confirming sub-manifold structure.</p>
+
+      <h3>4.3 Simpson's Paradox in BCC Data</h3>
+      <p is:raw>Figure 3 demonstrates the paradox: pooled correlation between \(C_{11}\) and \(C_{12}\) errors is \(r = -0.435\), while within-group correlations average \(r_w = +0.147\). 57% of material-level correlations have the opposite sign from the pooled estimate.</p>
+
+      <h3>4.4 Meta-Analysis of Cross-Material Transferability</h3>
+      <p is:raw>Figure 4 shows the forest plot. Random-effects summary \(\bar{y}_{RE} = -0.18\) (95% CI: [−0.42, 0.06]). Heterogeneity \(I^2 = 91.4\%\), \(\tau = 0.476\), indicating that most variance is between-material rather than within-material.</p>
+    </section>
+
+    <section class="manuscript-section mt-12">
+      <h2>5. Discussion</h2>
+      <p is:raw>The hyper-ribbon geometry has three implications for universal potential design. First, because the effective dimensionality is ~1.4 in a 3D property space, a universal potential needs to correctly model only one or two dominant error modes—not every property independently. Second, the Simpson's paradox warns against pooling errors across crystal structures without stratification: a potential that appears superior in aggregate may be inferior within each subgroup. Third, the high \(I^2\) implies that material-specific fine-tuning will outperform a single global fit.</p>
+      <p is:raw>Our framework is extensible: additional properties (phonons, defects, surfaces) increase ambient dimensionality \(m\) but need not increase effective dimensionality if they lie in the same ribbon. Future work will test this conjecture on amorphous and multi-component systems.</p>
+    </section>
+
+    <section class="manuscript-section mt-12">
+      <h2>6. Conclusions</h2>
+      <p>We have shown that IP error manifolds are hyper-ribbons: low-dimensional structures embedded in high-dimensional property spaces. The geometric framework—combining PCA, bootstrap uncertainty, paradox detection, and meta-analysis—provides quantitative diagnostics for potential selection that go beyond traditional pointwise comparisons. These tools are implemented in the open-source <code>atlas-distill</code> engine.</p>
+    </section>
+
+    <section class="manuscript-section mt-16 pb-16 border-t border-outline-variant/30 pt-8">
+      <h3 class="font-mono text-sm tracking-widest text-secondary mb-6">REFERENCES</h3>
+      <ol class="list-decimal pl-6 space-y-3 text-sm text-on-surface-variant font-body">
+        <li>Transtrum, M. K. et al. Perspective: Sloppiness and emergent theories in physics, biology, and beyond. <em>J. Chem. Phys.</em> 2015.</li>
+        <li>DerSimonian, R. & Laird, N. Meta-analysis in clinical trials. <em>Control. Clin. Trials</em> 1986.</li>
+        <li>Simpson, E. H. The interpretation of interaction in contingency tables. <em>J. R. Stat. Soc.</em> 1951.</li>
+        <li>Dawid, A. P. Simpson's paradox and the sure-thing principle. <em>J. Am. Stat. Assoc.</em> 1979.</li>
+        <li>Foiles, S. M. et al. Embedded-atom-method functions for the fcc metals Cu, Ag, Au, Ni, Pd, Pt, and their alloys. <em>Phys. Rev. B</em> 1986.</li>
+        <li>Mendelev, M. I. et al. Development of new interatomic potentials appropriate for crystalline and liquid iron. <em>Philos. Mag.</em> 2003.</li>
+      </ol>
+    </section>
   </FormalBrief>
-</Layout>
+</BaseLayout>
