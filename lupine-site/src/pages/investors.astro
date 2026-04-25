@@ -1,228 +1,36 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormalBrief from '../components/LayoutPrimitives/FormalBrief.astro';
+import ValidationTable from '../components/LayoutPrimitives/ValidationTable.astro';
 ---
 
-<Layout title="Investor Relations | Lupine">
-  <main class="reference-container">
-    <header class="formal-header">
-      <div class="seal">CONFIDENTIAL // PERFORMANCE METRICS</div>
-      <h1>Institutional Validation Manuscript</h1>
-      <p class="subtitle">Empirical validation metrics establishing the Atlas Distill technological moat</p>
-    </header>
+<BaseLayout title="Investor Relations | Lupine">
+  <FormalBrief 
+    title="Institutional Validation Manuscript"
+    subtitle="Empirical validation metrics establishing the Atlas Distill technological moat"
+    sealText="CONFIDENTIAL // PERFORMANCE METRICS"
+  >
+    <Fragment slot="marginalia">
+      <span class="citation-note"><strong>The Technological Moat:</strong> By automating the ingestion of NIST parameterizations, Lupine achieves a 10,000x acceleration in validation throughput compared to manual phenomenological fitting.</span>
+      <span class="citation-note"><strong>Validation Protocol:</strong> All metrics shown are cross-validated using density functional theory (DFT) baseline references.</span>
+    </Fragment>
 
-    <section class="reading-layout">
-      <div class="marginalia">
-        <span class="citation-note"><strong>The Technological Moat:</strong> By automating the ingestion of NIST parameterizations, Lupine achieves a 10,000x acceleration in validation throughput compared to manual phenomenological fitting.</span>
-        <span class="citation-note"><strong>Validation Protocol:</strong> All metrics shown are cross-validated using density functional theory (DFT) baseline references.</span>
-      </div>
-      <article class="manuscript">
-        <h2>1. Atlas Engine Capabilities</h2>
-        <p>The Atlas Distill engine represents a definitive leap in materials informatics. By converting the legacy empirical physics ecosystem into a unified, programmable data structure, we enable high-frequency algorithmic discovery of novel material properties.</p>
-        
-        <div class="validation-table-container">
-          <h2>2. System Accuracy Benchmarks</h2>
-          <p class="summary-text">Crystalline Stability Metrics (NIST-884 Compliance). Utilizing <em>Space Grotesk</em> tabular figures for exact precision.</p>
-          <table class="validation-table">
-            <thead>
-              <tr>
-                <th>PARAMETER (Silicon)</th>
-                <th>DFT REFERENCE</th>
-                <th>ATLAS OBSERVED</th>
-                <th>DELTA (Δ)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Lattice Constant (a)</td>
-                <td class="data">5.4309 Å</td>
-                <td class="data">5.4312 Å</td>
-                <td class="data highlight-good">+0.0003</td>
-              </tr>
-              <tr>
-                <td>Cohesive Energy</td>
-                <td class="data">-4.63 eV/atom</td>
-                <td class="data">-4.61 eV/atom</td>
-                <td class="data highlight-warn">+0.02</td>
-              </tr>
-              <tr>
-                <td>Bulk Modulus (B)</td>
-                <td class="data">97.6 GPa</td>
-                <td class="data">97.8 GPa</td>
-                <td class="data highlight-good">+0.2</td>
-              </tr>
-              <tr>
-                <td>C11 Elastic Constant</td>
-                <td class="data">165.8 GPa</td>
-                <td class="data">166.1 GPa</td>
-                <td class="data highlight-warn">+0.3</td>
-              </tr>
-              <tr>
-                <td>Isotropic Strain Limit</td>
-                <td class="data">0.0012</td>
-                <td class="data">0.0014</td>
-                <td class="data highlight-warn">+0.0002</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <h2>1. Atlas Engine Capabilities</h2>
+    <p>The Atlas Distill engine represents a definitive leap in materials informatics. By converting the legacy empirical physics ecosystem into a unified, programmable data structure, we enable high-frequency algorithmic discovery of novel material properties.</p>
+    
+    <ValidationTable
+      title="2. System Accuracy Benchmarks"
+      summary="Crystalline Stability Metrics (NIST-884 Compliance). Utilizing Space Grotesk tabular figures for exact precision."
+      headers={["PARAMETER (Silicon)", "DFT REFERENCE", "ATLAS OBSERVED", "DELTA (Δ)"]}
+      rows={[
+        { parameter: "Lattice Constant (a)", reference: "5.4309 Å", observed: "5.4312 Å", delta: "+0.0003", deltaState: "good" },
+        { parameter: "Cohesive Energy", reference: "-4.63 eV/atom", observed: "-4.61 eV/atom", delta: "+0.02", deltaState: "warn" },
+        { parameter: "Bulk Modulus (B)", reference: "97.6 GPa", observed: "97.8 GPa", delta: "+0.2", deltaState: "good" },
+        { parameter: "C11 Elastic Constant", reference: "165.8 GPa", observed: "166.1 GPa", delta: "+0.3", deltaState: "warn" },
+        { parameter: "Isotropic Strain Limit", reference: "0.0012", observed: "0.0014", delta: "+0.0002", deltaState: "warn" }
+      ]}
+    />
 
-        <p style="margin-top: 2rem;">The table above demonstrates our ability to constrain predictions within extraordinarily tight tolerances. This level of empirical certainty is what defines our computational sovereignty strategy.</p>
-      </article>
-    </section>
-  </main>
+    <p style="margin-top: 2rem;">The table above demonstrates our ability to constrain predictions within extraordinarily tight tolerances. This level of empirical certainty is what defines our computational sovereignty strategy.</p>
+  </FormalBrief>
 </Layout>
-
-<style>
-  .reference-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--space-2xl) var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3xl);
-  }
-
-  .formal-header {
-    border-bottom: 1px solid var(--outline-variant);
-    padding-bottom: var(--space-lg);
-    margin-bottom: var(--space-xl);
-  }
-
-  .seal {
-    font-family: 'Space Grotesk', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    color: var(--primary);
-    margin-bottom: var(--space-sm);
-  }
-
-  .formal-header h1 {
-    font-family: 'Newsreader', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 400;
-    line-height: 1.1;
-    color: var(--on-surface);
-    margin: 0 0 var(--space-xs);
-  }
-
-  .subtitle {
-    font-family: 'Inter', sans-serif;
-    color: var(--on-surface-variant);
-    font-size: 1.1rem;
-  }
-
-  .reading-layout {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: var(--space-2xl);
-    align-items: start;
-  }
-
-  .marginalia {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding-top: var(--space-xl);
-    position: sticky;
-    top: var(--space-xl);
-  }
-
-  .citation-note {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    color: var(--on-surface-variant);
-    line-height: 1.5;
-    border-left: 2px solid var(--primary-container);
-    padding-left: var(--space-sm);
-  }
-
-  .manuscript h2 {
-    font-family: 'Newsreader', serif;
-    font-size: 2rem;
-    font-weight: 400;
-    color: var(--on-surface);
-    margin-bottom: var(--space-md);
-  }
-
-  .manuscript p {
-    font-family: 'Newsreader', serif;
-    font-size: 1.25rem;
-    line-height: 1.7;
-    color: var(--on-surface);
-    margin-bottom: var(--space-lg);
-    max-width: 65ch;
-  }
-
-  .validation-table-container {
-    max-width: 900px;
-    margin-top: var(--space-xl);
-  }
-
-  .validation-table-container h2 {
-    font-size: 1.5rem;
-  }
-
-  .summary-text {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 1rem !important;
-    color: var(--on-surface-variant) !important;
-    margin-bottom: var(--space-xl) !important;
-    max-width: 100% !important;
-  }
-
-  .validation-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-  }
-
-  .validation-table th {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--on-surface-variant);
-    padding: var(--space-md) var(--space-sm);
-    border-bottom: 1px solid var(--outline-variant);
-    font-weight: 600;
-  }
-
-  .validation-table td {
-    padding: var(--space-md) var(--space-sm);
-    border-bottom: 1px solid var(--outline-variant);
-    font-family: 'Inter', sans-serif;
-    color: var(--on-surface);
-  }
-
-  .validation-table td.data {
-    font-family: 'Space Grotesk', monospace;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .highlight-good {
-    color: var(--secondary);
-  }
-  
-  .highlight-warn {
-    color: var(--tertiary);
-  }
-
-  @media (max-width: 800px) {
-    .reading-layout {
-      grid-template-columns: 1fr;
-    }
-    .marginalia {
-      position: static;
-      flex-direction: row;
-      flex-wrap: wrap;
-      border-top: 1px solid var(--outline-variant);
-      padding-top: var(--space-md);
-      margin-top: var(--space-md);
-    }
-    .validation-table {
-      display: block;
-      overflow-x: auto;
-    }
-  }
-</style>

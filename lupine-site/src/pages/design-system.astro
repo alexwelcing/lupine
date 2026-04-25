@@ -1,12 +1,12 @@
 ---
 // src/pages/design-system.astro
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/global.css';
 
 // Using Space Grotesk for data, Newsreader for editorial, Inter for body
 ---
 
-<Layout title="Formal Design Reference | Lupine">
+<BaseLayout title="Formal Design Reference | Lupine">
   <main class="reference-container">
     <header class="formal-header">
       <div class="seal">VALIDATED // NIST-884 COMPLIANT</div>
@@ -26,7 +26,7 @@ import '../styles/global.css';
         <div class="equation-block">
           <span class="math-label">Eq. 1.1 — Empirical Potential Energy</span>
           <div class="math-body">
-            V(r^N) = \sum_{i<j} v_2(r_{ij}) + \sum_{i<j<k} v_3(r_{ij}, r_{ik}, \theta_{ijk})
+            {String.raw`V(r^N) = \sum_{i<j} v_2(r_{ij}) + \sum_{i<j<k} v_3(r_{ij}, r_{ik}, \theta_{ijk})`}
           </div>
         </div>
         

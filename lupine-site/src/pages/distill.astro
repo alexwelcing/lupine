@@ -1,240 +1,38 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormalBrief from '../components/LayoutPrimitives/FormalBrief.astro';
+import WorkflowTimeline from '../components/LayoutPrimitives/WorkflowTimeline.astro';
 ---
 
-<Layout title="Distill Engine | Lupine">
-  <main class="reference-container">
-    <header class="formal-header">
-      <div class="seal">UNIVERSAL KNOWLEDGE DISTILLATION ENGINE</div>
-      <h1>Atlas Distill Compiler</h1>
-      <p class="subtitle">Standardized Knowledge Protocol (SKP) execution logs and timeline.</p>
-    </header>
-
-    <section class="reading-layout">
-      <div class="marginalia">
-        <span class="citation-note"><strong>Processing:</strong> The Distill CLI is written in pure Rust, running asynchronously to ingest empirical physics datasets at maximum concurrency.</span>
-        <span class="citation-note"><strong>Architecture:</strong> Extracts unstructured references into a verifiable JSON library, ensuring deterministic simulation execution.</span>
-      </div>
-      
-      <div class="timeline-container">
-        <h2>System Synthesis Status</h2>
-        <div class="workflow-active">
-          <span class="status-dot"></span> ACTIVE COMPILATION
-        </div>
-        
-        <div class="timeline-nodes">
-          <div class="node">
-            <span class="node-title">NIST Ingestion (675+ potentials)</span>
-            <div class="progress-bar"><div class="progress-fill" style="width: 84%"></div></div>
-          </div>
-          <div class="connector topographic-line"></div>
-          <div class="node">
-            <span class="node-title">Lattice Optimization</span>
-            <span class="node-icon">⌬</span>
-          </div>
-          <div class="connector topographic-line"></div>
-          <div class="node">
-            <span class="node-title">Energy Descriptors</span>
-            <span class="node-icon">⚛</span>
-          </div>
-        </div>
-
-        <div class="logbook-terminal">
-          <div class="log-header">COMPILER_LOGBOOK_V1.0.4</div>
-          <div class="log-content">
-            <div>[INIT] RUST_KERNEL_AWAKE</div>
-            <div>[INIT] SYSTEM_SCAN_START</div>
-            <div>[OK] NIST-884_MAPPING_COMPLETE</div>
-            <div>[OK] LAMMPS_INJECTION_PREPPED</div>
-            <div>[WAIT] LATTICE_HARDENING...</div>
-            <div>[WARN] SIMPSON'S PARADOX DETECTED IN MEAM-AL ALLOY SET</div>
-            <div style="color: var(--primary-fixed-dim); margin-top: 8px;">> AWAITING OPERATOR OVERSIGHT...</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+<BaseLayout title="Distill Engine | Lupine">
+  <FormalBrief 
+    title="Atlas Distill Compiler"
+    subtitle="Standardized Knowledge Protocol (SKP) execution logs and timeline."
+    sealText="UNIVERSAL KNOWLEDGE DISTILLATION ENGINE"
+  >
+    <Fragment slot="marginalia">
+      <span class="citation-note"><strong>Processing:</strong> The Distill CLI is written in pure Rust, running asynchronously to ingest empirical physics datasets at maximum concurrency.</span>
+      <span class="citation-note"><strong>Architecture:</strong> Extracts unstructured references into a verifiable JSON library, ensuring deterministic simulation execution.</span>
+    </Fragment>
+    
+    <WorkflowTimeline
+      title="System Synthesis Status"
+      statusText="ACTIVE COMPILATION"
+      nodes={[
+        { title: "NIST Ingestion (675+ potentials)", progress: 84 },
+        { title: "Lattice Optimization", icon: "⌬" },
+        { title: "Energy Descriptors", icon: "⚛" }
+      ]}
+      logHeader="COMPILER_LOGBOOK_V1.0.4"
+      logs={[
+        { text: "[INIT] RUST_KERNEL_AWAKE" },
+        { text: "[INIT] SYSTEM_SCAN_START" },
+        { text: "[OK] NIST-884_MAPPING_COMPLETE" },
+        { text: "[OK] LAMMPS_INJECTION_PREPPED" },
+        { text: "[WAIT] LATTICE_HARDENING..." },
+        { text: "[WARN] SIMPSON'S PARADOX DETECTED IN MEAM-AL ALLOY SET" },
+        { text: "> AWAITING OPERATOR OVERSIGHT...", actionRequired: true }
+      ]}
+    />
+  </FormalBrief>
 </Layout>
-
-<style>
-  .reference-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--space-2xl) var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3xl);
-  }
-
-  .formal-header {
-    border-bottom: 1px solid var(--outline-variant);
-    padding-bottom: var(--space-lg);
-    margin-bottom: var(--space-xl);
-  }
-
-  .seal {
-    font-family: 'Space Grotesk', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    color: var(--primary);
-    margin-bottom: var(--space-sm);
-  }
-
-  .formal-header h1 {
-    font-family: 'Newsreader', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 400;
-    line-height: 1.1;
-    color: var(--on-surface);
-    margin: 0 0 var(--space-xs);
-  }
-
-  .subtitle {
-    font-family: 'Inter', sans-serif;
-    color: var(--on-surface-variant);
-    font-size: 1.1rem;
-  }
-
-  .reading-layout {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: var(--space-2xl);
-    align-items: start;
-  }
-
-  .marginalia {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding-top: var(--space-xl);
-    position: sticky;
-    top: var(--space-xl);
-  }
-
-  .citation-note {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    color: var(--on-surface-variant);
-    line-height: 1.5;
-    border-left: 2px solid var(--primary-container);
-    padding-left: var(--space-sm);
-  }
-
-  .timeline-container {
-    background: var(--surface-container-low);
-    padding: var(--space-2xl);
-    max-width: 800px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .timeline-container h2 {
-    font-family: 'Newsreader', serif;
-    font-size: 2rem;
-    margin-bottom: var(--space-md);
-    font-weight: 400;
-  }
-
-  .workflow-active {
-    font-family: 'Space Grotesk', monospace;
-    font-size: 0.85rem;
-    color: var(--primary);
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-xl);
-  }
-
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--primary);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(71, 91, 156, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(71, 91, 156, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(71, 91, 156, 0); }
-  }
-
-  .timeline-nodes {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    margin-bottom: var(--space-2xl);
-  }
-
-  .node {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--space-md);
-    background: var(--surface);
-    border: 1px solid rgba(0,0,0,0.03);
-    box-shadow: 0 4px 12px rgba(44, 42, 40, 0.02);
-  }
-
-  .node-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-  }
-
-  .node-icon {
-    font-family: 'Space Grotesk', monospace;
-    color: var(--on-surface-variant);
-    font-size: 1.2rem;
-  }
-
-  .progress-bar {
-    width: 150px;
-    height: 4px;
-    background: var(--surface-container-high);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: var(--primary);
-  }
-
-  .connector {
-    height: 30px;
-    width: 2px;
-    background: repeating-linear-gradient(to bottom, var(--outline-variant) 0, var(--outline-variant) 4px, transparent 4px, transparent 8px);
-    margin-left: 20px;
-  }
-
-  .logbook-terminal {
-    background: var(--on-surface);
-    color: var(--surface);
-    padding: var(--space-lg);
-    font-family: 'Space Grotesk', monospace;
-    font-size: 0.85rem;
-    line-height: 1.6;
-  }
-
-  .log-header {
-    color: var(--primary-fixed-dim);
-    margin-bottom: var(--space-md);
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-
-  @media (max-width: 800px) {
-    .reading-layout {
-      grid-template-columns: 1fr;
-    }
-    .marginalia {
-      position: static;
-      flex-direction: row;
-      flex-wrap: wrap;
-      border-top: 1px solid var(--outline-variant);
-      padding-top: var(--space-md);
-      margin-top: var(--space-md);
-    }
-  }
-</style>
