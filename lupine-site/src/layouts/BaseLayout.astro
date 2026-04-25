@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -25,8 +26,15 @@ const { title = "Lupine Materials Science", description = "Bridging classical ph
     
     <!-- Tailwind CSS (via CDN to support legacy classes) -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" is:inline></script>
+    <ClientRouter />
   </head>
   <body>
+    <!-- Persistent Scroll Variable -->
+    <script>
+      document.addEventListener('scroll', () => {
+        document.body.style.setProperty('--scroll-y', `${window.scrollY}px`);
+      });
+    </script>
     <slot />
   </body>
 </html>

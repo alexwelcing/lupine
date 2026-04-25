@@ -14,15 +14,15 @@ import Footer from '../components/Footer.astro';
         <div class="grid grid--2" style="align-items: center; gap: var(--space-4xl);">
           <div class="reveal visible">
             <span class="section-label">Texas Research Initiative</span>
-            <h1 style="margin-bottom: var(--space-lg);">
+            <h1 class="tech-reveal" style="margin-bottom: var(--space-lg);">
               The Causal Geometry of <br/><em style="color: var(--primary);">Interatomic Potentials</em>
             </h1>
             <p class="section-description">
               Bridging decades of physical research with high-throughput prediction error manifolds to validate the next generation of molecular dynamics.
             </p>
-            <div style="display: flex; gap: var(--space-md);">
-              <a href="#methodology" class="btn btn--primary">Read Methodology</a>
-              <a href="/research" class="btn btn--secondary">Atlas Distill</a>
+            <div style="display: flex; gap: var(--space-md);" class="tech-reveal" style="animation-delay: 0.2s">
+              <a href="#methodology" class="btn btn--primary kinetic-hover">Read Methodology</a>
+              <a href="/investor-relations" class="btn btn--secondary kinetic-hover">Investor Relations</a>
             </div>
             
             <div style="margin-top: var(--space-3xl); padding-left: var(--space-lg); border-left: 2px dotted var(--outline-variant);">
@@ -31,10 +31,10 @@ import Footer from '../components/Footer.astro';
               </p>
             </div>
           </div>
-          <div class="reveal visible" style="position: relative;">
+          <div class="reveal visible tech-reveal" style="position: relative; animation-delay: 0.4s;">
             <!-- Stippled / Dithered Graphic Placeholder -->
-            <div style="width: 100%; height: 500px; background: var(--surface-container-low); border: 1px solid var(--outline-variant); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <div class="kinetic-hover" style="width: 100%; height: 500px; background: var(--surface-container-low); border: 1px solid var(--outline-variant); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="transform: translateY(calc(var(--scroll-y, 0px) * 0.2)); transition: transform 0.1s linear;">
                 <defs>
                   <pattern id="dither" patternUnits="userSpaceOnUse" width="4" height="4">
                     <rect width="2" height="2" fill="var(--primary)" opacity="0.1" />
@@ -42,7 +42,7 @@ import Footer from '../components/Footer.astro';
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#dither)" />
-                <circle cx="50%" cy="50%" r="150" fill="none" stroke="var(--primary)" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
+                <circle class="primary-glow" cx="50%" cy="50%" r="150" fill="none" stroke="var(--primary)" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
                 <circle cx="50%" cy="50%" r="100" fill="none" stroke="var(--secondary)" stroke-width="1" stroke-dasharray="2 6" opacity="0.5"/>
               </svg>
               <span class="mono" style="position: absolute; bottom: 16px; right: 16px; font-size: 12px; color: var(--primary);">FIG 1. ERROR MANIFOLD</span>
@@ -62,15 +62,15 @@ import Footer from '../components/Footer.astro';
         </div>
         
         <div class="grid grid--3">
-          <div class="card reveal visible" style="transition-delay: 0.1s;">
+          <div class="card reveal visible kinetic-hover" style="transition-delay: 0.1s;">
             <h4 class="serif-italic">Standardized Knowledge</h4>
             <p style="margin-top: var(--space-md); font-size: 0.95rem;">Decoupling the computational backend from visual interfaces via the Standardized Knowledge Protocol (SKP). A universal compiler for any research corpus.</p>
           </div>
-          <div class="card reveal visible" style="transition-delay: 0.2s;">
+          <div class="card reveal visible kinetic-hover" style="transition-delay: 0.2s;">
             <h4 class="serif-italic">Simpson's Paradox Avoidance</h4>
             <p style="margin-top: var(--space-md); font-size: 0.95rem;">Detecting and resolving data aggregation fallacies. We utilize hyper-ribbon dimensionality models to isolate reversal markers across potential landscapes.</p>
           </div>
-          <div class="card reveal visible" style="transition-delay: 0.3s;">
+          <div class="card reveal visible kinetic-hover" style="transition-delay: 0.3s;">
             <h4 class="serif-italic">Digital Vellum</h4>
             <p style="margin-top: var(--space-md); font-size: 0.95rem;">We log every structural simulation on our immutable digital vellum, ensuring that the provenance of our synthesized data is fully traceable and verifiable.</p>
           </div>

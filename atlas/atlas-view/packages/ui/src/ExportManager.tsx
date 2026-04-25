@@ -239,22 +239,39 @@ function VideoCaptureLoop({
             const userFormat = outputFormat.current;
 
             if (userFormat === 'mp4') {
-              downloadBlob(finalBlob, `${baseName}.mp4`);
+              if (onCompleteRef.current && onCompleteRef.current.length > 1) {
+                onCompleteRef.current(true, finalBlob, `${baseName}.mp4`);
+              } else {
+                downloadBlob(finalBlob, `${baseName}.mp4`);
+                if (onCompleteRef.current) onCompleteRef.current(true);
+              }
               success = true;
             } else if (userFormat === 'gif') {
               try {
                 const gifBlob = await convertMp4ToGif(finalBlob, 30); 
-                downloadBlob(gifBlob, `${baseName}.gif`);
+                if (onCompleteRef.current && onCompleteRef.current.length > 1) {
+                  onCompleteRef.current(true, gifBlob, `${baseName}.gif`);
+                } else {
+                  downloadBlob(gifBlob, `${baseName}.gif`);
+                  if (onCompleteRef.current) onCompleteRef.current(true);
+                }
                 success = true;
               } catch (err) {
                 console.error('GIF conversion failed, downloading pristine MP4 fallback:', err);
-                downloadBlob(finalBlob, `${baseName}.mp4`);
+                if (onCompleteRef.current && onCompleteRef.current.length > 1) {
+                  onCompleteRef.current(true, finalBlob, `${baseName}.mp4`);
+                } else {
+                  downloadBlob(finalBlob, `${baseName}.mp4`);
+                  if (onCompleteRef.current) onCompleteRef.current(true);
+                }
                 success = true;
               }
             }
           } // close else
-
-          if (onCompleteRef.current) onCompleteRef.current(success);
+          
+          if (!success) {
+            if (onCompleteRef.current) onCompleteRef.current(false);
+          }
 
         } catch (err) {
           console.error("Finalization failed", err);
@@ -373,8 +390,12 @@ export function ExportManager() {
     gl.domElement.toBlob(
       (blob) => {
         if (blob) {
-          downloadBlob(blob, filename);
-          if (req.onComplete) req.onComplete(true);
+          if (req.onComplete && req.onComplete.length > 1) {
+            req.onComplete(true, blob, filename);
+          } else {
+            downloadBlob(blob, filename);
+            if (req.onComplete) req.onComplete(true);
+          }
         } else {
           console.error('[ExportManager] toBlob returned null — canvas may be tainted or context lost');
           if (req.onComplete) req.onComplete(false);
