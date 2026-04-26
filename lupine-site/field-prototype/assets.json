@@ -1,0 +1,143 @@
+{
+  "$schema": "./assets.schema.json",
+  "project": "lupine-site / bluebonnet-field",
+  "license_tier": "Lifetime Commercial License (Envato personal-creator subscription)",
+  "notes": "Item URLs follow the pattern https://app.envato.com/{type-path}/{id}. The id is the UUID. Type-path differs per item type (see field 'detail_url').",
+  "items": [
+    {
+      "role": "hero motion reference + dolly path source + fallback hero video",
+      "envato_id": "63536676-7257-45b6-a3db-14a325d3c7c5",
+      "envato_type": "video",
+      "detail_url": "https://app.envato.com/stock-video/63536676-7257-45b6-a3db-14a325d3c7c5",
+      "title": "Slow dolly move through a field of bluebonnets in the Texas Hill Country",
+      "contributor": "BlackBoxGuild",
+      "specs": { "resolution": "3840 x 2160", "length_seconds": 45, "fps": 30 },
+      "local_path": "public/assets/video/bluebonnet-dolly.mp4",
+      "acquired": false,
+      "priority": 1
+    },
+    {
+      "role": "wide-field tonal/lighting calibration; daytime baseline",
+      "envato_id": "2f52124e-a20a-43e7-b7c6-95349ae23ec6",
+      "envato_type": "video",
+      "detail_url": "https://app.envato.com/stock-video/2f52124e-a20a-43e7-b7c6-95349ae23ec6",
+      "title": "Texas Field of Bluebonnet Wildflowers Under Blue Sky",
+      "contributor": "SANCUS-Media-Agency",
+      "specs": { "resolution": "3840 x 2160", "length_seconds": 9, "fps": 30 },
+      "local_path": "public/assets/video/bluebonnet-wide.mp4",
+      "acquired": false,
+      "priority": 1
+    },
+    {
+      "role": "macro single-bluebonnet target for the micro state",
+      "envato_id": "3d46892e-6300-4f24-9d1e-2333ed2f8840",
+      "envato_type": "photo",
+      "detail_url": "https://app.envato.com/search/photos/3d46892e-6300-4f24-9d1e-2333ed2f8840",
+      "title": "Hundreds Of Beautiful Bluebonnet Flowers Bloom In A Field. The Bluebonnet Is The State Flower Of [Texas]",
+      "contributor": "ToastedPictures",
+      "specs": { "dimensions_px": "6000 x 4000" },
+      "local_path": "public/assets/photos/macro-bluebonnet.jpg",
+      "acquired": false,
+      "priority": 1
+    },
+    {
+      "role": "primary tonal reference for the wide field view",
+      "envato_id": "892ae600-f5c9-4830-affc-56a795c622d0",
+      "envato_type": "photo",
+      "detail_url": "https://app.envato.com/search/photos/892ae600-f5c9-4830-affc-56a795c622d0",
+      "title": "Field with Bluebonnets flowers and green grass in the afternoon",
+      "contributor": "wirestock",
+      "specs": { "dimensions_px": "2480 x 1654" },
+      "local_path": "public/assets/photos/wide-pasture.jpg",
+      "acquired": false,
+      "priority": 1
+    },
+    {
+      "role": "far-LOD horizon billboard candidate; bake to ~2048x1024 JPEG",
+      "envato_id": "de7e04bd-e8be-49cb-9b5f-e4177286e58f",
+      "envato_type": "photo",
+      "detail_url": "https://app.envato.com/search/photos/de7e04bd-e8be-49cb-9b5f-e4177286e58f",
+      "title": "(dense indigo carpet receding to a treeline)",
+      "contributor": "DanThornberg",
+      "specs": { "dimensions_px": "5616 x 3744" },
+      "local_path": "public/assets/photos/horizon-billboard.jpg",
+      "acquired": false,
+      "priority": 2
+    },
+    {
+      "role": "stalk silhouette / lighting reference (Iceland lupines, NOT Texas; reference only)",
+      "envato_id": "1e91a53f-e70a-43f1-af58-02ee0a567b41",
+      "envato_type": "photo",
+      "detail_url": "https://app.envato.com/search/photos/1e91a53f-e70a-43f1-af58-02ee0a567b41",
+      "title": "full frame image of meadow with purple lupines in Iceland",
+      "contributor": "LightFieldStudios",
+      "specs": { "dimensions_px": "4818 x 3212" },
+      "caveat": "Lupinus nootkatensis (Iceland), not Lupinus texensis (Texas). Use only for stalk shape and lighting reference; never as public-facing imagery.",
+      "local_path": "public/assets/photos/_ref-lupines-iceland.jpg",
+      "acquired": false,
+      "priority": 3
+    },
+    {
+      "role": "mixed-wildflower variation reference (paintbrush scattering)",
+      "envato_id": "aac9e903-b7b7-47c4-b65b-ae71cb442a8e",
+      "envato_type": "photo",
+      "detail_url": "https://app.envato.com/search/photos/aac9e903-b7b7-47c4-b65b-ae71cb442a8e",
+      "title": "(panoramic mixed wildflower)",
+      "contributor": "tampatra",
+      "specs": { "dimensions_px": "4000 x 1920" },
+      "local_path": "public/assets/photos/_ref-mixed-wildflower.jpg",
+      "acquired": false,
+      "priority": 3
+    },
+    {
+      "role": "ground density / foliage near-camera reference",
+      "envato_id": "0d7a99f7-c50c-40d2-903f-e1d7184cb877",
+      "envato_type": "photo",
+      "detail_url": "https://app.envato.com/search/photos/0d7a99f7-c50c-40d2-903f-e1d7184cb877",
+      "title": "Field Of Blue Bonnets In Grass",
+      "contributor": "NaturesCharm",
+      "specs": { "dimensions_px": "4000 x 3000" },
+      "local_path": "public/assets/photos/_ref-ground-density.jpg",
+      "acquired": false,
+      "priority": 3
+    },
+    {
+      "role": "audio toggle: 'grass' base ambient bed",
+      "envato_id": "6f8fbb40-fb09-40d9-8029-80f4d33a9807",
+      "envato_type": "sound-effect",
+      "detail_url": "https://app.envato.com/sound-effects/6f8fbb40-fb09-40d9-8029-80f4d33a9807",
+      "title": "Field and Meadow Ambience",
+      "contributor": "HollywoodEdge",
+      "specs": { "format": "WAV", "sample_rate": "44.1 kHz", "bit_depth": 16, "channels": 2, "bitrate_kbps": 320, "length_seconds": 124 },
+      "local_path": "public/assets/audio/field-meadow.wav",
+      "deploy_path": "public/assets/audio/field-meadow.opus",
+      "deploy_recipe": "ffmpeg -i field-meadow.wav -c:a libopus -b:a 96k field-meadow.opus",
+      "acquired": false,
+      "priority": 1
+    },
+    {
+      "role": "audio toggle: 'cicada'",
+      "envato_id": "TODO-from-similar-list",
+      "envato_type": "sound-effect",
+      "detail_url": "see 'similar by HollywoodEdge' on /sound-effects/6f8fbb40-...",
+      "title": "Cricket Ambience (one of three HollywoodEdge variants)",
+      "contributor": "HollywoodEdge",
+      "local_path": "public/assets/audio/cicada.wav",
+      "acquired": false,
+      "priority": 1,
+      "note": "Capture the specific UUID when downloading. Pick the densest of the three variants for a Texas-afternoon feel."
+    },
+    {
+      "role": "audio toggle: 'ridge wind'",
+      "envato_id": "TODO-from-similar-list",
+      "envato_type": "sound-effect",
+      "detail_url": "see 'similar by HollywoodEdge' on /sound-effects/6f8fbb40-...",
+      "title": "Designed Wind Ambience",
+      "contributor": "HollywoodEdge",
+      "local_path": "public/assets/audio/ridge-wind.wav",
+      "acquired": false,
+      "priority": 1,
+      "note": "Capture the specific UUID when downloading."
+    }
+  ]
+}
