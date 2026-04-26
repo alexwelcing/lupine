@@ -25,7 +25,8 @@ jobs:
 
       - name: Install dependencies
         working-directory: glim-think
-        run: npm ci
+        run: |
+          npm install --prefer-offline --no-audit
 
       - name: Type check
         working-directory: glim-think
