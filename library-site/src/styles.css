@@ -802,6 +802,22 @@ body {
   flex: 1;
   border-radius: 0 0 16px 16px;
   overflow: hidden;
+  position: relative;
+  min-height: 320px;
+}
+.graph-status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-muted, #94a3b8);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 24px;
+}
+.graph-status.err {
+  color: var(--ink-warn, #f87171);
 }
 
 /* ─── Marketing / Formalization stat cards ───────────────────── */
