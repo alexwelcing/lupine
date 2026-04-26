@@ -21,4 +21,5 @@ ENV PORT=8080
 ENV NITRO_PORT=8080
 EXPOSE 8080
 
+# Deploy trigger: remove legacy Cloud Build trigger to prevent overwrite
 CMD ["node", ".output/server/index.mjs"]
