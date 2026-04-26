@@ -374,7 +374,7 @@ function scoreMatch(a, q) {
 }
 
 // ───────────────────────────────────────────────────────────────
-// Knowledge Graph Dialog
+// Entity Graph Dialog
 // ───────────────────────────────────────────────────────────────
 const graphDialog = document.getElementById('graph-dialog');
 const graphContainer = document.getElementById('graph-container');
@@ -384,67 +384,120 @@ graphDialog.addEventListener('click', (e) => { if (e.target === graphDialog) gra
 
 let graphInstance = null;
 
-async function openGraph() {
-  await fetchManifest();
-  if (typeof graphDialog.showModal === 'function') graphDialog.showModal();
-  else graphDialog.setAttribute('open', '');
-  
-  if (!window.ForceGraph) return; // Script not loaded yet
+// force-graph loads from a CDN with `defer`. If a user opens the graph before
+// it has parsed, wait for it (with a hard timeout so we can show an error).
+function waitForForceGraph(timeoutMs = 8000) {
+  if (window.ForceGraph) return Promise.resolve(true);
+  return new Promise((resolve) => {
+    const start = Date.now();
+    const tick = () => {
+      if (window.ForceGraph) return resolve(true);
+      if (Date.now() - start > timeoutMs) return resolve(false);
+      setTimeout(tick, 50);
+    };
+    tick();
+  });
+}
 
+function buildGraphData(manifest) {
   const nodes = [];
   const links = [];
-  const m = STATE.manifest;
-
-  const getOrAddNode = (id, group, label) => {
-    let n = nodes.find(x => x.id === id);
-    if (!n) {
-      n = { id, group, name: label, val: group === 'article' ? 3 : 1 };
-      nodes.push(n);
-    }
+  const seen = new Map();
+  const add = (id, group, label, val) => {
+    if (seen.has(id)) return seen.get(id);
+    const n = { id, group, name: label, val };
+    nodes.push(n);
+    seen.set(id, n);
     return n;
   };
 
-  for (const a of m.articles) {
-    getOrAddNode(a.id, 'article', a.title);
+  // Category nodes — anchor the layout into shelves.
+  for (const cat of manifest.categories) {
+    add(`cat:${cat.id}`, 'category', cat.label, 6);
+  }
 
-    if (a.extracted_knowledge) {
-      for (const [k, v] of Object.entries(a.extracted_knowledge)) {
-        let vals = Array.isArray(v) ? v : [v];
-        for (let val of vals) {
-          if (typeof val === 'object') continue;
-          const entId = `ent:${k}:${val}`;
-          getOrAddNode(entId, 'entity', `${val}`);
-          links.push({ source: a.id, target: entId });
-        }
-      }
+  // Article nodes link to their category and to each tag (tags become the
+  // shared "entities" that bridge shelves).
+  for (const a of manifest.articles) {
+    add(a.id, 'article', a.title, 3);
+    if (a.category) {
+      links.push({ source: a.id, target: `cat:${a.category}` });
+    }
+    for (const tag of a.tags || []) {
+      const tagId = `tag:${tag}`;
+      add(tagId, 'tag', `#${tag}`, 1.5);
+      links.push({ source: a.id, target: tagId });
     }
   }
+  return { nodes, links };
+}
 
-  if (!graphInstance) {
-    const isDark = document.documentElement.dataset.theme !== 'light';
-    graphInstance = ForceGraph()(graphContainer)
-      .backgroundColor('transparent')
-      .nodeAutoColorBy('group')
-      .nodeLabel('name')
-      .linkColor(() => isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)')
-      .nodeRelSize(4)
-      .onNodeClick(node => {
-        if (node.group === 'article') {
-           graphDialog.close();
-           location.hash = `#/read/${node.id}`;
-        }
-      });
+async function openGraph() {
+  if (typeof graphDialog.showModal === 'function') graphDialog.showModal();
+  else graphDialog.setAttribute('open', '');
+
+  graphContainer.innerHTML = '<div class="graph-status">Loading entity graph…</div>';
+
+  let manifest;
+  try {
+    manifest = await fetchManifest();
+  } catch (err) {
+    console.error('graph: manifest failed', err);
+    graphContainer.innerHTML = '<div class="graph-status err">Could not load library manifest.</div>';
+    return;
   }
 
-  // Set sizing correctly after dialog opens
-  setTimeout(() => {
+  const ok = await waitForForceGraph();
+  if (!ok || !window.ForceGraph) {
+    graphContainer.innerHTML = '<div class="graph-status err">Graph library failed to load. Check your connection and reopen.</div>';
+    return;
+  }
+
+  const { nodes, links } = buildGraphData(manifest);
+
+  // Tear down any previous instance — dimensions, theme, or data may have
+  // changed since last open. force-graph wires its own canvas/listeners, so
+  // recreating is the safe way to re-render cleanly inside <dialog>.
+  graphContainer.innerHTML = '';
+  const isDark = document.documentElement.dataset.theme !== 'light';
+  const groupColor = {
+    article: isDark ? '#7dd3fc' : '#0369a1',
+    tag:     isDark ? '#fbbf24' : '#b45309',
+    category:isDark ? '#c084fc' : '#7e22ce',
+  };
+
+  graphInstance = ForceGraph()(graphContainer)
+    .backgroundColor('transparent')
+    .nodeLabel('name')
+    .nodeColor(n => groupColor[n.group] || '#888')
+    .linkColor(() => isDark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.18)')
+    .linkWidth(0.6)
+    .nodeRelSize(4)
+    .cooldownTicks(80)
+    .onNodeClick(node => {
+      if (node.group === 'article') {
+        graphDialog.close();
+        location.hash = `#/read/${node.id}`;
+      }
+    });
+
+  // Dialog dimensions are only valid once the dialog is on-screen and laid
+  // out; rAF gives us that without a magic-number timeout.
+  requestAnimationFrame(() => {
     const rect = graphContainer.getBoundingClientRect();
     graphInstance
       .width(rect.width)
       .height(rect.height)
       .graphData({ nodes, links });
-  }, 50);
+  });
 }
+
+// Re-fit when the dialog is resized (orientation change, browser zoom).
+window.addEventListener('resize', () => {
+  if (!graphInstance || !graphDialog.open) return;
+  const rect = graphContainer.getBoundingClientRect();
+  graphInstance.width(rect.width).height(rect.height);
+});
 
 // ───────────────────────────────────────────────────────────────
 // Settings dialog
