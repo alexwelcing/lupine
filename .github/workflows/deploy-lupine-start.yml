@@ -46,6 +46,9 @@ jobs:
           workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
           service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
 
+      - name: Configure Docker
+        run: gcloud auth configure-docker gcr.io --quiet
+
       - name: Validate Secrets Pre-flight
         run: |
           if [ -z "${{ secrets.GCP_SERVICE_NAME_SITE }}" ]; then
@@ -61,11 +64,19 @@ jobs:
             exit 1
           fi
 
+      - name: Build and push Docker image
+        working-directory: lupine-start
+        run: |
+          IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/lupine-site:$GITHUB_SHA
+          docker build -t $IMAGE_TAG .
+          docker push $IMAGE_TAG
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
       - name: Deploy to Cloud Run
         id: deploy
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
-          source: 'lupine-start'
+          image: ${{ env.IMAGE_TAG }}
           service: '${{ secrets.GCP_SERVICE_NAME_SITE }}'
           region: '${{ secrets.GCP_REGION }}'
           project_id: '${{ secrets.GCP_PROJECT_ID }}'

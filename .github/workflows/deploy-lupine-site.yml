@@ -59,12 +59,12 @@ jobs:
             exit 1
           fi
 
-      - name: Deploy to Cloud Run
+      - name: Deploy to Cloud Run (Archive)
         id: deploy
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
           source: 'lupine-site'
-          service: '${{ secrets.GCP_SERVICE_NAME_SITE }}'
+          service: 'lupine-site-archive'
           region: '${{ secrets.GCP_REGION }}'
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
           flags: '--allow-unauthenticated'
