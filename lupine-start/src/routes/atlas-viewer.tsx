@@ -21,7 +21,7 @@ function AtlasViewerPage() {
 
   return (
     <PageShell
-      kicker="ATLAS VIEWER // COMING SOON"
+      kicker="ATLAS VIEWER // LIVE"
       title="WebGPU Molecular Visualization"
       subtitle="Drag a LAMMPS dump file into your browser and get publication-quality 3D in two seconds. No install. No license. No Python scripts."
     >
@@ -45,7 +45,7 @@ function AtlasViewerPage() {
               border: '1px solid rgba(78, 205, 196, 0.2)',
             }}
           >
-            &#9679; Preview
+            &#9679; Live
           </div>
           <div className="grid grid-cols-8 gap-1.5 max-w-[280px]">
             {atoms.map((atom) => (
@@ -68,7 +68,7 @@ function AtlasViewerPage() {
           </div>
         </motion.div>
 
-        {/* Feature list */}
+        {/* Feature list + CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,11 +90,23 @@ function AtlasViewerPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-10 glass-panel p-6 text-center">
-            <p className="mono-label text-[var(--primary)] mb-2">STATUS</p>
-            <p className="text-[var(--on-surface-variant)]">
-              Atlas Viewer is in active development. Join the waitlist to get early access.
-            </p>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <a
+              href="https://lupinematerials.science"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity text-center"
+            >
+              Launch Atlas Viewer →
+            </a>
+            <a
+              href="https://github.com/alexwelcing/lupine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors text-center"
+            >
+              View Source
+            </a>
           </div>
         </motion.div>
       </div>
