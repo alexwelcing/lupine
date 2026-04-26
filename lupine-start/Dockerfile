@@ -2,8 +2,8 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install pnpm (pin to v10 for reproducibility)
+RUN npm install -g pnpm@10.8.0
 
 COPY package.json pnpm-lock.yaml* ./
 RUN pnpm install --frozen-lockfile
