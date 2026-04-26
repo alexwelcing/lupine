@@ -18,7 +18,7 @@ function ProofPage() {
       kicker="RESEARCH DEFENSE: LIVE"
       title="The Causal Geometry of Prediction Errors"
       subtitle="A rigorous response to critique of Welcing (2025). Every claim below is backed by computational experiment, formal causal identification, or reproducible code. This is not a preprint — it is a theorem with data."
-      className="[&>div]:max-w-5xl"
+      maxWidth="5xl"
     >
       <div className="space-y-8">
         

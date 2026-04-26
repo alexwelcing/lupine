@@ -17,7 +17,7 @@ function About() {
       kicker="ABOUT"
       title="A small starter with room to grow."
       subtitle="TanStack Start gives you type-safe routing, server functions, and modern SSR defaults. Use this as a clean foundation, then layer in your own routes, styling, and add-ons."
-      className="[&>div]:max-w-5xl"
+      maxWidth="5xl"
     >
       <div className="glass-panel p-8 md:p-12">
         <h2 className="text-2xl mb-4">What is Lupine?</h2>

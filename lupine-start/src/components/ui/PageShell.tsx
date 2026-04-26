@@ -8,6 +8,7 @@ interface PageShellProps {
   title?: string
   subtitle?: string
   hero?: boolean
+  maxWidth?: '7xl' | '6xl' | '5xl' | '4xl' | '3xl' | 'full'
 }
 
 export function PageShell({
@@ -17,12 +18,15 @@ export function PageShell({
   title,
   subtitle,
   hero = true,
+  maxWidth = '7xl',
 }: PageShellProps) {
+  const widthClass = maxWidth === 'full' ? '' : `max-w-${maxWidth}`
+
   return (
     <main className={`flex-1 pb-12 ${className}`}>
       {hero && (kicker || title) && (
         <section className="pt-[var(--section-pad-y)] pb-8 px-6 lg:px-12">
-          <div className="container mx-auto max-w-7xl">
+          <div className={`container mx-auto ${widthClass}`}>
             {kicker && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -60,7 +64,7 @@ export function PageShell({
         </section>
       )}
       <div className="px-6 lg:px-12">
-        <div className="container mx-auto max-w-7xl">
+        <div className={`container mx-auto ${widthClass}`}>
           {children}
         </div>
       </div>
