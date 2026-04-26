@@ -19,7 +19,7 @@ export function PageShell({
   hero = true,
 }: PageShellProps) {
   return (
-    <main className={`min-h-screen pb-12 ${className}`}>
+    <main className={`flex-1 pb-12 ${className}`}>
       {hero && (kicker || title) && (
         <section className="pt-[var(--section-pad-y)] pb-8 px-6 lg:px-12">
           <div className="container mx-auto max-w-7xl">

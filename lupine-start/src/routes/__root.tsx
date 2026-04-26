@@ -14,7 +14,7 @@ const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getIte
 
 function NotFoundComponent() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6">
+    <main className="flex-1 flex flex-col items-center justify-center px-6">
       <div className="text-center max-w-lg">
         <div className="mono-label text-[var(--primary)] glow-primary mb-6 tracking-[0.3em]">404 — NOT FOUND</div>
         <h1 className="text-6xl lg:text-8xl mb-6">Lost in the manifold.</h1>

@@ -45,7 +45,7 @@ function ScrambleText({ text }: { text: string }) {
 
 function InvestorRelationsPage() {
   return (
-    <main className="relative min-h-screen bg-[var(--surface)] overflow-hidden">
+    <main className="relative flex-1 bg-[var(--surface)] overflow-hidden">
       <div className="bg-noise"></div>
       
       {/* Hero Section */}
