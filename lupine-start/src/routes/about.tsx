@@ -2,6 +2,12 @@ import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/about')({
   component: About,
+  head: () => ({
+    meta: [
+      { title: 'About — Lupine Materials Science' },
+      { name: 'description', content: 'Lupine is a unified computational materials science platform combining quantum DFT, ML potentials, and billion-atom MD in a single Rust codebase.' },
+    ],
+  }),
 })
 
 function About() {

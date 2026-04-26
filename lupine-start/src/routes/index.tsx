@@ -179,6 +179,7 @@ function ScrambleButton({
 /* ─── Navigation ─── */
 function LegacyNav() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -187,15 +188,24 @@ function LegacyNav() {
   }, [])
 
   const scrollTo = (id: string) => {
+    setMobileOpen(false)
     const el = document.querySelector(id)
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
+
+  const navItems = [
+    ['Problem', '#problem'],
+    ['Platform', '#platform'],
+    ['Product', '#product'],
+    ['Research', '#research'],
+    ['Market', '#market'],
+  ]
 
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between transition-all duration-[400ms]"
       style={{
-        padding: scrolled ? '14px 40px' : '20px 40px',
+        padding: scrolled ? '14px 24px' : '20px 24px',
         background: scrolled ? 'rgba(10, 11, 18, 0.92)' : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
@@ -204,17 +214,11 @@ function LegacyNav() {
     >
       <a href="#" className="flex items-center gap-3.5 no-underline" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
         <AtomicLogo size={36} />
-        <span className="font-semibold text-[15px] text-[var(--slate-100)] tracking-wide">Lupine Materials Science</span>
+        <span className="font-semibold text-[15px] text-[var(--slate-100)] tracking-wide hidden sm:inline">Lupine Materials Science</span>
       </a>
 
       <div className="hidden md:flex items-center gap-8">
-        {[
-          ['Problem', '#problem'],
-          ['Platform', '#platform'],
-          ['Product', '#product'],
-          ['Research', '#research'],
-          ['Market', '#market'],
-        ].map(([label, id]) => (
+        {navItems.map(([label, id]) => (
           <button
             key={label}
             onClick={() => scrollTo(id)}
@@ -231,6 +235,46 @@ function LegacyNav() {
           Explore
         </Link>
       </div>
+
+      {/* Mobile hamburger */}
+      <div className="md:hidden flex items-center gap-3">
+        <Link
+          to="/research"
+          className="text-[11px] font-semibold text-white px-3 py-1.5 rounded border border-white/10 no-underline"
+          style={{ background: 'linear-gradient(135deg, var(--lupine-700), var(--violet-700))' }}
+        >
+          Explore
+        </Link>
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="w-8 h-8 flex items-center justify-center text-[var(--slate-100)]"
+          aria-label="Toggle menu"
+        >
+          <div className="w-4 h-3 relative flex flex-col justify-between">
+            <span className={`block w-full h-px bg-current transition-transform duration-300 ${mobileOpen ? 'rotate-45 translate-y-[5px]' : ''}`} />
+            <span className={`block w-full h-px bg-current transition-opacity duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-full h-px bg-current transition-transform duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[5px]' : ''}`} />
+          </div>
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div
+          className="absolute top-full left-0 right-0 p-6 flex flex-col gap-3 md:hidden"
+          style={{ background: 'rgba(10, 11, 18, 0.96)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(91, 58, 140, 0.15)' }}
+        >
+          {navItems.map(([label, id]) => (
+            <button
+              key={label}
+              onClick={() => scrollTo(id)}
+              className="text-left text-[13px] font-medium uppercase tracking-widest text-[var(--slate-400)] hover:text-[var(--lupine-400)] transition-colors duration-300 bg-transparent border-none py-2"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
     </nav>
   )
 }

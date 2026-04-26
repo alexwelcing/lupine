@@ -6,6 +6,12 @@ import { PageShell } from '../components/ui/PageShell'
 
 export const Route = createFileRoute('/live')({
   component: LiveLabComponent,
+  head: () => ({
+    meta: [
+      { title: 'Live Lab — GLIM-THINK Autonomous Swarm' },
+      { name: 'description', content: 'Real-time telemetry of the GLIM-THINK autonomous swarm. Continuous experiment design, error manifold discovery, and model falsification.' },
+    ],
+  }),
 })
 
 const FEED_URL = 'https://glim-think-v1.aw-ab5.workers.dev/feed'

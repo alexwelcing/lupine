@@ -4,6 +4,12 @@ import { PageShell } from '../components/ui/PageShell'
 
 export const Route = createFileRoute('/proof')({
   component: ProofPage,
+  head: () => ({
+    meta: [
+      { title: 'Research Defense — Causal Geometry of Prediction Errors' },
+      { name: 'description', content: 'A rigorous response to critique of Welcing (2025). Computational experiment, formal causal identification, and reproducible code.' },
+    ],
+  }),
 })
 
 function ProofPage() {

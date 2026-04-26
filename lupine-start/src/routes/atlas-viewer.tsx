@@ -4,6 +4,12 @@ import { PageShell } from '../components/ui/PageShell'
 
 export const Route = createFileRoute('/atlas-viewer')({
   component: AtlasViewerPage,
+  head: () => ({
+    meta: [
+      { title: 'Atlas Viewer — WebGPU Molecular Visualization' },
+      { name: 'description', content: 'Drag a LAMMPS dump file into your browser and get publication-quality 3D in two seconds. No install. No license.' },
+    ],
+  }),
 })
 
 function AtlasViewerPage() {

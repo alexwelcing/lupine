@@ -7,6 +7,12 @@ import { Button } from '../components/ui/Button'
 
 export const Route = createFileRoute('/investor-relations')({
   component: InvestorRelationsPage,
+  head: () => ({
+    meta: [
+      { title: 'Investor Relations — Lupine Materials Science' },
+      { name: 'description', content: 'Unified computational platform for next-century materials. Secure data rooms, capitalization details, and deep-tech diligence materials.' },
+    ],
+  }),
 })
 
 function ScrambleText({ text }: { text: string }) {
