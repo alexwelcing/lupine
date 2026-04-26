@@ -5,6 +5,12 @@ import { PageShell } from '../components/ui/PageShell'
 
 export const Route = createFileRoute('/ops')({
   component: OpsDashboard,
+  head: () => ({
+    meta: [
+      { title: 'Ops — Deployment Telemetry' },
+      { name: 'description', content: 'Real-time observability into GitHub Actions deploy pipelines for Lupine Systems.' },
+    ],
+  }),
 })
 
 const OPS_URL = 'https://glim-think-v1.aw-ab5.workers.dev/ops/deployments'
