@@ -33,6 +33,9 @@ export default function Footer() {
               <Link to="/live" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors">
                 Live Lab
               </Link>
+              <Link to="/atlas-viewer" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors">
+                Atlas Viewer
+              </Link>
             </div>
             <div className="flex flex-col gap-3">
               <span className="mono-label text-[var(--on-surface-variant)] opacity-40 text-[10px]">Company</span>
