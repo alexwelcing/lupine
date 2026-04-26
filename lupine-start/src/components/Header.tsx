@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import MobileNav from './MobileNav'
+import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   return (
@@ -34,9 +35,15 @@ export default function Header() {
           <Link to="/about" className="font-mono text-xs font-bold text-[var(--secondary)] uppercase tracking-widest no-underline transition-colors hover:text-[var(--secondary)] relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-[var(--secondary)] glow-secondary">
             About
           </Link>
+          <div className="ml-2 pl-2 border-l border-[var(--outline-variant)]">
+            <ThemeToggle />
+          </div>
         </nav>
 
-        <MobileNav />
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle />
+          <MobileNav />
+        </div>
       </div>
     </header>
   )
