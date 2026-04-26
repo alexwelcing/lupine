@@ -223,13 +223,13 @@ function LegacyNav() {
             {label}
           </button>
         ))}
-        <button
-          onClick={() => scrollTo('#contact')}
-          className="text-[13px] font-semibold text-white px-6 py-2.5 rounded-lg border border-white/10 transition-all duration-300 hover:-translate-y-px"
+        <Link
+          to="/research"
+          className="text-[13px] font-semibold text-white px-6 py-2.5 rounded-lg border border-white/10 transition-all duration-300 hover:-translate-y-px no-underline"
           style={{ background: 'linear-gradient(135deg, var(--lupine-700), var(--violet-700))' }}
         >
-          Contact
-        </button>
+          Explore
+        </Link>
       </div>
     </nav>
   )
