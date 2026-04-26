@@ -21,8 +21,23 @@ const SHELL_ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(SHELL_CACHE).then((cache) => cache.addAll(SHELL_ASSETS)).then(() => self.skipWaiting())
+    (async () => {
+      const cache = await caches.open(SHELL_CACHE);
+      // Cache assets one-by-one. cache.addAll() aborts the whole install if
+      // any single asset fails — that would leave users stuck on a previous
+      // service worker, which is the failure mode we are trying to avoid.
+      await Promise.all(SHELL_ASSETS.map(async (url) => {
+        try { await cache.add(new Request(url, { cache: 'reload' })); }
+        catch (e) { console.warn('[sw] precache miss:', url, e?.message || e); }
+      }));
+      await self.skipWaiting();
+    })()
   );
+});
+
+self.addEventListener('message', (event) => {
+  // Lets the page request an immediate take-over after a fresh deploy.
+  if (event.data === 'skipWaiting') self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {

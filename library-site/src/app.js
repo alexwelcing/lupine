@@ -384,19 +384,41 @@ graphDialog.addEventListener('click', (e) => { if (e.target === graphDialog) gra
 
 let graphInstance = null;
 
-// force-graph loads from a CDN with `defer`. If a user opens the graph before
-// it has parsed, wait for it (with a hard timeout so we can show an error).
-function waitForForceGraph(timeoutMs = 8000) {
-  if (window.ForceGraph) return Promise.resolve(true);
+// force-graph is shipped self-hosted under /vendor/ and loaded with `defer`,
+// but if that file is missing (stale service worker, broken deploy) fall back
+// to the CDN so the entity graph still works.
+const FORCE_GRAPH_CDN = 'https://unpkg.com/force-graph';
+let _fgFallbackTried = false;
+
+function injectForceGraphFallback() {
+  if (_fgFallbackTried) return;
+  _fgFallbackTried = true;
   return new Promise((resolve) => {
+    const s = document.createElement('script');
+    s.src = FORCE_GRAPH_CDN;
+    s.async = true;
+    s.onload = () => resolve(true);
+    s.onerror = () => resolve(false);
+    document.head.appendChild(s);
+  });
+}
+
+async function waitForForceGraph(timeoutMs = 5000) {
+  if (window.ForceGraph) return true;
+  // Wait for the deferred /vendor/ script to finish loading.
+  await new Promise((resolve) => {
     const start = Date.now();
     const tick = () => {
-      if (window.ForceGraph) return resolve(true);
-      if (Date.now() - start > timeoutMs) return resolve(false);
+      if (window.ForceGraph) return resolve();
+      if (Date.now() - start > timeoutMs) return resolve();
       setTimeout(tick, 50);
     };
     tick();
   });
+  if (window.ForceGraph) return true;
+  // Vendor file never set the global — fall back to the CDN.
+  await injectForceGraphFallback();
+  return !!window.ForceGraph;
 }
 
 function buildGraphData(manifest) {
@@ -571,9 +593,29 @@ window.addEventListener('keydown', (e) => {
 applySettings();
 route();
 
-// Register service worker (offline + fast repeat loads)
+// Register service worker (offline + fast repeat loads). When a new version
+// installs, ask it to take over and reload exactly once so users immediately
+// pick up code/asset changes (otherwise stale caches can hide deploys).
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register(`/sw.js?v=__VERSION__`).catch(() => {});
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register(`/sw.js?v=__VERSION__`);
+      const promote = (sw) => {
+        if (!sw) return;
+        sw.addEventListener('statechange', () => {
+          if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+            sw.postMessage('skipWaiting');
+          }
+        });
+      };
+      promote(reg.installing);
+      reg.addEventListener('updatefound', () => promote(reg.installing));
+      let reloaded = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (reloaded) return;
+        reloaded = true;
+        location.reload();
+      });
+    } catch {}
   });
 }
