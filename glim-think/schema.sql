@@ -82,3 +82,21 @@ CREATE TABLE IF NOT EXISTS pending_experiments (
   created_at TEXT DEFAULT (datetime('now')),
   completed_at TEXT
 );
+
+-- Deployment observability: GitHub Actions report here
+CREATE TABLE IF NOT EXISTS deployments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  repo TEXT NOT NULL,
+  workflow TEXT NOT NULL,
+  run_id TEXT NOT NULL,
+  status TEXT NOT NULL,
+  commit_sha TEXT,
+  branch TEXT,
+  service TEXT NOT NULL,
+  run_url TEXT,
+  started_at TEXT,
+  completed_at TEXT DEFAULT (datetime('now')),
+  logs TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_deployments_service ON deployments(service);
+CREATE INDEX IF NOT EXISTS idx_deployments_completed_at ON deployments(completed_at DESC);
