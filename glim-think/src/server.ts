@@ -415,6 +415,86 @@ ${narrative}
         return stub.fetch(request);
       }
 
+      // ─── Ops: Deployment observability ───
+      if (url.pathname === "/ops/report" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+        const repo = typeof body.repo === "string" ? body.repo : "";
+        const workflow = typeof body.workflow === "string" ? body.workflow : "";
+        const runId = typeof body.run_id === "string" ? body.run_id : "";
+        const status = typeof body.status === "string" ? body.status : "";
+        const commitSha = typeof body.commit_sha === "string" ? body.commit_sha : null;
+        const branch = typeof body.branch === "string" ? body.branch : null;
+        const service = typeof body.service === "string" ? body.service : "";
+        const runUrl = typeof body.run_url === "string" ? body.run_url : null;
+        const startedAt = typeof body.started_at === "string" ? body.started_at : null;
+        const logs = typeof body.logs === "string" ? body.logs : null;
+
+        if (!repo || !workflow || !runId || !status || !service) {
+          return Response.json({ error: "Missing required fields" }, { status: 400 });
+        }
+
+        await env.LEDGER.prepare(
+          `INSERT INTO deployments (repo, workflow, run_id, status, commit_sha, branch, service, run_url, started_at, logs)
+           VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)`
+        ).bind(repo, workflow, runId, status, commitSha, branch, service, runUrl, startedAt, logs).run();
+
+        return Response.json({ reported: true }, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+        });
+      }
+
+      if (url.pathname === "/ops/report" && request.method === "OPTIONS") {
+        return new Response(null, {
+          status: 204,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Max-Age": "86400",
+          },
+        });
+      }
+
+      if (url.pathname === "/ops/deployments") {
+        if (request.method === "OPTIONS") {
+          return new Response(null, {
+            status: 204,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET, OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type",
+              "Access-Control-Max-Age": "86400",
+            },
+          });
+        }
+
+        const limit = Math.min(parseInt(url.searchParams.get("limit") || "20", 10), 100);
+        const service = url.searchParams.get("service");
+
+        let rows;
+        if (service) {
+          rows = await env.LEDGER.prepare(
+            `SELECT * FROM deployments WHERE service = ?1 ORDER BY completed_at DESC LIMIT ?2`
+          ).bind(service, limit).all();
+        } else {
+          rows = await env.LEDGER.prepare(
+            `SELECT * FROM deployments ORDER BY completed_at DESC LIMIT ?1`
+          ).bind(limit).all();
+        }
+
+        return Response.json({ deployments: rows.results }, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+        });
+      }
+
       // Real-time Dashboard Feed API
       if (url.pathname === "/feed") {
         // CORS preflight
