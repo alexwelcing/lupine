@@ -27,6 +27,20 @@ use std::process::{Command, Stdio};
 // use crate::manifold::BenchmarkEntry;  // reserved for future benchmark generation
 use crate::nist::{NistCatalog, NistPotential};
 
+/// Read a LAMMPS log file as text, tolerating non-UTF-8 bytes (Windows editors
+/// occasionally write UTF-16). Returns `None` if the file is missing or
+/// unreadable, after logging the cause — the silent `unwrap_or_default()`
+/// pattern previously masked encoding errors as parse failures.
+fn read_log_lossy(path: &Path) -> Option<String> {
+    match std::fs::read(path) {
+        Ok(bytes) => Some(String::from_utf8_lossy(&bytes).into_owned()),
+        Err(e) => {
+            eprintln!("    ✗ Failed to read log {}: {}", path.display(), e);
+            None
+        }
+    }
+}
+
 // ───────────────────────────────────────────────────────────
 // Configuration
 // ───────────────────────────────────────────────────────────
@@ -393,7 +407,7 @@ pub fn run_single_potential(
         }
     };
 
-    let log_content = std::fs::read_to_string(&log_path).unwrap_or_default();
+    let log_content = read_log_lossy(&log_path).unwrap_or_default();
     let statics_res_opt = lupine_ops::statics::parse_statics_output(&log_content);
 
     if statics_res_opt.is_none() {
@@ -457,7 +471,7 @@ pub fn run_single_potential(
         }
     };
 
-    let elastic_log_content = std::fs::read_to_string(&elastic_log_path).unwrap_or_default();
+    let elastic_log_content = read_log_lossy(&elastic_log_path).unwrap_or_default();
     let elastic_res_opt = lupine_ops::elastic::parse_elastic_output(&elastic_log_content);
 
     let (c11, c12, c44) = if let Some(eres) = elastic_res_opt {
@@ -622,9 +636,9 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
         };
 
         // Parse statics results
-        let log_content = std::fs::read_to_string(&log_path).unwrap_or_default();
+        let log_content = read_log_lossy(&log_path).unwrap_or_default();
         let statics_res_opt = lupine_ops::statics::parse_statics_output(&log_content);
-        
+
         if statics_res_opt.is_none() {
             eprintln!("    ✗ Parsing statics failed.");
             results.push(ComputationResult {
@@ -690,7 +704,7 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
             }
         };
 
-        let elastic_log_content = std::fs::read_to_string(&elastic_log_path).unwrap_or_default();
+        let elastic_log_content = read_log_lossy(&elastic_log_path).unwrap_or_default();
         let elastic_res_opt = lupine_ops::elastic::parse_elastic_output(&elastic_log_content);
 
         let (c11, c12, c44) = if let Some(eres) = elastic_res_opt {

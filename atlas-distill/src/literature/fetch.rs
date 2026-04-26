@@ -69,14 +69,34 @@ impl FetchConfig {
         Ok(())
     }
 
-    /// Get cached content for a paper ID.
+    /// Get cached content for a paper ID. Logs (but tolerates) corrupt cache
+    /// files so they're visible instead of looking like a benign cache miss.
     fn get_cached(&self, paper_id: &str) -> Option<PaperContent> {
         let path = self.cache_dir.join(format!("{}.json", paper_id));
-        if path.exists() {
-            let data = std::fs::read_to_string(&path).ok()?;
-            serde_json::from_str(&data).ok()
-        } else {
-            None
+        if !path.exists() {
+            return None;
+        }
+        let data = match std::fs::read_to_string(&path) {
+            Ok(s) => s,
+            Err(e) => {
+                eprintln!(
+                    "    ⚠ cache read failed for {}: {} ({})",
+                    paper_id,
+                    e,
+                    path.display()
+                );
+                return None;
+            }
+        };
+        match serde_json::from_str(&data) {
+            Ok(content) => Some(content),
+            Err(e) => {
+                eprintln!(
+                    "    ⚠ cache parse failed for {}: {} (will refetch)",
+                    paper_id, e
+                );
+                None
+            }
         }
     }
 
@@ -121,7 +141,9 @@ fn request_with_retry(
                 return Ok(body);
             }
             Err(ureq::Error::Status(code, resp)) => {
-                let status_text = resp.into_string().unwrap_or_default();
+                let status_text = resp
+                    .into_string()
+                    .unwrap_or_else(|e| format!("<unreadable error body: {}>", e));
                 last_err = format!("HTTP {}: {}", code, &status_text[..status_text.len().min(200)]);
 
                 // Don't retry on 4xx client errors (except 429 Too Many Requests)
