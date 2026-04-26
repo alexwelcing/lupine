@@ -1,0 +1,25 @@
+{
+  "name": "glim-think",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cloudflare/shell": "^0.3.3",
+    "@cloudflare/think": "^0.4.0",
+    "agents": "^0.11.5",
+    "ai": "^6.0.168",
+    "workers-ai-provider": "^3.1.12",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250410.0",
+    "typescript": "^5.8.0",
+    "wrangler": "^4.0.0"
+  }
+}
