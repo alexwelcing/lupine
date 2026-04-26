@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import MobileNav from './MobileNav'
 
 export default function Header() {
   return (
@@ -34,6 +35,8 @@ export default function Header() {
             About
           </Link>
         </nav>
+
+        <MobileNav />
       </div>
     </header>
   )
