@@ -4,12 +4,42 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import { Link } from '@tanstack/react-router'
 
 import appCss from '../styles.css?url'
 
 const queryClient = new QueryClient()
 
 const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`
+
+function NotFoundComponent() {
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-center px-6">
+      <div className="text-center max-w-lg">
+        <div className="mono-label text-[var(--primary)] glow-primary mb-6 tracking-[0.3em]">404 — NOT FOUND</div>
+        <h1 className="text-6xl lg:text-8xl mb-6">Lost in the manifold.</h1>
+        <p className="text-[var(--on-surface-variant)] text-lg mb-10 leading-relaxed">
+          The page you requested does not exist in this configuration space.
+          It may have been removed, renamed, or never existed.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link
+            to="/"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
+          >
+            Return to Thesis
+          </Link>
+          <Link
+            to="/research"
+            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors"
+          >
+            Read the Manifesto
+          </Link>
+        </div>
+      </div>
+    </main>
+  )
+}
 
 export const Route = createRootRoute({
   head: () => ({
@@ -40,6 +70,7 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  notFoundComponent: NotFoundComponent,
   shellComponent: RootDocument,
 })
 
