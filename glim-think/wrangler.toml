@@ -1,0 +1,81 @@
+name = "glim-think-v1"
+main = "src/server.ts"
+compatibility_date = "2026-04-25"
+compatibility_flags = ["nodejs_compat"]
+
+# ─── Durable Objects: Think-based research agents ───
+
+[[durable_objects.bindings]]
+name = "ORCHESTRATOR"
+class_name = "Orchestrator"
+
+[[durable_objects.bindings]]
+name = "MANIFOLD_AGENT"
+class_name = "Manifold"
+
+[[durable_objects.bindings]]
+name = "CAUSAL_AGENT"
+class_name = "Causal"
+
+[[durable_objects.bindings]]
+name = "THEORIST_AGENT"
+class_name = "Theorist"
+
+[[durable_objects.bindings]]
+name = "EXPERIMENT_AGENT"
+class_name = "Experiment"
+
+[[durable_objects.bindings]]
+name = "FLEET_ORCHESTRATOR"
+class_name = "FleetOrchestrator"
+
+[[durable_objects.bindings]]
+name = "DASHBOARD"
+class_name = "DashboardAgent"
+
+[[durable_objects.bindings]]
+name = "EXTENSION_MANAGER"
+class_name = "ExtensionManager"
+
+# ─── Migrations ───
+# v1-v2: original Agent-based classes
+# v3: upgraded to Think (re-provisions SQLite for Think's session schema)
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Orchestrator", "Manifold", "Causal", "Theorist", "Experiment"]
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["FleetOrchestrator", "DashboardAgent", "ExtensionManager"]
+
+# v3: Think upgrade — agents retain their SQLite from v1/v2,
+# Think layer adds session tables via onStart().
+
+# ─── AI Gateway ───
+[ai]
+binding = "AI"
+
+# ─── R2: artifact storage (potentials, trajectories, results) ───
+[[r2_buckets]]
+binding = "ARTIFACTS"
+bucket_name = "glim-artifacts"
+
+# ─── KV: lightweight config and cost tracking ───
+[[kv_namespaces]]
+binding = "CONFIG"
+id = "578e17febfa04f0e9d0ef6c34c797314"
+
+# ─── D1: structured research ledger ───
+[[d1_databases]]
+binding = "LEDGER"
+database_name = "glim-ledger"
+database_id = "b88f2156-6d74-41f7-a702-a7667cd6e0e2"
+
+# ─── Secrets (set via `wrangler secret put`) ───
+# OPENAI_API_KEY
+# ANTHROPIC_API_KEY
+# GOOGLE_API_KEY
+# ZAI_API_KEY
+# MINIMAX_API_KEY
+# HF_API_KEY
