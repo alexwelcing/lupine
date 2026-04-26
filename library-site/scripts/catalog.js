@@ -168,6 +168,14 @@ export const CATALOG = {
       category: 'theory',
       tags: ['information-theory'],
     },
+    {
+      id: 'lit-review-error-structure',
+      source: 'lit-review.md',
+      title: 'Error Structure in Interatomic Potentials — Literature Review',
+      subtitle: 'Sloppy models, Simpson’s paradox, and FCC error manifolds: a 30-reference synthesis.',
+      category: 'theory',
+      tags: ['literature-review', 'sloppy', 'simpson', 'fcc'],
+    },
 
     // ── Ecosystem & Funding ────────────────────────────────────────
     {
@@ -181,12 +189,12 @@ export const CATALOG = {
 
     // ── Formalization ───────────────────────────────────────────────
     {
-      id: 'formal-manifesto',
-      source: 'docs/formal-manifesto.md',
-      title: 'The Executable Manifesto',
+      id: 'formal-vision',
+      source: 'docs/formal-vision.md',
+      title: 'The Open Distillation Factory — Executable Vision',
       subtitle: '47 theorems, 1,499 build targets, and a build-locking epistemic contract.',
       category: 'formalization',
-      tags: ['lean', 'formal-spec', 'manifesto'],
+      tags: ['lean', 'formal-spec', 'vision'],
     },
     {
       id: 'formal-methodology',
