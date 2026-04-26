@@ -46,7 +46,7 @@ function ResearchPage() {
       kicker="IMMI PREPRINT // LUPINE SYSTEMS"
       title="Hyper-Ribbon Geometry of Interatomic Potential Error Manifolds"
       subtitle="A Statistical Framework for Universal Potential Design"
-      className="[&>div]:max-w-4xl"
+      maxWidth="4xl"
     >
       <div className="mb-16">
         <div className="pb-4 border-b border-[var(--outline-variant)]">
