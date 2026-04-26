@@ -1,0 +1,53 @@
+{
+  "elements": {
+    "BCC": [
+      "Fe",
+      "Cr",
+      "Mo",
+      "W",
+      "V",
+      "Nb",
+      "Ta"
+    ],
+    "FCC": [
+      "Al",
+      "Cu",
+      "Ni",
+      "Ag",
+      "Au",
+      "Pt",
+      "Pd",
+      "Pb"
+    ]
+  },
+  "models": {
+    "MACE-MP-0": {
+      "library": "mace",
+      "model_path": "medium-mpa-0",
+      "device": "cuda",
+      "batch_size": 4
+    },
+    "CHGNet": {
+      "library": "chgnet",
+      "model_path": null,
+      "device": "cuda",
+      "batch_size": 1
+    },
+    "M3GNet": {
+      "library": "matgl",
+      "model_path": "M3GNet-MP-2021.2.8-PES",
+      "device": "cuda",
+      "batch_size": 1
+    }
+  },
+  "reference": {
+    "source": "NIST Interatomic Potentials Repository + OpenKIM",
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ],
+    "structures": "experimental lattice constants at 0K"
+  },
+  "protocol_version": "1.0"
+}
