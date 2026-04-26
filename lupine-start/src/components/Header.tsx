@@ -27,11 +27,11 @@ export default function Header() {
           <Link to="/investor-relations" className="font-mono text-xs font-semibold text-[var(--on-surface-variant)] uppercase tracking-widest no-underline transition-colors hover:text-[var(--primary)] activeProps={{ className: 'text-[var(--primary)]' }}">
             Investor Relations
           </Link>
-          <Link to="/sovereignty" className="font-mono text-xs font-semibold text-[var(--on-surface-variant)] uppercase tracking-widest no-underline transition-colors hover:text-[var(--primary)] activeProps={{ className: 'text-[var(--primary)]' }}">
+          <Link to="/proof" className="font-mono text-xs font-semibold text-[var(--on-surface-variant)] uppercase tracking-widest no-underline transition-colors hover:text-[var(--primary)] activeProps={{ className: 'text-[var(--primary)]' }}">
             Compliance
           </Link>
-          <Link to="/atlas-viewer" className="font-mono text-xs font-bold text-[var(--secondary)] uppercase tracking-widest no-underline transition-colors hover:text-[var(--secondary)] relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-[var(--secondary)] glow-secondary">
-            Atlas Viewer
+          <Link to="/about" className="font-mono text-xs font-bold text-[var(--secondary)] uppercase tracking-widest no-underline transition-colors hover:text-[var(--secondary)] relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-[var(--secondary)] glow-secondary">
+            About
           </Link>
         </nav>
       </div>
