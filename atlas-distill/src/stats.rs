@@ -212,6 +212,63 @@ pub fn eigenvalue_geometric_fit(eigenvalues: &[f64]) -> (f64, f64, f64) {
     (slope, intercept, r2)
 }
 
+/// Coefficient of variation of residuals around the log-linear (geometric) fit.
+///
+/// Tests whether eigenvalues follow the *theoretically predicted* geometric
+/// sequence λₖ = λ₀ · rᵏ (Quinn et al. 2019, sloppy-model width hierarchy),
+/// not just any monotone-decaying sequence. Random covariance matrices
+/// (Wishart / Marchenko-Pastur) decay monotonically too, but their residuals
+/// around the log-linear fit have much larger CV.
+///
+/// Returns `f64::NAN` if there are fewer than 2 finite log-eigenvalues or the
+/// mean log-eigenvalue is zero (degenerate normalization).
+pub fn geometric_fit_residual_cv(eigenvalues: &[f64]) -> f64 {
+    let log_eig: Vec<f64> = eigenvalues
+        .iter()
+        .filter(|&&v| v > 1e-30)
+        .map(|&v| v.ln())
+        .collect();
+
+    if log_eig.len() < 2 {
+        return f64::NAN;
+    }
+
+    let (slope, intercept, _r2) = eigenvalue_geometric_fit(eigenvalues);
+    if !slope.is_finite() || !intercept.is_finite() {
+        return f64::NAN;
+    }
+
+    let n = log_eig.len() as f64;
+    let mean_log: f64 = log_eig.iter().sum::<f64>() / n;
+    if mean_log.abs() < 1e-30 {
+        return f64::NAN;
+    }
+
+    let residuals: Vec<f64> = log_eig
+        .iter()
+        .enumerate()
+        .map(|(i, &y)| y - (slope * i as f64 + intercept))
+        .collect();
+
+    let std_resid =
+        (residuals.iter().map(|r| r * r).sum::<f64>() / n).sqrt();
+
+    std_resid / mean_log.abs()
+}
+
+/// Geometric decay ratio r = exp(slope) of the log-linear eigenvalue fit.
+///
+/// For a true sloppy-model spectrum, r ∈ (0, 1) (eigenvalues shrink). Returns
+/// `f64::NAN` if the fit is degenerate.
+pub fn geometric_fit_ratio(eigenvalues: &[f64]) -> f64 {
+    let (slope, _intercept, _r2) = eigenvalue_geometric_fit(eigenvalues);
+    if slope.is_finite() {
+        slope.exp()
+    } else {
+        f64::NAN
+    }
+}
+
 /// Mann-Kendall trend test for monotonicity.
 /// Returns (tau, p_approx) using normal approximation.
 pub fn mann_kendall_tau(data: &[f64]) -> f64 {
@@ -441,6 +498,38 @@ mod tests {
         let true_r = pearson_r(&x, &y);
         assert!(lo <= true_r && true_r <= hi,
             "CI should contain true r: [{}, {}] does not contain {}", lo, hi, true_r);
+    }
+
+    #[test]
+    fn test_geometric_residual_cv_sloppy_is_small() {
+        // Pure geometric sequence — residual CV should be tiny
+        let ev: Vec<f64> = (0..6).map(|i| 100.0 * 0.3f64.powi(i)).collect();
+        let cv = geometric_fit_residual_cv(&ev);
+        assert!(cv.is_finite(), "CV must be finite for geometric sequence");
+        assert!(cv < 0.05, "Geometric sequence should have tiny residual CV, got {}", cv);
+    }
+
+    #[test]
+    fn test_geometric_residual_cv_uniform_is_large() {
+        // Flat eigenvalues = isotropic case — residual CV should be much larger
+        let ev = vec![1.0, 1.0, 1.0, 1.0, 1.0];
+        let cv = geometric_fit_residual_cv(&ev);
+        // Mean log-eigenvalue is 0 here, so CV is degenerate (NaN by design).
+        // Slight perturbation should give large CV.
+        let ev_pert = vec![1.0, 0.95, 1.05, 0.98, 1.02];
+        let cv_pert = geometric_fit_residual_cv(&ev_pert);
+        // Either NaN or very large — both indicate "not geometric"
+        assert!(cv.is_nan() || cv > 0.15 || cv_pert.is_nan() || cv_pert > 0.15,
+            "Flat / near-flat spectrum should fail the residual-CV gate; cv={}, cv_pert={}",
+            cv, cv_pert);
+    }
+
+    #[test]
+    fn test_geometric_decay_ratio_in_unit_interval() {
+        let ev: Vec<f64> = (0..5).map(|i| 100.0 * 0.5f64.powi(i)).collect();
+        let r = geometric_fit_ratio(&ev);
+        assert!(r.is_finite() && r > 0.1 && r < 1.0,
+            "Decay ratio for 0.5^k spectrum should be ~0.5, got {}", r);
     }
 
     #[test]

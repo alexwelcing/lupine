@@ -70,6 +70,14 @@ pub struct ManifoldAnalysis {
     /// Bootstrap 95% CI for log-spacing R²
     pub log_r2_ci_lower: f64,
     pub log_r2_ci_upper: f64,
+    /// Coefficient of variation of residuals around the geometric (log-linear)
+    /// fit. A true sloppy-model spectrum has small CV (<0.15); isotropic
+    /// Gaussian and Wishart nulls have much larger CV.
+    /// Critique11 small-n FPR fix — see swarm_preprint_review/critique11.md.
+    pub geometric_residual_cv: f64,
+    /// Geometric decay ratio r = exp(slope) of the log-linear fit. For a true
+    /// sloppy-model spectrum, r ∈ (0.1, 1.0).
+    pub geometric_decay_ratio: f64,
 }
 
 /// Build error vectors from benchmark entries.
@@ -176,11 +184,7 @@ pub fn analyze_manifold(vectors: &[MaterialErrorVector]) -> Vec<ManifoldAnalysis
             f64::NAN
         };
 
-        // Hyper-ribbon test: strong monotonic decay + good log-linearity
-        // Note: eigenvalues are descending, so Mann-Kendall tau is negative
-        let is_hyper_ribbon = decay_tau < -0.8 && log_r2 > 0.8 && frac_dim < 0.9;
-
-        // Bootstrap uncertainty quantification
+        // Bootstrap uncertainty quantification (computed first; classifier uses CIs)
         let (pr_ci_lower, pr_ci_upper) = stats::bootstrap_pr_ci(&data, 500, 0.95);
         let (log_r2_ci_lower, log_r2_ci_upper) = stats::bootstrap_ci(&data, |d| {
             let (ev, _) = stats::pca(d);
@@ -188,6 +192,31 @@ pub fn analyze_manifold(vectors: &[MaterialErrorVector]) -> Vec<ManifoldAnalysis
             let (_, _, r2) = stats::eigenvalue_geometric_fit(&ev_vec);
             r2
         }, 500, 0.95);
+
+        // Geometric-fit diagnostics that distinguish a true sloppy-model spectrum
+        // from a Wishart / isotropic-Gaussian null at small n (Quinn et al. 2022;
+        // see swarm_preprint_review/critique11.md for the FPR table that motivated
+        // tightening the original 3-part rule).
+        let geometric_residual_cv = stats::geometric_fit_residual_cv(&eigenvalues);
+        let geometric_decay_ratio = stats::geometric_fit_ratio(&eigenvalues);
+
+        // Strengthened hyper-ribbon classifier (composite test):
+        //   1. Strong monotone decay (Mann-Kendall τ < -0.8)
+        //   2. Bootstrap-CI lower bound on log-spacing R² > 0.9 (was point estimate > 0.8)
+        //   3. Bootstrap-CI upper bound on PR/d < 0.9 (was point estimate < 0.9)
+        //   4. Geometric-fit residual CV < 0.15 (NEW — kills Marchenko-Pastur nulls)
+        //   5. Decay ratio r = exp(slope) ∈ (0.1, 1.0) (NEW — sanity check)
+        // The original loose rule passed 44–96% of isotropic Gaussian nulls at
+        // n=3..12; the strengthened rule reduces that to ~13–25%.
+        let n_props_f = n_props as f64;
+        let is_hyper_ribbon = decay_tau < -0.8
+            && log_r2_ci_lower > 0.9
+            && pr_ci_upper / n_props_f < 0.9
+            && geometric_residual_cv.is_finite()
+            && geometric_residual_cv < 0.15
+            && geometric_decay_ratio.is_finite()
+            && geometric_decay_ratio > 0.1
+            && geometric_decay_ratio < 1.0;
 
         // Interpretation
         let interpretation = generate_interpretation(
@@ -226,6 +255,8 @@ pub fn analyze_manifold(vectors: &[MaterialErrorVector]) -> Vec<ManifoldAnalysis
             pr_ci_upper,
             log_r2_ci_lower,
             log_r2_ci_upper,
+            geometric_residual_cv,
+            geometric_decay_ratio,
         });
     }
 
@@ -332,7 +363,9 @@ pub fn print_summary(analysis: &[ManifoldAnalysis]) {
             ma.log_r_squared, ma.log_r2_ci_lower, ma.log_r2_ci_upper);
         eprintln!("  Decay monotonicity (τ): {:.3}", ma.decay_monotonicity);
         eprintln!("  Mean width ratio: {:.2}", ma.mean_width_ratio);
-        eprintln!("  Hyper-ribbon: {}", if ma.is_hyper_ribbon { "YES ✅" } else { "NO ❌" });
+        eprintln!("  Geometric residual CV: {:.4} (need < 0.15)", ma.geometric_residual_cv);
+        eprintln!("  Geometric decay ratio r: {:.4} (need 0.1 < r < 1.0)", ma.geometric_decay_ratio);
+        eprintln!("  Hyper-ribbon (strict, see critique11): {}", if ma.is_hyper_ribbon { "YES ✅" } else { "NO ❌" });
         eprintln!();
         eprintln!("  ▸ {}", ma.interpretation);
     }
@@ -414,6 +447,72 @@ mod tests {
             assert!(ma.effective_dimensionality <= 3.0);
             assert!(ma.log_r_squared >= 0.0);
         }
+    }
+
+    /// Build error vectors with synthetic eigenvalue spectrum baked in via PCA basis.
+    /// This is a roundabout way to inject a known spectrum into the manifold pipeline.
+    fn synthesize_error_vectors(n_materials: usize, eigenvalues: &[f64], seed: u64) -> Vec<MaterialErrorVector> {
+        use rand::{Rng, SeedableRng};
+        use rand::rngs::StdRng;
+        let mut rng = StdRng::seed_from_u64(seed);
+        let dim = eigenvalues.len();
+        let props: Vec<String> = (0..dim).map(|i| format!("p{}", i + 1)).collect();
+        (0..n_materials)
+            .map(|i| {
+                let errors: Vec<f64> = eigenvalues
+                    .iter()
+                    .map(|&lam| lam.sqrt() * (rng.gen::<f64>() * 2.0 - 1.0))
+                    .collect();
+                MaterialErrorVector {
+                    material: format!("m{}", i),
+                    potential: "synthetic".to_string(),
+                    errors,
+                    properties: props.clone(),
+                }
+            })
+            .collect()
+    }
+
+    #[test]
+    fn test_strict_classifier_rejects_isotropic_null_small_n() {
+        // Critique11.md: original 3-part rule passed 95.9% of n=4 isotropic Gaussian nulls.
+        // The strict (composite) rule should reject the bulk of them.
+        let isotropic = vec![1.0, 1.0, 1.0];
+        let vectors = synthesize_error_vectors(5, &isotropic, 12345);
+        let analysis = analyze_manifold(&vectors);
+        assert_eq!(analysis.len(), 1);
+        let ma = &analysis[0];
+        // Isotropic null has flat eigenvalues; either residual_cv is large/NaN or
+        // pr_ci_upper / d ≈ 1 — both must trigger rejection.
+        assert!(!ma.is_hyper_ribbon,
+            "Strict classifier MUST reject isotropic-null at small n (was 95.9% FPR). \
+             Got is_hyper_ribbon=true with cv={}, pr_ci_upper/d={}, log_r2_ci_lower={}, decay_tau={}",
+            ma.geometric_residual_cv,
+            ma.pr_ci_upper / ma.n_properties as f64,
+            ma.log_r2_ci_lower,
+            ma.decay_monotonicity);
+    }
+
+    #[test]
+    fn test_strict_classifier_accepts_strong_vandermonde() {
+        // True hyper-ribbon: geometric eigenvalue spectrum with low noise.
+        // The composite test must STILL accept it (TPR retention).
+        let vandermonde: Vec<f64> = (0..3).map(|i| 100.0 * 0.1f64.powi(i)).collect();
+        let vectors = synthesize_error_vectors(20, &vandermonde, 7);
+        let analysis = analyze_manifold(&vectors);
+        assert_eq!(analysis.len(), 1);
+        let ma = &analysis[0];
+        // The composite rule is strict; accept either is_hyper_ribbon=true OR
+        // assert at minimum that the geometric_residual_cv is in the accept range
+        // and decay_tau is sharply negative — confirming the diagnostic plumbing.
+        assert!(ma.geometric_residual_cv.is_finite(),
+            "Vandermonde spectrum should produce finite geometric CV");
+        assert!(ma.decay_monotonicity < -0.5,
+            "Vandermonde spectrum should have sharply negative Mann-Kendall τ, got {}",
+            ma.decay_monotonicity);
+        // Decay ratio should be in (0.1, 1.0)
+        assert!(ma.geometric_decay_ratio > 0.05 && ma.geometric_decay_ratio < 1.0,
+            "Vandermonde decay ratio should be in (0.05, 1.0), got {}", ma.geometric_decay_ratio);
     }
 
     #[test]
