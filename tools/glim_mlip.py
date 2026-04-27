@@ -43,35 +43,50 @@ def _space_base(space_url: str) -> str:
     return base
 
 
+def _is_local_server(space_url: str) -> bool:
+    return "localhost" in space_url or "127.0.0.1" in space_url or "huggingface.co" not in space_url
+
+
 def _call_gradio(space_url: str, api_name: str, data: list[Any], timeout: float = 300.0) -> Any:
-    """Call a Gradio 6.x endpoint via POST + SSE streaming."""
+    """Call a Gradio 6.x endpoint via POST + SSE streaming, or direct FastAPI."""
     base = _space_base(space_url)
+
+    # Local FastAPI server uses direct POST/JSON, not Gradio SSE
+    if _is_local_server(space_url):
+        url = f"{base}/{api_name}"
+        payload = {"element": data[0], "mlip": data[1]} if api_name == "predict" else {"elements": data[0], "mlips": data[1], "references_json": data[2]}
+        try:
+            r = httpx.post(url, json=payload, timeout=timeout)
+        except httpx.RequestError as e:
+            raise click.ClickException(f"Server unreachable at {url}: {e}") from e
+        if r.status_code >= 400:
+            raise click.ClickException(f"{url} -> {r.status_code}: {r.text[:300]}")
+        return r.json()
+
+    # HF Space: Gradio 6.x SSE streaming
     call_url = f"{base}/gradio_api/call/{api_name}"
     try:
         r = httpx.post(call_url, json={"data": data}, timeout=60.0)
     except httpx.RequestError as e:
         raise click.ClickException(f"Space unreachable at {call_url}: {e}") from e
     if r.status_code >= 400:
-        raise click.ClickException(f"{call_url} → {r.status_code}: {r.text[:300]}")
+        raise click.ClickException(f"{call_url} -> {r.status_code}: {r.text[:300]}")
     event_id = r.json()["event_id"]
 
-    # Poll SSE stream
     stream_url = f"{call_url}/{event_id}"
     try:
         r = httpx.get(stream_url, timeout=timeout)
     except httpx.RequestError as e:
         raise click.ClickException(f"SSE stream unreachable at {stream_url}: {e}") from e
     if r.status_code >= 400:
-        raise click.ClickException(f"{stream_url} → {r.status_code}: {r.text[:300]}")
+        raise click.ClickException(f"{stream_url} -> {r.status_code}: {r.text[:300]}")
 
-    # Parse SSE: last non-empty line after "event: complete" contains the data
     result = None
     for line in r.text.splitlines():
         if line.startswith("data: "):
             result = json.loads(line[6:])
     if result is None:
         raise click.ClickException("no data in SSE stream")
-    # Gradio 6.x wraps single-output results in [[...]] for batch-like consistency
     if isinstance(result, list) and len(result) == 1:
         return result[0]
     return result
