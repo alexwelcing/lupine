@@ -18,7 +18,7 @@ use crate::manifold::{self, BenchmarkEntry};
 use crate::meta_analysis;
 use crate::nist::{self, NistCatalog};
 use crate::stats;
-use anyhow::{Context, Result};
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -108,28 +108,33 @@ pub struct CampaignSummary {
 /// These papers typically report elastic constants in tables or text like:
 ///   "C11 = 108.2 GPa", "C₁₁ = 102.1 GPa", "C_{11} = 105 GPa"
 fn extract_elastic_constants(paper_id: &str, text: &str) -> Vec<ExtractedElastic> {
-    let re_cij = regex::Regex::new(
-        r"(?i)C[_\s]?\{?(\d)(\d)\}?\s*(?:=|≈|~|is\s+)\s*(\d+\.?\d*)\s*(GPa|MPa)"
-    ).unwrap();
+    let re_cij =
+        regex::Regex::new(r"(?i)C[_\s]?\{?(\d)(\d)\}?\s*(?:=|≈|~|is\s+)\s*(\d+\.?\d*)\s*(GPa|MPa)")
+            .unwrap();
 
     // Also match "C11 = 108.2" without explicit units (assume GPa for potentials papers)
-    let re_cij_bare = regex::Regex::new(
-        r"(?i)C[_\s]?\{?(\d)(\d)\}?\s*(?:=|≈|~)\s*(\d+\.?\d*)"
-    ).unwrap();
+    let _re_cij_bare =
+        regex::Regex::new(r"(?i)C[_\s]?\{?(\d)(\d)\}?\s*(?:=|≈|~)\s*(\d+\.?\d*)").unwrap();
 
     // Lattice constant (useful for cross-validation)
     let re_a0 = regex::Regex::new(
-        r"(?i)(?:lattice\s+(?:constant|parameter)|a[_0]?)\s*(?:=|≈|~)\s*(\d+\.?\d*)\s*(Å|nm)"
-    ).unwrap();
+        r"(?i)(?:lattice\s+(?:constant|parameter)|a[_0]?)\s*(?:=|≈|~)\s*(\d+\.?\d*)\s*(Å|nm)",
+    )
+    .unwrap();
 
     // Cohesive energy
     let re_ecoh = regex::Regex::new(
-        r"(?i)(?:cohesive\s+energy|E_?(?:coh|c))\s*(?:=|≈|~)\s*(-?\d+\.?\d*)\s*(eV|eV/atom)"
-    ).unwrap();
+        r"(?i)(?:cohesive\s+energy|E_?(?:coh|c))\s*(?:=|≈|~)\s*(-?\d+\.?\d*)\s*(eV|eV/atom)",
+    )
+    .unwrap();
 
     let normalized = text
-        .replace('₁', "1").replace('₂', "2").replace('₃', "3")
-        .replace('₄', "4").replace('₅', "5").replace('₆', "6");
+        .replace('₁', "1")
+        .replace('₂', "2")
+        .replace('₃', "3")
+        .replace('₄', "4")
+        .replace('₅', "5")
+        .replace('₆', "6");
 
     let mut results = Vec::new();
 
@@ -141,8 +146,12 @@ fn extract_elastic_constants(paper_id: &str, text: &str) -> Vec<ExtractedElastic
         let unit = cap[4].to_string();
 
         // Only keep physically meaningful elastic constants
-        if (i == 1 && j == 1) || (i == 1 && j == 2) || (i == 4 && j == 4) ||
-           (i == 3 && j == 3) || (i == 1 && j == 3) || (i == 2 && j == 3) {
+        if (i == 1 && (j == 1 || j == 2))
+            || (i == 4 && j == 4)
+            || (i == 3 && j == 3)
+            || (i == 1 && j == 3)
+            || (i == 2 && j == 3)
+        {
             let prop = format!("C{}{}", i, j);
             let val_gpa = if unit == "MPa" { val / 1000.0 } else { val };
             let context_start = cap.get(0).unwrap().start().saturating_sub(40);
@@ -189,7 +198,10 @@ fn extract_elastic_constants(paper_id: &str, text: &str) -> Vec<ExtractedElastic
     // Also try the general extraction pipeline
     let general = extract::extract_all(paper_id, text);
     for v in general {
-        if v.quantity == "bulk_modulus" || v.quantity == "youngs_modulus" || v.quantity == "shear_modulus" {
+        if v.quantity == "bulk_modulus"
+            || v.quantity == "youngs_modulus"
+            || v.quantity == "shear_modulus"
+        {
             results.push(ExtractedElastic {
                 property: v.quantity,
                 value: v.value,
@@ -219,8 +231,7 @@ pub fn run_campaign(config: &CampaignConfig) -> Result<CampaignSummary> {
 
     // Determine target elements
     let benchmark_metals = vec![
-        "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb",
-        "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta",
+        "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb", "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta",
     ];
     let elements: Vec<&str> = if config.elements.is_empty() {
         benchmark_metals
@@ -239,12 +250,18 @@ pub fn run_campaign(config: &CampaignConfig) -> Result<CampaignSummary> {
         targets.extend(pots.into_iter().filter(|p| !p.dois.is_empty()));
     }
 
-    eprintln!("  ✦ Target: {} potentials with DOIs across {} elements",
-        targets.len(), elements.len());
+    eprintln!(
+        "  ✦ Target: {} potentials with DOIs across {} elements",
+        targets.len(),
+        elements.len()
+    );
 
     // Limit to max_fetches
     if targets.len() > config.max_fetches {
-        eprintln!("  ✦ Limiting to {} fetches (use --max-fetches to increase)", config.max_fetches);
+        eprintln!(
+            "  ✦ Limiting to {} fetches (use --max-fetches to increase)",
+            config.max_fetches
+        );
         targets.truncate(config.max_fetches);
     }
 
@@ -272,18 +289,22 @@ pub fn run_campaign(config: &CampaignConfig) -> Result<CampaignSummary> {
 
         let element = pot.elements.first().map(|s| s.as_str()).unwrap_or("??");
 
-        eprintln!("\n  [{}/{}] {} ({}, {})",
-            i + 1, targets.len(), pot.short_label(), element, pot.pair_style);
+        eprintln!(
+            "\n  [{}/{}] {} ({}, {})",
+            i + 1,
+            targets.len(),
+            pot.short_label(),
+            element,
+            pot.pair_style
+        );
 
         // Fetch paper
-        let paper = match fetch::fetch_paper_robust(
-            &fetch_config,
-            &pot.id,
-            Some(doi),
-            None,
-        ) {
+        let paper = match fetch::fetch_paper_robust(&fetch_config, &pot.id, Some(doi), None) {
             Ok(p) => {
-                if std::path::Path::new(&config.cache_dir).join(format!("{}.json", pot.id)).exists() {
+                if std::path::Path::new(&config.cache_dir)
+                    .join(format!("{}.json", pot.id))
+                    .exists()
+                {
                     papers_cached += 1;
                 } else {
                     papers_fetched += 1;
@@ -309,13 +330,13 @@ pub fn run_campaign(config: &CampaignConfig) -> Result<CampaignSummary> {
 
         // If we are relying heavily on distill-cli, we still store the text to pass to it
         let all_text = format!("{}\n{}", paper.title, paper.abstract_text);
-        
+
         // We'll run the regex extractor as a baseline/fallback
         let extracted = extract_elastic_constants(&pot.id, &all_text);
 
-        let has_elastic = extracted.iter().any(|v|
-            v.property == "C11" || v.property == "C12" || v.property == "C44"
-        );
+        let has_elastic = extracted
+            .iter()
+            .any(|v| v.property == "C11" || v.property == "C12" || v.property == "C44");
 
         if has_elastic {
             // Convert to benchmark entries
@@ -337,8 +358,11 @@ pub fn run_campaign(config: &CampaignConfig) -> Result<CampaignSummary> {
             }
         }
 
-        eprintln!("    → Extracted {} values (elastic: {})",
-            extracted.len(), if has_elastic { "yes" } else { "no" });
+        eprintln!(
+            "    → Extracted {} values (elastic: {})",
+            extracted.len(),
+            if has_elastic { "yes" } else { "no" }
+        );
 
         all_results.push(ExtractionResult {
             nist_id: pot.id.clone(),
@@ -358,7 +382,10 @@ pub fn run_campaign(config: &CampaignConfig) -> Result<CampaignSummary> {
     let results_path = config.output_dir.join("autoresearch_results.json");
     let json = serde_json::to_string_pretty(&all_results)?;
     std::fs::write(&results_path, &json)?;
-    eprintln!("\n  ✦ Baseline extraction results → {}", results_path.display());
+    eprintln!(
+        "\n  ✦ Baseline extraction results → {}",
+        results_path.display()
+    );
 
     // ───────────────────────────────────────────────────────────
     // distill-cli ORCHESTRATION (The Heavy Machinery)
@@ -377,7 +404,10 @@ pub fn run_campaign(config: &CampaignConfig) -> Result<CampaignSummary> {
                 let file_path = corpus_dir.join(format!("{}.txt", res.nist_id));
                 // We use the cached paper text if possible. For now, writing title + ID as stub if body not present.
                 // In a real run, this text would be the full manuscript body.
-                let content = format!("Title: {}\nElement: {}\nPair Style: {}\n", res.paper_title, res.element, res.pair_style);
+                let content = format!(
+                    "Title: {}\nElement: {}\nPair Style: {}\n",
+                    res.paper_title, res.element, res.pair_style
+                );
                 std::fs::write(file_path, content)?;
             }
         }
@@ -411,14 +441,20 @@ fields = [
         let status = Command::new("cargo")
             .args([
                 "run",
-                "--manifest-path", "../distill-cli/Cargo.toml",
-                "--bin", "distill",
+                "--manifest-path",
+                "../distill-cli/Cargo.toml",
+                "--bin",
+                "distill",
                 "--",
                 "extract",
-                "--ontology", ontology_path.to_str().unwrap(),
-                "--source", corpus_dir.to_str().unwrap(),
-                "--output", distill_out.to_str().unwrap(),
-                "--concurrency", "5",
+                "--ontology",
+                ontology_path.to_str().unwrap(),
+                "--source",
+                corpus_dir.to_str().unwrap(),
+                "--output",
+                distill_out.to_str().unwrap(),
+                "--concurrency",
+                "5",
             ])
             .status();
 
@@ -431,7 +467,10 @@ fields = [
                     let lib_content = std::fs::read_to_string(&library_json_path)?;
                     if let Ok(lib) = serde_json::from_str::<serde_json::Value>(&lib_content) {
                         if let Some(articles) = lib.get("articles").and_then(|a| a.as_array()) {
-                            eprintln!("  ✦ Integrated {} extracted structured records from library.json", articles.len());
+                            eprintln!(
+                                "  ✦ Integrated {} extracted structured records from library.json",
+                                articles.len()
+                            );
                             // Fusion logic: Map articles back to nist_id, extract C11/C12/C44, insert into benchmark_entries
                             // (Implementation stubbed for safety, assumes valid SKP structure)
                         }
@@ -447,22 +486,30 @@ fields = [
     if !benchmark_entries.is_empty() {
         let bench_path = config.output_dir.join("nist_populated.csv");
         benchmark::export_csv(&benchmark_entries, &bench_path)?;
-        eprintln!("  ✦ Populated benchmark → {} ({} entries)", bench_path.display(), benchmark_entries.len());
+        eprintln!(
+            "  ✦ Populated benchmark → {} ({} entries)",
+            bench_path.display(),
+            benchmark_entries.len()
+        );
     }
 
     // Collect summary stats
-    let mut elements_seen: Vec<String> = all_results.iter()
+    let mut elements_seen: Vec<String> = all_results
+        .iter()
         .filter(|r| r.success)
         .map(|r| r.element.clone())
         .collect::<std::collections::HashSet<_>>()
-        .into_iter().collect();
+        .into_iter()
+        .collect();
     elements_seen.sort();
 
-    let mut pair_styles_seen: Vec<String> = all_results.iter()
+    let mut pair_styles_seen: Vec<String> = all_results
+        .iter()
         .filter(|r| r.success)
         .map(|r| r.pair_style.clone())
         .collect::<std::collections::HashSet<_>>()
-        .into_iter().collect();
+        .into_iter()
+        .collect();
     pair_styles_seen.sort();
 
     let summary = CampaignSummary {
@@ -479,7 +526,10 @@ fields = [
     // Run analysis if we have enough populated data
     if config.analyze && benchmark_entries.len() >= 9 {
         eprintln!("\n  ═══════════════════════════════════════════════════════");
-        eprintln!("  AUTO-ANALYSIS on {} populated entries", benchmark_entries.len());
+        eprintln!(
+            "  AUTO-ANALYSIS on {} populated entries",
+            benchmark_entries.len()
+        );
         eprintln!("  ═══════════════════════════════════════════════════════");
 
         // Manifold analysis
@@ -489,17 +539,17 @@ fields = [
             let analysis = manifold::analyze_manifold(&vectors);
             manifold::print_summary(&analysis);
             let json = serde_json::to_string_pretty(&analysis)?;
-            std::fs::write(
-                config.output_dir.join("nist_manifold.json"),
-                &json,
-            )?;
+            std::fs::write(config.output_dir.join("nist_manifold.json"), &json)?;
             eprintln!("  ✦ Manifold analysis → nist_manifold.json");
         }
 
         // Meta-analysis
         let mut by_material: HashMap<String, Vec<(f64, f64)>> = HashMap::new();
         for e in &benchmark_entries {
-            by_material.entry(e.material.clone()).or_default().push((e.reference, e.predicted));
+            by_material
+                .entry(e.material.clone())
+                .or_default()
+                .push((e.reference, e.predicted));
         }
         let mut groups = Vec::new();
         for (mat, pts) in &by_material {
@@ -530,10 +580,15 @@ fields = [
     eprintln!("  ╚════════════════════════════════════════════════════════════╝");
     eprintln!();
     eprintln!("  Potentials processed: {}", summary.total_potentials);
-    eprintln!("  Papers fetched:       {} (cached: {}, failed: {})",
-        summary.papers_fetched, summary.papers_cached, summary.papers_failed);
+    eprintln!(
+        "  Papers fetched:       {} (cached: {}, failed: {})",
+        summary.papers_fetched, summary.papers_cached, summary.papers_failed
+    );
     eprintln!("  Values extracted:     {}", summary.values_extracted);
-    eprintln!("  Benchmark entries:    {}", summary.benchmark_entries_added);
+    eprintln!(
+        "  Benchmark entries:    {}",
+        summary.benchmark_entries_added
+    );
     eprintln!("  Elements:             {:?}", summary.elements_covered);
     eprintln!("  Pair styles:          {:?}", summary.pair_styles_covered);
 
@@ -575,6 +630,9 @@ mod tests {
     fn test_extract_no_false_positives() {
         let text = "We used LAMMPS with 4000 atoms at 300 K for 100 ns.";
         let results = extract_elastic_constants("test", text);
-        assert!(results.is_empty(), "Should not extract elastic constants from non-elastic text");
+        assert!(
+            results.is_empty(),
+            "Should not extract elastic constants from non-elastic text"
+        );
     }
 }

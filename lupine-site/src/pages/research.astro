@@ -18,6 +18,27 @@ const table1Rows = [
   <script is:inline defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script is:inline defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 
+  <!-- Language Switcher -->
+  <div class="w-full border-b border-outline-variant/30 bg-surface-container-low/80 backdrop-blur-sm sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between text-sm">
+      <div class="flex items-center gap-4">
+        <span class="font-medium text-on-surface">English</span>
+        <span class="text-outline-variant">|</span>
+        <a href="/research/causal-geometry-zh" class="text-secondary hover:text-on-secondary transition-colors">
+          中文版本 →
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/alexwelcing/lupine" target="_blank" rel="noopener" class="text-on-surface-variant hover:text-on-surface transition-colors">
+          atlas-distill
+        </a>
+        <a href="https://viewer.lupine.science" target="_blank" rel="noopener" class="text-on-surface-variant hover:text-on-surface transition-colors">
+          Viewer
+        </a>
+      </div>
+    </div>
+  </div>
+
   <FormalBrief 
     title="Hyper-Ribbon Geometry of Interatomic Potential Error Manifolds"
     subtitle="A Statistical Framework for Universal Potential Design"

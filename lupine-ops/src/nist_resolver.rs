@@ -18,7 +18,6 @@
 //! ```
 
 use crate::mlip_ops::{MlipBackend, MlipDeployment};
-use serde::Deserialize;
 use std::path::{Path, PathBuf};
 
 /// A resolved NIST potential ready for LAMMPS deployment.
@@ -30,20 +29,6 @@ pub struct ResolvedPotential {
     pub deployment: MlipDeployment,
     /// All parameter files on disk
     pub file_paths: Vec<PathBuf>,
-}
-
-/// Metadata stored alongside each potential's files.
-#[derive(Debug, Deserialize)]
-struct PotentialMetadata {
-    #[serde(default)]
-    files: Vec<FileEntry>,
-}
-
-#[derive(Debug, Deserialize)]
-struct FileEntry {
-    filename: String,
-    #[serde(default)]
-    url: String,
 }
 
 /// Map a NIST pair_style string to the directory name used in the mirror.

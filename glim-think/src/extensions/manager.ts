@@ -2,6 +2,8 @@
  * ExtensionManager: agents write their own tools at runtime.
  */
 
+import type { Env } from "../types";
+
 export interface Extension {
   name: string;
   description: string;

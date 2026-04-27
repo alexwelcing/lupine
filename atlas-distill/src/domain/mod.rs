@@ -10,4 +10,4 @@ pub mod schemas;
 
 pub use odf_types::{BenchmarkInstance, Observable, PhysicalSystem};
 pub use provenance::fnv1a64_hex;
-pub use schemas::{OperatorPack, RunManifest, RiskEntry, OperatorStatus, RunStatus, RiskLevel};
+pub use schemas::{OperatorPack, OperatorStatus, RiskEntry, RiskLevel, RunManifest, RunStatus};

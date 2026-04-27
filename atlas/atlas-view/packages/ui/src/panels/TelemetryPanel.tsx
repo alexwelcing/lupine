@@ -347,6 +347,8 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
   const setColorProperty = useStore(s => s.setColorProperty);
   const setColormap = useStore(s => s.setColormap);
   const colormap = useStore(s => s.colormap);
+  const anomalyTracking = useStore(s => s.anomalyTracking);
+  const setAnomalyTracking = useStore(s => s.setAnomalyTracking);
 
   const [expandedProp, setExpandedProp] = useState<string | null>(null);
   const [autoJumpSpikes, setAutoJumpSpikes] = useState(false);
@@ -991,16 +993,39 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
           padding: '8px 16px',
           borderTop: '1px solid var(--border-subtle)',
           fontSize: 10, color: 'var(--text-dim)',
-          display: 'flex', alignItems: 'center', gap: 6,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6,
         }}>
-          <div style={{
-            width: 40, height: 6,
-            background: 'linear-gradient(90deg, #440154, #31688e, #35b779, #fde725)',
-            borderRadius: 2,
-          }} />
-          <span>
-            Atoms colored by <strong style={{ color: 'var(--accent)' }}>{colorProperty}</strong>
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{
+              width: 40, height: 6,
+              background: 'linear-gradient(90deg, #440154, #31688e, #35b779, #fde725)',
+              borderRadius: 2,
+            }} />
+            <span>
+              Atoms colored by <strong style={{ color: 'var(--accent)' }}>{colorProperty}</strong>
+            </span>
+          </div>
+          <button
+            onClick={() => setAnomalyTracking(!anomalyTracking)}
+            style={{
+              padding: '4px 8px',
+              fontSize: 10, fontWeight: 600,
+              fontFamily: 'var(--font-mono)',
+              background: anomalyTracking ? 'var(--accent)' : 'var(--bg-elevated)',
+              color: anomalyTracking ? '#000' : 'var(--text-primary)',
+              border: `1px solid ${anomalyTracking ? 'var(--accent)' : 'var(--border-default)'}`,
+              borderRadius: 'var(--radius-sm)',
+              cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: 4,
+            }}
+          >
+            <div style={{ 
+              width: 6, height: 6, borderRadius: '50%', 
+              background: anomalyTracking ? '#000' : SPIKE_COLORS.severe,
+              boxShadow: anomalyTracking ? 'none' : `0 0 6px ${SPIKE_COLORS.severe}`
+            }} />
+            TRACK ANOMALIES
+          </button>
         </div>
       )}
     </div>

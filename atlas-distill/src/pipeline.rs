@@ -55,7 +55,8 @@ pub fn run_pipeline(provider: &str, dry_run: bool) {
         eprintln!("  [{}/{}] Profile: {}", i + 1, PROFILES.len(), p.name);
         eprintln!("  Description: {}", p.description);
 
-        let cmd = p.command_template
+        let cmd = p
+            .command_template
             .replace("{provider}", provider)
             .replace("{max_turns}", &p.max_turns.to_string());
 
@@ -65,12 +66,9 @@ pub fn run_pipeline(provider: &str, dry_run: bool) {
         } else {
             eprintln!("  Running: {}", cmd);
             let p_start = Instant::now();
-            
+
             // Note: executing entirely through bash for simplicity
-            let result = Command::new("bash")
-                .arg("-c")
-                .arg(&cmd)
-                .status();
+            let result = Command::new("bash").arg("-c").arg(&cmd).status();
 
             let duration = p_start.elapsed().as_secs_f64();
 
@@ -91,6 +89,9 @@ pub fn run_pipeline(provider: &str, dry_run: bool) {
     eprintln!("  PIPELINE SUMMARY");
     eprintln!("  ==================================================");
     eprintln!("  Total duration: {:.1}s", total);
-    eprintln!("  Success rate:   {:.0}%", (successes as f64 / PROFILES.len() as f64) * 100.0);
+    eprintln!(
+        "  Success rate:   {:.0}%",
+        (successes as f64 / PROFILES.len() as f64) * 100.0
+    );
     eprintln!("  ==================================================");
 }

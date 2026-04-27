@@ -61,6 +61,12 @@ const IconRecord = () => (
     <circle cx="12" cy="12" r="7" />
   </svg>
 );
+const IconWand = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8L19 13M10.2 6.2L9 5M17.8 6.2L19 5M10.2 11.8L9 13M14 8h.01M17 21l-7.5-7.5" />
+    <path d="M3 21l7.5-7.5" />
+  </svg>
+);
 
 // ─── Easing curve SVG preview ──────────────────────────────────────
 function EasingPreview({ easing }: { easing: EasingType }) {
@@ -193,6 +199,62 @@ export function FlythroughPanel() {
     });
   }, [flythrough, triggerExport]);
 
+  const handleAutoDirector = useCallback(() => {
+    const file = useStore.getState().file;
+    if (!file) return;
+
+    // Start with current camera
+    const startPos = [...useStore.getState().cameraPosition] as [number, number, number];
+    const startTarget = [...useStore.getState().cameraTarget] as [number, number, number];
+    const seq = createDefaultSequence(startPos, startTarget);
+    seq.keyframes[0].label = "Auto Start";
+    seq.keyframes[0].easing = 'ease-in-out'; // Smooth start
+
+    const frame = file.trajectory.frames[0];
+    const natoms = frame.natoms;
+    
+    // Create 4 more random interesting points
+    for (let i = 0; i < 4; i++) {
+      let tx, ty, tz;
+      if (natoms > 0) {
+        // Pick a random atom as target
+        const idx = Math.floor(Math.random() * natoms);
+        tx = frame.positions[idx * 3];
+        ty = frame.positions[idx * 3 + 1];
+        tz = frame.positions[idx * 3 + 2];
+      } else {
+        // Fallback to origin
+        tx = 0; ty = 0; tz = 0;
+      }
+      
+      // Orbit around target: varying radius and angles
+      const radius = 15 + Math.random() * 40;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = (Math.random() * 0.6 + 0.2) * Math.PI; // Avoid direct top/bottom
+
+      const cx = tx + radius * Math.sin(phi) * Math.cos(theta);
+      const cy = ty + radius * Math.sin(phi) * Math.sin(theta);
+      const cz = tz + radius * Math.cos(phi);
+
+      const kf = createKeyframe(
+        [cx, cy, cz],
+        [tx, ty, tz],
+        null,
+        `Auto Stop ${i + 2}`
+      );
+      
+      // Randomize easing slightly for "cinematic" feel
+      const easings: EasingType[] = ['ease-in-out', 'slow-middle', 'fast-middle'];
+      kf.easing = easings[Math.floor(Math.random() * easings.length)];
+      kf.transitionDuration = 2.0 + Math.random() * 2.0; // 2s - 4s
+      kf.holdDuration = Math.random() > 0.5 ? 0.5 : 0; // Sometimes pause, sometimes glide
+      
+      seq.keyframes.push(kf);
+    }
+
+    setFlythrough(seq);
+  }, [setFlythrough]);
+
   const totalDuration = flythrough ? getSequenceDuration(flythrough) : 0;
   const keyframes = flythrough?.keyframes ?? [];
   const canAdd = keyframes.length < 5;
@@ -254,9 +316,23 @@ export function FlythroughPanel() {
                 Position your camera where you want the first stop,
                 then click below. Add up to 5 keyframes with easing transitions.
               </div>
-              <button onClick={handleAddKeyframe} style={btnPrimary}>
-                <IconCamera /> Capture First Stop
-              </button>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button onClick={handleAddKeyframe} style={{ ...btnPrimary, flex: 1 }}>
+                  <IconCamera /> Capture First Stop
+                </button>
+                <button 
+                  onClick={handleAutoDirector} 
+                  title="Auto Director: Generate 5-stop smart flythrough"
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    width: 36, height: 36, background: 'rgba(30,220,224,0.1)',
+                    border: '1px solid rgba(30,220,224,0.3)', borderRadius: 0,
+                    color: '#1edce0', cursor: 'pointer', flexShrink: 0
+                  }}
+                >
+                  <IconWand />
+                </button>
+              </div>
               <button
                 onClick={() => setShowImport(!showImport)}
                 style={{ ...btnGhost, marginTop: 8, width: '100%' }}

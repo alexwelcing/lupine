@@ -1,6 +1,6 @@
 # Multi-stage build for atlas-distill
 # Stage 1: Build the Rust binary
-FROM rust:1.82-slim-bookworm AS builder
+FROM rust:1.88-slim-bookworm AS builder
 
 WORKDIR /app
 
@@ -10,14 +10,19 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy manifest and lock file first for layer caching
-COPY Cargo.toml Cargo.lock ./
+# Copy workspace manifests first for layer caching. The Docker workspace is
+# intentionally smaller than the repo workspace to keep Cloud Build context lean.
+COPY atlas-distill/Cargo.docker.toml ./Cargo.toml
+COPY Cargo.lock ./
+COPY atlas-distill/Cargo.toml ./atlas-distill/Cargo.toml
+COPY lupine-ops/Cargo.toml ./lupine-ops/Cargo.toml
 
-# Copy source code
-COPY src ./src
+# Copy workspace source code
+COPY atlas-distill/src ./atlas-distill/src
+COPY lupine-ops/src ./lupine-ops/src
 
 # Build release binary
-RUN cargo build --release --bin atlas-distill
+RUN cargo build --release -p atlas-distill --bin atlas-distill
 
 # Stage 2: Minimal runtime image
 FROM debian:bookworm-slim AS runtime
@@ -36,7 +41,7 @@ RUN useradd -m -u 1000 atlas
 COPY --from=builder /app/target/release/atlas-distill /usr/local/bin/atlas-distill
 
 # Copy benchmark data
-COPY benchmarks ./benchmarks
+COPY atlas-distill/benchmarks ./benchmarks
 
 # Set ownership
 RUN chown -R atlas:atlas /app

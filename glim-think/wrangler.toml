@@ -3,6 +3,11 @@ main = "src/server.ts"
 compatibility_date = "2026-04-25"
 compatibility_flags = ["nodejs_compat"]
 
+# ─── Scheduled triggers ───
+# Hourly lab broadcast plus nightly fleet sweep at 07:00 UTC (~midnight US Pacific).
+[triggers]
+crons = ["0 * * * *", "0 7 * * *"]
+
 # ─── Durable Objects: Think-based research agents ───
 
 [[durable_objects.bindings]]

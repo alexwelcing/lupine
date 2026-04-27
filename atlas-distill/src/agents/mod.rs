@@ -47,35 +47,22 @@ pub enum Action {
         properties: Vec<String>,
     },
     /// Fetch and mine a paper by DOI
-    FetchPaper {
-        doi: String,
-        potential_id: String,
-    },
+    FetchPaper { doi: String, potential_id: String },
     /// Run manifold analysis on accumulated data for an element
-    RunManifoldAnalysis {
-        element: String,
-    },
+    RunManifoldAnalysis { element: String },
     /// Check for Simpson's paradox across element groups
-    CheckParadox {
-        grouping: String,
-    },
+    CheckParadox { grouping: String },
     /// Propose a new hypothesis
-    ProposeHypothesis {
-        description: String,
-    },
+    ProposeHypothesis { description: String },
     /// Design and execute a batch of LAMMPS experiments driven by surrogate acquisition.
     DesignExperiments {
         strategy: String,
         max_experiments: usize,
     },
     /// Screen multiple groupings for causal anomalies (Simpson's paradox, etc.).
-    ScreenCausalAnomalies {
-        groupings: Vec<String>,
-    },
+    ScreenCausalAnomalies { groupings: Vec<String> },
     /// Generate competing physical hypotheses for observed statistical patterns.
-    Theorize {
-        target_claim_ids: Vec<String>,
-    },
+    Theorize { target_claim_ids: Vec<String> },
 }
 
 /// Result of executing an action.

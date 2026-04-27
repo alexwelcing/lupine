@@ -1,27 +1,29 @@
+#![allow(dead_code)]
+
 mod agents;
+mod autoresearch;
+mod benchmark;
+mod causal;
 mod discovery;
 pub mod domain;
 mod fitting;
+mod formalize;
 mod ingest;
 mod literature;
+mod manifold;
+mod meta_analysis;
+mod nist;
 mod observables;
 mod pipeline;
 mod report;
-mod validation;
-mod formalize;
-mod stats;
-mod manifold;
-mod meta_analysis;
-mod causal;
-mod benchmark;
-mod nist;
 mod runner;
-mod autoresearch;
+mod stats;
 mod surrogate;
+mod validation;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 #[derive(Parser)]
 #[command(name = "atlas-distill")]
@@ -352,24 +354,54 @@ fn main() -> Result<()> {
         } => cmd_fit(&data, &model, degree),
         Commands::Literature { action } => cmd_literature(action),
         Commands::Elastic {
-            c11, c12, c44,
-            ref_c11, ref_c12, ref_c44,
+            c11,
+            c12,
+            c44,
+            ref_c11,
+            ref_c12,
+            ref_c44,
             material,
         } => cmd_elastic(c11, c12, c44, ref_c11, ref_c12, ref_c44, &material),
         Commands::Validate { full, bcc, statics } => cmd_validate(full, bcc, statics),
         Commands::Manifold { bcc } => cmd_manifold(bcc),
         Commands::MetaAnalyze { groups } => cmd_meta_analyze(groups.as_ref()),
-        Commands::DetectParadox { data, example, bcc } => cmd_detect_paradox(data.as_ref(), example, bcc),
-        Commands::Benchmark { path, manifold, meta, full } => cmd_benchmark(&path, manifold, meta, full),
+        Commands::DetectParadox { data, example, bcc } => {
+            cmd_detect_paradox(data.as_ref(), example, bcc)
+        }
+        Commands::Benchmark {
+            path,
+            manifold,
+            meta,
+            full,
+        } => cmd_benchmark(&path, manifold, meta, full),
         Commands::Pipeline { provider, dry_run } => cmd_pipeline(&provider, dry_run),
         Commands::Formalize { empirical } => {
             formalize::write_lean_spec(empirical.as_ref())?;
             Ok(())
         }
-        Commands::Nist { index, element, pair_style, single, scaffold } => {
-            cmd_nist(&index, element.as_deref(), pair_style.as_deref(), single, scaffold)
-        }
-        Commands::RunNist { index, element, structure, lammps_exe, work_dir, output, supercell, mpi } => {
+        Commands::Nist {
+            index,
+            element,
+            pair_style,
+            single,
+            scaffold,
+        } => cmd_nist(
+            &index,
+            element.as_deref(),
+            pair_style.as_deref(),
+            single,
+            scaffold,
+        ),
+        Commands::RunNist {
+            index,
+            element,
+            structure,
+            lammps_exe,
+            work_dir,
+            output,
+            supercell,
+            mpi,
+        } => {
             let config = runner::RunnerConfig {
                 nist_index: index,
                 element,
@@ -384,10 +416,19 @@ fn main() -> Result<()> {
             runner::export_benchmark_csv(&results, &config.element, &output)?;
             Ok(())
         }
-        Commands::AutoResearch { index, elements, eam_only, max_fetches, no_analyze, output_dir } => {
+        Commands::AutoResearch {
+            index,
+            elements,
+            eam_only,
+            max_fetches,
+            no_analyze,
+            output_dir,
+        } => {
             let config = autoresearch::CampaignConfig {
                 nist_index: index,
-                elements: elements.map(|e| e.split(',').map(|s| s.trim().to_string()).collect()).unwrap_or_default(),
+                elements: elements
+                    .map(|e| e.split(',').map(|s| s.trim().to_string()).collect())
+                    .unwrap_or_default(),
                 eam_only,
                 max_fetches,
                 analyze: !no_analyze,
@@ -397,19 +438,35 @@ fn main() -> Result<()> {
             autoresearch::run_campaign(&config)?;
             Ok(())
         }
-        Commands::DiscoverAgents { iterations, elements, ledger_dir } => {
-            cmd_discover_agents(iterations, elements.as_deref(), &ledger_dir)
-        }
-        Commands::ActiveLearn { strategy, n, element, ledger_dir, lammps_exe } => {
-            cmd_active_learn(&strategy, n, &element, &ledger_dir, &lammps_exe)
-        }
-        Commands::React { iterations, elements, ledger_dir, lammps_exe, fast } => {
-            cmd_react(iterations, elements.as_deref(), &ledger_dir, &lammps_exe, fast)
-        }
+        Commands::DiscoverAgents {
+            iterations,
+            elements,
+            ledger_dir,
+        } => cmd_discover_agents(iterations, elements.as_deref(), &ledger_dir),
+        Commands::ActiveLearn {
+            strategy,
+            n,
+            element,
+            ledger_dir,
+            lammps_exe,
+        } => cmd_active_learn(&strategy, n, &element, &ledger_dir, &lammps_exe),
+        Commands::React {
+            iterations,
+            elements,
+            ledger_dir,
+            lammps_exe,
+            fast,
+        } => cmd_react(
+            iterations,
+            elements.as_deref(),
+            &ledger_dir,
+            &lammps_exe,
+            fast,
+        ),
     }
 }
 
-fn cmd_thermo(path: &PathBuf, x_col: &str, y_col: Option<&str>) -> Result<()> {
+fn cmd_thermo(path: &Path, x_col: &str, y_col: Option<&str>) -> Result<()> {
     eprintln!("  ✦ Parsing thermo log: {}", path.display());
     let runs = ingest::thermo::parse_log(path)?;
     eprintln!("  ✦ Found {} run(s)", runs.len());
@@ -441,8 +498,8 @@ fn cmd_thermo(path: &PathBuf, x_col: &str, y_col: Option<&str>) -> Result<()> {
 fn cmd_active_learn(
     strategy: &str,
     n: usize,
-    element: &str,
-    ledger_dir: &PathBuf,
+    _element: &str,
+    ledger_dir: &Path,
     lammps_exe: &str,
 ) -> Result<()> {
     use agents::experiment_agent::{ExperimentAgent, ExperimentAgentConfig};
@@ -484,8 +541,10 @@ fn cmd_active_learn(
 }
 
 /// Seed the discovery ledger from existing benchmark CSVs.
-fn seed_ledger(ledger_dir: &PathBuf) -> Result<usize> {
-    use lupine_ops::ledger::{BenchmarkRecord, DiscoveryLedger, Provenance, generate_record_id, now_iso8601};
+fn seed_ledger(ledger_dir: &Path) -> Result<usize> {
+    use lupine_ops::ledger::{
+        generate_record_id, now_iso8601, BenchmarkRecord, DiscoveryLedger, Provenance,
+    };
 
     let mut ledger = if ledger_dir.exists() {
         DiscoveryLedger::load(ledger_dir).unwrap_or_default()
@@ -498,7 +557,11 @@ fn seed_ledger(ledger_dir: &PathBuf) -> Result<usize> {
     let provenance = Provenance::AgentInference {
         method: "ledger_seed_from_csv".into(),
         confidence: 0.95,
-        basis: vec!["fcc_elastic_constants.csv".into(), "bcc_elastic_constants.csv".into(), "nist_populated.csv".into()],
+        basis: vec![
+            "fcc_elastic_constants.csv".into(),
+            "bcc_elastic_constants.csv".into(),
+            "nist_populated.csv".into(),
+        ],
     };
 
     let files = vec![
@@ -514,7 +577,7 @@ fn seed_ledger(ledger_dir: &PathBuf) -> Result<usize> {
         let content = std::fs::read_to_string(path)?;
         let mut lines = content.lines();
         let header = lines.next().unwrap_or("");
-        let headers: Vec<&str> = header.split(',').collect();
+        let _headers: Vec<&str> = header.split(',').collect();
 
         for line in lines {
             let cols: Vec<&str> = line.split(',').collect();
@@ -529,8 +592,16 @@ fn seed_ledger(ledger_dir: &PathBuf) -> Result<usize> {
             let predicted: f64 = cols[4].trim().parse().unwrap_or(0.0);
             let unit = cols[5].trim().to_string();
 
-            let nist_id = if cols.len() > 6 { cols[6].trim().to_string() } else { potential.clone() };
-            let pair_style = if cols.len() > 7 { cols[7].trim().to_string() } else { "unknown".into() };
+            let nist_id = if cols.len() > 6 {
+                cols[6].trim().to_string()
+            } else {
+                potential.clone()
+            };
+            let pair_style = if cols.len() > 7 {
+                cols[7].trim().to_string()
+            } else {
+                "unknown".into()
+            };
 
             let record = BenchmarkRecord {
                 record_id: generate_record_id("seed"),
@@ -552,7 +623,10 @@ fn seed_ledger(ledger_dir: &PathBuf) -> Result<usize> {
         }
     }
 
-    eprintln!("  ✦ Seeded ledger with {} records from existing benchmarks", count);
+    eprintln!(
+        "  ✦ Seeded ledger with {} records from existing benchmarks",
+        count
+    );
     Ok(count)
 }
 
@@ -620,16 +694,23 @@ fn cmd_react(
 
     eprintln!("\n  ════════════════════════════════════════════════════════════");
     eprintln!("  Reactive loop complete.");
-    eprintln!("  {} records, {} claims, {} unique potentials across {} elements",
-        summary.total_records, summary.total_claims,
-        summary.unique_potentials, summary.unique_elements);
-    eprintln!("  Confirmed: {} | Refuted: {}", summary.confirmed_claims, summary.refuted_claims);
+    eprintln!(
+        "  {} records, {} claims, {} unique potentials across {} elements",
+        summary.total_records,
+        summary.total_claims,
+        summary.unique_potentials,
+        summary.unique_elements
+    );
+    eprintln!(
+        "  Confirmed: {} | Refuted: {}",
+        summary.confirmed_claims, summary.refuted_claims
+    );
     eprintln!("  Ledger saved to: {}\n", ledger_dir.display());
 
     Ok(())
 }
 
-fn cmd_trajectory(path: &PathBuf, do_msd: bool, do_rdf: bool, do_vacf: bool) -> Result<()> {
+fn cmd_trajectory(path: &Path, do_msd: bool, do_rdf: bool, do_vacf: bool) -> Result<()> {
     eprintln!("  ✦ Parsing trajectory: {}", path.display());
     let frames = ingest::trajectory::parse_dump(path)?;
     eprintln!("  ✦ Found {} frame(s)", frames.len());
@@ -665,7 +746,12 @@ fn cmd_trajectory(path: &PathBuf, do_msd: bool, do_rdf: bool, do_vacf: bool) -> 
 }
 
 fn cmd_scan(x_col: &str, y_col: &str, files: &[PathBuf]) -> Result<()> {
-    eprintln!("  ✦ Scanning {} files for {} vs {}", files.len(), x_col, y_col);
+    eprintln!(
+        "  ✦ Scanning {} files for {} vs {}",
+        files.len(),
+        x_col,
+        y_col
+    );
 
     let mut points: Vec<(f64, f64)> = Vec::new();
 
@@ -709,8 +795,7 @@ fn cmd_fit(data_path: &PathBuf, model: &str, degree: usize) -> Result<()> {
             .filter(|s| !s.is_empty())
             .collect();
         if parts.len() >= 2 {
-            if let (Ok(x), Ok(y)) = (parts[0].parse::<f64>(), parts[1].parse::<f64>())
-            {
+            if let (Ok(x), Ok(y)) = (parts[0].parse::<f64>(), parts[1].parse::<f64>()) {
                 points.push((x, y));
             }
         }
@@ -739,7 +824,10 @@ fn cmd_fit(data_path: &PathBuf, model: &str, degree: usize) -> Result<()> {
             let fit = fitting::symbolic::symbolic_fit(&points, 500, 50);
             discovery::scan::Discovery::from_fit("x", "y", "symbolic", &fit)
         }
-        _ => anyhow::bail!("Unknown model: {}. Use: linear, power, arrhenius, polynomial, symbolic", model),
+        _ => anyhow::bail!(
+            "Unknown model: {}. Use: linear, power, arrhenius, polynomial, symbolic",
+            model
+        ),
     };
 
     report::print_discovery(&result);
@@ -756,7 +844,10 @@ fn cmd_literature(action: LitAction) -> Result<()> {
             // Print summary
             let freq = literature::corpus::tag_frequency(&papers);
             eprintln!("  ╔════════════════════════════════════════════════════════════╗");
-            eprintln!("  ║  Research Corpus: {} papers                        ", papers.len());
+            eprintln!(
+                "  ║  Research Corpus: {} papers                        ",
+                papers.len()
+            );
             eprintln!("  ╠════════════════════════════════════════════════════════════╣");
             eprintln!("  ║  Year distribution:");
             let y2025 = papers.iter().filter(|p| p.year == 2025).count();
@@ -769,8 +860,14 @@ fn cmd_literature(action: LitAction) -> Result<()> {
                 eprintln!("  ║    {:20} {:3} {}", tag, count, bar);
             }
             eprintln!("  ║");
-            eprintln!("  ║  Papers with DOI: {}", papers.iter().filter(|p| p.doi.is_some()).count());
-            eprintln!("  ║  Papers with arXiv: {}", papers.iter().filter(|p| p.arxiv.is_some()).count());
+            eprintln!(
+                "  ║  Papers with DOI: {}",
+                papers.iter().filter(|p| p.doi.is_some()).count()
+            );
+            eprintln!(
+                "  ║  Papers with arXiv: {}",
+                papers.iter().filter(|p| p.arxiv.is_some()).count()
+            );
             eprintln!("  ╚════════════════════════════════════════════════════════════╝");
 
             // Dump as JSON
@@ -796,11 +893,7 @@ fn cmd_literature(action: LitAction) -> Result<()> {
                 if ds.points.len() < 3 {
                     continue;
                 }
-                let result = discovery::scan::fit_observable(
-                    &ds.x_label,
-                    &ds.y_label,
-                    &ds.points,
-                );
+                let result = discovery::scan::fit_observable(&ds.x_label, &ds.y_label, &ds.points);
 
                 // Check if the discovered model matches the expected model
                 let expected = &seed.testable_as;
@@ -808,13 +901,15 @@ fn cmd_literature(action: LitAction) -> Result<()> {
                 let status = if matched { "✅" } else { "⚠️" };
 
                 eprintln!("  {} {} ", status, seed.name);
-                eprintln!("      Expected: {} | Found: {} | R² = {:.6}",
+                eprintln!(
+                    "      Expected: {} | Found: {} | R² = {:.6}",
                     expected, result.best_model, result.r_squared
                 );
 
                 if !seed.parameters.is_empty() {
                     for param in &seed.parameters {
-                        eprintln!("      {} = {:.4} {} (typical: {:.4})",
+                        eprintln!(
+                            "      {} = {:.4} {} (typical: {:.4})",
                             param.name, param.typical_value, param.unit, param.typical_value
                         );
                     }
@@ -825,12 +920,21 @@ fn cmd_literature(action: LitAction) -> Result<()> {
             Ok(())
         }
 
-        LitAction::Fetch { corpus, output, limit, cache_dir } => {
+        LitAction::Fetch {
+            corpus,
+            output,
+            limit,
+            cache_dir,
+        } => {
             eprintln!("  ✦ Parsing corpus: {}", corpus.display());
             let papers = literature::corpus::parse_corpus_file(&corpus)?;
             eprintln!("  ✦ Found {} papers", papers.len());
 
-            let fetch_count = if limit == 0 { papers.len() } else { limit.min(papers.len()) };
+            let fetch_count = if limit == 0 {
+                papers.len()
+            } else {
+                limit.min(papers.len())
+            };
             eprintln!("  ✦ Will fetch up to {} paper abstracts", fetch_count);
             eprintln!("  ✦ Cache: {}", cache_dir.display());
 
@@ -872,7 +976,11 @@ fn cmd_literature(action: LitAction) -> Result<()> {
                 all_values.extend(values);
             }
 
-            eprintln!("\n  ✦ Total: {} values from {} papers", all_values.len(), content.len());
+            eprintln!(
+                "\n  ✦ Total: {} values from {} papers",
+                all_values.len(),
+                content.len()
+            );
 
             // Build datasets
             let datasets = literature::dataset::build_datasets(&all_values);
@@ -936,12 +1044,16 @@ fn cmd_literature(action: LitAction) -> Result<()> {
 }
 
 fn cmd_elastic(
-    c11: f64, c12: f64, c44: f64,
-    ref_c11: Option<f64>, ref_c12: Option<f64>, ref_c44: Option<f64>,
+    c11: f64,
+    c12: f64,
+    c44: f64,
+    ref_c11: Option<f64>,
+    ref_c12: Option<f64>,
+    ref_c44: Option<f64>,
     material: &str,
 ) -> Result<()> {
-    use observables::elasticity::{bulk_modulus_k, shear_modulus_g, anisotropy_a, relative_error};
     use domain::provenance::fnv1a64_hex;
+    use observables::elasticity::{anisotropy_a, bulk_modulus_k, relative_error, shear_modulus_g};
 
     let k = bulk_modulus_k(c11, c12);
     let g = shear_modulus_g(c11, c12, c44);
@@ -973,9 +1085,21 @@ fn cmd_elastic(
 
         eprintln!("  ║");
         eprintln!("  ║  vs Reference (C11={rc11}, C12={rc12}, C44={rc44}):");
-        eprintln!("  ║    ΔK = {:+.3} GPa ({:+.2}%)", k - ref_k, relative_error(k, ref_k) * 100.0);
-        eprintln!("  ║    ΔG = {:+.3} GPa ({:+.2}%)", g - ref_g, relative_error(g, ref_g) * 100.0);
-        eprintln!("  ║    ΔA = {:+.6}   ({:+.2}%)", a - ref_a, relative_error(a, ref_a) * 100.0);
+        eprintln!(
+            "  ║    ΔK = {:+.3} GPa ({:+.2}%)",
+            k - ref_k,
+            relative_error(k, ref_k) * 100.0
+        );
+        eprintln!(
+            "  ║    ΔG = {:+.3} GPa ({:+.2}%)",
+            g - ref_g,
+            relative_error(g, ref_g) * 100.0
+        );
+        eprintln!(
+            "  ║    ΔA = {:+.6}   ({:+.2}%)",
+            a - ref_a,
+            relative_error(a, ref_a) * 100.0
+        );
     }
 
     eprintln!("  ║");
@@ -1007,12 +1131,10 @@ fn cmd_pipeline(provider: &str, dry_run: bool) -> Result<()> {
 fn cmd_validate(full: bool, use_bcc: bool, statics: bool) -> Result<()> {
     if statics {
         let reference = validation::fcc_statics_reference_data();
-        let predictions = vec![
-            ("EAM", validation::fcc_statics_eam_data()),
-        ];
+        let predictions = vec![("EAM", validation::fcc_statics_eam_data())];
         let entries = validation::build_statics_benchmark_entries(&reference, &predictions);
         let metrics = validation::compute_potential_metrics(&entries);
-        
+
         let report = validation::ValidationReport {
             n_potentials: 1,
             n_materials: reference.len(),
@@ -1023,9 +1145,9 @@ fn cmd_validate(full: bool, use_bcc: bool, statics: bool) -> Result<()> {
             manifold_json: "[]".to_string(), // Manifold requires at least 3 properties usually
             ranking_by_mae: validation::rank_potentials(&metrics, "mae"),
         };
-        
+
         validation::print_validation_report(&report);
-        
+
         let json = serde_json::to_string_pretty(&report)?;
         std::fs::write("statics_validation_report.json", &json)?;
         eprintln!("\n  ✦ Statics validation report → statics_validation_report.json");
@@ -1093,25 +1215,47 @@ fn cmd_validate(full: bool, use_bcc: bool, statics: bool) -> Result<()> {
         eprintln!("  Ensemble RMSE: {:.3} GPa", agg.rmse);
         eprintln!("  Worst-case:    {:.3} GPa", agg.max_error);
 
-        eprintln!("\n  {:>5}  {:>8}  {:>8}  {:>8}  {:>8}", "Metal", "MAE", "C11 Err", "C12 Err", "C44 Err");
-        eprintln!("  {:>5}  {:>8}  {:>8}  {:>8}  {:>8}", "─────", "────────", "────────", "────────", "────────");
+        eprintln!(
+            "\n  {:>5}  {:>8}  {:>8}  {:>8}  {:>8}",
+            "Metal", "MAE", "C11 Err", "C12 Err", "C44 Err"
+        );
+        eprintln!(
+            "  {:>5}  {:>8}  {:>8}  {:>8}  {:>8}",
+            "─────", "────────", "────────", "────────", "────────"
+        );
         let mut metals: Vec<_> = res.per_metal.keys().collect();
         metals.sort();
         for m in metals {
             let pm = &res.per_metal[m];
-            eprintln!("  {:>5}  {:8.3}  {:8.3}  {:8.3}  {:8.3}", m, pm.mae, pm.c11, pm.c12, pm.c44);
+            eprintln!(
+                "  {:>5}  {:8.3}  {:8.3}  {:8.3}  {:8.3}",
+                m, pm.mae, pm.c11, pm.c12, pm.c44
+            );
         }
 
-        eprintln!("\n  {:>15}  {:>8}  {:>8}  {:>8}", "Operator", "MAE", "RMSE", "Max Err");
-        eprintln!("  {:>15}  {:>8}  {:>8}  {:>8}", "───────────────", "────────", "────────", "────────");
+        eprintln!(
+            "\n  {:>15}  {:>8}  {:>8}  {:>8}",
+            "Operator", "MAE", "RMSE", "Max Err"
+        );
+        eprintln!(
+            "  {:>15}  {:>8}  {:>8}  {:>8}",
+            "───────────────", "────────", "────────", "────────"
+        );
         let mut ops: Vec<_> = res.operator_metrics.keys().collect();
         ops.sort();
         for op in ops {
             let m = &res.operator_metrics[op];
-            eprintln!("  {:>15}  {:8.4}  {:8.4}  {:8.4}", op, m.mae, m.rmse, m.max_error);
+            eprintln!(
+                "  {:>15}  {:8.4}  {:8.4}  {:8.4}",
+                op, m.mae, m.rmse, m.max_error
+            );
         }
 
-        let status = if res.pass_status { "PASS ✅" } else { "FAIL ❌" };
+        let status = if res.pass_status {
+            "PASS ✅"
+        } else {
+            "FAIL ❌"
+        };
         eprintln!("\n  Overall: {}", status);
         eprintln!();
     }
@@ -1127,7 +1271,10 @@ fn cmd_manifold(use_bcc: bool) -> Result<()> {
         let props = vec!["C11".to_string(), "C12".to_string(), "C44".to_string()];
         let vectors = manifold::build_error_vectors(&entries, &props);
         manifold = manifold::analyze_manifold(&vectors);
-        eprintln!("  ✦ Analyzing BCC metal error manifold ({} entries)", entries.len());
+        eprintln!(
+            "  ✦ Analyzing BCC metal error manifold ({} entries)",
+            entries.len()
+        );
     } else {
         let report = validation::run_full_validation();
         manifold = serde_json::from_str(&report.manifold_json).unwrap_or_default();
@@ -1138,7 +1285,11 @@ fn cmd_manifold(use_bcc: bool) -> Result<()> {
 
     // Save detailed JSON
     let json = serde_json::to_string_pretty(&manifold)?;
-    let out_path = if use_bcc { "bcc_manifold_analysis.json" } else { "manifold_analysis.json" };
+    let out_path = if use_bcc {
+        "bcc_manifold_analysis.json"
+    } else {
+        "manifold_analysis.json"
+    };
     std::fs::write(out_path, &json)?;
     eprintln!("\n  ✦ Manifold analysis → {}", out_path);
 
@@ -1155,12 +1306,36 @@ fn cmd_meta_analyze(groups_path: Option<&PathBuf>) -> Result<()> {
     } else {
         // Default: synthetic example showing heterogeneity
         groups = vec![
-            crate::meta_analysis::GroupCorrelation { group_id: "Al".to_string(), n: 50, r: 0.85 },
-            crate::meta_analysis::GroupCorrelation { group_id: "Cu".to_string(), n: 50, r: 0.72 },
-            crate::meta_analysis::GroupCorrelation { group_id: "Ni".to_string(), n: 50, r: 0.68 },
-            crate::meta_analysis::GroupCorrelation { group_id: "Ag".to_string(), n: 50, r: 0.45 },
-            crate::meta_analysis::GroupCorrelation { group_id: "Au".to_string(), n: 50, r: 0.30 },
-            crate::meta_analysis::GroupCorrelation { group_id: "Pt".to_string(), n: 50, r: -0.15 },
+            crate::meta_analysis::GroupCorrelation {
+                group_id: "Al".to_string(),
+                n: 50,
+                r: 0.85,
+            },
+            crate::meta_analysis::GroupCorrelation {
+                group_id: "Cu".to_string(),
+                n: 50,
+                r: 0.72,
+            },
+            crate::meta_analysis::GroupCorrelation {
+                group_id: "Ni".to_string(),
+                n: 50,
+                r: 0.68,
+            },
+            crate::meta_analysis::GroupCorrelation {
+                group_id: "Ag".to_string(),
+                n: 50,
+                r: 0.45,
+            },
+            crate::meta_analysis::GroupCorrelation {
+                group_id: "Au".to_string(),
+                n: 50,
+                r: 0.30,
+            },
+            crate::meta_analysis::GroupCorrelation {
+                group_id: "Pt".to_string(),
+                n: 50,
+                r: -0.15,
+            },
         ];
     }
 
@@ -1226,12 +1401,7 @@ fn cmd_detect_paradox(data_path: Option<&PathBuf>, use_example: bool, use_bcc: b
     Ok(())
 }
 
-fn cmd_benchmark(
-    path: &PathBuf,
-    do_manifold: bool,
-    do_meta: bool,
-    do_full: bool,
-) -> Result<()> {
+fn cmd_benchmark(path: &Path, do_manifold: bool, do_meta: bool, do_full: bool) -> Result<()> {
     eprintln!("  ✦ Loading benchmark database: {}", path.display());
     let entries = benchmark::load_auto(path)?;
     let summary = benchmark::summarize(&entries);
@@ -1247,7 +1417,9 @@ fn cmd_benchmark(
             std::fs::write("benchmark_manifold.json", &json)?;
             eprintln!("\n  ✦ Manifold analysis → benchmark_manifold.json");
         } else {
-            eprintln!("  ⚠ Not enough data for manifold analysis (need ≥3 material×potential groups)");
+            eprintln!(
+                "  ⚠ Not enough data for manifold analysis (need ≥3 material×potential groups)"
+            );
         }
     }
 
@@ -1256,7 +1428,10 @@ fn cmd_benchmark(
         use std::collections::HashMap;
         let mut by_material: HashMap<String, Vec<(f64, f64)>> = HashMap::new();
         for e in &entries {
-            by_material.entry(e.material.clone()).or_default().push((e.reference, e.predicted));
+            by_material
+                .entry(e.material.clone())
+                .or_default()
+                .push((e.reference, e.predicted));
         }
         let mut groups = Vec::new();
         for (mat, pts) in &by_material {
@@ -1282,7 +1457,9 @@ fn cmd_benchmark(
             std::fs::write("benchmark_meta.json", serde_json::to_string_pretty(&json)?)?;
             eprintln!("\n  ✦ Meta-analysis → benchmark_meta.json");
         } else {
-            eprintln!("  ⚠ Not enough groups for meta-analysis (need ≥2 materials with ≥3 points each)");
+            eprintln!(
+                "  ⚠ Not enough groups for meta-analysis (need ≥2 materials with ≥3 points each)"
+            );
         }
     }
 
@@ -1290,7 +1467,7 @@ fn cmd_benchmark(
 }
 
 fn cmd_nist(
-    index_path: &PathBuf,
+    index_path: &Path,
     element: Option<&str>,
     pair_style: Option<&str>,
     single_only: bool,
@@ -1308,14 +1485,19 @@ fn cmd_nist(
             if rows.is_empty() {
                 anyhow::bail!("No single-element potentials found for {}", el);
             }
-            eprintln!("  ✦ Generating scaffold for {} ({} potentials × {} properties = {} rows)",
-                el, rows.len() / props.len(), props.len(), rows.len());
+            eprintln!(
+                "  ✦ Generating scaffold for {} ({} potentials × {} properties = {} rows)",
+                el,
+                rows.len() / props.len(),
+                props.len(),
+                rows.len()
+            );
             nist::write_scaffold_csv(&rows)?;
         } else {
             // Scaffold for all benchmark metals
             let metals = [
-                "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb",
-                "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta",
+                "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb", "Fe", "Cr", "Mo", "W", "V", "Nb",
+                "Ta",
             ];
             let mut all_rows = Vec::new();
             for &m in &metals {
@@ -1324,8 +1506,11 @@ fn cmd_nist(
             if all_rows.is_empty() {
                 anyhow::bail!("No single-element potentials found for any benchmark metal");
             }
-            eprintln!("  ✦ Generating scaffold for {} metals ({} rows)",
-                metals.len(), all_rows.len());
+            eprintln!(
+                "  ✦ Generating scaffold for {} metals ({} rows)",
+                metals.len(),
+                all_rows.len()
+            );
             nist::write_scaffold_csv(&all_rows)?;
         }
         return Ok(());
@@ -1341,13 +1526,29 @@ fn cmd_nist(
         } else {
             results = catalog.by_element(el);
         }
-        eprintln!("  ✦ Filter: element={}{}", el, if single_only { " (single-element only)" } else { "" });
+        eprintln!(
+            "  ✦ Filter: element={}{}",
+            el,
+            if single_only {
+                " (single-element only)"
+            } else {
+                ""
+            }
+        );
     } else if let Some(ps) = pair_style {
         results = catalog.by_pair_style(ps);
         if single_only {
             results.retain(|p| p.is_single_element());
         }
-        eprintln!("  ✦ Filter: pair_style={}{}", ps, if single_only { " (single-element only)" } else { "" });
+        eprintln!(
+            "  ✦ Filter: pair_style={}{}",
+            ps,
+            if single_only {
+                " (single-element only)"
+            } else {
+                ""
+            }
+        );
     }
 
     if !results.is_empty() {
@@ -1367,13 +1568,15 @@ fn cmd_nist(
 
         // Also show benchmark metal coverage
         let metals = [
-            "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb",
-            "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta",
+            "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb", "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta",
         ];
         eprintln!();
         eprintln!("  Benchmark metal coverage (single-element potentials):");
         eprintln!("  {:4} {:>6} {:>6} {:>6}", "Metal", "Total", "EAM", "MEAM");
-        eprintln!("  {:4} {:>6} {:>6} {:>6}", "────", "──────", "──────", "──────");
+        eprintln!(
+            "  {:4} {:>6} {:>6} {:>6}",
+            "────", "──────", "──────", "──────"
+        );
         let mut total_se = 0;
         let mut total_eam = 0;
         let mut total_meam = 0;
@@ -1386,8 +1589,14 @@ fn cmd_nist(
             total_meam += meam;
             eprintln!("  {:4} {:>6} {:>6} {:>6}", m, se, eam, meam);
         }
-        eprintln!("  {:4} {:>6} {:>6} {:>6}", "────", "──────", "──────", "──────");
-        eprintln!("  {:4} {:>6} {:>6} {:>6}", "SUM", total_se, total_eam, total_meam);
+        eprintln!(
+            "  {:4} {:>6} {:>6} {:>6}",
+            "────", "──────", "──────", "──────"
+        );
+        eprintln!(
+            "  {:4} {:>6} {:>6} {:>6}",
+            "SUM", total_se, total_eam, total_meam
+        );
     }
 
     Ok(())
@@ -1396,7 +1605,7 @@ fn cmd_nist(
 fn cmd_discover_agents(
     iterations: usize,
     elements: Option<&str>,
-    ledger_dir: &PathBuf,
+    ledger_dir: &Path,
 ) -> Result<()> {
     use agents::{
         causal_agent::CausalAgent,
@@ -1424,7 +1633,7 @@ fn cmd_discover_agents(
     eprintln!("  Ledger dir:      {}\n", ledger_dir.display());
 
     let config = CampaignConfig {
-        ledger_dir: ledger_dir.clone(),
+        ledger_dir: ledger_dir.to_path_buf(),
         max_iterations: iterations,
         elements: target_elements.clone(),
         nist_index: PathBuf::from("atlas/nist_ipr/index/master_index.json"),
@@ -1453,10 +1662,17 @@ fn cmd_discover_agents(
     // Final report
     eprintln!("\n  ════════════════════════════════════════════════════════════");
     eprintln!("  Discovery campaign complete.");
-    eprintln!("  {} records, {} claims, {} unique potentials across {} elements",
-        summary.total_records, summary.total_claims,
-        summary.unique_potentials, summary.unique_elements);
-    eprintln!("  Confirmed: {} | Refuted: {}", summary.confirmed_claims, summary.refuted_claims);
+    eprintln!(
+        "  {} records, {} claims, {} unique potentials across {} elements",
+        summary.total_records,
+        summary.total_claims,
+        summary.unique_potentials,
+        summary.unique_elements
+    );
+    eprintln!(
+        "  Confirmed: {} | Refuted: {}",
+        summary.confirmed_claims, summary.refuted_claims
+    );
     eprintln!("  Ledger saved to: {}\n", ledger_dir.display());
 
     Ok(())

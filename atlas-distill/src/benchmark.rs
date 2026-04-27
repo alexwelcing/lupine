@@ -157,9 +157,16 @@ pub fn export_csv(entries: &[BenchmarkEntry], path: &Path) -> Result<()> {
     let mut wtr = csv::Writer::from_path(path)
         .with_context(|| format!("Creating CSV writer for {}", path.display()))?;
 
-    wtr.write_record(&["material", "potential", "property", "reference", "predicted", "unit"])?;
+    wtr.write_record([
+        "material",
+        "potential",
+        "property",
+        "reference",
+        "predicted",
+        "unit",
+    ])?;
     for e in entries {
-        wtr.write_record(&[
+        wtr.write_record([
             &e.material,
             &e.potential,
             &e.property,
@@ -180,9 +187,18 @@ pub fn print_summary(summary: &BenchmarkSummary) {
     eprintln!("  ╚════════════════════════════════════════════════════════════╝");
     eprintln!();
     eprintln!("  Entries:      {}", summary.n_entries);
-    eprintln!("  Materials:    {}  {:?}", summary.n_materials, summary.materials);
-    eprintln!("  Potentials:   {}  {:?}", summary.n_potentials, summary.potentials);
-    eprintln!("  Properties:   {}  {:?}", summary.n_properties, summary.properties);
+    eprintln!(
+        "  Materials:    {}  {:?}",
+        summary.n_materials, summary.materials
+    );
+    eprintln!(
+        "  Potentials:   {}  {:?}",
+        summary.n_potentials, summary.potentials
+    );
+    eprintln!(
+        "  Properties:   {}  {:?}",
+        summary.n_properties, summary.properties
+    );
     eprintln!("  Completeness: {:.1}%", summary.completeness * 100.0);
 }
 

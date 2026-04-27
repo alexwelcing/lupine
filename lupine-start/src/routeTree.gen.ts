@@ -9,15 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TestRunsRouteImport } from './routes/test-runs'
+import { Route as SovereigntyRouteImport } from './routes/sovereignty'
 import { Route as ResearchRouteImport } from './routes/research'
+import { Route as ProofRouteImport } from './routes/proof'
+import { Route as OpsRouteImport } from './routes/ops'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as InvestorRelationsRouteImport } from './routes/investor-relations'
+import { Route as AtlasViewerRouteImport } from './routes/atlas-viewer'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AtlasViewerZhRouteImport } from './routes/atlas-viewer.zh'
 
+const TestRunsRoute = TestRunsRouteImport.update({
+  id: '/test-runs',
+  path: '/test-runs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SovereigntyRoute = SovereigntyRouteImport.update({
+  id: '/sovereignty',
+  path: '/sovereignty',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResearchRoute = ResearchRouteImport.update({
   id: '/research',
   path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProofRoute = ProofRouteImport.update({
+  id: '/proof',
+  path: '/proof',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpsRoute = OpsRouteImport.update({
+  id: '/ops',
+  path: '/ops',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveRoute = LiveRouteImport.update({
@@ -30,6 +56,11 @@ const InvestorRelationsRoute = InvestorRelationsRouteImport.update({
   path: '/investor-relations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AtlasViewerRoute = AtlasViewerRouteImport.update({
+  id: '/atlas-viewer',
+  path: '/atlas-viewer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -40,58 +71,142 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AtlasViewerZhRoute = AtlasViewerZhRouteImport.update({
+  id: '/zh',
+  path: '/zh',
+  getParentRoute: () => AtlasViewerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/atlas-viewer': typeof AtlasViewerRouteWithChildren
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
+  '/ops': typeof OpsRoute
+  '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
+  '/sovereignty': typeof SovereigntyRoute
+  '/test-runs': typeof TestRunsRoute
+  '/atlas-viewer/zh': typeof AtlasViewerZhRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/atlas-viewer': typeof AtlasViewerRouteWithChildren
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
+  '/ops': typeof OpsRoute
+  '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
+  '/sovereignty': typeof SovereigntyRoute
+  '/test-runs': typeof TestRunsRoute
+  '/atlas-viewer/zh': typeof AtlasViewerZhRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/atlas-viewer': typeof AtlasViewerRouteWithChildren
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
+  '/ops': typeof OpsRoute
+  '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
+  '/sovereignty': typeof SovereigntyRoute
+  '/test-runs': typeof TestRunsRoute
+  '/atlas-viewer/zh': typeof AtlasViewerZhRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/investor-relations' | '/live' | '/research'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/atlas-viewer'
+    | '/investor-relations'
+    | '/live'
+    | '/ops'
+    | '/proof'
+    | '/research'
+    | '/sovereignty'
+    | '/test-runs'
+    | '/atlas-viewer/zh'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/investor-relations' | '/live' | '/research'
+  to:
+    | '/'
+    | '/about'
+    | '/atlas-viewer'
+    | '/investor-relations'
+    | '/live'
+    | '/ops'
+    | '/proof'
+    | '/research'
+    | '/sovereignty'
+    | '/test-runs'
+    | '/atlas-viewer/zh'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/atlas-viewer'
     | '/investor-relations'
     | '/live'
+    | '/ops'
+    | '/proof'
     | '/research'
+    | '/sovereignty'
+    | '/test-runs'
+    | '/atlas-viewer/zh'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AtlasViewerRoute: typeof AtlasViewerRouteWithChildren
   InvestorRelationsRoute: typeof InvestorRelationsRoute
   LiveRoute: typeof LiveRoute
+  OpsRoute: typeof OpsRoute
+  ProofRoute: typeof ProofRoute
   ResearchRoute: typeof ResearchRoute
+  SovereigntyRoute: typeof SovereigntyRoute
+  TestRunsRoute: typeof TestRunsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/test-runs': {
+      id: '/test-runs'
+      path: '/test-runs'
+      fullPath: '/test-runs'
+      preLoaderRoute: typeof TestRunsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sovereignty': {
+      id: '/sovereignty'
+      path: '/sovereignty'
+      fullPath: '/sovereignty'
+      preLoaderRoute: typeof SovereigntyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/research': {
       id: '/research'
       path: '/research'
       fullPath: '/research'
       preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proof': {
+      id: '/proof'
+      path: '/proof'
+      fullPath: '/proof'
+      preLoaderRoute: typeof ProofRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ops': {
+      id: '/ops'
+      path: '/ops'
+      fullPath: '/ops'
+      preLoaderRoute: typeof OpsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live': {
@@ -108,6 +223,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvestorRelationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/atlas-viewer': {
+      id: '/atlas-viewer'
+      path: '/atlas-viewer'
+      fullPath: '/atlas-viewer'
+      preLoaderRoute: typeof AtlasViewerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -122,15 +244,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/atlas-viewer/zh': {
+      id: '/atlas-viewer/zh'
+      path: '/zh'
+      fullPath: '/atlas-viewer/zh'
+      preLoaderRoute: typeof AtlasViewerZhRouteImport
+      parentRoute: typeof AtlasViewerRoute
+    }
   }
 }
+
+interface AtlasViewerRouteChildren {
+  AtlasViewerZhRoute: typeof AtlasViewerZhRoute
+}
+
+const AtlasViewerRouteChildren: AtlasViewerRouteChildren = {
+  AtlasViewerZhRoute: AtlasViewerZhRoute,
+}
+
+const AtlasViewerRouteWithChildren = AtlasViewerRoute._addFileChildren(
+  AtlasViewerRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AtlasViewerRoute: AtlasViewerRouteWithChildren,
   InvestorRelationsRoute: InvestorRelationsRoute,
   LiveRoute: LiveRoute,
+  OpsRoute: OpsRoute,
+  ProofRoute: ProofRoute,
   ResearchRoute: ResearchRoute,
+  SovereigntyRoute: SovereigntyRoute,
+  TestRunsRoute: TestRunsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

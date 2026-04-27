@@ -1,13 +1,23 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState, useCallback, type ReactNode } from 'react'
-import { AtomicLogo } from '../components/legacy/AtomicLogo'
-import { AtomCanvas } from '../components/legacy/AtomCanvas'
-import { BootSequence } from '../components/legacy/BootSequence'
-import { CustomCursor } from '../components/legacy/CustomCursor'
-import { HUDOverlay } from '../components/legacy/HUDOverlay'
+import { AtomicLogo } from '../components/marketing/AtomicLogo'
+import { AtomCanvas } from '../components/marketing/AtomCanvas'
+import { BootSequence } from '../components/marketing/BootSequence'
+import { HUDOverlay } from '../components/marketing/HUDOverlay'
 
 export const Route = createFileRoute('/')({
   component: LandingPage,
+  head: () => ({
+    meta: [
+      { title: 'Lupine Materials Science — 559 Potentials, WebGPU Viewer, Autonomous Research' },
+      { name: 'description', content: 'Open-source materials science platform with a WebGPU molecular viewer (559 potentials, 15 metals), autonomous research intelligence, and full Chinese language support.' },
+      { property: 'og:title', content: 'Lupine Materials Science — 559 Potentials, WebGPU Viewer, Autonomous Research' },
+      { property: 'og:description', content: 'Open-source materials science platform with a WebGPU molecular viewer (559 potentials, 15 metals), autonomous research intelligence, and full Chinese language support.' },
+      { property: 'og:url', content: 'https://lupine.science/' },
+      { name: 'twitter:title', content: 'Lupine Materials Science — 559 Potentials, WebGPU Viewer, Autonomous Research' },
+      { name: 'twitter:description', content: 'Open-source materials science platform with a WebGPU molecular viewer (559 potentials, 15 metals), autonomous research intelligence, and full Chinese language support.' },
+    ],
+  }),
 })
 
 /* ─── Scroll Reveal ─── */
@@ -201,6 +211,29 @@ function LegacyNav() {
     ['Market', '#market'],
   ]
 
+  const navLink = (href: string, label: string) => {
+    if (href.startsWith('/')) {
+      return (
+        <Link
+          key={label}
+          to={href}
+          className="text-[13px] font-medium uppercase tracking-widest text-[var(--slate-400)] hover:text-[var(--lupine-400)] transition-colors duration-300 bg-transparent border-none"
+        >
+          {label}
+        </Link>
+      )
+    }
+    return (
+      <button
+        key={label}
+        onClick={() => scrollTo(href)}
+        className="text-[13px] font-medium uppercase tracking-widest text-[var(--slate-400)] hover:text-[var(--lupine-400)] transition-colors duration-300 bg-transparent border-none"
+      >
+        {label}
+      </button>
+    )
+  }
+
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between transition-all duration-[400ms]"
@@ -218,15 +251,8 @@ function LegacyNav() {
       </a>
 
       <div className="hidden md:flex items-center gap-8">
-        {navItems.map(([label, id]) => (
-          <button
-            key={label}
-            onClick={() => scrollTo(id)}
-            className="text-[13px] font-medium uppercase tracking-widest text-[var(--slate-400)] hover:text-[var(--lupine-400)] transition-colors duration-300 bg-transparent border-none"
-          >
-            {label}
-          </button>
-        ))}
+        {navItems.map(([label, id]) => navLink(id, label))}
+        {navLink('/atlas-viewer', 'Viewer')}
         <Link
           to="/research"
           className="text-[13px] font-semibold text-white px-6 py-2.5 rounded-lg border border-white/10 transition-all duration-300 hover:-translate-y-px no-underline"
@@ -273,6 +299,13 @@ function LegacyNav() {
               {label}
             </button>
           ))}
+          <Link
+            to="/atlas-viewer"
+            className="text-left text-[13px] font-medium uppercase tracking-widest text-[var(--lupine-400)] transition-colors duration-300 bg-transparent border-none py-2 no-underline"
+            onClick={() => setMobileOpen(false)}
+          >
+            Viewer
+          </Link>
         </div>
       )}
     </nav>
@@ -381,12 +414,30 @@ function HeroSection() {
             animation: 'fade-up 0.8s 0.7s both',
           }}
         >
-          The first platform to unify quantum DFT, molecular dynamics, and machine-learned potentials in a single Rust codebase. From electrons to engineering insights — in one command.
+          A live WebGPU molecular viewer with 559 interatomic potentials and 15 metals benchmarked. An autonomous research engine that extracts physical laws from literature. Built in Rust, Apache 2.0, with full Chinese language support.
         </p>
 
         <div className="flex gap-4 justify-center" style={{ animation: 'fade-up 0.8s 0.9s both' }}>
           <ScrambleButton href="#contact">Request Investor Briefing</ScrambleButton>
           <ScrambleButton href="#product" variant="secondary">See the Product</ScrambleButton>
+        </div>
+
+        <div className="mt-10" style={{ animation: 'fade-up 0.8s 1.1s both' }}>
+          <Link
+            to="/atlas-viewer"
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[13px] font-medium no-underline transition-all duration-300 hover:-translate-y-0.5"
+            style={{
+              color: 'var(--accent-cyan)',
+              background: 'rgba(78, 205, 196, 0.08)',
+              border: '1px solid rgba(78, 205, 196, 0.2)',
+            }}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: 'var(--accent-cyan)' }} />
+              <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: 'var(--accent-cyan)' }} />
+            </span>
+            Live Demo — 10M+ atoms in your browser
+          </Link>
         </div>
       </div>
 
@@ -412,6 +463,65 @@ function HeroSection() {
           Scroll
         </span>
         <div className="w-px h-12" style={{ background: 'linear-gradient(to bottom, var(--lupine-500), transparent)' }} />
+      </div>
+    </section>
+  )
+}
+
+/* ─── Viewer Stats Strip ─── */
+function ViewerStatsStrip() {
+  const stats = [
+    { value: '10M+', label: 'Atoms Rendered' },
+    { value: '60fps', label: 'WebGPU in Browser' },
+    { value: '559', label: 'Potentials Catalogued' },
+    { value: '0', label: 'Installs Required' },
+  ]
+
+  return (
+    <section style={{ padding: '40px 40px 0' }}>
+      <div className="max-w-[1200px] mx-auto">
+        <Reveal>
+          <div
+            className="rounded-2xl p-8 flex flex-wrap items-center justify-center gap-8 lg:gap-16"
+            style={{
+              background: 'linear-gradient(135deg, rgba(46,58,135,0.1), rgba(91,58,140,0.06))',
+              border: '1px solid rgba(255,255,255,0.06)',
+            }}
+          >
+            {stats.map((s, i) => (
+              <div key={s.label} className="text-center">
+                <div
+                  className="font-serif text-[28px] font-bold"
+                  style={{
+                    backgroundImage: i === 3
+                      ? 'linear-gradient(135deg, var(--accent-cyan), #2a9d8f)'
+                      : 'linear-gradient(135deg, var(--lupine-300), var(--violet-300))',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  {s.value}
+                </div>
+                <div className="text-[11px] uppercase tracking-widest mt-1" style={{ color: 'var(--slate-500)' }}>
+                  {s.label}
+                </div>
+              </div>
+            ))}
+            <Link
+              to="/atlas-viewer"
+              className="ml-0 lg:ml-4 inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[13px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
+              style={{
+                background: 'linear-gradient(135deg, var(--lupine-700), var(--lupine-600))',
+                color: 'white',
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              Launch Viewer
+              <span style={{ fontSize: 16 }}>&rarr;</span>
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </section>
   )
@@ -518,18 +628,18 @@ function ProblemSection() {
 /* ─── Pipeline ─── */
 function PipelineSection() {
   const steps = [
-    { node: 'DFT', label: 'Quantum DFT', desc: 'VASP-compatible plane-wave PAW calculations', colors: ['rgba(46, 58, 135, 0.3)', 'rgba(46, 58, 135, 0.1)', 'rgba(46, 58, 135, 0.4)'] },
-    { node: 'ML', label: 'ML Potentials', desc: 'Train MACE, NequIP, DeePMD from DFT data', colors: ['rgba(91, 58, 140, 0.3)', 'rgba(91, 58, 140, 0.1)', 'rgba(91, 58, 140, 0.4)'] },
-    { node: 'MD', label: 'Molecular Dynamics', desc: 'LAMMPS-compatible, billion-atom simulations', colors: ['rgba(78, 205, 196, 0.2)', 'rgba(78, 205, 196, 0.05)', 'rgba(78, 205, 196, 0.3)'] },
-    { node: 'D', label: 'Materials Discovery', desc: 'Properties at near-DFT accuracy, 1000× speed', colors: ['rgba(212, 168, 67, 0.2)', 'rgba(212, 168, 67, 0.05)', 'rgba(212, 168, 67, 0.3)'] },
+    { node: 'V', label: 'Atlas Viewer', desc: 'WebGPU molecular visualization — 10M+ atoms, zero install', colors: ['rgba(46, 58, 135, 0.3)', 'rgba(46, 58, 135, 0.1)', 'rgba(46, 58, 135, 0.4)'] },
+    { node: 'A', label: 'Potential Atlas', desc: '559 potentials from OpenKIM, 15 metals benchmarked', colors: ['rgba(91, 58, 140, 0.3)', 'rgba(91, 58, 140, 0.1)', 'rgba(91, 58, 140, 0.4)'] },
+    { node: 'D', label: 'Distill Engine', desc: 'Autonomous research intelligence from 60+ papers', colors: ['rgba(78, 205, 196, 0.2)', 'rgba(78, 205, 196, 0.05)', 'rgba(78, 205, 196, 0.3)'] },
+    { node: 'R', label: 'Discovery', desc: 'Hyper-ribbon geometry — from error analysis to universal potentials', colors: ['rgba(212, 168, 67, 0.2)', 'rgba(212, 168, 67, 0.05)', 'rgba(212, 168, 67, 0.3)'] },
   ]
 
   const tableRows = [
-    ['Plane-wave DFT', 'Yes', '—', 'Yes', 'Yes'],
-    ['Classical MD', '—', 'Yes', '—', 'Yes'],
-    ['ML potentials (native)', '—', 'Plugin', '—', 'Yes, Core'],
-    ['DFT / ML / MD pipeline', '—', '—', '—', 'Yes, one command'],
-    ['Differentiable simulation', '—', '—', '—', 'Yes'],
+    ['WebGPU Visualization', '—', '—', '—', 'Yes, Native'],
+    ['Potential Database', '—', '—', '—', 'Yes, 559 entries'],
+    ['Research Intelligence', '—', '—', '—', 'Yes, Automated'],
+    ['Multi-language Support', '—', '—', '—', 'Yes, EN + 中文'],
+    ['Browser-based', '—', '—', '—', 'Yes'],
     ['License', 'Commercial', 'GPL', 'GPL', 'Apache 2.0'],
     ['Language', 'Fortran', 'C++', 'Fortran', 'Rust'],
   ]
@@ -659,8 +769,9 @@ function BeachheadSection() {
 
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         <Reveal>
-          <div
-            className="relative rounded-2xl overflow-hidden flex items-center justify-center"
+          <Link
+            to="/atlas-viewer"
+            className="relative rounded-2xl overflow-hidden flex items-center justify-center no-underline group"
             style={{
               background: 'var(--slate-800)',
               border: '1px solid var(--slate-700)',
@@ -668,7 +779,7 @@ function BeachheadSection() {
             }}
           >
             <div
-              className="absolute top-4 left-4 text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-md"
+              className="absolute top-4 left-4 text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-md z-10"
               style={{
                 color: 'var(--accent-cyan)',
                 background: 'rgba(78, 205, 196, 0.1)',
@@ -676,6 +787,21 @@ function BeachheadSection() {
               }}
             >
               &#9679; Live Product
+            </div>
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10"
+              style={{ background: 'rgba(10,11,18,0.6)', backdropFilter: 'blur(4px)' }}
+            >
+              <span
+                className="px-6 py-3 rounded-xl text-[14px] font-semibold"
+                style={{
+                  background: 'linear-gradient(135deg, var(--lupine-700), var(--lupine-600))',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }}
+              >
+                Open Viewer &rarr;
+              </span>
             </div>
             <div className="text-center p-10">
               <div className="grid grid-cols-8 gap-1.5 max-w-[320px] mx-auto">
@@ -698,7 +824,7 @@ function BeachheadSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </Link>
         </Reveal>
 
         <Reveal>
@@ -714,12 +840,13 @@ function BeachheadSection() {
             </p>
             <ul className="space-y-2.5 my-8">
               {[
-                'WebGPU rendering — 10M+ atoms at 60fps',
-                'Rust/WASM parsers — 10x faster than JavaScript',
-                'SSAO, depth of field, bloom — publication quality',
+                'WebGPU rendering — 10M+ atoms at 60fps, zero install',
+                '559 OpenKIM potentials + 15 metals benchmarked',
+                'CN-NBSDC-001 dataset — Chinese national data center',
+                'Full Chinese language support (EN + 中文)',
+                'Demo mode — try instantly without uploading files',
                 'URL sharing — send a link, not a file',
-                'Free forever — replaces $$/yr OVITO Pro seats',
-                'WebCodecs video export — hardware-accelerated',
+                'SSAO, depth of field, bloom — publication quality',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm" style={{ color: 'var(--slate-300)' }}>
                   <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: 'var(--accent-cyan)' }} />
@@ -727,7 +854,10 @@ function BeachheadSection() {
                 </li>
               ))}
             </ul>
-            <ScrambleButton href="#">Try Lupine View</ScrambleButton>
+            <div className="flex gap-3 flex-wrap">
+          <ScrambleButton href="/atlas-viewer">Try Lupine View</ScrambleButton>
+          <ScrambleButton href="/atlas-viewer?demo=1" variant="secondary">Launch Demo</ScrambleButton>
+        </div>
           </div>
         </Reveal>
       </div>
@@ -796,17 +926,17 @@ function ResearchSection() {
         </Reveal>
         <Reveal>
           <p className="font-light text-[17px] leading-relaxed mb-16" style={{ color: 'var(--slate-400)', maxWidth: 600 }}>
-            The Lupine Distill engine mines published MD research to extract, validate, and discover mathematical relationships — automating what takes researchers months.
+            The Lupine Distill engine mines published MD research to extract, validate, and discover mathematical relationships. Our hyper-ribbon geometry framework reveals that universal potentials need only capture a small number of orthogonal error modes — published and peer-reviewed.
           </p>
         </Reveal>
 
         {/* Stats grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
           {[
+            { num: '559', label: 'Potentials Catalogued', sub: 'OpenKIM + NIST IPR' },
+            { num: '1,677', label: 'Predictions Analyzed', sub: '15 metals benchmarked' },
             { num: '60', label: 'Papers Analyzed', sub: '2025–2026 corpus' },
-            { num: '15', label: 'Canonical Laws', sub: 'Recovered autonomously' },
-            { num: '6', label: 'Fitting Algorithms', sub: 'Linear → Symbolic GP' },
-            { num: '49', label: 'Tests Passing', sub: 'Fully verified', cyan: true },
+            { num: '15', label: 'Canonical Laws', sub: 'Recovered autonomously', cyan: true },
           ].map((s, i) => (
             <Reveal key={s.label} delay={i * 0.1}>
               <div
@@ -960,7 +1090,7 @@ function ResearchSection() {
             <p className="text-[13px] leading-relaxed mt-5 mx-auto" style={{ color: 'var(--slate-400)', maxWidth: 600 }}>
               Written entirely in Rust. No Python. No notebooks.
               <br />
-              From raw literature to mathematical discovery in a single binary.
+              From 559 interatomic potentials to hyper-ribbon geometry in a single binary.
             </p>
           </div>
         </Reveal>
@@ -1058,7 +1188,7 @@ function WhyNowSection() {
     },
     {
       title: 'WebGPU is here',
-      text: 'Browser-native GPU compute unlocks scientific visualization without install barriers. We\'re the first to bring it to materials science.',
+      text: 'Browser-native GPU compute unlocks scientific visualization without install barriers. Our viewer ships with 559 potentials, full Chinese language support, and CN-NBSDC national data center integration.',
       color: 'var(--violet-700)',
     },
     {
@@ -1176,19 +1306,22 @@ function CTASection() {
         </Reveal>
         <Reveal>
           <p className="font-light text-[17px] leading-relaxed mb-10 mx-auto" style={{ color: 'var(--slate-400)', maxWidth: 500 }}>
-            We are building the computational engine that will underpin the next generation of batteries, alloys, semiconductors, and advanced materials. If you invest in deep tech, we should talk.
+            A live WebGPU viewer with 559 potentials. An autonomous research engine with published hyper-ribbon geometry. Full Chinese language support for national data center integration. If you invest in deep tech, we should talk.
           </p>
         </Reveal>
         <Reveal>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
-              href="mailto:founders@lupine.science"
+              href="mailto:alexwelcing@gmail.com"
               className="inline-flex items-center gap-2 px-9 py-4 rounded-xl text-[15px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
               style={{ background: 'linear-gradient(135deg, var(--lupine-700), var(--lupine-600))' }}
             >
-              founders@lupine.science
+              Email Founder
             </a>
-            <ScrambleButton href="#" variant="secondary">
+            <ScrambleButton href="/atlas-viewer" variant="secondary">
+              Try the Viewer
+            </ScrambleButton>
+            <ScrambleButton href="/research" variant="secondary">
               Download One-Pager
             </ScrambleButton>
           </div>
@@ -1202,16 +1335,30 @@ function CTASection() {
 function LegacyFooter() {
   const columns = [
     {
-      title: 'Platform',
-      links: ['Architecture', 'ML Potentials', 'WebGPU Compute', 'Why Rust'],
+      title: 'Product',
+      links: [
+        { label: 'Atlas Viewer', href: '/atlas-viewer' },
+        { label: 'Architecture', href: '#' },
+        { label: 'ML Potentials', href: '#' },
+        { label: 'WebGPU Compute', href: '#' },
+      ],
     },
     {
       title: 'Solutions',
-      links: ['Solid-State Batteries', 'Aerospace Alloys', 'Defense & Gov'],
+      links: [
+        { label: 'Solid-State Batteries', href: '#' },
+        { label: 'Aerospace Alloys', href: '#' },
+        { label: 'Defense & Gov', href: '#' },
+      ],
     },
     {
       title: 'Company',
-      links: ['Vision', 'Sovereignty', 'Investors'],
+      links: [
+        { label: 'Research', href: '/research' },
+        { label: 'Vision', href: '#' },
+        { label: 'Sovereignty', href: '#' },
+        { label: 'Investors', href: '#' },
+      ],
     },
   ]
 
@@ -1225,14 +1372,14 @@ function LegacyFooter() {
                 {col.title}
               </h4>
               {col.links.map((link) => (
-                <a
-                  key={link}
-                  href="#"
+                <Link
+                  key={link.label}
+                  to={link.href}
                   className="block text-[13px] mb-2 no-underline transition-colors hover:text-[var(--lupine-400)]"
                   style={{ color: 'var(--slate-500)' }}
                 >
-                  {link}
-                </a>
+                  {link.label}
+                </Link>
               ))}
             </div>
           ))}
@@ -1253,7 +1400,7 @@ function LandingPage() {
   return (
     <div className="relative" style={{ color: 'var(--slate-200)' }}>
       <BootSequence />
-      <CustomCursor />
+
 
       {/* Fixed background layers */}
       <div style={{ position: 'fixed', inset: 0, background: 'var(--slate-950)', zIndex: -3 }} />
@@ -1273,6 +1420,7 @@ function LandingPage() {
 
       <main>
         <HeroSection />
+        <ViewerStatsStrip />
         <ProblemSection />
         <PipelineSection />
         <BeachheadSection />

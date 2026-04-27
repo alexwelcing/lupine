@@ -14,6 +14,7 @@ import {
   MiniMaxProvider,
   HFProvider,
 } from "./providers";
+import type { Env } from "../types";
 
 export class ModelRouter {
   private providers: Map<string, Provider> = new Map();

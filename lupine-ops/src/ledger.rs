@@ -5,7 +5,7 @@
 //! a literature citation, an OpenKIM test, or an agent inference.
 
 use serde::{Deserialize, Serialize};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 // ───────────────────────────────────────────────────────────
 // Core Types
@@ -58,10 +58,7 @@ pub enum Provenance {
         extraction_method: String,
     },
     /// Retrieved from OpenKIM test result
-    OpenKimTest {
-        test_id: String,
-        model_id: String,
-    },
+    OpenKimTest { test_id: String, model_id: String },
     /// Inferred by an agent (e.g. interpolation, ML prediction)
     AgentInference {
         method: String,
@@ -71,10 +68,7 @@ pub enum Provenance {
     /// Hardcoded / synthetic benchmark data — NOT from any real computation.
     /// This provenance type explicitly marks data that was manually entered
     /// or generated for testing. It MUST NOT be treated as empirical evidence.
-    SyntheticBenchmark {
-        source: String,
-        warning: String,
-    },
+    SyntheticBenchmark { source: String, warning: String },
 }
 
 /// A discovery claim made by an agent.
@@ -241,8 +235,7 @@ impl DiscoveryLedger {
 
     /// Save to a directory (overwrites existing files).
     pub fn save(&self, dir: &Path) -> Result<(), LedgerError> {
-        std::fs::create_dir_all(dir)
-            .map_err(|e| LedgerError::Io(e.to_string()))?;
+        std::fs::create_dir_all(dir).map_err(|e| LedgerError::Io(e.to_string()))?;
 
         write_jsonl(&dir.join("records.jsonl"), &self.records)?;
         write_jsonl(&dir.join("claims.jsonl"), &self.claims)?;
@@ -251,7 +244,11 @@ impl DiscoveryLedger {
     }
 
     /// Append a single record (also writes to disk immediately).
-    pub fn append_record(&mut self, record: BenchmarkRecord, dir: &Path) -> Result<(), LedgerError> {
+    pub fn append_record(
+        &mut self,
+        record: BenchmarkRecord,
+        dir: &Path,
+    ) -> Result<(), LedgerError> {
         append_jsonl_line(&dir.join("records.jsonl"), &record)?;
         self.records.push(record);
         Ok(())
@@ -266,22 +263,34 @@ impl DiscoveryLedger {
 
     /// Get all records for a specific element.
     pub fn records_for_element(&self, element: &str) -> Vec<&BenchmarkRecord> {
-        self.records.iter().filter(|r| r.element == element).collect()
+        self.records
+            .iter()
+            .filter(|r| r.element == element)
+            .collect()
     }
 
     /// Get all records for a specific potential.
     pub fn records_for_potential(&self, potential_id: &str) -> Vec<&BenchmarkRecord> {
-        self.records.iter().filter(|r| r.potential_id == potential_id).collect()
+        self.records
+            .iter()
+            .filter(|r| r.potential_id == potential_id)
+            .collect()
     }
 
     /// Get all records for a specific property.
     pub fn records_for_property(&self, property: &str) -> Vec<&BenchmarkRecord> {
-        self.records.iter().filter(|r| r.property == property).collect()
+        self.records
+            .iter()
+            .filter(|r| r.property == property)
+            .collect()
     }
 
     /// Get all unconfirmed claims.
     pub fn pending_claims(&self) -> Vec<&AgentClaim> {
-        self.claims.iter().filter(|c| c.status == ClaimStatus::Proposed).collect()
+        self.claims
+            .iter()
+            .filter(|c| c.status == ClaimStatus::Proposed)
+            .collect()
     }
 
     /// Count unique potentials with data.
@@ -304,8 +313,10 @@ impl DiscoveryLedger {
 
     /// Summary statistics.
     pub fn summary(&self) -> LedgerSummary {
-        let mut by_agent: std::collections::HashMap<String, usize> = std::collections::HashMap::new();
-        let mut by_provenance: std::collections::HashMap<String, usize> = std::collections::HashMap::new();
+        let mut by_agent: std::collections::HashMap<String, usize> =
+            std::collections::HashMap::new();
+        let mut by_provenance: std::collections::HashMap<String, usize> =
+            std::collections::HashMap::new();
         for r in &self.records {
             *by_agent.entry(r.agent_id.clone()).or_default() += 1;
             let prov_type = match &r.provenance {
@@ -323,8 +334,18 @@ impl DiscoveryLedger {
             total_claims: self.claims.len(),
             unique_potentials: self.unique_potentials(),
             unique_elements: self.unique_elements(),
-            confirmed_claims: self.claims.iter().filter(|c| c.status == ClaimStatus::Confirmed || c.status == ClaimStatus::FormallyProven).count(),
-            refuted_claims: self.claims.iter().filter(|c| c.status == ClaimStatus::Refuted).count(),
+            confirmed_claims: self
+                .claims
+                .iter()
+                .filter(|c| {
+                    c.status == ClaimStatus::Confirmed || c.status == ClaimStatus::FormallyProven
+                })
+                .count(),
+            refuted_claims: self
+                .claims
+                .iter()
+                .filter(|c| c.status == ClaimStatus::Refuted)
+                .count(),
             records_by_agent: by_agent,
             records_by_provenance: by_provenance,
         }
@@ -373,7 +394,7 @@ impl std::error::Error for LedgerError {}
 
 impl From<LedgerError> for std::io::Error {
     fn from(e: LedgerError) -> Self {
-        std::io::Error::new(std::io::ErrorKind::Other, e.to_string())
+        std::io::Error::other(e.to_string())
     }
 }
 
@@ -382,8 +403,7 @@ impl From<LedgerError> for std::io::Error {
 // ───────────────────────────────────────────────────────────
 
 fn read_jsonl<T: for<'de> Deserialize<'de>>(path: &Path) -> Result<Vec<T>, LedgerError> {
-    let content = std::fs::read_to_string(path)
-        .map_err(|e| LedgerError::Io(e.to_string()))?;
+    let content = std::fs::read_to_string(path).map_err(|e| LedgerError::Io(e.to_string()))?;
     let mut items = Vec::new();
     for line in content.lines() {
         let line = line.trim();
@@ -399,13 +419,10 @@ fn read_jsonl<T: for<'de> Deserialize<'de>>(path: &Path) -> Result<Vec<T>, Ledge
 
 fn write_jsonl<T: Serialize>(path: &Path, items: &[T]) -> Result<(), LedgerError> {
     use std::io::Write;
-    let mut f = std::fs::File::create(path)
-        .map_err(|e| LedgerError::Io(e.to_string()))?;
+    let mut f = std::fs::File::create(path).map_err(|e| LedgerError::Io(e.to_string()))?;
     for item in items {
-        let line = serde_json::to_string(item)
-            .map_err(|e| LedgerError::Serde(e.to_string()))?;
-        writeln!(f, "{}", line)
-            .map_err(|e| LedgerError::Io(e.to_string()))?;
+        let line = serde_json::to_string(item).map_err(|e| LedgerError::Serde(e.to_string()))?;
+        writeln!(f, "{}", line).map_err(|e| LedgerError::Io(e.to_string()))?;
     }
     Ok(())
 }
@@ -414,18 +431,15 @@ fn append_jsonl_line<T: Serialize>(path: &Path, item: &T) -> Result<(), LedgerEr
     use std::io::Write;
     // Ensure parent directories exist
     if let Some(parent) = path.parent() {
-        std::fs::create_dir_all(parent)
-            .map_err(|e| LedgerError::Io(e.to_string()))?;
+        std::fs::create_dir_all(parent).map_err(|e| LedgerError::Io(e.to_string()))?;
     }
     let mut f = std::fs::OpenOptions::new()
         .create(true)
         .append(true)
         .open(path)
         .map_err(|e| LedgerError::Io(e.to_string()))?;
-    let line = serde_json::to_string(item)
-        .map_err(|e| LedgerError::Serde(e.to_string()))?;
-    writeln!(f, "{}", line)
-        .map_err(|e| LedgerError::Io(e.to_string()))?;
+    let line = serde_json::to_string(item).map_err(|e| LedgerError::Serde(e.to_string()))?;
+    writeln!(f, "{}", line).map_err(|e| LedgerError::Io(e.to_string()))?;
     Ok(())
 }
 
@@ -466,8 +480,14 @@ pub fn now_iso8601() -> String {
     let mut y = 1970i64;
     let mut remaining = days as i64;
     loop {
-        let days_in_year = if y % 4 == 0 && (y % 100 != 0 || y % 400 == 0) { 366 } else { 365 };
-        if remaining < days_in_year { break; }
+        let days_in_year = if y % 4 == 0 && (y % 100 != 0 || y % 400 == 0) {
+            366
+        } else {
+            365
+        };
+        if remaining < days_in_year {
+            break;
+        }
         remaining -= days_in_year;
         y += 1;
     }
@@ -478,12 +498,23 @@ pub fn now_iso8601() -> String {
     };
     let mut m = 0usize;
     for (i, &md) in month_days.iter().enumerate() {
-        if remaining < md as i64 { m = i; break; }
+        if remaining < md as i64 {
+            m = i;
+            break;
+        }
         remaining -= md as i64;
     }
     let d = remaining + 1;
 
-    format!("{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z", y, m + 1, d, hours, minutes, seconds)
+    format!(
+        "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z",
+        y,
+        m + 1,
+        d,
+        hours,
+        minutes,
+        seconds
+    )
 }
 
 #[cfg(test)]
@@ -511,7 +542,11 @@ mod tests {
     #[test]
     fn test_iso8601_format() {
         let ts = now_iso8601();
-        assert!(ts.starts_with("20"), "Timestamp should start with year 20xx: {}", ts);
+        assert!(
+            ts.starts_with("20"),
+            "Timestamp should start with year 20xx: {}",
+            ts
+        );
         assert!(ts.ends_with('Z'), "Timestamp should end with Z: {}", ts);
     }
 
@@ -554,7 +589,11 @@ mod tests {
         let mut ledger = DiscoveryLedger::new();
         let ts = now_iso8601();
 
-        for (el, prop, val) in [("Al", "C11", 110.0), ("Al", "C12", 62.0), ("Cu", "C11", 170.0)] {
+        for (el, prop, val) in [
+            ("Al", "C11", 110.0),
+            ("Al", "C12", 62.0),
+            ("Cu", "C11", 170.0),
+        ] {
             ledger.records.push(BenchmarkRecord {
                 record_id: generate_record_id("test"),
                 potential_id: format!("pot-{}", el),

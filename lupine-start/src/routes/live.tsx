@@ -2,6 +2,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { marked } from 'marked'
 import { useQuery } from '@tanstack/react-query'
+import { Activity, Atom, CheckCircle2, Clock3, FlaskConical, Radio, Sparkles, XCircle } from 'lucide-react'
+import type { ReactNode } from 'react'
 import { PageShell } from '../components/ui/PageShell'
 
 export const Route = createFileRoute('/live')({
@@ -15,6 +17,7 @@ export const Route = createFileRoute('/live')({
 })
 
 const FEED_URL = 'https://glim-think-v1.aw-ab5.workers.dev/feed'
+const BROADCASTS_URL = 'https://glim-think-v1.aw-ab5.workers.dev/broadcasts?limit=10'
 
 function timeAgo(dateString: string) {
   if (!dateString) return ''
@@ -61,25 +64,92 @@ function LiveLabComponent() {
     refetchInterval: 10000,
   })
 
+  const { data: broadcastData } = useQuery({
+    queryKey: ['lab-broadcasts'],
+    queryFn: async () => {
+      const res = await fetch(BROADCASTS_URL)
+      if (!res.ok) throw new Error('Broadcast response was not ok')
+      return res.json()
+    },
+    refetchInterval: 60000,
+  })
+
   const provens = data?.provens || []
   const hypotheticals = data?.hypotheticals || []
   const disproven = data?.disproven || []
   const swarm = data?.swarm_status || {}
   const metrics = data?.metrics
   const diary = data?.diary
+  const latestBroadcast = data?.broadcast || broadcastData?.broadcasts?.[0]
+  const broadcasts = broadcastData?.broadcasts || (latestBroadcast ? [latestBroadcast] : [])
+  const broadcastMetrics = latestBroadcast?.metrics
 
   return (
     <PageShell
-      kicker="LIVE LAB: OPERATIONAL"
-      title="The Living Laboratory"
-      subtitle="Real-time telemetry of the GLIM-THINK autonomous swarm. This engine runs 24/7, continuously designing LAMMPS experiments, discovering prediction error manifolds, and falsifying physical models."
+      kicker="LIVE LAB: HOURLY BROADCAST"
+      title="The Lab at Work"
+      subtitle="A public operating room for GLIM-THINK: hourly progress reports, research diary output, experiment queues, and the agent fleet that turns benchmark evidence into claims."
     >
+      <section className="mb-8 overflow-hidden border border-[var(--outline-variant)] bg-[linear-gradient(135deg,rgba(0,251,251,0.10),rgba(235,178,255,0.06)_44%,rgba(212,168,67,0.10))]">
+        <div className="grid grid-cols-1 xl:grid-cols-12">
+          <div className="xl:col-span-8 p-6 md:p-8 lg:p-10">
+            <div className="flex flex-wrap items-center gap-3 mb-7">
+              <span className="inline-flex h-9 w-9 items-center justify-center border border-[var(--primary)]/35 bg-[var(--primary-container)] text-[var(--primary)]">
+                <Radio size={18} />
+              </span>
+              <span className="mono-label text-[var(--primary)]">NEXT REPORT WINDOW: TOP OF THE HOUR</span>
+              <span className="mono-label text-[var(--on-surface-variant-mid)]">
+                {latestBroadcast?.created_at ? timeAgo(latestBroadcast.created_at) : 'awaiting first broadcast'}
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-5xl mb-5 max-w-4xl">
+              {latestBroadcast?.title || 'The hourly lab broadcast is standing by.'}
+            </h2>
+            <p className="text-base md:text-lg leading-relaxed text-[var(--on-surface-variant)] max-w-4xl">
+              {latestBroadcast?.summary || 'GLIM-THINK will publish a concise progress signal here after the scheduled worker writes the first broadcast artifact.'}
+            </p>
+            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+              <BroadcastMetric label="Records" value={broadcastMetrics?.totalRecords ?? '--'} icon={<Atom size={16} />} />
+              <BroadcastMetric label="Claims" value={broadcastMetrics?.totalClaims ?? '--'} icon={<Sparkles size={16} />} />
+              <BroadcastMetric label="Pending" value={broadcastMetrics?.pendingHypotheses ?? '--'} icon={<Clock3 size={16} />} />
+              <BroadcastMetric label="Validated" value={broadcastMetrics?.completedExperiments ?? '--'} icon={<CheckCircle2 size={16} />} />
+            </div>
+          </div>
+          <div className="xl:col-span-4 border-t xl:border-t-0 xl:border-l border-[var(--outline-variant)] bg-[var(--surface-container-low)]/80 p-6 md:p-8">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="mono-label text-[var(--secondary)]">BROADCAST HISTORY</h3>
+              <Activity size={16} className="text-[var(--secondary)]" />
+            </div>
+            <div className="space-y-3">
+              {broadcasts.length === 0 ? (
+                <div className="border border-dashed border-[var(--outline-variant)] p-5 text-sm text-[var(--on-surface-variant)]">
+                  No broadcast artifacts have been published yet.
+                </div>
+              ) : (
+                broadcasts.slice(0, 5).map((broadcast: any) => (
+                  <div key={broadcast.broadcast_id} className="border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <span className="font-display text-sm font-semibold text-[var(--on-surface)]">{broadcast.title}</span>
+                      <span className="mono-label text-[var(--primary)]">{broadcast.cadence}</span>
+                    </div>
+                    <p className="line-clamp-2 text-xs leading-relaxed text-[var(--on-surface-variant)]">{broadcast.summary}</p>
+                    <div className="mt-3 font-mono text-[9px] uppercase tracking-widest text-[var(--on-surface-variant-mid)]">
+                      {timeAgo(broadcast.created_at)}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Top Stats Bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Active Agents" value={Object.values(swarm).filter((a: any) => a.status === 'active').length} total={Object.keys(swarm).length} color="var(--primary)" />
-        <StatCard label="Proven" value={provens.length} color="#4ecdc4" />
-        <StatCard label="Hypotheticals" value={hypotheticals.length} color="var(--on-surface-variant)" />
-        <StatCard label="Falsified" value={disproven.length} color="var(--error)" />
+        <StatCard label="Active Agents" value={Object.values(swarm).filter((a: any) => a.status === 'active').length} total={Object.keys(swarm).length} color="var(--primary)" icon={<Activity size={18} />} />
+        <StatCard label="Proven" value={provens.length} color="#4ecdc4" icon={<CheckCircle2 size={18} />} />
+        <StatCard label="Hypotheticals" value={hypotheticals.length} color="var(--on-surface-variant)" icon={<FlaskConical size={18} />} />
+        <StatCard label="Falsified" value={disproven.length} color="var(--error)" icon={<XCircle size={18} />} />
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
@@ -281,14 +351,29 @@ function LiveLabComponent() {
 
 /* ─── Subcomponents ─── */
 
-function StatCard({ label, value, total, color }: { label: string; value: number; total?: number; color: string }) {
+function BroadcastMetric({ label, value, icon }: { label: string; value: number | string; icon: ReactNode }) {
+  return (
+    <div className="border border-[var(--outline-variant)] bg-[var(--surface-container-low)]/70 p-4">
+      <div className="mb-3 flex items-center justify-between text-[var(--on-surface-variant-mid)]">
+        <span className="mono-label">{label}</span>
+        <span className="text-[var(--primary)]">{icon}</span>
+      </div>
+      <div className="font-display text-2xl font-bold text-[var(--on-surface)]">{value}</div>
+    </div>
+  )
+}
+
+function StatCard({ label, value, total, color, icon }: { label: string; value: number; total?: number; color: string; icon: ReactNode }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className="glass-panel p-5 flex flex-col"
     >
-      <span className="font-mono text-[9px] uppercase tracking-widest text-[var(--on-surface-variant-mid)] mb-2">{label}</span>
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <span className="font-mono text-[9px] uppercase tracking-widest text-[var(--on-surface-variant-mid)]">{label}</span>
+        <span style={{ color }}>{icon}</span>
+      </div>
       <div className="flex items-baseline gap-1.5">
         <motion.span
           key={value}

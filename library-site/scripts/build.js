@@ -229,15 +229,15 @@ function build() {
   const version = loadVersion();
   const articles = [];
 
-  for (const entry of CATALOG.entries) {
-    const absPath = path.resolve(REPO_ROOT, entry.source);
+  function processEntry(entry, lang, sourcePath) {
+    const absPath = path.resolve(REPO_ROOT, sourcePath);
     if (!fs.existsSync(absPath)) {
-      console.warn(`[skip] ${entry.source} not found`);
-      continue;
+      console.warn(`[skip] ${sourcePath} not found`);
+      return null;
     }
     const rawMd = fs.readFileSync(absPath, 'utf8');
-    const md = preprocess(rawMd, entry.source);
-    const id = entry.id || slugify(path.basename(entry.source, path.extname(entry.source)));
+    const md = preprocess(rawMd, sourcePath);
+    const id = entry.id || slugify(path.basename(sourcePath, path.extname(sourcePath)));
     const title = entry.title || extractTitle(md, id);
     const subtitle = entry.subtitle || extractSubtitle(md);
     const html = marked.parse(md);
@@ -245,24 +245,57 @@ function build() {
     const words = wordCount(plain);
     const toc = headingsToToc(md);
 
-    const article = {
+    return {
       id,
       title,
       subtitle,
       category: entry.category,
       tags: entry.tags || [],
-      source: entry.source,
+      source: sourcePath,
+      lang,
       words,
       readMinutes: estimateReadMinutes(words),
       toc,
       html,
     };
-    articles.push(article);
+  }
 
+  for (const entry of CATALOG.entries) {
+    // Default language article
+    const defaultArticle = processEntry(entry, 'en', entry.source);
+    if (!defaultArticle) continue;
+
+    const languages = ['en'];
     fs.writeFileSync(
-      path.join(DATA_DIR, `${id}.json`),
-      JSON.stringify(article)
+      path.join(DATA_DIR, `${defaultArticle.id}.json`),
+      JSON.stringify(defaultArticle)
     );
+
+    // Internationalized variants
+    if (entry.i18n) {
+      for (const [lang, sourcePath] of Object.entries(entry.i18n)) {
+        const variant = processEntry(entry, lang, sourcePath);
+        if (variant) {
+          languages.push(lang);
+          fs.writeFileSync(
+            path.join(DATA_DIR, `${variant.id}.${lang}.json`),
+            JSON.stringify(variant)
+          );
+        }
+      }
+    }
+
+    const meta = {
+      id: defaultArticle.id,
+      title: defaultArticle.title,
+      subtitle: defaultArticle.subtitle,
+      category: defaultArticle.category,
+      tags: defaultArticle.tags,
+      words: defaultArticle.words,
+      readMinutes: defaultArticle.readMinutes,
+      languages,
+    };
+    articles.push(meta);
   }
 
   // Library manifest: compact metadata (no html bodies) for fast first paint.
@@ -270,7 +303,8 @@ function build() {
     version,
     generatedAt: new Date().toISOString(),
     categories: CATALOG.categories,
-    articles: articles.map(({ html, toc, ...meta }) => meta),
+    languages: CATALOG.languages || {},
+    articles,
   };
   fs.writeFileSync(path.join(DATA_DIR, 'library.json'), JSON.stringify(manifest, null, 2));
 

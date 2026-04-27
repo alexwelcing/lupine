@@ -43,7 +43,7 @@ export class WorkersAIProvider implements Provider {
       messages,
       max_tokens: opts?.maxTokens ?? 2048,
       temperature: opts?.temperature ?? 0.7,
-    } as AiChatInput);
+    } satisfies Record<string, unknown>);
 
     return {
       text: (result as AiChatOutput).response ?? "",
@@ -255,14 +255,16 @@ export class MiniMaxProvider implements Provider {
 
     const rawText = await res.text();
     if (!res.ok) throw new Error(`MiniMax ${res.status}: ${rawText}`);
-    const data = JSON.parse(rawText) as Record<string, unknown>;
-    if ((data as Record<string, unknown>)?.base_resp?.status_code !== 0) {
-      throw new Error(`MiniMax API error: ${JSON.stringify((data as Record<string, unknown>)?.base_resp)}`);
+    const data = JSON.parse(rawText) as {
+      base_resp?: { status_code?: number };
+      choices?: { message?: { content?: string } }[];
+    };
+    if (data.base_resp?.status_code !== undefined && data.base_resp.status_code !== 0) {
+      throw new Error(`MiniMax API error: ${JSON.stringify(data.base_resp)}`);
     }
-    const choices = (data as { choices?: { message?: { content?: string } }[] }).choices;
 
     return {
-      text: choices?.[0]?.message?.content ?? "",
+      text: data.choices?.[0]?.message?.content ?? "",
       provider: this.name,
       model: this.model,
       latencyMs: Date.now() - start,

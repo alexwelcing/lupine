@@ -3,16 +3,14 @@
 
 steps:
   # Step 1: Run tests
-  - name: 'rust:1.82-slim-bookworm'
+  - name: 'rust:1.88-slim-bookworm'
     entrypoint: 'cargo'
-    args: ['test', '--release']
-    dir: 'atlas-distill'
+    args: ['test', '--release', '-p', 'atlas-distill']
 
   # Step 2: Build release binary
-  - name: 'rust:1.82-slim-bookworm'
+  - name: 'rust:1.88-slim-bookworm'
     entrypoint: 'cargo'
-    args: ['build', '--release', '--bin', 'atlas-distill']
-    dir: 'atlas-distill'
+    args: ['build', '--release', '-p', 'atlas-distill', '--bin', 'atlas-distill']
 
   # Step 3: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
@@ -22,8 +20,9 @@ steps:
       - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/atlas-distill:${COMMIT_SHA}'
       - '-t'
       - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/atlas-distill:latest'
+      - '-f'
+      - 'atlas-distill/Dockerfile'
       - '.'
-    dir: 'atlas-distill'
 
   # Step 4: Push to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'

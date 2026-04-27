@@ -73,6 +73,7 @@ export function AtomsOptimized({
   // Pre-allocated working buffers
   const matrixArray = useMemo(() => new Float32Array(capacity * 16), [capacity]);
   const colorArray = useMemo(() => new Float32Array(capacity * 3), [capacity]);
+  const propArray = useMemo(() => new Float32Array(capacity), [capacity]);
   const _matrix = useMemo(() => new THREE.Matrix4(), []);
   const _position = useMemo(() => new THREE.Vector3(), []);
   const _scale = useMemo(() => new THREE.Vector3(), []);
@@ -93,6 +94,10 @@ export function AtomsOptimized({
     }
     return new THREE.SphereGeometry(1, 32, 32);     // Perfect circle silhouettes for normal files
   }, [renderStyle, frame.natoms > 100000, frame.natoms > 25000]);
+
+  useEffect(() => {
+    geometry.setAttribute('instanceProp', new THREE.InstancedBufferAttribute(propArray, 1));
+  }, [geometry, propArray]);
 
   const uniformsRef = useRef({ uTime: { value: 0 } });
   useFrame((state) => {
@@ -183,9 +188,9 @@ export function AtomsOptimized({
       gradientMap.minFilter = THREE.NearestFilter;
       return new THREE.MeshToonMaterial({ gradientMap });
     }
-    return new THREE.MeshPhysicalMaterial({
-      metalness: 0.15,
-      roughness: 0.35,
+    const mat = new THREE.MeshPhysicalMaterial({
+      metalness: 0.6, // Start highly metallic for stable regions
+      roughness: 0.2, // Start very smooth for stable regions
       clearcoat: 0.8,
       clearcoatRoughness: 0.2,
       envMapIntensity: 1.5,
@@ -193,6 +198,56 @@ export function AtomsOptimized({
       sheenRoughness: 0.5,
       sheenColor: new THREE.Color(0x8888aa),
     });
+
+    mat.onBeforeCompile = (shader) => {
+      // Pass instanceProp from vertex to fragment
+      shader.vertexShader = `
+        attribute float instanceProp;
+        varying float vInstanceProp;
+        ${shader.vertexShader}
+      `;
+      shader.vertexShader = shader.vertexShader.replace(
+        '#include <begin_vertex>',
+        `
+        #include <begin_vertex>
+        vInstanceProp = instanceProp;
+        `
+      );
+
+      shader.fragmentShader = `
+        varying float vInstanceProp;
+        ${shader.fragmentShader}
+      `;
+      
+      // Procedural PBR: Modulate roughness and metalness
+      shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <roughnessmap_fragment>',
+        `
+        #include <roughnessmap_fragment>
+        // High strain/error increases roughness (matte/fractured look)
+        roughnessFactor = mix(roughnessFactor, 0.9, vInstanceProp);
+        `
+      );
+      shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <metalnessmap_fragment>',
+        `
+        #include <metalnessmap_fragment>
+        // High strain/error decreases metalness
+        metalnessFactor = mix(metalnessFactor, 0.05, vInstanceProp);
+        `
+      );
+      
+      // Emissive Radiance: Top 10% of values bleed light
+      shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <emissivemap_fragment>',
+        `
+        #include <emissivemap_fragment>
+        float glowIntensity = smoothstep(0.85, 1.0, vInstanceProp) * 2.5;
+        totalEmissiveRadiance += diffuseColor.rgb * glowIntensity;
+        `
+      );
+    };
+    return mat;
   }, [renderStyle, botanicalMode]);
 
   // Get property data for coloring
@@ -351,6 +406,7 @@ export function AtomsOptimized({
           colorArray[cIdx + 1] = botG[typeId];
           colorArray[cIdx + 2] = botB[typeId];
         }
+        propArray[i] = 0.0;
       } else if (isPropMode) {
         let val = propData![i];
         if (nextPropData && nextPropData.length > i) {
@@ -361,6 +417,7 @@ export function AtomsOptimized({
         colorArray[cIdx] = r;
         colorArray[cIdx + 1] = g;
         colorArray[cIdx + 2] = b;
+        propArray[i] = norm;
       } else {
         const isHighlighted = highlightedAtoms?.has(i);
         let r, g, b;
@@ -379,6 +436,7 @@ export function AtomsOptimized({
           colorArray[cIdx + 1] = g;
           colorArray[cIdx + 2] = b;
         }
+        propArray[i] = 0.0;
       }
     }
 
@@ -387,6 +445,8 @@ export function AtomsOptimized({
     mesh.instanceMatrix.array.set(matrixArray.subarray(0, safeAtomCount * 16));
     mesh.instanceMatrix.needsUpdate = true;
     
+    geometry.attributes.instanceProp.needsUpdate = true;
+
     if (mesh.instanceColor) {
       mesh.instanceColor.array.set(colorArray.subarray(0, safeAtomCount * 3));
       mesh.instanceColor.needsUpdate = true;

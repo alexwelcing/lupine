@@ -3,7 +3,6 @@ use wgpu::util::DeviceExt;
 /// WGPU GPU Compute Experiment
 /// Validates connecting Rust with the NVIDIA GPU to massively parallelize
 /// molecular dynamics data processing (e.g. pairwise distances for RDF).
-
 async fn run_gpu_experiment() {
     let instance = wgpu::Instance::default();
 
@@ -31,9 +30,12 @@ async fn run_gpu_experiment() {
     // 2. Generate Dummy MD Data (e.g. 5,000 particles -> 15,000 f32s)
     let num_particles = 5_000u32;
     let num_pairs = (num_particles * (num_particles - 1)) / 2;
-    
-    println!("  ✦ Generating {} particles ({} distances)...", num_particles, num_pairs);
-    
+
+    println!(
+        "  ✦ Generating {} particles ({} distances)...",
+        num_particles, num_pairs
+    );
+
     let mut particle_data: Vec<f32> = Vec::with_capacity((num_particles * 3) as usize);
     for i in 0..num_particles {
         particle_data.push(i as f32 * 0.1); // x
@@ -66,7 +68,7 @@ async fn run_gpu_experiment() {
     // We only read back a small portion for verification (first 4 floats)
     let staging_buffer = device.create_buffer(&wgpu::BufferDescriptor {
         label: Some("Staging"),
-        size: 16, 
+        size: 16,
         usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST,
         mapped_at_creation: false,
     });
@@ -108,12 +110,13 @@ async fn run_gpu_experiment() {
 
     // 5. Execute Compute Workflow
     println!("  ✦ Dispatching compute shader to GPU...");
-    let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: None });
+    let mut encoder =
+        device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: None });
     {
         let mut cpass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor::default());
         cpass.set_pipeline(&compute_pipeline);
         cpass.set_bind_group(0, &bind_group, &[]);
-        
+
         // Dispatch enough workgroups of size 64
         let workgroups = (num_particles as f32 / 64.0).ceil() as u32;
         cpass.dispatch_workgroups(workgroups, 1, 1);
@@ -141,13 +144,13 @@ async fn run_gpu_experiment() {
 
 fn main() {
     env_logger::init();
-    
+
     println!();
     println!("  ╔══════════════════════════════════════════════════════════╗");
     println!("  ║   Academic Research / GPU Discovery Proof of Concept     ║");
     println!("  ╚══════════════════════════════════════════════════════════╝");
-    
+
     pollster::block_on(run_gpu_experiment());
-    
+
     println!("  ===============================================================");
 }

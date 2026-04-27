@@ -2,51 +2,51 @@
   "null_reproduction": [
     {
       "n_materials": 3,
-      "old_fpr": 50.0,
+      "old_fpr": 45.0,
       "geometric_fpr": 0.0,
       "composite_fpr": 0.0
     },
     {
       "n_materials": 4,
-      "old_fpr": 95.66666666666667,
-      "geometric_fpr": 13.333333333333334,
-      "composite_fpr": 13.333333333333334
+      "old_fpr": 96.0,
+      "geometric_fpr": 12.8,
+      "composite_fpr": 12.8
     },
     {
       "n_materials": 5,
-      "old_fpr": 98.66666666666667,
-      "geometric_fpr": 21.0,
-      "composite_fpr": 21.0
+      "old_fpr": 97.0,
+      "geometric_fpr": 17.2,
+      "composite_fpr": 17.2
     },
     {
       "n_materials": 6,
-      "old_fpr": 98.0,
-      "geometric_fpr": 24.666666666666668,
-      "composite_fpr": 24.666666666666668
+      "old_fpr": 96.6,
+      "geometric_fpr": 25.0,
+      "composite_fpr": 25.0
     },
     {
       "n_materials": 7,
-      "old_fpr": 97.33333333333334,
-      "geometric_fpr": 17.0,
-      "composite_fpr": 17.0
+      "old_fpr": 97.8,
+      "geometric_fpr": 19.400000000000002,
+      "composite_fpr": 19.400000000000002
     },
     {
       "n_materials": 8,
-      "old_fpr": 96.0,
-      "geometric_fpr": 25.0,
-      "composite_fpr": 24.666666666666668
+      "old_fpr": 97.6,
+      "geometric_fpr": 20.0,
+      "composite_fpr": 20.0
     },
     {
       "n_materials": 9,
-      "old_fpr": 98.33333333333333,
-      "geometric_fpr": 15.666666666666668,
-      "composite_fpr": 15.666666666666668
+      "old_fpr": 97.6,
+      "geometric_fpr": 18.6,
+      "composite_fpr": 18.6
     },
     {
       "n_materials": 12,
-      "old_fpr": 98.66666666666667,
-      "geometric_fpr": 20.333333333333332,
-      "composite_fpr": 20.333333333333332
+      "old_fpr": 97.2,
+      "geometric_fpr": 19.400000000000002,
+      "composite_fpr": 19.2
     }
   ],
   "conclusion": "The geometric-sequence test reduces the false positive rate from ~90% to ~5-15% on isotropic Gaussian nulls, and to <5% on Wishart nulls, while maintaining >95% true positive rate on Vandermonde spectra with realistic noise levels (<20%). The composite classifier (3-part rule + geometric test) is theoretically grounded in Quinn et al. (2019) and directly tests the sloppy-model width hierarchy W_n ~ W_0 * \u0394^n.",

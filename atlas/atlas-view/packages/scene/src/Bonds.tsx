@@ -10,7 +10,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
-import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS } from './constants';
+import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS, COLORMAPS } from './constants';
 
 interface BondsProps {
   frame: Frame;
@@ -18,6 +18,8 @@ interface BondsProps {
   interpolationFactor?: number;
   colormap?: ColormapName;
   colorMode?: 'type' | 'uniform' | 'property';
+  colorProperty?: string;
+  propRange?: [number, number];
   maxBondLength?: number;
   typeCutoffs?: Map<string, number>;
   periodic?: boolean;
@@ -34,6 +36,8 @@ export function Bonds({
   interpolationFactor,
   colormap = 'viridis',
   colorMode = 'type',
+  colorProperty,
+  propRange,
   maxBondLength = 2.5,
   typeCutoffs,
   periodic = false,
@@ -61,8 +65,9 @@ export function Bonds({
   });
 
   const material = useMemo(() => {
+    let mat: THREE.Material;
     if (botanicalMode) {
-      const mat = new THREE.MeshPhysicalMaterial({
+      mat = new THREE.MeshPhysicalMaterial({
         metalness: 0.05,
         roughness: 0.65,
         clearcoat: 0.2, // waxy cuticle
@@ -71,28 +76,53 @@ export function Bonds({
         thickness: 1.5,
         ior: 1.4, // organic tissue
       });
-      mat.onBeforeCompile = (shader) => {
+    } else if (renderStyle === 'toon') {
+      mat = new THREE.MeshToonMaterial({
+        transparent: opacity < 1,
+        opacity,
+      });
+    } else {
+      mat = new THREE.MeshPhysicalMaterial({
+        metalness: 0.1,
+        roughness: 0.5,
+        transparent: opacity < 1,
+        opacity,
+      });
+    }
+
+    mat.onBeforeCompile = (shader) => {
+      if (botanicalMode) {
         shader.uniforms.uTime = uniformsRef.current.uTime;
-        
-        // Inject vertex sway (must perfectly match AtomsOptimized to keep bonds connected)
-        shader.vertexShader = `
-          uniform float uTime;
-          ${shader.vertexShader}
+      }
+      
+      shader.vertexShader = `
+        attribute vec2 radiusBT;
+        ${botanicalMode ? 'uniform float uTime;' : ''}
+        ${shader.vertexShader}
+      `;
+      
+      let vertexChunk = `
+        #include <begin_vertex>
+        // Taper bonds using per-instance radiusBT (bottom, top)
+        float instanceRadius = mix(radiusBT.x, radiusBT.y, position.y + 0.5);
+        transformed.x *= instanceRadius;
+        transformed.z *= instanceRadius;
+      `;
+      
+      if (botanicalMode) {
+        vertexChunk += `
+        // Organic wind sway based on world height (instanceMatrix[3].y)
+        float heightFactor = max(0.0, instanceMatrix[3].y - 2.0); 
+        float swayAmount = heightFactor * 0.04;
+        float noise = sin(uTime * 1.2 + instanceMatrix[3].x * 0.5 + instanceMatrix[3].z * 0.5);
+        transformed.x += noise * swayAmount;
+        transformed.z += cos(uTime * 0.9 + instanceMatrix[3].x) * swayAmount;
         `;
-        shader.vertexShader = shader.vertexShader.replace(
-          '#include <begin_vertex>',
-          `
-          #include <begin_vertex>
-          // Organic wind sway based on world height (instanceMatrix[3].y)
-          float heightFactor = max(0.0, instanceMatrix[3].y - 2.0); 
-          float swayAmount = heightFactor * 0.04;
-          float noise = sin(uTime * 1.2 + instanceMatrix[3].x * 0.5 + instanceMatrix[3].z * 0.5);
-          transformed.x += noise * swayAmount;
-          transformed.z += cos(uTime * 0.9 + instanceMatrix[3].x) * swayAmount;
-          `
-        );
-        
-        // Inject velvet/fuzz subsurface rim light
+      }
+      
+      shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', vertexChunk);
+      
+      if (botanicalMode) {
         shader.fragmentShader = `
           ${shader.fragmentShader}
         `;
@@ -107,22 +137,9 @@ export function Bonds({
           gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb + vec3(0.15, 0.2, 0.05), fresnel * 0.6);
           `
         );
-      };
-      return mat;
-    }
-
-    if (renderStyle === 'toon') {
-      return new THREE.MeshToonMaterial({
-        transparent: opacity < 1,
-        opacity,
-      });
-    }
-    return new THREE.MeshPhysicalMaterial({
-      metalness: 0.1,
-      roughness: 0.5,
-      transparent: opacity < 1,
-      opacity,
-    });
+      }
+    };
+    return mat;
   }, [renderStyle, opacity, botanicalMode]);
 
   // Dispose shared resources on unmount or when they change
@@ -170,6 +187,28 @@ export function Bonds({
   }
   const capacity = capacityRef.current;
 
+  const radiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
+  useEffect(() => {
+    tubeGeo.setAttribute('radiusBT', new THREE.InstancedBufferAttribute(radiusBTArray, 2));
+  }, [tubeGeo, radiusBTArray]);
+
+  const isPropMode = colorMode === 'property' && colorProperty;
+  const propData = isPropMode && frame.properties ? frame.properties.get(colorProperty) : null;
+
+  // Auto-compute property range
+  const [autoMin, autoMax] = useMemo(() => {
+    if (!propData) return [0, 1];
+    let mn = Infinity, mx = -Infinity;
+    for (let i = 0; i < propData.length; i++) {
+      if (propData[i] < mn) mn = propData[i];
+      if (propData[i] > mx) mx = propData[i];
+    }
+    return [mn === Infinity ? 0 : mn, mx === -Infinity ? 1 : mx];
+  }, [propData]);
+
+  const pMin = propRange?.[0] ?? autoMin;
+  const pMax = propRange?.[1] ?? autoMax;
+
   // Update instance matrices smoothly using requestAnimationFrame/useEffect
   useEffect(() => {
     const mesh = meshRef.current;
@@ -189,6 +228,11 @@ export function Bonds({
     const midPoint = new THREE.Vector3();
     const axisVec = new THREE.Vector3(1, 0, 0);
     const color = new THREE.Color();
+
+    const t = interpolationFactor ?? 0;
+    const hasPropInterpolation = isPropMode && nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty);
+    const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty) : null;
+    const mapFn = COLORMAPS[colormap] || COLORMAPS.viridis;
 
     for (let i = 0; i < drawCount / 2; i++) {
       const [a, b] = bondPairs[i];
@@ -267,10 +311,30 @@ export function Bonds({
       const bondLen = posA.distanceTo(posB);
       const halfLen = bondLen / 2;
 
+      let normA = 0.5, normB = 0.5;
+      if (isPropMode && propData) {
+        let valA = propData[a];
+        if (nextPropData && nextPropData.length > a) valA += (nextPropData[a] - valA) * t;
+        normA = pMax > pMin ? (valA - pMin) / (pMax - pMin) : 0.5;
+
+        let valB = propData[b];
+        if (nextPropData && nextPropData.length > b) valB += (nextPropData[b] - valB) * t;
+        normB = pMax > pMin ? (valB - pMin) / (pMax - pMin) : 0.5;
+      }
+
+      // Advanced geometry scaling based on property
+      const rA = isPropMode ? radius * (0.2 + 1.8 * normA) : radius;
+      const rB = isPropMode ? radius * (0.2 + 1.8 * normB) : radius;
+      const rMid = (rA + rB) / 2.0;
+
+      // Instance i*2 (Bottom half of the bond: A -> Mid)
+      radiusBTArray[(i * 2) * 2] = rA;
+      radiusBTArray[(i * 2) * 2 + 1] = rMid;
+
       dir.subVectors(mid, posA).normalize();
       midPoint.lerpVectors(posA, mid, 0.5);
       dummy.position.copy(midPoint);
-      dummy.scale.set(radius, halfLen, radius);
+      dummy.scale.set(1, halfLen, 1);
       if (Math.abs(dir.dot(UP)) < 0.9999) {
         dummy.quaternion.setFromUnitVectors(UP, dir);
       } else {
@@ -283,6 +347,8 @@ export function Bonds({
       let tcA: [number, number, number];
       if (botanicalMode && frame.types) {
         tcA = BOTANICAL_COLORS[frame.types[a]] ?? [0.3, 0.5, 0.2];
+      } else if (isPropMode && propData) {
+        tcA = mapFn(normA);
       } else if (colorMode === 'uniform') {
         tcA = getTypeColorFromColormap(1, colormap);
       } else {
@@ -291,10 +357,14 @@ export function Bonds({
       color.setRGB(tcA[0], tcA[1], tcA[2]);
       mesh.setColorAt(i * 2, color);
 
+      // Instance i*2+1 (Top half of the bond: Mid -> B)
+      radiusBTArray[(i * 2 + 1) * 2] = rMid;
+      radiusBTArray[(i * 2 + 1) * 2 + 1] = rB;
+
       dir.subVectors(posB, mid).normalize();
       midPoint.lerpVectors(mid, posB, 0.5);
       dummy.position.copy(midPoint);
-      dummy.scale.set(radius, halfLen, radius);
+      dummy.scale.set(1, halfLen, 1);
       if (Math.abs(dir.dot(UP)) < 0.9999) {
         dummy.quaternion.setFromUnitVectors(UP, dir);
       } else {
@@ -307,6 +377,8 @@ export function Bonds({
       let tcB: [number, number, number];
       if (botanicalMode && frame.types) {
         tcB = BOTANICAL_COLORS[frame.types[b]] ?? [0.3, 0.5, 0.2];
+      } else if (isPropMode && propData) {
+        tcB = mapFn(normB);
       } else if (colorMode === 'uniform') {
         tcB = getTypeColorFromColormap(1, colormap);
       } else {
@@ -316,9 +388,11 @@ export function Bonds({
       mesh.setColorAt(i * 2 + 1, color);
     }
 
+    tubeGeo.attributes.radiusBT.needsUpdate = true;
+
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode]);
+  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, pMin, pMax, colorProperty, radiusBTArray]);
 
   return (
     <instancedMesh

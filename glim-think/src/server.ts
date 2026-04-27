@@ -29,6 +29,7 @@ import { FleetOrchestrator } from "./fleet/orchestrator";
 import { DashboardAgent } from "./dashboard/stream";
 import { ExtensionManager } from "./extensions/manager";
 import { ModelRouter } from "./gateway/router";
+import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
 import type { BenchmarkRecord, Env } from "./types";
 
 // Re-export all Durable Object classes for wrangler
@@ -47,11 +48,13 @@ export default {
 
       // ─── Think agent routing (WebSocket / chat protocol) ───
       // This handles /agents/{class}/{name} paths automatically
-      const agentResponse = await routeAgentRequest(
-        new Request(request.url, { method: request.method, headers: request.headers, body: bodyText || undefined }),
-        env
-      );
-      if (agentResponse) return agentResponse;
+      if (url.pathname.startsWith("/agents/")) {
+        const agentResponse = await routeAgentRequest(
+          new Request(request.url, { method: request.method, headers: request.headers, body: bodyText || undefined }),
+          env
+        );
+        if (agentResponse) return agentResponse;
+      }
 
       // ─── HTTP API routes ───
 
@@ -580,6 +583,7 @@ ${narrative}
 
         const latestDiaryObj = await env.ARTIFACTS.get("diary/latest.json");
         const latestMetricsObj = await env.ARTIFACTS.get("metrics/latest.json");
+        const latestBroadcastObj = await env.ARTIFACTS.get("broadcasts/latest.json");
         const recentRecords = await env.LEDGER.prepare(
           "SELECT agent_id, element, property, timestamp FROM records ORDER BY timestamp DESC LIMIT 10"
         ).all();
@@ -612,6 +616,7 @@ ${narrative}
           disproven: disproven.slice(0, 10),
           diary: latestDiaryObj ? await latestDiaryObj.json() : null,
           metrics: latestMetricsObj ? await latestMetricsObj.json() : null,
+          broadcast: latestBroadcastObj ? await latestBroadcastObj.json() : null,
           recent_activity: recentRecords.results
         }, {
           headers: {
@@ -619,6 +624,66 @@ ${narrative}
             "Access-Control-Allow-Methods": "GET, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type",
           },
+        });
+      }
+
+      if (url.pathname === "/broadcasts") {
+        if (request.method === "OPTIONS") {
+          return new Response(null, {
+            status: 204,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET, OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type",
+              "Access-Control-Max-Age": "86400",
+            },
+          });
+        }
+
+        const limit = Math.min(parseInt(url.searchParams.get("limit") || "12", 10), 48);
+        try {
+          await env.LEDGER.prepare(
+            `CREATE TABLE IF NOT EXISTS lab_broadcasts (
+              broadcast_id TEXT PRIMARY KEY,
+              title TEXT NOT NULL,
+              summary TEXT NOT NULL,
+              status TEXT NOT NULL,
+              cadence TEXT NOT NULL DEFAULT 'hourly',
+              metrics TEXT,
+              artifact_key TEXT,
+              created_at TEXT DEFAULT (datetime('now'))
+            )`
+          ).run();
+          const rows = await env.LEDGER.prepare(
+            `SELECT broadcast_id, title, summary, status, cadence, metrics, artifact_key, created_at
+             FROM lab_broadcasts
+             ORDER BY created_at DESC
+             LIMIT ?1`
+          ).bind(limit).all();
+          return Response.json({
+            broadcasts: (rows.results as Array<Record<string, unknown>>).map((row) => ({
+              ...row,
+              metrics: typeof row.metrics === "string" ? JSON.parse(row.metrics) : row.metrics,
+            })),
+          }, {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET, OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type",
+            },
+          });
+        } catch (e) {
+          console.error("Broadcast list error:", e);
+          return Response.json({ broadcasts: [], error: String(e) }, {
+            headers: { "Access-Control-Allow-Origin": "*" },
+          });
+        }
+      }
+
+      if (url.pathname === "/broadcasts/trigger" && request.method === "POST") {
+        const broadcast = await createLabBroadcast(env, "manual");
+        return Response.json({ broadcast }, {
+          headers: { "Access-Control-Allow-Origin": "*" },
         });
       }
 
@@ -631,6 +696,7 @@ ${narrative}
       });
     }
   },
+  scheduled: scheduledHandler,
 } satisfies ExportedHandler<Env>;
 
 function buildDiaryPrompt(element: string, potential: string, structure: string, records: Array<{ property: string; reference: number; predicted: number; unit: string }>): string {

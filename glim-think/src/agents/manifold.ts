@@ -37,7 +37,7 @@ Be quantitative. Cite specific numbers.`;
     return {
       get_families: tool({
         description: "Get distinct potential families (pair_style) for an element from the D1 ledger",
-        parameters: z.object({
+        inputSchema: z.object({
           element: z.string().describe("Element symbol (e.g. 'Cu') or 'all'"),
         }),
         execute: async ({ element }) => {
@@ -51,7 +51,7 @@ Be quantitative. Cite specific numbers.`;
 
       load_records: tool({
         description: "Load benchmark records for a specific element and potential family",
-        parameters: z.object({
+        inputSchema: z.object({
           element: z.string().describe("Element symbol or 'all'"),
           family: z.string().describe("Potential family/pair_style (e.g. 'eam/alloy')"),
         }),
@@ -65,7 +65,7 @@ Be quantitative. Cite specific numbers.`;
 
       compute_manifold: tool({
         description: "Compute PCA eigenvalue spectrum and participation ratio for a set of error vectors. Returns eigenvalues, PR, and log-spacing R².",
-        parameters: z.object({
+        inputSchema: z.object({
           records: z.array(z.object({
             potential_label: z.string(),
             property: z.string(),
@@ -139,7 +139,7 @@ Be quantitative. Cite specific numbers.`;
 
       check_cached_run: tool({
         description: "Check if a manifold analysis has already been run for a given family/element",
-        parameters: z.object({
+        inputSchema: z.object({
           family: z.string(),
           element: z.string(),
         }),
@@ -156,7 +156,7 @@ Be quantitative. Cite specific numbers.`;
 
       save_claim: tool({
         description: "Persist a manifold analysis claim to the local cache",
-        parameters: z.object({
+        inputSchema: z.object({
           family: z.string(),
           element: z.string(),
           claimId: z.string(),

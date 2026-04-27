@@ -27,7 +27,10 @@ pub fn build_datasets(values: &[ExtractedValue]) -> Vec<Dataset> {
     // Group by quantity
     let mut by_quantity: HashMap<String, Vec<&ExtractedValue>> = HashMap::new();
     for val in values {
-        by_quantity.entry(val.quantity.clone()).or_default().push(val);
+        by_quantity
+            .entry(val.quantity.clone())
+            .or_default()
+            .push(val);
     }
 
     // For each quantity, try to pair with temperature or other conditions
@@ -36,7 +39,9 @@ pub fn build_datasets(values: &[ExtractedValue]) -> Vec<Dataset> {
         let with_temp: Vec<_> = vals
             .iter()
             .filter_map(|v| {
-                v.conditions.get("temperature_K").map(|&t| (t, v.value, v.paper_id.clone()))
+                v.conditions
+                    .get("temperature_K")
+                    .map(|&t| (t, v.value, v.paper_id.clone()))
             })
             .collect();
 
@@ -56,7 +61,9 @@ pub fn build_datasets(values: &[ExtractedValue]) -> Vec<Dataset> {
         let with_pressure: Vec<_> = vals
             .iter()
             .filter_map(|v| {
-                v.conditions.get("pressure_GPa").map(|&p| (p, v.value, v.paper_id.clone()))
+                v.conditions
+                    .get("pressure_GPa")
+                    .map(|&p| (p, v.value, v.paper_id.clone()))
             })
             .collect();
 
@@ -96,10 +103,9 @@ pub fn build_datasets(values: &[ExtractedValue]) -> Vec<Dataset> {
 
     // Also check for cross-quantity correlations
     // e.g., system_size vs speedup, temperature vs diffusion, etc.
-    if let (Some(sizes), Some(speedups)) = (
-        by_quantity.get("system_size"),
-        by_quantity.get("speedup"),
-    ) {
+    if let (Some(sizes), Some(speedups)) =
+        (by_quantity.get("system_size"), by_quantity.get("speedup"))
+    {
         // Match papers
         let mut points = Vec::new();
         let mut sources = Vec::new();
@@ -147,15 +153,25 @@ pub fn datasets_from_seeds(seeds: &[SeedRelationship]) -> Vec<Dataset> {
 /// Print dataset summary.
 pub fn print_datasets(datasets: &[Dataset]) {
     eprintln!("\n  ╔════════════════════════════════════════════════════════════╗");
-    eprintln!("  ║  Assembled Datasets ({})                          ", datasets.len());
+    eprintln!(
+        "  ║  Assembled Datasets ({})                          ",
+        datasets.len()
+    );
     eprintln!("  ╠════════════════════════════════════════════════════════════╣");
 
     for ds in datasets {
         eprintln!("  ║  {} ", ds.name);
-        eprintln!("  ║    {} vs {} | {} points | {} sources",
-            ds.x_label, ds.y_label, ds.points.len(), ds.sources.len()
+        eprintln!(
+            "  ║    {} vs {} | {} points | {} sources",
+            ds.x_label,
+            ds.y_label,
+            ds.points.len(),
+            ds.sources.len()
         );
-        eprintln!("  ║    Domain: {} | Suggested: {}", ds.domain, ds.suggested_model);
+        eprintln!(
+            "  ║    Domain: {} | Suggested: {}",
+            ds.domain, ds.suggested_model
+        );
     }
 
     eprintln!("  ╚════════════════════════════════════════════════════════════╝");

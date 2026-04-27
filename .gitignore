@@ -10,6 +10,10 @@ wasm-out/
 .DS_Store
 *.data
 *.dump
+.wrangler/
+**/.wrangler/
+.claude/worktrees/
+**/.turbo/
 
 # Archive for old internal research, docs, and plans
 _research_archive/

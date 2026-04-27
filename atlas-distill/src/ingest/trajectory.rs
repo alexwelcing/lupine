@@ -80,7 +80,7 @@ where
 
     // ITEM: BOX BOUNDS
     let box_header = lines.next().context("Expected BOX BOUNDS")?;
-    let triclinic = box_header.contains("xy");
+    let _triclinic = box_header.contains("xy");
     let mut box_bounds = [0.0f64; 6];
 
     for dim in 0..3 {
@@ -127,7 +127,9 @@ where
     let mut types = Vec::with_capacity(n);
 
     // Identify extra property columns
-    let core_cols: Vec<Option<usize>> = vec![id_col, type_col, x_col, y_col, z_col, vx_col, vy_col, vz_col];
+    let core_cols: Vec<Option<usize>> = vec![
+        id_col, type_col, x_col, y_col, z_col, vx_col, vy_col, vz_col,
+    ];
     let core_set: Vec<usize> = core_cols.iter().filter_map(|c| *c).collect();
     let extra_cols: Vec<(usize, String)> = columns
         .iter()
@@ -154,9 +156,18 @@ where
             .unwrap_or(1);
         types.push(atom_type);
 
-        let raw_x: f64 = x_col.and_then(|i| parts.get(i)).and_then(|s| s.parse().ok()).unwrap_or(0.0);
-        let raw_y: f64 = y_col.and_then(|i| parts.get(i)).and_then(|s| s.parse().ok()).unwrap_or(0.0);
-        let raw_z: f64 = z_col.and_then(|i| parts.get(i)).and_then(|s| s.parse().ok()).unwrap_or(0.0);
+        let raw_x: f64 = x_col
+            .and_then(|i| parts.get(i))
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(0.0);
+        let raw_y: f64 = y_col
+            .and_then(|i| parts.get(i))
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(0.0);
+        let raw_z: f64 = z_col
+            .and_then(|i| parts.get(i))
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(0.0);
 
         let (x, y, z) = if is_scaled {
             (
@@ -173,16 +184,28 @@ where
         positions.push(z);
 
         if has_velocity {
-            let vx: f64 = vx_col.and_then(|i| parts.get(i)).and_then(|s| s.parse().ok()).unwrap_or(0.0);
-            let vy: f64 = vy_col.and_then(|i| parts.get(i)).and_then(|s| s.parse().ok()).unwrap_or(0.0);
-            let vz: f64 = vz_col.and_then(|i| parts.get(i)).and_then(|s| s.parse().ok()).unwrap_or(0.0);
+            let vx: f64 = vx_col
+                .and_then(|i| parts.get(i))
+                .and_then(|s| s.parse().ok())
+                .unwrap_or(0.0);
+            let vy: f64 = vy_col
+                .and_then(|i| parts.get(i))
+                .and_then(|s| s.parse().ok())
+                .unwrap_or(0.0);
+            let vz: f64 = vz_col
+                .and_then(|i| parts.get(i))
+                .and_then(|s| s.parse().ok())
+                .unwrap_or(0.0);
             velocities.push(vx);
             velocities.push(vy);
             velocities.push(vz);
         }
 
         for (prop_idx, (col_idx, _)) in extra_cols.iter().enumerate() {
-            let val: f64 = parts.get(*col_idx).and_then(|s| s.parse().ok()).unwrap_or(0.0);
+            let val: f64 = parts
+                .get(*col_idx)
+                .and_then(|s| s.parse().ok())
+                .unwrap_or(0.0);
             extra_data[prop_idx].push(val);
         }
     }
