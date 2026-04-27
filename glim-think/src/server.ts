@@ -32,6 +32,7 @@ import { ExtensionManager } from "./extensions/manager";
 import { ModelRouter } from "./gateway/router";
 import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
 import { respondToCritique } from "./critiques/dispatcher";
+import { openApiSpec } from "./openapi";
 import type {
   BenchmarkRecord,
   Critique,
@@ -1163,6 +1164,17 @@ ${narrative}
           { error: "Method not allowed for research_questions route" },
           { status: 405, headers: corsHeaders }
         );
+      }
+
+      // === unit-9: openapi route ===
+      if (url.pathname === "/openapi.json") {
+        return Response.json(openApiSpec, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+        });
       }
 
       return new Response("Not found", { status: 404 });
