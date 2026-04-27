@@ -32,35 +32,49 @@ DEFAULT_SPACE = "https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench"
 DEFAULT_API = "https://glim-think-v1.aw-ab5.workers.dev"
 
 
-def _gradio_endpoint(space_url: str, api_name: str) -> str:
-    """Build the Gradio HTTP API URL for a named endpoint.
-
-    Gradio Spaces expose JSON-RPC at <space_url>/run/<api_name>. Spaces
-    hosted on huggingface.co/spaces/<user>/<name> also have a direct
-    `<user>-<name>.hf.space` subdomain — we accept either form.
-    """
+def _space_base(space_url: str) -> str:
+    """Resolve a HF Space URL to its direct *.hf.space subdomain."""
     base = space_url.rstrip("/")
     if "huggingface.co/spaces/" in base:
         parts = base.split("huggingface.co/spaces/")[-1].split("/")
         if len(parts) >= 2:
             user, name = parts[0], parts[1]
             base = f"https://{user}-{name}.hf.space"
-    return f"{base}/run/{api_name}"
+    return base
 
 
 def _call_gradio(space_url: str, api_name: str, data: list[Any], timeout: float = 300.0) -> Any:
-    """POST to a Gradio endpoint; return the unwrapped `data[0]` payload."""
-    url = _gradio_endpoint(space_url, api_name)
+    """Call a Gradio 6.x endpoint via POST + SSE streaming."""
+    base = _space_base(space_url)
+    call_url = f"{base}/gradio_api/call/{api_name}"
     try:
-        r = httpx.post(url, json={"data": data}, timeout=timeout)
+        r = httpx.post(call_url, json={"data": data}, timeout=60.0)
     except httpx.RequestError as e:
-        raise click.ClickException(f"Space unreachable at {url}: {e}") from e
+        raise click.ClickException(f"Space unreachable at {call_url}: {e}") from e
     if r.status_code >= 400:
-        raise click.ClickException(f"{url} → {r.status_code}: {r.text[:300]}")
-    body = r.json()
-    if isinstance(body, dict) and "data" in body and isinstance(body["data"], list):
-        return body["data"][0] if body["data"] else None
-    return body
+        raise click.ClickException(f"{call_url} → {r.status_code}: {r.text[:300]}")
+    event_id = r.json()["event_id"]
+
+    # Poll SSE stream
+    stream_url = f"{call_url}/{event_id}"
+    try:
+        r = httpx.get(stream_url, timeout=timeout)
+    except httpx.RequestError as e:
+        raise click.ClickException(f"SSE stream unreachable at {stream_url}: {e}") from e
+    if r.status_code >= 400:
+        raise click.ClickException(f"{stream_url} → {r.status_code}: {r.text[:300]}")
+
+    # Parse SSE: last non-empty line after "event: complete" contains the data
+    result = None
+    for line in r.text.splitlines():
+        if line.startswith("data: "):
+            result = json.loads(line[6:])
+    if result is None:
+        raise click.ClickException("no data in SSE stream")
+    # Gradio 6.x wraps single-output results in [[...]] for batch-like consistency
+    if isinstance(result, list) and len(result) == 1:
+        return result[0]
+    return result
 
 
 @click.group()
@@ -114,7 +128,7 @@ def batch(ctx: click.Context, elements: str, mlips: str,
         with out_path.open("w", encoding="utf-8") as f:
             for row in out:
                 f.write(json.dumps(row) + "\n")
-        click.echo(f"wrote {len(out)} records → {out_path}")
+        click.echo(f"wrote {len(out)} records -> {out_path}")
 
 
 @mlip.command()
@@ -141,17 +155,16 @@ def ingest(ctx: click.Context, jsonl_path: Path) -> None:
 def space_info(ctx: click.Context) -> None:
     """Print the resolved Space URL and quickly probe its config endpoint."""
     space = ctx.obj["space"]
+    base = _space_base(space)
     click.echo(f"Space URL:        {space}")
-    click.echo(f"predict endpoint: {_gradio_endpoint(space, 'predict')}")
-    click.echo(f"batch endpoint:   {_gradio_endpoint(space, 'predict_batch')}")
-    config_url = _gradio_endpoint(space, "predict").replace("/run/predict", "/config")
+    click.echo(f"predict endpoint: {base}/gradio_api/call/predict")
+    click.echo(f"batch endpoint:   {base}/gradio_api/call/predict_batch")
     try:
-        r = httpx.get(config_url, timeout=10.0)
-        click.echo(f"GET /config → {r.status_code}")
+        r = httpx.get(f"{base}/config", timeout=10.0)
+        click.echo(f"GET /config -> {r.status_code}")
         if r.status_code == 200:
             cfg = r.json()
             click.echo(f"  title:   {cfg.get('title', '?')}")
-            click.echo(f"  version: {cfg.get('version', '?')}")
     except httpx.RequestError as e:
         click.echo(f"  ({e})")
 

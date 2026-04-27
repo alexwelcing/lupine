@@ -1,60 +1,51 @@
-"""Universal-MLIP calculator factory with lazy imports.
+"""Universal-MLIP calculator factory with lazy imports + runtime install.
 
 Each MLIP family (CHGNet, MACE-MP, M3GNet) is wrapped so the import only
-happens when the calculator is requested — the harness can be tested in
-environments where only a subset of the models is installed.
+happens when the calculator is requested. If the package is missing, we
+attempt a runtime `pip install` so the Space can stay lightweight at build
+time and pull in heavy deps (~2 GB torch + models) on first use.
 """
 from __future__ import annotations
 
+import importlib.util
+import subprocess
+import sys
 from typing import Callable
 
-# Mapping from canonical MLIP id → (display name, ASE-Calculator factory).
-# Each factory raises ImportError with an actionable install hint if the
-# underlying package isn't available.
+
+def _ensure_installed(package_spec: str, import_name: str | None = None) -> None:
+    """Install a pip package if its top-level module is not importable."""
+    name = import_name or package_spec.split("==")[0].split("[")[0].replace("-", "_")
+    if importlib.util.find_spec(name) is not None:
+        return
+    subprocess.run(
+        [sys.executable, "-m", "pip", "install", "--quiet", package_spec],
+        check=True,
+    )
+
 
 def _chgnet_factory():
-    try:
-        from chgnet.model.dynamics import CHGNetCalculator  # type: ignore
-    except ImportError as e:
-        raise ImportError(
-            "chgnet is not installed. Install with `pip install chgnet`. "
-            "On CPU-only hosts this is ~700 MB."
-        ) from e
+    _ensure_installed("chgnet==0.4.0", "chgnet")
+    from chgnet.model.dynamics import CHGNetCalculator  # type: ignore
     return CHGNetCalculator()
 
 
 def _mace_mp0_factory():
-    try:
-        from mace.calculators import mace_mp  # type: ignore
-    except ImportError as e:
-        raise ImportError(
-            "mace-torch is not installed. Install with "
-            "`pip install mace-torch`. The default MACE-MP-0 weights are "
-            "downloaded on first use (~300 MB)."
-        ) from e
+    _ensure_installed("mace-torch==0.3.6", "mace")
+    from mace.calculators import mace_mp  # type: ignore
     return mace_mp(model="medium", default_dtype="float32")
 
 
 def _m3gnet_factory():
-    try:
-        import matgl  # type: ignore
-        from matgl.ext.ase import PESCalculator  # type: ignore
-    except ImportError as e:
-        raise ImportError(
-            "matgl (M3GNet) is not installed. Install with `pip install matgl`. "
-            "The M3GNet-MP-2021.2.8-PES checkpoint downloads on first use."
-        ) from e
+    _ensure_installed("matgl==1.1.3", "matgl")
+    import matgl  # type: ignore
+    from matgl.ext.ase import PESCalculator  # type: ignore
     pot = matgl.load_model("M3GNet-MP-2021.2.8-PES")
     return PESCalculator(pot)
 
 
 def _emt_factory():
-    """Effective Medium Theory — built into ASE, no install needed.
-
-    Useful for smoke-testing the harness plumbing on Cu, Ag, Au, Ni, Pd, Pt,
-    Al, Pb (the EMT element list). NOT a defensible MLIP comparator — only
-    for pipeline validation.
-    """
+    """Effective Medium Theory — built into ASE, no install needed."""
     from ase.calculators.emt import EMT
     return EMT()
 
@@ -73,7 +64,7 @@ def available() -> list[str]:
     for mlip_id, (_label, factory) in CALCULATORS.items():
         try:
             factory()
-        except (ImportError, Exception):  # noqa: BLE001 — checking availability
+        except (ImportError, Exception):  # noqa: BLE001
             continue
         out.append(mlip_id)
     return out

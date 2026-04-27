@@ -1,15 +1,2 @@
-# Pinned for the HF Space runtime; do NOT use this for local development
-# (the parent dir's requirements.txt is unpinned + broader).
-gradio==4.44.1
-spaces==0.30.4
 ase==3.23.0
 numpy==1.26.4
-
-# CHGNet — primary MLIP, fastest, most reliable on ZeroGPU.
-chgnet==0.4.0
-torch==2.4.1
-
-# Optional: uncomment to expose MACE-MP-0 / M3GNet through the same Space.
-# Each adds ~3 min cold install + ~500 MB to the Space build cache.
-# mace-torch==0.3.6
-# matgl==1.1.3
