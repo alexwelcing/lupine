@@ -11,6 +11,7 @@ import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import type { ThermoData, ThermoRun, Frame } from '@atlas/core/types';
 import type { AppState } from '../store';
 import { useStore } from '../store';
+import heatmapData from './heatmap_data.json';
 
 // ── Types ──────────────────────────────────────────────────────────────
 
