@@ -20,6 +20,23 @@ export interface Hypothesis {
   model?: string;
 }
 
+/**
+ * Row in the `hypotheses` D1 table — persisted research hypotheses tracked
+ * across the agent fleet. See migrations/0001_hypotheses.sql.
+ */
+export type HypothesisStatus = "proposed" | "testing" | "confirmed" | "refuted";
+
+export interface HypothesisRecord {
+  id: string;
+  title: string;
+  status: HypothesisStatus;
+  confidence: number | null;
+  evidence_ids: string | null;
+  agent_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface BenchmarkRecord {
   recordId: string;
   element: string;

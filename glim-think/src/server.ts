@@ -31,7 +31,37 @@ import { DashboardAgent } from "./dashboard/stream";
 import { ExtensionManager } from "./extensions/manager";
 import { ModelRouter } from "./gateway/router";
 import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
-import type { BenchmarkRecord, Env } from "./types";
+import type { BenchmarkRecord, Env, HypothesisRecord, HypothesisStatus } from "./types";
+
+const HARDCODED_HYPOTHESES = [
+  "Hyper-ribbon universality across 559 classical potentials",
+  "BCC/FCC error correlation dichotomy (causal shield)",
+  "MLIP manifold equivalence (MACE-MP, CHGNet, M3GNet)",
+  "Ecological fallacy in one-number benchmarking",
+] as const;
+
+const VALID_HYPOTHESIS_STATUSES: ReadonlySet<HypothesisStatus> = new Set([
+  "proposed", "testing", "confirmed", "refuted",
+]);
+
+const JSON_CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+} as const;
+
+const HYPOTHESIS_SELECT =
+  `SELECT id, title, status, confidence, evidence_ids, agent_id, created_at, updated_at FROM hypotheses`;
+
+function selectHypothesisById(env: Env, id: string): Promise<HypothesisRecord | null> {
+  return env.LEDGER.prepare(`${HYPOTHESIS_SELECT} WHERE id = ?1`)
+    .bind(id)
+    .first<HypothesisRecord>();
+}
+
+function jsonError(message: string, status: number): Response {
+  return Response.json({ error: message }, { status, headers: JSON_CORS_HEADERS });
+}
 
 // Re-export all Durable Object classes for wrangler
 export {
@@ -44,8 +74,10 @@ export default {
     try {
       const url = new URL(request.url);
 
-      // Pre-read POST body so it can be reused after agent routing
-      const bodyText = request.method === "POST" ? await request.text() : "";
+      // Pre-read POST/PATCH body so it can be reused after agent routing
+      const bodyText = request.method === "POST" || request.method === "PATCH"
+        ? await request.text()
+        : "";
 
       // ─── Think agent routing (WebSocket / chat protocol) ───
       // This handles /agents/{class}/{name} paths automatically
@@ -60,6 +92,19 @@ export default {
       // ─── HTTP API routes ───
 
       if (url.pathname === "/health") {
+        let activeHypotheses: string[] = [...HARDCODED_HYPOTHESES];
+        try {
+          const rows = await env.LEDGER.prepare(
+            `SELECT title FROM hypotheses ORDER BY created_at`
+          ).all<{ title: string }>();
+          if (rows.results && rows.results.length > 0) {
+            activeHypotheses = rows.results.map(r => r.title);
+          }
+        } catch (e) {
+          // Migration may not yet be applied — fall back to hardcoded list.
+          console.error("/health hypotheses query failed:", e);
+        }
+
         return Response.json({
           status: "ok",
           service: "glim-think-v2",
@@ -68,12 +113,7 @@ export default {
           research_mode: "causal-geometry",
           research_direction: "Error Manifold Invariance & Causal Benchmarking",
           agents: ["Orchestrator", "Manifold", "Causal", "Theorist", "Experiment"],
-          active_hypotheses: [
-            "Hyper-ribbon universality across 559 classical potentials",
-            "BCC/FCC error correlation dichotomy (causal shield)",
-            "MLIP manifold equivalence (MACE-MP, CHGNet, M3GNet)",
-            "Ecological fallacy in one-number benchmarking",
-          ],
+          active_hypotheses: activeHypotheses,
         });
       }
 
@@ -686,6 +726,116 @@ ${narrative}
         return Response.json({ broadcast }, {
           headers: { "Access-Control-Allow-Origin": "*" },
         });
+      }
+
+      // === unit-1: hypotheses routes ===
+      if (url.pathname === "/hypotheses" || url.pathname.startsWith("/hypotheses/")) {
+        if (request.method === "OPTIONS") {
+          return new Response(null, { status: 204, headers: { ...JSON_CORS_HEADERS, "Access-Control-Max-Age": "86400" } });
+        }
+
+        if (url.pathname === "/hypotheses" && request.method === "GET") {
+          const rows = await env.LEDGER.prepare(
+            `${HYPOTHESIS_SELECT} ORDER BY created_at`
+          ).all<HypothesisRecord>();
+          return Response.json(rows.results ?? [], { headers: JSON_CORS_HEADERS });
+        }
+
+        if (url.pathname === "/hypotheses" && request.method === "POST") {
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const title = typeof body.title === "string" ? body.title.trim() : "";
+          const status = typeof body.status === "string" ? body.status as HypothesisStatus : null;
+
+          if (!title) {
+            return jsonError("Missing required field: title", 400);
+          }
+          if (!status || !VALID_HYPOTHESIS_STATUSES.has(status)) {
+            return jsonError(`Invalid status. Must be one of: ${[...VALID_HYPOTHESIS_STATUSES].join(", ")}`, 400);
+          }
+
+          const id = typeof body.id === "string" && body.id.trim() ? body.id.trim() : `h${Date.now()}`;
+          const confidence = typeof body.confidence === "number" ? body.confidence : null;
+          const evidenceIds = typeof body.evidence_ids === "string" ? body.evidence_ids : null;
+          const agentId = typeof body.agent_id === "string" ? body.agent_id : null;
+          const now = new Date().toISOString();
+
+          try {
+            await env.LEDGER.prepare(
+              `INSERT INTO hypotheses (id, title, status, confidence, evidence_ids, agent_id, created_at, updated_at)
+               VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)`
+            ).bind(id, title, status, confidence, evidenceIds, agentId, now, now).run();
+          } catch (e) {
+            const msg = String(e);
+            const isConflict = msg.includes("UNIQUE") || msg.includes("PRIMARY KEY");
+            return jsonError(
+              isConflict ? `Hypothesis with id '${id}' already exists` : msg,
+              isConflict ? 409 : 500
+            );
+          }
+
+          const created = await selectHypothesisById(env, id);
+          return Response.json(created, { status: 201, headers: JSON_CORS_HEADERS });
+        }
+
+        const idMatch = url.pathname.match(/^\/hypotheses\/([^/]+)$/);
+        if (idMatch) {
+          const id = decodeURIComponent(idMatch[1]);
+
+          if (request.method === "GET") {
+            const row = await selectHypothesisById(env, id);
+            if (!row) return jsonError(`Hypothesis '${id}' not found`, 404);
+            return Response.json(row, { headers: JSON_CORS_HEADERS });
+          }
+
+          if (request.method === "PATCH") {
+            const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+            const sets: string[] = [];
+            const binds: unknown[] = [];
+
+            if (body.status !== undefined) {
+              const status = body.status as HypothesisStatus;
+              if (!VALID_HYPOTHESIS_STATUSES.has(status)) {
+                return jsonError(`Invalid status. Must be one of: ${[...VALID_HYPOTHESIS_STATUSES].join(", ")}`, 400);
+              }
+              sets.push(`status = ?${sets.length + 1}`);
+              binds.push(status);
+            }
+            if (body.confidence !== undefined) {
+              if (body.confidence !== null && typeof body.confidence !== "number") {
+                return jsonError("confidence must be a number or null", 400);
+              }
+              sets.push(`confidence = ?${sets.length + 1}`);
+              binds.push(body.confidence);
+            }
+            if (body.evidence_ids !== undefined) {
+              if (body.evidence_ids !== null && typeof body.evidence_ids !== "string") {
+                return jsonError("evidence_ids must be a string or null", 400);
+              }
+              sets.push(`evidence_ids = ?${sets.length + 1}`);
+              binds.push(body.evidence_ids);
+            }
+
+            if (sets.length === 0) {
+              return jsonError("No updatable fields supplied", 400);
+            }
+
+            sets.push(`updated_at = ?${sets.length + 1}`);
+            binds.push(new Date().toISOString());
+            binds.push(id);
+
+            await env.LEDGER.prepare(
+              `UPDATE hypotheses SET ${sets.join(", ")} WHERE id = ?${binds.length}`
+            ).bind(...binds).run();
+
+            const updated = await selectHypothesisById(env, id);
+            if (!updated) return jsonError(`Hypothesis '${id}' not found`, 404);
+            return Response.json(updated, { headers: JSON_CORS_HEADERS });
+          }
+
+          return new Response("Method Not Allowed", { status: 405, headers: { ...JSON_CORS_HEADERS, "Allow": "GET, PATCH, OPTIONS" } });
+        }
+
+        return new Response("Method Not Allowed", { status: 405, headers: { ...JSON_CORS_HEADERS, "Allow": "GET, POST, OPTIONS" } });
       }
 
       return new Response("Not found", { status: 404 });
