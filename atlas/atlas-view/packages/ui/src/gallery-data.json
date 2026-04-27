@@ -44,6 +44,236 @@
     "featured": true
   },
   {
+    "id": "research_al",
+    "title": "Al Potential Benchmark",
+    "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 49.0%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "8",
+    "file": "gallery/research/research_al_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#c0c0c0",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "8 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_cu",
+    "title": "Cu Potential Benchmark",
+    "subtitle": "NIST evaluation of 9 interatomic potentials. Max error: 83.1%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "9",
+    "file": "gallery/research/research_cu_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "9 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_au",
+    "title": "Au Potential Benchmark",
+    "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 140.0%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "8",
+    "file": "gallery/research/research_au_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ffd700",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "8 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_ag",
+    "title": "Ag Potential Benchmark",
+    "subtitle": "NIST evaluation of 5 interatomic potentials. Max error: 87.5%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "5",
+    "file": "gallery/research/research_ag_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#c0c0c0",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "5 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_ni",
+    "title": "Ni Potential Benchmark",
+    "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 18.7%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "8",
+    "file": "gallery/research/research_ni_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4a90d9",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "8 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_fe",
+    "title": "Fe Potential Benchmark",
+    "subtitle": "NIST evaluation of 11 interatomic potentials. Max error: 123.8%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "11",
+    "file": "gallery/research/research_fe_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#a0522d",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "11 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_cr",
+    "title": "Cr Potential Benchmark",
+    "subtitle": "NIST evaluation of 1 interatomic potentials. Max error: 64.2%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "1",
+    "file": "gallery/research/research_cr_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#808080",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "1 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_mo",
+    "title": "Mo Potential Benchmark",
+    "subtitle": "NIST evaluation of 2 interatomic potentials. Max error: 8.8%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "2",
+    "file": "gallery/research/research_mo_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#b4b4b4",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "2 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_w",
+    "title": "W Potential Benchmark",
+    "subtitle": "NIST evaluation of 7 interatomic potentials. Max error: 4.0%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "7",
+    "file": "gallery/research/research_w_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#a9a9a9",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "7 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_v",
+    "title": "V Potential Benchmark",
+    "subtitle": "NIST evaluation of 3 interatomic potentials. Max error: 5.7%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "3",
+    "file": "gallery/research/research_v_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#708090",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "3 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
     "id": "oscillation_timeseries",
     "title": "Time-Series Oscillation",
     "subtitle": "Test dataset for 60fps property interpolation",

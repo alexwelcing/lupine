@@ -47,41 +47,9 @@ function send(type: string, payload: any): Promise<any> {
   });
 }
 
-/** Read a File object as text */
-async function readFileAsText(file: File): Promise<string> {
-  // For gzipped files, decompress first
-  if (file.name.endsWith('.gz')) {
-    const buffer = await file.arrayBuffer();
-    const ds = new DecompressionStream('gzip');
-    const reader = new Blob([buffer]).stream().pipeThrough(ds).getReader();
-    const chunks: Uint8Array[] = [];
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      chunks.push(value);
-    }
-    return new TextDecoder().decode(
-      new Uint8Array(chunks.reduce((a, c) => a + c.length, 0)).map((_, i) => {
-        let offset = 0;
-        for (const chunk of chunks) {
-          if (i < offset + chunk.length) return chunk[i - offset];
-          offset += chunk.length;
-        }
-        return 0;
-      })
-    );
-  }
-  const text = await file.text();
-  if (text.trim().toLowerCase().startsWith('<html') || text.trim().toLowerCase().startsWith('<!doctype html>')) {
-    throw new Error('Received HTML instead of molecular data (file not found on server).');
-  }
-  return text;
-}
-
 /** Parse a LAMMPS dump file and return a Trajectory */
 export async function parseDumpFile(file: File): Promise<Trajectory> {
-  const text = await readFileAsText(file);
-  const result = await send('parse-dump', text);
+  const result = await send('parse-dump', file);
   if (!result.frames || result.frames.length === 0) {
     throw new Error('No frames parsed; possibly wrong format.');
   }
@@ -152,8 +120,7 @@ export async function parseDumpFile(file: File): Promise<Trajectory> {
 
 /** Parse a LAMMPS log file and return ThermoData */
 export async function parseLogFile(file: File): Promise<ThermoData> {
-  const text = await readFileAsText(file);
-  const result = await send('parse-log', text);
+  const result = await send('parse-log', file);
   if (!result.runs || result.runs.length === 0) {
     throw new Error('No thermo runs parsed; possibly wrong format.');
   }
@@ -189,8 +156,7 @@ export function detectFileType(filename: string): 'dump' | 'log' | 'data' | 'xyz
 
 /** Parse an XYZ file and return a Trajectory */
 export async function parseXyzFile(file: File): Promise<Trajectory> {
-  const text = await readFileAsText(file);
-  const result = await send('parse-xyz', text);
+  const result = await send('parse-xyz', file);
   if (!result.frames || result.frames.length === 0) {
     throw new Error('No frames parsed; possibly wrong format.');
   }
@@ -261,8 +227,7 @@ export async function parseXyzFile(file: File): Promise<Trajectory> {
 
 /** Parse a LAMMPS data file and return a Trajectory of 1 frame */
 export async function parseDataFile(file: File): Promise<Trajectory> {
-  const text = await readFileAsText(file);
-  const result = await send('parse-data', text);
+  const result = await send('parse-data', file);
   if (!result.frames || result.frames.length === 0) {
     throw new Error('No frames parsed; possibly wrong format.');
   }

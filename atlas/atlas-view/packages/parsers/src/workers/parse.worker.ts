@@ -23,6 +23,37 @@ async function ensureWasm() {
   }
 }
 
+/** Read a File object as text */
+async function readFileAsText(file: File): Promise<string> {
+  // For gzipped files, decompress first
+  if (file.name.endsWith('.gz')) {
+    const buffer = await file.arrayBuffer();
+    const ds = new DecompressionStream('gzip');
+    const reader = new Blob([buffer]).stream().pipeThrough(ds).getReader();
+    const chunks: Uint8Array[] = [];
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+    }
+    return new TextDecoder().decode(
+      new Uint8Array(chunks.reduce((a, c) => a + c.length, 0)).map((_, i) => {
+        let offset = 0;
+        for (const chunk of chunks) {
+          if (i < offset + chunk.length) return chunk[i - offset];
+          offset += chunk.length;
+        }
+        return 0;
+      })
+    );
+  }
+  const text = await file.text();
+  if (text.trim().toLowerCase().startsWith('<html') || text.trim().toLowerCase().startsWith('<!doctype html>')) {
+    throw new Error('Received HTML instead of molecular data (file not found on server).');
+  }
+  return text;
+}
+
 self.onmessage = async (e: MessageEvent) => {
   const { type, payload, id } = e.data;
 
@@ -30,7 +61,8 @@ self.onmessage = async (e: MessageEvent) => {
     await ensureWasm();
 
     if (type === 'parse-dump') {
-      const content = payload as string;
+      const file = payload as File;
+      const content = typeof file === 'string' ? file : await readFileAsText(file);
 
       // Quick count for progress
       const totalFrames = countDumpFrames(content);
@@ -65,7 +97,8 @@ self.onmessage = async (e: MessageEvent) => {
       self.postMessage({ type: 'frames', id, frames: result });
 
     } else if (type === 'parse-data') {
-      const content = payload as string;
+      const file = payload as File;
+      const content = typeof file === 'string' ? file : await readFileAsText(file);
       const f = parseDataFile(content);
       
       self.postMessage({ type: 'frames', id, frames: [{
@@ -86,7 +119,8 @@ self.onmessage = async (e: MessageEvent) => {
       }]});
 
     } else if (type === 'parse-xyz') {
-      const content = payload as string;
+      const file = payload as File;
+      const content = typeof file === 'string' ? file : await readFileAsText(file);
       const frames = parseXyzFile(content);
 
       const result = frames.map((f: any) => ({
@@ -109,7 +143,8 @@ self.onmessage = async (e: MessageEvent) => {
       self.postMessage({ type: 'frames', id, frames: result });
 
     } else if (type === 'parse-log') {
-      const content = payload as string;
+      const file = payload as File;
+      const content = typeof file === 'string' ? file : await readFileAsText(file);
       const thermo = parseLog(content);
 
       const runs = [];
