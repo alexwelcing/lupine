@@ -75,29 +75,59 @@ times drop to seconds.
 
 ## Wiring into the worker
 
-Once the harness produces a JSONL file, push to the deployed worker:
+The canonical path is **GitHub Actions** — a clean Python 3.11 runner does
+the compute and POSTs directly to `/ingest/batch`. See
+`.github/workflows/mlip-benchmark.yml`. This means local environment quirks
+(Python 3.14 / ASE / spglib breakage, missing CUDA, etc.) **never block the
+research pipeline** — we just trigger the workflow.
+
+Trigger manually:
 
 ```bash
-# Option A: wrap the JSONL into the /ingest/batch envelope
+gh workflow run mlip-benchmark.yml -f mlips=chgnet
+gh workflow run mlip-benchmark.yml -f mlips=chgnet,m3gnet -f elements=Al,Cu,Ni
+```
+
+Or rely on the Tuesday 11:00 UTC cron (after the unit-7 critique drain).
+
+After the workflow runs, the records are already in the D1 ledger and
+per-element `/run` analyses have been triggered. Check the diary:
+
+```bash
+python tools/glim.py run --element Al --analysis manifold,causal
+```
+
+If you'd rather push manually from a local JSONL:
+
+```bash
 python -c "
-import json, sys
+import json
 records = [json.loads(line) for line in open('chgnet_records.jsonl')]
 print(json.dumps({'records': records}))
 " > batch.json
 curl -X POST https://glim-think-v1.aw-ab5.workers.dev/ingest/batch \
     -H 'Content-Type: application/json' --data @batch.json
-
-# Option B: extend tools/glim.py with an `ingest` subcommand (TODO).
-```
-
-Then trigger a per-element manifold analysis:
-
-```bash
-python tools/glim.py run --element Al --analysis manifold
 ```
 
 If h4_mlip_invariance holds, the MLIP rows produce a hyper-ribbon spectrum
 that overlaps the classical-potential CI for that element.
+
+## DFT reference coverage
+
+`extract_references.py` produces references for **all 15 elements** by
+merging two sources:
+
+| Source | Contributes |
+|---|---|
+| `nist_benchmark.csv` (existing manuscript dataset) | C11/C12/C44 for Ag, Al, Au, Cr, Cu, Fe, Mo, Ni, V, W (a0 also for Ag, Al, Au, Cu, Ni) |
+| `extra_references.json` (DFT-PBE from de Jong 2015 / Materials Project) | C11/C12/C44/a0 for Pt, Pd, Pb, Nb, Ta; missing a0s for Cr, Fe, Mo, V, W |
+
+Run `python extract_references.py` to see the per-element coverage. CSV-derived
+values always win on conflict — `extra_references.json` only fills gaps.
+
+Citations live in `extra_references.json`'s `_meta` block: de Jong et al. 2015
+*Sci. Data* 2:150009 (DOI 10.1038/sdata.2015.9) and the Materials Project
+elastic dataset (Jain et al. 2013 *APL Materials* 1:011002).
 
 ## File layout
 

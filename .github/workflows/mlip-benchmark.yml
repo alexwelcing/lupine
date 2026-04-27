@@ -1,0 +1,160 @@
+name: MLIP elastic-constant benchmark
+
+# Runs the swarm_preprint_review/scripts/mlip_benchmark/ harness on a clean
+# Python 3.11 runner so local environment mismatches (e.g. Python 3.14 +
+# ASE/spglib incompatibility on the dev workstation) never block the
+# h4_mlip_invariance validation.
+#
+# Workload scale per run (single CPU on ubuntu-latest, 2 vCPU / 7 GB):
+#   CHGNet on 15 elements: ~75 sec compute + ~5 min cold cache install
+#   MACE-MP-0:              ~7-10 min compute + ~3 min install
+#   M3GNet:                 ~2-5 min compute + ~3 min install
+# Default matrix runs CHGNet only (fastest, most reliable). Extend via the
+# `mlips` workflow_dispatch input or by editing `MLIP_SET` below.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mlips:
+        description: 'Comma-separated MLIP ids (chgnet, mace_mp0, m3gnet, emt)'
+        required: false
+        default: 'chgnet'
+      elements:
+        description: 'Optional comma-separated element subset (default: all 15)'
+        required: false
+        default: ''
+      ingest:
+        description: 'POST results to glim-think /ingest/batch'
+        required: false
+        type: boolean
+        default: true
+  schedule:
+    # Tuesday 11:00 UTC — runs after the unit-7 weekly critique drain
+    # (Monday 09:00) so the manifold analysis has fresh MLIP rows to compare
+    # against any newly-synthesized hypotheses.
+    - cron: '0 11 * * TUE'
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MLIP_SET: ${{ github.event.inputs.mlips || 'chgnet' }}
+      ELEMENT_SET: ${{ github.event.inputs.elements || '' }}
+      DO_INGEST: ${{ github.event.inputs.ingest != 'false' }}
+      GLIM_API_URL: ${{ secrets.GLIM_API_URL || 'https://glim-think-v1.aw-ab5.workers.dev' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: swarm_preprint_review/scripts/mlip_benchmark/requirements.txt
+
+      - name: Install core deps (ASE + numpy)
+        run: pip install ase numpy
+
+      - name: Install requested MLIPs
+        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        run: |
+          set -e
+          for mlip in $(echo "$MLIP_SET" | tr ',' ' '); do
+            case "$mlip" in
+              chgnet)   pip install chgnet ;;
+              mace_mp0) pip install mace-torch ;;
+              m3gnet)   pip install matgl ;;
+              emt)      ;;  # built into ASE
+              *) echo "unknown mlip: $mlip"; exit 1 ;;
+            esac
+          done
+
+      - name: Run unit tests
+        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        run: |
+          pip install pytest
+          python -m pytest test_extract_references.py -v
+
+      - name: Extract DFT references (CSV + extras)
+        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        run: python extract_references.py --out references.json
+
+      - name: Run MLIP elastic-constant predictions
+        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        run: |
+          ELEMENT_FLAG=""
+          if [ -n "$ELEMENT_SET" ]; then
+            ELEMENT_FLAG="--elements $ELEMENT_SET"
+          fi
+          python run_predictions.py \
+            --references references.json \
+            --mlips "$MLIP_SET" \
+            $ELEMENT_FLAG \
+            --out mlip_records.jsonl \
+            --continue-on-error
+
+      - name: Show summary
+        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        run: |
+          echo "=== records ==="
+          wc -l mlip_records.jsonl
+          echo "=== first 3 rows ==="
+          head -3 mlip_records.jsonl
+
+      - name: Upload JSONL artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlip-records-${{ github.run_id }}
+          path: swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
+          retention-days: 90
+
+      - name: Push to glim-think /ingest/batch
+        if: env.DO_INGEST == 'true'
+        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, sys
+          api = os.environ["GLIM_API_URL"].rstrip("/")
+          records = [json.loads(line) for line in open("mlip_records.jsonl") if line.strip()]
+          if not records:
+              print("no records to ingest")
+              sys.exit(0)
+          body = json.dumps({"records": records}).encode()
+          req = urllib.request.Request(
+              f"{api}/ingest/batch",
+              data=body,
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=60) as resp:
+                  print(f"HTTP {resp.status}: {resp.read().decode()[:500]}")
+          except Exception as e:
+              print(f"ingest failed: {e}", file=sys.stderr)
+              sys.exit(1)
+          PY
+
+      - name: Trigger /run analysis (per element)
+        if: env.DO_INGEST == 'true'
+        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          api = os.environ["GLIM_API_URL"].rstrip("/")
+          elements = sorted({json.loads(line)["element"]
+                             for line in open("mlip_records.jsonl") if line.strip()})
+          for el in elements:
+              body = json.dumps({"element": el, "analysis_types": ["manifold", "causal"],
+                                 "only_styles": ["mlip"]}).encode()
+              req = urllib.request.Request(
+                  f"{api}/run", data=body,
+                  headers={"Content-Type": "application/json"},
+                  method="POST",
+              )
+              try:
+                  with urllib.request.urlopen(req, timeout=120) as resp:
+                      print(f"  {el}: HTTP {resp.status}")
+              except Exception as e:
+                  print(f"  {el}: FAIL {e}")
+          PY
