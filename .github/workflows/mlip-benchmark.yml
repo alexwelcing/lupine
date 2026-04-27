@@ -1,20 +1,28 @@
 name: MLIP elastic-constant benchmark
 
-# Runs the swarm_preprint_review/scripts/mlip_benchmark/ harness on a clean
-# Python 3.11 runner so local environment mismatches (e.g. Python 3.14 +
-# ASE/spglib incompatibility on the dev workstation) never block the
-# h4_mlip_invariance validation.
+# Runs the MLIP harness end-to-end, ingests the resulting BenchmarkRecords
+# into the glim-think D1 ledger, and triggers per-element /run analysis.
 #
-# Workload scale per run (single CPU on ubuntu-latest, 2 vCPU / 7 GB):
-#   CHGNet on 15 elements: ~75 sec compute + ~5 min cold cache install
-#   MACE-MP-0:              ~7-10 min compute + ~3 min install
-#   M3GNet:                 ~2-5 min compute + ~3 min install
-# Default matrix runs CHGNet only (fastest, most reliable). Extend via the
-# `mlips` workflow_dispatch input or by editing `MLIP_SET` below.
+# Two execution paths:
+#   use_space=true (default) — call the glim-mlip-bench HF ZeroGPU Space.
+#       Heavy compute (PyTorch + CHGNet/MACE/M3GNet weights) lives on the
+#       Space; this runner only ships HTTP requests. ~1-2 min total job time.
+#   use_space=false           — install CHGNet/MACE/M3GNet locally and run
+#       the full Python harness on the runner. ~10-15 min job time including
+#       cold cache. Useful when the Space is down or weights need refreshing.
+#
+# The Space URL is read from the GLIM_HF_SPACE secret; defaults to
+# https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench. Worker URL from
+# GLIM_API_URL secret.
 
 on:
   workflow_dispatch:
     inputs:
+      use_space:
+        description: 'Call the HF ZeroGPU Space (true) vs local install (false)'
+        required: false
+        type: boolean
+        default: true
       mlips:
         description: 'Comma-separated MLIP ids (chgnet, mace_mp0, m3gnet, emt)'
         required: false
@@ -30,8 +38,7 @@ on:
         default: true
   schedule:
     # Tuesday 11:00 UTC — runs after the unit-7 weekly critique drain
-    # (Monday 09:00) so the manifold analysis has fresh MLIP rows to compare
-    # against any newly-synthesized hypotheses.
+    # (Monday 09:00) so the manifold analysis has fresh MLIP rows.
     - cron: '0 11 * * TUE'
 
 jobs:
@@ -39,10 +46,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
+      USE_SPACE: ${{ github.event.inputs.use_space != 'false' }}
       MLIP_SET: ${{ github.event.inputs.mlips || 'chgnet' }}
-      ELEMENT_SET: ${{ github.event.inputs.elements || '' }}
+      ELEMENT_SET: ${{ github.event.inputs.elements || 'Al,Cu,Ni,Ag,Au,Pt,Pd,Pb,Fe,Cr,Mo,W,V,Nb,Ta' }}
       DO_INGEST: ${{ github.event.inputs.ingest != 'false' }}
       GLIM_API_URL: ${{ secrets.GLIM_API_URL || 'https://glim-think-v1.aw-ab5.workers.dev' }}
+      GLIM_HF_SPACE: ${{ secrets.GLIM_HF_SPACE || 'https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -51,46 +60,53 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
-          cache-dependency-path: swarm_preprint_review/scripts/mlip_benchmark/requirements.txt
 
-      - name: Install core deps (ASE + numpy)
-        run: pip install ase numpy
+      - name: Install thin-client deps (always)
+        run: pip install httpx click
 
-      - name: Install requested MLIPs
+      - name: Install heavy MLIP deps (only when use_space=false)
+        if: env.USE_SPACE != 'true'
         working-directory: swarm_preprint_review/scripts/mlip_benchmark
         run: |
-          set -e
+          pip install ase numpy
           for mlip in $(echo "$MLIP_SET" | tr ',' ' '); do
             case "$mlip" in
               chgnet)   pip install chgnet ;;
               mace_mp0) pip install mace-torch ;;
               m3gnet)   pip install matgl ;;
-              emt)      ;;  # built into ASE
+              emt)      ;;
               *) echo "unknown mlip: $mlip"; exit 1 ;;
             esac
           done
 
-      - name: Run unit tests
-        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+      - name: Run unit tests (extract_references + glim_mlip)
         run: |
           pip install pytest
-          python -m pytest test_extract_references.py -v
+          python -m pytest swarm_preprint_review/scripts/mlip_benchmark/test_extract_references.py -v
+          python -m pytest tools/test_glim_mlip.py -v
 
       - name: Extract DFT references (CSV + extras)
         working-directory: swarm_preprint_review/scripts/mlip_benchmark
         run: python extract_references.py --out references.json
 
-      - name: Run MLIP elastic-constant predictions
+      - name: Predict via HF Space
+        if: env.USE_SPACE == 'true'
+        working-directory: tools
+        run: |
+          python glim_mlip.py batch \
+            --elements "$ELEMENT_SET" \
+            --mlips "$MLIP_SET" \
+            --references-from ../swarm_preprint_review/scripts/mlip_benchmark/references.json \
+            --out ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
+
+      - name: Predict via local install
+        if: env.USE_SPACE != 'true'
         working-directory: swarm_preprint_review/scripts/mlip_benchmark
         run: |
-          ELEMENT_FLAG=""
-          if [ -n "$ELEMENT_SET" ]; then
-            ELEMENT_FLAG="--elements $ELEMENT_SET"
-          fi
           python run_predictions.py \
             --references references.json \
             --mlips "$MLIP_SET" \
-            $ELEMENT_FLAG \
+            --elements "$ELEMENT_SET" \
             --out mlip_records.jsonl \
             --continue-on-error
 
@@ -111,29 +127,8 @@ jobs:
 
       - name: Push to glim-think /ingest/batch
         if: env.DO_INGEST == 'true'
-        working-directory: swarm_preprint_review/scripts/mlip_benchmark
-        run: |
-          python - <<'PY'
-          import json, os, urllib.request, sys
-          api = os.environ["GLIM_API_URL"].rstrip("/")
-          records = [json.loads(line) for line in open("mlip_records.jsonl") if line.strip()]
-          if not records:
-              print("no records to ingest")
-              sys.exit(0)
-          body = json.dumps({"records": records}).encode()
-          req = urllib.request.Request(
-              f"{api}/ingest/batch",
-              data=body,
-              headers={"Content-Type": "application/json"},
-              method="POST",
-          )
-          try:
-              with urllib.request.urlopen(req, timeout=60) as resp:
-                  print(f"HTTP {resp.status}: {resp.read().decode()[:500]}")
-          except Exception as e:
-              print(f"ingest failed: {e}", file=sys.stderr)
-              sys.exit(1)
-          PY
+        working-directory: tools
+        run: python glim_mlip.py ingest ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
 
       - name: Trigger /run analysis (per element)
         if: env.DO_INGEST == 'true'

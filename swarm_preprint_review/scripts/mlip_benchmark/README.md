@@ -73,44 +73,74 @@ Compute on a single CPU core:
 GPU acceleration: each MLIP picks up CUDA automatically if available; per-element
 times drop to seconds.
 
-## Wiring into the worker
+## Three execution paths
 
-The canonical path is **GitHub Actions** — a clean Python 3.11 runner does
-the compute and POSTs directly to `/ingest/batch`. See
-`.github/workflows/mlip-benchmark.yml`. This means local environment quirks
-(Python 3.14 / ASE / spglib breakage, missing CUDA, etc.) **never block the
-research pipeline** — we just trigger the workflow.
+Local environment quirks (Python 3.14 / ASE / spglib, missing CUDA, etc.)
+**never block the research pipeline** because the harness has three
+substrates that all converge on the same `BenchmarkRecord` JSONL output.
 
-Trigger manually:
+### 1. HF ZeroGPU Space (preferred)
+
+`hf_space/` is a Gradio app deployed at `huggingface.co/spaces/<HF_USERNAME>/glim-mlip-bench`.
+Hardware tier `zero-a10g` (free for HF Pro) means an A10G GPU per call,
+~5 min/request limit. CHGNet on GPU runs in ~5 sec/element vs ~5 sec/element
+on CPU AND ~5 min cold install — net savings ~10x and no per-run install.
 
 ```bash
-gh workflow run mlip-benchmark.yml -f mlips=chgnet
+# One-time deploy (see hf_space/README.md)
+huggingface-cli login
+cd swarm_preprint_review/scripts/mlip_benchmark/hf_space
+huggingface-cli upload <HF_USERNAME>/glim-mlip-bench . . --repo-type=space
+
+# Then call from anywhere:
+GLIM_HF_SPACE=https://huggingface.co/spaces/<HF_USERNAME>/glim-mlip-bench \
+    python tools/glim_mlip.py batch \
+        --elements Al,Cu,Ni \
+        --references-from references.json \
+        --out records.jsonl
+python tools/glim_mlip.py ingest records.jsonl
+```
+
+The Cloudflare Worker (`glim-think`) can also call the Space directly via
+`fetch()` — no PyTorch in the worker runtime, just HTTPS.
+
+### 2. GitHub Actions
+
+`.github/workflows/mlip-benchmark.yml` runs on a clean ubuntu-latest with
+Python 3.11. By default `use_space=true` so the workflow is a thin client
+calling the Space (~1-2 min total job time including setup). Set
+`use_space=false` to fall back to the local install path (~10-15 min
+including the cold CHGNet/MACE/M3GNet pip install).
+
+```bash
+gh workflow run mlip-benchmark.yml                   # uses Space
+gh workflow run mlip-benchmark.yml -f use_space=false  # full local install
 gh workflow run mlip-benchmark.yml -f mlips=chgnet,m3gnet -f elements=Al,Cu,Ni
 ```
 
-Or rely on the Tuesday 11:00 UTC cron (after the unit-7 critique drain).
+Schedule fires Tuesday 11:00 UTC after the unit-7 weekly critique drain.
 
-After the workflow runs, the records are already in the D1 ledger and
-per-element `/run` analyses have been triggered. Check the diary:
-
-```bash
-python tools/glim.py run --element Al --analysis manifold,causal
-```
-
-If you'd rather push manually from a local JSONL:
+### 3. Local install (fallback / debugging)
 
 ```bash
-python -c "
-import json
-records = [json.loads(line) for line in open('chgnet_records.jsonl')]
-print(json.dumps({'records': records}))
-" > batch.json
-curl -X POST https://glim-think-v1.aw-ab5.workers.dev/ingest/batch \
-    -H 'Content-Type: application/json' --data @batch.json
+cd swarm_preprint_review/scripts/mlip_benchmark
+pip install ase numpy chgnet                 # in a Python 3.11 / 3.12 venv
+python extract_references.py
+python run_predictions.py --references references.json \
+    --mlips chgnet --out chgnet_records.jsonl
 ```
 
-If h4_mlip_invariance holds, the MLIP rows produce a hyper-ribbon spectrum
-that overlaps the classical-potential CI for that element.
+## Triggering analysis after ingest
+
+Once records are in the ledger, kick off `/run` for each MLIP-tested element
+to produce the manifold spectrum that confirms (or refutes) `h4_mlip_invariance`:
+
+```bash
+python tools/glim.py run --element Al --analysis manifold,causal --only-styles mlip
+```
+
+The CI workflow does this automatically as its last step (one POST to `/run`
+per unique element in the JSONL).
 
 ## DFT reference coverage
 
