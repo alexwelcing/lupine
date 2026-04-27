@@ -10,11 +10,10 @@
 
 use super::{Action, ActionResult, Capability, DiscoveryAgent};
 use crate::manifold::{self, BenchmarkEntry, MaterialErrorVector};
-use crate::stats;
 use anyhow::Result;
 use lupine_ops::ledger::{
-    AgentClaim, BenchmarkRecord, ClaimStatus, ClaimType, DiscoveryLedger,
-    generate_record_id, now_iso8601,
+    generate_record_id, now_iso8601, AgentClaim, BenchmarkRecord, ClaimStatus, ClaimType,
+    DiscoveryLedger,
 };
 use rand::Rng;
 
@@ -37,7 +36,11 @@ impl NullModelAgent {
     }
 }
 
-impl Default for NullModelAgent { fn default() -> Self { Self::new() } }
+impl Default for NullModelAgent {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 /// Result of a null model comparison.
 #[derive(Debug)]
@@ -46,7 +49,7 @@ struct NullComparison {
     observed_pr: f64,
     null_mean_pr: f64,
     null_std_pr: f64,
-    null_p05_pr: f64,  // 5th percentile — below this is significant
+    null_p05_pr: f64, // 5th percentile — below this is significant
     null_p95_pr: f64,
     p_value: f64,
     is_significant: bool,
@@ -57,12 +60,18 @@ struct NullComparison {
 }
 
 impl DiscoveryAgent for NullModelAgent {
-    fn agent_id(&self) -> &str { "agent_epsilon_null" }
-    fn capabilities(&self) -> Vec<Capability> { vec![Capability::AnalyzeManifold] }
+    fn agent_id(&self) -> &str {
+        "agent_epsilon_null"
+    }
+    fn capabilities(&self) -> Vec<Capability> {
+        vec![Capability::AnalyzeManifold]
+    }
 
     fn propose_actions(&self, ledger: &DiscoveryLedger) -> Vec<Action> {
         if !self.null_run_complete && ledger.records.len() >= 9 {
-            vec![Action::RunManifoldAnalysis { element: "null_comparison".into() }]
+            vec![Action::RunManifoldAnalysis {
+                element: "null_comparison".into(),
+            }]
         } else {
             vec![]
         }
@@ -77,14 +86,17 @@ impl DiscoveryAgent for NullModelAgent {
 
                 // Convert ledger records to benchmark entries
                 let all_records: Vec<&BenchmarkRecord> = ledger.records.iter().collect();
-                let entries: Vec<BenchmarkEntry> = all_records.iter().map(|r| BenchmarkEntry {
-                    material: r.element.clone(),
-                    potential: r.potential_label.clone(),
-                    property: r.property.clone(),
-                    reference: r.reference,
-                    predicted: r.predicted,
-                    unit: r.unit.clone(),
-                }).collect();
+                let entries: Vec<BenchmarkEntry> = all_records
+                    .iter()
+                    .map(|r| BenchmarkEntry {
+                        material: r.element.clone(),
+                        potential: r.potential_label.clone(),
+                        property: r.property.clone(),
+                        reference: r.reference,
+                        predicted: r.predicted,
+                        unit: r.unit.clone(),
+                    })
+                    .collect();
 
                 let vectors = manifold::build_error_vectors(&entries, &self.properties);
                 if vectors.len() < 3 {
@@ -93,7 +105,9 @@ impl DiscoveryAgent for NullModelAgent {
                     return Ok(ActionResult {
                         agent_id: self.agent_id().into(),
                         action_description: "Null model comparison (insufficient data)".into(),
-                        records_produced: vec![], claims_produced: vec![], notes,
+                        records_produced: vec![],
+                        claims_produced: vec![],
+                        notes,
                     });
                 }
 
@@ -114,7 +128,10 @@ impl DiscoveryAgent for NullModelAgent {
                     let n_props = self.properties.len();
 
                     if n_materials < 3 {
-                        notes.push(format!("⚠ {}: only {} materials — skipping (need ≥3)", potential, n_materials));
+                        notes.push(format!(
+                            "⚠ {}: only {} materials — skipping (need ≥3)",
+                            potential, n_materials
+                        ));
                         continue;
                     }
 
@@ -134,7 +151,8 @@ impl DiscoveryAgent for NullModelAgent {
                     let mut rng = rand::thread_rng();
 
                     // Compute the actual error scale to match
-                    let error_scale: f64 = group.iter()
+                    let error_scale: f64 = group
+                        .iter()
                         .flat_map(|v| v.errors.iter())
                         .map(|e| e * e)
                         .sum::<f64>()
@@ -170,23 +188,27 @@ impl DiscoveryAgent for NullModelAgent {
                     null_log_r2s.sort_by(|a, b| a.partial_cmp(b).unwrap());
 
                     let null_mean_pr = null_prs.iter().sum::<f64>() / null_prs.len() as f64;
-                    let null_var_pr = null_prs.iter()
+                    let null_var_pr = null_prs
+                        .iter()
                         .map(|p| (p - null_mean_pr).powi(2))
-                        .sum::<f64>() / null_prs.len() as f64;
+                        .sum::<f64>()
+                        / null_prs.len() as f64;
                     let null_std_pr = null_var_pr.sqrt();
                     let p05_idx = (0.05 * null_prs.len() as f64) as usize;
-                    let p95_idx = (0.95 * null_prs.len() as f64).min(null_prs.len() as f64 - 1.0) as usize;
+                    let p95_idx =
+                        (0.95 * null_prs.len() as f64).min(null_prs.len() as f64 - 1.0) as usize;
                     let null_p05_pr = null_prs[p05_idx];
                     let null_p95_pr = null_prs[p95_idx];
 
-                    let null_mean_log_r2 = null_log_r2s.iter().sum::<f64>() / null_log_r2s.len() as f64;
+                    let null_mean_log_r2 =
+                        null_log_r2s.iter().sum::<f64>() / null_log_r2s.len() as f64;
                     let null_p95_log_r2 = null_log_r2s[p95_idx.min(null_log_r2s.len() - 1)];
 
                     // p-value: fraction of null trials with PR ≤ observed
                     let p_value = null_prs.iter().filter(|&&p| p <= observed_pr).count() as f64
                         / null_prs.len() as f64;
 
-                    let is_significant = observed_pr < null_p05_pr;  // observed is LOWER than null
+                    let is_significant = observed_pr < null_p05_pr; // observed is LOWER than null
                     let log_r2_significant = observed_log_r2 > null_p95_log_r2;
 
                     comparisons.push(NullComparison {
@@ -209,15 +231,24 @@ impl DiscoveryAgent for NullModelAgent {
                 eprintln!();
                 eprintln!("  ╔════════════════════════════════════════════════════════════╗");
                 eprintln!("  ║  Null Model Comparison (Devil's Advocate)                  ║");
-                eprintln!("  ║  {} trials per potential                                   ", NULL_TRIALS);
+                eprintln!(
+                    "  ║  {} trials per potential                                   ",
+                    NULL_TRIALS
+                );
                 eprintln!("  ╚════════════════════════════════════════════════════════════╝");
 
                 for c in &comparisons {
                     eprintln!();
                     eprintln!("  {} ─────────────────────────────────────", c.potential);
                     eprintln!("    Observed PR:     {:.3}", c.observed_pr);
-                    eprintln!("    Null mean PR:    {:.3} ± {:.3}", c.null_mean_pr, c.null_std_pr);
-                    eprintln!("    Null 5th-95th:   [{:.3}, {:.3}]", c.null_p05_pr, c.null_p95_pr);
+                    eprintln!(
+                        "    Null mean PR:    {:.3} ± {:.3}",
+                        c.null_mean_pr, c.null_std_pr
+                    );
+                    eprintln!(
+                        "    Null 5th-95th:   [{:.3}, {:.3}]",
+                        c.null_p05_pr, c.null_p95_pr
+                    );
                     eprintln!("    p-value:         {:.4}", c.p_value);
                     if c.is_significant {
                         eprintln!("    ✅ PR is significantly BELOW null (p < 0.05)");
@@ -254,8 +285,10 @@ impl DiscoveryAgent for NullModelAgent {
                                 c.potential, c.observed_pr, c.null_mean_pr, c.p_value
                             ),
                         });
-                        notes.push(format!("✅ {}: PR={:.3} is significantly below null {:.3} (p={:.4})",
-                            c.potential, c.observed_pr, c.null_mean_pr, c.p_value));
+                        notes.push(format!(
+                            "✅ {}: PR={:.3} is significantly below null {:.3} (p={:.4})",
+                            c.potential, c.observed_pr, c.null_mean_pr, c.p_value
+                        ));
                     } else {
                         // REFUTE the hyper-ribbon claim
                         claims.push(AgentClaim {
@@ -276,8 +309,10 @@ impl DiscoveryAgent for NullModelAgent {
                                 c.potential, c.observed_pr, c.null_mean_pr, c.p_value
                             ),
                         });
-                        notes.push(format!("❌ {}: PR={:.3} is NOT below null {:.3} (p={:.4}) — REFUTED",
-                            c.potential, c.observed_pr, c.null_mean_pr, c.p_value));
+                        notes.push(format!(
+                            "❌ {}: PR={:.3} is NOT below null {:.3} (p={:.4}) — REFUTED",
+                            c.potential, c.observed_pr, c.null_mean_pr, c.p_value
+                        ));
                     }
                 }
 
@@ -298,7 +333,9 @@ impl DiscoveryAgent for NullModelAgent {
             _ => Ok(ActionResult {
                 agent_id: self.agent_id().into(),
                 action_description: "No-op".into(),
-                records_produced: vec![], claims_produced: vec![], notes: vec![],
+                records_produced: vec![],
+                claims_produced: vec![],
+                notes: vec![],
             }),
         }
     }

@@ -118,22 +118,157 @@ pub struct ComputationResult {
 pub fn reference_data() -> HashMap<String, MetalReference> {
     let mut m = HashMap::new();
     // FCC metals
-    m.insert("Al".to_string(), MetalReference { lattice: 4.05,  c11: 108.2, c12: 61.3,  c44: 28.5,  structure: "fcc".to_string() });
-    m.insert("Cu".to_string(), MetalReference { lattice: 3.615, c11: 168.4, c12: 121.4, c44: 75.4,  structure: "fcc".to_string() });
-    m.insert("Ni".to_string(), MetalReference { lattice: 3.524, c11: 246.5, c12: 147.3, c44: 124.7, structure: "fcc".to_string() });
-    m.insert("Ag".to_string(), MetalReference { lattice: 4.09,  c11: 124.0, c12: 93.4,  c44: 46.1,  structure: "fcc".to_string() });
-    m.insert("Au".to_string(), MetalReference { lattice: 4.078, c11: 192.3, c12: 163.1, c44: 42.0,  structure: "fcc".to_string() });
-    m.insert("Pt".to_string(), MetalReference { lattice: 3.924, c11: 346.7, c12: 250.7, c44: 76.5,  structure: "fcc".to_string() });
-    m.insert("Pd".to_string(), MetalReference { lattice: 3.89,  c11: 227.1, c12: 176.1, c44: 71.7,  structure: "fcc".to_string() });
-    m.insert("Pb".to_string(), MetalReference { lattice: 4.95,  c11: 49.5,  c12: 42.3,  c44: 14.9,  structure: "fcc".to_string() });
+    m.insert(
+        "Al".to_string(),
+        MetalReference {
+            lattice: 4.05,
+            c11: 108.2,
+            c12: 61.3,
+            c44: 28.5,
+            structure: "fcc".to_string(),
+        },
+    );
+    m.insert(
+        "Cu".to_string(),
+        MetalReference {
+            lattice: 3.615,
+            c11: 168.4,
+            c12: 121.4,
+            c44: 75.4,
+            structure: "fcc".to_string(),
+        },
+    );
+    m.insert(
+        "Ni".to_string(),
+        MetalReference {
+            lattice: 3.524,
+            c11: 246.5,
+            c12: 147.3,
+            c44: 124.7,
+            structure: "fcc".to_string(),
+        },
+    );
+    m.insert(
+        "Ag".to_string(),
+        MetalReference {
+            lattice: 4.09,
+            c11: 124.0,
+            c12: 93.4,
+            c44: 46.1,
+            structure: "fcc".to_string(),
+        },
+    );
+    m.insert(
+        "Au".to_string(),
+        MetalReference {
+            lattice: 4.078,
+            c11: 192.3,
+            c12: 163.1,
+            c44: 42.0,
+            structure: "fcc".to_string(),
+        },
+    );
+    m.insert(
+        "Pt".to_string(),
+        MetalReference {
+            lattice: 3.924,
+            c11: 346.7,
+            c12: 250.7,
+            c44: 76.5,
+            structure: "fcc".to_string(),
+        },
+    );
+    m.insert(
+        "Pd".to_string(),
+        MetalReference {
+            lattice: 3.89,
+            c11: 227.1,
+            c12: 176.1,
+            c44: 71.7,
+            structure: "fcc".to_string(),
+        },
+    );
+    m.insert(
+        "Pb".to_string(),
+        MetalReference {
+            lattice: 4.95,
+            c11: 49.5,
+            c12: 42.3,
+            c44: 14.9,
+            structure: "fcc".to_string(),
+        },
+    );
     // BCC metals
-    m.insert("Fe".to_string(), MetalReference { lattice: 2.87,  c11: 230.0, c12: 135.0, c44: 117.0, structure: "bcc".to_string() });
-    m.insert("Cr".to_string(), MetalReference { lattice: 2.88,  c11: 350.0, c12: 67.0,  c44: 100.8, structure: "bcc".to_string() });
-    m.insert("Mo".to_string(), MetalReference { lattice: 3.147, c11: 440.0, c12: 172.0, c44: 106.0, structure: "bcc".to_string() });
-    m.insert("W".to_string(),  MetalReference { lattice: 3.165, c11: 522.0, c12: 204.0, c44: 161.0, structure: "bcc".to_string() });
-    m.insert("V".to_string(),  MetalReference { lattice: 3.03,  c11: 230.0, c12: 119.0, c44: 43.5,  structure: "bcc".to_string() });
-    m.insert("Nb".to_string(), MetalReference { lattice: 3.3,   c11: 247.0, c12: 135.0, c44: 28.5,  structure: "bcc".to_string() });
-    m.insert("Ta".to_string(), MetalReference { lattice: 3.31,  c11: 266.0, c12: 158.0, c44: 87.0,  structure: "bcc".to_string() });
+    m.insert(
+        "Fe".to_string(),
+        MetalReference {
+            lattice: 2.87,
+            c11: 230.0,
+            c12: 135.0,
+            c44: 117.0,
+            structure: "bcc".to_string(),
+        },
+    );
+    m.insert(
+        "Cr".to_string(),
+        MetalReference {
+            lattice: 2.88,
+            c11: 350.0,
+            c12: 67.0,
+            c44: 100.8,
+            structure: "bcc".to_string(),
+        },
+    );
+    m.insert(
+        "Mo".to_string(),
+        MetalReference {
+            lattice: 3.147,
+            c11: 440.0,
+            c12: 172.0,
+            c44: 106.0,
+            structure: "bcc".to_string(),
+        },
+    );
+    m.insert(
+        "W".to_string(),
+        MetalReference {
+            lattice: 3.165,
+            c11: 522.0,
+            c12: 204.0,
+            c44: 161.0,
+            structure: "bcc".to_string(),
+        },
+    );
+    m.insert(
+        "V".to_string(),
+        MetalReference {
+            lattice: 3.03,
+            c11: 230.0,
+            c12: 119.0,
+            c44: 43.5,
+            structure: "bcc".to_string(),
+        },
+    );
+    m.insert(
+        "Nb".to_string(),
+        MetalReference {
+            lattice: 3.3,
+            c11: 247.0,
+            c12: 135.0,
+            c44: 28.5,
+            structure: "bcc".to_string(),
+        },
+    );
+    m.insert(
+        "Ta".to_string(),
+        MetalReference {
+            lattice: 3.31,
+            c11: 266.0,
+            c12: 158.0,
+            c44: 87.0,
+            structure: "bcc".to_string(),
+        },
+    );
     m
 }
 
@@ -177,9 +312,10 @@ pub fn generate_elastic_input(
     };
 
     // Build pair_coeff command based on pair_style
-    let pair_coeff = if pair_style.contains("eam/alloy") || pair_style.contains("eam/fs") {
-        format!("pair_coeff * * {} {}", potential_file, element)
-    } else if pair_style == "eam" {
+    let pair_coeff = if pair_style.contains("eam/alloy")
+        || pair_style.contains("eam/fs")
+        || pair_style == "eam"
+    {
         format!("pair_coeff * * {} {}", potential_file, element)
     } else if pair_style.contains("meam") {
         format!("pair_coeff * * {} {} NULL", potential_file, element)
@@ -187,7 +323,8 @@ pub fn generate_elastic_input(
         format!("pair_coeff * * {} {}", potential_file, element)
     };
 
-    format!(r#"# LAMMPS input for elastic constants
+    format!(
+        r#"# LAMMPS input for elastic constants
 # Generated by Open Distillation Factory
 # Element: {element}, Structure: {structure}
 
@@ -273,15 +410,18 @@ pub fn execute_lammps(
         Command::new(&config.lammps_executable)
     };
 
-    cmd.arg("-in").arg(input_path.file_name().unwrap())
-        .arg("-log").arg(log_filename)
+    cmd.arg("-in")
+        .arg(input_path.file_name().unwrap())
+        .arg("-log")
+        .arg(log_filename)
         .current_dir(run_dir)
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
 
     eprintln!("    → Running LAMMPS for {}...", potential.id);
 
-    let output = cmd.output()
+    let output = cmd
+        .output()
         .with_context(|| format!("Failed to execute LAMMPS for {}", potential.id))?;
 
     if !output.status.success() {
@@ -306,11 +446,14 @@ pub fn run_single_potential(
     pot: &NistPotential,
 ) -> Result<ComputationResult> {
     let refs = reference_data();
-    let ref_data = refs.get(&config.element)
+    let ref_data = refs
+        .get(&config.element)
         .with_context(|| format!("No reference data for element {}", config.element))?;
     let lattice = config.lattice_constant.unwrap_or(ref_data.lattice);
 
-    let run_dir = config.work_dir.join(format!("{}_{}", config.element, pot.short_label()));
+    let run_dir = config
+        .work_dir
+        .join(format!("{}_{}", config.element, pot.short_label()));
     std::fs::create_dir_all(&run_dir)?;
 
     let result_path = run_dir.join("result.json");
@@ -327,8 +470,11 @@ pub fn run_single_potential(
             return Ok(ComputationResult {
                 potential: pot.clone(),
                 trace: dummy_trace(pot, &config.structure, lattice),
-                c11: None, c12: None, c44: None,
-                a0: None, ecoh: None,
+                c11: None,
+                c12: None,
+                c44: None,
+                a0: None,
+                ecoh: None,
                 success: false,
                 error_message: Some(format!("Potential file error: {}", e)),
             });
@@ -360,7 +506,8 @@ pub fn run_single_potential(
         lupine_ops::mlip_ops::MlipBackend::Eam
     };
 
-    let deployment = lupine_ops::mlip_ops::MlipDeployment::new(backend, "test").with_path(&pot_file);
+    let deployment =
+        lupine_ops::mlip_ops::MlipDeployment::new(backend, "test").with_path(&pot_file);
 
     // Statics
     let input = match lupine_ops::statics::generate_statics_script(&statics_config, &deployment) {
@@ -369,8 +516,11 @@ pub fn run_single_potential(
             return Ok(ComputationResult {
                 potential: pot.clone(),
                 trace: dummy_trace(pot, &config.structure, lattice),
-                c11: None, c12: None, c44: None,
-                a0: None, ecoh: None,
+                c11: None,
+                c12: None,
+                c44: None,
+                a0: None,
+                ecoh: None,
                 success: false,
                 error_message: Some(format!("Script error: {:?}", e)),
             });
@@ -385,8 +535,11 @@ pub fn run_single_potential(
             return Ok(ComputationResult {
                 potential: pot.clone(),
                 trace: dummy_trace(pot, &config.structure, lattice),
-                c11: None, c12: None, c44: None,
-                a0: None, ecoh: None,
+                c11: None,
+                c12: None,
+                c44: None,
+                a0: None,
+                ecoh: None,
                 success: false,
                 error_message: Some(format!("Statics execution error: {}", e)),
             });
@@ -400,8 +553,11 @@ pub fn run_single_potential(
         return Ok(ComputationResult {
             potential: pot.clone(),
             trace: dummy_trace(pot, &config.structure, lattice),
-            c11: None, c12: None, c44: None,
-            a0: None, ecoh: None,
+            c11: None,
+            c12: None,
+            c44: None,
+            a0: None,
+            ecoh: None,
             success: false,
             error_message: Some("Parse statics error".to_string()),
         });
@@ -418,36 +574,49 @@ pub fn run_single_potential(
         nist_id: pot.id.clone(),
     };
 
-    let elastic_input = match lupine_ops::elastic::generate_elastic_script(&elastic_config, &deployment) {
-        Ok(script) => script,
-        Err(e) => {
-            let trace = build_trace(pot, &config.structure, lattice, &run_dir);
-            let result = ComputationResult {
-                potential: pot.clone(),
-                trace,
-                c11: None, c12: None, c44: None,
-                a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
-                success: true,
-                error_message: Some(format!("Elastic script error: {:?}", e)),
-            };
-            let json = serde_json::to_string_pretty(&result)?;
-            std::fs::write(&result_path, json)?;
-            return Ok(result);
-        }
-    };
+    let elastic_input =
+        match lupine_ops::elastic::generate_elastic_script(&elastic_config, &deployment) {
+            Ok(script) => script,
+            Err(e) => {
+                let trace = build_trace(pot, &config.structure, lattice, &run_dir);
+                let result = ComputationResult {
+                    potential: pot.clone(),
+                    trace,
+                    c11: None,
+                    c12: None,
+                    c44: None,
+                    a0: Some(statics_res.a0),
+                    ecoh: Some(statics_res.ecoh),
+                    success: true,
+                    error_message: Some(format!("Elastic script error: {:?}", e)),
+                };
+                let json = serde_json::to_string_pretty(&result)?;
+                std::fs::write(&result_path, json)?;
+                return Ok(result);
+            }
+        };
 
     let elastic_input_path = run_dir.join("in.elastic");
     std::fs::write(&elastic_input_path, &elastic_input)?;
 
-    let elastic_log_path = match execute_lammps(config, pot, &elastic_input_path, &run_dir, "log.lammps.elastic") {
+    let elastic_log_path = match execute_lammps(
+        config,
+        pot,
+        &elastic_input_path,
+        &run_dir,
+        "log.lammps.elastic",
+    ) {
         Ok(p) => p,
         Err(e) => {
             let trace = build_trace(pot, &config.structure, lattice, &run_dir);
             let result = ComputationResult {
                 potential: pot.clone(),
                 trace,
-                c11: None, c12: None, c44: None,
-                a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+                c11: None,
+                c12: None,
+                c44: None,
+                a0: Some(statics_res.a0),
+                ecoh: Some(statics_res.ecoh),
                 success: true,
                 error_message: Some(format!("Elastic execution error: {}", e)),
             };
@@ -470,10 +639,17 @@ pub fn run_single_potential(
     let result = ComputationResult {
         potential: pot.clone(),
         trace,
-        c11, c12, c44,
-        a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+        c11,
+        c12,
+        c44,
+        a0: Some(statics_res.a0),
+        ecoh: Some(statics_res.ecoh),
         success: true,
-        error_message: if c11.is_none() { Some("Elastic parse failed".to_string()) } else { None },
+        error_message: if c11.is_none() {
+            Some("Elastic parse failed".to_string())
+        } else {
+            None
+        },
     };
 
     let json = serde_json::to_string_pretty(&result)?;
@@ -492,26 +668,38 @@ pub fn run_single_potential(
 pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
     // Check LAMMPS availability
     if !lammps_available(&config.lammps_executable) {
-        eprintln!("⚠ LAMMPS executable '{}' not found.", config.lammps_executable);
+        eprintln!(
+            "⚠ LAMMPS executable '{}' not found.",
+            config.lammps_executable
+        );
         eprintln!("  Please install LAMMPS: https://www.lammps.org/download.html");
         eprintln!("  Or set --lammps-exe to point to your LAMMPS binary.");
         anyhow::bail!("LAMMPS not available");
     }
 
     // Load NIST catalog
-    let catalog = NistCatalog::load(&config.nist_index)
-        .with_context(|| format!("Failed to load NIST catalog from {}", config.nist_index.display()))?;
+    let catalog = NistCatalog::load(&config.nist_index).with_context(|| {
+        format!(
+            "Failed to load NIST catalog from {}",
+            config.nist_index.display()
+        )
+    })?;
 
     let potentials = catalog.single_element(&config.element);
     if potentials.is_empty() {
         anyhow::bail!("No single-element potentials found for {}", config.element);
     }
 
-    eprintln!("  ✦ Campaign: {} single-element potentials for {}", potentials.len(), config.element);
+    eprintln!(
+        "  ✦ Campaign: {} single-element potentials for {}",
+        potentials.len(),
+        config.element
+    );
 
     // Get reference data
     let refs = reference_data();
-    let ref_data = refs.get(&config.element)
+    let ref_data = refs
+        .get(&config.element)
         .with_context(|| format!("No reference data for element {}", config.element))?;
 
     let lattice = config.lattice_constant.unwrap_or(ref_data.lattice);
@@ -524,7 +712,9 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
     for (i, pot) in potentials.iter().enumerate() {
         eprintln!("\n  [{}/{}] {}", i + 1, potentials.len(), pot.id);
 
-        let run_dir = config.work_dir.join(format!("{}_{}", config.element, pot.short_label()));
+        let run_dir = config
+            .work_dir
+            .join(format!("{}_{}", config.element, pot.short_label()));
         std::fs::create_dir_all(&run_dir)?;
 
         // Check if already completed (resume support)
@@ -547,8 +737,11 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
                 results.push(ComputationResult {
                     potential: (*pot).clone(),
                     trace: dummy_trace(pot, &config.structure, lattice),
-                    c11: None, c12: None, c44: None,
-                    a0: None, ecoh: None,
+                    c11: None,
+                    c12: None,
+                    c44: None,
+                    a0: None,
+                    ecoh: None,
                     success: false,
                     error_message: Some(format!("Potential file error: {}", e)),
                 });
@@ -583,18 +776,23 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
             lupine_ops::mlip_ops::MlipBackend::Eam // fallback
         };
 
-        let deployment = lupine_ops::mlip_ops::MlipDeployment::new(backend, "test").with_path(&pot_file);
+        let deployment =
+            lupine_ops::mlip_ops::MlipDeployment::new(backend, "test").with_path(&pot_file);
 
         // Generate input script using lupine_ops for statics (a0, Ecoh)
-        let input = match lupine_ops::statics::generate_statics_script(&statics_config, &deployment) {
+        let input = match lupine_ops::statics::generate_statics_script(&statics_config, &deployment)
+        {
             Ok(script) => script,
             Err(e) => {
                 eprintln!("    ✗ Script generation failed: {:?}", e);
                 results.push(ComputationResult {
                     potential: (*pot).clone(),
                     trace: dummy_trace(pot, &config.structure, lattice),
-                    c11: None, c12: None, c44: None,
-                    a0: None, ecoh: None,
+                    c11: None,
+                    c12: None,
+                    c44: None,
+                    a0: None,
+                    ecoh: None,
                     success: false,
                     error_message: Some(format!("Script error: {:?}", e)),
                 });
@@ -605,33 +803,40 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
         std::fs::write(&input_path, &input)?;
 
         // Run LAMMPS for statics
-        let log_path = match execute_lammps(config, pot, &input_path, &run_dir, "log.lammps.statics") {
-            Ok(p) => p,
-            Err(e) => {
-                eprintln!("    ✗ LAMMPS execution failed for statics: {}", e);
-                results.push(ComputationResult {
-                    potential: (*pot).clone(),
-                    trace: dummy_trace(pot, &config.structure, lattice),
-                    c11: None, c12: None, c44: None,
-                    a0: None, ecoh: None,
-                    success: false,
-                    error_message: Some(format!("Statics execution error: {}", e)),
-                });
-                continue;
-            }
-        };
+        let log_path =
+            match execute_lammps(config, pot, &input_path, &run_dir, "log.lammps.statics") {
+                Ok(p) => p,
+                Err(e) => {
+                    eprintln!("    ✗ LAMMPS execution failed for statics: {}", e);
+                    results.push(ComputationResult {
+                        potential: (*pot).clone(),
+                        trace: dummy_trace(pot, &config.structure, lattice),
+                        c11: None,
+                        c12: None,
+                        c44: None,
+                        a0: None,
+                        ecoh: None,
+                        success: false,
+                        error_message: Some(format!("Statics execution error: {}", e)),
+                    });
+                    continue;
+                }
+            };
 
         // Parse statics results
         let log_content = std::fs::read_to_string(&log_path).unwrap_or_default();
         let statics_res_opt = lupine_ops::statics::parse_statics_output(&log_content);
-        
+
         if statics_res_opt.is_none() {
             eprintln!("    ✗ Parsing statics failed.");
             results.push(ComputationResult {
                 potential: (*pot).clone(),
                 trace: dummy_trace(pot, &config.structure, lattice),
-                c11: None, c12: None, c44: None,
-                a0: None, ecoh: None,
+                c11: None,
+                c12: None,
+                c44: None,
+                a0: None,
+                ecoh: None,
                 success: false,
                 error_message: Some("Parse statics error".to_string()),
             });
@@ -639,7 +844,10 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
         }
 
         let statics_res = statics_res_opt.unwrap();
-        eprintln!("    ✓ a0={:.4} Å, Ecoh={:.4} eV/atom", statics_res.a0, statics_res.ecoh);
+        eprintln!(
+            "    ✓ a0={:.4} Å, Ecoh={:.4} eV/atom",
+            statics_res.a0, statics_res.ecoh
+        );
 
         // Now run elastics using the equilibrium a0 from statics!
         let elastic_config = lupine_ops::elastic::ElasticCalcConfig {
@@ -650,29 +858,39 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
             nist_id: pot.id.clone(),
         };
 
-        let elastic_input = match lupine_ops::elastic::generate_elastic_script(&elastic_config, &deployment) {
-            Ok(script) => script,
-            Err(e) => {
-                eprintln!("    ✗ Elastic script generation failed: {:?}", e);
-                // Still return statics
-                let trace = build_trace(pot, &config.structure, lattice, &run_dir);
-                let result = ComputationResult {
-                    potential: (*pot).clone(),
-                    trace,
-                    c11: None, c12: None, c44: None,
-                    a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
-                    success: true,
-                    error_message: Some(format!("Elastic script error: {:?}", e)),
-                };
-                results.push(result);
-                continue;
-            }
-        };
+        let elastic_input =
+            match lupine_ops::elastic::generate_elastic_script(&elastic_config, &deployment) {
+                Ok(script) => script,
+                Err(e) => {
+                    eprintln!("    ✗ Elastic script generation failed: {:?}", e);
+                    // Still return statics
+                    let trace = build_trace(pot, &config.structure, lattice, &run_dir);
+                    let result = ComputationResult {
+                        potential: (*pot).clone(),
+                        trace,
+                        c11: None,
+                        c12: None,
+                        c44: None,
+                        a0: Some(statics_res.a0),
+                        ecoh: Some(statics_res.ecoh),
+                        success: true,
+                        error_message: Some(format!("Elastic script error: {:?}", e)),
+                    };
+                    results.push(result);
+                    continue;
+                }
+            };
 
         let elastic_input_path = run_dir.join("in.elastic");
         std::fs::write(&elastic_input_path, &elastic_input)?;
 
-        let elastic_log_path = match execute_lammps(config, pot, &elastic_input_path, &run_dir, "log.lammps.elastic") {
+        let elastic_log_path = match execute_lammps(
+            config,
+            pot,
+            &elastic_input_path,
+            &run_dir,
+            "log.lammps.elastic",
+        ) {
             Ok(p) => p,
             Err(e) => {
                 eprintln!("    ✗ LAMMPS execution failed for elastic: {}", e);
@@ -680,8 +898,11 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
                 let result = ComputationResult {
                     potential: (*pot).clone(),
                     trace,
-                    c11: None, c12: None, c44: None,
-                    a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+                    c11: None,
+                    c12: None,
+                    c44: None,
+                    a0: Some(statics_res.a0),
+                    ecoh: Some(statics_res.ecoh),
                     success: true,
                     error_message: Some(format!("Elastic execution error: {}", e)),
                 };
@@ -694,7 +915,10 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
         let elastic_res_opt = lupine_ops::elastic::parse_elastic_output(&elastic_log_content);
 
         let (c11, c12, c44) = if let Some(eres) = elastic_res_opt {
-            eprintln!("    ✓ C11={:.1}, C12={:.1}, C44={:.1} GPa", eres.c11, eres.c12, eres.c44);
+            eprintln!(
+                "    ✓ C11={:.1}, C12={:.1}, C44={:.1} GPa",
+                eres.c11, eres.c12, eres.c44
+            );
             (Some(eres.c11), Some(eres.c12), Some(eres.c44))
         } else {
             eprintln!("    ✗ Parsing elastic failed.");
@@ -705,10 +929,17 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
         let result = ComputationResult {
             potential: (*pot).clone(),
             trace,
-            c11, c12, c44,
-            a0: Some(statics_res.a0), ecoh: Some(statics_res.ecoh),
+            c11,
+            c12,
+            c44,
+            a0: Some(statics_res.a0),
+            ecoh: Some(statics_res.ecoh),
             success: true,
-            error_message: if c11.is_none() { Some("Elastic parse failed".to_string()) } else { None },
+            error_message: if c11.is_none() {
+                Some("Elastic parse failed".to_string())
+            } else {
+                None
+            },
         };
 
         // Save result for resume support
@@ -721,7 +952,11 @@ pub fn run_campaign(config: &RunnerConfig) -> Result<Vec<ComputationResult>> {
     // Summary
     let success_count = results.iter().filter(|r| r.success).count();
     eprintln!("\n  ════════════════════════════════════════════════════════════");
-    eprintln!("  Campaign complete: {}/{} successful", success_count, results.len());
+    eprintln!(
+        "  Campaign complete: {}/{} successful",
+        success_count,
+        results.len()
+    );
     eprintln!("  ════════════════════════════════════════════════════════════");
 
     Ok(results)
@@ -807,19 +1042,33 @@ fn uuid() -> String {
 
 /// Export computation results as a benchmark CSV.
 /// This CSV can be loaded by `atlas-distill benchmark <path> --full`.
-pub fn export_benchmark_csv(results: &[ComputationResult], element: &str, path: &Path) -> Result<()> {
+pub fn export_benchmark_csv(
+    results: &[ComputationResult],
+    element: &str,
+    path: &Path,
+) -> Result<()> {
     let file_exists = path.exists();
     let file = std::fs::OpenOptions::new()
-        .write(true)
+        
         .create(true)
         .append(true)
         .open(path)?;
-        
+
     let mut wtr = csv::Writer::from_writer(file);
 
     // Header (only if new file)
     if !file_exists {
-        wtr.write_record(&["material", "potential", "property", "reference", "predicted", "unit", "nist_id", "doi", "pair_style"])?;
+        wtr.write_record([
+            "material",
+            "potential",
+            "property",
+            "reference",
+            "predicted",
+            "unit",
+            "nist_id",
+            "doi",
+            "pair_style",
+        ])?;
     }
 
     let refs = reference_data();
@@ -832,44 +1081,74 @@ pub fn export_benchmark_csv(results: &[ComputationResult], element: &str, path: 
         let pot = &result.potential;
 
         if let Some(c11) = result.c11 {
-            wtr.write_record(&[
-                element, &pot.short_label(), "C11",
-                &ref_data.c11.to_string(), &c11.to_string(), "GPa",
-                &pot.id, &result.trace.potential_doi, &pot.pair_style,
+            wtr.write_record([
+                element,
+                &pot.short_label(),
+                "C11",
+                &ref_data.c11.to_string(),
+                &c11.to_string(),
+                "GPa",
+                &pot.id,
+                &result.trace.potential_doi,
+                &pot.pair_style,
             ])?;
         }
         if let Some(c12) = result.c12 {
-            wtr.write_record(&[
-                element, &pot.short_label(), "C12",
-                &ref_data.c12.to_string(), &c12.to_string(), "GPa",
-                &pot.id, &result.trace.potential_doi, &pot.pair_style,
+            wtr.write_record([
+                element,
+                &pot.short_label(),
+                "C12",
+                &ref_data.c12.to_string(),
+                &c12.to_string(),
+                "GPa",
+                &pot.id,
+                &result.trace.potential_doi,
+                &pot.pair_style,
             ])?;
         }
         if let Some(c44) = result.c44 {
-            wtr.write_record(&[
-                element, &pot.short_label(), "C44",
-                &ref_data.c44.to_string(), &c44.to_string(), "GPa",
-                &pot.id, &result.trace.potential_doi, &pot.pair_style,
+            wtr.write_record([
+                element,
+                &pot.short_label(),
+                "C44",
+                &ref_data.c44.to_string(),
+                &c44.to_string(),
+                "GPa",
+                &pot.id,
+                &result.trace.potential_doi,
+                &pot.pair_style,
             ])?;
         }
-        
+
         let ref_statics = crate::validation::fcc_statics_reference_data();
         if let Some(ref_s) = ref_statics.get(element) {
             let ref_a0 = ref_s[0];
             let ref_ecoh = ref_s[1];
 
             if let Some(a0) = result.a0 {
-                wtr.write_record(&[
-                    element, &pot.short_label(), "a0",
-                    &ref_a0.to_string(), &a0.to_string(), "A",
-                    &pot.id, &result.trace.potential_doi, &pot.pair_style,
+                wtr.write_record([
+                    element,
+                    &pot.short_label(),
+                    "a0",
+                    &ref_a0.to_string(),
+                    &a0.to_string(),
+                    "A",
+                    &pot.id,
+                    &result.trace.potential_doi,
+                    &pot.pair_style,
                 ])?;
             }
             if let Some(ecoh) = result.ecoh {
-                wtr.write_record(&[
-                    element, &pot.short_label(), "Ecoh",
-                    &ref_ecoh.to_string(), &ecoh.to_string(), "eV/atom",
-                    &pot.id, &result.trace.potential_doi, &pot.pair_style,
+                wtr.write_record([
+                    element,
+                    &pot.short_label(),
+                    "Ecoh",
+                    &ref_ecoh.to_string(),
+                    &ecoh.to_string(),
+                    "eV/atom",
+                    &pot.id,
+                    &result.trace.potential_doi,
+                    &pot.pair_style,
                 ])?;
             }
         }

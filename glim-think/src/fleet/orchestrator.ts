@@ -2,6 +2,8 @@
  * FleetOrchestrator: parallel research fleet commander.
  */
 
+import type { Env } from "../types";
+
 const ELEMENTS = ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb", "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta"];
 
 export class FleetOrchestrator implements DurableObject {

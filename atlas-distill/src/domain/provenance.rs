@@ -31,7 +31,10 @@ mod tests {
     #[test]
     fn digest_is_stable() {
         // Known-good value from the ODF reference implementation
-        assert_eq!(fnv1a64_hex(b"open-distillation-factory"), "ef658f42f8591f87");
+        assert_eq!(
+            fnv1a64_hex(b"open-distillation-factory"),
+            "ef658f42f8591f87"
+        );
     }
 
     #[test]

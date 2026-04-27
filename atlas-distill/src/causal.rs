@@ -90,7 +90,10 @@ pub fn detect_simpsons_paradox(data: &[GroupedPoint]) -> ParadoxResult {
     // Group data
     let mut groups: HashMap<String, Vec<(f64, f64)>> = HashMap::new();
     for pt in data {
-        groups.entry(pt.group.clone()).or_default().push((pt.x, pt.y));
+        groups
+            .entry(pt.group.clone())
+            .or_default()
+            .push((pt.x, pt.y));
     }
 
     let n_groups = groups.len();
@@ -100,7 +103,11 @@ pub fn detect_simpsons_paradox(data: &[GroupedPoint]) -> ParadoxResult {
     let xs_pooled: Vec<f64> = data.iter().map(|p| p.x).collect();
     let ys_pooled: Vec<f64> = data.iter().map(|p| p.y).collect();
     let pooled_r = stats::pearson_r(&xs_pooled, &ys_pooled);
-    let pooled_direction = if pooled_r >= 0.0 { "positive" } else { "negative" };
+    let pooled_direction = if pooled_r >= 0.0 {
+        "positive"
+    } else {
+        "negative"
+    };
 
     // Per-group correlations
     let mut group_correlations = Vec::new();
@@ -179,9 +186,7 @@ pub fn detect_simpsons_paradox(data: &[GroupedPoint]) -> ParadoxResult {
     let simpsons_detected = opposite_fraction > 0.5
         || (pooled_r.signum() != pooled_within_r.signum() && pooled_within_r.is_finite());
 
-    let ecological_fallacy = between_var_x > 0.0
-        && between_var_y > 0.0
-        && reversal_magnitude > 0.1;
+    let ecological_fallacy = between_var_x > 0.0 && between_var_y > 0.0 && reversal_magnitude > 0.1;
 
     let pattern = if simpsons_detected {
         if pooled_r.signum() != pooled_within_r.signum() {
@@ -268,8 +273,14 @@ pub fn print_summary(result: &ParadoxResult) {
     eprintln!("  ║  Simpson's Paradox / Ecological Fallacy Detection          ║");
     eprintln!("  ╚════════════════════════════════════════════════════════════╝");
     eprintln!();
-    eprintln!("  Groups: {} | Total points: {}", result.n_groups, result.n_total);
-    eprintln!("  Pooled correlation: r = {:+.4} ({})", result.pooled_r, result.pooled_direction);
+    eprintln!(
+        "  Groups: {} | Total points: {}",
+        result.n_groups, result.n_total
+    );
+    eprintln!(
+        "  Pooled correlation: r = {:+.4} ({})",
+        result.pooled_r, result.pooled_direction
+    );
     eprintln!();
 
     eprintln!("  Per-group correlations:");
@@ -283,11 +294,26 @@ pub fn print_summary(result: &ParadoxResult) {
 
     eprintln!();
     eprintln!("  Markers:");
-    eprintln!("    Opposite-sign groups: {:.1}%", result.markers.opposite_sign_fraction * 100.0);
-    eprintln!("    Pooled within-group r: {:+.4}", result.markers.pooled_within_r);
-    eprintln!("    Reversal magnitude: {:.4}", result.markers.correlation_reversal_magnitude);
-    eprintln!("    Between-group var(x): {:.4}", result.markers.between_group_var_x);
-    eprintln!("    Between-group var(y): {:.4}", result.markers.between_group_var_y);
+    eprintln!(
+        "    Opposite-sign groups: {:.1}%",
+        result.markers.opposite_sign_fraction * 100.0
+    );
+    eprintln!(
+        "    Pooled within-group r: {:+.4}",
+        result.markers.pooled_within_r
+    );
+    eprintln!(
+        "    Reversal magnitude: {:.4}",
+        result.markers.correlation_reversal_magnitude
+    );
+    eprintln!(
+        "    Between-group var(x): {:.4}",
+        result.markers.between_group_var_x
+    );
+    eprintln!(
+        "    Between-group var(y): {:.4}",
+        result.markers.between_group_var_y
+    );
     eprintln!();
 
     if result.simpsons_detected {
@@ -380,20 +406,16 @@ pub fn generate_bcc_paradox_example() -> Vec<GroupedPoint> {
     let mut data = Vec::new();
 
     // Soft BCC metals: positive errors, within-metal positive slope
-    let soft = vec![
-        ("Fe", vec![(230.0, 8.0), (135.0, 4.0), (117.0, 2.0)]),
-        ("V",  vec![(230.0, 9.0), (119.0, 5.0), (44.0, 3.0)]),
+    let soft = [("Fe", vec![(230.0, 8.0), (135.0, 4.0), (117.0, 2.0)]),
+        ("V", vec![(230.0, 9.0), (119.0, 5.0), (44.0, 3.0)]),
         ("Nb", vec![(247.0, 11.0), (135.0, 6.0), (29.0, 4.0)]),
-        ("Ta", vec![(266.0, 8.0), (158.0, 4.0), (87.0, 2.0)]),
-    ];
+        ("Ta", vec![(266.0, 8.0), (158.0, 4.0), (87.0, 2.0)])];
 
     // Stiff BCC metals: negative errors, within-metal positive slope
     // (higher ref → less negative error)
-    let stiff = vec![
-        ("Cr", vec![(350.0, -6.0), (67.0, -3.0), (101.0, -2.0)]),
+    let stiff = [("Cr", vec![(350.0, -6.0), (67.0, -3.0), (101.0, -2.0)]),
         ("Mo", vec![(440.0, -10.0), (172.0, -5.0), (106.0, -3.0)]),
-        ("W",  vec![(522.0, -12.0), (204.0, -6.0), (161.0, -4.0)]),
-    ];
+        ("W", vec![(522.0, -12.0), (204.0, -6.0), (161.0, -4.0)])];
 
     for (metal, points) in soft.iter().chain(stiff.iter()) {
         for (x, y) in points {

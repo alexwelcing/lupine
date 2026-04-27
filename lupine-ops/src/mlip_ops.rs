@@ -171,10 +171,10 @@ impl MlipDeployment {
     }
 
     pub fn validate_local_paths(&self) -> Result<(), MlipOpsError> {
-        if let Some(path_str) = &self.model_path {
-            if !Path::new(path_str).exists() {
-                return Err(MlipOpsError::PathNotFound(path_str.clone()));
-            }
+        if let Some(path_str) = &self.model_path
+            && !Path::new(path_str).exists()
+        {
+            return Err(MlipOpsError::PathNotFound(path_str.clone()));
         }
         for aux_path in &self.auxiliary_paths {
             if !Path::new(aux_path).exists() {

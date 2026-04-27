@@ -64,36 +64,43 @@ end OpenDistillationFactory.Materials.Distillation.Extracted
     fs::create_dir_all(dist_dir)?;
     let dist_path = dist_dir.join("Extracted.lean");
     fs::write(&dist_path, eam_lean_code)?;
-    eprintln!("  ✅ Lean formalization written to: {}", dist_path.display());
-    
+    eprintln!(
+        "  ✅ Lean formalization written to: {}",
+        dist_path.display()
+    );
+
     if let Some(emp_path) = empirical {
         eprintln!("  ✦ Parsing empirical data from {}", emp_path.display());
         let entries = crate::benchmark::load_auto(emp_path)?;
-        
+
         let mut lean_out = String::new();
         lean_out.push_str("namespace OpenDistillationFactory.Materials.Data\n\n");
         lean_out.push_str("/--\n  Empirical benchmark dataset formally injected from LAMMPS executions.\n  Generated automatically by atlas-distill.\n-/\n");
         lean_out.push_str("def empiricalParadoxPointsRaw : List (String × Float × Float) := [\n");
-        
+
         for (i, e) in entries.iter().enumerate() {
-            let line = format!("  (\"{}\", {}, {}){}", 
-                e.material, 
-                e.reference, 
+            let line = format!(
+                "  (\"{}\", {}, {}){}",
+                e.material,
+                e.reference,
                 e.predicted,
                 if i == entries.len() - 1 { "" } else { "," }
             );
             lean_out.push_str(&line);
             lean_out.push('\n');
         }
-        
+
         lean_out.push_str("]\n\nend OpenDistillationFactory.Materials.Data\n");
-        
+
         let data_dir = Path::new("../lean-spec/OpenDistillationFactory/Materials/Data");
         fs::create_dir_all(data_dir)?;
         let data_path = data_dir.join("EmpiricalParadox.lean");
         fs::write(&data_path, lean_out)?;
-        eprintln!("  ✅ Lean empirical data generated to: {}", data_path.display());
-        
+        eprintln!(
+            "  ✅ Lean empirical data generated to: {}",
+            data_path.display()
+        );
+
         let manifold_path = Path::new("benchmark_manifold.json");
         if manifold_path.exists() {
             if let Ok(content) = fs::read_to_string(manifold_path) {
@@ -101,27 +108,39 @@ end OpenDistillationFactory.Materials.Distillation.Extracted
                     Ok(manifold_data) => {
                         let mut max_frac_dim = 0.0;
                         for analysis in &manifold_data {
-                            if let Some(frac_dim) = analysis.get("fractional_dimensionality").and_then(|v| v.as_f64()) {
+                            if let Some(frac_dim) = analysis
+                                .get("fractional_dimensionality")
+                                .and_then(|v| v.as_f64())
+                            {
                                 if frac_dim > max_frac_dim {
                                     max_frac_dim = frac_dim;
                                 }
                             }
                         }
-                        
+
                         let mut theory_out = String::new();
                         theory_out.push_str("import Mathlib.Data.Real.Basic\n\n");
                         theory_out.push_str("namespace OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical\n\n");
                         theory_out.push_str("/--\n  Empirical verification of the Hyper-Ribbon Claim across all potentials.\n  Computed by atlas-distill PCA manifold analysis.\n-/\n");
-                        theory_out.push_str(&format!("def maxEmpiricalFractionalDimensionality : Float := {}\n\n", max_frac_dim));
+                        theory_out.push_str(&format!(
+                            "def maxEmpiricalFractionalDimensionality : Float := {}\n\n",
+                            max_frac_dim
+                        ));
                         theory_out.push_str("theorem empirical_hyper_ribbon_holds : maxEmpiricalFractionalDimensionality < 0.5 := by\n");
                         theory_out.push_str("  native_decide\n\n");
-                        theory_out.push_str("end OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical\n");
-                        
-                        let theory_dir = Path::new("../lean-spec/OpenDistillationFactory/Materials/Theory");
+                        theory_out.push_str(
+                            "end OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical\n",
+                        );
+
+                        let theory_dir =
+                            Path::new("../lean-spec/OpenDistillationFactory/Materials/Theory");
                         fs::create_dir_all(theory_dir)?;
                         let theory_path = theory_dir.join("HyperRibbonEmpirical.lean");
                         fs::write(&theory_path, theory_out)?;
-                        eprintln!("  ✅ Lean empirical hyper-ribbon theorem generated to: {}", theory_path.display());
+                        eprintln!(
+                            "  ✅ Lean empirical hyper-ribbon theorem generated to: {}",
+                            theory_path.display()
+                        );
                     }
                     Err(e) => {
                         eprintln!("  ❌ Failed to parse benchmark_manifold.json: {}", e);

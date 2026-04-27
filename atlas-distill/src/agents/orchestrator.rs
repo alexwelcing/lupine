@@ -9,7 +9,7 @@
 //! This is the orchestrator's submission to autoresearch: it stops being
 //! a deterministic for-loop and becomes a reactive scheduler.
 
-use super::{Action, ActionResult, DiscoveryAgent};
+use super::{Action, DiscoveryAgent};
 use anyhow::Result;
 use lupine_ops::ledger::{DiscoveryLedger, LedgerSummary};
 use std::collections::{HashSet, VecDeque};
@@ -83,7 +83,9 @@ impl Orchestrator {
     /// Generate a deduplication key for an action.
     fn dedup_key(agent_id: &str, action: &Action) -> String {
         match action {
-            Action::EvaluatePotential { nist_id, element, .. } => {
+            Action::EvaluatePotential {
+                nist_id, element, ..
+            } => {
                 format!("{}:eval:{}:{}", agent_id, nist_id, element)
             }
             Action::FetchPaper { doi, .. } => {
@@ -98,7 +100,10 @@ impl Orchestrator {
             Action::ProposeHypothesis { description } => {
                 format!("{}:hypo:{}", agent_id, description)
             }
-            Action::DesignExperiments { strategy, max_experiments } => {
+            Action::DesignExperiments {
+                strategy,
+                max_experiments,
+            } => {
                 format!("{}:exp:{}:{}", agent_id, strategy, max_experiments)
             }
             Action::ScreenCausalAnomalies { groupings } => {
@@ -124,8 +129,14 @@ impl Orchestrator {
     pub fn run(&mut self) -> Result<LedgerSummary> {
         eprintln!("\n  ╔════════════════════════════════════════════════════════════╗");
         eprintln!("  ║  Dynamic Autoresearch Orchestrator                        ║");
-        eprintln!("  ║  Agents: {}                                                ", self.agents.len());
-        eprintln!("  ║  Ledger: {}                          ", self.ledger_dir.display());
+        eprintln!(
+            "  ║  Agents: {}                                                ",
+            self.agents.len()
+        );
+        eprintln!(
+            "  ║  Ledger: {}                          ",
+            self.ledger_dir.display()
+        );
         eprintln!("  ╚════════════════════════════════════════════════════════════╝\n");
 
         for iter in 0..self.max_iterations {
@@ -152,8 +163,12 @@ impl Orchestrator {
                 break;
             }
 
-            eprintln!("  ━━━ Iteration {}/{} | {} pending action(s) ━━━",
-                self.iteration, self.max_iterations, queue.len());
+            eprintln!(
+                "  ━━━ Iteration {}/{} | {} pending action(s) ━━━",
+                self.iteration,
+                self.max_iterations,
+                queue.len()
+            );
 
             let mut total_records = 0;
             let mut total_claims = 0;
@@ -161,8 +176,14 @@ impl Orchestrator {
             // ── Phase 2: Execute actions in queue order ──
             while let Some(pending) = queue.pop_front() {
                 let agent_id = self.agents[pending.agent_idx].agent_id().to_string();
-                eprintln!("\n  ▸ {} executes {}", agent_id,
-                    format!("{:?}", pending.action).chars().take(60).collect::<String>());
+                eprintln!(
+                    "\n  ▸ {} executes {}",
+                    agent_id,
+                    format!("{:?}", pending.action)
+                        .chars()
+                        .take(60)
+                        .collect::<String>()
+                );
 
                 match self.agents[pending.agent_idx].execute(&pending.action, &self.ledger) {
                     Ok(result) => {
@@ -195,9 +216,14 @@ impl Orchestrator {
                 self.executed_keys.insert(pending.dedup_key);
             }
 
-            eprintln!("\n  Iteration {} summary: +{} records, +{} claims (total: {} records, {} claims)",
-                self.iteration, total_records, total_claims,
-                self.ledger.records.len(), self.ledger.claims.len());
+            eprintln!(
+                "\n  Iteration {} summary: +{} records, +{} claims (total: {} records, {} claims)",
+                self.iteration,
+                total_records,
+                total_claims,
+                self.ledger.records.len(),
+                self.ledger.claims.len()
+            );
 
             // Stop early if no progress
             if total_records == 0 && total_claims == 0 {

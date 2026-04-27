@@ -11,7 +11,3 @@ anyhow = "1.0"
 chrono = "0.4"
 rand = "0.8"
 sysinfo = "0.33"
-
-[profile.release]
-opt-level = 3
-lto = true

@@ -37,7 +37,7 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
     return {
       load_grouped_data: tool({
         description: "Load benchmark records grouped by a specified column from the D1 ledger",
-        parameters: z.object({
+        inputSchema: z.object({
           grouping: z.enum(["element", "pair_style", "potential_label"]).describe("Column to group by"),
         }),
         execute: async ({ grouping }) => {
@@ -65,7 +65,7 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
 
       compute_correlations: tool({
         description: "Compute pooled and within-group Pearson correlations for a grouping variable. Detects Simpson's Paradox.",
-        parameters: z.object({
+        inputSchema: z.object({
           grouping: z.enum(["element", "pair_style", "potential_label"]),
         }),
         execute: async ({ grouping }) => {
@@ -129,7 +129,7 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
 
       check_screened: tool({
         description: "Check if a causal screen has already been run for a grouping",
-        parameters: z.object({
+        inputSchema: z.object({
           grouping: z.string(),
         }),
         execute: async ({ grouping }) => {
@@ -140,7 +140,7 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
 
       mark_screened: tool({
         description: "Mark a grouping as screened to avoid duplicate work",
-        parameters: z.object({
+        inputSchema: z.object({
           grouping: z.string(),
         }),
         execute: async ({ grouping }) => {

@@ -8,6 +8,11 @@ export const Route = createFileRoute('/atlas-viewer')({
     meta: [
       { title: 'Atlas Viewer — WebGPU Molecular Visualization' },
       { name: 'description', content: 'Drag a LAMMPS dump file into your browser and get publication-quality 3D in two seconds. No install. No license.' },
+      { property: 'og:title', content: 'Atlas Viewer — WebGPU Molecular Visualization' },
+      { property: 'og:description', content: 'Drag a LAMMPS dump file into your browser and get publication-quality 3D in two seconds. No install. No license.' },
+      { property: 'og:url', content: 'https://lupine.science/atlas-viewer' },
+      { name: 'twitter:title', content: 'Atlas Viewer — WebGPU Molecular Visualization' },
+      { name: 'twitter:description', content: 'Drag a LAMMPS dump file into your browser and get publication-quality 3D in two seconds. No install. No license.' },
     ],
   }),
 })
@@ -92,12 +97,20 @@ function AtlasViewerPage() {
           </ul>
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <a
-              href="https://lupinematerials.science"
+              href="https://viewer.lupine.science"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity text-center"
             >
               Launch Atlas Viewer →
+            </a>
+            <a
+              href="https://viewer.lupine.science?demo=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 border border-[var(--secondary)] text-[var(--secondary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--secondary)] hover:text-[var(--on-secondary)] transition-colors text-center"
+            >
+              Try Demo
             </a>
             <a
               href="https://github.com/alexwelcing/lupine"

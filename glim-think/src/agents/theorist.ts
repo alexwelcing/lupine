@@ -45,7 +45,7 @@ You think like a materials scientist. Reference real physics:
     return {
       query_existing_theories: tool({
         description: "Check if theories already exist for a given observation claim",
-        parameters: z.object({
+        inputSchema: z.object({
           observationClaimId: z.string().describe("The claim ID to check for existing theories"),
         }),
         execute: async ({ observationClaimId }) => {
@@ -59,7 +59,7 @@ You think like a materials scientist. Reference real physics:
 
       save_theory: tool({
         description: "Persist a new theory/hypothesis to the local store",
-        parameters: z.object({
+        inputSchema: z.object({
           observationClaimId: z.string(),
           explanation: z.string(),
           prediction: z.string(),
@@ -78,7 +78,7 @@ You think like a materials scientist. Reference real physics:
 
       query_ledger_context: tool({
         description: "Query the D1 ledger for contextual information to ground hypothesis generation",
-        parameters: z.object({
+        inputSchema: z.object({
           sql: z.string().describe("SELECT query to run against the records table"),
         }),
         execute: async ({ sql: query }) => {
@@ -97,7 +97,7 @@ You think like a materials scientist. Reference real physics:
 
       list_available_elements: tool({
         description: "List all elements present in the benchmark ledger",
-        parameters: z.object({}),
+        inputSchema: z.object({}),
         execute: async () => {
           const rows = await this.queryLedger<{ element: string; count: number }>(
             `SELECT element, COUNT(*) as count FROM records GROUP BY element ORDER BY count DESC`
@@ -108,7 +108,7 @@ You think like a materials scientist. Reference real physics:
 
       list_available_potentials: tool({
         description: "List all potentials in the benchmark ledger with their coverage",
-        parameters: z.object({
+        inputSchema: z.object({
           element: z.string().optional().describe("Filter by element, or omit for all"),
         }),
         execute: async ({ element }) => {

@@ -177,6 +177,14 @@ export const CATALOG = {
       tags: ['literature-review', 'sloppy', 'simpson', 'fcc'],
     },
 
+    {
+      id: 'causal-geometry',
+      source: 'latest/causal_geometry.agent.final.md',
+      i18n: { zh: 'latest/causal_geometry.agent.final.zh.md' },
+      category: 'theory',
+      tags: ['causal-geometry', 'sloppy', 'simpson', 'hyper-ribbon', 'meta-analysis'],
+    },
+
     // ── Ecosystem & Funding ────────────────────────────────────────
     {
       id: 'funding-landscape',
@@ -247,4 +255,10 @@ export const CATALOG = {
       tags: ['meta', 'build'],
     },
   ],
+
+  // Language labels for UI chrome (used by build & runtime)
+  languages: {
+    en: { label: 'English', native: 'English' },
+    zh: { label: 'Chinese', native: '中文' },
+  },
 };

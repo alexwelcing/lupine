@@ -63,6 +63,7 @@ export interface AppState {
   bloom: boolean;
   bloomIntensity: number;
   dof: boolean;
+  autoDepthOfField: boolean;
   dofFocus: number;
   toneMapping: 'none' | 'aces' | 'reinhard';
   antialiasing: 'none' | 'fxaa' | 'msaa4x' | 'smaa';
@@ -100,6 +101,9 @@ export interface AppState {
   hiddenAtomTypes: Set<number>;
   atomTypeScales: Record<number, number>; // per-type scale overrides
 
+  // ─── Anomalies ───
+  anomalyTracking: boolean;
+
   // ─── Export Pipeline ───
   exportRequest: ExportRequest;
   triggerExport: (req: Partial<ExportRequest>) => void;
@@ -136,9 +140,11 @@ export interface AppState {
   setColorMode: (mode: ColorMode) => void;
   setColorProperty: (prop: string | null) => void;
   setColormap: (map: ColormapName) => void;
+  setAnomalyTracking: (tracking: boolean) => void;
   toggleSSAO: () => void;
   toggleBloom: () => void;
   toggleDOF: () => void;
+  toggleAutoDOF: () => void;
   setSSAOIntensity: (v: number) => void;
   setBloomIntensity: (v: number) => void;
   setDOFFocus: (v: number) => void;
@@ -190,6 +196,7 @@ const DEFAULTS = {
   bloom: true,
   bloomIntensity: 0.15,
   dof: false,
+  autoDepthOfField: false,
   dofFocus: 50,
   toneMapping: 'aces' as const,
   antialiasing: 'smaa' as const,
@@ -209,6 +216,7 @@ const DEFAULTS = {
   hoveredAtom: null as number | null,
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
+  anomalyTracking: false,
   viewportMode: 'standard' as const,
   exportRequest: { type: null } as ExportRequest,
   flythrough: null as FlythroughSequence | null,
@@ -269,10 +277,12 @@ export const useStore = create<AppState>()(
     setColorMode: (colorMode) => set({ colorMode }),
     setColorProperty: (colorProperty) => set({ colorProperty }),
     setColormap: (colormap) => set({ colormap, backgroundPreset: `palette:${colormap}` }),
+    setAnomalyTracking: (anomalyTracking) => set({ anomalyTracking }),
 
     toggleSSAO: () => set(s => ({ ssao: !s.ssao })),
     toggleBloom: () => set(s => ({ bloom: !s.bloom })),
     toggleDOF: () => set(s => ({ dof: !s.dof })),
+    toggleAutoDOF: () => set(s => ({ autoDepthOfField: !s.autoDepthOfField })),
     setSSAOIntensity: (ssaoIntensity) => set({ ssaoIntensity }),
     setBloomIntensity: (bloomIntensity) => set({ bloomIntensity }),
     setDOFFocus: (dofFocus) => set({ dofFocus }),

@@ -123,10 +123,7 @@ pub fn analyze_manifold(vectors: &[MaterialErrorVector]) -> Vec<ManifoldAnalysis
     // Group by potential
     let mut by_potential: HashMap<String, Vec<&MaterialErrorVector>> = HashMap::new();
     for v in vectors {
-        by_potential
-            .entry(v.potential.clone())
-            .or_default()
-            .push(v);
+        by_potential.entry(v.potential.clone()).or_default().push(v);
     }
 
     let mut results = Vec::new();
@@ -166,7 +163,11 @@ pub fn analyze_manifold(vectors: &[MaterialErrorVector]) -> Vec<ManifoldAnalysis
             .collect();
 
         let mean_width_ratio = if !width_ratios.is_empty() {
-            let finite_ratios: Vec<f64> = width_ratios.iter().filter(|&&r| r.is_finite()).copied().collect();
+            let finite_ratios: Vec<f64> = width_ratios
+                .iter()
+                .filter(|&&r| r.is_finite())
+                .copied()
+                .collect();
             if !finite_ratios.is_empty() {
                 finite_ratios.iter().sum::<f64>() / finite_ratios.len() as f64
             } else {
@@ -182,12 +183,17 @@ pub fn analyze_manifold(vectors: &[MaterialErrorVector]) -> Vec<ManifoldAnalysis
 
         // Bootstrap uncertainty quantification
         let (pr_ci_lower, pr_ci_upper) = stats::bootstrap_pr_ci(&data, 500, 0.95);
-        let (log_r2_ci_lower, log_r2_ci_upper) = stats::bootstrap_ci(&data, |d| {
-            let (ev, _) = stats::pca(d);
-            let ev_vec: Vec<f64> = ev.iter().cloned().collect();
-            let (_, _, r2) = stats::eigenvalue_geometric_fit(&ev_vec);
-            r2
-        }, 500, 0.95);
+        let (log_r2_ci_lower, log_r2_ci_upper) = stats::bootstrap_ci(
+            &data,
+            |d| {
+                let (ev, _) = stats::pca(d);
+                let ev_vec: Vec<f64> = ev.iter().cloned().collect();
+                let (_, _, r2) = stats::eigenvalue_geometric_fit(&ev_vec);
+                r2
+            },
+            500,
+            0.95,
+        );
 
         // Interpretation
         let interpretation = generate_interpretation(
@@ -202,7 +208,11 @@ pub fn analyze_manifold(vectors: &[MaterialErrorVector]) -> Vec<ManifoldAnalysis
 
         // Extract eigenvectors as nested Vec
         let eigenvectors: Vec<Vec<f64>> = (0..eigenvectors_mat.ncols())
-            .map(|col| (0..eigenvectors_mat.nrows()).map(|row| eigenvectors_mat[(row, col)]).collect())
+            .map(|col| {
+                (0..eigenvectors_mat.nrows())
+                    .map(|row| eigenvectors_mat[(row, col)])
+                    .collect()
+            })
             .collect();
 
         results.push(ManifoldAnalysis {
@@ -273,7 +283,10 @@ fn generate_interpretation(
     }
 
     if decay_tau > 0.9 {
-        parts.push("Eigenvalue spectrum shows strong monotonic decay (characteristic of sloppy models).".to_string());
+        parts.push(
+            "Eigenvalue spectrum shows strong monotonic decay (characteristic of sloppy models)."
+                .to_string(),
+        );
     }
 
     if log_r2 > 0.9 {
@@ -316,7 +329,10 @@ pub fn print_summary(analysis: &[ManifoldAnalysis]) {
     for ma in analysis {
         eprintln!();
         eprintln!("  Potential: {}", ma.potential);
-        eprintln!("  Materials: {} | Properties: {}", ma.n_materials, ma.n_properties);
+        eprintln!(
+            "  Materials: {} | Properties: {}",
+            ma.n_materials, ma.n_properties
+        );
         eprintln!();
         eprintln!("  Eigenvalue spectrum:");
         for (i, ev) in ma.eigenvalues.iter().enumerate() {
@@ -325,14 +341,28 @@ pub fn print_summary(analysis: &[ManifoldAnalysis]) {
             eprintln!("    λ{} = {:12.4e} {}", i + 1, ev, bar);
         }
         eprintln!();
-        eprintln!("  Effective dimensionality: {:.2} / {}  (95% CI: {:.2}–{:.2})",
-            ma.effective_dimensionality, ma.n_properties, ma.pr_ci_lower, ma.pr_ci_upper);
-        eprintln!("  Fractional dimensionality: {:.3}", ma.fractional_dimensionality);
-        eprintln!("  Log-spacing R²: {:.4}  (95% CI: {:.4}–{:.4})",
-            ma.log_r_squared, ma.log_r2_ci_lower, ma.log_r2_ci_upper);
+        eprintln!(
+            "  Effective dimensionality: {:.2} / {}  (95% CI: {:.2}–{:.2})",
+            ma.effective_dimensionality, ma.n_properties, ma.pr_ci_lower, ma.pr_ci_upper
+        );
+        eprintln!(
+            "  Fractional dimensionality: {:.3}",
+            ma.fractional_dimensionality
+        );
+        eprintln!(
+            "  Log-spacing R²: {:.4}  (95% CI: {:.4}–{:.4})",
+            ma.log_r_squared, ma.log_r2_ci_lower, ma.log_r2_ci_upper
+        );
         eprintln!("  Decay monotonicity (τ): {:.3}", ma.decay_monotonicity);
         eprintln!("  Mean width ratio: {:.2}", ma.mean_width_ratio);
-        eprintln!("  Hyper-ribbon: {}", if ma.is_hyper_ribbon { "YES ✅" } else { "NO ❌" });
+        eprintln!(
+            "  Hyper-ribbon: {}",
+            if ma.is_hyper_ribbon {
+                "YES ✅"
+            } else {
+                "NO ❌"
+            }
+        );
         eprintln!();
         eprintln!("  ▸ {}", ma.interpretation);
     }

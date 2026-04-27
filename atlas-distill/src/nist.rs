@@ -249,8 +249,16 @@ impl NistCatalog {
 
     /// Compute summary statistics.
     pub fn summary(&self) -> NistSummary {
-        let single = self.potentials.iter().filter(|p| p.is_single_element()).count();
-        let with_doi = self.potentials.iter().filter(|p| !p.dois.is_empty()).count();
+        let single = self
+            .potentials
+            .iter()
+            .filter(|p| p.is_single_element())
+            .count();
+        let with_doi = self
+            .potentials
+            .iter()
+            .filter(|p| !p.dois.is_empty())
+            .count();
 
         let mut ps_counts: Vec<(String, usize)> = self
             .by_pair_style
@@ -365,7 +373,7 @@ pub fn write_scaffold_csv(rows: &[ScaffoldRow]) -> Result<()> {
     let stdout = std::io::stdout();
     let mut wtr = csv::Writer::from_writer(stdout.lock());
 
-    wtr.write_record(&[
+    wtr.write_record([
         "material",
         "potential",
         "property",
@@ -378,12 +386,16 @@ pub fn write_scaffold_csv(rows: &[ScaffoldRow]) -> Result<()> {
     ])?;
 
     for row in rows {
-        wtr.write_record(&[
+        wtr.write_record([
             &row.material,
             &row.potential,
             &row.property,
-            &row.reference.map(|v| format!("{:.1}", v)).unwrap_or_default(),
-            &row.predicted.map(|v| format!("{:.1}", v)).unwrap_or_default(),
+            &row.reference
+                .map(|v| format!("{:.1}", v))
+                .unwrap_or_default(),
+            &row.predicted
+                .map(|v| format!("{:.1}", v))
+                .unwrap_or_default(),
             &row.unit,
             &row.nist_id,
             &row.pair_style,
@@ -438,16 +450,15 @@ pub fn print_potentials(potentials: &[&NistPotential]) {
     }
     eprintln!();
     eprintln!(
-        "  {:40} {:15} {:>6} {:>5} {}",
-        "ID", "pair_style", "elems", "files", "DOI"
+        "  {:40} {:15} {:>6} {:>5} DOI",
+        "ID", "pair_style", "elems", "files"
     );
     eprintln!(
-        "  {:40} {:15} {:>6} {:>5} {}",
+        "  {:40} {:15} {:>6} {:>5} ────────────────────────────────",
         "────────────────────────────────────────",
         "───────────────",
         "──────",
-        "─────",
-        "────────────────────────────────"
+        "─────"
     );
     for pot in potentials {
         let els = pot.elements.join(",");

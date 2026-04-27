@@ -1,6 +1,8 @@
 // Lupine Library — mobile-first research reader.
 // Single-page app with hash routing. No framework — dependencies are in the DOM.
 
+import { t, detectLang, saveLang, DEFAULT_LANG, SUPPORTED_LANGS } from './i18n.js';
+
 const STATE = {
   manifest: null,          // { categories, articles, version }
   articleCache: new Map(), // id -> article (with html)
@@ -21,10 +23,10 @@ const PROGRESS_FILL = document.getElementById('progress-fill');
 function loadSettings() {
   try {
     return Object.assign(
-      { size: 'md', theme: 'dark', width: 'narrow' },
+      { size: 'md', theme: 'dark', width: 'narrow', lang: detectLang() },
       JSON.parse(localStorage.getItem('ll.settings') || '{}')
     );
-  } catch { return { size: 'md', theme: 'dark', width: 'narrow' }; }
+  } catch { return { size: 'md', theme: 'dark', width: 'narrow', lang: detectLang() }; }
 }
 function saveSettings() {
   localStorage.setItem('ll.settings', JSON.stringify(STATE.settings));
@@ -35,10 +37,34 @@ function applySettings() {
   html.dataset.theme = STATE.settings.theme;
   html.dataset.readerSize = STATE.settings.size;
   html.dataset.readerWidth = STATE.settings.width;
+  html.lang = STATE.settings.lang || DEFAULT_LANG;
   // Sync theme-color meta for PWA chrome
   const map = { dark: '#06070d', sepia: '#1f1a12', light: '#f6f5f0' };
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = map[STATE.settings.theme] || '#06070d';
+  // Sync page title
+  const brandTitle = document.querySelector('.brand-title');
+  if (brandTitle) brandTitle.textContent = t('brand.title', STATE.settings.lang);
+}
+
+function translateStaticDOM() {
+  const lang = STATE.settings.lang;
+  for (const el of document.querySelectorAll('[data-i18n]')) {
+    const key = el.dataset.i18n;
+    if (key) el.textContent = t(key, lang);
+  }
+  for (const el of document.querySelectorAll('[data-i18n-aria]')) {
+    const key = el.dataset.i18nAria;
+    if (key) el.setAttribute('aria-label', t(key, lang));
+  }
+  for (const el of document.querySelectorAll('[data-i18n-placeholder]')) {
+    const key = el.dataset.i18nPlaceholder;
+    if (key) el.setAttribute('placeholder', t(key, lang));
+  }
+  const titleEl = document.querySelector('title.i18n-title');
+  if (titleEl) titleEl.textContent = `${t('brand.title', lang)} — ${t('meta.description', lang).slice(0, 60)}…`;
+  const descEl = document.querySelector('meta.i18n-desc');
+  if (descEl) descEl.setAttribute('content', t('meta.description', lang));
 }
 
 function loadProgress() {
@@ -59,12 +85,31 @@ async function fetchManifest() {
   STATE.manifest = await res.json();
   return STATE.manifest;
 }
-async function fetchArticle(id) {
-  if (STATE.articleCache.has(id)) return STATE.articleCache.get(id);
-  const res = await fetch(`/data/${encodeURIComponent(id)}.json`);
+async function fetchArticle(id, preferredLang) {
+  const cacheKey = `${id}:${preferredLang || STATE.settings.lang}`;
+  if (STATE.articleCache.has(cacheKey)) return STATE.articleCache.get(cacheKey);
+
+  const lang = preferredLang || STATE.settings.lang;
+  let res = null;
+  let triedLang = null;
+
+  // Try preferred language variant first
+  if (lang !== DEFAULT_LANG) {
+    res = await fetch(`/data/${encodeURIComponent(id)}.${lang}.json`);
+    if (res.ok) triedLang = lang;
+  }
+
+  // Fall back to default
+  if (!res || !res.ok) {
+    res = await fetch(`/data/${encodeURIComponent(id)}.json`);
+    triedLang = DEFAULT_LANG;
+  }
+
   if (!res.ok) throw new Error(`article ${id} fetch failed`);
   const article = await res.json();
-  STATE.articleCache.set(id, article);
+  article._displayLang = triedLang;
+  article._requestedLang = lang;
+  STATE.articleCache.set(cacheKey, article);
   return article;
 }
 
@@ -117,30 +162,30 @@ async function renderHome() {
   document.documentElement.dataset.view = 'home';
   BACK_BTN.hidden = true;
   setProgress(0);
-  VIEW.innerHTML = '<div class="loading">Loading library…</div>';
+  VIEW.innerHTML = `<div class="loading">${t('home.loading', STATE.settings.lang)}</div>`;
   try {
     const m = await fetchManifest();
     VIEW.innerHTML = '';
 
     // Hero
     const hero = el('section', { class: 'hero' });
-    hero.append(el('h1', { html: 'A field library for <em>materials research</em>, on the go.' }));
-    hero.append(el('p', {}, 'Every research report in Lupine — UQ, phonon benchmarking, coarse-graining, ecosystem landscape — formatted for your phone. Save it offline before you step on the train.'));
+    hero.append(el('h1', { html: t('home.hero', STATE.settings.lang) }));
+    hero.append(el('p', {}, t('home.hero.sub', STATE.settings.lang)));
     const totalWords = m.articles.reduce((a, b) => a + (b.words || 0), 0);
     const totalMin = m.articles.reduce((a, b) => a + (b.readMinutes || 0), 0);
     const stats = el('div', { class: 'hero-stats' });
-    stats.append(el('span', { html: `<strong>${m.articles.length}</strong> reports` }));
-    stats.append(el('span', { html: `<strong>${totalWords.toLocaleString()}</strong> words` }));
-    stats.append(el('span', { html: `≈<strong>${totalMin}</strong> min total` }));
+    stats.append(el('span', { html: `<strong>${m.articles.length}</strong> ${t('home.stats.reports', STATE.settings.lang)}` }));
+    stats.append(el('span', { html: `<strong>${totalWords.toLocaleString()}</strong> ${t('home.stats.words', STATE.settings.lang)}` }));
+    stats.append(el('span', { html: `≈<strong>${totalMin}</strong> ${t('home.stats.minutes', STATE.settings.lang)}` }));
     hero.append(stats);
     VIEW.append(hero);
 
     // Preprint Banner
     const paperBanner = el('section', { class: 'continue', style: 'background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.2); padding: 16px; border-radius: 8px; margin: 0 16px 24px 16px; display: block; text-decoration: none;' });
     const bannerLink = el('a', { href: '/immi_paper.pdf', target: '_blank', style: 'text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 4px;' });
-    bannerLink.append(el('span', { style: 'font-size: 0.75rem; text-transform: uppercase; color: #60a5fa; font-weight: bold; letter-spacing: 0.05em;' }, 'NEW PREPRINT'));
-    bannerLink.append(el('strong', { style: 'font-size: 1.1rem; color: #fff;' }, 'The Causal Geometry of Prediction Errors'));
-    bannerLink.append(el('span', { style: 'font-size: 0.9rem; color: #9ca3af;' }, 'Read the finalized manuscript on interatomic potentials →'));
+    bannerLink.append(el('span', { style: 'font-size: 0.75rem; text-transform: uppercase; color: #60a5fa; font-weight: bold; letter-spacing: 0.05em;' }, t('home.preprint.badge', STATE.settings.lang)));
+    bannerLink.append(el('strong', { style: 'font-size: 1.1rem; color: #fff;' }, t('home.preprint.title', STATE.settings.lang)));
+    bannerLink.append(el('span', { style: 'font-size: 0.9rem; color: #9ca3af;' }, t('home.preprint.sub', STATE.settings.lang)));
     paperBanner.append(bannerLink);
     VIEW.append(paperBanner);
 
@@ -154,7 +199,7 @@ async function renderHome() {
       .filter(Boolean);
     if (inProgress.length) {
       const sec = el('section', { class: 'continue' });
-      sec.append(el('h2', {}, 'Continue reading'));
+      sec.append(el('h2', {}, t('home.continue', STATE.settings.lang)));
       const cards = el('div', { class: 'cards' });
       for (const a of inProgress) cards.append(cardFor(a, { showCategory: true }));
       sec.append(cards);
@@ -175,7 +220,7 @@ async function renderHome() {
     }
   } catch (e) {
     console.error(e);
-    VIEW.innerHTML = '<div class="empty">Could not load the library. Check your connection and refresh.</div>';
+    VIEW.innerHTML = `<div class="empty">${t('home.error', STATE.settings.lang)}</div>`;
   }
 }
 
@@ -188,7 +233,7 @@ async function renderReader(id) {
   STATE.currentId = id;
   BACK_BTN.hidden = false;
   setProgress(0);
-  VIEW.innerHTML = '<div class="loading">Loading…</div>';
+  VIEW.innerHTML = `<div class="loading">${t('reader.loading', STATE.settings.lang)}</div>`;
   window.scrollTo({ top: 0, behavior: 'instant' });
   try {
     const m = await fetchManifest();
@@ -200,11 +245,20 @@ async function renderReader(id) {
 
     const head = el('header', { class: 'reader-head' });
     if (cat) head.append(el('div', { class: 'reader-cat' }, cat.label));
+
+    // Fallback notice when article not available in requested language
+    if (article._displayLang && article._requestedLang && article._displayLang !== article._requestedLang) {
+      const langName = (m.languages && m.languages[article._requestedLang]?.native) || article._requestedLang;
+      const notice = el('div', { class: 'lang-fallback', style: 'margin-bottom: 12px; padding: 10px 14px; border-radius: 6px; background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.25); color: #fbbf24; font-size: 0.85rem;' });
+      notice.textContent = t('home.fallbackNotice', STATE.settings.lang, { lang: langName });
+      head.append(notice);
+    }
+
     head.append(el('h1', { class: 'reader-title' }, article.title));
     if (article.subtitle) head.append(el('p', { class: 'reader-sub' }, article.subtitle));
     const meta = el('div', { class: 'reader-meta' });
-    meta.append(el('span', {}, `${article.readMinutes} min read`));
-    meta.append(el('span', {}, `${article.words.toLocaleString()} words`));
+    meta.append(el('span', {}, `${article.readMinutes} ${t('reader.meta.read', STATE.settings.lang)}`));
+    meta.append(el('span', {}, `${article.words.toLocaleString()} ${t('home.stats.words', STATE.settings.lang)}`));
     if (article.source) meta.append(el('span', { class: 'tag' }, article.source));
     head.append(meta);
     root.append(head);
@@ -238,8 +292,8 @@ async function renderReader(id) {
     const prev = idx > 0 ? m.articles[idx - 1] : null;
     const next = idx < m.articles.length - 1 ? m.articles[idx + 1] : null;
     const nav = el('nav', { class: 'reader-nav' });
-    nav.append(linkBlock(prev, 'Previous', 'prev'));
-    nav.append(linkBlock(next, 'Next up',  'next'));
+    nav.append(linkBlock(prev, t('reader.nav.prev', STATE.settings.lang), 'prev'));
+    nav.append(linkBlock(next, t('reader.nav.next', STATE.settings.lang), 'next'));
     VIEW.append(nav);
 
     // Restore scroll position if partially read
@@ -250,14 +304,14 @@ async function renderReader(id) {
     }
   } catch (e) {
     console.error(e);
-    VIEW.innerHTML = '<div class="empty">Article not available offline. Connect and try again.</div>';
+    VIEW.innerHTML = `<div class="empty">${t('reader.error.offline', STATE.settings.lang)}</div>`;
   }
 }
 function linkBlock(article, label, cls) {
   if (!article) {
     return el('a', { class: `${cls} disabled`, 'aria-disabled': 'true' },
       el('span', { class: 'lbl' }, label),
-      el('span', {}, cls === 'prev' ? 'Start of library' : 'End of library'));
+      el('span', {}, cls === 'prev' ? t('reader.nav.start', STATE.settings.lang) : t('reader.nav.end', STATE.settings.lang)));
   }
   return el('a', { class: cls, href: `#/read/${article.id}` },
     el('span', { class: 'lbl' }, label),
@@ -332,7 +386,9 @@ function renderSearchResults(q) {
     return;
   }
   searchHint.classList.remove('err');
-  searchHint.textContent = q ? `${list.length} result${list.length === 1 ? '' : 's'}.` : 'All reports, A→Z by shelf order.';
+  searchHint.textContent = q
+    ? (list.length === 1 ? t('search.results.one', STATE.settings.lang) : t('search.results.many', STATE.settings.lang, { count: list.length }))
+    : t('search.all', STATE.settings.lang);
   for (const a of list.slice(0, 30)) {
     const li = el('li');
     const link = el('a', { href: `#/read/${a.id}`,
@@ -458,20 +514,20 @@ async function openGraph() {
   if (typeof graphDialog.showModal === 'function') graphDialog.showModal();
   else graphDialog.setAttribute('open', '');
 
-  graphContainer.innerHTML = '<div class="graph-status">Loading entity graph…</div>';
+  graphContainer.innerHTML = `<div class="graph-status">${t('graph.loading', STATE.settings.lang)}</div>`;
 
   let manifest;
   try {
     manifest = await fetchManifest();
   } catch (err) {
     console.error('graph: manifest failed', err);
-    graphContainer.innerHTML = '<div class="graph-status err">Could not load library manifest.</div>';
+    graphContainer.innerHTML = `<div class="graph-status err">${t('graph.error.manifest', STATE.settings.lang)}</div>`;
     return;
   }
 
   const ok = await waitForForceGraph();
   if (!ok || !window.ForceGraph) {
-    graphContainer.innerHTML = '<div class="graph-status err">Graph library failed to load. Check your connection and reopen.</div>';
+    graphContainer.innerHTML = `<div class="graph-status err">${t('graph.error.lib', STATE.settings.lang)}</div>`;
     return;
   }
 
@@ -534,6 +590,9 @@ document.getElementById('settings-close').addEventListener('click', () => settin
 settingsDialog.addEventListener('click', (e) => { if (e.target === settingsDialog) settingsDialog.close(); });
 
 function syncSettingsUI() {
+  for (const btn of settingsDialog.querySelectorAll('[data-lang]')) {
+    btn.classList.toggle('active', btn.dataset.lang === STATE.settings.lang);
+  }
   for (const btn of settingsDialog.querySelectorAll('[data-size]')) {
     btn.classList.toggle('active', btn.dataset.size === STATE.settings.size);
   }
@@ -547,6 +606,7 @@ function syncSettingsUI() {
 settingsDialog.addEventListener('click', (e) => {
   const t = e.target.closest('button');
   if (!t) return;
+  if (t.dataset.lang)  { STATE.settings.lang = t.dataset.lang;   saveLang(t.dataset.lang); saveSettings(); syncSettingsUI(); applySettings(); translateStaticDOM(); if (STATE.view === 'home') renderHome(); else if (STATE.view === 'reader' && STATE.currentId) renderReader(STATE.currentId); }
   if (t.dataset.size)  { STATE.settings.size = t.dataset.size;   saveSettings(); syncSettingsUI(); }
   if (t.dataset.theme) { STATE.settings.theme = t.dataset.theme; saveSettings(); syncSettingsUI(); }
   if (t.dataset.width) { STATE.settings.width = t.dataset.width; saveSettings(); syncSettingsUI(); }
@@ -556,15 +616,22 @@ settingsDialog.addEventListener('click', (e) => {
 const cacheBtn = document.getElementById('cache-btn');
 cacheBtn.addEventListener('click', async () => {
   cacheBtn.disabled = true;
-  cacheBtn.textContent = 'Saving…';
+  cacheBtn.textContent = t('settings.saving', STATE.settings.lang);
   try {
     const m = await fetchManifest();
     // Prefetch every article JSON so the SW picks them up
-    await Promise.all(m.articles.map(a => fetch(`/data/${a.id}.json`, { cache: 'reload' })));
-    cacheBtn.textContent = 'Saved ✓';
+    const fetches = [];
+    for (const a of m.articles) {
+      fetches.push(fetch(`/data/${a.id}.json`, { cache: 'reload' }));
+      for (const lng of (a.languages || []).slice(1)) {
+        fetches.push(fetch(`/data/${a.id}.${lng}.json`, { cache: 'reload' }));
+      }
+    }
+    await Promise.all(fetches);
+    cacheBtn.textContent = t('settings.saved', STATE.settings.lang);
     cacheBtn.classList.add('done');
   } catch (e) {
-    cacheBtn.textContent = 'Save failed — retry';
+    cacheBtn.textContent = t('settings.saveFailed', STATE.settings.lang);
   } finally {
     cacheBtn.disabled = false;
   }
@@ -591,6 +658,7 @@ window.addEventListener('keydown', (e) => {
 });
 
 applySettings();
+translateStaticDOM();
 route();
 
 // Register service worker (offline + fast repeat loads). When a new version

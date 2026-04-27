@@ -2,6 +2,8 @@
  * DashboardAgent: real-time WebSocket dashboard for the autoresearch fleet.
  */
 
+import type { Env } from "../types";
+
 export class DashboardAgent implements DurableObject {
   private state: DurableObjectState;
   private env: Env;

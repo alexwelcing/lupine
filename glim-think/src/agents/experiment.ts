@@ -34,7 +34,7 @@ Experiment design principles:
     return {
       list_available_experiments: tool({
         description: "List all element-potential combinations available for experiments",
-        parameters: z.object({
+        inputSchema: z.object({
           element: z.string().optional().describe("Filter by element"),
         }),
         execute: async ({ element }) => {
@@ -52,7 +52,7 @@ Experiment design principles:
 
       check_pending: tool({
         description: "Check for already-pending experiments to avoid duplicates",
-        parameters: z.object({
+        inputSchema: z.object({
           element: z.string().optional(),
           potential: z.string().optional(),
         }),
@@ -74,7 +74,7 @@ Experiment design principles:
 
       queue_experiment: tool({
         description: "Queue a LAMMPS experiment for local execution",
-        parameters: z.object({
+        inputSchema: z.object({
           element: z.string().describe("Element to test"),
           potentialLabel: z.string().describe("Potential to test"),
           pairStyle: z.string().describe("LAMMPS pair_style (e.g. 'eam/alloy')"),
@@ -131,7 +131,7 @@ Experiment design principles:
 
       get_experiment_results: tool({
         description: "Check results of completed experiments",
-        parameters: z.object({
+        inputSchema: z.object({
           experimentId: z.string().optional(),
           limit: z.number().optional().describe("Max results to return"),
         }),
@@ -151,7 +151,7 @@ Experiment design principles:
 
       infer_structure: tool({
         description: "Infer the crystal structure for a given element",
-        parameters: z.object({
+        inputSchema: z.object({
           element: z.string(),
         }),
         execute: async ({ element }) => {

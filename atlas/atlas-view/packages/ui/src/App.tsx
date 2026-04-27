@@ -40,6 +40,7 @@ import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
 import type { ColormapName } from '@atlas/core/types';
 import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
+import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -354,6 +355,28 @@ function CameraManager({
   return null;
 }
 
+function AutoDepthOfField() {
+  const { camera, controls } = useThree();
+  const autoDepthOfField = useStore(s => s.autoDepthOfField);
+  const dofEnabled = useStore(s => s.dof);
+  
+  useFrame(() => {
+    if (autoDepthOfField && dofEnabled && controls && (controls as any).target) {
+      const target = (controls as any).target as THREE.Vector3;
+      const dist = camera.position.distanceTo(target);
+      const currentDofFocus = useStore.getState().dofFocus;
+      const newFocus = dist * 100;
+      
+      // Update store only if it changed significantly (avoid micro-jitters)
+      if (Math.abs(currentDofFocus - newFocus) > 0.5) {
+        useStore.getState().setDOFFocus(newFocus);
+      }
+    }
+  });
+
+  return null;
+}
+
 export default function App() {
   const file = useStore(s => s.file);
   const loading = useStore(s => s.loading);
@@ -384,6 +407,7 @@ export default function App() {
   const cameraPreset = useStore(s => s.cameraPreset);
   const setCameraPreset = useStore(s => s.setCameraPreset);
   const bloomIntensity = useStore(s => s.bloomIntensity);
+  const propRange = useStore(s => s.propRange);
   const setFrame = useStore(s => s.setFrame);
   const nextFrame = useStore(s => s.nextFrame);
   const togglePlay = useStore(s => s.togglePlay);
@@ -394,6 +418,7 @@ export default function App() {
   const setSelectedAtoms = useStore(s => s.setSelectedAtoms);
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
+  const anomalyTracking = useStore(s => s.anomalyTracking);
 
   // Spatial hash for atom picking
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
@@ -718,6 +743,7 @@ export default function App() {
             <Environment preset="city" />
 
             <CameraManager fileId={file?.name} center={center} distance={cameraDistance} />
+            <AutoDepthOfField />
             <OrbitControls
               makeDefault
               enabled={!flythroughPreview}
@@ -739,6 +765,11 @@ export default function App() {
 
             {currentFrame && (
               <>
+                <AnomalyTracker
+                  frame={currentFrame}
+                  colorProperty={colorProperty}
+                  active={anomalyTracking}
+                />
                 <AtomsOptimized
                   frame={file!.trajectory.frames[interpState.frameIndex]}
                   nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
@@ -763,6 +794,7 @@ export default function App() {
                     renderStyle={renderStyle}
                     colormap={colormap}
                     colorMode={colorMode}
+                    colorProperty={colorProperty ?? undefined}
                     radius={0.12}
                     opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
@@ -967,15 +999,20 @@ export default function App() {
         {activePanel && file && (
           <div style={{
             position: 'absolute',
-            top: 0,
+            top: isMobile ? 'auto' : 0,
             right: 0,
             bottom: 0,
+            left: isMobile ? 0 : 'auto',
             width: isMobile ? '100%' : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' ? 360 : 320),
-            borderLeft: '1px solid var(--border-subtle)',
-            background: 'var(--bg-surface)',
+            height: isMobile ? '55vh' : 'auto',
+            borderLeft: isMobile ? 'none' : '1px solid var(--border-subtle)',
+            borderTop: isMobile ? '1px solid var(--border-subtle)' : 'none',
+            background: isMobile ? 'var(--bg-glass)' : 'var(--bg-surface)',
+            backdropFilter: isMobile ? 'blur(16px)' : 'none',
+            WebkitBackdropFilter: isMobile ? 'blur(16px)' : 'none',
             overflowY: 'auto',
             zIndex: 100,
-            animation: 'slideInRight 200ms ease-out forwards',
+            animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
           }}>
             <ErrorBoundary>
               {activePanel === 'style' && (

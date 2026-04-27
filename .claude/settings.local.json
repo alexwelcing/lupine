@@ -19,7 +19,19 @@
       "Bash(npx vite:*)",
       "Bash(pnpm dev:*)",
       "Bash(start:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(git *)",
+      "Bash(cargo install *)",
+      "Bash(npm install *)",
+      "Bash(python -m pip install --user ruff papermill markdown)",
+      "Read(//c/Users/alexw/Downloads/shed/glim-sous-chef/atlas-distill/**)",
+      "Bash(cargo check *)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(python -m json.tool)",
+      "Bash(jaq '{stats, hypotheses: \\(.hypotheses | to_entries | map\\({key, status: .value.status}\\)\\)}')",
+      "Bash(jaq '{swarm_status, recent_activity, has_diary: \\(.diary != null\\), has_metrics: \\(.metrics != null\\)}')",
+      "Bash(node *)",
+      "Bash(ps -W)"
     ]
   }
 }

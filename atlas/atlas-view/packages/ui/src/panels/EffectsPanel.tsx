@@ -97,8 +97,8 @@ function useRenderingPresets(): RenderingPreset[] {
 export function EffectsPanel() {
   const {
     ssao, ssaoIntensity, bloom, bloomIntensity,
-    dof, dofFocus, toneMapping,
-    toggleSSAO, toggleBloom, toggleDOF,
+    dof, autoDepthOfField, dofFocus, toneMapping,
+    toggleSSAO, toggleBloom, toggleDOF, toggleAutoDOF,
     setSSAOIntensity, setBloomIntensity, setDOFFocus,
     setToneMapping, setActivePanel,
   } = useStore();
@@ -341,16 +341,31 @@ export function EffectsPanel() {
               onToggle={toggleDOF}
             />
             {dof && (
-              <div style={{ marginTop: 8 }}>
-                <WaveformSlider
-                  label="FOCUS DISTANCE"
-                  value={dofFocus}
-                  min={1}
-                  max={200}
-                  step={1}
-                  format={(v) => `${v.toFixed(0)}Å`}
-                  onChange={setDOFFocus}
+              <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <ToggleRow
+                  label="Auto Focus Target"
+                  active={autoDepthOfField}
+                  onToggle={toggleAutoDOF}
                 />
+                {!autoDepthOfField && (
+                  <WaveformSlider
+                    label="FOCUS DISTANCE"
+                    value={dofFocus}
+                    min={1}
+                    max={200}
+                    step={1}
+                    format={(v) => `${v.toFixed(0)}Å`}
+                    onChange={setDOFFocus}
+                  />
+                )}
+                {autoDepthOfField && (
+                  <div style={{
+                    fontSize: 9, color: '#475569', marginTop: 4,
+                    fontFamily: 'var(--font-mono)',
+                  }}>
+                    Automatically sets focal plane to orbit target
+                  </div>
+                )}
               </div>
             )}
           </Section>

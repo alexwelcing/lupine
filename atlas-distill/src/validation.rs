@@ -4,7 +4,7 @@
 //! computes error statistics, and prepares data for manifold analysis,
 //! meta-analysis, and causal detection.
 
-use crate::manifold::{BenchmarkEntry, build_error_vectors, analyze_manifold};
+use crate::manifold::{analyze_manifold, build_error_vectors, BenchmarkEntry};
 use crate::stats;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -107,8 +107,8 @@ pub fn bcc_reference_data() -> HashMap<&'static str, [f64; 3]> {
         ("Fe", [230.0, 135.0, 117.0]),
         ("Cr", [350.0, 67.0, 100.8]),
         ("Mo", [440.0, 172.0, 106.0]),
-        ("W",  [522.0, 204.0, 161.0]),
-        ("V",  [230.0, 119.0, 43.5]),
+        ("W", [522.0, 204.0, 161.0]),
+        ("V", [230.0, 119.0, 43.5]),
         ("Nb", [247.0, 135.0, 28.5]),
         ("Ta", [266.0, 158.0, 87.0]),
     ])
@@ -118,10 +118,10 @@ pub fn bcc_reference_data() -> HashMap<&'static str, [f64; 3]> {
 pub fn bcc_eam_data() -> HashMap<&'static str, [f64; 3]> {
     HashMap::from([
         ("Fe", [225.0, 131.0, 113.0]),
-        ("Cr", [340.0, 65.0,  97.0]),
+        ("Cr", [340.0, 65.0, 97.0]),
         ("Mo", [435.0, 168.0, 102.0]),
-        ("W",  [510.0, 200.0, 155.0]),
-        ("V",  [225.0, 115.0, 41.0]),
+        ("W", [510.0, 200.0, 155.0]),
+        ("V", [225.0, 115.0, 41.0]),
         ("Nb", [240.0, 130.0, 27.0]),
         ("Ta", [260.0, 154.0, 84.0]),
     ])
@@ -131,10 +131,10 @@ pub fn bcc_eam_data() -> HashMap<&'static str, [f64; 3]> {
 pub fn bcc_lj_data() -> HashMap<&'static str, [f64; 3]> {
     HashMap::from([
         ("Fe", [210.0, 140.0, 105.0]),
-        ("Cr", [320.0, 75.0,  95.0]),
+        ("Cr", [320.0, 75.0, 95.0]),
         ("Mo", [410.0, 180.0, 98.0]),
-        ("W",  [490.0, 210.0, 150.0]),
-        ("V",  [215.0, 125.0, 40.0]),
+        ("W", [490.0, 210.0, 150.0]),
+        ("V", [215.0, 125.0, 40.0]),
         ("Nb", [235.0, 140.0, 25.0]),
         ("Ta", [255.0, 165.0, 80.0]),
     ])
@@ -221,7 +221,10 @@ pub fn compute_potential_metrics(entries: &[BenchmarkEntry]) -> Vec<PotentialMet
 
     let mut metrics = Vec::new();
     for (potential, group) in by_potential {
-        let errors: Vec<f64> = group.iter().map(|e| (e.predicted - e.reference).abs()).collect();
+        let errors: Vec<f64> = group
+            .iter()
+            .map(|e| (e.predicted - e.reference).abs())
+            .collect();
         let n = errors.len() as f64;
 
         let mae = errors.iter().sum::<f64>() / n;
@@ -430,19 +433,13 @@ pub fn run_full_validation() -> ValidationReport {
     let lj = lj_prediction_data();
     let sw = sw_prediction_data();
 
-    let predictions = vec![
-        ("EAM", eam),
-        ("LJ", lj),
-        ("SW", sw),
-    ];
+    let predictions = vec![("EAM", eam), ("LJ", lj), ("SW", sw)];
 
     let mut entries = build_benchmark_entries(&ref_data, &predictions);
 
     // Stitch statics data
     let statics_ref = fcc_statics_reference_data();
-    let statics_pred = vec![
-        ("EAM", fcc_statics_eam_data()),
-    ];
+    let statics_pred = vec![("EAM", fcc_statics_eam_data())];
     let statics_entries = build_statics_benchmark_entries(&statics_ref, &statics_pred);
     entries.extend(statics_entries);
 
@@ -452,8 +449,11 @@ pub fn run_full_validation() -> ValidationReport {
 
     // Manifold analysis
     let props = vec![
-        "C11".to_string(), "C12".to_string(), "C44".to_string(),
-        "a0".to_string(), "Ecoh".to_string(),
+        "C11".to_string(),
+        "C12".to_string(),
+        "C44".to_string(),
+        "a0".to_string(),
+        "Ecoh".to_string(),
     ];
     let error_vectors = build_error_vectors(&entries, &props);
     let manifold = analyze_manifold(&error_vectors);
@@ -478,8 +478,10 @@ pub fn print_validation_report(report: &ValidationReport) {
     eprintln!("  ║  Multi-Potential Benchmark Validation Report               ║");
     eprintln!("  ╚════════════════════════════════════════════════════════════╝");
     eprintln!();
-    eprintln!("  Benchmark: {} materials × {} properties × {} potentials = {} entries",
-        report.n_materials, report.n_properties, report.n_potentials, report.n_entries);
+    eprintln!(
+        "  Benchmark: {} materials × {} properties × {} potentials = {} entries",
+        report.n_materials, report.n_properties, report.n_potentials, report.n_entries
+    );
     eprintln!();
 
     eprintln!("  Potential Rankings (by MAE):");
@@ -498,8 +500,13 @@ pub fn print_validation_report(report: &ValidationReport) {
     for m in &report.metrics {
         eprintln!();
         eprintln!("    {}:", m.potential);
-        eprintln!("      MAE:  {:.3} GPa | RMSE: {:.3} GPa | Max: {:.3} GPa | Mean Rel: {:.2}%",
-            m.mae, m.rmse, m.max_error, m.mean_rel_error * 100.0);
+        eprintln!(
+            "      MAE:  {:.3} GPa | RMSE: {:.3} GPa | Max: {:.3} GPa | Mean Rel: {:.2}%",
+            m.mae,
+            m.rmse,
+            m.max_error,
+            m.mean_rel_error * 100.0
+        );
         eprintln!("      Per-property MAE:");
         let mut props: Vec<_> = m.per_property_mae.iter().collect();
         props.sort_by(|a, b| a.0.cmp(b.0));
@@ -568,11 +575,20 @@ pub fn run_validation() -> ValidationResults {
         let rmse = ((err_c11.powi(2) + err_c12.powi(2) + err_c44.powi(2)) / 3.0).sqrt();
 
         sum_mae += mae;
-        if mae > max_mae { max_mae = mae; }
+        if mae > max_mae {
+            max_mae = mae;
+        }
 
-        per_metal.insert(*metal, ErrorBreakdown {
-            c11: err_c11, c12: err_c12, c44: err_c44, mae, rmse
-        });
+        per_metal.insert(
+            *metal,
+            ErrorBreakdown {
+                c11: err_c11,
+                c12: err_c12,
+                c44: err_c44,
+                mae,
+                rmse,
+            },
+        );
     }
 
     let metals_count = eam.len() as f64;
@@ -584,10 +600,29 @@ pub fn run_validation() -> ValidationResults {
 
     let mut operator_metrics = HashMap::new();
     let op_results = vec![
-        ("bulk_modulus", Box::new(|c11,c12,_c44| bulk_modulus_k(c11,c12)) as Box<dyn Fn(f64,f64,f64)->f64>),
-        ("shear_modulus", Box::new(|c11,c12,c44| shear_modulus_g(c11,c12,c44))),
-        ("anisotropy", Box::new(|c11,c12,c44| anisotropy_a(c11,c12,c44))),
-        ("zener_ratio", Box::new(|c11,c12,c44| if (c11-c12).abs() > 1e-6 { c44/(c11-c12) } else { 0.0 })),
+        (
+            "bulk_modulus",
+            Box::new(|c11, c12, _c44| bulk_modulus_k(c11, c12))
+                as Box<dyn Fn(f64, f64, f64) -> f64>,
+        ),
+        (
+            "shear_modulus",
+            Box::new(shear_modulus_g),
+        ),
+        (
+            "anisotropy",
+            Box::new(anisotropy_a),
+        ),
+        (
+            "zener_ratio",
+            Box::new(|c11, c12, c44| {
+                if (c11 - c12).abs() > 1e-6 {
+                    c44 / (c11 - c12)
+                } else {
+                    0.0
+                }
+            }),
+        ),
     ];
 
     for (name, op) in op_results {
@@ -596,17 +631,31 @@ pub fn run_validation() -> ValidationResults {
             let exp_vals = exp.get(metal).unwrap();
             let pred = op(eam_vals[0], eam_vals[1], eam_vals[2]);
             let refer = op(exp_vals[0], exp_vals[1], exp_vals[2]);
-            let err = if refer.abs() > 1e-6 { (pred - refer).abs() / refer.abs() } else { (pred - refer).abs() };
+            let err = if refer.abs() > 1e-6 {
+                (pred - refer).abs() / refer.abs()
+            } else {
+                (pred - refer).abs()
+            };
             rel_errs.push(err);
         }
         let count = rel_errs.len() as f64;
-        operator_metrics.insert(name, ValidationMetrics {
-            mae: rel_errs.iter().sum::<f64>() / count,
-            rmse: (rel_errs.iter().map(|e| e.powi(2)).sum::<f64>() / count).sqrt(),
-            max_error: rel_errs.iter().cloned().fold(0.0, f64::max),
-        });
+        operator_metrics.insert(
+            name,
+            ValidationMetrics {
+                mae: rel_errs.iter().sum::<f64>() / count,
+                rmse: (rel_errs.iter().map(|e| e.powi(2)).sum::<f64>() / count).sqrt(),
+                max_error: rel_errs.iter().cloned().fold(0.0, f64::max),
+            },
+        );
     }
-    operator_metrics.insert("mean", ValidationMetrics { mae: 0.0, rmse: 0.0, max_error: 0.0 });
+    operator_metrics.insert(
+        "mean",
+        ValidationMetrics {
+            mae: 0.0,
+            rmse: 0.0,
+            max_error: 0.0,
+        },
+    );
 
     let gate1 = ensemble_metrics.mae < 1.0;
     let gate2 = ensemble_metrics.max_error < 5.0;
@@ -614,8 +663,16 @@ pub fn run_validation() -> ValidationResults {
     ValidationResults {
         pass_status: gate1 && gate2,
         gate_messages: vec![
-            format!("Gate 1 (Ensemble MAE < 1.0 GPa): {} (MAE={:.3} GPa)", if gate1 {"PASS"} else {"FAIL"}, ensemble_metrics.mae),
-            format!("Gate 2 (Worst-case < 5.0 GPa): {} (Max={:.3} GPa)", if gate2 {"PASS"} else {"FAIL"}, ensemble_metrics.max_error),
+            format!(
+                "Gate 1 (Ensemble MAE < 1.0 GPa): {} (MAE={:.3} GPa)",
+                if gate1 { "PASS" } else { "FAIL" },
+                ensemble_metrics.mae
+            ),
+            format!(
+                "Gate 2 (Worst-case < 5.0 GPa): {} (Max={:.3} GPa)",
+                if gate2 { "PASS" } else { "FAIL" },
+                ensemble_metrics.max_error
+            ),
         ],
         ensemble_metrics,
         per_metal,
@@ -633,16 +690,15 @@ mod tests {
         let eam = eam_prediction_data();
         let lj = lj_prediction_data();
 
-        let entries = build_benchmark_entries(
-            &ref_data,
-            &[("EAM", eam), ("LJ", lj)],
-        );
+        let entries = build_benchmark_entries(&ref_data, &[("EAM", eam), ("LJ", lj)]);
 
         // 8 metals × 3 properties × 2 potentials = 48 entries
         assert_eq!(entries.len(), 48);
 
         // Check entries contain expected data (HashMap order not guaranteed)
-        let al_c11 = entries.iter().find(|e| e.material == "Al" && e.potential == "EAM" && e.property == "C11");
+        let al_c11 = entries
+            .iter()
+            .find(|e| e.material == "Al" && e.potential == "EAM" && e.property == "C11");
         assert!(al_c11.is_some(), "Expected Al/EAM/C11 entry");
     }
 
@@ -699,7 +755,9 @@ mod tests {
         let entries = build_bcc_benchmark_entries();
         // 7 metals × 3 properties × 2 potentials = 42 entries
         assert_eq!(entries.len(), 42);
-        let fe_c11 = entries.iter().find(|e| e.material == "Fe" && e.potential == "EAM" && e.property == "C11");
+        let fe_c11 = entries
+            .iter()
+            .find(|e| e.material == "Fe" && e.potential == "EAM" && e.property == "C11");
         assert!(fe_c11.is_some());
     }
 

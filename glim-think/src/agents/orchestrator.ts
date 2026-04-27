@@ -61,7 +61,7 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
     return {
       dispatch_manifold: tool({
         description: "Delegate a manifold analysis task to the Manifold sub-agent (α). The sub-agent will use its own Think loop to analyze eigenvalue spectra.",
-        parameters: z.object({
+        inputSchema: z.object({
           element: z.string().describe("Element to analyze (e.g. 'Cu') or 'all'"),
           instruction: z.string().optional().describe("Additional instructions for the manifold agent"),
         }),
@@ -70,14 +70,14 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
           const prompt = instruction
             ? `Analyze the error manifold for element: ${element}. ${instruction}`
             : `Analyze the error manifold for element: ${element}. Query the ledger for all potential families, compute eigenvalue spectra, participation ratios, and check for hyper-ribbon geometry. Report your findings with numbers.`;
-          const response = await child.chat(prompt);
+          const response = await this.runChildChat(child, prompt);
           return { agent: "manifold", element, response };
         },
       }),
 
       dispatch_causal: tool({
         description: "Delegate a causal screening task to the Causal sub-agent (δ). The sub-agent will screen for Simpson's Paradox across grouping variables.",
-        parameters: z.object({
+        inputSchema: z.object({
           instruction: z.string().optional().describe("Additional instructions for the causal agent"),
         }),
         execute: async ({ instruction }) => {
@@ -85,14 +85,14 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
           const prompt = instruction
             ? `Screen for Simpson's Paradox. ${instruction}`
             : `Screen all grouping variables (element, pair_style, potential_label) for Simpson's Paradox. For each, compute pooled and within-group correlations and report any reversals.`;
-          const response = await child.chat(prompt);
+          const response = await this.runChildChat(child, prompt);
           return { agent: "causal", response };
         },
       }),
 
       dispatch_theorist: tool({
         description: "Delegate hypothesis generation to the Theorist sub-agent (γ). Pass it the statistical claims to generate competing hypotheses.",
-        parameters: z.object({
+        inputSchema: z.object({
           claimsDescription: z.string().describe("Description of the statistical claims to theorize about"),
           instruction: z.string().optional().describe("Additional instructions"),
         }),
@@ -101,14 +101,14 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
           const prompt = instruction
             ? `Generate competing hypotheses for: ${claimsDescription}. ${instruction}`
             : `Generate 2-3 competing, falsifiable physical hypotheses for the following observations: ${claimsDescription}. For each, specify the discriminative property and test strategy.`;
-          const response = await child.chat(prompt);
+          const response = await this.runChildChat(child, prompt);
           return { agent: "theorist", response };
         },
       }),
 
       dispatch_experiment: tool({
         description: "Delegate experiment design to the Experiment sub-agent (ε). Pass it hypotheses to queue discriminative LAMMPS experiments.",
-        parameters: z.object({
+        inputSchema: z.object({
           hypothesesDescription: z.string().describe("Description of hypotheses to test"),
           maxExperiments: z.number().optional().describe("Maximum experiments to queue (default 3)"),
           instruction: z.string().optional(),
@@ -118,14 +118,14 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
           const prompt = instruction
             ? `Design experiments for: ${hypothesesDescription}. Max ${maxExperiments ?? 3} experiments. ${instruction}`
             : `Design and queue up to ${maxExperiments ?? 3} discriminative LAMMPS experiments to test these hypotheses: ${hypothesesDescription}. Select element-potential combinations that maximize information gain.`;
-          const response = await child.chat(prompt);
+          const response = await this.runChildChat(child, prompt);
           return { agent: "experiment", response };
         },
       }),
 
       parallel_sweep: tool({
         description: "Run manifold analysis across multiple elements in parallel using sub-agent swarm",
-        parameters: z.object({
+        inputSchema: z.object({
           elements: z.array(z.string()).describe("Elements to analyze in parallel"),
         }),
         execute: async ({ elements }) => {
@@ -133,7 +133,7 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
             elements.map(async (element) => {
               try {
                 const child = await this.subAgent(Manifold, `manifold-${element}`);
-                const response = await child.chat(
+                const response = await this.runChildChat(child,
                   `Analyze the error manifold for ${element}. Report eigenvalues, participation ratio, and hyper-ribbon status.`
                 );
                 return { element, status: "complete", response };
@@ -148,7 +148,7 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
 
       get_research_state: tool({
         description: "Query the current state of the research — record counts, pending experiments, etc.",
-        parameters: z.object({}),
+        inputSchema: z.object({}),
         execute: async () => {
           const [records, pending, elements, families] = await Promise.all([
             this.queryLedger<{ total: number }>(`SELECT COUNT(*) as total FROM records`),
@@ -168,7 +168,7 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
 
       save_state: tool({
         description: "Save orchestrator state for resume/tracking",
-        parameters: z.object({
+        inputSchema: z.object({
           key: z.string(),
           value: z.string(),
         }),
@@ -192,5 +192,19 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
         updated_at TEXT DEFAULT (datetime('now'))
       )
     `;
+  }
+
+  private async runChildChat(child: { chat: (prompt: string, relay: { onEvent(json: string): void; onDone(): void; onError?(error: string): void }) => Promise<void> }, prompt: string): Promise<string> {
+    const events: string[] = [];
+    await child.chat(prompt, {
+      onEvent: (json: string) => {
+        events.push(json);
+      },
+      onDone: () => {},
+      onError: (error: string) => {
+        events.push(JSON.stringify({ type: "error", error }));
+      },
+    });
+    return events.slice(-8).join("\n");
   }
 }

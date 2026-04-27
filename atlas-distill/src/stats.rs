@@ -207,7 +207,11 @@ pub fn eigenvalue_geometric_fit(eigenvalues: &[f64]) -> (f64, f64, f64) {
         })
         .sum();
 
-    let r2 = if ss_tot > 1e-30 { 1.0 - ss_res / ss_tot } else { 0.0 };
+    let r2 = if ss_tot > 1e-30 {
+        1.0 - ss_res / ss_tot
+    } else {
+        0.0
+    };
 
     (slope, intercept, r2)
 }
@@ -284,11 +288,16 @@ where
 
 /// Bootstrap CI for participation ratio on a data matrix.
 pub fn bootstrap_pr_ci(data: &DMatrix<f64>, n_bootstrap: usize, confidence: f64) -> (f64, f64) {
-    bootstrap_ci(data, |d| {
-        let (ev, _) = pca(d);
-        let ev_vec: Vec<f64> = ev.iter().cloned().collect();
-        participation_ratio(&ev_vec)
-    }, n_bootstrap, confidence)
+    bootstrap_ci(
+        data,
+        |d| {
+            let (ev, _) = pca(d);
+            let ev_vec: Vec<f64> = ev.iter().cloned().collect();
+            participation_ratio(&ev_vec)
+        },
+        n_bootstrap,
+        confidence,
+    )
 }
 
 /// Bootstrap CI for Pearson correlation.
@@ -385,7 +394,11 @@ mod tests {
         // Data on a line: one large eigenvalue → PR ≈ 1
         let ev = vec![100.0, 0.1, 0.01];
         let pr = participation_ratio(&ev);
-        assert!((pr - 1.0).abs() < 0.1, "PR should be ~1 for 1D data, got {}", pr);
+        assert!(
+            (pr - 1.0).abs() < 0.1,
+            "PR should be ~1 for 1D data, got {}",
+            pr
+        );
     }
 
     #[test]
@@ -406,8 +419,12 @@ mod tests {
         // Should have 2 eigenvalues
         assert_eq!(eigenvalues.len(), 2);
         // First eigenvalue should dominate (perfect correlation)
-        assert!(eigenvalues[0] > eigenvalues[1] * 10.0,
-            "First eigenvalue should dominate: {} vs {}", eigenvalues[0], eigenvalues[1]);
+        assert!(
+            eigenvalues[0] > eigenvalues[1] * 10.0,
+            "First eigenvalue should dominate: {} vs {}",
+            eigenvalues[0],
+            eigenvalues[1]
+        );
         // Eigenvectors should be unit length
         let v0 = eigenvectors.column(0);
         let v0_norm = v0.dot(&v0).sqrt();
@@ -419,8 +436,15 @@ mod tests {
         // Sloppy model eigenvalue spectrum: log-spaced
         let ev: Vec<f64> = (0..5).map(|i| 100.0 * 0.1f64.powi(i)).collect();
         let (slope, _intercept, r2) = eigenvalue_geometric_fit(&ev);
-        assert!(r2 > 0.99, "Log-spacing should be nearly perfect, R² = {}", r2);
-        assert!(slope < -1.0, "Slope should be negative for decaying eigenvalues");
+        assert!(
+            r2 > 0.99,
+            "Log-spacing should be nearly perfect, R² = {}",
+            r2
+        );
+        assert!(
+            slope < -1.0,
+            "Slope should be negative for decaying eigenvalues"
+        );
     }
 
     #[test]
@@ -436,11 +460,19 @@ mod tests {
         let x = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0];
         let y = vec![2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0];
         let (lo, hi) = bootstrap_r_ci(&x, &y, 200, 0.95);
-        assert!(lo.is_finite() && hi.is_finite(), "Bootstrap CI should be finite");
+        assert!(
+            lo.is_finite() && hi.is_finite(),
+            "Bootstrap CI should be finite"
+        );
         assert!(lo <= hi, "Lower bound should be <= upper bound");
         let true_r = pearson_r(&x, &y);
-        assert!(lo <= true_r && true_r <= hi,
-            "CI should contain true r: [{}, {}] does not contain {}", lo, hi, true_r);
+        assert!(
+            lo <= true_r && true_r <= hi,
+            "CI should contain true r: [{}, {}] does not contain {}",
+            lo,
+            hi,
+            true_r
+        );
     }
 
     #[test]
@@ -450,23 +482,22 @@ mod tests {
             10,
             3,
             &[
-                1.0, 2.0, 0.1,
-                2.0, 4.0, 0.2,
-                3.0, 6.0, 0.15,
-                4.0, 8.0, 0.25,
-                5.0, 10.0, 0.1,
-                6.0, 12.0, 0.2,
-                7.0, 14.0, 0.15,
-                8.0, 16.0, 0.25,
-                9.0, 18.0, 0.1,
-                10.0, 20.0, 0.2,
+                1.0, 2.0, 0.1, 2.0, 4.0, 0.2, 3.0, 6.0, 0.15, 4.0, 8.0, 0.25, 5.0, 10.0, 0.1, 6.0,
+                12.0, 0.2, 7.0, 14.0, 0.15, 8.0, 16.0, 0.25, 9.0, 18.0, 0.1, 10.0, 20.0, 0.2,
             ],
         );
         let (lo, hi) = bootstrap_pr_ci(&data, 100, 0.95);
-        assert!(lo.is_finite() && hi.is_finite(), "Bootstrap PR CI should be finite");
+        assert!(
+            lo.is_finite() && hi.is_finite(),
+            "Bootstrap PR CI should be finite"
+        );
         assert!(lo <= hi, "Lower bound should be <= upper bound");
         // PR for 3D data should be in [1, 3]
-        assert!(lo >= 1.0 && hi <= 3.0,
-            "PR CI should be within [1, 3]: got [{}, {}]", lo, hi);
+        assert!(
+            lo >= 1.0 && hi <= 3.0,
+            "PR CI should be within [1, 3]: got [{}, {}]",
+            lo,
+            hi
+        );
     }
 }

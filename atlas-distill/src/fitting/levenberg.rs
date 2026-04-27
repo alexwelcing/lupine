@@ -48,10 +48,7 @@ pub fn levenberg_marquardt(
         }
 
         // Residuals
-        let residuals: Vec<f64> = data
-            .iter()
-            .map(|(x, y)| y - model(*x, &params))
-            .collect();
+        let residuals: Vec<f64> = data.iter().map(|(x, y)| y - model(*x, &params)).collect();
 
         // J^T J (p × p)
         let mut jtj = vec![vec![0.0f64; p]; p];
@@ -83,7 +80,11 @@ pub fn levenberg_marquardt(
 
         // Solve via Gaussian elimination
         if let Some(delta) = solve_linear_system(&augmented, &jtr) {
-            let new_params: Vec<f64> = params.iter().zip(delta.iter()).map(|(p, d)| p + d).collect();
+            let new_params: Vec<f64> = params
+                .iter()
+                .zip(delta.iter())
+                .map(|(p, d)| p + d)
+                .collect();
             let new_cost = compute_cost(model, &new_params, data);
 
             if new_cost < prev_cost {
@@ -181,7 +182,11 @@ pub fn lm_fit(
         .map(|(x, y)| (y - model(*x, &params)).powi(2))
         .sum();
 
-    let r_squared = if ss_tot > 1e-30 { 1.0 - ss_res / ss_tot } else { 0.0 };
+    let r_squared = if ss_tot > 1e-30 {
+        1.0 - ss_res / ss_tot
+    } else {
+        0.0
+    };
     let rms = (ss_res / data.len() as f64).sqrt();
 
     FitResult::new(

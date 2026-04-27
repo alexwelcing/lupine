@@ -100,3 +100,16 @@ CREATE TABLE IF NOT EXISTS deployments (
 );
 CREATE INDEX IF NOT EXISTS idx_deployments_service ON deployments(service);
 CREATE INDEX IF NOT EXISTS idx_deployments_completed_at ON deployments(completed_at DESC);
+
+-- Public-facing hourly progress reports for the lab broadcast.
+CREATE TABLE IF NOT EXISTS lab_broadcasts (
+  broadcast_id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  summary TEXT NOT NULL,
+  status TEXT NOT NULL,
+  cadence TEXT NOT NULL DEFAULT 'hourly',
+  metrics TEXT,
+  artifact_key TEXT,
+  created_at TEXT DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_lab_broadcasts_created_at ON lab_broadcasts(created_at DESC);

@@ -1,104 +1,55 @@
-# Lupine Materials Science — Design Guide
-## "Atomic Understanding" Design System v2
+# Lupine Materials Science — Design System Index
 
-This document defines the visual identity, design tokens, interaction paradigms, and component architecture for all Lupine Materials Science user interfaces. Every element in this system is inspired by the physics of materials science itself.
+The `glim/` workspace contains several frontends, each with its own design
+surface. Per-app docs live alongside the code; this file is a thin index.
 
-**Core Philosophy:** *Everything is an atom. Every interaction is a bond. Every transition is a phase change.*
+| App                 | Stack                          | Authoritative design doc                |
+|---------------------|--------------------------------|-----------------------------------------|
+| `lupine-start/`     | TanStack Start + Tailwind v4   | [`lupine-start/DESIGN.md`](./lupine-start/DESIGN.md) |
+| `lupine-site/`      | Vite + Tailwind                | _no doc yet — extend Lab tokens_        |
+| `library-site/`     | Static research publication    | _no doc yet_                            |
+| `atlas/atlas-view/` | WebGPU LAMMPS viewer (less active) | _no doc yet_                       |
 
----
+## Shared design philosophy
 
-## 1. Color Tokens
+All Lupine frontends draw from a common conceptual palette, but token
+implementations are intentionally per-app rather than imported from a shared
+package. This keeps each surface free to evolve at its own cadence.
 
-### Brand: The Lupine Spectrum
-A deep indigo-to-violet range that evokes the luminescence of rare earth elements under UV excitation.
+**Two motifs recur across apps:**
 
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `--lupine-950` | `#12142e` | Deepest brand tint |
-| `--lupine-700` | `#2e3a87` | Ambient backgrounds |
-| `--lupine-500` | `#5565d4` | Primary accent |
-| `--lupine-400` | `#7b8ae0` | Active states, nucleus glow |
-| `--lupine-300` | `#9ba6ea` | Section labels, header text |
+1. **Lab / Obsidian** — operational interfaces. Near-black surfaces, neon cyan
+   primary (`#00fbfb`), violet secondary, sharp 0px corners, terminal-mono
+   labels, ambient pulse animations.
+2. **Marketing / Editorial** — public-facing surfaces. Indigo lupine spectrum
+   (`#5565d4` → `#1a1d3d`), slate neutrals, Playfair Display serif, atomic
+   imagery (orbital electrons, lattice grids), warmer pacing.
 
-### Neutral: The Slate Void
-12-step neutral scale from near-black (`#06070d`) to near-white, providing the dark-mode backbone.
+Most apps host both motifs and route between them by section. The
+`lupine-start` app is the canonical reference — when starting a new frontend,
+crib its `src/styles/tokens.css` as a starting point and adapt.
 
-### Semantic Accents
-- **Cyan** (`#4ecdc4`): Electron indicators, success hints
-- **Gold** (`#d4a843`): Code values, numerical highlights
-- **Green** (`#4ecd6b`): "Shipped" status, positive confirmations
-- **Red** (`#e85454`): Destructive actions, errors
+## Cross-app conventions
 
-### Glass Surfaces
-All containers use transparent white composites over the dark void:
-- **Level 1** (Surface): `rgba(255,255,255,0.015)` — barely visible, for grouping
-- **Level 2** (Interior): `rgba(255,255,255,0.03)` + `backdrop-filter: blur(12px)`
-- **Level 3** (Deep Core): `rgba(255,255,255,0.05)` + `backdrop-filter: blur(24px)` + grain noise
+- **Dark-first.** Light mode is aspirational across the workspace; ship
+  dark-only until light is genuinely needed and properly designed.
+- **Sharp corners** (`--radius: 0`) for the Lab look; soft radii are reserved
+  for marketing CTAs.
+- **Inter** for body, **Space Grotesk** for display + mono, **Playfair
+  Display** for editorial highlights. Load from a single Google Fonts `<link>`
+  per app, not via CSS `@import`.
+- **Animation**: CSS keyframes for ambient motion, framer-motion for
+  state-driven transitions. No GSAP, no Lottie, no Three.js outside dedicated
+  visualizer surfaces.
+- **Tokens via CSS custom properties**, not Tailwind theme extensions, so
+  values are inspectable and overridable at runtime.
 
----
+## Aspirational components (not yet built)
 
-## 2. Typography
-
-| Role | Family | Weight | Usage |
-|------|--------|--------|-------|
-| Body / UI | Inter | 300–700 | All body text, labels, controls |
-| Editorial / Stats | Playfair Display | 400, 700, italic | Hero headings, stat values |
-| Data / Code | JetBrains Mono | 400–600 | Numerical readouts, mono labels, terminal aesthetics |
-
----
-
-## 3. Animation Keyframes
-
-All animations are pure CSS (zero JS runtime). The library provides:
-
-| Keyframe | Duration | Purpose |
-|----------|----------|---------|
-| `orbital-spin` | 3s linear ∞ | Electron orbiting nucleus on active toggles |
-| `orbital-counterspin` | — | Secondary shell, opposite direction |
-| `nucleus-pulse` | 2s ease ∞ | Heartbeat glow on active nucleus dots |
-| `bond-flow` | 4s linear ∞ | Dashed bond lines flowing between grid nodes |
-| `wave-breathe` | 3s ease ∞ | Slider thumb breathing glow ring |
-| `phase-in` | 0.3s | Content materialization on section expand |
-| `grain-drift` | 8s steps(6) ∞ | Noise texture overlay micro-movement |
-
----
-
-## 4. Component Library (`@lupine/ui`)
-
-### `AtomicGlass`
-Glassmorphic container with 3 depth levels. Level 2+ adds grain noise overlay (inline SVG `feTurbulence`). Top-edge refraction highlight line. Interactive variant lifts on hover with lupine glow.
-
-### `OrbitalToggle`
-Boolean toggle where state is represented by electron behavior. Inactive: dim nucleus, dormant orbit paths. Active: glowing nucleus with `nucleus-pulse`, cyan electron dot tracing the orbit via `orbital-spin`. Two SVG elliptical rings at different angles create the atom cross-hatch. Pure CSS — zero JS animation.
-
-### `WaveformSlider`
-Range input styled as a spectral emission line. Track is a 3px slate line. Filled portion glows with a lupine gradient. Thumb is a 14px circle with breathing box-shadow (`wave-breathe`). On drag, the thumb scales up and glow intensifies.
-
-### `QuantumSection`
-Collapsible accordion panel with phase-transition animation. Header has a tiny nucleus dot indicator (glows when expanded), uppercase mono label, and rotating chevron. Content materializes with `phase-in` animation. Height animated via `max-height` + `ease-out-expo`.
-
-### `IsotopeChip`
-Periodic-table-inspired tag/chip. Optional superscript atomic number (top-left), main symbol text, optional subscript badge tag (e.g., "NEW"). Selected state glows with lupine accent border.
-
-### `CovalentGrid`
-CSS Grid layout that draws animated dashed SVG "bond" lines between adjacent children. Horizontal bonds connect row siblings. Vertical bonds connect column neighbors. Uses `ResizeObserver` for responsive recalculation. Bond dashes animate with `bond-flow` keyframe.
-
----
-
-## 5. Integration Points
-
-### Atlas-View WebGPU Viewer (`StylePanel.tsx`)
-Every section is a `QuantumSection`. All boolean toggles are `OrbitalToggles`. All sliders are `WaveformSliders`. Color mode selection uses `IsotopeChips`. Quick presets use `CovalentGrid` + `AtomicGlass` interactive cards.
-
-### Lupine Marketing Site (`lupine-site/`)
-Deck slides and one-pager should progressively adopt the Lupine/Slate tokens and glass surfaces. The `deck.html` pipeline visualization is a prime candidate for `CovalentGrid`.
-
----
-
-## 6. Performance Contract
-
-- **Zero JS animation runtime** — no framer-motion, no GSAP, no spring libraries
-- All motion is CSS `@keyframes` composited on the GPU
-- Glass `backdrop-filter` usage is limited to Level 2+ panels (not used on frequently-rerendered elements)
-- The `App` bundle shrank 28% (428KB → 307KB) after migration to `@lupine/ui`
-- SVG noise texture is inline data-URI (no network request)
+An earlier draft of this guide (titled "Atomic Understanding v2") spec'd a
+named component library — `AtomicGlass`, `OrbitalToggle`, `WaveformSlider`,
+`QuantumSection`, `IsotopeChip`, `CovalentGrid`. **None of these have been
+implemented.** The motifs they describe still inform the system, but the
+named primitives are not present in any app's component tree. If the spec is
+revived, a shared `@lupine/ui` package would be the right home — not
+ad-hoc duplication across apps.

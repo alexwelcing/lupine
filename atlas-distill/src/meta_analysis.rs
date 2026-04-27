@@ -97,23 +97,13 @@ pub fn fixed_effects_meta(groups: &[GroupCorrelation]) -> MetaAnalysisResult {
         .collect();
 
     let sum_w: f64 = group_results.iter().map(|g| g.weight_fixed).sum();
-    let sum_wz: f64 = group_results
-        .iter()
-        .map(|g| g.weight_fixed * g.z)
-        .sum();
+    let sum_wz: f64 = group_results.iter().map(|g| g.weight_fixed * g.z).sum();
 
     let pooled_z = sum_wz / sum_w;
     let se_z = (1.0 / sum_w).sqrt();
 
     // Compute influence percentages
-    let mut result = compute_final_result(
-        groups,
-        group_results,
-        pooled_z,
-        se_z,
-        0.0,
-        "fixed",
-    );
+    let mut result = compute_final_result(groups, group_results, pooled_z, se_z, 0.0, "fixed");
 
     // For fixed effects, prediction interval = CI
     result.pred_interval_lower = result.ci_lower;
@@ -181,10 +171,7 @@ pub fn random_effects_meta(groups: &[GroupCorrelation]) -> MetaAnalysisResult {
         .collect();
 
     let sum_wr: f64 = group_results.iter().map(|g| g.weight_random).sum();
-    let sum_wrz: f64 = group_results
-        .iter()
-        .map(|g| g.weight_random * g.z)
-        .sum();
+    let sum_wrz: f64 = group_results.iter().map(|g| g.weight_random * g.z).sum();
 
     let pooled_z = sum_wrz / sum_wr;
     let se_z = (1.0 / sum_wr).sqrt();
@@ -236,12 +223,27 @@ fn compute_final_result(
     let q_pvalue = chi_square_pvalue(q, df);
 
     // Influence percentages
-    let sum_w: f64 = group_results.iter().map(|g| {
-        if model == "random" { g.weight_random } else { g.weight_fixed }
-    }).sum();
+    let sum_w: f64 = group_results
+        .iter()
+        .map(|g| {
+            if model == "random" {
+                g.weight_random
+            } else {
+                g.weight_fixed
+            }
+        })
+        .sum();
     for g in &mut group_results {
-        let w = if model == "random" { g.weight_random } else { g.weight_fixed };
-        g.influence_percent = if sum_w > 0.0 { (w / sum_w) * 100.0 } else { 0.0 };
+        let w = if model == "random" {
+            g.weight_random
+        } else {
+            g.weight_fixed
+        };
+        g.influence_percent = if sum_w > 0.0 {
+            (w / sum_w) * 100.0
+        } else {
+            0.0
+        };
     }
 
     // Prediction interval (random effects only)
@@ -353,8 +355,7 @@ fn normal_cdf(x: f64) -> f64 {
 
     if x >= 0.0 {
         let t = 1.0 / (1.0 + p * x);
-        1.0 - c * (-x * x / 2.0).exp() * t
-            * (t * (t * (t * (t * b5 + b4) + b3) + b2) + b1)
+        1.0 - c * (-x * x / 2.0).exp() * t * (t * (t * (t * (t * b5 + b4) + b3) + b2) + b1)
     } else {
         1.0 - normal_cdf(-x)
     }
@@ -372,18 +373,18 @@ fn gamma_approx(z: f64) -> f64 {
 
     // Lanczos approximation coefficients
     let p = [
-        676.520368_1218851,
-        -1259.139216_7224028,
-        771.323428_77765313,
-        -176.615029_16214059,
-        12.507343_278686905,
-        -0.138571_09526572012,
-        9.984369_19200710e-6,
-        1.505632_7351493116e-7,
+        676.520_368_121_885_1,
+        -1_259.139_216_722_402_8,
+        771.323_428_777_653_1,
+        -176.615_029_162_140_6,
+        12.507_343_278_686_905,
+        -0.138_571_095_265_720_12,
+        9.984_369_192_007_10e-6,
+        1.505_632_735_149_311_6e-7,
     ];
 
     let z = z - 1.0;
-    let mut x = 0.99999999999980993;
+    let mut x = 0.999_999_999_999_809_9;
     for (i, &pi) in p.iter().enumerate() {
         x += pi / (z + i as f64 + 1.0);
     }
@@ -427,23 +428,35 @@ pub fn recommend_model(result: &MetaAnalysisResult) -> (&'static str, String) {
 pub fn print_summary(result: &MetaAnalysisResult) {
     eprintln!();
     eprintln!("  ╔════════════════════════════════════════════════════════════╗");
-    eprintln!("  ║  Meta-Analysis of Correlations ({})                     ║", result.model.to_uppercase());
+    eprintln!(
+        "  ║  Meta-Analysis of Correlations ({})                     ║",
+        result.model.to_uppercase()
+    );
     eprintln!("  ╚════════════════════════════════════════════════════════════╝");
     eprintln!();
-    eprintln!("  Groups: {} | Total N: {}", result.n_groups, result.total_n);
+    eprintln!(
+        "  Groups: {} | Total N: {}",
+        result.n_groups, result.total_n
+    );
     eprintln!();
     eprintln!("  Pooled correlation: r = {:.4}", result.pooled_r);
     eprintln!("  95% CI: [{:.4}, {:.4}]", result.ci_lower, result.ci_upper);
     eprintln!();
     eprintln!("  Heterogeneity:");
-    eprintln!("    Q = {:.3} (df = {}, p = {:.4})", result.q_statistic, result.q_df, result.q_pvalue);
+    eprintln!(
+        "    Q = {:.3} (df = {}, p = {:.4})",
+        result.q_statistic, result.q_df, result.q_pvalue
+    );
     eprintln!("    I² = {:.1}%", result.i_squared);
     eprintln!("    τ² = {:.4}", result.tau_squared);
     eprintln!("    τ  = {:.4}", result.tau);
     eprintln!();
 
     if result.model == "random" {
-        eprintln!("  95% Prediction interval: [{:.4}, {:.4}]", result.pred_interval_lower, result.pred_interval_upper);
+        eprintln!(
+            "  95% Prediction interval: [{:.4}, {:.4}]",
+            result.pred_interval_lower, result.pred_interval_upper
+        );
         eprintln!();
     }
 
@@ -451,8 +464,14 @@ pub fn print_summary(result: &MetaAnalysisResult) {
     for g in &result.group_results {
         eprintln!(
             "    {:12}  r={:+.4}  z={:+.4}  w={:8.3}  {:5.1}%",
-            g.group_id, g.r, g.z,
-            if result.model == "random" { g.weight_random } else { g.weight_fixed },
+            g.group_id,
+            g.r,
+            g.z,
+            if result.model == "random" {
+                g.weight_random
+            } else {
+                g.weight_fixed
+            },
             g.influence_percent
         );
     }
@@ -472,39 +491,71 @@ mod tests {
     fn test_fixed_effects_homogeneous() {
         // All groups have similar correlations
         let groups = vec![
-            GroupCorrelation { group_id: "A".to_string(), n: 50, r: 0.60 },
-            GroupCorrelation { group_id: "B".to_string(), n: 50, r: 0.62 },
-            GroupCorrelation { group_id: "C".to_string(), n: 50, r: 0.58 },
+            GroupCorrelation {
+                group_id: "A".to_string(),
+                n: 50,
+                r: 0.60,
+            },
+            GroupCorrelation {
+                group_id: "B".to_string(),
+                n: 50,
+                r: 0.62,
+            },
+            GroupCorrelation {
+                group_id: "C".to_string(),
+                n: 50,
+                r: 0.58,
+            },
         ];
 
         let result = fixed_effects_meta(&groups);
         assert!(result.pooled_r > 0.55 && result.pooled_r < 0.65);
-        assert!(result.i_squared < 10.0, "Homogeneous data should have low I²");
+        assert!(
+            result.i_squared < 10.0,
+            "Homogeneous data should have low I²"
+        );
     }
 
     #[test]
     fn test_random_effects_heterogeneous() {
         // Groups have very different correlations
         let groups = vec![
-            GroupCorrelation { group_id: "A".to_string(), n: 50, r: 0.80 },
-            GroupCorrelation { group_id: "B".to_string(), n: 50, r: 0.20 },
-            GroupCorrelation { group_id: "C".to_string(), n: 50, r: -0.30 },
+            GroupCorrelation {
+                group_id: "A".to_string(),
+                n: 50,
+                r: 0.80,
+            },
+            GroupCorrelation {
+                group_id: "B".to_string(),
+                n: 50,
+                r: 0.20,
+            },
+            GroupCorrelation {
+                group_id: "C".to_string(),
+                n: 50,
+                r: -0.30,
+            },
         ];
 
         let fixed = fixed_effects_meta(&groups);
         let random = random_effects_meta(&groups);
 
         assert!(fixed.i_squared > 90.0, "Should detect high heterogeneity");
-        assert!(random.tau_squared > 0.1, "Should estimate substantial between-study variance");
+        assert!(
+            random.tau_squared > 0.1,
+            "Should estimate substantial between-study variance"
+        );
         assert!(random.pred_interval_upper > random.ci_upper);
         assert!(random.pred_interval_lower < random.ci_lower);
     }
 
     #[test]
     fn test_fisher_z_backtransform_consistency() {
-        let groups = vec![
-            GroupCorrelation { group_id: "X".to_string(), n: 100, r: 0.5 },
-        ];
+        let groups = vec![GroupCorrelation {
+            group_id: "X".to_string(),
+            n: 100,
+            r: 0.5,
+        }];
 
         let result = fixed_effects_meta(&groups);
         let expected_z = stats::fisher_z(0.5);
