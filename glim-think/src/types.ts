@@ -74,6 +74,30 @@ export interface ResearchQuestion {
   answered_at: string | null;
 }
 
+export type LiteratureSource = "arxiv" | "semantic_scholar" | "openalex";
+
+export interface LiteraturePaper {
+  /** DOI is the canonical key when present; otherwise we synthesize one. */
+  doi: string;
+  arxivId: string | null;
+  title: string;
+  abstract: string;
+  authors: string[];
+  year: number | null;
+  venue: string | null;
+  source: LiteratureSource;
+  fetchedAt: string;
+  rawArtifactKey: string | null;
+  /** External-id passthrough for downstream agents. */
+  externalIds?: Record<string, string>;
+}
+
+export interface LiteratureSearchResult {
+  results: Partial<Record<LiteratureSource, LiteraturePaper[]>>;
+  cached: Partial<Record<LiteratureSource, boolean>>;
+  errors: Partial<Record<LiteratureSource, string>>;
+}
+
 export interface BenchmarkRecord {
   recordId: string;
   element: string;

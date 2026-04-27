@@ -17,6 +17,9 @@
  *   /diary/draft        — LLM diary narrative
  *   /ext/*              — Extension management
  *   /agents/*           — Think WebSocket/chat routing (automatic)
+ *   /literature/search  — POST: arXiv + Semantic Scholar + OpenAlex search (cached)
+ *   /literature/papers  — GET: list cached papers (filterable by source/year)
+ *   /literature/papers/:doi — GET: fetch a single cached paper
  */
 
 import { routeAgentRequest } from "agents";
@@ -33,6 +36,7 @@ import { ModelRouter } from "./gateway/router";
 import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
 import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
+import { searchLiterature, isLiteratureSource, rowToPaper } from "./literature";
 import type {
   BenchmarkRecord,
   Critique,
@@ -40,6 +44,7 @@ import type {
   Env,
   HypothesisRecord,
   HypothesisStatus,
+  LiteratureSource,
   ResearchQuestion,
   ResearchQuestionStatus,
 } from "./types";
@@ -1175,6 +1180,78 @@ ${narrative}
             "Access-Control-Allow-Headers": "Content-Type",
           },
         });
+      }
+
+      // === unit-4: literature routes ===
+      if (url.pathname === "/literature/search" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+        const query = typeof body.query === "string" ? body.query : "";
+        if (!query.trim()) {
+          return Response.json({ error: "Missing 'query'" }, { status: 400 });
+        }
+        const max = typeof body.max === "number" && Number.isFinite(body.max)
+          ? Math.trunc(body.max)
+          : 10;
+        const forceRefresh = Boolean(body.force_refresh);
+
+        const requested = Array.isArray(body.sources)
+          ? (body.sources as unknown[]).filter(isLiteratureSource)
+          : [];
+
+        const result = await searchLiterature(env, query, {
+          sources: requested.length > 0 ? requested : undefined,
+          max,
+          forceRefresh,
+        });
+        return Response.json(result);
+      }
+
+      const PAPER_COLS =
+        "doi, arxiv_id, title, abstract, authors_json, year, venue, source, fetched_at, raw_artifact_key";
+
+      if (url.pathname.startsWith("/literature/papers/") && request.method === "GET") {
+        const doi = decodeURIComponent(url.pathname.slice("/literature/papers/".length));
+        if (!doi) {
+          return Response.json({ error: "Missing DOI" }, { status: 400 });
+        }
+        const row = await env.LEDGER.prepare(
+          `SELECT ${PAPER_COLS} FROM literature_papers WHERE doi = ?1`,
+        ).bind(doi).first();
+        if (!row) {
+          return Response.json({ error: "Not found", doi }, { status: 404 });
+        }
+        return Response.json(rowToPaper(row as Record<string, unknown>));
+      }
+
+      if (url.pathname === "/literature/papers" && request.method === "GET") {
+        const sourceParam = url.searchParams.get("source");
+        const yearParam = url.searchParams.get("year");
+        const limit = Math.min(
+          Math.max(parseInt(url.searchParams.get("limit") || "20", 10) || 20, 1),
+          200,
+        );
+
+        const conditions: string[] = [];
+        const binds: unknown[] = [];
+        if (sourceParam && isLiteratureSource(sourceParam)) {
+          conditions.push(`source = ?${binds.length + 1}`);
+          binds.push(sourceParam as LiteratureSource);
+        }
+        if (yearParam) {
+          const y = parseInt(yearParam, 10);
+          if (Number.isFinite(y)) {
+            conditions.push(`year = ?${binds.length + 1}`);
+            binds.push(y);
+          }
+        }
+        const where = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+        const sql =
+          `SELECT ${PAPER_COLS} FROM literature_papers ${where} ORDER BY fetched_at DESC LIMIT ?${binds.length + 1}`;
+        binds.push(limit);
+
+        const rows = await env.LEDGER.prepare(sql).bind(...binds).all();
+        const papers = (rows.results as Array<Record<string, unknown>>).map(rowToPaper);
+        return Response.json({ papers, count: papers.length });
       }
 
       return new Response("Not found", { status: 404 });
