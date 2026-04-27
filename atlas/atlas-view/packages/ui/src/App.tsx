@@ -7,7 +7,7 @@
 
 import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
-import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei';
+import { OrbitControls, GizmoHelper, GizmoViewport, Environment } from '@react-three/drei';
 import {
   EffectComposer, SSAO, Bloom, ToneMapping, Vignette, DepthOfField
 } from '@react-three/postprocessing';
@@ -33,6 +33,7 @@ import { AnalysisPanel } from './panels/AnalysisPanel';
 import { MeasurementPanel } from './panels/MeasurementPanel';
 import { AtomsPanel } from './panels/AtomsPanel';
 import { FlythroughPanel } from './panels/FlythroughPanel';
+import { TelemetryPanel } from './panels/TelemetryPanel';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
 import { decodeFlythrough } from './flythrough';
 import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
@@ -154,6 +155,11 @@ const IconFlythrough = () => (
     <path d="M17 17h5" />
   </svg>
 );
+const IconTelemetry = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+  </svg>
+);
 
 // ─── Background presets ───────────────────────────────────────────────
 const BG_PRESETS: Record<string, { top: string; bottom: string; label: string }> = {
@@ -174,52 +180,73 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 }
 
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ top, bottom, style = 'linear' }: { top: string; bottom: string; style?: 'linear' | 'radial' | 'spotlight' }) {
+function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: string; bottom: string; style?: 'linear' | 'radial' | 'spotlight'; videoUrl?: string | null }) {
   const { scene } = useThree();
 
   useEffect(() => {
-    const canvas = document.createElement('canvas');
-    // We need a square / higher-res canvas for beautiful radial gradients
-    const size = 1024;
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d')!;
+    let video: HTMLVideoElement | null = null;
+    let tex: THREE.Texture | null = null;
 
-    let grad;
-    if (style === 'radial') {
-      // Center out (bottom color on edge, top color in center)
-      grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/1.5);
-      grad.addColorStop(0, top);
-      grad.addColorStop(1, bottom);
-    } else if (style === 'spotlight') {
-      // Top-down spotlight effect
-      grad = ctx.createRadialGradient(size/2, 0, 0, size/2, 0, size/1.2);
-      grad.addColorStop(0, top);
-      grad.addColorStop(1, bottom);
+    if (videoUrl) {
+      video = document.createElement('video');
+      video.src = videoUrl;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.crossOrigin = 'anonymous';
+      video.play().catch(e => console.warn('Video background autoplay prevented:', e));
+
+      tex = new THREE.VideoTexture(video);
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.colorSpace = THREE.SRGBColorSpace;
+      // Fit to cover (requires custom shader or simple mapping, Equirectangular isn't perfect for flat video but let's just use it as flat background)
+      
+      scene.background = tex;
+      scene.fog = null; // No fog when using video background
     } else {
-      // Standard linear fallback
-      grad = ctx.createLinearGradient(0, 0, 0, size);
-      grad.addColorStop(0, top);
-      grad.addColorStop(1, bottom);
+      const canvas = document.createElement('canvas');
+      const size = 1024;
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d')!;
+
+      let grad;
+      if (style === 'radial') {
+        grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/1.5);
+        grad.addColorStop(0, top);
+        grad.addColorStop(1, bottom);
+      } else if (style === 'spotlight') {
+        grad = ctx.createRadialGradient(size/2, 0, 0, size/2, 0, size/1.2);
+        grad.addColorStop(0, top);
+        grad.addColorStop(1, bottom);
+      } else {
+        grad = ctx.createLinearGradient(0, 0, 0, size);
+        grad.addColorStop(0, top);
+        grad.addColorStop(1, bottom);
+      }
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+
+      tex = new THREE.CanvasTexture(canvas);
+      tex.mapping = THREE.EquirectangularReflectionMapping; 
+      
+      scene.background = tex;
+      scene.fog = new THREE.FogExp2(bottom, 0.0015);
     }
 
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, size, size);
-
-    const tex = new THREE.CanvasTexture(canvas);
-    // Important: for non-linear, we want it to map across the whole view gracefully
-    tex.mapping = THREE.EquirectangularReflectionMapping; 
-    
-    scene.background = tex;
-    // Add subtle fog to match background edge for depth
-    scene.fog = new THREE.FogExp2(bottom, 0.0015);
-
     return () => {
-      tex.dispose();
+      if (tex) tex.dispose();
+      if (video) {
+        video.pause();
+        video.src = '';
+        video.load();
+      }
       scene.background = null;
       scene.fog = null;
     };
-  }, [scene, top, bottom, style]);
+  }, [scene, top, bottom, style, videoUrl]);
 
   return null;
 }
@@ -351,6 +378,7 @@ export default function App() {
   const activePanel = useStore(s => s.activePanel);
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const backgroundStyle = useStore(s => s.backgroundStyle);
+  const backgroundVideo = useStore(s => s.backgroundVideo);
   const ssaoIntensity = useStore(s => s.ssaoIntensity);
   const showScaleBar = useStore(s => s.showScaleBar);
   const cameraPreset = useStore(s => s.cameraPreset);
@@ -406,7 +434,10 @@ export default function App() {
     const handler = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement).tagName === 'INPUT') return;
 
-      if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+      const currentFile = useStore.getState().file;
+      const isResearch = Boolean(currentFile?.name?.startsWith('research_') || currentFile?.sourceUrl?.includes('/research/'));
+
+      if (e.key === ' ' && !isResearch) { e.preventDefault(); togglePlay(); }
       if (e.key === 'ArrowRight') nextFrame();
       if (e.key === 'ArrowLeft') useStore.getState().prevFrame();
       if (e.key === 'Escape') setActivePanel(null);
@@ -416,6 +447,7 @@ export default function App() {
       if (e.key === 'x' && !e.metaKey && !e.ctrlKey) setActivePanel('export');
       if (e.key === 'b' && !e.metaKey && !e.ctrlKey) useStore.getState().toggleBonds();
       if (e.key === 'm' && !e.metaKey && !e.ctrlKey) setActivePanel('measurement');
+      if (e.key === 't' && !e.metaKey && !e.ctrlKey) setActivePanel('telemetry');
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
@@ -677,12 +709,13 @@ export default function App() {
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
             <ExportManager />
-            <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} />
+            <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} />
 
             <ambientLight intensity={0.35} />
             <directionalLight position={[5, 8, 6]} intensity={1.2} />
             <directionalLight position={[-3, -2, 4]} intensity={0.35} />
             <directionalLight position={[0, -5, -3]} intensity={0.15} color="#8888ff" />
+            <Environment preset="city" />
 
             <CameraManager fileId={file?.name} center={center} distance={cameraDistance} />
             <OrbitControls
@@ -880,6 +913,7 @@ export default function App() {
                 <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis'} onClick={() => setActivePanel('analysis')} />
                 <ToolButton icon={<IconMeasure />} label="Measure" active={activePanel === 'measurement'} onClick={() => setActivePanel('measurement')} />
                 <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export'} onClick={() => setActivePanel('export')} />
+                <ToolButton icon={<IconTelemetry />} label="Telemetry" active={activePanel === 'telemetry'} onClick={() => setActivePanel('telemetry')} />
                 <ToolButton icon={<IconFlythrough />} label="Path" active={activePanel === 'flythrough'} onClick={() => setActivePanel('flythrough')} />
                 <div style={{ width: 1, minWidth: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />
                 <ToolButton icon={<IconReset />} label="Reset" onClick={() => {
@@ -936,7 +970,7 @@ export default function App() {
             top: 0,
             right: 0,
             bottom: 0,
-            width: isMobile ? '100%' : (activePanel === 'export' || activePanel === 'flythrough' ? 360 : 320),
+            width: isMobile ? '100%' : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' ? 360 : 320),
             borderLeft: '1px solid var(--border-subtle)',
             background: 'var(--bg-surface)',
             overflowY: 'auto',
@@ -956,6 +990,13 @@ export default function App() {
               {activePanel === 'measurement' && <MeasurementPanel />}
               {activePanel === 'export' && <FigureExportPanel />}
               {activePanel === 'flythrough' && <FlythroughPanel />}
+              {activePanel === 'telemetry' && (
+                <TelemetryPanel
+                  thermo={file?.thermo ?? null}
+                  currentFrame={currentFrame}
+                  totalFrames={totalFrames}
+                />
+              )}
             </ErrorBoundary>
           </div>
         )}
@@ -991,22 +1032,24 @@ export default function App() {
               title="Previous [←]"
               icon={<IconPrev />}
             />
-            <button
-              onClick={togglePlay}
-              title="Play/Pause [Space]"
-              style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                width: 40, height: 32,
-                background: playing ? 'var(--accent-soft)' : 'var(--accent)',
-                border: `1px solid var(--accent)`,
-                borderRadius: 'var(--radius-sm)',
-                color: playing ? 'var(--accent)' : 'white',
-                cursor: 'pointer',
-                transition: 'all 100ms ease-out',
-              }}
-            >
-              {playing ? <IconPause /> : <IconPlay />}
-            </button>
+            {!(file?.name?.startsWith('research_') || file?.sourceUrl?.includes('/research/')) && (
+              <button
+                onClick={togglePlay}
+                title="Play/Pause [Space]"
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  width: 40, height: 32,
+                  background: playing ? 'var(--accent-soft)' : 'var(--accent)',
+                  border: `1px solid var(--accent)`,
+                  borderRadius: 'var(--radius-sm)',
+                  color: playing ? 'var(--accent)' : 'white',
+                  cursor: 'pointer',
+                  transition: 'all 100ms ease-out',
+                }}
+              >
+                {playing ? <IconPause /> : <IconPlay />}
+              </button>
+            )}
             <TransportButton
               onClick={nextFrame}
               title="Next [→]"

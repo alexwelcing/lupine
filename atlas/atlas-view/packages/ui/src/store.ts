@@ -55,6 +55,7 @@ export interface AppState {
   atomScale: number;
   backgroundPreset: string;
   backgroundStyle: 'linear' | 'radial' | 'spotlight';
+  backgroundVideo: string | null;
 
   // ─── Effects ───
   ssao: boolean;
@@ -64,7 +65,7 @@ export interface AppState {
   dof: boolean;
   dofFocus: number;
   toneMapping: 'none' | 'aces' | 'reinhard';
-  antialiasing: 'none' | 'fxaa' | 'msaa4x';
+  antialiasing: 'none' | 'fxaa' | 'msaa4x' | 'smaa';
 
   // ─── Playback ───
   playing: boolean;
@@ -85,7 +86,7 @@ export interface AppState {
   colorblindMode: boolean;
 
   // ─── UI ───
-  activePanel: 'style' | 'effects' | 'export' | 'analysis' | 'measurement' | 'atoms' | 'flythrough' | null;
+  activePanel: 'style' | 'effects' | 'export' | 'analysis' | 'measurement' | 'atoms' | 'flythrough' | 'telemetry' | null;
   showStats: boolean;
   showThermo: boolean;
 
@@ -150,6 +151,7 @@ export interface AppState {
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
   setBackgroundStyle: (style: AppState['backgroundStyle']) => void;
+  setBackgroundVideo: (url: string | null) => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
   clearFile: () => void;
   reset: () => void;
@@ -182,14 +184,15 @@ const DEFAULTS = {
   atomScale: 1.0,
   backgroundPreset: 'deep',
   backgroundStyle: 'linear' as const,
+  backgroundVideo: null as string | null,
   ssao: true,
-  ssaoIntensity: 0.5,
-  bloom: false,
-  bloomIntensity: 0.3,
+  ssaoIntensity: 0.65,
+  bloom: true,
+  bloomIntensity: 0.15,
   dof: false,
   dofFocus: 50,
   toneMapping: 'aces' as const,
-  antialiasing: 'fxaa' as const,
+  antialiasing: 'smaa' as const,
   playing: false,
   playbackSpeed: 1.0,
   loopMode: 'loop' as const,
@@ -283,6 +286,7 @@ export const useStore = create<AppState>()(
     setAtomScale: (atomScale) => set({ atomScale }),
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
     setBackgroundStyle: (backgroundStyle) => set({ backgroundStyle }),
+    setBackgroundVideo: (backgroundVideo) => set({ backgroundVideo }),
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),

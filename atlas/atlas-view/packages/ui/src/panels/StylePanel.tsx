@@ -316,6 +316,59 @@ export function StylePanel({ availableProperties, bgPresets }: StylePanelProps) 
                 </AtomicGlass>
               ))}
             </CovalentGrid>
+
+            {/* Video Background Sub-section */}
+            <div style={{ marginTop: 16 }}>
+              <div style={{
+                fontSize: 10, color: 'var(--slate-500)',
+                fontFamily: 'var(--font-mono)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: 8,
+              }}>
+                Video Background
+              </div>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <label className="lupine-glass lupine-glass--1 lupine-glass--interactive" style={{
+                  padding: '6px 12px',
+                  borderRadius: 'var(--radius-sm)',
+                  cursor: 'pointer',
+                  fontSize: 11, fontWeight: 500,
+                  color: 'var(--slate-300)',
+                }}>
+                  Load Video
+                  <input 
+                    type="file" 
+                    accept="video/*" 
+                    style={{ display: 'none' }} 
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const url = URL.createObjectURL(file);
+                        useStore.getState().setBackgroundVideo(url);
+                      }
+                    }}
+                  />
+                </label>
+                {useStore.getState().backgroundVideo && (
+                  <button
+                    className="lupine-glass lupine-glass--1 lupine-glass--interactive"
+                    style={{
+                      padding: '6px 12px',
+                      borderRadius: 'var(--radius-sm)',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: 11, fontWeight: 500,
+                      color: 'var(--danger)',
+                    }}
+                    onClick={() => useStore.getState().setBackgroundVideo(null)}
+                  >
+                    Clear Video
+                  </button>
+                )}
+              </div>
+            </div>
           </QuantumSection>
 
         </div>

@@ -184,11 +184,14 @@ export function AtomsOptimized({
       return new THREE.MeshToonMaterial({ gradientMap });
     }
     return new THREE.MeshPhysicalMaterial({
-      metalness: 0.1,
-      roughness: 0.5,
-      clearcoat: 0.05,
-      clearcoatRoughness: 0.5,
-      envMapIntensity: 0.8,
+      metalness: 0.15,
+      roughness: 0.35,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.2,
+      envMapIntensity: 1.5,
+      sheen: 0.4,
+      sheenRoughness: 0.5,
+      sheenColor: new THREE.Color(0x8888aa),
     });
   }, [renderStyle, botanicalMode]);
 
@@ -254,6 +257,52 @@ export function AtomsOptimized({
     const hasNextFrame = nextFrame && nextFrame.natoms === frame.natoms;
     const nextPos = hasNextFrame ? nextFrame.positions : null;
 
+    let bsx = 0, bsy = 0, bsz = 0;
+    const hasBounds = !!frame.boxBounds;
+    if (hasBounds) {
+      bsx = frame.boxBounds![1] - frame.boxBounds![0];
+      bsy = frame.boxBounds![3] - frame.boxBounds![2];
+      bsz = frame.boxBounds![5] - frame.boxBounds![4];
+    }
+
+    // ─── Pre-compute lookups for O(1) access inside hot loop ───
+    const MAX_TYPES = 256;
+    const radiiLookup = new Float32Array(MAX_TYPES).fill(1.2);
+    const hiddenLookup = new Uint8Array(MAX_TYPES);
+    const scaleOverrideLookup = new Float32Array(MAX_TYPES).fill(1.0);
+    const botR = new Float32Array(MAX_TYPES).fill(0.3);
+    const botG = new Float32Array(MAX_TYPES).fill(0.5);
+    const botB = new Float32Array(MAX_TYPES).fill(0.2);
+    const typR = new Float32Array(MAX_TYPES).fill(0.6);
+    const typG = new Float32Array(MAX_TYPES).fill(0.6);
+    const typB = new Float32Array(MAX_TYPES).fill(0.6);
+
+    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
+      radiiLookup[typeId] = botanicalMode ? (BOTANICAL_RADII[typeId] ?? 1.2) : (TYPE_RADII[typeId] ?? 1.2);
+      if (hiddenAtomTypes?.has(typeId)) hiddenLookup[typeId] = 1;
+      if (atomTypeScales?.[typeId] !== undefined) scaleOverrideLookup[typeId] = atomTypeScales[typeId];
+      if (botanicalMode) {
+        const c = BOTANICAL_COLORS[typeId] ?? [0.3, 0.5, 0.2];
+        botR[typeId] = c[0]; botG[typeId] = c[1]; botB[typeId] = c[2];
+      }
+    }
+    typeColorLookup.forEach((color, typeId) => {
+      if (typeId < MAX_TYPES) {
+        typR[typeId] = color[0]; typG[typeId] = color[1]; typB[typeId] = color[2];
+      }
+    });
+
+    let uniR = 0.6, uniG = 0.6, uniB = 0.6;
+    if (colorMode === 'uniform') {
+      const tc = mapFn(0.0);
+      uniR = tc[0]; uniG = tc[1]; uniB = tc[2];
+    }
+    
+    // Cache prop diffing logic
+    const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
+    const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty!) : null;
+    const isPropMode = colorMode === 'property' && propData;
+
     for (let i = 0; i < frame.natoms; i++) {
       // Position
       let x = positions[i * 3];
@@ -265,11 +314,7 @@ export function AtomsOptimized({
         let dy = nextPos[i * 3 + 1] - y;
         let dz = nextPos[i * 3 + 2] - z;
 
-        if (frame.boxBounds) {
-          const bsx = frame.boxBounds[1] - frame.boxBounds[0];
-          const bsy = frame.boxBounds[3] - frame.boxBounds[2];
-          const bsz = frame.boxBounds[5] - frame.boxBounds[4];
-          
+        if (hasBounds) {
           if (dx > bsx / 2) dx -= bsx;
           if (dx < -bsx / 2) dx += bsx;
           if (dy > bsy / 2) dy -= bsy;
@@ -283,72 +328,56 @@ export function AtomsOptimized({
         z += dz * t;
       }
       
-      _position.set(x, y, z);
+      const typeId = types[i] < MAX_TYPES ? types[i] : 0;
+      const radius = hiddenLookup[typeId] ? 0 : radiiLookup[typeId] * scale * scaleOverrideLookup[typeId];
       
-      // Scale by atom type (hidden = 0, otherwise per-type override or global)
-      const isHidden = hiddenAtomTypes?.has(types[i]) ?? false;
-      const typeScale = atomTypeScales?.[types[i]] ?? 1.0;
-      let baseRadius = 1.2;
-      if (botanicalMode) {
-        baseRadius = BOTANICAL_RADII[types[i]] ?? baseRadius;
-      } else {
-        baseRadius = TYPE_RADII[types[i]] ?? baseRadius;
-      }
-      const radius = isHidden ? 0 : baseRadius * scale * typeScale;
-      _scale.setScalar(radius);
-      
-      // Build matrix
-      _matrix.compose(_position, _quaternion, _scale);
-      _matrix.toArray(matrixArray, i * 16);
+      // Inline matrix building (translation + scale only, identity rotation)
+      const mIdx = i * 16;
+      matrixArray[mIdx + 0] = radius; matrixArray[mIdx + 1] = 0;      matrixArray[mIdx + 2] = 0;       matrixArray[mIdx + 3] = 0;
+      matrixArray[mIdx + 4] = 0;      matrixArray[mIdx + 5] = radius; matrixArray[mIdx + 6] = 0;       matrixArray[mIdx + 7] = 0;
+      matrixArray[mIdx + 8] = 0;      matrixArray[mIdx + 9] = 0;      matrixArray[mIdx + 10] = radius; matrixArray[mIdx + 11] = 0;
+      matrixArray[mIdx + 12] = x;     matrixArray[mIdx + 13] = y;     matrixArray[mIdx + 14] = z;      matrixArray[mIdx + 15] = 1;
 
       // Color
+      const cIdx = i * 3;
       if (botanicalMode) {
         const isHighlighted = highlightedAtoms?.has(i);
-        const tc = BOTANICAL_COLORS[types[i]] ?? [0.3, 0.5, 0.2]; // default fallback
         if (isHighlighted) {
-          colorArray[i * 3] = Math.min(1, tc[0] * 1.5);
-          colorArray[i * 3 + 1] = Math.min(1, tc[1] * 1.5);
-          colorArray[i * 3 + 2] = Math.min(1, tc[2] * 1.5);
+          colorArray[cIdx] = Math.min(1, botR[typeId] * 1.5);
+          colorArray[cIdx + 1] = Math.min(1, botG[typeId] * 1.5);
+          colorArray[cIdx + 2] = Math.min(1, botB[typeId] * 1.5);
         } else {
-          colorArray[i * 3] = tc[0];
-          colorArray[i * 3 + 1] = tc[1];
-          colorArray[i * 3 + 2] = tc[2];
+          colorArray[cIdx] = botR[typeId];
+          colorArray[cIdx + 1] = botG[typeId];
+          colorArray[cIdx + 2] = botB[typeId];
         }
-      } else if (colorMode === 'property' && propData) {
-        let val = propData[i];
-        
-        // Interpolate property if next frame is available and has the property
-        if (nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!)) {
-          const nextPropData = nextFrame.properties.get(colorProperty!);
-          if (nextPropData && nextPropData.length > i) {
-            val = val + (nextPropData[i] - val) * t;
-          }
+      } else if (isPropMode) {
+        let val = propData![i];
+        if (nextPropData && nextPropData.length > i) {
+          val = val + (nextPropData[i] - val) * t;
         }
-        
         const norm = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
         const [r, g, b] = mapFn(norm);
-        colorArray[i * 3] = r;
-        colorArray[i * 3 + 1] = g;
-        colorArray[i * 3 + 2] = b;
+        colorArray[cIdx] = r;
+        colorArray[cIdx + 1] = g;
+        colorArray[cIdx + 2] = b;
       } else {
-        // Type-based or uniform color using active palette
         const isHighlighted = highlightedAtoms?.has(i);
-        let tc: [number, number, number] = [0.6, 0.6, 0.6];
+        let r, g, b;
         if (colorMode === 'uniform') {
-          tc = mapFn(0.0);
+          r = uniR; g = uniG; b = uniB;
         } else {
-          tc = typeColorLookup.get(types[i]) ?? [0.6, 0.6, 0.6];
+          r = typR[typeId]; g = typG[typeId]; b = typB[typeId];
         }
         
         if (isHighlighted) {
-          // Brighten highlighted atoms
-          colorArray[i * 3] = Math.min(1, tc[0] * 1.5);
-          colorArray[i * 3 + 1] = Math.min(1, tc[1] * 1.5);
-          colorArray[i * 3 + 2] = Math.min(1, tc[2] * 1.5);
+          colorArray[cIdx] = Math.min(1, r * 1.5);
+          colorArray[cIdx + 1] = Math.min(1, g * 1.5);
+          colorArray[cIdx + 2] = Math.min(1, b * 1.5);
         } else {
-          colorArray[i * 3] = tc[0];
-          colorArray[i * 3 + 1] = tc[1];
-          colorArray[i * 3 + 2] = tc[2];
+          colorArray[cIdx] = r;
+          colorArray[cIdx + 1] = g;
+          colorArray[cIdx + 2] = b;
         }
       }
     }
