@@ -20,16 +20,14 @@ calls it via HTTP.
 from __future__ import annotations
 
 import os
-import sys
-from pathlib import Path
 
 import gradio as gr
 
-# Make the harness modules importable from inside the Space.
-_HARNESS = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(_HARNESS))
-
-from elastic import ElasticResult, elastic_constants  # noqa: E402
+# `calculators.py` and `elastic.py` are vendored next to this file so the
+# Space is self-contained (the originals live one directory up in the parent
+# repo at swarm_preprint_review/scripts/mlip_benchmark/, and are kept in sync
+# at deploy time).
+from elastic import ElasticResult, elastic_constants
 
 try:
     import spaces  # type: ignore  # provided by HF Spaces runtime when ZeroGPU is enabled

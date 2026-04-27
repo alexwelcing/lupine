@@ -8,9 +8,8 @@ sdk_version: 4.44.1
 app_file: app.py
 pinned: false
 license: mit
-hardware: zero-a10g
 suggested_hardware: zero-a10g
-short_description: Foundation-MLIP elastic-constant predictions for cubic metals
+short_description: MLIP elastic predictions on ZeroGPU
 ---
 
 # glim-mlip-bench (HF ZeroGPU Space)
@@ -52,25 +51,31 @@ no transformation.
 
 ## Deploy
 
-```bash
-# One-time: create the Space (any name; the CI workflow + CLI use the env
-# var GLIM_HF_SPACE to find it, defaulting to <HF_USERNAME>/glim-mlip-bench).
-huggingface-cli login           # paste your HF Pro token
+Uses the modern `hf` CLI (huggingface_hub ≥ 0.30; `huggingface-cli` is the
+legacy alias).
 
-# From this directory:
-huggingface-cli upload <HF_USERNAME>/glim-mlip-bench . . \
-    --repo-type=space \
+```bash
+# One-time auth (paste an HF Pro write token):
+hf auth login
+
+# Create the Space repo:
+hf repo create <HF_USERNAME>/glim-mlip-bench \
+    --repo-type space --space_sdk gradio
+
+# Upload everything in this directory (excluding tests + caches):
+cd swarm_preprint_review/scripts/mlip_benchmark/hf_space
+hf upload <HF_USERNAME>/glim-mlip-bench . . --repo-type space \
+    --exclude "__pycache__/*" --exclude "test_app.py" \
     --commit-message "deploy glim-mlip-bench"
 
-# Or via git push:
-git clone https://huggingface.co/spaces/<HF_USERNAME>/glim-mlip-bench
-cp app.py requirements.txt README.md glim-mlip-bench/
-cd glim-mlip-bench && git add . && git commit -m "deploy" && git push
-
-# After deploy, link the Space to your Pro account in Settings → Hardware →
-# enable ZeroGPU. First call has ~5 min cold-init while the GPU pool spins
-# up the container; subsequent calls in the same session are warm.
+# Subsequent updates: re-run the upload command above. hf upload diffs
+# locally and only sends changed files.
 ```
+
+After deploy, link the Space to your Pro account in **Settings → Variables
+and secrets → Hardware → enable ZeroGPU**. First call has ~5 min cold-init
+while the GPU pool spins up the container; subsequent calls in the same
+session are warm (sub-second per element).
 
 ## Hardware tier
 

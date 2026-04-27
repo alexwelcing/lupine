@@ -87,10 +87,12 @@ Hardware tier `zero-a10g` (free for HF Pro) means an A10G GPU per call,
 on CPU AND ~5 min cold install — net savings ~10x and no per-run install.
 
 ```bash
-# One-time deploy (see hf_space/README.md)
-huggingface-cli login
+# One-time deploy (see hf_space/README.md). Uses the modern `hf` CLI:
+hf auth login
+hf repo create <HF_USERNAME>/glim-mlip-bench --repo-type space --space_sdk gradio
 cd swarm_preprint_review/scripts/mlip_benchmark/hf_space
-huggingface-cli upload <HF_USERNAME>/glim-mlip-bench . . --repo-type=space
+hf upload <HF_USERNAME>/glim-mlip-bench . . --repo-type space \
+    --exclude "__pycache__/*" --exclude "test_app.py"
 
 # Then call from anywhere:
 GLIM_HF_SPACE=https://huggingface.co/spaces/<HF_USERNAME>/glim-mlip-bench \
