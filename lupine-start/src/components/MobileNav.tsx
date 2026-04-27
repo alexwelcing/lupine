@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { to: '/', label: 'Thesis' },
   { to: '/research', label: 'Research' },
   { to: '/live', label: 'Live Lab', live: true },
+  { to: '/lab', label: 'Lab' },
   { to: '/investor-relations', label: 'Investor Relations' },
   { to: '/proof', label: 'Compliance' },
   { to: '/about', label: 'About', accent: true },
