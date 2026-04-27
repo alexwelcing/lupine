@@ -37,6 +37,24 @@ export interface HypothesisRecord {
   updated_at: string;
 }
 
+/**
+ * Row in the `critiques` D1 table — peer-review critique queue with R2-backed
+ * markdown responses. See migrations/0002_critiques.sql.
+ */
+export type CritiqueStatus = "pending" | "in_progress" | "completed";
+
+export interface Critique {
+  id: string;
+  source: string;
+  question: string;
+  target_hypothesis_id: string | null;
+  status: CritiqueStatus;
+  response_md: string | null;
+  response_artifact_key: string | null;
+  created_at: string;
+  completed_at: string | null;
+}
+
 export interface BenchmarkRecord {
   recordId: string;
   element: string;
