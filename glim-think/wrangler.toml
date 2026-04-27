@@ -37,9 +37,14 @@ class_name = "DashboardAgent"
 name = "EXTENSION_MANAGER"
 class_name = "ExtensionManager"
 
+[[durable_objects.bindings]]
+name = "LITERATURIST_AGENT"
+class_name = "Literaturist"
+
 # ─── Migrations ───
 # v1-v2: original Agent-based classes
 # v3: upgraded to Think (re-provisions SQLite for Think's session schema)
+# v4: Literaturist agent (literature search + citation)
 
 [[migrations]]
 tag = "v1"
@@ -51,6 +56,10 @@ new_sqlite_classes = ["FleetOrchestrator", "DashboardAgent", "ExtensionManager"]
 
 # v3: Think upgrade — agents retain their SQLite from v1/v2,
 # Think layer adds session tables via onStart().
+
+[[migrations]]
+tag = "v4"
+new_sqlite_classes = ["Literaturist"]
 
 # ─── AI Gateway ───
 [ai]

@@ -25,6 +25,7 @@ import { Manifold } from "./agents/manifold";
 import { Causal } from "./agents/causal";
 import { Theorist } from "./agents/theorist";
 import { Experiment } from "./agents/experiment";
+import { Literaturist } from "./agents/literaturist";
 import { FleetOrchestrator } from "./fleet/orchestrator";
 import { DashboardAgent } from "./dashboard/stream";
 import { ExtensionManager } from "./extensions/manager";
@@ -34,7 +35,7 @@ import type { BenchmarkRecord, Env } from "./types";
 // Re-export all Durable Object classes for wrangler
 export {
   Orchestrator, Manifold, Causal, Theorist, Experiment,
-  FleetOrchestrator, DashboardAgent, ExtensionManager,
+  FleetOrchestrator, DashboardAgent, ExtensionManager, Literaturist,
 };
 
 export default {
