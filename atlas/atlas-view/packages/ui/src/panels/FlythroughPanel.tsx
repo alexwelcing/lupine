@@ -108,13 +108,19 @@ export function FlythroughPanel() {
   const [expandedKf, setExpandedKf] = useState<number | null>(null);
   const [importValue, setImportValue] = useState('');
   const [showImport, setShowImport] = useState(false);
+  const [exporting, setExporting] = useState(false);
+
+  // Stop preview if panel closes
+  useEffect(() => {
+    return () => setFlythroughPreview(false);
+  }, [setFlythroughPreview]);
 
   // Preview playback loop
   const previewRaf = useRef<number>(0);
   const previewStart = useRef<number>(0);
 
   useEffect(() => {
-    if (!flythroughPreview || !flythrough) return;
+    if (!flythroughPreview || !flythrough || flythrough.keyframes.length < 2) return;
     const duration = getSequenceDuration(flythrough);
     if (duration <= 0) return;
 
@@ -188,6 +194,7 @@ export function FlythroughPanel() {
 
   const handleExportVideo = useCallback(() => {
     if (!flythrough || flythrough.keyframes.length < 2) return;
+    setExporting(true);
     const duration = getSequenceDuration(flythrough);
     triggerExport({
       type: 'video',
@@ -196,6 +203,12 @@ export function FlythroughPanel() {
       durationSeconds: Math.ceil(duration),
       flythrough,
       baseName: 'glimPSE-flythrough',
+      onComplete: (success) => {
+        setExporting(false);
+        if (!success) {
+          alert('Video export failed or is not supported on this browser.');
+        }
+      }
     });
   }, [flythrough, triggerExport]);
 
@@ -422,8 +435,12 @@ export function FlythroughPanel() {
                 <button onClick={handleCopyShareLink} style={{ ...btnGhost, flex: 1 }}>
                   <IconShare /> Share Link
                 </button>
-                <button onClick={handleExportVideo} style={{ ...btnGhost, flex: 1 }}>
-                  <IconRecord /> Export MP4
+                <button 
+                  onClick={handleExportVideo} 
+                  disabled={exporting}
+                  style={{ ...btnGhost, flex: 1, opacity: exporting ? 0.5 : 1, cursor: exporting ? 'wait' : 'pointer' }}
+                >
+                  <IconRecord /> {exporting ? 'Encoding MP4...' : 'Export MP4'}
                 </button>
               </div>
 

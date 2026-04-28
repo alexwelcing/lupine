@@ -1216,10 +1216,8 @@ export default function App() {
           height: 60, flexShrink: 0,
           display: 'flex', alignItems: 'center', gap: 16,
           padding: '0 20px',
-          borderTop: '1px solid var(--border-subtle)',
-          background: 'var(--bg-glass)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          borderTop: '1px solid #1f2937',
+          background: '#0a0a0c',
           overflowX: 'auto',
           scrollbarWidth: 'none',
         }}>
@@ -1242,10 +1240,10 @@ export default function App() {
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: 40, height: 32,
-                  background: playing ? 'var(--accent-soft)' : 'var(--accent)',
-                  border: `1px solid var(--accent)`,
-                  borderRadius: 'var(--radius-sm)',
-                  color: playing ? 'var(--accent)' : 'white',
+                  background: playing ? '#f59e0b' : '#121418',
+                  border: `1px solid ${playing ? '#f59e0b' : '#334155'}`,
+                  borderRadius: 0,
+                  color: playing ? '#0a0a0c' : '#f8fafc',
                   cursor: 'pointer',
                   transition: 'all 100ms ease-out',
                 }}
@@ -1278,15 +1276,15 @@ export default function App() {
 
           {/* Frame counter */}
           <div style={{
-            fontSize: 'var(--fs-sm)',
+            fontSize: '11px',
             fontFamily: 'var(--font-mono)',
-            color: 'var(--text-muted)',
+            color: '#64748b',
             minWidth: 90,
             textAlign: 'right',
             fontVariantNumeric: 'tabular-nums',
           }}>
-            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{Math.floor(frame) + 1}</span>
-            <span style={{ color: 'var(--text-dim)' }}> / {totalFrames}</span>
+            <span style={{ color: '#f8fafc', fontWeight: 500 }}>{Math.floor(frame) + 1}</span>
+            <span style={{ color: '#475569' }}> / {totalFrames}</span>
           </div>
 
           {/* Speed selector */}
@@ -1298,13 +1296,13 @@ export default function App() {
                 style={{
                   padding: '6px 8px',
                   minWidth: 36,
-                  fontSize: 'var(--fs-xs)',
+                  fontSize: '10px',
                   fontFamily: 'var(--font-mono)',
-                  fontWeight: playbackSpeed === speed ? 500 : 400,
-                  color: playbackSpeed === speed ? 'var(--accent)' : 'var(--text-muted)',
-                  background: playbackSpeed === speed ? 'var(--accent-soft)' : 'transparent',
-                  border: `1px solid ${playbackSpeed === speed ? 'var(--accent)' : 'var(--border-default)'}`,
-                  borderRadius: 'var(--radius-sm)',
+                  fontWeight: playbackSpeed === speed ? 600 : 400,
+                  color: playbackSpeed === speed ? '#0a0a0c' : '#64748b',
+                  background: playbackSpeed === speed ? '#f59e0b' : '#121418',
+                  border: `1px solid ${playbackSpeed === speed ? '#f59e0b' : '#334155'}`,
+                  borderRadius: 0,
                   cursor: 'pointer',
                   transition: 'all 100ms ease-out',
                 }}
@@ -1403,20 +1401,22 @@ function TransportButton({ onClick, title, icon }: {
       style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         width: 32, height: 32,
-        color: 'var(--text-muted)',
-        background: 'transparent',
-        border: '1px solid var(--border-default)',
-        borderRadius: 'var(--radius-sm)',
+        color: '#64748b',
+        background: '#121418',
+        border: '1px solid #334155',
+        borderRadius: 0,
         cursor: 'pointer',
         transition: 'all 100ms ease-out',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.color = 'var(--text-primary)';
-        e.currentTarget.style.borderColor = 'var(--text-muted)';
+        e.currentTarget.style.color = '#f8fafc';
+        e.currentTarget.style.borderColor = '#475569';
+        e.currentTarget.style.background = '#1e293b';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.color = 'var(--text-muted)';
-        e.currentTarget.style.borderColor = 'var(--border-default)';
+        e.currentTarget.style.color = '#64748b';
+        e.currentTarget.style.borderColor = '#334155';
+        e.currentTarget.style.background = '#121418';
       }}
     >
       {icon}
@@ -1427,11 +1427,11 @@ function TransportButton({ onClick, title, icon }: {
 const kbdStyle: React.CSSProperties = {
   display: 'inline-block',
   padding: '2px 6px',
-  fontSize: 'var(--fs-2xs)',
+  fontSize: '9px',
   fontFamily: 'var(--font-mono)',
-  color: 'var(--text-muted)',
-  background: 'var(--bg-elevated)',
-  border: '1px solid var(--border-subtle)',
-  borderRadius: 'var(--radius-sm)',
+  color: '#94a3b8',
+  background: '#121418',
+  border: '1px solid #334155',
+  borderRadius: 0,
   marginRight: 4,
 };

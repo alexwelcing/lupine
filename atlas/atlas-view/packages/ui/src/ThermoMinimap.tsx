@@ -119,9 +119,9 @@ export function ThermoMinimap({
         height,
         position: 'relative',
         cursor: 'pointer',
-        borderRadius: 'var(--radius-sm)',
+        borderRadius: 0,
         overflow: 'hidden',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid #334155',
       }}
     >
       <canvas
