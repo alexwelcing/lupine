@@ -109,23 +109,28 @@ export function StylePanel({ availableProperties, bgPresets }: StylePanelProps) 
               <PresetButton label="Classic" onClick={() => {
                 setColorMode('type'); setColormap('viridis');
                 setRenderStyle('standard'); setBackgroundPreset('deep'); setAtomScale(1.0);
+                useStore.getState().setEnvironmentPreset('studio'); useStore.getState().setMaterialPreset('default');
               }} />
               <PresetButton label="Neon" onClick={() => {
                 setColorMode('type'); setColormap('neon');
                 setRenderStyle('standard'); setBackgroundPreset('void'); setAtomScale(1.0);
+                useStore.getState().setEnvironmentPreset('night'); useStore.getState().setMaterialPreset('metallic');
               }} />
               <PresetButton label="Publication" onClick={() => {
                 setColorMode('type'); setColormap('coolwarm');
                 setRenderStyle('standard'); setBackgroundPreset('studio'); setAtomScale(1.0);
+                useStore.getState().setEnvironmentPreset('studio'); useStore.getState().setMaterialPreset('matte');
               }} />
               <PresetButton label="Minimal" onClick={() => {
                 setColorMode('uniform'); setColormap('viridis');
                 setRenderStyle('standard'); setBackgroundPreset('fog'); setAtomScale(0.9);
+                useStore.getState().setEnvironmentPreset('apartment'); useStore.getState().setMaterialPreset('plastic');
               }} />
               {file?.name?.toLowerCase().includes('lupine') && (
                 <PresetButton label="🌿 Botanical" onClick={() => {
                   setColorMode('type'); setColormap('viridis');
                   setRenderStyle('botanical'); setBackgroundPreset('studio'); setAtomScale(1.0);
+                  useStore.getState().setEnvironmentPreset('forest'); useStore.getState().setMaterialPreset('default');
                 }} />
               )}
             </CovalentGrid>
@@ -256,6 +261,66 @@ export function StylePanel({ availableProperties, bgPresets }: StylePanelProps) 
                   />
                 </div>
               )}
+            </div>
+          </QuantumSection>
+
+          {/* ═══ Materials & Lighting ═══ */}
+          <QuantumSection label="Lighting & Materials" defaultOpen={true}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div>
+                <div style={{
+                  fontSize: 10, color: 'var(--slate-500)',
+                  fontFamily: 'var(--font-mono)', textTransform: 'uppercase',
+                  letterSpacing: '0.08em', marginBottom: 8,
+                }}>
+                  Atom Material
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                  {([
+                    { id: 'default' as const, label: 'Default' },
+                    { id: 'matte' as const, label: 'Matte' },
+                    { id: 'metallic' as const, label: 'Metallic' },
+                    { id: 'glass' as const, label: 'Glass' },
+                    { id: 'plastic' as const, label: 'Plastic' },
+                  ]).map(mat => (
+                    <IsotopeChip
+                      key={mat.id}
+                      label={mat.label}
+                      selected={useStore(s => s.materialPreset) === mat.id}
+                      onClick={() => useStore.getState().setMaterialPreset(mat.id)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div style={{
+                  fontSize: 10, color: 'var(--slate-500)',
+                  fontFamily: 'var(--font-mono)', textTransform: 'uppercase',
+                  letterSpacing: '0.08em', marginBottom: 8,
+                }}>
+                  Environment Lighting
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                  {([
+                    { id: 'studio' as const, label: 'Studio' },
+                    { id: 'dawn' as const, label: 'Dawn' },
+                    { id: 'night' as const, label: 'Night' },
+                    { id: 'warehouse' as const, label: 'Warehouse' },
+                    { id: 'forest' as const, label: 'Forest' },
+                    { id: 'apartment' as const, label: 'Apartment' },
+                    { id: 'city' as const, label: 'City' },
+                    { id: 'none' as const, label: 'None' },
+                  ]).map(env => (
+                    <IsotopeChip
+                      key={env.id}
+                      label={env.label}
+                      selected={useStore(s => s.environmentPreset) === env.id}
+                      onClick={() => useStore.getState().setEnvironmentPreset(env.id)}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </QuantumSection>
 

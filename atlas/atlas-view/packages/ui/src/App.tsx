@@ -450,6 +450,8 @@ export default function App() {
   const playbackSpeed = useStore(s => s.playbackSpeed);
   const colorMode = useStore(s => s.colorMode);
   const colorProperty = useStore(s => s.colorProperty);
+  const environmentPreset = useStore(s => s.environmentPreset);
+  const materialPreset = useStore(s => s.materialPreset);
   const colormap = useStore(s => s.colormap);
   const ssao = useStore(s => s.ssao);
   const bloom = useStore(s => s.bloom);
@@ -899,7 +901,9 @@ export default function App() {
             <directionalLight position={[5, 8, 6]} intensity={1.2} />
             <directionalLight position={[-3, -2, 4]} intensity={0.35} />
             <directionalLight position={[0, -5, -3]} intensity={0.15} color="#8888ff" />
-            <Environment preset="city" />
+          {environmentPreset !== 'none' && (
+            <Environment preset={environmentPreset as any} />
+          )}
 
             <CameraManager fileId={file?.name} center={center} distance={cameraDistance} />
             <AutoDepthOfField />
@@ -943,6 +947,7 @@ export default function App() {
                   hiddenAtomTypes={hiddenAtomTypes}
                   atomTypeScales={atomTypeScales}
                   botanicalMode={renderStyle === 'botanical'}
+                  materialPreset={materialPreset}
                 />
                 {showBonds && (
                   <Bonds
@@ -957,6 +962,7 @@ export default function App() {
                     radius={0.12}
                     opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
+                    materialPreset={materialPreset}
                   />
                 )}
                 {showCell && (

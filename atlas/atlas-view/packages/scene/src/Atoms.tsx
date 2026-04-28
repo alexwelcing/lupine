@@ -64,6 +64,7 @@ interface AtomsProps {
   propRange?: [number, number];
   scale?: number;
   renderStyle?: RenderStyle;
+  materialPreset?: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
 }
 
 export function Atoms({
@@ -74,6 +75,7 @@ export function Atoms({
   propRange,
   scale = 1.0,
   renderStyle = 'standard',
+  materialPreset = 'default',
 }: AtomsProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -95,14 +97,28 @@ export function Atoms({
       gradientMap.minFilter = THREE.NearestFilter;
       return new THREE.MeshToonMaterial({ gradientMap });
     }
-    return new THREE.MeshPhysicalMaterial({
-      metalness: 0.15,
-      roughness: 0.45,
-      clearcoat: 0.1,
-      clearcoatRoughness: 0.4,
-      envMapIntensity: 0.8,
-    });
-  }, [renderStyle]);
+    
+    let matConfig: THREE.MeshPhysicalMaterialParameters = {};
+    switch (materialPreset) {
+      case 'matte':
+        matConfig = { metalness: 0.1, roughness: 0.8, clearcoat: 0.0 };
+        break;
+      case 'metallic':
+        matConfig = { metalness: 0.9, roughness: 0.1, clearcoat: 0.3, clearcoatRoughness: 0.1, envMapIntensity: 2.0 };
+        break;
+      case 'glass':
+        matConfig = { metalness: 0.1, roughness: 0.05, transmission: 0.9, thickness: 1.5, ior: 1.5, transparent: true, clearcoat: 1.0, envMapIntensity: 1.5 };
+        break;
+      case 'plastic':
+        matConfig = { metalness: 0.0, roughness: 0.3, clearcoat: 1.0, clearcoatRoughness: 0.2, envMapIntensity: 1.0 };
+        break;
+      case 'default':
+      default:
+        matConfig = { metalness: 0.15, roughness: 0.45, clearcoat: 0.1, clearcoatRoughness: 0.4, envMapIntensity: 0.8 };
+        break;
+    }
+    return new THREE.MeshPhysicalMaterial(matConfig);
+  }, [renderStyle, materialPreset]);
 
   useEffect(() => { return () => { geometry.dispose(); }; }, [geometry]);
   useEffect(() => { return () => { material.dispose(); }; }, [material]);

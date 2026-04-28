@@ -56,6 +56,8 @@ export interface AppState {
   backgroundPreset: string;
   backgroundStyle: 'linear' | 'radial' | 'spotlight';
   backgroundVideo: string | null;
+  environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none';
+  materialPreset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
 
   // ─── Effects ───
   ssao: boolean;
@@ -157,7 +159,9 @@ export interface AppState {
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
   setBackgroundStyle: (style: AppState['backgroundStyle']) => void;
-  setBackgroundVideo: (url: string | null) => void;
+  setBackgroundVideo: (videoUrl: string | null) => void;
+  setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none') => void;
+  setMaterialPreset: (preset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic') => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
   clearFile: () => void;
   reset: () => void;
@@ -189,8 +193,12 @@ const DEFAULTS = {
   renderStyle: 'standard' as RenderStyle,
   atomScale: 1.0,
   backgroundPreset: 'deep',
-  backgroundStyle: 'linear' as const,
+  backgroundStyle: 'radial' as const,
   backgroundVideo: null as string | null,
+  environmentPreset: 'studio' as const,
+  materialPreset: 'default' as const,
+
+  // ─── Effects Defaults ───
   ssao: true,
   ssaoIntensity: 0.65,
   bloom: true,
@@ -297,6 +305,8 @@ export const useStore = create<AppState>()(
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
     setBackgroundStyle: (backgroundStyle) => set({ backgroundStyle }),
     setBackgroundVideo: (backgroundVideo) => set({ backgroundVideo }),
+    setEnvironmentPreset: (environmentPreset) => set({ environmentPreset }),
+    setMaterialPreset: (materialPreset) => set({ materialPreset }),
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),

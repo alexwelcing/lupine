@@ -28,6 +28,7 @@ interface BondsProps {
   opacity?: number;
   renderStyle?: RenderStyle;
   botanicalMode?: boolean;
+  materialPreset?: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
 }
 
 export function Bonds({
@@ -46,6 +47,7 @@ export function Bonds({
   opacity = 0.85,
   renderStyle = 'standard',
   botanicalMode = false,
+  materialPreset = 'default',
 }: BondsProps) {
   const groupRef = useRef<THREE.Group>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(maxBondLength));
@@ -106,9 +108,27 @@ export function Bonds({
         opacity,
       });
     } else {
+      let matConfig: THREE.MeshPhysicalMaterialParameters = {};
+      switch (materialPreset) {
+        case 'matte':
+          matConfig = { metalness: 0.05, roughness: 0.85, clearcoat: 0.0 };
+          break;
+        case 'metallic':
+          matConfig = { metalness: 0.8, roughness: 0.2, clearcoat: 0.2, clearcoatRoughness: 0.2, envMapIntensity: 2.0 };
+          break;
+        case 'glass':
+          matConfig = { metalness: 0.1, roughness: 0.1, transmission: 0.8, thickness: 1.5, ior: 1.5, transparent: true, clearcoat: 1.0, envMapIntensity: 1.5 };
+          break;
+        case 'plastic':
+          matConfig = { metalness: 0.0, roughness: 0.4, clearcoat: 0.8, clearcoatRoughness: 0.2, envMapIntensity: 1.0 };
+          break;
+        case 'default':
+        default:
+          matConfig = { metalness: 0.1, roughness: 0.5, clearcoat: 0.1, envMapIntensity: 0.8 };
+          break;
+      }
       mat = new THREE.MeshPhysicalMaterial({
-        metalness: 0.1,
-        roughness: 0.5,
+        ...matConfig,
         transparent: true,
         opacity,
       });

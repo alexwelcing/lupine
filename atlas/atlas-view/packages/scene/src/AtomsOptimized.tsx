@@ -34,6 +34,7 @@ interface AtomsOptimizedProps {
   hiddenAtomTypes?: Set<number>; // Types to hide
   atomTypeScales?: Record<number, number>; // Per-type scale overrides
   botanicalMode?: boolean; // Hidden mode for Lupine brand asset
+  materialPreset?: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
 }
 
 // Pre-allocate maximum buffer size (avoid reallocation)
@@ -56,6 +57,7 @@ export function AtomsOptimized({
   hiddenAtomTypes,
   atomTypeScales,
   botanicalMode = false,
+  materialPreset = 'default',
 }: AtomsOptimizedProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
@@ -225,20 +227,65 @@ export function AtomsOptimized({
       gradientMap.minFilter = THREE.NearestFilter;
       return new THREE.MeshToonMaterial({ gradientMap });
     }
-    const mat = new THREE.MeshPhysicalMaterial({
-      metalness: 0.6, // Start highly metallic for stable regions
-      roughness: 0.2, // Start very smooth for stable regions
-      clearcoat: 0.8,
-      clearcoatRoughness: 0.2,
-      envMapIntensity: 1.5,
-      sheen: 0.4,
-      sheenRoughness: 0.5,
-      sheenColor: new THREE.Color(0x8888aa),
-      transparent: true,
-      transmission: 0.0,
-      opacity: 1.0,
-      ior: 1.5,
-    });
+    let matConfig: THREE.MeshPhysicalMaterialParameters = {};
+    switch (materialPreset) {
+      case 'matte':
+        matConfig = {
+          metalness: 0.1,
+          roughness: 0.8,
+          clearcoat: 0.0,
+        };
+        break;
+      case 'metallic':
+        matConfig = {
+          metalness: 0.9,
+          roughness: 0.1,
+          clearcoat: 0.3,
+          clearcoatRoughness: 0.1,
+          envMapIntensity: 2.0,
+        };
+        break;
+      case 'glass':
+        matConfig = {
+          metalness: 0.1,
+          roughness: 0.05,
+          transmission: 0.9,
+          thickness: 1.5,
+          ior: 1.5,
+          transparent: true,
+          clearcoat: 1.0,
+          envMapIntensity: 1.5,
+        };
+        break;
+      case 'plastic':
+        matConfig = {
+          metalness: 0.0,
+          roughness: 0.3,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.2,
+          envMapIntensity: 1.0,
+        };
+        break;
+      case 'default':
+      default:
+        matConfig = {
+          metalness: 0.6,
+          roughness: 0.2,
+          clearcoat: 0.8,
+          clearcoatRoughness: 0.2,
+          envMapIntensity: 1.5,
+          sheen: 0.4,
+          sheenRoughness: 0.5,
+          sheenColor: new THREE.Color(0x8888aa),
+          transparent: true,
+          transmission: 0.0,
+          opacity: 1.0,
+          ior: 1.5,
+        };
+        break;
+    }
+
+    const mat = new THREE.MeshPhysicalMaterial(matConfig);
 
     mat.onBeforeCompile = (shader) => {
       // Pass instanceProp from vertex to fragment
