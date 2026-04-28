@@ -11,7 +11,7 @@ import { OrbitControls, GizmoHelper, GizmoViewport, Environment } from '@react-t
 import { EffectComposer, SSAO, Bloom, ToneMapping, Vignette, DepthOfField } from '@react-three/postprocessing';
 import { ToneMappingMode, BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
-import { XR, createXRStore } from '@react-three/xr';
+import { XR, createXRStore, useXR } from '@react-three/xr';
 
 export const xrStore = createXRStore({
   emulate: false,
@@ -188,8 +188,17 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 // ─── Scene Background component ──────────────────────────────────────
 function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: string; bottom: string; style?: 'linear' | 'radial' | 'spotlight'; videoUrl?: string | null }) {
   const { scene } = useThree();
+  
+  // Hook must be called unconditionally
+  const mode = useXR(state => state.mode);
 
   useEffect(() => {
+    if (mode === 'immersive-ar') {
+      scene.background = null;
+      scene.fog = null;
+      return;
+    }
+
     let video: HTMLVideoElement | null = null;
     let tex: THREE.Texture | null = null;
 
@@ -206,10 +215,9 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: str
       tex.minFilter = THREE.LinearFilter;
       tex.magFilter = THREE.LinearFilter;
       tex.colorSpace = THREE.SRGBColorSpace;
-      // Fit to cover (requires custom shader or simple mapping, Equirectangular isn't perfect for flat video but let's just use it as flat background)
       
       scene.background = tex;
-      scene.fog = null; // No fog when using video background
+      scene.fog = null;
     } else {
       const canvas = document.createElement('canvas');
       const size = 1024;
@@ -252,7 +260,7 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: str
       scene.background = null;
       scene.fog = null;
     };
-  }, [scene, top, bottom, style, videoUrl]);
+  }, [scene, top, bottom, style, videoUrl, mode]);
 
   return null;
 }
@@ -831,7 +839,7 @@ export default function App() {
             />
 
             {currentFrame && (
-              <SpatialAnchor>
+              <SpatialAnchor cameraDistance={cameraDistance}>
                 <AnomalyTracker
                   frame={currentFrame}
                   colorProperty={colorProperty}
