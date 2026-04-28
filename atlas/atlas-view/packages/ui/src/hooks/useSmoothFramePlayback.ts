@@ -181,20 +181,19 @@ export function useSmoothFramePlayback(
   // Control functions
   const setFrame = useCallback((frameIndex: number) => {
     const clamped = Math.max(0, Math.min(frames.length - 1, frameIndex));
-    setCurrentState({
-      frameIndex: clamped,
-      nextFrameIndex: Math.min(clamped + 1, frames.length - 1),
-      interpolationFactor: 0,
-      isInterpolating: false,
+    const intFrame = Math.floor(clamped);
+    const interp = clamped - intFrame;
+    const isInterp = interp > 0 && interp < 1;
+    
+    const state: InterpolatedFrameState = {
+      frameIndex: intFrame,
+      nextFrameIndex: Math.min(intFrame + 1, frames.length - 1),
+      interpolationFactor: interp,
+      isInterpolating: isInterp,
       effectiveFrame: clamped,
-    });
-    onFrame({
-      frameIndex: clamped,
-      nextFrameIndex: Math.min(clamped + 1, frames.length - 1),
-      interpolationFactor: 0,
-      isInterpolating: false,
-      effectiveFrame: clamped,
-    });
+    };
+    setCurrentState(state);
+    onFrame(state);
   }, [frames.length, onFrame]);
 
   const nextFrame = useCallback(() => {

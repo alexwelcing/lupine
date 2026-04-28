@@ -8,11 +8,13 @@
 import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport, Environment } from '@react-three/drei';
-import {
-  EffectComposer, SSAO, Bloom, ToneMapping, Vignette, DepthOfField
-} from '@react-three/postprocessing';
+import { EffectComposer, SSAO, Bloom, ToneMapping, Vignette, DepthOfField } from '@react-three/postprocessing';
 import { ToneMappingMode, BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
+import { XR, createXRStore } from '@react-three/xr';
+
+const xrStore = createXRStore();
+
 import { MobileHUD } from './MobileHUD';
 import { ChronosHUD } from './ChronosHUD';
 import { VolcanicHUD } from './VolcanicHUD';
@@ -441,7 +443,8 @@ export default function App() {
     mdFrameRate: 30, // Default typical MD output
     onFrame: (state) => {
       // Sync UI timeline without forcing expensive React renders unnecessarily
-      if (state.frameIndex !== useStore.getState().frame) {
+      // Only sync when playing. When paused, the store (user scrubbing) drives the hook.
+      if (useStore.getState().playing && state.frameIndex !== useStore.getState().frame) {
         useStore.getState().setFrame(state.frameIndex);
       }
     }
@@ -449,10 +452,10 @@ export default function App() {
 
   // Sync external frame updates (like timeline scrubber manually dragging) back to the hook when NOT playing
   useEffect(() => {
-    if (!playing && interpState.frameIndex !== frame) {
+    if (!playing && interpState.effectiveFrame !== frame) {
       setSmoothFrame(frame);
     }
-  }, [frame, playing, setSmoothFrame, interpState.frameIndex]);
+  }, [frame, playing, setSmoothFrame, interpState.effectiveFrame]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -603,6 +606,22 @@ export default function App() {
           {file && (
             <>
               <div style={{ width: 1, height: 18, background: 'var(--border-subtle)' }} />
+              <button
+                onClick={() => xrStore.enterVR()}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  padding: '4px 10px', background: 'var(--accent-soft)',
+                  border: '1px solid var(--accent)', borderRadius: 'var(--radius-sm)',
+                  color: 'var(--accent)', fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                }}
+                title="Enter WebXR VR Mode"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                VR
+              </button>
               <span style={{
                 fontSize: 14, color: 'var(--text-muted)',
                 maxWidth: 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
@@ -733,6 +752,7 @@ export default function App() {
             style={{ background: 'transparent' }}
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
+            <XR store={xrStore}>
             <ExportManager />
             <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} />
 
@@ -862,6 +882,7 @@ export default function App() {
                 blendFunction={BlendFunction.NORMAL}
               />
             </EffectComposer>
+            </XR>
           </Canvas>
 
           {/* Scale bar for publication figures */}
@@ -1119,7 +1140,7 @@ export default function App() {
             textAlign: 'right',
             fontVariantNumeric: 'tabular-nums',
           }}>
-            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{frame + 1}</span>
+            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{Math.floor(frame) + 1}</span>
             <span style={{ color: 'var(--text-dim)' }}> / {totalFrames}</span>
           </div>
 
