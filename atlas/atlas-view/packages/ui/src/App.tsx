@@ -221,23 +221,102 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 }
 
 // ─── USDZ Export component ─────────────────────────────────────────────
+
+// USDZExporter does not expand InstancedMesh — it serializes only the base
+// geometry, which is why AR Quick Look used to show a single atom for an
+// entire molecule. Before exporting we swap every InstancedMesh with a Group
+// of regular Meshes (one per instance, with the instance matrix/color baked
+// in), then restore the originals afterwards.
+type InstancedSwap = {
+  parent: THREE.Object3D;
+  original: THREE.InstancedMesh;
+  replacement: THREE.Group;
+  clonedMaterials: THREE.Material[];
+};
+
+function expandInstancedMeshes(root: THREE.Object3D): InstancedSwap[] {
+  const targets: THREE.InstancedMesh[] = [];
+  root.traverse(obj => {
+    if ((obj as any).isInstancedMesh && obj.parent) {
+      targets.push(obj as THREE.InstancedMesh);
+    }
+  });
+
+  const swaps: InstancedSwap[] = [];
+  const tmpMatrix = new THREE.Matrix4();
+  const tmpColor = new THREE.Color();
+
+  for (const im of targets) {
+    if (!im.parent) continue;
+
+    const group = new THREE.Group();
+    group.name = (im.name || 'instanced') + '_expanded';
+    group.position.copy(im.position);
+    group.quaternion.copy(im.quaternion);
+    group.scale.copy(im.scale);
+    group.visible = im.visible;
+
+    const baseMaterial = Array.isArray(im.material) ? im.material[0] : im.material;
+    const hasInstanceColor = (im as any).instanceColor != null;
+    // Cache cloned materials by hex color so a 10k-atom molecule doesn't
+    // allocate 10k materials.
+    const materialByColor = new Map<string, THREE.Material>();
+    const clonedMaterials: THREE.Material[] = [];
+
+    const resolveMaterial = (i: number): THREE.Material => {
+      if (!hasInstanceColor) return baseMaterial;
+      im.getColorAt(i, tmpColor);
+      const key = tmpColor.getHexString();
+      let mat = materialByColor.get(key);
+      if (!mat) {
+        mat = baseMaterial.clone();
+        if ('color' in mat) {
+          (mat as any).color = tmpColor.clone();
+        }
+        materialByColor.set(key, mat);
+        clonedMaterials.push(mat);
+      }
+      return mat;
+    };
+
+    for (let i = 0; i < im.count; i++) {
+      im.getMatrixAt(i, tmpMatrix);
+      const mesh = new THREE.Mesh(im.geometry, resolveMaterial(i));
+      mesh.applyMatrix4(tmpMatrix);
+      group.add(mesh);
+    }
+
+    swaps.push({ parent: im.parent, original: im, replacement: group, clonedMaterials });
+    im.parent.add(group);
+    im.parent.remove(im);
+  }
+
+  return swaps;
+}
+
+function restoreInstancedMeshes(swaps: InstancedSwap[]) {
+  for (const swap of swaps) {
+    swap.parent.add(swap.original);
+    swap.parent.remove(swap.replacement);
+    for (const m of swap.clonedMaterials) m.dispose();
+  }
+}
+
 function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplete: () => void }) {
   const { scene } = useThree();
-  
+
   useEffect(() => {
     if (!trigger) return;
-    
+
     const runExport = async () => {
+      const oldBackground = scene.background;
+      scene.background = null;
+      const swaps = expandInstancedMeshes(scene);
+
       try {
         const exporter = new USDZExporter();
-        // Ignore background for USDZ export
-        const oldBackground = scene.background;
-        scene.background = null;
-        
-        // Use parseAsync for promise-based usage
         const arrayBuffer = await exporter.parseAsync(scene);
-        scene.background = oldBackground;
-        
+
         const blob = new Blob([arrayBuffer as any], { type: 'model/vnd.usdz+zip' });
         const url = URL.createObjectURL(blob);
 
@@ -267,6 +346,8 @@ function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplet
         console.error("USDZ Export failed", e);
         alert("Failed to export AR model for Quick Look.");
       } finally {
+        restoreInstancedMeshes(swaps);
+        scene.background = oldBackground;
         onComplete();
       }
     };
