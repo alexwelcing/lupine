@@ -18,6 +18,39 @@ export const xrStore = createXRStore({
   emulate: false,
 });
 
+async function enterXRSession(mode: 'immersive-vr' | 'immersive-ar') {
+  const label = mode === 'immersive-vr' ? 'VR' : 'AR';
+  const xr = (window.navigator as any).xr;
+  if (!xr) {
+    alert(`WebXR is not supported in this browser.\n\nOn iOS: try the '🍎 AR Quick Look (Safari)' option for the best AR experience, or install the 'WebXR Viewer' app by Mozilla.\n\nOn Android: please use Google Chrome.`);
+    return;
+  }
+  try {
+    if (typeof xr.isSessionSupported === 'function') {
+      const supported = await xr.isSessionSupported(mode);
+      if (!supported) {
+        const isApple = /iPhone|iPad|iPod/.test(navigator.userAgent);
+        const tip = isApple && mode === 'immersive-ar'
+          ? `\n\nTry '🍎 AR Quick Look (Safari)' instead — it works natively on iOS without WebXR.`
+          : isApple
+            ? `\n\niOS does not support immersive VR. Try '🍎 AR Quick Look (Safari)' for AR.`
+            : '';
+        alert(`Immersive ${label} is not available on this device.${tip}`);
+        return;
+      }
+    }
+    if (mode === 'immersive-vr') {
+      await xrStore.enterVR();
+    } else {
+      await xrStore.enterAR();
+    }
+  } catch (err) {
+    console.error(`[glim] Failed to enter ${mode} session`, err);
+    const message = err instanceof Error ? err.message : String(err);
+    alert(`Could not start ${label} session: ${message}`);
+  }
+}
+
 import { MobileHUD } from './MobileHUD';
 import { ChronosHUD } from './ChronosHUD';
 import { VolcanicHUD } from './VolcanicHUD';
@@ -739,13 +772,9 @@ export default function App() {
                   minWidth: 180,
                 }}>
                   <button
-                    onClick={() => { 
-                      if (!(window.navigator as any).xr) {
-                        alert("WebXR is not supported in this browser.\n\nOn iOS: Please use the 'WebXR Viewer' app by Mozilla, or enable WebXR in Safari's advanced Experimental settings.\n\nOn Android: Please ensure you are using Google Chrome.");
-                        return;
-                      }
-                      xrStore.enterVR(); 
-                      setShowXRMenu(false); 
+                    onClick={() => {
+                      setShowXRMenu(false);
+                      void enterXRSession('immersive-vr');
                     }}
                     style={{
                       padding: '10px 14px', background: 'transparent', border: 'none',
@@ -758,13 +787,9 @@ export default function App() {
                     🥽 Enter VR Mode
                   </button>
                   <button
-                    onClick={() => { 
-                      if (!(window.navigator as any).xr) {
-                        alert("WebXR is not supported in this browser.\n\nOn iOS: Please use the 'WebXR Viewer' app by Mozilla, or enable WebXR in Safari's advanced Experimental settings.\n\nOn Android: Please ensure you are using Google Chrome.");
-                        return;
-                      }
-                      xrStore.enterAR(); 
-                      setShowXRMenu(false); 
+                    onClick={() => {
+                      setShowXRMenu(false);
+                      void enterXRSession('immersive-ar');
                     }}
                     style={{
                       padding: '10px 14px', background: 'transparent', border: 'none',
