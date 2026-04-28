@@ -13,7 +13,9 @@ import { ToneMappingMode, BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import { XR, createXRStore } from '@react-three/xr';
 
-const xrStore = createXRStore();
+export const xrStore = createXRStore({
+  emulate: false,
+});
 
 import { MobileHUD } from './MobileHUD';
 import { ChronosHUD } from './ChronosHUD';
@@ -23,6 +25,7 @@ import { useStore } from './store';
 import { FileDropZone } from './FileDropZone';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
+import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
 import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
@@ -426,6 +429,7 @@ export default function App() {
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const [showXRMenu, setShowXRMenu] = useState(false);
 
   // Mouse position for inspector tooltip
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -605,26 +609,11 @@ export default function App() {
 
           {file && (
             <>
-              <div style={{ width: 1, height: 18, background: 'var(--border-subtle)' }} />
-              <button
-                onClick={() => xrStore.enterVR()}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 6,
-                  padding: '4px 10px', background: 'var(--accent-soft)',
-                  border: '1px solid var(--accent)', borderRadius: 'var(--radius-sm)',
-                  color: 'var(--accent)', fontSize: 12, fontWeight: 600, cursor: 'pointer',
-                }}
-                title="Enter WebXR VR Mode"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-                VR
-              </button>
+              <div style={{ width: 1, height: 18, background: 'var(--border-subtle)', display: isMobile ? 'none' : 'block' }} />
+
               <span style={{
                 fontSize: 14, color: 'var(--text-muted)',
-                maxWidth: 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                maxWidth: isMobile ? 80 : 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
               }}>
                 {file.name}
               </span>
@@ -644,6 +633,7 @@ export default function App() {
                   borderRadius: 'var(--radius-sm)',
                   color: 'var(--text-dim)',
                   cursor: 'pointer',
+                  flexShrink: 0,
                 }}
               >
                 <IconClose />
@@ -653,7 +643,62 @@ export default function App() {
         </div>
 
         {/* Simple top-right actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 4 : 8 }}>
+          {file && (
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => setShowXRMenu(!showXRMenu)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  padding: '8px 12px', background: 'var(--accent-soft)',
+                  border: '1px solid var(--accent)', borderRadius: 'var(--radius-sm)',
+                  color: 'var(--accent)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                }}
+                title="Immersive Tools"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                {!isMobile && 'XR ▾'}
+              </button>
+
+              {showXRMenu && (
+                <div style={{
+                  position: 'absolute', top: '100%', right: 0, marginTop: 4,
+                  background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-sm)', padding: 4,
+                  display: 'flex', flexDirection: 'column', gap: 4, zIndex: 300,
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                }}>
+                  <button
+                    onClick={() => { xrStore.enterVR(); setShowXRMenu(false); }}
+                    style={{
+                      padding: '6px 12px', background: 'transparent', border: 'none',
+                      color: 'var(--text-primary)', fontSize: 12, cursor: 'pointer',
+                      textAlign: 'left', borderRadius: 'var(--radius-xs)', whiteSpace: 'nowrap',
+                    }}
+                    onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface)'}
+                    onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    🥽 Enter VR Mode
+                  </button>
+                  <button
+                    onClick={() => { xrStore.enterAR(); setShowXRMenu(false); }}
+                    style={{
+                      padding: '6px 12px', background: 'transparent', border: 'none',
+                      color: 'var(--lupine-400)', fontSize: 12, cursor: 'pointer', fontWeight: 500,
+                      textAlign: 'left', borderRadius: 'var(--radius-xs)', whiteSpace: 'nowrap',
+                    }}
+                    onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface)'}
+                    onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    📱 Open with Camera (AR)
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
           {file?.sourceUrl && (
             <button
               onClick={() => {
@@ -665,7 +710,7 @@ export default function App() {
               title="Copy shareable link"
               style={{
                 display: 'flex', alignItems: 'center', gap: 6,
-                padding: '8px 12px',
+                padding: isMobile ? '8px 8px' : '8px 12px',
                 fontSize: 13, fontWeight: 500,
                 color: 'var(--text-primary)',
                 background: 'var(--bg-elevated)',
@@ -675,7 +720,7 @@ export default function App() {
               }}
             >
               <IconShare />
-              Share
+              {!isMobile && 'Share'}
             </button>
           )}
           {!file && (
@@ -702,6 +747,7 @@ export default function App() {
           <a
             href="https://lupine.science"
             style={{
+              display: isMobile ? 'none' : 'block',
               padding: '8px 12px',
               fontSize: 13, fontWeight: 500,
               color: 'var(--text-primary)',
@@ -718,6 +764,7 @@ export default function App() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
+              display: isMobile ? 'none' : 'block',
               padding: '8px 12px',
               fontSize: 13, fontWeight: 500,
               color: 'var(--text-muted)',
@@ -784,7 +831,7 @@ export default function App() {
             />
 
             {currentFrame && (
-              <>
+              <SpatialAnchor>
                 <AnomalyTracker
                   frame={currentFrame}
                   colorProperty={colorProperty}
@@ -823,7 +870,7 @@ export default function App() {
                 {showCell && (
                   <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />
                 )}
-              </>
+              </SpatialAnchor>
             )}
 
             {currentFrame && spatialHash && (
