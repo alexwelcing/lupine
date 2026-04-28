@@ -222,75 +222,128 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 
 // ─── USDZ Export component ─────────────────────────────────────────────
 
-// USDZExporter does not expand InstancedMesh — it serializes only the base
-// geometry, which is why AR Quick Look used to show a single atom for an
-// entire molecule. Before exporting we swap every InstancedMesh with a Group
-// of regular Meshes (one per instance, with the instance matrix/color baked
-// in), then restore the originals afterwards.
+// USDZExporter does not expand InstancedMesh and deduplicates by geometry
+// reference, so a 1000-atom InstancedMesh exported "as-is" surfaces in AR
+// Quick Look as a single sphere. We solve it by baking each InstancedMesh
+// into ONE merged BufferGeometry — every instance's transformed
+// positions/normals are concatenated into one buffer, per-instance color is
+// written into a vertex-color attribute, and the original material is cloned
+// with `vertexColors: true` so its texture/metalness/roughness still apply.
 type InstancedSwap = {
   parent: THREE.Object3D;
   original: THREE.InstancedMesh;
-  replacement: THREE.Group;
-  clonedMaterials: THREE.Material[];
+  replacement: THREE.Mesh;
 };
+
+function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
+  const baseGeom = im.geometry;
+  const basePos = baseGeom.getAttribute('position') as THREE.BufferAttribute;
+  const baseNorm = baseGeom.getAttribute('normal') as THREE.BufferAttribute | undefined;
+  const baseUV = baseGeom.getAttribute('uv') as THREE.BufferAttribute | undefined;
+  const baseIdx = baseGeom.getIndex();
+
+  const vPerInstance = basePos.count;
+  const iPerInstance = baseIdx ? baseIdx.count : 0;
+  const N = im.count;
+
+  const totalVerts = vPerInstance * N;
+  const totalIdx = iPerInstance * N;
+
+  const positions = new Float32Array(totalVerts * 3);
+  const normals = baseNorm ? new Float32Array(totalVerts * 3) : null;
+  const uvs = baseUV ? new Float32Array(totalVerts * 2) : null;
+  const colors = new Float32Array(totalVerts * 3);
+  const indices = baseIdx
+    ? (totalVerts > 65535 ? new Uint32Array(totalIdx) : new Uint16Array(totalIdx))
+    : null;
+
+  const mat4 = new THREE.Matrix4();
+  const mat3 = new THREE.Matrix3();
+  const vp = new THREE.Vector3();
+  const vn = new THREE.Vector3();
+  const col = new THREE.Color();
+  const hasInstanceColor = (im as any).instanceColor != null;
+
+  for (let i = 0; i < N; i++) {
+    im.getMatrixAt(i, mat4);
+    if (hasInstanceColor) im.getColorAt(i, col);
+    else col.setRGB(1, 1, 1);
+    mat3.getNormalMatrix(mat4);
+
+    const vBase = i * vPerInstance;
+    for (let v = 0; v < vPerInstance; v++) {
+      vp.fromBufferAttribute(basePos, v).applyMatrix4(mat4);
+      const off3 = (vBase + v) * 3;
+      positions[off3] = vp.x;
+      positions[off3 + 1] = vp.y;
+      positions[off3 + 2] = vp.z;
+
+      if (normals && baseNorm) {
+        vn.fromBufferAttribute(baseNorm, v).applyMatrix3(mat3).normalize();
+        normals[off3] = vn.x;
+        normals[off3 + 1] = vn.y;
+        normals[off3 + 2] = vn.z;
+      }
+
+      colors[off3] = col.r;
+      colors[off3 + 1] = col.g;
+      colors[off3 + 2] = col.b;
+
+      if (uvs && baseUV) {
+        const off2 = (vBase + v) * 2;
+        uvs[off2] = baseUV.getX(v);
+        uvs[off2 + 1] = baseUV.getY(v);
+      }
+    }
+
+    if (indices && baseIdx) {
+      const iBase = i * iPerInstance;
+      for (let k = 0; k < iPerInstance; k++) {
+        indices[iBase + k] = baseIdx.getX(k) + vBase;
+      }
+    }
+  }
+
+  const merged = new THREE.BufferGeometry();
+  merged.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  if (normals) merged.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+  if (uvs) merged.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+  merged.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  if (indices) merged.setIndex(new THREE.BufferAttribute(indices, 1));
+  if (!normals) merged.computeVertexNormals();
+
+  const baseMat = (Array.isArray(im.material) ? im.material[0] : im.material) as THREE.Material;
+  const exportMat = baseMat.clone() as THREE.Material & { color?: THREE.Color; vertexColors?: boolean; map?: THREE.Texture | null };
+  exportMat.vertexColors = true;
+  // White base color so per-vertex color is the final color, multiplied by
+  // any texture (map, normalMap, etc.) the source material carried.
+  if ('color' in exportMat && exportMat.color) exportMat.color.setRGB(1, 1, 1);
+
+  const mesh = new THREE.Mesh(merged, exportMat);
+  mesh.name = (im.name || 'instanced') + '_baked';
+  mesh.position.copy(im.position);
+  mesh.quaternion.copy(im.quaternion);
+  mesh.scale.copy(im.scale);
+  mesh.visible = im.visible;
+  return mesh;
+}
 
 function expandInstancedMeshes(root: THREE.Object3D): InstancedSwap[] {
   const targets: THREE.InstancedMesh[] = [];
   root.traverse(obj => {
-    if ((obj as any).isInstancedMesh && obj.parent) {
+    if ((obj as any).isInstancedMesh && obj.parent && (obj as THREE.InstancedMesh).count > 0) {
       targets.push(obj as THREE.InstancedMesh);
     }
   });
 
   const swaps: InstancedSwap[] = [];
-  const tmpMatrix = new THREE.Matrix4();
-  const tmpColor = new THREE.Color();
-
   for (const im of targets) {
     if (!im.parent) continue;
-
-    const group = new THREE.Group();
-    group.name = (im.name || 'instanced') + '_expanded';
-    group.position.copy(im.position);
-    group.quaternion.copy(im.quaternion);
-    group.scale.copy(im.scale);
-    group.visible = im.visible;
-
-    const baseMaterial = Array.isArray(im.material) ? im.material[0] : im.material;
-    const hasInstanceColor = (im as any).instanceColor != null;
-    // Cache cloned materials by hex color so a 10k-atom molecule doesn't
-    // allocate 10k materials.
-    const materialByColor = new Map<string, THREE.Material>();
-    const clonedMaterials: THREE.Material[] = [];
-
-    const resolveMaterial = (i: number): THREE.Material => {
-      if (!hasInstanceColor) return baseMaterial;
-      im.getColorAt(i, tmpColor);
-      const key = tmpColor.getHexString();
-      let mat = materialByColor.get(key);
-      if (!mat) {
-        mat = baseMaterial.clone();
-        if ('color' in mat) {
-          (mat as any).color = tmpColor.clone();
-        }
-        materialByColor.set(key, mat);
-        clonedMaterials.push(mat);
-      }
-      return mat;
-    };
-
-    for (let i = 0; i < im.count; i++) {
-      im.getMatrixAt(i, tmpMatrix);
-      const mesh = new THREE.Mesh(im.geometry, resolveMaterial(i));
-      mesh.applyMatrix4(tmpMatrix);
-      group.add(mesh);
-    }
-
-    swaps.push({ parent: im.parent, original: im, replacement: group, clonedMaterials });
-    im.parent.add(group);
+    const baked = bakeInstancedMesh(im);
+    swaps.push({ parent: im.parent, original: im, replacement: baked });
+    im.parent.add(baked);
     im.parent.remove(im);
   }
-
   return swaps;
 }
 
@@ -298,7 +351,8 @@ function restoreInstancedMeshes(swaps: InstancedSwap[]) {
   for (const swap of swaps) {
     swap.parent.add(swap.original);
     swap.parent.remove(swap.replacement);
-    for (const m of swap.clonedMaterials) m.dispose();
+    swap.replacement.geometry.dispose();
+    (swap.replacement.material as THREE.Material).dispose();
   }
 }
 
@@ -308,7 +362,13 @@ function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplet
   useEffect(() => {
     if (!trigger) return;
 
+    let cancelled = false;
     const runExport = async () => {
+      // Yield one animation frame so the "Preparing AR view…" overlay
+      // actually paints before the main thread blocks on the bake.
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      if (cancelled) return;
+
       const oldBackground = scene.background;
       scene.background = null;
       const swaps = expandInstancedMeshes(scene);
@@ -342,6 +402,11 @@ function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplet
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
         }, 1000);
+
+        // Hold the overlay briefly so iOS's AR Quick Look UI has time to
+        // slide in on top before we dismiss our loading state — otherwise
+        // there's a flash of the 2D scene at the seam.
+        await new Promise<void>(resolve => setTimeout(resolve, 350));
       } catch (e) {
         console.error("USDZ Export failed", e);
         alert("Failed to export AR model for Quick Look.");
@@ -352,6 +417,7 @@ function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplet
       }
     };
     runExport();
+    return () => { cancelled = true; };
   }, [trigger, scene, onComplete]);
 
   return null;
@@ -1422,6 +1488,52 @@ export default function App() {
               </button>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* AR Quick Look launch overlay — covers the seam between the 2D
+          viewer and iOS's AR Quick Look UI sliding in. */}
+      {isExportingQuickLook && (
+        <div
+          aria-busy="true"
+          aria-label="Preparing AR view"
+          style={{
+            position: 'fixed', inset: 0, zIndex: 1000,
+            background: 'rgba(6, 8, 13, 0.62)',
+            backdropFilter: 'blur(14px)',
+            WebkitBackdropFilter: 'blur(14px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            animation: 'arQlFade 180ms ease-out',
+          }}
+        >
+          <div style={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
+            padding: '28px 36px',
+            background: 'var(--bg-elevated, rgba(20, 24, 32, 0.9))',
+            border: '1px solid var(--border-subtle, rgba(255,255,255,0.08))',
+            borderRadius: 'var(--radius-md, 12px)',
+            color: 'var(--text-primary, #e6ebf2)',
+            boxShadow: '0 18px 48px rgba(0,0,0,0.45)',
+            minWidth: 240,
+          }}>
+            <div style={{
+              width: 44, height: 44,
+              border: '3px solid rgba(255,255,255,0.14)',
+              borderTopColor: 'var(--accent, #00c8f0)',
+              borderRadius: '50%',
+              animation: 'arQlSpin 0.9s linear infinite',
+            }} />
+            <div style={{ fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>
+              Preparing AR view…
+            </div>
+            <div style={{ fontSize: 12, opacity: 0.62, textAlign: 'center', maxWidth: 220, lineHeight: 1.4 }}>
+              Building model for Apple AR Quick Look. This usually takes a moment.
+            </div>
+          </div>
+          <style>{`
+            @keyframes arQlFade { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes arQlSpin { to { transform: rotate(360deg); } }
+          `}</style>
         </div>
       )}
     </div>
