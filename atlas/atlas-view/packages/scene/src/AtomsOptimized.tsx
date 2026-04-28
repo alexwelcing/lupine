@@ -104,6 +104,43 @@ export function AtomsOptimized({
     if (botanicalMode) {
       uniformsRef.current.uTime.value = state.clock.elapsedTime;
     }
+    
+    // 🎬 Cinematic Macro-to-Micro Transition
+    if (!botanicalMode && renderStyle !== 'toon' && frame.natoms > 10000 && material instanceof THREE.MeshPhysicalMaterial) {
+      const dist = state.camera.position.length();
+      
+      // Heuristic for macro scale based on atom count
+      // A 30k atom supercell is roughly 70A wide.
+      const macroDist = 120.0;
+      const microDist = 60.0;
+      
+      let targetOpacity = 1.0;
+      let targetTransmission = 0.0;
+      let targetRoughness = 0.2;
+      
+      if (dist > macroDist) {
+        // Outside the gem: Solid, opaque, shiny diamond surface
+        targetOpacity = 1.0;
+        targetTransmission = 0.0;
+        targetRoughness = 0.1;
+      } else if (dist < microDist) {
+        // Plunged inside: The atoms turn into transparent glass nodes to reveal the intricate lattice bonds
+        targetOpacity = 0.8;
+        targetTransmission = 0.95;
+        targetRoughness = 0.05;
+      } else {
+        // Smooth transition zone
+        const factor = (macroDist - dist) / (macroDist - microDist);
+        targetOpacity = 1.0 - (factor * 0.2);
+        targetTransmission = factor * 0.95;
+        targetRoughness = 0.1 - (factor * 0.05);
+      }
+      
+      // Smoothly lerp properties
+      material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, 0.08);
+      material.transmission = THREE.MathUtils.lerp(material.transmission, targetTransmission, 0.08);
+      material.roughness = THREE.MathUtils.lerp(material.roughness, targetRoughness, 0.08);
+    }
   });
 
   const material = useMemo(() => {
@@ -197,6 +234,10 @@ export function AtomsOptimized({
       sheen: 0.4,
       sheenRoughness: 0.5,
       sheenColor: new THREE.Color(0x8888aa),
+      transparent: true,
+      transmission: 0.0,
+      opacity: 1.0,
+      ior: 1.5,
     });
 
     mat.onBeforeCompile = (shader) => {

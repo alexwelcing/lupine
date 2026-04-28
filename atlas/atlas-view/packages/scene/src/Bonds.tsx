@@ -62,6 +62,30 @@ export function Bonds({
     if (botanicalMode) {
       uniformsRef.current.uTime.value = state.clock.elapsedTime;
     }
+    
+    // 🎬 Cinematic Macro-to-Micro Transition
+    if (!botanicalMode && renderStyle !== 'toon' && frame.natoms > 10000 && material instanceof THREE.MeshPhysicalMaterial) {
+      const dist = state.camera.position.length();
+      
+      const macroDist = 120.0;
+      const microDist = 60.0;
+      
+      let targetOpacity = opacity; // Default desired opacity (e.g. 0.85)
+      
+      if (dist > macroDist) {
+        // Outside the gem: Bonds are invisible
+        targetOpacity = 0.0;
+      } else if (dist < microDist) {
+        // Plunged inside: Bonds are fully visible
+        targetOpacity = opacity;
+      } else {
+        // Smooth fade-in zone
+        const factor = (macroDist - dist) / (macroDist - microDist);
+        targetOpacity = factor * opacity;
+      }
+      
+      material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, 0.08);
+    }
   });
 
   const material = useMemo(() => {
@@ -85,7 +109,7 @@ export function Bonds({
       mat = new THREE.MeshPhysicalMaterial({
         metalness: 0.1,
         roughness: 0.5,
-        transparent: opacity < 1,
+        transparent: true,
         opacity,
       });
     }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useXR } from '@react-three/xr';
 import { PivotControls } from '@react-three/drei';
