@@ -661,6 +661,7 @@ export default function App() {
                   padding: '8px 12px', background: 'var(--accent-soft)',
                   border: '1px solid var(--accent)', borderRadius: 'var(--radius-sm)',
                   color: 'var(--accent)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                  minHeight: 36, // Ensure it's large enough to tap easily
                 }}
                 title="Immersive Tools"
               >
@@ -668,23 +669,31 @@ export default function App() {
                   <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" />
                   <circle cx="12" cy="12" r="3" />
                 </svg>
-                {!isMobile && 'XR ▾'}
+                {isMobile ? 'AR' : 'XR ▾'}
               </button>
 
               {showXRMenu && (
                 <div style={{
                   position: 'absolute', top: '100%', right: 0, marginTop: 4,
                   background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-sm)', padding: 4,
+                  borderRadius: 'var(--radius-md)', padding: 6,
                   display: 'flex', flexDirection: 'column', gap: 4, zIndex: 300,
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                  minWidth: 180,
                 }}>
                   <button
-                    onClick={() => { xrStore.enterVR(); setShowXRMenu(false); }}
+                    onClick={() => { 
+                      if (!(window.navigator as any).xr) {
+                        alert("WebXR is not supported in this browser.\n\nOn iOS: Please use the 'WebXR Viewer' app by Mozilla, or enable WebXR in Safari's advanced Experimental settings.\n\nOn Android: Please ensure you are using Google Chrome.");
+                        return;
+                      }
+                      xrStore.enterVR(); 
+                      setShowXRMenu(false); 
+                    }}
                     style={{
-                      padding: '6px 12px', background: 'transparent', border: 'none',
-                      color: 'var(--text-primary)', fontSize: 12, cursor: 'pointer',
-                      textAlign: 'left', borderRadius: 'var(--radius-xs)', whiteSpace: 'nowrap',
+                      padding: '10px 14px', background: 'transparent', border: 'none',
+                      color: 'var(--text-primary)', fontSize: 14, cursor: 'pointer',
+                      textAlign: 'left', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap',
                     }}
                     onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface)'}
                     onMouseOut={e => e.currentTarget.style.background = 'transparent'}
@@ -692,16 +701,23 @@ export default function App() {
                     🥽 Enter VR Mode
                   </button>
                   <button
-                    onClick={() => { xrStore.enterAR(); setShowXRMenu(false); }}
+                    onClick={() => { 
+                      if (!(window.navigator as any).xr) {
+                        alert("WebXR is not supported in this browser.\n\nOn iOS: Please use the 'WebXR Viewer' app by Mozilla, or enable WebXR in Safari's advanced Experimental settings.\n\nOn Android: Please ensure you are using Google Chrome.");
+                        return;
+                      }
+                      xrStore.enterAR(); 
+                      setShowXRMenu(false); 
+                    }}
                     style={{
-                      padding: '6px 12px', background: 'transparent', border: 'none',
-                      color: 'var(--lupine-400)', fontSize: 12, cursor: 'pointer', fontWeight: 500,
-                      textAlign: 'left', borderRadius: 'var(--radius-xs)', whiteSpace: 'nowrap',
+                      padding: '10px 14px', background: 'transparent', border: 'none',
+                      color: 'var(--lupine-400)', fontSize: 14, cursor: 'pointer', fontWeight: 500,
+                      textAlign: 'left', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap',
                     }}
                     onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface)'}
                     onMouseOut={e => e.currentTarget.style.background = 'transparent'}
                   >
-                    📱 Open with Camera (AR)
+                    📱 Open with Camera
                   </button>
                 </div>
               )}
