@@ -240,19 +240,25 @@ function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplet
         
         const blob = new Blob([arrayBuffer as any], { type: 'model/vnd.usdz+zip' });
         const url = URL.createObjectURL(blob);
-        
+
+        // iOS Safari AR Quick Look requirements:
+        //  - rel="ar" anchor with a single <img> child
+        //  - NO `download` attribute — its presence makes Safari download the
+        //    file instead of launching AR Quick Look.
         const a = document.createElement('a');
-        a.style.display = 'none';
         a.href = url;
-        a.download = 'molecule.usdz';
         a.rel = 'ar';
-        
+        a.style.position = 'absolute';
+        a.style.opacity = '0';
+        a.style.pointerEvents = 'none';
+
         const img = document.createElement('img');
+        img.alt = 'AR';
         a.appendChild(img);
         document.body.appendChild(a);
-        
+
         a.click();
-        
+
         setTimeout(() => {
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
