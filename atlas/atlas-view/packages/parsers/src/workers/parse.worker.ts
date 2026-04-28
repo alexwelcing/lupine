@@ -72,8 +72,29 @@ self.onmessage = async (e: MessageEvent) => {
       const frames = parseDump(content);
 
       // Transform WASM output to transferable typed arrays
+      const transferables: Transferable[] = [];
       const result = frames.map((f: any, i: number) => {
         self.postMessage({ type: 'progress', id, total: totalFrames, parsed: i + 1 });
+        const positions = f.positions;
+        const ids = f.ids;
+        const types = f.types;
+        const bonds = f.bonds;
+        const properties = (f.propertyNames && f.getProperty) ? 
+          f.propertyNames.map((name: string) => {
+            const data = f.getProperty(name);
+            if (data && data.buffer) transferables.push(data.buffer);
+            return { name, data };
+          }) : 
+          (f.properties ? f.properties.map(([name, data]: [string, any]) => {
+            if (data && data.buffer) transferables.push(data.buffer);
+            return { name, data };
+          }) : []);
+
+        if (positions && positions.buffer) transferables.push(positions.buffer);
+        if (ids && ids.buffer) transferables.push(ids.buffer);
+        if (types && types.buffer) transferables.push(types.buffer);
+        if (bonds && bonds.buffer) transferables.push(bonds.buffer);
+
         return {
           timestep: f.timestep,
           natoms: f.natoms,
@@ -81,26 +102,42 @@ self.onmessage = async (e: MessageEvent) => {
           boxTilt: f.boxTilt || f.box_tilt,
           triclinic: f.triclinic,
           columns: f.columns,
-          ids: f.ids,
-          types: f.types,
-          positions: f.positions,
-          bonds: f.bonds,
-          properties: (f.propertyNames && f.getProperty) ? 
-            f.propertyNames.map((name: string) => ({
-              name,
-              data: f.getProperty(name),
-            })) : 
-            (f.properties ? f.properties.map(([name, data]: [string, any]) => ({ name, data })) : []),
+          ids,
+          types,
+          positions,
+          bonds,
+          properties,
         };
       });
 
-      self.postMessage({ type: 'frames', id, frames: result });
+      self.postMessage({ type: 'frames', id, frames: result }, transferables);
 
     } else if (type === 'parse-data') {
       const file = payload as File;
       const content = typeof file === 'string' ? file : await readFileAsText(file);
       const f = parseDataFile(content);
       
+      const transferables: Transferable[] = [];
+      const positions = f.positions;
+      const ids = f.ids;
+      const types = f.types;
+      const bonds = f.bonds;
+      const properties = (f.propertyNames && f.getProperty) ? 
+        f.propertyNames.map((name: string) => {
+          const data = f.getProperty(name);
+          if (data && data.buffer) transferables.push(data.buffer);
+          return { name, data };
+        }) : 
+        (f.properties ? f.properties.map(([name, data]: [string, any]) => {
+          if (data && data.buffer) transferables.push(data.buffer);
+          return { name, data };
+        }) : []);
+
+      if (positions && positions.buffer) transferables.push(positions.buffer);
+      if (ids && ids.buffer) transferables.push(ids.buffer);
+      if (types && types.buffer) transferables.push(types.buffer);
+      if (bonds && bonds.buffer) transferables.push(bonds.buffer);
+
       self.postMessage({ type: 'frames', id, frames: [{
           timestep: f.timestep,
           natoms: f.natoms,
@@ -108,43 +145,56 @@ self.onmessage = async (e: MessageEvent) => {
           boxTilt: f.boxTilt || f.box_tilt,
           triclinic: f.triclinic,
           columns: f.columns,
-          ids: f.ids,
-          types: f.types,
-          positions: f.positions,
-          bonds: f.bonds,
-          properties: (f.propertyNames && f.getProperty) ? 
-            f.propertyNames.map((name: string) => ({
-              name,
-              data: f.getProperty(name),
-            })) : 
-            (f.properties ? f.properties.map(([name, data]: [string, any]) => ({ name, data })) : []),
-      }]});
+          ids,
+          types,
+          positions,
+          bonds,
+          properties,
+      }]}, transferables);
 
     } else if (type === 'parse-xyz') {
       const file = payload as File;
       const content = typeof file === 'string' ? file : await readFileAsText(file);
       const frames = parseXyzFile(content);
 
-      const result = frames.map((f: any) => ({
-        timestep: f.timestep,
-        natoms: f.natoms,
-        boxBounds: f.boxBounds || f.box_bounds,
-        boxTilt: f.boxTilt || f.box_tilt,
-        triclinic: f.triclinic,
-        columns: f.columns,
-        ids: f.ids,
-        types: f.types,
-        positions: f.positions,
-        bonds: f.bonds,
-        properties: (f.propertyNames && f.getProperty) ? 
-          f.propertyNames.map((name: string) => ({
-            name,
-            data: f.getProperty(name),
-          })) : 
-          (f.properties ? f.properties.map(([name, data]: [string, any]) => ({ name, data })) : []),
-      }));
+      const transferables: Transferable[] = [];
+      const result = frames.map((f: any) => {
+        const positions = f.positions;
+        const ids = f.ids;
+        const types = f.types;
+        const bonds = f.bonds;
+        const properties = (f.propertyNames && f.getProperty) ? 
+          f.propertyNames.map((name: string) => {
+            const data = f.getProperty(name);
+            if (data && data.buffer) transferables.push(data.buffer);
+            return { name, data };
+          }) : 
+          (f.properties ? f.properties.map(([name, data]: [string, any]) => {
+            if (data && data.buffer) transferables.push(data.buffer);
+            return { name, data };
+          }) : []);
 
-      self.postMessage({ type: 'frames', id, frames: result });
+        if (positions && positions.buffer) transferables.push(positions.buffer);
+        if (ids && ids.buffer) transferables.push(ids.buffer);
+        if (types && types.buffer) transferables.push(types.buffer);
+        if (bonds && bonds.buffer) transferables.push(bonds.buffer);
+
+        return {
+          timestep: f.timestep,
+          natoms: f.natoms,
+          boxBounds: f.boxBounds || f.box_bounds,
+          boxTilt: f.boxTilt || f.box_tilt,
+          triclinic: f.triclinic,
+          columns: f.columns,
+          ids,
+          types,
+          positions,
+          bonds,
+          properties,
+        };
+      });
+
+      self.postMessage({ type: 'frames', id, frames: result }, transferables);
 
     } else if (type === 'parse-log') {
       const file = payload as File;

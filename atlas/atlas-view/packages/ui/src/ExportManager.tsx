@@ -230,6 +230,7 @@ function VideoCaptureLoop({
           // If we streamed to disk, no buffer exists to download. Just close the stream!
           if (req.fileStream) {
             await req.fileStream.close();
+            if (onCompleteRef.current) onCompleteRef.current(true);
             success = true;
           } else {
             // Memory target: Pull the array buffer and spawn a client-side download

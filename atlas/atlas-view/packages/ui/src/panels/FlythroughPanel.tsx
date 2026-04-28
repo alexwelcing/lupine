@@ -192,8 +192,28 @@ export function FlythroughPanel() {
     }
   }, [importValue, setFlythrough]);
 
-  const handleExportVideo = useCallback(() => {
+  const handleExportVideo = useCallback(async () => {
     if (!flythrough || flythrough.keyframes.length < 2) return;
+
+    let fileStream;
+    if ('showSaveFilePicker' in window) {
+      try {
+        const handle = await (window as any).showSaveFilePicker({
+          suggestedName: 'glimPSE-flythrough.mp4',
+          types: [{
+            description: 'MP4 Video',
+            accept: { 'video/mp4': ['.mp4'] }
+          }],
+        });
+        fileStream = await handle.createWritable();
+      } catch (err: any) {
+        if (err.name !== 'AbortError') {
+          console.error("Save file picker failed", err);
+        }
+        return; // User cancelled or error
+      }
+    }
+
     setExporting(true);
     const duration = getSequenceDuration(flythrough);
     triggerExport({
@@ -203,6 +223,7 @@ export function FlythroughPanel() {
       durationSeconds: Math.ceil(duration),
       flythrough,
       baseName: 'glimPSE-flythrough',
+      fileStream,
       onComplete: (success) => {
         setExporting(false);
         if (!success) {

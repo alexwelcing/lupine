@@ -32,12 +32,10 @@ import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/use
 import { SimulationCell } from '@atlas/scene/SimulationCell';
 import { ScaleBar } from '@atlas/scene/ScaleBar';
 import { getBackgroundFromColormap } from '@atlas/scene';
-import { StylePanel } from './panels/StylePanel';
-import { EffectsPanel } from './panels/EffectsPanel';
+import { VisualsPanel } from './panels/VisualsPanel';
 import { FigureExportPanel } from './panels/FigureExportPanel';
 import { AnalysisPanel } from './panels/AnalysisPanel';
 import { MeasurementPanel } from './panels/MeasurementPanel';
-import { AtomsPanel } from './panels/AtomsPanel';
 import { FlythroughPanel } from './panels/FlythroughPanel';
 import { TelemetryPanel } from './panels/TelemetryPanel';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
@@ -170,12 +168,15 @@ const IconTelemetry = () => (
 
 // ─── Background presets ───────────────────────────────────────────────
 const BG_PRESETS: Record<string, { top: string; bottom: string; label: string }> = {
-  void:     { top: '#06080d', bottom: '#06080d', label: 'Void' },
-  deep:     { top: '#06080d', bottom: '#0c1220', label: 'Deep Space' },
-  midnight: { top: '#080c18', bottom: '#141e38', label: 'Midnight' },
-  studio:   { top: '#1a1a2e', bottom: '#16213e', label: 'Studio' },
-  warm:     { top: '#1a100c', bottom: '#0d0906', label: 'Warm Dark' },
-  fog:      { top: '#101418', bottom: '#1c2028', label: 'Fog' },
+  void:      { top: '#000000', bottom: '#000000', label: 'Void' },
+  deep:      { top: '#080a14', bottom: '#000000', label: 'Deep Field' },
+  dark:      { top: '#1a1a1f', bottom: '#0a0a0c', label: 'Dark' },
+  white:     { top: '#ffffff', bottom: '#f0f0f5', label: 'White' },
+  blueprint: { top: '#0b162c', bottom: '#050a14', label: 'Blueprint' },
+  midnight:  { top: '#080c18', bottom: '#141e38', label: 'Midnight' },
+  studio:    { top: '#1a1a2e', bottom: '#16213e', label: 'Studio' },
+  warm:      { top: '#1a100c', bottom: '#0d0906', label: 'Warm Dark' },
+  fog:       { top: '#101418', bottom: '#1c2028', label: 'Fog' },
 };
 
 function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string } {
@@ -486,6 +487,9 @@ export default function App() {
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
   const anomalyTracking = useStore(s => s.anomalyTracking);
+  const ambientLightIntensity = useStore(s => s.ambientLightIntensity);
+  const dirLightIntensity = useStore(s => s.dirLightIntensity);
+  const atomTexture = useStore(s => s.atomTexture);
 
   // Spatial hash for atom picking
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
@@ -535,8 +539,7 @@ export default function App() {
       if (e.key === 'ArrowRight') nextFrame();
       if (e.key === 'ArrowLeft') useStore.getState().prevFrame();
       if (e.key === 'Escape') setActivePanel(null);
-      if (e.key === 's' && !e.metaKey && !e.ctrlKey) setActivePanel('style');
-      if (e.key === 'e' && !e.metaKey && !e.ctrlKey) setActivePanel('effects');
+      if (e.key === 'v' && !e.metaKey && !e.ctrlKey) setActivePanel('visuals');
       if (e.key === 'a' && !e.metaKey && !e.ctrlKey) setActivePanel('analysis');
       if (e.key === 'x' && !e.metaKey && !e.ctrlKey) setActivePanel('export');
       if (e.key === 'b' && !e.metaKey && !e.ctrlKey) useStore.getState().toggleBonds();
@@ -897,10 +900,10 @@ export default function App() {
             <ExportManager />
             <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} />
 
-            <ambientLight intensity={0.35} />
-            <directionalLight position={[5, 8, 6]} intensity={1.2} />
-            <directionalLight position={[-3, -2, 4]} intensity={0.35} />
-            <directionalLight position={[0, -5, -3]} intensity={0.15} color="#8888ff" />
+            <ambientLight intensity={ambientLightIntensity} />
+            <directionalLight position={[5, 8, 6]} intensity={dirLightIntensity} />
+            <directionalLight position={[-3, -2, 4]} intensity={dirLightIntensity * 0.3} />
+            <directionalLight position={[0, -5, -3]} intensity={dirLightIntensity * 0.15} color="#8888ff" />
           {environmentPreset !== 'none' && (
             <Environment preset={environmentPreset as any} />
           )}
@@ -948,6 +951,7 @@ export default function App() {
                   atomTypeScales={atomTypeScales}
                   botanicalMode={renderStyle === 'botanical'}
                   materialPreset={materialPreset}
+                  atomTexture={atomTexture}
                 />
                 {showBonds && (
                   <Bonds
@@ -1105,9 +1109,7 @@ export default function App() {
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}>
-                <ToolButton icon={<IconStyle />} label="Style" active={activePanel === 'style'} onClick={() => setActivePanel('style')} />
-                <ToolButton icon={<IconAtoms />} label="Atoms" active={activePanel === 'atoms'} onClick={() => setActivePanel('atoms')} />
-                <ToolButton icon={<IconEffects />} label="Effects" active={activePanel === 'effects'} onClick={() => setActivePanel('effects')} />
+                <ToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
                 <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis'} onClick={() => setActivePanel('analysis')} />
                 <ToolButton icon={<IconMeasure />} label="Measure" active={activePanel === 'measurement'} onClick={() => setActivePanel('measurement')} />
                 <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export'} onClick={() => setActivePanel('export')} />
@@ -1181,14 +1183,11 @@ export default function App() {
             animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
           }}>
             <ErrorBoundary>
-              {activePanel === 'style' && (
-                <StylePanel
+              {activePanel === 'visuals' && (
+                <VisualsPanel
                   availableProperties={availableProperties}
-                  bgPresets={BG_PRESETS}
                 />
               )}
-              {activePanel === 'effects' && <EffectsPanel />}
-              {activePanel === 'atoms' && <AtomsPanel />}
               {activePanel === 'analysis' && <AnalysisPanel />}
               {activePanel === 'measurement' && <MeasurementPanel />}
               {activePanel === 'export' && <FigureExportPanel />}
