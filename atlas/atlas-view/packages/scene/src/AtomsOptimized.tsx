@@ -35,6 +35,7 @@ interface AtomsOptimizedProps {
   atomTypeScales?: Record<number, number>; // Per-type scale overrides
   botanicalMode?: boolean; // Hidden mode for Lupine brand asset
   materialPreset?: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
+  atomTexture?: 'none' | 'scratched' | 'noise';
 }
 
 // Pre-allocate maximum buffer size (avoid reallocation)
@@ -58,6 +59,7 @@ export function AtomsOptimized({
   atomTypeScales,
   botanicalMode = false,
   materialPreset = 'default',
+  atomTexture = 'none',
 }: AtomsOptimizedProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
@@ -285,6 +287,39 @@ export function AtomsOptimized({
         break;
     }
 
+    if (atomTexture !== 'none') {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d')!;
+      if (atomTexture === 'noise') {
+        const id = ctx.createImageData(512, 512);
+        for (let i = 0; i < id.data.length; i += 4) {
+          const v = Math.random() * 255;
+          id.data[i] = id.data[i + 1] = id.data[i + 2] = v;
+          id.data[i + 3] = 255;
+        }
+        ctx.putImageData(id, 0, 0);
+      } else if (atomTexture === 'scratched') {
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, 512, 512);
+        ctx.strokeStyle = '#000';
+        for (let i = 0; i < 200; i++) {
+          ctx.lineWidth = Math.random() * 2;
+          ctx.beginPath();
+          ctx.moveTo(Math.random() * 512, Math.random() * 512);
+          ctx.lineTo(Math.random() * 512, Math.random() * 512);
+          ctx.stroke();
+        }
+      }
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      matConfig.roughnessMap = tex;
+      matConfig.bumpMap = tex;
+      matConfig.bumpScale = 0.05;
+    }
+
     const mat = new THREE.MeshPhysicalMaterial(matConfig);
 
     mat.onBeforeCompile = (shader) => {
@@ -336,7 +371,7 @@ export function AtomsOptimized({
       );
     };
     return mat;
-  }, [renderStyle, botanicalMode]);
+  }, [renderStyle, botanicalMode, materialPreset, atomTexture]);
 
   // Get property data for coloring
   const propData = useMemo(() => {

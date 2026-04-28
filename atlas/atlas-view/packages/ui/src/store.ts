@@ -59,6 +59,11 @@ export interface AppState {
   environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none';
   materialPreset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
 
+  // ─── Lighting & Texture ───
+  ambientLightIntensity: number;
+  dirLightIntensity: number;
+  atomTexture: 'none' | 'scratched' | 'noise';
+
   // ─── Effects ───
   ssao: boolean;
   ssaoIntensity: number;
@@ -89,7 +94,7 @@ export interface AppState {
   colorblindMode: boolean;
 
   // ─── UI ───
-  activePanel: 'style' | 'effects' | 'export' | 'analysis' | 'measurement' | 'atoms' | 'flythrough' | 'telemetry' | null;
+  activePanel: 'visuals' | 'export' | 'analysis' | 'measurement' | 'flythrough' | 'telemetry' | null;
   showStats: boolean;
   showThermo: boolean;
 
@@ -162,6 +167,9 @@ export interface AppState {
   setBackgroundVideo: (videoUrl: string | null) => void;
   setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none') => void;
   setMaterialPreset: (preset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic') => void;
+  setAmbientLightIntensity: (val: number) => void;
+  setDirLightIntensity: (val: number) => void;
+  setAtomTexture: (tex: 'none' | 'scratched' | 'noise') => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
   clearFile: () => void;
   reset: () => void;
@@ -174,6 +182,7 @@ export interface AppState {
   resetAtomTypeScales: () => void;
   encodeToURL: () => string;
   decodeFromURL: (params: string) => void;
+  applyVisualProfile: (profileId: 'publication' | 'neon' | 'cinematic' | 'raw') => void;
 }
 
 const DEFAULTS = {
@@ -197,6 +206,10 @@ const DEFAULTS = {
   backgroundVideo: null as string | null,
   environmentPreset: 'studio' as const,
   materialPreset: 'default' as const,
+
+  ambientLightIntensity: 0.35,
+  dirLightIntensity: 1.2,
+  atomTexture: 'none' as const,
 
   // ─── Effects Defaults ───
   ssao: true,
@@ -307,6 +320,9 @@ export const useStore = create<AppState>()(
     setBackgroundVideo: (backgroundVideo) => set({ backgroundVideo }),
     setEnvironmentPreset: (environmentPreset) => set({ environmentPreset }),
     setMaterialPreset: (materialPreset) => set({ materialPreset }),
+    setAmbientLightIntensity: (ambientLightIntensity) => set({ ambientLightIntensity }),
+    setDirLightIntensity: (dirLightIntensity) => set({ dirLightIntensity }),
+    setAtomTexture: (atomTexture) => set({ atomTexture }),
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),
@@ -452,6 +468,47 @@ export const useStore = create<AppState>()(
       }
     },
 
+    applyVisualProfile: (profileId) => set((s) => {
+      switch (profileId) {
+        case 'publication':
+          return {
+            backgroundPreset: 'white', backgroundVideo: null,
+            toneMapping: 'aces', ssao: true, ssaoIntensity: 0.8,
+            bloom: false, dof: false, materialPreset: 'matte', atomTexture: 'none',
+            environmentPreset: 'studio', ambientLightIntensity: 0.8, dirLightIntensity: 1.0,
+            colormap: 'coolwarm', colorMode: 'type', renderStyle: 'standard'
+          };
+        case 'neon':
+          return {
+            backgroundPreset: 'void', backgroundVideo: null,
+            toneMapping: 'aces', ssao: false,
+            bloom: true, bloomIntensity: 0.6, dof: false,
+            materialPreset: 'metallic', atomTexture: 'none',
+            environmentPreset: 'none', ambientLightIntensity: 0.1, dirLightIntensity: 0.2,
+            colormap: 'neon', colorMode: 'type', renderStyle: 'standard'
+          };
+        case 'cinematic':
+          return {
+            backgroundPreset: 'deep', backgroundVideo: null,
+            toneMapping: 'aces', ssao: true, ssaoIntensity: 0.7,
+            bloom: true, bloomIntensity: 0.3, dof: true, dofFocus: 50, autoDepthOfField: true,
+            materialPreset: 'metallic', atomTexture: 'scratched',
+            environmentPreset: 'studio', ambientLightIntensity: 0.4, dirLightIntensity: 1.5,
+            colormap: 'viridis', colorMode: 'type', renderStyle: 'standard'
+          };
+        case 'raw':
+          return {
+            backgroundPreset: 'dark', backgroundVideo: null,
+            toneMapping: 'none', ssao: false,
+            bloom: false, dof: false, materialPreset: 'default', atomTexture: 'none',
+            environmentPreset: 'studio', ambientLightIntensity: 0.35, dirLightIntensity: 1.2,
+            colormap: 'viridis', colorMode: 'type', renderStyle: 'standard'
+          };
+        default:
+          return {};
+      }
+    }),
+
     encodeToURL: () => {
       const s = get();
       // ── Delta encoding: only include values that differ from defaults ──
@@ -488,6 +545,9 @@ export const useStore = create<AppState>()(
       if (s.showBonds)                                 delta.bonds = 1;
       if (r(s.bondCutoff) !== 2.5)                     delta.bc = r(s.bondCutoff);
       if (s.renderStyle !== 'standard')                delta.rs = s.renderStyle;
+      if (r(s.ambientLightIntensity) !== 0.35)         delta.ali = r(s.ambientLightIntensity);
+      if (r(s.dirLightIntensity) !== 1.2)              delta.dli = r(s.dirLightIntensity);
+      if (s.atomTexture !== 'none')                    delta.at = s.atomTexture;
 
       const json = JSON.stringify(delta);
       // URL-safe base64: replace +/= with -_. for shorter, URL-friendly tokens
@@ -527,6 +587,9 @@ export const useStore = create<AppState>()(
           showBonds: s.bonds === 1,
           bondCutoff: s.bc ?? 2.5,
           renderStyle: s.rs ?? 'standard',
+          ambientLightIntensity: s.ali ?? 0.35,
+          dirLightIntensity: s.dli ?? 1.2,
+          atomTexture: s.at ?? 'none',
         });
       } catch {
         console.warn('Failed to decode URL state');

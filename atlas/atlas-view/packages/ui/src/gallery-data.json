@@ -1,5 +1,25 @@
 [
   {
+    "id": "massive_1m",
+    "title": "1M Atom Scale Test",
+    "subtitle": "FCC Cu generated scale test.",
+    "domain": "Metals & Alloys",
+    "atoms": "1,000,000",
+    "frames": "1",
+    "file": "scale_tests/massive_1m.lammpstrj",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#cd853f",
+      "#d4af37"
+    ],
+    "metadata": {
+      "method": "Scale Test Generator",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
     "id": "lupine_brand_asset",
     "title": "Lupine Brand Asset (Procedural Hill)",
     "subtitle": "Procedurally generated rolling hill of Texas state flowers with dynamic GPU wind sway.",
@@ -17,7 +37,7 @@
       "method": "Procedural Math Sculpture",
       "potential": "Brand Identity Architecture",
       "temperature": "0 K",
-      "reference": "Lupine Materials Science — lupine.science"
+      "reference": "Lupine Materials Science \u2014 lupine.science"
     },
     "featured": true
   },
@@ -39,7 +59,7 @@
       "method": "Ab Initio Assembly",
       "potential": "Lennard-Jones",
       "temperature": "0 K",
-      "reference": "Lupine Materials Science — lupine.science"
+      "reference": "Lupine Materials Science \u2014 lupine.science"
     },
     "featured": true
   },
@@ -61,7 +81,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -84,7 +104,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "9 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -107,7 +127,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -130,7 +150,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "5 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -153,7 +173,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -176,7 +196,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "11 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -199,7 +219,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "1 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -222,7 +242,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "2 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -245,7 +265,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "7 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -268,7 +288,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "3 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -299,7 +319,7 @@
   {
     "id": "dang_cu_dislocation",
     "title": "FCC Cu Dislocation-GB Tracking",
-    "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation–grain-boundary interactions matrix",
+    "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation\u2013grain-boundary interactions matrix",
     "domain": "Advanced Theory & Validation",
     "atoms": "Variable",
     "frames": "100+",
@@ -593,7 +613,7 @@
   },
   {
     "id": "cuzr_melt",
-    "title": "Cu₆₄Zr₃₆ Metallic Glass",
+    "title": "Cu\u2086\u2084Zr\u2083\u2086 Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
     "domain": "Metals & Alloys",
     "atoms": "5,000",
@@ -617,7 +637,7 @@
   {
     "id": "al_polycrystal",
     "title": "Al Polycrystal (Voronoi)",
-    "subtitle": "Grain boundary structure in FCC aluminum with Σ5 misorientation",
+    "subtitle": "Grain boundary structure in FCC aluminum with \u03a35 misorientation",
     "domain": "Metals & Alloys",
     "atoms": "32,000",
     "frames": "50",
@@ -640,7 +660,7 @@
   {
     "id": "ni_superalloy",
     "title": "Ni-Based Superalloy",
-    "subtitle": "γ/γ′ microstructure with cuboidal precipitates",
+    "subtitle": "\u03b3/\u03b3\u2032 microstructure with cuboidal precipitates",
     "domain": "Metals & Alloys",
     "atoms": "108,000",
     "frames": "1",
@@ -705,7 +725,7 @@
   {
     "id": "dislocation_cu",
     "title": "Cu Edge Dislocation",
-    "subtitle": "1/2⟨110⟩ dislocation on (111) plane with stacking fault",
+    "subtitle": "1/2\u27e8110\u27e9 dislocation on (111) plane with stacking fault",
     "domain": "Defects & Mechanics",
     "atoms": "28,800",
     "frames": "1",
@@ -873,7 +893,7 @@
   },
   {
     "id": "mos2_sheet",
-    "title": "MoS₂ Monolayer",
+    "title": "MoS\u2082 Monolayer",
     "subtitle": "2D semiconductor with puckered structure",
     "domain": "Nanomaterials",
     "atoms": "24,000",
@@ -894,7 +914,7 @@
   },
   {
     "id": "sio2_glass",
-    "title": "SiO₂ Amorphous Silica",
+    "title": "SiO\u2082 Amorphous Silica",
     "subtitle": "Vitreous silica with tetrahedral network structure",
     "domain": "Ceramics & Oxides",
     "atoms": "24,000",
@@ -908,7 +928,7 @@
     ],
     "metadata": {
       "method": "Melt-quench with Vashishta potential",
-      "potential": "Vashishta (SiO₂)",
+      "potential": "Vashishta (SiO\u2082)",
       "temperature": "300-4000 K",
       "reference": "Continuous random network"
     },
@@ -916,7 +936,7 @@
   },
   {
     "id": "al2o3_sapphire",
-    "title": "α-Al₂O₃ (Sapphire)",
+    "title": "\u03b1-Al\u2082O\u2083 (Sapphire)",
     "subtitle": "Corundum structure with basal plane surface",
     "domain": "Ceramics & Oxides",
     "atoms": "18,000",
@@ -936,7 +956,7 @@
   },
   {
     "id": "zro2_tetragonal",
-    "title": "ZrO₂ Tetragonal",
+    "title": "ZrO\u2082 Tetragonal",
     "subtitle": "Yttria-stabilized zirconia (YSZ) with oxygen vacancies",
     "domain": "Ceramics & Oxides",
     "atoms": "32,768",
@@ -952,13 +972,13 @@
       "method": "Oxide MD",
       "potential": "Buckingham",
       "temperature": "1200 K",
-      "reference": "8% Y₂O₃ stabilized"
+      "reference": "8% Y\u2082O\u2083 stabilized"
     }
   },
   {
     "id": "pe_chain",
     "title": "Polyethylene Chain",
-    "subtitle": "Single C₁₀₀₀H₂₀₀₂ chain with united-atom model",
+    "subtitle": "Single C\u2081\u2080\u2080\u2080H\u2082\u2080\u2080\u2082 chain with united-atom model",
     "domain": "Polymers & Soft Matter",
     "atoms": "3,000",
     "frames": "200",
@@ -1023,7 +1043,7 @@
   {
     "id": "sulfur_cathode",
     "title": "Li-S Cathode",
-    "subtitle": "Sulfur nanoparticle with Li₂S coating",
+    "subtitle": "Sulfur nanoparticle with Li\u2082S coating",
     "domain": "Energy Materials",
     "atoms": "8,000",
     "frames": "100",
@@ -1059,7 +1079,7 @@
       "method": "Liquid MD",
       "potential": "TIP4P/2005",
       "temperature": "300 K",
-      "density": "0.997 g/cm³",
+      "density": "0.997 g/cm\u00b3",
       "reference": "Standard water model"
     }
   },
@@ -2983,7 +3003,7 @@
     ],
     "metadata": {
       "method": "Benchmark MD",
-      "potential": "LJ (σ=3.4Å, ε=0.238kcal)",
+      "potential": "LJ (\u03c3=3.4\u00c5, \u03b5=0.238kcal)",
       "temperature": "85 K",
       "reference": "Standard benchmark system"
     }
@@ -2991,7 +3011,7 @@
   {
     "id": "fcc_perf",
     "title": "1M Atom FCC Benchmark",
-    "subtitle": "Performance test — pure copper crystal",
+    "subtitle": "Performance test \u2014 pure copper crystal",
     "domain": "Methods",
     "atoms": "1,000,000",
     "frames": "10",

@@ -39,10 +39,11 @@ export const QuantumSection: React.FC<QuantumSectionProps> = ({
 
   return (
     <div className={`qsection ${open ? 'qsection--open' : ''}`}>
-      <button
+      <div
         className="qsection__header"
         onClick={() => setOpen(!open)}
-        type="button"
+        role="button"
+        tabIndex={0}
       >
         <div className="qsection__label-row">
           {/* Tiny nucleus indicator */}
@@ -72,7 +73,7 @@ export const QuantumSection: React.FC<QuantumSectionProps> = ({
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </div>
-      </button>
+      </div>
       <div
         className="qsection__body"
         style={{ maxHeight: typeof height === 'number' ? `${height}px` : undefined }}

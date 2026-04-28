@@ -190,9 +190,23 @@ export function FigureExportPanel() {
   }, [selectedPreset, format, transparentBg, triggerExport, handleComplete]);
 
   const handleExportVideo = useCallback(async () => {
-    // In-memory export by default. File System Access API streaming
-    // can be added as an explicit opt-in toggle in the future.
-    const fileStream: FileSystemWritableFileStream | undefined = undefined;
+    let fileStream;
+    // File System Access API streaming for MP4 to prevent memory crashes on large exports
+    if (mode === 'mp4' && 'showSaveFilePicker' in window) {
+      try {
+        const handle = await (window as any).showSaveFilePicker({
+          suggestedName: `glimPSE-orbit-${videoRes.label}.mp4`,
+          types: [{
+            description: 'MP4 Video',
+            accept: { 'video/mp4': ['.mp4'] }
+          }],
+        });
+        fileStream = await handle.createWritable();
+      } catch (err: any) {
+        if (err.name !== 'AbortError') console.error("Save file picker failed", err);
+        return; // User cancelled
+      }
+    }
 
     setExporting(true);
     setExportSuccess(false);

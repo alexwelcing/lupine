@@ -41,6 +41,11 @@ CRYSTAL_DATA = {
     'Mo': {'structure': 'bcc', 'type': 42, 'a0_ref': 3.147, 'color': '#b4b4b4'},
     'W':  {'structure': 'bcc', 'type': 74, 'a0_ref': 3.165, 'color': '#a9a9a9'},
     'V':  {'structure': 'bcc', 'type': 23, 'a0_ref': 3.030, 'color': '#708090'},
+    'Pt': {'structure': 'fcc', 'type': 78, 'a0_ref': 3.924, 'color': '#e5e4e2'},
+    'Pd': {'structure': 'fcc', 'type': 46, 'a0_ref': 3.890, 'color': '#c0c0c0'},
+    'Pb': {'structure': 'fcc', 'type': 82, 'a0_ref': 4.950, 'color': '#666666'},
+    'Nb': {'structure': 'bcc', 'type': 41, 'a0_ref': 3.300, 'color': '#737373'},
+    'Ta': {'structure': 'bcc', 'type': 73, 'a0_ref': 3.305, 'color': '#8b8c8d'},
 }
 
 # ── Parse NIST data ───────────────────────────────────────────────────

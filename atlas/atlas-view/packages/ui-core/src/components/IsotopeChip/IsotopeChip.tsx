@@ -26,17 +26,18 @@ export const IsotopeChip: React.FC<IsotopeChipProps> = ({
   onClick,
   tag,
 }) => {
+  const Component = onClick ? 'button' : 'div';
   return (
-    <button
+    <Component
       className={`isotope ${selected ? 'isotope--selected' : ''}`}
       onClick={onClick}
-      type="button"
+      type={onClick ? "button" : undefined}
     >
       {number !== undefined && (
         <span className="isotope__number">{number}</span>
       )}
       <span className="isotope__symbol">{label}</span>
       {tag && <span className="isotope__tag">{tag}</span>}
-    </button>
+    </Component>
   );
 };
