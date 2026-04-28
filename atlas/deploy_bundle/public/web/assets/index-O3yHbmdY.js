@@ -1,5 +1,5 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./App-DXFserl2.js","./vendor-three-DXS2DCSU.js","./vendor-postprocess-Bo_Yp5T4.js","./App-CNCQb1kB.css"])))=>i.map(i=>d[i]);
-import { _ as p, z as m, G as o, H as f } from "./vendor-three-DXS2DCSU.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./App-BdS3_xvK.js","./vendor-three-ClbWQ1cI.js","./vendor-postprocess-DrLu1uUn.js","./App-CNCQb1kB.css"])))=>i.map(i=>d[i]);
+import { _ as p, z as m, G as o, H as f } from "./vendor-three-ClbWQ1cI.js";
 (async ()=>{
     (function() {
         const s = document.createElement("link").relList;
@@ -25,7 +25,7 @@ import { _ as p, z as m, G as o, H as f } from "./vendor-three-DXS2DCSU.js";
     console.log("[glim] Step 1: imports starting");
     let d, n = null;
     try {
-        d = (await p(()=>import("./App-DXFserl2.js").then(async (m)=>{
+        d = (await p(()=>import("./App-BdS3_xvK.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }).then((s)=>s.A), __vite__mapDeps([0,1,2,3]), import.meta.url)).default, console.log("[glim] Step 2: App imported successfully");
