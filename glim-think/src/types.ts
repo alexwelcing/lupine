@@ -54,4 +54,5 @@ export interface Env {
   FLEET_ORCHESTRATOR: DurableObjectNamespace;
   DASHBOARD: DurableObjectNamespace;
   EXTENSION_MANAGER: DurableObjectNamespace;
+  LITERATURIST_AGENT: DurableObjectNamespace;
 }
