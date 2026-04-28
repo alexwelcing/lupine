@@ -12,6 +12,7 @@ import { EffectComposer, SSAO, Bloom, ToneMapping, Vignette, DepthOfField } from
 import { ToneMappingMode, BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import { XR, createXRStore, useXR } from '@react-three/xr';
+import { USDZExporter } from 'three/examples/jsm/exporters/USDZExporter.js';
 
 export const xrStore = createXRStore({
   emulate: false,
@@ -183,6 +184,56 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
     return getBackgroundFromColormap((palette as ColormapName) ?? colormap);
   }
   return BG_PRESETS[backgroundPreset] ?? BG_PRESETS.void;
+}
+
+// ─── USDZ Export component ─────────────────────────────────────────────
+function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplete: () => void }) {
+  const { scene } = useThree();
+  
+  useEffect(() => {
+    if (!trigger) return;
+    
+    const runExport = async () => {
+      try {
+        const exporter = new USDZExporter();
+        // Ignore background for USDZ export
+        const oldBackground = scene.background;
+        scene.background = null;
+        
+        // Use parseAsync for promise-based usage
+        const arrayBuffer = await exporter.parseAsync(scene);
+        scene.background = oldBackground;
+        
+        const blob = new Blob([arrayBuffer as any], { type: 'model/vnd.usdz+zip' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'molecule.usdz';
+        a.rel = 'ar';
+        
+        const img = document.createElement('img');
+        a.appendChild(img);
+        document.body.appendChild(a);
+        
+        a.click();
+        
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 1000);
+      } catch (e) {
+        console.error("USDZ Export failed", e);
+        alert("Failed to export AR model for Quick Look.");
+      } finally {
+        onComplete();
+      }
+    };
+    runExport();
+  }, [trigger, scene, onComplete]);
+
+  return null;
 }
 
 // ─── Scene Background component ──────────────────────────────────────
@@ -391,6 +442,7 @@ function AutoDepthOfField() {
 }
 
 export default function App() {
+  const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
   const file = useStore(s => s.file);
   const loading = useStore(s => s.loading);
   const frame = useStore(s => s.frame);
@@ -719,6 +771,21 @@ export default function App() {
                   >
                     📱 Open with Camera
                   </button>
+                  <button
+                    onClick={() => { 
+                      setIsExportingQuickLook(true); 
+                      setShowXRMenu(false); 
+                    }}
+                    style={{
+                      padding: '10px 14px', background: 'transparent', border: 'none',
+                      color: 'var(--lupine-400)', fontSize: 14, cursor: 'pointer', fontWeight: 500,
+                      textAlign: 'left', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap',
+                    }}
+                    onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface)'}
+                    onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    🍎 AR Quick Look (Safari)
+                  </button>
                 </div>
               )}
             </div>
@@ -824,6 +891,7 @@ export default function App() {
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
             <XR store={xrStore}>
+              <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
             <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} />
 
