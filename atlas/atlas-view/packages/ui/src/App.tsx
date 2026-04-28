@@ -362,7 +362,13 @@ function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplet
   useEffect(() => {
     if (!trigger) return;
 
+    let cancelled = false;
     const runExport = async () => {
+      // Yield one animation frame so the "Preparing AR view…" overlay
+      // actually paints before the main thread blocks on the bake.
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      if (cancelled) return;
+
       const oldBackground = scene.background;
       scene.background = null;
       const swaps = expandInstancedMeshes(scene);
@@ -396,6 +402,11 @@ function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplet
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
         }, 1000);
+
+        // Hold the overlay briefly so iOS's AR Quick Look UI has time to
+        // slide in on top before we dismiss our loading state — otherwise
+        // there's a flash of the 2D scene at the seam.
+        await new Promise<void>(resolve => setTimeout(resolve, 350));
       } catch (e) {
         console.error("USDZ Export failed", e);
         alert("Failed to export AR model for Quick Look.");
@@ -406,6 +417,7 @@ function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplet
       }
     };
     runExport();
+    return () => { cancelled = true; };
   }, [trigger, scene, onComplete]);
 
   return null;
@@ -1476,6 +1488,52 @@ export default function App() {
               </button>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* AR Quick Look launch overlay — covers the seam between the 2D
+          viewer and iOS's AR Quick Look UI sliding in. */}
+      {isExportingQuickLook && (
+        <div
+          aria-busy="true"
+          aria-label="Preparing AR view"
+          style={{
+            position: 'fixed', inset: 0, zIndex: 1000,
+            background: 'rgba(6, 8, 13, 0.62)',
+            backdropFilter: 'blur(14px)',
+            WebkitBackdropFilter: 'blur(14px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            animation: 'arQlFade 180ms ease-out',
+          }}
+        >
+          <div style={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
+            padding: '28px 36px',
+            background: 'var(--bg-elevated, rgba(20, 24, 32, 0.9))',
+            border: '1px solid var(--border-subtle, rgba(255,255,255,0.08))',
+            borderRadius: 'var(--radius-md, 12px)',
+            color: 'var(--text-primary, #e6ebf2)',
+            boxShadow: '0 18px 48px rgba(0,0,0,0.45)',
+            minWidth: 240,
+          }}>
+            <div style={{
+              width: 44, height: 44,
+              border: '3px solid rgba(255,255,255,0.14)',
+              borderTopColor: 'var(--accent, #00c8f0)',
+              borderRadius: '50%',
+              animation: 'arQlSpin 0.9s linear infinite',
+            }} />
+            <div style={{ fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>
+              Preparing AR view…
+            </div>
+            <div style={{ fontSize: 12, opacity: 0.62, textAlign: 'center', maxWidth: 220, lineHeight: 1.4 }}>
+              Building model for Apple AR Quick Look. This usually takes a moment.
+            </div>
+          </div>
+          <style>{`
+            @keyframes arQlFade { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes arQlSpin { to { transform: rotate(360deg); } }
+          `}</style>
         </div>
       )}
     </div>
