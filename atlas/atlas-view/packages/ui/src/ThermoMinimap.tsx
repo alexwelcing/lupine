@@ -101,6 +101,7 @@ export function ThermoMinimap({
           type="range"
           min={0}
           max={Math.max(totalFrames - 1, 0)}
+          step={0.01}
           value={currentFrame}
           onChange={(e) => onFrameChange(+e.target.value)}
           style={{ width: '100%' }}
@@ -132,6 +133,7 @@ export function ThermoMinimap({
         type="range"
         min={0}
         max={Math.max(totalFrames - 1, 0)}
+        step={0.01}
         value={currentFrame}
         onChange={(e) => onFrameChange(+e.target.value)}
         style={{
