@@ -485,10 +485,12 @@ export default function App() {
   const nextFrame = useStore(s => s.nextFrame);
   const togglePlay = useStore(s => s.togglePlay);
   const setActivePanel = useStore(s => s.setActivePanel);
-  const hoveredAtom = useStore(s => s.hoveredAtom);
-  const setHoveredAtom = useStore(s => s.setHoveredAtom);
+  // hoveredAtom subscription removed — inspector is now driven by selection.
   const selectedAtoms = useStore(s => s.selectedAtoms);
   const setSelectedAtoms = useStore(s => s.setSelectedAtoms);
+  // Stable Set identity for `highlightedAtoms` — without this, AtomsOptimized
+  // sees a new Set every render and rebuilds its highlights Uint8Array.
+  const highlightedAtomsSet = useMemo(() => new Set(selectedAtoms), [selectedAtoms]);
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
   const anomalyTracking = useStore(s => s.anomalyTracking);
@@ -502,13 +504,12 @@ export default function App() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [showXRMenu, setShowXRMenu] = useState(false);
 
-  // Mouse position for inspector tooltip
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
-  }, []);
+  // Click-driven inspector: the most recently selected atom drives the info
+  // card. We deliberately do NOT track mouse position or do hover raycasts —
+  // both were re-rendering the entire shell at the device's mouse-event rate
+  // (often 1000 Hz on gaming mice) and competing with the playback hot path.
+  // If atom-peek is missed, it can return as Alt-modifier-gated hover later.
+  const inspectedAtom = selectedAtoms.length === 1 ? selectedAtoms[0] : null;
 
   // Single RAF driver — owns playthrough + flythrough preview clocks.
   // Reads from and writes to the store; no React state in the hook.
@@ -611,9 +612,12 @@ export default function App() {
       ) as [number, number, number]
     : [0, 0, 0] as [number, number, number], [file?.name]);
 
-  const availableProperties = currentFrame
-    ? Array.from(currentFrame.properties?.keys() ?? [])
-    : [];
+  // Property names are file-stable in MD trajectories — memoize to keep array
+  // identity steady so panels using this as a useMemo dep don't churn.
+  const availableProperties = useMemo(
+    () => file ? Array.from(file.trajectory.frames[0]?.properties?.keys() ?? []) : [],
+    [file]
+  );
 
   const bg = resolveBackground(backgroundPreset, colormap);
 
@@ -933,7 +937,7 @@ export default function App() {
                     scale={atomScale}
                     renderStyle={renderStyle}
                     onSpatialHash={setSpatialHash}
-                    highlightedAtoms={new Set(selectedAtoms)}
+                    highlightedAtoms={highlightedAtomsSet}
                     hiddenAtomTypes={hiddenAtomTypes}
                     atomTypeScales={atomTypeScales}
                     botanicalMode={renderStyle === 'botanical'}
@@ -967,7 +971,6 @@ export default function App() {
                 spatialHash={spatialHash}
                 enabled={!loading}
                 selectionMode={activePanel === 'measurement' ? 'measure' : 'single'}
-                onHover={setHoveredAtom}
                 onSelect={setSelectedAtoms}
               />
             )}
@@ -1112,14 +1115,16 @@ export default function App() {
             </div>
           )}
 
-          {/* Atom Inspector Tooltip */}
-          {currentFrame && hoveredAtom !== null && (
+          {/* Atom Inspector — pinned to a fixed corner instead of following the
+              cursor. Driven by the most recently selected atom; click the atom
+              to inspect, click empty space to dismiss. */}
+          {currentFrame && inspectedAtom !== null && (
             <div style={{
-              position: 'fixed',
-              left: mousePos.x + 16,
-              top: mousePos.y + 16,
+              position: 'absolute',
+              left: 20,
+              bottom: 80,
               zIndex: 300,
-              pointerEvents: 'none',
+              pointerEvents: 'auto',
               background: 'var(--bg-glass)',
               backdropFilter: 'blur(12px)',
               WebkitBackdropFilter: 'blur(12px)',
@@ -1130,22 +1135,23 @@ export default function App() {
               fontFamily: 'var(--font-mono)',
               color: 'var(--text-secondary)',
               boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
-              minWidth: 160,
+              minWidth: 180,
+              maxWidth: 260,
             }}>
               <div style={{ color: 'var(--accent)', fontWeight: 600, marginBottom: 4 }}>
-                {(() => { const spec = getElementSpec(currentFrame.types[hoveredAtom]); return `${spec.symbol} — ${spec.name}`; })()}
+                {(() => { const spec = getElementSpec(currentFrame.types[inspectedAtom]); return `${spec.symbol} — ${spec.name}`; })()}
               </div>
               <div style={{ color: 'var(--text-muted)' }}>
-                Atom #{currentFrame.ids?.[hoveredAtom] ?? hoveredAtom + 1} · {(() => { const spec = getElementSpec(currentFrame.types[hoveredAtom]); return `${spec.mass.toFixed(2)} u · ${spec.role}`; })()}
+                Atom #{currentFrame.ids?.[inspectedAtom] ?? inspectedAtom + 1} · {(() => { const spec = getElementSpec(currentFrame.types[inspectedAtom]); return `${spec.mass.toFixed(2)} u · ${spec.role}`; })()}
               </div>
               <div style={{ color: 'var(--text-dim)', marginTop: 4 }}>
-                x: {currentFrame.positions[hoveredAtom * 3].toFixed(2)}<br />
-                y: {currentFrame.positions[hoveredAtom * 3 + 1].toFixed(2)}<br />
-                z: {currentFrame.positions[hoveredAtom * 3 + 2].toFixed(2)}
+                x: {currentFrame.positions[inspectedAtom * 3].toFixed(2)}<br />
+                y: {currentFrame.positions[inspectedAtom * 3 + 1].toFixed(2)}<br />
+                z: {currentFrame.positions[inspectedAtom * 3 + 2].toFixed(2)}
               </div>
               {Array.from(currentFrame.properties?.entries() ?? []).slice(0, 3).map(([name, vals]) => (
                 <div key={name} style={{ color: 'var(--text-dim)', marginTop: 2 }}>
-                  {name}: {vals[hoveredAtom].toFixed(3)}
+                  {name}: {vals[inspectedAtom].toFixed(3)}
                 </div>
               ))}
             </div>
