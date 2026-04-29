@@ -1265,16 +1265,25 @@ export default function App() {
           />
 
           {/* Frame counter */}
-          <div style={{
-            fontSize: '11px',
-            fontFamily: 'var(--font-mono)',
-            color: '#64748b',
-            minWidth: 90,
-            textAlign: 'right',
-            fontVariantNumeric: 'tabular-nums',
-          }}>
+          <div
+            title={file?.trajectory.parseStride && file.trajectory.parseStride > 1
+              ? `Decimated at parse: showing every ${file.trajectory.parseStride}th frame of the source file's ${file.trajectory.sourceFrameCount} total.`
+              : undefined}
+            style={{
+              fontSize: '11px',
+              fontFamily: 'var(--font-mono)',
+              color: '#64748b',
+              minWidth: 90,
+              textAlign: 'right',
+              fontVariantNumeric: 'tabular-nums',
+            }}>
             <span style={{ color: '#f8fafc', fontWeight: 500 }}>{Math.floor(frame) + 1}</span>
             <span style={{ color: '#475569' }}> / {totalFrames}</span>
+            {file?.trajectory.parseStride && file.trajectory.parseStride > 1 && (
+              <span style={{ color: '#f59e0b', marginLeft: 4 }}>
+                · 1∶{file.trajectory.parseStride}
+              </span>
+            )}
           </div>
 
           {/* Mode pill — shows the auto-chosen playback strategy */}

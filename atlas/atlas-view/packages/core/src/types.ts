@@ -55,6 +55,17 @@ export interface Trajectory {
   atomTypes: number[];
   /** Global bounding box encompassing all frames */
   globalBounds: { min: [number, number, number]; max: [number, number, number] };
+  /**
+   * If parse-time decimation occurred, this is the number of frames in the
+   * source file (e.g. 300_000) before the parser sampled every Nth frame to
+   * fit the memory budget. `totalFrames` is what's actually loaded.
+   */
+  sourceFrameCount?: number;
+  /**
+   * Stride used at parse time. 1 = every frame loaded, N = every Nth.
+   * Distinct from runtime `playbackStride`, which only affects play speed.
+   */
+  parseStride?: number;
 }
 
 // ─── Thermo data ────────────────────────────────────────────────────
