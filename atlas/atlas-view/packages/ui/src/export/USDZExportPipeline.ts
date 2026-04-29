@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { USDZExporter } from 'three/examples/jsm/exporters/USDZExporter.js';
 
-const AR_EXPORT_DEBUG = import.meta.env.DEV;
+const AR_EXPORT_DEBUG = (import.meta as any).env?.DEV;
 
 // Pre-allocated objects for baking to avoid GC pauses
 const _bakeMat4 = new THREE.Matrix4();

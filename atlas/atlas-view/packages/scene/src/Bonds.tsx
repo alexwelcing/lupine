@@ -148,17 +148,12 @@ export function Bonds({
       }
       
       shader.vertexShader = `
-        attribute vec2 radiusBT;
         ${botanicalMode ? 'uniform float uTime;' : ''}
         ${shader.vertexShader}
       `;
       
       let vertexChunk = `
         #include <begin_vertex>
-        // Taper bonds using per-instance radiusBT (bottom, top)
-        float instanceRadius = mix(radiusBT.x, radiusBT.y, position.y + 0.5);
-        transformed.x *= instanceRadius;
-        transformed.z *= instanceRadius;
       `;
       
       if (botanicalMode) {
@@ -240,10 +235,7 @@ export function Bonds({
   }
   const capacity = capacityRef.current;
 
-  const radiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
-  useEffect(() => {
-    tubeGeo.setAttribute('radiusBT', new THREE.InstancedBufferAttribute(radiusBTArray, 2));
-  }, [tubeGeo, radiusBTArray]);
+
 
   const isPropMode = colorMode === 'property' && !!colorProperty;
 
@@ -451,16 +443,12 @@ export function Bonds({
       // Advanced geometry scaling based on property
       const rA = isPropMode ? radius * (0.2 + 1.8 * normA) : radius;
       const rB = isPropMode ? radius * (0.2 + 1.8 * normB) : radius;
-      const rMid = (rA + rB) / 2.0;
 
       // Instance i*2 (Bottom half of the bond: A -> Mid)
-      radiusBTArray[(i * 2) * 2] = rA;
-      radiusBTArray[(i * 2) * 2 + 1] = rMid;
-
       dir.subVectors(mid, posA).normalize();
       midPoint.lerpVectors(posA, mid, 0.5);
       dummy.position.copy(midPoint);
-      dummy.scale.set(1, halfLen, 1);
+      dummy.scale.set(rA, halfLen, rA);
       if (Math.abs(dir.dot(UP)) < 0.9999) {
         dummy.quaternion.setFromUnitVectors(UP, dir);
       } else {
@@ -485,13 +473,10 @@ export function Bonds({
       mesh.setColorAt(i * 2, color);
 
       // Instance i*2+1 (Top half of the bond: Mid -> B)
-      radiusBTArray[(i * 2 + 1) * 2] = rMid;
-      radiusBTArray[(i * 2 + 1) * 2 + 1] = rB;
-
       dir.subVectors(posB, mid).normalize();
       midPoint.lerpVectors(mid, posB, 0.5);
       dummy.position.copy(midPoint);
-      dummy.scale.set(1, halfLen, 1);
+      dummy.scale.set(rB, halfLen, rB);
       if (Math.abs(dir.dot(UP)) < 0.9999) {
         dummy.quaternion.setFromUnitVectors(UP, dir);
       } else {
@@ -516,10 +501,9 @@ export function Bonds({
       mesh.setColorAt(i * 2 + 1, color);
     }
 
-    tubeGeo.attributes.radiusBT.needsUpdate = true;
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-  });
+  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, pMin, pMax, colorProperty]);
 
   return (
     <instancedMesh

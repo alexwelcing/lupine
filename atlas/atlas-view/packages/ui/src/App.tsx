@@ -18,7 +18,7 @@ export const xrStore = createXRStore({
   // In dev mode, enable the built-in IWER (Immersive Web Emulation Runtime)
   // so we can simulate AR/VR sessions on desktop for testing.
   // In production, native WebXR is required.
-  emulate: import.meta.env.DEV,
+  emulate: (import.meta as any).env?.DEV,
 });
 
 async function enterXRSession(mode: 'immersive-vr' | 'immersive-ar') {
