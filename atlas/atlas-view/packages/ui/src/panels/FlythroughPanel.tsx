@@ -115,37 +115,14 @@ export function FlythroughPanel() {
     return () => setFlythroughPreview(false);
   }, [setFlythroughPreview]);
 
-  // Preview playback loop
-  const previewRaf = useRef<number>(0);
-  const previewStart = useRef<number>(0);
-
+  // Reset the flythrough clock to 0 each time preview begins. The shared
+  // `useTimelineDriver` in App.tsx owns the actual RAF and advances both the
+  // camera and (when movie sync is on) the trajectory frame index.
   useEffect(() => {
-    if (!flythroughPreview || !flythrough || flythrough.keyframes.length < 2) return;
-    const duration = getSequenceDuration(flythrough);
-    if (duration <= 0) return;
-
-    previewStart.current = performance.now();
-
-    const tick = (now: number) => {
-      const elapsed = (now - previewStart.current) / 1000;
-      const t = flythrough.loop ? elapsed % duration : Math.min(elapsed, duration);
-      setFlythroughTime(t);
-
-      const sample = sampleFlythrough(flythrough, t, cameraFov);
-      if (sample) {
-        useStore.getState().setCameraState(sample.position, sample.target);
-      }
-
-      if (!flythrough.loop && elapsed >= duration) {
-        setFlythroughPreview(false);
-        return;
-      }
-      previewRaf.current = requestAnimationFrame(tick);
-    };
-
-    previewRaf.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(previewRaf.current);
-  }, [flythroughPreview, flythrough, cameraFov, setFlythroughPreview, setFlythroughTime]);
+    if (flythroughPreview) {
+      setFlythroughTime(0);
+    }
+  }, [flythroughPreview, setFlythroughTime]);
 
   const handleAddKeyframe = useCallback(() => {
     const kf = createKeyframe(
@@ -435,6 +412,7 @@ export function FlythroughPanel() {
                   active={flythrough.loop}
                   onToggle={() => setFlythroughLoop(!flythrough.loop)}
                 />
+                <MovieSyncRow />
               </div>
 
               {/* Preview + Actions */}
@@ -590,6 +568,12 @@ function KeyframeCard({ index, keyframe, isLast, expanded, activeSample, onToggl
             </div>
           </div>
 
+          {/* Frame anchor (only meaningful with > 1 frame) */}
+          <FrameAnchorRow
+            anchor={keyframe.frameAnchor}
+            onChange={(v) => onUpdate({ frameAnchor: v })}
+          />
+
           {/* Easing selector */}
           {!isLast && (
             <div>
@@ -674,11 +658,82 @@ function ToggleRow({ label, hint, active, onToggle }: {
   );
 }
 
+/** Movie sync toggle — when on, the flythrough drives the trajectory frame index. */
+function MovieSyncRow() {
+  const movieSync = useStore(s => s.movieSync);
+  const setMovieSync = useStore(s => s.setMovieSync);
+  const totalFrames = useStore(s => s.file?.trajectory.totalFrames ?? 0);
+  if (totalFrames <= 1) return null;
+  return (
+    <ToggleRow
+      label="Movie Sync"
+      hint="Flythrough drives the trajectory frame index. Use anchors to direct."
+      active={movieSync}
+      onToggle={() => setMovieSync(!movieSync)}
+    />
+  );
+}
+
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, fontFamily: 'var(--font-mono)' }}>
       <span style={{ color: '#64748b' }}>{label}</span>
       <span style={{ color: '#f8fafc' }}>{value}</span>
+    </div>
+  );
+}
+
+/**
+ * Pin a trajectory frame to this keyframe. When set on adjacent keyframes,
+ * the frame index interpolates between them during movie sync — that's how
+ * the user "directs the movie" instead of getting a uniform sweep.
+ */
+function FrameAnchorRow({ anchor, onChange }: {
+  anchor: number | undefined;
+  onChange: (v: number | undefined) => void;
+}) {
+  const totalFrames = useStore(s => s.file?.trajectory.totalFrames ?? 0);
+  const currentFrame = useStore(s => s.frame);
+  if (totalFrames <= 1) return null;
+
+  const pinned = typeof anchor === 'number';
+  return (
+    <div>
+      <div style={fieldLabel}>FRAME ANCHOR</div>
+      {pinned ? (
+        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          <input
+            type="number"
+            min={0}
+            max={totalFrames - 1}
+            step={1}
+            value={anchor}
+            onChange={e => {
+              const v = parseInt(e.target.value, 10);
+              if (Number.isFinite(v)) onChange(Math.max(0, Math.min(totalFrames - 1, v)));
+            }}
+            style={{ ...inputStyle, flex: 1 }}
+          />
+          <button
+            onClick={() => onChange(currentFrame)}
+            title="Set anchor to the current scrubbed frame"
+            style={{ ...btnSmall, padding: '4px 8px' }}
+          >Use {currentFrame}</button>
+          <button
+            onClick={() => onChange(undefined)}
+            title="Unpin — let movie sync interpolate linearly across this stop"
+            style={{ ...btnSmall, padding: '4px 8px', color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)' }}
+          >Unpin</button>
+        </div>
+      ) : (
+        <button
+          onClick={() => onChange(currentFrame)}
+          style={{ ...btnSmall, width: '100%' }}
+        >Pin to current frame ({currentFrame})</button>
+      )}
+      <div style={{ fontSize: 9, color: '#64748b', marginTop: 4, lineHeight: 1.4 }}>
+        Movie sync uses pinned anchors to drive frames between stops.
+      </div>
     </div>
   );
 }

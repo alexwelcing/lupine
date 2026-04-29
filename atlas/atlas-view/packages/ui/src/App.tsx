@@ -61,7 +61,7 @@ import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
-import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
+import { useTimelineDriver } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
 import { ScaleBar } from '@atlas/scene/ScaleBar';
 import { getBackgroundFromColormap } from '@atlas/scene';
@@ -724,27 +724,23 @@ export default function App() {
     return () => window.removeEventListener('mousemove', onMove);
   }, []);
 
-  // Playback timer (replaced with smooth 60fps interpolator)
-  const { currentState: interpState, setFrame: setSmoothFrame } = useSmoothFramePlayback(playing, {
-    frames: file?.trajectory.frames ?? [],
-    speed: playbackSpeed,
-    targetFPS: 60,
-    mdFrameRate: 30, // Default typical MD output
-    onFrame: (state) => {
-      // Sync UI timeline without forcing expensive React renders unnecessarily
-      // Only sync when playing. When paused, the store (user scrubbing) drives the hook.
-      if (useStore.getState().playing && state.frameIndex !== useStore.getState().frame) {
-        useStore.getState().setFrame(state.frameIndex);
-      }
-    }
-  });
+  // Single RAF driver — owns playthrough + flythrough preview clocks.
+  // Reads from and writes to the store; no React state in the hook.
+  useTimelineDriver();
 
-  // Sync external frame updates (like timeline scrubber manually dragging) back to the hook when NOT playing
-  useEffect(() => {
-    if (!playing && interpState.effectiveFrame !== frame) {
-      setSmoothFrame(frame);
-    }
-  }, [frame, playing, setSmoothFrame, interpState.effectiveFrame]);
+  // Derive interpolation state from the store. `effectiveFrame` is fractional
+  // during playback (the integer floor lives in `frame`), so renderers can
+  // blend between consecutive MD frames without a separate hook.
+  const effectiveFrame = useStore(s => s.effectiveFrame);
+  const totalFramesForInterp = file?.trajectory.totalFrames ?? 0;
+  const interpFrameIndex = totalFramesForInterp > 0
+    ? Math.min(Math.floor(effectiveFrame), totalFramesForInterp - 1)
+    : 0;
+  const interpNextFrameIndex = totalFramesForInterp > 0
+    ? Math.min(interpFrameIndex + 1, totalFramesForInterp - 1)
+    : 0;
+  const interpFactor = effectiveFrame - interpFrameIndex;
+  const isInterpolating = interpFactor > 0 && interpFactor < 1 && interpFrameIndex !== interpNextFrameIndex;
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -1148,9 +1144,9 @@ export default function App() {
                   active={anomalyTracking}
                 />
                 <AtomsOptimized
-                  frame={file!.trajectory.frames[interpState.frameIndex]}
-                  nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
-                  interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
+                  frame={file!.trajectory.frames[interpFrameIndex]}
+                  nextFrame={isInterpolating ? file!.trajectory.frames[interpNextFrameIndex] : undefined}
+                  interpolationFactor={isInterpolating ? interpFactor : 0}
                   colorMode={colorMode}
                   colorProperty={colorProperty ?? undefined}
                   colormap={colormap}
@@ -1166,9 +1162,9 @@ export default function App() {
                 />
                 {showBonds && (
                   <Bonds
-                    frame={currentFrame}
-                    nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
-                    interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
+                    frame={file!.trajectory.frames[interpFrameIndex]}
+                    nextFrame={isInterpolating ? file!.trajectory.frames[interpNextFrameIndex] : undefined}
+                    interpolationFactor={isInterpolating ? interpFactor : 0}
                     maxBondLength={bondCutoff}
                     renderStyle={renderStyle}
                     colormap={colormap}
@@ -1446,7 +1442,8 @@ export default function App() {
             {!(file?.name?.startsWith('research_') || file?.sourceUrl?.includes('/research/')) && (
               <button
                 onClick={togglePlay}
-                title="Play/Pause [Space]"
+                disabled={totalFrames <= 1}
+                title={totalFrames <= 1 ? 'Trajectory has only 1 frame' : 'Play/Pause [Space]'}
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: 40, height: 32,
@@ -1454,7 +1451,8 @@ export default function App() {
                   border: `1px solid ${playing ? '#f59e0b' : '#334155'}`,
                   borderRadius: 0,
                   color: playing ? '#0a0a0c' : '#f8fafc',
-                  cursor: 'pointer',
+                  cursor: totalFrames <= 1 ? 'not-allowed' : 'pointer',
+                  opacity: totalFrames <= 1 ? 0.4 : 1,
                   transition: 'all 100ms ease-out',
                 }}
               >
@@ -1496,6 +1494,9 @@ export default function App() {
             <span style={{ color: '#f8fafc', fontWeight: 500 }}>{Math.floor(frame) + 1}</span>
             <span style={{ color: '#475569' }}> / {totalFrames}</span>
           </div>
+
+          {/* Mode pill — shows the auto-chosen playback strategy */}
+          <PlaybackModePill />
 
           {/* Speed selector */}
           <div style={{ display: 'flex', gap: 4 }}>
@@ -1642,6 +1643,49 @@ function CameraPresetButton({ label, active, onClick, title }: {
     >
       {label}
     </button>
+  );
+}
+
+function PlaybackModePill() {
+  const mode = useStore(s => s.playbackMode);
+  const stride = useStore(s => s.playbackStride);
+  const movieSync = useStore(s => s.movieSync);
+  const flythroughPreview = useStore(s => s.flythroughPreview);
+  const totalFrames = useStore(s => s.file?.trajectory.totalFrames ?? 0);
+  if (totalFrames <= 1) return null;
+
+  const driving = flythroughPreview && movieSync;
+  const label =
+    driving ? 'movie sync'
+    : mode === 'discrete' ? 'discrete'
+    : mode === 'decimated' ? `stride ${stride}`
+    : 'smooth';
+  const color = driving ? '#1edce0' : (mode === 'decimated' ? '#f59e0b' : '#64748b');
+
+  return (
+    <div
+      title={
+        driving
+          ? 'Flythrough is driving the trajectory frames (movie sync)'
+          : mode === 'discrete'
+          ? `${totalFrames} frames — fades between each stop for clarity`
+          : mode === 'decimated'
+          ? `Playing every ${stride}th frame so a long trajectory finishes in a reasonable wall-clock time. Drag the scrubber to land on any exact frame.`
+          : `Smooth interpolated playback over ${totalFrames} frames`
+      }
+      style={{
+        padding: '4px 8px',
+        fontSize: 9,
+        fontFamily: 'var(--font-mono)',
+        textTransform: 'uppercase',
+        letterSpacing: '0.08em',
+        color,
+        background: '#0d1117',
+        border: `1px solid ${color === '#64748b' ? '#334155' : color}`,
+        borderRadius: 0,
+        whiteSpace: 'nowrap',
+      }}
+    >{label}</div>
   );
 }
 

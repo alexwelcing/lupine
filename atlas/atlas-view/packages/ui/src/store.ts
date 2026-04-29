@@ -79,6 +79,14 @@ export interface AppState {
   playing: boolean;
   playbackSpeed: number;
   loopMode: 'loop' | 'bounce' | 'once';
+  /** Continuous frame position; integer Math.floor lives in `frame`. */
+  effectiveFrame: number;
+  /** Stride between rendered frames during play (1 = every frame). Auto-set for huge trajectories. */
+  playbackStride: number;
+  /** Visual mode chosen from totalFrames; 'discrete' fades 1→2→3, 'smooth' interpolates, 'decimated' skips frames. */
+  playbackMode: 'static' | 'discrete' | 'smooth' | 'decimated';
+  /** When true, flythrough preview drives the frame index (movie mode). */
+  movieSync: boolean;
 
   // ─── Camera ───
   cameraPosition: [number, number, number];
@@ -144,6 +152,10 @@ export interface AppState {
   prevFrame: () => void;
   togglePlay: () => void;
   setPlaybackSpeed: (speed: number) => void;
+  setEffectiveFrame: (eff: number) => void;
+  setPlaybackStride: (stride: number) => void;
+  setPlaybackMode: (mode: AppState['playbackMode']) => void;
+  setMovieSync: (sync: boolean) => void;
   setColorMode: (mode: ColorMode) => void;
   setColorProperty: (prop: string | null) => void;
   setColormap: (map: ColormapName) => void;
@@ -224,6 +236,10 @@ const DEFAULTS = {
   playing: false,
   playbackSpeed: 1.0,
   loopMode: 'loop' as const,
+  effectiveFrame: 0,
+  playbackStride: 1,
+  playbackMode: 'static' as const,
+  movieSync: true,
   cameraPosition: [0, 0, 50] as [number, number, number],
   cameraTarget: [0, 0, 0] as [number, number, number],
   cameraFov: 50,
@@ -249,14 +265,32 @@ export const useStore = create<AppState>()(
   subscribeWithSelector((set, get) => ({
     ...DEFAULTS,
 
-    setFile: (file) => set({
-      file,
-      frame: 0,
-      playing: false,
-      error: null,
-      loading: false,
-      loadProgress: 1,
-    }),
+    setFile: (file) => {
+      const total = file.trajectory.totalFrames;
+      let mode: AppState['playbackMode'];
+      let stride = 1;
+      if (total <= 1) {
+        mode = 'static';
+      } else if (total <= 8) {
+        mode = 'discrete';
+      } else if (total <= 5000) {
+        mode = 'smooth';
+      } else {
+        mode = 'decimated';
+        stride = Math.max(1, Math.ceil(total / 1200));
+      }
+      set({
+        file,
+        frame: 0,
+        effectiveFrame: 0,
+        playing: false,
+        playbackMode: mode,
+        playbackStride: stride,
+        error: null,
+        loading: false,
+        loadProgress: 1,
+      });
+    },
 
     setLoading: (loading, progress) => set({
       loading,
@@ -270,7 +304,8 @@ export const useStore = create<AppState>()(
       const f = get().file;
       if (!f) return;
       const maxFrame = f.trajectory.totalFrames - 1;
-      set({ frame: Math.max(0, Math.min(frame, maxFrame)) });
+      const clamped = Math.max(0, Math.min(frame, maxFrame));
+      set({ frame: Math.floor(clamped), effectiveFrame: clamped });
     },
 
     nextFrame: () => {
@@ -278,10 +313,11 @@ export const useStore = create<AppState>()(
       if (!file) return;
       const max = file.trajectory.totalFrames - 1;
       if (frame >= max) {
-        if (loopMode === 'loop') set({ frame: 0 });
+        if (loopMode === 'loop') set({ frame: 0, effectiveFrame: 0 });
         else if (loopMode === 'once') set({ playing: false });
       } else {
-        set({ frame: frame + 1 });
+        const next = frame + 1;
+        set({ frame: next, effectiveFrame: next });
       }
     },
 
@@ -289,11 +325,22 @@ export const useStore = create<AppState>()(
       const { file, frame } = get();
       if (!file) return;
       const max = file.trajectory.totalFrames - 1;
-      set({ frame: frame <= 0 ? max : frame - 1 });
+      const next = frame <= 0 ? max : frame - 1;
+      set({ frame: next, effectiveFrame: next });
     },
 
     togglePlay: () => set(s => ({ playing: !s.playing })),
     setPlaybackSpeed: (playbackSpeed) => set({ playbackSpeed }),
+    setEffectiveFrame: (effectiveFrame) => {
+      const f = get().file;
+      if (!f) return;
+      const max = f.trajectory.totalFrames - 1;
+      const clamped = Math.max(0, Math.min(effectiveFrame, max));
+      set({ effectiveFrame: clamped, frame: Math.floor(clamped) });
+    },
+    setPlaybackStride: (playbackStride) => set({ playbackStride: Math.max(1, Math.floor(playbackStride)) }),
+    setPlaybackMode: (playbackMode) => set({ playbackMode }),
+    setMovieSync: (movieSync) => set({ movieSync }),
 
     setColorMode: (colorMode) => set({ colorMode }),
     setColorProperty: (colorProperty) => set({ colorProperty }),
@@ -330,6 +377,9 @@ export const useStore = create<AppState>()(
     clearFile: () => set({
       file: null,
       frame: 0,
+      effectiveFrame: 0,
+      playbackStride: 1,
+      playbackMode: 'static',
       playing: false,
       loading: false,
       loadProgress: 0,
