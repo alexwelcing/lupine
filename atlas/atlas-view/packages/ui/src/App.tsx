@@ -81,6 +81,7 @@ import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
 import type { ColormapName } from '@atlas/core/types';
 import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
+import { PlaybackFrameProbe, PlaybackHUD } from './PlaybackHUD';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 
 // ─── Icons ────────────────────────────────────────────────────────────
@@ -513,19 +514,12 @@ export default function App() {
   // Reads from and writes to the store; no React state in the hook.
   useTimelineDriver();
 
-  // Derive interpolation state from the store. `effectiveFrame` is fractional
-  // during playback (the integer floor lives in `frame`), so renderers can
-  // blend between consecutive MD frames without a separate hook.
-  const effectiveFrame = useStore(s => s.effectiveFrame);
-  const totalFramesForInterp = file?.trajectory.totalFrames ?? 0;
-  const interpFrameIndex = totalFramesForInterp > 0
-    ? Math.min(Math.floor(effectiveFrame), totalFramesForInterp - 1)
-    : 0;
-  const interpNextFrameIndex = totalFramesForInterp > 0
-    ? Math.min(interpFrameIndex + 1, totalFramesForInterp - 1)
-    : 0;
-  const interpFactor = effectiveFrame - interpFrameIndex;
-  const isInterpolating = interpFactor > 0 && interpFactor < 1 && interpFrameIndex !== interpNextFrameIndex;
+  // Note: App.tsx deliberately does NOT subscribe to `effectiveFrame`. The
+  // renderers (AtomsOptimized, Bonds) read it from the store inside `useFrame`
+  // so per-frame updates run on R3F's render clock without re-rendering this
+  // 1500-line component at the display refresh rate. The integer `frame` from
+  // the store still drives the scrubber UI, hover tooltip, and AnomalyTracker
+  // — those only need to update on integer frame transitions (~30 Hz).
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -891,6 +885,7 @@ export default function App() {
             <XR store={xrStore}>
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
+            <PlaybackFrameProbe />
             <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} />
 
             <ambientLight intensity={ambientLightIntensity} />
@@ -931,9 +926,7 @@ export default function App() {
                     active={anomalyTracking}
                   />
                   <AtomsOptimized
-                    frame={file!.trajectory.frames[interpFrameIndex]}
-                    nextFrame={isInterpolating ? file!.trajectory.frames[interpNextFrameIndex] : undefined}
-                    interpolationFactor={isInterpolating ? interpFactor : 0}
+                    trajectory={file!.trajectory}
                     colorMode={colorMode}
                     colorProperty={colorProperty ?? undefined}
                     colormap={colormap}
@@ -949,9 +942,7 @@ export default function App() {
                   />
                   {showBonds && (
                     <Bonds
-                      frame={file!.trajectory.frames[interpFrameIndex]}
-                      nextFrame={isInterpolating ? file!.trajectory.frames[interpNextFrameIndex] : undefined}
-                      interpolationFactor={isInterpolating ? interpFactor : 0}
+                      trajectory={file!.trajectory}
                       maxBondLength={bondCutoff}
                       renderStyle={renderStyle}
                       colormap={colormap}
@@ -1028,6 +1019,9 @@ export default function App() {
             </EffectComposer>
             </XR>
           </Canvas>
+
+          {/* FPS / drop counter — toggled via store.showStats or ?stats=1 */}
+          <PlaybackHUD />
 
           {/* Scale bar for publication figures */}
           {file && currentFrame && showScaleBar && (
