@@ -617,8 +617,8 @@
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
     "domain": "Metals & Alloys",
     "atoms": "5,000",
-    "frames": "100",
-    "file": "dump.CuZr_melt.lammpstrj",
+    "frames": "20",
+    "file": "gallery/dump.CuZr_melt.lammpstrj",
     "available": true,
     "colors": [
       "#4da6ff",
@@ -707,8 +707,8 @@
     "subtitle": "Dynamic crack propagation with elastic-plastic zone",
     "domain": "Defects & Mechanics",
     "atoms": "1,800",
-    "frames": "100",
-    "file": "dump.crack2d.lammpstrj",
+    "frames": "15",
+    "file": "gallery/dump.crack2d.lammpstrj",
     "available": true,
     "colors": [
       "#ff4060",
@@ -2993,8 +2993,8 @@
     "subtitle": "Argon-like system near triple point",
     "domain": "Methods",
     "atoms": "32,768",
-    "frames": "100",
-    "file": "dump.lj_melt.lammpstrj",
+    "frames": "25",
+    "file": "gallery/dump.lj_melt.lammpstrj",
     "available": true,
     "colors": [
       "#00ff7f",
