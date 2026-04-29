@@ -1,0 +1,6 @@
+.evidence-table th,
+.evidence-table td { padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--outline-variant); }
+.glass-panel-elevated { border: 1px solid var(--outline-variant); border-radius: 1rem; background: rgba(15, 23, 42, 0.45); }
+.bg-noise { background-image: radial-gradient(rgba(255,255,255,0.04) 0.5px, transparent 0.5px); background-size: 2px 2px; }
+.glow-primary { text-shadow: 0 0 12px color-mix(in srgb, var(--primary), transparent 55%); }
+.glow-secondary { text-shadow: 0 0 12px color-mix(in srgb, var(--secondary), transparent 45%); }
