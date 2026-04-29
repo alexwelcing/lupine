@@ -1,8 +1,14 @@
 /**
- * <AtomPicker /> — Raycast-based atom selection
- * 
- * Uses spatial hash for O(1) closest-atom lookup instead of
- * O(n) iteration through all atoms.
+ * <AtomPicker /> — Raycast-based atom selection.
+ *
+ * Click-only. The previous version did a raycast on every `pointermove`
+ * event (throttled to 20 Hz, plus a separate window mousemove listener that
+ * stored cursor coordinates in React state) — both were re-rendering the
+ * full app shell whenever the user moved the cursor and competing with the
+ * playback hot path. Hover-on-demand can come back as an Alt-modifier-gated
+ * opt-in if anyone misses it.
+ *
+ * Uses spatial hash for O(1) closest-atom lookup instead of O(n) iteration.
  */
 
 import { useCallback, useMemo, useRef, useEffect, useState } from 'react';
@@ -17,7 +23,6 @@ interface AtomPickerProps {
   spatialHash: SpatialHash3D;
   enabled?: boolean;
   radius?: number;
-  onHover?: (atomIndex: number | null) => void;
   onClick?: (atomIndex: number | null) => void;
   onSelect?: (indices: number[]) => void; // Multi-select
   selectionMode?: 'single' | 'add' | 'remove' | 'measure';
@@ -34,20 +39,13 @@ export function AtomPicker({
   spatialHash,
   enabled = true,
   radius = 2.0,
-  onHover,
   onClick,
   onSelect,
   selectionMode = 'single',
 }: AtomPickerProps) {
-  const { camera, size, scene, raycaster } = useThree();
-  const raycasterRef = useRef(new THREE.Raycaster());
-  const mouseRef = useRef(new THREE.Vector2());
-  const [hoveredAtom, setHoveredAtom] = useState<number | null>(null);
+  const { camera } = useThree();
   const [selectedAtoms, setSelectedAtoms] = useState<Set<number>>(new Set());
   const measureAtomsRef = useRef<number[]>([]); // For measurement mode
-
-  // Visual indicator for hovered atom
-  const indicatorRef = useRef<THREE.Mesh>(null);
 
   // Universal Raycast (XR + Mouse)
   const pickAtomRay = useCallback((ray: THREE.Ray): PickedAtom | null => {
@@ -92,36 +90,6 @@ export function AtomPicker({
     }
     return null;
   }, [camera.far, frame.positions, radius, spatialHash]);
-
-  const lastMoveRef = useRef<number>(0);
-
-  // R3F Pointer Move (supports XR controllers and mouse)
-  const handlePointerMove = useCallback((e: any) => {
-    if (!enabled) return;
-    
-    const now = performance.now();
-    if (now - lastMoveRef.current < 50) return; // Throttle to 20fps for hover
-    lastMoveRef.current = now;
-    
-    if (!e.ray) return;
-    const picked = pickAtomRay(e.ray);
-    
-    if (picked?.index !== hoveredAtom) {
-      setHoveredAtom(picked?.index ?? null);
-      onHover?.(picked?.index ?? null);
-      
-      if (indicatorRef.current && picked) {
-        indicatorRef.current.position.copy(picked.worldPosition);
-        indicatorRef.current.visible = true;
-        
-        const type = frame.types[picked.index];
-        const baseRadius = [1.28, 0.73, 1.60, 1.44][type - 1] ?? 1.2;
-        indicatorRef.current.scale.setScalar(baseRadius * 1.2);
-      } else if (indicatorRef.current) {
-        indicatorRef.current.visible = false;
-      }
-    }
-  }, [enabled, hoveredAtom, onHover, pickAtomRay, frame.types]);
 
   // R3F Pointer Click
   const handlePointerClick = useCallback((e: any) => {
@@ -202,27 +170,15 @@ export function AtomPicker({
 
   return (
     <>
-      {/* Invisible raycast target for Universal Pointer Events (Mouse + XR) */}
+      {/* Invisible raycast target for click selection (Mouse + XR) */}
       <mesh
         position={boundsMesh.position}
-        onPointerMove={handlePointerMove}
         onClick={handlePointerClick}
       >
         <boxGeometry args={boundsMesh.args} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} />
       </mesh>
 
-      {/* Hover indicator */}
-      <mesh ref={indicatorRef} visible={false}>
-        <sphereGeometry args={[1, 16, 12]} />
-        <meshBasicMaterial 
-          color="#00c8f0" 
-          transparent 
-          opacity={0.3} 
-          depthTest={false}
-        />
-      </mesh>
-      
       {/* Selection indicators */}
       {Array.from(selectedAtoms).map(index => (
         <SelectionIndicator
