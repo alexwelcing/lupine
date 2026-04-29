@@ -15,7 +15,10 @@ import { XR, createXRStore, useXR } from '@react-three/xr';
 import { USDZExporter } from 'three/examples/jsm/exporters/USDZExporter.js';
 
 export const xrStore = createXRStore({
-  emulate: false,
+  // In dev mode, enable the built-in IWER (Immersive Web Emulation Runtime)
+  // so we can simulate AR/VR sessions on desktop for testing.
+  // In production, native WebXR is required.
+  emulate: import.meta.env.DEV,
 });
 
 async function enterXRSession(mode: 'immersive-vr' | 'immersive-ar') {
@@ -60,6 +63,7 @@ import { FileDropZone } from './FileDropZone';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { SpatialAnchor } from './SpatialAnchor';
+import { XRMoleculeInteraction } from './xr/XRMoleculeInteraction';
 import { Bonds } from '@atlas/scene/Bonds';
 import { useTimelineDriver } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
@@ -235,226 +239,7 @@ type InstancedSwap = {
   replacement: THREE.Mesh;
 };
 
-const AR_EXPORT_DEBUG = false;
-
-function toExportSafeMaterial(src: THREE.Material): THREE.MeshStandardMaterial {
-  const anySrc = src as any;
-  const mat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(1, 1, 1),
-    vertexColors: true,
-    transparent: anySrc.transparent === true,
-    opacity: typeof anySrc.opacity === 'number' ? anySrc.opacity : 1.0,
-    roughness: typeof anySrc.roughness === 'number' ? anySrc.roughness : 0.45,
-    metalness: typeof anySrc.metalness === 'number' ? anySrc.metalness : 0.15,
-    map: anySrc.map ?? null,
-    normalMap: anySrc.normalMap ?? null,
-    roughnessMap: anySrc.roughnessMap ?? null,
-    metalnessMap: anySrc.metalnessMap ?? null,
-    emissiveMap: anySrc.emissiveMap ?? null,
-    emissive: anySrc.emissive?.clone?.() ?? new THREE.Color(0, 0, 0),
-    emissiveIntensity: typeof anySrc.emissiveIntensity === 'number' ? anySrc.emissiveIntensity : 1.0,
-  });
-  // Avoid exporter/runtime uncertainty from custom shader hooks.
-  (mat as any).onBeforeCompile = undefined;
-  return mat;
-}
-
-function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
-  const baseGeom = im.geometry;
-  const basePos = baseGeom.getAttribute('position') as THREE.BufferAttribute;
-  const baseNorm = baseGeom.getAttribute('normal') as THREE.BufferAttribute | undefined;
-  const baseUV = baseGeom.getAttribute('uv') as THREE.BufferAttribute | undefined;
-  const baseIdx = baseGeom.getIndex();
-
-  const vPerInstance = basePos.count;
-  const iPerInstance = baseIdx ? baseIdx.count : 0;
-  const N = im.count;
-
-  const totalVerts = vPerInstance * N;
-  const totalIdx = iPerInstance * N;
-
-  const positions = new Float32Array(totalVerts * 3);
-  const normals = baseNorm ? new Float32Array(totalVerts * 3) : null;
-  const uvs = baseUV ? new Float32Array(totalVerts * 2) : null;
-  const colors = new Float32Array(totalVerts * 3);
-  const indices = baseIdx
-    ? (totalVerts > 65535 ? new Uint32Array(totalIdx) : new Uint16Array(totalIdx))
-    : null;
-
-  const mat4 = new THREE.Matrix4();
-  const mat3 = new THREE.Matrix3();
-  const vp = new THREE.Vector3();
-  const vn = new THREE.Vector3();
-  const col = new THREE.Color();
-  const hasInstanceColor = (im as any).instanceColor != null;
-
-  for (let i = 0; i < N; i++) {
-    im.getMatrixAt(i, mat4);
-    if (hasInstanceColor) im.getColorAt(i, col);
-    else col.setRGB(1, 1, 1);
-    mat3.getNormalMatrix(mat4);
-
-    const vBase = i * vPerInstance;
-    for (let v = 0; v < vPerInstance; v++) {
-      vp.fromBufferAttribute(basePos, v).applyMatrix4(mat4);
-      const off3 = (vBase + v) * 3;
-      positions[off3] = vp.x;
-      positions[off3 + 1] = vp.y;
-      positions[off3 + 2] = vp.z;
-
-      if (normals && baseNorm) {
-        vn.fromBufferAttribute(baseNorm, v).applyMatrix3(mat3).normalize();
-        normals[off3] = vn.x;
-        normals[off3 + 1] = vn.y;
-        normals[off3 + 2] = vn.z;
-      }
-
-      colors[off3] = col.r;
-      colors[off3 + 1] = col.g;
-      colors[off3 + 2] = col.b;
-
-      if (uvs && baseUV) {
-        const off2 = (vBase + v) * 2;
-        uvs[off2] = baseUV.getX(v);
-        uvs[off2 + 1] = baseUV.getY(v);
-      }
-    }
-
-    if (indices && baseIdx) {
-      const iBase = i * iPerInstance;
-      for (let k = 0; k < iPerInstance; k++) {
-        indices[iBase + k] = baseIdx.getX(k) + vBase;
-      }
-    }
-  }
-
-  const merged = new THREE.BufferGeometry();
-  merged.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  if (normals) merged.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
-  if (uvs) merged.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
-  merged.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-  if (indices) merged.setIndex(new THREE.BufferAttribute(indices, 1));
-  if (!normals) merged.computeVertexNormals();
-
-  const baseMat = (Array.isArray(im.material) ? im.material[0] : im.material) as THREE.Material;
-  const exportMat = toExportSafeMaterial(baseMat);
-
-  if (AR_EXPORT_DEBUG) {
-    const c0 = colors.length >= 3 ? [colors[0], colors[1], colors[2]] : ['n/a'];
-    console.info('[AR export] baked instanced mesh', {
-      name: im.name || '(unnamed)',
-      instances: N,
-      totalVerts,
-      hasInstanceColor,
-      sampleColor0: c0,
-      materialType: baseMat.type,
-      exportMaterialType: exportMat.type,
-    });
-  }
-
-  const mesh = new THREE.Mesh(merged, exportMat);
-  mesh.name = (im.name || 'instanced') + '_baked';
-  mesh.position.copy(im.position);
-  mesh.quaternion.copy(im.quaternion);
-  mesh.scale.copy(im.scale);
-  mesh.visible = im.visible;
-  return mesh;
-}
-
-function expandInstancedMeshes(root: THREE.Object3D): InstancedSwap[] {
-  const targets: THREE.InstancedMesh[] = [];
-  root.traverse(obj => {
-    if ((obj as any).isInstancedMesh && obj.parent && (obj as THREE.InstancedMesh).count > 0) {
-      targets.push(obj as THREE.InstancedMesh);
-    }
-  });
-
-  const swaps: InstancedSwap[] = [];
-  for (const im of targets) {
-    if (!im.parent) continue;
-    const baked = bakeInstancedMesh(im);
-    swaps.push({ parent: im.parent, original: im, replacement: baked });
-    im.parent.add(baked);
-    im.parent.remove(im);
-  }
-  return swaps;
-}
-
-function restoreInstancedMeshes(swaps: InstancedSwap[]) {
-  for (const swap of swaps) {
-    swap.parent.add(swap.original);
-    swap.parent.remove(swap.replacement);
-    swap.replacement.geometry.dispose();
-    (swap.replacement.material as THREE.Material).dispose();
-  }
-}
-
-function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplete: () => void }) {
-  const { scene } = useThree();
-
-  useEffect(() => {
-    if (!trigger) return;
-
-    let cancelled = false;
-    const runExport = async () => {
-      // Yield one animation frame so the "Preparing AR view…" overlay
-      // actually paints before the main thread blocks on the bake.
-      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
-      if (cancelled) return;
-
-      const oldBackground = scene.background;
-      scene.background = null;
-      const swaps = expandInstancedMeshes(scene);
-
-      try {
-        const exporter = new USDZExporter();
-        const arrayBuffer = await exporter.parseAsync(scene);
-
-        const blob = new Blob([arrayBuffer as any], { type: 'model/vnd.usdz+zip' });
-        const url = URL.createObjectURL(blob);
-
-        // iOS Safari AR Quick Look requirements:
-        //  - rel="ar" anchor with a single <img> child
-        //  - NO `download` attribute — its presence makes Safari download the
-        //    file instead of launching AR Quick Look.
-        const a = document.createElement('a');
-        a.href = url;
-        a.rel = 'ar';
-        a.style.position = 'absolute';
-        a.style.opacity = '0';
-        a.style.pointerEvents = 'none';
-
-        const img = document.createElement('img');
-        img.alt = 'AR';
-        a.appendChild(img);
-        document.body.appendChild(a);
-
-        a.click();
-
-        setTimeout(() => {
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }, 1000);
-
-        // Hold the overlay briefly so iOS's AR Quick Look UI has time to
-        // slide in on top before we dismiss our loading state — otherwise
-        // there's a flash of the 2D scene at the seam.
-        await new Promise<void>(resolve => setTimeout(resolve, 350));
-      } catch (e) {
-        console.error("USDZ Export failed", e);
-        alert("Failed to export AR model for Quick Look.");
-      } finally {
-        restoreInstancedMeshes(swaps);
-        scene.background = oldBackground;
-        onComplete();
-      }
-    };
-    runExport();
-    return () => { cancelled = true; };
-  }, [trigger, scene, onComplete]);
-
-  return null;
-}
+import { USDZExportHelper } from './export/USDZExportPipeline';
 
 // ─── Scene Background component ──────────────────────────────────────
 function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: string; bottom: string; style?: 'linear' | 'radial' | 'spotlight'; videoUrl?: string | null }) {
@@ -1098,7 +883,8 @@ export default function App() {
               near: 0.1,
               far: cameraDistance * 10,
             }}
-            gl={{ antialias: true, preserveDrawingBuffer: true }}
+            dpr={[1, 1.5]}
+            gl={{ antialias: false, powerPreference: 'high-performance', alpha: false, stencil: false }}
             style={{ background: 'transparent' }}
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
@@ -1137,49 +923,51 @@ export default function App() {
             />
 
             {currentFrame && (
-              <SpatialAnchor cameraDistance={cameraDistance}>
-                <AnomalyTracker
-                  frame={currentFrame}
-                  colorProperty={colorProperty}
-                  active={anomalyTracking}
-                />
-                <AtomsOptimized
-                  frame={file!.trajectory.frames[interpFrameIndex]}
-                  nextFrame={isInterpolating ? file!.trajectory.frames[interpNextFrameIndex] : undefined}
-                  interpolationFactor={isInterpolating ? interpFactor : 0}
-                  colorMode={colorMode}
-                  colorProperty={colorProperty ?? undefined}
-                  colormap={colormap}
-                  scale={atomScale}
-                  renderStyle={renderStyle}
-                  onSpatialHash={setSpatialHash}
-                  highlightedAtoms={new Set(selectedAtoms)}
-                  hiddenAtomTypes={hiddenAtomTypes}
-                  atomTypeScales={atomTypeScales}
-                  botanicalMode={renderStyle === 'botanical'}
-                  materialPreset={materialPreset}
-                  atomTexture={atomTexture}
-                />
-                {showBonds && (
-                  <Bonds
+              <XRMoleculeInteraction>
+                <SpatialAnchor cameraDistance={cameraDistance}>
+                  <AnomalyTracker
+                    frame={currentFrame}
+                    colorProperty={colorProperty}
+                    active={anomalyTracking}
+                  />
+                  <AtomsOptimized
                     frame={file!.trajectory.frames[interpFrameIndex]}
                     nextFrame={isInterpolating ? file!.trajectory.frames[interpNextFrameIndex] : undefined}
                     interpolationFactor={isInterpolating ? interpFactor : 0}
-                    maxBondLength={bondCutoff}
-                    renderStyle={renderStyle}
-                    colormap={colormap}
                     colorMode={colorMode}
                     colorProperty={colorProperty ?? undefined}
-                    radius={0.12}
-                    opacity={0.85}
+                    colormap={colormap}
+                    scale={atomScale}
+                    renderStyle={renderStyle}
+                    onSpatialHash={setSpatialHash}
+                    highlightedAtoms={new Set(selectedAtoms)}
+                    hiddenAtomTypes={hiddenAtomTypes}
+                    atomTypeScales={atomTypeScales}
                     botanicalMode={renderStyle === 'botanical'}
                     materialPreset={materialPreset}
+                    atomTexture={atomTexture}
                   />
-                )}
-                {showCell && (
-                  <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />
-                )}
-              </SpatialAnchor>
+                  {showBonds && (
+                    <Bonds
+                      frame={file!.trajectory.frames[interpFrameIndex]}
+                      nextFrame={isInterpolating ? file!.trajectory.frames[interpNextFrameIndex] : undefined}
+                      interpolationFactor={isInterpolating ? interpFactor : 0}
+                      maxBondLength={bondCutoff}
+                      renderStyle={renderStyle}
+                      colormap={colormap}
+                      colorMode={colorMode}
+                      colorProperty={colorProperty ?? undefined}
+                      radius={0.12}
+                      opacity={0.85}
+                      botanicalMode={renderStyle === 'botanical'}
+                      materialPreset={materialPreset}
+                    />
+                  )}
+                  {showCell && (
+                    <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />
+                  )}
+                </SpatialAnchor>
+              </XRMoleculeInteraction>
             )}
 
             {currentFrame && spatialHash && (

@@ -443,7 +443,7 @@ export function AtomsOptimized({
       bsz = frame.boxBounds![5] - frame.boxBounds![4];
     }
 
-    // ─── Pre-compute lookups for O(1) access inside hot loop ───
+    // ─── Pre-compute LUTs for O(1) access inside hot loop ───
     const MAX_TYPES = 256;
     const radiiLookup = new Float32Array(MAX_TYPES).fill(1.2);
     const hiddenLookup = new Uint8Array(MAX_TYPES);
@@ -480,6 +480,26 @@ export function AtomsOptimized({
     const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
     const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty!) : null;
     const isPropMode = colorMode === 'property' && propData;
+
+    // ─── Zero-Allocation Lookup Tables ───
+    const lutSize = 1024;
+    const lutR = new Float32Array(lutSize);
+    const lutG = new Float32Array(lutSize);
+    const lutB = new Float32Array(lutSize);
+    if (isPropMode) {
+      for (let i = 0; i < lutSize; i++) {
+        const c = mapFn(i / (lutSize - 1));
+        lutR[i] = c[0]; lutG[i] = c[1]; lutB[i] = c[2];
+      }
+    }
+
+    // Convert Set to Uint8Array for O(1) loop checks
+    const highlights = new Uint8Array(frame.natoms);
+    if (highlightedAtoms && highlightedAtoms.size > 0) {
+      highlightedAtoms.forEach(idx => {
+        if (idx < frame.natoms) highlights[idx] = 1;
+      });
+    }
 
     for (let i = 0; i < frame.natoms; i++) {
       // Position
@@ -518,8 +538,9 @@ export function AtomsOptimized({
 
       // Color
       const cIdx = i * 3;
+      const isHighlighted = highlights[i] === 1;
+
       if (botanicalMode) {
-        const isHighlighted = highlightedAtoms?.has(i);
         if (isHighlighted) {
           colorArray[cIdx] = Math.min(1, botR[typeId] * 1.5);
           colorArray[cIdx + 1] = Math.min(1, botG[typeId] * 1.5);
@@ -536,13 +557,13 @@ export function AtomsOptimized({
           val = val + (nextPropData[i] - val) * t;
         }
         const norm = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
-        const [r, g, b] = mapFn(norm);
-        colorArray[cIdx] = r;
-        colorArray[cIdx + 1] = g;
-        colorArray[cIdx + 2] = b;
+        // Map to LUT index (0 to lutSize - 1)
+        const lutIdx = Math.max(0, Math.min(lutSize - 1, Math.floor(norm * lutSize)));
+        colorArray[cIdx] = lutR[lutIdx];
+        colorArray[cIdx + 1] = lutG[lutIdx];
+        colorArray[cIdx + 2] = lutB[lutIdx];
         propArray[i] = norm;
       } else {
-        const isHighlighted = highlightedAtoms?.has(i);
         let r, g, b;
         if (colorMode === 'uniform') {
           r = uniR; g = uniG; b = uniB;

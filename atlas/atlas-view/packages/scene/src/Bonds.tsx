@@ -278,6 +278,43 @@ export function Bonds({
     const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty) : null;
     const mapFn = COLORMAPS[colormap] || COLORMAPS.viridis;
 
+    // ─── Zero-Allocation Lookup Tables ───
+    const lutSize = 1024;
+    const lutR = new Float32Array(lutSize);
+    const lutG = new Float32Array(lutSize);
+    const lutB = new Float32Array(lutSize);
+    if (isPropMode) {
+      for (let i = 0; i < lutSize; i++) {
+        const c = mapFn(i / (lutSize - 1));
+        lutR[i] = c[0]; lutG[i] = c[1]; lutB[i] = c[2];
+      }
+    }
+
+    const MAX_TYPES = 256;
+    const typeR = new Float32Array(MAX_TYPES).fill(DEFAULT_TYPE_COLOR[0]);
+    const typeG = new Float32Array(MAX_TYPES).fill(DEFAULT_TYPE_COLOR[1]);
+    const typeB = new Float32Array(MAX_TYPES).fill(DEFAULT_TYPE_COLOR[2]);
+    const botR = new Float32Array(MAX_TYPES).fill(0.3);
+    const botG = new Float32Array(MAX_TYPES).fill(0.5);
+    const botB = new Float32Array(MAX_TYPES).fill(0.2);
+    
+    if (botanicalMode) {
+      for (let i = 0; i < MAX_TYPES; i++) {
+        const c = BOTANICAL_COLORS[i] ?? [0.3, 0.5, 0.2];
+        botR[i] = c[0]; botG[i] = c[1]; botB[i] = c[2];
+      }
+    } else if (colorMode === 'uniform') {
+      const uniformColor = getTypeColorFromColormap(1, colormap);
+      typeR.fill(uniformColor[0]);
+      typeG.fill(uniformColor[1]);
+      typeB.fill(uniformColor[2]);
+    } else {
+      for (let i = 0; i < MAX_TYPES; i++) {
+        const c = getTypeColorFromColormap(i, colormap);
+        typeR[i] = c[0]; typeG[i] = c[1]; typeB[i] = c[2];
+      }
+    }
+
     for (let i = 0; i < drawCount / 2; i++) {
       const [a, b] = bondPairs[i];
       let ax = frame.positions[a * 3];
@@ -388,17 +425,18 @@ export function Bonds({
       dummy.updateMatrix();
       mesh.setMatrixAt(i * 2, dummy.matrix);
       
-      let tcA: [number, number, number];
+      let rColA, gColA, bColA;
       if (botanicalMode && frame.types) {
-        tcA = BOTANICAL_COLORS[frame.types[a]] ?? [0.3, 0.5, 0.2];
+        const tA = frame.types[a] < MAX_TYPES ? frame.types[a] : 0;
+        rColA = botR[tA]; gColA = botG[tA]; bColA = botB[tA];
       } else if (isPropMode && propData) {
-        tcA = mapFn(normA);
-      } else if (colorMode === 'uniform') {
-        tcA = getTypeColorFromColormap(1, colormap);
+        const lutIdx = Math.max(0, Math.min(lutSize - 1, Math.floor(normA * lutSize)));
+        rColA = lutR[lutIdx]; gColA = lutG[lutIdx]; bColA = lutB[lutIdx];
       } else {
-        tcA = frame.types ? getTypeColorFromColormap(frame.types[a], colormap) : DEFAULT_TYPE_COLOR;
+        const tA = frame.types ? (frame.types[a] < MAX_TYPES ? frame.types[a] : 0) : 0;
+        rColA = typeR[tA]; gColA = typeG[tA]; bColA = typeB[tA];
       }
-      color.setRGB(tcA[0], tcA[1], tcA[2]);
+      color.setRGB(rColA, gColA, bColA);
       mesh.setColorAt(i * 2, color);
 
       // Instance i*2+1 (Top half of the bond: Mid -> B)
@@ -418,17 +456,18 @@ export function Bonds({
       dummy.updateMatrix();
       mesh.setMatrixAt(i * 2 + 1, dummy.matrix);
       
-      let tcB: [number, number, number];
+      let rColB, gColB, bColB;
       if (botanicalMode && frame.types) {
-        tcB = BOTANICAL_COLORS[frame.types[b]] ?? [0.3, 0.5, 0.2];
+        const tB = frame.types[b] < MAX_TYPES ? frame.types[b] : 0;
+        rColB = botR[tB]; gColB = botG[tB]; bColB = botB[tB];
       } else if (isPropMode && propData) {
-        tcB = mapFn(normB);
-      } else if (colorMode === 'uniform') {
-        tcB = getTypeColorFromColormap(1, colormap);
+        const lutIdx = Math.max(0, Math.min(lutSize - 1, Math.floor(normB * lutSize)));
+        rColB = lutR[lutIdx]; gColB = lutG[lutIdx]; bColB = lutB[lutIdx];
       } else {
-        tcB = frame.types ? getTypeColorFromColormap(frame.types[b], colormap) : DEFAULT_TYPE_COLOR;
+        const tB = frame.types ? (frame.types[b] < MAX_TYPES ? frame.types[b] : 0) : 0;
+        rColB = typeR[tB]; gColB = typeG[tB]; bColB = typeB[tB];
       }
-      color.setRGB(tcB[0], tcB[1], tcB[2]);
+      color.setRGB(rColB, gColB, bColB);
       mesh.setColorAt(i * 2 + 1, color);
     }
 

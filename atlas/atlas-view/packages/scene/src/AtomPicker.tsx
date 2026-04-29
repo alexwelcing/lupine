@@ -7,6 +7,7 @@
 
 import { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
+import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import type { Frame } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
@@ -48,45 +49,31 @@ export function AtomPicker({
   // Visual indicator for hovered atom
   const indicatorRef = useRef<THREE.Mesh>(null);
 
-  // Pick atom at screen position
-  const pickAtom = useCallback((screenX: number, screenY: number): PickedAtom | null => {
-    // Convert to NDC
-    mouseRef.current.x = (screenX / size.width) * 2 - 1;
-    mouseRef.current.y = -(screenY / size.height) * 2 + 1;
-
-    // Raycast into scene
-    raycasterRef.current.setFromCamera(mouseRef.current, camera);
-    const ray = raycasterRef.current.ray;
-
+  // Universal Raycast (XR + Mouse)
+  const pickAtomRay = useCallback((ray: THREE.Ray): PickedAtom | null => {
     // March along ray, checking spatial hash at intervals
-    const step = 0.5; // Check every 0.5 Angstrom
-    const maxDist = 1000; // Maximum search distance
+    const step = Math.max(1.0, radius * 0.5); // Dynamic step size
+    const maxDist = Math.min(camera.far, 300);
 
     for (let t = 0; t < maxDist; t += step) {
       const point = ray.at(t, new THREE.Vector3());
       const nearby = spatialHash.query(point.x, point.y, point.z, radius);
 
       if (nearby.length > 0) {
-        // Found candidate atoms - find closest by actual distance
         let closest: { index: number; dist: number } | null = null;
         
         for (const { index, dist } of nearby) {
-          // Screen-space distance check for precision
-          const atomX = frame.positions[index * 3];
-          const atomY = frame.positions[index * 3 + 1];
-          const atomZ = frame.positions[index * 3 + 2];
-          const atomPos = new THREE.Vector3(atomX, atomY, atomZ);
-          
-          // Project to screen space
-          atomPos.project(camera);
-          const screenDist = Math.hypot(
-            atomPos.x - mouseRef.current.x,
-            atomPos.y - mouseRef.current.y
+          const atomPos = new THREE.Vector3(
+            frame.positions[index * 3],
+            frame.positions[index * 3 + 1],
+            frame.positions[index * 3 + 2]
           );
           
-          // Must be within reasonable screen distance and ray distance
-          if (screenDist < 0.05 && (!closest || dist < closest.dist)) {
-            closest = { index, dist };
+          // Distance from atom center to the ray
+          const distToRay = ray.distanceToPoint(atomPos);
+          
+          if (distToRay < radius && (!closest || distToRay < closest.dist)) {
+            closest = { index, dist: distToRay };
           }
         }
 
@@ -103,26 +90,30 @@ export function AtomPicker({
         }
       }
     }
-
     return null;
-  }, [camera, frame.positions, radius, size, spatialHash]);
+  }, [camera.far, frame.positions, radius, spatialHash]);
 
-  // Mouse move handler
-  const handleMouseMove = useCallback((e: MouseEvent) => {
+  const lastMoveRef = useRef<number>(0);
+
+  // R3F Pointer Move (supports XR controllers and mouse)
+  const handlePointerMove = useCallback((e: any) => {
     if (!enabled) return;
     
-    const picked = pickAtom(e.clientX, e.clientY);
+    const now = performance.now();
+    if (now - lastMoveRef.current < 50) return; // Throttle to 20fps for hover
+    lastMoveRef.current = now;
+    
+    if (!e.ray) return;
+    const picked = pickAtomRay(e.ray);
     
     if (picked?.index !== hoveredAtom) {
       setHoveredAtom(picked?.index ?? null);
       onHover?.(picked?.index ?? null);
       
-      // Update visual indicator
       if (indicatorRef.current && picked) {
         indicatorRef.current.position.copy(picked.worldPosition);
         indicatorRef.current.visible = true;
         
-        // Scale based on atom type
         const type = frame.types[picked.index];
         const baseRadius = [1.28, 0.73, 1.60, 1.44][type - 1] ?? 1.2;
         indicatorRef.current.scale.setScalar(baseRadius * 1.2);
@@ -130,15 +121,15 @@ export function AtomPicker({
         indicatorRef.current.visible = false;
       }
     }
-  }, [enabled, hoveredAtom, onHover, pickAtom, frame.types]);
+  }, [enabled, hoveredAtom, onHover, pickAtomRay, frame.types]);
 
-  // Click handler
-  const handleClick = useCallback((e: MouseEvent) => {
+  // R3F Pointer Click
+  const handlePointerClick = useCallback((e: any) => {
     if (!enabled) return;
-    // Strictly isolate canvas clicks (prevent UI panel clicks from triggering deselection)
-    if (!(e.target instanceof HTMLCanvasElement)) return;
+    e.stopPropagation();
     
-    const picked = pickAtom(e.clientX, e.clientY);
+    if (!e.ray) return;
+    const picked = pickAtomRay(e.ray);
     const index = picked?.index ?? null;
     
     onClick?.(index);
@@ -146,7 +137,6 @@ export function AtomPicker({
     if (index !== null) {
       setSelectedAtoms(prev => {
         const next = new Set(prev);
-        
         switch (selectionMode) {
           case 'single':
             next.clear();
@@ -159,7 +149,6 @@ export function AtomPicker({
             next.delete(index);
             break;
           case 'measure':
-            // Collect up to 4 atoms for measurement
             measureAtomsRef.current.push(index);
             if (measureAtomsRef.current.length > 4) {
                measureAtomsRef.current.shift();
@@ -167,19 +156,17 @@ export function AtomPicker({
             onSelect?.(measureAtomsRef.current);
             return new Set(measureAtomsRef.current);
         }
-        
         onSelect?.(Array.from(next));
         return next;
       });
     } else {
-      // We missed all atoms but hit the canvas. Clear selection!
       if (selectionMode === 'single' || selectionMode === 'measure') {
         setSelectedAtoms(new Set());
         measureAtomsRef.current = [];
         onSelect?.([]);
       }
     }
-  }, [enabled, onClick, onSelect, pickAtom, selectionMode]);
+  }, [enabled, onClick, onSelect, pickAtomRay, selectionMode]);
 
   // Keyboard shortcuts
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -189,28 +176,42 @@ export function AtomPicker({
       onSelect?.([]);
     }
     if (e.key === 'm' && !e.metaKey && !e.ctrlKey) {
-      // Toggle measurement mode
       measureAtomsRef.current = [];
     }
   }, [onSelect]);
 
-  // Attach event listeners
   useEffect(() => {
     if (!enabled) return;
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('click', handleClick);
     window.addEventListener('keydown', handleKeyDown);
-    
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('click', handleClick);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [enabled, handleMouseMove, handleClick, handleKeyDown]);
+  }, [enabled, handleKeyDown]);
+
+  // Calculate bounds for the invisible raycast target
+  const boundsMesh = useMemo(() => {
+    if (!frame.boxBounds) {
+      return { position: [0,0,0] as [number, number, number], args: [100, 100, 100] as [number, number, number] };
+    }
+    const [xlo, xhi, ylo, yhi, zlo, zhi] = frame.boxBounds;
+    return {
+      position: [(xlo + xhi) / 2, (ylo + yhi) / 2, (zlo + zhi) / 2] as [number, number, number],
+      args: [xhi - xlo + 5, yhi - ylo + 5, zhi - zlo + 5] as [number, number, number]
+    };
+  }, [frame.boxBounds]);
 
   return (
     <>
+      {/* Invisible raycast target for Universal Pointer Events (Mouse + XR) */}
+      <mesh
+        position={boundsMesh.position}
+        onPointerMove={handlePointerMove}
+        onClick={handlePointerClick}
+      >
+        <boxGeometry args={boundsMesh.args} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} />
+      </mesh>
+
       {/* Hover indicator */}
       <mesh ref={indicatorRef} visible={false}>
         <sphereGeometry args={[1, 16, 12]} />
@@ -240,58 +241,73 @@ export function AtomPicker({
 
 // Individual selection indicator
 function SelectionIndicator({ position, index }: { position: [number, number, number]; index: number }) {
+  const reticleRef1 = useRef<THREE.Mesh>(null);
+  const reticleRef2 = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    if (reticleRef1.current) {
+      reticleRef1.current.rotation.x = t * 1.2;
+      reticleRef1.current.rotation.y = t * 0.8;
+      const pulse = 1.0 + Math.sin(t * 8) * 0.05;
+      reticleRef1.current.scale.setScalar(pulse);
+    }
+    if (reticleRef2.current) {
+      reticleRef2.current.rotation.y = -t * 1.5;
+      reticleRef2.current.rotation.z = t * 0.5;
+    }
+  });
+
   return (
-    <mesh position={position}>
-      <sphereGeometry args={[1.3, 16, 12]} />
-      <meshBasicMaterial 
-        color="#00c8f0" 
-        transparent 
-        opacity={0.15}
-        depthTest={false}
-      />
-      {/* Selection ring */}
-      <mesh scale={1.4}>
-        <ringGeometry args={[0.9, 1.0, 32]} />
+    <group position={position}>
+      {/* Holographic Core Glow */}
+      <mesh>
+        <sphereGeometry args={[1.5, 32, 32]} />
         <meshBasicMaterial 
-          color="#00c8f0" 
+          color="#00ffff" 
           transparent 
-          opacity={0.8}
-          side={THREE.DoubleSide}
+          opacity={0.15}
+          depthTest={false}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+      
+      {/* Sci-Fi Targeting Reticles */}
+      <mesh ref={reticleRef1}>
+        <torusGeometry args={[1.8, 0.03, 16, 64]} />
+        <meshBasicMaterial 
+          color="#ffffff" 
+          transparent
+          opacity={0.9}
           depthTest={false}
         />
       </mesh>
-      {/* Atom number label */}
-      <sprite position={[0, 2, 0]}>
-        <spriteMaterial
-          attach="material"
+      <mesh ref={reticleRef2}>
+        <torusGeometry args={[2.0, 0.015, 16, 64]} />
+        <meshBasicMaterial 
+          color="#00ffff" 
           transparent
-          opacity={0.9}
-        >
-          <canvasTexture
-            attach="map"
-            args={[createLabelCanvas(`#${index + 1}`)]}
-          />
-        </spriteMaterial>
-      </sprite>
-    </mesh>
-  );
-}
+          opacity={0.6}
+          depthTest={false}
+        />
+      </mesh>
 
-// Create text label canvas
-function createLabelCanvas(text: string): HTMLCanvasElement {
-  const canvas = document.createElement('canvas');
-  canvas.width = 64;
-  canvas.height = 32;
-  const ctx = canvas.getContext('2d')!;
-  
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(0, 0, 64, 32);
-  
-  ctx.font = 'bold 14px monospace';
-  ctx.fillStyle = '#00c8f0';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(text, 32, 16);
-  
-  return canvas;
+      {/* High-Fidelity Troika Text Label (XR Compatible) */}
+      <Text
+        position={[0, 2.5, 0]}
+        fontSize={0.8}
+        color="#ffffff"
+        anchorX="center"
+        anchorY="middle"
+        outlineWidth={0.05}
+        outlineColor="#0055ff"
+        outlineOpacity={0.8}
+        renderOrder={999}
+        material-depthTest={false}
+      >
+        {`#${index + 1}`}
+      </Text>
+    </group>
+  );
 }
