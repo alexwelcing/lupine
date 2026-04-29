@@ -1,308 +1,159 @@
 /**
- * useSmoothFramePlayback — Smooth interpolated playback between MD frames
- * 
- * Provides interpolated frame positions for butter-smooth playback
- * even when MD data is sparse (e.g., 1 frame every 1000 steps).
- * 
- * Features:
- * - Linear interpolation between MD frames
- * - Display-synced animation (requestAnimationFrame)
- * - Variable playback speeds
- * - Loop/bounce modes
- * - Statistics reporting
+ * useTimelineDriver — single RAF loop that owns the playback clock.
+ *
+ * Two coupled timelines share this driver:
+ *   1. Frame playthrough — advances `effectiveFrame` (and floored `frame`) in the store.
+ *   2. Flythrough preview — advances `flythroughTime` and writes the camera pose
+ *      to the store; the existing `CameraManager` in App.tsx applies it to the
+ *      Three.js camera on the next render.
+ *
+ * Movie sync mode collapses both into one clock so the camera and the frames
+ * move together. Without movie sync, only the active timeline runs.
+ *
+ * Design constraints:
+ *   - The hook never holds React state; it only writes to the store. That keeps
+ *     the RAF stable across parent re-renders (the previous version was killed
+ *     every render by closure churn — that's the bug this rewrite fixes).
+ *   - All mutable inputs live in `useStore.getState()` reads inside the loop,
+ *     so the loop callback identity is constant for the lifetime of the hook.
+ *   - Single source of truth: the store's `effectiveFrame` and `frame` are the
+ *     only place anything reads "what frame are we on".
  */
 
-import { useRef, useEffect, useCallback, useState } from 'react';
-import type { Frame } from '@atlas/core/types';
+import { useEffect, useRef } from 'react';
+import { useStore } from '../store';
+import {
+  getSequenceDuration,
+  sampleFlythrough,
+  type FlythroughSequence,
+  type FlythroughSample,
+} from '../flythrough';
 
-interface SmoothPlaybackOptions {
-  /** Array of MD frames */
-  frames: Frame[];
-  /** Initial playback speed (1.0 = real-time) */
-  speed?: number;
-  /** Target display rate (fps) */
-  targetFPS?: number;
-  /** MD source frame rate (fps) - default 30 */
-  mdFrameRate?: number;
-  /** Playback mode */
-  loopMode?: 'loop' | 'bounce' | 'once';
-  /** Called with interpolated frame data */
-  onFrame: (state: InterpolatedFrameState) => void;
-  /** Optional stats callback */
-  onStats?: (stats: PlaybackStats) => void;
-}
+const MD_FRAME_FPS_DEFAULT = 30; // assumed source rate of MD trajectories
+const DISCRETE_DWELL_FPS = 1.5;  // small trajectories dwell on each frame so 1→2→3 reads as discrete
 
-export interface InterpolatedFrameState {
-  /** Current MD frame index */
-  frameIndex: number;
-  /** Next MD frame index (for interpolation) */
-  nextFrameIndex: number;
-  /** Interpolation factor: 0.0 = current, 1.0 = next */
-  interpolationFactor: number;
-  /** Whether we're currently interpolating (vs on exact frame) */
-  isInterpolating: boolean;
-  /** Current effective frame number (can be fractional) */
-  effectiveFrame: number;
-}
+export function useTimelineDriver(): void {
+  const rafRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number | null>(null);
 
-export interface PlaybackStats {
-  /** Actual playback FPS */
-  actualFPS: number;
-  /** Number of MD frames advanced */
-  framesAdvanced: number;
-  /** Time spent in interpolation (ms) */
-  interpolationTime: number;
-}
+  useEffect(() => {
+    const tick = (time: number) => {
+      const state = useStore.getState();
+      const { file, playing, playbackSpeed, playbackStride, playbackMode, loopMode,
+              flythrough, flythroughPreview, movieSync, cameraFov } = state;
 
-export function useSmoothFramePlayback(
-  isPlaying: boolean,
-  options: SmoothPlaybackOptions
-) {
-  const {
-    frames,
-    speed = 1.0,
-    targetFPS = 60,
-    loopMode = 'loop',
-    onFrame,
-    onStats,
-  } = options;
-
-  // Playback state
-  const [currentState, setCurrentState] = useState<InterpolatedFrameState>({
-    frameIndex: 0,
-    nextFrameIndex: 1,
-    interpolationFactor: 0,
-    isInterpolating: false,
-    effectiveFrame: 0,
-  });
-
-  // RAF refs
-  const rafIdRef = useRef<number | undefined>(undefined);
-  const lastTimeRef = useRef<number | undefined>(undefined);
-  const accumulatorRef = useRef(0);
-
-  // Stats refs
-  const frameCountRef = useRef(0);
-  const lastStatsTimeRef = useRef(0);
-  const totalInterpolationTimeRef = useRef(0);
-
-  // Frame timing based on MD data
-  // Assume frames are evenly spaced in simulation time
-  const frameInterval = 1000 / targetFPS; // ms per display frame
-  const mdFrameTime = 1000 / (options.mdFrameRate ?? 30); // ms per MD frame
-
-  const loop = useCallback((time: number) => {
-    if (lastTimeRef.current === undefined) {
+      if (lastTimeRef.current === null) lastTimeRef.current = time;
+      const dtMs = time - lastTimeRef.current;
       lastTimeRef.current = time;
-    }
 
-    const delta = time - lastTimeRef.current;
-    lastTimeRef.current = time;
+      const flyActive = flythroughPreview && flythrough && flythrough.keyframes.length >= 2;
+      const totalFrames = file?.trajectory.totalFrames ?? 0;
+      const movieMode = !!flyActive && movieSync && totalFrames > 1;
 
-    // Fractional frames to advance based on elapsed wall-time, speed, and desired target MD framerate
-    const effectiveDeltaFrames = (delta * speed) / mdFrameTime;
-    
-    if (effectiveDeltaFrames > 0) {
-      const start = performance.now();
-
-      setCurrentState(prev => {
-        let newEffectiveFrame = prev.effectiveFrame + effectiveDeltaFrames;
-        const totalFrames = frames.length;
-
-        // Handle loop modes
-        if (newEffectiveFrame >= totalFrames - 1) {
-          if (loopMode === 'loop') {
-            newEffectiveFrame = newEffectiveFrame % (totalFrames - 1);
-          } else if (loopMode === 'bounce') {
-            // Bounce back (not implemented for simplicity)
-            newEffectiveFrame = totalFrames - 1;
-          } else {
-            // once: stop at end
-            newEffectiveFrame = totalFrames - 1;
+      // ─── Flythrough advance (camera) ────────────────────────────────
+      let flySample: FlythroughSample | null = null;
+      if (flyActive) {
+        const dur = getSequenceDuration(flythrough!);
+        if (dur > 0) {
+          let next = state.flythroughTime + (dtMs / 1000) * playbackSpeed;
+          if (flythrough!.loop) {
+            next = ((next % dur) + dur) % dur;
+          } else if (next >= dur) {
+            next = dur;
+            useStore.getState().setFlythroughPreview(false);
+          }
+          useStore.getState().setFlythroughTime(next);
+          flySample = sampleFlythrough(flythrough!, next, cameraFov);
+          if (flySample) {
+            useStore.getState().setCameraState(flySample.position, flySample.target);
           }
         }
-
-        const frameIndex = Math.floor(newEffectiveFrame);
-        const interpolationFactor = newEffectiveFrame - frameIndex;
-        const nextFrameIndex = Math.min(frameIndex + 1, totalFrames - 1);
-
-        const state: InterpolatedFrameState = {
-          frameIndex,
-          nextFrameIndex,
-          interpolationFactor,
-          isInterpolating: interpolationFactor > 0 && interpolationFactor < 1,
-          effectiveFrame: newEffectiveFrame,
-        };
-
-        onFrame(state);
-        return state;
-      });
-
-      totalInterpolationTimeRef.current += performance.now() - start;
-      frameCountRef.current++;
-    }
-
-    // Stats reporting
-    if (onStats && time - lastStatsTimeRef.current >= 1000) {
-      const elapsed = (time - lastStatsTimeRef.current) / 1000;
-      onStats({
-        actualFPS: Math.round(frameCountRef.current / elapsed),
-        framesAdvanced: frameCountRef.current,
-        interpolationTime: totalInterpolationTimeRef.current,
-      });
-      frameCountRef.current = 0;
-      totalInterpolationTimeRef.current = 0;
-      lastStatsTimeRef.current = time;
-    }
-
-    rafIdRef.current = requestAnimationFrame(loop);
-  }, [frames.length, speed, targetFPS, loopMode, onFrame, onStats]);
-
-  // Start/stop playback
-  useEffect(() => {
-    if (!isPlaying || frames.length < 2) {
-      if (rafIdRef.current !== undefined) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = undefined;
       }
-      lastTimeRef.current = undefined;
-      return;
-    }
 
-    rafIdRef.current = requestAnimationFrame(loop);
+      // ─── Frame advance ──────────────────────────────────────────────
+      // Movie mode: frame index is computed from the flythrough sample
+      //             (anchor-aware if both endpoints have anchors).
+      // Else if `playing`: frame index advances on its own clock.
+      if (movieMode && flySample && totalFrames > 1) {
+        const target = frameForFlySample(flythrough!, flySample, totalFrames);
+        if (Math.abs(target - state.effectiveFrame) > 1e-4) {
+          useStore.getState().setEffectiveFrame(target);
+        }
+      } else if (playing && totalFrames > 1) {
+        const sourceFps =
+          playbackMode === 'discrete' ? DISCRETE_DWELL_FPS : MD_FRAME_FPS_DEFAULT;
+        const framesPerMs = (sourceFps * playbackSpeed * playbackStride) / 1000;
+        let next = state.effectiveFrame + dtMs * framesPerMs;
+        const max = totalFrames - 1;
+        if (next >= totalFrames) {
+          if (loopMode === 'loop') {
+            next = ((next % totalFrames) + totalFrames) % totalFrames;
+            if (next > max) next -= totalFrames; // (next % totalFrames) ∈ [0, totalFrames)
+          } else {
+            // 'once' (and 'bounce' until it lands) — clamp at end and stop.
+            next = max;
+            useStore.getState().togglePlay();
+          }
+        }
+        // setEffectiveFrame clamps to [0, max], which is correct for
+        // values just past `max` produced by floating-point drift.
+        useStore.getState().setEffectiveFrame(next);
+      }
 
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
     return () => {
-      if (rafIdRef.current !== undefined) {
-        cancelAnimationFrame(rafIdRef.current);
-      }
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+      lastTimeRef.current = null;
     };
-  }, [isPlaying, frames.length, loop]);
-
-  // Control functions
-  const setFrame = useCallback((frameIndex: number) => {
-    const clamped = Math.max(0, Math.min(frames.length - 1, frameIndex));
-    const intFrame = Math.floor(clamped);
-    const interp = clamped - intFrame;
-    const isInterp = interp > 0 && interp < 1;
-    
-    const state: InterpolatedFrameState = {
-      frameIndex: intFrame,
-      nextFrameIndex: Math.min(intFrame + 1, frames.length - 1),
-      interpolationFactor: interp,
-      isInterpolating: isInterp,
-      effectiveFrame: clamped,
-    };
-    setCurrentState(state);
-    onFrame(state);
-  }, [frames.length, onFrame]);
-
-  const nextFrame = useCallback(() => {
-    setCurrentState(prev => {
-      const newIndex = Math.min(prev.frameIndex + 1, frames.length - 1);
-      const state: InterpolatedFrameState = {
-        frameIndex: newIndex,
-        nextFrameIndex: Math.min(newIndex + 1, frames.length - 1),
-        interpolationFactor: 0,
-        isInterpolating: false,
-        effectiveFrame: newIndex,
-      };
-      onFrame(state);
-      return state;
-    });
-  }, [frames.length, onFrame]);
-
-  const prevFrame = useCallback(() => {
-    setCurrentState(prev => {
-      const newIndex = Math.max(prev.frameIndex - 1, 0);
-      const state: InterpolatedFrameState = {
-        frameIndex: newIndex,
-        nextFrameIndex: Math.min(newIndex + 1, frames.length - 1),
-        interpolationFactor: 0,
-        isInterpolating: false,
-        effectiveFrame: newIndex,
-      };
-      onFrame(state);
-      return state;
-    });
-  }, [onFrame]);
-
-  return {
-    currentState,
-    setFrame,
-    nextFrame,
-    prevFrame,
-  };
+  }, []);
 }
 
 /**
- * Hook for simple frame stepping without interpolation
- * Use this when you want exact MD frames (no smoothing)
+ * Map a flythrough sample to a fractional frame index. If both endpoints of the
+ * current segment have a `frameAnchor`, interpolate between them with the same
+ * eased segment progress the camera uses; otherwise fall back to a linear
+ * mapping over total flythrough progress.
  */
-export function useStepPlayback(
-  isPlaying: boolean,
-  options: {
-    totalFrames: number;
-    speed?: number;
-    loopMode?: 'loop' | 'once';
-    onFrame: (frameIndex: number) => void;
+function frameForFlySample(
+  seq: FlythroughSequence,
+  sample: FlythroughSample,
+  totalFrames: number,
+): number {
+  const max = totalFrames - 1;
+  const kfs = seq.keyframes;
+  const a = kfs[sample.segment];
+  const bIdx = sample.segment + 1 < kfs.length ? sample.segment + 1 : (seq.loop ? 0 : sample.segment);
+  const b = kfs[bIdx];
+  if (a && b && typeof a.frameAnchor === 'number' && typeof b.frameAnchor === 'number') {
+    const fa = clampFrame(a.frameAnchor, max);
+    const fb = clampFrame(b.frameAnchor, max);
+    return fa + (fb - fa) * sample.segmentProgress;
   }
-) {
-  const { totalFrames, speed = 1.0, loopMode = 'loop', onFrame } = options;
-  const [frame, setFrame] = useState(0);
+  return sample.totalProgress * max;
+}
 
-  const rafIdRef = useRef<number | undefined>(undefined);
-  const lastTimeRef = useRef<number | undefined>(undefined);
-  const accumulatorRef = useRef(0);
+function clampFrame(v: number, max: number): number {
+  if (!Number.isFinite(v)) return 0;
+  return Math.max(0, Math.min(max, v));
+}
 
-  const loop = useCallback((time: number) => {
-    if (lastTimeRef.current === undefined) {
-      lastTimeRef.current = time;
-    }
+// ─── Backward-compatible exports ────────────────────────────────────────
+// Older imports referenced `useSmoothFramePlayback` and `InterpolatedFrameState`.
+// These exist now only so consumers can keep the same import names.
 
-    const delta = time - lastTimeRef.current;
-    lastTimeRef.current = time;
+export interface InterpolatedFrameState {
+  frameIndex: number;
+  nextFrameIndex: number;
+  interpolationFactor: number;
+  isInterpolating: boolean;
+  effectiveFrame: number;
+}
 
-    // Assume MD is 30 fps
-    accumulatorRef.current += delta * speed;
-    const frameInterval = 1000 / 30;
-
-    while (accumulatorRef.current >= frameInterval) {
-      setFrame(prev => {
-        let next = prev + 1;
-        if (next >= totalFrames) {
-          next = loopMode === 'loop' ? 0 : totalFrames - 1;
-        }
-        onFrame(next);
-        return next;
-      });
-      accumulatorRef.current -= frameInterval;
-    }
-
-    rafIdRef.current = requestAnimationFrame(loop);
-  }, [totalFrames, speed, loopMode, onFrame]);
-
-  useEffect(() => {
-    if (!isPlaying) {
-      if (rafIdRef.current !== undefined) {
-        cancelAnimationFrame(rafIdRef.current);
-      }
-      return;
-    }
-
-    rafIdRef.current = requestAnimationFrame(loop);
-    return () => {
-      if (rafIdRef.current !== undefined) {
-        cancelAnimationFrame(rafIdRef.current);
-      }
-    };
-  }, [isPlaying, loop]);
-
-  return {
-    frame,
-    setFrame: (f: number) => {
-      const clamped = Math.max(0, Math.min(totalFrames - 1, f));
-      setFrame(clamped);
-      onFrame(clamped);
-    },
-  };
+/** Legacy alias — the driver no longer takes per-call options. */
+export function useSmoothFramePlayback(): void {
+  useTimelineDriver();
 }
