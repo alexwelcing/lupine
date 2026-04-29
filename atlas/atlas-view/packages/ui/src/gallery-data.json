@@ -322,7 +322,7 @@
     "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation\u2013grain-boundary interactions matrix",
     "domain": "Advanced Theory & Validation",
     "atoms": "1,500",
-    "frames": "1",
+    "frames": "60",
     "file": "archive/DisGB_data.lammpstrj",
     "available": true,
     "colors": [
@@ -346,7 +346,7 @@
     "subtitle": "Enze Chen et al. (Nat Commun 2024): Automated phase discovery using GRIP",
     "domain": "Advanced Theory & Validation",
     "atoms": "1,500",
-    "frames": "1",
+    "frames": "60",
     "file": "archive/GRIP_snapshot.lammpstrj",
     "available": true,
     "colors": [
@@ -370,7 +370,7 @@
     "subtitle": "Vivek Devulapalli et al. (Science 2024): SGC MD/MC thermodynamic excess mapping",
     "domain": "Advanced Theory & Validation",
     "atoms": "1,500",
-    "frames": "1",
+    "frames": "60",
     "file": "archive/MDMC-SGC.lammpstrj",
     "available": true,
     "colors": [
@@ -394,7 +394,7 @@
     "subtitle": "W. Curtin et al. (Nature 2023): Edge dislocation mobility in CoCrFeMnNi High-Entropy Alloy using MLIP.",
     "domain": "Metals & Alloys",
     "atoms": "13,086",
-    "frames": "1",
+    "frames": "60",
     "file": "archive/curtin_hea_dislocation.lammpstrj",
     "available": true,
     "colors": [
@@ -418,7 +418,7 @@
     "subtitle": "G. Ceder et al. (Nature Materials 2024): Correlated Li-ion diffusion pathways in garnet-type solid electrolytes.",
     "domain": "Energy Materials",
     "atoms": "960",
-    "frames": "1",
+    "frames": "120",
     "file": "archive/llzo_diffusion.lammpstrj",
     "available": true,
     "colors": [
@@ -466,7 +466,7 @@
     "subtitle": "A.E. Sand et al. (PRL 2022): Primary radiation damage and defect clustering in plasma-facing materials.",
     "domain": "Defects & Mechanics",
     "atoms": "31,250",
-    "frames": "1",
+    "frames": "30",
     "file": "archive/w_cascade_150keV.lammpstrj",
     "available": true,
     "colors": [
@@ -490,7 +490,7 @@
     "subtitle": "S.R. Elliott et al. (Nature Comms 2024): Ultrafast nucleation in Ge2Sb2Te5 memory materials.",
     "domain": "Ceramics & Oxides",
     "atoms": "4,096",
-    "frames": "1",
+    "frames": "100",
     "file": "archive/gst_crystallization.lammpstrj",
     "available": true,
     "colors": [
