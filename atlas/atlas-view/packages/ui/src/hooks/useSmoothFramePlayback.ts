@@ -40,11 +40,19 @@ export function useTimelineDriver(): void {
     const tick = (time: number) => {
       const state = useStore.getState();
       const { file, playing, playbackSpeed, playbackStride, playbackMode, loopMode,
-              flythrough, flythroughPreview, movieSync, cameraFov } = state;
+              flythrough, flythroughPreview, movieSync, cameraFov, exportRequest } = state;
 
       if (lastTimeRef.current === null) lastTimeRef.current = time;
       const dtMs = time - lastTimeRef.current;
       lastTimeRef.current = time;
+
+      // Yield to ExportManager during video/complete recording — it owns the
+      // camera/frame writes for the duration so its frame-perfect cadence isn't
+      // fought by this driver.
+      if (exportRequest.type === 'video' || exportRequest.type === 'complete') {
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
 
       const flyActive = flythroughPreview && flythrough && flythrough.keyframes.length >= 2;
       const totalFrames = file?.trajectory.totalFrames ?? 0;
