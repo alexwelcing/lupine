@@ -122,9 +122,9 @@ const STRINGS = {
  * @param {Record<string, string|number>} [vars]
  * @returns {string}
  */
-export function t(key, lang, vars) {
+export function t(key, lang = DEFAULT_LANG, vars) {
   const l = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
-  let str = (STRINGS[l] && STRINGS[l][key]) || (STRINGS[DEFAULT_LANG] && STRINGS[DEFAULT_LANG][key]) || key;
+  let str = STRINGS[l]?.[key] || STRINGS[DEFAULT_LANG]?.[key] || key;
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       str = str.replaceAll(`{${k}}`, String(v));
