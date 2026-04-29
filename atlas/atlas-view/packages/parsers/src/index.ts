@@ -39,17 +39,31 @@ function getWorker(): Worker {
   return worker;
 }
 
-function send(type: string, payload: any): Promise<any> {
+function send(type: string, payload: any, extras?: Record<string, any>): Promise<any> {
   return new Promise((resolve, reject) => {
     const id = ++messageId;
     pending.set(id, { resolve, reject });
-    getWorker().postMessage({ type, payload, id });
+    getWorker().postMessage({ type, payload, id, ...(extras ?? {}) });
   });
 }
 
+/**
+ * Hard cap on the number of frames the renderer keeps in RAM by default.
+ * Trajectories larger than this are decimated at parse time (every Nth frame)
+ * so that, say, a 300k-frame run still loads. The original count comes back as
+ * `Trajectory.sourceFrameCount`. Override per-call via `parseDumpFile(file, { maxFrames })`.
+ */
+export const DEFAULT_MAX_FRAMES = 1500;
+
+export interface ParseDumpOptions {
+  /** Cap on materialized frames. Defaults to `DEFAULT_MAX_FRAMES`. Use `Infinity` to disable. */
+  maxFrames?: number;
+}
+
 /** Parse a LAMMPS dump file and return a Trajectory */
-export async function parseDumpFile(file: File): Promise<Trajectory> {
-  const result = await send('parse-dump', file);
+export async function parseDumpFile(file: File, options: ParseDumpOptions = {}): Promise<Trajectory> {
+  const maxFrames = options.maxFrames ?? DEFAULT_MAX_FRAMES;
+  const result = await send('parse-dump', file, Number.isFinite(maxFrames) ? { maxFrames } : undefined);
   if (!result.frames || result.frames.length === 0) {
     throw new Error('No frames parsed; possibly wrong format.');
   }
@@ -110,11 +124,14 @@ export async function parseDumpFile(file: File): Promise<Trajectory> {
     frame.properties.set('Displacement', displacement);
   }
 
+  const parseStride = result.parseStride ?? 1;
+  const sourceFrameCount = result.sourceFrameCount ?? frames.length;
   return {
     frames,
     totalFrames: frames.length,
     atomTypes: Array.from(allTypes).sort(),
     globalBounds: { min: [minX, minY, minZ], max: [maxX, maxY, maxZ] },
+    ...(parseStride > 1 ? { parseStride, sourceFrameCount } : {}),
   };
 }
 
