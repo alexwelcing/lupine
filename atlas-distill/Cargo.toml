@@ -1,0 +1,22 @@
+[package]
+name = "atlas-distill"
+version = "0.1.0"
+edition = "2021"
+description = "Mathematical discovery engine for MD simulation data"
+
+[dependencies]
+nalgebra = "0.33"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+rand = "0.8"
+regex = "1"
+ureq = { version = "2", features = ["json"] }
+wgpu = "22.1"
+bytemuck = { version = "1", features = ["derive"] }
+pollster = "0.3"
+env_logger = "0.11"
+approx = "0.5"
+csv = "1"
+lupine-ops = { version = "0.1.0", path = "../lupine-ops" }

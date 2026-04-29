@@ -1,0 +1,93 @@
+name: Deploy Lupine Start to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'lupine-start/**'
+      - '.github/workflows/deploy-lupine-start.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install dependencies and Build
+        working-directory: lupine-start
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker gcr.io --quiet
+
+      - name: Validate Secrets Pre-flight
+        run: |
+          if [ -z "${{ secrets.GCP_SERVICE_NAME_SITE }}" ]; then
+            echo "::error::MISSING SECRET: GCP_SERVICE_NAME_SITE is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_PROJECT_ID }}" ]; then
+            echo "::error::MISSING SECRET: GCP_PROJECT_ID is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_REGION }}" ]; then
+            echo "::error::MISSING SECRET: GCP_REGION is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+
+      - name: Build and push Docker image
+        working-directory: lupine-start
+        run: |
+          IMAGE_TAG=gcr.io/${{ secrets.GCP_PROJECT_ID }}/lupine-site:$GITHUB_SHA
+          docker build -t $IMAGE_TAG .
+          docker push $IMAGE_TAG
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          image: ${{ env.IMAGE_TAG }}
+          service: '${{ secrets.GCP_SERVICE_NAME_SITE }}'
+          region: '${{ secrets.GCP_REGION }}'
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+          flags: '--allow-unauthenticated'
+
+      - name: Show output
+        run: echo ${{ steps.deploy.outputs.url }}
+
+      - name: Report deploy status
+        if: always()
+        run: |
+          curl -X POST https://glim-think-v1.aw-ab5.workers.dev/ops/report \
+            -H "Content-Type: application/json" \
+            -d "{\"repo\":\"$GITHUB_REPOSITORY\",\"workflow\":\"$GITHUB_WORKFLOW\",\"run_id\":\"$GITHUB_RUN_ID\",\"status\":\"${{ job.status }}\",\"commit_sha\":\"$GITHUB_SHA\",\"branch\":\"$GITHUB_REF_NAME\",\"service\":\"lupine-start\",\"run_url\":\"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\",\"started_at\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}"

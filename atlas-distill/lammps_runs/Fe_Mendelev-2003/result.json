@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2003--Mendelev-M-I--Fe-2--LAMMPS--ipr1",
+    "potid": "2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "superseded",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1080/14786430310001613264"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2003--Mendelev-M-I--Fe-2--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2/1/Fe_2.eam.fs",
+        "filename": "Fe_2.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "b876e1f03403d084",
+    "nist_potential_id": "2003--Mendelev-M-I--Fe-2--LAMMPS--ipr1",
+    "potential_doi": "10.1080/14786430310001613264",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 244.30500140698,
+  "c12": 145.324106680144,
+  "c44": 116.349901601642,
+  "a0": 2.85532486079376,
+  "ecoh": -4.12243510205965,
+  "success": true,
+  "error_message": null
+}

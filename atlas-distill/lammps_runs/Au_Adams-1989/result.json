@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1989--Adams-J-B--Au--LAMMPS--ipr1",
+    "potid": "1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Au",
+    "pair_style": "eam",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Au"
+    ],
+    "symbols": [
+      "Au"
+    ],
+    "dois": [
+      "10.1557/jmr.1989.0102"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1989--Adams-J-B--Au--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Au",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Au/1/auu6.txt",
+        "filename": "auu6.txt",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "bf558f8eb5ef2122",
+    "nist_potential_id": "1989--Adams-J-B--Au--LAMMPS--ipr1",
+    "potential_doi": "10.1557/jmr.1989.0102",
+    "pair_style": "eam",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.078,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 183.247572013356,
+  "c12": 158.711895714718,
+  "c44": 45.2608144201792,
+  "a0": 4.07999996805535,
+  "ecoh": -3.92999999949357,
+  "success": true,
+  "error_message": null
+}

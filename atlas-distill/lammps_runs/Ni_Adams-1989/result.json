@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1989--Adams-J-B--Ni--LAMMPS--ipr1",
+    "potid": "1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ni",
+    "pair_style": "eam",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Ni"
+    ],
+    "symbols": [
+      "Ni"
+    ],
+    "dois": [
+      "10.1557/jmr.1989.0102"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1989--Adams-J-B--Ni--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ni",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ni/1/niu6.txt",
+        "filename": "niu6.txt",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "5703d867e731e7d0",
+    "nist_potential_id": "1989--Adams-J-B--Ni--LAMMPS--ipr1",
+    "potential_doi": "10.1557/jmr.1989.0102",
+    "pair_style": "eam",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.524,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 235.574884474912,
+  "c12": 153.141344658352,
+  "c44": 133.505081142698,
+  "a0": 3.51999990988958,
+  "ecoh": -4.45000000382792,
+  "success": true,
+  "error_message": null
+}

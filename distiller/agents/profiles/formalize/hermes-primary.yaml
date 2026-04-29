@@ -1,0 +1,11 @@
+# formalize profile — primary route (provider A: MiniMax M2.7)
+# Lean proofs + formalization. Hardest reasoning workload — full M2.7 tier.
+extends: ../../hermes/cli-config.base.yaml
+
+model:
+  default: "MiniMax-M2.7"
+  provider: "minimax"
+  base_url: "https://api.minimax.io/v1"
+
+memory:
+  project_memory: agents/profiles/formalize/MEMORY.md

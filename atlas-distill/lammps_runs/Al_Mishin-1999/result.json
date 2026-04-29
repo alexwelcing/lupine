@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "1999--Mishin-Y--Al--LAMMPS--ipr1",
+    "potid": "1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Al"
+    ],
+    "symbols": [
+      "Al"
+    ],
+    "dois": [
+      "10.1103/physrevb.59.3393"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1999--Mishin-Y--Al--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al/2/Al99.eam.alloy",
+        "filename": "Al99.eam.alloy",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al/2/Al99_releaseNotes_1.pdf",
+        "filename": "Al99_releaseNotes_1.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "98b559e0d7724625",
+    "nist_potential_id": "1999--Mishin-Y--Al--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.59.3393",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.05,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 113.795813300331,
+  "c12": 61.5547453947956,
+  "c44": 31.5945751531879,
+  "a0": 4.05000466178543,
+  "ecoh": -3.35999998818269,
+  "success": true,
+  "error_message": null
+}

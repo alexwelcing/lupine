@@ -1,0 +1,26 @@
+[
+  {
+    "id": "R-001",
+    "risk": "Over-claiming novelty without enough empirical/formal support",
+    "impact": "high",
+    "likelihood": "medium",
+    "mitigation": "Bind public claims to promotion ladder and explicit proof status",
+    "owner": "formalize-profile"
+  },
+  {
+    "id": "R-002",
+    "risk": "Toolchain mismatch causes non-reproducible runs",
+    "impact": "medium",
+    "likelihood": "high",
+    "mitigation": "Emit partial/success/failure in run manifests with check-level details",
+    "owner": "distill-profile"
+  },
+  {
+    "id": "R-003",
+    "risk": "Internal loop closure drifts from reproducibility guarantees",
+    "impact": "high",
+    "likelihood": "low",
+    "mitigation": "Require manifest emission, deterministic checks, and explicit partial/fail signaling in every loop run",
+    "owner": "loop-profile"
+  }
+]

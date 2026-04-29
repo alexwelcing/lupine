@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUPINE | Aerospace Superalloys Case Study</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;family=JetBrains+Mono:wght@400;700&amp;family=Playfair+Display:ital,wght@1,400;1,700;1,900&amp;family=Space+Grotesk:wght@300;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#dfe0ff",
+                    "on-error-container": "#ffdad6",
+                    "error": "#ffb4ab",
+                    "secondary": "#5dd9d0",
+                    "on-primary-fixed": "#000d60",
+                    "surface-variant": "#34343c",
+                    "on-tertiary-fixed-variant": "#5b4300",
+                    "surface-container-lowest": "#0d0e15",
+                    "secondary-container": "#00a29a",
+                    "on-error": "#690005",
+                    "outline": "#8f8f9f",
+                    "inverse-on-surface": "#2f3038",
+                    "on-secondary": "#003734",
+                    "inverse-surface": "#e3e1ec",
+                    "on-surface": "#e3e1ec",
+                    "surface-container": "#1e1f27",
+                    "on-secondary-fixed": "#00201e",
+                    "on-primary-container": "#f5f3ff",
+                    "outline-variant": "#454653",
+                    "on-secondary-fixed-variant": "#00504c",
+                    "on-tertiary-container": "#fff3e1",
+                    "on-primary": "#051c93",
+                    "on-tertiary": "#402d00",
+                    "secondary-fixed-dim": "#5dd9d0",
+                    "on-secondary-container": "#00302d",
+                    "inverse-primary": "#4353c2",
+                    "surface-container-high": "#292931",
+                    "tertiary-fixed": "#ffdf9f",
+                    "primary": "#bcc3ff",
+                    "secondary-fixed": "#7cf6ec",
+                    "surface": "#12131a",
+                    "surface-bright": "#383941",
+                    "on-surface-variant": "#c6c5d5",
+                    "primary-container": "#5565d4",
+                    "surface-container-highest": "#34343c",
+                    "background": "#12131a",
+                    "tertiary": "#eec058",
+                    "tertiary-container": "#8e6a00",
+                    "on-tertiary-fixed": "#261a00",
+                    "on-background": "#e3e1ec",
+                    "surface-tint": "#bcc3ff",
+                    "on-primary-fixed-variant": "#2839a9",
+                    "surface-container-low": "#1a1b23",
+                    "error-container": "#93000a",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "tertiary-fixed-dim": "#eec058",
+                    "surface-dim": "#12131a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Playfair Display", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #0d0e15; }
+        .font-playfair-italic { font-family: 'Playfair Display', serif; font-style: italic; }
+        .font-jetbrains { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(30, 31, 39, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(69, 70, 83, 0.15);
+        }
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #bcc3ff 0%, #5dd9d0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+
+<style>
+/* QA Fix: Responsive overrides for Stitch-generated pages */
+@media (max-width: 768px) {
+  .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+  .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+  .text-8xl, .text-7xl, .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; }
+  .text-5xl { font-size: 2rem !important; }
+  .text-4xl { font-size: 1.75rem !important; }
+  .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .p-16, .p-24 { padding: 2rem !important; }
+  .md\:p-24 { padding: 2rem !important; }
+  .gap-8, .gap-12 { gap: 1.5rem !important; }
+  .hidden.md\:flex { display: none !important; }
+  table { font-size: 12px !important; }
+  table td, table th { padding: 8px !important; }
+}
+@media (max-width: 480px) {
+  .text-6xl, .text-5xl { font-size: 1.8rem !important; line-height: 1.2 !important; }
+  .text-4xl { font-size: 1.5rem !important; }
+  .text-3xl { font-size: 1.25rem !important; }
+}
+</style>
+</head>
+<body class="text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-xl border-b border-indigo-500/15 shadow-[0_0_30px_rgba(85,101,212,0.1)]">
+<div class="flex justify-between items-center px-12 py-4 max-w-screen-2xl mx-auto">
+<span class="text-2xl font-black italic tracking-tighter text-slate-50 dark:text-white font-['Playfair_Display']">LUPINE</span>
+<div class="hidden md:flex space-x-12">
+<a class="text-slate-400 font-['JetBrains_Mono'] text-sm tracking-widest hover:text-cyan-300 transition-colors duration-300" href="research-vision.html">Research</a>
+<a class="text-slate-400 font-['JetBrains_Mono'] text-sm tracking-widest hover:text-cyan-300 transition-colors duration-300" href="docs.html">Documentation</a>
+<a class="text-slate-400 font-['JetBrains_Mono'] text-sm tracking-widest hover:text-cyan-300 transition-colors duration-300" href="docs.html">API</a>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label text-sm tracking-tight active:opacity-80 active:scale-95 transition-all">Launch Simulation</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex items-center pt-24 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface-container-lowest to-surface-container-lowest"></div>
+<img class="w-full h-full object-cover opacity-30 mix-blend-luminosity" data-alt="Close-up macro shot of complex metallic turbine blade alloy with iridescent blue and silver reflections and technical wireframe overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpuLfSgXEuSAsG4QgwaCY1ztMT7Si6NIpvCYSdMxJdY8HdSfYV1Ty0OirG1HYatcZ9uXMACc5qU3dNW9KzjfrBpBpzAuj-MGPrShE_wwp6UymQ3acfkVD6Uo7Ok8tm20n2V3RG8XxegE4oZ2_W0pVsXfx-SeFnWwqwl6FTtJAmvlkrcTcOaOHDlR2yRakiVnQBELGHoqgansGcqLqQ1N1d_lwu35JmvR6VoPcGLZG54Nx-4qJRb6xIWuxOTafpte_BJIomiGZ9KH0"/>
+</div>
+<div class="relative z-10 w-full max-w-screen-2xl mx-auto px-12">
+<div class="max-w-4xl">
+<span class="font-jetbrains text-secondary text-xs tracking-[0.4em] uppercase mb-6 block">CASE STUDY // REF_0402</span>
+<h1 class="text-7xl md:text-9xl font-playfair-italic text-on-background leading-tight mb-8">
+                    Aerospace <br/>
+<span class="text-gradient-cyan">Superalloys</span>
+</h1>
+<p class="text-xl md:text-2xl text-on-surface-variant font-light leading-relaxed mb-12 max-w-2xl border-l-2 border-primary-container pl-8">
+                    Exploring multi-principal element alloys (MPEAs) for high-temperature resilience through massive Permutation sweeps.
+                </p>
+<div class="flex flex-wrap gap-6">
+<button class="bg-primary-container text-on-primary-container px-10 py-4 rounded-sm font-jetbrains text-sm tracking-widest hover:shadow-[0_0_20px_rgba(85,101,212,0.4)] transition-all">
+                        EXPLORE FINDINGS
+                    </button>
+<button class="border border-outline-variant bg-surface/20 backdrop-blur-md text-on-surface px-10 py-4 rounded-sm font-jetbrains text-sm tracking-widest hover:bg-surface-variant/40 transition-all">
+                        READ WHITEPAPER
+                    </button>
+</div>
+</div>
+</div>
+<div class="absolute bottom-12 right-12 hidden lg:block">
+<div class="glass-panel p-6 border-l-4 border-secondary">
+<div class="font-jetbrains text-[10px] text-secondary opacity-70 mb-2 uppercase">Current Environment</div>
+<div class="text-on-surface font-jetbrains text-lg tracking-tighter">SIM_LEVEL: QUANTUM_THERMAL</div>
+<div class="text-on-surface-variant font-jetbrains text-xs mt-1">AXIS_X: Ni(%) | AXIS_Y: Co(%) | AXIS_Z: Cr(%)</div>
+</div>
+</div>
+</header>
+<!-- The Challenge -->
+<section class="py-32 relative bg-surface-container-lowest">
+<div class="max-w-screen-2xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+<div class="lg:col-span-7">
+<div class="glass-panel p-16 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<span class="font-jetbrains text-primary text-xs tracking-widest mb-4 block">PHASE 01: PROBLEM STATEMENT</span>
+<h2 class="text-5xl font-playfair-italic mb-8">The Combinatorial Explosion</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                        Traditional alloy development relies on single-element bases with minor additions. MPEAs defy this, using five or more elements in near-equimolar concentrations. This creates a design space of <span class="text-tertiary">billions of possible compositions</span> for next-gen turbine blades—far beyond the reach of traditional experimental trial-and-error.
+                    </p>
+<div class="flex items-center gap-4 text-secondary font-jetbrains text-sm">
+<span class="material-symbols-outlined">warning</span>
+<span class="uppercase tracking-widest">Design space saturation limit exceeded</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 relative">
+<div class="aspect-square bg-surface-container rounded-sm overflow-hidden relative border border-outline-variant/10">
+<img class="w-full h-full object-cover grayscale opacity-60" data-alt="A futuristic microscopic view of crystalline metallic lattice structures, glowing with soft blue cyan light on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrx0Aj__tYNvohoJVLdLF7wWG68h06vzlVGruamuhxjDk4POZYr21LZXnRJtGd2Xr4BH24zFAzpVfAbXnzG1VXpsACSZls4WFFJywZxO_pmW5F5LxR-ocCeCkZqHDBLpSujO4mTSYK6rwgJ3m-G--ZeFVzCjwY1OG5iJaWUr0S7qFG81tZd3wGrRYTiZwYqYAcEQOZllLSIkccekH1nyg5XKbpVHOLW72v8O2l_v5dcPTwm9x21rINsDwIsGABBuPDwvQ1-NgxVoY"/>
+<div class="absolute inset-0 bg-gradient-to-tr from-primary-container/20 to-transparent"></div>
+</div>
+<div class="absolute -bottom-8 -right-8 glass-panel p-8 max-w-[280px]">
+<div class="font-jetbrains text-4xl text-primary mb-2">10^12</div>
+<div class="font-jetbrains text-[10px] text-on-surface-variant tracking-wider uppercase">Hypothetical composition candidates for MPEA optimization</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Permutation Sweep Visualization -->
+<section class="py-32 bg-surface">
+<div class="max-w-screen-2xl mx-auto px-12">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div>
+<span class="font-jetbrains text-secondary text-xs tracking-widest mb-4 block">PHASE 02: SIMULATION ARCHITECTURE</span>
+<h2 class="text-6xl font-playfair-italic italic">Permutation Sweep</h2>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col items-end">
+<span class="font-jetbrains text-[10px] text-on-surface-variant uppercase mb-1">Target Element Cluster</span>
+<div class="flex gap-2">
+<span class="bg-surface-variant px-3 py-1 font-jetbrains text-xs text-on-surface">Al</span>
+<span class="bg-surface-variant px-3 py-1 font-jetbrains text-xs text-on-surface">Cr</span>
+<span class="bg-surface-variant px-3 py-1 font-jetbrains text-xs text-on-surface">Co</span>
+<span class="bg-surface-variant px-3 py-1 font-jetbrains text-xs text-on-surface">Ni</span>
+<span class="bg-surface-variant px-3 py-1 font-jetbrains text-xs text-on-surface">Ti</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+<div class="lg:col-span-3 aspect-[21/9] glass-panel relative overflow-hidden group border-t border-l border-white/5">
+<!-- Heatmap Representation -->
+<div class="absolute inset-0 grid grid-cols-12 grid-rows-6 gap-1 p-2 opacity-80">
+<!-- Simulate heatmap with Tailwind grid -->
+<div class="bg-indigo-900/40 rounded-sm"></div><div class="bg-indigo-800/40 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-600/40 rounded-sm"></div><div class="bg-cyan-900/60 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-400 rounded-sm shadow-[0_0_15px_#5dd9d0]"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-900/40 rounded-sm"></div>
+<div class="bg-indigo-800/40 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-600/40 rounded-sm"></div><div class="bg-cyan-900/60 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-400 rounded-sm"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-800/40 rounded-sm"></div><div class="bg-indigo-950/40 rounded-sm"></div>
+<!-- Repeat visual elements for effect -->
+<div class="bg-indigo-700/30 rounded-sm"></div><div class="bg-indigo-600/30 rounded-sm"></div><div class="bg-cyan-900/40 rounded-sm"></div><div class="bg-cyan-700/40 rounded-sm"></div><div class="bg-cyan-500/60 rounded-sm"></div><div class="bg-cyan-400/80 rounded-sm"></div><div class="bg-tertiary/60 rounded-sm"></div><div class="bg-tertiary rounded-sm shadow-[0_0_20px_#eec058]"></div><div class="bg-tertiary/60 rounded-sm"></div><div class="bg-cyan-400/80 rounded-sm"></div><div class="bg-cyan-600/40 rounded-sm"></div><div class="bg-indigo-700/30 rounded-sm"></div>
+<div class="bg-indigo-900/40 rounded-sm"></div><div class="bg-indigo-800/40 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-600/40 rounded-sm"></div><div class="bg-cyan-900/60 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-400 rounded-sm"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-900/40 rounded-sm"></div>
+<div class="bg-indigo-900/40 rounded-sm"></div><div class="bg-indigo-800/40 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-600/40 rounded-sm"></div><div class="bg-cyan-900/60 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-400 rounded-sm shadow-[0_0_15px_#5dd9d0]"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-900/40 rounded-sm"></div>
+<div class="bg-indigo-950/40 rounded-sm"></div><div class="bg-indigo-900/40 rounded-sm"></div><div class="bg-indigo-800/40 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-600/40 rounded-sm"></div><div class="bg-cyan-900/60 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-cyan-500/80 rounded-sm"></div><div class="bg-cyan-700/60 rounded-sm"></div><div class="bg-indigo-700/40 rounded-sm"></div><div class="bg-indigo-800/40 rounded-sm"></div><div class="bg-indigo-900/40 rounded-sm"></div>
+</div>
+<!-- Data Overlays -->
+<div class="absolute top-4 left-6">
+<div class="font-jetbrains text-[10px] text-white/50 mb-1">MAPPING_COORDINATES</div>
+<div class="font-jetbrains text-xs text-white">45.02°N / 122.34°E [VIRTUAL_SPACE]</div>
+</div>
+<div class="absolute bottom-4 right-6 text-right">
+<div class="font-jetbrains text-[10px] text-white/50 mb-1">YIELD_STRENGTH_PEAK</div>
+<div class="font-jetbrains text-2xl text-secondary">2.44 GPa</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex-1 glass-panel p-6 border-l-2 border-secondary/50">
+<div class="font-jetbrains text-[10px] text-on-surface-variant mb-4 uppercase">Yield Strength</div>
+<div class="h-1 w-full bg-surface-container mb-1">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+<div class="flex justify-between font-jetbrains text-[10px] text-on-surface-variant">
+<span>0.0 GPa</span>
+<span>3.5 GPa</span>
+</div>
+</div>
+<div class="flex-1 glass-panel p-6 border-l-2 border-tertiary/50">
+<div class="font-jetbrains text-[10px] text-on-surface-variant mb-4 uppercase">Ductility Index</div>
+<div class="h-1 w-full bg-surface-container mb-1">
+<div class="h-full bg-tertiary w-[62%]"></div>
+</div>
+<div class="flex justify-between font-jetbrains text-[10px] text-on-surface-variant">
+<span>MIN</span>
+<span>MAX_STABLE</span>
+</div>
+</div>
+<div class="flex-1 glass-panel p-6 border-l-2 border-primary-container/50">
+<div class="font-jetbrains text-[10px] text-on-surface-variant mb-4 uppercase">Stability Score</div>
+<div class="h-1 w-full bg-surface-container mb-1">
+<div class="h-full bg-primary-container w-[89%]"></div>
+</div>
+<div class="flex justify-between font-jetbrains text-[10px] text-on-surface-variant">
+<span>0.0</span>
+<span>1.0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Results Section -->
+<section class="py-32 bg-surface-container-lowest">
+<div class="max-w-screen-2xl mx-auto px-12">
+<div class="text-center mb-20">
+<span class="font-jetbrains text-primary text-xs tracking-widest mb-4 block">PHASE 03: AGGREGATED OUTPUTS</span>
+<h2 class="text-6xl font-playfair-italic italic">Verified Outcomes</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Stat Card 1 -->
+<div class="glass-panel p-10 relative group hover:bg-surface-container transition-colors border-t border-white/5">
+<div class="absolute -top-px left-0 w-8 h-[2px] bg-secondary group-hover:w-full transition-all duration-500"></div>
+<div class="text-5xl font-playfair-italic text-gradient-cyan mb-4 italic">47,000</div>
+<div class="font-jetbrains text-xs tracking-widest text-on-surface-variant uppercase mb-4">Compositions Evaluated</div>
+<p class="text-on-surface-variant text-sm leading-relaxed opacity-60">High-fidelity atomistic simulations across five structural variables.</p>
+</div>
+<!-- Stat Card 2 -->
+<div class="glass-panel p-10 relative group hover:bg-surface-container transition-colors border-t border-white/5">
+<div class="absolute -top-px left-0 w-8 h-[2px] bg-primary-container group-hover:w-full transition-all duration-500"></div>
+<div class="text-5xl font-playfair-italic text-gradient-cyan mb-4 italic">12</div>
+<div class="font-jetbrains text-xs tracking-widest text-on-surface-variant uppercase mb-4">Promising Alloys</div>
+<p class="text-on-surface-variant text-sm leading-relaxed opacity-60">Isolated candidates meeting all threshold mechanical requirements.</p>
+</div>
+<!-- Stat Card 3 -->
+<div class="glass-panel p-10 relative group hover:bg-surface-container transition-colors border-t border-white/5">
+<div class="absolute -top-px left-0 w-8 h-[2px] bg-tertiary group-hover:w-full transition-all duration-500"></div>
+<div class="text-5xl font-playfair-italic text-gradient-cyan mb-4 italic">1,400°C</div>
+<div class="font-jetbrains text-xs tracking-widest text-on-surface-variant uppercase mb-4">Stability Predicted</div>
+<p class="text-on-surface-variant text-sm leading-relaxed opacity-60">Maintaining structural integrity under extreme thermal gradients.</p>
+</div>
+<!-- Stat Card 4 -->
+<div class="glass-panel p-10 relative group hover:bg-surface-container transition-colors border-t border-white/5">
+<div class="absolute -top-px left-0 w-8 h-[2px] bg-secondary group-hover:w-full transition-all duration-500"></div>
+<div class="text-5xl font-playfair-italic text-gradient-cyan mb-4 italic">PHASE</div>
+<div class="font-jetbrains text-xs tracking-widest text-on-surface-variant uppercase mb-4">Diagram Validated</div>
+<p class="text-on-surface-variant text-sm leading-relaxed opacity-60">Consistent single-phase BCC structure verified through sweeps.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Real-World Impact -->
+<section class="py-32 bg-surface">
+<div class="max-w-screen-2xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div>
+<span class="font-jetbrains text-secondary text-xs tracking-widest mb-4 block">IMPACT ANALYSIS</span>
+<h2 class="text-5xl font-playfair-italic italic mb-8 leading-tight">Engineering the Future of Propulsion</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-12">
+                    Lupine’s materials acceleration engine compresses the standard R&amp;D timeline. By utilizing massive permutation sweeps, we identify superior alloys before the first crucible is ever heated, reducing the cycle from laboratory to flight certification by nearly 85%.
+                </p>
+<!-- Comparison Chart -->
+<div class="glass-panel p-8 bg-surface-container-low border-l-4 border-primary-container">
+<div class="font-jetbrains text-[10px] text-on-surface-variant uppercase mb-6 tracking-widest">Development Cycles: Time to Market</div>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between font-jetbrains text-xs mb-2">
+<span class="text-on-surface-variant">Traditional Methods</span>
+<span>12 - 15 Years</span>
+</div>
+<div class="h-2 w-full bg-surface-variant/30 overflow-hidden">
+<div class="h-full bg-outline-variant w-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-jetbrains text-xs mb-2">
+<span class="text-primary font-bold">Lupine Sweep Engine</span>
+<span class="text-secondary font-bold">18 - 24 Months</span>
+</div>
+<div class="h-2 w-full bg-surface-variant/30 overflow-hidden">
+<div class="h-full bg-secondary w-1/6"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="relative">
+<img class="rounded-sm opacity-80 border border-white/5" data-alt="Modern aerospace jet engine assembly in a high-tech clean room facility with blue industrial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo8_M-8QBZUAUKUJTaH_17i9ffpgQUMt4ltRyzDZqcd-gk9bHo1n2fpaEuhY0nXi17YaWFPIZhRJH9xIEwvFdm2vcY11ABtkcmr-5rYaO1lT1VRAGnUgtzQlZ4aZ2DHD1rSyqOqkySPJLSnaFuH2Jz2ks8-fvkQfiilRlzMuk0Cdm-benyZCIMC2itQalbjZ_SJ0LdiybpBH45rpC5JNydBVBphJ6q2Cbv1VIwyKTbaXZMClnX_H7twXlh9B9E5Fnf-7kr6tW9fyo"/>
+<div class="absolute -top-12 -left-12 glass-panel p-6 backdrop-blur-3xl border border-white/10 hidden md:block">
+<span class="material-symbols-outlined text-4xl text-secondary mb-4">rocket_launch</span>
+<div class="font-jetbrains text-sm text-on-surface font-bold">FLIGHT READY v4.0</div>
+<div class="font-jetbrains text-[10px] text-on-surface-variant">Certification expected Q3 2025</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-40 relative overflow-hidden bg-surface-container-lowest">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(85,101,212,0.1)_0%,_transparent_70%)]"></div>
+</div>
+<div class="relative z-10 max-w-4xl mx-auto px-12 text-center">
+<h2 class="text-6xl md:text-7xl font-playfair-italic italic mb-8">Accelerate your material discovery.</h2>
+<p class="text-on-surface-variant text-xl mb-12 max-w-2xl mx-auto">
+                Ready to deploy computational sweeps for your specific aerospace or energy infrastructure requirements?
+            </p>
+<div class="flex justify-center gap-6">
+<button class="bg-primary-container text-on-primary-container px-12 py-5 rounded-sm font-jetbrains text-sm tracking-widest hover:scale-105 transition-transform active:opacity-80">
+                    INITIALIZE SIMULATION
+                </button>
+</div>
+<div class="mt-16 font-jetbrains text-[10px] text-on-surface-variant tracking-[0.4em] uppercase opacity-40">
+                Encrypted Connection Stable // v4.0.01-b
+            </div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full border-t border-indigo-900/30 py-8 bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 opacity-60 max-w-screen-2xl mx-auto">
+<span class="font-['JetBrains_Mono'] uppercase tracking-[0.2em] text-[10px] text-slate-500 mb-4 md:mb-0">
+                © 2024 LUPINE MATERIALS SCIENCE | COMPUTATIONAL WIND TUNNEL v4.0
+            </span>
+<div class="flex space-x-8">
+<a class="font-['JetBrains_Mono'] uppercase tracking-[0.2em] text-[10px] text-slate-500 hover:text-indigo-400" href="index.html">Terms of Service</a>
+<a class="font-['JetBrains_Mono'] uppercase tracking-[0.2em] text-[10px] text-slate-500 hover:text-indigo-400" href="platform-architecture.html">Security Architecture</a>
+<a class="font-['JetBrains_Mono'] uppercase tracking-[0.2em] text-[10px] text-slate-500 hover:text-indigo-400" href="docs.html">Material Specs</a>
+</div>
+</div>
+</footer>
+</body></html>

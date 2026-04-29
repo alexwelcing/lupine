@@ -1,0 +1,17 @@
+{
+  "name": "atlas-parsers",
+  "type": "module",
+  "description": "High-performance LAMMPS file parsers compiled to WebAssembly",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "files": [
+    "atlas_parsers_bg.wasm",
+    "atlas_parsers.js",
+    "atlas_parsers.d.ts"
+  ],
+  "main": "atlas_parsers.js",
+  "types": "atlas_parsers.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

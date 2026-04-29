@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2004--Zhou-X-W--Mo--LAMMPS--ipr1",
+    "potid": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Mo",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "superseded",
+    "elements": [
+      "Mo"
+    ],
+    "symbols": [
+      "Mo"
+    ],
+    "dois": [
+      "10.1103/physrevb.69.144113"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2004--Zhou-X-W--Mo--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Mo",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Mo/2/Mo.set",
+        "filename": "Mo.set",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "b5ccc31df6ee5797",
+    "nist_potential_id": "2004--Zhou-X-W--Mo--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.69.144113",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.147,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 456.308883254656,
+  "c12": 167.406449860533,
+  "c44": 115.338450288377,
+  "a0": 3.15015335497867,
+  "ecoh": -6.81000382672637,
+  "success": true,
+  "error_message": null
+}

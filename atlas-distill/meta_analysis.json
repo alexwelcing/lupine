@@ -1,0 +1,162 @@
+{
+  "fixed_effects": {
+    "ci_lower": 0.4536465740698242,
+    "ci_upper": 0.618588126238336,
+    "group_results": [
+      {
+        "group_id": "Al",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.85,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 47.0,
+        "z": 1.2561528119880574
+      },
+      {
+        "group_id": "Cu",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.72,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 47.0,
+        "z": 0.9076449833191245
+      },
+      {
+        "group_id": "Ni",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.68,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 47.0,
+        "z": 0.8291140383017662
+      },
+      {
+        "group_id": "Ag",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.45,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 47.0,
+        "z": 0.48470027859405174
+      },
+      {
+        "group_id": "Au",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.3,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 47.0,
+        "z": 0.3095196042031118
+      },
+      {
+        "group_id": "Pt",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": -0.15,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 47.0,
+        "z": -0.15114043593646675
+      }
+    ],
+    "i_squared": 91.41618735140344,
+    "model": "fixed",
+    "n_groups": 6,
+    "pooled_r": 0.5413042419309912,
+    "pooled_z": 0.6059985467449408,
+    "pred_interval_lower": 0.4536465740698242,
+    "pred_interval_upper": 0.618588126238336,
+    "q_df": 5,
+    "q_pvalue": 2.48909337585701e-10,
+    "q_statistic": 58.24917440174435,
+    "se_z": 0.05954913341754137,
+    "tau": 0.0,
+    "tau_squared": 0.0,
+    "total_n": 300
+  },
+  "random_effects": {
+    "ci_lower": 0.2046913197597096,
+    "ci_upper": 0.7634245659331654,
+    "group_results": [
+      {
+        "group_id": "Al",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.85,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 4.034391944840382,
+        "z": 1.2561528119880574
+      },
+      {
+        "group_id": "Cu",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.72,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 4.034391944840382,
+        "z": 0.9076449833191245
+      },
+      {
+        "group_id": "Ni",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.68,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 4.034391944840382,
+        "z": 0.8291140383017662
+      },
+      {
+        "group_id": "Ag",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.45,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 4.034391944840382,
+        "z": 0.48470027859405174
+      },
+      {
+        "group_id": "Au",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": 0.3,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 4.034391944840382,
+        "z": 0.3095196042031118
+      },
+      {
+        "group_id": "Pt",
+        "influence_percent": 16.666666666666664,
+        "n": 50,
+        "r": -0.15,
+        "se_z": 0.14586499149789456,
+        "weight_fixed": 47.0,
+        "weight_random": 4.034391944840382,
+        "z": -0.15114043593646675
+      }
+    ],
+    "i_squared": 91.41618735140344,
+    "model": "random",
+    "n_groups": 6,
+    "pooled_r": 0.5413042419309912,
+    "pooled_z": 0.6059985467449408,
+    "pred_interval_lower": -0.38718639086316525,
+    "pred_interval_upper": 0.9246942678510767,
+    "q_df": 5,
+    "q_pvalue": 2.48909337585701e-10,
+    "q_statistic": 58.24917440174435,
+    "se_z": 0.2032522354290621,
+    "tau": 0.47601704958623536,
+    "tau_squared": 0.22659223149678445,
+    "total_n": 300
+  }
+}

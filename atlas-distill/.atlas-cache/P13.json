@@ -1,0 +1,13 @@
+{
+  "paper_id": "P13",
+  "title": "arXiv Query: search_query=&amp;id_list=2512.01318&amp;start=0&amp;max_results=10",
+  "abstract_text": "The Sllod equations of motion enable modeling of homogeneous flow at the atomic scale, and are commonly used to predict fluid properties such as viscosity. However, few publicly available codes support such simulations, and those that do often do not implement a reversible numerical integration scheme or have other subtle problems. Here, we demonstrate a reversible and energy-conserving integration scheme for the Sllod equations of motion with error on the order of $δt^3$, in line with typical operator splitting integrators used in standard molecular dynamics simulations. We discuss various implementation details, and implement the scheme in LAMMPS where we find that our changes enable more accurate simulation of transient responses, mixed flows, and steady states, especially at high rates of flow. Importantly, we show that a lack of energy conservation can manifest as a systematic error in the direct ensemble average of the pressure tensor, leading to an error in the calculated viscosity which becomes significant at high flow rates.",
+  "authors": [
+    "Stephen Sanderson",
+    "Debra J. Searles"
+  ],
+  "journal": "arXiv preprint",
+  "year": 2025,
+  "cited_by": null,
+  "source": "arxiv:2512.01318"
+}

@@ -1,0 +1,84 @@
+name: Deploy Lupine Library to Cloud Run
+
+# Triggers:
+#  - push to main affecting library inputs (the markdown IS the content)
+#  - push to the claude/mobile-library-display-* feature branches (preview deploys)
+#  - manual dispatch from the Actions tab
+on:
+  push:
+    branches:
+      - main
+      - 'claude/mobile-library-display-**'
+    paths:
+      - 'library-site/**'
+      - 'docs/**'
+      - '*.md'
+      - '.github/workflows/deploy-library-site.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Required for Workload Identity Federation
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: library-site/package-lock.json
+
+      - name: Install dependencies and build library
+        working-directory: library-site
+        run: |
+          npm ci
+          npm run build
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Validate Secrets Pre-flight
+        run: |
+          if [ -z "${{ secrets.GCP_PROJECT_ID }}" ]; then
+            echo "::error::MISSING SECRET: GCP_PROJECT_ID is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_REGION }}" ]; then
+            echo "::error::MISSING SECRET: GCP_REGION is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+
+      # Deploy from source. google-github-actions/deploy-cloudrun@v2 reads the
+      # Dockerfile at library-site/ and builds with Cloud Build, creating the
+      # Cloud Run service on first run. `dist/` is already built above and is
+      # COPYed into the image by the Dockerfile.
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          source: 'library-site'
+          service: 'library-site'
+          region: '${{ secrets.GCP_REGION }}'
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+          flags: '--allow-unauthenticated'
+
+      - name: Show Cloud Run URL
+        run: |
+          echo "### Lupine Library deployed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "URL: ${{ steps.deploy.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo ""
+          echo "Cloud Run URL: ${{ steps.deploy.outputs.url }}"

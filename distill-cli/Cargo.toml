@@ -1,0 +1,36 @@
+[package]
+name = "distill-cli"
+version = "0.1.0"
+edition = "2021"
+authors = ["Alexander Welcing"]
+description = "A high-performance, strictly-typed knowledge distillation engine."
+
+[dependencies]
+# CLI Parsing
+clap = { version = "4.5", features = ["derive"] }
+
+# Asynchronous Runtime & Networking
+tokio = { version = "1.37", features = ["full"] }
+reqwest = { version = "0.12", features = ["json"] }
+
+# Parallelism
+rayon = "1.10"
+
+# Serialization & Deserialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+# Error Handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Markdown Rendering
+pulldown-cmark = "0.10"
+
+# Time handling
+chrono = "0.4"
+
+# Logging / Tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

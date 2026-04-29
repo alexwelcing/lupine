@@ -1,0 +1,160 @@
+graph LR
+    performance-portability-across-architectures-demands-abstraction-layers["Performance portability across architectures deman… [12]"]:::emerging
+    scaling-mtp-to-large-systems-reveals-io-and-memory-bottlenecks["Scaling MTP to large systems reveals I/O and memor… [10]"]:::emerging
+    workflow-automation-reduces-friction-in-reaxff-simulation-pipelines["Workflow automation reduces friction in ReaxFF sim… [10]"]:::emerging
+    mace-deployment-requires-standardized-packaging-and-validation["MACE deployment requires standardized packaging an… [10]"]:::emerging
+    systematic-benchmarking-is-essential-for-mlip-reliability["Systematic benchmarking is essential for MLIP reli… [9]"]:::emerging
+    numerical-stability-in-reaxff-constrains-timestep-selection["Numerical stability in ReaxFF constrains timestep … [9]"]:::emerging
+    mlip-deployment-requires-standardized-packaging-and-validation["MLIP deployment requires standardized packaging an… [8]"]:::emerging
+    reactivemd-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows["ReactiveMD and ReaxFF are systematically co-deploy… [8]"]:::established
+    gpu-performance-portability-requires-kokkos-abstraction-layer["GPU performance portability requires KOKKOS abstra… [7]"]:::established
+    mlip-deployment-bottleneck-has-shifted-from-training-to-production-validation["MLIP deployment bottleneck has shifted from traini… [7]"]:::established
+    gpu-and-hpc-are-systematically-co-deployed-in-modern-md-workflows["GPU and HPC are systematically co-deployed in mode… [7]"]:::established
+    gpu-and-kokkos-are-systematically-co-deployed-in-modern-md-workflows["GPU and KOKKOS are systematically co-deployed in m… [7]"]:::established
+    reactive-md-requires-sub-femtosecond-timesteps-for-numerical-stability["Reactive MD requires sub-femtosecond timesteps for… [5]"]:::established
+    gpu-and-mlip-are-systematically-co-deployed-in-modern-md-workflows["GPU and MLIP are systematically co-deployed in mod… [5]"]:::established
+    mace-and-mlip-are-systematically-co-deployed-in-modern-md-workflows["MACE and MLIP are systematically co-deployed in mo… [5]"]:::established
+    gpu-and-snap-are-systematically-co-deployed-in-modern-md-workflows["GPU and SNAP are systematically co-deployed in mod… [4]"]:::emerging
+    hpc-and-kokkos-are-systematically-co-deployed-in-modern-md-workflows["HPC and KOKKOS are systematically co-deployed in m… [4]"]:::emerging
+    kokkos-and-snap-are-systematically-co-deployed-in-modern-md-workflows["KOKKOS and SNAP are systematically co-deployed in … [4]"]:::emerging
+    gpu-and-mace-are-systematically-co-deployed-in-modern-md-workflows["GPU and MACE are systematically co-deployed in mod… [4]"]:::emerging
+    polymers-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows["Polymers and ReaxFF are systematically co-deployed… [4]"]:::emerging
+    multi-tool-workflow-handoffs-are-the-dominant-friction-in-applied-md["Multi-tool workflow handoffs are the dominant fric… [3]"]:::established
+    lammps-input-script-validation-prevents-silent-simulation-errors["LAMMPS input script validation prevents silent sim… [3]"]:::emerging
+    scaling-membranes-to-large-systems-reveals-io-and-memory-bottlenecks["Scaling Membranes to large systems reveals I/O and… [3]"]:::emerging
+    cross-code-coupling-requires-standardized-interfaces-for-water["Cross-code coupling requires standardized interfac… [3]"]:::emerging
+    hpc-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows["HPC and ReaxFF are systematically co-deployed in m… [3]"]:::emerging
+    hpc-and-mlip-are-systematically-co-deployed-in-modern-md-workflows["HPC and MLIP are systematically co-deployed in mod… [3]"]:::emerging
+    kokkos-and-mace-are-systematically-co-deployed-in-modern-md-workflows["KOKKOS and MACE are systematically co-deployed in … [3]"]:::emerging
+    kokkos-and-mlip-are-systematically-co-deployed-in-modern-md-workflows["KOKKOS and MLIP are systematically co-deployed in … [3]"]:::emerging
+    highenergymaterials-and-reaxff-are-systematically-co-deployed-in-modern-md-workf["HighEnergyMaterials and ReaxFF are systematically … [3]"]:::emerging
+    polymers-and-reactivemd-are-systematically-co-deployed-in-modern-md-workflows["Polymers and ReactiveMD are systematically co-depl… [3]"]:::emerging
+    M_ACE(("ACE")):::method
+    M_ActiveLearning(("ActiveLearning")):::method
+    M_Allegro(("Allegro")):::method
+    M_Atomsk(("Atomsk")):::method
+    M_CUDA(("CUDA")):::method
+    M_Coupling(("Coupling")):::method
+    M_DeePMD(("DeePMD")):::method
+    M_Electrostatics(("Electrostatics")):::method
+    M_GPU(("GPU")):::method
+    M_HIP(("HIP")):::method
+    M_HPC(("HPC")):::method
+    M_HighEnergyMaterials(("HighEnergyMaterials")):::method
+    M_Ions(("Ions")):::method
+    M_KOKKOS(("KOKKOS")):::method
+    M_LAMMPS(("LAMMPS")):::method
+    M_MACE(("MACE")):::method
+    M_MBX(("MBX")):::method
+    M_MLIP(("MLIP")):::method
+    M_MOFs(("MOFs")):::method
+    M_MTP(("MTP")):::method
+    M_Materials_Studio(("Materials Studio")):::method
+    M_MaterialsStudio(("MaterialsStudio")):::method
+    M_Membranes(("Membranes")):::method
+    M_OVITO(("OVITO")):::method
+    M_PaiNN(("PaiNN")):::method
+    M_Polymers(("Polymers")):::method
+    M_REACTER(("REACTER")):::method
+    M_REACTION(("REACTION")):::method
+    M_ReactiveMD(("ReactiveMD")):::method
+    M_ReaxFF(("ReaxFF")):::method
+    M_SNAP(("SNAP")):::method
+    M_Transport(("Transport")):::method
+    M_VMD(("VMD")):::method
+    M_Water(("Water")):::method
+    performance-portability-across-architectures-demands-abstraction-layers --- M_KOKKOS
+    performance-portability-across-architectures-demands-abstraction-layers --- M_GPU
+    performance-portability-across-architectures-demands-abstraction-layers --- M_HPC
+    performance-portability-across-architectures-demands-abstraction-layers --- M_SNAP
+    performance-portability-across-architectures-demands-abstraction-layers --- M_ReaxFF
+    scaling-mtp-to-large-systems-reveals-io-and-memory-bottlenecks --- M_MTP
+    scaling-mtp-to-large-systems-reveals-io-and-memory-bottlenecks --- M_KOKKOS
+    scaling-mtp-to-large-systems-reveals-io-and-memory-bottlenecks --- M_GPU
+    scaling-mtp-to-large-systems-reveals-io-and-memory-bottlenecks --- M_HPC
+    scaling-mtp-to-large-systems-reveals-io-and-memory-bottlenecks --- M_ActiveLearning
+    workflow-automation-reduces-friction-in-reaxff-simulation-pipelines --- M_ReaxFF
+    workflow-automation-reduces-friction-in-reaxff-simulation-pipelines --- M_ReactiveMD
+    workflow-automation-reduces-friction-in-reaxff-simulation-pipelines --- M_Polymers
+    workflow-automation-reduces-friction-in-reaxff-simulation-pipelines --- M_MaterialsStudio
+    mace-deployment-requires-standardized-packaging-and-validation --- M_MACE
+    mace-deployment-requires-standardized-packaging-and-validation --- M_MLIP
+    mace-deployment-requires-standardized-packaging-and-validation --- M_KOKKOS
+    mace-deployment-requires-standardized-packaging-and-validation --- M_GPU
+    mace-deployment-requires-standardized-packaging-and-validation --- M_MOFs
+    systematic-benchmarking-is-essential-for-mlip-reliability --- M_MLIP
+    systematic-benchmarking-is-essential-for-mlip-reliability --- M_ACE
+    systematic-benchmarking-is-essential-for-mlip-reliability --- M_SNAP
+    systematic-benchmarking-is-essential-for-mlip-reliability --- M_MACE
+    systematic-benchmarking-is-essential-for-mlip-reliability --- M_GPU
+    numerical-stability-in-reaxff-constrains-timestep-selection --- M_ReaxFF
+    numerical-stability-in-reaxff-constrains-timestep-selection --- M_ReactiveMD
+    numerical-stability-in-reaxff-constrains-timestep-selection --- M_HighEnergyMaterials
+    mlip-deployment-requires-standardized-packaging-and-validation --- M_MLIP
+    mlip-deployment-requires-standardized-packaging-and-validation --- M_MACE
+    mlip-deployment-requires-standardized-packaging-and-validation --- M_Allegro
+    mlip-deployment-requires-standardized-packaging-and-validation --- M_PaiNN
+    mlip-deployment-requires-standardized-packaging-and-validation --- M_GPU
+    reactivemd-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows --- M_ReactiveMD
+    reactivemd-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows --- M_ReaxFF
+    gpu-performance-portability-requires-kokkos-abstraction-layer --- M_KOKKOS
+    gpu-performance-portability-requires-kokkos-abstraction-layer --- M_GPU
+    gpu-performance-portability-requires-kokkos-abstraction-layer --- M_CUDA
+    gpu-performance-portability-requires-kokkos-abstraction-layer --- M_HIP
+    mlip-deployment-bottleneck-has-shifted-from-training-to-production-validation --- M_DeePMD
+    mlip-deployment-bottleneck-has-shifted-from-training-to-production-validation --- M_MACE
+    mlip-deployment-bottleneck-has-shifted-from-training-to-production-validation --- M_ACE
+    mlip-deployment-bottleneck-has-shifted-from-training-to-production-validation --- M_MTP
+    mlip-deployment-bottleneck-has-shifted-from-training-to-production-validation --- M_SNAP
+    gpu-and-hpc-are-systematically-co-deployed-in-modern-md-workflows --- M_GPU
+    gpu-and-hpc-are-systematically-co-deployed-in-modern-md-workflows --- M_HPC
+    gpu-and-kokkos-are-systematically-co-deployed-in-modern-md-workflows --- M_GPU
+    gpu-and-kokkos-are-systematically-co-deployed-in-modern-md-workflows --- M_KOKKOS
+    reactive-md-requires-sub-femtosecond-timesteps-for-numerical-stability --- M_ReaxFF
+    reactive-md-requires-sub-femtosecond-timesteps-for-numerical-stability --- M_REACTION
+    reactive-md-requires-sub-femtosecond-timesteps-for-numerical-stability --- M_REACTER
+    gpu-and-mlip-are-systematically-co-deployed-in-modern-md-workflows --- M_GPU
+    gpu-and-mlip-are-systematically-co-deployed-in-modern-md-workflows --- M_MLIP
+    mace-and-mlip-are-systematically-co-deployed-in-modern-md-workflows --- M_MACE
+    mace-and-mlip-are-systematically-co-deployed-in-modern-md-workflows --- M_MLIP
+    gpu-and-snap-are-systematically-co-deployed-in-modern-md-workflows --- M_GPU
+    gpu-and-snap-are-systematically-co-deployed-in-modern-md-workflows --- M_SNAP
+    hpc-and-kokkos-are-systematically-co-deployed-in-modern-md-workflows --- M_HPC
+    hpc-and-kokkos-are-systematically-co-deployed-in-modern-md-workflows --- M_KOKKOS
+    kokkos-and-snap-are-systematically-co-deployed-in-modern-md-workflows --- M_KOKKOS
+    kokkos-and-snap-are-systematically-co-deployed-in-modern-md-workflows --- M_SNAP
+    gpu-and-mace-are-systematically-co-deployed-in-modern-md-workflows --- M_GPU
+    gpu-and-mace-are-systematically-co-deployed-in-modern-md-workflows --- M_MACE
+    polymers-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows --- M_Polymers
+    polymers-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows --- M_ReaxFF
+    multi-tool-workflow-handoffs-are-the-dominant-friction-in-applied-md --- M_Atomsk
+    multi-tool-workflow-handoffs-are-the-dominant-friction-in-applied-md --- M_OVITO
+    multi-tool-workflow-handoffs-are-the-dominant-friction-in-applied-md --- M_Materials_Studio
+    multi-tool-workflow-handoffs-are-the-dominant-friction-in-applied-md --- M_VMD
+    lammps-input-script-validation-prevents-silent-simulation-errors --- M_LAMMPS
+    scaling-membranes-to-large-systems-reveals-io-and-memory-bottlenecks --- M_Membranes
+    scaling-membranes-to-large-systems-reveals-io-and-memory-bottlenecks --- M_Ions
+    scaling-membranes-to-large-systems-reveals-io-and-memory-bottlenecks --- M_Transport
+    scaling-membranes-to-large-systems-reveals-io-and-memory-bottlenecks --- M_Water
+    cross-code-coupling-requires-standardized-interfaces-for-water --- M_Water
+    cross-code-coupling-requires-standardized-interfaces-for-water --- M_Ions
+    cross-code-coupling-requires-standardized-interfaces-for-water --- M_Coupling
+    cross-code-coupling-requires-standardized-interfaces-for-water --- M_MBX
+    cross-code-coupling-requires-standardized-interfaces-for-water --- M_Electrostatics
+    hpc-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows --- M_HPC
+    hpc-and-reaxff-are-systematically-co-deployed-in-modern-md-workflows --- M_ReaxFF
+    hpc-and-mlip-are-systematically-co-deployed-in-modern-md-workflows --- M_HPC
+    hpc-and-mlip-are-systematically-co-deployed-in-modern-md-workflows --- M_MLIP
+    kokkos-and-mace-are-systematically-co-deployed-in-modern-md-workflows --- M_KOKKOS
+    kokkos-and-mace-are-systematically-co-deployed-in-modern-md-workflows --- M_MACE
+    kokkos-and-mlip-are-systematically-co-deployed-in-modern-md-workflows --- M_KOKKOS
+    kokkos-and-mlip-are-systematically-co-deployed-in-modern-md-workflows --- M_MLIP
+    highenergymaterials-and-reaxff-are-systematically-co-deployed-in-modern-md-workf --- M_HighEnergyMaterials
+    highenergymaterials-and-reaxff-are-systematically-co-deployed-in-modern-md-workf --- M_ReaxFF
+    polymers-and-reactivemd-are-systematically-co-deployed-in-modern-md-workflows --- M_Polymers
+    polymers-and-reactivemd-are-systematically-co-deployed-in-modern-md-workflows --- M_ReactiveMD
+
+    classDef established fill:#2d6a4f,stroke:#1b4332,color:#d8f3dc
+    classDef emerging fill:#e9c46a,stroke:#f4a261,color:#264653
+    classDef speculative fill:#e76f51,stroke:#f4a261,color:#fff
+    classDef method fill:#457b9d,stroke:#1d3557,color:#f1faee

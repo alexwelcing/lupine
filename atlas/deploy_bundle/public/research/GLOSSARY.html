@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossary -- ATLAS Research</title><meta name="description" content="Key terms, acronyms, and concepts used throughout the ATLAS research and planning documents">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<nav class="top-bar"><a href="/" class="logo">ATLAS<span>research</span></a><div class="links"><a href="/research/">Index</a><a href="/web/">Viewer</a><a href="/">Manifesto</a></div></nav>
+<div class="article"><a href="/research/" class="back">&larr; Research Index</a><h1>Glossary</h1><h1 id="glim-glossary">glim Glossary</h1>
+<p>Terminology index for glim research and development. Organized by domain.</p>
+<hr />
+<h2 id="materials-science-terms">Materials Science Terms</h2>
+<h3 id="potentials-force-fields">Potentials &amp; Force Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EAM</strong> (Embedded Atom Method)</td>
+<td>Many-body potential commonly used for metals. Embedding function + pair terms.</td>
+</tr>
+<tr>
+<td><strong>MEAM</strong> (Modified EAM)</td>
+<td>Extension of EAM with angular dependencies.</td>
+</tr>
+<tr>
+<td><strong>ReaxFF</strong> (Reactive Force Field)</td>
+<td>Bond-order potential for reactive MD, handles bond formation/breaking.</td>
+</tr>
+<tr>
+<td><strong>Tersoff</strong></td>
+<td>Bond-order potential for covalent materials (Si, C, Ge).</td>
+</tr>
+<tr>
+<td><strong>LAMMPS</strong></td>
+<td>Large-scale Atomic/Molecular Massively Parallel Simulator — MD code.</td>
+</tr>
+<tr>
+<td><strong>MLIP</strong> (Machine Learning Interatomic Potential)</td>
+<td>Neural network potentials (DeePMD, MACE, NequIP) trained on DFT data.</td>
+</tr>
+<tr>
+<td><strong>DeePMD</strong></td>
+<td>Deep learning potential with embedding networks.</td>
+</tr>
+<tr>
+<td><strong>MACE</strong></td>
+<td>Equivariant message-passing neural network potential.</td>
+</tr>
+<tr>
+<td><strong>NequIP</strong></td>
+<td>Neural Equivariant Interatomic Potentials.</td>
+</tr>
+<tr>
+<td><strong>FitSNAP</strong></td>
+<td>Fitting SNAP potentials — spectral neighbor analysis potential.</td>
+</tr>
+<tr>
+<td><strong>SNAP</strong></td>
+<td>Spectral Neighbor Analysis Potential.</td>
+</tr>
+<tr>
+<td><strong>ACE</strong> (Atomic Cluster Expansion)</td>
+<td>Framework for efficient atomic descriptors.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="simulation-methods">Simulation Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DFT</strong> (Density Functional Theory)</td>
+<td>Quantum mechanical method for electronic structure.</td>
+</tr>
+<tr>
+<td><strong>MD</strong> (Molecular Dynamics)</td>
+<td>Classical particle simulation using force fields.</td>
+</tr>
+<tr>
+<td><strong>PIMD</strong> (Path Integral MD)</td>
+<td>Quantum dynamics using ring polymers.</td>
+</tr>
+<tr>
+<td><strong>MC</strong> (Monte Carlo)</td>
+<td>Stochastic sampling method.</td>
+</tr>
+<tr>
+<td><strong>PBC</strong> (Periodic Boundary Conditions)</td>
+<td>Replicates simulation box infinitely.</td>
+</tr>
+<tr>
+<td><strong>NVE</strong></td>
+<td>Microcanonical ensemble (constant N, V, E).</td>
+</tr>
+<tr>
+<td><strong>NVT</strong></td>
+<td>Canonical ensemble (constant N, V, T).</td>
+</tr>
+<tr>
+<td><strong>NPT</strong></td>
+<td>Isobaric-isothermal ensemble (constant N, P, T).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="analysis">Analysis</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RDF</strong> (Radial Distribution Function)</td>
+<td>g(r) — probability density of finding atoms at distance r.</td>
+</tr>
+<tr>
+<td><strong>MSD</strong> (Mean Squared Displacement)</td>
+<td>&lt;Δr²(t)&gt; — measures diffusion.</td>
+</tr>
+<tr>
+<td><strong>Coordination Number</strong></td>
+<td>Number of nearest neighbors within cutoff.</td>
+</tr>
+<tr>
+<td><strong>Stress Tensor</strong></td>
+<td>3×3 matrix describing forces per unit area.</td>
+</tr>
+<tr>
+<td><strong>OVITO</strong></td>
+<td>Visualization and analysis tool for MD (paid Pro version).</td>
+</tr>
+<tr>
+<td><strong>VMD</strong></td>
+<td>Visual Molecular Dynamics — older visualization tool.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="benchmarks">Benchmarks</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Delta Codes</strong></td>
+<td>DFT benchmark comparing total energies across elemental crystals.</td>
+</tr>
+<tr>
+<td><strong>Δ-factor</strong></td>
+<td>RMS energy difference per atom vs. reference (target: &lt;1 meV/atom).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="lammps-ecosystem">LAMMPS Ecosystem</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>dump file</strong></td>
+<td>LAMMPS output containing atomic positions per timestep.</td>
+</tr>
+<tr>
+<td><strong>lammpstrj</strong></td>
+<td>Common dump file extension.</td>
+</tr>
+<tr>
+<td><strong>log file</strong></td>
+<td>LAMMPS output containing thermodynamic data (temp, energy, etc.).</td>
+</tr>
+<tr>
+<td><strong>data file</strong></td>
+<td>LAMMPS input file with initial configuration + topology.</td>
+</tr>
+<tr>
+<td><strong>thermo</strong></td>
+<td>Thermodynamic output (Temperature, Energy, Pressure, etc.).</td>
+</tr>
+<tr>
+<td><strong>KOKKOS</strong></td>
+<td>Performance portability library for GPUs/HPs in LAMMPS.</td>
+</tr>
+<tr>
+<td><strong>pair_style</strong></td>
+<td>LAMMPS command specifying interaction potential.</td>
+</tr>
+<tr>
+<td><strong>fix</strong></td>
+<td>LAMMPS command for perturbations, thermostats, etc.</td>
+</tr>
+<tr>
+<td><strong>compute</strong></td>
+<td>LAMMPS command for calculating properties.</td>
+</tr>
+<tr>
+<td><strong>OpenKIM</strong></td>
+<td>Open Knowledgebase of Interatomic Models.</td>
+</tr>
+<tr>
+<td><strong>Pizza.py</strong></td>
+<td>Python toolkit for LAMMPS analysis (older).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="glim-tech-stack">glim Tech Stack</h2>
+<h3 id="web-graphics">Web &amp; Graphics</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WebGPU</strong></td>
+<td>Next-gen web graphics API with compute shaders.</td>
+</tr>
+<tr>
+<td><strong>WebGL</strong></td>
+<td>Current web graphics API (no compute shaders).</td>
+</tr>
+<tr>
+<td><strong>WASM</strong> (WebAssembly)</td>
+<td>Binary format runnable in browsers at near-native speed.</td>
+</tr>
+<tr>
+<td><strong>wgsl</strong></td>
+<td>WebGPU Shading Language.</td>
+</tr>
+<tr>
+<td><strong>R3F</strong> (React Three Fiber)</td>
+<td>React renderer for Three.js.</td>
+</tr>
+<tr>
+<td><strong>Three.js</strong></td>
+<td>JavaScript 3D library.</td>
+</tr>
+<tr>
+<td><strong>Zustand</strong></td>
+<td>Lightweight React state management.</td>
+</tr>
+<tr>
+<td><strong>Vite</strong></td>
+<td>Fast JavaScript build tool.</td>
+</tr>
+<tr>
+<td><strong>Turbo</strong> (Turborepo)</td>
+<td>Monorepo build orchestration.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rendering-techniques">Rendering Techniques</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Impostor spheres</strong></td>
+<td>Render each atom as a quad; fragment shader raycasts sphere.</td>
+</tr>
+<tr>
+<td><strong>InstancedMesh</strong></td>
+<td>Single draw call for many identical geometries.</td>
+</tr>
+<tr>
+<td><strong>Indirect draw</strong></td>
+<td>GPU builds draw buffer; single draw call regardless of atom count.</td>
+</tr>
+<tr>
+<td><strong>Frustum culling</strong></td>
+<td>Skip rendering atoms outside camera view.</td>
+</tr>
+<tr>
+<td><strong>SSAO</strong> (Screen Space Ambient Occlusion)</td>
+<td>Post-process darkening for depth perception.</td>
+</tr>
+<tr>
+<td><strong>DOF</strong> (Depth of Field)</td>
+<td>Blur based on distance from focus plane.</td>
+</tr>
+<tr>
+<td><strong>Bloom</strong></td>
+<td>Glow effect for bright areas.</td>
+</tr>
+<tr>
+<td><strong>Tone mapping</strong></td>
+<td>Map HDR colors to display range (ACES filmic).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="parsing">Parsing</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>wasm-pack</strong></td>
+<td>Build Rust → WASM with JS bindings.</td>
+</tr>
+<tr>
+<td><strong>wasm-bindgen</strong></td>
+<td>Generate JS bindings from Rust.</td>
+</tr>
+<tr>
+<td><strong>Web Worker</strong></td>
+<td>Background thread for parsing without blocking UI.</td>
+</tr>
+<tr>
+<td><strong>Streaming parser</strong></td>
+<td>Process data incrementally without loading all into memory.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="glim-project-structure">glim Project Structure</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>glimPSE</strong></td>
+<td>WebGPU-powered LAMMPS visualization web app (current focus).</td>
+</tr>
+<tr>
+<td><strong>glimPSE</strong></td>
+<td>The monorepo in <code>atlas/glimPSE/</code>.</td>
+</tr>
+<tr>
+<td><strong>@glim/core</strong></td>
+<td>Shared types package.</td>
+</tr>
+<tr>
+<td><strong>@glim/parsers</strong></td>
+<td>File parsing package (dump, log, data).</td>
+</tr>
+<tr>
+<td><strong>@glim/scene</strong></td>
+<td>R3F scene components package.</td>
+</tr>
+<tr>
+<td><strong>@glim/renderer</strong></td>
+<td>Low-level WebGPU pipeline package.</td>
+</tr>
+<tr>
+<td><strong>@glim/ui</strong></td>
+<td>App shell and panels package.</td>
+</tr>
+<tr>
+<td><strong>@glim/web</strong></td>
+<td>Vite app entry point.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="file-extensions">File Extensions</h2>
+<table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>File Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.lammpstrj</code></td>
+<td>LAMMPS dump file (text trajectory)</td>
+</tr>
+<tr>
+<td><code>.dump</code></td>
+<td>Alternative dump file extension</td>
+</tr>
+<tr>
+<td><code>.log</code></td>
+<td>LAMMPS log/thermo file</td>
+</tr>
+<tr>
+<td><code>.data</code></td>
+<td>LAMMPS data file (initial config)</td>
+</tr>
+<tr>
+<td><code>.lmp</code></td>
+<td>Alternative LAMMPS data extension</td>
+</tr>
+<tr>
+<td><code>.wgsl</code></td>
+<td>WebGPU Shading Language</td>
+</tr>
+<tr>
+<td><code>.tsx</code></td>
+<td>TypeScript React component</td>
+</tr>
+<tr>
+<td><code>.rs</code></td>
+<td>Rust source file</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>See docs/navigation.md for codebase navigation. See docs/research-index.md for research document index.</em>
+a</p></div>
+<footer><p>ATLAS -- Computational Materials Science Platform -- 2026</p></footer></body></html>

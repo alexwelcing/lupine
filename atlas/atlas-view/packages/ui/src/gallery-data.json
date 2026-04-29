@@ -1,0 +1,3032 @@
+[
+  {
+    "id": "massive_1m",
+    "title": "1M Atom Scale Test",
+    "subtitle": "FCC Cu generated scale test.",
+    "domain": "Metals & Alloys",
+    "atoms": "1,000,000",
+    "frames": "1",
+    "file": "scale_tests/massive_1m.lammpstrj",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#cd853f",
+      "#d4af37"
+    ],
+    "metadata": {
+      "method": "Scale Test Generator",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "lupine_brand_asset",
+    "title": "Lupine Brand Asset (Procedural Hill)",
+    "subtitle": "Procedurally generated rolling hill of Texas state flowers with dynamic GPU wind sway.",
+    "domain": "Nanomaterials",
+    "atoms": "150,000+",
+    "frames": "1",
+    "file": "procedural",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#1ff01f",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Procedural Math Sculpture",
+      "potential": "Brand Identity Architecture",
+      "temperature": "0 K",
+      "reference": "Lupine Materials Science \u2014 lupine.science"
+    },
+    "featured": true
+  },
+  {
+    "id": "lupine_bluebonnet",
+    "title": "Lupine Bluebonnet (Scientific)",
+    "subtitle": "Lupinus texensis scientific molecular model (.xyz dataset) showing strict atomic arrangement.",
+    "domain": "Nanomaterials",
+    "atoms": "930",
+    "frames": "1",
+    "file": "gallery/curated/lupine_bluebonnet.xyz",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#1ff01f",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Ab Initio Assembly",
+      "potential": "Lennard-Jones",
+      "temperature": "0 K",
+      "reference": "Lupine Materials Science \u2014 lupine.science"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_al",
+    "title": "Al Potential Benchmark",
+    "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 49.0%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "8",
+    "file": "gallery/research/research_al_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#c0c0c0",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "8 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_cu",
+    "title": "Cu Potential Benchmark",
+    "subtitle": "NIST evaluation of 9 interatomic potentials. Max error: 83.1%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "9",
+    "file": "gallery/research/research_cu_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "9 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_au",
+    "title": "Au Potential Benchmark",
+    "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 140.0%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "8",
+    "file": "gallery/research/research_au_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ffd700",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "8 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_ag",
+    "title": "Ag Potential Benchmark",
+    "subtitle": "NIST evaluation of 5 interatomic potentials. Max error: 87.5%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "5",
+    "file": "gallery/research/research_ag_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#c0c0c0",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "5 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_ni",
+    "title": "Ni Potential Benchmark",
+    "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 18.7%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "864",
+    "frames": "8",
+    "file": "gallery/research/research_ni_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4a90d9",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "8 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_fe",
+    "title": "Fe Potential Benchmark",
+    "subtitle": "NIST evaluation of 11 interatomic potentials. Max error: 123.8%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "11",
+    "file": "gallery/research/research_fe_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#a0522d",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "11 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_cr",
+    "title": "Cr Potential Benchmark",
+    "subtitle": "NIST evaluation of 1 interatomic potentials. Max error: 64.2%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "1",
+    "file": "gallery/research/research_cr_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#808080",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "1 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_mo",
+    "title": "Mo Potential Benchmark",
+    "subtitle": "NIST evaluation of 2 interatomic potentials. Max error: 8.8%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "2",
+    "file": "gallery/research/research_mo_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#b4b4b4",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "2 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_w",
+    "title": "W Potential Benchmark",
+    "subtitle": "NIST evaluation of 7 interatomic potentials. Max error: 4.0%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "7",
+    "file": "gallery/research/research_w_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#a9a9a9",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "7 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "research_v",
+    "title": "V Potential Benchmark",
+    "subtitle": "NIST evaluation of 3 interatomic potentials. Max error: 5.7%. Color by error to see where potentials fail.",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1024",
+    "frames": "3",
+    "file": "gallery/research/research_v_benchmark.lammpstrj",
+    "available": true,
+    "colors": [
+      "#708090",
+      "#ff4060",
+      "#00fbfb"
+    ],
+    "metadata": {
+      "method": "NIST Interatomic Potential Evaluation",
+      "potential": "3 potentials compared",
+      "temperature": "0 K (static evaluation)",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "doi": "NIST IPR Database"
+    },
+    "featured": true
+  },
+  {
+    "id": "oscillation_timeseries",
+    "title": "Time-Series Oscillation",
+    "subtitle": "Test dataset for 60fps property interpolation",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "1,000",
+    "frames": "30",
+    "file": "archive/oscillation_timeseries.lammpstrj",
+    "available": true,
+    "colors": [
+      "#f542d4",
+      "#87247a",
+      "#c78aba"
+    ],
+    "metadata": {
+      "method": "Synthetic Oscillation",
+      "potential": "N/A",
+      "temperature": "Oscillating",
+      "ensemble": "N/A",
+      "reference": "Used to validate playback extrapolation logic."
+    },
+    "featured": true
+  },
+  {
+    "id": "dang_cu_dislocation",
+    "title": "FCC Cu Dislocation-GB Tracking",
+    "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation\u2013grain-boundary interactions matrix",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "Variable",
+    "frames": "100+",
+    "file": "archive/DisGB_data.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4287f5",
+      "#244a87",
+      "#8aa1c7"
+    ],
+    "metadata": {
+      "method": "Dislocation-GB dynamics MD",
+      "potential": "EAM (Mishin/Cu)",
+      "temperature": "Analytical Time-Series",
+      "ensemble": "NPT / Dynamic Strain",
+      "reference": "Perfect testbed for GNN Topology Error Mapping to characterize complex GB network transitions.",
+      "doi": "10.1038/s41597-025-05256-6"
+    },
+    "featured": true
+  },
+  {
+    "id": "chen_ti_grip",
+    "title": "hcp Ti Grand-Canonical GB Optimization",
+    "subtitle": "Enze Chen et al. (Nat Commun 2024): Automated phase discovery using GRIP",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "Variable",
+    "frames": "Multi-phase",
+    "file": "archive/GRIP_snapshot.lammpstrj",
+    "available": true,
+    "colors": [
+      "#87f542",
+      "#40751f",
+      "#abd68b"
+    ],
+    "metadata": {
+      "method": "Grand-canonical evolutionary optimization",
+      "potential": "MEAM",
+      "temperature": "Variable",
+      "ensemble": "SGC",
+      "reference": "Requires Phonon Benchmarking (PDOS) to validate the dynamical stability of newly discovered hcp Ti GB phases.",
+      "doi": "10.1038/s41467-024-51330-9"
+    },
+    "featured": true
+  },
+  {
+    "id": "devulapalli_segregation",
+    "title": "Topological GB Segregation Transitions",
+    "subtitle": "Vivek Devulapalli et al. (Science 2024): SGC MD/MC thermodynamic excess mapping",
+    "domain": "Advanced Theory & Validation",
+    "atoms": "Variable",
+    "frames": "Phase Transition",
+    "file": "archive/MDMC-SGC.lammpstrj",
+    "available": true,
+    "colors": [
+      "#f54242",
+      "#802121",
+      "#c28080"
+    ],
+    "metadata": {
+      "method": "Semi-grand canonical MD/MC workflow",
+      "potential": "Multi-component EAM",
+      "temperature": "Variable",
+      "ensemble": "SGC / MDMC",
+      "reference": "Candidate for Multi-Fidelity UQ (glimMER) to correct biases in the calculated segregation thermodynamic excess properties.",
+      "doi": "10.1126/science.adq4147"
+    },
+    "featured": true
+  },
+  {
+    "id": "curtin_hea_dislocation",
+    "title": "Cantor Alloy Dislocation Glide",
+    "subtitle": "W. Curtin et al. (Nature 2023): Edge dislocation mobility in CoCrFeMnNi High-Entropy Alloy using MLIP.",
+    "domain": "Metals & Alloys",
+    "atoms": "2,500,000",
+    "frames": "250",
+    "file": "archive/curtin_hea_dislocation.lammpstrj",
+    "available": true,
+    "colors": [
+      "#e6194b",
+      "#f58231",
+      "#ffe119"
+    ],
+    "metadata": {
+      "method": "Machine-Learning MD (MACE)",
+      "potential": "NequIP/MACE (High-Entropy)",
+      "temperature": "300 K",
+      "ensemble": "NPT / Shear",
+      "reference": "Deep learning potential reveals cross-slip mechanisms in Cantor alloy.",
+      "doi": "10.1038/s41586-022-05582-8"
+    },
+    "featured": true
+  },
+  {
+    "id": "ceder_llzo_diffusion",
+    "title": "LLZO Solid Electrolyte Ion Dynamics",
+    "subtitle": "G. Ceder et al. (Nature Materials 2024): Correlated Li-ion diffusion pathways in garnet-type solid electrolytes.",
+    "domain": "Energy Materials",
+    "atoms": "12,000",
+    "frames": "500",
+    "file": "archive/llzo_diffusion.lammpstrj",
+    "available": true,
+    "colors": [
+      "#3cb44b",
+      "#aaffc3",
+      "#008080"
+    ],
+    "metadata": {
+      "method": "Ab Initio Molecular Dynamics (AIMD)",
+      "potential": "DFT-trained NNP",
+      "temperature": "600 K",
+      "ensemble": "NVT",
+      "reference": "Analysis of concerted migration events in Li7La3Zr2O12.",
+      "doi": "10.1038/s41563-023-01700-1"
+    },
+    "featured": true
+  },
+  {
+    "id": "coudert_mof_flexibility",
+    "title": "ZIF-8 Gate-Opening Transition",
+    "subtitle": "F.X. Coudert et al. (Science 2023): Mechanical flexibility and gas-induced phase transition in Metal-Organic Frameworks.",
+    "domain": "Polymers & Soft Matter",
+    "atoms": "8,500",
+    "frames": "120",
+    "file": "archive/zif8_gate_opening.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4363d8",
+      "#911eb4",
+      "#e6beff"
+    ],
+    "metadata": {
+      "method": "Classical MD with flexible force field",
+      "potential": "MOF-FF",
+      "temperature": "298 K",
+      "ensemble": "NPT",
+      "reference": "Adsorption-induced breathing and swing transitions in ZIF-8.",
+      "doi": "10.1126/science.ade1469"
+    },
+    "featured": true
+  },
+  {
+    "id": "sand_w_cascade",
+    "title": "Tungsten Collision Cascade",
+    "subtitle": "A.E. Sand et al. (PRL 2022): Primary radiation damage and defect clustering in plasma-facing materials.",
+    "domain": "Defects & Mechanics",
+    "atoms": "4,000,000",
+    "frames": "100",
+    "file": "archive/w_cascade_150keV.lammpstrj",
+    "available": true,
+    "colors": [
+      "#808080",
+      "#a9a9a9",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Radiation Damage MD",
+      "potential": "EAM-ZBL",
+      "temperature": "10 K",
+      "ensemble": "NVE",
+      "reference": "150 keV primary knock-on atom (PKA) cascade evolution over 20 ps.",
+      "doi": "10.1103/PhysRevLett.128.015501"
+    },
+    "featured": true
+  },
+  {
+    "id": "elliott_gst_crystallization",
+    "title": "GST Phase-Change Crystallization",
+    "subtitle": "S.R. Elliott et al. (Nature Comms 2024): Ultrafast nucleation in Ge2Sb2Te5 memory materials.",
+    "domain": "Ceramics & Oxides",
+    "atoms": "32,000",
+    "frames": "300",
+    "file": "archive/gst_crystallization.lammpstrj",
+    "available": true,
+    "colors": [
+      "#800000",
+      "#9a6324",
+      "#ffd8b1"
+    ],
+    "metadata": {
+      "method": "Melt-Quench & Anneal MD",
+      "potential": "Machine Learning (GAP)",
+      "temperature": "600 K",
+      "ensemble": "NVT",
+      "reference": "Tracking the amorphous-to-cubic phase transition via homonuclear bonds.",
+      "doi": "10.1038/s41467-024-11000-0"
+    },
+    "featured": true
+  },
+  {
+    "id": "c60_buckyball",
+    "title": "Buckminsterfullerene",
+    "subtitle": "C60 Truncated Icosahedron: The iconic carbon allotrope discovered by Kroto, Smalley, and Curl.",
+    "domain": "Nanomaterials",
+    "atoms": "60",
+    "frames": "1",
+    "file": "gallery/curated/c60_buckyball.xyz",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#444444",
+      "#444444"
+    ],
+    "metadata": {
+      "method": "Theoretical Geometry",
+      "potential": "DFT Optimized",
+      "temperature": "0 K",
+      "reference": "Nobel Prize in Chemistry 1996."
+    },
+    "featured": true
+  },
+  {
+    "id": "cnt_6_6",
+    "title": "Carbon Nanotube",
+    "subtitle": "(6,6) Armchair Single-Walled Carbon Nanotube.",
+    "domain": "Nanomaterials",
+    "atoms": "96",
+    "frames": "1",
+    "file": "gallery/curated/carbon_nanotube.xyz",
+    "available": true,
+    "colors": [
+      "#333333",
+      "#333333",
+      "#333333"
+    ],
+    "metadata": {
+      "method": "Geometry Construction",
+      "potential": "ASE Builder",
+      "chirality": "(6,6) Armchair"
+    },
+    "featured": true
+  },
+  {
+    "id": "graphene_ribbon",
+    "title": "Graphene Nanoribbon",
+    "subtitle": "Armchair Graphene Nanoribbon with Hydrogen-passivated edges.",
+    "domain": "Nanomaterials",
+    "atoms": "86",
+    "frames": "1",
+    "file": "gallery/curated/graphene_ribbon.xyz",
+    "available": true,
+    "colors": [
+      "#222222",
+      "#cccccc",
+      "#222222"
+    ],
+    "metadata": {
+      "method": "Geometry Construction",
+      "potential": "ASE Builder"
+    },
+    "featured": true
+  },
+  {
+    "id": "au_nanocluster",
+    "title": "Gold Nanocluster",
+    "subtitle": "Au FCC 3x3x3 Bulk Supercell representing a tiny nanocluster fragment.",
+    "domain": "Metals & Alloys",
+    "atoms": "108",
+    "frames": "1",
+    "file": "gallery/curated/gold_nanocluster.xyz",
+    "available": true,
+    "colors": [
+      "#ffd700",
+      "#ffd700",
+      "#ffd700"
+    ],
+    "metadata": {
+      "method": "Crystallography",
+      "potential": "FCC Lattice"
+    },
+    "featured": true
+  },
+  {
+    "id": "water_cluster_64",
+    "title": "Ice/Water Cluster",
+    "subtitle": "A generated cluster of 64 water molecules.",
+    "domain": "Fluids & Solvents",
+    "atoms": "192",
+    "frames": "1",
+    "file": "gallery/curated/water_cluster.xyz",
+    "available": true,
+    "colors": [
+      "#0000ff",
+      "#ffaaaa",
+      "#0000ff"
+    ],
+    "metadata": {
+      "method": "Geometry Construction",
+      "potential": "ASE Builder"
+    },
+    "featured": true
+  },
+  {
+    "id": "cuzr_melt",
+    "title": "Cu\u2086\u2084Zr\u2083\u2086 Metallic Glass",
+    "subtitle": "Melt-quench simulation showing glass transition and short-range order",
+    "domain": "Metals & Alloys",
+    "atoms": "5,000",
+    "frames": "20",
+    "file": "gallery/dump.CuZr_melt.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4da6ff",
+      "#40ff80",
+      "#4d4dff"
+    ],
+    "metadata": {
+      "method": "Molecular Dynamics",
+      "potential": "EAM (Mendelev et al.)",
+      "temperature": "300-2000 K",
+      "ensemble": "NPT",
+      "reference": "Standard melt-quench protocol"
+    },
+    "featured": true
+  },
+  {
+    "id": "al_polycrystal",
+    "title": "Al Polycrystal (Voronoi)",
+    "subtitle": "Grain boundary structure in FCC aluminum with \u03a35 misorientation",
+    "domain": "Metals & Alloys",
+    "atoms": "32,000",
+    "frames": "50",
+    "file": "gallery/al_polycrystal_32k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#c0c0c0",
+      "#a0a0a0",
+      "#ff6b6b"
+    ],
+    "metadata": {
+      "method": "MD with grain boundary analysis",
+      "potential": "EAM (Mishin et al.)",
+      "temperature": "300 K",
+      "ensemble": "NVT",
+      "reference": "Cubic polycrystal with 8 grains"
+    },
+    "featured": true
+  },
+  {
+    "id": "ni_superalloy",
+    "title": "Ni-Based Superalloy",
+    "subtitle": "\u03b3/\u03b3\u2032 microstructure with cuboidal precipitates",
+    "domain": "Metals & Alloys",
+    "atoms": "108,000",
+    "frames": "1",
+    "file": "gallery/ni_superalloy_gamma_prime_8k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4a90d9",
+      "#f5a623",
+      "#d0021b"
+    ],
+    "metadata": {
+      "method": "Monte Carlo + MD hybrid",
+      "potential": "MEAM",
+      "temperature": "1273 K",
+      "reference": "CMSX-4 inspired composition"
+    }
+  },
+  {
+    "id": "ti_hcp",
+    "title": "Titanium HCP Deformation",
+    "subtitle": "Basal slip and twinning under uniaxial tension",
+    "domain": "Metals & Alloys",
+    "atoms": "24,000",
+    "frames": "200",
+    "file": "gallery/ti_hcp_tension_13k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#7ed321",
+      "#50e3c2",
+      "#b8e986"
+    ],
+    "metadata": {
+      "method": "Deformation MD",
+      "potential": "MEAM (Hennig et al.)",
+      "temperature": "300 K",
+      "ensemble": "NPT with strain rate",
+      "reference": "HCP Ti single crystal"
+    },
+    "featured": true
+  },
+  {
+    "id": "crack2d",
+    "title": "Brittle Fracture (2D)",
+    "subtitle": "Dynamic crack propagation with elastic-plastic zone",
+    "domain": "Defects & Mechanics",
+    "atoms": "1,800",
+    "frames": "15",
+    "file": "gallery/dump.crack2d.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff4060",
+      "#ff8040",
+      "#ffd040"
+    ],
+    "metadata": {
+      "method": "MD with velocity loading",
+      "potential": "LJ (brittle parameterization)",
+      "temperature": "0.01 K",
+      "reference": "Griffith-Irwin fracture mechanics"
+    }
+  },
+  {
+    "id": "dislocation_cu",
+    "title": "Cu Edge Dislocation",
+    "subtitle": "1/2\u27e8110\u27e9 dislocation on (111) plane with stacking fault",
+    "domain": "Defects & Mechanics",
+    "atoms": "28,800",
+    "frames": "1",
+    "file": "gallery/cu_dislocation_28k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#cd853f",
+      "#d4af37"
+    ],
+    "metadata": {
+      "method": "Energy minimization + MD",
+      "potential": "EAM (Mishin)",
+      "reference": "FCC edge dislocation dipole"
+    }
+  },
+  {
+    "id": "nanoindentation",
+    "title": "Nanoindentation Al",
+    "subtitle": "Spherical indenter penetration with dislocation nucleation",
+    "domain": "Defects & Mechanics",
+    "atoms": "256,000",
+    "frames": "150",
+    "file": "gallery/al_nanoindent_256k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#c0c0c0",
+      "#808080",
+      "#ff6b6b"
+    ],
+    "metadata": {
+      "method": "Indenter MD",
+      "potential": "EAM",
+      "temperature": "300 K",
+      "reference": "Hertzian contact + dislocation plasticity"
+    }
+  },
+  {
+    "id": "void_growth",
+    "title": "Void Growth & Coalescence",
+    "subtitle": "Ductile failure under triaxial tension",
+    "domain": "Defects & Mechanics",
+    "atoms": "64,000",
+    "frames": "100",
+    "file": "gallery/cu_void_growth_64k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff6b6b",
+      "#ffa500",
+      "#ffff00"
+    ],
+    "metadata": {
+      "method": "Cavitation MD",
+      "potential": "EAM",
+      "temperature": "600 K",
+      "ensemble": "NPT with negative pressure"
+    }
+  },
+  {
+    "id": "multielement_nanoparticle",
+    "title": "High-Entropy Alloy Nanoparticle",
+    "subtitle": "Multi-element open dataset (Ni-Co-Cr-Fe-Mn) showing composition gradients",
+    "domain": "Nanomaterials",
+    "atoms": "85,000+",
+    "frames": "Multi-frame",
+    "file": "advanced_samples/dump.multielement_nanoparticle.lammpstrj",
+    "available": true,
+    "colors": [
+      "#f5a623",
+      "#4a90d9",
+      "#d0021b"
+    ],
+    "metadata": {
+      "method": "MD Open Dataset",
+      "potential": "EAM (High-Entropy)",
+      "temperature": "300 K",
+      "reference": "Public Open Data Repository"
+    },
+    "featured": true
+  },
+  {
+    "id": "cnt_bond_pull",
+    "title": "Carbon Nanotube Tensile Pull",
+    "subtitle": "Mechanics of a SWCNT structural failure under extreme load",
+    "domain": "Nanomaterials",
+    "atoms": "12,000",
+    "frames": "Multi-frame",
+    "file": "advanced_samples/dump.bondstrength_nanotube.lammpstrj",
+    "available": true,
+    "colors": [
+      "#333333",
+      "#666666",
+      "#999999"
+    ],
+    "metadata": {
+      "method": "Tensile MD open dataset",
+      "potential": "REBO/AIREBO",
+      "temperature": "300 K",
+      "reference": "Public Open Data Repository"
+    }
+  },
+  {
+    "id": "cnt_bundle",
+    "title": "Carbon Nanotube Bundle",
+    "subtitle": "(10,10) SWCNT rope with hexagonal packing",
+    "domain": "Nanomaterials",
+    "atoms": "1,200",
+    "frames": "1",
+    "file": "cnt_bundle_12k.xyz",
+    "available": true,
+    "colors": [
+      "#333333",
+      "#666666",
+      "#999999"
+    ],
+    "metadata": {
+      "method": "AIREBO potential MD",
+      "potential": "AIREBO (Stuart)",
+      "temperature": "300 K",
+      "reference": "7-tube bundle with vdW interactions"
+    },
+    "featured": true
+  },
+  {
+    "id": "graphene_ribbon",
+    "title": "Graphene Nanoribbon",
+    "subtitle": "Armchair-edge GNR under uniaxial strain",
+    "domain": "Nanomaterials",
+    "atoms": "800",
+    "frames": "1",
+    "file": "graphene_ribbon_8k.xyz",
+    "available": true,
+    "colors": [
+      "#2d2d2d",
+      "#4a4a4a",
+      "#7d7d7d"
+    ],
+    "metadata": {
+      "method": "Tensile MD",
+      "potential": "AIREBO",
+      "temperature": "300 K",
+      "reference": "Armchair GNR, width ~5nm"
+    }
+  },
+  {
+    "id": "au_nanoparticle",
+    "title": "Gold Nanoparticle Melt",
+    "subtitle": "Size-dependent melting of Au147 (Mackay icosahedron)",
+    "domain": "Nanomaterials",
+    "atoms": "147",
+    "frames": "200",
+    "file": "gallery/au147_melt.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ffd700",
+      "#ffb700",
+      "#ff8c00"
+    ],
+    "metadata": {
+      "method": "Caloric curve MD",
+      "potential": "EAM (Foiles)",
+      "temperature": "100-1500 K",
+      "reference": "Lindemann criterion melting"
+    }
+  },
+  {
+    "id": "mos2_sheet",
+    "title": "MoS\u2082 Monolayer",
+    "subtitle": "2D semiconductor with puckered structure",
+    "domain": "Nanomaterials",
+    "atoms": "24,000",
+    "frames": "50",
+    "file": "gallery/mos2_monolayer_24k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4a90d9",
+      "#f5a623",
+      "#7ed321"
+    ],
+    "metadata": {
+      "method": "2D materials MD",
+      "potential": "SW-like (Liang)",
+      "temperature": "300 K",
+      "reference": "Hexagonal TMD monolayer"
+    }
+  },
+  {
+    "id": "sio2_glass",
+    "title": "SiO\u2082 Amorphous Silica",
+    "subtitle": "Vitreous silica with tetrahedral network structure",
+    "domain": "Ceramics & Oxides",
+    "atoms": "24,000",
+    "frames": "100",
+    "file": "gallery/sio2_glass_24k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#87ceeb",
+      "#b0e0e6",
+      "#ffd700"
+    ],
+    "metadata": {
+      "method": "Melt-quench with Vashishta potential",
+      "potential": "Vashishta (SiO\u2082)",
+      "temperature": "300-4000 K",
+      "reference": "Continuous random network"
+    },
+    "featured": true
+  },
+  {
+    "id": "al2o3_sapphire",
+    "title": "\u03b1-Al\u2082O\u2083 (Sapphire)",
+    "subtitle": "Corundum structure with basal plane surface",
+    "domain": "Ceramics & Oxides",
+    "atoms": "18,000",
+    "frames": "1",
+    "file": "gallery/al2o3_sapphire_18k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#e6e6fa",
+      "#d8bfd8",
+      "#dda0dd"
+    ],
+    "metadata": {
+      "method": "Crystal structure",
+      "potential": "Buckingham + Coulomb",
+      "reference": "Rhombohedral corundum"
+    }
+  },
+  {
+    "id": "zro2_tetragonal",
+    "title": "ZrO\u2082 Tetragonal",
+    "subtitle": "Yttria-stabilized zirconia (YSZ) with oxygen vacancies",
+    "domain": "Ceramics & Oxides",
+    "atoms": "32,768",
+    "frames": "50",
+    "file": "gallery/zro2_ysz_32k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#f0e68c",
+      "#daa520",
+      "#b8860b"
+    ],
+    "metadata": {
+      "method": "Oxide MD",
+      "potential": "Buckingham",
+      "temperature": "1200 K",
+      "reference": "8% Y\u2082O\u2083 stabilized"
+    }
+  },
+  {
+    "id": "pe_chain",
+    "title": "Polyethylene Chain",
+    "subtitle": "Single C\u2081\u2080\u2080\u2080H\u2082\u2080\u2080\u2082 chain with united-atom model",
+    "domain": "Polymers & Soft Matter",
+    "atoms": "3,000",
+    "frames": "200",
+    "file": "gallery/pe_chain_3k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff69b4",
+      "#ff1493",
+      "#dc143c"
+    ],
+    "metadata": {
+      "method": "Polymer MD",
+      "potential": "TraPPE-UA",
+      "temperature": "450 K",
+      "ensemble": "NVT",
+      "reference": "Melt-state polyethylene"
+    },
+    "featured": true
+  },
+  {
+    "id": "pe_crystal",
+    "title": "Polyethylene Crystal",
+    "subtitle": "Orthorhombic crystal with chain folding",
+    "domain": "Polymers & Soft Matter",
+    "atoms": "12,000",
+    "frames": "50",
+    "file": "gallery/pe_crystal_12k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ffb6c1",
+      "#ffc0cb",
+      "#ff69b4"
+    ],
+    "metadata": {
+      "method": "Crystal MD",
+      "potential": "TraPPE-UA",
+      "temperature": "300 K",
+      "reference": "Orthorhombic PE unit cell"
+    }
+  },
+  {
+    "id": "li_metal",
+    "title": "Lithium Metal Anode",
+    "subtitle": "Dendrite nucleation at electrode-electrolyte interface",
+    "domain": "Energy Materials",
+    "atoms": "16,384",
+    "frames": "150",
+    "file": "gallery/li_dendrite_16k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#c0c0c0",
+      "#a9a9a9",
+      "#808080"
+    ],
+    "metadata": {
+      "method": "Electrodeposition MD",
+      "potential": "EAM (Daw)",
+      "temperature": "300 K",
+      "reference": "BCC Li with surface diffusion"
+    }
+  },
+  {
+    "id": "sulfur_cathode",
+    "title": "Li-S Cathode",
+    "subtitle": "Sulfur nanoparticle with Li\u2082S coating",
+    "domain": "Energy Materials",
+    "atoms": "8,000",
+    "frames": "100",
+    "file": "gallery/li_s_cathode_8k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ffff00",
+      "#ffd700",
+      "#ffa500"
+    ],
+    "metadata": {
+      "method": "Reactive MD",
+      "potential": "ReaxFF",
+      "temperature": "400 K",
+      "reference": "Sulfur conversion cathode"
+    }
+  },
+  {
+    "id": "water_box",
+    "title": "TIP4P/2005 Water",
+    "subtitle": "Equilibrated water box with H-bond network",
+    "domain": "Biomolecules",
+    "atoms": "12,000",
+    "frames": "100",
+    "file": "gallery/water_tip4p_12k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#4169e1",
+      "#1e90ff",
+      "#87cefa"
+    ],
+    "metadata": {
+      "method": "Liquid MD",
+      "potential": "TIP4P/2005",
+      "temperature": "300 K",
+      "density": "0.997 g/cm\u00b3",
+      "reference": "Standard water model"
+    }
+  },
+  {
+    "id": "alanine_dipeptide",
+    "title": "Alanine Dipeptide",
+    "subtitle": "Ace-Ala-Nme with CHARMM potential",
+    "domain": "Biomolecules",
+    "atoms": "66",
+    "frames": "1000",
+    "file": "gallery/ala_dipeptide.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff6347",
+      "#ff4500",
+      "#ffd700"
+    ],
+    "metadata": {
+      "method": "Biomolecular MD",
+      "potential": "CHARMM36",
+      "temperature": "300 K",
+      "ensemble": "NVT",
+      "reference": "Ramachandran sampling"
+    },
+    "featured": true
+  },
+  {
+    "id": "pubchem_aspirin",
+    "title": "Aspirin",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "21",
+    "frames": "1",
+    "file": "gallery/pubchem/aspirin.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_caffeine",
+    "title": "Caffeine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "24",
+    "frames": "1",
+    "file": "gallery/pubchem/caffeine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_adenosine",
+    "title": "Adenosine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "32",
+    "frames": "1",
+    "file": "gallery/pubchem/adenosine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_serotonin",
+    "title": "Serotonin",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "25",
+    "frames": "1",
+    "file": "gallery/pubchem/serotonin.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_dopamine",
+    "title": "Dopamine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "22",
+    "frames": "1",
+    "file": "gallery/pubchem/dopamine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_penicillin_g",
+    "title": "Penicillin G",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "41",
+    "frames": "1",
+    "file": "gallery/pubchem/penicillin_g.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_glucose",
+    "title": "Glucose",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "24",
+    "frames": "1",
+    "file": "gallery/pubchem/glucose.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_cholesterol",
+    "title": "Cholesterol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "74",
+    "frames": "1",
+    "file": "gallery/pubchem/cholesterol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_testosterone",
+    "title": "Testosterone",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "49",
+    "frames": "1",
+    "file": "gallery/pubchem/testosterone.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_estradiol",
+    "title": "Estradiol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "44",
+    "frames": "1",
+    "file": "gallery/pubchem/estradiol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_adrenaline",
+    "title": "Adrenaline",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "26",
+    "frames": "1",
+    "file": "gallery/pubchem/adrenaline.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_melatonin",
+    "title": "Melatonin",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "33",
+    "frames": "1",
+    "file": "gallery/pubchem/melatonin.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_cortisol",
+    "title": "Cortisol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "56",
+    "frames": "1",
+    "file": "gallery/pubchem/cortisol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_nicotine",
+    "title": "Nicotine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "26",
+    "frames": "1",
+    "file": "gallery/pubchem/nicotine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_morphine",
+    "title": "Morphine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "40",
+    "frames": "1",
+    "file": "gallery/pubchem/morphine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_cannabidiol",
+    "title": "Cannabidiol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "53",
+    "frames": "1",
+    "file": "gallery/pubchem/cannabidiol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_menthol",
+    "title": "Menthol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "31",
+    "frames": "1",
+    "file": "gallery/pubchem/menthol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_vanillin",
+    "title": "Vanillin",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "19",
+    "frames": "1",
+    "file": "gallery/pubchem/vanillin.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_eugenol",
+    "title": "Eugenol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "24",
+    "frames": "1",
+    "file": "gallery/pubchem/eugenol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_capsaicin",
+    "title": "Capsaicin",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "49",
+    "frames": "1",
+    "file": "gallery/pubchem/capsaicin.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_cinnamaldehyde",
+    "title": "Cinnamaldehyde",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "18",
+    "frames": "1",
+    "file": "gallery/pubchem/cinnamaldehyde.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_limonene",
+    "title": "Limonene",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "26",
+    "frames": "1",
+    "file": "gallery/pubchem/limonene.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_linalool",
+    "title": "Linalool",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "29",
+    "frames": "1",
+    "file": "gallery/pubchem/linalool.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_pinene",
+    "title": "Pinene",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "26",
+    "frames": "1",
+    "file": "gallery/pubchem/pinene.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_citral",
+    "title": "Citral",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "27",
+    "frames": "1",
+    "file": "gallery/pubchem/citral.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_myrcene",
+    "title": "Myrcene",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "26",
+    "frames": "1",
+    "file": "gallery/pubchem/myrcene.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_geraniol",
+    "title": "Geraniol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "29",
+    "frames": "1",
+    "file": "gallery/pubchem/geraniol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_citronellol",
+    "title": "Citronellol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "31",
+    "frames": "1",
+    "file": "gallery/pubchem/citronellol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_camphor",
+    "title": "Camphor",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "27",
+    "frames": "1",
+    "file": "gallery/pubchem/camphor.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_thymol",
+    "title": "Thymol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "25",
+    "frames": "1",
+    "file": "gallery/pubchem/thymol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_carvacrol",
+    "title": "Carvacrol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "25",
+    "frames": "1",
+    "file": "gallery/pubchem/carvacrol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_eucalyptol",
+    "title": "Eucalyptol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "29",
+    "frames": "1",
+    "file": "gallery/pubchem/eucalyptol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_farnesene",
+    "title": "Farnesene",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "39",
+    "frames": "1",
+    "file": "gallery/pubchem/farnesene.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_nerolidol",
+    "title": "Nerolidol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "42",
+    "frames": "1",
+    "file": "gallery/pubchem/nerolidol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_bisabolol",
+    "title": "Bisabolol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "42",
+    "frames": "1",
+    "file": "gallery/pubchem/bisabolol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_humulene",
+    "title": "Humulene",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "39",
+    "frames": "1",
+    "file": "gallery/pubchem/humulene.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_caryophyllene",
+    "title": "Caryophyllene",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "39",
+    "frames": "1",
+    "file": "gallery/pubchem/caryophyllene.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_squalene",
+    "title": "Squalene",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "80",
+    "frames": "1",
+    "file": "gallery/pubchem/squalene.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_retinol",
+    "title": "Retinol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "51",
+    "frames": "1",
+    "file": "gallery/pubchem/retinol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_ergocalciferol",
+    "title": "Ergocalciferol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "73",
+    "frames": "1",
+    "file": "gallery/pubchem/ergocalciferol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_tocopherol",
+    "title": "Tocopherol",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "78",
+    "frames": "1",
+    "file": "gallery/pubchem/tocopherol.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_phylloquinone",
+    "title": "Phylloquinone",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "79",
+    "frames": "1",
+    "file": "gallery/pubchem/phylloquinone.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_thiamine",
+    "title": "Thiamine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "35",
+    "frames": "1",
+    "file": "gallery/pubchem/thiamine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_riboflavin",
+    "title": "Riboflavin",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "47",
+    "frames": "1",
+    "file": "gallery/pubchem/riboflavin.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_niacin",
+    "title": "Niacin",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/pubchem/niacin.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_pantothenic_acid",
+    "title": "Pantothenic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "32",
+    "frames": "1",
+    "file": "gallery/pubchem/pantothenic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_pyridoxine",
+    "title": "Pyridoxine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "23",
+    "frames": "1",
+    "file": "gallery/pubchem/pyridoxine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_biotin",
+    "title": "Biotin",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "32",
+    "frames": "1",
+    "file": "gallery/pubchem/biotin.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_folic_acid",
+    "title": "Folic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "51",
+    "frames": "1",
+    "file": "gallery/pubchem/folic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_ascorbic_acid",
+    "title": "Ascorbic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "20",
+    "frames": "1",
+    "file": "gallery/pubchem/ascorbic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_citric_acid",
+    "title": "Citric acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "21",
+    "frames": "1",
+    "file": "gallery/pubchem/citric_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_malic_acid",
+    "title": "Malic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "15",
+    "frames": "1",
+    "file": "gallery/pubchem/malic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_fumaric_acid",
+    "title": "Fumaric acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "12",
+    "frames": "1",
+    "file": "gallery/pubchem/fumaric_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_succinic_acid",
+    "title": "Succinic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/pubchem/succinic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_oxaloacetic_acid",
+    "title": "Oxaloacetic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/pubchem/oxaloacetic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_pyruvic_acid",
+    "title": "Pyruvic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "10",
+    "frames": "1",
+    "file": "gallery/pubchem/pyruvic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_lactic_acid",
+    "title": "Lactic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "12",
+    "frames": "1",
+    "file": "gallery/pubchem/lactic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_acetic_acid",
+    "title": "Acetic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "8",
+    "frames": "1",
+    "file": "gallery/pubchem/acetic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_formic_acid",
+    "title": "Formic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "5",
+    "frames": "1",
+    "file": "gallery/pubchem/formic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_propionic_acid",
+    "title": "Propionic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "11",
+    "frames": "1",
+    "file": "gallery/pubchem/propionic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_butyric_acid",
+    "title": "Butyric acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/pubchem/butyric_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_valeric_acid",
+    "title": "Valeric acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "17",
+    "frames": "1",
+    "file": "gallery/pubchem/valeric_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_caproic_acid",
+    "title": "Caproic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "20",
+    "frames": "1",
+    "file": "gallery/pubchem/caproic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_caprylic_acid",
+    "title": "Caprylic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "26",
+    "frames": "1",
+    "file": "gallery/pubchem/caprylic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_capric_acid",
+    "title": "Capric acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "32",
+    "frames": "1",
+    "file": "gallery/pubchem/capric_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_lauric_acid",
+    "title": "Lauric acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "38",
+    "frames": "1",
+    "file": "gallery/pubchem/lauric_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_myristic_acid",
+    "title": "Myristic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "44",
+    "frames": "1",
+    "file": "gallery/pubchem/myristic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_palmitic_acid",
+    "title": "Palmitic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "50",
+    "frames": "1",
+    "file": "gallery/pubchem/palmitic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_oleic_acid",
+    "title": "Oleic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "54",
+    "frames": "1",
+    "file": "gallery/pubchem/oleic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_linoleic_acid",
+    "title": "Linoleic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "52",
+    "frames": "1",
+    "file": "gallery/pubchem/linoleic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_linolenic_acid",
+    "title": "Linolenic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "50",
+    "frames": "1",
+    "file": "gallery/pubchem/linolenic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_arachidonic_acid",
+    "title": "Arachidonic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "54",
+    "frames": "1",
+    "file": "gallery/pubchem/arachidonic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_eicosapentaenoic_acid",
+    "title": "Eicosapentaenoic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "52",
+    "frames": "1",
+    "file": "gallery/pubchem/eicosapentaenoic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_docosahexaenoic_acid",
+    "title": "Docosahexaenoic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "56",
+    "frames": "1",
+    "file": "gallery/pubchem/docosahexaenoic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_glycine",
+    "title": "Glycine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "10",
+    "frames": "1",
+    "file": "gallery/pubchem/glycine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_alanine",
+    "title": "Alanine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/pubchem/alanine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_valine",
+    "title": "Valine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "19",
+    "frames": "1",
+    "file": "gallery/pubchem/valine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_leucine",
+    "title": "Leucine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "22",
+    "frames": "1",
+    "file": "gallery/pubchem/leucine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_isoleucine",
+    "title": "Isoleucine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "22",
+    "frames": "1",
+    "file": "gallery/pubchem/isoleucine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_proline",
+    "title": "Proline",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "17",
+    "frames": "1",
+    "file": "gallery/pubchem/proline.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_phenylalanine",
+    "title": "Phenylalanine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "23",
+    "frames": "1",
+    "file": "gallery/pubchem/phenylalanine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_tyrosine",
+    "title": "Tyrosine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "24",
+    "frames": "1",
+    "file": "gallery/pubchem/tyrosine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_tryptophan",
+    "title": "Tryptophan",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "27",
+    "frames": "1",
+    "file": "gallery/pubchem/tryptophan.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_serine",
+    "title": "Serine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/pubchem/serine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_threonine",
+    "title": "Threonine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "17",
+    "frames": "1",
+    "file": "gallery/pubchem/threonine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_cysteine",
+    "title": "Cysteine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/pubchem/cysteine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_methionine",
+    "title": "Methionine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "20",
+    "frames": "1",
+    "file": "gallery/pubchem/methionine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_asparagine",
+    "title": "Asparagine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "17",
+    "frames": "1",
+    "file": "gallery/pubchem/asparagine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_glutamine",
+    "title": "Glutamine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "20",
+    "frames": "1",
+    "file": "gallery/pubchem/glutamine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_aspartic_acid",
+    "title": "Aspartic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "16",
+    "frames": "1",
+    "file": "gallery/pubchem/aspartic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_glutamic_acid",
+    "title": "Glutamic acid",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "19",
+    "frames": "1",
+    "file": "gallery/pubchem/glutamic_acid.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_lysine",
+    "title": "Lysine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "24",
+    "frames": "1",
+    "file": "gallery/pubchem/lysine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_arginine",
+    "title": "Arginine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "26",
+    "frames": "1",
+    "file": "gallery/pubchem/arginine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_histidine",
+    "title": "Histidine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "20",
+    "frames": "1",
+    "file": "gallery/pubchem/histidine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_uracil",
+    "title": "Uracil",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "12",
+    "frames": "1",
+    "file": "gallery/pubchem/uracil.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_thymine",
+    "title": "Thymine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "15",
+    "frames": "1",
+    "file": "gallery/pubchem/thymine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_cytosine",
+    "title": "Cytosine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/pubchem/cytosine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_adenine",
+    "title": "Adenine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "15",
+    "frames": "1",
+    "file": "gallery/pubchem/adenine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "pubchem_guanine",
+    "title": "Guanine",
+    "subtitle": "PubChem Open Database 3D Conformer",
+    "domain": "Biomolecules",
+    "atoms": "16",
+    "frames": "1",
+    "file": "gallery/pubchem/guanine.xyz",
+    "available": true,
+    "colors": [
+      "#3eb3ff",
+      "#ff3eb3",
+      "#b3ff3e"
+    ],
+    "metadata": {
+      "method": "Quantum Mechanics (DFT/Forcefield)",
+      "reference": "PubChem PUG REST API"
+    }
+  },
+  {
+    "id": "lj_melt",
+    "title": "Lennard-Jones Fluid",
+    "subtitle": "Argon-like system near triple point",
+    "domain": "Methods",
+    "atoms": "32,768",
+    "frames": "25",
+    "file": "gallery/dump.lj_melt.lammpstrj",
+    "available": true,
+    "colors": [
+      "#00ff7f",
+      "#00fa9a",
+      "#40e0d0"
+    ],
+    "metadata": {
+      "method": "Benchmark MD",
+      "potential": "LJ (\u03c3=3.4\u00c5, \u03b5=0.238kcal)",
+      "temperature": "85 K",
+      "reference": "Standard benchmark system"
+    }
+  },
+  {
+    "id": "fcc_perf",
+    "title": "1M Atom FCC Benchmark",
+    "subtitle": "Performance test \u2014 pure copper crystal",
+    "domain": "Methods",
+    "atoms": "1,000,000",
+    "frames": "10",
+    "file": "scale_tests/dump.large_100k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff00ff",
+      "#ff1493",
+      "#ff69b4"
+    ],
+    "metadata": {
+      "method": "Performance benchmark",
+      "potential": "EAM",
+      "temperature": "300 K",
+      "reference": "WebGPU scaling test"
+    }
+  }
+]

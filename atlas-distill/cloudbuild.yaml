@@ -1,0 +1,61 @@
+# Cloud Build configuration for atlas-distill
+# Builds the Rust binary, packages it into a Docker image, and deploys as a Cloud Run Job.
+
+steps:
+  # Step 1: Run tests
+  - name: 'rust:1.88-slim-bookworm'
+    entrypoint: 'cargo'
+    args: ['test', '--release', '-p', 'atlas-distill']
+
+  # Step 2: Build release binary
+  - name: 'rust:1.88-slim-bookworm'
+    entrypoint: 'cargo'
+    args: ['build', '--release', '-p', 'atlas-distill', '--bin', 'atlas-distill']
+
+  # Step 3: Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/atlas-distill:${COMMIT_SHA}'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/atlas-distill:latest'
+      - '-f'
+      - 'atlas-distill/Dockerfile'
+      - '.'
+
+  # Step 4: Push to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/atlas-distill:${COMMIT_SHA}'
+
+  # Step 5: Deploy Cloud Run Job
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'jobs'
+      - 'update'
+      - 'atlas-distill'
+      - '--image=${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/atlas-distill:${COMMIT_SHA}'
+      - '--region=${_REGION}'
+      - '--project=${_PROJECT_ID}'
+      - '--service-account=atlas-distill-runner@${_PROJECT_ID}.iam.gserviceaccount.com'
+      - '--set-env-vars=ATLAS_INPUT_BUCKET=${_PROJECT_ID}-atlas-inputs,ATLAS_OUTPUT_BUCKET=${_PROJECT_ID}-atlas-outputs'
+      - '--max-retries=3'
+      - '--tasks=1'
+      - '--memory=2Gi'
+      - '--cpu=2'
+      - '--timeout=3600s'
+
+substitutions:
+  _PROJECT_ID: shed-489901
+  _REGION: us-central1
+  _REPOSITORY: cloud-run-source-deploy
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/atlas-distill:${COMMIT_SHA}'

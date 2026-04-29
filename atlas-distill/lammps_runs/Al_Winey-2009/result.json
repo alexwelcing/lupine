@@ -1,0 +1,55 @@
+{
+  "potential": {
+    "id": "2010--Winey-J-M--Al--LAMMPS--ipr1",
+    "potid": "2009--Winey-J-M-Kubota-A-Gupta-Y-M--Al",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Al"
+    ],
+    "symbols": [
+      "Al"
+    ],
+    "dois": [
+      "10.1088/0965-0393/17/5/055004",
+      "10.1088/0965-0393/18/2/029801"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2010--Winey-J-M--Al--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2009--Winey-J-M-Kubota-A-Gupta-Y-M--Al",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2009--Winey-J-M-Kubota-A-Gupta-Y-M--Al/1/Al_wkg_MSMSE_2009.set",
+        "filename": "Al_wkg_MSMSE_2009.set",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "4e9cfd04c176745b",
+    "nist_potential_id": "2010--Winey-J-M--Al--LAMMPS--ipr1",
+    "potential_doi": "10.1088/0965-0393/17/5/055004",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.05,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 113.761286293048,
+  "c12": 61.710175685265,
+  "c44": 31.2492776210758,
+  "a0": 4.02484538561055,
+  "ecoh": -2.6459796171601,
+  "success": true,
+  "error_message": null
+}

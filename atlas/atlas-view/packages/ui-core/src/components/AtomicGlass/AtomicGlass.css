@@ -1,0 +1,101 @@
+/* AtomicGlass — Glassmorphic depth container */
+
+.lupine-glass {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.35s var(--ease-out-expo);
+}
+
+/* ─── Depth Levels ─── */
+
+.lupine-glass--1 {
+  background: var(--glass-bg-1);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.lupine-glass--2 {
+  background: var(--glass-bg-2);
+  border: 1px solid var(--glass-border-hi);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-glass);
+}
+
+.lupine-glass--3 {
+  background: var(--glass-bg-3);
+  border: 1px solid var(--glass-border-hi);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-lifted);
+}
+
+/* ─── Top-edge Refraction ─── */
+
+.lupine-glass__edge {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(155, 166, 234, 0.15) 20%,
+    rgba(155, 166, 234, 0.25) 50%,
+    rgba(155, 166, 234, 0.15) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ─── Grain Noise (levels 2 & 3 only) ─── */
+
+.lupine-glass__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  animation: grain-drift 8s steps(6) infinite;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+/* ─── Content ─── */
+
+.lupine-glass__content {
+  position: relative;
+  z-index: 3;
+  padding: 16px 18px;
+}
+
+.lupine-glass__content--flush {
+  position: relative;
+  z-index: 3;
+}
+
+/* ─── Interactive Variant ─── */
+
+.lupine-glass--interactive {
+  cursor: pointer;
+}
+
+.lupine-glass--interactive:hover {
+  border-color: rgba(85, 101, 212, 0.3);
+  background: var(--glass-glow);
+  box-shadow: var(--shadow-glow), var(--shadow-glass);
+  transform: translateY(-1px);
+}
+
+.lupine-glass--interactive:active {
+  transform: translateY(0);
+  transition-duration: 0.08s;
+}
+
+/* ─── Flush Variant ─── */
+
+.lupine-glass--flush {
+  border-radius: var(--radius-md);
+}

@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "2015--Borovikov-V--fictional-Cu-1--LAMMPS--ipr1",
+    "potid": "2015--Borovikov-V-Mendelev-M-I-King-A-H-LeSar-R--fictional-Cu-1",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Cu"
+    ],
+    "symbols": [
+      "Cu"
+    ],
+    "dois": [
+      "10.1088/0965-0393/23/5/055003"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2015--Borovikov-V--fictional-Cu-1--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2015--Borovikov-V-Mendelev-M-I-King-A-H-LeSar-R--fictional-Cu-1",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2015--Borovikov-V-Mendelev-M-I-King-A-H-LeSar-R--fictional-Cu-1/1/MCu1_MendelevM_2014.eam.fs",
+        "filename": "MCu1_MendelevM_2014.eam.fs",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2015--Borovikov-V-Mendelev-M-I-King-A-H-LeSar-R--fictional-Cu-1/1/PotentialProperties_MCu.pdf",
+        "filename": "PotentialProperties_MCu.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "056667cd637316eb",
+    "nist_potential_id": "2015--Borovikov-V--fictional-Cu-1--LAMMPS--ipr1",
+    "potential_doi": "10.1088/0965-0393/23/5/055003",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.615,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 172.918750954597,
+  "c12": 128.001643032808,
+  "c44": 83.7203372948233,
+  "a0": 3.63922110648869,
+  "ecoh": -3.42533355426007,
+  "success": true,
+  "error_message": null
+}

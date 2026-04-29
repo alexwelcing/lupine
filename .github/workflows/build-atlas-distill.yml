@@ -1,0 +1,106 @@
+name: Build and Deploy atlas-distill
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'atlas-distill/**'
+      - 'lupine-ops/**'
+      - '.github/workflows/build-atlas-distill.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'atlas-distill/**'
+      - 'lupine-ops/**'
+
+env:
+  PROJECT_ID: shed-489901
+  REGION: us-central1
+  REPOSITORY: cloud-run-source-deploy
+  SERVICE: atlas-distill
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}
+
+      - name: Run tests
+        run: cargo test --release -p atlas-distill
+
+      - name: Check formatting
+        run: cargo fmt -- --check
+
+      - name: Run clippy
+        run: cargo clippy -p atlas-distill -- -D warnings
+
+      - name: Generate docs
+        run: cargo doc --no-deps -p atlas-distill
+
+  build-and-deploy:
+    name: Build and Deploy
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+      - name: Build and push Docker image
+        run: |
+          docker build \
+            -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/atlas-distill:${{ github.sha }} \
+            -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/atlas-distill:latest \
+            -f atlas-distill/Dockerfile \
+            .
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/atlas-distill:${{ github.sha }}
+
+      - name: Deploy Cloud Run Job
+        run: |
+          gcloud run jobs update ${{ env.SERVICE }} \
+            --image=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/atlas-distill:${{ github.sha }} \
+            --region=${{ env.REGION }} \
+            --service-account=atlas-distill-runner@${{ env.PROJECT_ID }}.iam.gserviceaccount.com \
+            --set-env-vars=ATLAS_INPUT_BUCKET=${{ env.PROJECT_ID }}-atlas-inputs,ATLAS_OUTPUT_BUCKET=${{ env.PROJECT_ID }}-atlas-outputs \
+            --max-retries=3 \
+            --memory=2Gi \
+            --cpu=2 \
+            --timeout=3600s
+
+      - name: Verify deployment
+        run: |
+          gcloud run jobs describe ${{ env.SERVICE }} --region=${{ env.REGION }}

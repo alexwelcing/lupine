@@ -1,0 +1,59 @@
+{
+  "potential": {
+    "id": "1999--Mishin-Y--Ni--LAMMPS--ipr1",
+    "potid": "1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Ni",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Ni"
+    ],
+    "symbols": [
+      "Ni"
+    ],
+    "dois": [
+      "10.1103/physrevb.59.3393"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1999--Mishin-Y--Ni--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Ni",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Ni/2/Ni99.eam.alloy",
+        "filename": "Ni99.eam.alloy",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Ni/2/Ni99_releaseNotes_1.pdf",
+        "filename": "Ni99_releaseNotes_1.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "6c10fa23fb7261e7",
+    "nist_potential_id": "1999--Mishin-Y--Ni--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.59.3393",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.524,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 247.862330566274,
+  "c12": 147.828379620979,
+  "c44": 124.838117594854,
+  "a0": 3.51999943754043,
+  "ecoh": -4.44999999834724,
+  "success": true,
+  "error_message": null
+}

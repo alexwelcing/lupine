@@ -1,0 +1,112 @@
+import { motion } from 'framer-motion'
+import { cn } from '../../lib/utils'
+
+interface MolecularLatticeProps {
+  className?: string
+}
+
+export function MolecularLattice({ className }: MolecularLatticeProps) {
+  // A generic lattice using geometric SVG elements
+  const nodes = [
+    { id: 1, x: 20, y: 50 },
+    { id: 2, x: 50, y: 20 },
+    { id: 3, x: 50, y: 80 },
+    { id: 4, x: 80, y: 50 },
+    { id: 5, x: 20, y: 20 },
+    { id: 6, x: 80, y: 80 },
+  ]
+
+  const edges = [
+    { source: 1, target: 2 },
+    { source: 1, target: 3 },
+    { source: 2, target: 4 },
+    { source: 3, target: 4 },
+    { source: 5, target: 2 },
+    { source: 5, target: 1 },
+    { source: 4, target: 6 },
+    { source: 3, target: 6 },
+  ]
+
+  return (
+    <div className={cn("relative w-full h-full flex items-center justify-center overflow-hidden", className)}>
+      <svg viewBox="0 0 100 100" className="w-full h-full max-w-sm max-h-sm drop-shadow-[0_0_15px_rgba(0,251,251,0.2)]">
+        <defs>
+          <filter id="glow-primary">
+            <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Edges */}
+        {edges.map((edge, i) => {
+          const source = nodes.find((n) => n.id === edge.source)!
+          const target = nodes.find((n) => n.id === edge.target)!
+          return (
+            <motion.line
+              key={`edge-${i}`}
+              x1={source.x}
+              y1={source.y}
+              x2={target.x}
+              y2={target.y}
+              stroke="var(--outline-variant)"
+              strokeWidth="0.5"
+              strokeDasharray="1 1"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.5 }}
+              transition={{ duration: 1.5, delay: i * 0.1, ease: "easeOut" }}
+            />
+          )
+        })}
+
+        {/* Nodes */}
+        {nodes.map((node, i) => (
+          <motion.circle
+            key={`node-${node.id}`}
+            cx={node.x}
+            cy={node.y}
+            r="3"
+            fill="var(--surface)"
+            stroke="var(--primary)"
+            strokeWidth="1"
+            filter="url(#glow-primary)"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1 + i * 0.1, ease: "backOut" }}
+          />
+        ))}
+
+        {/* Orbital animations */}
+        <motion.circle
+          cx="50"
+          cy="50"
+          r="40"
+          fill="none"
+          stroke="var(--secondary)"
+          strokeWidth="0.25"
+          strokeDasharray="4 8"
+          initial={{ rotate: 0 }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: "50% 50%" }}
+        />
+        
+        <motion.circle
+          cx="50"
+          cy="50"
+          r="45"
+          fill="none"
+          stroke="var(--primary)"
+          strokeWidth="0.25"
+          strokeDasharray="2 12"
+          initial={{ rotate: 360 }}
+          animate={{ rotate: 0 }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: "50% 50%" }}
+        />
+      </svg>
+    </div>
+  )
+}

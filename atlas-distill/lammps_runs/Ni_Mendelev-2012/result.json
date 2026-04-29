@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2012--Mendelev-M-I--Ni--LAMMPS--ipr1",
+    "potid": "2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Ni"
+    ],
+    "symbols": [
+      "Ni"
+    ],
+    "dois": [
+      "10.1080/14786435.2012.712220"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2012--Mendelev-M-I--Ni--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni/1/Ni1_Mendelev_2012.eam.fs",
+        "filename": "Ni1_Mendelev_2012.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "17f56d9b5891e130",
+    "nist_potential_id": "2012--Mendelev-M-I--Ni--LAMMPS--ipr1",
+    "potential_doi": "10.1080/14786435.2012.712220",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.524,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 247.016843310398,
+  "c12": 147.295139583981,
+  "c44": 122.773084555568,
+  "a0": 3.51812111650558,
+  "ecoh": -4.38550876957346,
+  "success": true,
+  "error_message": null
+}

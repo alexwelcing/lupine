@@ -1,0 +1,96 @@
+{
+  "dataset_id": "WEST-MC-001",
+  "title": "Cu Dislocation-Grain Boundary Interaction Database",
+  "short_title": "Cu Dislocation-GB",
+  "source": "Materials Cloud",
+  "doi": "10.1038/s41597-025-05256-6",
+  "url": "https://archive.materialscloud.org/records/59y2w-rap91",
+  "authors": ["Khanh Dang", "et al."],
+  "journal": "Scientific Data (Nature)",
+  "year": 2025,
+  "institution": "Multiple",
+  "material": {
+    "name": "Copper",
+    "structure": "FCC",
+    "elements": ["Cu"]
+  },
+  "simulation": {
+    "software": "LAMMPS",
+    "potential": "Mishin_2004_Cu_EAM",
+    "ensemble": "NPT",
+    "temperatures_k": [300, 600, 900],
+    "atom_count_range": [10000, 1000000]
+  },
+  "files": {
+    "archive": "DisGB_data.zip",
+    "size_gb": 6.6,
+    "formats": ["dump", "data", "xyz"],
+    "contents": [
+      {
+        "type": "lammps_dump",
+        "pattern": "*.dump",
+        "description": "Trajectory files with atom positions",
+        "estimated_count": 500
+      },
+      {
+        "type": "lammps_data", 
+        "pattern": "*.data",
+        "description": "Initial configuration files",
+        "estimated_count": 200
+      },
+      {
+        "type": "structure",
+        "pattern": "*GB*.xyz",
+        "description": "Grain boundary structure files"
+      }
+    ]
+  },
+  "viewer_config": {
+    "recommended_views": [
+      {
+        "name": "dislocation_network",
+        "description": "Visualize dislocation lines and GB intersections",
+        "color_by": "centrosymmetry",
+        "camera_position": [0, 0, -50]
+      },
+      {
+        "name": "stress_field",
+        "description": "Von Mises stress visualization",
+        "color_by": "stress",
+        "cut_planes": true
+      },
+      {
+        "name": "gb_catalog",
+        "description": "Browse grain boundary structures",
+        "thumbnail_grid": true,
+        "sort_by": "sigma_value"
+      }
+    ],
+    "performance_notes": {
+      "max_atoms_smooth": 1000000,
+      "suggested_decimation": 0.1,
+      "gpu_recommended": true
+    }
+  },
+  "distiller_metadata": {
+    "research_focus": "Dislocation-GB interactions in FCC metals",
+    "key_findings": [
+      "Metastable GB structures enable statistical analysis",
+      "Dislocation character affects absorption",
+      "Driving stress influences trapping mechanisms"
+    ],
+    "methodology": [
+      "Systematic GB generation",
+      "Molecular statics relaxation",
+      "Dislocation insertion protocol"
+    ],
+    "comparison_data": {
+      "has_experimental": false,
+      "has_dft": false,
+      "validation_method": "Potential validation against DFT literature"
+    }
+  },
+  "download_status": "pending",
+  "priority": 1,
+  "quality_rating": "excellent"
+}

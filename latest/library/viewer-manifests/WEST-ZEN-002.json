@@ -1,0 +1,85 @@
+{
+  "dataset_id": "WEST-ZEN-002",
+  "title": "Topological Grain Boundary Segregation Transitions",
+  "short_title": "GB Segregation (Science)",
+  "source": "Zenodo",
+  "doi_paper": "10.1126/science.adq4147",
+  "doi_data": "10.5281/zenodo.13903314",
+  "url": "https://doi.org/10.5281/zenodo.13903314",
+  "authors": ["Vivek Devulapalli", "et al."],
+  "journal": "Science",
+  "year": 2024,
+  "institution": "Multiple",
+  "material": {
+    "name": "Binary Alloys",
+    "description": "Various binary alloy systems for segregation study",
+    "elements": ["Multiple transition metals"]
+  },
+  "simulation": {
+    "software": ["LAMMPS", "MC codes"],
+    "methods": ["MD", "Semi-grand-canonical Monte Carlo"],
+    "ensembles": ["SGC", "NPT"],
+    "properties_calculated": [
+      "Segregation enthalpies",
+      "GB excess properties", 
+      "Thermodynamic transitions"
+    ]
+  },
+  "files": {
+    "total_size_gb": 7.7,
+    "components": [
+      {
+        "name": "MDMC-SGC.zip",
+        "size_gb": 6.1,
+        "contents": "MD/MC semigrand-canonical simulation data"
+      },
+      {
+        "name": "Data.zip",
+        "size_gb": 1.6,
+        "contents": "Processed results and analysis"
+      },
+      {
+        "name": "GRIP.zip",
+        "size_mb": 1.0,
+        "contents": "GRIP workflow components"
+      }
+    ],
+    "formats": ["dump", "data", "xyz", "csv", "json"]
+  },
+  "viewer_config": {
+    "recommended_views": [
+      {
+        "name": "segregation_map",
+        "description": "2D/3D segregation concentration maps",
+        "color_by": "concentration",
+        "colormap": "RdYlBu",
+        "clip_plane": "gb_plane"
+      },
+      {
+        "name": "transition_visualization",
+        "description": "Animate segregation transitions",
+        "animate": true,
+        "frame_delay": 100
+      },
+      {
+        "name": "thermodynamic_analysis",
+        "description": "Excess properties visualization",
+        "overlay_data": true,
+        "plot_type": "line_graph"
+      }
+    ]
+  },
+  "distiller_metadata": {
+    "research_focus": "Topological transitions in GB segregation",
+    "key_findings": [
+      "Topological grain-boundary segregation transitions demonstrated",
+      "Coupling between point-defect absorption and GB network changes",
+      "Implications for irradiation-related defect accommodation"
+    ],
+    "significance": "Science publication — high impact",
+    "experimental_validation": "Coupled with experimental microscopy data"
+  },
+  "download_status": "pending",
+  "priority": 2,
+  "quality_rating": "excellent"
+}

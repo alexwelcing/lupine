@@ -1,0 +1,16 @@
+{
+  "paper_id": "P01",
+  "title": "arXiv Query: search_query=&amp;id_list=2508.13523&amp;start=0&amp;max_results=10",
+  "abstract_text": "Since its inception in 1995, LAMMPS has grown to be a world-class molecular dynamics code, with thousands of users, over one million lines of code, and multi-scale simulation capabilities. We discuss how LAMMPS has adapted to the modern heterogeneous computing landscape by integrating the Kokkos performance portability library into the existing C++ code. We investigate performance portability of simple pairwise, many-body reactive, and machine-learned force-field interatomic potentials. We present results on GPUs across different vendors and generations, and analyze performance trends, probing FLOPS throughput, memory bandwidths, cache capabilities, and thread-atomic operation performance. Finally, we demonstrate strong scaling on three exascale machines -- OLCF Frontier, ALCF Aurora, and NNSA El Capitan -- as well as on the CSCS Alps supercomputer, for the three potentials.",
+  "authors": [
+    "Anders Johansson",
+    "Evan Weinberg",
+    "Christian R. Trott",
+    "Megan J. McCarthy",
+    "Stan G. Moore"
+  ],
+  "journal": "arXiv preprint",
+  "year": 2025,
+  "cited_by": null,
+  "source": "arxiv:2508.13523"
+}

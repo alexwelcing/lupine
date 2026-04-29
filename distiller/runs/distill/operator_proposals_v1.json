@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Volume-scaling operator",
+    "mathematical_form": "dK(V) = a * (V_class - V_DFT) / V_DFT * K_DFT",
+    "physical_motivation": "Errors in elastic constants scale with volume errors. Classical potentials that over/underestimate equilibrium volumes propagate systematic bias to bulk modulus K.",
+    "expected_validity_domain": "FCC metals where |dV/V| < 5%. Best for EAM/MEAM potentials."
+  },
+  {
+    "name": "Stiffness-ratio operator",
+    "mathematical_form": "R_stiff = (C11_class/C12_class) / (C11_DFT/C12_DFT)",
+    "physical_motivation": "Ratio C11/C12 encodes longitudinal vs transverse stiffness balance. Deviations indicate incorrect angular dependence.",
+    "expected_validity_domain": "Cubic FCC metals (Al,Cu,Ni,Ag,Au,Pt). Valid when C11,C12 > 0."
+  },
+  {
+    "name": "Stability-margin operator",
+    "mathematical_form": "M_stab = min(C11-C12, C11+2C12, C44) / max(C11, C12, C44)",
+    "physical_motivation": "Distance from Born stability criteria. Measures proximity to elastic instability in the potential energy surface.",
+    "expected_validity_domain": "All FCC metals. Values < 0.1 indicate high risk of unphysical behavior."
+  }
+]

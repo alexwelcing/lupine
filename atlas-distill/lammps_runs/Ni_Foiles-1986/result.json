@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "1986--Foiles-S-M--Ni--LAMMPS--ipr1",
+    "potid": "1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ni",
+    "pair_style": "eam",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Ni"
+    ],
+    "symbols": [
+      "Ni"
+    ],
+    "dois": [
+      "10.1103/physrevb.33.7983"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/1986--Foiles-S-M--Ni--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ni",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ni/1/Ni_u3.eam",
+        "filename": "Ni_u3.eam",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "816f7ea09784489f",
+    "nist_potential_id": "1986--Foiles-S-M--Ni--LAMMPS--ipr1",
+    "potential_doi": "10.1103/physrevb.33.7983",
+    "pair_style": "eam",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 3.524,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 233.273125828758,
+  "c12": 154.287321147205,
+  "c44": 127.636559617416,
+  "a0": 3.5199999217937,
+  "ecoh": -4.45000000357544,
+  "success": true,
+  "error_message": null
+}

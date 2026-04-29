@@ -1,0 +1,1503 @@
+{
+  "principles": {
+    "gpu-performance-portability-requires-kokkos-abstraction-layer": {
+      "id": "gpu-performance-portability-requires-kokkos-abstraction-layer",
+      "title": "GPU performance portability requires KOKKOS abstraction layer",
+      "description": "Running LAMMPS across heterogeneous GPU/CPU architectures at exascale demands the KOKKOS abstraction. Direct CUDA or HIP code locks simulations to a single vendor. KOKKOS provides portable performance without rewriting kernels.",
+      "category": "performance",
+      "materials": [],
+      "methods": [
+        "KOKKOS",
+        "GPU",
+        "CUDA",
+        "HIP"
+      ],
+      "properties": [
+        "throughput",
+        "scaling"
+      ],
+      "scale": "atomic",
+      "confidence": "established",
+      "source_ids": [
+        "P01",
+        "P02",
+        "P04",
+        "P05"
+      ],
+      "tags": [
+        "HPC",
+        "exascale",
+        "portability"
+      ]
+    },
+    "mlip-spatial-mixing-recovers-accuracy-at-reduced-computational-cost": {
+      "id": "mlip-spatial-mixing-recovers-accuracy-at-reduced-computational-cost",
+      "title": "MLIP spatial mixing recovers accuracy at reduced computational cost",
+      "description": "High-fidelity MLIPs are too expensive to run everywhere in a simulation box. ML-MIX enables spatial mixing of cheap and expensive potentials, applying the expensive model only where needed (e.g., near defects) for up to 11× speedup.",
+      "category": "potential",
+      "materials": [],
+      "methods": [
+        "MACE",
+        "ACE",
+        "SNAP",
+        "ML-MIX"
+      ],
+      "properties": [
+        "accuracy",
+        "computational_cost"
+      ],
+      "scale": "atomic",
+      "confidence": "emerging",
+      "source_ids": [
+        "P07",
+        "P08"
+      ],
+      "tags": [
+        "MLIP",
+        "cost-reduction",
+        "spatial-mixing"
+      ]
+    },
+    "reactive-md-requires-sub-femtosecond-timesteps-for-numerical-stability": {
+      "id": "reactive-md-requires-sub-femtosecond-timesteps-for-numerical-stability",
+      "title": "Reactive MD requires sub-femtosecond timesteps for numerical stability",
+      "description": "ReaxFF and reactive force fields involve bond formation/breaking with stiff potentials. Timesteps of 0.1–0.25 fs are typically required to maintain energy conservation, making reactive simulations 10-40× more expensive per unit time.",
+      "category": "method",
+      "materials": [
+        "FOX-7",
+        "HMX",
+        "polymers",
+        "graphene"
+      ],
+      "methods": [
+        "ReaxFF",
+        "REACTION",
+        "REACTER"
+      ],
+      "properties": [
+        "energy_conservation",
+        "reaction_products"
+      ],
+      "scale": "atomic",
+      "confidence": "established",
+      "source_ids": [
+        "P29",
+        "P30",
+        "P31",
+        "P33",
+        "P34"
+      ],
+      "tags": [
+        "reactive-MD",
+        "timestep",
+        "stability",
+        "energetic-materials"
+      ]
+    },
+    "mlip-deployment-bottleneck-has-shifted-from-training-to-production-validation": {
+      "id": "mlip-deployment-bottleneck-has-shifted-from-training-to-production-validation",
+      "title": "MLIP deployment bottleneck has shifted from training to production validation",
+      "description": "Training ML interatomic potentials is increasingly automated (DP-GEN, active learning). The real bottleneck is now deploying, validating, benchmarking, and trusting models in production MD runs — especially across different hardware and LAMMPS versions.",
+      "category": "workflow",
+      "materials": [],
+      "methods": [
+        "DeePMD",
+        "MACE",
+        "ACE",
+        "MTP",
+        "SNAP"
+      ],
+      "properties": [
+        "deployment",
+        "validation",
+        "uncertainty"
+      ],
+      "scale": "atomic",
+      "confidence": "established",
+      "source_ids": [
+        "P06",
+        "P15",
+        "P16",
+        "P18",
+        "P60"
+      ],
+      "tags": [
+        "MLIP-ops",
+        "deployment",
+        "validation",
+        "production"
+      ]
+    },
+    "model-agnostic-mlip-deployment-enables-cross-architecture-portability": {
+      "id": "model-agnostic-mlip-deployment-enables-cross-architecture-portability",
+      "title": "Model-agnostic MLIP deployment enables cross-architecture portability",
+      "description": "Tools like chemtrain-deploy and metatensor provide model-agnostic deployment of MLIPs into standard MD engines. Without this, each potential architecture (MACE, Allegro, DeePMD) requires bespoke integration and GPU dispatch code.",
+      "category": "potential",
+      "materials": [],
+      "methods": [
+        "MACE",
+        "Allegro",
+        "PaiNN",
+        "metatensor",
+        "metatomic"
+      ],
+      "properties": [
+        "portability",
+        "interoperability"
+      ],
+      "scale": "atomic",
+      "confidence": "emerging",
+      "source_ids": [
+        "P06",
+        "P60"
+      ],
+      "tags": [
+        "MLIP",
+        "deployment",
+        "model-agnostic",
+        "interoperability"
+      ]
+    },
+    "multi-tool-workflow-handoffs-are-the-dominant-friction-in-applied-md": {
+      "id": "multi-tool-workflow-handoffs-are-the-dominant-friction-in-applied-md",
+      "title": "Multi-tool workflow handoffs are the dominant friction in applied MD",
+      "description": "Real-world MD workflows chain together Atomsk → LAMMPS → OVITO → Python scripts. Each handoff is manual, brittle, and unreproducible. Even 2025-2026 applied papers show researchers stitching 3-5 tools together without standardized data flow.",
+      "category": "workflow",
+      "materials": [],
+      "methods": [
+        "Atomsk",
+        "OVITO",
+        "Materials Studio",
+        "VMD"
+      ],
+      "properties": [
+        "reproducibility",
+        "workflow_integrity"
+      ],
+      "scale": "multiscale",
+      "confidence": "established",
+      "source_ids": [
+        "P27",
+        "P28",
+        "P47"
+      ],
+      "tags": [
+        "workflow",
+        "fragmentation",
+        "reproducibility",
+        "tooling"
+      ]
+    },
+    "lammps-input-script-validation-prevents-silent-simulation-errors": {
+      "id": "lammps-input-script-validation-prevents-silent-simulation-errors",
+      "title": "LAMMPS input script validation prevents silent simulation errors",
+      "description": "Complex LAMMPS input scripts can contain unit mismatches, incompatible fix/pair_style combinations, and missing package dependencies that produce silently wrong results. Static validation (linting) of input scripts is an unmet need across the community.",
+      "category": "validation",
+      "materials": [],
+      "methods": [
+        "LAMMPS"
+      ],
+      "properties": [
+        "correctness",
+        "reproducibility"
+      ],
+      "scale": "atomic",
+      "confidence": "emerging",
+      "source_ids": [
+        "P09",
+        "P21",
+        "P22"
+      ],
+      "tags": [
+        "validation",
+        "linting",
+        "input-scripts",
+        "correctness"
+      ]
+    },
+    "provenance-capture-is-essential-for-reproducible-md-research": {
+      "id": "provenance-capture-is-essential-for-reproducible-md-research",
+      "title": "Provenance capture is essential for reproducible MD research",
+      "description": "Reproducibility requires capturing the exact LAMMPS version, enabled packages, potential files (with DOI/KIM IDs), GPU settings, compiler flags, and random seeds. Most workflows capture none of this automatically.",
+      "category": "workflow",
+      "materials": [],
+      "methods": [
+        "LAMMPS",
+        "OpenKIM"
+      ],
+      "properties": [
+        "reproducibility",
+        "provenance"
+      ],
+      "scale": "multiscale",
+      "confidence": "established",
+      "source_ids": [
+        "P41",
+        "P22"
+      ],
+      "tags": [
+        "provenance",
+        "reproducibility",
+        "metadata",
+        "FAIR"
+      ]
+    },
+    "streaming-trajectory-analysis-avoids-dump-file-sprawl-at-scale": {
+      "id": "streaming-trajectory-analysis-avoids-dump-file-sprawl-at-scale",
+      "title": "Streaming trajectory analysis avoids dump file sprawl at scale",
+      "description": "Large-scale simulations produce terabytes of dump data. Post-hoc analysis of giant text dumps is I/O-bound and wasteful. Streaming/incremental feature extraction (RDF, MSD, defect counts) during or immediately after simulation is more scalable.",
+      "category": "analysis",
+      "materials": [],
+      "methods": [
+        "OVITO",
+        "MDAnalysis",
+        "YAML dumps",
+        "VTK"
+      ],
+      "properties": [
+        "RDF",
+        "MSD",
+        "defect_density"
+      ],
+      "scale": "atomic",
+      "confidence": "emerging",
+      "source_ids": [
+        "P20"
+      ],
+      "tags": [
+        "streaming",
+        "analysis",
+        "large-scale",
+        "I/O"
+      ]
+    },
+    "integrator-choice-materially-affects-nemd-simulation-outcomes": {
+      "id": "integrator-choice-materially-affects-nemd-simulation-outcomes",
+      "title": "Integrator choice materially affects NEMD simulation outcomes",
+      "description": "Seemingly minor details in time integration (SLLOD, Nosé-Hoover chains, damping constants) can materially change viscosity, thermal conductivity, and transport properties in non-equilibrium MD. Documenting integrator choice is critical.",
+      "category": "method",
+      "materials": [],
+      "methods": [
+        "fix npt/sllod",
+        "Nosé-Hoover",
+        "Langevin"
+      ],
+      "properties": [
+        "viscosity",
+        "thermal_conductivity",
+        "transport"
+      ],
+      "scale": "atomic",
+      "confidence": "established",
+      "source_ids": [
+        "P13",
+        "P48"
+      ],
+      "tags": [
+        "NEMD",
+        "integrator",
+        "rheology",
+        "transport"
+      ]
+    },
+    "dft-vs-md-cross-validation-establishes-multiscale-simulation-credibility": {
+      "id": "dft-vs-md-cross-validation-establishes-multiscale-simulation-credibility",
+      "title": "DFT-vs-MD cross-validation establishes multiscale simulation credibility",
+      "description": "Comparing MD results (energy, forces, structure) against DFT reference calculations is the standard validation procedure for both classical and ML potentials. Without systematic cross-validation, MD predictions lack quantitative credibility.",
+      "category": "validation",
+      "materials": [],
+      "methods": [
+        "DFT",
+        "VASP",
+        "ABACUS",
+        "EAM",
+        "MLIP"
+      ],
+      "properties": [
+        "energy",
+        "forces",
+        "structure"
+      ],
+      "scale": "multiscale",
+      "confidence": "established",
+      "source_ids": [
+        "P43"
+      ],
+      "tags": [
+        "validation",
+        "DFT",
+        "cross-validation",
+        "accuracy"
+      ]
+    },
+    "active-learning-loops-automate-training-data-generation-for-mlips": {
+      "id": "active-learning-loops-automate-training-data-generation-for-mlips",
+      "title": "Active learning loops automate training data generation for MLIPs",
+      "description": "DP-GEN and similar active learning frameworks identify configurations where the MLIP is uncertain, run DFT on those configurations, and retrain. This avoids redundant training data and systematically fills gaps in chemical/configurational space.",
+      "category": "potential",
+      "materials": [],
+      "methods": [
+        "DP-GEN",
+        "active learning",
+        "DeePMD",
+        "MTP"
+      ],
+      "properties": [
+        "accuracy",
+        "transferability",
+        "uncertainty"
+      ],
+      "scale": "atomic",
+      "confidence": "established",
+      "source_ids": [
+        "P04",
+        "P05"
+      ],
+      "tags": [
+        "active-learning",
+        "MLIP",
+        "training-data",
+        "automation"
+      ]
+    },
+    "plugin-architecture-resolves-lammps-licensing-and-distribution-constraints": {
+      "id": "plugin-architecture-resolves-lammps-licensing-and-distribution-constraints",
+      "title": "Plugin architecture resolves LAMMPS licensing and distribution constraints",
+      "description": "LAMMPS's GPLv2 license creates friction when distributing binaries that include incompatibly-licensed MLIP libraries. The runtime plugin system (dynamic shared objects) allows loading extensions without recompiling, sidestepping license conflicts.",
+      "category": "performance",
+      "materials": [],
+      "methods": [
+        "LAMMPS plugins",
+        "pair_style",
+        "fix"
+      ],
+      "properties": [
+        "compatibility",
+        "distribution"
+      ],
+      "scale": "atomic",
+      "confidence": "established",
+      "source_ids": [],
+      "tags": [
+        "plugins",
+        "licensing",
+        "distribution",
+        "packaging"
+      ]
+    },
+    "charge-equilibration-adds-significant-complexity-to-mlip-deployment": {
+      "id": "charge-equilibration-adds-significant-complexity-to-mlip-deployment",
+      "title": "Charge equilibration adds significant complexity to MLIP deployment",
+      "description": "Fourth-generation high-dimensional neural network potentials (4G-HDNNPs) require iterative charge equilibration at every MD step. This adds both computational cost and implementation complexity compared to charge-neutral MLIPs.",
+      "category": "potential",
+      "materials": [],
+      "methods": [
+        "HDNNP",
+        "n2p2",
+        "QEq"
+      ],
+      "properties": [
+        "charge_distribution",
+        "electrostatics"
+      ],
+      "scale": "atomic",
+      "confidence": "emerging",
+      "source_ids": [
+        "P18"
+      ],
+      "tags": [
+        "charge-equilibration",
+        "MLIP",
+        "electrostatics"
+      ]
+    },
+    "heat-current-formulations-require-careful-many-body-treatment-in-mlips": {
+      "id": "heat-current-formulations-require-careful-many-body-treatment-in-mlips",
+      "title": "Heat current formulations require careful many-body treatment in MLIPs",
+      "description": "Computing thermal conductivity via Green-Kubo or NEMD requires correct heat current definitions. Many-body potentials (including MLIPs) introduce non-trivial terms in the heat current that standard two-body formulations miss, leading to systematic errors.",
+      "category": "analysis",
+      "materials": [],
+      "methods": [
+        "MTP",
+        "Green-Kubo",
+        "NEMD"
+      ],
+      "properties": [
+        "thermal_conductivity",
+        "heat_current"
+      ],
+      "scale": "atomic",
+      "confidence": "emerging",
+      "source_ids": [
+        "P17"
+      ],
+      "tags": [
+        "thermal-transport",
+        "heat-current",
+        "many-body"
+      ]
+    },
+    "path-integral-md-with-mlips-captures-nuclear-quantum-effects-efficiently": {
+      "id": "path-integral-md-with-mlips-captures-nuclear-quantum-effects-efficiently",
+      "title": "Path-integral MD with MLIPs captures nuclear quantum effects efficiently",
+      "description": "PIMD combined with ML potentials (e.g., DeePMD) enables quantum nuclear dynamics at near-classical cost. Efficient ring-polymer implementations (fix pimd/langevin) reduce the overhead of running 32+ beads per atom.",
+      "category": "method",
+      "materials": [
+        "water",
+        "H₂O"
+      ],
+      "methods": [
+        "PIMD",
+        "DeePMD",
+        "ring-polymer"
+      ],
+      "properties": [
+        "quantum_dynamics",
+        "isotope_effects"
+      ],
+      "scale": "atomic",
+      "confidence": "emerging",
+      "source_ids": [
+        "P03"
+      ],
+      "tags": [
+        "PIMD",
+        "quantum",
+        "nuclear-dynamics",
+        "water"
+      ]
+    }
+  },
+  "sources": {
+    "WEST-MC-001": {
+      "id": "WEST-MC-001",
+      "title": "A large-scale molecular dynamics dataset of dislocation-grain boundary interactions in FCC Cu",
+      "authors": "Dang, Khanh and others",
+      "year": 2025,
+      "journal": "Scientific Data",
+      "doi": "10.1038/s41597-025-05256-6",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "WEST-ZEN-001": {
+      "id": "WEST-ZEN-001",
+      "title": "Automated grand-canonical optimization of grain-boundary phases",
+      "authors": "Chen, Enze and others",
+      "year": 2024,
+      "journal": "Nature Communications",
+      "doi": "10.1038/s41467-024-51330-9",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "WEST-ZEN-002": {
+      "id": "WEST-ZEN-002",
+      "title": "Topological grain-boundary segregation transitions",
+      "authors": "Devulapalli, Vivek and others",
+      "year": 2024,
+      "journal": "Science",
+      "doi": "10.1126/science.adq4147",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "CN-NBSDC-001": {
+      "id": "CN-NBSDC-001",
+      "title": "多物理场耦合下材料跨尺度去除模型与亚表面损伤抑制方法数据集",
+      "authors": "中科院过程工程研究所",
+      "year": 2024,
+      "journal": "",
+      "doi": "",
+      "cstr": "16666.11.nbsdc.6qosvoyp",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "CN-NBSDC-002": {
+      "id": "CN-NBSDC-002",
+      "title": "合金元素晶界偏聚对氢相关行为的影响数据集",
+      "authors": "雍兮, 中科院金属研究所",
+      "year": 2021,
+      "journal": "",
+      "doi": "",
+      "cstr": "16666.11.nbsdc.2eaz4c1k",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "WEST-MC-002": {
+      "id": "WEST-MC-002",
+      "title": "Structural phase transitions in CaCO3 via molecular dynamics",
+      "authors": "Sidler, Elizaveta and Cabriolu, Raffaela",
+      "year": 2024,
+      "journal": "arXiv preprint",
+      "doi": "10.48550/arXiv.2408.04036",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "WEST-MC-004": {
+      "id": "WEST-MC-004",
+      "title": "Multilayer graphene with inserted CNT nanospacers",
+      "authors": "Ding, Mingda and others",
+      "year": 2023,
+      "journal": "Journal of Physical Chemistry C",
+      "doi": "10.1021/acs.jpcc.3c06132",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "WEST-ZEN-003": {
+      "id": "WEST-ZEN-003",
+      "title": "Crosslinked epoxy resin modeling",
+      "authors": "Livraghi, M. and others",
+      "year": 2023,
+      "journal": "Journal of Physical Chemistry B",
+      "doi": "10.1021/acs.jpcb.3c04724",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-1": {
+      "id": "NB-1",
+      "title": "Unified Cross",
+      "authors": "",
+      "year": 0,
+      "journal": "Scale 3D Generation and Understanding via Autoregressive Modeling - arXiv",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-2": {
+      "id": "NB-2",
+      "title": "Flowr.root – A flow matching based foundation model for joint multi",
+      "authors": "",
+      "year": 0,
+      "journal": "purpose structure-aware 3D ligand generation and affinity prediction - arXiv.org",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-3": {
+      "id": "NB-3",
+      "title": "(PDF) AI",
+      "authors": "",
+      "year": 0,
+      "journal": "powered open-source infrastructure for accelerating materials discovery and advanced manufacturing - ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-4": {
+      "id": "NB-4",
+      "title": "DPA",
+      "authors": "",
+      "year": 0,
+      "journal": "2: Towards a universal large atomic model for molecular and material simulation",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-5": {
+      "id": "NB-5",
+      "title": "Advanced Manufacturing Office: Workshop on Artificial Intelligence Applied to Materials Discovery and Design",
+      "authors": "",
+      "year": 0,
+      "journal": "Department of Energy",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-6": {
+      "id": "NB-6",
+      "title": "(PDF) DPA",
+      "authors": "",
+      "year": 0,
+      "journal": "2: a large atomic model as a multi-task learner - ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-7": {
+      "id": "NB-7",
+      "title": "Recent advances in machine learning interatomic ...",
+      "authors": "",
+      "year": 0,
+      "journal": "ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-8": {
+      "id": "NB-8",
+      "title": "Agentic material science",
+      "authors": "",
+      "year": 0,
+      "journal": "OAE Publishing Inc.",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-9": {
+      "id": "NB-9",
+      "title": "(PDF) GatorAffinity: Boosting Protein",
+      "authors": "",
+      "year": 0,
+      "journal": "Ligand Binding Affinity Prediction with Large-Scale Synthetic Structural Data - ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-10": {
+      "id": "NB-10",
+      "title": "(PDF) Pretraining of attention",
+      "authors": "",
+      "year": 0,
+      "journal": "based deep learning potential model for molecular simulation",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-11": {
+      "id": "NB-11",
+      "title": "A Machine Learning Interatomic Potential Data Set and Model for Catalysis with Local Fine",
+      "authors": "",
+      "year": 0,
+      "journal": "Tuning to Chemical Accuracy - PMC",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-12": {
+      "id": "NB-12",
+      "title": "atlas",
+      "authors": "",
+      "year": 0,
+      "journal": "distillation-hypothesis-draft.docx",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-13": {
+      "id": "NB-13",
+      "title": "ATLAS",
+      "authors": "",
+      "year": 0,
+      "journal": "project-plan.md",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-14": {
+      "id": "NB-14",
+      "title": "DPA",
+      "authors": "",
+      "year": 0,
+      "journal": "2: a large atomic model as a multi-task learner - PubMed",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-15": {
+      "id": "NB-15",
+      "title": "The Autonomous Materials Paradigm: Machine",
+      "authors": "",
+      "year": 0,
+      "journal": "Learned Interatomic Potentials, Agentic Science, and Decentralized Discovery Infrastructures",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-16": {
+      "id": "NB-16",
+      "title": "The Unified Discovery Paradigm: Fusing Synthetic Structural Repositories with Agentic Infrastructure and Shared Research Methodologies",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-17": {
+      "id": "NB-17",
+      "title": "0cfe7a19",
+      "authors": "",
+      "year": 0,
+      "journal": "7f3d-4028-8433-b5f2afddd8f2.pptx",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-18": {
+      "id": "NB-18",
+      "title": "ABACUS: An Electronic Structure Analysis Package for the AI Era",
+      "authors": "",
+      "year": 0,
+      "journal": "arXiv.org",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-19": {
+      "id": "NB-19",
+      "title": "ABACUS: An Electronic Structure Analysis Package for the AI Era",
+      "authors": "",
+      "year": 0,
+      "journal": "arXiv",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-20": {
+      "id": "NB-20",
+      "title": "Advances in modeling complex materials: The rise of neuroevolution potentials",
+      "authors": "",
+      "year": 0,
+      "journal": "arXiv",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-21": {
+      "id": "NB-21",
+      "title": "(PDF) Molecular dynamics simulations of heat transport using machine",
+      "authors": "",
+      "year": 0,
+      "journal": "learned potentials: A mini review and tutorial on GPUMD with neuroevolution potentials - ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-22": {
+      "id": "NB-22",
+      "title": "Molecular dynamics simulations of heat transport using machine",
+      "authors": "",
+      "year": 0,
+      "journal": "learned potentials: A mini review and tutorial on GPUMD with neuroevolution potentials - arXiv.org",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-23": {
+      "id": "NB-23",
+      "title": "Recent advances in machine learning interatomic potentials for cross",
+      "authors": "",
+      "year": 0,
+      "journal": "scale computational simulation of materials机器学习原子间势在材料跨尺度计算模拟中的最新进展 - ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-24": {
+      "id": "NB-24",
+      "title": "A deep learning interatomic potential suitable for simulating radiation damage in bulk tungsten",
+      "authors": "",
+      "year": 0,
+      "journal": "ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-25": {
+      "id": "NB-25",
+      "title": "Machine learning interatomic potential: Bridge the gap between small",
+      "authors": "",
+      "year": 0,
+      "journal": "scale models and realistic device-scale simulations - PMC",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-26": {
+      "id": "NB-26",
+      "title": "Can recent machine learning interatomic potentials reliably predict surface stability?",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-27": {
+      "id": "NB-27",
+      "title": "A critical review of machine learning interatomic potentials and Hamiltonian",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-28": {
+      "id": "NB-28",
+      "title": "Breakouts",
+      "authors": "",
+      "year": 0,
+      "journal": "LAMMPS Workshop and Symposium - August 12-14, 2025",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-29": {
+      "id": "NB-29",
+      "title": "A Guide to Building Deep Potential ModelsChapter 6: Learning DeePMD",
+      "authors": "",
+      "year": 0,
+      "journal": "Kit",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-30": {
+      "id": "NB-30",
+      "title": "The Global Evolution of Interatomic Potentials and Molecular Dynamics: Deciphering the Ascascendance of Chinese Materials Science",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-31": {
+      "id": "NB-31",
+      "title": "DeScAI: the convergence of decentralized science and ...",
+      "authors": "",
+      "year": 0,
+      "journal": "Frontiers",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-32": {
+      "id": "NB-32",
+      "title": "Bohrium + SciMaster: Building the Infrastructure and Ecosystem for Agentic Science at Scale",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-33": {
+      "id": "NB-33",
+      "title": "openDFT",
+      "authors": "",
+      "year": 0,
+      "journal": "project-plan.md",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-34": {
+      "id": "NB-34",
+      "title": "Enabling AI Deep Potentials for Ab Initio",
+      "authors": "",
+      "year": 0,
+      "journal": "quality Molecular Dynamics Simulations in GROMACS Pre-print submitted for publication. - arXiv.org",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-35": {
+      "id": "NB-35",
+      "title": "Opportunities for Ancillary Software Around LAMMPS Through the Lens of 2025–2026 People, Labs, and M.pdf",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-36": {
+      "id": "NB-36",
+      "title": "Isaac Lab: A GPU",
+      "authors": "",
+      "year": 0,
+      "journal": "Accelerated Simulation Framework for Multi-Modal Robot Learning - Cloudfront.net",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-37": {
+      "id": "NB-37",
+      "title": "(PDF) An interpretable DeePMD",
+      "authors": "",
+      "year": 0,
+      "journal": "kit performance model for emerging supercomputers",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-38": {
+      "id": "NB-38",
+      "title": "GPU Accelerated Hybrid Particle‐Field Molecular Dynamics: Multi‐Node/Multi‐GPU Implementation and Large‐Scale Benchmarks of the OCCAM Code",
+      "authors": "",
+      "year": 0,
+      "journal": "PMC",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-39": {
+      "id": "NB-39",
+      "title": "atlas",
+      "authors": "",
+      "year": 0,
+      "journal": "view-web-product-plan.md",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-40": {
+      "id": "NB-40",
+      "title": "From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery",
+      "authors": "",
+      "year": 0,
+      "journal": "arXiv",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-41": {
+      "id": "NB-41",
+      "title": "Autonomous intelligent agents for accelerated materials discovery",
+      "authors": "",
+      "year": 0,
+      "journal": "PMC - NIH",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-42": {
+      "id": "NB-42",
+      "title": "AI",
+      "authors": "",
+      "year": 0,
+      "journal": "Accelerated Materials Discovery in 2026: How Generative Models, Graph Neural Networks, and Autonomous Labs Are Transforming R&D | Cypris",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-43": {
+      "id": "NB-43",
+      "title": "atlas",
+      "authors": "",
+      "year": 0,
+      "journal": "distillation-hypothesis-v2.docx",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-44": {
+      "id": "NB-44",
+      "title": "DigCat Platform",
+      "authors": "",
+      "year": 0,
+      "journal": "Welcome to the LI Group",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-45": {
+      "id": "NB-45",
+      "title": "LASP to the Future of Atomic Simulation: Intelligence and Automation",
+      "authors": "",
+      "year": 0,
+      "journal": "ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-46": {
+      "id": "NB-46",
+      "title": "Center for High Pressure Science & Technology Advanced Research | Changchun, China |",
+      "authors": "",
+      "year": 0,
+      "journal": "ResearchGate",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-47": {
+      "id": "NB-47",
+      "title": "Regular",
+      "authors": "",
+      "year": 0,
+      "journal": "Talk - LAMMPS Workshop and Symposium - August 12-14, 2025",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-48": {
+      "id": "NB-48",
+      "title": "The Computational Renaissance of Materials Science: Deep Learning Potentials and the Ascendance of Chinese Research Infrastructure",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-49": {
+      "id": "NB-49",
+      "title": "AI empowered multi",
+      "authors": "",
+      "year": 0,
+      "journal": "scale molecular modeling and simulation - CECAM",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-50": {
+      "id": "NB-50",
+      "title": "Boosting Li",
+      "authors": "",
+      "year": 0,
+      "journal": "CO2 Battery Performance via High-Entropy Alloy Catalysts - PubMed",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-51": {
+      "id": "NB-51",
+      "title": "DPA",
+      "authors": "",
+      "year": 0,
+      "journal": "2: a large atomic model as a multi-task learner - Research With Rutgers",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-52": {
+      "id": "NB-52",
+      "title": "Research Interest",
+      "authors": "",
+      "year": 0,
+      "journal": "Xu ShenZhen Lab - PKU",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-53": {
+      "id": "NB-53",
+      "title": "[2501.08697] ABACUS: An Electronic Structure Analysis Package for the AI Era",
+      "authors": "",
+      "year": 0,
+      "journal": "arXiv",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-54": {
+      "id": "NB-54",
+      "title": "Structure",
+      "authors": "",
+      "year": 0,
+      "journal": "informed machine learning for drug discovery: a task-centric perspective - PMC",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-55": {
+      "id": "NB-55",
+      "title": "heat transfer in composite materials: mechanisms",
+      "authors": "",
+      "year": 0,
+      "journal": "arXiv.org",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-56": {
+      "id": "NB-56",
+      "title": "Comments to Office of Science and Technology Policy Regarding a Strategic Plan for Advanced Manufacturing",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-57": {
+      "id": "NB-57",
+      "title": "The Future of Manufacturing: Key Trends 2025 and Strategic Roadmap 2026",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-58": {
+      "id": "NB-58",
+      "title": "Industrial Research Labs: Driving Innovation and Scale",
+      "authors": "",
+      "year": 0,
+      "journal": "Lab Manager",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-59": {
+      "id": "NB-59",
+      "title": "Who should govern the development of powerful AI systems—governments, companies, or an international body? | ResearchGate",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-60": {
+      "id": "NB-60",
+      "title": "3 Questions: On the future of AI and the mathematical and physical sciences | MIT News",
+      "authors": "",
+      "year": 0,
+      "journal": "",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-61": {
+      "id": "NB-61",
+      "title": "Implementation Opinions on the \"AI + Manufacturing\" Special Initiative | Center for Security and Emerging Technology",
+      "authors": "",
+      "year": 0,
+      "journal": "CSET",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-62": {
+      "id": "NB-62",
+      "title": "Reimagining the Future of Materials Discovery: From Automation to Collaboration | Rafik Hariri Institute for Computing and Computational Science & Engineering",
+      "authors": "",
+      "year": 0,
+      "journal": "Boston University",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-63": {
+      "id": "NB-63",
+      "title": "DPA",
+      "authors": "",
+      "year": 0,
+      "journal": "2: a large atomic model as a multi-task learner - arXiv",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-64": {
+      "id": "NB-64",
+      "title": "conversation",
+      "authors": "",
+      "year": 0,
+      "journal": "w-researcher.txt",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    },
+    "NB-65": {
+      "id": "NB-65",
+      "title": "EC Research Series_ Deep",
+      "authors": "",
+      "year": 0,
+      "journal": "Research Blueprint for the Next Report Under Ambiguous Scope.pdf",
+      "doi": "",
+      "cstr": "",
+      "methods_used": [],
+      "materials": [],
+      "scale": "unspecified",
+      "pain_points": "",
+      "principles_extracted": []
+    }
+  },
+  "taxonomy": [],
+  "metadata": {
+    "version": "0.1.0",
+    "last_updated": "2026-04-20T13:40:36.594144+00:00",
+    "total_principles": 16,
+    "total_sources": 73,
+    "seed_version": "seed-v1"
+  }
+}

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    .impact { position:absolute; left: 100px; top: 300px; font-size: 130px; font-weight: 900; color: white; opacity: 0; line-height: 1.1; }
+    .impact span { color: var(--lupine-400); }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="gallery-tour" data-start="0" data-duration="6" data-width="1920" data-height="1080">
+    <div class="impact" id="msg">10,000+ ATOMS.<br><span>60 FPS.</span><br>ZERO PYTHON.</div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#msg", { x: -100, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power4.out" }, 0.5);
+    tl.to("#msg", { x: 100, opacity: 0, duration: 0.5 }, 5.0);
+    tl.set({}, {}, 6);
+    window.__timelines["gallery-tour"] = tl;
+  </script>
+</body>
+</html>

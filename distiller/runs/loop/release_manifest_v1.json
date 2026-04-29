@@ -1,0 +1,81 @@
+{
+  "version": "0.1.0",
+  "date": "2026-04-13",
+  "profiles_completed": [
+    {
+      "profile": "corpus",
+      "name": "literature_scan",
+      "version": "v1",
+      "description": "FCC elastic property benchmarking literature scan covering EAM, MEAM, and ML potentials"
+    },
+    {
+      "profile": "distill",
+      "name": "operator_proposals",
+      "version": "v2",
+      "description": "Elastic constant correction operators derived from literature benchmarks"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "runs/corpus/literature_scan_v1.json",
+      "sha256": "PLACEHOLDER_sha256_literature_scan_v1",
+      "description": "10 papers on interatomic potentials with elastic error metrics"
+    },
+    {
+      "path": "runs/corpus/literature_summary_v1.md",
+      "sha256": "PLACEHOLDER_sha256_literature_summary_v1",
+      "description": "Summary of error landscape by method type and recommendations"
+    },
+    {
+      "path": "runs/distill/operator_proposals_v2.json",
+      "sha256": "PLACEHOLDER_sha256_operator_proposals_v2",
+      "description": "5 elastic correction operators with validity conditions and Python implementations"
+    },
+    {
+      "path": "runs/distill/distill_summary_v1.md",
+      "sha256": "PLACEHOLDER_sha256_distill_summary_v1",
+      "description": "Operator inventory, metal-specific accuracy, and pipeline order"
+    }
+  ],
+  "pipeline_metrics": {
+    "corpus_literature_scan": {
+      "duration_seconds": 45,
+      "tool_calls": 12,
+      "provider": "minimax",
+      "papers_processed": 10,
+      "metals_covered": ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb"]
+    },
+    "distill_operator_proposals": {
+      "duration_seconds": 38,
+      "tool_calls": 8,
+      "provider": "minimax",
+      "operators_generated": 5,
+      "supported_metals": ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd"]
+    }
+  },
+  "quality_assessment": {
+    "overall_score": "good",
+    "corpus_quality": {
+      "literature_coverage": "comprehensive",
+      "methods_covered": ["EAM", "MEAM", "ML-GAP", "ML-NN", "ML-SNAP", "ML-OTF"],
+      "year_range": "2000-2023",
+      "gaps_identified": ["BCC potentials underrepresented", "High-throughput screening focus limited"]
+    },
+    "distill_quality": {
+      "operator_count": 5,
+      "avg_corrected_error": 5.56,
+      "highest_confidence_operators": ["Volume-scaling", "Stiffness-ratio", "Cauchy-pressure", "Poisson-ratio-deviation"],
+      "risk_mitigation": "Stability-margin operator addresses high-risk scenarios"
+    },
+    "metal_coverage": {
+      "FCC_complete": ["Al", "Cu", "Ni", "Ag", "Au", "Pt"],
+      "FCC_partial": ["Pd", "Pb"],
+      "BCC_excluded": ["Fe", "Mo", "W available via Cauchy-pressure operator"]
+    },
+    "expected_accuracy": {
+      "best_case": "2.9-3.5% (volume-scaling for Pt, Ag)",
+      "worst_case": "7.8% (stability-margin for Ag)",
+      "aggregate": "4-5% mean absolute error across test metals"
+    }
+  }
+}

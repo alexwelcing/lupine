@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2017--Mason-D-R--W--LAMMPS--ipr1",
+    "potid": "2017--Mason-D-R-Nguyen-Manh-D-Becquart-C-S--W",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "W"
+    ],
+    "symbols": [
+      "W"
+    ],
+    "dois": [
+      "10.1088/1361-648x/aa9776"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2017--Mason-D-R--W--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2017--Mason-D-R-Nguyen-Manh-D-Becquart-C-S--W",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2017--Mason-D-R-Nguyen-Manh-D-Becquart-C-S--W/1/W_MNB_JPCM17.eam.fs",
+        "filename": "W_MNB_JPCM17.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "f4f6b53e255faea2",
+    "nist_potential_id": "2017--Mason-D-R--W--LAMMPS--ipr1",
+    "potential_doi": "10.1088/1361-648x/aa9776",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 3.165,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 542.858544264778,
+  "c12": 204.416906615819,
+  "c44": 160.613711875574,
+  "a0": 3.1651976103416,
+  "ecoh": -8.90000208971648,
+  "success": true,
+  "error_message": null
+}

@@ -1,0 +1,85 @@
+name: Deploy glim viewer to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'atlas/**'
+      - '.github/workflows/deploy-glim-viewer.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Required for Workload Identity Federation
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: atlas/atlas-view/pnpm-lock.yaml
+
+      - name: Install Dependencies
+        working-directory: atlas/atlas-view
+        run: pnpm install
+
+      - name: Build Bundle (Research Site + Web Viewer)
+        working-directory: atlas
+        run: |
+          pip install markdown
+          python -c "import deploy_slim; deploy_slim.build_research(); deploy_slim.build_web()"
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Validate Secrets Pre-flight
+        run: |
+          if [ -z "${{ secrets.GCP_SERVICE_NAME_VIEWER }}" ]; then
+            echo "::error::MISSING SECRET: GCP_SERVICE_NAME_VIEWER is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_PROJECT_ID }}" ]; then
+            echo "::error::MISSING SECRET: GCP_PROJECT_ID is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_REGION }}" ]; then
+            echo "::error::MISSING SECRET: GCP_REGION is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          source: 'atlas/deploy_bundle'
+          service: '${{ secrets.GCP_SERVICE_NAME_VIEWER }}'
+          region: '${{ secrets.GCP_REGION }}'
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+          flags: '--allow-unauthenticated'
+
+      - name: Show output
+        run: echo ${{ steps.deploy.outputs.url }}

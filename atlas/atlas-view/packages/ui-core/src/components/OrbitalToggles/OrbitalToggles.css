@@ -1,0 +1,137 @@
+/* OrbitalToggle — Electron orbit state indicator */
+
+.orbital {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--glass-bg-1);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out-expo);
+  outline: none;
+}
+
+.orbital:hover {
+  background: var(--glass-bg-2);
+  border-color: var(--glass-border-hi);
+}
+
+.orbital:focus-visible {
+  box-shadow: 0 0 0 2px var(--lupine-500);
+}
+
+.orbital--active {
+  background: rgba(85, 101, 212, 0.06);
+  border-color: rgba(85, 101, 212, 0.25);
+}
+
+/* ─── Text ─── */
+
+.orbital__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.orbital__label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--slate-400);
+  transition: color 0.25s;
+}
+
+.orbital--active .orbital__label {
+  color: var(--slate-100);
+  font-weight: 500;
+}
+
+.orbital__hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--slate-600);
+}
+
+/* ─── Indicator Container ─── */
+
+.orbital__indicator {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+/* ─── Nucleus ─── */
+
+.orbital__nucleus {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 6px; height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--slate-600);
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.orbital--active .orbital__nucleus {
+  background: var(--lupine-400);
+  animation: nucleus-pulse 2s ease-in-out infinite;
+}
+
+/* ─── Orbit Rings ─── */
+
+.orbital__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.orbital__ring--secondary {
+  transform: rotate(70deg);
+}
+
+.orbital__path {
+  fill: none;
+  stroke: var(--slate-600);
+  stroke-width: 0.8;
+  transition: stroke 0.3s, stroke-width 0.3s;
+}
+
+.orbital--active .orbital__path {
+  stroke: rgba(85, 101, 212, 0.5);
+  stroke-width: 1;
+}
+
+/* ─── Electron ─── */
+
+.orbital__electron {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 36px; height: 36px;
+  margin-top: -18px;
+  margin-left: -18px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: orbital-spin 3s linear infinite;
+}
+
+.orbital--active .orbital__electron {
+  opacity: 1;
+}
+
+.orbital__electron::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -1px;
+  width: 5px; height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan), 0 0 16px rgba(78, 205, 196, 0.4);
+}

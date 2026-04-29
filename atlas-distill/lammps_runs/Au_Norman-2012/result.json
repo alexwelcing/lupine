@@ -1,0 +1,60 @@
+{
+  "potential": {
+    "id": "2012--Norman-G-E--Au--LAMMPS--ipr1",
+    "potid": "2012--Norman-G-E-Starikov-S-V-Stegailov-V-V--Au",
+    "pair_style": "eam/alloy",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "",
+    "elements": [
+      "Au"
+    ],
+    "symbols": [
+      "Au"
+    ],
+    "dois": [
+      "10.1134/s1063776112040115",
+      "10.1007/s00340-014-5789-y"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2012--Norman-G-E--Au--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2012--Norman-G-E-Starikov-S-V-Stegailov-V-V--Au",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2012--Norman-G-E-Starikov-S-V-Stegailov-V-V--Au/1/Au_5T.eam.alloy",
+        "filename": "Au_5T.eam.alloy",
+        "label": ""
+      },
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2012--Norman-G-E-Starikov-S-V-Stegailov-V-V--Au/1/Verification.pdf",
+        "filename": "Verification.pdf",
+        "label": ""
+      }
+    ],
+    "file_count": 2
+  },
+  "trace": {
+    "run_id": "56fdf1ac013e614b",
+    "nist_potential_id": "2012--Norman-G-E--Au--LAMMPS--ipr1",
+    "potential_doi": "10.1134/s1063776112040115",
+    "pair_style": "eam/alloy",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "fcc",
+    "lattice_constant": 4.078,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 210.360835543277,
+  "c12": 159.976448458084,
+  "c44": 54.4571839316836,
+  "a0": 4.0685006539571,
+  "ecoh": -4.29936280838569,
+  "success": true,
+  "error_message": null
+}

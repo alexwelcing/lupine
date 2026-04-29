@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupine Materials Science — The Future of Computational Materials</title>
+    <meta name="description" content="Lupine Materials Science is building the unified computational platform for materials discovery. From quantum DFT to molecular dynamics to ML potentials — one system, zero fragmentation.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           LUPINE MATERIALS SCIENCE — VC LANDING PAGE
+           Brand: Deep Indigo / Lupine Violet / Warm Slate
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            --lupine-900: #1a1d3d;
+            --lupine-800: #252a52;
+            --lupine-700: #2e3a87;
+            --lupine-600: #3d4db3;
+            --lupine-500: #5565d4;
+            --lupine-400: #7b8ae0;
+            --lupine-300: #9ba6ea;
+            --lupine-200: #c5cdf3;
+            --lupine-100: #e8ebfa;
+            --lupine-50:  #f4f5fd;
+
+            --violet-700: #5b3a8c;
+            --violet-500: #8b6bc4;
+            --violet-300: #b9a0e0;
+
+            --slate-950: #0a0b12;
+            --slate-900: #0f1119;
+            --slate-800: #181b28;
+            --slate-700: #252838;
+            --slate-600: #3a3e52;
+            --slate-500: #646880;
+            --slate-400: #9096ab;
+            --slate-300: #b4b9cc;
+            --slate-200: #d4d7e3;
+            --slate-100: #eceef4;
+
+            --accent-gold: #d4a843;
+            --accent-cyan: #4ecdc4;
+            --accent-warm: #e8834a;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--slate-950);
+            color: var(--slate-200);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--lupine-600);
+            color: white;
+        }
+
+        /* ─── Navigation ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        nav.scrolled {
+            background: rgba(10, 11, 18, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(91, 58, 140, 0.15);
+            padding: 14px 40px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .nav-brand .logo-mark {
+            width: 36px;
+            height: 36px;
+        }
+
+        .nav-brand-text {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--slate-100);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--slate-400);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--lupine-400);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--lupine-700), var(--violet-700));
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s !important;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 32px rgba(46, 58, 135, 0.4);
+        }
+
+        /* ─── Hero Section ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 120px 40px 80px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 30%, rgba(46, 58, 135, 0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 70% 60%, rgba(91, 58, 140, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 30% 70%, rgba(78, 205, 196, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Animated atom-orbit decorations */
+        .hero-orbits {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            pointer-events: none;
+            opacity: 0.12;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid var(--lupine-500);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-ring:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            animation: orbit-spin 20s linear infinite;
+        }
+
+        .orbit-ring:nth-child(2) {
+            width: 500px;
+            height: 200px;
+            animation: orbit-spin 30s linear infinite reverse;
+            transform: translate(-50%, -50%) rotate(60deg);
+        }
+
+        .orbit-ring:nth-child(3) {
+            width: 600px;
+            height: 250px;
+            animation: orbit-spin 25s linear infinite;
+            transform: translate(-50%, -50%) rotate(-30deg);
+        }
+
+        @keyframes orbit-spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 40px;
+            animation: hero-logo-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes hero-logo-in {
+            from {
+                opacity: 0;
+                transform: scale(0.6) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .hero-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--lupine-400);
+            margin-bottom: 24px;
+            animation: fade-up 0.8s 0.3s both;
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(36px, 5.5vw, 72px);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--slate-100);
+            margin-bottom: 28px;
+            animation: fade-up 0.8s 0.5s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--lupine-400), var(--violet-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--slate-400);
+            max-width: 620px;
+            margin: 0 auto 48px;
+            line-height: 1.8;
+            font-weight: 300;
+            animation: fade-up 0.8s 0.7s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            animation: fade-up 0.8s 0.9s both;
+        }
+
+        @keyframes fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, var(--lupine-700), var(--lupine-600));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 48px rgba(46, 58, 135, 0.5);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 36px;
+            background: rgba(255,255,255,0.04);
+            color: var(--slate-200);
+            border: 1px solid var(--slate-700);
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--slate-600);
+        }
+
+        /* ─── Scroll indicator ─── */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.4;
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator span {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--slate-500);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--lupine-500), transparent);
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ─── Section styling ─── */
+        section {
+            padding: 120px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--lupine-400);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(28px, 3.5vw, 48px);
+            color: var(--slate-100);
+            font-weight: 400;
+            line-height: 1.25;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 17px;
+            color: var(--slate-400);
+            max-width: 600px;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 64px;
+        }
+
+        /* ─── Problem Section ─── */
+        .problem-section {
+            position: relative;
+        }
+
+        .problem-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100vw;
+            right: -100vw;
+            bottom: 0;
+            background: linear-gradient(180deg, var(--slate-950) 0%, var(--slate-900) 50%, var(--slate-950) 100%);
+            z-index: -1;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .problem-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--lupine-600), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .problem-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(91, 58, 140, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .problem-card:hover::before {
+            opacity: 1;
+        }
+
+        .problem-icon {
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+
+        .problem-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--slate-100);
+            margin-bottom: 12px;
+        }
+
+        .problem-card p {
+            font-size: 14px;
+            color: var(--slate-400);
+            line-height: 1.75;
+        }
+
+        .problem-stat {
+            margin-top: 20px;
+            font-family: var(--font-serif);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--lupine-400);
+        }
+
+        .problem-stat-label {
+            font-size: 11px;
+            color: var(--slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 4px;
+        }
+
+        /* ─── Pipeline Section ─── */
+        .pipeline-section {
+            text-align: center;
+        }
+
+        .pipeline-visual {
+            margin-top: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .pipeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 32px 24px;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .pipeline-node {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .pipeline-step:nth-child(1) .pipeline-node { background: linear-gradient(135deg, rgba(46, 58, 135, 0.3), rgba(46, 58, 135, 0.1)); border: 1px solid rgba(46, 58, 135, 0.4); }
+        .pipeline-step:nth-child(3) .pipeline-node { background: linear-gradient(135deg, rgba(91, 58, 140, 0.3), rgba(91, 58, 140, 0.1)); border: 1px solid rgba(91, 58, 140, 0.4); }
+        .pipeline-step:nth-child(5) .pipeline-node { background: linear-gradient(135deg, rgba(78, 205, 196, 0.2), rgba(78, 205, 196, 0.05)); border: 1px solid rgba(78, 205, 196, 0.3); }
+        .pipeline-step:nth-child(7) .pipeline-node { background: linear-gradient(135deg, rgba(212, 168, 67, 0.2), rgba(212, 168, 67, 0.05)); border: 1px solid rgba(212, 168, 67, 0.3); }
+
+        .pipeline-step:hover .pipeline-node {
+            transform: scale(1.08);
+        }
+
+        .pipeline-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-200);
+            letter-spacing: 0.03em;
+        }
+
+        .pipeline-desc {
+            font-size: 12px;
+            color: var(--slate-500);
+            max-width: 160px;
+        }
+
+        .pipeline-arrow {
+            font-size: 24px;
+            color: var(--slate-600);
+            padding: 0 8px;
+        }
+
+        /* ─── Beachhead Section (glimPSE) ─── */
+        .beachhead-section {
+            position: relative;
+        }
+
+        .beachhead-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100vw;
+            right: -100vw;
+            bottom: 0;
+            background: linear-gradient(180deg, var(--slate-950) 0%, rgba(46, 58, 135, 0.04) 50%, var(--slate-950) 100%);
+            z-index: -1;
+        }
+
+        .beachhead-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .beachhead-visual {
+            background: var(--slate-800);
+            border: 1px solid var(--slate-700);
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 16 / 10;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .beachhead-visual-inner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .beachhead-visual .demo-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            background: rgba(78, 205, 196, 0.1);
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .fake-atoms {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .fake-atom {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            animation: atom-pulse 3s ease-in-out infinite;
+        }
+
+        .fake-atom:nth-child(odd) {
+            background: radial-gradient(circle at 35% 35%, var(--lupine-400), var(--lupine-700));
+        }
+        .fake-atom:nth-child(even) {
+            background: radial-gradient(circle at 35% 35%, var(--violet-300), var(--violet-700));
+        }
+        .fake-atom:nth-child(3n) {
+            background: radial-gradient(circle at 35% 35%, var(--accent-cyan), #1a7a74);
+        }
+
+        @keyframes atom-pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .beachhead-content h3 {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            color: var(--slate-100);
+            margin-bottom: 16px;
+        }
+
+        .beachhead-content h3 span {
+            color: var(--lupine-400);
+        }
+
+        .beachhead-content p {
+            color: var(--slate-400);
+            font-size: 15px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 32px 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 14px;
+            color: var(--slate-300);
+        }
+
+        .feature-list li .check {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ─── Competitive Edge ─── */
+        .comp-table-wrapper {
+            overflow-x: auto;
+            margin-top: 48px;
+            border-radius: 16px;
+            border: 1px solid var(--slate-700);
+        }
+
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .comp-table thead {
+            background: var(--slate-800);
+        }
+
+        .comp-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--slate-300);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--slate-700);
+        }
+
+        .comp-table th:last-child {
+            color: var(--lupine-300);
+            background: rgba(46, 58, 135, 0.15);
+        }
+
+        .comp-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--slate-400);
+        }
+
+        .comp-table td:last-child {
+            color: var(--lupine-200);
+            font-weight: 600;
+            background: rgba(46, 58, 135, 0.06);
+        }
+
+        .comp-table tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .comp-table td:first-child {
+            color: var(--slate-300);
+            font-weight: 500;
+        }
+
+        /* ─── Market Section ─── */
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .market-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 36px 28px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .market-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(91, 58, 140, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .market-number {
+            font-family: var(--font-serif);
+            font-size: 40px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--lupine-300), var(--violet-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .market-label {
+            font-size: 13px;
+            color: var(--slate-400);
+            font-weight: 500;
+        }
+
+        .market-detail {
+            font-size: 11px;
+            color: var(--slate-500);
+            margin-top: 6px;
+        }
+
+        /* ─── Team / Founder Section ─── */
+        .team-section {
+            text-align: center;
+        }
+
+        .team-section .section-subtitle {
+            margin: 0 auto 64px;
+        }
+
+        .founder-card {
+            max-width: 660px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 48px;
+            text-align: left;
+        }
+
+        .founder-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .founder-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--lupine-700), var(--violet-700));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .founder-name {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--slate-100);
+        }
+
+        .founder-role {
+            font-size: 13px;
+            color: var(--lupine-400);
+            margin-top: 4px;
+        }
+
+        .founder-bio {
+            font-size: 15px;
+            color: var(--slate-400);
+            line-height: 1.85;
+        }
+
+        /* ─── CTA Section ─── */
+        .cta-section {
+            text-align: center;
+            padding: 160px 40px;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100vw;
+            right: -100vw;
+            bottom: 0;
+            background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(46, 58, 135, 0.12), transparent 70%);
+            z-index: -1;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(32px, 4vw, 56px);
+            color: var(--slate-100);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .cta-section p {
+            font-size: 17px;
+            color: var(--slate-400);
+            max-width: 500px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            padding: 48px 40px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        footer p {
+            font-size: 12px;
+            color: var(--slate-600);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-brand {
+            font-weight: 600;
+            color: var(--slate-500);
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1024px) {
+            .problem-grid { grid-template-columns: 1fr; gap: 20px; }
+            .beachhead-layout { grid-template-columns: 1fr; gap: 48px; }
+            .market-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 80px 24px; }
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .hero { padding: 100px 24px 60px; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .pipeline-visual { flex-direction: column; }
+            .pipeline-arrow { transform: rotate(90deg); }
+            .market-grid { grid-template-columns: 1fr; }
+            .founder-card { padding: 32px 24px; }
+            .founder-header { flex-direction: column; text-align: center; }
+        }
+
+        /* ─── Animations on scroll ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── SVG Logo ─── */
+        .lupine-svg-logo {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ Navigation ═══ -->
+    <nav id="nav">
+        <a href="#" class="nav-brand">
+            <svg class="logo-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Stylized Lupine/Atom Mark -->
+                <circle cx="24" cy="24" r="3" fill="#7b8ae0"/>
+                <ellipse cx="24" cy="24" rx="18" ry="6" stroke="#5565d4" stroke-width="1" fill="none" opacity="0.6">
+                    <animateTransform attributeName="transform" type="rotate" dur="8s" from="0 24 24" to="360 24 24" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="24" cy="24" rx="18" ry="6" stroke="#8b6bc4" stroke-width="1" fill="none" opacity="0.5" transform="rotate(60 24 24)">
+                    <animateTransform attributeName="transform" type="rotate" dur="12s" from="60 24 24" to="420 24 24" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="24" cy="24" rx="18" ry="6" stroke="#4ecdc4" stroke-width="1" fill="none" opacity="0.4" transform="rotate(120 24 24)">
+                    <animateTransform attributeName="transform" type="rotate" dur="10s" from="120 24 24" to="480 24 24" repeatCount="indefinite"/>
+                </ellipse>
+                <!-- Petal shapes (stylized bluebonnet + p-orbitals) -->
+                <path d="M24 6 C26 12, 28 18, 24 21 C20 18, 22 12, 24 6Z" fill="#5565d4" opacity="0.7"/>
+                <path d="M24 42 C22 36, 20 30, 24 27 C28 30, 26 36, 24 42Z" fill="#5565d4" opacity="0.5"/>
+                <path d="M6 24 C12 22, 18 20, 21 24 C18 28, 12 26, 6 24Z" fill="#8b6bc4" opacity="0.6"/>
+                <path d="M42 24 C36 26, 30 28, 27 24 C30 20, 36 22, 42 24Z" fill="#8b6bc4" opacity="0.4"/>
+            </svg>
+            <span class="nav-brand-text">Lupine Materials Science</span>
+        </a>
+        <div class="nav-links">
+            <a href="#problem">Problem</a>
+            <a href="#platform">Platform</a>
+            <a href="#product">Product</a>
+            <a href="#market">Market</a>
+            <a href="#contact" class="nav-cta">Contact</a>
+        </div>
+    </nav>
+
+    <!-- ═══ Hero ═══ -->
+    <section class="hero" id="hero">
+        <div class="hero-orbits">
+            <div class="orbit-ring"></div>
+            <div class="orbit-ring"></div>
+            <div class="orbit-ring"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-logo">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="lupine-svg-logo">
+                    <circle cx="40" cy="40" r="5" fill="#9ba6ea"/>
+                    <circle cx="40" cy="40" r="4" fill="#7b8ae0"/>
+                    <!-- Orbital rings -->
+                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="url(#grad1)" stroke-width="1.2" fill="none">
+                        <animateTransform attributeName="transform" type="rotate" dur="8s" from="0 40 40" to="360 40 40" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="url(#grad2)" stroke-width="1.2" fill="none" transform="rotate(60 40 40)">
+                        <animateTransform attributeName="transform" type="rotate" dur="12s" from="60 40 40" to="420 40 40" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="url(#grad3)" stroke-width="1.2" fill="none" transform="rotate(120 40 40)">
+                        <animateTransform attributeName="transform" type="rotate" dur="10s" from="120 40 40" to="480 40 40" repeatCount="indefinite"/>
+                    </ellipse>
+                    <!-- Petal/orbital lobes -->
+                    <path d="M40 8 C43 20, 46 30, 40 35 C34 30, 37 20, 40 8Z" fill="#5565d4" opacity="0.75"/>
+                    <path d="M40 72 C37 60, 34 50, 40 45 C46 50, 43 60, 40 72Z" fill="#5565d4" opacity="0.55"/>
+                    <path d="M8 40 C20 37, 30 34, 35 40 C30 46, 20 43, 8 40Z" fill="#8b6bc4" opacity="0.65"/>
+                    <path d="M72 40 C60 43, 50 46, 45 40 C50 34, 60 37, 72 40Z" fill="#8b6bc4" opacity="0.45"/>
+                    <path d="M17 17 C26 23, 32 29, 35 35 C29 32, 23 26, 17 17Z" fill="#4ecdc4" opacity="0.4"/>
+                    <path d="M63 63 C54 57, 48 51, 45 45 C51 48, 57 54, 63 63Z" fill="#4ecdc4" opacity="0.3"/>
+                    <!-- Electron dots -->
+                    <circle r="2" fill="#9ba6ea">
+                        <animateMotion dur="8s" repeatCount="indefinite" path="M40,30 A10,10 0 1,1 40,50 A10,10 0 1,1 40,30"/>
+                    </circle>
+                    <circle r="1.5" fill="#b9a0e0">
+                        <animateMotion dur="12s" repeatCount="indefinite" path="M30,40 A10,10 0 1,1 50,40 A10,10 0 1,1 30,40"/>
+                    </circle>
+                    <defs>
+                        <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5565d4" stop-opacity="0.8"/><stop offset="100%" stop-color="#5565d4" stop-opacity="0.1"/></linearGradient>
+                        <linearGradient id="grad2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b6bc4" stop-opacity="0.7"/><stop offset="100%" stop-color="#8b6bc4" stop-opacity="0.1"/></linearGradient>
+                        <linearGradient id="grad3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4ecdc4" stop-opacity="0.5"/><stop offset="100%" stop-color="#4ecdc4" stop-opacity="0.1"/></linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="hero-label">Lupine Materials Science</div>
+            <h1>The <em>Unified Engine</em><br>for Materials Discovery</h1>
+            <p class="hero-sub">
+                One platform spanning quantum simulation, molecular dynamics, and machine learning potentials. The full DFT→ML→MD pipeline — no fragmentation, no vendor lock-in.
+            </p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn-primary">Request a Briefing →</a>
+                <a href="#product" class="btn-secondary">See the Product</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ═══ Problem ═══ -->
+    <section class="problem-section" id="problem">
+        <div class="section-label reveal">The Problem</div>
+        <h2 class="section-title reveal">Materials science runs on<br>a fractured toolchain</h2>
+        <p class="section-subtitle reveal">
+            Researchers stitch together 4–6 disconnected tools for a single workflow. File conversions lose metadata. Validation is manual. The pipeline is broken.
+        </p>
+        <div class="problem-grid">
+            <div class="problem-card reveal">
+                <div class="problem-icon">🔒</div>
+                <h3>Commercially Locked</h3>
+                <p>VASP — the gold-standard quantum solver — is proprietary and expensive. Entire research groups share a single license.</p>
+                <div class="problem-stat">$4,500</div>
+                <div class="problem-stat-label">Per VASP Academic License</div>
+            </div>
+            <div class="problem-card reveal">
+                <div class="problem-icon">⏳</div>
+                <h3>30 Years Old</h3>
+                <p>LAMMPS is brilliant but ancient — Fortran-era C++ patterns, no native ML support, GPU acceleration bolted on as an afterthought.</p>
+                <div class="problem-stat">1995</div>
+                <div class="problem-stat-label">Year LAMMPS was first released</div>
+            </div>
+            <div class="problem-card reveal">
+                <div class="problem-icon">🔗</div>
+                <h3>No Integration</h3>
+                <p>The DFT→ML potential→production MD pipeline requires expertise in 4–6 separate packages, each with its own data model and community.</p>
+                <div class="problem-stat">6+</div>
+                <div class="problem-stat-label">Tools in a typical workflow</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Platform / Pipeline ═══ -->
+    <section class="pipeline-section" id="platform">
+        <div class="section-label reveal">The Platform</div>
+        <h2 class="section-title reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
+            From electrons to engineering.<br>One unified system.
+        </h2>
+        <p class="section-subtitle reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
+            Lupine replaces the fragmented stack with a single, modern codebase written in Rust — memory-safe, GPU-accelerated, and with ML potentials as a first-class citizen.
+        </p>
+
+        <div class="pipeline-visual reveal">
+            <div class="pipeline-step">
+                <div class="pipeline-node">⚛️</div>
+                <div class="pipeline-label">Quantum DFT</div>
+                <div class="pipeline-desc">VASP-compatible plane-wave PAW calculations</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">
+                <div class="pipeline-node">🧠</div>
+                <div class="pipeline-label">ML Potentials</div>
+                <div class="pipeline-desc">Train MACE, NequIP, DeePMD from DFT data</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">
+                <div class="pipeline-node">🔬</div>
+                <div class="pipeline-label">Molecular Dynamics</div>
+                <div class="pipeline-desc">LAMMPS-compatible, billion-atom simulations</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">
+                <div class="pipeline-node">💎</div>
+                <div class="pipeline-label">Materials Discovery</div>
+                <div class="pipeline-desc">Properties at near-DFT accuracy, 1000× speed</div>
+            </div>
+        </div>
+
+        <!-- Competitive table -->
+        <div class="comp-table-wrapper reveal" style="margin-top:80px;">
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th>VASP</th>
+                        <th>LAMMPS</th>
+                        <th>Quantum ESPRESSO</th>
+                        <th>Lupine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Plane-wave DFT</td>
+                        <td>✅</td>
+                        <td>—</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Classical MD</td>
+                        <td>—</td>
+                        <td>✅</td>
+                        <td>—</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>ML potentials (native)</td>
+                        <td>—</td>
+                        <td>Plugin</td>
+                        <td>—</td>
+                        <td>✅ Core</td>
+                    </tr>
+                    <tr>
+                        <td>DFT → ML → MD pipeline</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>✅ One command</td>
+                    </tr>
+                    <tr>
+                        <td>Differentiable simulation</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>License</td>
+                        <td>Commercial</td>
+                        <td>GPL</td>
+                        <td>GPL</td>
+                        <td>Apache 2.0</td>
+                    </tr>
+                    <tr>
+                        <td>Language</td>
+                        <td>Fortran</td>
+                        <td>C++</td>
+                        <td>Fortran</td>
+                        <td>Rust</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ═══ Beachhead Product ═══ -->
+    <section class="beachhead-section" id="product">
+        <div class="beachhead-layout">
+            <div class="beachhead-visual reveal">
+                <div class="demo-badge">● Live Product</div>
+                <div class="beachhead-visual-inner">
+                    <div class="fake-atoms" id="atomGrid">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+            </div>
+            <div class="beachhead-content reveal">
+                <div class="section-label">Shipping Now</div>
+                <h3>Lupine <span>View</span></h3>
+                <p>
+                    Our beachhead product: a WebGPU-powered molecular visualization platform. Drag a LAMMPS dump file into your browser — get publication-quality 3D in two seconds. No install. No license. No Python scripts.
+                </p>
+                <ul class="feature-list">
+                    <li><span class="check">✓</span> WebGPU rendering — 10M+ atoms at 60fps</li>
+                    <li><span class="check">✓</span> Rust/WASM parsers — 10× faster than JavaScript</li>
+                    <li><span class="check">✓</span> SSAO, depth of field, bloom — publication quality</li>
+                    <li><span class="check">✓</span> URL sharing — send a link, not a file</li>
+                    <li><span class="check">✓</span> Free forever — replaces $$/yr OVITO Pro seats</li>
+                    <li><span class="check">✓</span> WebCodecs video export — hardware-accelerated</li>
+                </ul>
+                <a href="#" class="btn-primary" style="margin-top:8px;">Try Lupine View →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Market ═══ -->
+    <section id="market">
+        <div class="section-label reveal">The Market</div>
+        <h2 class="section-title reveal">A sovereign-scale opportunity</h2>
+        <p class="section-subtitle reveal">
+            Computational materials science underpins batteries, semiconductors, aerospace alloys, and nuclear materials. Every nation needs this stack.
+        </p>
+        <div class="market-grid">
+            <div class="market-card reveal">
+                <div class="market-number">$12B</div>
+                <div class="market-label">Simulation Software TAM</div>
+                <div class="market-detail">Scientific computing & CAE by 2028</div>
+            </div>
+            <div class="market-card reveal">
+                <div class="market-number">300K+</div>
+                <div class="market-label">LAMMPS Researchers</div>
+                <div class="market-detail">Active users worldwide</div>
+            </div>
+            <div class="market-card reveal">
+                <div class="market-number">$0</div>
+                <div class="market-label">Unified Platforms</div>
+                <div class="market-detail">DFT + ML + MD in one system</div>
+            </div>
+            <div class="market-card reveal">
+                <div class="market-number">100×</div>
+                <div class="market-label">ML Speedup</div>
+                <div class="market-detail">Near-DFT accuracy, MD speed</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Why Now ═══ -->
+    <section>
+        <div style="max-width:800px; margin:0 auto; text-align:center;">
+            <div class="section-label reveal">Why Now</div>
+            <h2 class="section-title reveal" style="margin-left:auto;margin-right:auto;">Three tailwinds converging</h2>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:48px; text-align:left;">
+                <div class="reveal" style="padding:24px 0; border-top:2px solid var(--lupine-700);">
+                    <h4 style="color:var(--slate-100);font-size:15px;margin-bottom:8px;">ML Potentials are proven</h4>
+                    <p style="font-size:13px;color:var(--slate-400);">MACE, NequIP, and Allegro have demonstrated near-DFT accuracy at classical MD speed. The science is settled — the tooling isn't.</p>
+                </div>
+                <div class="reveal" style="padding:24px 0; border-top:2px solid var(--violet-700);">
+                    <h4 style="color:var(--slate-100);font-size:15px;margin-bottom:8px;">WebGPU is here</h4>
+                    <p style="font-size:13px;color:var(--slate-400);">Browser-native GPU compute unlocks scientific visualization without install barriers. We're the first to bring it to materials science.</p>
+                </div>
+                <div class="reveal" style="padding:24px 0; border-top:2px solid var(--accent-cyan);">
+                    <h4 style="color:var(--slate-100);font-size:15px;margin-bottom:8px;">Sovereignty demands</h4>
+                    <p style="font-size:13px;color:var(--slate-400);">Nations are realizing that computational materials infrastructure is strategic. VASP is Austrian-held. The world needs alternatives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CTA ═══ -->
+    <section class="cta-section" id="contact">
+        <h2 class="reveal">The future of matter<br>starts with software.</h2>
+        <p class="reveal">We're raising to accelerate platform development. If you understand the strategic value of computational materials infrastructure, let's speak.</p>
+        <div class="hero-actions reveal" style="margin-top:0;">
+            <a href="mailto:founders@lupine.science" class="btn-primary">founders@lupine.science →</a>
+            <a href="#" class="btn-secondary">Download One-Pager</a>
+        </div>
+    </section>
+
+    <!-- ═══ Footer ═══ -->
+    <footer>
+        <p><span class="footer-brand">Lupine Materials Science</span> · 2026 · Building the infrastructure for materials discovery</p>
+    </footer>
+
+    <script>
+        // ─── Nav scroll behavior ───
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ─── Generate atom grid ───
+        const grid = document.getElementById('atomGrid');
+        for (let i = 0; i < 48; i++) {
+            const atom = document.createElement('div');
+            atom.className = 'fake-atom';
+            atom.style.animationDelay = `${Math.random() * 3}s`;
+            atom.style.opacity = 0.5 + Math.random() * 0.5;
+            grid.appendChild(atom);
+        }
+
+        // ─── Scroll reveal ───
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px'
+        });
+        reveals.forEach(el => observer.observe(el));
+
+        // ─── Smooth anchor scrolling ───
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>

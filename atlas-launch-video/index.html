@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="stylesheet" href="./styles/global.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  </head>
+  <body>
+    <!--
+      ═══════════════════════════════════════════════════════════════
+      glimPSE Launch Video — Root Composition
+      Total: 60 seconds @ 1920×1080
+
+      Timeline:
+        0-4s    Cold Open (terminal frustration)
+        4-8s    Brand Reveal (logo assembly)
+        8-14s   Drag & Drop (screen recording)
+        14-20s  Gallery Tour (screen recording)
+        20-30s  Rendering Power (feature showcase)
+        30-40s  Cinematic Flythrough (embedded video)
+        40-48s  Publication Export (screen recording)
+        48-60s  Outro CTA
+      ═══════════════════════════════════════════════════════════════
+    -->
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="60"
+      data-width="1920"
+      data-height="1080"
+    >
+
+      <!-- Scene 1: Cold Open — 0s to 4s -->
+      <div id="scene-cold-open"
+           class="clip"
+           data-start="0"
+           data-duration="4"
+           data-track-index="0"
+           data-composition-id="cold-open"
+           data-composition-src="./compositions/cold-open.html"
+           style="position:absolute;inset:0;width:1920px;height:1080px;">
+      </div>
+
+      <!-- Scene 2: Brand Reveal — 4s to 8s -->
+      <div id="scene-brand"
+           class="clip"
+           data-start="scene-cold-open"
+           data-duration="4"
+           data-track-index="0"
+           data-composition-id="brand-reveal"
+           data-composition-src="./compositions/brand-reveal.html"
+           style="position:absolute;inset:0;width:1920px;height:1080px;">
+      </div>
+
+      <!-- Scene 3: Drag & Drop — 8s to 14s -->
+      <div id="scene-dragdrop"
+           class="clip"
+           data-start="scene-brand"
+           data-duration="6"
+           data-track-index="0"
+           data-composition-id="drag-drop"
+           data-composition-src="./compositions/drag-drop.html"
+           style="position:absolute;inset:0;width:1920px;height:1080px;">
+      </div>
+
+      <!-- Scene 4: Gallery Tour — 14s to 20s -->
+      <div id="scene-gallery"
+           class="clip"
+           data-start="scene-dragdrop"
+           data-duration="6"
+           data-track-index="0"
+           data-composition-id="gallery-tour"
+           data-composition-src="./compositions/gallery-tour.html"
+           style="position:absolute;inset:0;width:1920px;height:1080px;">
+      </div>
+
+      <!-- Scene 5: Rendering Power — 20s to 30s -->
+      <div id="scene-rendering"
+           class="clip"
+           data-start="scene-gallery"
+           data-duration="10"
+           data-track-index="0"
+           data-composition-id="rendering-power"
+           data-composition-src="./compositions/rendering-power.html"
+           style="position:absolute;inset:0;width:1920px;height:1080px;">
+      </div>
+
+      <!-- Scene 6: Cinematic Flythrough — 30s to 40s -->
+      <div id="scene-flythrough"
+           class="clip"
+           data-start="scene-rendering"
+           data-duration="10"
+           data-track-index="0"
+           data-composition-id="flythrough"
+           data-composition-src="./compositions/flythrough.html"
+           style="position:absolute;inset:0;width:1920px;height:1080px;">
+      </div>
+
+      <!-- Scene 7: Publication Export — 40s to 48s -->
+      <div id="scene-export"
+           class="clip"
+           data-start="scene-flythrough"
+           data-duration="8"
+           data-track-index="0"
+           data-composition-id="publication-export"
+           data-composition-src="./compositions/publication-export.html"
+           style="position:absolute;inset:0;width:1920px;height:1080px;">
+      </div>
+
+      <!-- Scene 8: Outro CTA — 48s to 60s -->
+      <div id="scene-outro"
+           class="clip"
+           data-start="scene-export"
+           data-duration="12"
+           data-track-index="0"
+           data-composition-id="outro"
+           data-composition-src="./compositions/outro.html"
+           style="position:absolute;inset:0;width:1920px;height:1080px;">
+      </div>
+
+    </div>
+
+    <script>
+      // Root timeline — no animations here; each sub-composition owns its own.
+      // Just extend to 60s to match total duration.
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.set({}, {}, 60);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

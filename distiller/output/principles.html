@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distilled MD Principles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #fafafa; color: #1a1a1a; line-height: 1.9; font-size: 17px; }
+        .container { max-width: 860px; margin: 0 auto; padding: 60px 40px; }
+        header { text-align: left; margin-bottom: 50px; padding-bottom: 30px; border-bottom: 1px solid #000; }
+        h1 { font-size: 28px; font-weight: 400; letter-spacing: 0.05em; }
+        .meta { font-size: 13px; color: #777; font-family: monospace; margin-top: 8px; }
+        h2 { font-size: 20px; font-weight: 400; letter-spacing: 0.05em; margin-top: 50px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid #e0e0e0; }
+        .card { background: #fff; border: 1px solid #e0e0e0; padding: 24px; margin-bottom: 20px; border-radius: 4px; }
+        .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .card .badges { font-size: 12px; font-family: monospace; color: #555; margin-bottom: 12px; }
+        .card .badges span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px; margin-right: 6px; }
+        .card blockquote { border-left: 3px solid #000; padding: 8px 16px; margin: 12px 0; background: #f9f9f9; font-style: italic; color: #444; font-size: 15px; }
+        .card .details { font-size: 13px; color: #666; }
+        .card .details span { margin-right: 12px; }
+        .tag { background: #264653; color: #f1faee; padding: 1px 6px; border-radius: 2px; font-size: 11px; font-family: monospace; margin-right: 4px; }
+        .confidence-established { color: #2d6a4f; font-weight: 600; }
+        .confidence-emerging { color: #e9c46a; font-weight: 600; }
+        .confidence-speculative { color: #e76f51; font-weight: 600; }
+        .stats { display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0 40px; }
+        .stat { text-align: center; }
+        .stat .num { font-size: 28px; font-weight: 300; color: #264653; font-family: monospace; }
+        .stat .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Distilled MD Principles</h1>
+            <div class="meta">59 principles · 133 sources · v0.1.0</div>
+        </header>
+        <div class="stats">
+            <div class="stat"><div class="num">59</div><div class="label">Principles</div></div>
+            <div class="stat"><div class="num">133</div><div class="label">Sources</div></div>
+            <div class="stat"><div class="num">14</div><div class="label">Established</div></div>
+            <div class="stat"><div class="num">45</div><div class="label">Emerging</div></div>
+        </div>
+        <h2>Analysis (2)</h2>
+
+    <div class="card">
+        <h3>Streaming trajectory analysis avoids dump file sprawl at scale</h3>
+        <div class="badges">
+            <span>analysis</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Large-scale simulations produce terabytes of dump data. Post-hoc analysis of giant text dumps is I/O-bound and wasteful. Streaming/incremental feature extraction (RDF, MSD, defect counts) during or immediately after simulation is more scalable.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>OVITO</code>, <code>MDAnalysis</code>, <code>YAML dumps</code>, <code>VTK</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P20</span><br>
+            <span class="tag">#streaming</span><span class="tag">#analysis</span><span class="tag">#large-scale</span><span class="tag">#I/O</span><span class="tag">#EAM</span><span class="tag">#MD</span><span class="tag">#RDF</span><span class="tag">#MSD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Heat current formulations require careful many-body treatment in MLIPs</h3>
+        <div class="badges">
+            <span>analysis</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Computing thermal conductivity via Green-Kubo or NEMD requires correct heat current definitions. Many-body potentials (including MLIPs) introduce non-trivial terms in the heat current that standard two-body formulations miss, leading to systematic errors.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MTP</code>, <code>Green-Kubo</code>, <code>NEMD</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P17</span><br>
+            <span class="tag">#thermal-transport</span><span class="tag">#heat-current</span><span class="tag">#many-body</span><span class="tag">#MLIP</span><span class="tag">#MD</span>
+        </div>
+    </div>
+<h2>Method (8)</h2>
+
+    <div class="card">
+        <h3>ReactiveMD and ReaxFF are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>method</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>ReactiveMD and ReaxFF co-occur in 8 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>ReactiveMD</code>, <code>ReaxFF</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P29, P30, P31, P32, P33, P34, P35, P39</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#reactivemd</span><span class="tag">#reaxff</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Reactive MD requires sub-femtosecond timesteps for numerical stability</h3>
+        <div class="badges">
+            <span>method</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>ReaxFF and reactive force fields involve bond formation/breaking with stiff potentials. Timesteps of 0.1–0.25 fs are typically required to maintain energy conservation, making reactive simulations 10-40× more expensive per unit time.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>ReaxFF</code>, <code>REACTION</code>, <code>REACTER</code></span><br>
+            <span><b>Materials:</b> FOX-7, HMX, polymers, graphene</span><br>
+            <span><b>Sources:</b> P29, P30, P31, P33, P34</span><br>
+            <span class="tag">#reactive-MD</span><span class="tag">#timestep</span><span class="tag">#stability</span><span class="tag">#energetic-materials</span><span class="tag">#ReaxFF</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Integrator choice materially affects NEMD simulation outcomes</h3>
+        <div class="badges">
+            <span>method</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>Seemingly minor details in time integration (SLLOD, Nosé-Hoover chains, damping constants) can materially change viscosity, thermal conductivity, and transport properties in non-equilibrium MD. Documenting integrator choice is critical.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>fix npt/sllod</code>, <code>Nosé-Hoover</code>, <code>Langevin</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P13, P48</span><br>
+            <span class="tag">#NEMD</span><span class="tag">#integrator</span><span class="tag">#rheology</span><span class="tag">#transport</span><span class="tag">#MD</span><span class="tag">#NPT</span><span class="tag">#fix</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Numerical stability in ReaxFF constrains timestep selection</h3>
+        <div class="badges">
+            <span>method</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of FOX‑7 decomposition (ReaxFF‑lg). Pain point: Small timestep + reactive complexity; heavy compute</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>ReaxFF</code>, <code>ReactiveMD</code>, <code>HighEnergyMaterials</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P29, P31, P30, P32, P33, P34, P35, P39, P42</span><br>
+            <span class="tag">#stability</span><span class="tag">#timestep</span><span class="tag">#validation</span><span class="tag">#benchmarking</span><span class="tag">#ReaxFF</span><span class="tag">#MD</span><span class="tag">#compute</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Polymers and ReaxFF are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>method</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Polymers and ReaxFF co-occur in 4 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Polymers</code>, <code>ReaxFF</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P33, P35, P39, P47</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#polymers</span><span class="tag">#reaxff</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>HighEnergyMaterials and ReaxFF are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>method</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>HighEnergyMaterials and ReaxFF co-occur in 3 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>HighEnergyMaterials</code>, <code>ReaxFF</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P29, P30, P42</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#highenergymaterials</span><span class="tag">#reaxff</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Polymers and ReactiveMD are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>method</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Polymers and ReactiveMD co-occur in 3 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Polymers</code>, <code>ReactiveMD</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P33, P35, P39</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#polymers</span><span class="tag">#reactivemd</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Path-integral MD with MLIPs captures nuclear quantum effects efficiently</h3>
+        <div class="badges">
+            <span>method</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>PIMD combined with ML potentials (e.g., DeePMD) enables quantum nuclear dynamics at near-classical cost. Efficient ring-polymer implementations (fix pimd/langevin) reduce the overhead of running 32+ beads per atom.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>PIMD</code>, <code>DeePMD</code>, <code>ring-polymer</code></span><br>
+            <span><b>Materials:</b> water, H₂O</span><br>
+            <span><b>Sources:</b> P03</span><br>
+            <span class="tag">#PIMD</span><span class="tag">#quantum</span><span class="tag">#nuclear-dynamics</span><span class="tag">#water</span><span class="tag">#DeePMD</span><span class="tag">#MD</span><span class="tag">#fix</span>
+        </div>
+    </div>
+<h2>Performance (21)</h2>
+
+    <div class="card">
+        <h3>GPU performance portability requires KOKKOS abstraction layer</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>Running LAMMPS across heterogeneous GPU/CPU architectures at exascale demands the KOKKOS abstraction. Direct CUDA or HIP code locks simulations to a single vendor. KOKKOS provides portable performance without rewriting kernels.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>KOKKOS</code>, <code>GPU</code>, <code>CUDA</code>, <code>HIP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P01, P02, P04, P05, P07, P08, P59</span><br>
+            <span class="tag">#HPC</span><span class="tag">#exascale</span><span class="tag">#portability</span><span class="tag">#LAMMPS</span><span class="tag">#KOKKOS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>GPU and HPC are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>GPU and HPC co-occur in 7 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>GPU</code>, <code>HPC</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P01, P02, P03, P04, P05, P06, P16</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#gpu</span><span class="tag">#hpc</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>GPU and KOKKOS are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>GPU and KOKKOS co-occur in 7 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>GPU</code>, <code>KOKKOS</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P01, P02, P04, P05, P07, P08, P59</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#gpu</span><span class="tag">#kokkos</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>GPU and MLIP are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>GPU and MLIP co-occur in 5 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>GPU</code>, <code>MLIP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P06, P07, P08, P16, P59</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#gpu</span><span class="tag">#mlip</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Plugin architecture resolves LAMMPS licensing and distribution constraints</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>LAMMPS's GPLv2 license creates friction when distributing binaries that include incompatibly-licensed MLIP libraries. The runtime plugin system (dynamic shared objects) allows loading extensions without recompiling, sidestepping license conflicts.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>LAMMPS plugins</code>, <code>pair_style</code>, <code>fix</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> —</span><br>
+            <span class="tag">#plugins</span><span class="tag">#licensing</span><span class="tag">#distribution</span><span class="tag">#packaging</span><span class="tag">#LAMMPS</span><span class="tag">#MLIP</span><span class="tag">#pair_style</span><span class="tag">#fix</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Performance portability across architectures demands abstraction layers</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of LAMMPS‑KOKKOS: Performance Portable Molecular Dynamics Across Exascale Architectures. Pain point: Hardware heterogeneity drives portability needs</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>KOKKOS</code>, <code>GPU</code>, <code>HPC</code>, <code>SNAP</code>, <code>ReaxFF</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P01, P02, P04, P05, P60, P03, P06, P07, P08, P16, P58, P59</span><br>
+            <span class="tag">#HPC</span><span class="tag">#portability</span><span class="tag">#ReaxFF</span><span class="tag">#LAMMPS</span><span class="tag">#SNAP</span><span class="tag">#KOKKOS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Scaling MTP to large systems reveals I/O and memory bottlenecks</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Kokkos‑Accelerated Moment Tensor Potential (MTP) for LAMMPS (preprint). Pain point: Need portable high‑fidelity MLIPs at scale</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MTP</code>, <code>KOKKOS</code>, <code>GPU</code>, <code>HPC</code>, <code>ActiveLearning</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P04, P01, P02, P03, P05, P06, P07, P08, P16, P59</span><br>
+            <span class="tag">#scaling</span><span class="tag">#large-scale</span><span class="tag">#LAMMPS</span><span class="tag">#MLIP</span><span class="tag">#KOKKOS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>GPU and SNAP are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>GPU and SNAP co-occur in 4 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>GPU</code>, <code>SNAP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P01, P02, P07, P08</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#gpu</span><span class="tag">#snap</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>HPC and KOKKOS are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>HPC and KOKKOS co-occur in 4 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>HPC</code>, <code>KOKKOS</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P01, P02, P04, P05</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#hpc</span><span class="tag">#kokkos</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>KOKKOS and SNAP are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>KOKKOS and SNAP co-occur in 4 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>KOKKOS</code>, <code>SNAP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P01, P02, P07, P08</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#kokkos</span><span class="tag">#snap</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>GPU and MACE are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>GPU and MACE co-occur in 4 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>GPU</code>, <code>MACE</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P06, P07, P08, P59</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#gpu</span><span class="tag">#mace</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Scaling Membranes to large systems reveals I/O and memory bottlenecks</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Ion transport in polyamide (Science Advances) via LAMMPS. Pain point: Nanoscale morphology ↔ transport inference friction</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Membranes</code>, <code>Ions</code>, <code>Transport</code>, <code>Water</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P52, P53, P54</span><br>
+            <span class="tag">#scaling</span><span class="tag">#large-scale</span><span class="tag">#LAMMPS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>HPC and ReaxFF are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>HPC and ReaxFF co-occur in 3 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>HPC</code>, <code>ReaxFF</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P01, P02, P58</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#hpc</span><span class="tag">#reaxff</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>HPC and MLIP are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>HPC and MLIP co-occur in 3 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>HPC</code>, <code>MLIP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P06, P15, P16</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#hpc</span><span class="tag">#mlip</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>KOKKOS and MACE are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>KOKKOS and MACE co-occur in 3 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>KOKKOS</code>, <code>MACE</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P07, P08, P59</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#kokkos</span><span class="tag">#mace</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>KOKKOS and MLIP are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>KOKKOS and MLIP co-occur in 3 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>KOKKOS</code>, <code>MLIP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P07, P08, P59</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#kokkos</span><span class="tag">#mlip</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Scaling Electrostatics to large systems reveals I/O and memory bottlenecks</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Fast Ewald Summation with Prolates; implementations in LAMMPS and GROMACS. Pain point: Efficient long‑range electrostatics remains a scaling bottleneck</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Electrostatics</code>, <code>FFT</code>, <code>HPC</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P11</span><br>
+            <span class="tag">#scaling</span><span class="tag">#large-scale</span><span class="tag">#LAMMPS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Scaling Multiscale to large systems reveals I/O and memory bottlenecks</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Quasi‑atom method (simultaneous atomistic + continuum). Pain point: Bridging scales efficiently remains hard</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Multiscale</code>, <code>AtC</code>, <code>HPC</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P14</span><br>
+            <span class="tag">#scaling</span><span class="tag">#large-scale</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Scaling HPC to large systems reveals I/O and memory bottlenecks</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Improving LAMMPS performance on large‑scale HPC systems. Pain point: Scaling/efficiency challenges on large systems</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>HPC</code>, <code>Performance</code>, <code>Scaling</code>, <code>MPI</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P23</span><br>
+            <span class="tag">#scaling</span><span class="tag">#large-scale</span><span class="tag">#LAMMPS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Scaling MD‑FEA to large systems reveals I/O and memory bottlenecks</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Integrated MD‑FEA approach using LAMMPS. Pain point: Multiscale coupling and parameter handoffs</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MD‑FEA</code>, <code>Mechanical</code>, <code>Nanocomposites</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P49</span><br>
+            <span class="tag">#scaling</span><span class="tag">#large-scale</span><span class="tag">#interoperability</span><span class="tag">#coupling</span><span class="tag">#LAMMPS</span><span class="tag">#MD</span><span class="tag">#DOF</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Scaling Biomaterials to large systems reveals I/O and memory bottlenecks</h3>
+        <div class="badges">
+            <span>performance</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Biomimetic tendon‑like materials: multiscale toughening. Pain point: Bridging scales + validation complexity</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Biomaterials</code>, <code>Mechanical</code>, <code>Multiscale</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P50</span><br>
+            <span class="tag">#scaling</span><span class="tag">#large-scale</span><span class="tag">#validation</span><span class="tag">#benchmarking</span>
+        </div>
+    </div>
+<h2>Potential (5)</h2>
+
+    <div class="card">
+        <h3>MACE and MLIP are systematically co-deployed in modern MD workflows</h3>
+        <div class="badges">
+            <span>potential</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>MACE and MLIP co-occur in 5 papers in the corpus, indicating a systematic workflow or performance relationship.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MACE</code>, <code>MLIP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P06, P07, P08, P59, P60</span><br>
+            <span class="tag">#co-occurrence</span><span class="tag">#mace</span><span class="tag">#mlip</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Active learning loops automate training data generation for MLIPs</h3>
+        <div class="badges">
+            <span>potential</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>DP-GEN and similar active learning frameworks identify configurations where the MLIP is uncertain, run DFT on those configurations, and retrain. This avoids redundant training data and systematically fills gaps in chemical/configurational space.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>DP-GEN</code>, <code>active learning</code>, <code>DeePMD</code>, <code>MTP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P04, P05</span><br>
+            <span class="tag">#active-learning</span><span class="tag">#MLIP</span><span class="tag">#training-data</span><span class="tag">#automation</span><span class="tag">#DeePMD</span><span class="tag">#ACE</span><span class="tag">#DFT</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>MLIP spatial mixing recovers accuracy at reduced computational cost</h3>
+        <div class="badges">
+            <span>potential</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>High-fidelity MLIPs are too expensive to run everywhere in a simulation box. ML-MIX enables spatial mixing of cheap and expensive potentials, applying the expensive model only where needed (e.g., near defects) for up to 11× speedup.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MACE</code>, <code>ACE</code>, <code>SNAP</code>, <code>ML-MIX</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P07, P08</span><br>
+            <span class="tag">#MLIP</span><span class="tag">#cost-reduction</span><span class="tag">#spatial-mixing</span><span class="tag">#MACE</span><span class="tag">#SNAP</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Model-agnostic MLIP deployment enables cross-architecture portability</h3>
+        <div class="badges">
+            <span>potential</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Tools like chemtrain-deploy and metatensor provide model-agnostic deployment of MLIPs into standard MD engines. Without this, each potential architecture (MACE, Allegro, DeePMD) requires bespoke integration and GPU dispatch code.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MACE</code>, <code>Allegro</code>, <code>PaiNN</code>, <code>metatensor</code>, <code>metatomic</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P06, P60</span><br>
+            <span class="tag">#MLIP</span><span class="tag">#deployment</span><span class="tag">#model-agnostic</span><span class="tag">#interoperability</span><span class="tag">#DeePMD</span><span class="tag">#MACE</span><span class="tag">#ACE</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Charge equilibration adds significant complexity to MLIP deployment</h3>
+        <div class="badges">
+            <span>potential</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Fourth-generation high-dimensional neural network potentials (4G-HDNNPs) require iterative charge equilibration at every MD step. This adds both computational cost and implementation complexity compared to charge-neutral MLIPs.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>HDNNP</code>, <code>n2p2</code>, <code>QEq</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P18</span><br>
+            <span class="tag">#charge-equilibration</span><span class="tag">#MLIP</span><span class="tag">#electrostatics</span><span class="tag">#MD</span>
+        </div>
+    </div>
+<h2>Validation (7)</h2>
+
+    <div class="card">
+        <h3>DFT-vs-MD cross-validation establishes multiscale simulation credibility</h3>
+        <div class="badges">
+            <span>validation</span>
+            <span>multiscale</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>Comparing MD results (energy, forces, structure) against DFT reference calculations is the standard validation procedure for both classical and ML potentials. Without systematic cross-validation, MD predictions lack quantitative credibility.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>DFT</code>, <code>VASP</code>, <code>ABACUS</code>, <code>EAM</code>, <code>MLIP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P43</span><br>
+            <span class="tag">#validation</span><span class="tag">#DFT</span><span class="tag">#cross-validation</span><span class="tag">#accuracy</span><span class="tag">#EAM</span><span class="tag">#MLIP</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Systematic benchmarking is essential for MLIP reliability</h3>
+        <div class="badges">
+            <span>validation</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of ML‑MIX (npj Computational Materials). Pain point: MLIP cost vs accuracy tradeoff; extends feasible scales</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MLIP</code>, <code>ACE</code>, <code>SNAP</code>, <code>MACE</code>, <code>GPU</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P08, P18, P01, P02, P06, P07, P16, P59, P60</span><br>
+            <span class="tag">#validation</span><span class="tag">#benchmarking</span><span class="tag">#scaling</span><span class="tag">#large-scale</span><span class="tag">#MLIP</span><span class="tag">#MACE</span><span class="tag">#SNAP</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>LAMMPS input script validation prevents silent simulation errors</h3>
+        <div class="badges">
+            <span>validation</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Complex LAMMPS input scripts can contain unit mismatches, incompatible fix/pair_style combinations, and missing package dependencies that produce silently wrong results. Static validation (linting) of input scripts is an unmet need across the community.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>LAMMPS</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P09, P21, P22</span><br>
+            <span class="tag">#validation</span><span class="tag">#linting</span><span class="tag">#input-scripts</span><span class="tag">#correctness</span><span class="tag">#LAMMPS</span><span class="tag">#pair_style</span><span class="tag">#fix</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Reproducible Dataset workflows require automated provenance capture</h3>
+        <div class="badges">
+            <span>validation</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of ElectroFace dataset: MLMD trajectories via LAMMPS + DeePMD. Pain point: Dataset/provenance tooling is central</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Dataset</code>, <code>DeePMD</code>, <code>MLIP</code>, <code>Reproducibility</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P41, P40</span><br>
+            <span class="tag">#reproducibility</span><span class="tag">#provenance</span><span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#LAMMPS</span><span class="tag">#MLIP</span><span class="tag">#DeePMD</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Systematic benchmarking is essential for Rheology reliability</h3>
+        <div class="badges">
+            <span>validation</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Rate‑dependent shear viscosity; fix npt/sllod validation. Pain point: Implementation/validation of NEMD fixes is nontrivial</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Rheology</code>, <code>Integrator</code>, <code>NonEquilibrium</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P48, P13</span><br>
+            <span class="tag">#validation</span><span class="tag">#benchmarking</span><span class="tag">#MD</span><span class="tag">#NPT</span><span class="tag">#fix</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Reproducible RNG workflows require automated provenance capture</h3>
+        <div class="badges">
+            <span>validation</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Faster RANMAR RNG in LAMMPS + jump‑ahead. Pain point: RNG cost and reproducibility/scaling concerns</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>RNG</code>, <code>HPC</code>, <code>Reproducibility</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P12</span><br>
+            <span class="tag">#reproducibility</span><span class="tag">#provenance</span><span class="tag">#scaling</span><span class="tag">#large-scale</span><span class="tag">#LAMMPS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Reproducible Polymers workflows require automated provenance capture</h3>
+        <div class="badges">
+            <span>validation</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Ion distribution at polymer/ceramic interfaces. Pain point: Workflow chart referenced; suggests reproducibility need</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Polymers</code>, <code>Interfaces</code>, <code>Electrolytes</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P46</span><br>
+            <span class="tag">#reproducibility</span><span class="tag">#provenance</span><span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+<h2>Workflow (16)</h2>
+
+    <div class="card">
+        <h3>MLIP deployment bottleneck has shifted from training to production validation</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>Training ML interatomic potentials is increasingly automated (DP-GEN, active learning). The real bottleneck is now deploying, validating, benchmarking, and trusting models in production MD runs — especially across different hardware and LAMMPS versions.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>DeePMD</code>, <code>MACE</code>, <code>ACE</code>, <code>MTP</code>, <code>SNAP</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P06, P15, P16, P18, P60, P07, P08</span><br>
+            <span class="tag">#MLIP-ops</span><span class="tag">#deployment</span><span class="tag">#validation</span><span class="tag">#production</span><span class="tag">#LAMMPS</span><span class="tag">#MLIP</span><span class="tag">#DeePMD</span><span class="tag">#MACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Multi-tool workflow handoffs are the dominant friction in applied MD</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>multiscale</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>Real-world MD workflows chain together Atomsk → LAMMPS → OVITO → Python scripts. Each handoff is manual, brittle, and unreproducible. Even 2025-2026 applied papers show researchers stitching 3-5 tools together without standardized data flow.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Atomsk</code>, <code>OVITO</code>, <code>Materials Studio</code>, <code>VMD</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P27, P28, P47</span><br>
+            <span class="tag">#workflow</span><span class="tag">#fragmentation</span><span class="tag">#reproducibility</span><span class="tag">#tooling</span><span class="tag">#LAMMPS</span><span class="tag">#MD</span><span class="tag">#OVITO</span><span class="tag">#VMD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Provenance capture is essential for reproducible MD research</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>multiscale</span>
+            <span class="confidence-established">established</span>
+        </div>
+        <blockquote>Reproducibility requires capturing the exact LAMMPS version, enabled packages, potential files (with DOI/KIM IDs), GPU settings, compiler flags, and random seeds. Most workflows capture none of this automatically.</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>LAMMPS</code>, <code>OpenKIM</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P41, P22</span><br>
+            <span class="tag">#provenance</span><span class="tag">#reproducibility</span><span class="tag">#metadata</span><span class="tag">#FAIR</span><span class="tag">#LAMMPS</span><span class="tag">#OpenKIM</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Workflow automation reduces friction in ReaxFF simulation pipelines</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Pyrolysis of polyimide and epoxy resin (ReaxFF). Pain point: Reactive workflows depend on upstream structure prep</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>ReaxFF</code>, <code>ReactiveMD</code>, <code>Polymers</code>, <code>MaterialsStudio</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P33, P47, P25, P29, P30, P31, P32, P34, P35, P39</span><br>
+            <span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#EAM</span><span class="tag">#ReaxFF</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>MACE deployment requires standardized packaging and validation</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of ZIF phase transitions using LAMMPS_MACE + KOKKOS GPU. Pain point: Deploying/maintaining MLIP GPU integrations</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MACE</code>, <code>MLIP</code>, <code>KOKKOS</code>, <code>GPU</code>, <code>MOFs</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P59, P01, P02, P04, P05, P06, P07, P08, P16, P60</span><br>
+            <span class="tag">#deployment</span><span class="tag">#MLIP-ops</span><span class="tag">#LAMMPS</span><span class="tag">#MLIP</span><span class="tag">#MACE</span><span class="tag">#ACE</span><span class="tag">#KOKKOS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>MLIP deployment requires standardized packaging and validation</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of chemtrain‑deploy: model‑agnostic deployment of MLPs in million‑atom MD. Pain point: Notes lack of model‑agnostic + multi‑GPU‑parallel deployment tools in standard MD</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MLIP</code>, <code>MACE</code>, <code>Allegro</code>, <code>PaiNN</code>, <code>GPU</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P06, P15, P18, P07, P08, P16, P59, P60</span><br>
+            <span class="tag">#deployment</span><span class="tag">#MLIP-ops</span><span class="tag">#MLIP</span><span class="tag">#MACE</span><span class="tag">#ACE</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Cross-code coupling requires standardized interfaces for Water</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Ions on water: LAMMPS interfaced with MBX (ChemRxiv). Pain point: Cross‑code coupling and packaging complexity</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Water</code>, <code>Ions</code>, <code>Coupling</code>, <code>MBX</code>, <code>Electrostatics</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P53, P52, P54</span><br>
+            <span class="tag">#interoperability</span><span class="tag">#coupling</span><span class="tag">#LAMMPS</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Workflow automation reduces friction in PythonWorkflow simulation pipelines</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of NAVIS: LAMMPS‑Python framework for nanochannel slip. Pain point: Need efficient, reproducible interfacial slip extraction workflows</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>PythonWorkflow</code>, <code>Nanofluidics</code>, <code>ThermalTransport</code>, <code>InterfacialSlip</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P10, P19</span><br>
+            <span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#reproducibility</span><span class="tag">#provenance</span><span class="tag">#LAMMPS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Workflow automation reduces friction in EAM simulation pipelines</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Vanadium grain boundary migration under gradients. Pain point: Workflow relies on multiple tools (Atomsk/OVITO)</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>EAM</code>, <code>GrainBoundaries</code>, <code>Atomsk</code>, <code>OVITO</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P27, P28</span><br>
+            <span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#EAM</span><span class="tag">#OVITO</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Workflow automation reduces friction in ML simulation pipelines</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Multi‑fidelity ML prediction using LAMMPS MD + TensorFlow. Pain point: Data‑pipeline coupling (MD→ML) adds friction</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>ML</code>, <code>EAM</code>, <code>Atomsk</code>, <code>OVITO</code>, <code>TensorFlow</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P28, P27</span><br>
+            <span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#interoperability</span><span class="tag">#coupling</span><span class="tag">#EAM</span><span class="tag">#LAMMPS</span><span class="tag">#MD</span><span class="tag">#OVITO</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Cross-code coupling requires standardized interfaces for MTP</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Heat current + thermal conductivity using MTP/LAMMPS interface. Pain point: Correct many‑body heat current definitions + interfaces matter</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>MTP</code>, <code>ThermalTransport</code>, <code>Methodology</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P17</span><br>
+            <span class="tag">#interoperability</span><span class="tag">#coupling</span><span class="tag">#LAMMPS</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Cross-code coupling requires standardized interfaces for CVFF</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Epoxy coating + concrete interface MD (CVFF/ClayFF). Pain point: Multi‑FF coupling and interfacial metrics friction</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>CVFF</code>, <code>ClayFF</code>, <code>Concrete</code>, <code>Coatings</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P36</span><br>
+            <span class="tag">#interoperability</span><span class="tag">#coupling</span><span class="tag">#ACE</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>ReaxFF‑nn deployment requires standardized packaging and validation</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of ReaxFF‑nn in GULP/LAMMPS; thermal conductivity of carbon. Pain point: Reactive ML augmentation + deployment complexity</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>ReaxFF‑nn</code>, <code>MLIP</code>, <code>ThermalTransport</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P38</span><br>
+            <span class="tag">#deployment</span><span class="tag">#MLIP-ops</span><span class="tag">#ReaxFF</span><span class="tag">#LAMMPS</span><span class="tag">#MLIP</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Workflow automation reduces friction in GasSurface simulation pipelines</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Reflected gas behavior in rarefied flow using LAMMPS. Pain point: Accurate boundary models & analysis workflows</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>GasSurface</code>, <code>LJ</code>, <code>NonEquilibrium</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P45</span><br>
+            <span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#LAMMPS</span><span class="tag">#ACE</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Workflow automation reduces friction in CoarseGrained simulation pipelines</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Multiple‑network elastomers: coarse‑grained MD in LAMMPS. Pain point: Large ensembles + analysis pipelines</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>CoarseGrained</code>, <code>Polymers</code>, <code>SoftMatter</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P51</span><br>
+            <span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#LAMMPS</span><span class="tag">#MD</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Workflow automation reduces friction in Composites simulation pipelines</h3>
+        <div class="badges">
+            <span>workflow</span>
+            <span>atomic</span>
+            <span class="confidence-emerging">emerging</span>
+        </div>
+        <blockquote>Derived from friction analysis of Fiber–NASH composite interfacial MD using LAMMPS (MDPI). Pain point: Long equilibration pipelines are common</blockquote>
+        <div class="details">
+            <span><b>Methods:</b> <code>Composites</code>, <code>Cement</code>, <code>Interfaces</code></span><br>
+            <span><b>Materials:</b> —</span><br>
+            <span><b>Sources:</b> P55</span><br>
+            <span class="tag">#workflow</span><span class="tag">#automation</span><span class="tag">#LAMMPS</span><span class="tag">#ACE</span><span class="tag">#MD</span>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

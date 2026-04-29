@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@300;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-label { font-family: 'Space Grotesk', sans-serif; }
+        
+        .glass-plate {
+            background: rgba(227, 225, 236, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .molecular-gradient {
+            background: radial-gradient(circle at top left, #5565d4, transparent),
+                        radial-gradient(circle at bottom right, #5dd9d0, transparent);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#12131a",
+                    "on-primary-fixed-variant": "#2839a9",
+                    "surface-dim": "#12131a",
+                    "tertiary-fixed-dim": "#eec058",
+                    "surface-container": "#1e1f27",
+                    "on-tertiary": "#402d00",
+                    "surface-container-highest": "#34343c",
+                    "on-tertiary-fixed-variant": "#5b4300",
+                    "on-error": "#690005",
+                    "secondary-fixed-dim": "#5dd9d0",
+                    "inverse-surface": "#e3e1ec",
+                    "error": "#ffb4ab",
+                    "on-surface-variant": "#c6c5d5",
+                    "secondary": "#5dd9d0",
+                    "background": "#12131a",
+                    "surface-variant": "#34343c",
+                    "secondary-container": "#00a29a",
+                    "primary-fixed": "#dfe0ff",
+                    "on-primary": "#051c93",
+                    "on-surface": "#e3e1ec",
+                    "tertiary": "#eec058",
+                    "on-primary-fixed": "#000d60",
+                    "inverse-on-surface": "#2f3038",
+                    "surface-tint": "#bcc3ff",
+                    "on-secondary": "#003734",
+                    "tertiary-container": "#8e6a00",
+                    "surface-container-high": "#292931",
+                    "on-tertiary-container": "#fff3e1",
+                    "on-secondary-fixed-variant": "#00504c",
+                    "surface-container-low": "#1a1b23",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#4353c2",
+                    "outline-variant": "#454653",
+                    "outline": "#8f8f9f",
+                    "on-primary-container": "#f5f3ff",
+                    "on-secondary-container": "#00302d",
+                    "on-secondary-fixed": "#00201e",
+                    "primary": "#bcc3ff",
+                    "on-tertiary-fixed": "#261a00",
+                    "tertiary-fixed": "#ffdf9f",
+                    "primary-container": "#5565d4",
+                    "surface-container-lowest": "#0d0e15",
+                    "error-container": "#93000a",
+                    "secondary-fixed": "#7cf6ec",
+                    "on-background": "#e3e1ec",
+                    "surface-bright": "#383941"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            }
+          },
+        }
+      }
+    </script>
+
+<style>
+/* QA Fix: Responsive overrides for Stitch-generated pages */
+@media (max-width: 768px) {
+  .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+  .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+  .text-8xl, .text-7xl, .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; }
+  .text-5xl { font-size: 2rem !important; }
+  .text-4xl { font-size: 1.75rem !important; }
+  .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .p-16, .p-24 { padding: 2rem !important; }
+  .md\:p-24 { padding: 2rem !important; }
+  .gap-8, .gap-12 { gap: 1.5rem !important; }
+  .hidden.md\:flex { display: none !important; }
+  table { font-size: 12px !important; }
+  table td, table th { padding: 8px !important; }
+}
+@media (max-width: 480px) {
+  .text-6xl, .text-5xl { font-size: 1.8rem !important; line-height: 1.2 !important; }
+  .text-4xl { font-size: 1.5rem !important; }
+  .text-3xl { font-size: 1.25rem !important; }
+}
+</style>
+</head>
+<body class="bg-surface text-on-surface font-sans selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#12131a]/60 backdrop-blur-xl shadow-[0_40px_40px_-15px_rgba(227,225,236,0.1)]">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 h-20">
+<div class="text-2xl font-serif italic text-[#e3e1ec] tracking-tight">Lupine Materials</div>
+<div class="hidden md:flex gap-10 items-center">
+<a class="text-[#e3e1ec]/70 hover:text-[#e3e1ec] transition-colors font-mono text-xs uppercase tracking-widest" href="platform-architecture.html">Platform</a>
+<a class="text-[#e3e1ec]/70 hover:text-[#e3e1ec] transition-colors font-mono text-xs uppercase tracking-widest" href="research-manifesto.html">Materials</a>
+<a class="text-[#e3e1ec]/70 hover:text-[#e3e1ec] transition-colors font-mono text-xs uppercase tracking-widest" href="investors.html">Investors</a>
+<a class="text-[#bcc3ff] border-b-2 border-[#5565d4] pb-1 font-mono text-xs uppercase tracking-widest" href="team.html">Team</a>
+<a class="text-[#e3e1ec]/70 hover:text-[#e3e1ec] transition-colors font-mono text-xs uppercase tracking-widest" href="javascript:void(0);" onclick="alert('Feature Coming Soon')">Careers</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#bcc3ff] font-mono text-xs uppercase tracking-widest hover:opacity-80 transition-all" onclick="alert('Feature Coming Soon')">Investor Login</button>
+<span class="material-symbols-outlined text-[#e3e1ec] cursor-pointer">menu</span>
+</div>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="pt-48 pb-32 px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<div class="md:col-span-8">
+<span class="font-mono text-primary text-xs tracking-[0.3em] uppercase mb-6 block">The Quantum Ledger / Personnel</span>
+<h1 class="text-6xl md:text-8xl font-serif leading-tight mb-8">
+                        The Minds Behind <br/>
+<span class="italic">the Molecules</span>
+</h1>
+</div>
+<div class="md:col-span-4 mt-8 md:mt-24">
+<p class="text-on-surface-variant leading-relaxed text-lg mb-6">
+                        Bridging the gap between computational materials science and high-performance computing (HPC) to forge the future of solid-state architecture.
+                    </p>
+<div class="h-px w-24 bg-primary-container"></div>
+</div>
+</div>
+</section>
+<!-- Leadership Grid (2x2) -->
+<section class="py-24 px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+<!-- CEO -->
+<div class="glass-plate p-10 rounded-xl relative overflow-hidden group">
+<div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+<div class="w-48 h-48 rounded-full molecular-gradient p-1 shrink-0">
+<img class="w-full h-full object-cover rounded-full filter grayscale contrast-125 hover:grayscale-0 transition-all duration-700" data-alt="professional portrait of Dr. Elena Vasquez with a confident gaze, warm studio lighting on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1i4S3p2e7qVMMYw7_bIacKgUySzfOWuaYxAS9N4rWQekhpIRTZpbPICn-hXBR0bNrvDKqsZlP2dmw9FzCm7sm8t7bp3tg8lNTkg8Ifnlq6hs0ymGRpK2BU3uMKs5QRdzcxRHJfIapx-i7-b5R9hrcn80fEA1Cc8KtRe6lKuPPmY6ehG8bVOi6kwokzauaUEpC6imTq668AGN2R5xeyE78Wvt6aNe25Aoio5aK424K4ZMsckyZDZqs7nKjluINqjNOm6bj33y7xEo"/>
+</div>
+<div>
+<span class="font-mono text-secondary text-xs uppercase tracking-widest mb-2 block">Chief Executive Officer</span>
+<h3 class="text-3xl font-serif mb-2">Dr. Elena Vasquez</h3>
+<p class="font-mono text-on-surface-variant text-xs mb-4">Ex-Los Alamos National Lab • PhD Stanford</p>
+<p class="text-on-surface-variant leading-relaxed font-sans text-sm">
+                                Architect of the initial Quantum Carbon Lattice framework. Under her tenure, Lupine has secured over $400M in advanced research grants and private equity.
+                            </p>
+</div>
+</div>
+</div>
+<!-- CTO -->
+<div class="glass-plate p-10 rounded-xl relative overflow-hidden group">
+<div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+<div class="w-48 h-48 rounded-full molecular-gradient p-1 shrink-0">
+<img class="w-full h-full object-cover rounded-full filter grayscale contrast-125 hover:grayscale-0 transition-all duration-700" data-alt="portrait of Marcus Chen, tech visionary style, soft blue ambient rim lighting, focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVJ3w_NMttxHFEOqrnUWp8p5n9mYi_Hlx0_oKQ4-TjkUXsSBA0k0JLVTPzlduUFIjjDjCwmZhKbVFIRWfMeQd36u_SRaGT0ZL9Ev-ZNTHT26NAkxCzCtvuidrQu45JV29vRZEDalO9N2_3XGNOfWLGU-MXKeB0IgcxZ9GeKZIQu0CAen0WiT-9-uQSdZd08uqtIL5_DBYHKTxGWWjBYNa4pxKaZVvzj3J98irwkfcgzju5BTVyXJW_N2VA8ZFvOlM8APMSetejkoU"/>
+</div>
+<div>
+<span class="font-mono text-secondary text-xs uppercase tracking-widest mb-2 block">Chief Technology Officer</span>
+<h3 class="text-3xl font-serif mb-2">Marcus Chen</h3>
+<p class="font-mono text-on-surface-variant text-xs mb-4">Ex-DeepMind • WebGPU Architect</p>
+<p class="text-on-surface-variant leading-relaxed font-sans text-sm">
+                                Leading the transition from classical simulation to AI-native material synthesis. Pioneer in high-frequency molecular dynamics visualization.
+                            </p>
+</div>
+</div>
+</div>
+<!-- VP Eng -->
+<div class="glass-plate p-10 rounded-xl relative overflow-hidden group">
+<div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+<div class="w-48 h-48 rounded-full molecular-gradient p-1 shrink-0">
+<img class="w-full h-full object-cover rounded-full filter grayscale contrast-125 hover:grayscale-0 transition-all duration-700" data-alt="professional portrait of Dr. Sarah Okonkwo, elegant and authoritative, neutral studio lighting, cinematic shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhKqRb-0LHjqyilklUteqxgV-D_klQ-IoM7Q4oRiLwUA7qgqlDDmSMuokSO3ZBqc19eIxY7xP4kHItIr01EtvBXnC_oXODP3VPOk8ZQafmYjSUYH63PDNyISOVYrpmLUKGi9Gtg6jbvVoPb9tsmfX96Ux4gYnZePiNshLflWGKqXMLCGqCcsRsfWIN8_Nt03coUd741QAZugn8c2qLfmddHQ3SVAOq4s9g6XB27dNOGACvdllNAoydnAS-CwJbe8ATX-fGMwx-REA"/>
+</div>
+<div>
+<span class="font-mono text-secondary text-xs uppercase tracking-widest mb-2 block">VP Engineering</span>
+<h3 class="text-3xl font-serif mb-2">Dr. Sarah Okonkwo</h3>
+<p class="font-mono text-on-surface-variant text-xs mb-4">Rust Core Contributor • PhD Cambridge</p>
+<p class="text-on-surface-variant leading-relaxed font-sans text-sm">
+                                Responsible for the "Metal-Rust" safety architecture. Ensuring 99.999% uptime for global simulation nodes across decentralized GPU clusters.
+                            </p>
+</div>
+</div>
+</div>
+<!-- Head of Research -->
+<div class="glass-plate p-10 rounded-xl relative overflow-hidden group">
+<div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+<div class="w-48 h-48 rounded-full molecular-gradient p-1 shrink-0">
+<img class="w-full h-full object-cover rounded-full filter grayscale contrast-125 hover:grayscale-0 transition-all duration-700" data-alt="portrait of Dr. James Whitfield in a modern office setting, thoughtful expression, soft natural window light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUiIyKrwLWNwjb2zjSIz_rTwx93ba5LE-9XXIaNWGNeY02hAMrNFqm9fYYF5sQSnDH-uFmoDxEjShSCvJNn0sXwArmE-NGSh2w4R8F5FtUBBnaFEIi_KhzKieQrE6aFZgNa1kw0VbZAWl54uuF6JgBdut_WiPJVEkoEwQwMNVPQZIAhTcrS5lUniZkgu_zk5pD_SRMevwBQr3Mcm7A2FUGlFSnZV7-RxtfzZ3NujDcOYsgV8MbpIR0Jh2s2p8xQnXMZCVWjiBldN0"/>
+</div>
+<div>
+<span class="font-mono text-secondary text-xs uppercase tracking-widest mb-2 block">Head of Research</span>
+<h3 class="text-3xl font-serif mb-2">Dr. James Whitfield</h3>
+<p class="font-mono text-on-surface-variant text-xs mb-4">Materials Genome Project • PhD Caltech</p>
+<p class="text-on-surface-variant leading-relaxed font-sans text-sm">
+                                Guiding the exploration of non-euclidean structural chemistry. Holding 45 patents in superconducting polymer synthesis.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Scientific Advisory Board -->
+<section class="py-32 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-8">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div>
+<span class="font-mono text-tertiary text-xs uppercase tracking-widest mb-4 block">Institutional Ties</span>
+<h2 class="text-5xl font-serif italic">Scientific Advisory Board</h2>
+</div>
+<p class="max-w-md text-on-surface-variant font-mono text-xs uppercase tracking-wider">
+                        Validation through rigorous cross-institutional peer review and collaboration.
+                    </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- MIT -->
+<div class="bg-surface p-12 flex flex-col items-center text-center rounded-xl shadow-inner group hover:bg-surface-container transition-all">
+<div class="w-20 h-20 mb-8 opacity-40 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-primary">account_balance</span>
+</div>
+<h4 class="font-serif text-xl mb-2">Massachusetts Institute of Technology</h4>
+<span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Quantum Mechanics Lab</span>
+</div>
+<!-- Max Planck -->
+<div class="bg-surface p-12 flex flex-col items-center text-center rounded-xl shadow-inner group hover:bg-surface-container transition-all">
+<div class="w-20 h-20 mb-8 opacity-40 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-primary">biotech</span>
+</div>
+<h4 class="font-serif text-xl mb-2">Max Planck Institute</h4>
+<span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Solid State Research</span>
+</div>
+<!-- NIST -->
+<div class="bg-surface p-12 flex flex-col items-center text-center rounded-xl shadow-inner group hover:bg-surface-container transition-all">
+<div class="w-20 h-20 mb-8 opacity-40 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-primary">rule</span>
+</div>
+<h4 class="font-serif text-xl mb-2">NIST</h4>
+<span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Standards &amp; Precision</span>
+</div>
+<!-- Sandia -->
+<div class="bg-surface p-12 flex flex-col items-center text-center rounded-xl shadow-inner group hover:bg-surface-container transition-all">
+<div class="w-20 h-20 mb-8 opacity-40 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-primary">shield</span>
+</div>
+<h4 class="font-serif text-xl mb-2">Sandia National Laboratories</h4>
+<span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">Defense Infrastructure</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Culture Section -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="text-center mb-24">
+<h2 class="text-4xl font-serif mb-4">Built on Principles</h2>
+<div class="h-1 w-20 bg-primary-container mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="relative pt-12">
+<span class="absolute top-0 left-0 text-7xl font-serif italic text-on-surface/5 select-none">01</span>
+<h5 class="font-mono text-xs uppercase tracking-widest text-primary mb-4">Open Science</h5>
+<p class="text-on-surface-variant leading-relaxed">
+                        We believe progress happens in the open. Our core simulation algorithms are published for academic scrutiny and collaborative refinement.
+                    </p>
+</div>
+<div class="relative pt-12">
+<span class="absolute top-0 left-0 text-7xl font-serif italic text-on-surface/5 select-none">02</span>
+<h5 class="font-mono text-xs uppercase tracking-widest text-primary mb-4">Rust-Native</h5>
+<p class="text-on-surface-variant leading-relaxed">
+                        Memory safety is non-negotiable. Our entire stack—from driver to data visualization—is built in systems-grade Rust for peak performance.
+                    </p>
+</div>
+<div class="relative pt-12">
+<span class="absolute top-0 left-0 text-7xl font-serif italic text-on-surface/5 select-none">03</span>
+<h5 class="font-mono text-xs uppercase tracking-widest text-primary mb-4">Defense-Grade Security</h5>
+<p class="text-on-surface-variant leading-relaxed">
+                        Handling proprietary molecular data requires the highest level of encryption. We deploy E2EE across all simulation streams and data at rest.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Careers CTA -->
+<section class="py-40 relative overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-surface"></div>
+<img class="w-full h-full object-cover opacity-20 filter blur-sm" data-alt="abstract visualization of high-energy physics, glowing neon blue and purple particles in dark space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0zeWGiVJIjc7iiwueyf53Y7m0uZdLhR8e5UmQaYIH5YPd-xsU1JDAEClKkpN1d26SEDgsdbUmQNDYe70Yko0druyynGffnYXd9r2x4yFpNFHmNFa6AyaM7PyyVfloX_BIViZW1n4tL8VlbbGyOBapklFvt0a7xZTi8XwGvbzjA-eRp0s3TNVuj3uNIUQB29PUO4FDaPj8tkYuwzJTsTYu3uxFd5AogplGp9QTWzlBCma8IbkaIWgGop7BfD1oaZ7hoJYY669VlP0"/>
+</div>
+<div class="relative z-10 max-w-4xl mx-auto px-8 text-center">
+<h2 class="text-5xl md:text-7xl font-serif italic mb-10 leading-tight">Join the Team Rewriting <br/> the Periodic Table</h2>
+<p class="text-xl text-on-surface-variant mb-12 font-sans font-light">
+                    We are hiring physicists, software engineers, and materials scientists who aren't afraid of the impossible.
+                </p>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary font-mono px-12 py-5 uppercase tracking-widest text-sm font-bold rounded-sm hover:scale-95 transition-transform">
+                    View Open Positions
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#12131a] w-full py-12 border-t border-[#e3e1ec]/5">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="font-serif italic text-[#e3e1ec] text-xl">Lupine Materials Science</div>
+<div class="flex gap-8 items-center">
+<a class="text-[#e3e1ec]/40 hover:text-[#e3e1ec] transition-colors font-mono text-[10px] uppercase tracking-wider" href="index.html">Privacy Policy</a>
+<a class="text-[#e3e1ec]/40 hover:text-[#e3e1ec] transition-colors font-mono text-[10px] uppercase tracking-wider" href="index.html">Terms of Service</a>
+<a class="text-[#e3e1ec]/40 hover:text-[#e3e1ec] transition-colors font-mono text-[10px] uppercase tracking-wider" href="research-manifesto.html">Ethics Framework</a>
+<a class="text-[#e3e1ec]/40 hover:text-[#e3e1ec] transition-colors font-mono text-[10px] uppercase tracking-wider" href="contact.html">Contact</a>
+</div>
+<div class="text-[#e3e1ec]/40 font-mono text-[10px] tracking-tight">
+                © 2024 Lupine Materials Science. All rights reserved.
+            </div>
+</div>
+</footer>
+</body></html>

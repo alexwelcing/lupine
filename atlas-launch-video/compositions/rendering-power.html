@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    .center-text { font-size: 100px; color: white; font-weight: 900; text-align: center; position: absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0;}
+    .number { font-size: 200px; color: #28c840; line-height:1; }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="rendering-power" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+    <div class="center-text" id="t1">PROVING THE<br><span style="color:var(--lupine-300);">HYPER-RIBBON</span></div>
+    <div class="center-text" id="t2"><div class="number">48</div>THEOREMS<br>FORMALLY VERIFIED.</div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.to("#t1", { opacity:1, scale:1.05, duration: 0.5, ease: "power2.out" }, 1.0);
+    tl.to("#t1", { opacity:0, scale:1.1, duration: 0.5 }, 4.5);
+    tl.fromTo("#t2", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out" }, 5.0);
+    tl.to("#t2", { opacity:0, duration: 0.5 }, 9.0);
+    tl.set({}, {}, 10);
+    window.__timelines["rendering-power"] = tl;
+  </script>
+</body>
+</html>

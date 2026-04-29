@@ -1,0 +1,13 @@
+{
+  "paper_id": "P24",
+  "title": "Molecular dynamics simulations of thermal transport in metals using a two-temperature model",
+  "abstract_text": "<jats:title>Abstract</jats:title>\n          <jats:sec>\n            <jats:title>Context</jats:title>\n            <jats:p>In classical molecular dynamics, thermal transport via electrons is typically non-existent. Therefore, thermal property determination in metals or material systems that include metals is inaccessible. We have developed a two-temperature model for use with non-equilibrium molecular dynamics to predict thermal interface resistance across metal–metal and metal–insulator interfaces. Using LAMMPS and a modified module for the diffusion of thermal energy via electrons, we systematically examine the effects of including a second transport pathway through material systems. We found that inclusion of an electronic transport pathway reduces the phonon-only thermal conductivity because of electron–phonon scattering. Moreover, the presence of electrons eliminates temperature jumps at the boundary but still admits interface resistance, which is reduced in some cases by an order of magnitude.</jats:p>\n          </jats:sec>\n          <jats:sec>\n            <jats:title>Method</jats:title>\n            <jats:p>We developed a module for LAMMPS that estimates thermal transport via the diffusion equation with a specified electron thermal conductivity. The electronic energy is transferred to/from the atomic system using velocity rescaling with appropriate momentum perturbation. The atomistic motion is governed by the NiU3-EAM potential.</jats:p>\n          </jats:sec>",
+  "authors": [
+    "B. Baer",
+    "D. G. Walker"
+  ],
+  "journal": "Journal of Molecular Modeling",
+  "year": 2025,
+  "cited_by": 2,
+  "source": "crossref:10.1007/s00894-025-06433-5"
+}

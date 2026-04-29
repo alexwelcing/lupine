@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    .huge { font-size: 150px; font-weight: 900; color: #4ecdc4; text-transform: uppercase; position: absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="drag-drop" data-start="0" data-duration="6" data-width="1920" data-height="1080">
+    <div class="huge" id="t1">GPU ACCELERATED</div>
+    <div class="huge" id="t2" style="color: #ff5472;">RUST KERNEL</div>
+    <div class="huge" id="t3" style="color: #f0b840;">LEAN 4 FORMALIZED</div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.to("#t1", { opacity:1, scale:1.1, duration:0.2 }, 0.5);
+    tl.to("#t1", { opacity:0, duration:0.2 }, 2.0);
+    tl.to("#t2", { opacity:1, scale:1.1, duration:0.2 }, 2.2);
+    tl.to("#t2", { opacity:0, duration:0.2 }, 3.8);
+    tl.to("#t3", { opacity:1, scale:1.1, duration:0.2 }, 4.0);
+    tl.to("#t3", { opacity:0, duration:0.2 }, 5.8);
+    tl.set({}, {}, 6);
+    window.__timelines["drag-drop"] = tl;
+  </script>
+</body>
+</html>

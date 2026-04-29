@@ -1,0 +1,54 @@
+{
+  "potential": {
+    "id": "2017--Wang-P--TWIP--LAMMPS--ipr1",
+    "potid": "2017--Wang-P-Xu-S-Liu-J-et-al--TWIP",
+    "pair_style": "eam/fs",
+    "units": "metal",
+    "atom_style": "atomic",
+    "status": "superseded",
+    "elements": [
+      "Fe"
+    ],
+    "symbols": [
+      "Fe"
+    ],
+    "dois": [
+      "10.1016/j.jmps.2016.09.008"
+    ],
+    "url": "https://potentials.nist.gov/pid/rest/local/potentials/2017--Wang-P--TWIP--LAMMPS--ipr1",
+    "poturl": "https://potentials.nist.gov/pid/rest/local/potentials/potential.2017--Wang-P-Xu-S-Liu-J-et-al--TWIP",
+    "artifacts": [
+      {
+        "url": "https://www.ctcms.nist.gov/potentials/Download/2017--Wang-P-Xu-S-Liu-J-et-al--TWIP/1/Fe.eam.fs",
+        "filename": "Fe.eam.fs",
+        "label": ""
+      }
+    ],
+    "file_count": 1
+  },
+  "trace": {
+    "run_id": "e342f07ec6cd7aba",
+    "nist_potential_id": "2017--Wang-P--TWIP--LAMMPS--ipr1",
+    "potential_doi": "10.1016/j.jmps.2016.09.008",
+    "pair_style": "eam/fs",
+    "lammps_version": "unknown",
+    "input_script_hash": "placeholder",
+    "potential_file_hash": "placeholder",
+    "output_log_hash": "placeholder",
+    "crystal_structure": "bcc",
+    "lattice_constant": 2.87,
+    "temperature": 0.0,
+    "properties": [
+      "C11",
+      "C12",
+      "C44"
+    ]
+  },
+  "c11": 285.283471880657,
+  "c12": 254.582519975972,
+  "c44": 261.85973869577,
+  "a0": 2.86909755539492,
+  "ecoh": -4.25311397201711,
+  "success": true,
+  "error_message": null
+}
