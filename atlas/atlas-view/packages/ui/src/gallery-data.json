@@ -20,6 +20,28 @@
     "featured": true
   },
   {
+    "id": "lupine_genesis",
+    "title": "Lupine Genesis (Classified)",
+    "subtitle": "A procedural 4D botanical dataset depicting the deterministic unfurling of the Lupinus texensis architecture from a carbon seed.",
+    "domain": "Nanomaterials",
+    "atoms": "9,595",
+    "frames": "200",
+    "file": "gallery/curated/lupine_genesis.lammpstrj",
+    "available": true,
+    "colors": [
+      "#113311",
+      "#3050f8",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Procedural Botanical Growth Engine",
+      "potential": "Golden Ratio (Phyllotaxis)",
+      "temperature": "Time-Series Evolution",
+      "reference": "Lupine Materials Science Brand Genesis"
+    },
+    "featured": true
+  },
+  {
     "id": "lupine_brand_asset",
     "title": "Lupine Brand Asset (Procedural Hill)",
     "subtitle": "Procedurally generated rolling hill of Texas state flowers with dynamic GPU wind sway.",
