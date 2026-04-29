@@ -235,6 +235,30 @@ type InstancedSwap = {
   replacement: THREE.Mesh;
 };
 
+const AR_EXPORT_DEBUG = false;
+
+function toExportSafeMaterial(src: THREE.Material): THREE.MeshStandardMaterial {
+  const anySrc = src as any;
+  const mat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(1, 1, 1),
+    vertexColors: true,
+    transparent: anySrc.transparent === true,
+    opacity: typeof anySrc.opacity === 'number' ? anySrc.opacity : 1.0,
+    roughness: typeof anySrc.roughness === 'number' ? anySrc.roughness : 0.45,
+    metalness: typeof anySrc.metalness === 'number' ? anySrc.metalness : 0.15,
+    map: anySrc.map ?? null,
+    normalMap: anySrc.normalMap ?? null,
+    roughnessMap: anySrc.roughnessMap ?? null,
+    metalnessMap: anySrc.metalnessMap ?? null,
+    emissiveMap: anySrc.emissiveMap ?? null,
+    emissive: anySrc.emissive?.clone?.() ?? new THREE.Color(0, 0, 0),
+    emissiveIntensity: typeof anySrc.emissiveIntensity === 'number' ? anySrc.emissiveIntensity : 1.0,
+  });
+  // Avoid exporter/runtime uncertainty from custom shader hooks.
+  (mat as any).onBeforeCompile = undefined;
+  return mat;
+}
+
 function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
   const baseGeom = im.geometry;
   const basePos = baseGeom.getAttribute('position') as THREE.BufferAttribute;
@@ -313,11 +337,20 @@ function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
   if (!normals) merged.computeVertexNormals();
 
   const baseMat = (Array.isArray(im.material) ? im.material[0] : im.material) as THREE.Material;
-  const exportMat = baseMat.clone() as THREE.Material & { color?: THREE.Color; vertexColors?: boolean; map?: THREE.Texture | null };
-  exportMat.vertexColors = true;
-  // White base color so per-vertex color is the final color, multiplied by
-  // any texture (map, normalMap, etc.) the source material carried.
-  if ('color' in exportMat && exportMat.color) exportMat.color.setRGB(1, 1, 1);
+  const exportMat = toExportSafeMaterial(baseMat);
+
+  if (AR_EXPORT_DEBUG) {
+    const c0 = colors.length >= 3 ? [colors[0], colors[1], colors[2]] : ['n/a'];
+    console.info('[AR export] baked instanced mesh', {
+      name: im.name || '(unnamed)',
+      instances: N,
+      totalVerts,
+      hasInstanceColor,
+      sampleColor0: c0,
+      materialType: baseMat.type,
+      exportMaterialType: exportMat.type,
+    });
+  }
 
   const mesh = new THREE.Mesh(merged, exportMat);
   mesh.name = (im.name || 'instanced') + '_baked';
