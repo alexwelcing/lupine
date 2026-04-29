@@ -1,0 +1,36 @@
+:root {
+  --font-sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
+  --radius: 0.75rem;
+
+  --background: #020617;
+  --foreground: #e2e8f0;
+  --card: #0b1220;
+  --card-foreground: #e2e8f0;
+  --popover: #0b1220;
+  --popover-foreground: #e2e8f0;
+  --primary: #3b82f6;
+  --primary-foreground: #f8fafc;
+  --secondary: #1e293b;
+  --secondary-foreground: #cbd5e1;
+  --muted: #0f172a;
+  --muted-foreground: #94a3b8;
+  --accent: #0f172a;
+  --accent-foreground: #e2e8f0;
+  --destructive: #ef4444;
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #3b82f6;
+
+  --outline-variant: rgba(148, 163, 184, 0.2);
+  --on-surface: #e2e8f0;
+  --on-surface-variant: #94a3b8;
+  --surface: #0b1220;
+  --lupine-400: #60a5fa;
+  --lupine-600: #2563eb;
+  --lupine-700: #1d4ed8;
+  --slate-200: #e2e8f0;
+  --slate-400: #94a3b8;
+  --slate-600: #475569;
+  --slate-700: #334155;
+}
