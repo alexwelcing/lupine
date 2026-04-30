@@ -6,7 +6,8 @@ use rusqlite::Connection;
 /// Current schema version. Bump this when adding migrations.
 /// v1 — initial tables (benchmarks, hypotheses, experiments, literature, manifolds, claims).
 /// v2 — `pc1_alignments` (per-element-pair PC1 cosine similarity cache).
-const SCHEMA_VERSION: u32 = 2;
+/// v3 — `null_models` (permutation/bootstrap p-values + CIs for every claim).
+const SCHEMA_VERSION: u32 = 3;
 
 /// Initialize the database with all tables.
 pub fn initialize(conn: &Connection) -> Result<()> {
@@ -142,6 +143,28 @@ pub fn initialize(conn: &Connection) -> Result<()> {
 
         CREATE INDEX IF NOT EXISTS idx_pc1_pairstyle ON pc1_alignments(pair_style);
 
+        -- Null-model significance results — one row per (test, grouping) pair.
+        -- The `null_distribution` column stores a JSON array of permutation /
+        -- bootstrap statistics so downstream tooling can plot histograms.
+        CREATE TABLE IF NOT EXISTS null_models (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            test_name       TEXT NOT NULL,
+            grouping_key    TEXT NOT NULL,
+            method          TEXT NOT NULL,
+            observed        REAL NOT NULL,
+            null_mean       REAL NOT NULL,
+            null_std        REAL NOT NULL,
+            null_ci_low     REAL NOT NULL,
+            null_ci_high    REAL NOT NULL,
+            p_value         REAL NOT NULL,
+            n_iterations    INTEGER NOT NULL,
+            null_distribution TEXT NOT NULL DEFAULT '[]',
+            computed_at     TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now')),
+            UNIQUE(test_name, grouping_key, method)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_null_test ON null_models(test_name);
+
         -- Agent claims (migrated from JSONL ledger)
         CREATE TABLE IF NOT EXISTS claims (
             id              INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -201,12 +224,12 @@ mod tests {
         // Verify tables exist
         let count: u32 = conn
             .query_row(
-                "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name IN ('benchmarks', 'hypotheses', 'experiments', 'literature', 'manifolds', 'claims', 'pc1_alignments')",
+                "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name IN ('benchmarks', 'hypotheses', 'experiments', 'literature', 'manifolds', 'claims', 'pc1_alignments', 'null_models')",
                 [],
                 |r| r.get(0),
             )
             .unwrap();
-        assert_eq!(count, 7, "Expected 7 tables");
+        assert_eq!(count, 8, "Expected 8 tables");
     }
 
     #[test]

@@ -596,6 +596,88 @@ pub fn list_pc1_alignments(conn: &Connection, limit: usize) -> Result<Vec<Pc1Ali
     Ok(rows)
 }
 
+// ─── Null-model persistence ──────────────────────────────
+
+#[derive(Debug, Clone, Serialize)]
+pub struct NullModelRow {
+    pub test_name: String,
+    pub grouping_key: String,
+    pub method: String,
+    pub observed: f64,
+    pub null_mean: f64,
+    pub null_std: f64,
+    pub null_ci_low: f64,
+    pub null_ci_high: f64,
+    pub p_value: f64,
+    pub n_iterations: usize,
+    pub computed_at: String,
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn upsert_null_model(
+    conn: &Connection,
+    test_name: &str,
+    grouping_key: &str,
+    method: &str,
+    observed: f64,
+    null_mean: f64,
+    null_std: f64,
+    null_ci_low: f64,
+    null_ci_high: f64,
+    p_value: f64,
+    n_iterations: usize,
+    null_distribution: &[f64],
+) -> Result<()> {
+    let dist_json = serde_json::to_string(null_distribution)?;
+    conn.execute(
+        "INSERT INTO null_models
+         (test_name, grouping_key, method, observed, null_mean, null_std,
+          null_ci_low, null_ci_high, p_value, n_iterations, null_distribution)
+         VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)
+         ON CONFLICT(test_name, grouping_key, method) DO UPDATE SET
+            observed = excluded.observed,
+            null_mean = excluded.null_mean,
+            null_std = excluded.null_std,
+            null_ci_low = excluded.null_ci_low,
+            null_ci_high = excluded.null_ci_high,
+            p_value = excluded.p_value,
+            n_iterations = excluded.n_iterations,
+            null_distribution = excluded.null_distribution,
+            computed_at = strftime('%Y-%m-%dT%H:%M:%SZ', 'now')",
+        rusqlite::params![
+            test_name, grouping_key, method, observed, null_mean, null_std,
+            null_ci_low, null_ci_high, p_value, n_iterations as i64, dist_json,
+        ],
+    )?;
+    Ok(())
+}
+
+pub fn list_null_models(conn: &Connection, limit: usize) -> Result<Vec<NullModelRow>> {
+    let mut stmt = conn.prepare(
+        "SELECT test_name, grouping_key, method, observed, null_mean, null_std,
+                null_ci_low, null_ci_high, p_value, n_iterations, computed_at
+           FROM null_models
+           ORDER BY computed_at DESC
+           LIMIT ?1",
+    )?;
+    let rows: Vec<NullModelRow> = stmt.query_map([limit as i64], |r| {
+        Ok(NullModelRow {
+            test_name: r.get(0)?,
+            grouping_key: r.get(1)?,
+            method: r.get(2)?,
+            observed: r.get(3)?,
+            null_mean: r.get(4)?,
+            null_std: r.get(5)?,
+            null_ci_low: r.get(6)?,
+            null_ci_high: r.get(7)?,
+            p_value: r.get(8)?,
+            n_iterations: r.get::<_, i64>(9)? as usize,
+            computed_at: r.get(10)?,
+        })
+    })?.filter_map(|r| r.ok()).collect();
+    Ok(rows)
+}
+
 // ─── Claim management ────────────────────────────────────
 
 #[derive(Debug, Clone, Serialize)]

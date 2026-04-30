@@ -7,6 +7,8 @@
 mod bridge;
 mod db;
 mod hypothesis;
+mod null_model;
+mod orthogonalize;
 
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
@@ -45,6 +47,43 @@ enum Command {
         #[arg(long)]
         element: Option<String>,
     },
+    /// Significance testing — permutation tests + bootstrap CIs.
+    NullModel {
+        #[command(subcommand)]
+        which: NullWhich,
+    },
+    /// Confound elimination — project errors orthogonal to the reference
+    /// direction and re-test the hyper-ribbon claim.
+    Orthogonalize {
+        /// Restrict to one element. Default: pool all 15 benchmark elements.
+        #[arg(long)]
+        element: Option<String>,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+enum NullWhich {
+    /// Permutation null for fingerprint LOO classifier (shuffle pair_style labels).
+    Fingerprint {
+        #[arg(long)]
+        element: Option<String>,
+        #[arg(long, default_value_t = 1000)]
+        iterations: usize,
+    },
+    /// Random-unit-vector null for transfer PC1 cosine similarity.
+    Transfer {
+        #[arg(long)]
+        pair_style: Option<String>,
+        #[arg(long, default_value_t = 1000)]
+        iterations: usize,
+    },
+    /// Bootstrap CI for manifold participation ratio.
+    Manifold {
+        /// Grouping key, e.g. "style:meam", "element:Cu", or "global".
+        grouping_key: String,
+        #[arg(long, default_value_t = 1000)]
+        iterations: usize,
+    },
 }
 
 #[derive(Subcommand, Debug)]
@@ -72,6 +111,11 @@ enum DbAction {
     Manifolds,
     /// List cached PC1 alignments (transfer detail).
     Alignments {
+        #[arg(long, default_value_t = 100)]
+        limit: usize,
+    },
+    /// List cached null-model significance results.
+    NullModels {
         #[arg(long, default_value_t = 100)]
         limit: usize,
     },
@@ -160,6 +204,12 @@ fn main() -> Result<()> {
                 eprintln!("[db] {} cached PC1 alignments (limit {})", rows.len(), limit);
                 println!("{}", serde_json::to_string_pretty(&rows)?);
             }
+            DbAction::NullModels { limit } => {
+                let conn = open_db(&db_path)?;
+                let rows = db::query::list_null_models(&conn, limit)?;
+                eprintln!("[db] {} null-model results (limit {})", rows.len(), limit);
+                println!("{}", serde_json::to_string_pretty(&rows)?);
+            }
             DbAction::Claims { limit } => {
                 let conn = open_db(&db_path)?;
                 let rows = db::query::list_claims(&conn, limit)?;
@@ -213,6 +263,14 @@ fn main() -> Result<()> {
         Command::Theorize { element } => {
             let conn = open_db(&db_path)?;
             run_theorize(&conn, element.as_deref())?;
+        }
+        Command::NullModel { which } => {
+            let conn = open_db(&db_path)?;
+            run_null_model(&conn, which)?;
+        }
+        Command::Orthogonalize { element } => {
+            let conn = open_db(&db_path)?;
+            run_orthogonalize(&conn, element.as_deref())?;
         }
     }
 
@@ -515,4 +573,60 @@ fn sanitize(s: &str) -> String {
     s.chars()
         .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
         .collect()
+}
+
+// ─── null-model dispatch ────────────────────────────────────
+
+fn run_null_model(conn: &Connection, which: NullWhich) -> Result<()> {
+    let result = match which {
+        NullWhich::Fingerprint { element, iterations } => {
+            null_model::fingerprint_null(conn, element.as_deref(), iterations)?
+        }
+        NullWhich::Transfer { pair_style, iterations } => {
+            null_model::transfer_null(conn, pair_style.as_deref(), iterations)?
+        }
+        NullWhich::Manifold { grouping_key, iterations } => {
+            null_model::manifold_bootstrap(conn, &grouping_key, iterations)?
+        }
+    };
+    eprintln!(
+        "[null-model:{}] grouping={} method={} observed={:.4} null_mean={:.4} 95%CI=[{:.4},{:.4}] p={:.4} {} (n={})",
+        result.test_name, result.grouping_key, result.method,
+        result.observed, result.null_mean, result.null_ci_low, result.null_ci_high,
+        result.p_value,
+        if result.significant { "SIGNIFICANT" } else { "n.s." },
+        result.n_iterations,
+    );
+
+    db::query::upsert_null_model(
+        conn, &result.test_name, &result.grouping_key, &result.method,
+        result.observed, result.null_mean, result.null_std,
+        result.null_ci_low, result.null_ci_high,
+        result.p_value, result.n_iterations,
+        &result.null_distribution,
+    )?;
+
+    println!("{}", serde_json::to_string_pretty(&result)?);
+    Ok(())
+}
+
+// ─── orthogonalize dispatch ─────────────────────────────────
+
+fn run_orthogonalize(conn: &Connection, element: Option<&str>) -> Result<()> {
+    let result = orthogonalize::run(conn, element)?;
+    let dim = result.pooled_dim;
+    eprintln!(
+        "[orthogonalize] elements analyzed: {}; pooled PR before={:.3} after={:.3} (D={}) — {}",
+        result.n_elements_analyzed, result.pooled_pr_before, result.pooled_pr_after, dim,
+        if result.confound_detected { "CONFOUND DETECTED (ribbon was scale-coupled)" } else { "ribbon survives orthogonalization (geometry is real)" },
+    );
+    for el in &result.per_element {
+        eprintln!(
+            "  {} (n={:>3}): PR {:.3} -> {:.3}; {:.1}% of variance was along reference axis",
+            el.element, el.n_potentials, el.pr_before, el.pr_after,
+            el.fraction_along_scale_axis * 100.0,
+        );
+    }
+    println!("{}", serde_json::to_string_pretty(&result)?);
+    Ok(())
 }

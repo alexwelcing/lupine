@@ -148,6 +148,13 @@ fn analyze_group(
     })
 }
 
+/// Public re-export of the Jacobi eigensolver for cross-module use
+/// (null_model bootstrap, orthogonalize). Kept as a thin alias so the
+/// implementation remains private to this module.
+pub fn jacobi_eigenvalues_pub(mat: &[Vec<f64>]) -> Vec<f64> {
+    jacobi_eigenvalues(mat)
+}
+
 /// Jacobi eigenvalue algorithm for small symmetric matrices.
 /// Returns eigenvalues sorted descending.
 fn jacobi_eigenvalues(mat: &[Vec<f64>]) -> Vec<f64> {
