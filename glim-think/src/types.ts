@@ -55,6 +55,25 @@ export interface Critique {
   completed_at: string | null;
 }
 
+/**
+ * Row in the `research_questions` D1 table — lab-notebook style Q/A queue.
+ * Distinct from peer-review critiques (Critique) and hypotheses
+ * (HypothesisRecord). See migrations/0003_research_questions.sql.
+ */
+export type ResearchQuestionStatus = "open" | "in_progress" | "answered";
+
+export interface ResearchQuestion {
+  id: string;
+  question: string;
+  asked_by: string | null;
+  status: ResearchQuestionStatus;
+  answer_md: string | null;
+  answer_artifact_key: string | null;
+  target_hypothesis_id: string | null;
+  created_at: string;
+  answered_at: string | null;
+}
+
 export interface BenchmarkRecord {
   recordId: string;
   element: string;

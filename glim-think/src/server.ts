@@ -39,6 +39,8 @@ import type {
   Env,
   HypothesisRecord,
   HypothesisStatus,
+  ResearchQuestion,
+  ResearchQuestionStatus,
 } from "./types";
 
 const HARDCODED_HYPOTHESES = [
@@ -993,6 +995,175 @@ ${narrative}
         return Response.json({ critique: row });
       }
       // === end unit-2 ===
+
+      // === unit-3: research_questions routes ===
+      // Lab-notebook style Q/A queue. Distinct from /research/causal-geometry
+      // (read-only hypothesis status above) and from formal peer-review
+      // critiques (unit-2). Persisted in D1 (research_questions table);
+      // long-form answers optionally mirrored to R2 at research/{id}.md.
+      const RQ_LIST_RE = /^\/research\/questions$/;
+      const RQ_ANSWER_RE = /^\/research\/questions\/([^/]+)\/answer$/;
+      const RQ_ITEM_RE = /^\/research\/questions\/([^/]+)$/;
+      const isResearchQuestionsRoute =
+        RQ_LIST_RE.test(url.pathname) ||
+        RQ_ANSWER_RE.test(url.pathname) ||
+        RQ_ITEM_RE.test(url.pathname);
+
+      if (isResearchQuestionsRoute) {
+        const corsHeaders = {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        } as const;
+
+        if (request.method === "OPTIONS") {
+          return new Response(null, { status: 204, headers: corsHeaders });
+        }
+
+        // POST /research/questions — create a new question
+        if (RQ_LIST_RE.test(url.pathname) && request.method === "POST") {
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const question = typeof body.question === "string" ? body.question.trim() : "";
+          if (!question) {
+            return Response.json(
+              { error: "Missing required field: question" },
+              { status: 400, headers: corsHeaders }
+            );
+          }
+          const id = typeof body.id === "string" && body.id.trim().length > 0
+            ? body.id.trim()
+            : `rq${Date.now()}`;
+          const askedBy = typeof body.asked_by === "string" ? body.asked_by : null;
+          const targetHypothesisId = typeof body.target_hypothesis_id === "string"
+            ? body.target_hypothesis_id
+            : null;
+          const createdAt = new Date().toISOString();
+
+          let created: ResearchQuestion | null;
+          try {
+            created = await env.LEDGER.prepare(
+              `INSERT INTO research_questions
+                 (id, question, asked_by, status, target_hypothesis_id, created_at)
+               VALUES (?1, ?2, ?3, 'open', ?4, ?5)
+               RETURNING *`
+            ).bind(id, question, askedBy, targetHypothesisId, createdAt)
+              .first<ResearchQuestion>();
+          } catch (e) {
+            console.error("research_questions insert error:", e);
+            return Response.json(
+              { error: "Failed to create question", detail: String(e) },
+              { status: 500, headers: corsHeaders }
+            );
+          }
+          return Response.json(created, { status: 201, headers: corsHeaders });
+        }
+
+        // GET /research/questions — list (optional ?status=&limit=N)
+        if (RQ_LIST_RE.test(url.pathname) && request.method === "GET") {
+          const statusParam = url.searchParams.get("status");
+          const allowedStatuses: ResearchQuestionStatus[] = ["open", "in_progress", "answered"];
+          const status = statusParam && (allowedStatuses as string[]).includes(statusParam)
+            ? (statusParam as ResearchQuestionStatus)
+            : null;
+          const limitRaw = Number.parseInt(url.searchParams.get("limit") ?? "", 10);
+          const limit = Number.isFinite(limitRaw) && limitRaw > 0 && limitRaw <= 500
+            ? limitRaw
+            : 50;
+
+          const rows = status
+            ? await env.LEDGER.prepare(
+                `SELECT * FROM research_questions
+                 WHERE status = ?1
+                 ORDER BY created_at DESC
+                 LIMIT ?2`
+              ).bind(status, limit).all<ResearchQuestion>()
+            : await env.LEDGER.prepare(
+                `SELECT * FROM research_questions
+                 ORDER BY created_at DESC
+                 LIMIT ?1`
+              ).bind(limit).all<ResearchQuestion>();
+
+          return Response.json(
+            { questions: rows.results, count: rows.results.length, limit, status },
+            { headers: corsHeaders }
+          );
+        }
+
+        // POST /research/questions/:id/answer — record an answer
+        const answerMatch = url.pathname.match(RQ_ANSWER_RE);
+        if (answerMatch && request.method === "POST") {
+          const id = answerMatch[1];
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const answerMd = typeof body.answer_md === "string" ? body.answer_md : "";
+          if (!answerMd.trim()) {
+            return Response.json(
+              { error: "Missing required field: answer_md" },
+              { status: 400, headers: corsHeaders }
+            );
+          }
+          const agentId = typeof body.agent_id === "string" ? body.agent_id : null;
+          const artifactKey = `research/${id}.md`;
+          const answeredAt = new Date().toISOString();
+
+          // Single UPDATE...RETURNING handles existence check + write + read.
+          const updated = await env.LEDGER.prepare(
+            `UPDATE research_questions
+             SET answer_md = ?1,
+                 answer_artifact_key = ?2,
+                 status = 'answered',
+                 answered_at = ?3
+             WHERE id = ?4
+             RETURNING *`
+          ).bind(answerMd, artifactKey, answeredAt, id).first<ResearchQuestion>();
+
+          if (!updated) {
+            return Response.json(
+              { error: `Question not found: ${id}` },
+              { status: 404, headers: corsHeaders }
+            );
+          }
+
+          // Mirror answer to R2 for long-form / linkable artifact (best-effort;
+          // D1 row is the source of truth, so R2 failure must not abort).
+          const artifactBody = [
+            `# Research Question ${id}`,
+            ...(agentId ? [`_Answered by: ${agentId}_`] : []),
+            `_Answered at: ${answeredAt}_`,
+            "",
+            answerMd,
+          ].join("\n");
+          try {
+            await env.ARTIFACTS.put(artifactKey, artifactBody, {
+              httpMetadata: { contentType: "text/markdown; charset=utf-8" },
+            });
+          } catch (e) {
+            console.error("research_questions R2 write error:", e);
+          }
+
+          return Response.json(updated, { headers: corsHeaders });
+        }
+
+        // GET /research/questions/:id — single (must come AFTER /answer match)
+        const itemMatch = url.pathname.match(RQ_ITEM_RE);
+        if (itemMatch && request.method === "GET") {
+          const id = itemMatch[1];
+          const row = await env.LEDGER.prepare(
+            `SELECT * FROM research_questions WHERE id = ?1`
+          ).bind(id).first<ResearchQuestion>();
+          if (!row) {
+            return Response.json(
+              { error: `Question not found: ${id}` },
+              { status: 404, headers: corsHeaders }
+            );
+          }
+          return Response.json(row, { headers: corsHeaders });
+        }
+
+        return Response.json(
+          { error: "Method not allowed for research_questions route" },
+          { status: 405, headers: corsHeaders }
+        );
+      }
 
       return new Response("Not found", { status: 404 });
     } catch (e) {
