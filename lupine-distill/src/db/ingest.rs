@@ -360,10 +360,18 @@ fn classify_pair_style(model: &str) -> Option<String> {
         ("eam_quinticclampedspline", "eam"),
         ("eam_dynamofs", "eam/fs"),
         ("eam_", "eam"),
+        ("geam_", "eam/alloy"),                  // generalized EAM, treat as eam/alloy
+        ("emt_", "eam"),                          // effective-medium theory — EAM-family
         ("meam_2nn", "meam"),
         ("meam_lammps", "meam"),
         ("meam_spline", "meam/spline"),
         ("meam_", "meam"),
+        // sim_lammps_meam_* and similar wrappers shipped via NIST/KIM SM_*
+        ("sim_lammps_meam", "meam"),
+        ("sim_lammps_eam", "eam/alloy"),
+        ("sim_lammps_tersoff", "tersoff"),
+        ("sim_lammps_sw", "sw"),
+        ("sim_lammps_", "kim"),                   // remaining sim_lammps_* — keep as kim
         ("tersoff_lammps", "tersoff"),
         ("tersoff_zbl", "tersoff/zbl"),
         ("tersoff_", "tersoff"),
@@ -373,6 +381,12 @@ fn classify_pair_style(model: &str) -> Option<String> {
         ("snap_", "snap"),
         ("acelmptramp_", "ace"),
         ("ace_", "ace"),
+        ("morse_", "morse"),                      // pair-additive Morse
+        ("lj_", "lj"),                            // Lennard-Jones, kept distinct from sw
+        ("mj_", "mj"),                            // Mendelev-Johnson EAM-variant
+        ("polymlp_", "polymlp"),                  // polynomial machine-learning potential
+        ("quip_gap", "quip/gap"),                 // GAP via QUIP
+        ("quip_", "quip"),
     ];
     for (prefix, style) in prefixes {
         if low.starts_with(prefix) {
