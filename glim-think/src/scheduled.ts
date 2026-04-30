@@ -255,14 +255,24 @@ async function runScheduledSweep(event: ScheduledController, env: Env): Promise<
 }
 
 /**
- * Cloudflare Workers `scheduled` entry point.
- * Defers the heavy work to ctx.waitUntil so the trigger can return promptly.
+ * Cloudflare Workers `scheduled` entry point — dispatches by cron expression
+ * so multiple sibling jobs coexist:
+ *   - "0 7 * * *"     nightly fleet sweep + diary snapshot
+ *   - "0 9 * * MON"   weekly critique drain (originally PR #12)
+ *
+ * Defers heavy work to `ctx.waitUntil` so the trigger returns promptly.
  */
 export async function scheduled(
   event: ScheduledController,
   env: Env,
   ctx: ExecutionContext,
 ): Promise<void> {
+  if (event.cron === "0 9 * * MON") {
+    ctx.waitUntil(drainCritiques(env, ctx));
+    return;
+  }
+  // Default: nightly sweep on "0 7 * * *" and any unknown cron (defensive —
+  // better to run the safe sweep than silently no-op).
   ctx.waitUntil(runScheduledSweep(event, env));
 }
 
@@ -331,4 +341,194 @@ export async function createLabBroadcast(
     timestamp: now.toISOString(),
     summary,
   };
+}
+const CRITIQUE_DRAIN_LIMIT = 10;
+const CRITIQUE_DRAIN_SERVICE = "cron-critique-drain";
+
+interface PendingCritique {
+  id: string;
+  source: string | null;
+  question: string;
+  target_hypothesis_id: string | null;
+}
+
+/**
+ * Top-level dispatcher. Routes by cron expression so multiple sibling
+ * units can coexist in the same scheduled handler.
+export async function drainCritiques(
+  env: Env,
+  _ctx: ExecutionContext,
+): Promise<void> {
+  const startedAt = new Date().toISOString();
+  const runId = `critique-drain-${Date.now()}`;
+  let processed = 0;
+  let failed = 0;
+  let outcome: "success" | "failure" | "skipped" = "success";
+  const errors: string[] = [];
+
+  let pending: PendingCritique[] = [];
+  try {
+    const rows = await env.LEDGER.prepare(
+      `SELECT id, source, question, target_hypothesis_id
+         FROM critiques
+        WHERE status = 'pending'
+        LIMIT ?1`,
+    )
+      .bind(CRITIQUE_DRAIN_LIMIT)
+      .all();
+    pending = (rows.results as unknown as PendingCritique[]) ?? [];
+  } catch (e) {
+    const msg = String(e);
+    // critiques table belongs to unit 2; if it isn't merged yet, skip cleanly.
+    if (/no such table/i.test(msg)) {
+      console.log(
+        "[critique-drain] critiques table not present yet — skipping",
+      );
+      outcome = "skipped";
+      await logDeployment(env, {
+        runId,
+        startedAt,
+        status: outcome,
+        logs: { reason: "critiques_table_missing", processed, failed },
+      });
+      return;
+    }
+    // Unknown D1 failure — record and bail.
+    console.error("[critique-drain] failed to query critiques:", e);
+    outcome = "failure";
+    errors.push(`query: ${msg}`);
+    await logDeployment(env, {
+      runId,
+      startedAt,
+      status: outcome,
+      logs: { processed, failed, errors },
+    });
+    return;
+  }
+
+  if (pending.length === 0) {
+    console.log("[critique-drain] no pending critiques");
+    await logDeployment(env, {
+      runId,
+      startedAt,
+      status: "success",
+      logs: { processed: 0, failed: 0, message: "no_pending_critiques" },
+    });
+    return;
+  }
+
+  for (const critique of pending) {
+    try {
+      const responseMd = await synthesizeCritiqueResponse(env, critique);
+      const artifactKey = `critiques/${critique.id}.md`;
+      await env.ARTIFACTS.put(artifactKey, responseMd, {
+        httpMetadata: { contentType: "text/markdown" },
+        customMetadata: {
+          critiqueId: critique.id,
+          source: critique.source ?? "unknown",
+        },
+      });
+      await env.LEDGER.prepare(
+        `UPDATE critiques
+            SET status = 'completed',
+                response_md = ?1,
+                response_artifact_key = ?2,
+                completed_at = ?3
+          WHERE id = ?4`,
+      )
+        .bind(responseMd, artifactKey, new Date().toISOString(), critique.id)
+        .run();
+      processed++;
+    } catch (e) {
+      failed++;
+      const msg = `${critique.id}: ${String(e)}`;
+      errors.push(msg);
+      console.error("[critique-drain] critique processing failed:", msg);
+    }
+  }
+
+  if (failed > 0 && processed === 0) outcome = "failure";
+
+  await logDeployment(env, {
+    runId,
+    startedAt,
+    status: outcome,
+    logs: { processed, failed, total: pending.length, errors: errors.slice(0, 5) },
+  });
+}
+
+/**
+ * Dispatch a single critique to the Orchestrator agent and return its
+ * markdown response. The Orchestrator will (when wired up) delegate to
+ * the Theorist and — if unit 5's Literaturist exists — to that agent
+ * for citation lookup.
+ */
+async function synthesizeCritiqueResponse(
+  env: Env,
+  critique: PendingCritique,
+): Promise<string> {
+  const prompt = buildCritiquePrompt(critique);
+  const id = env.ORCHESTRATOR.idFromName(`critique-drain-${critique.id}`);
+  const stub = env.ORCHESTRATOR.get(id) as DurableObjectStub & {
+    chat: (input: { prompt: string }) => Promise<{ text?: string; response?: string }>;
+  };
+
+  const result = await stub.chat({ prompt });
+  const text = result?.text ?? result?.response ?? "";
+  if (!text || !text.trim()) {
+    throw new Error("orchestrator_empty_response");
+  }
+  return text.trim();
+}
+
+function buildCritiquePrompt(critique: PendingCritique): string {
+  const targetLine = critique.target_hypothesis_id
+    ? `\nTarget hypothesis: ${critique.target_hypothesis_id}`
+    : "";
+  const sourceLine = critique.source ? `\nReviewer source: ${critique.source}` : "";
+  return [
+    "Synthesize a peer-review response for the following critique.",
+    "Draw on the D1 ledger evidence (records, claims, theories, pending_experiments)",
+    "and, if available, cite recent literature via the Literaturist sub-agent.",
+    "Format the answer as a concise (3-5 paragraph) markdown reply suitable for an IMMI revision letter.",
+    `${sourceLine}${targetLine}`,
+    "",
+    "Critique:",
+    critique.question,
+  ].join("\n");
+}
+
+interface DeploymentLog {
+  runId: string;
+  startedAt: string;
+  status: "success" | "failure" | "skipped";
+  logs: Record<string, unknown>;
+}
+
+/**
+ * Insert a row into `deployments` so the ops dashboard surfaces this
+ * cron run. Best-effort: if the deployments table is missing (very
+ * early in repo lifecycle) we just log and continue.
+ */
+async function logDeployment(env: Env, entry: DeploymentLog): Promise<void> {
+  try {
+    await env.LEDGER.prepare(
+      `INSERT INTO deployments
+         (repo, workflow, run_id, status, service, started_at, completed_at, logs)
+       VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)`,
+    )
+      .bind(
+        "glim-think",
+        "scheduled",
+        entry.runId,
+        entry.status,
+        CRITIQUE_DRAIN_SERVICE,
+        entry.startedAt,
+        new Date().toISOString(),
+        JSON.stringify(entry.logs),
+      )
+      .run();
+  } catch (e) {
+    console.error("[critique-drain] failed to log deployment row:", e);
+  }
 }
