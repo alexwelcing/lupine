@@ -31,7 +31,15 @@ import { DashboardAgent } from "./dashboard/stream";
 import { ExtensionManager } from "./extensions/manager";
 import { ModelRouter } from "./gateway/router";
 import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
-import type { BenchmarkRecord, Env, HypothesisRecord, HypothesisStatus } from "./types";
+import { respondToCritique } from "./critiques/dispatcher";
+import type {
+  BenchmarkRecord,
+  Critique,
+  CritiqueStatus,
+  Env,
+  HypothesisRecord,
+  HypothesisStatus,
+} from "./types";
 
 const HARDCODED_HYPOTHESES = [
   "Hyper-ribbon universality across 559 classical potentials",
@@ -837,6 +845,154 @@ ${narrative}
 
         return new Response("Method Not Allowed", { status: 405, headers: { ...JSON_CORS_HEADERS, "Allow": "GET, POST, OPTIONS" } });
       }
+
+      // === unit-2: critiques routes ===
+      // Persistence + dispatch for peer-review critiques. Backed by
+      // D1 table `critiques` (see migrations/0002_critiques.sql) and
+      // R2 artifacts at `critiques/{id}.md`.
+      const CRITIQUE_COLS = `id, source, question, target_hypothesis_id, status,
+             response_md, response_artifact_key, created_at, completed_at`;
+      const VALID_CRITIQUE_STATUSES: readonly CritiqueStatus[] = ["pending", "in_progress", "completed"];
+
+      // GET /critiques/pending?limit=N — list status=pending (default 50)
+      if (url.pathname === "/critiques/pending" && request.method === "GET") {
+        const rawLimit = parseInt(url.searchParams.get("limit") ?? "50", 10);
+        const limit = Number.isFinite(rawLimit) && rawLimit > 0
+          ? Math.min(rawLimit, 500)
+          : 50;
+        const rows = await env.LEDGER.prepare(
+          `SELECT ${CRITIQUE_COLS}
+             FROM critiques
+            WHERE status = 'pending'
+            ORDER BY created_at ASC
+            LIMIT ?1`,
+        ).bind(limit).all<Critique>();
+        return Response.json({ critiques: rows.results, count: rows.results.length });
+      }
+
+      // POST /critiques — create new critique
+      if (url.pathname === "/critiques" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+        const source = typeof body.source === "string" ? body.source : "";
+        const question = typeof body.question === "string" ? body.question : "";
+        if (!source || !question) {
+          return Response.json(
+            { error: "Missing required fields: source, question" },
+            { status: 400 },
+          );
+        }
+        const target_hypothesis_id = typeof body.target_hypothesis_id === "string"
+          ? body.target_hypothesis_id
+          : null;
+        const id = typeof body.id === "string" && body.id.trim().length > 0
+          ? body.id
+          : `c${Date.now()}`;
+        const created_at = new Date().toISOString();
+
+        try {
+          await env.LEDGER.prepare(
+            `INSERT INTO critiques
+               (id, source, question, target_hypothesis_id, status, created_at)
+             VALUES (?1, ?2, ?3, ?4, 'pending', ?5)`,
+          )
+            .bind(id, source, question, target_hypothesis_id, created_at)
+            .run();
+        } catch (insertErr) {
+          // 409 instead of 500 because PRIMARY KEY collisions are a client problem.
+          return Response.json(
+            { error: "Insert failed (id may already exist)", detail: String(insertErr) },
+            { status: 409 },
+          );
+        }
+
+        const critique: Critique = {
+          id,
+          source,
+          question,
+          target_hypothesis_id,
+          status: "pending",
+          response_md: null,
+          response_artifact_key: null,
+          created_at,
+          completed_at: null,
+        };
+        return Response.json({ critique }, { status: 201 });
+      }
+
+      // GET /critiques?status=&source=  — filterable list
+      if (url.pathname === "/critiques" && request.method === "GET") {
+        const status = url.searchParams.get("status");
+        const source = url.searchParams.get("source");
+
+        const where: string[] = [];
+        const binds: string[] = [];
+        if (status) {
+          if (!VALID_CRITIQUE_STATUSES.includes(status as CritiqueStatus)) {
+            return Response.json(
+              { error: `Invalid status. Must be one of: ${VALID_CRITIQUE_STATUSES.join(", ")}` },
+              { status: 400 },
+            );
+          }
+          where.push(`status = ?${binds.length + 1}`);
+          binds.push(status);
+        }
+        if (source) {
+          where.push(`source = ?${binds.length + 1}`);
+          binds.push(source);
+        }
+        const whereSql = where.length > 0 ? `WHERE ${where.join(" AND ")}` : "";
+        const rows = await env.LEDGER.prepare(
+          `SELECT ${CRITIQUE_COLS}
+             FROM critiques
+             ${whereSql}
+             ORDER BY created_at ASC`,
+        ).bind(...binds).all<Critique>();
+        return Response.json({ critiques: rows.results, count: rows.results.length });
+      }
+
+      // POST /critiques/:id/respond — write response_md to R2 + complete in D1
+      const respondMatch = url.pathname.match(/^\/critiques\/([^/]+)\/respond$/);
+      if (respondMatch && request.method === "POST") {
+        const id = decodeURIComponent(respondMatch[1]);
+        const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+        const response_md = typeof body.response_md === "string" ? body.response_md : "";
+        const agent_id = typeof body.agent_id === "string" ? body.agent_id : undefined;
+        if (!response_md.trim()) {
+          return Response.json(
+            { error: "Missing required field: response_md" },
+            { status: 400 },
+          );
+        }
+        try {
+          const result = await respondToCritique(env, id, response_md, agent_id);
+          if (!result.critique) {
+            return Response.json({ error: `Critique not found: ${id}` }, { status: 404 });
+          }
+          return Response.json({ critique: result.critique, artifactKey: result.artifactKey });
+        } catch (respondErr) {
+          console.error("respondToCritique error:", respondErr);
+          return Response.json(
+            { error: "Failed to record response", detail: String(respondErr) },
+            { status: 500 },
+          );
+        }
+      }
+
+      // GET /critiques/:id — single (the /pending check above already consumed that path)
+      const singleMatch = url.pathname.match(/^\/critiques\/([^/]+)$/);
+      if (singleMatch && request.method === "GET") {
+        const id = decodeURIComponent(singleMatch[1]);
+        const row = await env.LEDGER.prepare(
+          `SELECT ${CRITIQUE_COLS}
+             FROM critiques
+            WHERE id = ?1`,
+        ).bind(id).first<Critique>();
+        if (!row) {
+          return Response.json({ error: `Critique not found: ${id}` }, { status: 404 });
+        }
+        return Response.json({ critique: row });
+      }
+      // === end unit-2 ===
 
       return new Response("Not found", { status: 404 });
     } catch (e) {
