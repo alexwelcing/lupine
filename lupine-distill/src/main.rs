@@ -5,10 +5,12 @@
 //! the DSPy bridge. Rust owns the data and the math; Python owns the reasoning.
 
 mod bridge;
+mod cross_style;
 mod db;
 mod hypothesis;
 mod null_model;
 mod orthogonalize;
+mod rank_correlation;
 
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
@@ -59,6 +61,22 @@ enum Command {
         #[arg(long)]
         element: Option<String>,
     },
+    /// Cross-style PC1 alignment — for each element, compute pairwise PC1
+    /// cosine similarity between pair_style families. Tests the LLM-generated
+    /// `HYP-CU-UNIVERSAL-ALIGN-001` (PC1 element-intrinsic, not style-intrinsic).
+    CrossStylePc1 {
+        /// Restrict to one element.
+        #[arg(long)]
+        element: Option<String>,
+        /// Run a random-unit-vector null model and persist the p-value.
+        #[arg(long)]
+        with_null: bool,
+        #[arg(long, default_value_t = 1000)]
+        iterations: usize,
+    },
+    /// Many-body rank vs participation ratio — Spearman correlation against
+    /// the cached manifolds table. Tests `error_manifold_dimensionality_scaling`.
+    RankCorrelation,
 }
 
 #[derive(Subcommand, Debug)]
@@ -271,6 +289,14 @@ fn main() -> Result<()> {
         Command::Orthogonalize { element } => {
             let conn = open_db(&db_path)?;
             run_orthogonalize(&conn, element.as_deref())?;
+        }
+        Command::CrossStylePc1 { element, with_null, iterations } => {
+            let conn = open_db(&db_path)?;
+            run_cross_style(&conn, element.as_deref(), with_null, iterations)?;
+        }
+        Command::RankCorrelation => {
+            let conn = open_db(&db_path)?;
+            run_rank_correlation(&conn)?;
         }
     }
 
@@ -628,5 +654,158 @@ fn run_orthogonalize(conn: &Connection, element: Option<&str>) -> Result<()> {
         );
     }
     println!("{}", serde_json::to_string_pretty(&result)?);
+    Ok(())
+}
+
+// ─── cross-style PC1 dispatch ───────────────────────────────
+
+fn run_cross_style(
+    conn: &Connection,
+    element: Option<&str>,
+    with_null: bool,
+    iterations: usize,
+) -> Result<()> {
+    let result = cross_style::run(conn, element)?;
+    eprintln!(
+        "[cross-style-pc1] {} elements, {} pair-style comparisons; pooled mean |cos|={:.3} — {}",
+        result.n_elements_analyzed,
+        result.pooled_n_pairs,
+        result.pooled_mean_cosine,
+        if result.supported { "SUPPORTED (LLM hypothesis)" } else { "not supported" },
+    );
+    for el in &result.per_element {
+        eprintln!(
+            "  {} (styles={}): n={} pairs, mean={:.3}, range=[{:.3}, {:.3}]",
+            el.element,
+            el.pair_styles.len(),
+            el.n_pairs,
+            el.mean_cosine,
+            el.min_cosine,
+            el.max_cosine,
+        );
+    }
+
+    let mut p_value: Option<f64> = None;
+    if with_null {
+        let (observed, null_mean, null_std, lo, hi, mut dist) =
+            cross_style::null_model_pooled(conn, iterations)?;
+        // The convention used inside null_model_pooled stashes the p-value as
+        // the trailing element; pull it back out before persisting.
+        let p = dist.pop().unwrap_or(1.0);
+        p_value = Some(p);
+        eprintln!(
+            "[cross-style-pc1:null] observed={:.4} null_mean={:.4} 95%CI=[{:.4},{:.4}] p={:.4} (n={})",
+            observed, null_mean, lo, hi, p, dist.len(),
+        );
+        db::query::upsert_null_model(
+            conn,
+            "cross_style_pc1",
+            "all",
+            "random_unit_vector",
+            observed,
+            null_mean,
+            null_std,
+            lo,
+            hi,
+            p,
+            dist.len(),
+            &dist,
+        )?;
+    }
+
+    persist_cross_style_claim(conn, &result, p_value)?;
+    println!("{}", serde_json::to_string_pretty(&result)?);
+    Ok(())
+}
+
+fn persist_cross_style_claim(
+    conn: &Connection,
+    r: &cross_style::CrossStyleResult,
+    p_value: Option<f64>,
+) -> Result<()> {
+    let claim_id = format!(
+        "cross_style_pc1_{}",
+        db::ledger::generate_record_id(AGENT_ID),
+    );
+    let data = serde_json::json!({
+        "pooled_mean_cosine": r.pooled_mean_cosine,
+        "n_pairs": r.pooled_n_pairs,
+        "n_elements_analyzed": r.n_elements_analyzed,
+        "p_value": p_value,
+        "per_element_summary": r.per_element.iter().map(|el| serde_json::json!({
+            "element": el.element,
+            "n_pairs": el.n_pairs,
+            "mean_cosine": el.mean_cosine,
+            "min_cosine": el.min_cosine,
+            "max_cosine": el.max_cosine,
+            "pair_styles": el.pair_styles,
+        })).collect::<Vec<_>>(),
+    });
+    let p_tail = match p_value {
+        Some(p) => format!(", p={:.4}", p),
+        None => String::new(),
+    };
+    let description = format!(
+        "Cross-style PC1 alignment: pooled mean |cos|={:.3} over {} pair-style comparisons across {} elements{}",
+        r.pooled_mean_cosine, r.pooled_n_pairs, r.n_elements_analyzed, p_tail,
+    );
+    let status = if r.supported { "proposed" } else { "refuted" };
+    let confidence = r.pooled_mean_cosine.clamp(0.0, 1.0);
+    db::query::insert_claim(
+        conn, &claim_id, AGENT_ID, "CrossStyleAlignment",
+        &data, &description, confidence, status,
+    )?;
+    Ok(())
+}
+
+// ─── rank-correlation dispatch ──────────────────────────────
+
+fn run_rank_correlation(conn: &Connection) -> Result<()> {
+    let result = rank_correlation::run(conn)?;
+    eprintln!(
+        "[rank-correlation] n={} pair-styles, Spearman ρ={:.3}, Pearson r={:.3}, p={:.4} — {}",
+        result.n_styles,
+        result.spearman_rho,
+        result.pearson_r,
+        result.two_tailed_p_value,
+        if result.supported { "SUPPORTED (ρ>0.7, p<0.05)" } else { "not supported" },
+    );
+    for b in &result.buckets {
+        eprintln!(
+            "  rank={} {:20} PR={:.3}  n={}",
+            b.many_body_rank, b.pair_style, b.participation_ratio, b.n_potentials,
+        );
+    }
+
+    persist_rank_correlation_claim(conn, &result)?;
+    println!("{}", serde_json::to_string_pretty(&result)?);
+    Ok(())
+}
+
+fn persist_rank_correlation_claim(
+    conn: &Connection,
+    r: &rank_correlation::RankCorrelationResult,
+) -> Result<()> {
+    let claim_id = format!(
+        "rank_correlation_{}",
+        db::ledger::generate_record_id(AGENT_ID),
+    );
+    let data = serde_json::json!({
+        "spearman_rho": r.spearman_rho,
+        "pearson_r": r.pearson_r,
+        "p_value": r.two_tailed_p_value,
+        "n_styles": r.n_styles,
+        "buckets": r.buckets,
+    });
+    let description = format!(
+        "Many-body rank vs PR: Spearman ρ={:.3}, Pearson r={:.3}, p={:.4}, n_styles={}",
+        r.spearman_rho, r.pearson_r, r.two_tailed_p_value, r.n_styles,
+    );
+    let status = if r.supported { "proposed" } else { "refuted" };
+    let confidence = r.spearman_rho.abs().clamp(0.0, 1.0);
+    db::query::insert_claim(
+        conn, &claim_id, AGENT_ID, "DimensionalityRanking",
+        &data, &description, confidence, status,
+    )?;
     Ok(())
 }
