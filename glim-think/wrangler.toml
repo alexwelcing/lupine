@@ -4,9 +4,10 @@ compatibility_date = "2026-04-25"
 compatibility_flags = ["nodejs_compat"]
 
 # ─── Scheduled triggers ───
-# Hourly lab broadcast plus nightly fleet sweep at 07:00 UTC (~midnight US Pacific).
+# Hourly lab broadcast, nightly fleet sweep at 07:00 UTC (~midnight US Pacific),
+# and weekly critique drain at 09:00 UTC Monday (~02:00 Pacific).
 [triggers]
-crons = ["0 * * * *", "0 7 * * *"]
+crons = ["0 * * * *", "0 7 * * *", "0 9 * * MON"]
 
 # ─── Durable Objects: Think-based research agents ───
 
