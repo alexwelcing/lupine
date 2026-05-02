@@ -15,8 +15,9 @@
 
 import { Think, Session } from "@cloudflare/think";
 import { createWorkersAI } from "workers-ai-provider";
-import type { ToolSet } from "ai";
+import { generateText, type ToolSet } from "ai";
 import type { Env } from "../types";
+import { recordMiniMaxSpend } from "./models";
 
 export abstract class GlimThinkAgent extends Think<Env> {
   /**
@@ -90,5 +91,109 @@ export abstract class GlimThinkAgent extends Think<Env> {
     const obj = await this.env.ARTIFACTS.get(key);
     if (!obj) return null;
     return obj.text();
+  }
+
+  /**
+   * Diagnostic — does this DO instance see the CONFIG KV binding and
+   * can it write/read? Returns the actual binding name + a round-trip
+   * probe result. Used by /admin/diag-do-kv to isolate whether the
+   * /budget bug is a KV-binding issue or a middleware issue.
+   */
+  async kvProbe(): Promise<{
+    binding_present: boolean;
+    write_ok: boolean;
+    read_back?: string | null;
+    error?: string;
+  }> {
+    if (!this.env.CONFIG) {
+      return { binding_present: false, write_ok: false, error: "this.env.CONFIG is undefined inside the DO" };
+    }
+    const probeKey = `kv-probe:${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+    const probeValue = `do-write-at-${new Date().toISOString()}`;
+    try {
+      await this.env.CONFIG.put(probeKey, probeValue);
+      const readBack = await this.env.CONFIG.get(probeKey);
+      return {
+        binding_present: true,
+        write_ok: readBack === probeValue,
+        read_back: readBack,
+      };
+    } catch (e) {
+      return {
+        binding_present: true,
+        write_ok: false,
+        error: e instanceof Error ? e.message : String(e),
+      };
+    }
+  }
+
+  /**
+   * One-shot synthesis call. RPC-callable from the worker handler / queue
+   * consumer (DO methods are auto-exposed via stub since
+   * compatibility_date >= 2024-04-03).
+   *
+   * Routes through this.getModel() so subclasses inherit MiniMax-M2.7
+   * (Theorist/Causal/Orchestrator) or Workers AI (Manifold/Experiment/
+   * Literaturist) automatically. The wrapped model also runs through
+   * spendMiddleware so /budget ticks on each call.
+   *
+   * Strips the <think>...</think> reasoning prefix that M2.7 emits so
+   * callers get the clean assistant text only. Caller can keep
+   * `text_with_reasoning` if they want the full output.
+   */
+  async synthesize(opts: {
+    systemPrompt?: string;
+    prompt: string;
+    maxOutputTokens?: number;
+  }): Promise<{
+    text: string;
+    text_with_reasoning: string;
+    usage?: {
+      inputTokens?: number;
+      outputTokens?: number;
+      reasoningTokens?: number;
+      totalTokens?: number;
+    };
+    finish_reason?: string;
+    latency_ms: number;
+  }> {
+    const start = Date.now();
+    const model = this.getModel();
+    const result = await generateText({
+      model,
+      system: opts.systemPrompt ?? this.getSystemPrompt(),
+      prompt: opts.prompt,
+      maxOutputTokens: opts.maxOutputTokens ?? 768,
+    });
+    const raw = result.text ?? "";
+    const cleaned = raw.replace(/<think>[\s\S]*?<\/think>\s*/g, "").trim();
+
+    // Direct spend recording — the spendMiddleware closure from
+    // selectModel() doesn't fire in DO context (silent KV write failure
+    // we haven't diagnosed yet). Recording here from the DO ensures
+    // /budget reflects every cron-driven agent invocation. Once the
+    // middleware bug is fixed in Fix A, this becomes a no-op double-
+    // count which we can drop.
+    const usage = result.usage as {
+      inputTokens?: number;
+      outputTokens?: number;
+      reasoningTokens?: number;
+      totalTokens?: number;
+    } | undefined;
+    const totalTokens =
+      (usage?.inputTokens ?? 0) +
+      (usage?.outputTokens ?? 0) +
+      (usage?.reasoningTokens ?? 0);
+    if (totalTokens > 0) {
+      await recordMiniMaxSpend(this.env, totalTokens);
+    }
+
+    return {
+      text: cleaned,
+      text_with_reasoning: raw,
+      usage: result.usage,
+      finish_reason: result.finishReason,
+      latency_ms: Date.now() - start,
+    };
   }
 }

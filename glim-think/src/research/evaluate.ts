@@ -187,10 +187,90 @@ function nextStatusFromVerdict(
   return "testing";
 }
 
+/**
+ * Build a synthesis prompt asking the Theorist to interpret the
+ * statistical evaluation. Kept narrow on purpose — M2.7 is expensive
+ * and reasoning-heavy, so we want a tight 3-5 sentence interpretation.
+ */
+function buildTheoristPrompt(
+  hypothesisTitle: string,
+  summary: EvaluationSummary,
+): string {
+  const styleLines = summary.within_style.slice(0, 8).map((s) =>
+    `  - ${s.pair_style.padEnd(14)} n=${String(s.n).padEnd(4)} r=${s.r.toFixed(3)}`,
+  ).join("\n");
+  return [
+    `Hypothesis under test: "${hypothesisTitle}"`,
+    `Target element (inferred from title): ${summary.target_element ?? "pooled (all elements)"}`,
+    `Evaluation result:`,
+    `  - n_records: ${summary.n_records}`,
+    `  - pooled pearson r: ${summary.pooled_r?.toFixed(4) ?? "insufficient data"}`,
+    `  - within pair_style:`,
+    styleLines,
+    `  - within-style r range: [${summary.within_style_min_r?.toFixed(3) ?? "?"}, ${summary.within_style_max_r?.toFixed(3) ?? "?"}]`,
+    `  - statistical verdict: ${summary.verdict}`,
+    `  - attenuation detected: ${summary.attenuation_detected}`,
+    ``,
+    `Write a tight 3-5 sentence interpretation: what does this say about the hypothesis?`,
+    `Cite the specific numbers. If verdict is "supports_dichotomy" call out the Simpson-like attenuation;`,
+    `if "supports_universal" note that pooled and within-style agree;`,
+    `if "weak" or "insufficient_data" say so plainly. Do NOT invent data.`,
+  ].join("\n");
+}
+
+interface SynthesisResult {
+  text: string;
+  usage?: {
+    inputTokens?: number;
+    outputTokens?: number;
+    reasoningTokens?: number;
+    totalTokens?: number;
+  };
+  latency_ms: number;
+  error?: string;
+}
+
+/**
+ * Invoke the Theorist DO for a one-shot M2.7 interpretation. RPC-call
+ * across DO boundary; the agent's getModel() returns the wrapped
+ * MiniMax model so spendMiddleware fires and /budget ticks.
+ *
+ * Best-effort: if the DO call fails, we still write the statistical
+ * Claim, just without the narrative. The hypothesis update doesn't
+ * depend on this.
+ */
+async function invokeTheorist(
+  env: Env,
+  hypothesisId: string,
+  prompt: string,
+): Promise<SynthesisResult> {
+  const start = Date.now();
+  try {
+    // One DO instance per hypothesis so each one carries its own
+    // Think session memory across evaluations. Cheap — DOs are lazy.
+    const id = env.THEORIST_AGENT.idFromName(`auto-eval:${hypothesisId}`);
+    const stub = env.THEORIST_AGENT.get(id);
+    // RPC method exposed on GlimThinkAgent base class.
+    const result = (await (stub as unknown as {
+      synthesize: (opts: {
+        prompt: string;
+        maxOutputTokens?: number;
+      }) => Promise<SynthesisResult>;
+    }).synthesize({ prompt, maxOutputTokens: 768 }));
+    return result;
+  } catch (e) {
+    return {
+      text: "",
+      latency_ms: Date.now() - start,
+      error: e instanceof Error ? e.message : String(e),
+    };
+  }
+}
+
 export async function evaluateHypothesis(
   env: Env,
   hypothesisId: string,
-): Promise<EvaluationSummary> {
+): Promise<EvaluationSummary & { narrative?: string; narrative_error?: string }> {
   const hyp = await env.LEDGER
     .prepare(`SELECT id, title FROM hypotheses WHERE id = ?1`)
     .bind(hypothesisId)
@@ -207,7 +287,25 @@ export async function evaluateHypothesis(
   const status = nextStatusFromVerdict(summary);
   const now = new Date().toISOString();
 
-  // 1. Update hypothesis confidence + status
+  // 1. Theorist synthesis — only when we have enough data to say
+  //    something meaningful. Skip the LLM call (and its M2.7 cost) for
+  //    insufficient_data hypotheses.
+  let narrative: string | undefined;
+  let narrativeError: string | undefined;
+  if (summary.verdict !== "insufficient_data") {
+    const synth = await invokeTheorist(
+      env,
+      hypothesisId,
+      buildTheoristPrompt(hyp.title, summary),
+    );
+    if (synth.error) {
+      narrativeError = synth.error;
+    } else if (synth.text) {
+      narrative = synth.text;
+    }
+  }
+
+  // 2. Update hypothesis confidence + status
   await env.LEDGER
     .prepare(
       `UPDATE hypotheses
@@ -217,8 +315,12 @@ export async function evaluateHypothesis(
     .bind(status, confidence, now, hypothesisId)
     .run();
 
-  // 2. Insert a Claim row capturing the evaluation snapshot
+  // 3. Insert a Claim row capturing the evaluation snapshot + narrative
   const claimId = `auto_eval_${hypothesisId.slice(0, 24)}_${Date.now()}`;
+  const claimData = JSON.stringify({ ...summary, narrative, narrative_error: narrativeError });
+  const description = narrative
+    ? `Auto-eval ${hypothesisId.slice(0, 32)}: ${narrative.slice(0, 500)}`
+    : `Auto-eval ${hypothesisId.slice(0, 32)}: pooled r=${summary.pooled_r?.toFixed(3) ?? "n/a"}, within-style r∈[${summary.within_style_min_r?.toFixed(2) ?? "?"}, ${summary.within_style_max_r?.toFixed(2) ?? "?"}], n=${summary.n_records}, verdict=${summary.verdict}`;
   try {
     await env.LEDGER
       .prepare(
@@ -229,13 +331,13 @@ export async function evaluateHypothesis(
       )
       .bind(
         claimId,
-        "glim-think:auto-evaluator",
+        narrative ? "theorist+minimax-m2.7" : "glim-think:auto-evaluator",
         "AutoHypothesisEvaluation",
-        JSON.stringify(summary),
+        claimData,
         JSON.stringify([]),
         confidence,
-        summary.verdict === "supports_dichotomy" ? "proposed" : "proposed",
-        `Auto-eval ${hypothesisId.slice(0, 32)}: pooled r=${summary.pooled_r?.toFixed(3) ?? "n/a"}, within-style r∈[${summary.within_style_min_r?.toFixed(2) ?? "?"}, ${summary.within_style_max_r?.toFixed(2) ?? "?"}], n=${summary.n_records}, verdict=${summary.verdict}`,
+        "proposed",
+        description,
         now,
       )
       .run();
@@ -243,5 +345,5 @@ export async function evaluateHypothesis(
     console.error("evaluateHypothesis: claim insert failed:", e);
   }
 
-  return summary;
+  return { ...summary, narrative, narrative_error: narrativeError };
 }
