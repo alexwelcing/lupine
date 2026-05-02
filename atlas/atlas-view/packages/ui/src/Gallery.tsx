@@ -142,34 +142,7 @@ export function Gallery() {
       const blob = await resp.blob();
       const fileObj = new File([blob], example.file.split('/').pop() ?? 'file.dump');
       const { parseFile } = await import('@atlas/parsers');
-      let result = await parseFile(fileObj);
-      let resolvedUrl = url;
-
-      // Self-healing fallback: many gallery entries point at root paths that
-      // are now stub/placeholder files (XYZ-format-but-named-lammpstrj or
-      // single-frame stubs) while the real multi-frame trajectories live in
-      // /gallery/. If the metadata advertises >1 frame but we got back a
-      // single frame, retry against /gallery/<basename>.
-      const metaFrames = parseInt(String(example.frames ?? ''), 10);
-      const wantsMulti = Number.isFinite(metaFrames) && metaFrames > 1;
-      const gotFrames = result.trajectory?.totalFrames ?? 0;
-      if (wantsMulti && gotFrames < 2 && !cleanFile.startsWith('gallery/')) {
-        const altUrl = `${cleanBase}gallery/${cleanFile.split('/').pop()}`;
-        try {
-          const altResp = await fetch(altUrl);
-          if (altResp.ok) {
-            const altBlob = await altResp.blob();
-            const altFileObj = new File([altBlob], example.file.split('/').pop() ?? 'file.dump');
-            const altResult = await parseFile(altFileObj);
-            if ((altResult.trajectory?.totalFrames ?? 0) > gotFrames) {
-              result = altResult;
-              resolvedUrl = altUrl;
-            }
-          }
-        } catch {
-          // Fallback fetch/parse failed; keep the original result.
-        }
-      }
+      const result = await parseFile(fileObj);
 
       if (result.trajectory) {
         useStore.getState().setFile({
@@ -177,7 +150,7 @@ export function Gallery() {
           size: blob.size,
           trajectory: result.trajectory,
           thermo: result.thermo ?? null,
-          sourceUrl: resolvedUrl,
+          sourceUrl: url,
         });
       }
     } catch (err: any) {

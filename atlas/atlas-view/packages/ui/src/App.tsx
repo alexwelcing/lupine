@@ -15,44 +15,8 @@ import { XR, createXRStore, useXR } from '@react-three/xr';
 import { USDZExporter } from 'three/examples/jsm/exporters/USDZExporter.js';
 
 export const xrStore = createXRStore({
-  // In dev mode, enable the built-in IWER (Immersive Web Emulation Runtime)
-  // so we can simulate AR/VR sessions on desktop for testing.
-  // In production, native WebXR is required.
-  emulate: (import.meta as any).env?.DEV,
+  emulate: false,
 });
-
-async function enterXRSession(mode: 'immersive-vr' | 'immersive-ar') {
-  const label = mode === 'immersive-vr' ? 'VR' : 'AR';
-  const xr = (window.navigator as any).xr;
-  if (!xr) {
-    alert(`WebXR is not supported in this browser.\n\nOn iOS: try the '🍎 AR Quick Look (Safari)' option for the best AR experience, or install the 'WebXR Viewer' app by Mozilla.\n\nOn Android: please use Google Chrome.`);
-    return;
-  }
-  try {
-    if (typeof xr.isSessionSupported === 'function') {
-      const supported = await xr.isSessionSupported(mode);
-      if (!supported) {
-        const isApple = /iPhone|iPad|iPod/.test(navigator.userAgent);
-        const tip = isApple && mode === 'immersive-ar'
-          ? `\n\nTry '🍎 AR Quick Look (Safari)' instead — it works natively on iOS without WebXR.`
-          : isApple
-            ? `\n\niOS does not support immersive VR. Try '🍎 AR Quick Look (Safari)' for AR.`
-            : '';
-        alert(`Immersive ${label} is not available on this device.${tip}`);
-        return;
-      }
-    }
-    if (mode === 'immersive-vr') {
-      await xrStore.enterVR();
-    } else {
-      await xrStore.enterAR();
-    }
-  } catch (err) {
-    console.error(`[glim] Failed to enter ${mode} session`, err);
-    const message = err instanceof Error ? err.message : String(err);
-    alert(`Could not start ${label} session: ${message}`);
-  }
-}
 
 import { MobileHUD } from './MobileHUD';
 import { ChronosHUD } from './ChronosHUD';
@@ -63,9 +27,8 @@ import { FileDropZone } from './FileDropZone';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { SpatialAnchor } from './SpatialAnchor';
-import { XRMoleculeInteraction } from './xr/XRMoleculeInteraction';
 import { Bonds } from '@atlas/scene/Bonds';
-import { useTimelineDriver } from './hooks/useSmoothFramePlayback';
+import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
 import { ScaleBar } from '@atlas/scene/ScaleBar';
 import { getBackgroundFromColormap } from '@atlas/scene';
@@ -81,7 +44,6 @@ import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
 import type { ColormapName } from '@atlas/core/types';
 import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
-import { PlaybackFrameProbe, PlaybackHUD } from './PlaybackHUD';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 
 // ─── Icons ────────────────────────────────────────────────────────────
@@ -226,21 +188,54 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 }
 
 // ─── USDZ Export component ─────────────────────────────────────────────
+function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplete: () => void }) {
+  const { scene } = useThree();
+  
+  useEffect(() => {
+    if (!trigger) return;
+    
+    const runExport = async () => {
+      try {
+        const exporter = new USDZExporter();
+        // Ignore background for USDZ export
+        const oldBackground = scene.background;
+        scene.background = null;
+        
+        // Use parseAsync for promise-based usage
+        const arrayBuffer = await exporter.parseAsync(scene);
+        scene.background = oldBackground;
+        
+        const blob = new Blob([arrayBuffer as any], { type: 'model/vnd.usdz+zip' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'molecule.usdz';
+        a.rel = 'ar';
+        
+        const img = document.createElement('img');
+        a.appendChild(img);
+        document.body.appendChild(a);
+        
+        a.click();
+        
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 1000);
+      } catch (e) {
+        console.error("USDZ Export failed", e);
+        alert("Failed to export AR model for Quick Look.");
+      } finally {
+        onComplete();
+      }
+    };
+    runExport();
+  }, [trigger, scene, onComplete]);
 
-// USDZExporter does not expand InstancedMesh and deduplicates by geometry
-// reference, so a 1000-atom InstancedMesh exported "as-is" surfaces in AR
-// Quick Look as a single sphere. We solve it by baking each InstancedMesh
-// into ONE merged BufferGeometry — every instance's transformed
-// positions/normals are concatenated into one buffer, per-instance color is
-// written into a vertex-color attribute, and the original material is cloned
-// with `vertexColors: true` so its texture/metalness/roughness still apply.
-type InstancedSwap = {
-  parent: THREE.Object3D;
-  original: THREE.InstancedMesh;
-  replacement: THREE.Mesh;
-};
-
-import { USDZExportHelper } from './export/USDZExportPipeline';
+  return null;
+}
 
 // ─── Scene Background component ──────────────────────────────────────
 function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: string; bottom: string; style?: 'linear' | 'radial' | 'spotlight'; videoUrl?: string | null }) {
@@ -485,12 +480,10 @@ export default function App() {
   const nextFrame = useStore(s => s.nextFrame);
   const togglePlay = useStore(s => s.togglePlay);
   const setActivePanel = useStore(s => s.setActivePanel);
-  // hoveredAtom subscription removed — inspector is now driven by selection.
+  const hoveredAtom = useStore(s => s.hoveredAtom);
+  const setHoveredAtom = useStore(s => s.setHoveredAtom);
   const selectedAtoms = useStore(s => s.selectedAtoms);
   const setSelectedAtoms = useStore(s => s.setSelectedAtoms);
-  // Stable Set identity for `highlightedAtoms` — without this, AtomsOptimized
-  // sees a new Set every render and rebuilds its highlights Uint8Array.
-  const highlightedAtomsSet = useMemo(() => new Set(selectedAtoms), [selectedAtoms]);
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
   const anomalyTracking = useStore(s => s.anomalyTracking);
@@ -504,23 +497,35 @@ export default function App() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [showXRMenu, setShowXRMenu] = useState(false);
 
-  // Click-driven inspector: the most recently selected atom drives the info
-  // card. We deliberately do NOT track mouse position or do hover raycasts —
-  // both were re-rendering the entire shell at the device's mouse-event rate
-  // (often 1000 Hz on gaming mice) and competing with the playback hot path.
-  // If atom-peek is missed, it can return as Alt-modifier-gated hover later.
-  const inspectedAtom = selectedAtoms.length === 1 ? selectedAtoms[0] : null;
+  // Mouse position for inspector tooltip
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
+  }, []);
 
-  // Single RAF driver — owns playthrough + flythrough preview clocks.
-  // Reads from and writes to the store; no React state in the hook.
-  useTimelineDriver();
+  // Playback timer (replaced with smooth 60fps interpolator)
+  const { currentState: interpState, setFrame: setSmoothFrame } = useSmoothFramePlayback(playing, {
+    frames: file?.trajectory.frames ?? [],
+    speed: playbackSpeed,
+    targetFPS: 60,
+    mdFrameRate: 30, // Default typical MD output
+    onFrame: (state) => {
+      // Sync UI timeline without forcing expensive React renders unnecessarily
+      // Only sync when playing. When paused, the store (user scrubbing) drives the hook.
+      if (useStore.getState().playing && state.frameIndex !== useStore.getState().frame) {
+        useStore.getState().setFrame(state.frameIndex);
+      }
+    }
+  });
 
-  // Note: App.tsx deliberately does NOT subscribe to `effectiveFrame`. The
-  // renderers (AtomsOptimized, Bonds) read it from the store inside `useFrame`
-  // so per-frame updates run on R3F's render clock without re-rendering this
-  // 1500-line component at the display refresh rate. The integer `frame` from
-  // the store still drives the scrubber UI, hover tooltip, and AnomalyTracker
-  // — those only need to update on integer frame transitions (~30 Hz).
+  // Sync external frame updates (like timeline scrubber manually dragging) back to the hook when NOT playing
+  useEffect(() => {
+    if (!playing && interpState.effectiveFrame !== frame) {
+      setSmoothFrame(frame);
+    }
+  }, [frame, playing, setSmoothFrame, interpState.effectiveFrame]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -612,12 +617,9 @@ export default function App() {
       ) as [number, number, number]
     : [0, 0, 0] as [number, number, number], [file?.name]);
 
-  // Property names are file-stable in MD trajectories — memoize to keep array
-  // identity steady so panels using this as a useMemo dep don't churn.
-  const availableProperties = useMemo(
-    () => file ? Array.from(file.trajectory.frames[0]?.properties?.keys() ?? []) : [],
-    [file]
-  );
+  const availableProperties = currentFrame
+    ? Array.from(currentFrame.properties?.keys() ?? [])
+    : [];
 
   const bg = resolveBackground(backgroundPreset, colormap);
 
@@ -737,9 +739,13 @@ export default function App() {
                   minWidth: 180,
                 }}>
                   <button
-                    onClick={() => {
-                      setShowXRMenu(false);
-                      void enterXRSession('immersive-vr');
+                    onClick={() => { 
+                      if (!(window.navigator as any).xr) {
+                        alert("WebXR is not supported in this browser.\n\nOn iOS: Please use the 'WebXR Viewer' app by Mozilla, or enable WebXR in Safari's advanced Experimental settings.\n\nOn Android: Please ensure you are using Google Chrome.");
+                        return;
+                      }
+                      xrStore.enterVR(); 
+                      setShowXRMenu(false); 
                     }}
                     style={{
                       padding: '10px 14px', background: 'transparent', border: 'none',
@@ -752,9 +758,13 @@ export default function App() {
                     🥽 Enter VR Mode
                   </button>
                   <button
-                    onClick={() => {
-                      setShowXRMenu(false);
-                      void enterXRSession('immersive-ar');
+                    onClick={() => { 
+                      if (!(window.navigator as any).xr) {
+                        alert("WebXR is not supported in this browser.\n\nOn iOS: Please use the 'WebXR Viewer' app by Mozilla, or enable WebXR in Safari's advanced Experimental settings.\n\nOn Android: Please ensure you are using Google Chrome.");
+                        return;
+                      }
+                      xrStore.enterAR(); 
+                      setShowXRMenu(false); 
                     }}
                     style={{
                       padding: '10px 14px', background: 'transparent', border: 'none',
@@ -881,15 +891,13 @@ export default function App() {
               near: 0.1,
               far: cameraDistance * 10,
             }}
-            dpr={[1, 1.5]}
-            gl={{ antialias: false, powerPreference: 'high-performance', alpha: false, stencil: false }}
+            gl={{ antialias: true, preserveDrawingBuffer: true }}
             style={{ background: 'transparent' }}
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
             <XR store={xrStore}>
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
-            <PlaybackFrameProbe />
             <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} />
 
             <ambientLight intensity={ambientLightIntensity} />
@@ -922,47 +930,49 @@ export default function App() {
             />
 
             {currentFrame && (
-              <XRMoleculeInteraction>
-                <SpatialAnchor cameraDistance={cameraDistance}>
-                  <AnomalyTracker
+              <SpatialAnchor cameraDistance={cameraDistance}>
+                <AnomalyTracker
+                  frame={currentFrame}
+                  colorProperty={colorProperty}
+                  active={anomalyTracking}
+                />
+                <AtomsOptimized
+                  frame={file!.trajectory.frames[interpState.frameIndex]}
+                  nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
+                  interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
+                  colorMode={colorMode}
+                  colorProperty={colorProperty ?? undefined}
+                  colormap={colormap}
+                  scale={atomScale}
+                  renderStyle={renderStyle}
+                  onSpatialHash={setSpatialHash}
+                  highlightedAtoms={new Set(selectedAtoms)}
+                  hiddenAtomTypes={hiddenAtomTypes}
+                  atomTypeScales={atomTypeScales}
+                  botanicalMode={renderStyle === 'botanical'}
+                  materialPreset={materialPreset}
+                  atomTexture={atomTexture}
+                />
+                {showBonds && (
+                  <Bonds
                     frame={currentFrame}
-                    colorProperty={colorProperty}
-                    active={anomalyTracking}
-                  />
-                  <AtomsOptimized
-                    trajectory={file!.trajectory}
+                    nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
+                    interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
+                    maxBondLength={bondCutoff}
+                    renderStyle={renderStyle}
+                    colormap={colormap}
                     colorMode={colorMode}
                     colorProperty={colorProperty ?? undefined}
-                    colormap={colormap}
-                    scale={atomScale}
-                    renderStyle={renderStyle}
-                    onSpatialHash={setSpatialHash}
-                    highlightedAtoms={highlightedAtomsSet}
-                    hiddenAtomTypes={hiddenAtomTypes}
-                    atomTypeScales={atomTypeScales}
+                    radius={0.12}
+                    opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
                     materialPreset={materialPreset}
-                    atomTexture={atomTexture}
                   />
-                  {showBonds && (
-                    <Bonds
-                      trajectory={file!.trajectory}
-                      maxBondLength={bondCutoff}
-                      renderStyle={renderStyle}
-                      colormap={colormap}
-                      colorMode={colorMode}
-                      colorProperty={colorProperty ?? undefined}
-                      radius={0.12}
-                      opacity={0.85}
-                      botanicalMode={renderStyle === 'botanical'}
-                      materialPreset={materialPreset}
-                    />
-                  )}
-                  {showCell && (
-                    <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />
-                  )}
-                </SpatialAnchor>
-              </XRMoleculeInteraction>
+                )}
+                {showCell && (
+                  <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />
+                )}
+              </SpatialAnchor>
             )}
 
             {currentFrame && spatialHash && (
@@ -971,6 +981,7 @@ export default function App() {
                 spatialHash={spatialHash}
                 enabled={!loading}
                 selectionMode={activePanel === 'measurement' ? 'measure' : 'single'}
+                onHover={setHoveredAtom}
                 onSelect={setSelectedAtoms}
               />
             )}
@@ -1022,9 +1033,6 @@ export default function App() {
             </EffectComposer>
             </XR>
           </Canvas>
-
-          {/* FPS / drop counter — toggled via store.showStats or ?stats=1 */}
-          <PlaybackHUD />
 
           {/* Scale bar for publication figures */}
           {file && currentFrame && showScaleBar && (
@@ -1115,16 +1123,14 @@ export default function App() {
             </div>
           )}
 
-          {/* Atom Inspector — pinned to a fixed corner instead of following the
-              cursor. Driven by the most recently selected atom; click the atom
-              to inspect, click empty space to dismiss. */}
-          {currentFrame && inspectedAtom !== null && (
+          {/* Atom Inspector Tooltip */}
+          {currentFrame && hoveredAtom !== null && (
             <div style={{
-              position: 'absolute',
-              left: 20,
-              bottom: 80,
+              position: 'fixed',
+              left: mousePos.x + 16,
+              top: mousePos.y + 16,
               zIndex: 300,
-              pointerEvents: 'auto',
+              pointerEvents: 'none',
               background: 'var(--bg-glass)',
               backdropFilter: 'blur(12px)',
               WebkitBackdropFilter: 'blur(12px)',
@@ -1135,23 +1141,22 @@ export default function App() {
               fontFamily: 'var(--font-mono)',
               color: 'var(--text-secondary)',
               boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
-              minWidth: 180,
-              maxWidth: 260,
+              minWidth: 160,
             }}>
               <div style={{ color: 'var(--accent)', fontWeight: 600, marginBottom: 4 }}>
-                {(() => { const spec = getElementSpec(currentFrame.types[inspectedAtom]); return `${spec.symbol} — ${spec.name}`; })()}
+                {(() => { const spec = getElementSpec(currentFrame.types[hoveredAtom]); return `${spec.symbol} — ${spec.name}`; })()}
               </div>
               <div style={{ color: 'var(--text-muted)' }}>
-                Atom #{currentFrame.ids?.[inspectedAtom] ?? inspectedAtom + 1} · {(() => { const spec = getElementSpec(currentFrame.types[inspectedAtom]); return `${spec.mass.toFixed(2)} u · ${spec.role}`; })()}
+                Atom #{currentFrame.ids?.[hoveredAtom] ?? hoveredAtom + 1} · {(() => { const spec = getElementSpec(currentFrame.types[hoveredAtom]); return `${spec.mass.toFixed(2)} u · ${spec.role}`; })()}
               </div>
               <div style={{ color: 'var(--text-dim)', marginTop: 4 }}>
-                x: {currentFrame.positions[inspectedAtom * 3].toFixed(2)}<br />
-                y: {currentFrame.positions[inspectedAtom * 3 + 1].toFixed(2)}<br />
-                z: {currentFrame.positions[inspectedAtom * 3 + 2].toFixed(2)}
+                x: {currentFrame.positions[hoveredAtom * 3].toFixed(2)}<br />
+                y: {currentFrame.positions[hoveredAtom * 3 + 1].toFixed(2)}<br />
+                z: {currentFrame.positions[hoveredAtom * 3 + 2].toFixed(2)}
               </div>
               {Array.from(currentFrame.properties?.entries() ?? []).slice(0, 3).map(([name, vals]) => (
                 <div key={name} style={{ color: 'var(--text-dim)', marginTop: 2 }}>
-                  {name}: {vals[inspectedAtom].toFixed(3)}
+                  {name}: {vals[hoveredAtom].toFixed(3)}
                 </div>
               ))}
             </div>
@@ -1230,8 +1235,7 @@ export default function App() {
             {!(file?.name?.startsWith('research_') || file?.sourceUrl?.includes('/research/')) && (
               <button
                 onClick={togglePlay}
-                disabled={totalFrames <= 1}
-                title={totalFrames <= 1 ? 'Trajectory has only 1 frame' : 'Play/Pause [Space]'}
+                title="Play/Pause [Space]"
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: 40, height: 32,
@@ -1239,8 +1243,7 @@ export default function App() {
                   border: `1px solid ${playing ? '#f59e0b' : '#334155'}`,
                   borderRadius: 0,
                   color: playing ? '#0a0a0c' : '#f8fafc',
-                  cursor: totalFrames <= 1 ? 'not-allowed' : 'pointer',
-                  opacity: totalFrames <= 1 ? 0.4 : 1,
+                  cursor: 'pointer',
                   transition: 'all 100ms ease-out',
                 }}
               >
@@ -1271,29 +1274,17 @@ export default function App() {
           />
 
           {/* Frame counter */}
-          <div
-            title={file?.trajectory.parseStride && file.trajectory.parseStride > 1
-              ? `Decimated at parse: showing every ${file.trajectory.parseStride}th frame of the source file's ${file.trajectory.sourceFrameCount} total.`
-              : undefined}
-            style={{
-              fontSize: '11px',
-              fontFamily: 'var(--font-mono)',
-              color: '#64748b',
-              minWidth: 90,
-              textAlign: 'right',
-              fontVariantNumeric: 'tabular-nums',
-            }}>
+          <div style={{
+            fontSize: '11px',
+            fontFamily: 'var(--font-mono)',
+            color: '#64748b',
+            minWidth: 90,
+            textAlign: 'right',
+            fontVariantNumeric: 'tabular-nums',
+          }}>
             <span style={{ color: '#f8fafc', fontWeight: 500 }}>{Math.floor(frame) + 1}</span>
             <span style={{ color: '#475569' }}> / {totalFrames}</span>
-            {file?.trajectory.parseStride && file.trajectory.parseStride > 1 && (
-              <span style={{ color: '#f59e0b', marginLeft: 4 }}>
-                · 1∶{file.trajectory.parseStride}
-              </span>
-            )}
           </div>
-
-          {/* Mode pill — shows the auto-chosen playback strategy */}
-          <PlaybackModePill />
 
           {/* Speed selector */}
           <div style={{ display: 'flex', gap: 4 }}>
@@ -1319,52 +1310,6 @@ export default function App() {
               </button>
             ))}
           </div>
-        </div>
-      )}
-
-      {/* AR Quick Look launch overlay — covers the seam between the 2D
-          viewer and iOS's AR Quick Look UI sliding in. */}
-      {isExportingQuickLook && (
-        <div
-          aria-busy="true"
-          aria-label="Preparing AR view"
-          style={{
-            position: 'fixed', inset: 0, zIndex: 1000,
-            background: 'rgba(6, 8, 13, 0.62)',
-            backdropFilter: 'blur(14px)',
-            WebkitBackdropFilter: 'blur(14px)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            animation: 'arQlFade 180ms ease-out',
-          }}
-        >
-          <div style={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
-            padding: '28px 36px',
-            background: 'var(--bg-elevated, rgba(20, 24, 32, 0.9))',
-            border: '1px solid var(--border-subtle, rgba(255,255,255,0.08))',
-            borderRadius: 'var(--radius-md, 12px)',
-            color: 'var(--text-primary, #e6ebf2)',
-            boxShadow: '0 18px 48px rgba(0,0,0,0.45)',
-            minWidth: 240,
-          }}>
-            <div style={{
-              width: 44, height: 44,
-              border: '3px solid rgba(255,255,255,0.14)',
-              borderTopColor: 'var(--accent, #00c8f0)',
-              borderRadius: '50%',
-              animation: 'arQlSpin 0.9s linear infinite',
-            }} />
-            <div style={{ fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>
-              Preparing AR view…
-            </div>
-            <div style={{ fontSize: 12, opacity: 0.62, textAlign: 'center', maxWidth: 220, lineHeight: 1.4 }}>
-              Building model for Apple AR Quick Look. This usually takes a moment.
-            </div>
-          </div>
-          <style>{`
-            @keyframes arQlFade { from { opacity: 0; } to { opacity: 1; } }
-            @keyframes arQlSpin { to { transform: rotate(360deg); } }
-          `}</style>
         </div>
       )}
     </div>
@@ -1440,49 +1385,6 @@ function CameraPresetButton({ label, active, onClick, title }: {
     >
       {label}
     </button>
-  );
-}
-
-function PlaybackModePill() {
-  const mode = useStore(s => s.playbackMode);
-  const stride = useStore(s => s.playbackStride);
-  const movieSync = useStore(s => s.movieSync);
-  const flythroughPreview = useStore(s => s.flythroughPreview);
-  const totalFrames = useStore(s => s.file?.trajectory.totalFrames ?? 0);
-  if (totalFrames <= 1) return null;
-
-  const driving = flythroughPreview && movieSync;
-  const label =
-    driving ? 'movie sync'
-    : mode === 'discrete' ? 'discrete'
-    : mode === 'decimated' ? `stride ${stride}`
-    : 'smooth';
-  const color = driving ? '#1edce0' : (mode === 'decimated' ? '#f59e0b' : '#64748b');
-
-  return (
-    <div
-      title={
-        driving
-          ? 'Flythrough is driving the trajectory frames (movie sync)'
-          : mode === 'discrete'
-          ? `${totalFrames} frames — fades between each stop for clarity`
-          : mode === 'decimated'
-          ? `Playing every ${stride}th frame so a long trajectory finishes in a reasonable wall-clock time. Drag the scrubber to land on any exact frame.`
-          : `Smooth interpolated playback over ${totalFrames} frames`
-      }
-      style={{
-        padding: '4px 8px',
-        fontSize: 9,
-        fontFamily: 'var(--font-mono)',
-        textTransform: 'uppercase',
-        letterSpacing: '0.08em',
-        color,
-        background: '#0d1117',
-        border: `1px solid ${color === '#64748b' ? '#334155' : color}`,
-        borderRadius: 0,
-        whiteSpace: 'nowrap',
-      }}
-    >{label}</div>
   );
 }
 

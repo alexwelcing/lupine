@@ -1,26 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { Suspense } from 'react';
 
-// Mozilla's WebXR Viewer iOS app polyfills navigator.xr but its shim throws
-// "We don't expect user adds event before stating session" if anything calls
-// addEventListener before a session is started. @react-three/xr's
-// createXRStore() does exactly that on init, which crashes the whole app.
-// Wrap addEventListener so the shim's throw is swallowed without breaking
-// real WebXR runtimes.
-{
-  const xr = (navigator as any).xr;
-  if (xr && typeof xr.addEventListener === 'function') {
-    const original = xr.addEventListener.bind(xr);
-    xr.addEventListener = (...args: unknown[]) => {
-      try {
-        return original(...args);
-      } catch (err) {
-        console.warn('[glim] navigator.xr.addEventListener threw (likely WebXR Viewer shim); ignoring.', err);
-      }
-    };
-  }
-}
-
 // Step-by-step test to find what's crashing
 console.log('[glim] Step 1: imports starting');
 

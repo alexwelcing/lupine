@@ -38,12 +38,6 @@ export interface FlythroughKeyframe {
   holdDuration: number;
   /** Optional label for UI display */
   label: string;
-  /**
-   * Optional trajectory frame index pinned to this keyframe. When two adjacent
-   * keyframes both have anchors, movie sync interpolates frames between them
-   * (so "Stop 1 = frame 0, Stop 3 = frame 50" plays as a directed shot).
-   */
-  frameAnchor?: number;
 }
 
 /** Full flythrough sequence */
@@ -274,7 +268,6 @@ export function encodeFlythrough(seq: FlythroughSequence): string {
       d: r1(kf.transitionDuration),
       e: EASING_CODES[kf.easing],
       h: kf.holdDuration > 0 ? r1(kf.holdDuration) : undefined,
-      a: typeof kf.frameAnchor === 'number' ? Math.round(kf.frameAnchor) : undefined,
     })),
   };
 
@@ -300,7 +293,6 @@ export function decodeFlythrough(encoded: string): FlythroughSequence | null {
         easing: CODE_TO_EASING[k.e] ?? 'ease-in-out',
         holdDuration: k.h ?? 0,
         label: `Stop ${i + 1}`,
-        frameAnchor: typeof k.a === 'number' ? k.a : undefined,
       })),
     };
   } catch {
