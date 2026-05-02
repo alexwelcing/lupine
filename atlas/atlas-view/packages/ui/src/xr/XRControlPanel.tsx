@@ -57,6 +57,8 @@ function FrameReadout({ position }: { position: [number, number, number] }) {
 }
 
 export function XRControlPanel() {
+  const file = useStore(s => s.file);
+  
   // Playback
   const playing = useStore(s => s.playing);
   const togglePlay = useStore(s => s.togglePlay);
@@ -82,6 +84,8 @@ export function XRControlPanel() {
   // Coloring
   const colorMode = useStore(s => s.colorMode);
   const setColorMode = useStore(s => s.setColorMode);
+  const colorProperty = useStore(s => s.colorProperty);
+  const setColorProperty = useStore(s => s.setColorProperty);
   const colormap = useStore(s => s.colormap);
   const setColormap = useStore(s => s.setColormap);
   const colorblindMode = useStore(s => s.colorblindMode);
@@ -109,6 +113,14 @@ export function XRControlPanel() {
   const cycleMaterial = () => {
     const idx = materials.indexOf(materialPreset);
     setMaterialPreset(materials[(idx + 1) % materials.length]);
+  };
+
+  const availableProperties = file?.trajectory.frames[0]?.properties ? Object.keys(file.trajectory.frames[0].properties) : [];
+  const cycleProperty = () => {
+    if (availableProperties.length === 0) return;
+    setColorMode('property');
+    const currentIdx = colorProperty ? availableProperties.indexOf(colorProperty) : -1;
+    setColorProperty(availableProperties[(currentIdx + 1) % availableProperties.length]);
   };
 
   return (
@@ -163,10 +175,17 @@ export function XRControlPanel() {
           
           <group position={[0, -0.13, 0]}>
             <XRButton width={0.10} position={[-0.055, 0, 0]} label="By Type" onClick={() => setColorMode('type')} active={colorMode === 'type'} />
-            <XRButton width={0.10} position={[0.055, 0, 0]} label="By Prop" onClick={() => setColorMode('property')} active={colorMode === 'property'} />
+            <XRButton width={0.10} position={[0.055, 0, 0]} label="By Prop" onClick={cycleProperty} active={colorMode === 'property'} />
           </group>
-
-          <XRButton position={[0, -0.23, 0]} label={`Colormap: ${colormap}`} onClick={cycleColormap} />
+          
+          {colorMode === 'property' && colorProperty ? (
+            <group position={[0, -0.23, 0]}>
+              <XRButton width={0.10} position={[-0.055, 0, 0]} label={colorProperty.substring(0, 8)} onClick={cycleProperty} active={true} activeColor="#4a90e2" />
+              <XRButton width={0.10} position={[0.055, 0, 0]} label={colormap} onClick={cycleColormap} />
+            </group>
+          ) : (
+            <XRButton position={[0, -0.23, 0]} label={`Colormap: ${colormap}`} onClick={cycleColormap} />
+          )}
         </group>
 
         {/* COLUMN 3: STRUCTURE & TOOLS (X = 0.28) */}
