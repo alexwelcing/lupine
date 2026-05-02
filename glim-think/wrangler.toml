@@ -5,9 +5,11 @@ compatibility_flags = ["nodejs_compat"]
 
 # ─── Scheduled triggers ───
 # Hourly lab broadcast, nightly fleet sweep at 07:00 UTC (~midnight US Pacific),
-# and weekly critique drain at 09:00 UTC Monday (~02:00 Pacific).
+# weekly critique drain at 09:00 UTC Monday (~02:00 Pacific), and a 5-minute
+# observability smoketest that pings /health, /broadcasts/trigger, /feed and
+# alerts on regression (Phase A).
 [triggers]
-crons = ["0 * * * *", "0 7 * * *", "0 9 * * MON"]
+crons = ["0 * * * *", "0 7 * * *", "0 9 * * MON", "*/5 * * * *"]
 
 # ─── Durable Objects: Think-based research agents ───
 

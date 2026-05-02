@@ -112,6 +112,18 @@ function LiveLabComponent() {
   const diary = diaryQuery.data
   const latestBroadcast = latestBroadcastQuery.data || broadcastData?.broadcasts?.[0]
   const broadcasts = broadcastData?.broadcasts || (latestBroadcast ? [latestBroadcast] : [])
+
+  // Phase A — surface degraded backend state. Any of the six queries
+  // failing is a strong signal that the worker is unhealthy or a
+  // section's data path is broken; show a banner instead of silently
+  // rendering empty cards.
+  const failedSections = [
+    swarmQuery.error && 'swarm',
+    experimentsQuery.error && 'experiments',
+    diaryQuery.error && 'diary',
+    metricsQuery.error && 'metrics',
+    latestBroadcastQuery.error && 'broadcast',
+  ].filter(Boolean) as string[]
   const broadcastMetrics = latestBroadcast?.metrics
   // Synthesized "data" object so existing `data.swarm_status` reads
   // below keep working without rewriting the JSX.
@@ -123,6 +135,14 @@ function LiveLabComponent() {
       title="The Lab at Work"
       subtitle="A public operating room for GLIM-THINK: hourly progress reports, research diary output, experiment queues, and the agent fleet that turns benchmark evidence into claims."
     >
+      {failedSections.length > 0 && (
+        <div className="mb-6 border border-[var(--error)] bg-[var(--error)]/10 px-4 py-3 text-sm">
+          <span className="mono-label text-[var(--error)] mr-2">DEGRADED</span>
+          <span className="text-[var(--on-surface-variant)]">
+            Backend is degraded — failed sections: {failedSections.join(', ')}. Showing last-known values where available.
+          </span>
+        </div>
+      )}
       <section className="mb-8 overflow-hidden border border-[var(--outline-variant)] bg-[linear-gradient(135deg,rgba(0,251,251,0.10),rgba(235,178,255,0.06)_44%,rgba(212,168,67,0.10))]">
         <div className="grid grid-cols-1 xl:grid-cols-12">
           <div className="xl:col-span-8 p-6 md:p-8 lg:p-10">

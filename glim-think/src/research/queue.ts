@@ -25,6 +25,7 @@
 
 import type { Env } from "../types";
 import { createLabBroadcast } from "../scheduled";
+import { evaluateHypothesis } from "./evaluate";
 
 export type ResearchTaskKind = "round" | "literature" | "evaluate" | "broadcast";
 
@@ -229,13 +230,7 @@ async function runTask(env: Env, task: ResearchTask & { job_id?: string }): Prom
   }
 
   if (task.kind === "evaluate") {
-    // Placeholder: real hypothesis evaluation lives in lupine-distill (Rust).
-    // For now we just mark this hypothesis as 'testing' to surface intent.
-    await env.LEDGER.prepare(
-      `UPDATE hypotheses SET status = 'testing', updated_at = ?1 WHERE id = ?2`,
-    )
-      .bind(new Date().toISOString(), task.hypothesis_id)
-      .run();
+    await evaluateHypothesis(env, task.hypothesis_id);
     return;
   }
 
