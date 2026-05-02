@@ -111,6 +111,10 @@ export interface AppState {
   // ─── Anomalies ───
   anomalyTracking: boolean;
 
+  // ─── Streaming (Two-Phase Loading) ───
+  streamingProgress: number;
+  isStreamingFrames: boolean;
+  fullTrajectoryReady: boolean;
   // ─── Export Pipeline ───
   exportRequest: ExportRequest;
   triggerExport: (req: Partial<ExportRequest>) => void;
@@ -183,6 +187,11 @@ export interface AppState {
   encodeToURL: () => string;
   decodeFromURL: (params: string) => void;
   applyVisualProfile: (profileId: 'publication' | 'neon' | 'cinematic' | 'raw') => void;
+
+  // ─── Streaming Actions ───
+  appendFrames: (frames: Frame[]) => void;
+  setStreamingProgress: (p: number) => void;
+  setFullTrajectoryReady: (ready: boolean) => void;
 }
 
 const DEFAULTS = {
@@ -243,6 +252,10 @@ const DEFAULTS = {
   flythrough: null as FlythroughSequence | null,
   flythroughPreview: false,
   flythroughTime: 0,
+  // ─── Streaming (Two-Phase Loading) ───
+  streamingProgress: 0,
+  isStreamingFrames: false,
+  fullTrajectoryReady: true,
 };
 
 export const useStore = create<AppState>()(
@@ -595,5 +608,24 @@ export const useStore = create<AppState>()(
         console.warn('Failed to decode URL state');
       }
     },
+
+    // ─── Streaming Actions ───
+    appendFrames: (frames: Frame[]) => set(state => {
+      if (!state.file) return state;
+      const existing = state.file.trajectory.frames;
+      const merged = [...existing, ...frames];
+      return {
+        file: {
+          ...state.file,
+          trajectory: {
+            ...state.file.trajectory,
+            frames: merged,
+            totalFrames: merged.length,
+          },
+        },
+      };
+    }),
+    setStreamingProgress: (p: number) => set(() => ({ streamingProgress: p })),
+    setFullTrajectoryReady: (ready: boolean) => set(() => ({ fullTrajectoryReady: ready, isStreamingFrames: !ready })),
   }))
 );

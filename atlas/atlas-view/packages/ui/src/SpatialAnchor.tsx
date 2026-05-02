@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useXR } from '@react-three/xr';
-import { PivotControls } from '@react-three/drei';
+import { XRMoleculeInteraction } from './xr/XRMoleculeInteraction';
 
 interface SpatialAnchorProps {
   children: React.ReactNode;
@@ -20,18 +20,11 @@ export function SpatialAnchor({ children, cameraDistance = 50 }: SpatialAnchorPr
   const scale = isImmersive ? Math.max(0.01, 1.0 / (cameraDistance / 1.4)) : 1;
 
   const innerContent = isImmersive ? (
-    <PivotControls
-      visible={true}
-      scale={0.5}
-      anchor={[0, 0, 0]}
-      depthTest={false}
-      lineWidth={4}
-      axisColors={['#ff4b4b', '#20c20e', '#3a78ff']}
-    >
+    <XRMoleculeInteraction>
       <group scale={scale}>
         {children}
       </group>
-    </PivotControls>
+    </XRMoleculeInteraction>
   ) : (
     <>{children}</>
   );

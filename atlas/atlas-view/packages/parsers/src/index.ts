@@ -311,3 +311,68 @@ export async function parseFile(file: File): Promise<{
 
   throw new Error(`Unsupported file type: ${file.name}`);
 }
+
+/**
+ * Two-Phase Loading — Phase 1: Parse rest frame
+ * 
+ * Sends the file to the worker, waits for the full parse,
+ * but returns ONLY frame 0 immediately. The full frame array
+ * is cached internally for Phase 2 streaming.
+ */
+let _cachedFullParse: { file: File; trajectory: Trajectory } | null = null;
+
+export async function parseDumpFileRest(file: File): Promise<{
+  restFrame: Frame;
+  totalFrames: number;
+  atomTypes: number[];
+  globalBounds: { min: [number, number, number]; max: [number, number, number] };
+}> {
+  const trajectory = await parseDumpFile(file);
+  // Cache for Phase 2
+  _cachedFullParse = { file, trajectory };
+
+  return {
+    restFrame: trajectory.frames[0],
+    totalFrames: trajectory.totalFrames,
+    atomTypes: trajectory.atomTypes,
+    globalBounds: trajectory.globalBounds as { min: [number, number, number]; max: [number, number, number] },
+  };
+}
+
+/**
+ * Two-Phase Loading — Phase 2: Stream remaining frames
+ * 
+ * Uses the cached full parse from Phase 1 to deliver remaining
+ * frames in chunks via the onChunk callback. Each chunk is yielded
+ * via microtask to avoid blocking the main thread.
+ */
+export async function streamDumpFrames(
+  _restFrame: Frame,
+  onChunk: (frames: Frame[], progress: number) => void,
+): Promise<void> {
+  if (!_cachedFullParse) {
+    throw new Error('streamDumpFrames called before parseDumpFileRest');
+  }
+
+  const { trajectory } = _cachedFullParse;
+  const allFrames = trajectory.frames;
+  const total = allFrames.length;
+
+  if (total <= 1) {
+    onChunk([], 1);
+    return;
+  }
+
+  // Deliver remaining frames in chunks of ~10 to avoid blocking
+  const CHUNK_SIZE = 10;
+  for (let i = 1; i < total; i += CHUNK_SIZE) {
+    const chunk = allFrames.slice(i, Math.min(i + CHUNK_SIZE, total));
+    const progress = Math.min(i + CHUNK_SIZE, total) / total;
+    onChunk(chunk, progress);
+    // Yield to main thread between chunks
+    await new Promise(r => setTimeout(r, 0));
+  }
+
+  // Release cache
+  _cachedFullParse = null;
+}

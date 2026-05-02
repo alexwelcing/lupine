@@ -67,14 +67,15 @@ export function useSmoothFramePlayback(
     onStats,
   } = options;
 
-  // Playback state
-  const [currentState, setCurrentState] = useState<InterpolatedFrameState>({
+  // Playback state — use ref for hot path, state only for UI sync
+  const stateRef = useRef<InterpolatedFrameState>({
     frameIndex: 0,
     nextFrameIndex: 1,
     interpolationFactor: 0,
     isInterpolating: false,
     effectiveFrame: 0,
   });
+  const [currentState, setCurrentState] = useState<InterpolatedFrameState>(stateRef.current);
 
   // RAF refs
   const rafIdRef = useRef<number | undefined>(undefined);
@@ -85,6 +86,8 @@ export function useSmoothFramePlayback(
   const frameCountRef = useRef(0);
   const lastStatsTimeRef = useRef(0);
   const totalInterpolationTimeRef = useRef(0);
+  // PERF: Throttle React state sync to ~15fps to avoid 120 re-renders/sec
+  const lastUISyncRef = useRef(0);
 
   // Frame timing based on MD data
   // Assume frames are evenly spaced in simulation time
@@ -105,38 +108,42 @@ export function useSmoothFramePlayback(
     if (effectiveDeltaFrames > 0) {
       const start = performance.now();
 
-      setCurrentState(prev => {
-        let newEffectiveFrame = prev.effectiveFrame + effectiveDeltaFrames;
-        const totalFrames = frames.length;
+      // PERF: Update ref directly — no React setState in the hot loop
+      const prev = stateRef.current;
+      let newEffectiveFrame = prev.effectiveFrame + effectiveDeltaFrames;
+      const totalFrames = frames.length;
 
-        // Handle loop modes
-        if (newEffectiveFrame >= totalFrames - 1) {
-          if (loopMode === 'loop') {
-            newEffectiveFrame = newEffectiveFrame % (totalFrames - 1);
-          } else if (loopMode === 'bounce') {
-            // Bounce back (not implemented for simplicity)
-            newEffectiveFrame = totalFrames - 1;
-          } else {
-            // once: stop at end
-            newEffectiveFrame = totalFrames - 1;
-          }
+      // Handle loop modes
+      if (newEffectiveFrame >= totalFrames - 1) {
+        if (loopMode === 'loop') {
+          newEffectiveFrame = newEffectiveFrame % (totalFrames - 1);
+        } else if (loopMode === 'bounce') {
+          newEffectiveFrame = totalFrames - 1;
+        } else {
+          newEffectiveFrame = totalFrames - 1;
         }
+      }
 
-        const frameIndex = Math.floor(newEffectiveFrame);
-        const interpolationFactor = newEffectiveFrame - frameIndex;
-        const nextFrameIndex = Math.min(frameIndex + 1, totalFrames - 1);
+      const frameIndex = Math.floor(newEffectiveFrame);
+      const interpolationFactor = newEffectiveFrame - frameIndex;
+      const nextFrameIndex = Math.min(frameIndex + 1, totalFrames - 1);
 
-        const state: InterpolatedFrameState = {
-          frameIndex,
-          nextFrameIndex,
-          interpolationFactor,
-          isInterpolating: interpolationFactor > 0 && interpolationFactor < 1,
-          effectiveFrame: newEffectiveFrame,
-        };
+      const state: InterpolatedFrameState = {
+        frameIndex,
+        nextFrameIndex,
+        interpolationFactor,
+        isInterpolating: interpolationFactor > 0 && interpolationFactor < 1,
+        effectiveFrame: newEffectiveFrame,
+      };
 
-        onFrame(state);
-        return state;
-      });
+      stateRef.current = state;
+      onFrame(state);
+
+      // PERF: Only sync React state at ~15fps for UI display (frame counter, etc.)
+      if (time - lastUISyncRef.current > 66) {
+        setCurrentState(state);
+        lastUISyncRef.current = time;
+      }
 
       totalInterpolationTimeRef.current += performance.now() - start;
       frameCountRef.current++;
@@ -192,39 +199,40 @@ export function useSmoothFramePlayback(
       isInterpolating: isInterp,
       effectiveFrame: clamped,
     };
+    stateRef.current = state;
     setCurrentState(state);
     onFrame(state);
   }, [frames.length, onFrame]);
 
   const nextFrame = useCallback(() => {
-    setCurrentState(prev => {
-      const newIndex = Math.min(prev.frameIndex + 1, frames.length - 1);
-      const state: InterpolatedFrameState = {
-        frameIndex: newIndex,
-        nextFrameIndex: Math.min(newIndex + 1, frames.length - 1),
-        interpolationFactor: 0,
-        isInterpolating: false,
-        effectiveFrame: newIndex,
-      };
-      onFrame(state);
-      return state;
-    });
+    const prev = stateRef.current;
+    const newIndex = Math.min(prev.frameIndex + 1, frames.length - 1);
+    const state: InterpolatedFrameState = {
+      frameIndex: newIndex,
+      nextFrameIndex: Math.min(newIndex + 1, frames.length - 1),
+      interpolationFactor: 0,
+      isInterpolating: false,
+      effectiveFrame: newIndex,
+    };
+    stateRef.current = state;
+    setCurrentState(state);
+    onFrame(state);
   }, [frames.length, onFrame]);
 
   const prevFrame = useCallback(() => {
-    setCurrentState(prev => {
-      const newIndex = Math.max(prev.frameIndex - 1, 0);
-      const state: InterpolatedFrameState = {
-        frameIndex: newIndex,
-        nextFrameIndex: Math.min(newIndex + 1, frames.length - 1),
-        interpolationFactor: 0,
-        isInterpolating: false,
-        effectiveFrame: newIndex,
-      };
-      onFrame(state);
-      return state;
-    });
-  }, [onFrame]);
+    const prev = stateRef.current;
+    const newIndex = Math.max(prev.frameIndex - 1, 0);
+    const state: InterpolatedFrameState = {
+      frameIndex: newIndex,
+      nextFrameIndex: Math.min(newIndex + 1, frames.length - 1),
+      interpolationFactor: 0,
+      isInterpolating: false,
+      effectiveFrame: newIndex,
+    };
+    stateRef.current = state;
+    setCurrentState(state);
+    onFrame(state);
+  }, [frames.length, onFrame]);
 
   return {
     currentState,

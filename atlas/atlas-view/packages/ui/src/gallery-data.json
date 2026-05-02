@@ -37,7 +37,7 @@
       "method": "Procedural Math Sculpture",
       "potential": "Brand Identity Architecture",
       "temperature": "0 K",
-      "reference": "Lupine Materials Science \u2014 lupine.science"
+      "reference": "Lupine Materials Science — lupine.science"
     },
     "featured": true
   },
@@ -59,7 +59,7 @@
       "method": "Ab Initio Assembly",
       "potential": "Lennard-Jones",
       "temperature": "0 K",
-      "reference": "Lupine Materials Science \u2014 lupine.science"
+      "reference": "Lupine Materials Science — lupine.science"
     },
     "featured": true
   },
@@ -69,7 +69,7 @@
     "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 49.0%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "864",
-    "frames": "8",
+    "frames": "74",
     "file": "gallery/research/research_al_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -81,7 +81,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -92,7 +92,7 @@
     "subtitle": "NIST evaluation of 9 interatomic potentials. Max error: 83.1%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "864",
-    "frames": "9",
+    "frames": "58",
     "file": "gallery/research/research_cu_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -104,7 +104,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "9 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -115,7 +115,7 @@
     "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 140.0%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "864",
-    "frames": "8",
+    "frames": "23",
     "file": "gallery/research/research_au_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -127,7 +127,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -138,7 +138,7 @@
     "subtitle": "NIST evaluation of 5 interatomic potentials. Max error: 87.5%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "864",
-    "frames": "5",
+    "frames": "22",
     "file": "gallery/research/research_ag_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -150,7 +150,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "5 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -161,7 +161,7 @@
     "subtitle": "NIST evaluation of 8 interatomic potentials. Max error: 18.7%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "864",
-    "frames": "8",
+    "frames": "68",
     "file": "gallery/research/research_ni_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -173,7 +173,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -184,7 +184,7 @@
     "subtitle": "NIST evaluation of 11 interatomic potentials. Max error: 123.8%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "1024",
-    "frames": "11",
+    "frames": "55",
     "file": "gallery/research/research_fe_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -196,7 +196,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "11 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -207,7 +207,7 @@
     "subtitle": "NIST evaluation of 1 interatomic potentials. Max error: 64.2%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "1024",
-    "frames": "1",
+    "frames": "18",
     "file": "gallery/research/research_cr_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -219,7 +219,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "1 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -230,7 +230,7 @@
     "subtitle": "NIST evaluation of 2 interatomic potentials. Max error: 8.8%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "1024",
-    "frames": "2",
+    "frames": "23",
     "file": "gallery/research/research_mo_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -242,7 +242,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "2 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -253,7 +253,7 @@
     "subtitle": "NIST evaluation of 7 interatomic potentials. Max error: 4.0%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "1024",
-    "frames": "7",
+    "frames": "26",
     "file": "gallery/research/research_w_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -265,7 +265,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "7 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -276,7 +276,7 @@
     "subtitle": "NIST evaluation of 3 interatomic potentials. Max error: 5.7%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "1024",
-    "frames": "3",
+    "frames": "15",
     "file": "gallery/research/research_v_benchmark.lammpstrj",
     "available": true,
     "colors": [
@@ -288,7 +288,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "3 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -319,10 +319,10 @@
   {
     "id": "dang_cu_dislocation",
     "title": "FCC Cu Dislocation-GB Tracking",
-    "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation\u2013grain-boundary interactions matrix",
+    "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation–grain-boundary interactions matrix",
     "domain": "Advanced Theory & Validation",
     "atoms": "Variable",
-    "frames": "100+",
+    "frames": "1",
     "file": "archive/DisGB_data.lammpstrj",
     "available": true,
     "colors": [
@@ -346,7 +346,7 @@
     "subtitle": "Enze Chen et al. (Nat Commun 2024): Automated phase discovery using GRIP",
     "domain": "Advanced Theory & Validation",
     "atoms": "Variable",
-    "frames": "Multi-phase",
+    "frames": "1",
     "file": "archive/GRIP_snapshot.lammpstrj",
     "available": true,
     "colors": [
@@ -370,7 +370,7 @@
     "subtitle": "Vivek Devulapalli et al. (Science 2024): SGC MD/MC thermodynamic excess mapping",
     "domain": "Advanced Theory & Validation",
     "atoms": "Variable",
-    "frames": "Phase Transition",
+    "frames": "1",
     "file": "archive/MDMC-SGC.lammpstrj",
     "available": true,
     "colors": [
@@ -394,7 +394,7 @@
     "subtitle": "W. Curtin et al. (Nature 2023): Edge dislocation mobility in CoCrFeMnNi High-Entropy Alloy using MLIP.",
     "domain": "Metals & Alloys",
     "atoms": "2,500,000",
-    "frames": "250",
+    "frames": "1",
     "file": "archive/curtin_hea_dislocation.lammpstrj",
     "available": true,
     "colors": [
@@ -418,7 +418,7 @@
     "subtitle": "G. Ceder et al. (Nature Materials 2024): Correlated Li-ion diffusion pathways in garnet-type solid electrolytes.",
     "domain": "Energy Materials",
     "atoms": "12,000",
-    "frames": "500",
+    "frames": "1",
     "file": "archive/llzo_diffusion.lammpstrj",
     "available": true,
     "colors": [
@@ -466,7 +466,7 @@
     "subtitle": "A.E. Sand et al. (PRL 2022): Primary radiation damage and defect clustering in plasma-facing materials.",
     "domain": "Defects & Mechanics",
     "atoms": "4,000,000",
-    "frames": "100",
+    "frames": "1",
     "file": "archive/w_cascade_150keV.lammpstrj",
     "available": true,
     "colors": [
@@ -490,7 +490,7 @@
     "subtitle": "S.R. Elliott et al. (Nature Comms 2024): Ultrafast nucleation in Ge2Sb2Te5 memory materials.",
     "domain": "Ceramics & Oxides",
     "atoms": "32,000",
-    "frames": "300",
+    "frames": "1",
     "file": "archive/gst_crystallization.lammpstrj",
     "available": true,
     "colors": [
@@ -613,11 +613,11 @@
   },
   {
     "id": "cuzr_melt",
-    "title": "Cu\u2086\u2084Zr\u2083\u2086 Metallic Glass",
+    "title": "Cu₆₄Zr₃₆ Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
     "domain": "Metals & Alloys",
     "atoms": "5,000",
-    "frames": "100",
+    "frames": "20",
     "file": "dump.CuZr_melt.lammpstrj",
     "available": true,
     "colors": [
@@ -637,10 +637,10 @@
   {
     "id": "al_polycrystal",
     "title": "Al Polycrystal (Voronoi)",
-    "subtitle": "Grain boundary structure in FCC aluminum with \u03a35 misorientation",
+    "subtitle": "Grain boundary structure in FCC aluminum with Σ5 misorientation",
     "domain": "Metals & Alloys",
     "atoms": "32,000",
-    "frames": "50",
+    "frames": "1",
     "file": "gallery/al_polycrystal_32k.lammpstrj",
     "available": true,
     "colors": [
@@ -660,10 +660,10 @@
   {
     "id": "ni_superalloy",
     "title": "Ni-Based Superalloy",
-    "subtitle": "\u03b3/\u03b3\u2032 microstructure with cuboidal precipitates",
+    "subtitle": "γ/γ′ microstructure with cuboidal precipitates",
     "domain": "Metals & Alloys",
     "atoms": "108,000",
-    "frames": "1",
+    "frames": "12",
     "file": "gallery/ni_superalloy_gamma_prime_8k.lammpstrj",
     "available": true,
     "colors": [
@@ -684,7 +684,7 @@
     "subtitle": "Basal slip and twinning under uniaxial tension",
     "domain": "Metals & Alloys",
     "atoms": "24,000",
-    "frames": "200",
+    "frames": "6",
     "file": "gallery/ti_hcp_tension_13k.lammpstrj",
     "available": true,
     "colors": [
@@ -707,7 +707,7 @@
     "subtitle": "Dynamic crack propagation with elastic-plastic zone",
     "domain": "Defects & Mechanics",
     "atoms": "1,800",
-    "frames": "100",
+    "frames": "15",
     "file": "dump.crack2d.lammpstrj",
     "available": true,
     "colors": [
@@ -725,7 +725,7 @@
   {
     "id": "dislocation_cu",
     "title": "Cu Edge Dislocation",
-    "subtitle": "1/2\u27e8110\u27e9 dislocation on (111) plane with stacking fault",
+    "subtitle": "1/2⟨110⟩ dislocation on (111) plane with stacking fault",
     "domain": "Defects & Mechanics",
     "atoms": "28,800",
     "frames": "1",
@@ -748,7 +748,7 @@
     "subtitle": "Spherical indenter penetration with dislocation nucleation",
     "domain": "Defects & Mechanics",
     "atoms": "256,000",
-    "frames": "150",
+    "frames": "1",
     "file": "gallery/al_nanoindent_256k.lammpstrj",
     "available": true,
     "colors": [
@@ -769,7 +769,7 @@
     "subtitle": "Ductile failure under triaxial tension",
     "domain": "Defects & Mechanics",
     "atoms": "64,000",
-    "frames": "100",
+    "frames": "1",
     "file": "gallery/cu_void_growth_64k.lammpstrj",
     "available": true,
     "colors": [
@@ -790,7 +790,7 @@
     "subtitle": "Multi-element open dataset (Ni-Co-Cr-Fe-Mn) showing composition gradients",
     "domain": "Nanomaterials",
     "atoms": "85,000+",
-    "frames": "Multi-frame",
+    "frames": "100",
     "file": "advanced_samples/dump.multielement_nanoparticle.lammpstrj",
     "available": true,
     "colors": [
@@ -812,7 +812,7 @@
     "subtitle": "Mechanics of a SWCNT structural failure under extreme load",
     "domain": "Nanomaterials",
     "atoms": "12,000",
-    "frames": "Multi-frame",
+    "frames": "1",
     "file": "advanced_samples/dump.bondstrength_nanotube.lammpstrj",
     "available": true,
     "colors": [
@@ -876,7 +876,7 @@
     "subtitle": "Size-dependent melting of Au147 (Mackay icosahedron)",
     "domain": "Nanomaterials",
     "atoms": "147",
-    "frames": "200",
+    "frames": "1",
     "file": "gallery/au147_melt.lammpstrj",
     "available": true,
     "colors": [
@@ -893,11 +893,11 @@
   },
   {
     "id": "mos2_sheet",
-    "title": "MoS\u2082 Monolayer",
+    "title": "MoS₂ Monolayer",
     "subtitle": "2D semiconductor with puckered structure",
     "domain": "Nanomaterials",
     "atoms": "24,000",
-    "frames": "50",
+    "frames": "1",
     "file": "gallery/mos2_monolayer_24k.lammpstrj",
     "available": true,
     "colors": [
@@ -914,11 +914,11 @@
   },
   {
     "id": "sio2_glass",
-    "title": "SiO\u2082 Amorphous Silica",
+    "title": "SiO₂ Amorphous Silica",
     "subtitle": "Vitreous silica with tetrahedral network structure",
     "domain": "Ceramics & Oxides",
     "atoms": "24,000",
-    "frames": "100",
+    "frames": "1",
     "file": "gallery/sio2_glass_24k.lammpstrj",
     "available": true,
     "colors": [
@@ -928,7 +928,7 @@
     ],
     "metadata": {
       "method": "Melt-quench with Vashishta potential",
-      "potential": "Vashishta (SiO\u2082)",
+      "potential": "Vashishta (SiO₂)",
       "temperature": "300-4000 K",
       "reference": "Continuous random network"
     },
@@ -936,7 +936,7 @@
   },
   {
     "id": "al2o3_sapphire",
-    "title": "\u03b1-Al\u2082O\u2083 (Sapphire)",
+    "title": "α-Al₂O₃ (Sapphire)",
     "subtitle": "Corundum structure with basal plane surface",
     "domain": "Ceramics & Oxides",
     "atoms": "18,000",
@@ -956,11 +956,11 @@
   },
   {
     "id": "zro2_tetragonal",
-    "title": "ZrO\u2082 Tetragonal",
+    "title": "ZrO₂ Tetragonal",
     "subtitle": "Yttria-stabilized zirconia (YSZ) with oxygen vacancies",
     "domain": "Ceramics & Oxides",
     "atoms": "32,768",
-    "frames": "50",
+    "frames": "1",
     "file": "gallery/zro2_ysz_32k.lammpstrj",
     "available": true,
     "colors": [
@@ -972,16 +972,16 @@
       "method": "Oxide MD",
       "potential": "Buckingham",
       "temperature": "1200 K",
-      "reference": "8% Y\u2082O\u2083 stabilized"
+      "reference": "8% Y₂O₃ stabilized"
     }
   },
   {
     "id": "pe_chain",
     "title": "Polyethylene Chain",
-    "subtitle": "Single C\u2081\u2080\u2080\u2080H\u2082\u2080\u2080\u2082 chain with united-atom model",
+    "subtitle": "Single C₁₀₀₀H₂₀₀₂ chain with united-atom model",
     "domain": "Polymers & Soft Matter",
     "atoms": "3,000",
-    "frames": "200",
+    "frames": "1",
     "file": "gallery/pe_chain_3k.lammpstrj",
     "available": true,
     "colors": [
@@ -1004,7 +1004,7 @@
     "subtitle": "Orthorhombic crystal with chain folding",
     "domain": "Polymers & Soft Matter",
     "atoms": "12,000",
-    "frames": "50",
+    "frames": "1",
     "file": "gallery/pe_crystal_12k.lammpstrj",
     "available": true,
     "colors": [
@@ -1025,7 +1025,7 @@
     "subtitle": "Dendrite nucleation at electrode-electrolyte interface",
     "domain": "Energy Materials",
     "atoms": "16,384",
-    "frames": "150",
+    "frames": "1",
     "file": "gallery/li_dendrite_16k.lammpstrj",
     "available": true,
     "colors": [
@@ -1043,10 +1043,10 @@
   {
     "id": "sulfur_cathode",
     "title": "Li-S Cathode",
-    "subtitle": "Sulfur nanoparticle with Li\u2082S coating",
+    "subtitle": "Sulfur nanoparticle with Li₂S coating",
     "domain": "Energy Materials",
     "atoms": "8,000",
-    "frames": "100",
+    "frames": "1",
     "file": "gallery/li_s_cathode_8k.lammpstrj",
     "available": true,
     "colors": [
@@ -1067,7 +1067,7 @@
     "subtitle": "Equilibrated water box with H-bond network",
     "domain": "Biomolecules",
     "atoms": "12,000",
-    "frames": "100",
+    "frames": "1",
     "file": "gallery/water_tip4p_12k.lammpstrj",
     "available": true,
     "colors": [
@@ -1079,7 +1079,7 @@
       "method": "Liquid MD",
       "potential": "TIP4P/2005",
       "temperature": "300 K",
-      "density": "0.997 g/cm\u00b3",
+      "density": "0.997 g/cm³",
       "reference": "Standard water model"
     }
   },
@@ -1089,7 +1089,7 @@
     "subtitle": "Ace-Ala-Nme with CHARMM potential",
     "domain": "Biomolecules",
     "atoms": "66",
-    "frames": "1000",
+    "frames": "1",
     "file": "gallery/ala_dipeptide.lammpstrj",
     "available": true,
     "colors": [
@@ -2993,7 +2993,7 @@
     "subtitle": "Argon-like system near triple point",
     "domain": "Methods",
     "atoms": "32,768",
-    "frames": "100",
+    "frames": "1",
     "file": "dump.lj_melt.lammpstrj",
     "available": true,
     "colors": [
@@ -3003,7 +3003,7 @@
     ],
     "metadata": {
       "method": "Benchmark MD",
-      "potential": "LJ (\u03c3=3.4\u00c5, \u03b5=0.238kcal)",
+      "potential": "LJ (σ=3.4Å, ε=0.238kcal)",
       "temperature": "85 K",
       "reference": "Standard benchmark system"
     }
@@ -3011,10 +3011,10 @@
   {
     "id": "fcc_perf",
     "title": "1M Atom FCC Benchmark",
-    "subtitle": "Performance test \u2014 pure copper crystal",
+    "subtitle": "Performance test — pure copper crystal",
     "domain": "Methods",
     "atoms": "1,000,000",
-    "frames": "10",
+    "frames": "1",
     "file": "scale_tests/dump.large_100k.lammpstrj",
     "available": true,
     "colors": [

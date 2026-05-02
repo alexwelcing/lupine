@@ -442,6 +442,64 @@ function AutoDepthOfField() {
   return null;
 }
 
+function PostProcessingEffects() {
+  const ssao = useStore(s => s.ssao);
+  const bloom = useStore(s => s.bloom);
+  const dof = useStore(s => s.dof);
+  const dofFocus = useStore(s => s.dofFocus);
+  const toneMapping = useStore(s => s.toneMapping);
+  const playing = useStore(s => s.playing);
+  const ssaoIntensity = useStore(s => s.ssaoIntensity);
+  const bloomIntensity = useStore(s => s.bloomIntensity);
+
+  const mode = useXR(state => state.mode);
+  const isImmersive = mode === 'immersive-ar' || mode === 'immersive-vr';
+
+  if (isImmersive) return null;
+
+  return (
+    <EffectComposer enableNormalPass={ssao} multisampling={playing ? 0 : 4}>
+      {ssao && (
+        <SSAO
+          radius={0.3}
+          intensity={ssaoIntensity * 70}
+          luminanceInfluence={0.5}
+          worldDistanceThreshold={100}
+          worldDistanceFalloff={5}
+          worldProximityThreshold={0.5}
+          worldProximityFalloff={0.3}
+        />
+      ) as any}
+      {bloom && (
+        <Bloom
+          intensity={bloomIntensity}
+          luminanceThreshold={0.7}
+          luminanceSmoothing={0.3}
+          mipmapBlur
+        />
+      ) as any}
+      {dof && (
+        <DepthOfField
+          focusDistance={dofFocus / 100}
+          focalLength={0.02}
+          bokehScale={2}
+          height={480}
+        />
+      ) as any}
+      {toneMapping !== 'none' && (
+        <ToneMapping
+          mode={toneMapping === 'aces' ? ToneMappingMode.ACES_FILMIC : ToneMappingMode.REINHARD}
+        />
+      )}
+      <Vignette
+        offset={0.35}
+        darkness={0.55}
+        blendFunction={BlendFunction.NORMAL}
+      />
+    </EffectComposer>
+  );
+}
+
 export default function App() {
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
   const file = useStore(s => s.file);
@@ -891,7 +949,7 @@ export default function App() {
               near: 0.1,
               far: cameraDistance * 10,
             }}
-            gl={{ antialias: true, preserveDrawingBuffer: true }}
+            gl={{ antialias: false, preserveDrawingBuffer: true, powerPreference: 'high-performance' }}
             style={{ background: 'transparent' }}
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
@@ -992,45 +1050,7 @@ export default function App() {
               </GizmoHelper>
             )}
 
-            <EffectComposer enableNormalPass={ssao} multisampling={4}>
-              {ssao && (
-                <SSAO
-                  radius={0.3}
-                  intensity={ssaoIntensity * 70}
-                  luminanceInfluence={0.5}
-                  worldDistanceThreshold={100}
-                  worldDistanceFalloff={5}
-                  worldProximityThreshold={0.5}
-                  worldProximityFalloff={0.3}
-                />
-              ) as any}
-              {bloom && (
-                <Bloom
-                  intensity={bloomIntensity}
-                  luminanceThreshold={0.7}
-                  luminanceSmoothing={0.3}
-                  mipmapBlur
-                />
-              ) as any}
-              {dof && (
-                <DepthOfField
-                  focusDistance={dofFocus / 100}
-                  focalLength={0.02}
-                  bokehScale={2}
-                  height={480}
-                />
-              ) as any}
-              {toneMapping !== 'none' && (
-                <ToneMapping
-                  mode={toneMapping === 'aces' ? ToneMappingMode.ACES_FILMIC : ToneMappingMode.REINHARD}
-                />
-              )}
-              <Vignette
-                offset={0.35}
-                darkness={0.55}
-                blendFunction={BlendFunction.NORMAL}
-              />
-            </EffectComposer>
+            <PostProcessingEffects />
             </XR>
           </Canvas>
 
@@ -1232,7 +1252,7 @@ export default function App() {
               title="Previous [←]"
               icon={<IconPrev />}
             />
-            {!(file?.name?.startsWith('research_') || file?.sourceUrl?.includes('/research/')) && (
+            {totalFrames > 1 && (
               <button
                 onClick={togglePlay}
                 title="Play/Pause [Space]"
