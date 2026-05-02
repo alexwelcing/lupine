@@ -144,6 +144,13 @@ export interface Env {
   GOOGLE_API_KEY?: string;
   ZAI_API_KEY?: string;
   MINIMAX_API_KEY?: string;
+  /** Override the MiniMax model used by deep-tier agents. Default: MiniMax-M2.
+   * Set via `wrangler secret put MINIMAX_MODEL` to e.g. "MiniMax-M2-Pro"
+   * when the Max plan exposes a higher-tier model. */
+  MINIMAX_MODEL?: string;
+  /** Override the MiniMax OpenAI-compatible base URL (e.g. swap to
+   * api.minimaxi.com for the international plan). Default: api.minimax.chat/v1. */
+  MINIMAX_BASE_URL?: string;
   HF_API_KEY?: string;
   ORCHESTRATOR: DurableObjectNamespace;
   MANIFOLD_AGENT: DurableObjectNamespace;

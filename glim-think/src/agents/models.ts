@@ -25,11 +25,21 @@ import type { Env } from "../types";
 
 export type ReasoningTier = "fast" | "deep";
 
-const MINIMAX_BASE_URL = "https://api.minimax.chat/v1";
-const MINIMAX_MODEL = "MiniMax-M2";
-const MINIMAX_MONTHLY_TOKEN_BUDGET = 80_000_000;
+const MINIMAX_DEFAULT_BASE_URL = "https://api.minimax.chat/v1";
+const MINIMAX_DEFAULT_MODEL = "MiniMax-M2";
+// Bumped from 80M → 500M for the Max plan. Override at deploy time
+// by editing this constant if pricing changes; budget guard kicks in
+// once monthly usage exceeds it and falls back to Workers AI.
+const MINIMAX_MONTHLY_TOKEN_BUDGET = 500_000_000;
 
 const FAST_MODEL = "@cf/meta/llama-4-scout-17b-16e-instruct";
+
+function miniMaxConfig(env: Env): { baseURL: string; model: string } {
+  return {
+    baseURL: env.MINIMAX_BASE_URL?.trim() || MINIMAX_DEFAULT_BASE_URL,
+    model: env.MINIMAX_MODEL?.trim() || MINIMAX_DEFAULT_MODEL,
+  };
+}
 
 function monthKey(): string {
   return new Date().toISOString().slice(0, 7);
@@ -115,15 +125,92 @@ function spendMiddleware(env: Env): LanguageModelV2Middleware {
 }
 
 function miniMaxModel(env: Env) {
+  const { baseURL, model } = miniMaxConfig(env);
   const base = createOpenAICompatible({
-    baseURL: MINIMAX_BASE_URL,
+    baseURL,
     apiKey: env.MINIMAX_API_KEY!,
     name: "minimax",
-  }).chatModel(MINIMAX_MODEL);
+  }).chatModel(model);
   return wrapLanguageModel({
     model: base,
     middleware: spendMiddleware(env),
   });
+}
+
+/**
+ * Fire a minimal "say OK" call to verify that the configured MiniMax
+ * model + base URL + key work. Returns latency + the response text +
+ * the active model name, so /admin/test-minimax surfaces something
+ * actionable. Used to test which model your Max plan supports without
+ * code-edits.
+ */
+export async function testMiniMaxCall(env: Env): Promise<{
+  ok: boolean;
+  model: string;
+  base_url: string;
+  latency_ms: number;
+  response_text?: string;
+  usage?: { promptTokens?: number; completionTokens?: number; totalTokens?: number };
+  error?: string;
+}> {
+  const { baseURL, model } = miniMaxConfig(env);
+  if (!env.MINIMAX_API_KEY) {
+    return { ok: false, model, base_url: baseURL, latency_ms: 0, error: "MINIMAX_API_KEY is unset" };
+  }
+  const start = Date.now();
+  try {
+    const res = await fetch(`${baseURL}/chat/completions`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.MINIMAX_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: "system", content: "Reply with the single word OK." },
+          { role: "user", content: "ping" },
+        ],
+        max_tokens: 8,
+        temperature: 0,
+      }),
+    });
+    const latency = Date.now() - start;
+    const text = await res.text();
+    if (!res.ok) {
+      return {
+        ok: false,
+        model,
+        base_url: baseURL,
+        latency_ms: latency,
+        error: `HTTP ${res.status}: ${text.slice(0, 500)}`,
+      };
+    }
+    const json = JSON.parse(text) as {
+      choices?: Array<{ message?: { content?: string } }>;
+      usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number };
+    };
+    return {
+      ok: true,
+      model,
+      base_url: baseURL,
+      latency_ms: latency,
+      response_text: json.choices?.[0]?.message?.content?.trim(),
+      usage: {
+        promptTokens: json.usage?.prompt_tokens,
+        completionTokens: json.usage?.completion_tokens,
+        totalTokens: json.usage?.total_tokens,
+      },
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      model,
+      base_url: baseURL,
+      latency_ms: Date.now() - start,
+      error: e instanceof Error ? e.message : String(e),
+    };
+  }
 }
 
 /**

@@ -41,6 +41,7 @@ import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
+import { testMiniMaxCall } from "./agents/models";
 import type {
   BenchmarkRecord,
   ClaimRecord,
@@ -1518,6 +1519,12 @@ ${narrative}
         }
 
         return jsonError("Unknown /research/* route", 404);
+      }
+
+      // === MiniMax connectivity probe — verify which model your plan supports
+      if (url.pathname === "/admin/test-minimax" && (request.method === "POST" || request.method === "GET")) {
+        const result = await testMiniMaxCall(env);
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
       }
 
       // === phase-B: provider spend telemetry ===
