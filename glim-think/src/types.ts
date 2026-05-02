@@ -56,6 +56,26 @@ export interface Critique {
 }
 
 /**
+ * Row in the `claims` D1 table — adjudicated discovery claims produced by
+ * lupine-distill (Rust) and ingested via POST /claims/ingest. Schema mirrors
+ * lupine-distill/src/db/schema.rs so rows round-trip without transform.
+ * See migrations/0004_claims.sql.
+ */
+export type ClaimStatus = "proposed" | "confirmed" | "refuted" | "formally_proven" | "insufficient";
+
+export interface ClaimRecord {
+  claim_id: string;
+  agent_id: string;
+  claim_type: string;
+  claim_data: string;
+  evidence_ids: string;
+  confidence: number;
+  status: string;
+  description: string;
+  created_at: string;
+}
+
+/**
  * Row in the `research_questions` D1 table — lab-notebook style Q/A queue.
  * Distinct from peer-review critiques (Critique) and hypotheses
  * (HypothesisRecord). See migrations/0003_research_questions.sql.
