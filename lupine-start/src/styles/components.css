@@ -1,6 +1,89 @@
+/* ═══════════════════════════════════════════════════════════════
+   LUPINE COMPONENT STYLES
+   
+   Shared utility classes for glass panels, data tables,
+   background textures, and glow effects.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Evidence / data tables ─── */
 .evidence-table th,
-.evidence-table td { padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--outline-variant); }
-.glass-panel-elevated { border: 1px solid var(--outline-variant); border-radius: 1rem; background: rgba(15, 23, 42, 0.45); }
-.bg-noise { background-image: radial-gradient(rgba(255,255,255,0.04) 0.5px, transparent 0.5px); background-size: 2px 2px; }
-.glow-primary { text-shadow: 0 0 12px color-mix(in srgb, var(--primary), transparent 55%); }
-.glow-secondary { text-shadow: 0 0 12px color-mix(in srgb, var(--secondary), transparent 45%); }
+.evidence-table td {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+/* ─── Glass panels (dark mode) ─── */
+.glass-panel {
+  border: 1px solid var(--outline-variant);
+  border-radius: 0;
+  background: rgba(15, 23, 42, 0.45);
+}
+.glass-panel-elevated {
+  border: 1px solid var(--outline-variant);
+  border-radius: 0;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+/* ─── Light mode overrides ─── */
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+}
+.light .glass-panel-elevated {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(44, 42, 40, 0.04);
+}
+
+/* ─── Background noise texture ─── */
+.bg-noise {
+  background-image: radial-gradient(rgba(255,255,255,0.04) 0.5px, transparent 0.5px);
+  background-size: 2px 2px;
+}
+.light .bg-noise {
+  background-image: radial-gradient(rgba(44,42,40,0.03) 0.5px, transparent 0.5px);
+}
+
+/* ─── Text glow effects ─── */
+.glow-primary {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--primary), transparent 55%);
+}
+.glow-secondary {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--secondary), transparent 45%);
+}
+
+/* ─── Light mode: softer glows ─── */
+.light .glow-primary { text-shadow: none; }
+.light .glow-secondary { text-shadow: none; }
+
+/* ─── Status pulse ─── */
+.status-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: pulse-cyan 2s infinite;
+  flex-shrink: 0;
+}
+
+/* ─── KaTeX overrides — theme integration ─── */
+.katex {
+  color: var(--on-surface);
+  font-size: 1.05em;
+}
+.katex-block {
+  padding: 1.25rem 1.5rem;
+  background: var(--surface-container-low);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 4px 4px 0;
+}
+.katex-block .katex {
+  font-size: 1.15em;
+}
+.light .katex {
+  color: var(--on-surface);
+}
+.light .katex-block {
+  background: var(--surface-container-low);
+  border-left-color: var(--primary);
+}

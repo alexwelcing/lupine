@@ -104,6 +104,8 @@ class HypothesisType(str, Enum):
     PARAMETER_BOUND = "parameter_bound"
     MANIFOLD_EVOLUTION = "manifold_evolution"
     CAUSAL_MECHANISM = "causal_mechanism"
+    ORTHOGONAL_FAILURE = "orthogonal_failure"
+    HOLISTIC_COUPLING = "holistic_coupling"
 
 
 class Hypothesis(BaseModel):

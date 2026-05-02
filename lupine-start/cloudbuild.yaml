@@ -1,0 +1,42 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/lupine-site:$SHORT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/lupine-site:latest'
+      - '.'
+    dir: 'lupine-start'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/lupine-site:$SHORT_SHA']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/lupine-site:latest']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'lupine-site'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/lupine-site:$SHORT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--memory'
+      - '512Mi'
+      - '--cpu'
+      - '1'
+      - '--max-instances'
+      - '5'
+
+images:
+  - 'gcr.io/$PROJECT_ID/lupine-site:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/lupine-site:latest'
+
+timeout: '600s'

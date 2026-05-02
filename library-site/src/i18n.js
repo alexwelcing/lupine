@@ -124,6 +124,15 @@ const STRINGS = {
  */
 export function t(key, lang = DEFAULT_LANG, vars) {
   const l = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
+  if (key && typeof key === 'object') {
+    let str = key[l] || key[DEFAULT_LANG] || '';
+    if (vars) {
+      for (const [k, v] of Object.entries(vars)) {
+        str = str.replaceAll(`{${k}}`, String(v));
+      }
+    }
+    return str;
+  }
   let str = STRINGS[l]?.[key] || STRINGS[DEFAULT_LANG]?.[key] || key;
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {

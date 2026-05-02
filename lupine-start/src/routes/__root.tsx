@@ -1,12 +1,11 @@
 import { HeadContent, Scripts, createRootRoute, useRouterState } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import { Link } from '@tanstack/react-router'
 
 import appCss from '../styles.css?url'
+import katexCss from 'katex/dist/katex.min.css?url'
 
 const queryClient = new QueryClient()
 
@@ -14,26 +13,25 @@ const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getIte
 
 function NotFoundComponent() {
   return (
-    <main className="flex-1 flex flex-col items-center justify-center px-6">
+    <main className="flex-1 flex flex-col items-center justify-center px-6 py-32">
       <div className="text-center max-w-lg">
-        <div className="mono-label text-[var(--primary)] glow-primary mb-6 tracking-[0.3em]">404 — NOT FOUND</div>
-        <h1 className="text-6xl lg:text-8xl mb-6">Lost in the manifold.</h1>
+        <div className="font-mono text-xs font-semibold text-[var(--primary)] uppercase tracking-[0.3em] mb-6">404 — NOT FOUND</div>
+        <h1 className="font-serif text-5xl lg:text-7xl mb-6 text-[var(--slate-100)]">Lost in the manifold.</h1>
         <p className="text-[var(--on-surface-variant)] text-lg mb-10 leading-relaxed">
           The page you requested does not exist in this configuration space.
-          It may have been removed, renamed, or never existed.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/"
-            className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--primary-foreground)] font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:opacity-90 transition-opacity no-underline"
           >
-            Return to Thesis
+            Return Home
           </Link>
           <Link
             to="/research"
-            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors"
+            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)] transition-colors no-underline"
           >
-            Read the Manifesto
+            Read the Research
           </Link>
         </div>
       </div>
@@ -47,6 +45,7 @@ export const Route = createRootRoute({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { title: 'Lupine Materials Science' },
+      { name: 'description', content: 'Open-source materials science platform with 559 interatomic potentials, a WebGPU molecular viewer, and autonomous research intelligence. Built in Rust, Apache 2.0.' },
       { property: 'og:site_name', content: 'Lupine Materials Science' },
       { property: 'og:type', content: 'website' },
       { property: 'og:image', content: 'https://lupine.science/logo512.png' },
@@ -57,6 +56,10 @@ export const Route = createRootRoute({
       {
         rel: 'stylesheet',
         href: appCss,
+      },
+      {
+        rel: 'stylesheet',
+        href: katexCss,
       },
       {
         rel: 'preconnect',
@@ -87,17 +90,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           {!isHome && <Header />}
           {children}
           {!isHome && <Footer />}
-          <TanStackDevtools
-            config={{
-              position: 'bottom-right',
-            }}
-            plugins={[
-              {
-                name: 'Tanstack Router',
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-            ]}
-          />
         </QueryClientProvider>
         <Scripts />
       </body>

@@ -35,6 +35,7 @@ import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
 import type {
   BenchmarkRecord,
+  ClaimRecord,
   Critique,
   CritiqueStatus,
   Env,
@@ -1164,6 +1165,101 @@ ${narrative}
           { error: "Method not allowed for research_questions route" },
           { status: 405, headers: corsHeaders }
         );
+      }
+
+      // === claims routes (distill verdict bridge) ===
+      // Mirrors lupine-distill's `claims` table; see migrations/0004_claims.sql.
+      // Distill is the producer (cross-style-pc1, rank-correlation, theorize-cycle, ...);
+      // the worker is the consumer for the Theorist agent and /lab dashboard.
+      const CLAIM_COLS =
+        `claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at`;
+
+      if (url.pathname === "/claims/ingest" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+        const claims = Array.isArray(body.claims) ? body.claims as Array<Record<string, unknown>> : [];
+        if (claims.length === 0) {
+          return Response.json({ ingested: 0, total: 0 }, { status: 400, headers: JSON_CORS_HEADERS });
+        }
+
+        let inserted = 0;
+        const errors: Array<{ claim_id: string; error: string }> = [];
+        for (const c of claims) {
+          const claimId = typeof c.claim_id === "string" ? c.claim_id : "";
+          const agentId = typeof c.agent_id === "string" ? c.agent_id : "";
+          const claimType = typeof c.claim_type === "string" ? c.claim_type : "";
+          const description = typeof c.description === "string" ? c.description : "";
+          if (!claimId || !agentId || !claimType || !description) {
+            errors.push({ claim_id: claimId || "<missing>", error: "missing required fields (claim_id, agent_id, claim_type, description)" });
+            continue;
+          }
+          const claimData =
+            typeof c.claim_data === "string" ? c.claim_data
+            : c.claim_data !== undefined ? JSON.stringify(c.claim_data)
+            : "{}";
+          const evidenceIds =
+            typeof c.evidence_ids === "string" ? c.evidence_ids
+            : Array.isArray(c.evidence_ids) ? JSON.stringify(c.evidence_ids)
+            : "[]";
+          const confidence = typeof c.confidence === "number" ? c.confidence : 0;
+          const status = typeof c.status === "string" ? c.status : "proposed";
+          const createdAt = typeof c.created_at === "string" ? c.created_at : new Date().toISOString();
+
+          try {
+            await env.LEDGER.prepare(
+              `INSERT INTO claims
+                 (claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at, timestamp)
+               VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?9)
+               ON CONFLICT(claim_id) DO NOTHING`
+            ).bind(claimId, agentId, claimType, claimData, evidenceIds, confidence, status, description, createdAt).run();
+            inserted++;
+          } catch (e) {
+            errors.push({ claim_id: claimId, error: String(e) });
+          }
+        }
+        return Response.json(
+          { ingested: inserted, total: claims.length, errors },
+          { headers: JSON_CORS_HEADERS }
+        );
+      }
+
+      if (url.pathname === "/claims" && request.method === "GET") {
+        const status = url.searchParams.get("status");
+        const claimType = url.searchParams.get("claim_type");
+        const agentId = url.searchParams.get("agent_id");
+        const limitRaw = parseInt(url.searchParams.get("limit") ?? "50", 10);
+        const limit = Number.isFinite(limitRaw) && limitRaw > 0 ? Math.min(limitRaw, 500) : 50;
+
+        const where: string[] = [];
+        const binds: unknown[] = [];
+        if (status) { where.push(`status = ?${binds.length + 1}`); binds.push(status); }
+        if (claimType) { where.push(`claim_type = ?${binds.length + 1}`); binds.push(claimType); }
+        if (agentId) { where.push(`agent_id = ?${binds.length + 1}`); binds.push(agentId); }
+
+        const whereClause = where.length ? `WHERE ${where.join(" AND ")}` : "";
+        binds.push(limit);
+        const rows = await env.LEDGER.prepare(
+          `SELECT ${CLAIM_COLS} FROM claims ${whereClause}
+           ORDER BY created_at DESC LIMIT ?${binds.length}`
+        ).bind(...binds).all<ClaimRecord>();
+
+        return Response.json(
+          { claims: rows.results, count: rows.results.length, limit, status, claim_type: claimType, agent_id: agentId },
+          { headers: JSON_CORS_HEADERS }
+        );
+      }
+
+      const claimItemMatch = url.pathname.match(/^\/claims\/([^/]+)$/);
+      if (claimItemMatch && claimItemMatch[1] !== "ingest" && request.method === "GET") {
+        const id = decodeURIComponent(claimItemMatch[1]);
+        const row = await env.LEDGER.prepare(
+          `SELECT ${CLAIM_COLS} FROM claims WHERE claim_id = ?1`
+        ).bind(id).first<ClaimRecord>();
+        if (!row) return jsonError(`Claim '${id}' not found`, 404);
+        return Response.json(row, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname.startsWith("/claims") && request.method === "OPTIONS") {
+        return new Response(null, { status: 204, headers: { ...JSON_CORS_HEADERS, "Access-Control-Max-Age": "86400" } });
       }
 
       // === unit-9: openapi route ===

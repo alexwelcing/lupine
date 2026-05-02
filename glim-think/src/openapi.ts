@@ -38,10 +38,10 @@ export const openApiSpec = {
     { name: "research", description: "Live research-state snapshot" },
     { name: "feed", description: "Real-time swarm activity stream" },
     { name: "spec", description: "Self-describing API spec" },
-    { name: "hypotheses", description: "Persisted hypothesis tracker (planned, unit 1)" },
-    { name: "critiques", description: "Peer-review critique queue (planned, unit 2)" },
-    { name: "research-questions", description: "Lab-notebook Q/A queue (planned, unit 3)" },
-    { name: "literature", description: "External paper search & cache (planned, unit 4)" },
+    { name: "hypotheses", description: "Persisted hypothesis tracker (D1)" },
+    { name: "critiques", description: "Peer-review critique queue with R2-backed responses" },
+    { name: "research-questions", description: "Lab-notebook Q/A queue (D1)" },
+    { name: "claims", description: "Discovery-claim ingestion bridge for lupine-distill verdicts" },
   ],
   paths: {
     "/health": {
@@ -294,43 +294,92 @@ export const openApiSpec = {
       },
     },
     "/hypotheses": {
-      get: { tags: ["hypotheses"], summary: "List hypotheses", "x-status": "planned-unit-1", responses: { "200": { description: "Hypotheses" }, "404": { description: "Unit 1 not yet merged" } } },
-      post: { tags: ["hypotheses"], summary: "Create a hypothesis", "x-status": "planned-unit-1", responses: { "200": { description: "Created" } } },
+      get: { tags: ["hypotheses"], summary: "List hypotheses", responses: { "200": { description: "Hypotheses" } } },
+      post: { tags: ["hypotheses"], summary: "Create a hypothesis", responses: { "201": { description: "Created" }, "409": { description: "ID already exists" } } },
     },
     "/hypotheses/{id}": {
-      get: { tags: ["hypotheses"], summary: "Single hypothesis", "x-status": "planned-unit-1", parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }], responses: { "200": { description: "Hypothesis" } } },
-      patch: { tags: ["hypotheses"], summary: "Update status/confidence", "x-status": "planned-unit-1", parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }], responses: { "200": { description: "Updated" } } },
+      get: { tags: ["hypotheses"], summary: "Single hypothesis", parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }], responses: { "200": { description: "Hypothesis" }, "404": { description: "Not found" } } },
+      patch: { tags: ["hypotheses"], summary: "Update status/confidence/evidence_ids", parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }], responses: { "200": { description: "Updated" }, "404": { description: "Not found" } } },
     },
     "/critiques": {
-      post: { tags: ["critiques"], summary: "Queue a critique for asynchronous response", "x-status": "planned-unit-2", responses: { "200": { description: "Queued" } } },
-      get: { tags: ["critiques"], summary: "List critiques (filter by status/source)", "x-status": "planned-unit-2", responses: { "200": { description: "Critiques" } } },
+      post: { tags: ["critiques"], summary: "Queue a critique for asynchronous response", responses: { "201": { description: "Queued" } } },
+      get: { tags: ["critiques"], summary: "List critiques (filter by status/source)", responses: { "200": { description: "Critiques" } } },
     },
     "/critiques/pending": {
-      get: { tags: ["critiques"], summary: "Pending critiques only", "x-status": "planned-unit-2", responses: { "200": { description: "Pending critiques" } } },
+      get: { tags: ["critiques"], summary: "Pending critiques only", responses: { "200": { description: "Pending critiques" } } },
     },
     "/critiques/{id}/respond": {
       post: {
         tags: ["critiques"],
         summary: "Submit response markdown for a critique (writes R2 artifact + marks complete)",
-        "x-status": "planned-unit-2",
         parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         responses: { "200": { description: "Responded" } },
       },
     },
     "/research/questions": {
-      post: { tags: ["research-questions"], summary: "Ask a lab-notebook question", "x-status": "planned-unit-3", responses: { "200": { description: "Queued" } } },
-      get: { tags: ["research-questions"], summary: "List questions", "x-status": "planned-unit-3", responses: { "200": { description: "Questions" } } },
+      post: { tags: ["research-questions"], summary: "Ask a lab-notebook question", responses: { "201": { description: "Queued" } } },
+      get: { tags: ["research-questions"], summary: "List questions (filter by status, limit)", responses: { "200": { description: "Questions" } } },
     },
-    "/literature/search": {
-      post: { tags: ["literature"], summary: "Search arXiv + Semantic Scholar + OpenAlex", "x-status": "planned-unit-4", responses: { "200": { description: "Search results" } } },
+    "/research/questions/{id}/answer": {
+      post: {
+        tags: ["research-questions"],
+        summary: "Answer a research question (writes answer_md to R2 + marks answered)",
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
+        responses: { "200": { description: "Answered" }, "404": { description: "Not found" } },
+      },
     },
-    "/literature/papers/{doi}": {
+    "/claims/ingest": {
+      post: {
+        tags: ["claims"],
+        summary: "Bulk-ingest discovery claims from lupine-distill",
+        description:
+          "Mirrors lupine-distill's local `claims` table. Each claim row carries a typed payload (CrossStyleAlignment, DimensionalityRanking, ManifoldEvolution, HyperRibbonConfirmed, ...) and is keyed by claim_id (idempotent on conflict).",
+        requestBody: {
+          required: true,
+          content: { "application/json": { schema: {
+            type: "object",
+            required: ["claims"],
+            properties: { claims: { type: "array", items: { $ref: "#/components/schemas/ClaimRow" } } },
+          } } },
+        },
+        responses: { "200": { description: "Ingestion summary", content: { "application/json": { schema: {
+          type: "object",
+          properties: {
+            ingested: { type: "integer" },
+            total: { type: "integer" },
+            errors: { type: "array", items: { type: "object" } },
+          },
+        } } } } },
+      },
+    },
+    "/claims": {
       get: {
-        tags: ["literature"],
-        summary: "Single paper from cache",
-        "x-status": "planned-unit-4",
-        parameters: [{ name: "doi", in: "path", required: true, schema: { type: "string" } }],
-        responses: { "200": { description: "Paper" }, "404": { description: "Not in cache" } },
+        tags: ["claims"],
+        summary: "List claims (filter by status, claim_type, agent_id)",
+        parameters: [
+          { name: "status", in: "query", schema: { type: "string", enum: ["proposed", "confirmed", "refuted", "formally_proven", "insufficient"] } },
+          { name: "claim_type", in: "query", schema: { type: "string" } },
+          { name: "agent_id", in: "query", schema: { type: "string" } },
+          { name: "limit", in: "query", schema: { type: "integer", default: 50, maximum: 500 } },
+        ],
+        responses: { "200": { description: "Claim list", content: { "application/json": { schema: {
+          type: "object",
+          properties: {
+            claims: { type: "array", items: { $ref: "#/components/schemas/ClaimRow" } },
+            count: { type: "integer" },
+          },
+        } } } } },
+      },
+    },
+    "/claims/{id}": {
+      get: {
+        tags: ["claims"],
+        summary: "Single claim by claim_id",
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
+        responses: {
+          "200": { description: "Claim", content: { "application/json": { schema: { $ref: "#/components/schemas/ClaimRow" } } } },
+          "404": { description: "Not found" },
+        },
       },
     },
   },
@@ -489,6 +538,31 @@ export const openApiSpec = {
             },
           },
           critique_response: { type: "object", additionalProperties: { type: "string" } },
+        },
+      },
+      ClaimRow: {
+        type: "object",
+        required: ["claim_id", "agent_id", "claim_type", "description"],
+        properties: {
+          claim_id: { type: "string", description: "Unique stable id, e.g. cross_style_pc1_<rec>" },
+          agent_id: { type: "string" },
+          claim_type: { type: "string", description: "e.g. CrossStyleAlignment, DimensionalityRanking, HyperRibbonConfirmed, ManifoldEvolution" },
+          claim_data: {
+            oneOf: [
+              { type: "string", description: "JSON-encoded payload" },
+              { type: "object", additionalProperties: true },
+            ],
+          },
+          evidence_ids: {
+            oneOf: [
+              { type: "string", description: "JSON-encoded array of record_ids" },
+              { type: "array", items: { type: "string" } },
+            ],
+          },
+          confidence: { type: "number", minimum: 0, maximum: 1 },
+          status: { type: "string", enum: ["proposed", "confirmed", "refuted", "formally_proven", "insufficient"] },
+          description: { type: "string" },
+          created_at: { type: "string", format: "date-time" },
         },
       },
       ErrorResponse: {

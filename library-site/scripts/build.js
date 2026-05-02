@@ -271,12 +271,17 @@ function build() {
       JSON.stringify(defaultArticle)
     );
 
+    const title = { en: defaultArticle.title };
+    const subtitle = { en: defaultArticle.subtitle };
+
     // Internationalized variants
     if (entry.i18n) {
       for (const [lang, sourcePath] of Object.entries(entry.i18n)) {
         const variant = processEntry(entry, lang, sourcePath);
         if (variant) {
           languages.push(lang);
+          title[lang] = variant.title;
+          subtitle[lang] = variant.subtitle;
           fs.writeFileSync(
             path.join(DATA_DIR, `${variant.id}.${lang}.json`),
             JSON.stringify(variant)
@@ -287,8 +292,8 @@ function build() {
 
     const meta = {
       id: defaultArticle.id,
-      title: defaultArticle.title,
-      subtitle: defaultArticle.subtitle,
+      title,
+      subtitle,
       category: defaultArticle.category,
       tags: defaultArticle.tags,
       words: defaultArticle.words,

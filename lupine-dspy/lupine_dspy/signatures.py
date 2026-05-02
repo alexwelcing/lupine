@@ -37,9 +37,10 @@ class GenerateHypothesis(dspy.Signature):
     structure of prediction errors.
 
     Focus on:
-    - Why certain potential families produce geometrically constrained errors
+    - Why certain potential families produce geometrically constrained errors (HYPER_RIBBON)
     - Whether error structure is universal (physics-driven) or potential-specific
-    - Causal mechanisms linking functional form to error geometry
+    - Geometric coupling between physical properties (HOLISTIC_COUPLING)
+    - Distinct error directions for different functional forms (ORTHOGONAL_FAILURE)
     """
 
     manifold_results: list[ManifoldResult] = dspy.InputField(

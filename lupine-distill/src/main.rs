@@ -8,9 +8,13 @@ mod bridge;
 mod cross_style;
 mod db;
 mod hypothesis;
+mod literature;
 mod null_model;
 mod orthogonalize;
 mod rank_correlation;
+mod worker_sync;
+#[cfg(test)]
+mod test_fixtures;
 
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
@@ -77,6 +81,34 @@ enum Command {
     /// Many-body rank vs participation ratio — Spearman correlation against
     /// the cached manifolds table. Tests `error_manifold_dimensionality_scaling`.
     RankCorrelation,
+    /// Literature-grounded investigation. Pulls our DB findings about an
+    /// element, queries Semantic Scholar, persists papers, mines abstracts
+    /// via the DSPy bridge, and emits LiteratureComputationGap claims when
+    /// extracted values disagree with our DB.
+    Investigate {
+        /// Element symbol (Al, Cu, Fe, ...).
+        element: String,
+        /// How many papers to fetch from Semantic Scholar.
+        #[arg(long, default_value_t = 8)]
+        papers: usize,
+        /// Don't call the DSPy bridge — persist papers only.
+        #[arg(long)]
+        no_bridge: bool,
+    },
+    /// Evaluate hypotheses — run the appropriate test, null model, and update status.
+    ///
+    /// Without --id, evaluates all 'proposed' hypotheses.
+    Evaluate {
+        /// Evaluate a single hypothesis by ID.
+        #[arg(long)]
+        id: Option<String>,
+        /// Number of null-model iterations.
+        #[arg(long, default_value_t = 1000)]
+        iterations: usize,
+        /// Significance threshold for confirmation (p < alpha).
+        #[arg(long, default_value_t = 0.05)]
+        alpha: f64,
+    },
 }
 
 #[derive(Subcommand, Debug)]
@@ -147,6 +179,17 @@ enum DbAction {
         #[arg(long, default_value_t = 50)]
         limit: usize,
     },
+    /// Seed the three core hypotheses (fingerprint, manifold, transfer).
+    SeedHypotheses,
+    /// Analytical statistics: stratified correlations and family breakdowns.
+    Stats {
+        /// Element filter.
+        #[arg(long)]
+        element: Option<String>,
+        /// Grouping column for stratified correlations (element, pair_style, property, potential_label).
+        #[arg(long, default_value = "pair_style")]
+        group_by: String,
+    },
 }
 
 #[derive(Subcommand, Debug)]
@@ -163,6 +206,11 @@ enum TestWhich {
     },
     /// Hypothesis 3.3 — manifold dimensionality / participation ratio (Jacobi eigensolve).
     Manifold,
+    /// Advanced stress tests for hyper-ribbon geometry (stability, ablation, LOO, etc.)
+    RibbonStress {
+        #[arg(long, default_value_t = 50)]
+        iterations: usize,
+    },
 }
 
 fn main() -> Result<()> {
@@ -240,6 +288,14 @@ fn main() -> Result<()> {
                 eprintln!("[db] {} hypotheses (limit {})", rows.len(), limit);
                 println!("{}", serde_json::to_string_pretty(&rows)?);
             }
+            DbAction::SeedHypotheses => {
+                let conn = open_db(&db_path)?;
+                seed_core_hypotheses(&conn)?;
+            }
+            DbAction::Stats { element, group_by } => {
+                let conn = open_db(&db_path)?;
+                run_stats(&conn, element.as_deref(), &group_by)?;
+            }
         },
         Command::Test { which } => match which {
             TestWhich::Fingerprint { element } => {
@@ -277,6 +333,20 @@ fn main() -> Result<()> {
                 persist_manifold_results(&conn, &r)?;
                 println!("{}", serde_json::to_string_pretty(&r)?);
             }
+            TestWhich::RibbonStress { iterations } => {
+                let conn = open_db(&db_path)?;
+                let r = hypothesis::ribbon_stress::test_ribbon_stress(&conn, iterations)?;
+                eprintln!(
+                    "[ribbon-stress] {}/{} tests support hyper-ribbon robustness:",
+                    r.tests_supporting, r.tests_total,
+                );
+                eprintln!("  stability: {}", if r.stability.stable { "✅ PASS" } else { "❌ FAIL" });
+                eprintln!("  ablation : {}", if r.ablation.critical_property.is_some() { "✅ PASS" } else { "❌ FAIL" });
+                eprintln!("  influence: {}", if r.influence.robust { "✅ PASS" } else { "❌ FAIL" });
+                eprintln!("  alignment: {}", if r.alignment.ribbons_parallel { "✅ PASS" } else { "❌ FAIL" });
+                eprintln!("  threshold: {}", if r.threshold.converged { "✅ PASS" } else { "❌ FAIL" });
+                println!("{}", serde_json::to_string_pretty(&r)?);
+            }
         },
         Command::Theorize { element } => {
             let conn = open_db(&db_path)?;
@@ -298,6 +368,34 @@ fn main() -> Result<()> {
             let conn = open_db(&db_path)?;
             run_rank_correlation(&conn)?;
         }
+        Command::Investigate { element, papers, no_bridge } => {
+            let conn = open_db(&db_path)?;
+            let result = literature::investigate::run(
+                &conn, &element, Some(papers), no_bridge,
+            )?;
+            eprintln!(
+                "[investigate:{}] DONE — {} papers fetched, {} mined, {} records, {} gaps",
+                element,
+                result.papers_fetched,
+                result.papers_mined,
+                result.records_extracted,
+                result.gaps_detected,
+            );
+            for gap in result.gap_summaries.iter().take(8) {
+                eprintln!(
+                    "  GAP: {} {} {} → lit={:.3} ours={:.3} ({:+.1}%) doi={}",
+                    element, gap.potential_label, gap.property,
+                    gap.literature_value, gap.our_value,
+                    (gap.literature_value - gap.our_value) / gap.our_value * 100.0,
+                    gap.doi.as_deref().unwrap_or("(none)"),
+                );
+            }
+            println!("{}", serde_json::to_string_pretty(&result)?);
+        }
+        Command::Evaluate { id, iterations, alpha } => {
+            let conn = open_db(&db_path)?;
+            run_evaluate(&conn, id.as_deref(), iterations, alpha)?;
+        }
     }
 
     Ok(())
@@ -306,6 +404,93 @@ fn main() -> Result<()> {
 /// Open the SQLite database (creates + migrates if missing).
 fn open_db(path: &str) -> Result<Connection> {
     db::schema::open(path).with_context(|| format!("opening database at {}", path))
+}
+
+/// Insert the three core hypotheses from the dissertation.
+fn seed_core_hypotheses(conn: &Connection) -> Result<()> {
+    let hypotheses = [
+        (
+            "HYP-FP-001",
+            "fingerprint",
+            "Functional Form Fingerprints (§3.1)",
+            "Each pair_style family (EAM, MEAM, Tersoff, etc.) has a distinctive error \
+             signature in (C11, C12, C44) space that can discriminate functional form \
+             without examining potential parameters.",
+            "Leave-one-out nearest-neighbor classifier achieves accuracy significantly \
+             above chance level (1/K for K families).",
+            0.5,
+        ),
+        (
+            "HYP-MF-001",
+            "manifold",
+            "Universal Hyper-Ribbon Geometry (§3.3)",
+            "Interatomic potential error vectors lie on low-dimensional hyper-ribbon \
+             manifolds, with participation ratio PR << D (property dimension) for all \
+             elements and pair_styles.",
+            "Jacobi eigensolve on error covariance yields PR < 2 for element-grouped \
+             and style-grouped data.",
+            0.6,
+        ),
+        (
+            "HYP-TF-001",
+            "transfer",
+            "Cross-Element PC1 Transfer Universality (§3.2)",
+            "The primary error axis (PC1) is conserved across elements within the same \
+             pair_style family, suggesting a universal error structure independent of \
+             the fitted element.",
+            "Cosine similarity between PC1 vectors of different elements within the \
+             same pair_style exceeds 0.8 on average.",
+            0.5,
+        ),
+    ];
+
+    for (id, class, title, desc, prediction, confidence) in &hypotheses {
+        db::query::insert_hypothesis(conn, id, class, title, desc, prediction, *confidence)?;
+        eprintln!("[db] seeded hypothesis {} ({})", id, class);
+    }
+
+    eprintln!("[db] {} core hypotheses ready for evaluation", hypotheses.len());
+    Ok(())
+}
+
+/// Analytical statistics: stratified correlations, family breakdowns, literature status.
+fn run_stats(conn: &Connection, element: Option<&str>, group_by: &str) -> Result<()> {
+    // ── 1. Family statistics ────────────────────────────────
+    let families = db::query::family_statistics(conn, element)?;
+    eprintln!("[stats] {} pair_style families{}",
+        families.len(),
+        element.map_or(String::new(), |e| format!(" for element={}", e)),
+    );
+    for f in &families {
+        eprintln!(
+            "  {:20} {:>4} potentials, {:>6} records, mean_err={:+.2}% ± {:.2}%",
+            f.pair_style, f.n_potentials, f.n_records, f.mean_error_pct, f.std_error_pct,
+        );
+    }
+
+    // ── 2. Stratified correlations ──────────────────────────
+    let (pooled_r, strats) = db::query::stratified_correlations(conn, group_by, element)?;
+    eprintln!(
+        "\n[stats] Pearson r (pooled, ref vs predicted): {:.4}, {} strata by {}",
+        pooled_r, strats.len(), group_by,
+    );
+    for s in &strats {
+        eprintln!("  {:30} n={:>5} r={:+.4}", s.group, s.n, s.pearson_r);
+    }
+
+    // ── 3. Literature status ────────────────────────────────
+    let unreviewed = db::query::unreviewed_count(conn)?;
+    eprintln!("\n[stats] {} unreviewed literature entries", unreviewed);
+
+    // Emit JSON output
+    println!("{}", serde_json::to_string_pretty(&json!({
+        "families": families,
+        "pooled_pearson_r": pooled_r,
+        "stratified_correlations": strats,
+        "unreviewed_literature": unreviewed,
+    }))?);
+
+    Ok(())
 }
 
 /// Build a manifold-grounded data summary, call the DSPy bridge, and persist the
@@ -346,11 +531,26 @@ fn run_theorize(conn: &Connection, element: Option<&str>) -> Result<()> {
         v
     };
 
+    let stress = hypothesis::ribbon_stress::test_ribbon_stress(conn, 50).unwrap_or_else(|_| hypothesis::ribbon_stress::RibbonStressResult {
+        stability: hypothesis::ribbon_stress::StabilityResult { full_pr: 1.0, n_resamples: 0, mean_pr: 1.0, std_pr: 0.0, min_pr: 1.0, max_pr: 1.0, ribbon_fraction: 0.0, stable: false },
+        ablation: hypothesis::ribbon_stress::AblationResult { full_pr: 1.0, full_dim: 0, ablations: vec![], critical_property: None, redundant_property: None },
+        influence: hypothesis::ribbon_stress::InfluenceResult { full_pr: 1.0, n_potentials: 0, loo_prs: vec![], max_influence: 0.0, n_ribbon_breakers: 0, robust: false },
+        alignment: hypothesis::ribbon_stress::AlignmentResult { comparisons: vec![], mean_cosine: 0.0, n_comparisons: 0, ribbons_parallel: false },
+        threshold: hypothesis::ribbon_stress::ThresholdResult { convergence_curve: vec![], full_n: 0, full_pr: 1.0, convergence_n: None, converged: false },
+        tests_supporting: 0,
+        tests_total: 5,
+    });
+
     let element_ctx = element.unwrap_or("all").to_string();
     let request = bridge::BridgeRequest::Theorize {
         element: element_ctx.clone(),
         data_summary: json!({
             "manifolds": manifolds_json,
+            "ribbon_stress": {
+                "stable": stress.stability.stable,
+                "holistic": stress.ablation.critical_property.is_none(),
+                "parallel_ribbons": stress.alignment.ribbons_parallel,
+            },
             "totals": {
                 "records": summary.total_records,
                 "potentials": summary.unique_potentials,
@@ -806,6 +1006,286 @@ fn persist_rank_correlation_claim(
     db::query::insert_claim(
         conn, &claim_id, AGENT_ID, "DimensionalityRanking",
         &data, &description, confidence, status,
+    )?;
+    Ok(())
+}
+
+// ─── evaluate dispatch ──────────────────────────────────────
+
+/// Evaluation report for one hypothesis.
+#[derive(Debug, serde::Serialize)]
+struct EvaluationReport {
+    hypothesis_id: String,
+    class: String,
+    prior_status: String,
+    test_result: serde_json::Value,
+    null_model: Option<serde_json::Value>,
+    verdict: String,
+    p_value: Option<f64>,
+    new_confidence: f64,
+}
+
+fn run_evaluate(
+    conn: &Connection,
+    id_filter: Option<&str>,
+    iterations: usize,
+    alpha: f64,
+) -> Result<()> {
+    // Collect hypotheses to evaluate
+    let hypotheses = db::query::list_hypotheses(conn, 200)?;
+    let targets: Vec<_> = hypotheses.into_iter()
+        .filter(|h| {
+            if let Some(id) = id_filter {
+                h.hypothesis_id == id
+            } else {
+                h.status == "proposed"
+            }
+        })
+        .collect();
+
+    if targets.is_empty() {
+        if let Some(id) = id_filter {
+            anyhow::bail!("hypothesis '{}' not found", id);
+        } else {
+            eprintln!("[evaluate] no 'proposed' hypotheses to evaluate");
+            return Ok(());
+        }
+    }
+
+    eprintln!("[evaluate] evaluating {} hypothesis(es)", targets.len());
+    let mut reports = Vec::new();
+
+    for hyp in &targets {
+        eprintln!("\n  ── {} ({}) ──", hyp.hypothesis_id, hyp.class);
+
+        let report = evaluate_one(conn, hyp, iterations, alpha)?;
+
+        eprintln!(
+            "  verdict={} confidence={:.3} p={}",
+            report.verdict,
+            report.new_confidence,
+            report.p_value.map_or("n/a".to_string(), |p| format!("{:.4}", p)),
+        );
+
+        // Update the hypothesis in the DB
+        let (evidence_for, evidence_against) = match report.verdict.as_str() {
+            "confirmed" => (hyp.evidence_for + 1, hyp.evidence_against),
+            "refuted" => (hyp.evidence_for, hyp.evidence_against + 1),
+            _ => (hyp.evidence_for, hyp.evidence_against),
+        };
+        db::query::update_hypothesis_status(
+            conn,
+            &hyp.hypothesis_id,
+            &report.verdict,
+            evidence_for,
+            evidence_against,
+            report.new_confidence,
+        )?;
+
+        reports.push(report);
+    }
+
+    println!("{}", serde_json::to_string_pretty(&reports)?);
+    eprintln!("\n[evaluate] done: {} hypothesis(es) evaluated", reports.len());
+    Ok(())
+}
+
+/// Evaluate a single hypothesis by dispatching to the correct test+null-model.
+fn evaluate_one(
+    conn: &Connection,
+    hyp: &db::query::HypothesisRow,
+    iterations: usize,
+    alpha: f64,
+) -> Result<EvaluationReport> {
+    let effective_class = classify_hypothesis(hyp);
+    if effective_class != hyp.class {
+        eprintln!(
+            "  [evaluate] mapped class '{}' → '{}' for dispatch",
+            hyp.class, effective_class,
+        );
+    }
+
+    match effective_class.as_str() {
+        "fingerprint" => {
+            let test = hypothesis::fingerprint::test_fingerprint(conn, None)?;
+            persist_fingerprint_claim(conn, None, &test)?;
+            let test_json = serde_json::to_value(&test)?;
+
+            let null = null_model::fingerprint_null(conn, None, iterations)?;
+            persist_null_result(conn, &null)?;
+            let null_json = serde_json::to_value(&null)?;
+
+            let verdict = if null.p_value < alpha && test.supported {
+                "confirmed"
+            } else if !test.supported {
+                "refuted"
+            } else {
+                "needs_more_data"
+            };
+
+            Ok(EvaluationReport {
+                hypothesis_id: hyp.hypothesis_id.clone(),
+                class: hyp.class.clone(),
+                prior_status: hyp.status.clone(),
+                test_result: test_json,
+                null_model: Some(null_json),
+                verdict: verdict.to_string(),
+                p_value: Some(null.p_value),
+                new_confidence: test.loo_accuracy.clamp(0.0, 1.0),
+            })
+        }
+        "transfer" => {
+            let test = hypothesis::transfer::test_transfer(conn, None)?;
+            persist_transfer_claim(conn, None, &test)?;
+            let test_json = serde_json::to_value(&test)?;
+
+            let null = null_model::transfer_null(conn, None, iterations)?;
+            persist_null_result(conn, &null)?;
+            let null_json = serde_json::to_value(&null)?;
+
+            let verdict = if null.p_value < alpha && test.supported {
+                "confirmed"
+            } else if !test.supported {
+                "refuted"
+            } else {
+                "needs_more_data"
+            };
+
+            Ok(EvaluationReport {
+                hypothesis_id: hyp.hypothesis_id.clone(),
+                class: hyp.class.clone(),
+                prior_status: hyp.status.clone(),
+                test_result: test_json,
+                null_model: Some(null_json),
+                verdict: verdict.to_string(),
+                p_value: Some(null.p_value),
+                new_confidence: test.mean_cosine_similarity.clamp(0.0, 1.0),
+            })
+        }
+        "manifold" => {
+            let test = hypothesis::manifold::test_manifold(conn)?;
+            persist_manifold_results(conn, &test)?;
+            let test_json = serde_json::to_value(&test)?;
+
+            // Bootstrap a representative grouping
+            let null = null_model::manifold_bootstrap(conn, "global", iterations)?;
+            persist_null_result(conn, &null)?;
+            let null_json = serde_json::to_value(&null)?;
+
+            let verdict = if null.p_value < alpha && test.hyper_ribbon_confirmed {
+                "confirmed"
+            } else if !test.hyper_ribbon_confirmed {
+                "refuted"
+            } else {
+                "needs_more_data"
+            };
+
+            Ok(EvaluationReport {
+                hypothesis_id: hyp.hypothesis_id.clone(),
+                class: hyp.class.clone(),
+                prior_status: hyp.status.clone(),
+                test_result: test_json,
+                null_model: Some(null_json),
+                verdict: verdict.to_string(),
+                p_value: Some(null.p_value),
+                new_confidence: if test.hyper_ribbon_confirmed { 0.95 } else { 0.1 },
+            })
+        }
+        other => {
+            eprintln!("  [evaluate] no test infrastructure for class '{}', skipping", other);
+            Ok(EvaluationReport {
+                hypothesis_id: hyp.hypothesis_id.clone(),
+                class: hyp.class.clone(),
+                prior_status: hyp.status.clone(),
+                test_result: json!({ "skipped": true, "reason": format!("no test for class: {}", other) }),
+                null_model: None,
+                verdict: "needs_more_data".to_string(),
+                p_value: None,
+                new_confidence: hyp.confidence,
+            })
+        }
+    }
+}
+
+/// Map an LLM-generated hypothesis class to the closest available test.
+///
+/// The LLM may emit class names like "causal_mechanism", "parameter_bound",
+/// "symmetry_breaking", etc. We route them to the closest statistical test
+/// by matching on keywords in the class name, description, and prediction.
+fn classify_hypothesis(hyp: &db::query::HypothesisRow) -> String {
+    // Exact matches for our core classes
+    let class_lower = hyp.class.to_ascii_lowercase();
+    match class_lower.as_str() {
+        "fingerprint" | "fingerprinttest" => return "fingerprint".to_string(),
+        "transfer" | "universalalignment" | "universal_alignment" => return "transfer".to_string(),
+        "manifold" | "hyper_ribbon" | "hyperribbonconfirmed" => return "manifold".to_string(),
+        _ => {}
+    }
+
+    // Fuzzy: search the class name, description, and prediction for keywords
+    let text = format!(
+        "{} {} {} {}",
+        class_lower,
+        hyp.description.to_ascii_lowercase(),
+        hyp.testable_prediction.to_ascii_lowercase(),
+        hyp.title.to_ascii_lowercase(),
+    );
+
+    // Manifold keywords (most common from LLM output)
+    let manifold_signals = [
+        "manifold", "ribbon", "dimensionality", "participation ratio",
+        "eigenvalue", "pca", "principal component", "1d", "one-dimensional",
+        "low-dimensional", "hyper-ribbon", "covariance", "error collapse",
+        "causal_mechanism", "causal mechanism",
+    ];
+    let manifold_score: usize = manifold_signals.iter()
+        .filter(|kw| text.contains(**kw))
+        .count();
+
+    // Transfer keywords
+    let transfer_signals = [
+        "transfer", "cross-element", "universal", "conserved",
+        "cosine similarity", "pc1", "alignment", "cross element",
+    ];
+    let transfer_score: usize = transfer_signals.iter()
+        .filter(|kw| text.contains(**kw))
+        .count();
+
+    // Fingerprint keywords
+    let fingerprint_signals = [
+        "fingerprint", "classifier", "discriminat", "functional form",
+        "pair_style", "leave-one-out", "loo", "nearest neighbor",
+        "family", "signature",
+    ];
+    let fingerprint_score: usize = fingerprint_signals.iter()
+        .filter(|kw| text.contains(**kw))
+        .count();
+
+    // Pick the highest score, defaulting to manifold (the broadest test)
+    if fingerprint_score > manifold_score && fingerprint_score > transfer_score {
+        "fingerprint".to_string()
+    } else if transfer_score > manifold_score && transfer_score > fingerprint_score {
+        "transfer".to_string()
+    } else if manifold_score > 0 {
+        "manifold".to_string()
+    } else {
+        // Default: manifold is the broadest test (covers general error structure)
+        eprintln!(
+            "  [classify] no keyword match for class='{}', defaulting to manifold",
+            hyp.class,
+        );
+        "manifold".to_string()
+    }
+}
+
+/// Persist a null-model result to the database.
+fn persist_null_result(conn: &Connection, r: &null_model::NullModelResult) -> Result<()> {
+    db::query::upsert_null_model(
+        conn, &r.test_name, &r.grouping_key, &r.method,
+        r.observed, r.null_mean, r.null_std,
+        r.null_ci_low, r.null_ci_high,
+        r.p_value, r.n_iterations,
+        &r.null_distribution,
     )?;
     Ok(())
 }
