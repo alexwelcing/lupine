@@ -321,11 +321,9 @@ pub struct FamilyStats {
 /// Get per-pair_style family statistics.
 pub fn family_statistics(conn: &Connection, element: Option<&str>) -> Result<Vec<FamilyStats>> {
     let mut sql = String::from(
-        "SELECT pair_style, COUNT(DISTINCT potential_id), COUNT(*), AVG(error_pct),
-                COALESCE(
-                  SQRT(AVG(error_pct * error_pct) - AVG(error_pct) * AVG(error_pct)),
-                  0.0
-                )
+        "SELECT pair_style, COUNT(DISTINCT potential_id), COUNT(*),
+                AVG(error_pct),
+                SUM(error_pct * error_pct), SUM(error_pct)
          FROM benchmarks WHERE 1=1"
     );
 
@@ -337,12 +335,21 @@ pub fn family_statistics(conn: &Connection, element: Option<&str>) -> Result<Vec
     let mut stmt = conn.prepare(&sql)?;
     let stats: Vec<FamilyStats> = stmt
         .query_map([], |r| {
+            let n_records: usize = r.get(2)?;
+            let sum_sq: f64 = r.get::<_, f64>(4).unwrap_or(0.0);
+            let sum_val: f64 = r.get::<_, f64>(5).unwrap_or(0.0);
+            let n = n_records as f64;
+            let variance = if n > 1.0 {
+                (sum_sq / n - (sum_val / n).powi(2)).max(0.0)
+            } else {
+                0.0
+            };
             Ok(FamilyStats {
                 pair_style: r.get(0)?,
                 n_potentials: r.get(1)?,
-                n_records: r.get(2)?,
+                n_records,
                 mean_error_pct: r.get(3)?,
-                std_error_pct: r.get(4)?,
+                std_error_pct: variance.sqrt(),
                 properties: Vec::new(),
             })
         })?
@@ -692,6 +699,10 @@ pub struct ClaimRow {
 }
 
 /// Insert a discovery claim. Idempotent on `claim_id`.
+///
+/// On successful local insert, fires a best-effort sync to the glim-think
+/// Cloudflare worker so the D1 ledger stays current. Sync failures log a
+/// warning but never fail the local commit. See `crate::worker_sync`.
 pub fn insert_claim(
     conn: &Connection,
     claim_id: &str,
@@ -703,12 +714,24 @@ pub fn insert_claim(
     status: &str,
 ) -> Result<()> {
     let data_json = serde_json::to_string(claim_data)?;
-    conn.execute(
+    let changes = conn.execute(
         "INSERT OR IGNORE INTO claims
          (claim_id, agent_id, claim_type, claim_data, confidence, status, description)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
         rusqlite::params![claim_id, agent_id, claim_type, data_json, confidence, status, description],
     )?;
+
+    // Only push if the local row was actually written (skip on idempotent
+    // re-runs where the claim_id already existed). Compiled out under
+    // `cargo test` to keep unit tests fully offline.
+    #[cfg(not(test))]
+    if changes > 0 {
+        crate::worker_sync::try_push_claim(
+            claim_id, agent_id, claim_type, &data_json, description, confidence, status,
+        );
+    }
+    #[cfg(test)]
+    let _ = changes;
     Ok(())
 }
 

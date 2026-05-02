@@ -3,6 +3,9 @@
 //! Calls out to `lupine-dspy` via subprocess, passing JSON on stdin
 //! and reading JSON from stdout. This keeps all LLM logic in Python
 //! while Rust owns all data and statistical truth.
+//!
+//! Set `DISTILL_BRIDGE_MOCK=1` to enable offline mock mode, which
+//! returns deterministic synthetic responses without spawning Python.
 
 use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
@@ -58,6 +61,81 @@ pub struct BridgeResponse {
     pub error: Option<String>,
 }
 
+/// Check if mock mode is enabled via `DISTILL_BRIDGE_MOCK=1`.
+fn is_mock() -> bool {
+    std::env::var("DISTILL_BRIDGE_MOCK")
+        .map(|v| v == "1" || v.eq_ignore_ascii_case("true"))
+        .unwrap_or(false)
+}
+
+/// Generate a deterministic mock response for a given request.
+/// This enables testing the full `theorize → persist` pipeline
+/// without requiring a Python subprocess or LLM API access.
+fn mock_call(request: &BridgeRequest) -> Result<BridgeResponse> {
+    let (command, data) = match request {
+        BridgeRequest::Theorize { element, .. } => {
+            let hyp_id = format!("HYP-MOCK-{}", element.to_ascii_uppercase());
+            (
+                "theorize".to_string(),
+                serde_json::json!({
+                    "hypothesis_id": hyp_id,
+                    "type": "manifold",
+                    "title": format!("Mock Hypothesis: {} Error Manifold Structure", element),
+                    "description": format!(
+                        "Synthetic hypothesis for {} generated in mock mode. \
+                         The error manifold for {} interatomic potentials exhibits \
+                         low-dimensional ribbon geometry consistent with parameter-count \
+                         constraints on the functional form.",
+                        element, element,
+                    ),
+                    "testable_prediction": format!(
+                        "Participation ratio PR < 2.0 for {} error vectors grouped by pair_style.",
+                        element,
+                    ),
+                    "confidence": 0.5,
+                    "reasoning": "Mock mode — no LLM reasoning was performed.",
+                }),
+            )
+        }
+        BridgeRequest::Analyze { element, .. } => (
+            "analyze".to_string(),
+            serde_json::json!({
+                "summary": format!("Mock analysis for {}. No causal structure computed.", element),
+                "confounders": [],
+            }),
+        ),
+        BridgeRequest::Design { hypothesis_id, .. } => (
+            "design".to_string(),
+            serde_json::json!({
+                "experiments": [{
+                    "hypothesis_id": hypothesis_id,
+                    "description": "Mock experiment — run manifold analysis with bootstrap CI.",
+                    "element": "Al",
+                    "pair_style": "eam/alloy",
+                }],
+            }),
+        ),
+        BridgeRequest::Mine { title, doi, .. } => (
+            "mine".to_string(),
+            serde_json::json!({
+                "records": [],
+                "paper_title": title,
+                "doi": doi,
+                "note": "Mock mode — no records extracted.",
+            }),
+        ),
+    };
+
+    eprintln!("[bridge:mock] {} → deterministic response", command);
+
+    Ok(BridgeResponse {
+        success: true,
+        command,
+        data,
+        error: None,
+    })
+}
+
 /// Location of the lupine-dspy Python module.
 fn find_dspy_dir() -> Result<std::path::PathBuf> {
     // Look relative to the distill binary
@@ -77,7 +155,14 @@ fn find_dspy_dir() -> Result<std::path::PathBuf> {
 }
 
 /// Call the DSPy bridge and return the response.
+///
+/// If `DISTILL_BRIDGE_MOCK=1` is set, returns a deterministic synthetic
+/// response without spawning a Python subprocess.
 pub fn call(request: &BridgeRequest) -> Result<BridgeResponse> {
+    if is_mock() {
+        return mock_call(request);
+    }
+
     let dspy_dir = find_dspy_dir()?;
     let input = serde_json::to_string(request)?;
 
@@ -119,10 +204,16 @@ pub fn call(request: &BridgeRequest) -> Result<BridgeResponse> {
 }
 
 /// Check if the DSPy bridge is available (Python + lupine-dspy installed).
+///
+/// Returns `true` in mock mode regardless of Python availability.
 pub fn is_available() -> bool {
+    if is_mock() {
+        return true;
+    }
     find_dspy_dir().is_ok() && Command::new("python")
         .args(["--version"])
         .output()
         .map(|o| o.status.success())
         .unwrap_or(false)
 }
+

@@ -12,7 +12,7 @@
 #![allow(dead_code)]
 
 use serde::{Deserialize, Serialize};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 // ───────────────────────────────────────────────────────────
 // Core Types
