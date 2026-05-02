@@ -11,6 +11,8 @@
  *   5. Insert a `deployments` row tagged `service='cron-fleet'`.
  */
 import type { Env } from "./types";
+import { recordCronRun, runSmoketest } from "./ops/observability";
+import { runOrchestratorTick } from "./research/orchestrator";
 
 const FLEET_ELEMENTS = [
   "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb",
@@ -267,13 +269,59 @@ export async function scheduled(
   env: Env,
   ctx: ExecutionContext,
 ): Promise<void> {
-  if (event.cron === "0 9 * * MON") {
-    ctx.waitUntil(drainCritiques(env, ctx));
+  // Phase A — every cron is wrapped in recordCronRun for heartbeat
+  // tracking. The wrapper writes started_at/finished_at/outcome to the
+  // cron_runs table; /health surfaces the latest row per cron.
+  if (event.cron === "*/5 * * * *") {
+    ctx.waitUntil(
+      recordCronRun(env, "smoketest", event.cron, async () => {
+        const result = await runSmoketest(env);
+        if (result.overall_outcome === "fail") {
+          throw new Error(
+            `smoketest failed: ${result.probes.filter((p) => p.outcome === "fail").map((p) => p.name).join(", ")}`,
+          );
+        }
+      }),
+    );
     return;
   }
+
+  if (event.cron === "0 * * * *") {
+    // Hourly: emit broadcast + tick the auto-research orchestrator
+    // (Phase E). Broadcast is fast; orchestrator just enqueues queue
+    // work so this cron stays under the 30s scheduled-handler budget.
+    ctx.waitUntil(
+      recordCronRun(env, "hourly-broadcast", event.cron, async () => {
+        await createLabBroadcast(env, "cron-hourly");
+      }),
+    );
+    ctx.waitUntil(
+      recordCronRun(env, "research-orchestrator", event.cron, async () => {
+        const result = await runOrchestratorTick(env);
+        console.log(
+          `[research-orchestrator] enqueued=${result.enqueued.length} notes=${result.notes.join("; ")}`,
+        );
+      }),
+    );
+    return;
+  }
+
+  if (event.cron === "0 9 * * MON") {
+    ctx.waitUntil(
+      recordCronRun(env, "critique-drain", event.cron, () =>
+        drainCritiques(env, ctx),
+      ),
+    );
+    return;
+  }
+
   // Default: nightly sweep on "0 7 * * *" and any unknown cron (defensive —
   // better to run the safe sweep than silently no-op).
-  ctx.waitUntil(runScheduledSweep(event, env));
+  ctx.waitUntil(
+    recordCronRun(env, "nightly-fleet", event.cron, () =>
+      runScheduledSweep(event, env),
+    ),
+  );
 }
 
 /**

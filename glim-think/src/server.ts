@@ -38,7 +38,9 @@ import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
 import { searchLiterature, isLiteratureSource, rowToPaper } from "./literature";
 import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
+import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
+import { getHealthSnapshot, runSmoketest } from "./ops/observability";
 import type {
   BenchmarkRecord,
   ClaimRecord,
@@ -124,16 +126,143 @@ export default {
           console.error("/health hypotheses query failed:", e);
         }
 
+        const snapshot = await getHealthSnapshot(env);
+        const status =
+          snapshot.last_smoketest?.overall_outcome === "fail"
+            ? "degraded"
+            : "ok";
+
         return Response.json({
-          status: "ok",
+          status,
           service: "glim-think-v2",
-          version: "2.1.0",
+          version: "2.2.0",
           runtime: "think",
           research_mode: "causal-geometry",
           research_direction: "Error Manifold Invariance & Causal Benchmarking",
           agents: ["Orchestrator", "Manifold", "Causal", "Theorist", "Experiment"],
           active_hypotheses: activeHypotheses,
+          observability: {
+            counts: {
+              records: snapshot.records,
+              hypotheses: snapshot.hypotheses,
+              claims: snapshot.claims,
+              pending_experiments: snapshot.pending_experiments,
+              pending_critiques: snapshot.pending_critiques,
+            },
+            cron_runs: snapshot.cron_runs,
+            last_smoketest: snapshot.last_smoketest,
+            recent_errors: snapshot.recent_errors.slice(0, 5),
+          },
         });
+      }
+
+      // === Phase A — observability endpoints ===
+      if (url.pathname === "/ops/cron-runs" && request.method === "GET") {
+        const limit = Math.min(
+          parseInt(url.searchParams.get("limit") ?? "50", 10) || 50,
+          200,
+        );
+        const cronName = url.searchParams.get("cron");
+        const sql = cronName
+          ? `SELECT run_id, cron_name, cron_expression, started_at, finished_at,
+                    outcome, duration_ms, error
+               FROM cron_runs
+              WHERE cron_name = ?1
+              ORDER BY started_at DESC
+              LIMIT ?2`
+          : `SELECT run_id, cron_name, cron_expression, started_at, finished_at,
+                    outcome, duration_ms, error
+               FROM cron_runs
+              ORDER BY started_at DESC
+              LIMIT ?1`;
+        const stmt = cronName
+          ? env.LEDGER.prepare(sql).bind(cronName, limit)
+          : env.LEDGER.prepare(sql).bind(limit);
+        try {
+          const rows = await stmt.all();
+          return Response.json(
+            { runs: rows.results ?? [], count: (rows.results ?? []).length },
+            { headers: JSON_CORS_HEADERS },
+          );
+        } catch (e) {
+          return Response.json(
+            { runs: [], count: 0, error: String(e) },
+            { headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+
+      if (url.pathname === "/ops/errors" && request.method === "GET") {
+        const limit = Math.min(
+          parseInt(url.searchParams.get("limit") ?? "50", 10) || 50,
+          200,
+        );
+        const source = url.searchParams.get("source");
+        const sql = source
+          ? `SELECT error_id, source, message, stack, context_json, occurred_at
+               FROM ops_errors
+              WHERE source = ?1
+              ORDER BY occurred_at DESC
+              LIMIT ?2`
+          : `SELECT error_id, source, message, stack, context_json, occurred_at
+               FROM ops_errors
+              ORDER BY occurred_at DESC
+              LIMIT ?1`;
+        const stmt = source
+          ? env.LEDGER.prepare(sql).bind(source, limit)
+          : env.LEDGER.prepare(sql).bind(limit);
+        try {
+          const rows = await stmt.all();
+          return Response.json(
+            { errors: rows.results ?? [], count: (rows.results ?? []).length },
+            { headers: JSON_CORS_HEADERS },
+          );
+        } catch (e) {
+          return Response.json(
+            { errors: [], count: 0, error: String(e) },
+            { headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+
+      if (url.pathname === "/ops/smoketest" && request.method === "GET") {
+        const limit = Math.min(
+          parseInt(url.searchParams.get("limit") ?? "20", 10) || 20,
+          100,
+        );
+        try {
+          const rows = await env.LEDGER.prepare(
+            `SELECT run_id, started_at, finished_at, overall_outcome,
+                    probes_json, duration_ms
+               FROM smoketest_runs
+              ORDER BY started_at DESC
+              LIMIT ?1`,
+          )
+            .bind(limit)
+            .all();
+          const runs = (rows.results ?? []).map((row: Record<string, unknown>) => ({
+            ...row,
+            probes:
+              typeof row.probes_json === "string"
+                ? JSON.parse(row.probes_json)
+                : row.probes_json,
+          }));
+          return Response.json(
+            { runs, count: runs.length },
+            { headers: JSON_CORS_HEADERS },
+          );
+        } catch (e) {
+          return Response.json(
+            { runs: [], count: 0, error: String(e) },
+            { headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+
+      if (url.pathname === "/ops/smoketest/run" && request.method === "POST") {
+        // Manual trigger — useful for testing without waiting for the cron.
+        const result = await runSmoketest(env);
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
       }
 
       // Orchestrator: trigger a research analysis directly via D1
@@ -1338,6 +1467,13 @@ ${narrative}
             enqueued_at: nowIso(),
             source,
           });
+        }
+
+        if (url.pathname === "/research/auto" && request.method === "POST") {
+          // Manual orchestrator tick — same code path as the hourly cron.
+          // Useful to test the auto-research loop without waiting.
+          const result = await runOrchestratorTick(env);
+          return Response.json(result, { headers: JSON_CORS_HEADERS });
         }
 
         if (url.pathname === "/research/jobs" && request.method === "GET") {
