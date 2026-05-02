@@ -5,38 +5,38 @@ export const CATALOG = {
   categories: [
     {
       id: 'foundations',
-      label: 'Foundations',
-      blurb: 'Start here — orientation, vision, and shared vocabulary.',
+      label: { en: 'Foundations', zh: '基础与愿景' },
+      blurb: { en: 'Start here — orientation, vision, and shared vocabulary.', zh: '从这里开始 — 方向、愿景和共有词汇。' },
     },
     {
       id: 'uq',
-      label: 'Uncertainty & Error',
-      blurb: 'How we measure, predict, and correct potential error at scale.',
+      label: { en: 'Uncertainty & Error', zh: '不确定性与误差' },
+      blurb: { en: 'How we measure, predict, and correct potential error at scale.', zh: '我们如何在大规模下测量、预测和纠正势函数误差。' },
     },
     {
       id: 'validation',
-      label: 'Validation & Benchmarking',
-      blurb: 'Phonons, force fields, and what "good enough" really means.',
+      label: { en: 'Validation & Benchmarking', zh: '验证与基准测试' },
+      blurb: { en: 'Phonons, force fields, and what "good enough" really means.', zh: '声子、力场以及“足够好”的真正含义。' },
     },
     {
       id: 'theory',
-      label: 'Theory',
-      blurb: 'Coarse-graining, sloppy models, information-theoretic bounds.',
+      label: { en: 'Theory', zh: '理论' },
+      blurb: { en: 'Coarse-graining, sloppy models, information-theoretic bounds.', zh: '粗粒化、sloppy模型、信息论边界。' },
     },
     {
       id: 'ecosystem',
-      label: 'Ecosystem & Funding',
-      blurb: 'The people, labs, and programs behind computational materials.',
+      label: { en: 'Ecosystem & Funding', zh: '生态与资金' },
+      blurb: { en: 'The people, labs, and programs behind computational materials.', zh: '计算材料科学背后的研究人员、实验室和项目。' },
     },
     {
       id: 'formalization',
-      label: 'Formalization',
-      blurb: 'Theorem-driven validation, build-locking contracts, and the epistemic gap.',
+      label: { en: 'Formalization', zh: '形式化' },
+      blurb: { en: 'Theorem-driven validation, build-locking contracts, and the epistemic gap.', zh: '定理驱动验证、构建锁定契约和认知差距。' },
     },
     {
       id: 'meta',
-      label: 'Meta',
-      blurb: 'Navigation, extraction logs, and how this library was built.',
+      label: { en: 'Meta', zh: '元数据' },
+      blurb: { en: 'Navigation, extraction logs, and how this library was built.', zh: '导航、提取日志以及该图书馆是如何构建的。' },
     },
   ],
 

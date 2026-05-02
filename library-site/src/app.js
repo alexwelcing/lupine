@@ -136,10 +136,10 @@ function cardFor(article, opts = {}) {
   const card = el('a', { href: `#/read/${article.id}`, class: 'card' });
   if (opts.showCategory) {
     const catLabel = (STATE.manifest.categories.find(c => c.id === article.category) || {}).label;
-    if (catLabel) card.append(el('span', { class: 'card-pill-cat' }, catLabel));
+    if (catLabel) card.append(el('span', { class: 'card-pill-cat' }, t(catLabel, STATE.settings.lang)));
   }
-  card.append(el('div', { class: 'card-title' }, article.title));
-  if (article.subtitle) card.append(el('div', { class: 'card-sub' }, article.subtitle));
+  card.append(el('div', { class: 'card-title' }, t(article.title, STATE.settings.lang)));
+  if (article.subtitle) card.append(el('div', { class: 'card-sub' }, t(article.subtitle, STATE.settings.lang)));
 
   const meta = el('div', { class: 'card-meta' });
   meta.append(el('span', {}, `${article.readMinutes} min`));
@@ -211,8 +211,8 @@ async function renderHome() {
       const arts = m.articles.filter(a => a.category === cat.id);
       if (!arts.length) continue;
       const shelf = el('section', { class: 'shelf' });
-      shelf.append(el('h2', {}, cat.label));
-      if (cat.blurb) shelf.append(el('p', { class: 'blurb' }, cat.blurb));
+      shelf.append(el('h2', {}, t(cat.label, STATE.settings.lang)));
+      if (cat.blurb) shelf.append(el('p', { class: 'blurb' }, t(cat.blurb, STATE.settings.lang)));
       const cards = el('div', { class: 'cards' });
       for (const a of arts) cards.append(cardFor(a));
       shelf.append(cards);
@@ -244,7 +244,7 @@ async function renderReader(id) {
     const root = el('article', { class: 'reader' });
 
     const head = el('header', { class: 'reader-head' });
-    if (cat) head.append(el('div', { class: 'reader-cat' }, cat.label));
+    if (cat) head.append(el('div', { class: 'reader-cat' }, t(cat.label, STATE.settings.lang)));
 
     // Fallback notice when article not available in requested language
     if (article._displayLang && article._requestedLang && article._displayLang !== article._requestedLang) {
@@ -254,8 +254,8 @@ async function renderReader(id) {
       head.append(notice);
     }
 
-    head.append(el('h1', { class: 'reader-title' }, article.title));
-    if (article.subtitle) head.append(el('p', { class: 'reader-sub' }, article.subtitle));
+    head.append(el('h1', { class: 'reader-title' }, t(article.title, STATE.settings.lang)));
+    if (article.subtitle) head.append(el('p', { class: 'reader-sub' }, t(article.subtitle, STATE.settings.lang)));
     const meta = el('div', { class: 'reader-meta' });
     meta.append(el('span', {}, `${article.readMinutes} ${t('reader.meta.read', STATE.settings.lang)}`));
     meta.append(el('span', {}, `${article.words.toLocaleString()} ${t('home.stats.words', STATE.settings.lang)}`));
@@ -315,7 +315,7 @@ function linkBlock(article, label, cls) {
   }
   return el('a', { class: cls, href: `#/read/${article.id}` },
     el('span', { class: 'lbl' }, label),
-    el('span', {}, article.title));
+    el('span', {}, t(article.title, STATE.settings.lang)));
 }
 
 // Scroll-tracked progress
@@ -393,16 +393,16 @@ function renderSearchResults(q) {
     const li = el('li');
     const link = el('a', { href: `#/read/${a.id}`,
       onclick: () => searchDialog.close() });
-    link.append(el('div', { class: 'r-title' }, a.title));
-    if (a.subtitle) link.append(el('div', { class: 'r-sub' }, a.subtitle));
+    link.append(el('div', { class: 'r-title' }, t(a.title, STATE.settings.lang)));
+    if (a.subtitle) link.append(el('div', { class: 'r-sub' }, t(a.subtitle, STATE.settings.lang)));
     li.append(link);
     searchResults.append(li);
   }
 }
 function scoreMatch(a, q) {
   if (!q) return 1;
-  const title = (a.title || '').toLowerCase();
-  const sub   = (a.subtitle || '').toLowerCase();
+  const title = (typeof a.title === 'string' ? a.title : Object.values(a.title || {}).join(' ')).toLowerCase();
+  const sub   = (typeof a.subtitle === 'string' ? a.subtitle : Object.values(a.subtitle || {}).join(' ')).toLowerCase();
   const tags  = (a.tags || []).join(' ').toLowerCase();
   
   let extractedTokens = '';
@@ -491,13 +491,13 @@ function buildGraphData(manifest) {
 
   // Category nodes — anchor the layout into shelves.
   for (const cat of manifest.categories) {
-    add(`cat:${cat.id}`, 'category', cat.label, 6);
+    add(`cat:${cat.id}`, 'category', t(cat.label, STATE.settings.lang), 6);
   }
 
   // Article nodes link to their category and to each tag (tags become the
   // shared "entities" that bridge shelves).
   for (const a of manifest.articles) {
-    add(a.id, 'article', a.title, 3);
+    add(a.id, 'article', t(a.title, STATE.settings.lang), 3);
     if (a.category) {
       links.push({ source: a.id, target: `cat:${a.category}` });
     }
