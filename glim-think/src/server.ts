@@ -41,7 +41,7 @@ import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
-import { testMiniMaxCall } from "./agents/models";
+import { testMiniMaxCall, listMiniMaxModels, sweepMiniMaxEndpoints, exerciseDeepTier } from "./agents/models";
 import type {
   BenchmarkRecord,
   ClaimRecord,
@@ -1523,7 +1523,31 @@ ${narrative}
 
       // === MiniMax connectivity probe — verify which model your plan supports
       if (url.pathname === "/admin/test-minimax" && (request.method === "POST" || request.method === "GET")) {
-        const result = await testMiniMaxCall(env);
+        const result = await testMiniMaxCall(env, {
+          baseURL: url.searchParams.get("base_url") ?? undefined,
+          model: url.searchParams.get("model") ?? undefined,
+        });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/list-minimax-models" && request.method === "GET") {
+        const result = await listMiniMaxModels(env, {
+          baseURL: url.searchParams.get("base_url") ?? undefined,
+        });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/sweep-minimax" && request.method === "GET") {
+        const extra = url.searchParams.get("extra_urls");
+        const extraUrls = extra ? extra.split(",").map((s) => s.trim()).filter(Boolean) : [];
+        const results = await sweepMiniMaxEndpoints(env, extraUrls);
+        return Response.json({ results, key_prefix: env.MINIMAX_API_KEY?.slice(0, 8) }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/exercise-deep-tier" && (request.method === "POST" || request.method === "GET")) {
+        // Runs the full selectModel('deep') + spendMiddleware + generateText
+        // pipeline. /budget should tick by the returned token count.
+        const result = await exerciseDeepTier(env);
         return Response.json(result, { headers: JSON_CORS_HEADERS });
       }
 
