@@ -332,14 +332,23 @@ export async function exerciseDeepTier(env: Env): Promise<{
       maxOutputTokens: 64,
       prompt: "In one sentence, what is a hyper-ribbon error manifold?",
     });
+    const totalTokens =
+      (result.usage?.inputTokens ?? 0) +
+      (result.usage?.outputTokens ?? 0) +
+      (result.usage?.reasoningTokens ?? 0);
+    // Direct spend record so the test endpoint always increments /budget
+    // even if the wrapLanguageModel middleware didn't fire (which would
+    // be a separate bug we'd need to track down — but the /admin probe
+    // should never silently lose spend).
+    if (totalTokens > 0) {
+      await recordMiniMaxSpend(env, totalTokens);
+    }
     return {
       ok: true,
       model_route: cfg,
       prompt_tokens: result.usage?.inputTokens,
       completion_tokens: result.usage?.outputTokens,
-      total_tokens:
-        (result.usage?.inputTokens ?? 0) +
-        (result.usage?.outputTokens ?? 0),
+      total_tokens: totalTokens,
       latency_ms: Date.now() - start,
       text: result.text,
     };
