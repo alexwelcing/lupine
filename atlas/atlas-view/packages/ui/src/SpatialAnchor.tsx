@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useXR } from '@react-three/xr';
 import { XRMoleculeInteraction } from './xr/XRMoleculeInteraction';
+import { XRControlPanel } from './xr/XRControlPanel';
 
 interface SpatialAnchorProps {
   children: React.ReactNode;
@@ -20,11 +21,14 @@ export function SpatialAnchor({ children, cameraDistance = 50 }: SpatialAnchorPr
   const scale = isImmersive ? Math.max(0.01, 1.0 / (cameraDistance / 1.4)) : 1;
 
   const innerContent = isImmersive ? (
-    <XRMoleculeInteraction>
-      <group scale={scale}>
-        {children}
-      </group>
-    </XRMoleculeInteraction>
+    <>
+      <XRMoleculeInteraction>
+        <group scale={scale}>
+          {children}
+        </group>
+      </XRMoleculeInteraction>
+      <XRControlPanel />
+    </>
   ) : (
     <>{children}</>
   );
