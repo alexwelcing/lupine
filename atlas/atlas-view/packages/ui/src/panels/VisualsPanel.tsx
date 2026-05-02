@@ -188,7 +188,7 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
               <div>
                 <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Palette</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  {['viridis', 'coolwarm', 'plasma', 'neon'].map(c => (
+                  {['viridis', 'inferno', 'coolwarm', 'plasma', 'magma', 'cividis', 'neon', 'sunset', 'vaporwave', 'ocean', 'fire', 'ice', 'forest', 'cyberpunk', 'autumn', 'grayscale', 'turbo'].map(c => (
                     <IsotopeChip key={c} label={c.charAt(0).toUpperCase() + c.slice(1)} selected={colormap === c} onClick={() => setColormap(c as any)} />
                   ))}
                 </div>

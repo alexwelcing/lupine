@@ -103,7 +103,7 @@ export function XRControlPanel() {
     }
   });
 
-  const colormaps: ColormapName[] = ['viridis', 'plasma', 'coolwarm', 'neon'];
+  const colormaps: ColormapName[] = ['viridis', 'inferno', 'coolwarm', 'plasma', 'magma', 'cividis', 'neon', 'sunset', 'vaporwave', 'ocean', 'fire', 'ice', 'forest', 'cyberpunk', 'autumn', 'grayscale', 'turbo'];
   const cycleColormap = () => {
     const idx = colormaps.indexOf(colormap);
     setColormap(colormaps[(idx + 1) % colormaps.length]);
