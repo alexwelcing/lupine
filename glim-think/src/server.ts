@@ -42,6 +42,7 @@ import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
 import { testMiniMaxCall, listMiniMaxModels, sweepMiniMaxEndpoints, exerciseDeepTier } from "./agents/models";
+import { runDiag, probeDOSynthesize, probeDOKV } from "./admin/diag";
 import type {
   BenchmarkRecord,
   ClaimRecord,
@@ -1548,6 +1549,21 @@ ${narrative}
         // Runs the full selectModel('deep') + spendMiddleware + generateText
         // pipeline. /budget should tick by the returned token count.
         const result = await exerciseDeepTier(env);
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/diag" && (request.method === "POST" || request.method === "GET")) {
+        const result = await runDiag(env);
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/diag-do" && (request.method === "POST" || request.method === "GET")) {
+        const result = await probeDOSynthesize(env);
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/diag-do-kv" && (request.method === "POST" || request.method === "GET")) {
+        const result = await probeDOKV(env);
         return Response.json(result, { headers: JSON_CORS_HEADERS });
       }
 
