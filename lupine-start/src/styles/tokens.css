@@ -1,36 +1,197 @@
+/* ═══════════════════════════════════════════════════════════════
+   LUPINE DESIGN TOKENS — Single source of truth
+
+   Two coexisting visual systems:
+     • Dark (Obsidian) — default, :root
+     • Light (Living Manuscript) — warm paper palette, .light
+
+   Every variable used in the codebase MUST be defined here.
+   No orphan references.
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
   --font-sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
   --radius: 0.75rem;
+  --section-pad-y: 6rem;
 
+  /* ─── Core surfaces ─── */
   --background: #020617;
   --foreground: #e2e8f0;
   --card: #0b1220;
   --card-foreground: #e2e8f0;
   --popover: #0b1220;
   --popover-foreground: #e2e8f0;
+
+  /* ─── Brand: Lupine blue ─── */
   --primary: #3b82f6;
   --primary-foreground: #f8fafc;
-  --secondary: #1e293b;
-  --secondary-foreground: #cbd5e1;
+  --primary-container: rgba(59, 130, 246, 0.12);
+  --lupine-300: #93bbfd;
+  --lupine-400: #60a5fa;
+  --lupine-500: #3b82f6;
+  --lupine-600: #2563eb;
+  --lupine-700: #1d4ed8;
+
+  /* ─── Semantic ─── */
+  --secondary: #4ecdc4;
+  --secondary-foreground: #020617;
+  --secondary-container: rgba(78, 205, 196, 0.12);
+  --tertiary: #c4b5fd;
   --muted: #0f172a;
   --muted-foreground: #94a3b8;
   --accent: #0f172a;
   --accent-foreground: #e2e8f0;
+  --accent-cyan: #4ecdc4;
   --destructive: #ef4444;
+  --error: #ef4444;
+  --error-container: rgba(239, 68, 68, 0.12);
+  --on-secondary: #020617;
+
+  /* ─── Borders & inputs ─── */
   --border: #1e293b;
   --input: #1e293b;
   --ring: #3b82f6;
-
   --outline-variant: rgba(148, 163, 184, 0.2);
-  --on-surface: #e2e8f0;
-  --on-surface-variant: #94a3b8;
-  --surface: #0b1220;
-  --lupine-400: #60a5fa;
-  --lupine-600: #2563eb;
-  --lupine-700: #1d4ed8;
+
+  /* ─── Violet accents ─── */
+  --violet-300: #c4b5fd;
+  --violet-500: #8b5cf6;
+  --violet-700: #6d28d9;
+
+  /* ─── Slate scale (complete) ─── */
+  --slate-100: #f1f5f9;
   --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
   --slate-400: #94a3b8;
+  --slate-500: #64748b;
   --slate-600: #475569;
   --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  /* ─── Surface aliases ─── */
+  --surface: #0b1220;
+  --surface-container: #111827;
+  --surface-container-low: #0d1526;
+  --surface-container-lowest: #131b2e;
+  --surface-container-high: #1a2438;
+  --surface-variant: #1e293b;
+  --on-surface: #e2e8f0;
+  --on-surface-variant: #94a3b8;
+  --on-surface-variant-mid: #64748b;
+  --on-primary: #020617;
+
+  /* ─── Chart ─── */
+  --chart-1: #3b82f6;
+  --chart-2: #8b5cf6;
+  --chart-3: #4ecdc4;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+
+  /* ─── Sidebar (shadcn) ─── */
+  --sidebar: #0b1220;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-primary: #3b82f6;
+  --sidebar-primary-foreground: #f8fafc;
+  --sidebar-accent: #0f172a;
+  --sidebar-accent-foreground: #e2e8f0;
+  --sidebar-border: #1e293b;
+  --sidebar-ring: #3b82f6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT MODE — "The Living Manuscript"
+
+   Warm uncoated-paper base, Texas Bluebonnet primary,
+   Sagebrush secondary, Sunset Violet tertiary.
+   Inspired by a high-end scientific field notebook.
+   ═══════════════════════════════════════════════════════════════ */
+
+.light {
+  /* ─── Core surfaces ─── */
+  --background: #fef8f5;
+  --foreground: #2c2a28;
+  --card: #ffffff;
+  --card-foreground: #2c2a28;
+  --popover: #ffffff;
+  --popover-foreground: #2c2a28;
+
+  /* ─── Brand: Texas Bluebonnet ─── */
+  --primary: #475b9c;
+  --primary-foreground: #ffffff;
+  --primary-container: rgba(71, 91, 156, 0.10);
+  --lupine-300: #7b8fc4;
+  --lupine-400: #5e73b0;
+  --lupine-500: #475b9c;
+  --lupine-600: #3a4d87;
+  --lupine-700: #2e3f72;
+
+  /* ─── Semantic ─── */
+  --secondary: #4c653d;
+  --secondary-foreground: #ffffff;
+  --secondary-container: rgba(76, 101, 61, 0.10);
+  --tertiary: #725381;
+  --muted: #f3ede9;
+  --muted-foreground: #64605d;
+  --accent: #f3ede9;
+  --accent-foreground: #2c2a28;
+  --accent-cyan: #2a8f86;
+  --destructive: #c53030;
+  --error: #c53030;
+  --error-container: rgba(197, 48, 48, 0.08);
+  --on-secondary: #ffffff;
+
+  /* ─── Borders & inputs ─── */
+  --border: #e7ddd7;
+  --input: #e7ddd7;
+  --ring: #475b9c;
+  --outline-variant: rgba(44, 42, 40, 0.12);
+
+  /* ─── Violet accents ─── */
+  --violet-300: #9f8bbd;
+  --violet-500: #725381;
+  --violet-700: #5a3f69;
+
+  /* ─── Slate scale → warm neutrals ─── */
+  --slate-100: #2c2a28;
+  --slate-200: #3d3a37;
+  --slate-300: #5c5856;
+  --slate-400: #7a7673;
+  --slate-500: #9e9a97;
+  --slate-600: #bfbbb8;
+  --slate-700: #ddd8d4;
+  --slate-800: #ece7e3;
+  --slate-900: #f3ede9;
+  --slate-950: #fef8f5;
+
+  /* ─── Surface aliases ─── */
+  --surface: #fef8f5;
+  --surface-container: #f8f2ef;
+  --surface-container-low: #f3ede9;
+  --surface-container-lowest: #ffffff;
+  --surface-container-high: #ece7e3;
+  --surface-variant: #e7ddd7;
+  --on-surface: #2c2a28;
+  --on-surface-variant: #5c5856;
+  --on-surface-variant-mid: #9e9a97;
+  --on-primary: #ffffff;
+
+  /* ─── Chart ─── */
+  --chart-1: #475b9c;
+  --chart-2: #725381;
+  --chart-3: #4c653d;
+  --chart-4: #c4851c;
+  --chart-5: #c53030;
+
+  /* ─── Sidebar ─── */
+  --sidebar: #f8f2ef;
+  --sidebar-foreground: #2c2a28;
+  --sidebar-primary: #475b9c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3ede9;
+  --sidebar-accent-foreground: #2c2a28;
+  --sidebar-border: #e7ddd7;
+  --sidebar-ring: #475b9c;
 }

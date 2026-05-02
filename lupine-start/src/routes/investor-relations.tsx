@@ -46,11 +46,11 @@ function ScrambleText({ text }: { text: string }) {
 function InvestorRelationsPage() {
   return (
     <main className="relative flex-1 bg-[var(--surface)] overflow-hidden">
-      <div className="bg-noise"></div>
       
       {/* Hero Section */}
       <section className="relative pt-[160px] pb-[120px] px-6 lg:px-12 z-10">
-        <div className="container mx-auto max-w-7xl">
+        <div className="bg-noise absolute inset-0 z-0" />
+        <div className="container mx-auto max-w-7xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
             <motion.div 
@@ -60,16 +60,26 @@ function InvestorRelationsPage() {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <div className="mono-label text-[var(--tertiary)] mb-6 tracking-[0.3em]">INVESTOR RELATIONS</div>
-              <h1 className="text-5xl lg:text-8xl mb-8 leading-[1.1] text-[var(--on-surface)]">
-                Investor Relations
+              <h1 className="text-5xl lg:text-7xl mb-8 leading-[1.1] text-[var(--on-surface)]">
+                The materials <em className="italic text-[var(--primary)] glow-primary">infrastructure</em> thesis.
               </h1>
               <p className="text-[var(--on-surface-variant)] text-xl md:text-2xl mb-12 max-w-2xl leading-relaxed font-light">
                 Unified computational platform for next-century materials. Access secure data rooms, capitalization details, and deep-tech diligence materials.
               </p>
               
-              <div className="flex gap-6 items-center">
-                <Button variant="primary" onClick={() => alert('Feature Coming Soon')}>Request Diligence</Button>
-                <Button variant="secondary" onClick={() => alert('Feature Coming Soon')}>View Roadmap</Button>
+              <div className="flex gap-6 items-center flex-wrap">
+                <a
+                  href="mailto:alexwelcing@gmail.com?subject=Lupine%20Diligence%20Request"
+                  className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+                >
+                  Request Diligence
+                </a>
+                <a
+                  href="/research"
+                  className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+                >
+                  View Research
+                </a>
               </div>
             </motion.div>
 
@@ -173,15 +183,14 @@ function InvestorRelationsPage() {
               <p className="text-[var(--on-surface-variant)] mb-12 max-w-lg mx-auto leading-relaxed">
                 Access detailed capitalization tables, IP filings, and 3rd party computational validation reports. Requires signed MNDA.
               </p>
-              <form className="flex flex-col md:flex-row gap-4 max-w-md mx-auto" onSubmit={(e) => { e.preventDefault(); alert('Feature Coming Soon'); }}>
-                <input 
-                  className="flex-grow bg-[var(--surface-container-lowest)] border-none border-b border-[var(--outline-variant)] text-[var(--on-surface)] px-6 py-4 focus:ring-0 focus:border-[var(--primary)] focus:shadow-[0_4px_16px_rgba(0,251,251,0.2)] transition-all font-mono text-[13px] outline-none" 
-                  placeholder="Institutional Email" 
-                  type="email"
-                  required
-                />
-                <Button variant="primary" type="submit" size="lg">Submit Request</Button>
-              </form>
+              <div className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+                <a
+                  href="mailto:alexwelcing@gmail.com?subject=Lupine%20Data%20Room%20Access%20Request"
+                  className="flex-grow px-6 py-4 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity text-center no-underline"
+                >
+                  Request Access
+                </a>
+              </div>
               
               <div className="mt-16 flex flex-wrap justify-center gap-8 items-center">
                 <div className="flex items-center gap-2 mono-label text-[var(--on-surface-variant)] opacity-50">

@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SovereigntyRouteImport } from './routes/sovereignty'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as OpsRouteImport } from './routes/ops'
@@ -19,11 +18,6 @@ import { Route as AtlasViewerRouteImport } from './routes/atlas-viewer'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
-const SovereigntyRoute = SovereigntyRouteImport.update({
-  id: '/sovereignty',
-  path: '/sovereignty',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ResearchRoute = ResearchRouteImport.update({
   id: '/research',
   path: '/research',
@@ -74,7 +68,6 @@ export interface FileRoutesByFullPath {
   '/ops': typeof OpsRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
-  '/sovereignty': typeof SovereigntyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,7 +78,6 @@ export interface FileRoutesByTo {
   '/ops': typeof OpsRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
-  '/sovereignty': typeof SovereigntyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,7 +89,6 @@ export interface FileRoutesById {
   '/ops': typeof OpsRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
-  '/sovereignty': typeof SovereigntyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -110,7 +101,6 @@ export interface FileRouteTypes {
     | '/ops'
     | '/proof'
     | '/research'
-    | '/sovereignty'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,7 +111,6 @@ export interface FileRouteTypes {
     | '/ops'
     | '/proof'
     | '/research'
-    | '/sovereignty'
   id:
     | '__root__'
     | '/'
@@ -132,7 +121,6 @@ export interface FileRouteTypes {
     | '/ops'
     | '/proof'
     | '/research'
-    | '/sovereignty'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,18 +132,10 @@ export interface RootRouteChildren {
   OpsRoute: typeof OpsRoute
   ProofRoute: typeof ProofRoute
   ResearchRoute: typeof ResearchRoute
-  SovereigntyRoute: typeof SovereigntyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sovereignty': {
-      id: '/sovereignty'
-      path: '/sovereignty'
-      fullPath: '/sovereignty'
-      preLoaderRoute: typeof SovereigntyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/research': {
       id: '/research'
       path: '/research'
@@ -224,7 +204,6 @@ const rootRouteChildren: RootRouteChildren = {
   OpsRoute: OpsRoute,
   ProofRoute: ProofRoute,
   ResearchRoute: ResearchRoute,
-  SovereigntyRoute: SovereigntyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
