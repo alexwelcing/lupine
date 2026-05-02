@@ -10,6 +10,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/openai-compatible": "^2.0.45",
     "@cloudflare/shell": "^0.3.3",
     "@cloudflare/think": "^0.4.0",
     "agents": "^0.11.5",

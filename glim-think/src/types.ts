@@ -138,6 +138,7 @@ export interface Env {
   ARTIFACTS: R2Bucket;
   CONFIG: KVNamespace;
   LEDGER: D1Database;
+  RESEARCH_QUEUE: Queue<unknown>;
   OPENAI_API_KEY?: string;
   ANTHROPIC_API_KEY?: string;
   GOOGLE_API_KEY?: string;

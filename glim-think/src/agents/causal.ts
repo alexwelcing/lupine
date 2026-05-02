@@ -6,6 +6,7 @@
  */
 
 import { GlimThinkAgent } from "./base";
+import { selectModel } from "./models";
 import { tool } from "ai";
 import { z } from "zod";
 import type { ToolSet } from "ai";
@@ -13,6 +14,16 @@ import type { ToolSet } from "ai";
 const GROUPINGS = ["element", "pair_style", "potential_label"] as const;
 
 export class Causal extends GlimThinkAgent {
+  /**
+   * Causal uses the deep tier (MiniMax-M2 when available) — paradox
+   * detection requires inferring confounders from numeric stratification,
+   * which Llama 4 Scout struggles with. Falls back to Workers AI when
+   * MINIMAX_API_KEY is unset.
+   */
+  getModel() {
+    return selectModel(this.env, "deep");
+  }
+
   getSystemPrompt(): string {
     return `You are the Causal Agent (δ) — the Paradox Detector — in the GLIM autoresearch swarm.
 

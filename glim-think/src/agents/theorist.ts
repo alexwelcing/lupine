@@ -7,17 +7,18 @@
  */
 
 import { GlimThinkAgent } from "./base";
-import { createWorkersAI } from "workers-ai-provider";
+import { selectModel } from "./models";
 import { tool } from "ai";
 import { z } from "zod";
 import type { ToolSet } from "ai";
 
 export class Theorist extends GlimThinkAgent {
   /**
-   * Theorist uses the capable model tier for deeper reasoning.
+   * Theorist uses the deep tier (MiniMax-M2 when available) for hypothesis
+   * generation. Falls back to Workers AI when MINIMAX_API_KEY is unset.
    */
   getModel() {
-    return createWorkersAI({ binding: this.env.AI })("@cf/meta/llama-4-scout-17b-16e-instruct");
+    return selectModel(this.env, "deep");
   }
 
   getSystemPrompt(): string {

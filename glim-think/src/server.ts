@@ -37,6 +37,8 @@ import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
 import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
 import { searchLiterature, isLiteratureSource, rowToPaper } from "./literature";
+import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
+import { handleFeedRoute } from "./feed/split";
 import type {
   BenchmarkRecord,
   ClaimRecord,
@@ -624,66 +626,11 @@ ${narrative}
         });
       }
 
-      // Real-time Dashboard Feed API
-      if (url.pathname === "/feed") {
-        // CORS preflight
-        if (request.method === "OPTIONS") {
-          return new Response(null, {
-            status: 204,
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Methods": "GET, OPTIONS",
-              "Access-Control-Allow-Headers": "Content-Type",
-              "Access-Control-Max-Age": "86400",
-            },
-          });
-        }
-
-        const latestDiaryObj = await env.ARTIFACTS.get("diary/latest.json");
-        const latestMetricsObj = await env.ARTIFACTS.get("metrics/latest.json");
-        const latestBroadcastObj = await env.ARTIFACTS.get("broadcasts/latest.json");
-        const recentRecords = await env.LEDGER.prepare(
-          "SELECT agent_id, element, property, timestamp FROM records ORDER BY timestamp DESC LIMIT 10"
-        ).all();
-
-        const experimentsRaw = await env.LEDGER.prepare(
-          "SELECT experiment_id, element, potential_label, status, discriminative_property, hypothesis_id, created_at FROM pending_experiments ORDER BY created_at DESC LIMIT 100"
-        ).all();
-        const exps = experimentsRaw.results as any[];
-
-        // Categorize experiments based on status and metadata (if applicable)
-        const hypotheticals = exps.filter(e => e.status === 'pending');
-        // Simple heuristic for proven/disproven until Theorist formalizes output
-        const provens = exps.filter(e => e.status === 'completed' && (!e.hypothesis_id || !e.hypothesis_id.includes('fail')));
-        const disproven = exps.filter(e => e.status === 'completed' && e.hypothesis_id && e.hypothesis_id.includes('fail'));
-
-        // Swarm Status Simulation
-        const swarmStatus = {
-          orchestrator: { status: "active", task: "Coordinating manifold analysis", last_seen: new Date().toISOString() },
-          manifold: { status: "active", task: "Computing eigenvalue spectra", last_seen: new Date().toISOString() },
-          causal: { status: "active", task: "Screening for Simpson's Paradox", last_seen: new Date().toISOString() },
-          theorist: { status: "idle", task: "Awaiting causal inputs", last_seen: new Date().toISOString() },
-          experiment: { status: hypotheticals.length > 0 ? "active" : "idle", task: hypotheticals.length > 0 ? `Queueing ${hypotheticals.length} experiments` : "Awaiting hypotheses", last_seen: new Date().toISOString() },
-        };
-
-        return Response.json({
-          status: "live",
-          swarm_status: swarmStatus,
-          hypotheticals: hypotheticals.slice(0, 10),
-          provens: provens.slice(0, 10),
-          disproven: disproven.slice(0, 10),
-          diary: latestDiaryObj ? await latestDiaryObj.json() : null,
-          metrics: latestMetricsObj ? await latestMetricsObj.json() : null,
-          broadcast: latestBroadcastObj ? await latestBroadcastObj.json() : null,
-          recent_activity: recentRecords.results
-        }, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-          },
-        });
-      }
+      // Real-time Dashboard Feed API (split into edge-cached endpoints in Phase D).
+      // /feed/* routes are handled by feed/split.ts. /feed (no suffix) is a
+      // back-compat shim that returns the union for clients on the old protocol.
+      const feedResponse = await handleFeedRoute(request, env);
+      if (feedResponse) return feedResponse;
 
       if (url.pathname === "/broadcasts") {
         if (request.method === "OPTIONS") {
@@ -1278,6 +1225,178 @@ ${narrative}
         });
       }
 
+      // === phase-C: research work queue ===
+      if (url.pathname.startsWith("/research/")) {
+        if (request.method === "OPTIONS") {
+          return new Response(null, {
+            status: 204,
+            headers: { ...JSON_CORS_HEADERS, "Access-Control-Max-Age": "86400" },
+          });
+        }
+
+        const enqueueResponse = async (
+          task: ResearchTask,
+        ): Promise<Response> => {
+          const result = await enqueueTask(env, task);
+          return Response.json(
+            { ...result, kind: task.kind, dedup_key: task.dedup_key },
+            { headers: JSON_CORS_HEADERS },
+          );
+        };
+
+        const nowIso = () => new Date().toISOString();
+
+        if (url.pathname === "/research/round" && request.method === "POST") {
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const element = typeof body.element === "string" ? body.element : "";
+          if (!element) return jsonError("Missing 'element'", 400);
+          const analysis = Array.isArray(body.analysis_types)
+            ? (body.analysis_types as string[])
+            : ["manifold", "causal"];
+          const exclude = Array.isArray(body.exclude_styles)
+            ? (body.exclude_styles as string[])
+            : [];
+          const only = Array.isArray(body.only_styles)
+            ? (body.only_styles as string[])
+            : [];
+          const dedupKey =
+            typeof body.dedup_key === "string"
+              ? body.dedup_key
+              : `round:${element}:${analysis.sort().join(",")}:${only.sort().join(",")}:${exclude.sort().join(",")}`;
+          return enqueueResponse({
+            kind: "round",
+            dedup_key: dedupKey,
+            enqueued_at: nowIso(),
+            element,
+            analysis_types: analysis,
+            exclude_styles: exclude,
+            only_styles: only,
+          });
+        }
+
+        if (url.pathname === "/research/literature" && request.method === "POST") {
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const query = typeof body.query === "string" ? body.query.trim() : "";
+          if (!query) return jsonError("Missing 'query'", 400);
+          const max =
+            typeof body.max === "number" && Number.isFinite(body.max)
+              ? Math.trunc(body.max)
+              : 10;
+          const sources = Array.isArray(body.sources)
+            ? (body.sources as string[])
+            : undefined;
+          const dedupKey =
+            typeof body.dedup_key === "string"
+              ? body.dedup_key
+              : `literature:${query}:${max}:${(sources ?? []).sort().join(",")}`;
+          return enqueueResponse({
+            kind: "literature",
+            dedup_key: dedupKey,
+            enqueued_at: nowIso(),
+            query,
+            max,
+            sources,
+          });
+        }
+
+        if (url.pathname === "/research/evaluate" && request.method === "POST") {
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const hypothesisId =
+            typeof body.hypothesis_id === "string" ? body.hypothesis_id : "";
+          if (!hypothesisId) return jsonError("Missing 'hypothesis_id'", 400);
+          const iterations =
+            typeof body.iterations === "number" ? body.iterations : 1000;
+          const alpha =
+            typeof body.alpha === "number" ? body.alpha : 0.05;
+          const dedupKey =
+            typeof body.dedup_key === "string"
+              ? body.dedup_key
+              : `evaluate:${hypothesisId}:${iterations}:${alpha}`;
+          return enqueueResponse({
+            kind: "evaluate",
+            dedup_key: dedupKey,
+            enqueued_at: nowIso(),
+            hypothesis_id: hypothesisId,
+            iterations,
+            alpha,
+          });
+        }
+
+        if (url.pathname === "/research/broadcast" && request.method === "POST") {
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const source =
+            typeof body.source === "string" ? body.source : "manual-async";
+          // For broadcasts we dedupe per-minute so rapid double-clicks coalesce
+          const minuteBucket = new Date().toISOString().slice(0, 16);
+          const dedupKey =
+            typeof body.dedup_key === "string"
+              ? body.dedup_key
+              : `broadcast:${source}:${minuteBucket}`;
+          return enqueueResponse({
+            kind: "broadcast",
+            dedup_key: dedupKey,
+            enqueued_at: nowIso(),
+            source,
+          });
+        }
+
+        if (url.pathname === "/research/jobs" && request.method === "GET") {
+          const limit = Math.min(
+            parseInt(url.searchParams.get("limit") ?? "20", 10) || 20,
+            100,
+          );
+          const kindFilter = url.searchParams.get("kind");
+          const outcomeFilter = url.searchParams.get("outcome");
+          const conds: string[] = [];
+          const binds: unknown[] = [];
+          if (kindFilter) {
+            conds.push(`kind = ?${binds.length + 1}`);
+            binds.push(kindFilter);
+          }
+          if (outcomeFilter) {
+            conds.push(`outcome = ?${binds.length + 1}`);
+            binds.push(outcomeFilter);
+          }
+          const where = conds.length > 0 ? `WHERE ${conds.join(" AND ")}` : "";
+          const sql = `
+            SELECT job_id, dedup_key, kind, payload, enqueued_at, started_at,
+                   finished_at, outcome, error, attempts
+              FROM research_jobs
+              ${where}
+              ORDER BY enqueued_at DESC
+              LIMIT ?${binds.length + 1}
+          `;
+          binds.push(limit);
+          try {
+            const rows = await env.LEDGER.prepare(sql).bind(...binds).all();
+            return Response.json(
+              { jobs: rows.results ?? [], count: (rows.results ?? []).length },
+              { headers: JSON_CORS_HEADERS },
+            );
+          } catch (e) {
+            return Response.json(
+              { jobs: [], count: 0, error: String(e) },
+              { headers: JSON_CORS_HEADERS },
+            );
+          }
+        }
+
+        return jsonError("Unknown /research/* route", 404);
+      }
+
+      // === phase-B: provider spend telemetry ===
+      if (url.pathname === "/budget" && request.method === "GET") {
+        const month =
+          url.searchParams.get("month") ?? new Date().toISOString().slice(0, 7);
+        const providers = ["minimax", "zai", "huggingface"];
+        const usage: Record<string, unknown> = { month };
+        for (const provider of providers) {
+          const raw = await env.CONFIG.get(`budget:${month}:${provider}`);
+          usage[provider] = raw ? JSON.parse(raw) : { tokens: 0, calls: 0 };
+        }
+        return Response.json(usage, { headers: JSON_CORS_HEADERS });
+      }
+
       // === unit-4: literature routes ===
       if (url.pathname === "/literature/search" && request.method === "POST") {
         const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
@@ -1360,6 +1479,12 @@ ${narrative}
     }
   },
   scheduled: scheduledHandler,
+  async queue(batch, env) {
+    await consumeBatch(
+      batch as MessageBatch<ResearchTask & { job_id: string }>,
+      env,
+    );
+  },
 } satisfies ExportedHandler<Env>;
 
 function buildDiaryPrompt(element: string, potential: string, structure: string, records: Array<{ property: string; reference: number; predicted: number; unit: string }>): string {

@@ -310,35 +310,61 @@ export async function createLabBroadcast(
     pending_critiques: 0,
   };
 
-  // Best-effort D1 summary; missing tables / unbound DB simply leave zeros.
-  try {
-    const db = (env as unknown as { DB?: D1Database }).DB;
-    if (db) {
-      const safe = async (sql: string): Promise<number> => {
-        try {
-          const row = await db.prepare(sql).first<CountRow>();
-          return row?.n ?? 0;
-        } catch {
-          return 0;
-        }
-      };
-      summary.records = await safe("SELECT COUNT(*) AS n FROM records");
-      summary.claims = await safe("SELECT COUNT(*) AS n FROM claims");
-      summary.hypotheses = await safe(
-        "SELECT COUNT(*) AS n FROM hypotheses WHERE status = 'proposed'",
-      );
-      summary.pending_critiques = await safe(
-        "SELECT COUNT(*) AS n FROM critiques WHERE status = 'pending'",
-      );
+  const safe = async (sql: string): Promise<number> => {
+    try {
+      const row = await env.LEDGER.prepare(sql).first<CountRow>();
+      return row?.n ?? 0;
+    } catch {
+      return 0;
     }
-  } catch {
-    // Fail closed; never let a broadcast call throw at the worker boundary.
+  };
+
+  summary.records = await safe("SELECT COUNT(*) AS n FROM records");
+  summary.claims = await safe("SELECT COUNT(*) AS n FROM claims");
+  summary.hypotheses = await safe(
+    "SELECT COUNT(*) AS n FROM hypotheses WHERE status = 'proposed'",
+  );
+  summary.pending_critiques = await safe(
+    "SELECT COUNT(*) AS n FROM critiques WHERE status = 'pending'",
+  );
+
+  const timestamp = now.toISOString();
+  const title = `Lab broadcast — ${utcDateKey(now)}`;
+  const summaryText =
+    `${summary.records.toLocaleString()} records · ` +
+    `${summary.claims} claims · ` +
+    `${summary.hypotheses} proposed hypotheses · ` +
+    `${summary.pending_critiques} pending critiques`;
+  const metricsJson = JSON.stringify(summary);
+
+  try {
+    await env.LEDGER.prepare(
+      `CREATE TABLE IF NOT EXISTS lab_broadcasts (
+        broadcast_id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        summary TEXT NOT NULL,
+        status TEXT NOT NULL,
+        cadence TEXT NOT NULL DEFAULT 'hourly',
+        metrics TEXT,
+        artifact_key TEXT,
+        created_at TEXT DEFAULT (datetime('now'))
+      )`,
+    ).run();
+
+    await env.LEDGER.prepare(
+      `INSERT INTO lab_broadcasts (broadcast_id, title, summary, status, cadence, metrics, created_at)
+       VALUES (?1, ?2, ?3, 'published', ?4, ?5, ?6)`,
+    )
+      .bind(id, title, summaryText, source, metricsJson, timestamp)
+      .run();
+  } catch (e) {
+    console.error("createLabBroadcast: failed to persist broadcast row:", e);
   }
 
   return {
     id,
     source,
-    timestamp: now.toISOString(),
+    timestamp,
     summary,
   };
 }

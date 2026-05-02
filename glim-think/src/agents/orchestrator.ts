@@ -15,7 +15,7 @@
  */
 
 import { GlimThinkAgent } from "./base";
-import { createWorkersAI } from "workers-ai-provider";
+import { selectModel } from "./models";
 import { Manifold } from "./manifold";
 import { Causal } from "./causal";
 import { Theorist } from "./theorist";
@@ -26,10 +26,13 @@ import type { ToolSet } from "ai";
 
 export class Orchestrator extends GlimThinkAgent {
   /**
-   * Orchestrator uses the capable model for strategic reasoning.
+   * Orchestrator uses the deep tier (MiniMax-M2 when available) for the
+   * strategic dispatch loop — coordinating sub-agents requires multi-step
+   * reasoning that benefits from the larger model. Falls back to Workers
+   * AI when MINIMAX_API_KEY is unset.
    */
   getModel() {
-    return createWorkersAI({ binding: this.env.AI })("@cf/meta/llama-4-scout-17b-16e-instruct");
+    return selectModel(this.env, "deep");
   }
 
   getSystemPrompt(): string {

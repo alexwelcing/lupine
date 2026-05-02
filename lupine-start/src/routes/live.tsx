@@ -16,8 +16,14 @@ export const Route = createFileRoute('/live')({
   }),
 })
 
-const FEED_URL = 'https://glim-think-v1.aw-ab5.workers.dev/feed'
-const BROADCASTS_URL = 'https://glim-think-v1.aw-ab5.workers.dev/broadcasts?limit=10'
+const WORKER_BASE = 'https://glim-think-v1.aw-ab5.workers.dev'
+// Phase D — split /feed into edge-cached, single-purpose endpoints.
+const FEED_SWARM_URL = `${WORKER_BASE}/feed/swarm`
+const FEED_EXPERIMENTS_URL = `${WORKER_BASE}/feed/experiments`
+const FEED_DIARY_URL = `${WORKER_BASE}/feed/diary`
+const FEED_METRICS_URL = `${WORKER_BASE}/feed/metrics`
+const FEED_BROADCAST_URL = `${WORKER_BASE}/feed/broadcast`
+const BROADCASTS_URL = `${WORKER_BASE}/broadcasts?limit=10`
 
 function timeAgo(dateString: string) {
   if (!dateString) return ''
@@ -53,36 +59,63 @@ const ELEMENT_COLORS: Record<string, string> = {
   Ti: '#7b8ae0',
 }
 
-function LiveLabComponent() {
-  const { data } = useQuery({
-    queryKey: ['live-telemetry'],
-    queryFn: async () => {
-      const res = await fetch(FEED_URL)
-      if (!res.ok) throw new Error('Network response was not ok')
-      return res.json()
-    },
-    refetchInterval: 10000,
-  })
+async function fetchJson(url: string) {
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`${url} returned ${res.status}`)
+  return res.json()
+}
 
+function LiveLabComponent() {
+  // Phase D — parallel fetches against split /feed/* endpoints. Each
+  // refetches at its server-side cache TTL so the edge serves most
+  // requests from cache.
+  const swarmQuery = useQuery({
+    queryKey: ['feed-swarm'],
+    queryFn: () => fetchJson(FEED_SWARM_URL),
+    refetchInterval: 5_000,
+  })
+  const experimentsQuery = useQuery({
+    queryKey: ['feed-experiments'],
+    queryFn: () => fetchJson(FEED_EXPERIMENTS_URL),
+    refetchInterval: 30_000,
+  })
+  const diaryQuery = useQuery({
+    queryKey: ['feed-diary'],
+    queryFn: () => fetchJson(FEED_DIARY_URL),
+    refetchInterval: 60_000,
+  })
+  const metricsQuery = useQuery({
+    queryKey: ['feed-metrics'],
+    queryFn: () => fetchJson(FEED_METRICS_URL),
+    refetchInterval: 60_000,
+  })
+  const latestBroadcastQuery = useQuery({
+    queryKey: ['feed-broadcast'],
+    queryFn: () => fetchJson(FEED_BROADCAST_URL),
+    refetchInterval: 30_000,
+  })
   const { data: broadcastData } = useQuery({
     queryKey: ['lab-broadcasts'],
-    queryFn: async () => {
-      const res = await fetch(BROADCASTS_URL)
-      if (!res.ok) throw new Error('Broadcast response was not ok')
-      return res.json()
-    },
-    refetchInterval: 60000,
+    queryFn: () => fetchJson(BROADCASTS_URL),
+    refetchInterval: 60_000,
   })
 
-  const provens = data?.provens || []
-  const hypotheticals = data?.hypotheticals || []
-  const disproven = data?.disproven || []
-  const swarm = data?.swarm_status || {}
-  const metrics = data?.metrics
-  const diary = data?.diary
-  const latestBroadcast = data?.broadcast || broadcastData?.broadcasts?.[0]
+  // Aggregate shape kept identical to the old /feed payload so the
+  // render tree below is unchanged. SSR fallback (`data` undefined) is
+  // still honored: each section shows its own loading/empty state.
+  const swarm = swarmQuery.data || {}
+  const experiments = experimentsQuery.data
+  const provens = experiments?.provens || []
+  const hypotheticals = experiments?.hypotheticals || []
+  const disproven = experiments?.disproven || []
+  const metrics = metricsQuery.data
+  const diary = diaryQuery.data
+  const latestBroadcast = latestBroadcastQuery.data || broadcastData?.broadcasts?.[0]
   const broadcasts = broadcastData?.broadcasts || (latestBroadcast ? [latestBroadcast] : [])
   const broadcastMetrics = latestBroadcast?.metrics
+  // Synthesized "data" object so existing `data.swarm_status` reads
+  // below keep working without rewriting the JSX.
+  const data: { swarm_status?: Record<string, unknown> } = { swarm_status: swarm }
 
   return (
     <PageShell
