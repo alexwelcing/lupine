@@ -12,21 +12,16 @@
 import { useRef, useMemo, useEffect, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import type { Trajectory, ColormapName, RenderStyle } from '@atlas/core/types';
-import { useStore } from '@atlas/ui/store';
+import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
 
 import { TYPE_COLORS, TYPE_RADII, COLORMAPS, BOTANICAL_COLORS, BOTANICAL_RADII } from './constants';
 
 // ─── Types ───────────────────────────────────────────────────────────
 interface AtomsOptimizedProps {
-  /**
-   * Stable per-file trajectory reference. Does NOT carry the playhead — the
-   * component reads the live `effectiveFrame` from the store inside `useFrame`,
-   * so per-frame updates run on R3F's render clock without forcing React to
-   * reconcile the parent tree at the display refresh rate.
-   */
-  trajectory: Trajectory;
+  frame: Frame;
+  nextFrame?: Frame;
+  interpolationFactor?: number;
   colorMode?: 'type' | 'uniform' | 'property';
   colorProperty?: string;
   colormap?: ColormapName;
@@ -48,7 +43,9 @@ interface AtomsOptimizedProps {
 const MIN_CAPACITY = 50000;
 
 export function AtomsOptimized({
-  trajectory,
+  frame,
+  nextFrame,
+  interpolationFactor,
   colorMode = 'type',
   colorProperty,
   colormap = 'viridis',
@@ -66,17 +63,11 @@ export function AtomsOptimized({
 }: AtomsOptimizedProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
-
-  // Stable per-file values — natoms is treated as fixed across the trajectory.
-  // (MD frames in this app share atom count and types; reactions that change
-  // counts mid-run aren't supported elsewhere either.)
-  const firstFrame = trajectory.frames[0];
-  const natoms = firstFrame?.natoms ?? 0;
-
+  
   // Dynamic capacity mapping (vector-style growth)
-  const capacityRef = useRef(Math.max(MIN_CAPACITY, Math.ceil(natoms * 1.2)));
-  if (natoms > capacityRef.current) {
-    capacityRef.current = Math.max(capacityRef.current * 1.5, Math.ceil(natoms * 1.2));
+  const capacityRef = useRef(Math.max(MIN_CAPACITY, Math.ceil(frame.natoms * 1.2)));
+  if (frame.natoms > capacityRef.current) {
+    capacityRef.current = Math.max(capacityRef.current * 1.5, Math.ceil(frame.natoms * 1.2));
   }
   let capacity = capacityRef.current;
   if (maxAtoms !== undefined && capacity > maxAtoms) {
@@ -99,14 +90,14 @@ export function AtomsOptimized({
     }
     // LOD: Instanced drawing is highly vertex-throughput efficient on modern GPUs.
     // We can safely push high segment counts to maintain perfect circles.
-    if (natoms > 100000) {
+    if (frame.natoms > 100000) {
       return new THREE.SphereGeometry(1, 12, 8);    // V-low for massive systems
     }
-    if (natoms > 25000) {
+    if (frame.natoms > 25000) {
       return new THREE.IcosahedronGeometry(1, 2);   // 162 verts, highly uniform sphere
     }
     return new THREE.SphereGeometry(1, 32, 32);     // Perfect circle silhouettes for normal files
-  }, [renderStyle, natoms > 100000, natoms > 25000]);
+  }, [renderStyle, frame.natoms > 100000, frame.natoms > 25000]);
 
   useEffect(() => {
     geometry.setAttribute('instanceProp', new THREE.InstancedBufferAttribute(propArray, 1));
@@ -119,7 +110,7 @@ export function AtomsOptimized({
     }
     
     // 🎬 Cinematic Macro-to-Micro Transition
-    if (!botanicalMode && renderStyle !== 'toon' && natoms > 10000 && material instanceof THREE.MeshPhysicalMaterial) {
+    if (!botanicalMode && renderStyle !== 'toon' && frame.natoms > 10000 && material instanceof THREE.MeshPhysicalMaterial) {
       const dist = state.camera.position.length();
       
       // Heuristic for macro scale based on atom count
@@ -382,142 +373,67 @@ export function AtomsOptimized({
     return mat;
   }, [renderStyle, botanicalMode, materialPreset, atomTexture]);
 
+  // Get property data for coloring
+  const propData = useMemo(() => {
+    if (colorMode !== 'property' || !colorProperty) return null;
+    return frame.properties?.get(colorProperty) ?? null;
+  }, [frame, colorMode, colorProperty]);
+
+  // Auto-compute property range
+  const [autoMin, autoMax] = useMemo(() => {
+    if (!propData) return [0, 1];
+    let mn = Infinity, mx = -Infinity;
+    for (let i = 0; i < propData.length; i++) {
+      if (propData[i] < mn) mn = propData[i];
+      if (propData[i] > mx) mx = propData[i];
+    }
+    return [mn === Infinity ? 0 : mn, mx === -Infinity ? 1 : mx];
+  }, [propData]);
+
+  const pMin = propRange?.[0] ?? autoMin;
+  const pMax = propRange?.[1] ?? autoMax;
   const mapFn = COLORMAPS[colormap] ?? COLORMAPS.viridis;
 
-  // Pre-compute palette-mapped colors for each atom type. Uses
-  // `trajectory.atomTypes` (the global unique-type set the parser already built),
-  // so the lookup is stable per file rather than rebuilt every frame.
+  // Pre-compute palette-mapped colors for each atom type
+  // This maps each unique type to a position on the active colormap
   const typeColorLookup = useMemo(() => {
-    const sortedTypes = [...trajectory.atomTypes].sort((a, b) => a - b);
+    const typeSet = new Set<number>();
+    for (let i = 0; i < frame.natoms; i++) typeSet.add(frame.types[i]);
+    const sortedTypes = Array.from(typeSet).sort((a, b) => a - b);
     const lookup = new Map<number, [number, number, number]>();
     for (let i = 0; i < sortedTypes.length; i++) {
       const t = sortedTypes.length > 1 ? i / (sortedTypes.length - 1) : 0.5;
       lookup.set(sortedTypes[i], mapFn(t));
     }
     return lookup;
-  }, [trajectory.atomTypes, mapFn]);
+  }, [frame.types, frame.natoms, mapFn]);
 
-  // ─── Type-keyed lookup tables (rebuilt only when slow inputs change) ───
-  // These were re-allocated inside the hot loop on every frame change. They
-  // depend only on slow-changing inputs, so we cache them and let `useFrame`
-  // read through the ref.
-  const MAX_TYPES = 256;
-  const typeLutsRef = useRef({
-    radii: new Float32Array(MAX_TYPES).fill(1.2),
-    hidden: new Uint8Array(MAX_TYPES),
-    scaleOverride: new Float32Array(MAX_TYPES).fill(1.0),
-    botR: new Float32Array(MAX_TYPES).fill(0.3),
-    botG: new Float32Array(MAX_TYPES).fill(0.5),
-    botB: new Float32Array(MAX_TYPES).fill(0.2),
-    typR: new Float32Array(MAX_TYPES).fill(0.6),
-    typG: new Float32Array(MAX_TYPES).fill(0.6),
-    typB: new Float32Array(MAX_TYPES).fill(0.6),
-  });
-
+  // Build spatial hash and update instance buffers
   useEffect(() => {
-    const luts = typeLutsRef.current;
-    luts.hidden.fill(0);
-    luts.scaleOverride.fill(1.0);
-    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
-      luts.radii[typeId] = botanicalMode
-        ? (BOTANICAL_RADII[typeId] ?? 1.2)
-        : (TYPE_RADII[typeId] ?? 1.2);
-      if (hiddenAtomTypes?.has(typeId)) luts.hidden[typeId] = 1;
-      if (atomTypeScales?.[typeId] !== undefined) luts.scaleOverride[typeId] = atomTypeScales[typeId];
-      if (botanicalMode) {
-        const c = BOTANICAL_COLORS[typeId] ?? [0.3, 0.5, 0.2];
-        luts.botR[typeId] = c[0]; luts.botG[typeId] = c[1]; luts.botB[typeId] = c[2];
-      }
-    }
-    luts.typR.fill(0.6); luts.typG.fill(0.6); luts.typB.fill(0.6);
-    typeColorLookup.forEach((color, typeId) => {
-      if (typeId < MAX_TYPES) {
-        luts.typR[typeId] = color[0];
-        luts.typG[typeId] = color[1];
-        luts.typB[typeId] = color[2];
-      }
-    });
-  }, [botanicalMode, hiddenAtomTypes, atomTypeScales, typeColorLookup]);
-
-  // ─── Property colormap LUT (1024 bins) ───
-  const propLutSize = 1024;
-  const propLutsRef = useRef({
-    R: new Float32Array(propLutSize),
-    G: new Float32Array(propLutSize),
-    B: new Float32Array(propLutSize),
-  });
-  useEffect(() => {
-    const luts = propLutsRef.current;
-    for (let i = 0; i < propLutSize; i++) {
-      const c = mapFn(i / (propLutSize - 1));
-      luts.R[i] = c[0]; luts.G[i] = c[1]; luts.B[i] = c[2];
-    }
-  }, [mapFn]);
-
-  // ─── Uniform-color cache ───
-  const uniformColorRef = useRef<[number, number, number]>([0.6, 0.6, 0.6]);
-  useEffect(() => {
-    if (colorMode === 'uniform') {
-      uniformColorRef.current = mapFn(0.0);
-    }
-  }, [colorMode, mapFn]);
-
-  // ─── Highlights as Uint8Array (rebuilt only when selection changes) ───
-  const highlightsRef = useRef<Uint8Array>(new Uint8Array(natoms));
-  useEffect(() => {
-    if (highlightsRef.current.length !== natoms) {
-      highlightsRef.current = new Uint8Array(natoms);
-    } else {
-      highlightsRef.current.fill(0);
-    }
-    if (highlightedAtoms && highlightedAtoms.size > 0) {
-      const arr = highlightsRef.current;
-      highlightedAtoms.forEach(idx => { if (idx < natoms) arr[idx] = 1; });
-    }
-  }, [highlightedAtoms, natoms]);
-
-  // Auto-range cache for property mode — recomputed only when integer frame
-  // index crosses, not every render. Keeps the visualization stable instead of
-  // throbbing as min/max shift each interpolated tick.
-  const autoRangeRef = useRef<{ frameIdx: number; min: number; max: number; key: string | null }>({
-    frameIdx: -1, min: 0, max: 1, key: null,
-  });
-
-  // Spatial-hash throttle: rebuild only on integer frame change, deferred to idle.
-  const lastHashedFrameRef = useRef(-1);
-  const idleHashRef = useRef<number | null>(null);
-
-  // Stable callback refs — `useFrame`'s closure rereads via these so changing
-  // styling props doesn't invalidate the loop's identity.
-  const onSpatialHashRef = useRef(onSpatialHash);
-  onSpatialHashRef.current = onSpatialHash;
-
-  // Cleanup any pending idle callback on unmount.
-  useEffect(() => () => {
-    if (idleHashRef.current !== null && typeof cancelIdleCallback !== 'undefined') {
-      cancelIdleCallback(idleHashRef.current);
-    }
-  }, []);
-
-  // ─── Per-frame work — runs on R3F's render clock, NOT React reconciliation. ───
-  // Reading effectiveFrame via `useStore.getState()` (no subscription) keeps
-  // the parent tree from re-rendering at display refresh rate.
-  useFrame(() => {
     const mesh = meshRef.current;
-    if (!mesh || natoms === 0 || trajectory.frames.length === 0) return;
+    if (!mesh) return;
 
-    const eff = useStore.getState().effectiveFrame;
-    const totalFrames = trajectory.frames.length;
-    const idx = Math.min(Math.max(0, Math.floor(eff)), totalFrames - 1);
-    const nextIdx = Math.min(idx + 1, totalFrames - 1);
-    const t = idx === nextIdx ? 0 : Math.max(0, Math.min(1, eff - idx));
-    const frame = trajectory.frames[idx];
-    const nextFrame = idx === nextIdx ? null : trajectory.frames[nextIdx];
+    // Defer spatial hash rebuild to idle time (avoid blocking render loop)
+    const idleCallback = (typeof requestIdleCallback !== 'undefined')
+      ? requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 0);
+    const cancelIdle = (typeof cancelIdleCallback !== 'undefined')
+      ? cancelIdleCallback
+      : clearTimeout;
+    const idleId = idleCallback(() => {
+      spatialHashRef.current.build(frame.positions, frame.natoms);
+      onSpatialHash?.(spatialHashRef.current);
+    });
+    // Capture for cleanup
+    const cleanupIdle = () => cancelIdle(idleId as any);
 
+    // Update matrices and colors - direct buffer manipulation for speed
     const positions = frame.positions;
     const types = frame.types;
+    
+    const t = interpolationFactor ?? 0;
     const hasNextFrame = nextFrame && nextFrame.natoms === frame.natoms;
-    const nextPos = hasNextFrame && t > 0 ? nextFrame!.positions : null;
+    const nextPos = hasNextFrame ? nextFrame.positions : null;
 
     let bsx = 0, bsy = 0, bsz = 0;
     const hasBounds = !!frame.boxBounds;
@@ -527,45 +443,51 @@ export function AtomsOptimized({
       bsz = frame.boxBounds![5] - frame.boxBounds![4];
     }
 
-    // Property data + auto-range — only recompute when integer frame changes.
-    const isPropMode = colorMode === 'property' && !!colorProperty;
-    const propData = isPropMode ? (frame.properties?.get(colorProperty!) ?? null) : null;
-    const nextPropData = (isPropMode && nextPos && nextFrame!.properties?.has(colorProperty!))
-      ? nextFrame!.properties!.get(colorProperty!)!
-      : null;
+    // ─── Pre-compute lookups for O(1) access inside hot loop ───
+    const MAX_TYPES = 256;
+    const radiiLookup = new Float32Array(MAX_TYPES).fill(1.2);
+    const hiddenLookup = new Uint8Array(MAX_TYPES);
+    const scaleOverrideLookup = new Float32Array(MAX_TYPES).fill(1.0);
+    const botR = new Float32Array(MAX_TYPES).fill(0.3);
+    const botG = new Float32Array(MAX_TYPES).fill(0.5);
+    const botB = new Float32Array(MAX_TYPES).fill(0.2);
+    const typR = new Float32Array(MAX_TYPES).fill(0.6);
+    const typG = new Float32Array(MAX_TYPES).fill(0.6);
+    const typB = new Float32Array(MAX_TYPES).fill(0.6);
 
-    let pMin = 0, pMax = 1;
-    if (isPropMode && propData) {
-      const cache = autoRangeRef.current;
-      const cacheKey = colorProperty ?? null;
-      if (cache.frameIdx !== idx || cache.key !== cacheKey) {
-        let mn = Infinity, mx = -Infinity;
-        for (let i = 0; i < propData.length; i++) {
-          const v = propData[i];
-          if (v < mn) mn = v;
-          if (v > mx) mx = v;
-        }
-        cache.frameIdx = idx;
-        cache.key = cacheKey;
-        cache.min = mn === Infinity ? 0 : mn;
-        cache.max = mx === -Infinity ? 1 : mx;
+    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
+      radiiLookup[typeId] = botanicalMode ? (BOTANICAL_RADII[typeId] ?? 1.2) : (TYPE_RADII[typeId] ?? 1.2);
+      if (hiddenAtomTypes?.has(typeId)) hiddenLookup[typeId] = 1;
+      if (atomTypeScales?.[typeId] !== undefined) scaleOverrideLookup[typeId] = atomTypeScales[typeId];
+      if (botanicalMode) {
+        const c = BOTANICAL_COLORS[typeId] ?? [0.3, 0.5, 0.2];
+        botR[typeId] = c[0]; botG[typeId] = c[1]; botB[typeId] = c[2];
       }
-      pMin = propRange?.[0] ?? cache.min;
-      pMax = propRange?.[1] ?? cache.max;
     }
+    typeColorLookup.forEach((color, typeId) => {
+      if (typeId < MAX_TYPES) {
+        typR[typeId] = color[0]; typG[typeId] = color[1]; typB[typeId] = color[2];
+      }
+    });
 
-    const luts = typeLutsRef.current;
-    const propLuts = propLutsRef.current;
-    const highlights = highlightsRef.current;
-    const [uniR, uniG, uniB] = uniformColorRef.current;
+    let uniR = 0.6, uniG = 0.6, uniB = 0.6;
+    if (colorMode === 'uniform') {
+      const tc = mapFn(0.0);
+      uniR = tc[0]; uniG = tc[1]; uniB = tc[2];
+    }
+    
+    // Cache prop diffing logic
+    const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
+    const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty!) : null;
+    const isPropMode = colorMode === 'property' && propData;
 
-    for (let i = 0; i < natoms; i++) {
+    for (let i = 0; i < frame.natoms; i++) {
       // Position
       let x = positions[i * 3];
       let y = positions[i * 3 + 1];
       let z = positions[i * 3 + 2];
 
-      if (nextPos) {
+      if (nextPos && t > 0) {
         let dx = nextPos[i * 3] - x;
         let dy = nextPos[i * 3 + 1] - y;
         let dz = nextPos[i * 3 + 2] - z;
@@ -583,13 +505,11 @@ export function AtomsOptimized({
         y += dy * t;
         z += dz * t;
       }
-
+      
       const typeId = types[i] < MAX_TYPES ? types[i] : 0;
-      const radius = luts.hidden[typeId]
-        ? 0
-        : luts.radii[typeId] * scale * luts.scaleOverride[typeId];
-
-      // Inline matrix (translation + uniform scale, identity rotation)
+      const radius = hiddenLookup[typeId] ? 0 : radiiLookup[typeId] * scale * scaleOverrideLookup[typeId];
+      
+      // Inline matrix building (translation + scale only, identity rotation)
       const mIdx = i * 16;
       matrixArray[mIdx + 0] = radius; matrixArray[mIdx + 1] = 0;      matrixArray[mIdx + 2] = 0;       matrixArray[mIdx + 3] = 0;
       matrixArray[mIdx + 4] = 0;      matrixArray[mIdx + 5] = radius; matrixArray[mIdx + 6] = 0;       matrixArray[mIdx + 7] = 0;
@@ -598,43 +518,44 @@ export function AtomsOptimized({
 
       // Color
       const cIdx = i * 3;
-      const isHighlighted = highlights[i] === 1;
-
       if (botanicalMode) {
+        const isHighlighted = highlightedAtoms?.has(i);
         if (isHighlighted) {
-          colorArray[cIdx]     = Math.min(1, luts.botR[typeId] * 1.5);
-          colorArray[cIdx + 1] = Math.min(1, luts.botG[typeId] * 1.5);
-          colorArray[cIdx + 2] = Math.min(1, luts.botB[typeId] * 1.5);
+          colorArray[cIdx] = Math.min(1, botR[typeId] * 1.5);
+          colorArray[cIdx + 1] = Math.min(1, botG[typeId] * 1.5);
+          colorArray[cIdx + 2] = Math.min(1, botB[typeId] * 1.5);
         } else {
-          colorArray[cIdx]     = luts.botR[typeId];
-          colorArray[cIdx + 1] = luts.botG[typeId];
-          colorArray[cIdx + 2] = luts.botB[typeId];
+          colorArray[cIdx] = botR[typeId];
+          colorArray[cIdx + 1] = botG[typeId];
+          colorArray[cIdx + 2] = botB[typeId];
         }
         propArray[i] = 0.0;
-      } else if (isPropMode && propData) {
-        let val = propData[i];
+      } else if (isPropMode) {
+        let val = propData![i];
         if (nextPropData && nextPropData.length > i) {
           val = val + (nextPropData[i] - val) * t;
         }
         const norm = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
-        const lutIdx = Math.max(0, Math.min(propLutSize - 1, Math.floor(norm * propLutSize)));
-        colorArray[cIdx]     = propLuts.R[lutIdx];
-        colorArray[cIdx + 1] = propLuts.G[lutIdx];
-        colorArray[cIdx + 2] = propLuts.B[lutIdx];
+        const [r, g, b] = mapFn(norm);
+        colorArray[cIdx] = r;
+        colorArray[cIdx + 1] = g;
+        colorArray[cIdx + 2] = b;
         propArray[i] = norm;
       } else {
+        const isHighlighted = highlightedAtoms?.has(i);
         let r, g, b;
         if (colorMode === 'uniform') {
           r = uniR; g = uniG; b = uniB;
         } else {
-          r = luts.typR[typeId]; g = luts.typG[typeId]; b = luts.typB[typeId];
+          r = typR[typeId]; g = typG[typeId]; b = typB[typeId];
         }
+        
         if (isHighlighted) {
-          colorArray[cIdx]     = Math.min(1, r * 1.5);
+          colorArray[cIdx] = Math.min(1, r * 1.5);
           colorArray[cIdx + 1] = Math.min(1, g * 1.5);
           colorArray[cIdx + 2] = Math.min(1, b * 1.5);
         } else {
-          colorArray[cIdx]     = r;
+          colorArray[cIdx] = r;
           colorArray[cIdx + 1] = g;
           colorArray[cIdx + 2] = b;
         }
@@ -642,33 +563,27 @@ export function AtomsOptimized({
       }
     }
 
-    // Upload to GPU
-    const safeAtomCount = Math.min(natoms, capacity);
+    // Upload to GPU - single operation
+    const safeAtomCount = Math.min(frame.natoms, capacity);
     mesh.instanceMatrix.array.set(matrixArray.subarray(0, safeAtomCount * 16));
     mesh.instanceMatrix.needsUpdate = true;
-    if (geometry.attributes.instanceProp) {
-      geometry.attributes.instanceProp.needsUpdate = true;
-    }
+    
+    geometry.attributes.instanceProp.needsUpdate = true;
+
     if (mesh.instanceColor) {
       mesh.instanceColor.array.set(colorArray.subarray(0, safeAtomCount * 3));
       mesh.instanceColor.needsUpdate = true;
     }
+    
     mesh.count = safeAtomCount;
 
-    // Spatial-hash rebuild — throttled to integer frame transitions, deferred
-    // to idle so we never block the render loop.
-    if (idx !== lastHashedFrameRef.current) {
-      lastHashedFrameRef.current = idx;
-      const idle = (typeof requestIdleCallback !== 'undefined') ? requestIdleCallback : (cb: () => void) => setTimeout(cb, 0) as any;
-      const cancelIdle = (typeof cancelIdleCallback !== 'undefined') ? cancelIdleCallback : clearTimeout;
-      if (idleHashRef.current !== null) cancelIdle(idleHashRef.current as any);
-      idleHashRef.current = idle(() => {
-        spatialHashRef.current.build(frame.positions, frame.natoms);
-        onSpatialHashRef.current?.(spatialHashRef.current);
-        idleHashRef.current = null;
-      }) as any;
-    }
-  });
+    // Cleanup: cancel pending idle hash build if effect re-runs
+    return cleanupIdle;
+  }, [
+    frame, nextFrame, interpolationFactor, colorMode, propData, pMin, pMax, scale, highlightedAtoms,
+    hiddenAtomTypes, atomTypeScales, typeColorLookup, botanicalMode,
+    matrixArray, colorArray, _matrix, _position, _scale, _quaternion, mapFn, onSpatialHash
+  ]);
 
   // Cleanup
   useEffect(() => {

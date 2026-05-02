@@ -144,9 +144,6 @@ importers:
       '@types/three':
         specifier: ^0.170.0
         version: 0.170.0
-      '@vitejs/plugin-basic-ssl':
-        specifier: ^2.3.0
-        version: 2.3.0(vite@6.4.1(@types/node@22.19.15)(terser@5.46.1))
       '@vitejs/plugin-react':
         specifier: ^4.3.0
         version: 4.7.0(vite@6.4.1(@types/node@22.19.15)(terser@5.46.1))
@@ -200,9 +197,6 @@ importers:
       '@atlas/core':
         specifier: workspace:*
         version: link:../core
-      '@react-three/drei':
-        specifier: ^10.0.0
-        version: 10.7.7(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.170.0))(@types/react@19.2.14)(@types/three@0.170.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.170.0)
       '@react-three/fiber':
         specifier: ^9.0.0
         version: 9.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.170.0)
@@ -1565,12 +1559,6 @@ packages:
     resolution: {integrity: sha512-Yy19y6O2GJq8f7CHf7L0nxL8bf4PZCPaVOCgJrusOeFHY1LvHgYXnmnXg6N5iwAnbgbZCDjo60SiM6IPJi9C5g==}
     peerDependencies:
       react: '>= 16.8.0'
-
-  '@vitejs/plugin-basic-ssl@2.3.0':
-    resolution: {integrity: sha512-bdyo8rB3NnQbikdMpHaML9Z1OZPBu6fFOBo+OtxsBlvMJtysWskmBcnbIDhUqgC8tcxNv/a+BcV5U+2nQMm1OQ==}
-    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
-    peerDependencies:
-      vite: ^6.0.0 || ^7.0.0 || ^8.0.0
 
   '@vitejs/plugin-react@4.7.0':
     resolution: {integrity: sha512-gUu9hwfWvvEDBBmgtAowQCojwZmJ5mcLn3aufeCsitijs3+f2NsrPtlAWIR6OPiqljl96GVCUbLe0HyqIpVaoA==}
@@ -4128,10 +4116,6 @@ snapshots:
       '@use-gesture/core': 10.3.1
       react: 19.2.4
 
-  '@vitejs/plugin-basic-ssl@2.3.0(vite@6.4.1(@types/node@22.19.15)(terser@5.46.1))':
-    dependencies:
-      vite: 6.4.1(@types/node@22.19.15)(terser@5.46.1)
-
   '@vitejs/plugin-react@4.7.0(vite@5.4.21(@types/node@22.19.15)(terser@5.46.1))':
     dependencies:
       '@babel/core': 7.29.0
@@ -5156,7 +5140,7 @@ snapshots:
 
   tapable@2.3.0: {}
 
-  terser-webpack-plugin@5.4.0(esbuild@0.25.0)(webpack@5.105.0):
+  terser-webpack-plugin@5.4.0(esbuild@0.25.0)(webpack@5.105.0(esbuild@0.25.0)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
@@ -5380,7 +5364,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.4.0(esbuild@0.25.0)(webpack@5.105.0)
+      terser-webpack-plugin: 5.4.0(esbuild@0.25.0)(webpack@5.105.0(esbuild@0.25.0))
       watchpack: 2.5.1
       webpack-sources: 3.3.4
     transitivePeerDependencies:

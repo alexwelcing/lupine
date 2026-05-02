@@ -8,20 +8,14 @@
 import { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import type { Frame, Trajectory, ColormapName, RenderStyle } from '@atlas/core/types';
-import { useStore } from '@atlas/ui/store';
+import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
 import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS, COLORMAPS } from './constants';
 
 interface BondsProps {
-  /**
-   * Stable per-file trajectory. The component reads the live `effectiveFrame`
-   * from the store inside `useFrame`, so bond positions update on R3F's render
-   * clock without re-rendering the parent tree at the display refresh rate.
-   * Bond topology is computed once per trajectory (from frame 0) and reused —
-   * bonds in MD trajectories are typically static.
-   */
-  trajectory: Trajectory;
+  frame: Frame;
+  nextFrame?: Frame;
+  interpolationFactor?: number;
   colormap?: ColormapName;
   colorMode?: 'type' | 'uniform' | 'property';
   colorProperty?: string;
@@ -38,7 +32,9 @@ interface BondsProps {
 }
 
 export function Bonds({
-  trajectory,
+  frame,
+  nextFrame,
+  interpolationFactor,
   colormap = 'viridis',
   colorMode = 'type',
   colorProperty,
@@ -57,10 +53,6 @@ export function Bonds({
   const spatialHashRef = useRef(new SpatialHash3D(maxBondLength));
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
-  // Stable per-file frame-0 reference for topology and capacity calcs.
-  const frame0 = trajectory.frames[0];
-  const natoms = frame0?.natoms ?? 0;
-
   // Shared tube geometry: cylinder along Y axis, unit height
   const tubeGeo = useMemo(
     () => new THREE.CylinderGeometry(1, 1, 1, 8, 1),
@@ -74,7 +66,7 @@ export function Bonds({
     }
     
     // 🎬 Cinematic Macro-to-Micro Transition
-    if (!botanicalMode && renderStyle !== 'toon' && natoms > 10000 && material instanceof THREE.MeshPhysicalMaterial) {
+    if (!botanicalMode && renderStyle !== 'toon' && frame.natoms > 10000 && material instanceof THREE.MeshPhysicalMaterial) {
       const dist = state.camera.position.length();
       
       const macroDist = 120.0;
@@ -148,12 +140,17 @@ export function Bonds({
       }
       
       shader.vertexShader = `
+        attribute vec2 radiusBT;
         ${botanicalMode ? 'uniform float uTime;' : ''}
         ${shader.vertexShader}
       `;
       
       let vertexChunk = `
         #include <begin_vertex>
+        // Taper bonds using per-instance radiusBT (bottom, top)
+        float instanceRadius = mix(radiusBT.x, radiusBT.y, position.y + 0.5);
+        transformed.x *= instanceRadius;
+        transformed.z *= instanceRadius;
       `;
       
       if (botanicalMode) {
@@ -198,31 +195,30 @@ export function Bonds({
     return () => { material.dispose(); };
   }, [material]);
 
-  // Bond topology — computed once per file from frame 0. MD bond topology is
-  // typically static across frames; recomputing per frame was a major source
-  // of allocation churn during play.
+  // Rebuild bonds when frame or cutoff changes
+  // Find bonds only when topology changes
   const bondPairs = useMemo(() => {
-    if (!frame0 || frame0.natoms < 2) return [];
+    if (!frame || frame.natoms < 2) return [];
 
-    if (frame0.bonds && frame0.bonds.length > 0) {
+    if (frame.bonds && frame.bonds.length > 0) {
       const pairs: Array<[number, number]> = [];
-      for (let i = 0; i < frame0.bonds.length; i += 2) {
-        pairs.push([frame0.bonds[i], frame0.bonds[i + 1]]);
+      for (let i = 0; i < frame.bonds.length; i += 2) {
+        pairs.push([frame.bonds[i], frame.bonds[i + 1]]);
       }
       return pairs;
     }
 
     spatialHashRef.current = new SpatialHash3D(maxBondLength);
-    spatialHashRef.current.build(frame0.positions, frame0.natoms);
+    spatialHashRef.current.build(frame.positions, frame.natoms);
     return findBondsFast(
-      frame0,
+      frame,
       spatialHashRef.current,
       maxBondLength,
       typeCutoffs,
       periodic,
       cellBounds
     );
-  }, [frame0, maxBondLength, typeCutoffs, periodic, cellBounds]);
+  }, [frame, maxBondLength, typeCutoffs, periodic, cellBounds]);
 
   // Dynamic capacity mapping (vector-style growth) starting at 20k bonds minimum
   const MIN_BOND_CAPACITY = 20000;
@@ -235,123 +231,52 @@ export function Bonds({
   }
   const capacity = capacityRef.current;
 
-
-
-  const isPropMode = colorMode === 'property' && !!colorProperty;
-
-  // ─── Cached LUTs (rebuilt only when slow inputs change) ───
-  const MAX_TYPES = 256;
-  const colorLutsRef = useRef({
-    propR: new Float32Array(1024),
-    propG: new Float32Array(1024),
-    propB: new Float32Array(1024),
-    typeR: new Float32Array(MAX_TYPES),
-    typeG: new Float32Array(MAX_TYPES),
-    typeB: new Float32Array(MAX_TYPES),
-    botR: new Float32Array(MAX_TYPES),
-    botG: new Float32Array(MAX_TYPES),
-    botB: new Float32Array(MAX_TYPES),
-  });
-
+  const radiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
   useEffect(() => {
-    const luts = colorLutsRef.current;
-    const mapFn = COLORMAPS[colormap] || COLORMAPS.viridis;
+    tubeGeo.setAttribute('radiusBT', new THREE.InstancedBufferAttribute(radiusBTArray, 2));
+  }, [tubeGeo, radiusBTArray]);
 
-    // Property colormap LUT
-    for (let i = 0; i < 1024; i++) {
-      const c = mapFn(i / 1023);
-      luts.propR[i] = c[0]; luts.propG[i] = c[1]; luts.propB[i] = c[2];
+  const isPropMode = colorMode === 'property' && colorProperty;
+  const propData = isPropMode && frame.properties ? frame.properties.get(colorProperty) : null;
+
+  // Auto-compute property range
+  const [autoMin, autoMax] = useMemo(() => {
+    if (!propData) return [0, 1];
+    let mn = Infinity, mx = -Infinity;
+    for (let i = 0; i < propData.length; i++) {
+      if (propData[i] < mn) mn = propData[i];
+      if (propData[i] > mx) mx = propData[i];
     }
+    return [mn === Infinity ? 0 : mn, mx === -Infinity ? 1 : mx];
+  }, [propData]);
 
-    // Type-keyed color LUTs
-    luts.typeR.fill(DEFAULT_TYPE_COLOR[0]);
-    luts.typeG.fill(DEFAULT_TYPE_COLOR[1]);
-    luts.typeB.fill(DEFAULT_TYPE_COLOR[2]);
-    luts.botR.fill(0.3); luts.botG.fill(0.5); luts.botB.fill(0.2);
+  const pMin = propRange?.[0] ?? autoMin;
+  const pMax = propRange?.[1] ?? autoMax;
 
-    if (botanicalMode) {
-      for (let i = 0; i < MAX_TYPES; i++) {
-        const c = BOTANICAL_COLORS[i] ?? [0.3, 0.5, 0.2];
-        luts.botR[i] = c[0]; luts.botG[i] = c[1]; luts.botB[i] = c[2];
-      }
-    } else if (colorMode === 'uniform') {
-      const uniformColor = getTypeColorFromColormap(1, colormap);
-      luts.typeR.fill(uniformColor[0]);
-      luts.typeG.fill(uniformColor[1]);
-      luts.typeB.fill(uniformColor[2]);
-    } else {
-      for (let i = 0; i < MAX_TYPES; i++) {
-        const c = getTypeColorFromColormap(i, colormap);
-        luts.typeR[i] = c[0]; luts.typeG[i] = c[1]; luts.typeB[i] = c[2];
-      }
-    }
-  }, [colormap, colorMode, botanicalMode]);
-
-  // Auto-range cache (recomputed only when integer frame index changes)
-  const autoRangeRef = useRef<{ frameIdx: number; min: number; max: number; key: string | null }>({
-    frameIdx: -1, min: 0, max: 1, key: null,
-  });
-
-  // Pre-allocated THREE objects used inside useFrame (avoid GC each tick)
-  const tmpRef = useRef({
-    posA: new THREE.Vector3(),
-    posB: new THREE.Vector3(),
-    mid: new THREE.Vector3(),
-    dir: new THREE.Vector3(),
-    UP: new THREE.Vector3(0, 1, 0),
-    midPoint: new THREE.Vector3(),
-    axisVec: new THREE.Vector3(1, 0, 0),
-    color: new THREE.Color(),
-  });
-
-  // ─── Per-frame work — runs on R3F's render clock, not React reconciliation. ───
-  useFrame(() => {
+  // Update instance matrices smoothly using requestAnimationFrame/useEffect
+  useEffect(() => {
     const mesh = meshRef.current;
-    if (!mesh || halfCount === 0 || !mesh.instanceMatrix) return;
+    if (!mesh || halfCount === 0) return;
 
-    const eff = useStore.getState().effectiveFrame;
-    const totalFrames = trajectory.frames.length;
-    if (totalFrames === 0) return;
-
-    const idx = Math.min(Math.max(0, Math.floor(eff)), totalFrames - 1);
-    const nextIdx = Math.min(idx + 1, totalFrames - 1);
-    const t = idx === nextIdx ? 0 : Math.max(0, Math.min(1, eff - idx));
-    const frame = trajectory.frames[idx];
-    const nextFrame = idx === nextIdx ? null : trajectory.frames[nextIdx];
-
+    if (!mesh.instanceMatrix) return;
+    
     // Bounds check to prevent drawing beyond pre-allocated memory
     const drawCount = Math.min(halfCount, capacity);
     mesh.count = drawCount;
 
-    const propData = isPropMode && frame.properties ? frame.properties.get(colorProperty!) ?? null : null;
-    const hasPropInterpolation = isPropMode && nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
-    const nextPropData = hasPropInterpolation ? nextFrame!.properties!.get(colorProperty!)! : null;
+    const posA = new THREE.Vector3();
+    const posB = new THREE.Vector3();
+    const mid = new THREE.Vector3();
+    const dir = new THREE.Vector3();
+    const UP = new THREE.Vector3(0, 1, 0);
+    const midPoint = new THREE.Vector3();
+    const axisVec = new THREE.Vector3(1, 0, 0);
+    const color = new THREE.Color();
 
-    // Compute auto property range only when integer frame changes (or property changes).
-    let pMin = 0, pMax = 1;
-    if (isPropMode && propData) {
-      const cache = autoRangeRef.current;
-      const cacheKey = colorProperty ?? null;
-      if (cache.frameIdx !== idx || cache.key !== cacheKey) {
-        let mn = Infinity, mx = -Infinity;
-        for (let i = 0; i < propData.length; i++) {
-          const v = propData[i];
-          if (v < mn) mn = v;
-          if (v > mx) mx = v;
-        }
-        cache.frameIdx = idx;
-        cache.key = cacheKey;
-        cache.min = mn === Infinity ? 0 : mn;
-        cache.max = mx === -Infinity ? 1 : mx;
-      }
-      pMin = propRange?.[0] ?? cache.min;
-      pMax = propRange?.[1] ?? cache.max;
-    }
-
-    const luts = colorLutsRef.current;
-    const tmp = tmpRef.current;
-    const { posA, posB, mid, dir, UP, midPoint, axisVec, color } = tmp;
-    const lutSize = 1024;
+    const t = interpolationFactor ?? 0;
+    const hasPropInterpolation = isPropMode && nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty);
+    const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty) : null;
+    const mapFn = COLORMAPS[colormap] || COLORMAPS.viridis;
 
     for (let i = 0; i < drawCount / 2; i++) {
       const [a, b] = bondPairs[i];
@@ -362,19 +287,20 @@ export function Bonds({
       let by = frame.positions[b * 3 + 1];
       let bz = frame.positions[b * 3 + 2];
 
+      const t = interpolationFactor ?? 0;
       const canInterpolate = nextFrame && t > 0 && nextFrame.positions && nextFrame.positions.length >= frame.positions.length;
-
+      
       if (canInterpolate) {
-          let next_ax = nextFrame!.positions[a * 3];
-          let next_ay = nextFrame!.positions[a * 3 + 1];
-          let next_az = nextFrame!.positions[a * 3 + 2];
+          let next_ax = nextFrame.positions[a * 3];
+          let next_ay = nextFrame.positions[a * 3 + 1];
+          let next_az = nextFrame.positions[a * 3 + 2];
           let d_ax = next_ax - ax;
           let d_ay = next_ay - ay;
           let d_az = next_az - az;
-
-          let next_bx = nextFrame!.positions[b * 3];
-          let next_by = nextFrame!.positions[b * 3 + 1];
-          let next_bz = nextFrame!.positions[b * 3 + 2];
+          
+          let next_bx = nextFrame.positions[b * 3];
+          let next_by = nextFrame.positions[b * 3 + 1];
+          let next_bz = nextFrame.positions[b * 3 + 2];
           let d_bx = next_bx - bx;
           let d_by = next_by - by;
           let d_bz = next_bz - bz;
@@ -443,12 +369,16 @@ export function Bonds({
       // Advanced geometry scaling based on property
       const rA = isPropMode ? radius * (0.2 + 1.8 * normA) : radius;
       const rB = isPropMode ? radius * (0.2 + 1.8 * normB) : radius;
+      const rMid = (rA + rB) / 2.0;
 
       // Instance i*2 (Bottom half of the bond: A -> Mid)
+      radiusBTArray[(i * 2) * 2] = rA;
+      radiusBTArray[(i * 2) * 2 + 1] = rMid;
+
       dir.subVectors(mid, posA).normalize();
       midPoint.lerpVectors(posA, mid, 0.5);
       dummy.position.copy(midPoint);
-      dummy.scale.set(rA, halfLen, rA);
+      dummy.scale.set(1, halfLen, 1);
       if (Math.abs(dir.dot(UP)) < 0.9999) {
         dummy.quaternion.setFromUnitVectors(UP, dir);
       } else {
@@ -458,25 +388,27 @@ export function Bonds({
       dummy.updateMatrix();
       mesh.setMatrixAt(i * 2, dummy.matrix);
       
-      let rColA, gColA, bColA;
+      let tcA: [number, number, number];
       if (botanicalMode && frame.types) {
-        const tA = frame.types[a] < MAX_TYPES ? frame.types[a] : 0;
-        rColA = luts.botR[tA]; gColA = luts.botG[tA]; bColA = luts.botB[tA];
+        tcA = BOTANICAL_COLORS[frame.types[a]] ?? [0.3, 0.5, 0.2];
       } else if (isPropMode && propData) {
-        const lutIdx = Math.max(0, Math.min(lutSize - 1, Math.floor(normA * lutSize)));
-        rColA = luts.propR[lutIdx]; gColA = luts.propG[lutIdx]; bColA = luts.propB[lutIdx];
+        tcA = mapFn(normA);
+      } else if (colorMode === 'uniform') {
+        tcA = getTypeColorFromColormap(1, colormap);
       } else {
-        const tA = frame.types ? (frame.types[a] < MAX_TYPES ? frame.types[a] : 0) : 0;
-        rColA = luts.typeR[tA]; gColA = luts.typeG[tA]; bColA = luts.typeB[tA];
+        tcA = frame.types ? getTypeColorFromColormap(frame.types[a], colormap) : DEFAULT_TYPE_COLOR;
       }
-      color.setRGB(rColA, gColA, bColA);
+      color.setRGB(tcA[0], tcA[1], tcA[2]);
       mesh.setColorAt(i * 2, color);
 
       // Instance i*2+1 (Top half of the bond: Mid -> B)
+      radiusBTArray[(i * 2 + 1) * 2] = rMid;
+      radiusBTArray[(i * 2 + 1) * 2 + 1] = rB;
+
       dir.subVectors(posB, mid).normalize();
       midPoint.lerpVectors(mid, posB, 0.5);
       dummy.position.copy(midPoint);
-      dummy.scale.set(rB, halfLen, rB);
+      dummy.scale.set(1, halfLen, 1);
       if (Math.abs(dir.dot(UP)) < 0.9999) {
         dummy.quaternion.setFromUnitVectors(UP, dir);
       } else {
@@ -485,25 +417,26 @@ export function Bonds({
       }
       dummy.updateMatrix();
       mesh.setMatrixAt(i * 2 + 1, dummy.matrix);
-
-      let rColB, gColB, bColB;
+      
+      let tcB: [number, number, number];
       if (botanicalMode && frame.types) {
-        const tB = frame.types[b] < MAX_TYPES ? frame.types[b] : 0;
-        rColB = luts.botR[tB]; gColB = luts.botG[tB]; bColB = luts.botB[tB];
+        tcB = BOTANICAL_COLORS[frame.types[b]] ?? [0.3, 0.5, 0.2];
       } else if (isPropMode && propData) {
-        const lutIdx = Math.max(0, Math.min(lutSize - 1, Math.floor(normB * lutSize)));
-        rColB = luts.propR[lutIdx]; gColB = luts.propG[lutIdx]; bColB = luts.propB[lutIdx];
+        tcB = mapFn(normB);
+      } else if (colorMode === 'uniform') {
+        tcB = getTypeColorFromColormap(1, colormap);
       } else {
-        const tB = frame.types ? (frame.types[b] < MAX_TYPES ? frame.types[b] : 0) : 0;
-        rColB = luts.typeR[tB]; gColB = luts.typeG[tB]; bColB = luts.typeB[tB];
+        tcB = frame.types ? getTypeColorFromColormap(frame.types[b], colormap) : DEFAULT_TYPE_COLOR;
       }
-      color.setRGB(rColB, gColB, bColB);
+      color.setRGB(tcB[0], tcB[1], tcB[2]);
       mesh.setColorAt(i * 2 + 1, color);
     }
 
+    tubeGeo.attributes.radiusBT.needsUpdate = true;
+
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-  });
+  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, pMin, pMax, colorProperty, radiusBTArray]);
 
   return (
     <instancedMesh
