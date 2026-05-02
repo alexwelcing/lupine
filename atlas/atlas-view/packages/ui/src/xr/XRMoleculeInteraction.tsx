@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -9,20 +9,25 @@ export function XRMoleculeInteraction({ children }: { children: React.ReactNode 
   const [isDragging, setIsDragging] = useState(false);
   const [hovered, setHovered] = useState(false);
   const dragPlane = useRef(new THREE.Plane());
-  const dragOffset = useRef(new THREE.Vector3());
+  const lastPoint = useRef(new THREE.Vector3());
   const { camera } = useThree();
 
   const handlePointerDown = (e: any) => {
     e.stopPropagation();
     setIsDragging(true);
 
-    // Create a plane facing the camera at the point of intersection.
-    // This allows us to drag the object along this plane in 3D space.
+    // Create a plane facing the camera at the point of intersection
     const normal = camera.getWorldDirection(new THREE.Vector3()).negate();
     dragPlane.current.setFromNormalAndCoplanarPoint(normal, e.point);
     
-    if (group.current) {
-      dragOffset.current.copy(group.current.position).sub(e.point);
+    // Store intersection point to calculate delta later
+    const ray = e.ray as THREE.Ray;
+    const intersection = new THREE.Vector3();
+    ray.intersectPlane(dragPlane.current, intersection);
+    if (intersection) {
+      lastPoint.current.copy(intersection);
+    } else {
+      lastPoint.current.copy(e.point);
     }
     
     // Attempt to capture the pointer so fast movements don't lose the drag
@@ -43,7 +48,7 @@ export function XRMoleculeInteraction({ children }: { children: React.ReactNode 
   };
 
   const handlePointerMove = (e: any) => {
-    if (!isDragging) return;
+    if (!isDragging || !group.current) return;
     e.stopPropagation();
     
     // Use the XR ray or the standard camera ray
@@ -51,9 +56,17 @@ export function XRMoleculeInteraction({ children }: { children: React.ReactNode 
     const intersection = new THREE.Vector3();
     ray.intersectPlane(dragPlane.current, intersection);
     
-    if (intersection && group.current) {
-      // Smoothly interpolate to the new position for a weighty feel
-      group.current.position.copy(intersection.add(dragOffset.current));
+    if (intersection) {
+      // Calculate world-space delta
+      const dx = intersection.x - lastPoint.current.x;
+      const dy = intersection.y - lastPoint.current.y;
+      
+      // Convert drag movement to 3D rotation
+      // Factor of 5 is a sensitivity multiplier
+      group.current.rotation.y += dx * 5; 
+      group.current.rotation.x -= dy * 5;
+      
+      lastPoint.current.copy(intersection);
     }
   };
 

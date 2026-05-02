@@ -47,11 +47,16 @@ function XRLabel({ position, text, fontSize = 0.035, color = "#ffffff" }: any) {
   );
 }
 
-export function XRControlPanel() {
-  const file = useStore(s => s.file);
+function FrameReadout({ position }: { position: [number, number, number] }) {
   const frameIndex = useStore(s => s.frame);
-  const totalFrames = file?.trajectory.totalFrames ?? 1;
+  const totalFrames = useStore(s => s.file?.trajectory.totalFrames ?? 1);
 
+  return (
+    <XRLabel position={position} text={`Timeline: Frame ${frameIndex + 1} / ${totalFrames}`} fontSize={0.025} color="#aaaaaa" />
+  );
+}
+
+export function XRControlPanel() {
   // Playback
   const playing = useStore(s => s.playing);
   const togglePlay = useStore(s => s.togglePlay);
@@ -126,7 +131,7 @@ export function XRControlPanel() {
 
         {/* COLUMN 1: PLAYBACK & ENVIRONMENT (X = -0.28) */}
         <group position={[-0.28, 0, 0]}>
-          <XRLabel position={[0, 0.20, 0]} text={`Timeline: Frame ${frameIndex + 1} / ${totalFrames}`} fontSize={0.025} color="#aaaaaa" />
+          <FrameReadout position={[0, 0.20, 0]} />
           
           <XRButton position={[0, 0.12, 0]} label={playing ? "Pause" : "Play Sequence"} onClick={togglePlay} active={playing} activeColor="#e24a4a" />
           
