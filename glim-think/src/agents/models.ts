@@ -23,7 +23,7 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { generateText, wrapLanguageModel, type LanguageModelV2Middleware } from "ai";
 import type { Env } from "../types";
 
-export type ReasoningTier = "fast" | "deep";
+export type ReasoningTier = "fast" | "deep" | "fast-deep";
 
 // Verified on 2026-05-02: api.minimax.io/v1 exposes the full MiniMax
 // model line for our Max-plan key (api.minimax.chat/v1 and api.minimaxi.com/v1
@@ -51,6 +51,18 @@ function miniMaxConfig(env: Env): { baseURL: string; model: string } {
     baseURL: env.MINIMAX_BASE_URL?.trim() || MINIMAX_DEFAULT_BASE_URL,
     model: env.MINIMAX_MODEL?.trim() || MINIMAX_DEFAULT_MODEL,
   };
+}
+
+/**
+ * For the `fast-deep` tier we map the configured deep model to its
+ * `-highspeed` variant (e.g. MiniMax-M2.7 → MiniMax-M2.7-highspeed).
+ * The Max plan exposes -highspeed siblings for every tier; they trade
+ * ~10% quality for ~3x throughput, ideal for the Orchestrator's many
+ * short dispatch calls. If the configured model already ends in
+ * -highspeed (operator override) we leave it alone.
+ */
+function fastDeepModelName(model: string): string {
+  return model.endsWith("-highspeed") ? model : `${model}-highspeed`;
 }
 
 function monthKey(): string {
@@ -94,16 +106,54 @@ function fastModel(env: Env) {
   return createWorkersAI({ binding: env.AI })(FAST_MODEL);
 }
 
+/**
+ * Extract a usable token count from any of the usage shapes the
+ * OpenAI-compatible adapter returns. Empirically (verified via
+ * /admin/diag-do):
+ *
+ *   - generateText returns `{inputTokens, outputTokens, reasoningTokens,
+ *     totalTokens, raw, ...}` — v6 shape with numeric fields
+ *   - streamText's `finish` chunk often returns `{inputTokens: {},
+ *     outputTokens: {}}` — empty objects (a bug in the adapter or in
+ *     how MiniMax M2.7 reports streaming usage)
+ *   - The raw passthrough (`usage.raw`) consistently has the OpenAI
+ *     shape `{prompt_tokens, completion_tokens, total_tokens,
+ *     completion_tokens_details: {reasoning_tokens}, ...}`
+ *
+ * We try the v6 shape first; if that yields zero AND raw has numbers,
+ * we use raw. This makes spend tracking work whether the model is
+ * called via generate or stream.
+ */
+export function extractMiniMaxTokens(usage: unknown): number {
+  if (!usage || typeof usage !== "object") return 0;
+  const u = usage as Record<string, unknown>;
+
+  const numericOrZero = (v: unknown): number =>
+    typeof v === "number" && Number.isFinite(v) ? v : 0;
+
+  const v6 =
+    numericOrZero(u.inputTokens) +
+    numericOrZero(u.outputTokens) +
+    numericOrZero(u.reasoningTokens);
+  if (v6 > 0) return v6;
+
+  const raw = u.raw as Record<string, unknown> | undefined;
+  if (raw) {
+    const rawTotal =
+      numericOrZero(raw.prompt_tokens) + numericOrZero(raw.completion_tokens);
+    if (rawTotal > 0) return rawTotal;
+    const rawTotalDirect = numericOrZero(raw.total_tokens);
+    if (rawTotalDirect > 0) return rawTotalDirect;
+  }
+
+  return numericOrZero(u.totalTokens);
+}
+
 function spendMiddleware(env: Env): LanguageModelV2Middleware {
   return {
     wrapGenerate: async ({ doGenerate }) => {
       const result = await doGenerate();
-      const usage = result.usage;
-      const tokens =
-        (usage?.inputTokens ?? 0) +
-        (usage?.outputTokens ?? 0) +
-        (usage?.reasoningTokens ?? 0);
-      console.log(`[spendMiddleware] wrapGenerate tokens=${tokens} usage=${JSON.stringify(usage)}`);
+      const tokens = extractMiniMaxTokens(result.usage);
       if (tokens > 0) {
         await recordMiniMaxSpend(env, tokens);
       }
@@ -111,21 +161,17 @@ function spendMiddleware(env: Env): LanguageModelV2Middleware {
     },
     wrapStream: async ({ doStream }) => {
       const { stream, ...rest } = await doStream();
-      let inputTokens = 0;
-      let outputTokens = 0;
-      let reasoningTokens = 0;
+      let lastFinishUsage: unknown = null;
       const wrappedStream = stream.pipeThrough(
         new TransformStream({
           transform(chunk, controller) {
             if (chunk.type === "finish") {
-              inputTokens = chunk.usage?.inputTokens ?? inputTokens;
-              outputTokens = chunk.usage?.outputTokens ?? outputTokens;
-              reasoningTokens = chunk.usage?.reasoningTokens ?? reasoningTokens;
+              lastFinishUsage = chunk.usage;
             }
             controller.enqueue(chunk);
           },
           async flush() {
-            const tokens = inputTokens + outputTokens + reasoningTokens;
+            const tokens = extractMiniMaxTokens(lastFinishUsage);
             if (tokens > 0) {
               await recordMiniMaxSpend(env, tokens);
             }
@@ -137,8 +183,9 @@ function spendMiddleware(env: Env): LanguageModelV2Middleware {
   };
 }
 
-function miniMaxModel(env: Env) {
-  const { baseURL, model } = miniMaxConfig(env);
+function miniMaxModel(env: Env, modelOverride?: string) {
+  const { baseURL, model: defaultModel } = miniMaxConfig(env);
+  const model = modelOverride ?? defaultModel;
   const base = createOpenAICompatible({
     baseURL,
     apiKey: env.MINIMAX_API_KEY!,
@@ -393,10 +440,20 @@ export async function sweepMiniMaxEndpoints(
  *
  * Caller is responsible for budget guarding via `hasMiniMaxBudget`
  * if it cares. Default: pick deep when key is present.
+ *
+ *   tier "deep"      → MiniMax-M2.7 (or env override)
+ *   tier "fast-deep" → MiniMax-M2.7-highspeed (3x faster, ~10% quality cost)
+ *   tier "fast"      → Workers AI (free, llama-4-scout)
  */
 export function selectModel(env: Env, tier: ReasoningTier) {
-  if (tier === "deep" && env.MINIMAX_API_KEY) {
-    return miniMaxModel(env);
+  if (env.MINIMAX_API_KEY) {
+    if (tier === "deep") {
+      return miniMaxModel(env);
+    }
+    if (tier === "fast-deep") {
+      const { model } = miniMaxConfig(env);
+      return miniMaxModel(env, fastDeepModelName(model));
+    }
   }
   return fastModel(env);
 }
@@ -410,8 +467,12 @@ export async function selectModelChecked(
   env: Env,
   tier: ReasoningTier,
 ): Promise<ReturnType<typeof selectModel>> {
-  if (tier === "deep" && (await hasMiniMaxBudget(env))) {
-    return miniMaxModel(env);
+  if (await hasMiniMaxBudget(env)) {
+    if (tier === "deep") return miniMaxModel(env);
+    if (tier === "fast-deep") {
+      const { model } = miniMaxConfig(env);
+      return miniMaxModel(env, fastDeepModelName(model));
+    }
   }
   return fastModel(env);
 }

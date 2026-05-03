@@ -26,13 +26,14 @@ import type { ToolSet } from "ai";
 
 export class Orchestrator extends GlimThinkAgent {
   /**
-   * Orchestrator uses the deep tier (MiniMax-M2 when available) for the
-   * strategic dispatch loop — coordinating sub-agents requires multi-step
-   * reasoning that benefits from the larger model. Falls back to Workers
-   * AI when MINIMAX_API_KEY is unset.
+   * Orchestrator uses the fast-deep tier (MiniMax-M2.7-highspeed when
+   * MINIMAX_API_KEY is set). Many short dispatch turns benefit more from
+   * 3x throughput than from extra reasoning depth — the actual hypothesis
+   * generation runs on the Theorist sub-agent which uses the base M2.7.
+   * Falls back to Workers AI when MINIMAX_API_KEY is unset.
    */
   getModel() {
-    return selectModel(this.env, "deep");
+    return selectModel(this.env, "fast-deep");
   }
 
   getSystemPrompt(): string {
