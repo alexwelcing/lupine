@@ -23,6 +23,7 @@ const FEED_METRICS_URL = `${WORKER_BASE}/feed/metrics`
 const FEED_BROADCAST_URL = `${WORKER_BASE}/feed/broadcast`
 const FEED_HYPOTHESES_URL = `${WORKER_BASE}/feed/hypotheses`
 const FEED_RECENT_CLAIMS_URL = `${WORKER_BASE}/feed/recent-claims`
+const FEED_VIGNETTE_URL = `${WORKER_BASE}/feed/vignette`
 const BROADCASTS_URL = `${WORKER_BASE}/broadcasts?limit=10`
 
 function timeAgo(dateString: string) {
@@ -82,6 +83,17 @@ type RecentClaim = {
   created_at: string
   is_minimax: boolean
   image_url: string | null
+  audio_url: string | null
+}
+
+type Vignette = {
+  vignette_id: string
+  date_key: string
+  status: string
+  r2_url: string | null
+  claim_ids: string[]
+  created_at: string
+  completed_at: string | null
 }
 
 function LiveLabComponent() {
@@ -115,6 +127,11 @@ function LiveLabComponent() {
     queryFn: () => fetchJson(FEED_RECENT_CLAIMS_URL),
     refetchInterval: 30_000,
   })
+  const vignetteQuery = useQuery<Vignette | null>({
+    queryKey: ['feed-vignette'],
+    queryFn: () => fetchJson(FEED_VIGNETTE_URL),
+    refetchInterval: 60_000,
+  })
   const { data: broadcastData } = useQuery({
     queryKey: ['lab-broadcasts'],
     queryFn: () => fetchJson(BROADCASTS_URL),
@@ -130,6 +147,7 @@ function LiveLabComponent() {
   const refutedHypotheses = hypotheses.filter(h => h.status === 'refuted')
   const activeHypotheses = hypotheses.filter(h => h.status === 'testing' || h.status === 'proposed')
   const claimCount = recentClaims.length
+  const vignette = vignetteQuery.data
   const latestBroadcast = latestBroadcastQuery.data || broadcastData?.broadcasts?.[0]
   const broadcasts = broadcastData?.broadcasts || (latestBroadcast ? [latestBroadcast] : [])
 
@@ -157,6 +175,26 @@ function LiveLabComponent() {
             Backend is degraded — failed sections: {failedSections.join(', ')}. Showing last-known values where available.
           </span>
         </div>
+      )}
+      {vignette?.r2_url && vignette.status === 'complete' && (
+        <section className="mb-8 overflow-hidden border border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--outline-variant)]">
+            <div className="flex items-center gap-3">
+              <span className="mono-label text-[var(--secondary)]">TODAY IN THE LAB</span>
+              <span className="mono-label text-[var(--on-surface-variant-mid)]">{vignette.date_key}</span>
+            </div>
+            <span className="mono-label text-[var(--on-surface-variant-mid)]">Hailuo-2.3 · MiniMax</span>
+          </div>
+          <video
+            src={vignette.r2_url}
+            className="block w-full h-auto"
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls={false}
+          />
+        </section>
       )}
       <section className="mb-8 overflow-hidden border border-[var(--outline-variant)] bg-[linear-gradient(135deg,rgba(0,251,251,0.10),rgba(235,178,255,0.06)_44%,rgba(212,168,67,0.10))]">
         <div className="grid grid-cols-1 xl:grid-cols-12">
@@ -456,9 +494,20 @@ function ClaimRow({ c }: { c: RecentClaim }) {
             loading="lazy"
             className="block w-full h-auto aspect-video object-cover"
           />
-          <div className="px-3 py-1.5 mono-label text-[var(--on-surface-variant-mid)] bg-[var(--surface-container-low)]/60">
-            image-01 · MiniMax
+          <div className="px-3 py-1.5 mono-label text-[var(--on-surface-variant-mid)] bg-[var(--surface-container-low)]/60 flex items-center gap-2">
+            <span>image-01 · MiniMax</span>
+            {c.audio_url && (
+              <>
+                <span className="text-[var(--on-surface-variant-mid)]">·</span>
+                <audio src={c.audio_url} controls preload="none" className="h-6 ml-auto" />
+              </>
+            )}
           </div>
+        </div>
+      )}
+      {!c.image_url && c.audio_url && (
+        <div className="mb-3">
+          <audio src={c.audio_url} controls preload="none" className="w-full h-8" />
         </div>
       )}
       <p className="font-sans text-[13px] leading-relaxed text-[var(--on-surface-variant)] line-clamp-3">

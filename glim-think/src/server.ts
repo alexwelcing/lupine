@@ -44,6 +44,8 @@ import { getHealthSnapshot, runSmoketest } from "./ops/observability";
 import { testMiniMaxCall, listMiniMaxModels, sweepMiniMaxEndpoints, exerciseDeepTier } from "./agents/models";
 import { runDiag, probeDOSynthesize, probeDOKV } from "./admin/diag";
 import { generateAndStoreImage } from "./agents/image";
+import { generateAndStoreAudio } from "./agents/tts";
+import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
 import type {
   BenchmarkRecord,
   ClaimRecord,
@@ -1575,6 +1577,169 @@ ${narrative}
         const storageKey = `claim-images/probe-${Date.now()}.png`;
         const result = await generateAndStoreImage(env, { prompt, storageKey });
         return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/test-tts" && (request.method === "POST" || request.method === "GET")) {
+        const text =
+          url.searchParams.get("text") ??
+          "This is a probe of the MiniMax text to speech narration pipeline for glim think.";
+        const voice = url.searchParams.get("voice") ?? undefined;
+        const model = url.searchParams.get("model") ?? undefined;
+        const storageKey = `claim-audio/probe-${Date.now()}.mp3`;
+        const result = await generateAndStoreAudio(env, { text, storageKey, voice_id: voice, model });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/submit-vignette" && request.method === "POST") {
+        const r = await submitDailyVignette(env);
+        return Response.json(r, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/seed-vignette" && request.method === "POST") {
+        // Used to verify the polling/download path with an existing
+        // task_id when the Hailuo daily budget is exhausted.
+        const body = JSON.parse(bodyText || "{}") as { task_id?: string; date?: string };
+        if (!body.task_id) return jsonError("Missing task_id", 400);
+        const dateKey = body.date ?? new Date().toISOString().slice(0, 10);
+        const vignetteId = `seed-${dateKey}-${Date.now().toString(36)}`;
+        await env.LEDGER.prepare(
+          `CREATE TABLE IF NOT EXISTS daily_vignettes (
+             vignette_id TEXT PRIMARY KEY, date_key TEXT NOT NULL,
+             task_id TEXT, file_id TEXT, r2_key TEXT,
+             prompt TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'submitted',
+             claim_ids TEXT, error TEXT,
+             poll_attempts INTEGER NOT NULL DEFAULT 0,
+             created_at TEXT NOT NULL, completed_at TEXT
+           )`,
+        ).run();
+        await env.LEDGER.prepare(
+          `INSERT INTO daily_vignettes
+             (vignette_id, date_key, task_id, prompt, status, claim_ids, created_at)
+           VALUES (?1, ?2, ?3, ?4, 'submitted', ?5, ?6)`,
+        )
+          .bind(vignetteId, dateKey, body.task_id, "(seeded)", "[]", new Date().toISOString())
+          .run();
+        return Response.json({ ok: true, vignette_id: vignetteId, task_id: body.task_id, date: dateKey }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/poll-vignettes" && request.method === "POST") {
+        const r = await pollPendingVignettes(env);
+        return Response.json(r, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-video-status" && request.method === "GET") {
+        // Poll a video_generation task by id, and also try downloading
+        // the file once status is "Success".
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const taskId = url.searchParams.get("task_id");
+        if (!taskId) return jsonError("Missing task_id", 400);
+        const res = await fetch(`${baseURL}/query/video_generation?task_id=${taskId}`, {
+          headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}` },
+        });
+        const text = await res.text();
+        let parsed: unknown = null;
+        try { parsed = JSON.parse(text); } catch {}
+        // If file_id present, also try retrieving the file URL
+        let fileResult: unknown = null;
+        const p = parsed as { file_id?: string };
+        if (p?.file_id) {
+          const fres = await fetch(`${baseURL}/files/retrieve?file_id=${p.file_id}`, {
+            headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}` },
+          });
+          fileResult = await fres.json().catch(() => null);
+        }
+        return Response.json({ status_code: res.status, parsed, file: fileResult }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-video-models" && request.method === "GET") {
+        // Test Hailuo / video_generation endpoint with several model IDs
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const candidates = (url.searchParams.get("models") ?? "MiniMax-Hailuo-02,Hailuo-2.3,Hailuo-2.3-Fast,Hailuo-2.3-768P,T2V-01,video-01,video-2.6")
+          .split(",").map(s => s.trim()).filter(Boolean);
+        const results = [];
+        for (const model of candidates) {
+          try {
+            const res = await fetch(`${baseURL}/video_generation`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify({
+                model,
+                prompt: "A serene cyanotype aurora drifts across a dark night sky.",
+                duration: 6,
+                resolution: "768P",
+              }),
+            });
+            const text = await res.text();
+            results.push({ model, status: res.status, ok: res.ok, body_preview: text.slice(0, 280) });
+          } catch (e) {
+            results.push({ model, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, results }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-tts-paths" && request.method === "GET") {
+        // Try alternate TTS endpoint paths in case the proxy key uses
+        // OpenAI-style /v1/audio/speech instead of MiniMax /v1/t2a_v2
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const paths = [
+          { path: "/audio/speech", body: { model: "tts-1", input: "ok", voice: "alloy" }, name: "openai-compat-tts-1" },
+          { path: "/audio/speech", body: { model: "tts-1-hd", input: "ok", voice: "alloy" }, name: "openai-compat-tts-1-hd" },
+          { path: "/audio/speech", body: { model: "speech-2.5-hd-preview", input: "ok", voice: "alloy" }, name: "openai-compat-2.5" },
+          { path: "/audio/speech", body: { model: "MiniMax-Speech", input: "ok", voice: "alloy" }, name: "openai-compat-MiniMax-Speech" },
+          { path: "/text/audio", body: { model: "speech-01", text: "ok", voice_id: "male-qn-qingse" }, name: "legacy-text-audio" },
+        ];
+        const results = [];
+        for (const probe of paths) {
+          try {
+            const res = await fetch(`${baseURL}${probe.path}`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify(probe.body),
+            });
+            const text = await res.text();
+            results.push({
+              ...probe,
+              status: res.status,
+              ok: res.ok,
+              body_preview: text.slice(0, 250),
+            });
+          } catch (e) {
+            results.push({ ...probe, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, results }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/sweep-tts-models" && request.method === "GET") {
+        // Try a list of plausible TTS model IDs to find what the plan accepts
+        const extraParam = url.searchParams.get("models");
+        const candidates = extraParam
+          ? extraParam.split(",").map(s => s.trim()).filter(Boolean)
+          : [
+              "speech-2.7-hd",
+              "speech-2.7-turbo",
+              "speech-02-hd",
+              "speech-2.6-hd",
+              "speech-2.5-hd-preview",
+              "speech-2.5-hd",
+              "speech-2.5-turbo-preview",
+              "speech-01-hd",
+              "speech-01-turbo-preview",
+              "speech-01-240228",
+              "speech-2.5-25-hd",
+              "speech-02-turbo",
+            ];
+        const results = [];
+        for (const model of candidates) {
+          const r = await generateAndStoreAudio(env, {
+            text: "ok",
+            storageKey: `claim-audio/sweep-${Date.now()}-${model.replace(/[^a-z0-9]/gi, "_")}.mp3`,
+            model,
+          });
+          results.push({ model, ok: r.ok, error: r.error?.slice(0, 200) });
+        }
+        return Response.json({ results }, { headers: JSON_CORS_HEADERS });
       }
 
       // === Public R2 artifact serving (claim images, diary attachments) ===
