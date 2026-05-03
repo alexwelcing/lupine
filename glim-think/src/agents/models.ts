@@ -23,7 +23,7 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { generateText, wrapLanguageModel, type LanguageModelV2Middleware } from "ai";
 import type { Env } from "../types";
 
-export type ReasoningTier = "fast" | "deep" | "fast-deep";
+export type ReasoningTier = "fast" | "deep";
 
 // Verified on 2026-05-02: api.minimax.io/v1 exposes the full MiniMax
 // model line for our Max-plan key (api.minimax.chat/v1 and api.minimaxi.com/v1
@@ -53,17 +53,11 @@ function miniMaxConfig(env: Env): { baseURL: string; model: string } {
   };
 }
 
-/**
- * For the `fast-deep` tier we map the configured deep model to its
- * `-highspeed` variant (e.g. MiniMax-M2.7 → MiniMax-M2.7-highspeed).
- * The Max plan exposes -highspeed siblings for every tier; they trade
- * ~10% quality for ~3x throughput, ideal for the Orchestrator's many
- * short dispatch calls. If the configured model already ends in
- * -highspeed (operator override) we leave it alone.
- */
-function fastDeepModelName(model: string): string {
-  return model.endsWith("-highspeed") ? model : `${model}-highspeed`;
-}
+// Note: -highspeed model variants are NOT exposed on this account's
+// Max plan (every "*-highspeed" returns 2061 "current token plan not
+// support model"). The earlier "fast-deep" tier has been removed.
+// If MiniMax later exposes -highspeed, re-add by setting MINIMAX_MODEL
+// secret to e.g. "MiniMax-M2.7-highspeed".
 
 function monthKey(): string {
   return new Date().toISOString().slice(0, 7);
@@ -438,22 +432,12 @@ export async function sweepMiniMaxEndpoints(
  * Synchronous selector. Use when the caller can't await
  * (e.g. inside @cloudflare/think `getModel()`).
  *
- * Caller is responsible for budget guarding via `hasMiniMaxBudget`
- * if it cares. Default: pick deep when key is present.
- *
- *   tier "deep"      → MiniMax-M2.7 (or env override)
- *   tier "fast-deep" → MiniMax-M2.7-highspeed (3x faster, ~10% quality cost)
- *   tier "fast"      → Workers AI (free, llama-4-scout)
+ *   tier "deep" → MiniMax-M2.7 (or env override via MINIMAX_MODEL)
+ *   tier "fast" → Workers AI (free, llama-4-scout)
  */
 export function selectModel(env: Env, tier: ReasoningTier) {
-  if (env.MINIMAX_API_KEY) {
-    if (tier === "deep") {
-      return miniMaxModel(env);
-    }
-    if (tier === "fast-deep") {
-      const { model } = miniMaxConfig(env);
-      return miniMaxModel(env, fastDeepModelName(model));
-    }
+  if (tier === "deep" && env.MINIMAX_API_KEY) {
+    return miniMaxModel(env);
   }
   return fastModel(env);
 }
@@ -467,12 +451,8 @@ export async function selectModelChecked(
   env: Env,
   tier: ReasoningTier,
 ): Promise<ReturnType<typeof selectModel>> {
-  if (await hasMiniMaxBudget(env)) {
-    if (tier === "deep") return miniMaxModel(env);
-    if (tier === "fast-deep") {
-      const { model } = miniMaxConfig(env);
-      return miniMaxModel(env, fastDeepModelName(model));
-    }
+  if (tier === "deep" && (await hasMiniMaxBudget(env))) {
+    return miniMaxModel(env);
   }
   return fastModel(env);
 }
