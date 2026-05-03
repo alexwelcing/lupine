@@ -240,6 +240,10 @@ export async function topInsightsForHypothesis(
   limit = 5,
 ): Promise<InsightRow[]> {
   await ensureSchema(env);
+  // Filter out relevance=0 noise. Pre-PR-#52 extracts hit 0.0 due to
+  // truncation; we want only insights M2.7 actually judged as having
+  // some bearing on the hypothesis. Threshold 0.15 (just above the
+  // noise floor of "different field entirely").
   const rows = await env.LEDGER
     .prepare(
       `SELECT i.insight_id, i.paper_doi, i.hypothesis_id, i.key_finding,
@@ -247,7 +251,7 @@ export async function topInsightsForHypothesis(
               p.title AS paper_title, p.year AS paper_year, p.source AS paper_source
          FROM literature_insights i
          LEFT JOIN literature_papers p ON p.doi = i.paper_doi
-        WHERE i.hypothesis_id = ?1
+        WHERE i.hypothesis_id = ?1 AND i.relevance_score >= 0.15
         ORDER BY i.relevance_score DESC, i.extracted_at DESC
         LIMIT ?2`,
     )
@@ -330,7 +334,9 @@ export async function reasonOnHypothesis(
   const model = selectModel(env, "deep");
   let raw = "";
   try {
-    const result = await generateText({ model, prompt, maxOutputTokens: opts.max_tokens ?? 1024 });
+    // M2.7 spends ~half the token budget on <think> before producing the
+    // visible narrative. Default 3000 → effectively ~1500 visible tokens.
+    const result = await generateText({ model, prompt, maxOutputTokens: opts.max_tokens ?? 3000 });
     raw = (result.text ?? "")
       .replace(/<think>[\s\S]*?<\/think>\s*/g, "")
       .trim();
