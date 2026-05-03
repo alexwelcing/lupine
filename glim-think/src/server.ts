@@ -1643,6 +1643,108 @@ ${narrative}
         });
       }
 
+      if (url.pathname === "/admin/probe-vlm-file-upload" && request.method === "GET") {
+        // Step 1: try uploading a file to /v1/files with several purpose values
+        // Step 2: if upload succeeds, try chat completions with file_id reference
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const imageKey = url.searchParams.get("image_key") ?? "claim-images/auto_eval_hyp_meam_anomaly_1777770170424.png";
+        const obj = await env.ARTIFACTS.get(imageKey);
+        if (!obj) return jsonError(`R2 image not found: ${imageKey}`, 404);
+        const imageBuf = await obj.arrayBuffer();
+
+        const purposes = ["retrieval", "vision_input", "image", "vision", "file-extract", "fine-tune", "knowledge"];
+        const uploadResults: unknown[] = [];
+        for (const purpose of purposes) {
+          const fd = new FormData();
+          fd.append("purpose", purpose);
+          fd.append("file", new Blob([imageBuf], { type: "image/png" }), "probe.png");
+          try {
+            const res = await fetch(`${baseURL}/files`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}` },
+              body: fd,
+            });
+            const text = await res.text();
+            uploadResults.push({ purpose, status: res.status, body: text.slice(0, 250) });
+          } catch (e) {
+            uploadResults.push({ purpose, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, image_key: imageKey, upload_results: uploadResults }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-vlm-with-file" && request.method === "GET") {
+        // Try chat/completions with a known file_id and various content shapes
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const fileId = url.searchParams.get("file_id");
+        const model = url.searchParams.get("model") ?? "MiniMax-VL-01";
+        if (!fileId) return jsonError("Missing file_id", 400);
+        const shapes = [
+          { name: "image_file ref", content: [{ type: "text", text: "Describe this image" }, { type: "image_file", image_file: { file_id: fileId } }] },
+          { name: "image_url with file_id", content: [{ type: "text", text: "Describe this image" }, { type: "image_url", image_url: { url: `file://${fileId}` } }] },
+          { name: "input_image with file_id", content: [{ type: "text", text: "Describe this image" }, { type: "input_image", file_id: fileId }] },
+          { name: "image with file_id", content: [{ type: "text", text: "Describe this image" }, { type: "image", file_id: fileId }] },
+        ];
+        const results: unknown[] = [];
+        for (const shape of shapes) {
+          try {
+            const res = await fetch(`${baseURL}/chat/completions`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify({ model, messages: [{ role: "user", content: shape.content }], max_tokens: 64 }),
+            });
+            const text = await res.text();
+            results.push({ shape: shape.name, status: res.status, body: text.slice(0, 280) });
+          } catch (e) {
+            results.push({ shape: shape.name, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, model, file_id: fileId, results }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-vlm-base64" && request.method === "GET") {
+        // Try base64 inline data URLs across several models
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const imageKey = url.searchParams.get("image_key") ?? "claim-images/auto_eval_hyp_meam_anomaly_1777770170424.png";
+        const obj = await env.ARTIFACTS.get(imageKey);
+        if (!obj) return jsonError(`R2 image not found: ${imageKey}`, 404);
+        const imageBuf = await obj.arrayBuffer();
+        // Convert to base64 data URL
+        const bytes = new Uint8Array(imageBuf);
+        let binary = "";
+        const chunkSize = 8192;
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+          binary += String.fromCharCode.apply(null, Array.from(bytes.slice(i, i + chunkSize)));
+        }
+        const dataUrl = `data:image/png;base64,${btoa(binary)}`;
+        const models = (url.searchParams.get("models") ?? "MiniMax-VL-01,MiniMax-M2.7,MiniMax-M2.1,MiniMax-M2.5").split(",").map(s => s.trim());
+        const results: unknown[] = [];
+        for (const model of models) {
+          try {
+            const res = await fetch(`${baseURL}/chat/completions`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify({
+                model,
+                messages: [{
+                  role: "user",
+                  content: [
+                    { type: "text", text: "Describe this image in one sentence." },
+                    { type: "image_url", image_url: { url: dataUrl } },
+                  ],
+                }],
+                max_tokens: 100,
+              }),
+            });
+            const text = await res.text();
+            results.push({ model, status: res.status, body: text.slice(0, 280) });
+          } catch (e) {
+            results.push({ model, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, image_key: imageKey, image_size: imageBuf.byteLength, results }, { headers: JSON_CORS_HEADERS });
+      }
+
       if (url.pathname === "/admin/probe-vlm" && request.method === "GET") {
         // Try several VLM model IDs via /chat/completions with an image input
         const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
