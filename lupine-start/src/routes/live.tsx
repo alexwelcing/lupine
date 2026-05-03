@@ -17,12 +17,12 @@ export const Route = createFileRoute('/live')({
 })
 
 const WORKER_BASE = 'https://glim-think-v1.aw-ab5.workers.dev'
-// Phase D — split /feed into edge-cached, single-purpose endpoints.
 const FEED_SWARM_URL = `${WORKER_BASE}/feed/swarm`
 const FEED_EXPERIMENTS_URL = `${WORKER_BASE}/feed/experiments`
-const FEED_DIARY_URL = `${WORKER_BASE}/feed/diary`
 const FEED_METRICS_URL = `${WORKER_BASE}/feed/metrics`
 const FEED_BROADCAST_URL = `${WORKER_BASE}/feed/broadcast`
+const FEED_HYPOTHESES_URL = `${WORKER_BASE}/feed/hypotheses`
+const FEED_RECENT_CLAIMS_URL = `${WORKER_BASE}/feed/recent-claims`
 const BROADCASTS_URL = `${WORKER_BASE}/broadcasts?limit=10`
 
 function timeAgo(dateString: string) {
@@ -65,10 +65,25 @@ async function fetchJson(url: string) {
   return res.json()
 }
 
+type Hypothesis = {
+  id: string
+  title: string
+  status: string
+  confidence: number | null
+  updated_at: string
+}
+
+type RecentClaim = {
+  claim_id: string
+  agent_id: string
+  claim_type: string
+  description: string
+  confidence: number | null
+  created_at: string
+  is_minimax: boolean
+}
+
 function LiveLabComponent() {
-  // Phase D — parallel fetches against split /feed/* endpoints. Each
-  // refetches at its server-side cache TTL so the edge serves most
-  // requests from cache.
   const swarmQuery = useQuery({
     queryKey: ['feed-swarm'],
     queryFn: () => fetchJson(FEED_SWARM_URL),
@@ -78,11 +93,6 @@ function LiveLabComponent() {
     queryKey: ['feed-experiments'],
     queryFn: () => fetchJson(FEED_EXPERIMENTS_URL),
     refetchInterval: 30_000,
-  })
-  const diaryQuery = useQuery({
-    queryKey: ['feed-diary'],
-    queryFn: () => fetchJson(FEED_DIARY_URL),
-    refetchInterval: 60_000,
   })
   const metricsQuery = useQuery({
     queryKey: ['feed-metrics'],
@@ -94,46 +104,50 @@ function LiveLabComponent() {
     queryFn: () => fetchJson(FEED_BROADCAST_URL),
     refetchInterval: 30_000,
   })
+  const hypothesesQuery = useQuery<Hypothesis[]>({
+    queryKey: ['feed-hypotheses'],
+    queryFn: () => fetchJson(FEED_HYPOTHESES_URL),
+    refetchInterval: 30_000,
+  })
+  const recentClaimsQuery = useQuery<RecentClaim[]>({
+    queryKey: ['feed-recent-claims'],
+    queryFn: () => fetchJson(FEED_RECENT_CLAIMS_URL),
+    refetchInterval: 30_000,
+  })
   const { data: broadcastData } = useQuery({
     queryKey: ['lab-broadcasts'],
     queryFn: () => fetchJson(BROADCASTS_URL),
     refetchInterval: 60_000,
   })
 
-  // Aggregate shape kept identical to the old /feed payload so the
-  // render tree below is unchanged. SSR fallback (`data` undefined) is
-  // still honored: each section shows its own loading/empty state.
   const swarm = swarmQuery.data || {}
   const experiments = experimentsQuery.data
-  const provens = experiments?.provens || []
-  const hypotheticals = experiments?.hypotheticals || []
-  const disproven = experiments?.disproven || []
+  const pendingExperiments = experiments?.hypotheticals || []
   const metrics = metricsQuery.data
-  const diary = diaryQuery.data
+  const hypotheses = (hypothesesQuery.data || []) as Hypothesis[]
+  const recentClaims = (recentClaimsQuery.data || []) as RecentClaim[]
+  const refutedHypotheses = hypotheses.filter(h => h.status === 'refuted')
+  const activeHypotheses = hypotheses.filter(h => h.status === 'testing' || h.status === 'proposed')
+  const claimCount = recentClaims.length
   const latestBroadcast = latestBroadcastQuery.data || broadcastData?.broadcasts?.[0]
   const broadcasts = broadcastData?.broadcasts || (latestBroadcast ? [latestBroadcast] : [])
 
-  // Phase A — surface degraded backend state. Any of the six queries
-  // failing is a strong signal that the worker is unhealthy or a
-  // section's data path is broken; show a banner instead of silently
-  // rendering empty cards.
   const failedSections = [
     swarmQuery.error && 'swarm',
     experimentsQuery.error && 'experiments',
-    diaryQuery.error && 'diary',
     metricsQuery.error && 'metrics',
     latestBroadcastQuery.error && 'broadcast',
+    hypothesesQuery.error && 'hypotheses',
+    recentClaimsQuery.error && 'claims',
   ].filter(Boolean) as string[]
   const broadcastMetrics = latestBroadcast?.metrics
-  // Synthesized "data" object so existing `data.swarm_status` reads
-  // below keep working without rewriting the JSX.
   const data: { swarm_status?: Record<string, unknown> } = { swarm_status: swarm }
 
   return (
     <PageShell
-      kicker="LIVE LAB: HOURLY BROADCAST"
-      title="The Lab at Work"
-      subtitle="A public operating room for GLIM-THINK: hourly progress reports, research diary output, experiment queues, and the agent fleet that turns benchmark evidence into claims."
+      kicker="LIVE LAB"
+      title="The lab at work"
+      subtitle="An autonomous research swarm running on Cloudflare Workers + MiniMax-M2.7. Hypotheses generated, evaluated, and refuted in public, every hour."
     >
       {failedSections.length > 0 && (
         <div className="mb-6 border border-[var(--error)] bg-[var(--error)]/10 px-4 py-3 text-sm">
@@ -197,12 +211,12 @@ function LiveLabComponent() {
         </div>
       </section>
 
-      {/* Top Stats Bar */}
+      {/* Top Stats Bar — counts straight from hypotheses + claims tables */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Active Agents" value={Object.values(swarm).filter((a: any) => a.status === 'active').length} total={Object.keys(swarm).length} color="var(--primary)" icon={<Activity size={18} />} />
-        <StatCard label="Proven" value={provens.length} color="#4ecdc4" icon={<CheckCircle2 size={18} />} />
-        <StatCard label="Hypotheticals" value={hypotheticals.length} color="var(--on-surface-variant)" icon={<FlaskConical size={18} />} />
-        <StatCard label="Falsified" value={disproven.length} color="var(--error)" icon={<XCircle size={18} />} />
+        <StatCard label="Active agents" value={Object.values(swarm).filter((a: any) => a.status === 'active').length} total={Object.keys(swarm).length} color="var(--primary)" icon={<Activity size={18} />} />
+        <StatCard label="Hypotheses" value={activeHypotheses.length} color="#4ecdc4" icon={<FlaskConical size={18} />} />
+        <StatCard label="Claims" value={claimCount} color="var(--secondary)" icon={<CheckCircle2 size={18} />} />
+        <StatCard label="Refuted" value={refutedHypotheses.length} color="var(--error)" icon={<XCircle size={18} />} />
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
@@ -323,44 +337,37 @@ function LiveLabComponent() {
 
         {/* Main Content Area */}
         <div className="xl:col-span-8 flex flex-col gap-6">
-          {/* The Living Canon */}
+          {/* Active hypotheses — the actual research portfolio */}
           <div className="glass-panel p-0 overflow-hidden">
-            <div className="flex flex-col md:flex-row md:items-center justify-between px-8 py-5 border-b border-[var(--outline-variant)]">
+            <div className="flex items-center justify-between px-8 py-5 border-b border-[var(--outline-variant)]">
               <div className="flex items-center gap-3">
                 <div className="w-1 h-6 bg-[var(--primary)]"></div>
-                <h2 className="text-xl">The Living Canon</h2>
+                <h2 className="text-xl">Active hypotheses</h2>
               </div>
-              <span className="font-mono text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest mt-2 md:mt-0">Immutable Ledger of Truth</span>
+              <span className="mono-label text-[var(--on-surface-variant)]">{activeHypotheses.length} testing · {refutedHypotheses.length} refuted</span>
             </div>
-
-            <div className="p-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <CanonColumn
-                  title="HYPOTHETICALS"
-                  subtitle="Queued for validation"
-                  accent="var(--on-surface-variant)"
-                  items={hypotheticals}
-                  empty="Queue empty. Awaiting new hypotheses from the theorist agent."
-                />
-                <CanonColumn
-                  title="PROVENS"
-                  subtitle="Experimentally validated"
-                  accent="var(--primary)"
-                  items={provens}
-                  empty="Awaiting validation. Run experiments to populate this ledger."
-                />
-                <CanonColumn
-                  title="DISPROVEN"
-                  subtitle="Falsified by evidence"
-                  accent="var(--error)"
-                  items={disproven}
-                  empty="No falsifications. All current hypotheses remain viable."
-                />
-              </div>
+            <div className="p-6 space-y-3">
+              {activeHypotheses.length === 0 ? (
+                <p className="font-mono text-[13px] text-[var(--on-surface-variant)]">No active hypotheses.</p>
+              ) : (
+                activeHypotheses.map(h => (
+                  <HypothesisRow key={h.id} h={h} />
+                ))
+              )}
+              {refutedHypotheses.length > 0 && (
+                <>
+                  <div className="pt-4 mt-4 border-t border-[var(--outline-variant)] mono-label text-[var(--error)]">
+                    Refuted
+                  </div>
+                  {refutedHypotheses.map(h => (
+                    <HypothesisRow key={h.id} h={h} />
+                  ))}
+                </>
+              )}
             </div>
           </div>
 
-          {/* Research Diary Stream */}
+          {/* Recent claims — the cron-driven M2.7 narratives */}
           <div className="glass-panel p-0 overflow-hidden">
             <div className="flex items-center justify-between px-8 py-5 border-b border-[var(--outline-variant)]">
               <div className="flex items-center gap-3">
@@ -368,37 +375,82 @@ function LiveLabComponent() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--secondary)] opacity-60"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--secondary)]"></span>
                 </div>
-                <h3 className="mono-label text-[var(--secondary)]">RESEARCH DIARY STREAM</h3>
+                <h3 className="mono-label text-[var(--secondary)]">Recent claims</h3>
               </div>
-              <div className="flex items-center gap-4">
-                <span className="mono-label text-[var(--on-surface-variant-mid)]">
-                  MODEL: <span className="text-[var(--on-surface)]">{diary?.model || 'SYS'}</span>
-                </span>
-                <span className="mono-label text-[var(--on-surface-variant-mid)]">
-                  ID: <span className="text-[var(--on-surface)]">{diary?.articleId?.slice(0, 8) || '--'}</span>
-                </span>
-              </div>
+              <span className="mono-label text-[var(--on-surface-variant-mid)]">MiniMax-M2.7 + auto-evaluator</span>
             </div>
-
-            <div className="p-8">
-              {!diary?.narrative ? (
-                <div className="flex items-center gap-3 py-8">
-                  <div className="w-3 h-3 border-2 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
-                  <span className="terminal-glow font-mono text-[13px]">&gt; Awaiting first diary entry...</span>
+            <div className="divide-y divide-[var(--outline-variant)]">
+              {recentClaims.length === 0 ? (
+                <div className="p-8 font-mono text-[13px] text-[var(--on-surface-variant)]">
+                  &gt; No claims yet. The hourly orchestrator will write one within the hour.
                 </div>
               ) : (
-                <div className="relative">
-                  <div className="absolute left-0 top-0 bottom-0 w-px bg-[var(--outline-variant)]"></div>
-                  <div className="pl-6 prose prose-sm prose-p:font-sans prose-p:text-[var(--on-surface-variant)] prose-headings:font-display prose-headings:text-[var(--on-surface)] prose-strong:text-[var(--on-surface)] max-w-none">
-                    <div dangerouslySetInnerHTML={{ __html: marked.parse(diary.narrative) }} />
-                  </div>
-                </div>
+                recentClaims.map(c => (
+                  <ClaimRow key={c.claim_id} c={c} />
+                ))
               )}
             </div>
           </div>
+
+          {/* Pending experiments (was Hypotheticals — renamed since the
+              underlying table is `pending_experiments`, distinct from hypotheses) */}
+          {pendingExperiments.length > 0 && (
+            <div className="glass-panel p-0 overflow-hidden">
+              <div className="flex items-center justify-between px-8 py-5 border-b border-[var(--outline-variant)]">
+                <h3 className="mono-label text-[var(--on-surface-variant)]">Pending experiments · {pendingExperiments.length}</h3>
+              </div>
+              <div className="p-6">
+                <CanonColumn
+                  title=""
+                  subtitle=""
+                  accent="var(--on-surface-variant)"
+                  items={pendingExperiments}
+                  empty=""
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </PageShell>
+  )
+}
+
+function HypothesisRow({ h }: { h: { id: string; title: string; status: string; confidence: number | null; updated_at: string } }) {
+  const conf = typeof h.confidence === 'number' ? `${(h.confidence * 100).toFixed(0)}%` : '—'
+  const statusColor =
+    h.status === 'refuted' ? 'var(--error)' :
+    h.status === 'confirmed' ? 'var(--primary)' :
+    h.status === 'testing' ? 'var(--secondary)' : 'var(--on-surface-variant)'
+  return (
+    <div className="border border-[var(--outline-variant)] p-4 hover:border-[var(--primary)]/40 transition-colors">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="mono-label" style={{ color: statusColor }}>{h.status}</span>
+        <span className="mono-label text-[var(--on-surface-variant-mid)]">conf {conf}</span>
+        <span className="mono-label text-[var(--on-surface-variant-mid)] ml-auto">{timeAgo(h.updated_at)}</span>
+      </div>
+      <p className="font-sans text-[13px] leading-relaxed text-[var(--on-surface)]">{h.title}</p>
+    </div>
+  )
+}
+
+function ClaimRow({ c }: { c: { claim_id: string; agent_id: string; description: string; confidence: number | null; created_at: string; is_minimax: boolean } }) {
+  const conf = typeof c.confidence === 'number' ? `${(c.confidence * 100).toFixed(0)}%` : ''
+  return (
+    <div className="px-8 py-5">
+      <div className="flex items-center gap-3 mb-2">
+        <span
+          className={`mono-label px-2 py-0.5 ${c.is_minimax ? 'bg-[var(--secondary)]/15 text-[var(--secondary)]' : 'text-[var(--on-surface-variant)]'}`}
+        >
+          {c.is_minimax ? 'M2.7' : c.agent_id.split(':').pop() || c.agent_id}
+        </span>
+        {conf && <span className="mono-label text-[var(--on-surface-variant-mid)]">{conf}</span>}
+        <span className="mono-label text-[var(--on-surface-variant-mid)] ml-auto">{timeAgo(c.created_at)}</span>
+      </div>
+      <p className="font-sans text-[13px] leading-relaxed text-[var(--on-surface-variant)] line-clamp-3">
+        {c.description}
+      </p>
+    </div>
   )
 }
 
