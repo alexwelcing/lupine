@@ -20,6 +20,7 @@ import type { Env } from "../types";
 import { selectModel } from "../agents/models";
 import { generateText } from "ai";
 import { searchLiterature } from "../literature";
+import { parseHitlistBlock, persistHits } from "./hits";
 
 const TABLE_DDL = `
   CREATE TABLE IF NOT EXISTS literature_insights (
@@ -284,7 +285,8 @@ function parseReasonOutput(raw: string): {
 } {
   const verdictMatch = raw.match(/VERDICT:\s*(supports|refutes|open)/i);
   const confidenceMatch = raw.match(/CONFIDENCE:\s*([0-9.]+)/);
-  const narrativeMatch = raw.match(/NARRATIVE:\s*([\s\S]*?)(?=\nFOLLOW_UP_QUERIES:|$)/i);
+  // Narrative ends at the first of HITLIST:, FOLLOW_UP_QUERIES:, or EOF.
+  const narrativeMatch = raw.match(/NARRATIVE:\s*([\s\S]*?)(?=\n(?:HITLIST|FOLLOW_UP_QUERIES):|$)/i);
   const followUpMatch = raw.match(/FOLLOW_UP_QUERIES:\s*([\s\S]*)$/i);
   const queries: string[] = [];
   if (followUpMatch) {
@@ -314,6 +316,8 @@ export async function reasonOnHypothesis(
   follow_up_queries?: string[];
   raw?: string;
   claim_id?: string;
+  hits_inserted?: string[];
+  hits_skipped_duplicate?: number;
   latency_ms: number;
   error?: string;
 }> {
@@ -365,6 +369,20 @@ export async function reasonOnHypothesis(
     "  - Cite at least 2 of the literature insights ([1], [2], ...) by number",
     "  - State the verdict and the reasoning behind the confidence number",
     "  - Quote specific numerical values when the literature provides them",
+    "",
+    "HITLIST:",
+    "List 0-4 ACTIONABLE findings surfaced by this round, one per line.",
+    "Format: - [KIND] short summary :: proposed action",
+    "KIND must be exactly one of: missing_experiment, contradiction, reinforcement, surprise.",
+    "  - missing_experiment: a test the literature has NOT done that would resolve H",
+    "  - contradiction: two cited insights that disagree on a measurable claim",
+    "  - reinforcement: independent corroboration of a foundation claim (F1..F4)",
+    "  - surprise: a high-relevance insight whose verdict differs from naive expectation",
+    "Examples:",
+    "  - [missing_experiment] No paper has measured PR for E(3)-equivariant MLIPs on the IMMI benchmark suite :: rerun the IMMI participation-ratio analysis on a NequIP/MACE/Allegro ensemble",
+    "  - [reinforcement] Insight [3] independently observes the same anharmonic split that drives F3 PC1 alignment :: cite alongside F3 in the next round",
+    "Skip the section ENTIRELY (output 'HITLIST:' followed by no list items) if no hit clearly fits.",
+    "Do NOT pad with weak observations. A hit must be specific and actionable.",
     "",
     "FOLLOW_UP_QUERIES:",
     "List 2-3 NEW literature search queries (one per line, prefixed with '- ').",
@@ -436,6 +454,28 @@ export async function reasonOnHypothesis(
 
   const parsed = parseReasonOutput(raw);
 
+  // Extract structured hits from the HITLIST: block (if M2.7 emitted one)
+  // and persist them with dedup. Hits surface actionable findings — missing
+  // experiments, contradictions, reinforcements, surprises — that humans can
+  // triage via /admin/hitlist.
+  let hitsInserted: string[] = [];
+  let hitsSkipped = 0;
+  try {
+    const parsedHits = parseHitlistBlock(raw);
+    if (parsedHits.length > 0) {
+      const persisted = await persistHits(env, {
+        hypothesis_id: hyp.id,
+        source_claim_id: claimId,
+        source_insight_ids: insights.map((i) => i.insight_id),
+        parsed: parsedHits,
+      });
+      hitsInserted = persisted.inserted;
+      hitsSkipped = persisted.skipped_duplicate;
+    }
+  } catch (e) {
+    console.error("reasonOnHypothesis: hit persistence failed:", e);
+  }
+
   return {
     ok: true,
     hypothesis_title: hyp.title,
@@ -446,6 +486,8 @@ export async function reasonOnHypothesis(
     follow_up_queries: parsed.follow_up_queries,
     raw,
     claim_id: claimId,
+    hits_inserted: hitsInserted,
+    hits_skipped_duplicate: hitsSkipped,
     latency_ms: Date.now() - start,
   };
 }
@@ -459,6 +501,7 @@ export interface IterateRoundResult {
   follow_up_queries: string[];
   papers_harvested_this_round: number;
   papers_comprehended_this_round: number;
+  hits_inserted_this_round: number;
   narrative: string;
   claim_id?: string;
 }
@@ -793,6 +836,7 @@ export async function iterateOnHypothesis(
       follow_up_queries: followUps,
       papers_harvested_this_round: papersHarvestedThisRound,
       papers_comprehended_this_round: papersComprehendedThisRound,
+      hits_inserted_this_round: reasoned.hits_inserted?.length ?? 0,
       narrative: reasoned.narrative ?? "",
       claim_id: reasoned.claim_id,
     });
