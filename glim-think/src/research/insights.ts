@@ -148,6 +148,12 @@ export async function comprehendPaper(
     "",
     "VERDICT 'context' = paper enriches the framing without supporting or refuting.",
     "",
+    "Specific-name boost: if the abstract mentions a SPECIFIC element symbol",
+    "(Au/Cu/Fe/Ni/Mo/W/etc.), method (MEAM/EAM/Tersoff/CHGNet/MACE/SNAP/etc.), or",
+    "measurable quantity (PR, eigenvalue, elastic constant, PCA component) that ALSO",
+    "appears in the hypothesis text, the relevance MUST be at least 0.5. Verbatim",
+    "term overlap is meaningful signal — don't underrate it.",
+    "",
     "Be honest but not overly strict — papers providing methodology, scale evidence,",
     "or related-system data are valuable context (≥ 0.4). Reserve 0.0-0.2 for papers",
     "in different fields. Do not invent findings. Quote numbers verbatim when relevant.",
@@ -481,6 +487,14 @@ export interface LeanReadiness {
   };
 }
 
+// Threshold for what counts as "high-relevance" in the Lean gate.
+// Empirically M2.7 lands most on-topic papers at 0.4-0.5; raised to 0.5
+// was too strict (zero papers cleared it after 3 iterations on a
+// well-targeted hypothesis). 0.4 = "provides methodology / scale
+// evidence", which is the floor below which a paper isn't really
+// load-bearing for a Lean attempt.
+const HIGH_RELEVANCE_THRESHOLD = 0.4;
+
 function assessLeanReadiness(rounds: IterateRoundResult[], highRelCount: number): LeanReadiness {
   const last = rounds[rounds.length - 1];
   const confidenceOk = (last?.confidence ?? 0) >= 0.85;
@@ -547,6 +561,130 @@ function cleanQuery(q: string): string {
 }
 
 /**
+ * Manually override an insight's relevance + verdict. Use when M2.7
+ * underrated a paper that a human reader judges directly relevant.
+ * The original `raw_response` is preserved in a note for audit.
+ */
+export async function promoteInsight(
+  env: Env,
+  opts: {
+    insight_id: string;
+    new_relevance?: number;
+    new_verdict?: string;
+    note?: string;
+  },
+): Promise<{ ok: boolean; updated?: InsightRow; error?: string }> {
+  await ensureSchema(env);
+  const existing = await env.LEDGER
+    .prepare(
+      `SELECT insight_id, paper_doi, hypothesis_id, key_finding,
+              relevance_score, agrees_or_refutes, extracted_at
+         FROM literature_insights WHERE insight_id = ?1`,
+    )
+    .bind(opts.insight_id)
+    .first<InsightRow>()
+    .catch(() => null);
+  if (!existing) {
+    return { ok: false, error: `insight not found: ${opts.insight_id}` };
+  }
+
+  const newRel =
+    typeof opts.new_relevance === "number"
+      ? Math.max(0, Math.min(1, opts.new_relevance))
+      : existing.relevance_score;
+  const newVerdict = opts.new_verdict ?? existing.agrees_or_refutes;
+  const noteSuffix = opts.note ? ` // human note: ${opts.note}` : "";
+
+  await env.LEDGER
+    .prepare(
+      `UPDATE literature_insights
+          SET relevance_score = ?1,
+              agrees_or_refutes = ?2,
+              raw_response = COALESCE(raw_response, '') || ?3
+        WHERE insight_id = ?4`,
+    )
+    .bind(
+      newRel,
+      newVerdict,
+      `\n[promoted at ${new Date().toISOString()}: relevance ${existing.relevance_score} -> ${newRel}, verdict ${existing.agrees_or_refutes} -> ${newVerdict}${noteSuffix}]`,
+      opts.insight_id,
+    )
+    .run();
+
+  return {
+    ok: true,
+    updated: {
+      ...existing,
+      relevance_score: newRel,
+      agrees_or_refutes: newVerdict,
+    },
+  };
+}
+
+interface LeanStatusEntry {
+  hypothesis_id: string;
+  hypothesis_title: string;
+  status: string;
+  confidence: number | null;
+  insight_count: number;
+  high_relevance_count: number;
+  recent_claim_id: string | null;
+}
+
+/**
+ * Cross-hypothesis snapshot for the lean-readiness gate. Doesn't run
+ * iterate (cheap read-only DB query). Useful for spotting which
+ * hypotheses are closest to the gate without paying the M2.7 cost.
+ */
+export async function leanStatusOverview(env: Env): Promise<LeanStatusEntry[]> {
+  await ensureSchema(env);
+  const hypotheses = await env.LEDGER
+    .prepare(
+      `SELECT id, title, status, confidence FROM hypotheses
+        WHERE status IN ('proposed', 'testing')
+        ORDER BY updated_at DESC`,
+    )
+    .all<HypothesisRow>()
+    .catch(() => ({ results: [] as HypothesisRow[] }));
+
+  const out: LeanStatusEntry[] = [];
+  for (const h of hypotheses.results ?? []) {
+    const counts = await env.LEDGER
+      .prepare(
+        `SELECT COUNT(*) AS total,
+                SUM(CASE WHEN relevance_score >= ?2 THEN 1 ELSE 0 END) AS high_rel
+           FROM literature_insights
+          WHERE hypothesis_id = ?1 AND relevance_score >= 0.15`,
+      )
+      .bind(h.id, HIGH_RELEVANCE_THRESHOLD)
+      .first<{ total: number; high_rel: number }>()
+      .catch(() => ({ total: 0, high_rel: 0 }));
+
+    const recentClaim = await env.LEDGER
+      .prepare(
+        `SELECT claim_id FROM claims
+          WHERE claim_type = 'LiteratureGroundedReasoning'
+            AND json_extract(claim_data, '$.hypothesis_id') = ?1
+          ORDER BY created_at DESC LIMIT 1`,
+      )
+      .bind(h.id)
+      .first<{ claim_id: string }>()
+      .catch(() => null);
+
+    out.push({
+      hypothesis_id: h.id,
+      hypothesis_title: h.title,
+      status: h.status,
+      confidence: h.confidence,
+      insight_count: counts?.total ?? 0,
+      high_relevance_count: counts?.high_rel ?? 0,
+      recent_claim_id: recentClaim?.claim_id ?? null,
+    });
+  }
+  return out;
+}
+
+/**
  * Iterative deepening loop: reason → harvest follow-ups → comprehend →
  * reason again. Stops when verdict + confidence stabilize OR when the
  * round budget is exhausted OR when no new follow-up queries surface.
@@ -608,7 +746,7 @@ export async function iterateOnHypothesis(
     }
 
     const insightsCount = reasoned.insights_used.length;
-    const highRelCount = reasoned.insights_used.filter((i) => i.relevance_score >= 0.5).length;
+    const highRelCount = reasoned.insights_used.filter((i) => i.relevance_score >= HIGH_RELEVANCE_THRESHOLD).length;
     let papersHarvestedThisRound = 0;
     let papersComprehendedThisRound = 0;
 

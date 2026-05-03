@@ -47,7 +47,7 @@ import { generateAndStoreImage } from "./agents/image";
 import { generateAndStoreAudio } from "./agents/tts";
 import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
 import { explainFigure } from "./agents/vlm";
-import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis, iterateOnHypothesis } from "./research/insights";
+import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis, iterateOnHypothesis, promoteInsight, leanStatusOverview } from "./research/insights";
 import { searchLiterature as searchLit } from "./literature";
 
 async function sha256(input: string): Promise<string> {
@@ -1797,6 +1797,28 @@ ${narrative}
           max_tokens: body.max_tokens,
         });
         return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/insights/promote" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as {
+          insight_id?: string;
+          new_relevance?: number;
+          new_verdict?: string;
+          note?: string;
+        };
+        if (!body.insight_id) return jsonError("Missing insight_id", 400);
+        const result = await promoteInsight(env, {
+          insight_id: body.insight_id,
+          new_relevance: body.new_relevance,
+          new_verdict: body.new_verdict,
+          note: body.note,
+        });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/lean-status" && request.method === "GET") {
+        const overview = await leanStatusOverview(env);
+        return Response.json({ hypotheses: overview }, { headers: JSON_CORS_HEADERS });
       }
 
       if (url.pathname === "/admin/iterate" && request.method === "POST") {
