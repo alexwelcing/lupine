@@ -255,14 +255,16 @@ interface HypothesisRow {
 }
 
 async function buildHypotheses(env: Env): Promise<HypothesisRow[]> {
+  // Include refuted so the dashboard can show the full lifecycle
+  // (testing → confirmed/refuted). Display logic separates them.
   const rows = await env.LEDGER
     .prepare(
       `SELECT id, title, status, confidence, evidence_ids, agent_id,
               created_at, updated_at
          FROM hypotheses
-         WHERE status IN ('proposed', 'testing', 'confirmed')
+         WHERE status IN ('proposed', 'testing', 'confirmed', 'refuted')
          ORDER BY updated_at DESC
-         LIMIT 25`,
+         LIMIT 30`,
     )
     .all<HypothesisRow>();
   return rows.results ?? [];

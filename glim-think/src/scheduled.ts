@@ -369,8 +369,12 @@ export async function createLabBroadcast(
 
   summary.records = await safe("SELECT COUNT(*) AS n FROM records");
   summary.claims = await safe("SELECT COUNT(*) AS n FROM claims");
+  // Active = currently being investigated (proposed + testing). The
+  // earlier "proposed only" count was misleading — once the
+  // auto-evaluator promotes a hypothesis to 'testing' the headline
+  // dropped to zero even though the research portfolio was full.
   summary.hypotheses = await safe(
-    "SELECT COUNT(*) AS n FROM hypotheses WHERE status = 'proposed'",
+    "SELECT COUNT(*) AS n FROM hypotheses WHERE status IN ('proposed', 'testing')",
   );
   summary.pending_critiques = await safe(
     "SELECT COUNT(*) AS n FROM critiques WHERE status = 'pending'",
@@ -381,7 +385,7 @@ export async function createLabBroadcast(
   const summaryText =
     `${summary.records.toLocaleString()} records · ` +
     `${summary.claims} claims · ` +
-    `${summary.hypotheses} proposed hypotheses · ` +
+    `${summary.hypotheses} active hypotheses · ` +
     `${summary.pending_critiques} pending critiques`;
   const metricsJson = JSON.stringify(summary);
 
