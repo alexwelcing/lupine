@@ -47,7 +47,7 @@ import { generateAndStoreImage } from "./agents/image";
 import { generateAndStoreAudio } from "./agents/tts";
 import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
 import { explainFigure } from "./agents/vlm";
-import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis } from "./research/insights";
+import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis, iterateOnHypothesis } from "./research/insights";
 import { searchLiterature as searchLit } from "./literature";
 
 async function sha256(input: string): Promise<string> {
@@ -1795,6 +1795,23 @@ ${narrative}
           hypothesis_id: body.hypothesis_id,
           insight_limit: body.insight_limit,
           max_tokens: body.max_tokens,
+        });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/iterate" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as {
+          hypothesis_id?: string;
+          max_rounds?: number;
+          papers_per_query?: number;
+          sources?: string[];
+        };
+        if (!body.hypothesis_id) return jsonError("Missing hypothesis_id", 400);
+        const result = await iterateOnHypothesis(env, {
+          hypothesis_id: body.hypothesis_id,
+          max_rounds: body.max_rounds,
+          papers_per_query: body.papers_per_query,
+          sources: body.sources,
         });
         return Response.json(result, { headers: JSON_CORS_HEADERS });
       }

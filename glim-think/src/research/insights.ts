@@ -19,6 +19,7 @@
 import type { Env } from "../types";
 import { selectModel } from "../agents/models";
 import { generateText } from "ai";
+import { searchLiterature } from "../literature";
 
 const TABLE_DDL = `
   CREATE TABLE IF NOT EXISTS literature_insights (
@@ -269,6 +270,31 @@ export async function topInsightsForHypothesis(
  * Returns the narrative + the insights it cited, so the human reviewer
  * can judge quality.
  */
+function parseReasonOutput(raw: string): {
+  verdict: "supports" | "refutes" | "open" | "unknown";
+  confidence: number | null;
+  narrative: string;
+  follow_up_queries: string[];
+} {
+  const verdictMatch = raw.match(/VERDICT:\s*(supports|refutes|open)/i);
+  const confidenceMatch = raw.match(/CONFIDENCE:\s*([0-9.]+)/);
+  const narrativeMatch = raw.match(/NARRATIVE:\s*([\s\S]*?)(?=\nFOLLOW_UP_QUERIES:|$)/i);
+  const followUpMatch = raw.match(/FOLLOW_UP_QUERIES:\s*([\s\S]*)$/i);
+  const queries: string[] = [];
+  if (followUpMatch) {
+    for (const line of followUpMatch[1].split("\n")) {
+      const m = line.match(/^\s*[-*•]\s*(.+?)$/);
+      if (m && m[1].trim().length > 5) queries.push(m[1].trim());
+    }
+  }
+  return {
+    verdict: (verdictMatch?.[1].toLowerCase() ?? "unknown") as "supports" | "refutes" | "open" | "unknown",
+    confidence: confidenceMatch ? Math.max(0, Math.min(1, parseFloat(confidenceMatch[1]))) : null,
+    narrative: narrativeMatch?.[1].trim() ?? raw,
+    follow_up_queries: queries.slice(0, 5),
+  };
+}
+
 export async function reasonOnHypothesis(
   env: Env,
   opts: { hypothesis_id: string; insight_limit?: number; max_tokens?: number },
@@ -277,6 +303,9 @@ export async function reasonOnHypothesis(
   hypothesis_title?: string;
   insights_used: InsightRow[];
   narrative?: string;
+  verdict?: "supports" | "refutes" | "open" | "unknown";
+  confidence?: number | null;
+  follow_up_queries?: string[];
   raw?: string;
   claim_id?: string;
   latency_ms: number;
@@ -319,16 +348,33 @@ export async function reasonOnHypothesis(
     "## Literature insights (ranked by relevance):",
     insightLines,
     "",
-    "## Your task:",
-    "Write a 4-7 sentence interpretation that:",
-    "  - Cites at least 2 of the foundation claims (F1..F4) by number",
-    "  - Cites at least 2 of the literature insights ([1], [2], ...) by number",
-    "  - States whether the literature SUPPORTS, REFUTES, or LEAVES OPEN the hypothesis",
-    "  - Proposes one concrete next experiment if the verdict is unclear",
-    "  - Quotes specific numerical values when the literature provides them",
+    "## Output exactly these sections in order:",
     "",
-    "Do NOT invent findings beyond what is in the foundation or the insights.",
-    "Be precise about your epistemic state — uncertainty is fine if warranted.",
+    "VERDICT: <one word: supports | refutes | open>",
+    "CONFIDENCE: <single number 0.0-1.0>",
+    "",
+    "NARRATIVE:",
+    "Write 4-7 sentences that:",
+    "  - Cite at least 2 of the foundation claims (F1..F4) by number",
+    "  - Cite at least 2 of the literature insights ([1], [2], ...) by number",
+    "  - State the verdict and the reasoning behind the confidence number",
+    "  - Quote specific numerical values when the literature provides them",
+    "",
+    "FOLLOW_UP_QUERIES:",
+    "List 2-3 NEW literature search queries (one per line, prefixed with '- ').",
+    "Each query MUST be a TIGHT keyword string of 4-10 words — like a",
+    "search engine query, NOT a sentence. Example good queries:",
+    "  - d-band center transition metals EAM potential",
+    "  - MEAM angular term iron elastic constants benchmark",
+    "  - cross-style PC1 alignment classical interatomic potentials",
+    "Bad: 'Search for papers on d-band fullness and...' — drop 'search for',",
+    "drop 'papers on', drop 'how does', drop articles ('the', 'a'). Just",
+    "concrete nouns + element names + technique names.",
+    "",
+    "## Constraints:",
+    "  - Do NOT invent findings beyond what is in the foundation or the insights",
+    "  - Do NOT name specific tools/methods unless they are in an insight's KEY_FINDING",
+    "  - Be precise about epistemic state — uncertainty is fine if warranted",
   ].join("\n");
 
   const model = selectModel(env, "deep");
@@ -382,12 +428,268 @@ export async function reasonOnHypothesis(
     console.error("reasonOnHypothesis: claim insert failed:", e);
   }
 
+  const parsed = parseReasonOutput(raw);
+
   return {
     ok: true,
     hypothesis_title: hyp.title,
     insights_used: insights,
-    narrative: raw,
+    narrative: parsed.narrative,
+    verdict: parsed.verdict,
+    confidence: parsed.confidence,
+    follow_up_queries: parsed.follow_up_queries,
+    raw,
     claim_id: claimId,
     latency_ms: Date.now() - start,
+  };
+}
+
+export interface IterateRoundResult {
+  round: number;
+  verdict: "supports" | "refutes" | "open" | "unknown";
+  confidence: number | null;
+  insights_count: number;
+  high_relevance_count: number;
+  follow_up_queries: string[];
+  papers_harvested_this_round: number;
+  papers_comprehended_this_round: number;
+  narrative: string;
+  claim_id?: string;
+}
+
+export interface IterateResult {
+  hypothesis_id: string;
+  hypothesis_title: string;
+  rounds: IterateRoundResult[];
+  converged: boolean;
+  convergence_reason: string;
+  total_papers_added: number;
+  total_insights_added: number;
+  duration_ms: number;
+  lean_readiness: LeanReadiness;
+}
+
+export interface LeanReadiness {
+  ready: boolean;
+  reasons: string[];
+  checklist: {
+    confidence_gte_0_85: boolean;
+    verdict_stable_3_rounds: boolean;
+    high_relevance_insights_gte_5: boolean;
+    no_recent_refutations: boolean;
+    formalizable_claim_shape: boolean;
+  };
+}
+
+function assessLeanReadiness(rounds: IterateRoundResult[], highRelCount: number): LeanReadiness {
+  const last = rounds[rounds.length - 1];
+  const confidenceOk = (last?.confidence ?? 0) >= 0.85;
+  const recent = rounds.slice(-3);
+  const stableVerdict =
+    recent.length >= 3 &&
+    recent.every((r) => r.verdict === last.verdict) &&
+    last.verdict !== "unknown";
+  const insightsOk = highRelCount >= 5;
+  const noRecentRefutations =
+    recent.length === 0 || !recent.some((r) => r.verdict === "refutes");
+  const formalizable =
+    (last?.verdict === "supports" || last?.verdict === "refutes") &&
+    /[0-9]+\.[0-9]+/.test(last?.narrative ?? "");
+
+  const checklist = {
+    confidence_gte_0_85: confidenceOk,
+    verdict_stable_3_rounds: stableVerdict,
+    high_relevance_insights_gte_5: insightsOk,
+    no_recent_refutations: noRecentRefutations,
+    formalizable_claim_shape: formalizable,
+  };
+
+  const ready = Object.values(checklist).every(Boolean);
+  const reasons: string[] = [];
+  if (!confidenceOk) reasons.push(`confidence ${last?.confidence ?? 0} < 0.85`);
+  if (!stableVerdict) reasons.push(`verdict not stable across 3 rounds`);
+  if (!insightsOk) reasons.push(`only ${highRelCount} high-relevance insights (need >= 5)`);
+  if (!noRecentRefutations) reasons.push(`recent round produced refutation`);
+  if (!formalizable) reasons.push(`verdict open OR narrative lacks numerical anchors`);
+  if (ready) reasons.push("all gates passed — Lean formalization can begin");
+
+  return { ready, reasons, checklist };
+}
+
+const STOPWORDS = new Set([
+  "the", "a", "an", "and", "or", "of", "to", "in", "on", "for", "with",
+  "by", "from", "as", "is", "are", "was", "were", "be", "been", "this",
+  "that", "these", "those", "what", "which", "how", "why", "when", "where",
+]);
+
+function queryFingerprint(q: string): string {
+  return q
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, " ")
+    .split(/\s+/)
+    .filter((t) => t.length > 2 && !STOPWORDS.has(t))
+    .sort()
+    .join(" ");
+}
+
+/**
+ * Strip M2.7's framing prefixes so the search engines receive a tight
+ * keyword query rather than a research-request sentence.
+ */
+function cleanQuery(q: string): string {
+  return q
+    .replace(/^(?:search\s+for|query|look\s+for|find|search|investigate)\s*[":]*/i, "")
+    .replace(/^["'`]+|["'`.,;:]+$/g, "")
+    .replace(/\s*[—–-]\s+(?:targets?|tests?|seeks?|determines?|examines?|asks?)\s+.*/i, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 250);
+}
+
+/**
+ * Iterative deepening loop: reason → harvest follow-ups → comprehend →
+ * reason again. Stops when verdict + confidence stabilize OR when the
+ * round budget is exhausted OR when no new follow-up queries surface.
+ *
+ * NOT a Lean-proof generator — this is the gate that decides whether a
+ * Lean attempt is justified. Use the returned lean_readiness checklist.
+ */
+export async function iterateOnHypothesis(
+  env: Env,
+  opts: {
+    hypothesis_id: string;
+    max_rounds?: number;
+    papers_per_query?: number;
+    sources?: string[];
+  },
+): Promise<IterateResult> {
+  await ensureSchema(env);
+  const start = Date.now();
+  const maxRounds = Math.min(opts.max_rounds ?? 3, 6);
+  const papersPerQuery = Math.min(opts.papers_per_query ?? 3, 6);
+  const sources = (opts.sources ?? ["arxiv", "openalex"]) as Array<
+    "arxiv" | "openalex" | "semantic_scholar"
+  >;
+
+  const hyp = await env.LEDGER
+    .prepare(`SELECT id, title, status, confidence FROM hypotheses WHERE id = ?1`)
+    .bind(opts.hypothesis_id)
+    .first<HypothesisRow>()
+    .catch(() => null);
+  if (!hyp) {
+    return {
+      hypothesis_id: opts.hypothesis_id,
+      hypothesis_title: "(not found)",
+      rounds: [],
+      converged: false,
+      convergence_reason: "hypothesis not found",
+      total_papers_added: 0,
+      total_insights_added: 0,
+      duration_ms: Date.now() - start,
+      lean_readiness: assessLeanReadiness([], 0),
+    };
+  }
+
+  const rounds: IterateRoundResult[] = [];
+  const seenQueries = new Set<string>();
+  let totalPapersAdded = 0;
+  let totalInsightsAdded = 0;
+  let convergenceReason = "max rounds reached";
+
+  for (let round = 1; round <= maxRounds; round++) {
+    const reasoned = await reasonOnHypothesis(env, {
+      hypothesis_id: hyp.id,
+      insight_limit: 7,
+      max_tokens: 3000,
+    });
+    if (!reasoned.ok) {
+      convergenceReason = `reason failed in round ${round}: ${reasoned.error}`;
+      break;
+    }
+
+    const insightsCount = reasoned.insights_used.length;
+    const highRelCount = reasoned.insights_used.filter((i) => i.relevance_score >= 0.5).length;
+    let papersHarvestedThisRound = 0;
+    let papersComprehendedThisRound = 0;
+
+    const followUps = (reasoned.follow_up_queries ?? []).filter((q) => {
+      const fp = queryFingerprint(q);
+      if (seenQueries.has(fp)) return false;
+      seenQueries.add(fp);
+      return true;
+    });
+
+    if (followUps.length > 0 && round < maxRounds) {
+      for (const rawQuery of followUps.slice(0, 3)) {
+        const query = cleanQuery(rawQuery);
+        if (query.length < 5) continue;
+        try {
+          const harvest = await searchLiterature(env, query, {
+            max: papersPerQuery,
+            sources,
+          });
+          for (const [, papers] of Object.entries(harvest.results) as Array<[string, Array<{ doi: string }>]>) {
+            for (const paper of papers) {
+              papersHarvestedThisRound += 1;
+              const comp = await comprehendPaper(env, {
+                paper_doi: paper.doi,
+                hypothesis_id: hyp.id,
+              });
+              if (comp.ok) papersComprehendedThisRound += 1;
+            }
+          }
+        } catch (e) {
+          console.error(`iterate round ${round}: harvest failed for "${query}":`, e);
+        }
+      }
+      totalPapersAdded += papersHarvestedThisRound;
+      totalInsightsAdded += papersComprehendedThisRound;
+    }
+
+    rounds.push({
+      round,
+      verdict: reasoned.verdict ?? "unknown",
+      confidence: reasoned.confidence ?? null,
+      insights_count: insightsCount,
+      high_relevance_count: highRelCount,
+      follow_up_queries: followUps,
+      papers_harvested_this_round: papersHarvestedThisRound,
+      papers_comprehended_this_round: papersComprehendedThisRound,
+      narrative: reasoned.narrative ?? "",
+      claim_id: reasoned.claim_id,
+    });
+
+    if (round >= 2) {
+      const prev = rounds[rounds.length - 2];
+      const curr = rounds[rounds.length - 1];
+      if (
+        curr.verdict === prev.verdict &&
+        curr.verdict !== "unknown" &&
+        Math.abs((curr.confidence ?? 0) - (prev.confidence ?? 0)) < 0.05 &&
+        followUps.length === 0
+      ) {
+        convergenceReason = `verdict + confidence stable at round ${round}, no new queries`;
+        break;
+      }
+    }
+    if (followUps.length === 0 && round >= 2) {
+      convergenceReason = `no new follow-up queries after round ${round}`;
+      break;
+    }
+  }
+
+  const finalHighRel =
+    rounds.length === 0 ? 0 : rounds[rounds.length - 1].high_relevance_count;
+
+  return {
+    hypothesis_id: hyp.id,
+    hypothesis_title: hyp.title,
+    rounds,
+    converged: rounds.length < maxRounds,
+    convergence_reason: convergenceReason,
+    total_papers_added: totalPapersAdded,
+    total_insights_added: totalInsightsAdded,
+    duration_ms: Date.now() - start,
+    lean_readiness: assessLeanReadiness(rounds, finalHighRel),
   };
 }
