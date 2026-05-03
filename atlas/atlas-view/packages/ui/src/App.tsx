@@ -12,7 +12,7 @@ import { EffectComposer, SSAO, Bloom, ToneMapping, Vignette, DepthOfField } from
 import { ToneMappingMode, BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import { XR, createXRStore, useXR } from '@react-three/xr';
-import { USDZExporter } from 'three/examples/jsm/exporters/USDZExporter.js';
+import { USDZExportHelper } from './export/USDZExportPipeline';
 
 export const xrStore = createXRStore({
   emulate: false,
@@ -185,56 +185,6 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
     return getBackgroundFromColormap((palette as ColormapName) ?? colormap);
   }
   return BG_PRESETS[backgroundPreset] ?? BG_PRESETS.void;
-}
-
-// ─── USDZ Export component ─────────────────────────────────────────────
-function USDZExportHelper({ trigger, onComplete }: { trigger: boolean, onComplete: () => void }) {
-  const { scene } = useThree();
-  
-  useEffect(() => {
-    if (!trigger) return;
-    
-    const runExport = async () => {
-      try {
-        const exporter = new USDZExporter();
-        // Ignore background for USDZ export
-        const oldBackground = scene.background;
-        scene.background = null;
-        
-        // Use parseAsync for promise-based usage
-        const arrayBuffer = await exporter.parseAsync(scene);
-        scene.background = oldBackground;
-        
-        const blob = new Blob([arrayBuffer as any], { type: 'model/vnd.usdz+zip' });
-        const url = URL.createObjectURL(blob);
-        
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'molecule.usdz';
-        a.rel = 'ar';
-        
-        const img = document.createElement('img');
-        a.appendChild(img);
-        document.body.appendChild(a);
-        
-        a.click();
-        
-        setTimeout(() => {
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }, 1000);
-      } catch (e) {
-        console.error("USDZ Export failed", e);
-        alert("Failed to export AR model for Quick Look.");
-      } finally {
-        onComplete();
-      }
-    };
-    runExport();
-  }, [trigger, scene, onComplete]);
-
-  return null;
 }
 
 // ─── Scene Background component ──────────────────────────────────────
@@ -500,8 +450,34 @@ function PostProcessingEffects() {
   );
 }
 
+import { Testbed } from './Testbed';
+
 export default function App() {
+  if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('testbed')) {
+    return <Testbed />;
+  }
+
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
+  const [xrCapabilities, setXrCapabilities] = useState({ ar: false, vr: false, ios: false });
+
+  useEffect(() => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const xr = (navigator as any).xr;
+    
+    if (xr) {
+      // Check AR support
+      xr.isSessionSupported('immersive-ar').then((supported: boolean) => {
+        setXrCapabilities(prev => ({ ...prev, ar: supported }));
+      }).catch(() => {});
+      
+      // Check VR support
+      xr.isSessionSupported('immersive-vr').then((supported: boolean) => {
+        setXrCapabilities(prev => ({ ...prev, vr: supported }));
+      }).catch(() => {});
+    }
+    
+    setXrCapabilities(prev => ({ ...prev, ios: isIOS }));
+  }, []);
   const file = useStore(s => s.file);
   const loading = useStore(s => s.loading);
   const frame = useStore(s => s.frame);
@@ -553,7 +529,7 @@ export default function App() {
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [showXRMenu, setShowXRMenu] = useState(false);
+
 
   // Mouse position for inspector tooltip
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -770,7 +746,17 @@ export default function App() {
           {file && (
             <div style={{ position: 'relative' }}>
               <button
-                onClick={() => setShowXRMenu(!showXRMenu)}
+                onClick={() => {
+                  if (xrCapabilities.ar) {
+                    xrStore.enterAR();
+                  } else if (xrCapabilities.vr) {
+                    xrStore.enterVR();
+                  } else if (xrCapabilities.ios) {
+                    setIsExportingQuickLook(true);
+                  } else {
+                    alert("Immersive AR/VR is not supported on this device or browser.\n\nOn iOS: Use Safari for AR Quick Look.\nOn Android: Use Google Chrome.");
+                  }
+                }}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 6,
                   padding: '8px 12px', background: 'var(--accent-soft)',
@@ -784,73 +770,8 @@ export default function App() {
                   <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" />
                   <circle cx="12" cy="12" r="3" />
                 </svg>
-                {isMobile ? 'AR' : 'XR ▾'}
+                {isMobile ? 'View AR' : 'View XR'}
               </button>
-
-              {showXRMenu && (
-                <div style={{
-                  position: 'absolute', top: '100%', right: 0, marginTop: 4,
-                  background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-md)', padding: 6,
-                  display: 'flex', flexDirection: 'column', gap: 4, zIndex: 300,
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
-                  minWidth: 180,
-                }}>
-                  <button
-                    onClick={() => { 
-                      if (!(window.navigator as any).xr) {
-                        alert("WebXR is not supported in this browser.\n\nOn iOS: Please use the 'WebXR Viewer' app by Mozilla, or enable WebXR in Safari's advanced Experimental settings.\n\nOn Android: Please ensure you are using Google Chrome.");
-                        return;
-                      }
-                      xrStore.enterVR(); 
-                      setShowXRMenu(false); 
-                    }}
-                    style={{
-                      padding: '10px 14px', background: 'transparent', border: 'none',
-                      color: 'var(--text-primary)', fontSize: 14, cursor: 'pointer',
-                      textAlign: 'left', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap',
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface)'}
-                    onMouseOut={e => e.currentTarget.style.background = 'transparent'}
-                  >
-                    🥽 Enter VR Mode
-                  </button>
-                  <button
-                    onClick={() => { 
-                      if (!(window.navigator as any).xr) {
-                        alert("WebXR is not supported in this browser.\n\nOn iOS: Please use the 'WebXR Viewer' app by Mozilla, or enable WebXR in Safari's advanced Experimental settings.\n\nOn Android: Please ensure you are using Google Chrome.");
-                        return;
-                      }
-                      xrStore.enterAR(); 
-                      setShowXRMenu(false); 
-                    }}
-                    style={{
-                      padding: '10px 14px', background: 'transparent', border: 'none',
-                      color: 'var(--lupine-400)', fontSize: 14, cursor: 'pointer', fontWeight: 500,
-                      textAlign: 'left', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap',
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface)'}
-                    onMouseOut={e => e.currentTarget.style.background = 'transparent'}
-                  >
-                    📱 Open with Camera
-                  </button>
-                  <button
-                    onClick={() => { 
-                      setIsExportingQuickLook(true); 
-                      setShowXRMenu(false); 
-                    }}
-                    style={{
-                      padding: '10px 14px', background: 'transparent', border: 'none',
-                      color: 'var(--lupine-400)', fontSize: 14, cursor: 'pointer', fontWeight: 500,
-                      textAlign: 'left', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap',
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface)'}
-                    onMouseOut={e => e.currentTarget.style.background = 'transparent'}
-                  >
-                    🍎 AR Quick Look (Safari)
-                  </button>
-                </div>
-              )}
             </div>
           )}
           {file?.sourceUrl && (

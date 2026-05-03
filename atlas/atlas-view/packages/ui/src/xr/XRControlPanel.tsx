@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Text, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
@@ -95,9 +95,29 @@ export function XRControlPanel() {
   const materialPreset = useStore(s => s.materialPreset);
   const setMaterialPreset = useStore(s => s.setMaterialPreset);
 
-  // Animate the panel to gently float
+  // Animate the panel to gently float and follow camera
+  const rootRef = useRef<THREE.Group>(null);
+  const targetPos = useMemo(() => new THREE.Vector3(), []);
+  const dummy = useMemo(() => new THREE.Object3D(), []);
   const group = useRef<THREE.Group>(null);
-  useFrame((state) => {
+
+  useFrame((state, delta) => {
+    if (rootRef.current) {
+      // 1. Follow camera lazily
+      // Position it 0.6m right, 0.2m down, 0.8m forward relative to the user's head
+      const offset = new THREE.Vector3(0.6, -0.2, -0.8);
+      offset.applyQuaternion(state.camera.quaternion);
+      targetPos.copy(state.camera.position).add(offset);
+      
+      // Lerp position (smooth follow)
+      rootRef.current.position.lerp(targetPos, delta * 2.5);
+
+      // 2. Look at camera
+      dummy.position.copy(rootRef.current.position);
+      dummy.lookAt(state.camera.position);
+      rootRef.current.quaternion.slerp(dummy.quaternion, delta * 3.0);
+    }
+
     if (group.current) {
       group.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.015;
     }
@@ -124,7 +144,7 @@ export function XRControlPanel() {
   };
 
   return (
-    <group position={[0.8, 0, -0.3]} rotation={[0, -0.6, 0]}>
+    <group ref={rootRef}>
       <group ref={group}>
         {/* Panel Background */}
         <RoundedBox args={[0.9, 0.7, 0.01]} radius={0.04} smoothness={4} position={[0, 0, -0.01]}>

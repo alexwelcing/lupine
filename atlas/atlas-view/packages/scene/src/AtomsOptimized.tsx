@@ -409,7 +409,7 @@ export function AtomsOptimized({
   }, [frame.types, frame.natoms, mapFn]);
 
   // Build spatial hash and update instance buffers
-  useEffect(() => {
+  const uploadFrame = useCallback(() => {
     const mesh = meshRef.current;
     if (!mesh) return;
 
@@ -582,8 +582,23 @@ export function AtomsOptimized({
   }, [
     frame, nextFrame, interpolationFactor, colorMode, propData, pMin, pMax, scale, highlightedAtoms,
     hiddenAtomTypes, atomTypeScales, typeColorLookup, botanicalMode,
-    matrixArray, colorArray, _matrix, _position, _scale, _quaternion, mapFn, onSpatialHash
+    matrixArray, colorArray, _matrix, _position, _scale, _quaternion, mapFn, onSpatialHash,
+    capacity, colorProperty, geometry
   ]);
+
+  useEffect(() => {
+    return uploadFrame();
+  }, [uploadFrame]);
+
+  // Handle R3F remounts, especially for WebXR
+  const onMeshRef = useCallback((mesh: THREE.InstancedMesh | null) => {
+    if (mesh) {
+      (meshRef as any).current = mesh;
+      // Small delay to ensure R3F has finished setting up the mesh.
+      // Use setTimeout instead of requestAnimationFrame because rAF is paused in WebXR!
+      setTimeout(() => uploadFrame(), 0);
+    }
+  }, [uploadFrame]);
 
   // Cleanup
   useEffect(() => {
@@ -596,7 +611,7 @@ export function AtomsOptimized({
 
   return (
     <instancedMesh
-      ref={meshRef}
+      ref={onMeshRef}
       args={[geometry, material, capacity]}
       frustumCulled={false}
     >
