@@ -10,6 +10,13 @@
       "cache": false,
       "persistent": true
     },
+    "@atlas/core#build": { "outputs": [] },
+    "@atlas/parsers#build": { "outputs": [] },
+    "@atlas/renderer#build": { "outputs": [] },
+    "@atlas/scene#build": { "outputs": [] },
+    "@atlas/ui#build": { "outputs": [] },
+    "@lupine/ui#build": { "outputs": [] },
+    "@atlas/remotion-trailer#build": { "outputs": [] },
     "test": {
       "outputs": [],
       "dependsOn": ["build"]
