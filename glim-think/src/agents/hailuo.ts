@@ -51,24 +51,34 @@ function hailuoBase(env: Env): string {
 
 export async function submitHailuoVideo(
   env: Env,
-  opts: { prompt: string; model?: string; resolution?: string; duration?: number },
+  opts: {
+    prompt: string;
+    model?: string;
+    resolution?: string;
+    duration?: number;
+    first_frame_image?: string;
+  },
 ): Promise<{ ok: boolean; task_id?: string; error?: string }> {
   if (!env.MINIMAX_API_KEY) {
     return { ok: false, error: "MINIMAX_API_KEY unset" };
   }
   try {
+    const body: Record<string, unknown> = {
+      model: opts.model ?? HAILUO_DEFAULT_MODEL,
+      prompt: opts.prompt.slice(0, 2000),
+      duration: opts.duration ?? 6,
+      resolution: opts.resolution ?? "768P",
+    };
+    if (opts.first_frame_image) {
+      body.first_frame_image = opts.first_frame_image;
+    }
     const res = await fetch(`${hailuoBase(env)}/video_generation`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${env.MINIMAX_API_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        model: opts.model ?? HAILUO_DEFAULT_MODEL,
-        prompt: opts.prompt.slice(0, 2000),
-        duration: opts.duration ?? 6,
-        resolution: opts.resolution ?? "768P",
-      }),
+      body: JSON.stringify(body),
     });
     if (!res.ok) {
       return { ok: false, error: `HTTP ${res.status}: ${(await res.text()).slice(0, 300)}` };
