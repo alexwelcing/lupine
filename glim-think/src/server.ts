@@ -46,6 +46,15 @@ import { runDiag, probeDOSynthesize, probeDOKV } from "./admin/diag";
 import { generateAndStoreImage } from "./agents/image";
 import { generateAndStoreAudio } from "./agents/tts";
 import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
+import { explainFigure } from "./agents/vlm";
+
+async function sha256(input: string): Promise<string> {
+  const data = new TextEncoder().encode(input);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+}
 import type {
   BenchmarkRecord,
   ClaimRecord,
@@ -1593,6 +1602,143 @@ ${narrative}
       if (url.pathname === "/admin/submit-vignette" && request.method === "POST") {
         const r = await submitDailyVignette(env);
         return Response.json(r, { headers: JSON_CORS_HEADERS });
+      }
+
+      // Public VLM endpoint — explain a figure. CORS-enabled so the
+      // /research page can call it from the browser. Caches per-image
+      // explanations in CONFIG (KV) so we don't re-run VLM every visit.
+      if (url.pathname === "/api/explain-figure") {
+        if (request.method === "OPTIONS") {
+          return new Response(null, { status: 204, headers: { ...JSON_CORS_HEADERS, "Access-Control-Max-Age": "86400" } });
+        }
+        if (request.method !== "POST" && request.method !== "GET") {
+          return jsonError("Method not allowed", 405);
+        }
+        const params = request.method === "POST"
+          ? JSON.parse(bodyText || "{}") as { image_url?: string; question?: string }
+          : { image_url: url.searchParams.get("image_url") ?? undefined, question: url.searchParams.get("question") ?? undefined };
+        if (!params.image_url) return jsonError("Missing image_url", 400);
+        if (!/^https?:\/\//.test(params.image_url)) return jsonError("Bad image_url", 400);
+
+        const cacheKey = `vlm-cache:${await sha256(params.image_url + ":" + (params.question ?? ""))}`;
+        const cached = await env.CONFIG.get(cacheKey);
+        if (cached) {
+          return new Response(cached, {
+            headers: {
+              ...JSON_CORS_HEADERS,
+              "Cache-Control": "public, max-age=86400, s-maxage=86400",
+              "X-Cache": "kv-hit",
+            },
+          });
+        }
+
+        const result = await explainFigure(env, { imageUrl: params.image_url, question: params.question });
+        const body = JSON.stringify(result);
+        if (result.ok) {
+          // 7-day KV cache; explanations of stable images don't change
+          await env.CONFIG.put(cacheKey, body, { expirationTtl: 7 * 24 * 60 * 60 });
+        }
+        return new Response(body, {
+          headers: { ...JSON_CORS_HEADERS, "Cache-Control": result.ok ? "public, max-age=86400" : "no-cache", "X-Cache": "miss" },
+        });
+      }
+
+      if (url.pathname === "/admin/probe-vlm" && request.method === "GET") {
+        // Try several VLM model IDs via /chat/completions with an image input
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const candidates = (url.searchParams.get("models") ?? "MiniMax-VL-01,MiniMax-VL-2.5,MiniMax-VL-2.7,MiniMax-Vision,MiniMax-VL-Pro,MiniMax-VL-M2,MiniMax-M2-VL,MiniMax-M2.7-VL,abab6.5-vision,MiniMax-VL")
+          .split(",").map(s => s.trim()).filter(Boolean);
+        const testImage = url.searchParams.get("image") ?? "https://glim-think-v1.aw-ab5.workers.dev/artifacts/claim-images/auto_eval_hyp_meam_anomaly_1777770170424.png";
+        const results = [];
+        for (const model of candidates) {
+          try {
+            const res = await fetch(`${baseURL}/chat/completions`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify({
+                model,
+                messages: [
+                  { role: "user", content: [
+                    { type: "text", text: "Describe this image in one sentence." },
+                    { type: "image_url", image_url: { url: testImage } },
+                  ]},
+                ],
+                max_tokens: 64,
+              }),
+            });
+            const text = await res.text();
+            results.push({ model, status: res.status, ok: res.ok, body: text.slice(0, 220) });
+          } catch (e) {
+            results.push({ model, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, results }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-search" && request.method === "GET") {
+        // Try several search invocations: chat completion with web_search tool,
+        // dedicated /search endpoint, etc.
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const query = url.searchParams.get("q") ?? "MEAM interatomic potential elastic constants benchmark";
+        const probes = [
+          {
+            name: "chat-with-web_search-tool",
+            path: "/chat/completions",
+            body: {
+              model: env.MINIMAX_MODEL?.trim() || "MiniMax-M2.7",
+              messages: [{ role: "user", content: query }],
+              tools: [{ type: "web_search" }],
+            },
+          },
+          {
+            name: "chat-with-search-tool",
+            path: "/chat/completions",
+            body: {
+              model: env.MINIMAX_MODEL?.trim() || "MiniMax-M2.7",
+              messages: [{ role: "user", content: query }],
+              tools: [{ type: "search" }],
+            },
+          },
+          {
+            name: "dedicated-search",
+            path: "/search",
+            body: { query, limit: 5 },
+          },
+          {
+            name: "chat-with-coding-plan-search",
+            path: "/chat/completions",
+            body: {
+              model: "coding-plan-search",
+              messages: [{ role: "user", content: query }],
+            },
+          },
+          {
+            name: "web-search",
+            path: "/web_search",
+            body: { query, limit: 5 },
+          },
+        ];
+        const results = [];
+        for (const probe of probes) {
+          try {
+            const res = await fetch(`${baseURL}${probe.path}`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify(probe.body),
+            });
+            const text = await res.text();
+            results.push({
+              name: probe.name,
+              path: probe.path,
+              status: res.status,
+              ok: res.ok,
+              body: text.slice(0, 280),
+            });
+          } catch (e) {
+            results.push({ name: probe.name, path: probe.path, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, results }, { headers: JSON_CORS_HEADERS });
       }
 
       if (url.pathname === "/admin/seed-vignette" && request.method === "POST") {

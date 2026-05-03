@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { marked } from 'marked'
 import { useQuery } from '@tanstack/react-query'
 import { Activity, Atom, CheckCircle2, Clock3, FlaskConical, Radio, Sparkles, XCircle } from 'lucide-react'
+import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { PageShell } from '../components/ui/PageShell'
 
@@ -473,6 +474,56 @@ function HypothesisRow({ h }: { h: { id: string; title: string; status: string; 
   )
 }
 
+function FigureExplainer({ imageUrl }: { imageUrl: string }) {
+  const [opened, setOpened] = useState(false)
+  const [text, setText] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState<string | null>(null)
+
+  async function explain() {
+    setOpened(true)
+    if (text || loading) return
+    setLoading(true)
+    setErr(null)
+    try {
+      const res = await fetch('https://glim-think-v1.aw-ab5.workers.dev/api/explain-figure', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image_url: imageUrl }),
+      })
+      const data = await res.json()
+      if (data.ok) setText(data.text)
+      else setErr(data.error ?? 'unknown error')
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="border-t border-[var(--outline-variant)]">
+      <button
+        type="button"
+        onClick={explain}
+        className="w-full px-3 py-2 text-left mono-label text-[var(--on-surface-variant)] hover:text-[var(--primary)] transition-colors flex items-center gap-2"
+      >
+        <span>{opened ? '▾' : '▸'}</span>
+        <span>{loading ? 'reading figure…' : opened && text ? 'figure description' : 'explain this figure'}</span>
+        <span className="ml-auto text-[var(--on-surface-variant-mid)]">llava-1.5</span>
+      </button>
+      {opened && text && (
+        <p className="px-4 pb-3 text-[12px] leading-relaxed text-[var(--on-surface-variant)]">
+          {text}
+        </p>
+      )}
+      {opened && err && (
+        <p className="px-4 pb-3 text-[12px] text-[var(--error)]">explain failed: {err}</p>
+      )}
+    </div>
+  )
+}
+
 function ClaimRow({ c }: { c: RecentClaim }) {
   const conf = typeof c.confidence === 'number' ? `${(c.confidence * 100).toFixed(0)}%` : ''
   return (
@@ -499,10 +550,11 @@ function ClaimRow({ c }: { c: RecentClaim }) {
             {c.audio_url && (
               <>
                 <span className="text-[var(--on-surface-variant-mid)]">·</span>
-                <audio src={c.audio_url} controls preload="none" className="h-6 ml-auto" />
+                <audio src={c.audio_url} controls preload="none" className="h-6" />
               </>
             )}
           </div>
+          <FigureExplainer imageUrl={c.image_url} />
         </div>
       )}
       {!c.image_url && c.audio_url && (
