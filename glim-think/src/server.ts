@@ -48,6 +48,7 @@ import { generateAndStoreAudio } from "./agents/tts";
 import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
 import { explainFigure } from "./agents/vlm";
 import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis, iterateOnHypothesis, promoteInsight, leanStatusOverview } from "./research/insights";
+import { listHits, updateHitStatus, type HitKind, type HitStatus } from "./research/hits";
 import { searchLiterature as searchLit } from "./literature";
 
 async function sha256(input: string): Promise<string> {
@@ -1531,6 +1532,44 @@ ${narrative}
               { headers: JSON_CORS_HEADERS },
             );
           }
+        }
+
+        // === Hitlist: actionable findings extracted from M2.7 narratives ===
+        // Public read so the live research surface can render open findings;
+        // PATCH is also public on this worker (same auth posture as the rest
+        // of /research/*).
+        if (url.pathname === "/research/hitlist" && request.method === "GET") {
+          const kindParam = url.searchParams.get("kind") as HitKind | null;
+          const statusParam = url.searchParams.get("status") as HitStatus | null;
+          const hypId = url.searchParams.get("hypothesis_id");
+          const limit = Math.min(parseInt(url.searchParams.get("limit") ?? "30", 10) || 30, 100);
+          const validKinds = new Set(["missing_experiment", "contradiction", "reinforcement", "surprise"]);
+          const validStatuses = new Set(["open", "pursuing", "resolved", "dismissed"]);
+          if (kindParam && !validKinds.has(kindParam)) return jsonError(`invalid kind: ${kindParam}`, 400);
+          if (statusParam && !validStatuses.has(statusParam)) return jsonError(`invalid status: ${statusParam}`, 400);
+          const result = await listHits(env, {
+            kind: kindParam ?? undefined,
+            status: statusParam ?? undefined,
+            hypothesis_id: hypId ?? undefined,
+            limit,
+          });
+          return Response.json(result, { headers: JSON_CORS_HEADERS });
+        }
+
+        const hitsPatchMatch = url.pathname.match(/^\/research\/hits\/([^/]+)$/);
+        if (hitsPatchMatch && request.method === "PATCH") {
+          const id = decodeURIComponent(hitsPatchMatch[1]);
+          const body = JSON.parse(bodyText || "{}") as { status?: string; note?: string };
+          if (!body.status) return jsonError("Missing status", 400);
+          const validStatuses = new Set(["open", "pursuing", "resolved", "dismissed"]);
+          if (!validStatuses.has(body.status)) return jsonError(`invalid status: ${body.status}`, 400);
+          const result = await updateHitStatus(env, {
+            id,
+            status: body.status as HitStatus,
+            note: body.note,
+          });
+          if (!result.ok) return jsonError(result.error ?? "update failed", 404);
+          return Response.json(result, { headers: JSON_CORS_HEADERS });
         }
 
         return jsonError("Unknown /research/* route", 404);
