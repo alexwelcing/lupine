@@ -164,12 +164,13 @@ interface RecentClaim {
   confidence: number | null;
   created_at: string;
   is_minimax: boolean;
+  image_url: string | null;
 }
 
 async function buildRecentClaims(env: Env): Promise<RecentClaim[]> {
   const rows = await env.LEDGER
     .prepare(
-      `SELECT claim_id, agent_id, claim_type, description, confidence, created_at
+      `SELECT claim_id, agent_id, claim_type, claim_data, description, confidence, created_at
          FROM claims
          ORDER BY created_at DESC
          LIMIT 6`,
@@ -178,16 +179,34 @@ async function buildRecentClaims(env: Env): Promise<RecentClaim[]> {
       claim_id: string;
       agent_id: string;
       claim_type: string;
+      claim_data: string;
       description: string;
       confidence: number | null;
       created_at: string;
     }>()
     .catch(() => ({ results: [] as never[] }));
 
-  return (rows.results ?? []).map((c) => ({
-    ...c,
-    is_minimax: typeof c.agent_id === "string" && c.agent_id.includes("minimax"),
-  }));
+  return (rows.results ?? []).map((c) => {
+    let imageUrl: string | null = null;
+    try {
+      const data = JSON.parse(c.claim_data) as { image_key?: string };
+      if (data.image_key) {
+        imageUrl = `https://glim-think-v1.aw-ab5.workers.dev/artifacts/${data.image_key}`;
+      }
+    } catch {
+      // claim_data not JSON — leave imageUrl null
+    }
+    return {
+      claim_id: c.claim_id,
+      agent_id: c.agent_id,
+      claim_type: c.claim_type,
+      description: c.description,
+      confidence: c.confidence,
+      created_at: c.created_at,
+      is_minimax: typeof c.agent_id === "string" && c.agent_id.includes("minimax"),
+      image_url: imageUrl,
+    };
+  });
 }
 
 interface ExperimentRow {

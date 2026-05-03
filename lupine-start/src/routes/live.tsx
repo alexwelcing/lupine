@@ -81,6 +81,7 @@ type RecentClaim = {
   confidence: number | null
   created_at: string
   is_minimax: boolean
+  image_url: string | null
 }
 
 function LiveLabComponent() {
@@ -434,11 +435,11 @@ function HypothesisRow({ h }: { h: { id: string; title: string; status: string; 
   )
 }
 
-function ClaimRow({ c }: { c: { claim_id: string; agent_id: string; description: string; confidence: number | null; created_at: string; is_minimax: boolean } }) {
+function ClaimRow({ c }: { c: RecentClaim }) {
   const conf = typeof c.confidence === 'number' ? `${(c.confidence * 100).toFixed(0)}%` : ''
   return (
     <div className="px-8 py-5">
-      <div className="flex items-center gap-3 mb-2">
+      <div className="flex items-center gap-3 mb-3">
         <span
           className={`mono-label px-2 py-0.5 ${c.is_minimax ? 'bg-[var(--secondary)]/15 text-[var(--secondary)]' : 'text-[var(--on-surface-variant)]'}`}
         >
@@ -447,6 +448,19 @@ function ClaimRow({ c }: { c: { claim_id: string; agent_id: string; description:
         {conf && <span className="mono-label text-[var(--on-surface-variant-mid)]">{conf}</span>}
         <span className="mono-label text-[var(--on-surface-variant-mid)] ml-auto">{timeAgo(c.created_at)}</span>
       </div>
+      {c.image_url && (
+        <div className="mb-3 overflow-hidden border border-[var(--outline-variant)]">
+          <img
+            src={c.image_url}
+            alt=""
+            loading="lazy"
+            className="block w-full h-auto aspect-video object-cover"
+          />
+          <div className="px-3 py-1.5 mono-label text-[var(--on-surface-variant-mid)] bg-[var(--surface-container-low)]/60">
+            image-01 · MiniMax
+          </div>
+        </div>
+      )}
       <p className="font-sans text-[13px] leading-relaxed text-[var(--on-surface-variant)] line-clamp-3">
         {c.description}
       </p>

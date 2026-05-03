@@ -43,6 +43,7 @@ import { handleFeedRoute } from "./feed/split";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
 import { testMiniMaxCall, listMiniMaxModels, sweepMiniMaxEndpoints, exerciseDeepTier } from "./agents/models";
 import { runDiag, probeDOSynthesize, probeDOKV } from "./admin/diag";
+import { generateAndStoreImage } from "./agents/image";
 import type {
   BenchmarkRecord,
   ClaimRecord,
@@ -1565,6 +1566,41 @@ ${narrative}
       if (url.pathname === "/admin/diag-do-kv" && (request.method === "POST" || request.method === "GET")) {
         const result = await probeDOKV(env);
         return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/test-image" && (request.method === "POST" || request.method === "GET")) {
+        const prompt =
+          url.searchParams.get("prompt") ??
+          "Abstract cyanotype data visualization, error manifold projection in 3D space, dark navy background, cyan accent points, scientific paper aesthetic, no text";
+        const storageKey = `claim-images/probe-${Date.now()}.png`;
+        const result = await generateAndStoreImage(env, { prompt, storageKey });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      // === Public R2 artifact serving (claim images, diary attachments) ===
+      if (url.pathname.startsWith("/artifacts/") && (request.method === "GET" || request.method === "HEAD")) {
+        const key = decodeURIComponent(url.pathname.slice("/artifacts/".length));
+        if (!key || key.includes("..")) {
+          return new Response("Bad request", { status: 400 });
+        }
+        const obj = request.method === "HEAD"
+          ? await env.ARTIFACTS.head(key)
+          : await env.ARTIFACTS.get(key);
+        if (!obj) {
+          return new Response("Not found", { status: 404 });
+        }
+        const headers = new Headers();
+        obj.writeHttpMetadata(headers);
+        headers.set("etag", obj.httpEtag);
+        headers.set("Access-Control-Allow-Origin", "*");
+        if (!headers.has("Cache-Control")) {
+          headers.set("Cache-Control", "public, max-age=31536000, immutable");
+        }
+        if (request.method === "HEAD") {
+          return new Response(null, { headers });
+        }
+        // The .get() return has a body; HEAD branch returned above
+        return new Response((obj as R2ObjectBody).body, { headers });
       }
 
       // === phase-B: provider spend telemetry ===

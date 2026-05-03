@@ -23,6 +23,8 @@
  * to pooled analysis across all elements.
  */
 import type { Env } from "../types";
+import { promptForEvaluationClaim } from "../agents/image";
+import { enqueueTask } from "./queue";
 
 interface EvalRow {
   potential_id: string;
@@ -343,6 +345,37 @@ export async function evaluateHypothesis(
       .run();
   } catch (e) {
     console.error("evaluateHypothesis: claim insert failed:", e);
+  }
+
+  // Fire-and-forget: enqueue a claim-image task so MiniMax image-01
+  // generates a supporting visual asynchronously. Image landing later
+  // is fine — the dashboard renders the placeholder until image_key
+  // shows up on the claim row. Skip when the verdict is too thin to
+  // bother spending image budget on.
+  if (
+    summary.verdict === "supports_dichotomy" ||
+    summary.verdict === "supports_universal"
+  ) {
+    try {
+      const imagePrompt = promptForEvaluationClaim({
+        hypothesisTitle: hyp.title,
+        verdict: summary.verdict,
+        pooled_r: summary.pooled_r,
+        within_min_r: summary.within_style_min_r,
+        within_max_r: summary.within_style_max_r,
+        target_element: summary.target_element,
+        n_records: summary.n_records,
+      });
+      await enqueueTask(env, {
+        kind: "claim-image",
+        dedup_key: `claim-image:${claimId}`,
+        enqueued_at: now,
+        claim_id: claimId,
+        prompt: imagePrompt,
+      });
+    } catch (e) {
+      console.error("evaluateHypothesis: image enqueue failed:", e);
+    }
   }
 
   return { ...summary, narrative, narrative_error: narrativeError };
