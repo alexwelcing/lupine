@@ -26,8 +26,9 @@
 import type { Env } from "../types";
 import { createLabBroadcast } from "../scheduled";
 import { evaluateHypothesis } from "./evaluate";
+import { generateAndStoreImage } from "../agents/image";
 
-export type ResearchTaskKind = "round" | "literature" | "evaluate" | "broadcast";
+export type ResearchTaskKind = "round" | "literature" | "evaluate" | "broadcast" | "claim-image";
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -62,7 +63,24 @@ export interface BroadcastTask extends ResearchTaskBase {
   source: string;
 }
 
-export type ResearchTask = RoundTask | LiteratureTask | EvaluateTask | BroadcastTask;
+/**
+ * Async image generation for a claim. The evaluator emits one of these
+ * after writing its claim row so the slow (~24s) image-01 call doesn't
+ * block the queue consumer.
+ */
+export interface ClaimImageTask extends ResearchTaskBase {
+  kind: "claim-image";
+  claim_id: string;
+  prompt: string;
+  aspect_ratio?: string;
+}
+
+export type ResearchTask =
+  | RoundTask
+  | LiteratureTask
+  | EvaluateTask
+  | BroadcastTask
+  | ClaimImageTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -231,6 +249,40 @@ async function runTask(env: Env, task: ResearchTask & { job_id?: string }): Prom
 
   if (task.kind === "evaluate") {
     await evaluateHypothesis(env, task.hypothesis_id);
+    return;
+  }
+
+  if (task.kind === "claim-image") {
+    const storageKey = `claim-images/${task.claim_id}.png`;
+    const result = await generateAndStoreImage(env, {
+      prompt: task.prompt,
+      storageKey,
+      aspect_ratio: task.aspect_ratio ?? "16:9",
+    });
+    if (!result.ok) {
+      throw new Error(`image generation failed: ${result.error}`);
+    }
+    // Persist image_key on the claim so the dashboard can render it.
+    // Falls back to no-op if claim row doesn't exist (shouldn't happen
+    // since the evaluator inserts before enqueueing this task).
+    try {
+      const row = await env.LEDGER
+        .prepare(`SELECT claim_data FROM claims WHERE claim_id = ?1`)
+        .bind(task.claim_id)
+        .first<{ claim_data: string }>();
+      if (row) {
+        const data = (() => {
+          try { return JSON.parse(row.claim_data); } catch { return {}; }
+        })();
+        data.image_key = storageKey;
+        await env.LEDGER
+          .prepare(`UPDATE claims SET claim_data = ?1 WHERE claim_id = ?2`)
+          .bind(JSON.stringify(data), task.claim_id)
+          .run();
+      }
+    } catch (e) {
+      console.error(`claim-image: failed to update claim row:`, e);
+    }
     return;
   }
 
