@@ -47,6 +47,8 @@ import { generateAndStoreImage } from "./agents/image";
 import { generateAndStoreAudio } from "./agents/tts";
 import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
 import { explainFigure } from "./agents/vlm";
+import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis } from "./research/insights";
+import { searchLiterature as searchLit } from "./literature";
 
 async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
@@ -1700,6 +1702,335 @@ ${narrative}
           }
         }
         return Response.json({ base_url: baseURL, model, file_id: fileId, results }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-m27-native-image" && request.method === "GET") {
+        // Single call to /text/chatcompletion_pro with M2.7 + image media.
+        // Use sparingly — 1 RPM limit on this endpoint.
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const imageKey = url.searchParams.get("image_key") ?? "claim-images/auto_eval_hyp_meam_anomaly_1777770170424.png";
+        const obj = await env.ARTIFACTS.get(imageKey);
+        if (!obj) return jsonError(`R2 image not found: ${imageKey}`, 404);
+        const buf = await obj.arrayBuffer();
+        const publicImageUrl = `https://glim-think-v1.aw-ab5.workers.dev/artifacts/${imageKey}`;
+
+        const start = Date.now();
+        const res = await fetch(`${baseURL}/text/chatcompletion_pro`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "MiniMax-M2.7",
+            messages: [{
+              sender_type: "USER",
+              sender_name: "user",
+              text: "Describe this image in one sentence — what do you see?",
+              media: [{ type: "image", url: publicImageUrl }],
+            }],
+            bot_setting: [{ bot_name: "Vision", content: "You analyze images concretely and concisely." }],
+            reply_constraints: { sender_type: "BOT", sender_name: "Vision" },
+            tokens_to_generate: 100,
+          }),
+        });
+        const text = await res.text();
+        let parsed: unknown = null;
+        try { parsed = JSON.parse(text); } catch {}
+        return Response.json({
+          status: res.status,
+          latency_ms: Date.now() - start,
+          image_size: buf.byteLength,
+          public_image_url: publicImageUrl,
+          response: parsed ?? text.slice(0, 500),
+        }, { headers: JSON_CORS_HEADERS });
+      }
+
+      // === Manual research loop — harvest, comprehend, reason, review ===
+      if (url.pathname === "/admin/harvest" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as {
+          query?: string;
+          max?: number;
+          sources?: string[];
+        };
+        if (!body.query?.trim()) return jsonError("Missing query", 400);
+        const result = await searchLit(env, body.query, {
+          max: body.max ?? 8,
+          sources: body.sources?.filter(isLiteratureSource),
+        });
+        // Return a flat summary of papers found per source so the
+        // human reviewer can pick which to comprehend next.
+        const flat: Array<{ doi: string; title: string; year: number | null; source: string; arxiv_id: string | null }> = [];
+        for (const [src, papers] of Object.entries(result.results) as Array<[string, Array<{ doi: string; title: string; year: number | null; arxivId: string | null }>]>) {
+          for (const p of papers) {
+            flat.push({ doi: p.doi, title: p.title, year: p.year, source: src, arxiv_id: p.arxivId });
+          }
+        }
+        return Response.json(
+          { query: body.query, papers: flat, errors: result.errors, cached: result.cached },
+          { headers: JSON_CORS_HEADERS },
+        );
+      }
+
+      if (url.pathname === "/admin/comprehend" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as {
+          paper_doi?: string;
+          hypothesis_id?: string;
+        };
+        if (!body.paper_doi || !body.hypothesis_id) {
+          return jsonError("Missing paper_doi or hypothesis_id", 400);
+        }
+        const result = await comprehendPaper(env, {
+          paper_doi: body.paper_doi,
+          hypothesis_id: body.hypothesis_id,
+        });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/reason" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as {
+          hypothesis_id?: string;
+          insight_limit?: number;
+          max_tokens?: number;
+        };
+        if (!body.hypothesis_id) return jsonError("Missing hypothesis_id", 400);
+        const result = await reasonOnHypothesis(env, {
+          hypothesis_id: body.hypothesis_id,
+          insight_limit: body.insight_limit,
+          max_tokens: body.max_tokens,
+        });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/insights" && request.method === "GET") {
+        const hypothesisId = url.searchParams.get("hypothesis_id");
+        const limit = Math.min(parseInt(url.searchParams.get("limit") ?? "10", 10) || 10, 50);
+        if (hypothesisId) {
+          const insights = await topInsightsForHypothesis(env, hypothesisId, limit);
+          return Response.json({ hypothesis_id: hypothesisId, insights }, { headers: JSON_CORS_HEADERS });
+        }
+        // No filter — list recent insights across all hypotheses
+        const rows = await env.LEDGER
+          .prepare(
+            `SELECT i.insight_id, i.paper_doi, i.hypothesis_id, i.key_finding,
+                    i.relevance_score, i.agrees_or_refutes, i.extracted_at,
+                    p.title AS paper_title, p.year AS paper_year, p.source AS paper_source,
+                    h.title AS hypothesis_title
+               FROM literature_insights i
+               LEFT JOIN literature_papers p ON p.doi = i.paper_doi
+               LEFT JOIN hypotheses h ON h.id = i.hypothesis_id
+              ORDER BY i.extracted_at DESC
+              LIMIT ?1`,
+          )
+          .bind(limit)
+          .all()
+          .catch(() => ({ results: [] as never[] }));
+        return Response.json({ insights: rows.results ?? [] }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-vlm-native-pro" && request.method === "GET") {
+        // Probe /text/chatcompletion_pro with a proper bot_setting + various
+        // image-bearing message shapes. This is MiniMax's native multimodal
+        // chat endpoint (the OpenAI-compat one strips images).
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const imageKey = url.searchParams.get("image_key") ?? "claim-images/auto_eval_hyp_meam_anomaly_1777770170424.png";
+        const obj = await env.ARTIFACTS.get(imageKey);
+        if (!obj) return jsonError(`R2 image not found: ${imageKey}`, 404);
+        const buf = await obj.arrayBuffer();
+        const bytes = new Uint8Array(buf);
+        let binary = "";
+        for (let i = 0; i < bytes.length; i += 8192) {
+          binary += String.fromCharCode.apply(null, Array.from(bytes.slice(i, i + 8192)));
+        }
+        const dataUrl = `data:image/png;base64,${btoa(binary)}`;
+        const publicImageUrl = `https://glim-think-v1.aw-ab5.workers.dev/artifacts/${imageKey}`;
+
+        const botSetting = [{ bot_name: "Vision", content: "You are a vision assistant. Describe images concretely." }];
+        const replyConstraints = { sender_type: "BOT", sender_name: "Vision" };
+        const baseMessage = { sender_type: "USER", sender_name: "user", text: "Describe this image in one sentence." };
+
+        const probes = [
+          {
+            name: "media field in message (data url)",
+            body: {
+              model: "MiniMax-VL-01",
+              messages: [{ ...baseMessage, media: [{ type: "image", url: dataUrl }] }],
+              bot_setting: botSetting,
+              reply_constraints: replyConstraints,
+            },
+          },
+          {
+            name: "media field in message (public url)",
+            body: {
+              model: "MiniMax-VL-01",
+              messages: [{ ...baseMessage, media: [{ type: "image", url: publicImageUrl }] }],
+              bot_setting: botSetting,
+              reply_constraints: replyConstraints,
+            },
+          },
+          {
+            name: "image_url field on message",
+            body: {
+              model: "MiniMax-VL-01",
+              messages: [{ ...baseMessage, image_url: publicImageUrl }],
+              bot_setting: botSetting,
+              reply_constraints: replyConstraints,
+            },
+          },
+          {
+            name: "M2.7 with media field",
+            body: {
+              model: "MiniMax-M2.7",
+              messages: [{ ...baseMessage, media: [{ type: "image", url: publicImageUrl }] }],
+              bot_setting: botSetting,
+              reply_constraints: replyConstraints,
+            },
+          },
+          {
+            name: "M2.7 with image inline content",
+            body: {
+              model: "MiniMax-M2.7",
+              messages: [{
+                sender_type: "USER",
+                sender_name: "user",
+                text: "Describe this image",
+                content: [
+                  { type: "text", text: "Describe" },
+                  { type: "image", image_url: publicImageUrl },
+                ],
+              }],
+              bot_setting: botSetting,
+              reply_constraints: replyConstraints,
+            },
+          },
+          {
+            name: "abab6.5s-chat (legacy multimodal)",
+            body: {
+              model: "abab6.5s-chat",
+              messages: [{ ...baseMessage, media: [{ type: "image", url: publicImageUrl }] }],
+              bot_setting: botSetting,
+              reply_constraints: replyConstraints,
+            },
+          },
+        ];
+
+        const results: unknown[] = [];
+        for (const probe of probes) {
+          try {
+            const res = await fetch(`${baseURL}/text/chatcompletion_pro`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify(probe.body),
+            });
+            const text = await res.text();
+            results.push({
+              name: probe.name,
+              model: (probe.body as { model: string }).model,
+              status: res.status,
+              body: text.slice(0, 320),
+            });
+          } catch (e) {
+            results.push({ name: probe.name, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, image_size: buf.byteLength, results }, { headers: JSON_CORS_HEADERS });
+      }
+
+      if (url.pathname === "/admin/probe-vlm-native-paths" && request.method === "GET") {
+        // The OpenAI-compat /chat/completions path on this proxy
+        // strips multimodal content. Try MiniMax's native paths that
+        // a proxy is more likely to forward untouched: /text/chatcompletion_v2,
+        // /multimodal/chat, /vision/chat, etc.
+        const baseURL = env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1";
+        const imageKey = url.searchParams.get("image_key") ?? "claim-images/auto_eval_hyp_meam_anomaly_1777770170424.png";
+        const obj = await env.ARTIFACTS.get(imageKey);
+        if (!obj) return jsonError(`R2 image not found: ${imageKey}`, 404);
+        const buf = await obj.arrayBuffer();
+        const bytes = new Uint8Array(buf);
+        let binary = "";
+        for (let i = 0; i < bytes.length; i += 8192) {
+          binary += String.fromCharCode.apply(null, Array.from(bytes.slice(i, i + 8192)));
+        }
+        const dataUrl = `data:image/png;base64,${btoa(binary)}`;
+
+        const probes = [
+          {
+            name: "text-chatcompletion_v2",
+            path: "/text/chatcompletion_v2",
+            body: {
+              model: "MiniMax-M2.7",
+              messages: [{
+                sender_type: "USER",
+                sender_name: "user",
+                text: "Describe this image",
+              }],
+              tokens_to_generate: 64,
+            },
+          },
+          {
+            name: "text-chatcompletion_pro",
+            path: "/text/chatcompletion_pro",
+            body: {
+              model: "MiniMax-M2.7",
+              messages: [{
+                sender_type: "USER",
+                text: "Describe this image",
+                image: dataUrl,
+              }],
+            },
+          },
+          {
+            name: "multimodal-generation",
+            path: "/multimodal/generation",
+            body: {
+              model: "MiniMax-VL-01",
+              prompt: "Describe this image",
+              image_url: dataUrl,
+            },
+          },
+          {
+            name: "vision-completion",
+            path: "/vision/completion",
+            body: { model: "MiniMax-VL-01", messages: [{ role: "user", content: "Describe", image: dataUrl }] },
+          },
+          {
+            name: "vlm-completion",
+            path: "/vlm/chat/completions",
+            body: { model: "MiniMax-VL-01", messages: [{ role: "user", content: [{ type: "text", text: "Describe" }, { type: "image_url", image_url: { url: dataUrl } }] }] },
+          },
+          {
+            name: "openai-vision-detail",
+            path: "/chat/completions",
+            body: {
+              model: "MiniMax-M2.7",
+              messages: [{
+                role: "user",
+                content: [
+                  { type: "text", text: "Describe what you see in this image. The image is attached. If you cannot see it, say 'NO_IMAGE_RECEIVED'." },
+                  { type: "image_url", image_url: { url: dataUrl, detail: "high" } },
+                ],
+              }],
+              max_tokens: 100,
+            },
+          },
+        ];
+        const results: unknown[] = [];
+        for (const probe of probes) {
+          try {
+            const res = await fetch(`${baseURL}${probe.path}`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${env.MINIMAX_API_KEY}`, "Content-Type": "application/json" },
+              body: JSON.stringify(probe.body),
+            });
+            const text = await res.text();
+            results.push({
+              name: probe.name,
+              path: probe.path,
+              status: res.status,
+              body_preview: text.slice(0, 280),
+            });
+          } catch (e) {
+            results.push({ name: probe.name, path: probe.path, error: e instanceof Error ? e.message : String(e) });
+          }
+        }
+        return Response.json({ base_url: baseURL, image_size: buf.byteLength, results }, { headers: JSON_CORS_HEADERS });
       }
 
       if (url.pathname === "/admin/probe-vlm-base64" && request.method === "GET") {
