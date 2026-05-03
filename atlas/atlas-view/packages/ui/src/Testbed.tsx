@@ -14,8 +14,8 @@ const store = createXRStore();
 const mockFrame: Frame = {
   natoms: 10,
   timestep: 0,
-  boxBounds: [-5, 5, -5, 5, -5, 5] as [number, number, number, number, number, number],
-  boxTilt: [0, 0, 0] as [number, number, number],
+  boxBounds: new Float64Array([-5, 5, -5, 5, -5, 5]),
+  boxTilt: new Float64Array([0, 0, 0]),
   positions: new Float32Array([
     0, 0, 0,
     2, 0, 0,
@@ -28,7 +28,11 @@ const mockFrame: Frame = {
     -2, -2, 0,
     0, 2, 2
   ]),
-  types: [1, 2, 1, 2, 1, 2, 1, 2, 1, 2],
+  types: new Int32Array([1, 2, 1, 2, 1, 2, 1, 2, 1, 2]),
+  ids: new Int32Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+  bonds: new Int32Array([1, 2, 3, 4]),
+  triclinic: false,
+  columns: ['id', 'type', 'x', 'y', 'z'],
   properties: new Map()
 };
 
@@ -38,7 +42,7 @@ const mockTypeToElement = new Map([
 ]);
 
 export function Testbed() {
-  const { colorPalette, renderStyle, showGrid, environment } = useControls('Visual Settings', {
+  const { colorPalette, renderStyle, showGrid, showBonds, showCell, environment } = useControls('Visual Settings', {
     colorPalette: {
       options: ['ocean', 'fire', 'ice', 'forest', 'cyberpunk', 'turbo', 'grayscale']
     },
@@ -89,7 +93,7 @@ export function Testbed() {
               )}
               {showCell && mockFrame.boxBounds && (
                 <SimulationCell 
-                  bounds={mockFrame.boxBounds as unknown as Float64Array} 
+                  bounds={mockFrame.boxBounds} 
                 />
               )}
             </group>
