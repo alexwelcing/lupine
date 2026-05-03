@@ -132,19 +132,37 @@ export async function comprehendPaper(
     `Active hypothesis under test: "${hyp.title}"`,
     `Current status: ${hyp.status}, confidence: ${hyp.confidence ?? "n/a"}`,
     "",
-    "Your task — output exactly this format, nothing else:",
+    "Your task — output EXACTLY these three lines, RELEVANCE first, in this order:",
+    "RELEVANCE: <single number 0.0 to 1.0, no extra text>",
+    "VERDICT: <one word: supports | refutes | tangential | neutral | context>",
     "KEY_FINDING: <one sentence summarizing the paper's most relevant numerical or conceptual finding for this hypothesis>",
-    "RELEVANCE: <number 0.0-1.0; 0.0 = unrelated, 1.0 = directly tests the hypothesis>",
-    "VERDICT: <one of: supports | refutes | tangential | neutral>",
     "",
-    "Be honest — if the abstract is unrelated, say so (RELEVANCE: 0.0, VERDICT: tangential).",
-    "Do not invent findings. Quote numbers from the abstract verbatim if relevant.",
+    "RELEVANCE anchors:",
+    "  0.0 = different field entirely",
+    "  0.2 = same broad domain but no specific bearing",
+    "  0.4 = provides methodology, framework, or scale evidence that informs the hypothesis",
+    "  0.6 = empirical evidence about a related system, family, or comparable claim",
+    "  0.8 = empirical evidence about the SAME system / family the hypothesis names",
+    "  1.0 = directly tests this exact hypothesis with quantitative results",
+    "",
+    "VERDICT 'context' = paper enriches the framing without supporting or refuting.",
+    "",
+    "Be honest but not overly strict — papers providing methodology, scale evidence,",
+    "or related-system data are valuable context (≥ 0.4). Reserve 0.0-0.2 for papers",
+    "in different fields. Do not invent findings. Quote numbers verbatim when relevant.",
+    "",
+    "CRITICAL: Do NOT name specific models, tools, or methods unless they are EXPLICITLY",
+    "in the abstract above. Even if the hypothesis names CHGNet, MACE-MP, MEAM, etc.,",
+    "do not write that the paper uses those unless the abstract says so. Write 'a deep",
+    "learning potential' or 'a neural-network interatomic potential' instead. The reasoning",
+    "step relies on you for ground truth — never substitute the hypothesis's vocabulary",
+    "for the paper's actual claims.",
   ].join("\n");
 
   const model = selectModel(env, "deep");
   let raw = "";
   try {
-    const result = await generateText({ model, prompt, maxOutputTokens: 512 });
+    const result = await generateText({ model, prompt, maxOutputTokens: 2048 });
     raw = (result.text ?? "")
       .replace(/<think>[\s\S]*?<\/think>\s*/g, "")
       .trim();
@@ -158,7 +176,7 @@ export async function comprehendPaper(
 
   const keyFindingMatch = raw.match(/KEY_FINDING:\s*(.+?)(?=\n[A-Z_]+:|$)/s);
   const relevanceMatch = raw.match(/RELEVANCE:\s*([0-9.]+)/);
-  const verdictMatch = raw.match(/VERDICT:\s*(supports|refutes|tangential|neutral)/i);
+  const verdictMatch = raw.match(/VERDICT:\s*(supports|refutes|tangential|neutral|context)/i);
 
   const extracted = {
     key_finding: keyFindingMatch?.[1].trim().slice(0, 1500) ?? "(parse failed)",
