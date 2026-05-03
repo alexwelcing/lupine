@@ -65,27 +65,129 @@ interface SwarmAgentState {
   status: "active" | "idle";
   task: string;
   last_seen: string;
+  model?: string;
 }
 
+const ACTIVE_WINDOW_MS = 90 * 60 * 1000;
+
+function withinWindow(iso: string | null | undefined): boolean {
+  if (!iso) return false;
+  const t = Date.parse(iso);
+  if (!Number.isFinite(t)) return false;
+  return Date.now() - t < ACTIVE_WINDOW_MS;
+}
+
+/**
+ * Real swarm status — reads cron_runs for orchestrator activity and
+ * recent claims for theorist activity. Each agent's `last_seen` is the
+ * actual most-recent timestamp from D1, not Date.now().
+ */
 async function buildSwarmStatus(env: Env): Promise<Record<string, SwarmAgentState>> {
-  const now = new Date().toISOString();
+  const fallback = new Date().toISOString();
+
+  const lastOrchestrator = await env.LEDGER
+    .prepare(
+      `SELECT started_at, outcome FROM cron_runs
+        WHERE cron_name = 'research-orchestrator'
+        ORDER BY started_at DESC LIMIT 1`,
+    )
+    .first<{ started_at: string; outcome: string }>()
+    .catch(() => null);
+
+  const lastTheoristClaim = await env.LEDGER
+    .prepare(
+      `SELECT created_at, claim_data FROM claims
+        WHERE agent_id = 'theorist+minimax-m2.7'
+        ORDER BY created_at DESC LIMIT 1`,
+    )
+    .first<{ created_at: string; claim_data: string }>()
+    .catch(() => null);
+
+  const lastRecord = await env.LEDGER
+    .prepare(
+      `SELECT timestamp, element FROM records ORDER BY timestamp DESC LIMIT 1`,
+    )
+    .first<{ timestamp: string; element: string }>()
+    .catch(() => null);
+
   const pendingCountRow = await env.LEDGER
     .prepare("SELECT COUNT(*) AS n FROM pending_experiments WHERE status = 'pending'")
     .first<{ n: number }>()
     .catch(() => null);
   const pending = pendingCountRow?.n ?? 0;
 
+  const orchestratorActive = withinWindow(lastOrchestrator?.started_at ?? null);
+  const theoristActive = withinWindow(lastTheoristClaim?.created_at ?? null);
+  const recordActive = withinWindow(lastRecord?.timestamp ?? null);
+
   return {
-    orchestrator: { status: "active", task: "Coordinating manifold analysis", last_seen: now },
-    manifold: { status: "active", task: "Computing eigenvalue spectra", last_seen: now },
-    causal: { status: "active", task: "Screening for Simpson's Paradox", last_seen: now },
-    theorist: { status: "idle", task: "Awaiting causal inputs", last_seen: now },
+    orchestrator: {
+      status: orchestratorActive ? "active" : "idle",
+      task: orchestratorActive
+        ? `Hourly tick · last ${lastOrchestrator?.outcome ?? "ok"}`
+        : "Awaiting next hour",
+      last_seen: lastOrchestrator?.started_at ?? fallback,
+    },
+    manifold: {
+      status: recordActive ? "active" : "idle",
+      task: recordActive
+        ? `PCA on ${lastRecord?.element ?? "—"}`
+        : "Awaiting fresh records",
+      last_seen: lastRecord?.timestamp ?? fallback,
+    },
+    causal: {
+      status: recordActive ? "active" : "idle",
+      task: recordActive ? "Stratifying for Simpson's paradox" : "Awaiting fresh records",
+      last_seen: lastRecord?.timestamp ?? fallback,
+    },
+    theorist: {
+      status: theoristActive ? "active" : "idle",
+      task: theoristActive
+        ? "Synthesizing eval narrative"
+        : "Awaiting evaluation enqueue",
+      last_seen: lastTheoristClaim?.created_at ?? fallback,
+      model: theoristActive ? "MiniMax-M2.7" : undefined,
+    },
     experiment: {
       status: pending > 0 ? "active" : "idle",
-      task: pending > 0 ? `Queueing ${pending} experiments` : "Awaiting hypotheses",
-      last_seen: now,
+      task: pending > 0 ? `${pending} experiments queued` : "Awaiting hypotheses",
+      last_seen: fallback,
     },
   };
+}
+
+interface RecentClaim {
+  claim_id: string;
+  agent_id: string;
+  claim_type: string;
+  description: string;
+  confidence: number | null;
+  created_at: string;
+  is_minimax: boolean;
+}
+
+async function buildRecentClaims(env: Env): Promise<RecentClaim[]> {
+  const rows = await env.LEDGER
+    .prepare(
+      `SELECT claim_id, agent_id, claim_type, description, confidence, created_at
+         FROM claims
+         ORDER BY created_at DESC
+         LIMIT 6`,
+    )
+    .all<{
+      claim_id: string;
+      agent_id: string;
+      claim_type: string;
+      description: string;
+      confidence: number | null;
+      created_at: string;
+    }>()
+    .catch(() => ({ results: [] as never[] }));
+
+  return (rows.results ?? []).map((c) => ({
+    ...c,
+    is_minimax: typeof c.agent_id === "string" && c.agent_id.includes("minimax"),
+  }));
 }
 
 interface ExperimentRow {
@@ -220,6 +322,10 @@ export async function handleFeedRoute(
 
   if (path === "/feed/hypotheses") {
     return cachedSection(request, { ttlSeconds: 30 }, () => buildHypotheses(env));
+  }
+
+  if (path === "/feed/recent-claims") {
+    return cachedSection(request, { ttlSeconds: 30 }, () => buildRecentClaims(env));
   }
 
   if (path === "/feed") {
