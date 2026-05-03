@@ -156,8 +156,9 @@ export function Atoms({
   const onMeshRef = useCallback((mesh: THREE.InstancedMesh | null) => {
     if (mesh) {
       (meshRef as any).current = mesh;
-      // Small delay to ensure R3F has finished setting up the mesh
-      requestAnimationFrame(() => uploadFrame());
+      // Small delay to ensure R3F has finished setting up the mesh.
+      // Use setTimeout instead of requestAnimationFrame because rAF is paused in WebXR!
+      setTimeout(() => uploadFrame(), 0);
     }
   }, [uploadFrame]);
 
