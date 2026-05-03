@@ -13,6 +13,7 @@
 import type { Env } from "./types";
 import { recordCronRun, runSmoketest } from "./ops/observability";
 import { runOrchestratorTick } from "./research/orchestrator";
+import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
 
 const FLEET_ELEMENTS = [
   "Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb",
@@ -281,6 +282,29 @@ export async function scheduled(
             `smoketest failed: ${result.probes.filter((p) => p.outcome === "fail").map((p) => p.name).join(", ")}`,
           );
         }
+      }),
+    );
+    // Reuse the 5-min smoketest cron to also poll any in-flight Hailuo
+    // vignettes — saves a separate cron line. The pollPendingVignettes
+    // call returns quickly (<5s) when there's nothing to process.
+    ctx.waitUntil(
+      recordCronRun(env, "vignette-poll", event.cron, async () => {
+        const r = await pollPendingVignettes(env);
+        console.log(`[vignette-poll] checked=${r.checked} completed=${r.completed} processing=${r.still_processing} failed=${r.failed}`);
+      }),
+    );
+    return;
+  }
+
+  if (event.cron === "0 6 * * *") {
+    // Daily vignette submission at 06:00 UTC. Polling continues via
+    // the 5-min smoketest cron; download + R2 mirror happens when the
+    // task reports Success.
+    ctx.waitUntil(
+      recordCronRun(env, "daily-vignette", event.cron, async () => {
+        const r = await submitDailyVignette(env);
+        if (!r.ok) throw new Error(r.error ?? "submit failed");
+        console.log(`[daily-vignette] vignette_id=${r.vignette_id} task_id=${r.task_id} date=${r.date} status=${r.status}`);
       }),
     );
     return;

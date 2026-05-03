@@ -9,7 +9,7 @@ compatibility_flags = ["nodejs_compat"]
 # observability smoketest that pings /health, /broadcasts/trigger, /feed and
 # alerts on regression (Phase A).
 [triggers]
-crons = ["0 * * * *", "0 7 * * *", "0 9 * * MON", "*/5 * * * *"]
+crons = ["0 * * * *", "0 7 * * *", "0 9 * * MON", "*/5 * * * *", "0 6 * * *"]
 
 # ─── Durable Objects: Think-based research agents ───
 

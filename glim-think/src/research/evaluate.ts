@@ -24,6 +24,7 @@
  */
 import type { Env } from "../types";
 import { promptForEvaluationClaim } from "../agents/image";
+import { narrationTextForClaim } from "../agents/tts";
 import { enqueueTask } from "./queue";
 
 interface EvalRow {
@@ -375,6 +376,29 @@ export async function evaluateHypothesis(
       });
     } catch (e) {
       console.error("evaluateHypothesis: image enqueue failed:", e);
+    }
+
+    // Audio narration in parallel — TTS HD ~5-15s, runs as separate
+    // queue task so the evaluate consumer doesn't block.
+    try {
+      const narrationText = narrationTextForClaim({
+        hypothesisTitle: hyp.title,
+        verdict: summary.verdict,
+        pooled_r: summary.pooled_r,
+        within_min_r: summary.within_style_min_r,
+        within_max_r: summary.within_style_max_r,
+        n_records: summary.n_records,
+        narrative,
+      });
+      await enqueueTask(env, {
+        kind: "claim-audio",
+        dedup_key: `claim-audio:${claimId}`,
+        enqueued_at: now,
+        claim_id: claimId,
+        text: narrationText,
+      });
+    } catch (e) {
+      console.error("evaluateHypothesis: audio enqueue failed:", e);
     }
   }
 

@@ -17,6 +17,7 @@
  * lands).
  */
 import type { Env } from "../types";
+import { latestVignette } from "../research/vignette";
 
 const FEED_CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -165,6 +166,7 @@ interface RecentClaim {
   created_at: string;
   is_minimax: boolean;
   image_url: string | null;
+  audio_url: string | null;
 }
 
 async function buildRecentClaims(env: Env): Promise<RecentClaim[]> {
@@ -188,13 +190,17 @@ async function buildRecentClaims(env: Env): Promise<RecentClaim[]> {
 
   return (rows.results ?? []).map((c) => {
     let imageUrl: string | null = null;
+    let audioUrl: string | null = null;
     try {
-      const data = JSON.parse(c.claim_data) as { image_key?: string };
+      const data = JSON.parse(c.claim_data) as { image_key?: string; audio_key?: string };
       if (data.image_key) {
         imageUrl = `https://glim-think-v1.aw-ab5.workers.dev/artifacts/${data.image_key}`;
       }
+      if (data.audio_key) {
+        audioUrl = `https://glim-think-v1.aw-ab5.workers.dev/artifacts/${data.audio_key}`;
+      }
     } catch {
-      // claim_data not JSON — leave imageUrl null
+      // claim_data not JSON — leave urls null
     }
     return {
       claim_id: c.claim_id,
@@ -205,6 +211,7 @@ async function buildRecentClaims(env: Env): Promise<RecentClaim[]> {
       created_at: c.created_at,
       is_minimax: typeof c.agent_id === "string" && c.agent_id.includes("minimax"),
       image_url: imageUrl,
+      audio_url: audioUrl,
     };
   });
 }
@@ -347,6 +354,10 @@ export async function handleFeedRoute(
 
   if (path === "/feed/recent-claims") {
     return cachedSection(request, { ttlSeconds: 30 }, () => buildRecentClaims(env));
+  }
+
+  if (path === "/feed/vignette") {
+    return cachedSection(request, { ttlSeconds: 60 }, () => latestVignette(env));
   }
 
   if (path === "/feed") {

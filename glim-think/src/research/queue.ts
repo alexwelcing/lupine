@@ -27,8 +27,15 @@ import type { Env } from "../types";
 import { createLabBroadcast } from "../scheduled";
 import { evaluateHypothesis } from "./evaluate";
 import { generateAndStoreImage } from "../agents/image";
+import { generateAndStoreAudio } from "../agents/tts";
 
-export type ResearchTaskKind = "round" | "literature" | "evaluate" | "broadcast" | "claim-image";
+export type ResearchTaskKind =
+  | "round"
+  | "literature"
+  | "evaluate"
+  | "broadcast"
+  | "claim-image"
+  | "claim-audio";
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -75,12 +82,24 @@ export interface ClaimImageTask extends ResearchTaskBase {
   aspect_ratio?: string;
 }
 
+/**
+ * Async TTS narration for a claim. ~5-15s latency at speech-02-hd, so
+ * fire-and-forget like claim-image. Plays back as MP3 from R2.
+ */
+export interface ClaimAudioTask extends ResearchTaskBase {
+  kind: "claim-audio";
+  claim_id: string;
+  text: string;
+  voice_id?: string;
+}
+
 export type ResearchTask =
   | RoundTask
   | LiteratureTask
   | EvaluateTask
   | BroadcastTask
-  | ClaimImageTask;
+  | ClaimImageTask
+  | ClaimAudioTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -262,32 +281,58 @@ async function runTask(env: Env, task: ResearchTask & { job_id?: string }): Prom
     if (!result.ok) {
       throw new Error(`image generation failed: ${result.error}`);
     }
-    // Persist image_key on the claim so the dashboard can render it.
-    // Falls back to no-op if claim row doesn't exist (shouldn't happen
-    // since the evaluator inserts before enqueueing this task).
-    try {
-      const row = await env.LEDGER
-        .prepare(`SELECT claim_data FROM claims WHERE claim_id = ?1`)
-        .bind(task.claim_id)
-        .first<{ claim_data: string }>();
-      if (row) {
-        const data = (() => {
-          try { return JSON.parse(row.claim_data); } catch { return {}; }
-        })();
-        data.image_key = storageKey;
-        await env.LEDGER
-          .prepare(`UPDATE claims SET claim_data = ?1 WHERE claim_id = ?2`)
-          .bind(JSON.stringify(data), task.claim_id)
-          .run();
-      }
-    } catch (e) {
-      console.error(`claim-image: failed to update claim row:`, e);
+    await patchClaimData(env, task.claim_id, { image_key: storageKey });
+    return;
+  }
+
+  if (task.kind === "claim-audio") {
+    const storageKey = `claim-audio/${task.claim_id}.mp3`;
+    const result = await generateAndStoreAudio(env, {
+      text: task.text,
+      storageKey,
+      voice_id: task.voice_id,
+    });
+    if (!result.ok) {
+      throw new Error(`TTS failed: ${result.error}`);
     }
+    await patchClaimData(env, task.claim_id, {
+      audio_key: storageKey,
+      audio_bytes: result.bytes ?? null,
+    });
     return;
   }
 
   // Defensive — this path is unreachable per the type union.
   throw new Error(`Unknown task kind: ${(task as ResearchTask).kind}`);
+}
+
+/**
+ * Merge keys into a claim row's claim_data JSON. No-op if the row is
+ * missing or claim_data isn't valid JSON. Used by claim-image and
+ * claim-audio to attach asset keys.
+ */
+async function patchClaimData(
+  env: Env,
+  claimId: string,
+  patch: Record<string, unknown>,
+): Promise<void> {
+  try {
+    const row = await env.LEDGER
+      .prepare(`SELECT claim_data FROM claims WHERE claim_id = ?1`)
+      .bind(claimId)
+      .first<{ claim_data: string }>();
+    if (!row) return;
+    const data = (() => {
+      try { return JSON.parse(row.claim_data); } catch { return {}; }
+    })();
+    Object.assign(data, patch);
+    await env.LEDGER
+      .prepare(`UPDATE claims SET claim_data = ?1 WHERE claim_id = ?2`)
+      .bind(JSON.stringify(data), claimId)
+      .run();
+  } catch (e) {
+    console.error(`patchClaimData: failed for ${claimId}:`, e);
+  }
 }
 
 /**
