@@ -45,7 +45,7 @@ import { testMiniMaxCall, listMiniMaxModels, sweepMiniMaxEndpoints, exerciseDeep
 import { runDiag, probeDOSynthesize, probeDOKV } from "./admin/diag";
 import { generateAndStoreImage } from "./agents/image";
 import { generateAndStoreAudio } from "./agents/tts";
-import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
+import { submitDailyVignette, pollPendingVignettes, submitCustomVignette } from "./research/vignette";
 import { explainFigure } from "./agents/vlm";
 import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis, iterateOnHypothesis, promoteInsight, leanStatusOverview } from "./research/insights";
 import { listHits, updateHitStatus, type HitKind, type HitStatus } from "./research/hits";
@@ -1532,6 +1532,32 @@ ${narrative}
               { headers: JSON_CORS_HEADERS },
             );
           }
+        }
+
+        // === One-off Hailuo video with a custom prompt ===
+        // Bypasses the cron auto-aggregation so a research round can
+        // submit a video tuned to its actual narrative findings.
+        if (url.pathname === "/research/vignette/submit" && request.method === "POST") {
+          const body = JSON.parse(bodyText || "{}") as {
+            prompt?: string;
+            round_label?: string;
+            claim_ids?: string[];
+            first_frame_image?: string;
+            model?: string;
+            duration?: number;
+          };
+          if (!body.prompt) return jsonError("Missing prompt", 400);
+          if (!body.round_label) return jsonError("Missing round_label", 400);
+          if (body.prompt.length > 2000) return jsonError("prompt > 2000 chars", 400);
+          const result = await submitCustomVignette(env, {
+            prompt: body.prompt,
+            round_label: body.round_label,
+            claim_ids: Array.isArray(body.claim_ids) ? body.claim_ids : [],
+            first_frame_image: body.first_frame_image,
+            model: body.model,
+            duration: body.duration,
+          });
+          return Response.json(result, { headers: JSON_CORS_HEADERS });
         }
 
         // === Hitlist: actionable findings extracted from M2.7 narratives ===

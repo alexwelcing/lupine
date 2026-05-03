@@ -188,6 +188,71 @@ export async function submitDailyVignette(
   return { ok: true, vignette_id: vignetteId, task_id: submission.task_id, date: ctx.date, status: "submitted" };
 }
 
+/**
+ * Submit a one-off vignette with a custom prompt. Bypasses the
+ * daily-claim aggregation (use when a research round has a stronger
+ * narrative than the cron-time auto-aggregation would produce). The
+ * resulting row reuses the daily_vignettes table so the existing
+ * 5-min poll cron picks it up and so /feed/vignette surfaces it
+ * once Hailuo finishes — no separate plumbing needed.
+ *
+ * date_key is suffixed with the round_label so it cannot collide with
+ * the cron-emitted daily row for the same calendar day.
+ */
+export async function submitCustomVignette(
+  env: Env,
+  opts: {
+    prompt: string;
+    round_label: string;
+    claim_ids?: string[];
+    first_frame_image?: string;
+    model?: string;
+    duration?: number;
+  },
+): Promise<{
+  ok: boolean;
+  vignette_id?: string;
+  task_id?: string;
+  date_key?: string;
+  status?: string;
+  error?: string;
+}> {
+  await ensureSchema(env);
+  const today = dateKey(new Date());
+  const labelSlug = opts.round_label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 32);
+  const dateKeySuffixed = `${today}-${labelSlug || "custom"}`;
+
+  const submission = await submitHailuoVideo(env, {
+    prompt: opts.prompt,
+    first_frame_image: opts.first_frame_image,
+    model: opts.model,
+    duration: opts.duration,
+  });
+  if (!submission.ok || !submission.task_id) {
+    return { ok: false, error: submission.error ?? "submit failed", date_key: dateKeySuffixed };
+  }
+
+  const vignetteId = `vignette-${dateKeySuffixed}-${Date.now().toString(36)}`;
+  const now = new Date().toISOString();
+  await env.LEDGER
+    .prepare(
+      `INSERT INTO daily_vignettes
+         (vignette_id, date_key, task_id, prompt, status, claim_ids, created_at)
+       VALUES (?1, ?2, ?3, ?4, 'submitted', ?5, ?6)`,
+    )
+    .bind(
+      vignetteId,
+      dateKeySuffixed,
+      submission.task_id,
+      opts.prompt,
+      JSON.stringify(opts.claim_ids ?? []),
+      now,
+    )
+    .run();
+
+  return { ok: true, vignette_id: vignetteId, task_id: submission.task_id, date_key: dateKeySuffixed, status: "submitted" };
+}
+
 interface PendingVignette {
   vignette_id: string;
   task_id: string | null;
