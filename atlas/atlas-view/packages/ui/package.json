@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test": "vitest run"
   },
   "dependencies": {
     "@atlas/core": "workspace:*",
@@ -28,6 +29,7 @@
     "@react-three/postprocessing": "^3.0.0",
     "@react-three/xr": "^6.6.29",
     "gifenc": "^1.0.3",
+    "leva": "^0.10.1",
     "mp4-muxer": "^5.2.2",
     "postprocessing": "^6.36.0",
     "react": "^19.0.0",
