@@ -893,7 +893,13 @@ export default function App() {
               near: 0.1,
               far: cameraDistance * 10,
             }}
-            gl={{ antialias: false, preserveDrawingBuffer: true, powerPreference: 'high-performance' }}
+            gl={{
+              antialias: false,
+              preserveDrawingBuffer: true,
+              powerPreference: 'high-performance',
+              // r182 deprecates PCFSoftShadowMap; PCFShadowMap is now soft.
+              shadowMap: { type: THREE.PCFShadowMap },
+            }}
             style={{ background: 'transparent' }}
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
