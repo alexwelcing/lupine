@@ -35,7 +35,9 @@ export type ResearchTaskKind =
   | "evaluate"
   | "broadcast"
   | "claim-image"
-  | "claim-audio";
+  | "claim-audio"
+  | "manifold_analysis"   // Phase A Option-C: dispatch to Manifold DO
+  | "causal_screen";      // Phase A Option-C: dispatch to Causal DO
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -93,13 +95,35 @@ export interface ClaimAudioTask extends ResearchTaskBase {
   voice_id?: string;
 }
 
+/**
+ * Run Manifold.runAnalysis(element) on the per-element Manifold DO. Pure
+ * deterministic computation, no LLM cost. Writes a ManifoldAnalysis claim
+ * to env.LEDGER + a row to the DO-local manifold_runs table.
+ */
+export interface ManifoldAnalysisTask extends ResearchTaskBase {
+  kind: "manifold_analysis";
+  element: string;
+  family?: string;
+}
+
+/**
+ * Run Causal.runScreen(grouping) on a single Causal DO instance. Pure
+ * deterministic computation. Writes a CausalScreen claim + DO-local row.
+ */
+export interface CausalScreenTask extends ResearchTaskBase {
+  kind: "causal_screen";
+  grouping: "element" | "pair_style" | "potential_label";
+}
+
 export type ResearchTask =
   | RoundTask
   | LiteratureTask
   | EvaluateTask
   | BroadcastTask
   | ClaimImageTask
-  | ClaimAudioTask;
+  | ClaimAudioTask
+  | ManifoldAnalysisTask
+  | CausalScreenTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -282,6 +306,32 @@ async function runTask(env: Env, task: ResearchTask & { job_id?: string }): Prom
       throw new Error(`image generation failed: ${result.error}`);
     }
     await patchClaimData(env, task.claim_id, { image_key: storageKey });
+    return;
+  }
+
+  if (task.kind === "manifold_analysis") {
+    // One DO instance per element so Manifold's session memory is
+    // element-scoped. Cheap — DOs are lazy.
+    const id = env.MANIFOLD_AGENT.idFromName(`manifold-${task.element}`);
+    const stub = env.MANIFOLD_AGENT.get(id);
+    const result = (await (stub as unknown as {
+      runAnalysis: (opts: { element: string; family?: string }) => Promise<{ ok: boolean; error?: string }>;
+    }).runAnalysis({ element: task.element, family: task.family }));
+    if (!result.ok) {
+      throw new Error(`Manifold.runAnalysis failed: ${result.error ?? "unknown"}`);
+    }
+    return;
+  }
+
+  if (task.kind === "causal_screen") {
+    const id = env.CAUSAL_AGENT.idFromName("causal-main");
+    const stub = env.CAUSAL_AGENT.get(id);
+    const result = (await (stub as unknown as {
+      runScreen: (opts: { grouping: "element" | "pair_style" | "potential_label" }) => Promise<{ ok: boolean; error?: string }>;
+    }).runScreen({ grouping: task.grouping }));
+    if (!result.ok) {
+      throw new Error(`Causal.runScreen failed: ${result.error ?? "unknown"}`);
+    }
     return;
   }
 

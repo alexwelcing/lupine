@@ -9,15 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SlideshowRouteImport } from './routes/slideshow'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as ProofRouteImport } from './routes/proof'
+import { Route as ProcessRouteImport } from './routes/process'
 import { Route as OpsRouteImport } from './routes/ops'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as InvestorRelationsRouteImport } from './routes/investor-relations'
+import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as AtlasViewerRouteImport } from './routes/atlas-viewer'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SlideshowRoute = SlideshowRouteImport.update({
+  id: '/slideshow',
+  path: '/slideshow',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResearchRoute = ResearchRouteImport.update({
   id: '/research',
   path: '/research',
@@ -26,6 +34,11 @@ const ResearchRoute = ResearchRouteImport.update({
 const ProofRoute = ProofRouteImport.update({
   id: '/proof',
   path: '/proof',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProcessRoute = ProcessRouteImport.update({
+  id: '/process',
+  path: '/process',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpsRoute = OpsRouteImport.update({
@@ -41,6 +54,11 @@ const LiveRoute = LiveRouteImport.update({
 const InvestorRelationsRoute = InvestorRelationsRouteImport.update({
   id: '/investor-relations',
   path: '/investor-relations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/console',
+  path: '/console',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AtlasViewerRoute = AtlasViewerRouteImport.update({
@@ -63,32 +81,41 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/atlas-viewer': typeof AtlasViewerRoute
+  '/console': typeof ConsoleRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
+  '/process': typeof ProcessRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
+  '/slideshow': typeof SlideshowRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/atlas-viewer': typeof AtlasViewerRoute
+  '/console': typeof ConsoleRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
+  '/process': typeof ProcessRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
+  '/slideshow': typeof SlideshowRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/atlas-viewer': typeof AtlasViewerRoute
+  '/console': typeof ConsoleRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
+  '/process': typeof ProcessRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
+  '/slideshow': typeof SlideshowRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -96,46 +123,65 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/atlas-viewer'
+    | '/console'
     | '/investor-relations'
     | '/live'
     | '/ops'
+    | '/process'
     | '/proof'
     | '/research'
+    | '/slideshow'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/atlas-viewer'
+    | '/console'
     | '/investor-relations'
     | '/live'
     | '/ops'
+    | '/process'
     | '/proof'
     | '/research'
+    | '/slideshow'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/atlas-viewer'
+    | '/console'
     | '/investor-relations'
     | '/live'
     | '/ops'
+    | '/process'
     | '/proof'
     | '/research'
+    | '/slideshow'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AtlasViewerRoute: typeof AtlasViewerRoute
+  ConsoleRoute: typeof ConsoleRoute
   InvestorRelationsRoute: typeof InvestorRelationsRoute
   LiveRoute: typeof LiveRoute
   OpsRoute: typeof OpsRoute
+  ProcessRoute: typeof ProcessRoute
   ProofRoute: typeof ProofRoute
   ResearchRoute: typeof ResearchRoute
+  SlideshowRoute: typeof SlideshowRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/slideshow': {
+      id: '/slideshow'
+      path: '/slideshow'
+      fullPath: '/slideshow'
+      preLoaderRoute: typeof SlideshowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/research': {
       id: '/research'
       path: '/research'
@@ -148,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/proof'
       fullPath: '/proof'
       preLoaderRoute: typeof ProofRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/process': {
+      id: '/process'
+      path: '/process'
+      fullPath: '/process'
+      preLoaderRoute: typeof ProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ops': {
@@ -169,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: '/investor-relations'
       fullPath: '/investor-relations'
       preLoaderRoute: typeof InvestorRelationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/console': {
+      id: '/console'
+      path: '/console'
+      fullPath: '/console'
+      preLoaderRoute: typeof ConsoleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/atlas-viewer': {
@@ -199,11 +259,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AtlasViewerRoute: AtlasViewerRoute,
+  ConsoleRoute: ConsoleRoute,
   InvestorRelationsRoute: InvestorRelationsRoute,
   LiveRoute: LiveRoute,
   OpsRoute: OpsRoute,
+  ProcessRoute: ProcessRoute,
   ProofRoute: ProofRoute,
   ResearchRoute: ResearchRoute,
+  SlideshowRoute: SlideshowRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

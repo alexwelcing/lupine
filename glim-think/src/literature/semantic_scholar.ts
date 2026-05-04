@@ -5,12 +5,15 @@
  * Public tier is rate-limited; we keep requests serialized via a token bucket.
  */
 
-import type { LiteraturePaper } from "../types";
+import type { Env, LiteraturePaper } from "../types";
 import { createRateLimiter } from "./rate_limit";
+import { claimSlot, parseRetryAfter, record429, recordSuccess } from "./rate_limit_kv";
 
 const ENDPOINT = "https://api.semanticscholar.org/graph/v1/paper/search";
 const FIELDS = "title,abstract,authors,year,venue,externalIds";
-const rateLimit = createRateLimiter(1000);
+const localBackstop = createRateLimiter(1000);
+// Semantic Scholar public tier: ~1 req/s. Use 1.5s as global floor.
+const S2_MIN_INTERVAL_MS = 1_500;
 
 interface S2Author {
   name?: string;
@@ -73,6 +76,7 @@ function normalizePaper(p: S2Paper, fetchedAt: string): LiteraturePaper | null {
 }
 
 export async function searchSemanticScholar(
+  env: Env,
   query: string,
   options: SemanticScholarSearchOptions = {},
 ): Promise<LiteraturePaper[]> {
@@ -80,7 +84,8 @@ export async function searchSemanticScholar(
   const safeQuery = query.trim();
   if (!safeQuery) return [];
 
-  await rateLimit();
+  await claimSlot(env, "semantic_scholar", S2_MIN_INTERVAL_MS);
+  await localBackstop();
 
   const url =
     `${ENDPOINT}?query=${encodeURIComponent(safeQuery)}` +
@@ -95,9 +100,15 @@ export async function searchSemanticScholar(
     signal: options.signal,
   });
 
+  if (res.status === 429) {
+    const retryMs = parseRetryAfter(res.headers.get("retry-after"));
+    await record429(env, "semantic_scholar", retryMs);
+    throw new Error(`Semantic Scholar HTTP 429: Too Many Requests${retryMs ? ` (retry-after ${Math.round(retryMs/1000)}s)` : ""}`);
+  }
   if (!res.ok) {
     throw new Error(`Semantic Scholar HTTP ${res.status}: ${res.statusText}`);
   }
+  await recordSuccess(env, "semantic_scholar");
 
   const data = (await res.json()) as S2SearchResponse;
   const fetchedAt = new Date().toISOString();

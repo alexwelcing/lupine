@@ -11,8 +11,11 @@ const PRIMARY_NAV = [
 ] as const
 
 const MORE_NAV = [
+  { to: '/console', label: 'Research Console', desc: 'Tabular browser for the full Cloudflare ledger' },
+  { to: '/slideshow', label: 'Slideshow', desc: '100+ MiniMax stills across 10 categories' },
   { to: '/atlas-viewer', label: 'Atlas Viewer', desc: 'WebGPU molecular visualization' },
   { to: '/proof', label: 'Research Defense', desc: 'Response to preprint critique' },
+  { to: '/process', label: 'Operating Report', desc: 'Autonomous-research engine, run by run' },
   { to: '/investor-relations', label: 'Investor Relations', desc: 'Data room & diligence' },
   { to: '/ops', label: 'Ops Dashboard', desc: 'Deployment telemetry' },
 ] as const

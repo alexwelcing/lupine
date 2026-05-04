@@ -9,11 +9,15 @@
  * ~1 req/sec via a per-isolate token bucket.
  */
 
-import type { LiteraturePaper } from "../types";
+import type { Env, LiteraturePaper } from "../types";
 import { createRateLimiter } from "./rate_limit";
+import { claimSlot, parseRetryAfter, record429, recordSuccess } from "./rate_limit_kv";
 
 const ARXIV_ENDPOINT = "http://export.arxiv.org/api/query";
-const rateLimit = createRateLimiter(1000); // arXiv API: 1 req/sec
+// In-isolate backstop. The cross-isolate KV layer is the source of truth.
+const localBackstop = createRateLimiter(1000);
+// arXiv unauthenticated guidance: 1 req per 3 seconds. Conservative.
+const ARXIV_MIN_INTERVAL_MS = 3_000;
 
 function decodeXmlEntities(s: string): string {
   return s
@@ -106,6 +110,7 @@ export interface ArxivSearchOptions {
  * Throws on transport/HTTP errors so callers can surface them.
  */
 export async function searchArxiv(
+  env: Env,
   query: string,
   options: ArxivSearchOptions = {},
 ): Promise<LiteraturePaper[]> {
@@ -113,7 +118,9 @@ export async function searchArxiv(
   const safeQuery = query.trim();
   if (!safeQuery) return [];
 
-  await rateLimit();
+  // Cross-isolate slot reservation (KV-backed) + in-isolate backstop.
+  await claimSlot(env, "arxiv", ARXIV_MIN_INTERVAL_MS);
+  await localBackstop();
 
   const url =
     `${ARXIV_ENDPOINT}?search_query=${encodeURIComponent(`all:${safeQuery}`)}` +
@@ -123,9 +130,15 @@ export async function searchArxiv(
     headers: { Accept: "application/atom+xml" },
     signal: options.signal,
   });
+  if (res.status === 429) {
+    const retryMs = parseRetryAfter(res.headers.get("retry-after"));
+    await record429(env, "arxiv", retryMs);
+    throw new Error(`arXiv HTTP 429: Too Many Requests${retryMs ? ` (retry-after ${Math.round(retryMs/1000)}s)` : ""}`);
+  }
   if (!res.ok) {
     throw new Error(`arXiv HTTP ${res.status}: ${res.statusText}`);
   }
+  await recordSuccess(env, "arxiv");
   const xml = await res.text();
   return parseEntries(xml);
 }

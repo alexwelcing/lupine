@@ -15,8 +15,11 @@ const NAV_SECTIONS = [
   {
     label: 'MORE',
     items: [
+      { to: '/console', label: 'Research Console' },
+      { to: '/slideshow', label: 'Slideshow' },
       { to: '/atlas-viewer', label: 'Atlas Viewer' },
       { to: '/proof', label: 'Research Defense' },
+      { to: '/process', label: 'Operating Report' },
       { to: '/investor-relations', label: 'Investor Relations' },
       { to: '/ops', label: 'Ops Dashboard' },
     ],

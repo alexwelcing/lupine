@@ -176,4 +176,13 @@ Experiment design principles:
       )
     `;
   }
+
+  async getStorageStats(): Promise<Record<string, number>> {
+    try {
+      const rows = await this.sql`SELECT COUNT(*) AS n FROM experiment_runs`;
+      return { experiment_runs: Number(rows[0]?.n ?? 0) };
+    } catch {
+      return { experiment_runs: 0 };
+    }
+  }
 }

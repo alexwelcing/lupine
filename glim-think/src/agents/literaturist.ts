@@ -362,6 +362,15 @@ do not fabricate citations.`;
     `;
   }
 
+  async getStorageStats(): Promise<Record<string, number>> {
+    try {
+      const rows = await this.sql`SELECT COUNT(*) AS n FROM literaturist_searches`;
+      return { literaturist_searches: Number(rows[0]?.n ?? 0) };
+    } catch {
+      return { literaturist_searches: 0 };
+    }
+  }
+
   private formatCitationBlock(ids: string[]): string {
     const lines = ids.map((id) => {
       const isArxiv = /^\d{4}\.\d{4,5}(v\d+)?$/.test(id) || id.toLowerCase().startsWith("arxiv:");
