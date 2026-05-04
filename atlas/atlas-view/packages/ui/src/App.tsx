@@ -16,6 +16,14 @@ import { USDZExportHelper } from './export/USDZExportPipeline';
 
 export const xrStore = createXRStore({
   emulate: false,
+  // Request hand tracking on session start. Direct manipulation lives in
+  // XRMoleculeInteraction, which reads joint poses each frame; the hand ray
+  // pointer is kept around as a fallback for menu/UI interactions.
+  hand: {
+    rayPointer: { rayModel: { maxLength: 1.5 } },
+    teleportPointer: false,
+    grabPointer: false,
+  },
 });
 
 import { MobileHUD } from './MobileHUD';
