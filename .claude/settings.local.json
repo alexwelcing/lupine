@@ -1,4 +1,11 @@
 {
+  "sandbox": {
+    "network": {
+      "allowedDomains": [
+        "glim-think-v1.aw-ab5.workers.dev"
+      ]
+    }
+  },
   "permissions": {
     "allow": [
       "Bash(cargo build:*)",
