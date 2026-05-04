@@ -200,6 +200,7 @@ Be quantitative. Cite specific numbers.`;
   async runAnalysis(opts: {
     element: string;
     family?: string;
+    force?: boolean;
   }): Promise<{
     ok: boolean;
     cached?: boolean;
@@ -215,18 +216,23 @@ Be quantitative. Cite specific numbers.`;
     await this.onStart(); // ensure schema
     const family = opts.family ?? "all";
 
-    // Idempotency: skip if (family, element) already screened.
-    const cached = await this.sql`
-      SELECT claim_id, pr FROM manifold_runs
-      WHERE family = ${family} AND element = ${opts.element}
-    `;
-    if (cached.length > 0) {
-      return {
-        ok: true,
-        cached: true,
-        claim_id: String(cached[0].claim_id ?? ""),
-        pr: Number(cached[0].pr ?? 0),
-      };
+    // Idempotency: skip if (family, element) already screened — unless force=true,
+    // in which case we delete the cached row and recompute from current records.
+    if (opts.force) {
+      await this.sql`DELETE FROM manifold_runs WHERE family = ${family} AND element = ${opts.element}`;
+    } else {
+      const cached = await this.sql`
+        SELECT claim_id, pr FROM manifold_runs
+        WHERE family = ${family} AND element = ${opts.element}
+      `;
+      if (cached.length > 0) {
+        return {
+          ok: true,
+          cached: true,
+          claim_id: String(cached[0].claim_id ?? ""),
+          pr: Number(cached[0].pr ?? 0),
+        };
+      }
     }
 
     // Load records (matching the get_families/load_records tool flow).
