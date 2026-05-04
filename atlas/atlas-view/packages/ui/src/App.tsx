@@ -14,11 +14,26 @@ import * as THREE from 'three';
 import { XR, createXRStore, useXR } from '@react-three/xr';
 import { USDZExportHelper } from './export/USDZExportPipeline';
 
+// XR store — tuned for the Meta Quest browser (Quest 2/3/Pro) while staying
+// graceful on non-Meta runtimes. All advanced features are requested as
+// *optional* (XRSessionFeatureRequest = true) so a session still starts on
+// devices that lack them.
 export const xrStore = createXRStore({
   emulate: false,
-  // Request hand tracking on session start. Direct manipulation lives in
-  // XRMoleculeInteraction, which reads joint poses each frame; the hand ray
-  // pointer is kept around as a fallback for menu/UI interactions.
+  // Quest 3 reliably hits 90 Hz; default of 72 leaves frames on the table.
+  frameRate: 'high',
+  // Foveated rendering — Quest GPU loves this; 0 disables, 1 is max.
+  foveation: 0.5,
+  // Optional WebXR features. Quest 3 supports all of these; older devices
+  // simply ignore them. Requesting them up-front means we don't have to
+  // re-negotiate later if/when we wire surface-placement, mesh occlusion, etc.
+  handTracking: true,
+  hitTest: true,
+  anchors: true,
+  planeDetection: true,
+  meshDetection: true,
+  // Direct manipulation lives in XRMoleculeInteraction (reads joint poses
+  // every frame). The short hand ray remains as a fallback for menu / UI.
   hand: {
     rayPointer: { rayModel: { maxLength: 1.5 } },
     teleportPointer: false,
