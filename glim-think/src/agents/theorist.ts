@@ -127,6 +127,15 @@ You think like a materials scientist. Reference real physics:
     };
   }
 
+  async getStorageStats(): Promise<Record<string, number>> {
+    try {
+      const rows = await this.sql`SELECT COUNT(*) AS n FROM theories`;
+      return { theories: Number(rows[0]?.n ?? 0) };
+    } catch {
+      return { theories: 0 };
+    }
+  }
+
   async onStart() {
     this.sql`
       CREATE TABLE IF NOT EXISTS theories (

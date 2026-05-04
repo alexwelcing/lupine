@@ -1,10 +1,22 @@
 /**
  * FleetOrchestrator: parallel research fleet commander.
+ *
+ * REWIRED for Option-C queue-driven dispatch:
+ *   runFleet() no longer calls the Orchestrator DO over the broken
+ *   /run interface. It enqueues queue tasks (manifold_analysis per
+ *   element, causal_screen per grouping) which the queue consumer
+ *   dispatches to the corresponding agent DOs via direct RPC.
+ *
+ *   This kills the silent-failure loop where every hourly alarm
+ *   produced 15 status='failed' rows. New rows record the count of
+ *   tasks enqueued + status='dispatched'.
  */
 
 import type { Env } from "../types";
+import { enqueueTask } from "../research/queue";
 
 const ELEMENTS = ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb", "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta"];
+const GROUPINGS = ["element", "pair_style", "potential_label"] as const;
 
 export class FleetOrchestrator implements DurableObject {
   private state: DurableObjectState;
@@ -80,54 +92,59 @@ export class FleetOrchestrator implements DurableObject {
 
   async runFleet(opts: { elements?: string[]; iterations?: number }) {
     const elements = opts.elements ?? ELEMENTS;
-    const iterations = opts.iterations ?? 1;
+    const fleetBatchId = `fleet-batch-${Date.now()}`;
+    const dateHour = new Date().toISOString().slice(0, 13);
+    const results: Array<{ element: string; status: string; manifold_job?: string; error?: string }> = [];
 
-    const promises = elements.map(async (el) => {
-      const fleetId = `fleet-${el}-${Date.now()}`;
+    // 1. One manifold_analysis task per element.
+    for (const el of elements) {
+      const fleetId = `${fleetBatchId}-${el}`;
       this.state.storage.sql.exec(
-        `INSERT INTO fleets (fleet_id, element, status, started_at) VALUES (?, ?, 'running', datetime('now'))`,
+        `INSERT INTO fleets (fleet_id, element, status, started_at) VALUES (?, ?, 'dispatched', datetime('now'))`,
         fleetId, el
       );
-
       try {
-        const id = this.env.ORCHESTRATOR.idFromName(`orchestrator-${el}`);
-        const stub = this.env.ORCHESTRATOR.get(id);
-        const response = await stub.fetch(new Request("http://internal/run", {
-          method: "POST",
-          body: JSON.stringify({ element: el, iterations }),
-        }));
-        const result = await response.json() as { done?: boolean };
-
-        const recordsRes = await this.env.LEDGER.prepare(
-          `SELECT COUNT(*) as count FROM records WHERE element = ?1`
-        ).bind(el).all();
-        const recordsCount = (recordsRes.results[0] as { count: number }).count;
-
+        const enq = await enqueueTask(this.env, {
+          kind: "manifold_analysis",
+          dedup_key: `auto-manifold:${el}:${dateHour}`,
+          enqueued_at: new Date().toISOString(),
+          element: el,
+        });
         this.state.storage.sql.exec(
-          `UPDATE fleets SET status = 'complete', records_count = ?, completed_at = datetime('now') WHERE fleet_id = ?`,
-          recordsCount, fleetId
+          `UPDATE fleets SET status = 'enqueued', completed_at = datetime('now') WHERE fleet_id = ?`,
+          fleetId
         );
-
-        return { element: el, status: "complete", records: recordsCount };
+        results.push({ element: el, status: enq.status, manifold_job: enq.job_id });
       } catch (e) {
         this.state.storage.sql.exec(
           `UPDATE fleets SET status = 'failed', completed_at = datetime('now') WHERE fleet_id = ?`,
           fleetId
         );
-        return { element: el, status: "failed", error: String(e) };
+        results.push({ element: el, status: "failed", error: String(e) });
       }
-    });
-
-    const results = await Promise.all(promises);
-
-    // Auto-schedule next run if not already scheduled
-    try {
-      await this.scheduleNextRun();
-    } catch (e) {
-      console.warn("Failed to schedule next alarm:", e);
     }
 
-    return { fleets: results.length, results };
+    // 2. One causal_screen task per grouping variable (only 3 — independent of element).
+    const causalResults: Array<{ grouping: string; status: string; job_id?: string; error?: string }> = [];
+    for (const grouping of GROUPINGS) {
+      try {
+        const enq = await enqueueTask(this.env, {
+          kind: "causal_screen",
+          dedup_key: `auto-causal:${grouping}:${dateHour}`,
+          enqueued_at: new Date().toISOString(),
+          grouping,
+        });
+        causalResults.push({ grouping, status: enq.status, job_id: enq.job_id });
+      } catch (e) {
+        causalResults.push({ grouping, status: "failed", error: String(e) });
+      }
+    }
+
+    return {
+      fleets: results.length,
+      results,
+      causal_screens: causalResults,
+    };
   }
 
   async scheduleNextRun(delayMs: number = 3600_000) {
@@ -138,8 +155,22 @@ export class FleetOrchestrator implements DurableObject {
   }
 
   async alarm() {
-    console.log("FleetOrchestrator alarm fired — starting scheduled run");
+    console.log("FleetOrchestrator alarm fired — enqueueing fleet sweep");
     await this.runFleet({ iterations: 1 });
     await this.scheduleNextRun();
+  }
+
+  /**
+   * Storage-stats RPC for /graph/agents.json. Returns DO-local row counts.
+   */
+  async getStorageStats(): Promise<Record<string, number>> {
+    await this.ensureStarted();
+    try {
+      const cursor = this.state.storage.sql.exec(`SELECT COUNT(*) AS n FROM fleets`);
+      const rows = cursor.toArray();
+      return { fleets: Number((rows[0] as { n?: number })?.n ?? 0) };
+    } catch {
+      return { fleets: 0 };
+    }
   }
 }

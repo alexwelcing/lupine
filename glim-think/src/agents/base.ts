@@ -78,6 +78,16 @@ export abstract class GlimThinkAgent extends Think<Env> {
   }
 
   /**
+   * Storage-stats RPC. Returns the row counts of any DO-local SQL tables
+   * this agent owns. Default is empty; subclasses with private tables
+   * override to declare them. Surfaced by /graph/agents.json so the FE
+   * can render the dark-matter store alongside env.LEDGER.
+   */
+  async getStorageStats(): Promise<Record<string, number>> {
+    return {};
+  }
+
+  /**
    * Helper: store an artifact in R2.
    */
   protected async storeArtifact(key: string, data: string | ArrayBuffer): Promise<void> {

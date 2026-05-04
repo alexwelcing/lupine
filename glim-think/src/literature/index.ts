@@ -82,12 +82,12 @@ export interface SearchLiteratureOptions {
   forceRefresh?: boolean;
 }
 
-type SourceFetcher = (query: string, opts: { max?: number }) => Promise<LiteraturePaper[]>;
+type SourceFetcher = (env: Env, query: string, opts: { max?: number }) => Promise<LiteraturePaper[]>;
 
 const FETCHERS: Record<LiteratureSource, SourceFetcher> = {
-  arxiv: (q, o) => searchArxiv(q, o),
-  semantic_scholar: (q, o) => searchSemanticScholar(q, o),
-  openalex: (q, o) => searchOpenAlex(q, o),
+  arxiv: (env, q, o) => searchArxiv(env, q, o),
+  semantic_scholar: (env, q, o) => searchSemanticScholar(env, q, o),
+  openalex: (env, q, o) => searchOpenAlex(env, q, o),
 };
 
 function attachArtifactKeys(papers: LiteraturePaper[]): LiteraturePaper[] {
@@ -114,7 +114,7 @@ async function fetchOne(
       return { papers: cached, cached: true };
     }
   }
-  const fetched = await FETCHERS[source](query, { max });
+  const fetched = await FETCHERS[source](env, query, { max });
   const enriched = attachArtifactKeys(fetched);
   // Best-effort persistence; don't await failure path explicitly.
   await putCachedSearch(env, source, query, enriched);

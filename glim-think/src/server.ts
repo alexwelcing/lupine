@@ -50,6 +50,16 @@ import { explainFigure } from "./agents/vlm";
 import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis, iterateOnHypothesis, promoteInsight, leanStatusOverview } from "./research/insights";
 import { listHits, updateHitStatus, type HitKind, type HitStatus } from "./research/hits";
 import { searchLiterature as searchLit } from "./literature";
+import { buildGraphSnapshot } from "./graph/snapshot";
+import { buildArchSnapshot } from "./graph/arch";
+import { buildAgentsSnapshot } from "./graph/agents";
+import { GRAPH_HTML } from "./graph/page";
+import { getRateLimitSnapshot } from "./literature/rate_limit_kv";
+import {
+  SLIDESHOW_PROMPTS,
+  runSlideshowBatch,
+  listSlideshowImages,
+} from "./research/slideshow";
 
 async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
@@ -108,7 +118,7 @@ export {
 };
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx?: ExecutionContext): Promise<Response> {
     try {
       const url = new URL(request.url);
 
@@ -547,6 +557,107 @@ ${narrative}
         const id = env.DASHBOARD.idFromName("dash-main-v2");
         const stub = env.DASHBOARD.get(id);
         return stub.fetch(request);
+      }
+
+      // Knowledge graph: /graph (HTML viewer) + /graph.json (snapshot)
+      if (url.pathname === "/graph" && request.method === "GET") {
+        return new Response(GRAPH_HTML, {
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "public, max-age=60",
+          },
+        });
+      }
+      if (url.pathname === "/graph.json" && request.method === "GET") {
+        try {
+          const snap = await buildGraphSnapshot(env);
+          return Response.json(snap, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return jsonError(`graph snapshot failed: ${String(e)}`, 500);
+        }
+      }
+      if (url.pathname === "/graph/arch.json" && request.method === "GET") {
+        try {
+          const snap = await buildArchSnapshot(env);
+          return Response.json(snap, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return jsonError(`graph arch snapshot failed: ${String(e)}`, 500);
+        }
+      }
+      // Slideshow batch generation — kicks off N image-01 calls under
+      // ctx.waitUntil so the response is immediate. Each generation writes
+      // its bytes to R2 (slideshow/{slug}.png) and updates a row in the
+      // slideshow_images D1 table.
+      if (url.pathname === "/admin/slideshow/generate" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as {
+          concurrency?: number;
+          force_redo?: boolean;
+          slug_filter?: string[];
+        };
+        const prompts = Array.isArray(body.slug_filter) && body.slug_filter.length > 0
+          ? SLIDESHOW_PROMPTS.filter(p => body.slug_filter!.includes(p.slug))
+          : SLIDESHOW_PROMPTS;
+        const work = (async () => {
+          try {
+            const r = await runSlideshowBatch(env, prompts, {
+              concurrency: body.concurrency,
+              force_redo: body.force_redo,
+            });
+            console.log(`[slideshow/generate] batch complete: ${JSON.stringify(r)}`);
+          } catch (e) {
+            console.error("[slideshow/generate] batch failed:", e);
+          }
+        })();
+        if (ctx) ctx.waitUntil(work);
+        return Response.json(
+          {
+            ok: true,
+            queued: prompts.length,
+            note: "batch running under ctx.waitUntil; poll /research/slideshow.json for progress",
+          },
+          { headers: JSON_CORS_HEADERS },
+        );
+      }
+
+      // Slideshow manifest — returns the current state of every prompt
+      // (pending / complete / failed) plus the R2 URL when ready.
+      if (url.pathname === "/research/slideshow.json" && request.method === "GET") {
+        try {
+          const images = await listSlideshowImages(env);
+          const totals = images.reduce(
+            (acc, i) => {
+              acc.total++;
+              if (i.status === "complete") acc.complete++;
+              else if (i.status === "failed") acc.failed++;
+              else acc.pending++;
+              return acc;
+            },
+            { total: 0, complete: 0, failed: 0, pending: 0 },
+          );
+          return Response.json(
+            { images, totals, generated_at: new Date().toISOString() },
+            { headers: { ...JSON_CORS_HEADERS, "Cache-Control": "public, max-age=15" } },
+          );
+        } catch (e) {
+          return jsonError(`slideshow manifest failed: ${String(e)}`, 500);
+        }
+      }
+
+      if (url.pathname === "/ops/rate-limits" && request.method === "GET") {
+        try {
+          const snap = await getRateLimitSnapshot(env, ["arxiv", "openalex", "semantic_scholar"]);
+          return Response.json(snap, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return jsonError(`rate-limit snapshot failed: ${String(e)}`, 500);
+        }
+      }
+      if (url.pathname === "/graph/agents.json" && request.method === "GET") {
+        try {
+          const snap = await buildAgentsSnapshot(env);
+          return Response.json(snap, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return jsonError(`graph agents snapshot failed: ${String(e)}`, 500);
+        }
       }
 
       // Experiment queue management
@@ -1563,8 +1674,13 @@ ${narrative}
         // === Hitlist: actionable findings extracted from M2.7 narratives ===
         // Public read so the live research surface can render open findings;
         // PATCH is also public on this worker (same auth posture as the rest
-        // of /research/*).
-        if (url.pathname === "/research/hitlist" && request.method === "GET") {
+        // of /research/*). Both /research/hitlist and /research/hits map here —
+        // the table is named research_hits and the function is listHits, so
+        // /research/hits is the more discoverable name.
+        if (
+          (url.pathname === "/research/hitlist" || url.pathname === "/research/hits") &&
+          request.method === "GET"
+        ) {
           const kindParam = url.searchParams.get("kind") as HitKind | null;
           const statusParam = url.searchParams.get("status") as HitStatus | null;
           const hypId = url.searchParams.get("hypothesis_id");
@@ -1886,6 +2002,24 @@ ${narrative}
         return Response.json({ hypotheses: overview }, { headers: JSON_CORS_HEADERS });
       }
 
+      // D-band closure analysis — RPC entry to Causal.runDBandAnalysis().
+      // Computes Spearman + Mann-Whitney + bootstrap + permutation stats on
+      // (d_electron_count, cross_style_PC1_alignment) for the IMMI 15-element
+      // set. Pure deterministic — no LLM call, no token spend. Writes a
+      // DBandClosure claim to env.LEDGER on success.
+      if (url.pathname === "/admin/d-band-analysis" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as { bootstrap_n?: number; permutation_n?: number };
+        const id = env.CAUSAL_AGENT.idFromName("causal-main");
+        const stub = env.CAUSAL_AGENT.get(id);
+        const result = await (stub as unknown as {
+          runDBandAnalysis: (opts: { bootstrap_n?: number; permutation_n?: number }) => Promise<unknown>;
+        }).runDBandAnalysis({
+          bootstrap_n: body.bootstrap_n,
+          permutation_n: body.permutation_n,
+        });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
       if (url.pathname === "/admin/iterate" && request.method === "POST") {
         const body = JSON.parse(bodyText || "{}") as {
           hypothesis_id?: string;
@@ -1905,10 +2039,18 @@ ${narrative}
 
       if (url.pathname === "/admin/insights" && request.method === "GET") {
         const hypothesisId = url.searchParams.get("hypothesis_id");
-        const limit = Math.min(parseInt(url.searchParams.get("limit") ?? "10", 10) || 10, 50);
+        const requested = parseInt(url.searchParams.get("limit") ?? "10", 10) || 10;
+        const cap = 500;
+        const limit = Math.min(requested, cap);
+        const capped = requested > cap;
         if (hypothesisId) {
           const insights = await topInsightsForHypothesis(env, hypothesisId, limit);
-          return Response.json({ hypothesis_id: hypothesisId, insights }, { headers: JSON_CORS_HEADERS });
+          return Response.json({
+            hypothesis_id: hypothesisId,
+            insights,
+            limit_applied: limit,
+            limit_capped: capped,
+          }, { headers: JSON_CORS_HEADERS });
         }
         // No filter — list recent insights across all hypotheses
         const rows = await env.LEDGER
@@ -1926,7 +2068,11 @@ ${narrative}
           .bind(limit)
           .all()
           .catch(() => ({ results: [] as never[] }));
-        return Response.json({ insights: rows.results ?? [] }, { headers: JSON_CORS_HEADERS });
+        return Response.json({
+          insights: rows.results ?? [],
+          limit_applied: limit,
+          limit_capped: capped,
+        }, { headers: JSON_CORS_HEADERS });
       }
 
       if (url.pathname === "/admin/probe-vlm-native-pro" && request.method === "GET") {

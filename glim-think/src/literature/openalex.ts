@@ -6,12 +6,16 @@
  * parameter). We send both for redundancy.
  */
 
-import type { LiteraturePaper } from "../types";
+import type { Env, LiteraturePaper } from "../types";
 import { createRateLimiter } from "./rate_limit";
+import { claimSlot, parseRetryAfter, record429, recordSuccess } from "./rate_limit_kv";
 
 const ENDPOINT = "https://api.openalex.org/works";
 const USER_AGENT = "glim-think/1.0 (mailto:research@glim)";
-const rateLimit = createRateLimiter(200); // OpenAlex polite pool ≈ 10 req/s
+const localBackstop = createRateLimiter(200);
+// OpenAlex polite pool advertises 10 req/s. We use 1s as the global floor —
+// small batch sizes mean the throughput is dominated by upstream latency anyway.
+const OPENALEX_MIN_INTERVAL_MS = 1_000;
 
 interface OAAuthor {
   author?: { display_name?: string };
@@ -109,6 +113,7 @@ function normalizeWork(w: OAWork, fetchedAt: string): LiteraturePaper | null {
 }
 
 export async function searchOpenAlex(
+  env: Env,
   query: string,
   options: OpenAlexSearchOptions = {},
 ): Promise<LiteraturePaper[]> {
@@ -116,7 +121,8 @@ export async function searchOpenAlex(
   const safeQuery = query.trim();
   if (!safeQuery) return [];
 
-  await rateLimit();
+  await claimSlot(env, "openalex", OPENALEX_MIN_INTERVAL_MS);
+  await localBackstop();
 
   const url =
     `${ENDPOINT}?search=${encodeURIComponent(safeQuery)}` +
@@ -131,9 +137,15 @@ export async function searchOpenAlex(
     signal: options.signal,
   });
 
+  if (res.status === 429) {
+    const retryMs = parseRetryAfter(res.headers.get("retry-after"));
+    await record429(env, "openalex", retryMs);
+    throw new Error(`OpenAlex HTTP 429: Too Many Requests${retryMs ? ` (retry-after ${Math.round(retryMs/1000)}s)` : ""}`);
+  }
   if (!res.ok) {
     throw new Error(`OpenAlex HTTP ${res.status}: ${res.statusText}`);
   }
+  await recordSuccess(env, "openalex");
 
   const data = (await res.json()) as OAResponse;
   const fetchedAt = new Date().toISOString();

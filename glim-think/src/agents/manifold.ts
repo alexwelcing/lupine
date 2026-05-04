@@ -190,6 +190,154 @@ Be quantitative. Cite specific numbers.`;
     `;
   }
 
+  /**
+   * RPC entry point — run a full manifold analysis without an LLM loop.
+   * Pure math: load records → compute eigenvalues + PR → persist DO-local
+   * + emit a claim to env.LEDGER. Zero token cost.
+   *
+   * Called by the queue consumer for `manifold_analysis` task kind.
+   */
+  async runAnalysis(opts: {
+    element: string;
+    family?: string;
+  }): Promise<{
+    ok: boolean;
+    cached?: boolean;
+    claim_id?: string;
+    pr?: number;
+    log_spacing_r2?: number;
+    eigenvalues?: number[];
+    hyper_ribbon?: boolean;
+    potential_count?: number;
+    property_count?: number;
+    error?: string;
+  }> {
+    await this.onStart(); // ensure schema
+    const family = opts.family ?? "all";
+
+    // Idempotency: skip if (family, element) already screened.
+    const cached = await this.sql`
+      SELECT claim_id, pr FROM manifold_runs
+      WHERE family = ${family} AND element = ${opts.element}
+    `;
+    if (cached.length > 0) {
+      return {
+        ok: true,
+        cached: true,
+        claim_id: String(cached[0].claim_id ?? ""),
+        pr: Number(cached[0].pr ?? 0),
+      };
+    }
+
+    // Load records (matching the get_families/load_records tool flow).
+    const sql = family === "all"
+      ? `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE element = ?1`
+      : `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE element = ?1 AND pair_style = ?2`;
+    const records = family === "all"
+      ? await this.queryLedger<{ potential_label: string; property: string; reference: number; predicted: number; pair_style: string }>(sql, opts.element)
+      : await this.queryLedger<{ potential_label: string; property: string; reference: number; predicted: number; pair_style: string }>(sql, opts.element, family);
+
+    const potentials = [...new Set(records.map(r => r.potential_label))];
+    const properties = [...new Set(records.map(r => r.property))];
+    if (potentials.length < 2 || properties.length < 2) {
+      return { ok: false, error: `insufficient data (potentials=${potentials.length}, properties=${properties.length})` };
+    }
+
+    // Build relative-error matrix [n potentials × m properties].
+    const errorMatrix: number[][] = [];
+    for (const pot of potentials) {
+      const row: number[] = [];
+      for (const prop of properties) {
+        const rec = records.find(r => r.potential_label === pot && r.property === prop);
+        if (rec && rec.reference !== 0) {
+          row.push((rec.predicted - rec.reference) / rec.reference);
+        } else {
+          row.push(0);
+        }
+      }
+      errorMatrix.push(row);
+    }
+
+    const n = errorMatrix.length;
+    const d = properties.length;
+    const means = new Array(d).fill(0);
+    for (const row of errorMatrix) {
+      for (let j = 0; j < d; j++) means[j] += row[j] / n;
+    }
+    const cov: number[][] = Array.from({ length: d }, () => new Array(d).fill(0));
+    for (const row of errorMatrix) {
+      for (let i = 0; i < d; i++) {
+        for (let j = 0; j < d; j++) {
+          cov[i][j] += (row[i] - means[i]) * (row[j] - means[j]) / Math.max(1, n - 1);
+        }
+      }
+    }
+
+    const eigenvalues = await this.powerIterationEigenvalues(cov, Math.min(d, 5));
+    const sumSq = eigenvalues.reduce((s, v) => s + v * v, 0);
+    const sumLin = eigenvalues.reduce((s, v) => s + v, 0);
+    const pr = sumSq > 0 ? (sumLin * sumLin) / sumSq : 0;
+    const logEigs = eigenvalues.filter(v => v > 0).map(v => Math.log(v));
+    const logSpacingR2 = logEigs.length > 2 ? this.computeR2(logEigs) : 0;
+    const hyperRibbon = pr < 2.0;
+
+    // Persist DO-local + emit claim to env.LEDGER.
+    const claimId = `manifold_${opts.element}_${family}_${Date.now()}`;
+    const claimData = {
+      element: opts.element,
+      family,
+      pr: Math.round(pr * 1000) / 1000,
+      log_spacing_r2: Math.round(logSpacingR2 * 1000) / 1000,
+      eigenvalues: eigenvalues.map(v => Math.round(v * 1e6) / 1e6),
+      potential_count: potentials.length,
+      property_count: properties.length,
+      hyper_ribbon: hyperRibbon,
+    };
+    const description = `Manifold analysis ${opts.element}/${family}: PR=${claimData.pr}, ribbon=${hyperRibbon ? "yes" : "no"}, n=${potentials.length}p×${properties.length}d`;
+    const now = new Date().toISOString();
+
+    try {
+      await this.env.LEDGER
+        .prepare(
+          `INSERT INTO claims
+            (claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at, timestamp)
+          VALUES (?1, 'agent_alpha_manifold', 'ManifoldAnalysis', ?2, '[]', ?3, 'proposed', ?4, ?5, ?5)
+          ON CONFLICT(claim_id) DO NOTHING`,
+        )
+        .bind(claimId, JSON.stringify(claimData), hyperRibbon ? 0.85 : 0.6, description, now)
+        .run();
+    } catch (e) {
+      console.error("Manifold.runAnalysis: claim insert failed:", e);
+    }
+
+    await this.sql`
+      INSERT INTO manifold_runs (family, element, claim_id, pr)
+      VALUES (${family}, ${opts.element}, ${claimId}, ${pr})
+      ON CONFLICT DO NOTHING
+    `;
+
+    return {
+      ok: true,
+      cached: false,
+      claim_id: claimId,
+      pr: Math.round(pr * 1000) / 1000,
+      log_spacing_r2: Math.round(logSpacingR2 * 1000) / 1000,
+      eigenvalues: eigenvalues.map(v => Math.round(v * 1e6) / 1e6),
+      hyper_ribbon: hyperRibbon,
+      potential_count: potentials.length,
+      property_count: properties.length,
+    };
+  }
+
+  /**
+   * Storage stats RPC for /graph/agents.json. Returns DO-local row counts.
+   */
+  async getStorageStats(): Promise<Record<string, number>> {
+    await this.onStart();
+    const rows = await this.sql`SELECT COUNT(*) AS n FROM manifold_runs`;
+    return { manifold_runs: Number(rows[0]?.n ?? 0) };
+  }
+
   // ─── Numerical Helpers (edge-safe, no BLAS needed) ─────────────
 
   private async powerIterationEigenvalues(cov: number[][], k: number): Promise<number[]> {

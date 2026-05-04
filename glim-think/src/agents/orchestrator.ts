@@ -197,6 +197,15 @@ Be strategic. Don't re-run analyses that are already cached. Focus on the highes
     `;
   }
 
+  async getStorageStats(): Promise<Record<string, number>> {
+    try {
+      const rows = await this.sql`SELECT COUNT(*) AS n FROM orchestrator_state`;
+      return { orchestrator_state: Number(rows[0]?.n ?? 0) };
+    } catch {
+      return { orchestrator_state: 0 };
+    }
+  }
+
   private async runChildChat(child: { chat: (prompt: string, relay: { onEvent(json: string): void; onDone(): void; onError?(error: string): void }) => Promise<void> }, prompt: string): Promise<string> {
     const events: string[] = [];
     await child.chat(prompt, {
