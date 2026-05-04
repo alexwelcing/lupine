@@ -897,8 +897,10 @@ export default function App() {
               antialias: false,
               preserveDrawingBuffer: true,
               powerPreference: 'high-performance',
+            }}
+            onCreated={({ gl }) => {
               // r182 deprecates PCFSoftShadowMap; PCFShadowMap is now soft.
-              shadowMap: { type: THREE.PCFShadowMap },
+              gl.shadowMap.type = THREE.PCFShadowMap;
             }}
             style={{ background: 'transparent' }}
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
