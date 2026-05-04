@@ -1,6 +1,6 @@
 # Top 100 Materials-Chemistry Entries — NIST IPR LAMMPS Coverage
 
-_Generated 2026-05-04T21:28:30.171226+00:00_
+_Generated 2026-05-04T22:01:24.062270+00:00_
 
 Ranked by count of LAMMPS-implementation records in the NIST Interatomic Potentials Repository mirror (`atlas/nist_ipr/index/master_index.json`).
 

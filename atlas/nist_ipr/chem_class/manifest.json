@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-04T21:28:30.171226+00:00",
+  "generated": "2026-05-04T22:01:24.062270+00:00",
   "source": "atlas/nist_ipr/index/master_index.json",
   "framing": "materials-chemistry: pure elements + binary alloys ranked by NIST IPR LAMMPS record count",
   "total_entries": 100,

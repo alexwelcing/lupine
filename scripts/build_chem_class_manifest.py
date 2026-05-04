@@ -207,7 +207,44 @@ def main() -> None:
     (OUT_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2))
     emit_csv(manifest, OUT_DIR / "manifest.csv")
     emit_markdown(manifest, OUT_DIR / "README.md")
+    sync_gallery_card(manifest)
     print(f"Wrote {len(manifest['entries'])} entries to {OUT_DIR}")
+
+
+def sync_gallery_card(manifest: dict) -> None:
+    """Upsert a single summary card into atlas-view's gallery-data.json."""
+    gallery = REPO / "atlas" / "atlas-view" / "packages" / "ui" / "src" / "gallery-data.json"
+    if not gallery.exists():
+        return
+    data = json.loads(gallery.read_text())
+    data = [x for x in data if x.get("id") != "nist_ipr_top100"]
+    total_records = sum(e["record_count"] for e in manifest["entries"])
+    total_files = sum(e["file_count"] for e in manifest["entries"])
+    data.append(
+        {
+            "id": "nist_ipr_top100",
+            "title": "NIST IPR Top-100 Catalog",
+            "subtitle": (
+                f"{manifest['n_elements']} pure elements + {manifest['n_binary_alloys']} "
+                f"binary alloys ranked by LAMMPS-record count. "
+                f"{total_records} potentials, {total_files} parameter files."
+            ),
+            "domain": "Methods",
+            "atoms": "—",
+            "frames": "—",
+            "file": "procedural",
+            "available": True,
+            "colors": ["#b87333", "#c0c0c0", "#ffd700"],
+            "metadata": {
+                "method": "NIST IPR mirror catalog",
+                "potential": "Various (eam/alloy, meam, tersoff, …)",
+                "manifest": "atlas/nist_ipr/chem_class/manifest.json",
+                "reference": "atlas/nist_ipr/chem_class/README.md",
+            },
+            "featured": True,
+        }
+    )
+    gallery.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
 
 
 if __name__ == "__main__":
