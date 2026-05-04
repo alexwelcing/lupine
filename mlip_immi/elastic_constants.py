@@ -201,10 +201,19 @@ def compute_elastic_constants(element: str, calc, eps_max: float = 0.005) -> Ela
     )
 
 
-def make_calculator():
-    """Load MACE-MP-0 (small variant for CPU speed)."""
-    from mace.calculators import mace_mp
-    return mace_mp(model="small", device="cpu", default_dtype="float32")
+def make_calculator(model: str = "mace-mp-0"):
+    """Load a foundation MLIP calculator. Currently supports:
+       - mace-mp-0 (default; small variant for CPU speed)
+       - chgnet (412k-param universal force field)
+    Both expose ASE Calculator interface so the strain-energy code is unchanged.
+    """
+    if model == "mace-mp-0":
+        from mace.calculators import mace_mp
+        return mace_mp(model="small", device="cpu", default_dtype="float32")
+    if model == "chgnet":
+        from chgnet.model.dynamics import CHGNetCalculator
+        return CHGNetCalculator()
+    raise ValueError(f"unknown model: {model}; supported: mace-mp-0, chgnet")
 
 
 def fmt_compare(el: str, predicted: ElasticResult) -> str:
@@ -228,11 +237,15 @@ def main():
     parser.add_argument("--element", help="single element to compute")
     parser.add_argument("--validate", action="store_true", help="compare against published values")
     parser.add_argument("--all", action="store_true", help="run all 15 IMMI elements")
-    parser.add_argument("--output", default="mace_immi_results.json", help="JSON output path")
+    parser.add_argument("--model", default="mace-mp-0", choices=["mace-mp-0", "chgnet"],
+                        help="foundation MLIP to evaluate")
+    parser.add_argument("--output", default=None, help="JSON output path (default: {model}_immi_results.json)")
     args = parser.parse_args()
+    if args.output is None:
+        args.output = f"{args.model.replace('-','_')}_immi_results.json"
 
-    print("Loading MACE-MP-0 (small variant)...")
-    calc = make_calculator()
+    print(f"Loading {args.model}...")
+    calc = make_calculator(args.model)
     print("Calculator ready.\n")
 
     if args.element:
@@ -253,7 +266,7 @@ def main():
 
     # Persist
     payload = {
-        "model": "mace-mp-0-small",
+        "model": args.model + ("-small" if args.model == "mace-mp-0" else ""),
         "method": "strain-energy, eps_max=0.5%",
         "results": [
             {
