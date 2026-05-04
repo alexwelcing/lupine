@@ -2002,6 +2002,32 @@ ${narrative}
         return Response.json({ hypotheses: overview }, { headers: JSON_CORS_HEADERS });
       }
 
+      // Force a recompute of Manifold.runAnalysis on all 15 IMMI elements,
+      // bypassing the (family, element) cache. Used after ingesting new
+      // records (e.g. MACE-MP-0 entries) so the existing pipeline produces
+      // updated ManifoldAnalysis claims that include the new potential.
+      if (url.pathname === "/admin/manifold-recompute" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as { elements?: string[]; family?: string };
+        const els = Array.isArray(body.elements) && body.elements.length > 0
+          ? body.elements
+          : ["Al","Cu","Ni","Ag","Au","Pt","Pd","Pb","Fe","Cr","Mo","W","V","Nb","Ta"];
+        const family = body.family ?? "all";
+        const results: Array<{ element: string; ok: boolean; pr?: number; potential_count?: number; error?: string }> = [];
+        for (const el of els) {
+          const id = env.MANIFOLD_AGENT.idFromName(`manifold-${el}`);
+          const stub = env.MANIFOLD_AGENT.get(id);
+          try {
+            const r = await (stub as unknown as {
+              runAnalysis: (opts: { element: string; family?: string; force?: boolean }) => Promise<{ ok: boolean; pr?: number; potential_count?: number; error?: string }>;
+            }).runAnalysis({ element: el, family, force: true });
+            results.push({ element: el, ok: r.ok, pr: r.pr, potential_count: r.potential_count, error: r.error });
+          } catch (e) {
+            results.push({ element: el, ok: false, error: String(e) });
+          }
+        }
+        return Response.json({ results }, { headers: JSON_CORS_HEADERS });
+      }
+
       // D-band closure analysis — RPC entry to Causal.runDBandAnalysis().
       // Computes Spearman + Mann-Whitney + bootstrap + permutation stats on
       // (d_electron_count, cross_style_PC1_alignment) for the IMMI 15-element
