@@ -46,7 +46,7 @@ import { ChronosHUD } from './ChronosHUD';
 import { VolcanicHUD } from './VolcanicHUD';
 
 import { useStore } from './store';
-import { FileDropZone } from './FileDropZone';
+import { LandingPage } from './LandingPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { SpatialAnchor } from './SpatialAnchor';
@@ -1141,10 +1141,12 @@ export default function App() {
           </div>
         )}
 
-        {/* File drop zone overlay (placed inside relative main content wrapper to allow document scrolling) */}
-        <div style={{ position: 'relative', width: '100%', zIndex: 10, pointerEvents: file ? 'none' : 'auto' }}>
-          <FileDropZone />
-        </div>
+        {/* Landing page (hero, featured, drop zone, gallery) */}
+        {!file && (
+          <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
+            <LandingPage />
+          </div>
+        )}
       </div>
 
       {/* ─── Batch Asset Generator overlay ─── */}
