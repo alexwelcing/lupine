@@ -3028,5 +3028,27 @@
       "temperature": "300 K",
       "reference": "WebGPU scaling test"
     }
+  },
+  {
+    "id": "nist_ipr_top100",
+    "title": "NIST IPR Top-100 Catalog",
+    "subtitle": "40 pure elements + 60 binary alloys ranked by LAMMPS-record count. 434 potentials, 626 parameter files.",
+    "domain": "Methods",
+    "atoms": "—",
+    "frames": "—",
+    "file": "procedural",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#c0c0c0",
+      "#ffd700"
+    ],
+    "metadata": {
+      "method": "NIST IPR mirror catalog",
+      "potential": "Various (eam/alloy, meam, tersoff, …)",
+      "manifest": "atlas/nist_ipr/chem_class/manifest.json",
+      "reference": "atlas/nist_ipr/chem_class/README.md"
+    },
+    "featured": true
   }
 ]
