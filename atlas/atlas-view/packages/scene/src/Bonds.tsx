@@ -338,9 +338,16 @@ export function Bonds({
   const pMin = propRange?.[0] ?? autoMin;
   const pMax = propRange?.[1] ?? autoMax;
 
-  // Compute geometry and colors into CPU buffers
-  useEffect(() => {
-    if (halfCount === 0) return;
+
+  // Upload instance matrices + colors. Extracted into a callback so we can
+  // invoke it both on dep change AND on mesh remount (R3F remounts the mesh
+  // when entering WebXR, and rAF is paused during the session-start transition
+  // so a normal useEffect won't fire on the new mesh until too late).
+  const uploadBonds = useCallback(() => {
+    const mesh = meshRef.current;
+    if (!mesh || halfCount === 0) return;
+
+    if (!mesh.instanceMatrix) return;
 
     // Bounds check to prevent drawing beyond pre-allocated memory
     const drawCount = Math.min(halfCount, capacity);
@@ -539,11 +546,30 @@ export function Bonds({
       cpuColorArray[(i * 2 + 1) * 3 + 1] = tcB[1];
       cpuColorArray[(i * 2 + 1) * 3 + 2] = tcB[2];
     }
-  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, propRange, colorProperty, cpuMatrixArray, cpuColorArray, cpuRadiusBTArray, cpuMidPointArray, capacity]);
+
+    tubeGeo.attributes.radiusBT.needsUpdate = true;
+
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  }, [bondPairs, halfCount, capacity, tubeGeo, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, pMin, pMax, colorProperty, radiusBTArray]);
+
+  useEffect(() => {
+    uploadBonds();
+  }, [uploadBonds]);
+
+  // Handle R3F remounts on WebXR session entry. rAF is paused during the
+  // transition, so we schedule the upload via setTimeout (same pattern as
+  // Atoms / AtomsOptimized — see commit 17a0b66).
+  const onMeshRef = useCallback((mesh: THREE.InstancedMesh | null) => {
+    if (mesh) {
+      (meshRef as any).current = mesh;
+      setTimeout(() => uploadBonds(), 0);
+    }
+  }, [uploadBonds]);
 
   return (
     <instancedMesh
-      ref={meshRef}
+      ref={onMeshRef}
       args={[tubeGeo, material, capacity]}
       frustumCulled={false}
       visible={halfCount > 0}
