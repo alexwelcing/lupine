@@ -617,7 +617,7 @@
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
     "domain": "Metals & Alloys",
     "atoms": "5,000",
-    "frames": "20",
+    "frames": "1",
     "file": "dump.CuZr_melt.lammpstrj",
     "available": true,
     "colors": [
@@ -704,10 +704,10 @@
   {
     "id": "crack2d",
     "title": "Brittle Fracture (2D)",
-    "subtitle": "Dynamic crack propagation with elastic-plastic zone",
+    "subtitle": "Dynamic crack propagation with elastic-plastic zone, single snapshot",
     "domain": "Defects & Mechanics",
     "atoms": "1,800",
-    "frames": "15",
+    "frames": "1",
     "file": "dump.crack2d.lammpstrj",
     "available": true,
     "colors": [
@@ -787,10 +787,10 @@
   {
     "id": "multielement_nanoparticle",
     "title": "High-Entropy Alloy Nanoparticle",
-    "subtitle": "Multi-element open dataset (Ni-Co-Cr-Fe-Mn) showing composition gradients",
+    "subtitle": "Multi-element open dataset (Ni-Co-Cr-Fe-Mn) showing composition gradients, single snapshot",
     "domain": "Nanomaterials",
     "atoms": "85,000+",
-    "frames": "100",
+    "frames": "1",
     "file": "advanced_samples/dump.multielement_nanoparticle.lammpstrj",
     "available": true,
     "colors": [
@@ -1006,7 +1006,7 @@
     "atoms": "12,000",
     "frames": "1",
     "file": "gallery/pe_crystal_12k.lammpstrj",
-    "available": true,
+    "available": false,
     "colors": [
       "#ffb6c1",
       "#ffc0cb",
@@ -3037,7 +3037,7 @@
     "atoms": "—",
     "frames": "—",
     "file": "procedural",
-    "available": true,
+    "available": false,
     "colors": [
       "#b87333",
       "#c0c0c0",

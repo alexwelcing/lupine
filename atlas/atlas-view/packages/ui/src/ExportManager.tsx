@@ -1,10 +1,12 @@
 /**
- * ExportManager — Unified pipeline for image, MP4, and GIF export.
+ * ExportManager — Unified pipeline for image, MP4, GLB, and GIF export.
  *
  * Architecture:
  *   Image:  Single-frame WebGL readback at arbitrary resolution.
  *   MP4:    WebCodecs VideoEncoder + mp4-muxer → H.264 MP4 download.
  *   GIF:    Same MP4 pipeline → decode via <video> element → gifenc → GIF download.
+ *   GLB:    Reconstructs real sphere/cylinder meshes from atomic data and exports
+ *           via GLTFExporter for use in Blender, Unity, or any 3D software.
  *
  * The GIF path reuses the exact same recording pipeline as MP4, then converts
  * the finalized MP4 blob client-side. This means one capture loop, one encoder,
@@ -417,6 +419,217 @@ export function ExportManager() {
     gl.setClearAlpha(originalClearAlpha);
   }, [exportRequest, gl, scene, camera, size, clearExportRequest, frame]);
 
+  // ─── 3D Model Export (GLB / USDZ) ─────────────────────
+  const handle3DExport = useCallback(async () => {
+    const req = exportRequest;
+    if (!req) return;
+
+    try {
+      const { TYPE_COLORS, TYPE_RADII, DEFAULT_TYPE_COLOR } = await import('@atlas/scene');
+
+      const state = useStore.getState();
+      const currentFile = state.file;
+      if (!currentFile) {
+        console.error('[3D Export] No file loaded');
+        if (req.onComplete) req.onComplete(false);
+        clearExportRequest();
+        return;
+      }
+
+      const currentFrame = currentFile.trajectory.frames[state.frame];
+      if (!currentFrame) {
+        console.error('[3D Export] No valid frame');
+        if (req.onComplete) req.onComplete(false);
+        clearExportRequest();
+        return;
+      }
+
+      const exportScene = new THREE.Scene();
+      exportScene.name = currentFile.name || 'glimPSE-export';
+
+      // ── Build atom meshes ──
+      // Group atoms by type for instanced rendering efficiency in downstream tools
+      const atomsByType = new Map<number, number[]>();
+      for (let i = 0; i < currentFrame.natoms; i++) {
+        const typeId = currentFrame.types[i];
+        if (state.hiddenAtomTypes.has(typeId)) continue;
+        if (!atomsByType.has(typeId)) atomsByType.set(typeId, []);
+        atomsByType.get(typeId)!.push(i);
+      }
+
+      const sphereGeo = new THREE.SphereGeometry(1, 16, 12);
+
+      for (const [typeId, indices] of atomsByType) {
+        const [r, g, b] = TYPE_COLORS[typeId] ?? DEFAULT_TYPE_COLOR;
+        const baseRadius = (TYPE_RADII[typeId] ?? 1.0) * (state.atomScale ?? 1.0);
+        const typeScale = state.atomTypeScales[typeId] ?? 1.0;
+        const radius = baseRadius * typeScale;
+
+        let matConfig: any = { metalness: 0.1, roughness: 0.5 };
+        switch (state.materialPreset) {
+          case 'matte':
+            matConfig = { metalness: 0.05, roughness: 0.85 };
+            break;
+          case 'metallic':
+            matConfig = { metalness: 0.8, roughness: 0.2 };
+            break;
+          case 'glass':
+            matConfig = { metalness: 0.1, roughness: 0.1, transmission: 0.8, transparent: true, opacity: 0.8, ior: 1.5 };
+            break;
+          case 'plastic':
+            matConfig = { metalness: 0.0, roughness: 0.4 };
+            break;
+        }
+
+        const MaterialClass = state.materialPreset === 'glass' ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
+        const material = new MaterialClass({
+          color: new THREE.Color(r, g, b),
+          ...matConfig
+        });
+
+        const mesh = new THREE.InstancedMesh(sphereGeo, material, indices.length);
+        mesh.name = `atoms-type-${typeId}`;
+        const matrix = new THREE.Matrix4();
+
+        for (let j = 0; j < indices.length; j++) {
+          const idx = indices[j];
+          const x = currentFrame.positions[idx * 3];
+          const y = currentFrame.positions[idx * 3 + 1];
+          const z = currentFrame.positions[idx * 3 + 2];
+          matrix.compose(
+            new THREE.Vector3(x, y, z),
+            new THREE.Quaternion(),
+            new THREE.Vector3(radius, radius, radius)
+          );
+          mesh.setMatrixAt(j, matrix);
+        }
+        mesh.instanceMatrix.needsUpdate = true;
+        exportScene.add(mesh);
+      }
+
+      // ── Build bond cylinders (if bonds are visible) ──
+      if (state.showBonds && currentFrame.natoms < 50000) {
+        const bondCutoff = state.bondCutoff ?? 2.5;
+        const cutoffSq = bondCutoff * bondCutoff;
+        const bonds: [number, number][] = [];
+
+        // Simple O(n²) for small systems, spatial hash for larger
+        // For GLB export we cap at 50k atoms to avoid memory issues
+        for (let i = 0; i < currentFrame.natoms && bonds.length < 500000; i++) {
+          const xi = currentFrame.positions[i * 3];
+          const yi = currentFrame.positions[i * 3 + 1];
+          const zi = currentFrame.positions[i * 3 + 2];
+          for (let j = i + 1; j < currentFrame.natoms; j++) {
+            const dx = currentFrame.positions[j * 3] - xi;
+            const dy = currentFrame.positions[j * 3 + 1] - yi;
+            const dz = currentFrame.positions[j * 3 + 2] - zi;
+            const distSq = dx * dx + dy * dy + dz * dz;
+            if (distSq < cutoffSq && distSq > 0.01) {
+              bonds.push([i, j]);
+            }
+          }
+        }
+
+        if (bonds.length > 0) {
+          const cylGeo = new THREE.CylinderGeometry(0.12, 0.12, 1, 8, 1);
+          // Rotate cylinder so it aligns along +Y (default cylinder axis)
+          let matConfig: any = { metalness: 0.1, roughness: 0.5 };
+          switch (state.materialPreset) {
+            case 'matte':
+              matConfig = { metalness: 0.05, roughness: 0.85 };
+              break;
+            case 'metallic':
+              matConfig = { metalness: 0.8, roughness: 0.2 };
+              break;
+            case 'glass':
+              matConfig = { metalness: 0.1, roughness: 0.1, transmission: 0.8, transparent: true, opacity: 0.8, ior: 1.5 };
+              break;
+            case 'plastic':
+              matConfig = { metalness: 0.0, roughness: 0.4 };
+              break;
+          }
+
+          const MaterialClass = state.materialPreset === 'glass' ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
+          const bondMat = new MaterialClass({
+            color: new THREE.Color(0.5, 0.5, 0.5),
+            ...matConfig
+          });
+
+          const bondMesh = new THREE.InstancedMesh(cylGeo, bondMat, bonds.length);
+          bondMesh.name = 'bonds';
+          const mat = new THREE.Matrix4();
+          const pos = new THREE.Vector3();
+          const dir = new THREE.Vector3();
+          const up = new THREE.Vector3(0, 1, 0);
+          const quat = new THREE.Quaternion();
+          const scale = new THREE.Vector3();
+
+          for (let b = 0; b < bonds.length; b++) {
+            const [ai, aj] = bonds[b];
+            const ax = currentFrame.positions[ai * 3];
+            const ay = currentFrame.positions[ai * 3 + 1];
+            const az = currentFrame.positions[ai * 3 + 2];
+            const bx = currentFrame.positions[aj * 3];
+            const by = currentFrame.positions[aj * 3 + 1];
+            const bz = currentFrame.positions[aj * 3 + 2];
+
+            const length = Math.sqrt((bx-ax)**2 + (by-ay)**2 + (bz-az)**2);
+            pos.set((ax+bx)/2, (ay+by)/2, (az+bz)/2);
+            dir.set(bx-ax, by-ay, bz-az).normalize();
+            quat.setFromUnitVectors(up, dir);
+            scale.set(1, length, 1);
+            mat.compose(pos, quat, scale);
+            bondMesh.setMatrixAt(b, mat);
+          }
+          bondMesh.instanceMatrix.needsUpdate = true;
+          exportScene.add(bondMesh);
+        }
+      }
+
+      // ── Export via chosen format ──
+      let blob: Blob;
+      let filename: string;
+      const baseName = req.baseName || 'glimPSE';
+
+      if (req.type === 'usdz') {
+        const { USDZExporter } = await import('three/addons/exporters/USDZExporter.js');
+        const exporter = new USDZExporter();
+        const usdz = (await (exporter as any).parse(exportScene)) as Uint8Array;
+        blob = new Blob([usdz.buffer as ArrayBuffer], { type: 'model/vnd.usdz+zip' });
+        filename = `${baseName}-frame${state.frame + 1}.usdz`;
+      } else {
+        const { GLTFExporter } = await import('three/addons/exporters/GLTFExporter.js');
+        const exporter = new GLTFExporter();
+        const glb = await exporter.parseAsync(exportScene, { binary: true }) as ArrayBuffer;
+        blob = new Blob([glb], { type: 'model/gltf-binary' });
+        filename = `${baseName}-frame${state.frame + 1}.glb`;
+      }
+
+      if (req.onComplete && req.onComplete.length > 1) {
+        req.onComplete(true, blob, filename);
+      } else {
+        downloadBlob(blob, filename);
+        if (req.onComplete) req.onComplete(true);
+      }
+
+      // Cleanup export scene
+      exportScene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh || obj instanceof THREE.InstancedMesh) {
+          obj.geometry.dispose();
+          if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose());
+          else obj.material.dispose();
+        }
+      });
+      sphereGeo.dispose();
+
+    } catch (err) {
+      console.error('[3D Export] Failed:', err);
+      if (req.onComplete) req.onComplete(false);
+    }
+
+    clearExportRequest();
+  }, [exportRequest, clearExportRequest]);
+
   // ─── Start Video Recording (Post-processing Aware 80Mbps) ─────────
   const startVideoRecording = useCallback(async () => {
     const req = exportRequest;
@@ -567,6 +780,8 @@ export function ExportManager() {
   handleImageExportRef.current = handleImageExport;
   const startVideoRecordingRef = useRef(startVideoRecording);
   startVideoRecordingRef.current = startVideoRecording;
+  const handle3DExportRef = useRef(handle3DExport);
+  handle3DExportRef.current = handle3DExport;
 
   useEffect(() => {
     if (!exportRequest || !exportRequest.type) return;
@@ -576,6 +791,9 @@ export function ExportManager() {
     }
     if (exportRequest.type === 'video') {
       startVideoRecordingRef.current();
+    }
+    if (exportRequest.type === 'glb' || exportRequest.type === 'usdz') {
+      handle3DExportRef.current();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exportRequest]);
