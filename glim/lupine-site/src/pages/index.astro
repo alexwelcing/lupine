@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Lupine Materials Science | The Living Manuscript">
+  <Header />
+
+  <main>
+    <!-- Hero Section -->
+    <section class="section section--light">
+      <div class="container">
+        <div class="grid grid--2" style="align-items: center; gap: var(--space-4xl);">
+          <div class="reveal visible">
+            <span class="section-label">Texas Research Initiative</span>
+            <h1 class="tech-reveal" style="margin-bottom: var(--space-lg);">
+              The Causal Geometry of <br/><em style="color: var(--primary);">Interatomic Potentials</em>
+            </h1>
+            <p class="section-description">
+              Bridging decades of physical research with high-throughput prediction error manifolds to validate the next generation of molecular dynamics.
+            </p>
+            <div style="display: flex; gap: var(--space-md);" class="tech-reveal" style="animation-delay: 0.2s">
+              <a href="#methodology" class="btn btn--primary kinetic-hover">Read Methodology</a>
+              <a href="/investor-relations" class="btn btn--secondary kinetic-hover">Investor Relations</a>
+            </div>
+            
+            <div style="margin-top: var(--space-3xl); padding-left: var(--space-lg); border-left: 2px dotted var(--outline-variant);">
+              <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.1rem; color: var(--on-surface);">
+                "Quantifying error heterogeneities across element-specific potential landscapes."
+              </p>
+            </div>
+          </div>
+          <div class="reveal visible tech-reveal" style="position: relative; animation-delay: 0.4s;">
+            <!-- Stippled / Dithered Graphic Placeholder -->
+            <div class="kinetic-hover" style="width: 100%; height: 500px; background: var(--surface-container-low); border: 1px solid var(--outline-variant); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="transform: translateY(calc(var(--scroll-y, 0px) * 0.2)); transition: transform 0.1s linear;">
+                <defs>
+                  <pattern id="dither" patternUnits="userSpaceOnUse" width="4" height="4">
+                    <rect width="2" height="2" fill="var(--primary)" opacity="0.1" />
+                    <rect x="2" y="2" width="2" height="2" fill="var(--primary)" opacity="0.1" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#dither)" />
+                <circle class="primary-glow" cx="50%" cy="50%" r="150" fill="none" stroke="var(--primary)" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
+                <circle cx="50%" cy="50%" r="100" fill="none" stroke="var(--secondary)" stroke-width="1" stroke-dasharray="2 6" opacity="0.5"/>
+              </svg>
+              <span class="mono" style="position: absolute; bottom: 16px; right: 16px; font-size: 12px; color: var(--primary);">FIG 1. ERROR MANIFOLD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / Methodology Section -->
+    <section id="methodology" class="section section--offset">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <span class="section-label">Methodology</span>
+          <h2 class="serif-italic">The Living Manuscript</h2>
+          <p class="section-description">We treat physical simulation libraries not as a static resource, but as a dynamic mathematical text. Our universal compiler distills 675+ NIST potential parameterizations into high-fidelity validations.</p>
+        </div>
+        
+        <div class="grid grid--3">
+          <div class="card reveal visible kinetic-hover" style="transition-delay: 0.1s;">
+            <h4 class="serif-italic">Standardized Knowledge</h4>
+            <p style="margin-top: var(--space-md); font-size: 0.95rem;">Decoupling the computational backend from visual interfaces via the Standardized Knowledge Protocol (SKP). A universal compiler for any research corpus.</p>
+          </div>
+          <div class="card reveal visible kinetic-hover" style="transition-delay: 0.2s;">
+            <h4 class="serif-italic">Simpson's Paradox Avoidance</h4>
+            <p style="margin-top: var(--space-md); font-size: 0.95rem;">Detecting and resolving data aggregation fallacies. We utilize hyper-ribbon dimensionality models to isolate reversal markers across potential landscapes.</p>
+          </div>
+          <div class="card reveal visible kinetic-hover" style="transition-delay: 0.3s;">
+            <h4 class="serif-italic">Digital Vellum</h4>
+            <p style="margin-top: var(--space-md); font-size: 0.95rem;">We log every structural simulation on our immutable digital vellum, ensuring that the provenance of our synthesized data is fully traceable and verifiable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scientific Data Table -->
+    <section class="section section--light">
+      <div class="container container--narrow">
+        <div class="section-header reveal visible text-center" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+          <span class="section-label">Prediction Error Benchmarks</span>
+          <h2 class="serif-italic">Empirical Observations</h2>
+        </div>
+
+        <div class="table-wrapper reveal visible">
+          <table class="evidence-table">
+            <thead>
+              <tr>
+                <th>Dataset / Integration</th>
+                <th>Baseline Inference</th>
+                <th>Atlas Distill</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>NIST IPR Parameterization</strong><br/><span style="font-size: 12px; color: var(--on-surface-variant);">Automated extraction and injection of MEAM/EAM alloys.</span></td>
+                <td class="mono">Manual</td>
+                <td class="mono" style="color: var(--primary);">675+ Potentials</td>
+                <td><span class="badge badge--verified">Verified</span></td>
+              </tr>
+              <tr>
+                <td><strong>Dimensionality Mapping</strong><br/><span style="font-size: 12px; color: var(--on-surface-variant);">Visualizing prediction error manifolds.</span></td>
+                <td class="mono">Flat Array</td>
+                <td class="mono" style="color: var(--secondary);">Hyper-Ribbon</td>
+                <td><span class="badge badge--validated">Validated</span></td>
+              </tr>
+              <tr>
+                <td><strong>Formal Lean Specifications</strong><br/><span style="font-size: 12px; color: var(--on-surface-variant);">Mathematical proof generation for peer-review inclusion.</span></td>
+                <td class="mono">Unverified</td>
+                <td class="mono" style="color: var(--tertiary);">Lean 4 Compiled</td>
+                <td><span class="badge badge--benchmarked">Benchmarked</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  // Simple scroll reveal logic
+  document.addEventListener("DOMContentLoaded", () => {
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    reveals.forEach(reveal => {
+      observer.observe(reveal);
+      // Fallback for elements already in viewport
+      const rect = reveal.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        reveal.classList.add("visible");
+      }
+    });
+  });
+</script>

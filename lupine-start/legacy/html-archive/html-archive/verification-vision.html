@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUPINE — The Executable Vision</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=JetBrains+Mono:wght@300;400;500&amp;family=Playfair+Display:ital,wght@1,400;1,700;1,900&amp;family=Space+Grotesk:wght@400;500&amp;family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { body: ["Inter", "sans-serif"], mono: ["JetBrains Mono", "monospace"], "serif-display": ["Playfair Display", "serif"] } } } }
+</script>
+<style>.glass-panel { background: rgba(52, 52, 60, 0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }</style>
+</head>
+<body class="bg-[#0a0b12] text-[#e3e1ec] font-body selection:bg-[#5565d4] selection:text-white">
+<nav class="fixed top-0 w-full z-50 bg-[#0a0b12]/80 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-12 py-6">
+<div class="text-2xl font-serif-display italic tracking-tighter text-white"><a href="index.html">LUPINE</a></div>
+<a class="text-slate-400 font-mono text-xs uppercase tracking-widest hover:text-white transition-colors" href="formal-verification.html">← Back</a>
+</nav>
+<main class="min-h-screen flex flex-col items-center justify-center px-12 pt-32 pb-20">
+    <div class="max-w-3xl w-full text-center">
+        <h1 class="text-5xl md:text-6xl font-serif-display italic text-white leading-tight mb-8">The Executable Vision</h1>
+        <p class="text-xl text-slate-400 font-light leading-relaxed mb-12">Contracts that compile.</p>
+        <div class="glass-panel p-10 border border-white/5 text-left rounded-lg shadow-2xl">
+            <h3 class='text-2xl font-serif-display text-white mb-4'>Proof Before Simulation</h3><p class='text-slate-300 leading-relaxed mb-4'>Our core philosophy is that a formal specification is not a presentation—it is a contract. If an epistemic constraint drops below its minimum threshold (e.g. at least 6 hypotheses, 10 proven theorems), the entire platform refuses to build.</p><ul class='list-disc list-inside text-slate-300 font-mono text-sm space-y-2 mt-4'><li>guard (hypothesisCount >= 6)</li><li>guard (computationallyProvenCount >= 10)</li></ul>
+        </div>
+    </div>
+</main>
+</body></html>
