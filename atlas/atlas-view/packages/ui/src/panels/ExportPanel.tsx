@@ -284,10 +284,10 @@ export function ExportPanel() {
                 setExportSuccess(false);
                 triggerExport({
                   type: 'video',
-                  format: 'webm',
+                  format: 'mp4',
                   orbit: cameraPreset === 'orbit' || cameraPreset === 'spin',
                   durationSeconds: 5,
-                  baseName: 'glimPSE-120fps',
+                  baseName: 'glimPSE',
                   onComplete: handleComplete
                 });
               }}
@@ -318,7 +318,112 @@ export function ExportPanel() {
                 fontSize: 11, color: 'var(--slate-400)', lineHeight: 1.5,
               }}>
                 Video export uses the <strong style={{ color: 'var(--slate-200)' }}>WebCodecs API</strong> for
-                hardware-accelerated MP4 encoding.
+                hardware-accelerated H.264 MP4 encoding at 60fps / 80Mbps.
+              </div>
+            </AtomicGlass>
+          </QuantumSection>
+
+          {/* ─── 3D Model Export ─── */}
+          <QuantumSection label="Export 3D Model" defaultOpen={false}>
+            <div style={{ marginBottom: 12 }}>
+              <div style={{
+                fontSize: 11, color: 'var(--slate-400)', lineHeight: 1.5, marginBottom: 12,
+              }}>
+                Export the current frame as a <strong style={{ color: 'var(--slate-200)' }}>GLB</strong> or <strong style={{ color: 'var(--slate-200)' }}>USDZ</strong> file
+                with real sphere geometry and bond cylinders. Compatible with Blender, Unity, iOS AR, and Snapchat.
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button
+                onClick={() => {
+                  setExporting(true);
+                  setExportSuccess(false);
+                  triggerExport({
+                    type: 'glb',
+                    format: 'glb',
+                    baseName: 'glimPSE',
+                    onComplete: handleComplete
+                  });
+                }}
+                disabled={exporting}
+                style={{
+                  flex: 1, padding: '12px 0',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  fontSize: 12, fontWeight: 600,
+                  fontFamily: 'var(--font-mono)',
+                  textTransform: 'uppercase', letterSpacing: '0.04em',
+                  cursor: exporting ? 'not-allowed' : 'pointer',
+                  color: exportSuccess ? '#fff' : '#fff',
+                  background: exportSuccess ? 'rgba(78, 205, 107, 0.2)' : (exporting ? 'rgba(85, 101, 212, 0.1)' : 'var(--lupine-500)'),
+                  border: `1px solid ${exportSuccess ? 'rgba(78, 205, 107, 0.5)' : (exporting ? 'rgba(85, 101, 212, 0.3)' : 'var(--lupine-400)')}`,
+                  borderRadius: 'var(--radius-sm)',
+                  transition: 'all 0.3s var(--ease-out-expo)',
+                }}
+              >
+                {exportSuccess ? (
+                  <>
+                    <IconCheck />
+                    Saved
+                  </>
+                ) : exporting ? (
+                  <span style={{ animation: 'nucleus-pulse 1.5s infinite' }}>Building...</span>
+                ) : (
+                  <>
+                    <IconDownload />
+                    GLB
+                  </>
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  setExporting(true);
+                  setExportSuccess(false);
+                  triggerExport({
+                    type: 'usdz',
+                    format: 'usdz',
+                    baseName: 'glimPSE',
+                    onComplete: handleComplete
+                  });
+                }}
+                disabled={exporting}
+                style={{
+                  flex: 1, padding: '12px 0',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  fontSize: 12, fontWeight: 600,
+                  fontFamily: 'var(--font-mono)',
+                  textTransform: 'uppercase', letterSpacing: '0.04em',
+                  cursor: exporting ? 'not-allowed' : 'pointer',
+                  color: exportSuccess ? '#fff' : '#fff',
+                  background: exportSuccess ? 'rgba(78, 205, 107, 0.2)' : (exporting ? 'rgba(85, 101, 212, 0.1)' : 'var(--violet-500)'),
+                  border: `1px solid ${exportSuccess ? 'rgba(78, 205, 107, 0.5)' : (exporting ? 'rgba(85, 101, 212, 0.3)' : 'var(--violet-400)')}`,
+                  borderRadius: 'var(--radius-sm)',
+                  transition: 'all 0.3s var(--ease-out-expo)',
+                }}
+              >
+                {exportSuccess ? (
+                  <>
+                    <IconCheck />
+                    Saved
+                  </>
+                ) : exporting ? (
+                  <span style={{ animation: 'nucleus-pulse 1.5s infinite' }}>Building...</span>
+                ) : (
+                  <>
+                    <IconDownload />
+                    USDZ
+                  </>
+                )}
+              </button>
+            </div>
+
+            <AtomicGlass level={1} style={{ marginTop: 12, padding: '12px', borderStyle: 'dashed' }}>
+              <div style={{
+                fontSize: 11, color: 'var(--slate-400)', lineHeight: 1.5,
+              }}>
+                Atoms are exported as instanced spheres grouped by element type.
+                Bonds (if visible) are exported as instanced cylinders.
+                Hidden atom types are excluded.
               </div>
             </AtomicGlass>
           </QuantumSection>

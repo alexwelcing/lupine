@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lupine Materials Science — Defense &amp; Aerospace Applications</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:ital,wght@1,700;1,900&amp;family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#00504c",
+                        "surface-tint": "#bcc3ff",
+                        "on-surface": "#e3e1ec",
+                        "on-primary-fixed-variant": "#2839a9",
+                        "primary": "#bcc3ff",
+                        "tertiary-fixed": "#ffdf9f",
+                        "secondary": "#5dd9d0",
+                        "surface-container-high": "#292931",
+                        "primary-fixed": "#dfe0ff",
+                        "surface-variant": "#34343c",
+                        "on-tertiary-container": "#fff3e1",
+                        "on-secondary-fixed": "#00201e",
+                        "tertiary": "#eec058",
+                        "error": "#ffb4ab",
+                        "inverse-surface": "#e3e1ec",
+                        "outline-variant": "#454653",
+                        "on-primary": "#051c93",
+                        "on-error": "#690005",
+                        "surface-dim": "#12131a",
+                        "on-tertiary-fixed-variant": "#5b4300",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#2f3038",
+                        "inverse-primary": "#4353c2",
+                        "secondary-fixed": "#7cf6ec",
+                        "on-surface-variant": "#c6c5d5",
+                        "on-tertiary": "#402d00",
+                        "secondary-container": "#00a29a",
+                        "surface-bright": "#383941",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#bcc3ff",
+                        "on-background": "#e3e1ec",
+                        "surface-container-lowest": "#0d0e15",
+                        "surface-container-highest": "#34343c",
+                        "outline": "#8f8f9f",
+                        "surface-container-low": "#1a1b23",
+                        "on-secondary-container": "#00302d",
+                        "surface-container": "#1e1f27",
+                        "tertiary-fixed-dim": "#eec058",
+                        "on-primary-fixed": "#000d60",
+                        "on-primary-container": "#f5f3ff",
+                        "on-tertiary-fixed": "#261a00",
+                        "background": "#12131a",
+                        "surface": "#12131a",
+                        "tertiary-container": "#8e6a00",
+                        "on-secondary": "#003734",
+                        "primary-container": "#5565d4",
+                        "secondary-fixed-dim": "#5dd9d0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Playfair Display", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"],
+                        "technical": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0a0b12;
+            color: #e3e1ec;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .technical-label {
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.75rem;
+        }
+        .italic-headline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(52, 52, 60, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .ghost-border {
+            border: 1px solid rgba(227, 225, 236, 0.1);
+        }
+    </style>
+
+<style>
+/* QA Fix: Responsive overrides for Stitch-generated pages */
+@media (max-width: 768px) {
+  .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+  .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+  .text-8xl, .text-7xl, .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; }
+  .text-5xl { font-size: 2rem !important; }
+  .text-4xl { font-size: 1.75rem !important; }
+  .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .p-16, .p-24 { padding: 2rem !important; }
+  .md\:p-24 { padding: 2rem !important; }
+  .gap-8, .gap-12 { gap: 1.5rem !important; }
+  .hidden.md\:flex { display: none !important; }
+  table { font-size: 12px !important; }
+  table td, table th { padding: 8px !important; }
+}
+@media (max-width: 480px) {
+  .text-6xl, .text-5xl { font-size: 1.8rem !important; line-height: 1.2 !important; }
+  .text-4xl { font-size: 1.5rem !important; }
+  .text-3xl { font-size: 1.25rem !important; }
+}
+</style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-950/40 backdrop-blur-xl shadow-[0_40px_80px_rgba(188,195,255,0.06)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-xl font-bold tracking-tighter text-slate-100 italic">
+                Lupine Materials Science
+            </div>
+<div class="hidden md:flex space-x-8">
+<a class="text-indigo-400 border-b border-indigo-500/50 pb-1 hover:text-indigo-300 transition-colors duration-300" href="defense-aerospace.html">Defense</a>
+<a class="text-slate-400 font-medium hover:text-indigo-300 transition-colors duration-300" href="platform-architecture.html">Infrastructure</a>
+<a class="text-slate-400 font-medium hover:text-indigo-300 transition-colors duration-300" href="platform-architecture.html">Compliance</a>
+<a class="text-slate-400 font-medium hover:text-indigo-300 transition-colors duration-300" href="docs.html">Documentation</a>
+</div>
+<button class="bg-primary-container text-on-primary-container px-5 py-2 text-sm font-medium rounded-lg hover:opacity-80 transition-all duration-200 active:scale-95">
+                Request Classified Briefing
+            </button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex items-center pt-24 overflow-hidden">
+<div class="max-w-screen-2xl mx-auto px-8 grid md:grid-cols-2 gap-12 items-center w-full">
+<div class="z-10">
+<div class="technical-label text-secondary mb-6 flex items-center gap-2">
+<span class="w-8 h-[1px] bg-secondary"></span>
+                    DEFENSE
+                </div>
+<h1 class="italic-headline text-6xl md:text-8xl font-bold text-on-surface leading-[1.1] mb-8">
+                    Defense Applications
+                </h1>
+<p class="text-xl text-on-surface-variant max-w-xl leading-relaxed mb-10 font-body">
+                    Secure, on-premise deployments of the Lupine materials simulation stack. Engineered for high-velocity research within classified environments and national defense networks.
+                </p>
+<div class="flex gap-4">
+<button class="bg-primary-container text-on-primary-container px-8 py-4 text-sm font-bold tracking-tight rounded hover:opacity-90 transition-all shadow-lg shadow-primary/10">
+                        ACCESS PROTOCOL
+                    </button>
+<button class="glass-panel ghost-border px-8 py-4 text-sm font-bold tracking-tight text-on-surface rounded hover:bg-surface-variant/50 transition-all">
+                        VIEW WHITEPAPER
+                    </button>
+</div>
+</div>
+<div class="relative">
+<div class="absolute inset-0 bg-indigo-500/10 blur-[120px] rounded-full"></div>
+<img alt="Materials Science Visualization" class="relative z-10 w-full h-auto object-cover rounded-2xl shadow-2xl mix-blend-screen opacity-90" data-alt="Intricate 3D visualization of a metallic crystal lattice structure with glowing energy nodes and geometric patterns in deep blue and silver" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9HqZ17eukv96dDWPqwJaY1J8AJMuscc-r2zKzuGIwW4w5VdWbWI5l-OdZC8Q8oUPetOU4rUpPZjNKroRT-4dUhLf9dJ0gfPyKDTe9zjwU01qZ8wuj_HDLZ8xsoY6v39i6KmkHibnFXA3-PvsBqts2A9c7QDKxHFqcL_aKeaBsOqLq5rBDYxuNuzZ9M7aRCbD-Pwl7RqF6vibwfFQFpbGg-GXmrX0sresfME7UvAmpiHXO8KkC2ZYyc_-g0p1EvsTMFfDeSOT9Jyo"/>
+</div>
+</div>
+</header>
+<!-- Mission-Critical Materials -->
+<section class="py-32 bg-surface-container-low">
+<div class="max-w-screen-2xl mx-auto px-8">
+<div class="mb-20">
+<div class="technical-label text-tertiary mb-2">CATALOG: 01-MATERIALS</div>
+<h2 class="italic-headline text-5xl font-bold text-on-surface">Mission-Critical Materials</h2>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="glass-panel ghost-border p-8 rounded-xl flex flex-col h-full hover:bg-surface-variant/20 transition-all">
+<div class="technical-label text-secondary-fixed-dim mb-4">THERMAL BARRIERS</div>
+<h3 class="text-2xl font-bold mb-4 font-body">Hypersonic Vehicle Skins</h3>
+<p class="text-on-surface-variant text-sm mb-8 leading-relaxed">Advanced thermal barrier coatings designed to withstand sustained Mach 5+ flight environments and plasma interaction.</p>
+<div class="mt-auto space-y-2">
+<div class="technical-label text-[10px] bg-slate-900/50 p-2 rounded flex justify-between">
+<span>SURFACE_MAX</span>
+<span class="text-tertiary">3200°C</span>
+</div>
+<div class="technical-label text-[10px] bg-slate-900/50 p-2 rounded flex justify-between">
+<span>RE-ENTRY_READY</span>
+<span class="text-secondary">YES</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel ghost-border p-8 rounded-xl flex flex-col h-full hover:bg-surface-variant/20 transition-all">
+<div class="technical-label text-secondary-fixed-dim mb-4">BALLISTICS</div>
+<h3 class="text-2xl font-bold mb-4 font-body">Next-Gen Armor</h3>
+<p class="text-on-surface-variant text-sm mb-8 leading-relaxed">Lightweight ceramic composites optimized via computational lattice design for superior fracture toughness and multi-hit capacity.</p>
+<div class="mt-auto space-y-2">
+<div class="technical-label text-[10px] bg-slate-900/50 p-2 rounded flex justify-between">
+<span>DENSITY_MOD</span>
+<span class="text-tertiary">-42%</span>
+</div>
+<div class="technical-label text-[10px] bg-slate-900/50 p-2 rounded flex justify-between">
+<span>HARDNESS_V</span>
+<span class="text-secondary">24.1 GPA</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel ghost-border p-8 rounded-xl flex flex-col h-full hover:bg-surface-variant/20 transition-all">
+<div class="technical-label text-secondary-fixed-dim mb-4">DEEP SPACE</div>
+<h3 class="text-2xl font-bold mb-4 font-body">Rad-Hard Electronics</h3>
+<p class="text-on-surface-variant text-sm mb-8 leading-relaxed">Novel semiconductor substrates and packaging materials for long-endurance assets in high-radiation orbital environments.</p>
+<div class="mt-auto space-y-2">
+<div class="technical-label text-[10px] bg-slate-900/50 p-2 rounded flex justify-between">
+<span>TID_TOLERANCE</span>
+<span class="text-tertiary">1.2 MRAD</span>
+</div>
+<div class="technical-label text-[10px] bg-slate-900/50 p-2 rounded flex justify-between">
+<span>ORBIT_LIFE</span>
+<span class="text-secondary">25+ YRS</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="glass-panel ghost-border p-8 rounded-xl flex flex-col h-full hover:bg-surface-variant/20 transition-all">
+<div class="technical-label text-secondary-fixed-dim mb-4">SIGNATURE</div>
+<h3 class="text-2xl font-bold mb-4 font-body">Stealth Coatings</h3>
+<p class="text-on-surface-variant text-sm mb-8 leading-relaxed">Multi-spectral radar-absorbing materials (RAM) with programmable frequency attenuation properties.</p>
+<div class="mt-auto space-y-2">
+<div class="technical-label text-[10px] bg-slate-900/50 p-2 rounded flex justify-between">
+<span>RCS_REDUCTION</span>
+<span class="text-tertiary">-35 DB</span>
+</div>
+<div class="technical-label text-[10px] bg-slate-900/50 p-2 rounded flex justify-between">
+<span>BANDWIDTH</span>
+<span class="text-secondary">ULTRA-WIDE</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Deployment Options -->
+<section class="py-32 relative">
+<div class="max-w-screen-2xl mx-auto px-8">
+<div class="text-center mb-24">
+<div class="technical-label text-primary mb-2">INFRASTRUCTURE ARCHITECTURE</div>
+<h2 class="italic-headline text-5xl font-bold">Deployment Flexibility</h2>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Cloud -->
+<div class="relative group">
+<div class="p-10 flex flex-col h-full bg-surface-container-low border-t-2 border-primary/20">
+<div class="mb-6"><span class="material-symbols-outlined text-4xl text-primary" data-icon="cloud">cloud</span></div>
+<h4 class="text-2xl font-bold mb-4">Cloud</h4>
+<div class="technical-label text-xs text-primary mb-6">LEVEL: UNCLASSIFIED</div>
+<ul class="space-y-4 text-on-surface-variant text-sm flex-grow">
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>High-velocity iteration labs</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>Global collaborative research</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>Automated scaling to 10k cores</li>
+</ul>
+</div>
+</div>
+<!-- On-Prem -->
+<div class="relative group">
+<div class="p-10 flex flex-col h-full bg-surface-container border-t-2 border-secondary/40 shadow-xl">
+<div class="mb-6"><span class="material-symbols-outlined text-4xl text-secondary" data-icon="dns">dns</span></div>
+<h4 class="text-2xl font-bold mb-4">On-Premise</h4>
+<div class="technical-label text-xs text-secondary mb-6">LEVEL: CUI / ITAR</div>
+<ul class="space-y-4 text-on-surface-variant text-sm flex-grow">
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>Sovereign data ownership</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>Hardware-level encryption</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>Direct ITAR compliance control</li>
+</ul>
+</div>
+</div>
+<!-- Air-Gapped -->
+<div class="relative group">
+<div class="p-10 flex flex-col h-full bg-surface-container-high border-t-2 border-error/20">
+<div class="mb-6"><span class="material-symbols-outlined text-4xl text-error" data-icon="security">security</span></div>
+<h4 class="text-2xl font-bold mb-4">Air-Gapped</h4>
+<div class="technical-label text-xs text-error mb-6">LEVEL: CLASSIFIED</div>
+<ul class="space-y-4 text-on-surface-variant text-sm flex-grow">
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>Physically isolated networks</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>TS/SCI environment compatible</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>Zero external telemetric leakage</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Performance Dashboard -->
+<section class="py-32 bg-surface-container-lowest">
+<div class="max-w-screen-2xl mx-auto px-8">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div>
+<div class="technical-label text-secondary mb-2">SYSTEM TELEMETRY</div>
+<h2 class="italic-headline text-5xl font-bold">Performance at Scale</h2>
+</div>
+<div class="technical-label text-on-surface-variant text-xs">
+                    TIMESTAMP: 2024.11.14_14:22:01_UTC
+                </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-1px bg-outline-variant/10 rounded-xl overflow-hidden ghost-border">
+<div class="p-12 bg-surface-dim flex flex-col items-center text-center">
+<div class="technical-label text-primary-fixed mb-4">PARALLELIZATION</div>
+<div class="text-5xl font-technical text-on-surface font-bold">10,000+</div>
+<div class="text-sm text-on-surface-variant mt-2">Core Scaling Capacity</div>
+</div>
+<div class="p-12 bg-surface-dim flex flex-col items-center text-center">
+<div class="technical-label text-secondary-fixed-dim mb-4">THROUGHPUT</div>
+<div class="text-5xl font-technical text-on-surface font-bold">PETABYTE</div>
+<div class="text-sm text-on-surface-variant mt-2">Data Management Pipeline</div>
+</div>
+<div class="p-12 bg-surface-dim flex flex-col items-center text-center">
+<div class="technical-label text-tertiary-fixed-dim mb-4">RESOLUTION</div>
+<div class="text-5xl font-technical text-on-surface font-bold">&lt;1μs</div>
+<div class="text-sm text-on-surface-variant mt-2">Timestep Integration</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Compliance Section -->
+<section class="py-24 border-y border-outline-variant/10">
+<div class="max-w-screen-2xl mx-auto px-8 flex flex-wrap justify-center gap-12 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-700">
+<div class="flex flex-col items-center gap-2">
+<div class="h-12 w-24 bg-surface-container-highest flex items-center justify-center font-technical font-bold text-xs rounded">ITAR</div>
+<div class="technical-label text-[10px]">COMPLIANT</div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="h-12 w-24 bg-surface-container-highest flex items-center justify-center font-technical font-bold text-xs rounded">FedRAMP</div>
+<div class="technical-label text-[10px]">HIGH-AUTHORITY</div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="h-12 w-24 bg-surface-container-highest flex items-center justify-center font-technical font-bold text-xs rounded">CMMC 2.0</div>
+<div class="technical-label text-[10px]">LEVEL 3</div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="h-12 w-24 bg-surface-container-highest flex items-center justify-center font-technical font-bold text-xs rounded">SOC 2</div>
+<div class="technical-label text-[10px]">TYPE II</div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="h-12 w-24 bg-surface-container-highest flex items-center justify-center font-technical font-bold text-xs rounded">NIST</div>
+<div class="technical-label text-[10px]">800-171</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-40 relative">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent"></div>
+</div>
+<div class="max-w-4xl mx-auto px-8 relative z-10 text-center">
+<div class="technical-label text-secondary mb-6">SECURE CHANNEL INITIATION</div>
+<h2 class="italic-headline text-5xl md:text-7xl font-bold mb-12">Establish Sovereign Materials Advantage</h2>
+<button class="glass-panel ghost-border px-12 py-6 text-lg font-bold tracking-widest text-primary-fixed uppercase transition-all hover:bg-primary-container hover:text-on-primary-container shadow-2xl">
+                Request Classified Briefing
+            </button>
+<p class="mt-8 text-on-surface-variant font-technical text-xs">COMMUNICATION ENCRYPTED VIA AES-256-GCM</p>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-slate-950 w-full py-12 px-8 border-t border-outline-variant/10">
+<div class="flex flex-col md:flex-row justify-between items-center w-full max-w-screen-2xl mx-auto space-y-4 md:space-y-0">
+<div class="flex flex-col gap-2">
+<div class="text-lg font-bold text-slate-200">Lupine Materials Science</div>
+<div class="text-slate-500 text-xs font-technical uppercase">© 2024 Lupine Materials Science. Protocol v4.2.0-Sovereign.</div>
+</div>
+<div class="flex gap-8">
+<a class="text-slate-500 text-xs font-technical uppercase hover:text-slate-200 underline decoration-indigo-500/30 transition-all" href="platform-architecture.html">Security</a>
+<a class="text-slate-500 text-xs font-technical uppercase hover:text-slate-200 underline decoration-indigo-500/30 transition-all" href="defense-aerospace.html">ITAR Compliance</a>
+<a class="text-slate-500 text-xs font-technical uppercase hover:text-slate-200 underline decoration-indigo-500/30 transition-all" href="index.html">Legal</a>
+<a class="text-slate-500 text-xs font-technical uppercase hover:text-slate-200 underline decoration-indigo-500/30 transition-all" href="index.html">Terms</a>
+</div>
+</div>
+</footer>
+</body></html>

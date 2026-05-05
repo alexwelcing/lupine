@@ -1,0 +1,157 @@
+---
+// src/components/LayoutPrimitives/WorkflowTimeline.astro
+export interface Props {
+  title: string;
+  statusText: string;
+  nodes: Array<{
+    title: string;
+    progress?: number;
+    icon?: string;
+  }>;
+  logHeader: string;
+  logs: Array<{ text: string; actionRequired?: boolean }>;
+}
+
+const { title, statusText, nodes, logHeader, logs } = Astro.props;
+---
+
+<div class="timeline-container">
+  <h2>{title}</h2>
+  <div class="workflow-active">
+    <span class="status-dot"></span> {statusText}
+  </div>
+  
+  <div class="timeline-nodes">
+    {nodes.map((node, index) => (
+      <>
+        <div class="node">
+          <span class="node-title">{node.title}</span>
+          {node.progress !== undefined ? (
+            <div class="progress-bar"><div class="progress-fill" style={`width: ${node.progress}%`}></div></div>
+          ) : (
+            <span class="node-icon">{node.icon || '⚛'}</span>
+          )}
+        </div>
+        {index < nodes.length - 1 && <div class="connector topographic-line"></div>}
+      </>
+    ))}
+  </div>
+
+  <div class="logbook-terminal">
+    <div class="log-header">{logHeader}</div>
+    <div class="log-content">
+      {logs.map(log => (
+        <div style={log.actionRequired ? "color: var(--primary-fixed-dim); margin-top: 8px;" : ""}>
+          {log.text}
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .timeline-container {
+    background: var(--surface-container-low);
+    padding: var(--space-2xl);
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+    margin: var(--space-xl) 0;
+  }
+
+  .timeline-container h2 {
+    font-family: 'Newsreader', serif;
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+    font-weight: 400;
+  }
+
+  .workflow-active {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.85rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    text-transform: uppercase;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(71, 91, 156, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(71, 91, 156, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(71, 91, 156, 0); }
+  }
+
+  .timeline-nodes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .node {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid rgba(0,0,0,0.03);
+    box-shadow: 0 4px 12px rgba(44, 42, 40, 0.02);
+  }
+
+  .node-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  .node-icon {
+    font-family: 'Space Grotesk', monospace;
+    color: var(--on-surface-variant);
+    font-size: 1.2rem;
+  }
+
+  .progress-bar {
+    width: 150px;
+    height: 4px;
+    background: var(--surface-container-high);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--primary);
+  }
+
+  .connector {
+    height: 30px;
+    width: 2px;
+    background: repeating-linear-gradient(to bottom, var(--outline-variant) 0, var(--outline-variant) 4px, transparent 4px, transparent 8px);
+    margin-left: 20px;
+  }
+
+  .logbook-terminal {
+    background: var(--on-surface);
+    color: var(--surface);
+    padding: var(--space-lg);
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .log-header {
+    color: var(--primary-fixed-dim);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+</style>

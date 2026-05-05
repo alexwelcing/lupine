@@ -109,7 +109,8 @@ export function AtomPicker({
 
   // Mouse move handler
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!enabled) return;
+    // If the user is dragging the mouse (orbiting the camera), skip expensive raymarching!
+    if (!enabled || e.buttons > 0) return;
     
     const picked = pickAtom(e.clientX, e.clientY);
     

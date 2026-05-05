@@ -1,0 +1,78 @@
+{
+  "_meta": {
+    "purpose": "DFT-PBE reference values for elements / properties not present in nist_benchmark.csv. Merged into the references.json output by extract_references.py.",
+    "primary_source": "de Jong, Chen, Notestine, Persson, Ceder, Jain, Asta, Gamst (2015). 'Charting the complete elastic properties of inorganic crystalline compounds.' Scientific Data 2, 150009.",
+    "primary_doi": "10.1038/sdata.2015.9",
+    "secondary_source": "Materials Project elastic dataset (Jain et al. 2013, APL Materials 1, 011002).",
+    "secondary_doi": "10.1063/1.4812323",
+    "functional": "GGA-PBE",
+    "units": "elastic constants in GPa, lattice constants in Angstrom",
+    "notes": "Values rounded to 1 decimal (Cij) or 3 decimals (a0). PBE typically underestimates elastic constants by 5-10% vs experimental and underestimates lattice constants by 1-3% (overestimates for Pb due to spin-orbit). The classical-potential rows in nist_benchmark.csv use the same DFT-PBE references where overlap exists, so MLIP records produced via this dataset are directly comparable with the existing 559 classical potentials."
+  },
+  "Pt": {
+    "structure": "fcc",
+    "mp_id": "mp-126",
+    "C11": 302.0,
+    "C12": 244.0,
+    "C44": 64.0,
+    "a0":  3.969
+  },
+  "Pd": {
+    "structure": "fcc",
+    "mp_id": "mp-2",
+    "C11": 224.0,
+    "C12": 176.0,
+    "C44": 72.0,
+    "a0":  3.951
+  },
+  "Pb": {
+    "structure": "fcc",
+    "mp_id": "mp-20483",
+    "C11": 43.0,
+    "C12": 37.0,
+    "C44": 11.0,
+    "a0":  5.017
+  },
+  "Nb": {
+    "structure": "bcc",
+    "mp_id": "mp-75",
+    "C11": 247.0,
+    "C12": 132.0,
+    "C44": 29.0,
+    "a0":  3.319
+  },
+  "Ta": {
+    "structure": "bcc",
+    "mp_id": "mp-50",
+    "C11": 265.0,
+    "C12": 158.0,
+    "C44": 82.0,
+    "a0":  3.319
+  },
+  "Cr": {
+    "structure": "bcc",
+    "mp_id": "mp-90",
+    "a0": 2.879
+  },
+  "Fe": {
+    "structure": "bcc",
+    "mp_id": "mp-13",
+    "_a0_caveat": "PBE underestimates ferromagnetic alpha-Fe lattice; experimental is 2.866 A",
+    "a0": 2.832
+  },
+  "Mo": {
+    "structure": "bcc",
+    "mp_id": "mp-129",
+    "a0": 3.169
+  },
+  "V": {
+    "structure": "bcc",
+    "mp_id": "mp-146",
+    "a0": 3.024
+  },
+  "W": {
+    "structure": "bcc",
+    "mp_id": "mp-91",
+    "a0": 3.187
+  }
+}

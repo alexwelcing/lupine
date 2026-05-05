@@ -29,6 +29,7 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
     // General
     setActivePanel,
     applyVisualProfile,
+    activeProfile,
     // Data Rep
     colorMode, setColorMode,
     colorProperty, setColorProperty,
@@ -154,11 +155,12 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
                   onClick={() => applyVisualProfile(p.id as any)}
                   title={p.desc}
                   style={{
-                    padding: '10px 12px', background: '#121418', border: '1px solid #334155',
+                    padding: '10px 12px', background: activeProfile === p.id ? '#0c1a2a' : '#121418',
+                    border: `1px solid ${activeProfile === p.id ? '#1edce0' : '#334155'}`,
                     borderRadius: 0, cursor: 'pointer', textAlign: 'left', transition: 'border-color 150ms',
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.borderColor = '#1edce0'}
-                  onMouseLeave={(e) => e.currentTarget.style.borderColor = '#334155'}
+                  onMouseLeave={(e) => { if (activeProfile !== p.id) e.currentTarget.style.borderColor = '#334155'; }}
                 >
                   <div style={{
                     fontSize: 12, fontWeight: 600, fontFamily: 'Space Grotesk, sans-serif',
