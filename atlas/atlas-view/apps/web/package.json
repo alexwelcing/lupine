@@ -14,8 +14,8 @@
     "@atlas/renderer": "workspace:*",
     "@atlas/scene": "workspace:*",
     "@atlas/ui": "workspace:*",
-    "@react-three/drei": "^9.115.0",
-    "@react-three/fiber": "^8.17.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
     "@react-three/postprocessing": "^2.16.0",
     "gifenc": "^1.0.3",
     "mp4-muxer": "^5.2.2",
@@ -23,7 +23,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "three": "^0.184.0",
-    "zustand": "^5.0.0"
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

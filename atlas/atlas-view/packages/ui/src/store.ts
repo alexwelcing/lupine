@@ -11,9 +11,9 @@ import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyl
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 
 export interface ExportRequest {
-  type: 'image' | 'video' | 'complete' | null;
+  type: 'image' | 'video' | 'glb' | 'usdz' | 'complete' | null;
   resolution?: { width: number; height: number; flexAspect?: boolean };
-  format?: 'png' | 'jpeg' | 'webp' | 'mp4' | 'webm' | 'gif';
+  format?: 'png' | 'jpeg' | 'webp' | 'mp4' | 'webm' | 'gif' | 'glb' | 'usdz';
   flythrough?: FlythroughSequence;
   transparent?: boolean;
   durationSeconds?: number;
@@ -95,6 +95,7 @@ export interface AppState {
 
   // ─── UI ───
   activePanel: 'visuals' | 'export' | 'analysis' | 'measurement' | 'flythrough' | 'telemetry' | null;
+  activeProfile: 'publication' | 'neon' | 'cinematic' | 'raw' | null;
   showStats: boolean;
   showThermo: boolean;
 
@@ -240,6 +241,7 @@ const DEFAULTS = {
   showScaleBar: true,
   colorblindMode: false,
   activePanel: null,
+  activeProfile: null,
   showStats: false,
   showThermo: true,
   selectedAtoms: [] as number[],
@@ -262,14 +264,24 @@ export const useStore = create<AppState>()(
   subscribeWithSelector((set, get) => ({
     ...DEFAULTS,
 
-    setFile: (file) => set({
-      file,
-      frame: 0,
-      playing: false,
-      error: null,
-      loading: false,
-      loadProgress: 1,
-    }),
+    setFile: (file) => {
+      const atomCount = file?.trajectory?.frames?.[0]?.positions?.length ? file.trajectory.frames[0].positions.length / 3 : 0;
+      const isMassive = atomCount > 50000;
+      
+      set({
+        file,
+        frame: 0,
+        playing: false,
+        error: null,
+        loading: false,
+        loadProgress: 1,
+        ...(isMassive && {
+          ssao: false,
+          bloom: false,
+          dof: false,
+        }),
+      });
+    },
 
     setLoading: (loading, progress) => set({
       loading,
@@ -310,7 +322,7 @@ export const useStore = create<AppState>()(
 
     setColorMode: (colorMode) => set({ colorMode }),
     setColorProperty: (colorProperty) => set({ colorProperty }),
-    setColormap: (colormap) => set({ colormap, backgroundPreset: `palette:${colormap}` }),
+    setColormap: (colormap) => set({ colormap, activeProfile: null }),
     setAnomalyTracking: (anomalyTracking) => set({ anomalyTracking }),
 
     toggleSSAO: () => set(s => ({ ssao: !s.ssao })),
@@ -485,6 +497,7 @@ export const useStore = create<AppState>()(
       switch (profileId) {
         case 'publication':
           return {
+            activeProfile: 'publication',
             backgroundPreset: 'white', backgroundVideo: null,
             toneMapping: 'aces', ssao: true, ssaoIntensity: 0.8,
             bloom: false, dof: false, materialPreset: 'matte', atomTexture: 'none',
@@ -493,6 +506,7 @@ export const useStore = create<AppState>()(
           };
         case 'neon':
           return {
+            activeProfile: 'neon',
             backgroundPreset: 'void', backgroundVideo: null,
             toneMapping: 'aces', ssao: false,
             bloom: true, bloomIntensity: 0.6, dof: false,
@@ -502,6 +516,7 @@ export const useStore = create<AppState>()(
           };
         case 'cinematic':
           return {
+            activeProfile: 'cinematic',
             backgroundPreset: 'deep', backgroundVideo: null,
             toneMapping: 'aces', ssao: true, ssaoIntensity: 0.7,
             bloom: true, bloomIntensity: 0.3, dof: true, dofFocus: 50, autoDepthOfField: true,
@@ -511,6 +526,7 @@ export const useStore = create<AppState>()(
           };
         case 'raw':
           return {
+            activeProfile: 'raw',
             backgroundPreset: 'dark', backgroundVideo: null,
             toneMapping: 'none', ssao: false,
             bloom: false, dof: false, materialPreset: 'default', atomTexture: 'none',

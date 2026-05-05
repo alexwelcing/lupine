@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Text, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
@@ -100,6 +100,7 @@ export function XRControlPanel() {
   const targetPos = useMemo(() => new THREE.Vector3(), []);
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const group = useRef<THREE.Group>(null);
+  const timer = useMemo(() => new THREE.Clock(), []);
 
   useFrame((state, delta) => {
     if (rootRef.current) {
@@ -119,7 +120,7 @@ export function XRControlPanel() {
     }
 
     if (group.current) {
-      group.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.015;
+      group.current.position.y = Math.sin(timer.getElapsedTime() * 0.5) * 0.015;
     }
   });
 

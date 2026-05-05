@@ -15,7 +15,7 @@ import { useStore } from '../store';
 import { getElementSpec } from '@atlas/core';
 
 // ─── Types ────────────────────────────────────────────────────────────
-type ExportMode = 'figure' | 'mp4' | 'gif';
+type ExportMode = 'figure' | 'mp4' | 'gif' | 'glb' | 'usdz';
 
 interface JournalPreset {
   id: string;
@@ -296,6 +296,8 @@ export function FigureExportPanel() {
           { id: 'figure' as const, label: 'FIGURE', icon: '📷' },
           { id: 'mp4' as const, label: 'MP4', icon: '🎬' },
           { id: 'gif' as const, label: 'GIF', icon: '✨' },
+          { id: 'glb' as const, label: 'GLB', icon: '🧊' },
+          { id: 'usdz' as const, label: 'USDZ', icon: '📱' },
         ]).map(tab => (
           <button
             key={tab.id}
@@ -565,6 +567,93 @@ export function FigureExportPanel() {
                   progress={progress}
                 />
               )}
+            </>
+          )}
+
+          {/* ═══ GLB MODE ═══ */}
+          {mode === 'glb' && (
+            <>
+              <Section title="3D MODEL EXPORT">
+                <div style={{
+                  fontSize: 11, color: '#94a3b8', lineHeight: 1.6,
+                  fontFamily: 'Space Grotesk, sans-serif',
+                }}>
+                  Export the current frame as a <strong style={{ color: '#1edce0' }}>GLB</strong> binary
+                  glTF file. Atoms are converted to real sphere meshes grouped by element type.
+                  Bonds (if visible) are exported as cylinder geometry.
+                </div>
+              </Section>
+
+              <InfoBlock>
+                <InfoRow label="Format" value="GLB (binary glTF 2.0)" />
+                <InfoRow label="Atoms" value={`${systemInfo?.natoms?.toLocaleString() ?? '—'} particles`} />
+                <InfoRow label="Geometry" value="Instanced spheres + cylinders" />
+                <InfoRow label="Materials" value="PBR Standard (roughness, metalness)" />
+              </InfoBlock>
+
+              <div style={{
+                background: '#0d1117', border: '1px solid #1f2937',
+                padding: '10px',
+                fontSize: 10, color: '#475569',
+                fontFamily: 'var(--font-mono)', lineHeight: 1.5,
+              }}>
+                Compatible with Blender, Unity, Unreal, Cinema 4D,
+                Three.js, and all major 3D pipelines.
+                Hidden atom types are excluded from the export.
+              </div>
+
+              <ExportButton
+                onClick={() => {
+                  setExporting(true);
+                  setExportSuccess(false);
+                  triggerExport({
+                    type: 'glb',
+                    format: 'glb',
+                    baseName: `glimPSE-${systemInfo?.formula ?? 'export'}`,
+                    onComplete: handleComplete,
+                  });
+                }}
+                exporting={exporting}
+                success={exportSuccess}
+                label="Export GLB Model"
+              />
+            </>
+          )}
+
+          {/* ═══ USDZ MODE ═══ */}
+          {mode === 'usdz' && (
+            <>
+              <Section title="AR EXPORT">
+                <div style={{
+                  fontSize: 11, color: '#94a3b8', lineHeight: 1.6,
+                  fontFamily: 'Space Grotesk, sans-serif',
+                }}>
+                  Export the current frame as a <strong style={{ color: '#1edce0' }}>USDZ</strong> file.
+                  Perfect for AR quick look on iOS devices and Snapchat lenses.
+                </div>
+              </Section>
+
+              <InfoBlock>
+                <InfoRow label="Format" value="USDZ (Universal Scene Description)" />
+                <InfoRow label="Atoms" value={`${systemInfo?.natoms?.toLocaleString() ?? '—'} particles`} />
+                <InfoRow label="Compatibility" value="iOS AR, Snapchat Lens Studio" />
+              </InfoBlock>
+
+              <ExportButton
+                onClick={() => {
+                  setExporting(true);
+                  setExportSuccess(false);
+                  triggerExport({
+                    type: 'usdz',
+                    format: 'usdz',
+                    baseName: `glimPSE-${systemInfo?.formula ?? 'export'}`,
+                    onComplete: handleComplete,
+                  });
+                }}
+                exporting={exporting}
+                success={exportSuccess}
+                label="Export USDZ Model"
+              />
             </>
           )}
 
