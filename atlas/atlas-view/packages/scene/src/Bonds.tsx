@@ -54,8 +54,9 @@ export function Bonds({
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
   // Shared tube geometry: cylinder along Y axis, unit height
+  // Reduced to 5 radial segments for performance on massive arrays
   const tubeGeo = useMemo(
-    () => new THREE.CylinderGeometry(1, 1, 1, 8, 1),
+    () => new THREE.CylinderGeometry(1, 1, 1, 5, 1),
     []
   );
 
@@ -87,6 +88,79 @@ export function Bonds({
       }
       
       material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, 0.08);
+    }
+
+    // 🔭 VIEW is the secret math! Frustum Culling for Bonds
+    const mesh = meshRef.current;
+    if (mesh && halfCount > 0) {
+      projScreenMatrix.multiplyMatrices(state.camera.projectionMatrix, state.camera.matrixWorldInverse);
+      frustum.setFromProjectionMatrix(projScreenMatrix);
+
+      const dstMat = mesh.instanceMatrix.array as Float32Array;
+      const dstCol = mesh.instanceColor ? (mesh.instanceColor.array as Float32Array) : null;
+      const dstRadiusBT = tubeGeo.attributes.radiusBT.array as Float32Array;
+
+      let visibleCount = 0;
+      const totalBonds = Math.min(halfCount, capacity);
+
+      for (let i = 0; i < totalBonds; i++) {
+        const midIdx = i * 3;
+        _v.set(
+          cpuMidPointArray[midIdx + 0],
+          cpuMidPointArray[midIdx + 1],
+          cpuMidPointArray[midIdx + 2]
+        );
+
+        if (frustum.containsPoint(_v)) {
+          const srcMIdx = i * 16;
+          const dstMIdx = visibleCount * 16;
+          
+          dstMat[dstMIdx + 0]  = cpuMatrixArray[srcMIdx + 0];
+          dstMat[dstMIdx + 1]  = cpuMatrixArray[srcMIdx + 1];
+          dstMat[dstMIdx + 2]  = cpuMatrixArray[srcMIdx + 2];
+          dstMat[dstMIdx + 3]  = cpuMatrixArray[srcMIdx + 3];
+          dstMat[dstMIdx + 4]  = cpuMatrixArray[srcMIdx + 4];
+          dstMat[dstMIdx + 5]  = cpuMatrixArray[srcMIdx + 5];
+          dstMat[dstMIdx + 6]  = cpuMatrixArray[srcMIdx + 6];
+          dstMat[dstMIdx + 7]  = cpuMatrixArray[srcMIdx + 7];
+          dstMat[dstMIdx + 8]  = cpuMatrixArray[srcMIdx + 8];
+          dstMat[dstMIdx + 9]  = cpuMatrixArray[srcMIdx + 9];
+          dstMat[dstMIdx + 10] = cpuMatrixArray[srcMIdx + 10];
+          dstMat[dstMIdx + 11] = cpuMatrixArray[srcMIdx + 11];
+          dstMat[dstMIdx + 12] = cpuMatrixArray[srcMIdx + 12];
+          dstMat[dstMIdx + 13] = cpuMatrixArray[srcMIdx + 13];
+          dstMat[dstMIdx + 14] = cpuMatrixArray[srcMIdx + 14];
+          dstMat[dstMIdx + 15] = cpuMatrixArray[srcMIdx + 15];
+
+          if (dstCol) {
+            const srcCIdx = i * 3;
+            const dstCIdx = visibleCount * 3;
+            dstCol[dstCIdx + 0] = cpuColorArray[srcCIdx + 0];
+            dstCol[dstCIdx + 1] = cpuColorArray[srcCIdx + 1];
+            dstCol[dstCIdx + 2] = cpuColorArray[srcCIdx + 2];
+          }
+
+          const srcRIdx = i * 2;
+          const dstRIdx = visibleCount * 2;
+          dstRadiusBT[dstRIdx + 0] = cpuRadiusBTArray[srcRIdx + 0];
+          dstRadiusBT[dstRIdx + 1] = cpuRadiusBTArray[srcRIdx + 1];
+
+          visibleCount++;
+        }
+      }
+
+      mesh.count = visibleCount;
+      
+      mesh.instanceMatrix.needsUpdate = true;
+      (mesh.instanceMatrix as any).updateRange.count = visibleCount * 16;
+      
+      if (mesh.instanceColor) {
+        mesh.instanceColor.needsUpdate = true;
+        (mesh.instanceColor as any).updateRange.count = visibleCount * 3;
+      }
+      
+      tubeGeo.attributes.radiusBT.needsUpdate = true;
+      (tubeGeo.attributes.radiusBT as any).updateRange = { offset: 0, count: visibleCount * 2 };
     }
   });
 
@@ -231,10 +305,21 @@ export function Bonds({
   }
   const capacity = capacityRef.current;
 
+  // CPU-side state arrays for manual frustum culling
+  const cpuMatrixArray = useMemo(() => new Float32Array(capacity * 16), [capacity]);
+  const cpuColorArray = useMemo(() => new Float32Array(capacity * 3), [capacity]);
+  const cpuRadiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
+  const cpuMidPointArray = useMemo(() => new Float32Array(capacity * 3), [capacity]); // Used for fast point-in-frustum testing
+  
+  // Working arrays for rendering/updating GPU buffers
   const radiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
   useEffect(() => {
     tubeGeo.setAttribute('radiusBT', new THREE.InstancedBufferAttribute(radiusBTArray, 2));
   }, [tubeGeo, radiusBTArray]);
+
+  const projScreenMatrix = useMemo(() => new THREE.Matrix4(), []);
+  const frustum = useMemo(() => new THREE.Frustum(), []);
+  const _v = useMemo(() => new THREE.Vector3(), []);
 
   const isPropMode = colorMode === 'property' && colorProperty;
   const propData = isPropMode && frame.properties ? frame.properties.get(colorProperty) : null;
@@ -253,19 +338,26 @@ export function Bonds({
   const pMin = propRange?.[0] ?? autoMin;
   const pMax = propRange?.[1] ?? autoMax;
 
-  // Upload instance matrices + colors. Extracted into a callback so we can
-  // invoke it both on dep change AND on mesh remount (R3F remounts the mesh
-  // when entering WebXR, and rAF is paused during the session-start transition
-  // so a normal useEffect won't fire on the new mesh until too late).
-  const uploadBonds = useCallback(() => {
-    const mesh = meshRef.current;
-    if (!mesh || halfCount === 0) return;
-
-    if (!mesh.instanceMatrix) return;
+  // Compute geometry and colors into CPU buffers
+  useEffect(() => {
+    if (halfCount === 0) return;
 
     // Bounds check to prevent drawing beyond pre-allocated memory
     const drawCount = Math.min(halfCount, capacity);
-    mesh.count = drawCount;
+    
+    // Auto-compute property range
+    const [autoMin, autoMax] = (() => {
+      if (!propData) return [0, 1];
+      let mn = Infinity, mx = -Infinity;
+      for (let i = 0; i < propData.length; i++) {
+        if (propData[i] < mn) mn = propData[i];
+        if (propData[i] > mx) mx = propData[i];
+      }
+      return [mn === Infinity ? 0 : mn, mx === -Infinity ? 1 : mx];
+    })();
+
+    const pMin = propRange?.[0] ?? autoMin;
+    const pMax = propRange?.[1] ?? autoMax;
 
     const posA = new THREE.Vector3();
     const posB = new THREE.Vector3();
@@ -290,7 +382,6 @@ export function Bonds({
       let by = frame.positions[b * 3 + 1];
       let bz = frame.positions[b * 3 + 2];
 
-      const t = interpolationFactor ?? 0;
       const canInterpolate = nextFrame && t > 0 && nextFrame.positions && nextFrame.positions.length >= frame.positions.length;
       
       if (canInterpolate) {
@@ -375,11 +466,17 @@ export function Bonds({
       const rMid = (rA + rB) / 2.0;
 
       // Instance i*2 (Bottom half of the bond: A -> Mid)
-      radiusBTArray[(i * 2) * 2] = rA;
-      radiusBTArray[(i * 2) * 2 + 1] = rMid;
+      cpuRadiusBTArray[(i * 2) * 2] = rA;
+      cpuRadiusBTArray[(i * 2) * 2 + 1] = rMid;
 
       dir.subVectors(mid, posA).normalize();
       midPoint.lerpVectors(posA, mid, 0.5);
+      
+      // Store midpoint for frustum culling
+      cpuMidPointArray[(i * 2) * 3 + 0] = midPoint.x;
+      cpuMidPointArray[(i * 2) * 3 + 1] = midPoint.y;
+      cpuMidPointArray[(i * 2) * 3 + 2] = midPoint.z;
+
       dummy.position.copy(midPoint);
       dummy.scale.set(1, halfLen, 1);
       if (Math.abs(dir.dot(UP)) < 0.9999) {
@@ -389,7 +486,7 @@ export function Bonds({
         if (dir.y < 0) dummy.quaternion.setFromAxisAngle(axisVec, Math.PI);
       }
       dummy.updateMatrix();
-      mesh.setMatrixAt(i * 2, dummy.matrix);
+      dummy.matrix.toArray(cpuMatrixArray, (i * 2) * 16);
       
       let tcA: [number, number, number];
       if (botanicalMode && frame.types) {
@@ -401,15 +498,22 @@ export function Bonds({
       } else {
         tcA = frame.types ? getTypeColorFromColormap(frame.types[a], colormap) : DEFAULT_TYPE_COLOR;
       }
-      color.setRGB(tcA[0], tcA[1], tcA[2]);
-      mesh.setColorAt(i * 2, color);
+      cpuColorArray[(i * 2) * 3 + 0] = tcA[0];
+      cpuColorArray[(i * 2) * 3 + 1] = tcA[1];
+      cpuColorArray[(i * 2) * 3 + 2] = tcA[2];
 
       // Instance i*2+1 (Top half of the bond: Mid -> B)
-      radiusBTArray[(i * 2 + 1) * 2] = rMid;
-      radiusBTArray[(i * 2 + 1) * 2 + 1] = rB;
+      cpuRadiusBTArray[(i * 2 + 1) * 2] = rMid;
+      cpuRadiusBTArray[(i * 2 + 1) * 2 + 1] = rB;
 
       dir.subVectors(posB, mid).normalize();
       midPoint.lerpVectors(mid, posB, 0.5);
+      
+      // Store midpoint for frustum culling
+      cpuMidPointArray[(i * 2 + 1) * 3 + 0] = midPoint.x;
+      cpuMidPointArray[(i * 2 + 1) * 3 + 1] = midPoint.y;
+      cpuMidPointArray[(i * 2 + 1) * 3 + 2] = midPoint.z;
+
       dummy.position.copy(midPoint);
       dummy.scale.set(1, halfLen, 1);
       if (Math.abs(dir.dot(UP)) < 0.9999) {
@@ -419,7 +523,7 @@ export function Bonds({
         if (dir.y < 0) dummy.quaternion.setFromAxisAngle(axisVec, Math.PI);
       }
       dummy.updateMatrix();
-      mesh.setMatrixAt(i * 2 + 1, dummy.matrix);
+      dummy.matrix.toArray(cpuMatrixArray, (i * 2 + 1) * 16);
       
       let tcB: [number, number, number];
       if (botanicalMode && frame.types) {
@@ -431,33 +535,15 @@ export function Bonds({
       } else {
         tcB = frame.types ? getTypeColorFromColormap(frame.types[b], colormap) : DEFAULT_TYPE_COLOR;
       }
-      color.setRGB(tcB[0], tcB[1], tcB[2]);
-      mesh.setColorAt(i * 2 + 1, color);
+      cpuColorArray[(i * 2 + 1) * 3 + 0] = tcB[0];
+      cpuColorArray[(i * 2 + 1) * 3 + 1] = tcB[1];
+      cpuColorArray[(i * 2 + 1) * 3 + 2] = tcB[2];
     }
-
-    tubeGeo.attributes.radiusBT.needsUpdate = true;
-
-    mesh.instanceMatrix.needsUpdate = true;
-    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-  }, [bondPairs, halfCount, capacity, tubeGeo, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, pMin, pMax, colorProperty, radiusBTArray]);
-
-  useEffect(() => {
-    uploadBonds();
-  }, [uploadBonds]);
-
-  // Handle R3F remounts on WebXR session entry. rAF is paused during the
-  // transition, so we schedule the upload via setTimeout (same pattern as
-  // Atoms / AtomsOptimized — see commit 17a0b66).
-  const onMeshRef = useCallback((mesh: THREE.InstancedMesh | null) => {
-    if (mesh) {
-      (meshRef as any).current = mesh;
-      setTimeout(() => uploadBonds(), 0);
-    }
-  }, [uploadBonds]);
+  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, propRange, colorProperty, cpuMatrixArray, cpuColorArray, cpuRadiusBTArray, cpuMidPointArray, capacity]);
 
   return (
     <instancedMesh
-      ref={onMeshRef}
+      ref={meshRef}
       args={[tubeGeo, material, capacity]}
       frustumCulled={false}
       visible={halfCount > 0}
