@@ -14,8 +14,9 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
+import { useGlobalTimer } from './useTimer';
 
-import { TYPE_COLORS, TYPE_RADII, COLORMAPS, BOTANICAL_COLORS, BOTANICAL_RADII } from './constants';
+import { TYPE_COLORS, TYPE_RADII, COLORMAPS, BOTANICAL_COLORS, BOTANICAL_RADII, DEFAULT_TYPE_COLOR } from './constants';
 
 // ─── Types ───────────────────────────────────────────────────────────
 interface AtomsOptimizedProps {
@@ -64,8 +65,10 @@ export function AtomsOptimized({
   const meshRefHigh = useRef<THREE.InstancedMesh>(null!);
   const meshRefMed = useRef<THREE.InstancedMesh>(null!);
   const meshRefLow = useRef<THREE.InstancedMesh>(null!);
+  const timer = useGlobalTimer();
   
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
+  const visibleAtomsCountRef = useRef(0);
   
   // Dynamic capacity mapping (vector-style growth)
   const capacityRef = useRef(Math.max(MIN_CAPACITY, Math.ceil(frame.natoms * 1.2)));
@@ -93,7 +96,7 @@ export function AtomsOptimized({
 
   // Geometry & Material (cached, LOD based on atom count)
   const geoToon = useMemo(() => new THREE.IcosahedronGeometry(1, 1), []);
-  const geoHigh = useMemo(() => new THREE.IcosahedronGeometry(1, 2), []); // 162 verts
+  const geoHigh = useMemo(() => new THREE.SphereGeometry(1, 24, 16), []);
   const geoMed = useMemo(() => new THREE.IcosahedronGeometry(1, 1), []);  // 42 verts
   const geoLow = useMemo(() => new THREE.IcosahedronGeometry(1, 0), []);  // 12 verts
 
@@ -117,7 +120,7 @@ export function AtomsOptimized({
   
   useFrame((state) => {
     if (botanicalMode) {
-      uniformsRef.current.uTime.value = state.clock.elapsedTime;
+      uniformsRef.current.uTime.value = timer.getElapsedTime();
     }
     
     // 🎬 Cinematic Macro-to-Micro Transition
@@ -194,7 +197,7 @@ export function AtomsOptimized({
         _v.set(ax, ay, az);
         
         // 3. Good old fashioned physics/optics: Only process what the camera can physically see
-        if (frustum.containsPoint(_v)) {
+        if (true) { // Temporary disable frustum culling
           const dx = ax - camX;
           const dy = ay - camY;
           const dz = az - camZ;
@@ -294,13 +297,14 @@ export function AtomsOptimized({
       // Update counts and mark ranges for GPU upload
       meshH.count = countH;
       meshH.instanceMatrix.needsUpdate = true;
-      (meshH.instanceMatrix as any).updateRange.count = countH * 16;
+      (meshH.instanceMatrix as any).updateRange = { offset: 0, count: countH * 16 };
       if (meshH.instanceColor) {
         meshH.instanceColor.needsUpdate = true;
-        (meshH.instanceColor as any).updateRange.count = countH * 3;
+        (meshH.instanceColor as any).updateRange = { offset: 0, count: countH * 3 };
       }
       geoHigh.attributes.instanceProp.needsUpdate = true;
       (geoHigh.attributes.instanceProp as any).updateRange = { offset: 0, count: countH };
+
       if (renderStyle === 'toon') {
         geoToon.attributes.instanceProp.needsUpdate = true;
         (geoToon.attributes.instanceProp as any).updateRange = { offset: 0, count: countH };
@@ -308,20 +312,20 @@ export function AtomsOptimized({
 
       meshM.count = countM;
       meshM.instanceMatrix.needsUpdate = true;
-      (meshM.instanceMatrix as any).updateRange.count = countM * 16;
+      // (meshM.instanceMatrix as any).updateRange.count = countM * 16;
       if (meshM.instanceColor) {
         meshM.instanceColor.needsUpdate = true;
-        (meshM.instanceColor as any).updateRange.count = countM * 3;
+        // (meshM.instanceColor as any).updateRange.count = countM * 3;
       }
       geoMed.attributes.instanceProp.needsUpdate = true;
       (geoMed.attributes.instanceProp as any).updateRange = { offset: 0, count: countM };
 
       meshL.count = countL;
       meshL.instanceMatrix.needsUpdate = true;
-      (meshL.instanceMatrix as any).updateRange.count = countL * 16;
+      // (meshL.instanceMatrix as any).updateRange.count = countL * 16;
       if (meshL.instanceColor) {
         meshL.instanceColor.needsUpdate = true;
-        (meshL.instanceColor as any).updateRange.count = countL * 3;
+        // (meshL.instanceColor as any).updateRange.count = countL * 3;
       }
       geoLow.attributes.instanceProp.needsUpdate = true;
       (geoLow.attributes.instanceProp as any).updateRange = { offset: 0, count: countL };
@@ -583,11 +587,20 @@ export function AtomsOptimized({
     const sortedTypes = Array.from(typeSet).sort((a, b) => a - b);
     const lookup = new Map<number, [number, number, number]>();
     for (let i = 0; i < sortedTypes.length; i++) {
-      const t = sortedTypes.length > 1 ? i / (sortedTypes.length - 1) : 0.5;
-      lookup.set(sortedTypes[i], mapFn(t));
+      const typeId = sortedTypes[i];
+      if (colorMode === 'type') {
+        const tc = TYPE_COLORS[typeId] ?? DEFAULT_TYPE_COLOR;
+        // The default type color is [0.6, 0.6, 0.6] but TYPE_COLORS contains 1: [1, 1, 1] for Hydrogen
+        // However, if the typeId is a generic LAMMPS index (1, 2, 3) and the user doesn't want Hydrogen,
+        // we'll stick to TYPE_COLORS for now to restore the physical mapping behavior for XYZ
+        lookup.set(typeId, [tc[0], tc[1], tc[2]]);
+      } else {
+        const t = sortedTypes.length > 1 ? i / (sortedTypes.length - 1) : 0.5;
+        lookup.set(typeId, mapFn(t));
+      }
     }
     return lookup;
-  }, [frame.types, frame.natoms, mapFn]);
+  }, [frame.types, frame.natoms, mapFn, colorMode]);
 
   // Build spatial hash and update instance buffers
   const uploadFrame = useCallback(() => {
