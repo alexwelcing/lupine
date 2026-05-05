@@ -40,5 +40,14 @@
     "@types/node": "^22.0.0",
     "leva": "^0.10.1",
     "serve": "^14.2.6"
+  },
+  "pnpm": {
+    "packageExtensions": {
+      "@iwer/devui": {
+        "dependencies": {
+          "zustand": "^5.0.0"
+        }
+      }
+    }
   }
 }
