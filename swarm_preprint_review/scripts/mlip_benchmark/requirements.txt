@@ -1,0 +1,12 @@
+# Core (always required)
+numpy>=1.24
+ase>=3.22
+
+# MLIPs — install one or more depending on which models you want to benchmark.
+# Each is independent; pip-install only what you need.
+chgnet>=0.3.0           # Deng 2023, Nat. Mach. Intell. — CPU-friendly
+mace-torch>=0.3.0       # Batatia 2024, MACE-MP-0 — CPU works, slower
+matgl>=1.1.0            # Chen & Ong 2022, M3GNet — CPU works
+
+# Test deps (optional)
+pytest>=7.4

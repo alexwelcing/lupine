@@ -1,8 +1,8 @@
 {
   "name": "lupine-site",
-  "private": true,
-  "version": "1.0.0",
   "type": "module",
+  "version": "2.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",

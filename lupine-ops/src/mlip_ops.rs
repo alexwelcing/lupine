@@ -181,6 +181,11 @@ impl MlipDeployment {
                 return Err(MlipOpsError::PathNotFound(aux_path.clone()));
             }
         }
+        for aux_path in &self.auxiliary_paths {
+            if !Path::new(aux_path).exists() {
+                return Err(MlipOpsError::PathNotFound(aux_path.clone()));
+            }
+        }
         Ok(())
     }
 }

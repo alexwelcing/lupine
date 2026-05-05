@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+ase
+numpy
+chgnet
+mace-torch
+matgl

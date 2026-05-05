@@ -46,7 +46,7 @@ import { ChronosHUD } from './ChronosHUD';
 import { VolcanicHUD } from './VolcanicHUD';
 
 import { useStore } from './store';
-import { FileDropZone } from './FileDropZone';
+import { LandingPage } from './LandingPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { SpatialAnchor } from './SpatialAnchor';
@@ -68,6 +68,7 @@ import type { ColormapName } from '@atlas/core/types';
 import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
+import { BatchAssetGenerator } from './BatchAssetGenerator';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -340,8 +341,18 @@ function CameraManager({
   const { camera, controls } = useThree((s) => ({ camera: s.camera, controls: s.controls as any }));
   const flythroughPreview = useStore(s => s.flythroughPreview);
 
-  // Sync continuously during flythrough preview
+  // Sync continuously during flythrough preview + keep clipping planes generous
   useFrame(() => {
+    // Dynamic clipping: always keep far plane far enough to see everything
+    if (camera instanceof THREE.PerspectiveCamera) {
+      const camDist = camera.position.length();
+      const minFar = Math.max(10000, distance * 100, camDist * 20);
+      if (camera.far < minFar) {
+        camera.far = minFar;
+        camera.updateProjectionMatrix();
+      }
+    }
+
     if (flythroughPreview) {
       const state = useStore.getState();
       camera.position.set(...state.cameraPosition);
@@ -419,7 +430,6 @@ function PostProcessingEffects() {
   const ssao = useStore(s => s.ssao);
   const bloom = useStore(s => s.bloom);
   const dof = useStore(s => s.dof);
-  const dofFocus = useStore(s => s.dofFocus);
   const toneMapping = useStore(s => s.toneMapping);
   const playing = useStore(s => s.playing);
   const ssaoIntensity = useStore(s => s.ssaoIntensity);
@@ -428,10 +438,23 @@ function PostProcessingEffects() {
   const mode = useXR(state => state.mode);
   const isImmersive = mode === 'immersive-ar' || mode === 'immersive-vr';
 
+  const dofRef = useRef<any>(null);
+
+  useFrame(() => {
+    if (dofRef.current) {
+      // Imperatively update the effect's focus distance to avoid re-rendering the composer
+      dofRef.current.focusDistance = useStore.getState().dofFocus / 100;
+    }
+  });
+
   if (isImmersive) return null;
 
+  // Force EffectComposer to completely remount when effects toggle.
+  // This prevents r3f/postprocessing from leaking ghost 'Scene (Postprocessing)' nodes.
+  const composerKey = `${ssao}-${bloom}-${dof}-${playing}`;
+
   return (
-    <EffectComposer enableNormalPass={ssao} multisampling={playing ? 0 : 4}>
+    <EffectComposer key={composerKey} enableNormalPass={ssao} multisampling={playing ? 0 : 4}>
       {ssao && (
         <SSAO
           radius={0.3}
@@ -453,7 +476,7 @@ function PostProcessingEffects() {
       ) as any}
       {dof && (
         <DepthOfField
-          focusDistance={dofFocus / 100}
+          ref={dofRef}
           focalLength={0.02}
           bokehScale={2}
           height={480}
@@ -537,10 +560,6 @@ export default function App() {
   const nextFrame = useStore(s => s.nextFrame);
   const togglePlay = useStore(s => s.togglePlay);
   const setActivePanel = useStore(s => s.setActivePanel);
-  const hoveredAtom = useStore(s => s.hoveredAtom);
-  const setHoveredAtom = useStore(s => s.setHoveredAtom);
-  const selectedAtoms = useStore(s => s.selectedAtoms);
-  const setSelectedAtoms = useStore(s => s.setSelectedAtoms);
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
   const anomalyTracking = useStore(s => s.anomalyTracking);
@@ -552,15 +571,6 @@ export default function App() {
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
-
-
-  // Mouse position for inspector tooltip
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
-  }, []);
 
   // Playback timer (replaced with smooth 60fps interpolator)
   const { currentState: interpState, setFrame: setSmoothFrame } = useSmoothFramePlayback(playing, {
@@ -679,6 +689,7 @@ export default function App() {
     : [];
 
   const bg = resolveBackground(backgroundPreset, colormap);
+  const isBatchExport = new URLSearchParams(window.location.search).get('batchExport') === 'true';
 
   return (
     <div style={{
@@ -891,7 +902,7 @@ export default function App() {
               position: [center[0], center[1], center[2] + cameraDistance],
               fov: 50,
               near: 0.1,
-              far: cameraDistance * 10,
+              far: Math.max(10000, cameraDistance * 100),
             }}
             gl={{
               antialias: false,
@@ -912,8 +923,12 @@ export default function App() {
 
             <ambientLight intensity={ambientLightIntensity} />
             <directionalLight position={[5, 8, 6]} intensity={dirLightIntensity} />
-            <directionalLight position={[-3, -2, 4]} intensity={dirLightIntensity * 0.3} />
-            <directionalLight position={[0, -5, -3]} intensity={dirLightIntensity * 0.15} color="#8888ff" />
+            {(!file?.trajectory?.frames?.[0]?.positions?.length || file.trajectory.frames[0].positions.length / 3 <= 50000) && (
+              <>
+                <directionalLight position={[-3, -2, 4]} intensity={dirLightIntensity * 0.3} />
+                <directionalLight position={[0, -5, -3]} intensity={dirLightIntensity * 0.15} color="#8888ff" />
+              </>
+            )}
           {environmentPreset !== 'none' && (
             <Environment preset={environmentPreset as any} />
           )}
@@ -956,15 +971,13 @@ export default function App() {
                   scale={atomScale}
                   renderStyle={renderStyle}
                   onSpatialHash={setSpatialHash}
-                  highlightedAtoms={new Set(selectedAtoms)}
                   hiddenAtomTypes={hiddenAtomTypes}
                   atomTypeScales={atomTypeScales}
                   botanicalMode={renderStyle === 'botanical'}
                   materialPreset={materialPreset}
                   atomTexture={atomTexture}
                 />
-                {showBonds && (
-                  <Bonds
+                <Bonds
                     frame={currentFrame}
                     nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
                     interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
@@ -977,23 +990,13 @@ export default function App() {
                     opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
                     materialPreset={materialPreset}
+                    visible={showBonds}
                   />
-                )}
                 {showCell && (
                   <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />
                 )}
-              </SpatialAnchor>
-            )}
 
-            {currentFrame && spatialHash && (
-              <AtomPicker
-                frame={currentFrame}
-                spatialHash={spatialHash}
-                enabled={!loading}
-                selectionMode={activePanel === 'measurement' ? 'measure' : 'single'}
-                onHover={setHoveredAtom}
-                onSelect={setSelectedAtoms}
-              />
+              </SpatialAnchor>
             )}
 
             {showAxes && (
@@ -1001,6 +1004,7 @@ export default function App() {
                 <GizmoViewport axisColors={['#ff4060', '#40ff80', '#4080ff']} labelColor="white" />
               </GizmoHelper>
             )}
+
 
             <PostProcessingEffects />
             </XR>
@@ -1095,44 +1099,6 @@ export default function App() {
             </div>
           )}
 
-          {/* Atom Inspector Tooltip */}
-          {currentFrame && hoveredAtom !== null && (
-            <div style={{
-              position: 'fixed',
-              left: mousePos.x + 16,
-              top: mousePos.y + 16,
-              zIndex: 300,
-              pointerEvents: 'none',
-              background: 'var(--bg-glass)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: 'var(--radius-md)',
-              padding: '10px 14px',
-              fontSize: 'var(--fs-xs)',
-              fontFamily: 'var(--font-mono)',
-              color: 'var(--text-secondary)',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
-              minWidth: 160,
-            }}>
-              <div style={{ color: 'var(--accent)', fontWeight: 600, marginBottom: 4 }}>
-                {(() => { const spec = getElementSpec(currentFrame.types[hoveredAtom]); return `${spec.symbol} — ${spec.name}`; })()}
-              </div>
-              <div style={{ color: 'var(--text-muted)' }}>
-                Atom #{currentFrame.ids?.[hoveredAtom] ?? hoveredAtom + 1} · {(() => { const spec = getElementSpec(currentFrame.types[hoveredAtom]); return `${spec.mass.toFixed(2)} u · ${spec.role}`; })()}
-              </div>
-              <div style={{ color: 'var(--text-dim)', marginTop: 4 }}>
-                x: {currentFrame.positions[hoveredAtom * 3].toFixed(2)}<br />
-                y: {currentFrame.positions[hoveredAtom * 3 + 1].toFixed(2)}<br />
-                z: {currentFrame.positions[hoveredAtom * 3 + 2].toFixed(2)}
-              </div>
-              {Array.from(currentFrame.properties?.entries() ?? []).slice(0, 3).map(([name, vals]) => (
-                <div key={name} style={{ color: 'var(--text-dim)', marginTop: 2 }}>
-                  {name}: {vals[hoveredAtom].toFixed(3)}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* ─── Side panel ─── */}
@@ -1175,11 +1141,16 @@ export default function App() {
           </div>
         )}
 
-        {/* File drop zone overlay (placed inside relative main content wrapper to allow document scrolling) */}
-        <div style={{ position: 'relative', width: '100%', zIndex: 10, pointerEvents: file ? 'none' : 'auto' }}>
-          <FileDropZone />
-        </div>
+        {/* Landing page (hero, featured, drop zone, gallery) */}
+        {!file && (
+          <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
+            <LandingPage />
+          </div>
+        )}
       </div>
+
+      {/* ─── Batch Asset Generator overlay ─── */}
+      {isBatchExport && <BatchAssetGenerator />}
 
       {/* ─── Timeline ─── */}
       {file && (
@@ -1406,3 +1377,5 @@ const kbdStyle: React.CSSProperties = {
   borderRadius: 0,
   marginRight: 4,
 };
+
+

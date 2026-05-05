@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUPINE — Theorem-Driven Validation</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=JetBrains+Mono:wght@300;400;500&amp;family=Playfair+Display:ital,wght@1,400;1,700;1,900&amp;family=Space+Grotesk:wght@400;500&amp;family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-highest": "#34343c",
+              "on-primary": "#051c93",
+              "surface-container-lowest": "#0d0e15",
+              "on-surface": "#e3e1ec",
+              "on-secondary-container": "#00302d",
+              "surface-bright": "#383941",
+              "surface-container-low": "#1a1b23",
+              "primary-container": "#5565d4",
+              "on-surface-variant": "#c6c5d5",
+              "surface-container-high": "#292931",
+              "surface-container": "#1e1f27",
+              "secondary": "#5dd9d0",
+              "error": "#ffb4ab",
+              "primary": "#bcc3ff",
+              "surface": "#12131a",
+              "tertiary": "#d4bbff",
+              "background": "#12131a",
+              "tertiary-container": "#7f5fb7",
+              "accent-gold": "#d4a843"
+            },
+            borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+            fontFamily: {
+              headline: ["Newsreader", "serif"],
+              body: ["Inter", "sans-serif"],
+              label: ["Space Grotesk", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+              "serif-display": ["Playfair Display", "serif"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(52, 52, 60, 0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .text-glow-indigo { text-shadow: 0 0 20px rgba(85, 101, 212, 0.4); }
+        .mask-fade-bottom { mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
+        .theorem-block { border-left: 2px solid #5565d4; background: rgba(85, 101, 212, 0.05); }
+    </style>
+<style>
+@media (max-width: 768px) {
+  .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+  .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+  .text-8xl, .text-7xl, .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; }
+  .text-5xl { font-size: 2rem !important; }
+  .text-4xl { font-size: 1.75rem !important; }
+  .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .p-16, .p-24 { padding: 2rem !important; }
+  .md\:p-24 { padding: 2rem !important; }
+  .gap-8, .gap-12 { gap: 1.5rem !important; }
+  .hidden.md\:flex { display: none !important; }
+  table { font-size: 12px !important; }
+  table td, table th { padding: 8px !important; }
+}
+@media (max-width: 480px) {
+  .text-6xl, .text-5xl { font-size: 1.8rem !important; line-height: 1.2 !important; }
+  .text-4xl { font-size: 1.5rem !important; }
+  .text-3xl { font-size: 1.25rem !important; }
+}
+</style>
+</head>
+<body class="bg-[#0a0b12] text-on-surface font-body selection:bg-primary-container selection:text-white overflow-x-hidden">
+<nav class="fixed top-0 w-full z-50 bg-[#0a0b12]/80 backdrop-blur-xl shadow-[0_4px_40px_0_rgba(188,195,255,0.06)] flex justify-between items-center px-12 py-6 w-full">
+<div class="text-2xl font-serif-display italic tracking-tighter text-white"><a href="index.html">LUPINE</a></div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-[#5565D4] border-b border-[#5565D4] pb-1 font-mono text-xs uppercase tracking-widest hover:text-white transition-colors duration-300" href="research-vision.html">Theory</a>
+<a class="text-slate-400 font-mono text-xs uppercase tracking-widest hover:text-white transition-colors duration-300" href="javascript:void(0);" onclick="alert('Feature Coming Soon')">Protocols</a>
+<a class="text-slate-400 font-mono text-xs uppercase tracking-widest hover:text-white transition-colors duration-300" href="javascript:void(0);" onclick="alert('Feature Coming Soon')">Archive</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="bg-primary-container text-on-primary-container font-mono text-[10px] uppercase tracking-widest px-6 py-2 rounded-sm hover:opacity-80 transition-opacity" onclick="alert('Feature Coming Soon')">Access Node</button>
+</div>
+<div class="absolute bottom-0 left-0 w-full bg-gradient-to-r from-transparent via-[#5565D4]/20 to-transparent h-[1px]"></div>
+</nav>
+<aside class="hidden lg:flex h-screen w-20 fixed left-0 top-0 flex-col items-center py-8 bg-[#0a0b12]/40 backdrop-blur-2xl z-40 border-r border-white/5">
+<div class="font-serif-display italic text-xl text-white mb-12 mt-20"><a href="index.html">MS</a></div>
+<div class="flex flex-col gap-8">
+<div class="bg-[#5565D4]/10 text-[#5565D4] rounded-sm p-3 cursor-pointer group relative">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="absolute left-16 bg-surface-container px-2 py-1 text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">Vision</span>
+</div>
+<div class="text-slate-500 p-3 cursor-pointer hover:bg-white/5 transition-all group relative">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="absolute left-16 bg-surface-container px-2 py-1 text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">Pillars</span>
+</div>
+<div class="text-slate-500 p-3 cursor-pointer hover:bg-white/5 transition-all group relative">
+<span class="material-symbols-outlined">compare_arrows</span>
+<span class="absolute left-16 bg-surface-container px-2 py-1 text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">Comparison</span>
+</div>
+<div class="text-slate-500 p-3 cursor-pointer hover:bg-white/5 transition-all group relative">
+<span class="material-symbols-outlined">format_quote</span>
+<span class="absolute left-16 bg-surface-container px-2 py-1 text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">Citations</span>
+</div>
+</div>
+<div class="mt-auto font-mono text-[10px] tracking-tighter text-slate-600 -rotate-90 whitespace-nowrap mb-8">V.2.04-ALPHA</div>
+</aside>
+<main class="lg:ml-20">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col items-center justify-center px-12 pt-32 pb-20 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary-container/10 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-tertiary-container/10 rounded-full blur-[100px]"></div>
+</div>
+<div class="relative z-10 text-center max-w-4xl mx-auto">
+<div class="font-mono text-xs tracking-[0.4em] text-secondary mb-8 uppercase">Open Distillation Factory</div>
+<h1 class="text-7xl md:text-9xl font-serif-display italic text-white leading-tight mb-8 text-glow-indigo mask-fade-bottom">
+                    Proof Before<br>Simulation
+                </h1>
+<p class="text-xl md:text-2xl text-on-surface-variant font-light leading-relaxed max-w-2xl mx-auto">
+                    We formalize what it means to validate an interatomic potential — then we lock that formalization into the build. 47 theorems. Zero sorry. One epistemic contract.
+                </p>
+<div class="mt-12 flex gap-4 justify-center">
+<a href="#vision" class="bg-primary-container text-on-primary-container font-mono text-xs uppercase tracking-widest px-10 py-4 rounded-sm hover:shadow-[0_0_30px_rgba(85,101,212,0.3)] transition-all">Read the Vision</a>
+<a href="#audit" class="bg-surface-variant/20 backdrop-blur-md border border-white/5 text-white font-mono text-xs uppercase tracking-widest px-10 py-4 rounded-sm hover:bg-white/10 transition-all">View Audit</a>
+</div>
+</div>
+<div class="absolute bottom-10 left-12 font-mono text-[10px] text-slate-500 flex flex-col gap-1">
+<span>LEAN_TOOLCHAIN: v4.30.0-rc1</span>
+<span>MATHLIB_TARGETS: 1,499</span>
+</div>
+</section>
+
+<!-- Stats Row -->
+<section class="py-20 px-12 bg-surface-container-lowest/30 border-y border-white/5">
+<div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="glass-panel p-8 border border-white/5 text-center">
+<div class="font-mono text-5xl font-bold text-primary mb-2">47</div>
+<div class="font-mono text-[10px] uppercase tracking-widest text-slate-400">Theorems Proven</div>
+</div>
+<div class="glass-panel p-8 border border-white/5 text-center">
+<div class="font-mono text-5xl font-bold text-secondary mb-2">1,499</div>
+<div class="font-mono text-[10px] uppercase tracking-widest text-slate-400">Build Targets</div>
+</div>
+<div class="glass-panel p-8 border border-white/5 text-center">
+<div class="font-mono text-5xl font-bold text-tertiary mb-2">6</div>
+<div class="font-mono text-[10px] uppercase tracking-widest text-slate-400">Hypotheses</div>
+</div>
+<div class="glass-panel p-8 border border-white/5 text-center">
+<div class="font-mono text-5xl font-bold text-accent-gold mb-2">0</div>
+<div class="font-mono text-[10px] uppercase tracking-widest text-slate-400">Sorry Proofs</div>
+</div>
+</div>
+</section>
+
+<!-- Build-Locking Contract -->
+<section id="vision" class="py-32 px-12 relative">
+<div class="max-w-5xl mx-auto">
+<div class="flex items-center gap-4 mb-12">
+<span class="material-symbols-outlined text-slate-500">lock</span>
+<h2 class="font-mono text-xs uppercase tracking-[0.3em] text-slate-400">The Executable Vision</h2>
+</div>
+<div class="glass-panel p-16 rounded-lg relative overflow-hidden border border-white/5">
+<div class="absolute top-0 right-0 w-32 h-32 bg-accent-gold/5 blur-3xl"></div>
+<blockquote class="text-2xl md:text-4xl font-serif-display italic text-white leading-tight mb-12">
+                        "A formal specification is not a presentation. It is a contract that compiles."
+                    </blockquote>
+<p class="text-on-surface-variant leading-relaxed mb-8">
+                        Conventional materials informatics puts claims in PDFs. We put them in Lean 4 modules — and if the claim breaks, <strong class="text-white">the build breaks</strong>.
+                    </p>
+<div class="p-8 bg-surface-container-lowest font-mono text-xs text-slate-300 leading-relaxed border-l-2 border-primary">
+<p class="text-primary mb-2">-- Epistemic minimums enforced at compile time</p>
+<p>#guard (hypothesisCount &gt;= 6)</p>
+<p>#guard (computationallyProvenCount &gt;= 10)</p>
+<p>#guard (epistemicGapCount &gt;= 1)</p>
+</div>
+<p class="text-on-surface-variant text-sm mt-8">
+                        These are not tests. They are <strong class="text-white">epistemic minimums</strong>. A future commit cannot silently drop below 6 hypotheses, remove all proven theorems, or close every gap without justification.
+                    </p>
+</div>
+</div>
+</section>
+
+<!-- Theorem Inventory -->
+<section class="py-32 px-12 bg-surface-container-lowest/50">
+<div class="max-w-6xl mx-auto">
+<div class="flex items-center gap-4 mb-12">
+<span class="material-symbols-outlined text-slate-500">checklist</span>
+<h2 class="font-mono text-xs uppercase tracking-[0.3em] text-slate-400">Theorem Inventory</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="glass-panel p-10 border border-white/5">
+<h3 class="text-xl font-serif-display italic text-white mb-6">Data &amp; Provenance</h3>
+<div class="space-y-3 font-mono text-xs text-slate-400">
+<div class="flex justify-between"><span>syntheticFccCount</span><span class="text-secondary">= 72</span></div>
+<div class="flex justify-between"><span>syntheticBccCount</span><span class="text-secondary">= 42</span></div>
+<div class="flex justify-between"><span>nistScaffoldCount</span><span class="text-secondary">= 9</span></div>
+<div class="flex justify-between"><span>syntheticFccIsSynthetic</span><span class="text-secondary">= true</span></div>
+<div class="flex justify-between"><span>nistScaffoldPredictionsMissing</span><span class="text-secondary">= true</span></div>
+</div>
+</div>
+<div class="glass-panel p-10 border border-white/5">
+<h3 class="text-xl font-serif-display italic text-white mb-6">Causal Analysis</h3>
+<div class="space-y-3 font-mono text-xs text-slate-400">
+<div class="flex justify-between"><span>noSimpsonsDetected</span><span class="text-error">= false</span></div>
+<div class="flex justify-between"><span>pooledRBelowMinus08</span><span class="text-secondary">= true</span></div>
+<div class="flex justify-between"><span>pooledWithinRBelowMinus09</span><span class="text-secondary">= true</span></div>
+<div class="flex justify-between"><span>nGroupsEqualsSeven</span><span class="text-secondary">= true</span></div>
+<div class="flex justify-between"><span>reversalMagnitudeAbove01</span><span class="text-secondary">= true</span></div>
+</div>
+</div>
+<div class="glass-panel p-10 border border-white/5">
+<h3 class="text-xl font-serif-display italic text-white mb-6">Manifold Geometry</h3>
+<div class="space-y-3 font-mono text-xs text-slate-400">
+<div class="flex justify-between"><span>fccEamPRBounded</span><span class="text-secondary">∈ (1.2, 1.3)</span></div>
+<div class="flex justify-between"><span>fccAllPRBounded</span><span class="text-secondary">∈ (1.3, 1.4)</span></div>
+<div class="flex justify-between"><span>paperClaimHolds</span><span class="text-secondary">= true</span></div>
+<div class="flex justify-between"><span>fccEamPRGreaterThanLj</span><span class="text-secondary">= true</span></div>
+</div>
+</div>
+<div class="glass-panel p-10 border border-white/5">
+<h3 class="text-xl font-serif-display italic text-white mb-6">Meta-Science &amp; Audit</h3>
+<div class="space-y-3 font-mono text-xs text-slate-400">
+<div class="flex justify-between"><span>hypothesisBoardLength</span><span class="text-secondary">= 6</span></div>
+<div class="flex justify-between"><span>cubicIrrepSum</span><span class="text-secondary">= 4</span></div>
+<div class="flex justify-between"><span>simpsonVerdictContainsFabricated</span><span class="text-error">= true</span></div>
+<div class="flex justify-between"><span>hyperRibbonVerdictContainsConsistent</span><span class="text-secondary">= true</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Split Verdict Audit -->
+<section id="audit" class="py-32 px-12">
+<div class="max-w-5xl mx-auto">
+<div class="flex items-center gap-4 mb-12">
+<span class="material-symbols-outlined text-slate-500">gavel</span>
+<h2 class="font-mono text-xs uppercase tracking-[0.3em] text-slate-400">Formal Audit: Split Verdict</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="glass-panel p-12 border border-error/20 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-error/5 to-transparent"></div>
+<div class="relative z-10">
+<div class="font-mono text-[10px] uppercase tracking-widest text-error mb-4">Claim 1 — Verdict</div>
+<h3 class="text-3xl font-serif-display italic text-white mb-6">FABRICATED</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                                Simpson's Paradox in BCC elastic constants. The paper claimed stratifying by metal identity reversed the correlation sign. Our detector computes pooled vs. within-group correlations on the same synthetic dataset.
+                            </p>
+<div class="theorem-block p-4 rounded-sm mb-4">
+<p class="font-mono text-xs text-slate-300">syntheticBccEamParadox.simpsonsDetected = false</p>
+<p class="font-mono text-[10px] text-slate-500 mt-1">Proof: native_decide</p>
+</div>
+<p class="text-on-surface-variant text-xs">
+                                The synthetic data was constructed with <code class="text-primary">ElementIdentity</code> as a confounder. In nature, element identity only affects predictions <em>through</em> crystal structure — a mediator, not a confounder.
+                            </p>
+</div>
+</div>
+<div class="glass-panel p-12 border border-secondary/20 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-secondary/5 to-transparent"></div>
+<div class="relative z-10">
+<div class="font-mono text-[10px] uppercase tracking-widest text-secondary mb-4">Claim 2 — Verdict</div>
+<h3 class="text-3xl font-serif-display italic text-white mb-6">CONSISTENT</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                                Hyper-Ribbon Manifold Dimensionality. The paper claimed prediction-error vectors occupy a low-dimensional manifold (PR/n &lt; 0.5). On synthetic FCC data, this holds.
+                            </p>
+<div class="theorem-block p-4 rounded-sm mb-4">
+<p class="font-mono text-xs text-slate-300">satisfiesHyperRibbonClaim fccAllPR 3 = true</p>
+<p class="font-mono text-[10px] text-slate-500 mt-1">Proof: native_decide</p>
+</div>
+<p class="text-on-surface-variant text-xs">
+                                All 72 FCC and 42 BCC entries are <strong class="text-white">synthetic</strong>. The NIST scaffold (9 rows) has predicted = none. Consistent with available data — but the available data is not enough.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Meta-Scientific Hypotheses -->
+<section class="py-32 px-12 bg-surface-container-lowest/50">
+<div class="max-w-5xl mx-auto">
+<div class="flex items-center gap-4 mb-12">
+<span class="material-symbols-outlined text-slate-500">lightbulb</span>
+<h2 class="font-mono text-xs uppercase tracking-[0.3em] text-slate-400">Six Meta-Scientific Hypotheses</h2>
+</div>
+<p class="text-on-surface-variant leading-relaxed mb-12 max-w-3xl">
+                    The old hypotheses (Simpson's paradox, hyper-ribbon dimensionality) are abandoned. We formulate <strong class="text-white">new hypotheses about the epistemic structure of validation itself</strong> — all formally stated, all falsifiable, none yet proven.
+                </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="glass-panel p-8 border border-white/5">
+<div class="font-mono text-[10px] uppercase tracking-widest text-primary mb-3">H1 — [CONJECTURE]</div>
+<h3 class="text-lg font-serif-display italic text-white mb-3">Validation Incompleteness</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">For any finite benchmark B and potential family P, there exists an observable outside B whose error is unbounded. No finite benchmark exhausts a many-body interaction law.</p>
+</div>
+<div class="glass-panel p-8 border border-white/5">
+<div class="font-mono text-[10px] uppercase tracking-widest text-primary mb-3">H2 — [CONJECTURE]</div>
+<h3 class="text-lg font-serif-display italic text-white mb-3">Epistemic Entropy Bound</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Error entropy is bounded below by Kolmogorov complexity divided by benchmark size. Simpler potentials concentrate error; complex potentials disperse it.</p>
+</div>
+<div class="glass-panel p-8 border border-white/5">
+<div class="font-mono text-[10px] uppercase tracking-widest text-primary mb-3">H3 — [CONJECTURE]</div>
+<h3 class="text-lg font-serif-display italic text-white mb-3">Causal Structure Theorem</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">In the true causal graph, crystal structure is a mediator, not a confounder. Simpson's paradox cannot arise from elemental stratification in real data.</p>
+</div>
+<div class="glass-panel p-8 border border-white/5">
+<div class="font-mono text-[10px] uppercase tracking-widest text-primary mb-3">H4 — [CONJECTURE]</div>
+<h3 class="text-lg font-serif-display italic text-white mb-3">Spectral Rigidity</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Eigenvalue multiplicities of the error covariance matrix equal irreducible representation dimensions of the crystal's point group. PR is determined by symmetry.</p>
+</div>
+<div class="glass-panel p-8 border border-white/5">
+<div class="font-mono text-[10px] uppercase tracking-widest text-primary mb-3">H5 — [CONJECTURE]</div>
+<h3 class="text-lg font-serif-display italic text-white mb-3">Transferability Phase Transition</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">There exists a critical parameter count P_c such that P &lt; P_c yields correlated errors (low PR) and P &gt; P_c yields decorrelated errors (PR → N).</p>
+</div>
+<div class="glass-panel p-8 border border-white/5">
+<div class="font-mono text-[10px] uppercase tracking-widest text-primary mb-3">H6 — [CONJECTURE]</div>
+<h3 class="text-lg font-serif-display italic text-white mb-3">Bootstrap Collapse</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">For N &lt; 30 validation points, the 95% bootstrap CI on PR has width &gt; N/2 with probability &gt; 0.5. Small samples make PR claims statistically void.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Methodology -->
+<section class="py-32 px-12">
+<div class="max-w-5xl mx-auto">
+<div class="flex items-center gap-4 mb-12">
+<span class="material-symbols-outlined text-slate-500">route</span>
+<h2 class="font-mono text-xs uppercase tracking-[0.3em] text-slate-400">In the In Between</h2>
+</div>
+<div class="glass-panel p-16 rounded-lg border border-white/5">
+<blockquote class="text-2xl md:text-3xl font-serif-display italic text-white leading-tight mb-10">
+                        "We are not running LAMMPS. We are formalizing what it means to validate without running it all."
+                    </blockquote>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+<div>
+<div class="font-mono text-[10px] uppercase tracking-widest text-secondary mb-4">Layer 1</div>
+<h4 class="text-white font-medium mb-3">Synthetic Data (Proven)</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">72 FCC + 42 BCC entries embedded as compile-time constants. Change a value → theorems re-check → build may fail.</p>
+</div>
+<div>
+<div class="font-mono text-[10px] uppercase tracking-widest text-secondary mb-4">Layer 2</div>
+<h4 class="text-white font-medium mb-3">Computed Properties</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Statistics computed via <code class="text-primary">native_decide</code>. Lean compiles to native code, runs it, and locks the result at build time.</p>
+</div>
+<div>
+<div class="font-mono text-[10px] uppercase tracking-widest text-secondary mb-4">Layer 3</div>
+<h4 class="text-white font-medium mb-3">Documented Gaps</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Five acknowledged limitations — no NIST traces, no DOI citations, no pre-registration — recorded as structured data, not hidden assumptions.</p>
+</div>
+</div>
+<div class="p-8 bg-surface-container-lowest font-mono text-xs text-slate-300 leading-relaxed border-l-2 border-secondary">
+<p class="mb-2">| Approach           | Cost | Guarantee            | Gap visibility |</p>
+<p class="mb-2">|--------------------|------|----------------------|----------------|</p>
+<p class="mb-2">| Run everything     | $$$$ | None (never complete)| Hidden         |</p>
+<p class="mb-2">| Trust the PDF      | $    | None                 | Hidden         |</p>
+<p class="text-secondary">| Formalize the gap  | $    | Compile-time checked | Explicit       |</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Citation Block -->
+<section class="py-32 px-12 bg-surface-container-low">
+<div class="max-w-4xl mx-auto">
+<div class="flex items-center gap-4 mb-12">
+<span class="material-symbols-outlined text-slate-500">terminal</span>
+<h2 class="font-mono text-xs uppercase tracking-[0.3em] text-slate-400">Computational Reference</h2>
+</div>
+<div class="p-12 bg-surface-container-lowest font-mono text-xs text-slate-300 leading-relaxed border-l-2 border-primary">
+<p class="mb-4">@article{lupine_2025_theorem_driven,</p>
+<p class="ml-8">author = {Welcing, A.},</p>
+<p class="ml-8">title = {Theorem-Driven Validation of Interatomic Potentials: A Build-Locking Epistemic Contract},</p>
+<p class="ml-8">journal = {arXiv preprint},</p>
+<p class="ml-8">year = {2025},</p>
+<p class="ml-8">note = {47 theorems in Lean 4. Open-source at github.com/lupine-ms/glim},</p>
+<p class="ml-8 text-primary">url = {https://glim.lupine.science/formal-verification}</p>
+<p>}</p>
+</div>
+<div class="mt-12 flex items-center justify-between text-[10px] font-mono text-slate-500 uppercase">
+<div class="flex gap-8">
+<span>SHA-256: 8f3c...12a9</span>
+<span>NODE_SYNC: OK</span>
+</div>
+<button class="text-accent-gold hover:underline">Download BibTeX</button>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#0a0b12] w-full py-20 px-12 border-t border-white/5">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end">
+<div class="w-full md:w-auto mb-12 md:mb-0">
+<div class="font-serif-display italic text-3xl text-white mb-4">LUPINE</div>
+<div class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 max-w-xs">
+                        &copy; 2024 LUPINE MATERIALS SCIENCE. PROTOCOL-X INITIATIVE. ALL RESEARCH OPEN-ACCESS.
+                    </div>
+</div>
+<div class="flex flex-col md:flex-row gap-12 text-right">
+<div class="flex flex-col gap-2">
+<span class="font-mono text-[10px] text-slate-600 uppercase mb-2">Research</span>
+<a class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 hover:text-[#5565D4] hover:underline decoration-[#d4a843] transition-all duration-500" href="research-vision.html">Vision</a>
+<a class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 hover:text-[#5565D4] hover:underline decoration-[#d4a843] transition-all duration-500" href="formal-verification.html">Theorem-Driven</a>
+</div>
+<div class="flex flex-col gap-2">
+<span class="font-mono text-[10px] text-slate-600 uppercase mb-2">Legal</span>
+<a class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 hover:text-[#5565D4] hover:underline decoration-[#d4a843] transition-all duration-500" href="research-vision.html">Ethics AI</a>
+<a class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 hover:text-[#5565D4] hover:underline decoration-[#d4a843] transition-all duration-500" href="research-vision.html">Open Access</a>
+</div>
+<div class="flex flex-col gap-2">
+<span class="font-mono text-[10px] text-slate-600 uppercase mb-2">Network</span>
+<a class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 hover:text-[#5565D4] hover:underline decoration-[#d4a843] transition-all duration-500" href="docs.html">Raw Data</a>
+<a class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 hover:text-[#5565D4] hover:underline decoration-[#d4a843] transition-all duration-500" href="platform-architecture.html">Node Status</a>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-slate-600">
+<div class="flex gap-4">
+<span>SECURITY: AES-256</span>
+<span>LATENCY: 12ms</span>
+</div>
+<div class="flex gap-4">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#4ecdc4]"></span>
+<span>SYSTEMS NOMINAL</span>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

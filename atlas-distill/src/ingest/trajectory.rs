@@ -87,12 +87,27 @@ where
         let bound_line = lines.next().context("Expected box bound line")?;
         let parts: Vec<f64> = bound_line
             .split_whitespace()
-            .filter_map(|s| s.parse().ok())
+            .filter_map(|s| match s.parse::<f64>() {
+                Ok(v) => Some(v),
+                Err(e) => {
+                    eprintln!(
+                        "    ⚠ trajectory: dropping unparseable box-bound value {:?} on dim {}: {}",
+                        s, dim, e
+                    );
+                    None
+                }
+            })
             .collect();
 
         if parts.len() >= 2 {
             box_bounds[dim * 2] = parts[0];
             box_bounds[dim * 2 + 1] = parts[1];
+        } else {
+            eprintln!(
+                "    ⚠ trajectory: box-bound line for dim {} yielded {} usable floats; using defaults",
+                dim,
+                parts.len()
+            );
         }
     }
 
