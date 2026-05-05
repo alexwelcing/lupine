@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "@atlas/core": "workspace:*",
-    "three": "^0.170.0"
+    "three": "^0.184.0"
   },
   "devDependencies": {
-    "@types/three": "^0.170.0",
+    "@types/three": "^0.184.0",
     "typescript": "^5.6.0"
   }
 }

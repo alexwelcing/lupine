@@ -18,13 +18,13 @@
   },
   "dependencies": {
     "@atlas/core": "workspace:*",
-    "@react-three/fiber": "^9.0.0",
+    "@react-three/fiber": "^9.6.0",
     "react": "^19.0.0",
-    "three": "^0.170.0"
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
-    "@types/three": "^0.170.0",
+    "@types/three": "^0.184.0",
     "typescript": "^5.6.0"
   }
 }

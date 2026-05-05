@@ -207,7 +207,7 @@ function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
       materialType: baseMat.type,
       exportMaterialType: exportMat.type,
       hasPaletteTexture: true,
-      paletteSize: paletteTexture.image.width,
+      paletteSize: (paletteTexture.image as HTMLCanvasElement).width,
     });
   }
 
