@@ -64,7 +64,6 @@ export function Bonds({
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const timer = useGlobalTimer();
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const needsUploadRef = useRef(false);
   const workerRef = useRef<Worker | null>(null);
 
   // Bond pair data from the worker
@@ -277,9 +276,16 @@ export function Bonds({
   const pMin = propRange?.[0] ?? autoMin;
   const pMax = propRange?.[1] ?? autoMax;
 
-  // ─── Compute bond geometry into CPU buffers ────────────────────────
-  useEffect(() => {
-    if (halfCount === 0) return;
+
+  // Upload instance matrices + colors. Extracted into a callback so we can
+  // invoke it both on dep change AND on mesh remount (R3F remounts the mesh
+  // when entering WebXR, and rAF is paused during the session-start transition
+  // so a normal useEffect won't fire on the new mesh until too late).
+  const uploadBonds = useCallback(() => {
+    const mesh = meshRef.current;
+    if (!mesh || halfCount === 0) return;
+
+    if (!mesh.instanceMatrix) return;
 
     const drawCount = Math.min(halfCount, capacity);
 
@@ -507,44 +513,50 @@ export function Bonds({
       cpuColorArray[(i * 2 + 1) * 3 + 2] = tcB[2];
     }
 
-    needsUploadRef.current = true;
-  }, [bondPairs, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, botanicalMode, isPropMode, propData, propRange, colorProperty, cpuMatrixArray, cpuColorArray, cpuRadiusBTArray, capacity, materialPreset]);
+    // ─── GPU upload ────────────────────────────────────────────────────
+    const totalBonds = Math.min(halfCount, capacity);
 
-  // ─── GPU upload (once per data change) ─────────────────────────────
+    const dstMat = mesh.instanceMatrix.array as Float32Array;
+    dstMat.set(cpuMatrixArray.subarray(0, totalBonds * 16));
+
+    const dstCol = mesh.instanceColor ? (mesh.instanceColor.array as Float32Array) : null;
+    if (dstCol) {
+      dstCol.set(cpuColorArray.subarray(0, totalBonds * 3));
+    }
+
+    const dstRadiusBT = tubeGeo.attributes.radiusBT.array as Float32Array;
+    dstRadiusBT.set(cpuRadiusBTArray.subarray(0, totalBonds * 2));
+
+    mesh.count = totalBonds;
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    tubeGeo.attributes.radiusBT.needsUpdate = true;
+    (tubeGeo.attributes.radiusBT as any).updateRange = { offset: 0, count: totalBonds * 2 };
+  }, [bondPairs, halfCount, capacity, tubeGeo, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, pMin, pMax, colorProperty, cpuMatrixArray, cpuColorArray, cpuRadiusBTArray]);
+
   useFrame(() => {
     if (botanicalMode) {
       uniformsRef.current.uTime.value = timer.getElapsedTime();
     }
-
-    const mesh = meshRef.current;
-    if (mesh && halfCount > 0 && needsUploadRef.current) {
-      const totalBonds = Math.min(halfCount, capacity);
-
-      const dstMat = mesh.instanceMatrix.array as Float32Array;
-      dstMat.set(cpuMatrixArray.subarray(0, totalBonds * 16));
-
-      const dstCol = mesh.instanceColor ? (mesh.instanceColor.array as Float32Array) : null;
-      if (dstCol) {
-        dstCol.set(cpuColorArray.subarray(0, totalBonds * 3));
-      }
-
-      const dstRadiusBT = tubeGeo.attributes.radiusBT.array as Float32Array;
-      dstRadiusBT.set(cpuRadiusBTArray.subarray(0, totalBonds * 2));
-
-      mesh.count = totalBonds;
-      mesh.instanceMatrix.needsUpdate = true;
-      if (mesh.instanceColor) {
-        mesh.instanceColor.needsUpdate = true;
-      }
-      tubeGeo.attributes.radiusBT.needsUpdate = true;
-      (tubeGeo.attributes.radiusBT as any).updateRange = { offset: 0, count: totalBonds * 2 };
-      needsUploadRef.current = false;
-    }
   });
+
+  useEffect(() => {
+    uploadBonds();
+  }, [uploadBonds]);
+
+  // Handle R3F remounts on WebXR session entry. rAF is paused during the
+  // transition, so we schedule the upload via setTimeout (same pattern as
+  // Atoms / AtomsOptimized — see commit 17a0b66).
+  const onMeshRef = useCallback((mesh: THREE.InstancedMesh | null) => {
+    if (mesh) {
+      (meshRef as any).current = mesh;
+      setTimeout(() => uploadBonds(), 0);
+    }
+  }, [uploadBonds]);
 
   return (
     <instancedMesh
-      ref={meshRef}
+      ref={onMeshRef}
       args={[tubeGeo, material, capacity]}
       frustumCulled={false}
       visible={visible && halfCount > 0}
