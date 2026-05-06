@@ -19,9 +19,9 @@ import type { Frame, ColormapName, RenderStyle, BondStats } from '@atlas/core/ty
 import { getElementSpec } from '@atlas/core';
 import { useGlobalTimer } from './useTimer';
 import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS, COLORMAPS } from './constants';
-
-// Worker URL — matches the pattern used in @atlas/parsers
-const BOND_WORKER_URL = new URL('./bondWorker.ts', import.meta.url);
+// Vite worker import: the `?worker` suffix triggers proper bundling so the
+// production output is a real .js worker module, not a raw .ts asset.
+import BondWorkerCtor from './bondWorker.ts?worker';
 
 interface BondsProps {
   frame: Frame;
@@ -262,7 +262,7 @@ export function Bonds({
 
   // ─── Web Worker lifecycle ──────────────────────────────────────────
   useEffect(() => {
-    const worker = new Worker(BOND_WORKER_URL, { type: 'module' });
+    const worker = new BondWorkerCtor();
     workerRef.current = worker;
 
     worker.onmessage = (e: MessageEvent) => {
@@ -280,6 +280,11 @@ export function Bonds({
 
   // ─── Dispatch bond detection to worker (debounced) ─────────────────
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Track previous cutoff so we can distinguish slider-driven changes
+  // (debounce) from playback frame advances (immediate). Must live at
+  // component scope — calling useRef inside an effect violates the Rules of
+  // Hooks and crashes the renderer on mount.
+  const prevMaxBondLengthRef = useRef(maxBondLength);
 
   useEffect(() => {
     if (!workerRef.current || !frame || frame.natoms < 2) {
@@ -287,8 +292,6 @@ export function Bonds({
       return;
     }
 
-    // Distinguish slider-driven maxBondLength changes (debounce) from playback frame advances (immediate)
-    const prevMaxBondLengthRef = useRef(maxBondLength);
     const isSliderChange = prevMaxBondLengthRef.current !== maxBondLength;
     prevMaxBondLengthRef.current = maxBondLength;
 
