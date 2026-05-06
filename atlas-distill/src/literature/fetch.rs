@@ -69,34 +69,14 @@ impl FetchConfig {
         Ok(())
     }
 
-    /// Get cached content for a paper ID. Logs (but tolerates) corrupt cache
-    /// files so they're visible instead of looking like a benign cache miss.
+    /// Get cached content for a paper ID.
     fn get_cached(&self, paper_id: &str) -> Option<PaperContent> {
         let path = self.cache_dir.join(format!("{}.json", paper_id));
-        if !path.exists() {
-            return None;
-        }
-        let data = match std::fs::read_to_string(&path) {
-            Ok(s) => s,
-            Err(e) => {
-                eprintln!(
-                    "    ⚠ cache read failed for {}: {} ({})",
-                    paper_id,
-                    e,
-                    path.display()
-                );
-                return None;
-            }
-        };
-        match serde_json::from_str(&data) {
-            Ok(content) => Some(content),
-            Err(e) => {
-                eprintln!(
-                    "    ⚠ cache parse failed for {}: {} (will refetch)",
-                    paper_id, e
-                );
-                None
-            }
+        if path.exists() {
+            let data = std::fs::read_to_string(&path).ok()?;
+            serde_json::from_str(&data).ok()
+        } else {
+            None
         }
     }
 
@@ -120,38 +100,32 @@ pub struct FetchResult {
 }
 
 /// HTTP request with retry and exponential backoff.
-fn request_with_retry(agent: &ureq::Agent, url: &str, max_retries: u32) -> Result<String> {
+fn request_with_retry(
+    agent: &ureq::Agent,
+    url: &str,
+    max_retries: u32,
+) -> Result<String> {
     let mut last_err = String::new();
 
     for attempt in 0..max_retries {
         if attempt > 0 {
             let delay = Duration::from_millis(500 * 2u64.pow(attempt));
-            eprintln!(
-                "      ↻ Retry {}/{} in {}ms...",
-                attempt + 1,
-                max_retries,
-                delay.as_millis()
-            );
+            eprintln!("      ↻ Retry {}/{} in {}ms...", attempt + 1, max_retries, delay.as_millis());
             std::thread::sleep(delay);
         }
 
         match agent.get(url).call() {
             Ok(resp) => {
-                let body = resp
-                    .into_string()
+                let body = resp.into_string()
                     .map_err(|e| anyhow::anyhow!("Failed to read response body: {}", e))?;
                 return Ok(body);
             }
             Err(ureq::Error::Status(code, resp)) => {
                 let status_text = resp.into_string().unwrap_or_default();
-                last_err = format!(
-                    "HTTP {}: {}",
-                    code,
-                    &status_text[..status_text.len().min(200)]
-                );
+                last_err = format!("HTTP {}: {}", code, &status_text[..status_text.len().min(200)]);
 
                 // Don't retry on 4xx client errors (except 429 Too Many Requests)
-                if (400..500).contains(&code) && code != 429 {
+                if code >= 400 && code < 500 && code != 429 {
                     return Err(anyhow::anyhow!("{}", last_err));
                 }
 
@@ -168,11 +142,7 @@ fn request_with_retry(agent: &ureq::Agent, url: &str, max_retries: u32) -> Resul
         }
     }
 
-    Err(anyhow::anyhow!(
-        "Failed after {} attempts: {}",
-        max_retries,
-        last_err
-    ))
+    Err(anyhow::anyhow!("Failed after {} attempts: {}", max_retries, last_err))
 }
 
 /// Parse CrossRef JSON response into PaperContent.
@@ -187,7 +157,10 @@ fn parse_crossref(paper_id: &str, doi: &str, body: &str) -> Result<PaperContent>
         .unwrap_or("Unknown")
         .to_string();
 
-    let abstract_text = message["abstract"].as_str().unwrap_or("").to_string();
+    let abstract_text = message["abstract"]
+        .as_str()
+        .unwrap_or("")
+        .to_string();
 
     let authors: Vec<String> = message["author"]
         .as_array()
@@ -222,7 +195,9 @@ fn parse_crossref(paper_id: &str, doi: &str, body: &str) -> Result<PaperContent>
         .and_then(|y| y.as_u64())
         .unwrap_or(2025) as u16;
 
-    let cited_by = message["is-referenced-by-count"].as_u64().map(|c| c as u32);
+    let cited_by = message["is-referenced-by-count"]
+        .as_u64()
+        .map(|c| c as u32);
 
     Ok(PaperContent {
         paper_id: paper_id.to_string(),
@@ -304,15 +279,17 @@ pub fn fetch_paper_robust(
         eprintln!("  🌐 {} — CrossRef: {}", paper_id, doi);
 
         match request_with_retry(&agent, &url, config.max_retries) {
-            Ok(body) => match parse_crossref(paper_id, doi, &body) {
-                Ok(content) => {
-                    if let Err(e) = config.save_cache(&content) {
-                        eprintln!("      ⚠ Cache write failed: {}", e);
+            Ok(body) => {
+                match parse_crossref(paper_id, doi, &body) {
+                    Ok(content) => {
+                        if let Err(e) = config.save_cache(&content) {
+                            eprintln!("      ⚠ Cache write failed: {}", e);
+                        }
+                        return Ok(content);
                     }
-                    return Ok(content);
+                    Err(e) => eprintln!("      ⚠ CrossRef parse failed: {}", e),
                 }
-                Err(e) => eprintln!("      ⚠ CrossRef parse failed: {}", e),
-            },
+            }
             Err(e) => eprintln!("      ⚠ CrossRef fetch failed: {}", e),
         }
     }
@@ -323,15 +300,17 @@ pub fn fetch_paper_robust(
         eprintln!("  🌐 {} — arXiv: {}", paper_id, arxiv_id);
 
         match request_with_retry(&agent, &url, config.max_retries) {
-            Ok(body) => match parse_arxiv(paper_id, arxiv_id, &body) {
-                Ok(content) => {
-                    if let Err(e) = config.save_cache(&content) {
-                        eprintln!("      ⚠ Cache write failed: {}", e);
+            Ok(body) => {
+                match parse_arxiv(paper_id, arxiv_id, &body) {
+                    Ok(content) => {
+                        if let Err(e) = config.save_cache(&content) {
+                            eprintln!("      ⚠ Cache write failed: {}", e);
+                        }
+                        return Ok(content);
                     }
-                    return Ok(content);
+                    Err(e) => eprintln!("      ⚠ arXiv parse failed: {}", e),
                 }
-                Err(e) => eprintln!("      ⚠ arXiv parse failed: {}", e),
-            },
+            }
             Err(e) => eprintln!("      ⚠ arXiv fetch failed: {}", e),
         }
     }
@@ -356,7 +335,12 @@ pub fn fetch_batch(
     for (i, (id, doi, arxiv)) in papers.iter().enumerate() {
         eprintln!("\n  [{}/{}]", i + 1, total);
 
-        match fetch_paper_robust(config, id, doi.as_deref(), arxiv.as_deref()) {
+        match fetch_paper_robust(
+            config,
+            id,
+            doi.as_deref(),
+            arxiv.as_deref(),
+        ) {
             Ok(content) => {
                 let is_cached = content.source.contains("cached");
                 let abstract_len = content.abstract_text.len();
@@ -392,12 +376,7 @@ pub fn fetch_batch(
     eprintln!("  ║  Fetch Summary                                            ║");
     eprintln!("  ╠════════════════════════════════════════════════════════════╣");
     eprintln!("  ║  Total:    {}", total);
-    eprintln!(
-        "  ║  Success:  {} ({} fetched, {} cached)",
-        result.successes.len(),
-        result.fetched,
-        result.cached
-    );
+    eprintln!("  ║  Success:  {} ({} fetched, {} cached)", result.successes.len(), result.fetched, result.cached);
     eprintln!("  ║  Failed:   {}", result.failures.len());
     if !result.failures.is_empty() {
         eprintln!("  ║");
@@ -415,16 +394,16 @@ pub fn fetch_batch(
 pub fn save_results(results: &FetchResult, output: &Path) -> Result<()> {
     let json = serde_json::to_string_pretty(&results.successes)?;
     std::fs::write(output, &json)?;
-    eprintln!(
-        "\n  ✦ Results → {} ({} papers)",
-        output.display(),
-        results.successes.len()
-    );
+    eprintln!("\n  ✦ Results → {} ({} papers)", output.display(), results.successes.len());
     Ok(())
 }
 
 /// Legacy API (kept for backward compatibility) — delegates to robust version.
-pub fn fetch_paper(paper_id: &str, doi: Option<&str>, arxiv: Option<&str>) -> Result<PaperContent> {
+pub fn fetch_paper(
+    paper_id: &str,
+    doi: Option<&str>,
+    arxiv: Option<&str>,
+) -> Result<PaperContent> {
     let config = FetchConfig::default();
     fetch_paper_robust(&config, paper_id, doi, arxiv)
 }
@@ -440,9 +419,7 @@ fn extract_xml_tag(xml: &str, tag: &str) -> Option<String> {
 
     if let Some(start_pos) = xml.find(&open) {
         let content_start = xml[start_pos..].find('>').map(|p| start_pos + p + 1)?;
-        let content_end = xml[content_start..]
-            .find(&close)
-            .map(|p| content_start + p)?;
+        let content_end = xml[content_start..].find(&close).map(|p| content_start + p)?;
         Some(xml[content_start..content_end].to_string())
     } else {
         None

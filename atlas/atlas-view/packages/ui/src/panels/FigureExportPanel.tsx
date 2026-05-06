@@ -126,12 +126,14 @@ export function FigureExportPanel() {
     };
   }, [file, frame]);
 
-  const handleComplete = useCallback((success?: boolean, blob?: Blob, filename?: string) => {
+  const handleComplete = useCallback((success: boolean, blob?: Blob, filename?: string) => {
     setExporting(false);
     setProgress(100);
     setExportSuccess(success !== false);
     if (success && blob && filename) {
       setReadyBlob({ blob, name: filename });
+    } else if (!success) {
+      alert("Export failed! Check console for details.");
     }
   }, []);
 
@@ -602,21 +604,30 @@ export function FigureExportPanel() {
                 Hidden atom types are excluded from the export.
               </div>
 
-              <ExportButton
-                onClick={() => {
-                  setExporting(true);
-                  setExportSuccess(false);
-                  triggerExport({
-                    type: 'glb',
-                    format: 'glb',
-                    baseName: `glimPSE-${systemInfo?.formula ?? 'export'}`,
-                    onComplete: handleComplete,
-                  });
-                }}
-                exporting={exporting}
-                success={exportSuccess}
-                label="Export GLB Model"
-              />
+              {readyBlob ? (
+                <ExportButton
+                  onClick={downloadReadyBlob}
+                  exporting={false}
+                  success={false}
+                  label="Save to Device"
+                />
+              ) : (
+                <ExportButton
+                  onClick={() => {
+                    setExporting(true);
+                    setExportSuccess(false);
+                    triggerExport({
+                      type: 'glb',
+                      format: 'glb',
+                      baseName: `glimPSE-${systemInfo?.formula ?? 'export'}`,
+                      onComplete: handleComplete,
+                    });
+                  }}
+                  exporting={exporting}
+                  success={exportSuccess}
+                  label="Export GLB Model"
+                />
+              )}
             </>
           )}
 
@@ -639,21 +650,30 @@ export function FigureExportPanel() {
                 <InfoRow label="Compatibility" value="iOS AR, Snapchat Lens Studio" />
               </InfoBlock>
 
-              <ExportButton
-                onClick={() => {
-                  setExporting(true);
-                  setExportSuccess(false);
-                  triggerExport({
-                    type: 'usdz',
-                    format: 'usdz',
-                    baseName: `glimPSE-${systemInfo?.formula ?? 'export'}`,
-                    onComplete: handleComplete,
-                  });
-                }}
-                exporting={exporting}
-                success={exportSuccess}
-                label="Export USDZ Model"
-              />
+              {readyBlob ? (
+                <ExportButton
+                  onClick={downloadReadyBlob}
+                  exporting={false}
+                  success={false}
+                  label="Save to Device"
+                />
+              ) : (
+                <ExportButton
+                  onClick={() => {
+                    setExporting(true);
+                    setExportSuccess(false);
+                    triggerExport({
+                      type: 'usdz',
+                      format: 'usdz',
+                      baseName: `glimPSE-${systemInfo?.formula ?? 'export'}`,
+                      onComplete: handleComplete,
+                    });
+                  }}
+                  exporting={exporting}
+                  success={exportSuccess}
+                  label="Export USDZ Model"
+                />
+              )}
             </>
           )}
 

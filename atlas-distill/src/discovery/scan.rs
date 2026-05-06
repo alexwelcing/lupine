@@ -60,9 +60,7 @@ fn best_fit(data: &[(f64, f64)]) -> FitResult {
         .max_by(|a, b| {
             let a_score = a.r_squared - 0.001 * a.params.len() as f64;
             let b_score = b.r_squared - 0.001 * b.params.len() as f64;
-            a_score
-                .partial_cmp(&b_score)
-                .unwrap_or(std::cmp::Ordering::Equal)
+            a_score.partial_cmp(&b_score).unwrap_or(std::cmp::Ordering::Equal)
         })
         .unwrap_or_else(|| fitting::linear::linear_fit(data))
 }
@@ -165,11 +163,8 @@ fn generate_physical_note(x: &str, y: &str, model: &str, params: &[f64]) -> Stri
     if (x_lower.contains("strain") || x_lower.contains("lx"))
         && (y_lower.contains("stress") || y_lower.contains("pxx") || y_lower.contains("press"))
     {
-        if model == "linear" && !params.is_empty() {
-            return format!(
-                "Young's modulus ≈ {:.4e} (from linear stress-strain fit)",
-                params[0]
-            );
+        if model == "linear" && params.len() >= 1 {
+            return format!("Young's modulus ≈ {:.4e} (from linear stress-strain fit)", params[0]);
         }
         if model == "power_law" && params.len() >= 2 {
             return format!(
@@ -181,10 +176,7 @@ fn generate_physical_note(x: &str, y: &str, model: &str, params: &[f64]) -> Stri
 
     // Generic
     match model {
-        "linear" => format!(
-            "Linear relationship with slope = {:.6e}",
-            params.first().unwrap_or(&0.0)
-        ),
+        "linear" => format!("Linear relationship with slope = {:.6e}", params.first().unwrap_or(&0.0)),
         "power_law" if params.len() >= 2 => format!("Power law with exponent = {:.4}", params[1]),
         "arrhenius" if params.len() >= 2 => format!("Activation energy = {:.4} eV", params[1]),
         _ => String::from("Discovered relationship"),
@@ -219,8 +211,11 @@ mod tests {
         let run = ThermoRun {
             columns: vec!["Step".into(), "Temp".into(), "Press".into()],
             data: vec![
-                0.0, 300.0, 1.0, 100.0, 310.0, 2.0, 200.0, 320.0, 3.0, 300.0, 330.0, 4.0, 400.0,
-                340.0, 5.0,
+                0.0, 300.0, 1.0,
+                100.0, 310.0, 2.0,
+                200.0, 320.0, 3.0,
+                300.0, 330.0, 4.0,
+                400.0, 340.0, 5.0,
             ],
             nrows: 5,
         };

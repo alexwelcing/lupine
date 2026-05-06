@@ -377,7 +377,7 @@ pub fn extract_values_loose(paper_id: &str, text: &str) -> Vec<ExtractedValue> {
     for cap in re_temp.captures_iter(text_n) {
         let val_str = cap[1].replace(',', "");
         if let Ok(val) = val_str.parse::<f64>() {
-            if (77.0..=50000.0).contains(&val) {
+            if val >= 77.0 && val <= 50000.0 {
                 values.push(ExtractedValue {
                     paper_id: paper_id.to_string(),
                     quantity: "temperature".to_string(),
@@ -424,7 +424,7 @@ pub fn extract_values_loose(paper_id: &str, text: &str) -> Vec<ExtractedValue> {
     let re_speedup = Regex::new(r"(\d[\d.]*)\s*[×xX]\b").unwrap();
     for cap in re_speedup.captures_iter(text_n) {
         if let Ok(val) = cap[1].parse::<f64>() {
-            if (1.1..=10000.0).contains(&val) {
+            if val >= 1.1 && val <= 10000.0 {
                 values.push(ExtractedValue {
                     paper_id: paper_id.to_string(),
                     quantity: "speedup".to_string(),
@@ -503,13 +503,7 @@ pub fn extract_values_loose(paper_id: &str, text: &str) -> Vec<ExtractedValue> {
     }
 
     // Deduplicate: prefer the first match for identical (quantity, value) pairs
-    values.sort_by(|a, b| {
-        a.quantity.cmp(&b.quantity).then(
-            a.value
-                .partial_cmp(&b.value)
-                .unwrap_or(std::cmp::Ordering::Equal),
-        )
-    });
+    values.sort_by(|a, b| a.quantity.cmp(&b.quantity).then(a.value.partial_cmp(&b.value).unwrap_or(std::cmp::Ordering::Equal)));
     values.dedup_by(|a, b| a.quantity == b.quantity && (a.value - b.value).abs() < 1e-10);
 
     values
@@ -522,9 +516,9 @@ pub fn extract_all(paper_id: &str, text: &str) -> Vec<ExtractedValue> {
 
     // Add loose values that weren't already captured by strict patterns
     for lv in loose {
-        let already = values
-            .iter()
-            .any(|v| v.quantity == lv.quantity && (v.value - lv.value).abs() < 1e-10);
+        let already = values.iter().any(|v| {
+            v.quantity == lv.quantity && (v.value - lv.value).abs() < 1e-10
+        });
         if !already {
             values.push(lv);
         }
@@ -557,10 +551,7 @@ mod tests {
     fn test_extract_diffusion() {
         let text = "The self-diffusion coefficient D = 2.5 × 10⁻⁵ cm²/s was measured at 300 K.";
         let vals = extract_values("P01", text);
-        let diff: Vec<_> = vals
-            .iter()
-            .filter(|v| v.quantity == "diffusion_coefficient")
-            .collect();
+        let diff: Vec<_> = vals.iter().filter(|v| v.quantity == "diffusion_coefficient").collect();
         assert_eq!(diff.len(), 1);
         assert!((diff[0].value - 2.5e-5).abs() < 1e-10);
         // After normalization, ² → 2
@@ -571,10 +562,7 @@ mod tests {
     fn test_extract_activation_energy() {
         let text = "We find an activation energy Ea = 0.35 eV for vacancy migration.";
         let vals = extract_values("P02", text);
-        let ea: Vec<_> = vals
-            .iter()
-            .filter(|v| v.quantity == "activation_energy")
-            .collect();
+        let ea: Vec<_> = vals.iter().filter(|v| v.quantity == "activation_energy").collect();
         assert_eq!(ea.len(), 1);
         assert!((ea[0].value - 0.35).abs() < 1e-10);
     }
@@ -583,10 +571,7 @@ mod tests {
     fn test_extract_system_size() {
         let text = "Simulations were performed with 4,000 atoms over 100 ns.";
         let vals = extract_values("P03", text);
-        let size: Vec<_> = vals
-            .iter()
-            .filter(|v| v.quantity == "system_size")
-            .collect();
+        let size: Vec<_> = vals.iter().filter(|v| v.quantity == "system_size").collect();
         assert_eq!(size.len(), 1);
         assert!((size[0].value - 4000.0).abs() < 1e-10);
     }
@@ -595,10 +580,7 @@ mod tests {
     fn test_extract_scaling_exponent() {
         let text = "The exponent β = 0.72 indicates subdiffusion.";
         let vals = extract_values("P04", text);
-        let exp: Vec<_> = vals
-            .iter()
-            .filter(|v| v.quantity == "scaling_exponent")
-            .collect();
+        let exp: Vec<_> = vals.iter().filter(|v| v.quantity == "scaling_exponent").collect();
         assert!(!exp.is_empty(), "Expected scaling exponent, got {:?}", vals);
         assert!((exp[0].value - 0.72).abs() < 1e-10);
     }
@@ -616,10 +598,7 @@ mod tests {
     fn test_extract_temperature() {
         let text = "Simulations at T = 300 K showed normal diffusion.";
         let vals = extract_values("P06", text);
-        let temps: Vec<_> = vals
-            .iter()
-            .filter(|v| v.quantity == "temperature")
-            .collect();
+        let temps: Vec<_> = vals.iter().filter(|v| v.quantity == "temperature").collect();
         assert!(!temps.is_empty());
         assert!((temps[0].value - 300.0).abs() < 1e-10);
     }

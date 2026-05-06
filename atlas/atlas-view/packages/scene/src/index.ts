@@ -4,6 +4,8 @@ export { AtomsOptimized } from './AtomsOptimized';
 export { InterpolatedAtoms } from './InterpolatedAtoms';
 export { SimulationCell } from './SimulationCell';
 export { Bonds, DEFAULT_CUTOFFS, buildTypeCutoffs } from './Bonds';
+export { useBondGpuPipeline } from './useBondGpuPipeline';
+export type { BondGpuComputeInput, UseBondGpuPipelineResult } from './useBondGpuPipeline';
 export { AtomPicker } from './AtomPicker';
 export { SpatialHash3D } from './SpatialHash';
 

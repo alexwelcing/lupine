@@ -63,11 +63,7 @@ pub fn polynomial_fit(data: &[(f64, f64)], degree: usize) -> FitResult {
         })
         .sum();
 
-    let r_squared = if ss_tot > 1e-30 {
-        1.0 - ss_res / ss_tot
-    } else {
-        0.0
-    };
+    let r_squared = if ss_tot > 1e-30 { 1.0 - ss_res / ss_tot } else { 0.0 };
     let rms = (ss_res / n as f64).sqrt();
 
     // Build equation string
@@ -83,15 +79,7 @@ pub fn polynomial_fit(data: &[(f64, f64)], degree: usize) -> FitResult {
 
     let param_names: Vec<String> = (0..d).map(|i| format!("c{}", i)).collect();
 
-    FitResult::new(
-        "polynomial",
-        &equation,
-        params,
-        param_names,
-        r_squared,
-        rms,
-        n,
-    )
+    FitResult::new("polynomial", &equation, params, param_names, r_squared, rms, n)
 }
 
 /// Find the best polynomial degree using AIC (Akaike Information Criterion).

@@ -8,8 +8,11 @@
 import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport, Environment } from '@react-three/drei';
-import { EffectComposer, SSAO, Bloom, ToneMapping, Vignette, DepthOfField } from '@react-three/postprocessing';
-import { ToneMappingMode, BlendFunction } from 'postprocessing';
+import { Perf } from 'r3f-perf';
+import { ScenePostprocessing } from './postprocess/ScenePostprocessing';
+import { POSTPROCESS_PRESETS } from './postprocess/presets';
+import { DevProbe } from './DevProbe';
+import { StateInspector } from './StateInspector';
 import * as THREE from 'three';
 import { XR, createXRStore, useXR } from '@react-three/xr';
 import { USDZExportHelper } from './export/USDZExportPipeline';
@@ -404,96 +407,24 @@ function CameraManager({
   return null;
 }
 
-function AutoDepthOfField() {
-  const { camera, controls } = useThree();
-  const autoDepthOfField = useStore(s => s.autoDepthOfField);
-  const dofEnabled = useStore(s => s.dof);
-  
-  useFrame(() => {
-    if (autoDepthOfField && dofEnabled && controls && (controls as any).target) {
-      const target = (controls as any).target as THREE.Vector3;
-      const dist = camera.position.distanceTo(target);
-      const currentDofFocus = useStore.getState().dofFocus;
-      const newFocus = dist * 100;
-      
-      // Update store only if it changed significantly (avoid micro-jitters)
-      if (Math.abs(currentDofFocus - newFocus) > 0.5) {
-        useStore.getState().setDOFFocus(newFocus);
-      }
-    }
-  });
-
+/** Sync the legacy `dof` boolean to whether the active preset has DOF
+ *  enabled. AnomalyTracker reads `dof` to know when to focus on hot atoms;
+ *  keeping this synced means the legacy field stays meaningful without
+ *  duplicating preset logic in the consumer. Migrate AnomalyTracker to read
+ *  the preset directly when convenient and delete this. */
+function PresetLegacyBridge() {
+  const presetId = useStore(s => s.postprocessPreset);
+  useEffect(() => {
+    const preset = POSTPROCESS_PRESETS[presetId];
+    if (!preset) return;
+    useStore.setState({
+      ssao: preset.ssao.enabled,
+      bloom: preset.bloom.enabled,
+      dof: preset.dof.enabled,
+      toneMapping: preset.toneMapping,
+    });
+  }, [presetId]);
   return null;
-}
-
-function PostProcessingEffects() {
-  const ssao = useStore(s => s.ssao);
-  const bloom = useStore(s => s.bloom);
-  const dof = useStore(s => s.dof);
-  const toneMapping = useStore(s => s.toneMapping);
-  const playing = useStore(s => s.playing);
-  const ssaoIntensity = useStore(s => s.ssaoIntensity);
-  const bloomIntensity = useStore(s => s.bloomIntensity);
-
-  const mode = useXR(state => state.mode);
-  const isImmersive = mode === 'immersive-ar' || mode === 'immersive-vr';
-
-  const dofRef = useRef<any>(null);
-
-  useFrame(() => {
-    if (dofRef.current) {
-      // Imperatively update the effect's focus distance to avoid re-rendering the composer
-      dofRef.current.focusDistance = useStore.getState().dofFocus / 100;
-    }
-  });
-
-  if (isImmersive) return null;
-
-  // Force EffectComposer to completely remount when effects toggle.
-  // This prevents r3f/postprocessing from leaking ghost 'Scene (Postprocessing)' nodes.
-  const composerKey = `${ssao}-${bloom}-${dof}-${playing}`;
-
-  return (
-    <EffectComposer key={composerKey} enableNormalPass={ssao} multisampling={playing ? 0 : 4}>
-      {ssao && (
-        <SSAO
-          radius={0.3}
-          intensity={ssaoIntensity * 70}
-          luminanceInfluence={0.5}
-          worldDistanceThreshold={100}
-          worldDistanceFalloff={5}
-          worldProximityThreshold={0.5}
-          worldProximityFalloff={0.3}
-        />
-      ) as any}
-      {bloom && (
-        <Bloom
-          intensity={bloomIntensity}
-          luminanceThreshold={0.7}
-          luminanceSmoothing={0.3}
-          mipmapBlur
-        />
-      ) as any}
-      {dof && (
-        <DepthOfField
-          ref={dofRef}
-          focalLength={0.02}
-          bokehScale={2}
-          height={480}
-        />
-      ) as any}
-      {toneMapping !== 'none' && (
-        <ToneMapping
-          mode={toneMapping === 'aces' ? ToneMappingMode.ACES_FILMIC : ToneMappingMode.REINHARD}
-        />
-      )}
-      <Vignette
-        offset={0.35}
-        darkness={0.55}
-        blendFunction={BlendFunction.NORMAL}
-      />
-    </EffectComposer>
-  );
 }
 
 import { Testbed } from './Testbed';
@@ -534,6 +465,19 @@ export default function App() {
   const environmentPreset = useStore(s => s.environmentPreset);
   const materialPreset = useStore(s => s.materialPreset);
   const colormap = useStore(s => s.colormap);
+  const atomColorSource = useStore(s => s.atomColorSource);
+  const postprocessPreset = useStore(s => s.postprocessPreset);
+  const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
+  // Compute IBL sky/ground for the active preset. Memoized so the prop
+  // identity stays stable across renders that don't change the preset.
+  const envSky = useMemo<[number, number, number]>(
+    () => POSTPROCESS_PRESETS[postprocessPreset].env.sky,
+    [postprocessPreset],
+  );
+  const envGround = useMemo<[number, number, number]>(
+    () => POSTPROCESS_PRESETS[postprocessPreset].env.ground,
+    [postprocessPreset],
+  );
   const ssao = useStore(s => s.ssao);
   const bloom = useStore(s => s.bloom);
   const dof = useStore(s => s.dof);
@@ -544,14 +488,8 @@ export default function App() {
   const flythroughPreview = useStore(s => s.flythroughPreview);
   const showBonds = useStore(s => s.showBonds);
   const bondCutoff = useStore(s => s.bondCutoff);
-  const bondStats = useStore(s => s.bondStats);
+  const useGpuBonds = useStore(s => s.useGpuBonds);
   const bondColorMode = useStore(s => s.bondColorMode);
-  const bondThresholdMode = useStore(s => s.bondThresholdMode);
-  const bondPercentileRange = useStore(s => s.bondPercentileRange);
-  const setBondStats = useStore(s => s.setBondStats);
-  const filamentMode = useStore(s => s.filamentMode);
-  const meamScreening = useStore(s => s.meamScreening);
-  const grDrivenCutoff = useStore(s => s.grDrivenCutoff);
   const renderStyle = useStore(s => s.renderStyle);
   const atomScale = useStore(s => s.atomScale);
   const activePanel = useStore(s => s.activePanel);
@@ -574,18 +512,6 @@ export default function App() {
   const ambientLightIntensity = useStore(s => s.ambientLightIntensity);
   const dirLightIntensity = useStore(s => s.dirLightIntensity);
   const atomTexture = useStore(s => s.atomTexture);
-
-  // Effective bond cutoff: percentile mode overrides manual slider
-  const effectiveBondCutoff = useMemo(() => {
-    if (grDrivenCutoff && bondStats?.bondLengthHistogramFirstMinimum != null) {
-      return bondStats.bondLengthHistogramFirstMinimum;
-    }
-    if (bondThresholdMode === 'percentile' && bondStats) {
-      const roundedPct = Math.round(bondPercentileRange[1] / 5) * 5;
-      return bondStats.percentiles[`p${roundedPct}`] ?? bondCutoff;
-    }
-    return bondCutoff;
-  }, [grDrivenCutoff, bondThresholdMode, bondStats, bondCutoff, bondPercentileRange]);
 
   // Spatial hash for atom picking
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
@@ -936,6 +862,12 @@ export default function App() {
             style={{ background: 'transparent' }}
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
+            {import.meta.env.DEV && (
+              <>
+                <Perf position="top-left" logsPerSecond={4} matrixUpdate />
+                <DevProbe />
+              </>
+            )}
             <XR store={xrStore}>
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
@@ -949,12 +881,21 @@ export default function App() {
                 <directionalLight position={[0, -5, -3]} intensity={dirLightIntensity * 0.15} color="#8888ff" />
               </>
             )}
-          {environmentPreset !== 'none' && (
-            <Environment preset={environmentPreset as any} />
-          )}
+          {/* HDRI environment, coupled to the postprocess preset. Bonds (which
+              use MeshPhysicalMaterial) automatically pick this up via
+              scene.environment for IBL specular — they reflect studio in
+              studio preset, sunset in cinematic, night in editorial, etc.
+              The store-level `environmentPreset` is now a fallback override
+              when explicitly set to anything other than 'studio' (the default). */}
+          {(() => {
+            const drei = POSTPROCESS_PRESETS[postprocessPreset].env.drei;
+            const override = environmentPreset !== 'studio' && environmentPreset !== 'none' ? environmentPreset : null;
+            const final = override ?? drei;
+            return final ? <Environment preset={final as any} /> : null;
+          })()}
 
             <CameraManager fileId={file?.name} center={center} distance={cameraDistance} />
-            <AutoDepthOfField />
+            <PresetLegacyBridge />
             <OrbitControls
               makeDefault
               enabled={!flythroughPreview}
@@ -988,6 +929,7 @@ export default function App() {
                   colorMode={colorMode}
                   colorProperty={colorProperty ?? undefined}
                   colormap={colormap}
+                  atomColorSource={atomColorSource}
                   scale={atomScale}
                   renderStyle={renderStyle}
                   onSpatialHash={setSpatialHash}
@@ -996,12 +938,15 @@ export default function App() {
                   botanicalMode={renderStyle === 'botanical'}
                   materialPreset={materialPreset}
                   atomTexture={atomTexture}
+                  envSky={envSky}
+                  envGround={envGround}
+                  propertyEmissionStrength={propertyEmissionStrength}
                 />
                 <Bonds
                     frame={currentFrame}
                     nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
                     interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
-                    maxBondLength={effectiveBondCutoff}
+                    maxBondLength={bondCutoff}
                     renderStyle={renderStyle}
                     colormap={colormap}
                     colorMode={colorMode}
@@ -1011,10 +956,11 @@ export default function App() {
                     botanicalMode={renderStyle === 'botanical'}
                     materialPreset={materialPreset}
                     visible={showBonds}
-                    onBondStats={setBondStats}
                     bondColorMode={bondColorMode}
-                    filamentMode={filamentMode}
-                    meamScreening={meamScreening}
+                    useGpu={useGpuBonds}
+                    atomColorSource={atomColorSource}
+                    onBondsUpdate={(info) => useStore.getState().reportBondsUpdate(info.source, info.count)}
+                    onGpuStatusChange={(status) => useStore.getState().setGpuBondsStatus(status)}
                   />
                 {showCell && (
                   <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />
@@ -1030,9 +976,11 @@ export default function App() {
             )}
 
 
-            <PostProcessingEffects />
+            <ScenePostprocessing />
             </XR>
           </Canvas>
+
+          {import.meta.env.DEV && <StateInspector />}
 
           {/* Scale bar for publication figures */}
           {file && currentFrame && showScaleBar && (

@@ -23,6 +23,8 @@ import { SpatialHash3D } from './SpatialHash';
 import { useGlobalTimer } from './useTimer';
 
 import { TYPE_COLORS, TYPE_RADII, COLORMAPS, BOTANICAL_COLORS, BOTANICAL_RADII, DEFAULT_TYPE_COLOR } from './constants';
+import { buildMaterialPaletteData } from './materials';
+import { getElementSpec, hexToRgb } from '@atlas/core';
 
 // ─── Types ───────────────────────────────────────────────────────────
 interface AtomsOptimizedProps {
@@ -43,6 +45,19 @@ interface AtomsOptimizedProps {
   botanicalMode?: boolean;
   materialPreset?: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
   atomTexture?: 'none' | 'scratched' | 'noise';
+  /** Where per-type atom colors come from. Overrides the legacy
+   *  colormap-only behavior. 'colormap' is the original default. */
+  atomColorSource?: 'colormap' | 'element' | 'botanical';
+  /** Synthetic IBL: sky and ground colors sampled by reflection vector
+   *  in the atom shader. Tied to the active postprocess preset by App.tsx
+   *  so cinematic metals reflect warm sunset, editorial reflect dark moody, etc. */
+  envSky?: [number, number, number];
+  envGround?: [number, number, number];
+  /** Strength of property-driven emission (0..1). When > 0 and colorMode
+   *  is 'property', atoms glow proportional to their normalized property
+   *  value × this strength × the colormap-mapped color. Reads as
+   *  "this atom is energetic". */
+  propertyEmissionStrength?: number;
 }
 
 // ─── GLSL Shaders ────────────────────────────────────────────────────
@@ -66,8 +81,13 @@ const IMPOSTOR_VERTEX = /* glsl */ `
   varying vec3 vViewCenter;
   varying float vRadius;
   varying float vViewRadius;
+  varying float vTypeId;
+  varying float vPropValue;
 
   void main() {
+    vTypeId = instanceTypeId;
+    vPropValue = instancePropValue;
+
     // ─── GPU-side color lookup ───
     if (uColorMode == 2) {
       // Property mode: sample colormap by normalized property value
@@ -106,10 +126,22 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
   varying vec3 vViewCenter;
   varying float vRadius;
   varying float vViewRadius;
+  varying float vTypeId;
+  varying float vPropValue;
 
   uniform mat4 projectionMatrix;
   uniform int uTextureMode; // 0: none, 1: noise, 2: scratched
-  uniform int uMaterialPreset; // 0: default, 1: matte, 2: metallic, 3: glass, 4: plastic
+  uniform int uColorMode; // 0=type, 1=uniform, 2=property — same scheme as vertex
+  uniform int uMaterialPreset; // 0: per-element (default), 1: matte, 2: metallic, 3: glass, 4: plastic
+  // 256×2 RGBA: row 0 = (metalness, roughness, anisotropy, subsurface),
+  //             row 1 = (emission r, emission g, emission b, intensity).
+  uniform sampler2D uMaterialPalette;
+  // IBL synthetic env (driven by postprocess preset).
+  uniform vec3 uSkyColor;
+  uniform vec3 uGroundColor;
+  // Property-driven emission strength. 0 disables; >0 makes atoms glow
+  // proportional to their normalized property value × colormap-mapped color.
+  uniform float uPropEmission;
 
   // Two-light setup in view space
   const vec3 LIGHT_DIR = normalize(vec3(0.4, 0.7, 0.6));
@@ -140,32 +172,120 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
     vec3 hitPoint = rayDir * t;
     vec3 normal = normalize(hitPoint - vViewCenter);
 
-    // Material presets approximation
-    float roughness = 0.5;
-    float metalness = 0.1;
-    if (uMaterialPreset == 1) { // matte
-      roughness = 0.85;
-      metalness = 0.05;
-    } else if (uMaterialPreset == 2) { // metallic
-      roughness = 0.2;
-      metalness = 0.8;
-    } else if (uMaterialPreset == 3) { // glass
-      roughness = 0.1;
-      metalness = 0.1;
-    } else if (uMaterialPreset == 4) { // plastic
-      roughness = 0.4;
-      metalness = 0.0;
-    }
+    // ─── Material lookup ────────────────────────────────────────────
+    // Default (0): sample per-element profile from the material palette.
+    // Presets 1-4: keep the legacy fixed-look behavior so the panel option
+    // still works as a global override.
+    float metalness, roughness, anisotropy, subsurface;
+    vec3 emissionColor = vec3(0.0);
+    float emissionIntensity = 0.0;
+    if (uMaterialPreset == 0) {
+      // Material palette is 256×2: row 0 at v=0.25 holds material params,
+      // row 1 at v=0.75 holds (emission rgb, intensity).
+      vec2 paletteUv = vec2((vTypeId + 0.5) / 256.0, 0.25);
+      vec4 m = texture2D(uMaterialPalette, paletteUv);
+      metalness = m.r;
+      roughness = m.g;
+      anisotropy = m.b;
+      subsurface = m.a;
 
-    // Blinn-Phong lighting
-    float diffuse1 = max(dot(normal, LIGHT_DIR), 0.0);
-    vec3 halfDir1 = normalize(LIGHT_DIR + vec3(0.0, 0.0, 1.0));
-    float specPower = mix(10.0, 100.0, 1.0 - roughness);
-    float spec1 = pow(max(dot(normal, halfDir1), 0.0), specPower) * mix(0.3, 1.5, metalness);
-    float diffuse2 = max(dot(normal, LIGHT_DIR_2), 0.0) * 0.3;
-    float ambient = 0.15;
-    float rim = 1.0 - max(dot(normal, vec3(0.0, 0.0, 1.0)), 0.0);
-    rim = pow(rim, 3.0) * mix(0.15, 0.5, metalness);
+      vec4 e = texture2D(uMaterialPalette, vec2(paletteUv.x, 0.75));
+      emissionColor = e.rgb;
+      emissionIntensity = e.a;
+    } else if (uMaterialPreset == 1) { metalness = 0.05; roughness = 0.85; anisotropy = 0.0; subsurface = 0.0; }
+    else if (uMaterialPreset == 2)   { metalness = 0.8;  roughness = 0.2;  anisotropy = 0.0; subsurface = 0.0; }
+    else if (uMaterialPreset == 3)   { metalness = 0.1;  roughness = 0.1;  anisotropy = 0.0; subsurface = 0.4; }
+    else if (uMaterialPreset == 4)   { metalness = 0.0;  roughness = 0.4;  anisotropy = 0.0; subsurface = 0.0; }
+    else                             { metalness = 0.1;  roughness = 0.5;  anisotropy = 0.0; subsurface = 0.0; }
+
+    // ─── Cook-Torrance microfacet shading (Tier 1 polish) ───────────
+    // Replaces the Blinn-Phong baseline. Same 4 per-element inputs
+    // (metalness/roughness/anisotropy/subsurface), much more material identity.
+    //
+    //   - GGX D + Smith G + Schlick F microfacet specular
+    //   - Burley-style wrap diffuse for soft shadow rolloff
+    //   - Subsurface backlight: light "transmits" to the shadow side for
+    //     translucent atoms (H, O, noble gases) — they read as dewdrops
+    //     not painted balls
+    //   - Schlick fresnel ramps reflectivity at grazing — gives Cu/Au/Ag
+    //     the chrome-edge that distinguishes them from plastic
+    //   - Anisotropic D-term widens the highlight along screen-space y,
+    //     reads as "brushed" for high-anisotropy metals
+    //
+    // We're in view space here, so the camera direction is +z from any
+    // fragment. That simplifies F/G calculations.
+    vec3 V = vec3(0.0, 0.0, 1.0); // view direction in view space, fragment-relative
+    vec3 L = LIGHT_DIR;
+    vec3 H = normalize(L + V);
+    float NoL = max(dot(normal, L), 0.0);
+    float NoV = max(dot(normal, V), 0.0);
+    float NoH = max(dot(normal, H), 0.0);
+    float LoH = max(dot(L, H), 0.0);
+
+    // GGX normal distribution. alpha grows with roughness² (the standard
+    // perceptually-linear remap). Anisotropy stretches the lobe along
+    // screen-space y by reducing alpha in that direction — a placeholder
+    // until atoms get a real tangent attribute (impostor spheres are
+    // direction-less, so this is the best approximation without a per-
+    // atom orientation hint).
+    float alpha = roughness * roughness;
+    float alphaY = alpha * mix(1.0, 0.4, anisotropy);
+    float alphaX = alpha;
+    // Project normal into screen space for anisotropy axis. nx/ny are how
+    // far the normal tilts in screen-space x/y; the squared form is what
+    // GGX needs. For isotropic atoms (anisotropy=0), alphaY==alphaX and
+    // this collapses to standard GGX D.
+    float nxSq = normal.x * normal.x;
+    float nySq = normal.y * normal.y;
+    float nzSq = normal.z * normal.z;
+    float alphaProjSq = (alphaX * alphaX) * nxSq + (alphaY * alphaY) * nySq + alpha * alpha * nzSq;
+    float D_denom = (NoH * NoH) * (alphaProjSq - 1.0) + 1.0;
+    float D = alphaProjSq / max(3.14159 * D_denom * D_denom, 1e-6);
+
+    // Smith G (height-correlated approximation). Cheap.
+    float k = (alpha + 1.0) * (alpha + 1.0) / 8.0;
+    float G_V = NoV / (NoV * (1.0 - k) + k);
+    float G_L = NoL / (NoL * (1.0 - k) + k);
+    float G = G_V * G_L;
+
+    // Schlick fresnel. F0 is 0.04 for dielectrics (typical glass/plastic),
+    // base color for metals. The (1-F0)*(1-LoH)^5 ramp gives chrome the
+    // bright edge.
+    vec3 F0 = mix(vec3(0.04), vColor, metalness);
+    float fresnelRamp = pow(1.0 - LoH, 5.0);
+    vec3 F = F0 + (vec3(1.0) - F0) * fresnelRamp;
+
+    // Cook-Torrance specular term. The 4 NoL NoV in the denominator is
+    // standard; the max protects against divide-by-zero at silhouettes.
+    vec3 specular = (D * G) * F / max(4.0 * NoL * NoV, 1e-6);
+
+    // ─── Diffuse with subsurface ──────────────────────────────────────
+    // Burley wrap: smooths the shadow terminator. wrapHalf=1 is half-Lambert.
+    float wrapHalf = 0.5; // tuneable; higher = softer transition
+    float wrapNoL = max((dot(normal, L) + wrapHalf) / (1.0 + wrapHalf), 0.0);
+
+    // Subsurface backlight: when the normal points away from the light,
+    // simulate light transmitting through the material to the shadow side.
+    // This is what makes a dewdrop, milky glass, or noble-gas atom read as
+    // "lit from within" rather than as a painted shadow.
+    float backLight = max(dot(-normal, L), 0.0);
+    backLight = pow(backLight, 3.0) * subsurface;
+
+    // Combine: dielectric portion uses (1-F) energy conservation; metalness
+    // attenuates the diffuse term entirely (metals don't have diffuse).
+    vec3 kD = (vec3(1.0) - F) * (1.0 - metalness);
+
+    // Secondary fill light (existing two-light setup) — half-strength,
+    // also wrap-shaded for consistency.
+    float wrapNoL2 = max((dot(normal, LIGHT_DIR_2) + wrapHalf) / (1.0 + wrapHalf), 0.0) * 0.3;
+
+    float ambient = 0.15 + subsurface * 0.15; // subsurface elements get a touch more ambient
+
+    // Rim — Schlick-style fresnel rim for visual depth. Stronger on
+    // metallic and subsurface materials, fades on matte dielectrics.
+    float rim = pow(1.0 - NoV, 4.0);
+    float rimStrength = mix(0.15, 0.5, metalness) + subsurface * 0.4;
+    vec3 rimColor = mix(vec3(1.0), vColor, metalness) * rim * rimStrength;
 
     // Apply texture based on uniform
     vec3 texColor = vColor;
@@ -181,8 +301,45 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
       }
     }
 
-    float diffuseFactor = mix(1.0, 0.4, metalness);
-    vec3 color = texColor * (ambient + (diffuse1 * 0.7 + diffuse2) * diffuseFactor) + vec3(spec1) + vec3(rim);
+    // ─── Synthetic IBL — sky-ground gradient sampled by reflection ──
+    // Sky/ground come from uniforms set by App.tsx based on the active
+    // postprocess preset. Cinematic gives warm sunset reflections;
+    // editorial gives moody dark; paper gives neutral; etc.
+    vec3 reflectVec = reflect(-V, normal);
+    float skyMix = clamp(reflectVec.y * 0.5 + 0.5, 0.0, 1.0);
+    vec3 envSpec = mix(uGroundColor, uSkyColor, skyMix);
+    // Roughness fall-off: blur reflection by lerping toward the env average.
+    vec3 envAvg = (uSkyColor + uGroundColor) * 0.5;
+    envSpec = mix(envSpec, envAvg, roughness);
+
+    // Final combine — Cook-Torrance + Burley diffuse + subsurface backlight + rim + IBL + emission.
+    //   - Diffuse uses Burley wrap (wrapNoL) which softens the shadow line.
+    //   - kD = (1-F)(1-metalness) implements energy conservation: metals
+    //     have no diffuse contribution, dielectrics share energy with spec.
+    //   - IBL specular: F0 * envSpec gives metals a real-feeling environment
+    //     reflection that varies with viewing angle. Replaces the flat
+    //     F0 * (ambient + 0.4) baseline.
+    //   - IBL diffuse: envAvg as the ambient-irradiance color (tinted!).
+    //   - Specular is the full Cook-Torrance term × NoL.
+    //   - backLight × texColor gives translucent atoms a subtle glow on
+    //     the shadow side — dewdrop / glass / noble gas read.
+    //   - Rim is fresnel-driven, color-tinted by metalness.
+    //   - Emission: per-element baseline glow from the palette row 1.
+    vec3 envIrradiance = envAvg * (ambient + 0.4);
+    vec3 diffuseTerm = kD * texColor * (envIrradiance + wrapNoL * 0.7 + wrapNoL2);
+    vec3 iblSpecular = F0 * envSpec * (0.5 + 0.5 * (1.0 - roughness));
+    vec3 specularTerm = specular * NoL * 1.5;
+    vec3 backTerm = texColor * backLight * 0.6;
+    // Per-element emission baseline + property-driven emission boost.
+    //   - Baseline: per-element emission × intensity (radioactives glow).
+    //   - Property-driven: when in property color mode, atoms with high
+    //     normalized property emit additional light tinted by the colormap-
+    //     mapped color. Reads as "this atom is doing something."
+    vec3 emissive = emissionColor * emissionIntensity;
+    if (uColorMode == 2 && uPropEmission > 0.0) {
+      emissive += vColor * vPropValue * uPropEmission;
+    }
+    vec3 color = diffuseTerm + iblSpecular + specularTerm + backTerm + rimColor + emissive;
 
     // Correct depth via projected hit point
     vec4 clipPos = projectionMatrix * vec4(hitPoint, 1.0);
@@ -208,6 +365,30 @@ function buildPaletteTexture(
     data[i * 4 + 3] = 255;
   }
   const tex = new THREE.DataTexture(data, 256, 1, THREE.RGBAFormat);
+  tex.minFilter = THREE.NearestFilter;
+  tex.magFilter = THREE.NearestFilter;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+/**
+ * Build the per-element material palette texture. 256×2 RGBA:
+ *   - row 0 (sampled at v=0.25): material params (metalness, roughness, anisotropy, subsurface)
+ *   - row 1 (sampled at v=0.75): emission (r, g, b, intensity)
+ *
+ * Stored as 8-bit; both material params (0..1) and emission color (0..1)
+ * fit. Emission intensity in alpha is also 0..1.
+ *
+ * Reads the entire periodic table from `materials/elementProfiles.ts`,
+ * so adding a new element override there immediately reflects here.
+ */
+function buildMaterialPaletteTexture(): THREE.DataTexture {
+  const floats = buildMaterialPaletteData(); // length 256 * 2 * 4
+  const data = new Uint8Array(256 * 2 * 4);
+  for (let i = 0; i < data.length; i++) {
+    data[i] = Math.max(0, Math.min(255, Math.round(floats[i] * 255)));
+  }
+  const tex = new THREE.DataTexture(data, 256, 2, THREE.RGBAFormat);
   tex.minFilter = THREE.NearestFilter;
   tex.magFilter = THREE.NearestFilter;
   tex.needsUpdate = true;
@@ -254,6 +435,10 @@ export function AtomsOptimized({
   hiddenAtomTypes,
   atomTypeScales,
   botanicalMode = false,
+  atomColorSource = 'colormap',
+  envSky = [0.65, 0.72, 0.85],
+  envGround = [0.30, 0.26, 0.22],
+  propertyEmissionStrength = 0,
   materialPreset = 'default',
   atomTexture = 'none',
 }: AtomsOptimizedProps) {
@@ -315,6 +500,8 @@ export function AtomsOptimized({
     const paletteTex = buildPaletteTexture((i) => DEFAULT_TYPE_COLOR);
     const colormapTex = buildColormapTexture((t) => [t, t, t]);
 
+    const materialPaletteTex = buildMaterialPaletteTexture();
+
     return new THREE.ShaderMaterial({
       vertexShader: IMPOSTOR_VERTEX,
       fragmentShader: IMPOSTOR_FRAGMENT,
@@ -325,6 +512,13 @@ export function AtomsOptimized({
         uUniformColor: { value: new THREE.Vector3(0.6, 0.6, 0.6) },
         uTextureMode: { value: 0 },
         uMaterialPreset: { value: 0 },
+        // Static — periodic table doesn't change at runtime.
+        uMaterialPalette: { value: materialPaletteTex },
+        // IBL synthetic env (driven by postprocess preset via props)
+        uSkyColor: { value: new THREE.Vector3(0.65, 0.72, 0.85) },
+        uGroundColor: { value: new THREE.Vector3(0.30, 0.26, 0.22) },
+        // Property-driven emission strength
+        uPropEmission: { value: 0 },
       },
       depthWrite: true,
       depthTest: true,
@@ -373,6 +567,11 @@ export function AtomsOptimized({
     if (materialPreset === 'plastic') matMode = 4;
     uniforms.uMaterialPreset.value = matMode;
 
+    // IBL env sync — push the active preset's sky/ground into the shader.
+    uniforms.uSkyColor.value.set(envSky[0], envSky[1], envSky[2]);
+    uniforms.uGroundColor.value.set(envGround[0], envGround[1], envGround[2]);
+    uniforms.uPropEmission.value = propertyEmissionStrength;
+
     if (colorMode === 'uniform') {
       const [r, g, b] = mapFn(0.0);
       uniforms.uUniformColor.value.set(r, g, b);
@@ -381,13 +580,26 @@ export function AtomsOptimized({
     // Rebuild the 256×1 type palette (768 bytes, instant)
     const oldPalette = uniforms.uPalette.value as THREE.DataTexture;
 
-    if (botanicalMode) {
+    // Source the per-type palette from one of three places. botanicalMode
+    // forces botanical regardless of atomColorSource — historical UX.
+    const effectiveSource = botanicalMode ? 'botanical' : atomColorSource;
+
+    if (effectiveSource === 'botanical') {
       uniforms.uPalette.value = buildPaletteTexture((typeId) => {
         const c = BOTANICAL_COLORS[typeId] ?? [0.3, 0.5, 0.2];
         return [c[0], c[1], c[2]];
       });
+    } else if (effectiveSource === 'element') {
+      // Element-natural colors from the periodic table data. Cu is warm, Au
+      // is gold, O is red — no colormap mediation. Pairs with the per-element
+      // material identity for a chemically-honest read.
+      uniforms.uPalette.value = buildPaletteTexture((typeId) => {
+        const spec = getElementSpec(typeId);
+        return hexToRgb(spec.color);
+      });
     } else {
-      // Map types through the active colormap so changing colormap changes atom colors
+      // 'colormap' — types mapped through the active colormap by rank.
+      // Generic, abstract; fine when chemistry isn't the point.
       const typeSet = new Set<number>();
       for (let i = 0; i < frame.natoms; i++) typeSet.add(frame.types[i]);
       const sortedTypes = Array.from(typeSet).sort((a, b) => a - b);
@@ -408,7 +620,8 @@ export function AtomsOptimized({
     uniforms.uColormap.value = buildColormapTexture(mapFn);
     oldColormap.dispose();
 
-  }, [colorMode, colormap, mapFn, botanicalMode, material, frame.types, frame.natoms, atomTexture, materialPreset]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, envSky[0], envSky[1], envSky[2], envGround[0], envGround[1], envGround[2], propertyEmissionStrength]);
 
   // ─── Upload frame data to GPU (runs ONCE per frame change) ────────
   const uploadFrame = useCallback(() => {

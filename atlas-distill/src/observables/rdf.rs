@@ -9,7 +9,11 @@ use crate::ingest::trajectory::Frame;
 /// Compute the RDF averaged over a set of frames.
 ///
 /// Returns (r, g(r)) pairs.
-pub fn compute_rdf(frames: &[Frame], n_bins: usize, r_max: Option<f64>) -> Vec<(f64, f64)> {
+pub fn compute_rdf(
+    frames: &[Frame],
+    n_bins: usize,
+    r_max: Option<f64>,
+) -> Vec<(f64, f64)> {
     if frames.is_empty() {
         return vec![];
     }
@@ -124,11 +128,7 @@ pub fn coordination_number(rdf: &[(f64, f64)], rho: f64) -> Option<f64> {
     }
 
     // Integrate 4πρ ∫₀^r_min r² g(r) dr
-    let dr = if rdf.len() > 1 {
-        rdf[1].0 - rdf[0].0
-    } else {
-        return None;
-    };
+    let dr = if rdf.len() > 1 { rdf[1].0 - rdf[0].0 } else { return None };
     let mut cn = 0.0;
     for i in 0..=min_idx {
         let (r, g) = rdf[i];

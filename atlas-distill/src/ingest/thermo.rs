@@ -164,10 +164,7 @@ Loop time of 12.3456 on 4 procs for 200 steps with 1000 atoms
 ";
         let runs = parse_log_str(log).unwrap();
         assert_eq!(runs.len(), 1);
-        assert_eq!(
-            runs[0].columns,
-            vec!["Step", "Temp", "E_pair", "TotEng", "Press"]
-        );
+        assert_eq!(runs[0].columns, vec!["Step", "Temp", "E_pair", "TotEng", "Press"]);
         assert_eq!(runs[0].nrows, 3);
     }
 
