@@ -116,6 +116,160 @@ function HeroSection() {
   )
 }
 
+/* ─── Evolution Feature (2nd primary) ─── */
+function EvolutionFeature() {
+  const stages = [
+    { label: 'Organize', desc: 'Typed corpus of claims + literature, 7,940 records.' },
+    { label: 'Harden', desc: 'Bootstrap, permutation, matched-n controls — kill artifacts.' },
+    { label: 'Evaluate', desc: 'Strict hypothesis lifecycle with a Lean-readiness gate.' },
+  ]
+
+  return (
+    <section className="relative px-6 py-20 lg:py-24">
+      <div
+        className="absolute inset-0 -z-[1] pointer-events-none opacity-60"
+        style={{
+          background:
+            'radial-gradient(ellipse 50% 60% at 30% 50%, rgba(139,92,246,0.08), transparent 70%)',
+        }}
+      />
+      <div className="max-w-[1100px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+          {/* Left column — message */}
+          <div className="lg:col-span-7">
+            <Reveal>
+              <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--violet-300)]">
+                The Autonomous Research Engine
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2
+                className="font-serif font-normal leading-[1.15] mb-6 text-[var(--slate-100)]"
+                style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}
+              >
+                The loop that{' '}
+                <em
+                  className="italic text-transparent bg-clip-text"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(135deg, var(--lupine-400), var(--violet-300))',
+                  }}
+                >
+                  caught itself.
+                </em>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p
+                className="font-light leading-relaxed mb-4 text-[var(--slate-300)]"
+                style={{ fontSize: 17, maxWidth: 580 }}
+              >
+                Five rounds, four days, and the system caught two of its own statistical artifacts
+                using the same matched-n bootstrap method — once on a d-band-fullness claim, once
+                on a MEAM-anomaly claim. Two different scientific domains, same self-correction
+                operator. That is the harden stage doing its job repeatedly.
+              </p>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <p
+                className="font-light leading-relaxed mb-8 text-[var(--slate-400)]"
+                style={{ fontSize: 15, maxWidth: 580 }}
+              >
+                Read the round-by-round trail of how the canonical hypotheses moved, why
+                refutations always leave behind a narrower defensible claim, and how this projects
+                to a 10⁷-record, thousand-round version under BigQuery + GCP.
+              </p>
+            </Reveal>
+            <Reveal delay={0.4}>
+              <div className="flex gap-4 flex-wrap">
+                <Link
+                  to="/evolution"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, var(--violet-600, #7c3aed), var(--lupine-600))',
+                  }}
+                >
+                  Read the Evolution Report
+                </Link>
+                <Link
+                  to="/process"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    color: 'var(--slate-200)',
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid var(--slate-700)',
+                  }}
+                >
+                  Operating Report
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Right column — three-stage visual */}
+          <div className="lg:col-span-5">
+            <Reveal delay={0.2}>
+              <div
+                className="rounded-2xl p-6 lg:p-7"
+                style={{
+                  background:
+                    'linear-gradient(160deg, rgba(139,92,246,0.06), rgba(59,130,246,0.04))',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}
+              >
+                <div className="text-[10px] font-bold uppercase tracking-[0.3em] mb-5 text-[var(--violet-300)]">
+                  The three-stage cycle
+                </div>
+                <div className="space-y-4">
+                  {stages.map((s, i) => (
+                    <div
+                      key={s.label}
+                      className="flex items-start gap-4 pb-4"
+                      style={{
+                        borderBottom:
+                          i < stages.length - 1
+                            ? '1px solid rgba(255,255,255,0.05)'
+                            : undefined,
+                      }}
+                    >
+                      <div
+                        className="font-serif font-bold text-2xl shrink-0 w-10 text-center"
+                        style={{ color: 'var(--lupine-400)' }}
+                      >
+                        {i + 1}
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-[var(--slate-100)] mb-1">
+                          {s.label}
+                        </div>
+                        <div className="text-[13px] leading-relaxed text-[var(--slate-400)]">
+                          {s.desc}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div
+                  className="mt-5 pt-5 text-center"
+                  style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+                >
+                  <div className="font-serif text-3xl font-bold text-[var(--lupine-400)] leading-none mb-1">
+                    2 / 2
+                  </div>
+                  <div className="text-[10px] uppercase tracking-widest text-[var(--slate-500)]">
+                    Confounders caught · Same method · Two days
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Stats Strip ─── */
 function StatsStrip() {
   const stats = [
@@ -330,6 +484,7 @@ function LandingPage() {
       <Header />
       <main>
         <HeroSection />
+        <EvolutionFeature />
         <StatsStrip />
         <WhatWeBuild />
         <WhyLupine />

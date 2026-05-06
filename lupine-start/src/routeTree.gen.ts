@@ -16,6 +16,7 @@ import { Route as ProcessRouteImport } from './routes/process'
 import { Route as OpsRouteImport } from './routes/ops'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as InvestorRelationsRouteImport } from './routes/investor-relations'
+import { Route as EvolutionRouteImport } from './routes/evolution'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as AtlasViewerRouteImport } from './routes/atlas-viewer'
 import { Route as AboutRouteImport } from './routes/about'
@@ -56,6 +57,11 @@ const InvestorRelationsRoute = InvestorRelationsRouteImport.update({
   path: '/investor-relations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EvolutionRoute = EvolutionRouteImport.update({
+  id: '/evolution',
+  path: '/evolution',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
   path: '/console',
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/atlas-viewer': typeof AtlasViewerRoute
   '/console': typeof ConsoleRoute
+  '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/atlas-viewer': typeof AtlasViewerRoute
   '/console': typeof ConsoleRoute
+  '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/atlas-viewer': typeof AtlasViewerRoute
   '/console': typeof ConsoleRoute
+  '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/atlas-viewer'
     | '/console'
+    | '/evolution'
     | '/investor-relations'
     | '/live'
     | '/ops'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/atlas-viewer'
     | '/console'
+    | '/evolution'
     | '/investor-relations'
     | '/live'
     | '/ops'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/atlas-viewer'
     | '/console'
+    | '/evolution'
     | '/investor-relations'
     | '/live'
     | '/ops'
@@ -164,6 +176,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AtlasViewerRoute: typeof AtlasViewerRoute
   ConsoleRoute: typeof ConsoleRoute
+  EvolutionRoute: typeof EvolutionRoute
   InvestorRelationsRoute: typeof InvestorRelationsRoute
   LiveRoute: typeof LiveRoute
   OpsRoute: typeof OpsRoute
@@ -224,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvestorRelationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/evolution': {
+      id: '/evolution'
+      path: '/evolution'
+      fullPath: '/evolution'
+      preLoaderRoute: typeof EvolutionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/console': {
       id: '/console'
       path: '/console'
@@ -260,6 +280,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AtlasViewerRoute: AtlasViewerRoute,
   ConsoleRoute: ConsoleRoute,
+  EvolutionRoute: EvolutionRoute,
   InvestorRelationsRoute: InvestorRelationsRoute,
   LiveRoute: LiveRoute,
   OpsRoute: OpsRoute,
