@@ -123,11 +123,19 @@ function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
   const posArr = basePos.array;
   const normArr = baseNorm ? baseNorm.array : null;
 
+  // Bond mesh applies per-instance radius taper inside its custom shader via the
+  // `radiusBT` instanced attribute. The USDZ exporter strips shaders, so we have
+  // to bake the same `mix(radiusBT.x, radiusBT.y, position.y + 0.5)` lateral
+  // scaling into the vertex positions here — otherwise every bond exports as a
+  // unit-radius cylinder.
+  const radiusBTAttr = baseGeom.getAttribute('radiusBT') as THREE.InstancedBufferAttribute | undefined;
+  const radiusBTArr = radiusBTAttr ? (radiusBTAttr.array as ArrayLike<number>) : null;
+
   for (let i = 0; i < N; i++) {
     im.getMatrixAt(i, _bakeMat4);
     if (hasInstanceColor) im.getColorAt(i, _bakeCol);
     else _bakeCol.setRGB(1, 1, 1);
-    
+
     _bakeMat3.getNormalMatrix(_bakeMat4);
 
     const m = _bakeMat4.elements;
@@ -140,12 +148,21 @@ function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
     const n10 = n[1], n11 = n[4], n12 = n[7];
     const n20 = n[2], n21 = n[5], n22 = n[8];
 
+    const rB = radiusBTArr ? radiusBTArr[i * 2]     : 1;
+    const rT = radiusBTArr ? radiusBTArr[i * 2 + 1] : 1;
+
     const vBase = i * vPerInstance;
     for (let v = 0; v < vPerInstance; v++) {
       const srcOff = v * 3;
-      const x = posArr[srcOff];
+      let x = posArr[srcOff];
       const y = posArr[srcOff + 1];
-      const z = posArr[srcOff + 2];
+      let z = posArr[srcOff + 2];
+
+      if (radiusBTArr) {
+        const r = rB + (rT - rB) * (y + 0.5);
+        x *= r;
+        z *= r;
+      }
 
       const dstOff = (vBase + v) * 3;
       positions[dstOff]     = m00 * x + m01 * y + m02 * z + m03;

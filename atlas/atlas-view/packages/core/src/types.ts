@@ -260,6 +260,23 @@ export function encodeState(state: Partial<VisualizationState>): string {
 }
 
 /** Decode visualization state from a URL parameter */
+// ─── Bond Statistics ────────────────────────────────────────────────
+
+/** Real-time bond topology statistics computed from detected pairs */
+export interface BondStats {
+  count: number;
+  minLength: number;
+  maxLength: number;
+  meanLength: number;
+  medianLength: number;
+  stdDev: number;
+  histogram: { bins: number[]; binEdges: number[] };
+  percentiles: Record<string, number>;
+  typePairCounts: Record<string, number>;
+  typePairMeans: Record<string, number>; // mean length per pair type
+  bondLengthHistogramFirstMinimum: number | null; // first minimum of bond-length histogram (NOT a true g(r) minimum — computed from detected bond pairs only)
+}
+
 export function decodeState(encoded: string): Partial<VisualizationState> {
   try {
     return JSON.parse(atob(encoded));
