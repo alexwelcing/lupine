@@ -7,7 +7,7 @@
 
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
+import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle, BondStats } from '@atlas/core/types';
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 
 export interface ExportRequest {
@@ -51,6 +51,13 @@ export interface AppState {
   showAxes: boolean;
   showBonds: boolean;
   bondCutoff: number;
+  bondStats: BondStats | null;
+  bondColorMode: 'type' | 'length' | 'uniform';
+  bondThresholdMode: 'manual' | 'percentile';
+  bondPercentileRange: [number, number];
+  filamentMode: boolean;
+  meamScreening: boolean;
+  grDrivenCutoff: boolean;
   renderStyle: RenderStyle;
   atomScale: number;
   backgroundPreset: string;
@@ -165,6 +172,14 @@ export interface AppState {
   toggleAxes: () => void;
   toggleBonds: () => void;
   setBondCutoff: (cutoff: number) => void;
+  setBondStats: (stats: BondStats | null) => void;
+  setBondColorMode: (mode: 'type' | 'length' | 'uniform') => void;
+  setBondThresholdMode: (mode: 'manual' | 'percentile') => void;
+  setBondPercentileRange: (range: [number, number]) => void;
+  applyPercentileCutoff: () => void;
+  toggleFilamentMode: () => void;
+  toggleMeamScreening: () => void;
+  toggleGrDrivenCutoff: () => void;
   setRenderStyle: (style: RenderStyle) => void;
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
@@ -209,6 +224,13 @@ const DEFAULTS = {
   showAxes: true,
   showBonds: false,
   bondCutoff: 2.5,
+  bondStats: null,
+  bondColorMode: 'type' as const,
+  bondThresholdMode: 'manual' as const,
+  bondPercentileRange: [5, 95] as [number, number],
+  filamentMode: false,
+  meamScreening: false,
+  grDrivenCutoff: false,
   renderStyle: 'standard' as RenderStyle,
   atomScale: 1.0,
   backgroundPreset: 'deep',
@@ -338,6 +360,22 @@ export const useStore = create<AppState>()(
     toggleAxes: () => set(s => ({ showAxes: !s.showAxes })),
     toggleBonds: () => set(s => ({ showBonds: !s.showBonds })),
     setBondCutoff: (bondCutoff) => set({ bondCutoff }),
+    setBondStats: (bondStats) => set({ bondStats }),
+    setBondColorMode: (bondColorMode) => set({ bondColorMode }),
+    setBondThresholdMode: (bondThresholdMode) => set({ bondThresholdMode }),
+    setBondPercentileRange: (bondPercentileRange) => set({ bondPercentileRange }),
+    toggleFilamentMode: () => set(s => ({ filamentMode: !s.filamentMode })),
+    toggleMeamScreening: () => set(s => ({ meamScreening: !s.meamScreening })),
+    toggleGrDrivenCutoff: () => set(s => ({ grDrivenCutoff: !s.grDrivenCutoff })),
+    applyPercentileCutoff: () => {
+      const s = get();
+      if (!s.bondStats) return;
+      const upperPct = s.bondPercentileRange[1];
+      // Round to nearest 5 since we compute percentiles in 5% increments
+      const roundedPct = Math.round(upperPct / 5) * 5;
+      const val = s.bondStats.percentiles[`p${roundedPct}`];
+      if (val !== undefined) set({ bondCutoff: val });
+    },
     setRenderStyle: (renderStyle) => set({ renderStyle }),
     setAtomScale: (atomScale) => set({ atomScale }),
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
@@ -573,6 +611,12 @@ export const useStore = create<AppState>()(
       if (s.toneMapping !== 'aces')                    delta.tm = s.toneMapping;
       if (s.showBonds)                                 delta.bonds = 1;
       if (r(s.bondCutoff) !== 2.5)                     delta.bc = r(s.bondCutoff);
+      if (s.bondColorMode !== 'type')                  delta.bcm = s.bondColorMode;
+      if (s.bondThresholdMode !== 'manual')            delta.btm = s.bondThresholdMode;
+      if (!arrEq(s.bondPercentileRange, [5, 95]))      delta.bpr = s.bondPercentileRange;
+      if (s.filamentMode)                              delta.fm = 1;
+      if (s.meamScreening)                             delta.ms = 1;
+      if (s.grDrivenCutoff)                            delta.gr = 1;
       if (s.renderStyle !== 'standard')                delta.rs = s.renderStyle;
       if (r(s.ambientLightIntensity) !== 0.35)         delta.ali = r(s.ambientLightIntensity);
       if (r(s.dirLightIntensity) !== 1.2)              delta.dli = r(s.dirLightIntensity);
@@ -615,6 +659,12 @@ export const useStore = create<AppState>()(
           toneMapping: s.tm ?? 'aces',
           showBonds: s.bonds === 1,
           bondCutoff: s.bc ?? 2.5,
+          bondColorMode: s.bcm ?? 'type',
+          bondThresholdMode: s.btm ?? 'manual',
+          bondPercentileRange: s.bpr ?? [5, 95],
+          filamentMode: s.fm === 1,
+          meamScreening: s.ms === 1,
+          grDrivenCutoff: s.gr === 1,
           renderStyle: s.rs ?? 'standard',
           ambientLightIntensity: s.ali ?? 0.35,
           dirLightIntensity: s.dli ?? 1.2,
