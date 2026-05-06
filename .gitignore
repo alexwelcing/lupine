@@ -35,3 +35,11 @@ atlas/nist_ipr/mirror.log
 
 # OpenKIM API cache
 .atlas-cache/
+
+# atlas-view verify-viewer screenshot artifacts
+atlas/atlas-view/.verify-artifacts/
+
+# Astro / Playwright build + test outputs (lupine-site)
+lupine-site/.astro/
+lupine-site/playwright-report/
+lupine-site/test-results/

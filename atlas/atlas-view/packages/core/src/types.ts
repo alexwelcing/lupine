@@ -173,6 +173,85 @@ export interface ExportVideoOptions {
   orbitSpeed: number;       // degrees per frame for orbit mode
 }
 
+// ─── Bond Engine Types ──────────────────────────────────────────────
+
+/** Origin of bond data — tracks provenance for comparison */
+export type BondSourceType = 'byob' | 'cpu-scientific' | 'gpu-compute';
+
+/** Per-bond metadata for energy/force/order coloring */
+export interface BondProperties {
+  /** Bond order (1.0 = single, 2.0 = double, etc.) */
+  order?: Float32Array;
+  /** Bond energy in frame units (eV, kcal/mol, etc.) */
+  energy?: Float32Array;
+  /** Bond force magnitude */
+  force?: Float32Array;
+  /** MEAM angular screening factor (0-1) */
+  screening?: Float32Array;
+  /** Arbitrary named per-bond scalars */
+  custom?: Map<string, Float32Array>;
+}
+
+/** A complete bond dataset for one frame */
+export interface BondData {
+  /** Source provenance */
+  source: BondSourceType;
+  /** Flat bond pairs [a0,b0, a1,b1, ...] */
+  pairs: Int32Array;
+  /** Number of bonds */
+  count: number;
+  /** Per-bond distances (computed at detection time) */
+  distances: Float32Array;
+  /** Optional per-bond properties */
+  properties?: BondProperties;
+  /** Detection parameters used (for reproducibility) */
+  params?: {
+    cutoff: number;
+    method: string;
+    tolerance: number;
+    periodic: boolean;
+    timestamp: number;
+  };
+}
+
+/** Real-time bond topology statistics */
+export interface BondStats {
+  count: number;
+  minLength: number;
+  maxLength: number;
+  meanLength: number;
+  medianLength: number;
+  stdDev: number;
+  histogram: { bins: number[]; binEdges: number[] };
+  percentiles: Record<string, number>;
+  typePairCounts: Record<string, number>;
+  /** Mean bond length per type pair */
+  typePairMeans: Record<string, number>;
+  /** First minimum of bond-length histogram (NOT a g(r) minimum) */
+  histogramFirstMinimum: number | null;
+}
+
+/** Divergence analysis between two bond sources */
+export interface BondDivergence {
+  /** Bonds present in source A but not B */
+  onlyInA: Int32Array;
+  /** Bonds present in source B but not A */
+  onlyInB: Int32Array;
+  /** Bonds present in both with length differences */
+  shared: {
+    pairs: Int32Array;
+    lengthDiffMean: number;
+    lengthDiffStdDev: number;
+    maxDivergence: { pair: [number, number]; diff: number };
+  };
+  /** |A∩B| / |A∪B| — 1.0 means identical topology */
+  jaccardIndex: number;
+  /** |A∩B| / |B| — fraction of B's bonds also in A */
+  precisionVsA: number;
+  /** |A∩B| / |A| — fraction of A's bonds also in B */
+  recallVsA: number;
+}
+
 // ─── URL state serialization ────────────────────────────────────────
 
 /** Encode visualization state into a URL-safe string for sharing */

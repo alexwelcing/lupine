@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupine Materials Science — Investor Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           LUPINE MATERIALS SCIENCE — PITCH DECK
+           12-Slide Investor Presentation
+           Navigate: Arrow keys, Space, or click slide indicators
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            --lupine-900: #1a1d3d;
+            --lupine-800: #252a52;
+            --lupine-700: #2e3a87;
+            --lupine-600: #3d4db3;
+            --lupine-500: #5565d4;
+            --lupine-400: #7b8ae0;
+            --lupine-300: #9ba6ea;
+            --lupine-200: #c5cdf3;
+            --lupine-100: #e8ebfa;
+
+            --violet-700: #5b3a8c;
+            --violet-500: #8b6bc4;
+            --violet-300: #b9a0e0;
+
+            --slate-950: #0a0b12;
+            --slate-900: #0f1119;
+            --slate-800: #181b28;
+            --slate-700: #252838;
+            --slate-600: #3a3e52;
+            --slate-500: #646880;
+            --slate-400: #9096ab;
+            --slate-300: #b4b9cc;
+            --slate-200: #d4d7e3;
+            --slate-100: #eceef4;
+
+            --cyan: #4ecdc4;
+            --gold: #d4a843;
+            --warm: #e8834a;
+            --red: #e85454;
+            --green: #4ecd6b;
+
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--slate-950);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--lupine-600);
+            color: white;
+        }
+
+        /* ─── Slide Container ─── */
+        .deck {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 120px;
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+            color: var(--slate-200);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .slide.exit-left {
+            opacity: 0;
+            transform: translateX(-60px);
+        }
+
+        /* ─── Slide Chrome ─── */
+        .slide-number {
+            position: absolute;
+            bottom: 32px;
+            right: 48px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-600);
+            letter-spacing: 0.15em;
+        }
+
+        .slide-brand {
+            position: absolute;
+            bottom: 32px;
+            left: 48px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-700);
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slide-brand svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ─── Progress Bar ─── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--lupine-600), var(--violet-500));
+            transition: width 0.4s ease;
+            z-index: 100;
+        }
+
+        /* ─── Slide Navigation Dots ─── */
+        .nav-dots {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--slate-700);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0;
+        }
+
+        .nav-dot.active {
+            background: var(--lupine-500);
+            box-shadow: 0 0 12px rgba(85, 101, 212, 0.5);
+        }
+
+        .nav-dot:hover {
+            background: var(--lupine-400);
+        }
+
+        /* ─── Typography ─── */
+        .slide-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--lupine-400);
+            margin-bottom: 20px;
+        }
+
+        .slide h1 {
+            font-family: var(--font-serif);
+            font-size: 56px;
+            font-weight: 400;
+            color: var(--slate-100);
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .slide h1 em {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--lupine-400), var(--violet-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide h2 {
+            font-family: var(--font-serif);
+            font-size: 40px;
+            font-weight: 400;
+            color: var(--slate-100);
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        .slide h2 em {
+            background: linear-gradient(135deg, var(--lupine-400), var(--violet-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+        }
+
+        .slide p {
+            font-size: 17px;
+            color: var(--slate-400);
+            line-height: 1.8;
+            max-width: 640px;
+        }
+
+        .slide p.large {
+            font-size: 20px;
+            color: var(--slate-300);
+        }
+
+        .slide strong {
+            color: var(--slate-200);
+            font-weight: 600;
+        }
+
+        /* ─── Layouts ─── */
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            height: 100%;
+        }
+
+        .split-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .split-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .centered {
+            text-align: center;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .centered p {
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ─── Cards & Grids ─── */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: var(--font-serif);
+            font-size: 44px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--lupine-300), var(--violet-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--slate-400);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .stat-detail {
+            font-size: 11px;
+            color: var(--slate-600);
+            margin-top: 4px;
+        }
+
+        /* ─── Data Tables ─── */
+        .deck-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 32px;
+            font-size: 13px;
+        }
+
+        .deck-table thead th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--slate-500);
+            border-bottom: 1px solid var(--slate-700);
+        }
+
+        .deck-table thead th:last-child {
+            color: var(--lupine-300);
+        }
+
+        .deck-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--slate-400);
+        }
+
+        .deck-table td:first-child {
+            color: var(--slate-300);
+            font-weight: 500;
+        }
+
+        .deck-table td:last-child {
+            color: var(--lupine-200);
+            font-weight: 600;
+        }
+
+        .check { color: var(--green); }
+        .cross { color: var(--slate-600); }
+
+        /* ─── Lists ─── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .feature-item .icon {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--lupine-400);
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+        }
+
+        .feature-item .text {
+            font-size: 13px;
+            color: var(--slate-300);
+            line-height: 1.5;
+        }
+
+        .feature-item .text strong {
+            color: var(--slate-100);
+            display: block;
+            margin-bottom: 2px;
+            font-size: 14px;
+        }
+
+        /* ─── Pipeline Visual ─── */
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 48px;
+        }
+
+        .pipeline-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 28px 24px;
+            text-align: center;
+            min-width: 180px;
+            transition: all 0.3s;
+        }
+
+        .pipeline-box:hover {
+            border-color: var(--lupine-600);
+            background: rgba(46, 58, 135, 0.08);
+        }
+
+        .pipeline-box .emoji { font-size: 13px; font-weight: 700; color: var(--slate-300); letter-spacing: 0.1em; margin-bottom: 10px; }
+        .pipeline-box .name { font-size: 14px; font-weight: 600; color: var(--slate-100); margin-bottom: 4px; }
+        .pipeline-box .desc { font-size: 11px; color: var(--slate-500); }
+
+        .pipeline-arrow { font-size: 20px; color: var(--slate-600); }
+
+        /* ─── Roadmap ─── */
+        .timeline {
+            margin-top: 40px;
+        }
+
+        .timeline-row {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 24px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .timeline-period {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--lupine-400);
+        }
+
+        .timeline-content h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate-100);
+            margin-bottom: 4px;
+        }
+
+        .timeline-content p {
+            font-size: 13px;
+            color: var(--slate-400);
+            line-height: 1.6;
+        }
+
+        .timeline-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+
+        .tag-shipped { background: rgba(78, 205, 107, 0.15); color: var(--green); }
+        .tag-building { background: rgba(85, 101, 212, 0.15); color: var(--lupine-400); }
+        .tag-planned { background: rgba(255,255,255,0.06); color: var(--slate-500); }
+
+        /* ─── Ask Slide ─── */
+        .ask-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .ask-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .ask-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--slate-200);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .ask-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ask-card li {
+            font-size: 14px;
+            color: var(--slate-400);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .ask-card li:last-child { border: none; }
+
+        /* ─── Title Slide Special ─── */
+        .slide.title-slide {
+            background: radial-gradient(ellipse 80% 50% at 50% 40%, rgba(46, 58, 135, 0.2) 0%, transparent 70%),
+                        radial-gradient(ellipse 60% 40% at 70% 60%, rgba(91, 58, 140, 0.1) 0%, transparent 60%);
+            align-items: center;
+            text-align: center;
+        }
+
+        .title-slide .title-logo {
+            width: 96px;
+            height: 96px;
+            margin-bottom: 40px;
+        }
+
+        .title-slide h1 {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .title-slide .title-tagline {
+            font-size: 20px;
+            color: var(--slate-400);
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        .title-slide .title-meta {
+            margin-top: 64px;
+            font-size: 12px;
+            color: var(--slate-600);
+            letter-spacing: 0.1em;
+        }
+
+        /* ─── Closing Slide ─── */
+        .slide.closing-slide {
+            background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(46, 58, 135, 0.15) 0%, transparent 70%);
+            align-items: center;
+            text-align: center;
+        }
+
+        .closing-slide h1 {
+            font-size: 52px;
+        }
+
+        .closing-contact {
+            margin-top: 48px;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .closing-contact a {
+            color: var(--lupine-400);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .closing-contact a:hover { color: var(--lupine-300); }
+
+        /* ─── Keyboard Hint ─── */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--slate-700);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            z-index: 100;
+        }
+
+        kbd {
+            display: inline-block;
+            padding: 2px 6px;
+            background: var(--slate-800);
+            border: 1px solid var(--slate-700);
+            border-radius: 3px;
+            font-family: var(--font-sans);
+            font-size: 10px;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1024px) {
+            .slide { padding: 60px 48px; }
+            .split { grid-template-columns: 1fr; gap: 32px; }
+            .slide h1 { font-size: 40px; }
+            .slide h2 { font-size: 32px; }
+            .stat-row { grid-template-columns: repeat(2, 1fr); }
+            .pipeline-flow { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="nav-dots" id="navDots"></div>
+
+    <div class="deck" id="deck">
+
+        <!-- ═══ SLIDE 1: Title ═══ -->
+        <div class="slide title-slide active" data-slide="0">
+            <div class="title-logo">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <circle cx="40" cy="40" r="5" fill="#9ba6ea"/>
+                    <circle cx="40" cy="40" r="4" fill="#7b8ae0"/>
+                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="#5565d4" stroke-width="1.2" fill="none" opacity="0.6">
+                        <animateTransform attributeName="transform" type="rotate" dur="8s" from="0 40 40" to="360 40 40" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="#8b6bc4" stroke-width="1.2" fill="none" opacity="0.5" transform="rotate(60 40 40)">
+                        <animateTransform attributeName="transform" type="rotate" dur="12s" from="60 40 40" to="420 40 40" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="#4ecdc4" stroke-width="1" fill="none" opacity="0.3" transform="rotate(120 40 40)">
+                        <animateTransform attributeName="transform" type="rotate" dur="10s" from="120 40 40" to="480 40 40" repeatCount="indefinite"/>
+                    </ellipse>
+                    <path d="M40 8 C43 20, 46 30, 40 35 C34 30, 37 20, 40 8Z" fill="#5565d4" opacity="0.7"/>
+                    <path d="M40 72 C37 60, 34 50, 40 45 C46 50, 43 60, 40 72Z" fill="#5565d4" opacity="0.5"/>
+                    <path d="M8 40 C20 37, 30 34, 35 40 C30 46, 20 43, 8 40Z" fill="#8b6bc4" opacity="0.6"/>
+                    <path d="M72 40 C60 43, 50 46, 45 40 C50 34, 60 37, 72 40Z" fill="#8b6bc4" opacity="0.4"/>
+                </svg>
+            </div>
+            <h1>Lupine Materials<br>Science</h1>
+            <div class="title-tagline">The unified engine for computational materials discovery</div>
+            <div class="title-meta">CONFIDENTIAL / INVESTOR PRESENTATION / 2026</div>
+        </div>
+
+        <!-- ═══ SLIDE 2: The Thesis ═══ -->
+        <div class="slide" data-slide="1">
+            <div class="slide-label">Thesis</div>
+            <h1>Civilization runs<br>on <em>materials</em></h1>
+            <p class="large" style="margin-top:12px;">
+                Batteries. Semiconductors. Aerospace alloys. Carbon capture catalysts. Every breakthrough that matters is bottlenecked by materials discovery.
+            </p>
+            <p style="margin-top:20px;">
+                Computational simulation is the only way to accelerate this search. But the tools are <strong>30 years old, commercially locked, and fatally fragmented</strong>.
+            </p>
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">02 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 3: The Problem ═══ -->
+        <div class="slide" data-slide="2">
+            <div class="slide-label">The Problem</div>
+            <h2>The fragmented<br>materials simulation stack</h2>
+            <p>A typical research workflow stitches together 4–6 disconnected tools. Each conversion point loses metadata. Each tool has its own data model. The pipeline is broken.</p>
+
+            <div class="stat-row">
+                <div class="stat-card">
+                    <div class="stat-value">$4,500</div>
+                    <div class="stat-label">VASP License (Academic)</div>
+                    <div class="stat-detail">Commercially locked quantum solver</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1995</div>
+                    <div class="stat-label">LAMMPS First Release</div>
+                    <div class="stat-detail">Fortran-era C++ codebase</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">6+</div>
+                    <div class="stat-label">Tools Per Workflow</div>
+                    <div class="stat-detail">DFT, scripts, ML, MD, viz</div>
+                </div>
+            </div>
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">03 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 4: The Solution ═══ -->
+        <div class="slide" data-slide="3">
+            <div class="centered">
+                <div class="slide-label">The Solution</div>
+                <h2>One platform.<br>Three engines. <em>Zero fragmentation.</em></h2>
+                <p>Lupine replaces the fragmented stack with a single, modern Rust codebase — memory-safe, GPU-accelerated, with ML potentials as a first-class citizen.</p>
+
+                <div class="pipeline-flow">
+                    <div class="pipeline-box">
+                        <div class="emoji">DFT</div>
+                        <div class="name">Quantum DFT</div>
+                        <div class="desc">VASP-compatible PAW</div>
+                    </div>
+                    <div class="pipeline-arrow">&rsaquo;</div>
+                    <div class="pipeline-box">
+                        <div class="emoji">ML</div>
+                        <div class="name">ML Potentials</div>
+                        <div class="desc">MACE / NequIP / DeePMD</div>
+                    </div>
+                    <div class="pipeline-arrow">&rsaquo;</div>
+                    <div class="pipeline-box">
+                        <div class="emoji">MD</div>
+                        <div class="name">Molecular Dynamics</div>
+                        <div class="desc">LAMMPS-compatible</div>
+                    </div>
+                    <div class="pipeline-arrow">&rsaquo;</div>
+                    <div class="pipeline-box">
+                        <div class="emoji">D</div>
+                        <div class="name">Discovery</div>
+                        <div class="desc">DFT accuracy, 1000x speed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">04 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 5: The Killer Feature ═══ -->
+        <div class="slide" data-slide="4">
+            <div class="slide-label">Differentiator</div>
+            <h2>The DFT to ML to MD pipeline<br>is the <em>killer feature</em></h2>
+            <p>No existing tool covers the full pipeline. Lupine provides a single-command workflow from quantum calculation to production-scale simulation.</p>
+
+            <div style="margin-top:32px; background:var(--slate-800); border:1px solid var(--slate-700); border-radius:12px; padding:28px 32px; font-family:'Courier New',monospace; font-size:14px; color:var(--slate-300); line-height:2;">
+                <span style="color:var(--slate-500);"># One command: DFT training data, ML potential, validated model</span><br>
+                <span style="color:var(--cyan);">lupine</span> flow train-mlip \<br>
+                &nbsp;&nbsp;--structure POSCAR \<br>
+                &nbsp;&nbsp;--model-type mace \<br>
+                &nbsp;&nbsp;--target-delta <span style="color:var(--gold);">0.5</span> &nbsp;<span style="color:var(--slate-500);"># meV/atom accuracy</span><br><br>
+                <span style="color:var(--slate-500);"># Then: production MD at near-DFT accuracy</span><br>
+                <span style="color:var(--cyan);">lupine</span> md -i production.lmp &nbsp;<span style="color:var(--slate-500);"># LAMMPS format, 1M steps</span>
+            </div>
+
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">05 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 6: Competitive Position ═══ -->
+        <div class="slide" data-slide="5">
+            <div class="slide-label">Competitive Landscape</div>
+            <h2>Lupine is the <em>only</em> unified platform</h2>
+
+            <table class="deck-table">
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th>VASP</th>
+                        <th>LAMMPS</th>
+                        <th>QE</th>
+                        <th>OpenMM</th>
+                        <th style="min-width:100px;">Lupine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Plane-wave DFT</td><td class="check">Yes</td><td class="cross">—</td><td class="check">Yes</td><td class="cross">—</td><td>Yes</td></tr>
+                    <tr><td>Classical MD</td><td class="cross">—</td><td class="check">Yes</td><td class="cross">—</td><td class="check">Yes</td><td>Yes</td></tr>
+                    <tr><td>ML Potentials (native)</td><td class="cross">—</td><td>Plugin</td><td class="cross">—</td><td>Partial</td><td>Yes, Core</td></tr>
+                    <tr><td>DFT / ML / MD Pipeline</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td>Yes</td></tr>
+                    <tr><td>Active Learning</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td>Yes</td></tr>
+                    <tr><td>Differentiable Sim</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td>Partial</td><td>Yes</td></tr>
+                    <tr><td>License</td><td>Commercial</td><td>GPL</td><td>GPL</td><td>MIT</td><td>Apache 2.0</td></tr>
+                    <tr><td>Language</td><td>Fortran</td><td>C++</td><td>Fortran</td><td>C++</td><td>Rust</td></tr>
+                </tbody>
+            </table>
+
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">06 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 7: Beachhead Product ═══ -->
+        <div class="slide" data-slide="6">
+            <div class="split">
+                <div class="split-left">
+                    <div class="slide-label">Shipping Now</div>
+                    <h2>Lupine <em>View</em></h2>
+                    <p>WebGPU-powered molecular visualization. Drag a file into your browser — publication-quality 3D in two seconds. No install, no license, no Python.</p>
+
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <div class="icon">01</div>
+                            <div class="text"><strong>10M+ atoms @ 60fps</strong>WebGPU impostor rendering</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">02</div>
+                            <div class="text"><strong>Rust/WASM parsers</strong>10x faster than JavaScript</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">03</div>
+                            <div class="text"><strong>Publication quality</strong>SSAO, DOF, bloom, 4K export</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="icon">04</div>
+                            <div class="text"><strong>URL sharing</strong>Send a link, not a file</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="split-right" style="display:flex;align-items:center;justify-content:center;">
+                    <div style="width:100%;aspect-ratio:16/10;background:var(--slate-800);border:1px solid var(--slate-700);border-radius:16px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+                        <div style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--cyan);background:rgba(78,205,196,0.1);padding:3px 10px;border-radius:5px;border:1px solid rgba(78,205,196,0.2);">● Live</div>
+                        <div style="text-align:center;padding:32px;">
+                            <div style="font-size:14px;color:var(--slate-400);">Lupine View — WebGPU Molecular Viewer</div>
+                            <div style="font-size:11px;color:var(--slate-600);margin-top:4px;">Replaces $$/yr OVITO Pro licenses</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">07 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 8: Market ═══ -->
+        <div class="slide" data-slide="7">
+            <div class="slide-label">Market</div>
+            <h2>A sovereign-scale<br><em>market opportunity</em></h2>
+            <p>Computational materials simulation underpins every hardware sector. The TAM is enormous and growing — driven by AI/ML adoption and national sovereignty mandates.</p>
+
+            <div class="stat-row" style="grid-template-columns:repeat(4,1fr);">
+                <div class="stat-card">
+                    <div class="stat-value">$12B</div>
+                    <div class="stat-label">Simulation TAM</div>
+                    <div class="stat-detail">Scientific computing by 2028</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">300K+</div>
+                    <div class="stat-label">LAMMPS Users</div>
+                    <div class="stat-detail">Active researchers worldwide</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Unified Competitors</div>
+                    <div class="stat-detail">DFT+ML+MD in one system</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">100x</div>
+                    <div class="stat-label">ML Speedup</div>
+                    <div class="stat-detail">DFT accuracy, MD speed</div>
+                </div>
+            </div>
+
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">08 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 9: Why Now ═══ -->
+        <div class="slide" data-slide="8">
+            <div class="slide-label">Timing</div>
+            <h2>Three tailwinds<br><em>converging now</em></h2>
+
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:40px;">
+                <div style="border-top:2px solid var(--lupine-600); padding-top:24px;">
+                    <h4 style="font-size:16px;color:var(--slate-100);margin-bottom:10px;">ML Potentials are proven</h4>
+                    <p style="font-size:13px;color:var(--slate-400);line-height:1.7;">MACE, NequIP, and Allegro have demonstrated near-DFT accuracy at classical MD speed. The science is settled — the tooling isn't.</p>
+                </div>
+                <div style="border-top:2px solid var(--violet-500); padding-top:24px;">
+                    <h4 style="font-size:16px;color:var(--slate-100);margin-bottom:10px;">WebGPU unlocks access</h4>
+                    <p style="font-size:13px;color:var(--slate-400);line-height:1.7;">Browser-native GPU compute enables scientific visualization without install barriers. We built the first materials science app on it.</p>
+                </div>
+                <div style="border-top:2px solid var(--cyan); padding-top:24px;">
+                    <h4 style="font-size:16px;color:var(--slate-100);margin-bottom:10px;">Sovereignty demands</h4>
+                    <p style="font-size:13px;color:var(--slate-400);line-height:1.7;">Nations are realizing computational materials infrastructure is strategic. VASP is Austrian-held. The world needs modern, permissive alternatives.</p>
+                </div>
+            </div>
+
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">09 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 10: Roadmap ═══ -->
+        <div class="slide" data-slide="9">
+            <div class="slide-label">Roadmap</div>
+            <h2>Execution plan</h2>
+
+            <div class="timeline">
+                <div class="timeline-row">
+                    <div class="timeline-period">Now</div>
+                    <div class="timeline-content">
+                        <h4>Lupine View — WebGPU Molecular Visualization <span class="timeline-tag tag-shipped">Shipped</span></h4>
+                        <p>LAMMPS dump/log parsing, 10M+ atom rendering, publication-quality export. Builds community and brand with zero-friction adoption.</p>
+                    </div>
+                </div>
+                <div class="timeline-row">
+                    <div class="timeline-period">6 months</div>
+                    <div class="timeline-content">
+                        <h4>MD Engine Alpha — LAMMPS Compatibility <span class="timeline-tag tag-building">Building</span></h4>
+                        <p>LJ, EAM, Tersoff potentials. Velocity-Verlet, NVE/NVT/NPT. LAMMPS input script parser. Bit-identical force verification.</p>
+                    </div>
+                </div>
+                <div class="timeline-row">
+                    <div class="timeline-period">12 months</div>
+                    <div class="timeline-content">
+                        <h4>DFT Engine + ML Pipeline <span class="timeline-tag tag-planned">Planned</span></h4>
+                        <p>PAW DFT with JTH datasets. MACE/NequIP inference. Active learning loop. Delta benchmark: Δ &lt; 1 meV/atom.</p>
+                    </div>
+                </div>
+                <div class="timeline-row">
+                    <div class="timeline-period">24 months</div>
+                    <div class="timeline-content">
+                        <h4>Unified Platform — Full Pipeline <span class="timeline-tag tag-planned">Planned</span></h4>
+                        <p>Single-command DFT to ML to MD workflow. GPU acceleration. Enterprise/HPC deployment. Community ecosystem.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">10 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 11: Business Model ═══ -->
+        <div class="slide" data-slide="10">
+            <div class="slide-label">Business Model</div>
+            <h2>Open core + <em>enterprise services</em></h2>
+
+            <div class="ask-grid" style="margin-top:32px;">
+                <div class="ask-card">
+                    <h4>Open Source (Free)</h4>
+                    <ul>
+                        <li>Core simulation engines (DFT, MD, ML)</li>
+                        <li>CLI + Python bindings</li>
+                        <li>Lupine View web app</li>
+                        <li>Community support</li>
+                        <li>Apache 2.0 license</li>
+                    </ul>
+                </div>
+                <div class="ask-card" style="border-color:rgba(46,58,135,0.3);">
+                    <h4>Enterprise (Paid)</h4>
+                    <ul>
+                        <li>Cloud-hosted HPC simulation platform</li>
+                        <li>Priority support + SLAs</li>
+                        <li>Custom ML potential training pipelines</li>
+                        <li>On-premise deployment for gov/defense</li>
+                        <li>Team collaboration + data management</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top:24px;font-size:13px;color:var(--slate-500);">
+                <strong style="color:var(--slate-400);">Revenue model:</strong> Enterprise subscriptions + managed compute. Open core creates adoption flywheel (300K+ LAMMPS researchers as organic pipeline).
+            </p>
+
+            <div class="slide-brand"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="3" fill="#7b8ae0"/><ellipse cx="24" cy="24" rx="16" ry="5" stroke="#5565d4" stroke-width="0.8" fill="none" opacity="0.5"/></svg> Lupine Materials Science</div>
+            <div class="slide-number">11 / 12</div>
+        </div>
+
+        <!-- ═══ SLIDE 12: Close ═══ -->
+        <div class="slide closing-slide" data-slide="11">
+            <div class="title-logo" style="width:72px;height:72px;margin-bottom:32px;">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <circle cx="40" cy="40" r="5" fill="#9ba6ea"/>
+                    <circle cx="40" cy="40" r="4" fill="#7b8ae0"/>
+                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="#5565d4" stroke-width="1.2" fill="none" opacity="0.6">
+                        <animateTransform attributeName="transform" type="rotate" dur="8s" from="0 40 40" to="360 40 40" repeatCount="indefinite"/>
+                    </ellipse>
+                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="#8b6bc4" stroke-width="1.2" fill="none" opacity="0.5" transform="rotate(60 40 40)">
+                        <animateTransform attributeName="transform" type="rotate" dur="12s" from="60 40 40" to="420 40 40" repeatCount="indefinite"/>
+                    </ellipse>
+                    <path d="M40 8 C43 20, 46 30, 40 35 C34 30, 37 20, 40 8Z" fill="#5565d4" opacity="0.7"/>
+                    <path d="M40 72 C37 60, 34 50, 40 45 C46 50, 43 60, 40 72Z" fill="#5565d4" opacity="0.5"/>
+                    <path d="M8 40 C20 37, 30 34, 35 40 C30 46, 20 43, 8 40Z" fill="#8b6bc4" opacity="0.6"/>
+                    <path d="M72 40 C60 43, 50 46, 45 40 C50 34, 60 37, 72 40Z" fill="#8b6bc4" opacity="0.4"/>
+                </svg>
+            </div>
+            <h1>The future of matter<br>starts with <em>software</em>.</h1>
+            <p class="large" style="max-width:500px;">Let's discuss how Lupine fits your portfolio.</p>
+
+            <div class="closing-contact">
+                <a href="mailto:founders@lupine.science">founders@lupine.science</a>
+                <a href="#">lupine.science</a>
+            </div>
+
+            <div style="margin-top:64px;font-size:11px;color:var(--slate-600);letter-spacing:0.1em;">
+                CONFIDENTIAL / LUPINE MATERIALS SCIENCE / 2026
+            </div>
+        </div>
+
+    </div>
+
+    <div class="keyboard-hint">
+        <kbd>Left</kbd> <kbd>Right</kbd> or <kbd>Space</kbd> to navigate
+    </div>
+
+    <script>
+        // ─── Deck Controller ───
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let current = 0;
+
+        // Build nav dots
+        const dotsContainer = document.getElementById('navDots');
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goTo(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        function goTo(index) {
+            if (index < 0 || index >= totalSlides || index === current) return;
+
+            const direction = index > current ? 1 : -1;
+
+            // Exit current
+            slides[current].classList.remove('active');
+            slides[current].classList.add(direction > 0 ? 'exit-left' : '');
+            setTimeout(() => {
+                slides[current === index ? current : (current + totalSlides) % totalSlides].classList.remove('exit-left');
+            }, 600);
+
+            // Enter new
+            current = index;
+            slides[current].classList.add('active');
+
+            // Update dots
+            document.querySelectorAll('.nav-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === current);
+            });
+
+            // Update progress
+            document.getElementById('progressBar').style.width =
+                ((current / (totalSlides - 1)) * 100) + '%';
+        }
+
+        function next() { goTo(current + 1); }
+        function prev() { goTo(current - 1); }
+
+        // Keyboard
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+            if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+            if (e.key === 'End') { e.preventDefault(); goTo(totalSlides - 1); }
+        });
+
+        // Touch swipe
+        let touchStartX = 0;
+        document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? next() : prev();
+            }
+        });
+
+        // Mouse wheel
+        let wheelTimeout;
+        document.addEventListener('wheel', e => {
+            clearTimeout(wheelTimeout);
+            wheelTimeout = setTimeout(() => {
+                e.deltaY > 0 ? next() : prev();
+            }, 50);
+        }, { passive: true });
+
+        // Init progress
+        document.getElementById('progressBar').style.width = '0%';
+    </script>
+</body>
+</html>

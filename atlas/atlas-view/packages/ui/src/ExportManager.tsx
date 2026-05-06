@@ -242,7 +242,7 @@ function VideoCaptureLoop({
             const userFormat = outputFormat.current;
 
             if (userFormat === 'mp4') {
-              if (onCompleteRef.current && onCompleteRef.current.length > 1) {
+              if (onCompleteRef.current) {
                 onCompleteRef.current(true, finalBlob, `${baseName}.mp4`);
               } else {
                 downloadBlob(finalBlob, `${baseName}.mp4`);
@@ -252,7 +252,7 @@ function VideoCaptureLoop({
             } else if (userFormat === 'gif') {
               try {
                 const gifBlob = await convertMp4ToGif(finalBlob, 30); 
-                if (onCompleteRef.current && onCompleteRef.current.length > 1) {
+                if (onCompleteRef.current) {
                   onCompleteRef.current(true, gifBlob, `${baseName}.gif`);
                 } else {
                   downloadBlob(gifBlob, `${baseName}.gif`);
@@ -261,7 +261,7 @@ function VideoCaptureLoop({
                 success = true;
               } catch (err) {
                 console.error('GIF conversion failed, downloading pristine MP4 fallback:', err);
-                if (onCompleteRef.current && onCompleteRef.current.length > 1) {
+                if (onCompleteRef.current) {
                   onCompleteRef.current(true, finalBlob, `${baseName}.mp4`);
                 } else {
                   downloadBlob(finalBlob, `${baseName}.mp4`);
@@ -393,11 +393,10 @@ export function ExportManager() {
     gl.domElement.toBlob(
       (blob) => {
         if (blob) {
-          if (req.onComplete && req.onComplete.length > 1) {
+          if (req.onComplete) {
             req.onComplete(true, blob, filename);
           } else {
             downloadBlob(blob, filename);
-            if (req.onComplete) req.onComplete(true);
           }
         } else {
           console.error('[ExportManager] toBlob returned null — canvas may be tainted or context lost');
@@ -592,24 +591,24 @@ export function ExportManager() {
       const baseName = req.baseName || 'glimPSE';
 
       if (req.type === 'usdz') {
+        console.log('[ExportManager] FIXED USDZ EXPORT RUNNING');
         const { USDZExporter } = await import('three/addons/exporters/USDZExporter.js');
         const exporter = new USDZExporter();
-        const usdz = (await (exporter as any).parse(exportScene)) as Uint8Array;
-        blob = new Blob([usdz.buffer as ArrayBuffer], { type: 'model/vnd.usdz+zip' });
+        const usdz = (await (exporter as any).parseAsync(exportScene)) as ArrayBuffer;
+        blob = new Blob([usdz], { type: 'model/vnd.usdz+zip' });
         filename = `${baseName}-frame${state.frame + 1}.usdz`;
       } else {
         const { GLTFExporter } = await import('three/addons/exporters/GLTFExporter.js');
         const exporter = new GLTFExporter();
-        const glb = await exporter.parseAsync(exportScene, { binary: true }) as ArrayBuffer;
+        const glb = (await exporter.parseAsync(exportScene, { binary: true })) as ArrayBuffer;
         blob = new Blob([glb], { type: 'model/gltf-binary' });
         filename = `${baseName}-frame${state.frame + 1}.glb`;
       }
 
-      if (req.onComplete && req.onComplete.length > 1) {
+      if (req.onComplete) {
         req.onComplete(true, blob, filename);
       } else {
         downloadBlob(blob, filename);
-        if (req.onComplete) req.onComplete(true);
       }
 
       // Cleanup export scene

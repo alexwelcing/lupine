@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Superalloys | Lupine</title>
+    <meta name="description" content="Lupine Materials Science is building the unified computational platform for materials discovery. From quantum DFT to molecular dynamics to ML potentials — one system, zero fragmentation.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           LUPINE MATERIALS SCIENCE — VC LANDING PAGE
+           Brand: Deep Indigo / Lupine Violet / Warm Slate
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            --lupine-900: #1a1d3d;
+            --lupine-800: #252a52;
+            --lupine-700: #2e3a87;
+            --lupine-600: #3d4db3;
+            --lupine-500: #5565d4;
+            --lupine-400: #7b8ae0;
+            --lupine-300: #9ba6ea;
+            --lupine-200: #c5cdf3;
+            --lupine-100: #e8ebfa;
+            --lupine-50:  #f4f5fd;
+
+            --violet-700: #5b3a8c;
+            --violet-500: #8b6bc4;
+            --violet-300: #b9a0e0;
+
+            --slate-950: #0a0b12;
+            --slate-900: #0f1119;
+            --slate-800: #181b28;
+            --slate-700: #252838;
+            --slate-600: #3a3e52;
+            --slate-500: #646880;
+            --slate-400: #9096ab;
+            --slate-300: #b4b9cc;
+            --slate-200: #d4d7e3;
+            --slate-100: #eceef4;
+
+            --accent-gold: #d4a843;
+            --accent-cyan: #4ecdc4;
+            --accent-warm: #e8834a;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: transparent;
+            color: var(--slate-200);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--lupine-600);
+            color: white;
+        }
+
+        /* ─── Navigation ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        nav.scrolled {
+            background: rgba(10, 11, 18, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(91, 58, 140, 0.15);
+            padding: 14px 40px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .nav-brand .logo-mark {
+            width: 36px;
+            height: 36px;
+        }
+
+        .nav-brand-text {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--slate-100);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--slate-400);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--lupine-400);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--lupine-700), var(--violet-700));
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s !important;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 32px rgba(46, 58, 135, 0.4);
+        }
+
+        /* ─── Hero Section ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 120px 40px 80px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 30%, rgba(46, 58, 135, 0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 70% 60%, rgba(91, 58, 140, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 30% 70%, rgba(78, 205, 196, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Animated atom-orbit decorations */
+        .hero-orbits {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            pointer-events: none;
+            opacity: 0.12;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid var(--lupine-500);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-ring:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            animation: orbit-spin 20s linear infinite;
+        }
+
+        .orbit-ring:nth-child(2) {
+            width: 500px;
+            height: 200px;
+            animation: orbit-spin 30s linear infinite reverse;
+            transform: translate(-50%, -50%) rotate(60deg);
+        }
+
+        .orbit-ring:nth-child(3) {
+            width: 600px;
+            height: 250px;
+            animation: orbit-spin 25s linear infinite;
+            transform: translate(-50%, -50%) rotate(-30deg);
+        }
+
+        @keyframes orbit-spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* ─── WebGPU Atom Canvas ─── */
+        /* Handled by inline styles on the canvas near <body> tag */
+
+        .hero.webgpu-active .hero-orbits {
+            display: none;
+        }
+
+        .hero.webgpu-active .hero::before {
+            opacity: 0.5;
+        }
+
+        /* Dark center scrim for text contrast over atoms */
+        .hero.webgpu-active::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                ellipse 55% 60% at 50% 45%,
+                rgba(10, 11, 18, 0.82) 0%,
+                rgba(10, 11, 18, 0.45) 50%,
+                transparent 80%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero.webgpu-active .hero-content *,
+        .hero.webgpu-active .hero h1,
+        .hero.webgpu-active .hero-sub {
+            text-shadow:
+                0 2px 24px rgba(10, 11, 18, 0.9),
+                0 0 80px rgba(10, 11, 18, 0.7);
+        }
+
+        /* Permutation iteration counter */
+        .iter-counter {
+            position: absolute;
+            bottom: 88px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--lupine-400);
+            opacity: 0.5;
+            z-index: 3;
+            font-variant-numeric: tabular-nums;
+            transition: opacity 0.3s;
+        }
+
+        .iter-counter .iter-num {
+            display: inline-block;
+            min-width: 24px;
+            text-align: right;
+            color: var(--accent-cyan);
+        }
+
+        .hero-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 40px;
+            animation: hero-logo-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes hero-logo-in {
+            from {
+                opacity: 0;
+                transform: scale(0.6) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .hero-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--lupine-400);
+            margin-bottom: 24px;
+            animation: fade-up 0.8s 0.3s both;
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(36px, 5.5vw, 72px);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--slate-100);
+            margin-bottom: 28px;
+            animation: fade-up 0.8s 0.5s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--lupine-400), var(--violet-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--slate-400);
+            max-width: 620px;
+            margin: 0 auto 48px;
+            line-height: 1.8;
+            font-weight: 300;
+            animation: fade-up 0.8s 0.7s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            animation: fade-up 0.8s 0.9s both;
+        }
+
+        @keyframes fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, var(--lupine-700), var(--lupine-600));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 48px rgba(46, 58, 135, 0.5);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 36px;
+            background: rgba(255,255,255,0.04);
+            color: var(--slate-200);
+            border: 1px solid var(--slate-700);
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--slate-600);
+        }
+
+        /* ─── Scroll indicator ─── */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.4;
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator span {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--slate-500);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--lupine-500), transparent);
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ─── Section styling ─── */
+        section {
+            padding: 120px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--lupine-400);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(28px, 3.5vw, 48px);
+            color: var(--slate-100);
+            font-weight: 400;
+            line-height: 1.25;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 17px;
+            color: var(--slate-400);
+            max-width: 600px;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 64px;
+        }
+
+        /* ─── Problem Section ─── */
+        .problem-section {
+            position: relative;
+        }
+
+        .problem-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100vw;
+            right: -100vw;
+            bottom: 0;
+            /* Semi-transparent gradient to let global atoms peek through */
+            background: linear-gradient(180deg, rgba(10,11,18,0.7) 0%, rgba(15,17,25,0.85) 50%, rgba(10,11,18,0.7) 100%);
+            z-index: -1;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .problem-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--lupine-600), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .problem-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(91, 58, 140, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .problem-card:hover::before {
+            opacity: 1;
+        }
+
+        .problem-icon {
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+
+        .problem-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--slate-100);
+            margin-bottom: 12px;
+        }
+
+        .problem-card p {
+            font-size: 14px;
+            color: var(--slate-400);
+            line-height: 1.75;
+        }
+
+        .problem-stat {
+            margin-top: 20px;
+            font-family: var(--font-serif);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--lupine-400);
+        }
+
+        .problem-stat-label {
+            font-size: 11px;
+            color: var(--slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 4px;
+        }
+
+        /* ─── Pipeline Section ─── */
+        .pipeline-section {
+            text-align: center;
+        }
+
+        .pipeline-visual {
+            margin-top: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .pipeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 32px 24px;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .pipeline-node {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--slate-200);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .pipeline-step:nth-child(1) .pipeline-node { background: linear-gradient(135deg, rgba(46, 58, 135, 0.3), rgba(46, 58, 135, 0.1)); border: 1px solid rgba(46, 58, 135, 0.4); }
+        .pipeline-step:nth-child(3) .pipeline-node { background: linear-gradient(135deg, rgba(91, 58, 140, 0.3), rgba(91, 58, 140, 0.1)); border: 1px solid rgba(91, 58, 140, 0.4); }
+        .pipeline-step:nth-child(5) .pipeline-node { background: linear-gradient(135deg, rgba(78, 205, 196, 0.2), rgba(78, 205, 196, 0.05)); border: 1px solid rgba(78, 205, 196, 0.3); }
+        .pipeline-step:nth-child(7) .pipeline-node { background: linear-gradient(135deg, rgba(212, 168, 67, 0.2), rgba(212, 168, 67, 0.05)); border: 1px solid rgba(212, 168, 67, 0.3); }
+
+        .pipeline-step:hover .pipeline-node {
+            transform: scale(1.08);
+        }
+
+        .pipeline-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-200);
+            letter-spacing: 0.03em;
+        }
+
+        .pipeline-desc {
+            font-size: 12px;
+            color: var(--slate-500);
+            max-width: 160px;
+        }
+
+        .pipeline-arrow {
+            font-size: 18px;
+            color: var(--slate-600);
+            padding: 0 8px;
+            font-family: var(--font-sans);
+        }
+
+        /* ─── Beachhead Section (glimPSE) ─── */
+        .beachhead-section {
+            position: relative;
+        }
+
+        .beachhead-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100vw;
+            right: -100vw;
+            bottom: 0;
+            /* Semi-transparent to let global atoms show */
+            background: linear-gradient(180deg, rgba(10,11,18,0.4) 0%, rgba(46, 58, 135, 0.1) 50%, rgba(10,11,18,0.4) 100%);
+            z-index: -1;
+        }
+
+        .beachhead-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .beachhead-visual {
+            background: var(--slate-800);
+            border: 1px solid var(--slate-700);
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 16 / 10;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .beachhead-visual-inner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .beachhead-visual .demo-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            background: rgba(78, 205, 196, 0.1);
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .fake-atoms {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .fake-atom {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            animation: atom-pulse 3s ease-in-out infinite;
+        }
+
+        .fake-atom:nth-child(odd) {
+            background: radial-gradient(circle at 35% 35%, var(--lupine-400), var(--lupine-700));
+        }
+        .fake-atom:nth-child(even) {
+            background: radial-gradient(circle at 35% 35%, var(--violet-300), var(--violet-700));
+        }
+        .fake-atom:nth-child(3n) {
+            background: radial-gradient(circle at 35% 35%, var(--accent-cyan), #1a7a74);
+        }
+
+        @keyframes atom-pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .beachhead-content h3 {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            color: var(--slate-100);
+            margin-bottom: 16px;
+        }
+
+        .beachhead-content h3 span {
+            color: var(--lupine-400);
+        }
+
+        .beachhead-content p {
+            color: var(--slate-400);
+            font-size: 15px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 32px 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 14px;
+            color: var(--slate-300);
+        }
+
+        .feature-list li .check {
+            color: var(--accent-cyan);
+            font-weight: 400;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            display: inline-block;
+        }
+
+        /* ─── Competitive Edge ─── */
+        .comp-table-wrapper {
+            overflow-x: auto;
+            margin-top: 48px;
+            border-radius: 16px;
+            border: 1px solid var(--slate-700);
+        }
+
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .comp-table thead {
+            background: var(--slate-800);
+        }
+
+        .comp-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--slate-300);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--slate-700);
+        }
+
+        .comp-table th:last-child {
+            color: var(--lupine-300);
+            background: rgba(46, 58, 135, 0.15);
+        }
+
+        .comp-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--slate-400);
+        }
+
+        .comp-table td:last-child {
+            color: var(--lupine-200);
+            font-weight: 600;
+            background: rgba(46, 58, 135, 0.06);
+        }
+
+        .comp-table tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .comp-table td:first-child {
+            color: var(--slate-300);
+            font-weight: 500;
+        }
+
+        /* ─── Market Section ─── */
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .market-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 36px 28px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .market-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(91, 58, 140, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .market-number {
+            font-family: var(--font-serif);
+            font-size: 40px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--lupine-300), var(--violet-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .market-label {
+            font-size: 13px;
+            color: var(--slate-400);
+            font-weight: 500;
+        }
+
+        .market-detail {
+            font-size: 11px;
+            color: var(--slate-500);
+            margin-top: 6px;
+        }
+
+        /* ─── Team / Founder Section ─── */
+        .team-section {
+            text-align: center;
+        }
+
+        .team-section .section-subtitle {
+            margin: 0 auto 64px;
+        }
+
+        .founder-card {
+            max-width: 660px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 48px;
+            text-align: left;
+        }
+
+        .founder-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .founder-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--lupine-700), var(--violet-700));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .founder-name {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--slate-100);
+        }
+
+        .founder-role {
+            font-size: 13px;
+            color: var(--lupine-400);
+            margin-top: 4px;
+        }
+
+        .founder-bio {
+            font-size: 15px;
+            color: var(--slate-400);
+            line-height: 1.85;
+        }
+
+        /* ─── CTA Section ─── */
+        .cta-section {
+            text-align: center;
+            padding: 160px 40px;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100vw;
+            right: -100vw;
+            bottom: 0;
+            background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(46, 58, 135, 0.12), transparent 70%);
+            z-index: -1;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(32px, 4vw, 56px);
+            color: var(--slate-100);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .cta-section p {
+            font-size: 17px;
+            color: var(--slate-400);
+            max-width: 500px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            padding: 48px 40px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        footer p {
+            font-size: 12px;
+            color: var(--slate-600);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-brand {
+            font-weight: 600;
+            color: var(--slate-500);
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1024px) {
+            .problem-grid { grid-template-columns: 1fr; gap: 20px; }
+            .beachhead-layout { grid-template-columns: 1fr; gap: 48px; }
+            .market-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 80px 24px; }
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .hero { padding: 100px 24px 60px; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .pipeline-visual { flex-direction: column; }
+            .pipeline-arrow { transform: rotate(90deg); }
+            .market-grid { grid-template-columns: 1fr; }
+            .founder-card { padding: 32px 24px; }
+            .founder-header { flex-direction: column; text-align: center; }
+        }
+
+        /* ─── Animations on scroll ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── SVG Logo ─── */
+        .lupine-svg-logo {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ─── Custom Flair: Cursor ─── */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            a, button, .btn-primary, .btn-secondary, input, textarea { cursor: none !important; }
+            
+            .cursor-dot, .cursor-ring {
+                position: fixed;
+                top: 0; left: 0;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                mix-blend-mode: screen;
+            }
+            .cursor-dot {
+                width: 6px; height: 6px;
+                background: var(--accent-cyan);
+                transition: width 0.2s, height 0.2s, background 0.2s;
+            }
+            .cursor-ring {
+                width: 32px; height: 32px;
+                border: 1px solid rgba(78, 205, 196, 0.4);
+                transition: width 0.2s, height 0.2s, border-color 0.2s, background 0.2s;
+            }
+            body.cursor-active .cursor-dot {
+                width: 0; height: 0;
+            }
+            body.cursor-active .cursor-ring {
+                width: 48px; height: 48px;
+                border-color: var(--lupine-400);
+                background: rgba(123, 138, 224, 0.1);
+            }
+        }
+
+        /* ─── HUD Viewfinder Corners ─── */
+        .hud-corner {
+            position: fixed;
+            width: 24px; height: 24px;
+            border: 1px solid var(--accent-cyan);
+            opacity: 0.3;
+            z-index: 100;
+            pointer-events: none;
+        }
+        .hud-corner.tl { top: 32px; left: 32px; border-right: none; border-bottom: none; }
+        .hud-corner.tr { top: 32px; right: 32px; border-left: none; border-bottom: none; }
+        .hud-corner.bl { bottom: 32px; left: 32px; border-right: none; border-top: none; }
+        .hud-corner.br { bottom: 32px; right: 32px; border-left: none; border-top: none; }
+
+        .hud-text {
+            position: fixed;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 10px;
+            color: var(--accent-cyan);
+            letter-spacing: 0.2em;
+            opacity: 0.4;
+            z-index: 100;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+        @media (max-width: 768px) {
+            .hud-text { display: none; }
+        }
+        .hud-text.tl { top: 38px; left: 64px; }
+        .hud-text.tr { top: 38px; right: 64px; text-align: right; }
+        .hud-text.bl { bottom: 38px; left: 64px; }
+        .hud-text.br { bottom: 38px; right: 64px; text-align: right; }
+        .hud-text.br { bottom: 38px; right: 64px; text-align: right; }
+
+        /* ─── Boot Sequence ─── */
+        #boot-sequence {
+            position: fixed; inset: 0; background: var(--slate-950);
+            z-index: 10000;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 60px; font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 13px; color: var(--accent-cyan);
+            pointer-events: none;
+            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .boot-log-line { margin-top: 6px; text-shadow: 0 0 8px rgba(78,205,196,0.4); }
+
+    </style>
+</head>
+<body>
+
+    <!-- ═══ System Boot Sequence ═══ -->
+    <div id="boot-sequence">
+        <div class="boot-log" id="bootLog"></div>
+    </div>
+    <script>
+        (function() {
+            if (sessionStorage.getItem('lupine_booted')) {
+                document.getElementById('boot-sequence').style.display = 'none';
+                return;
+            }
+            sessionStorage.setItem('lupine_booted', '1');
+            const seq = document.getElementById('boot-sequence');
+            const logEl = document.getElementById('bootLog');
+            const logs = [
+                "INIT: Kernel Boot sequence engaged.",
+                "WASM: Loading compiled Rust binary (4.2MB)... [OK]",
+                "OXT: Establishing secure handshake with prediction cluster... [OK]",
+                "WEBGPU: Requesting device adapter...",
+                "WEBGPU: Adapter found -> High Performance Profile.",
+                "MD: Initializing 12x12x12 MgLi supercell... (1,728 atoms)",
+                "SYS: Generating projection matrices...",
+                "SYS: Handing control to main UI thread.",
+                "BOOT COMPLETE"
+            ];
+            
+            let i = 0;
+            function pushLog() {
+                if (i >= logs.length) {
+                    setTimeout(() => { seq.style.opacity = '0'; setTimeout(() => seq.style.display = 'none', 600); }, 400);
+                    return;
+                }
+                const d = document.createElement('div');
+                d.className = 'boot-log-line';
+                d.textContent = `[${(performance.now() / 1000).toFixed(3)}] ${logs[i]}`;
+                logEl.appendChild(d);
+                i++;
+                setTimeout(pushLog, Math.random() * 60 + 20);
+            }
+            setTimeout(pushLog, 150);
+        })();
+    </script>
+
+    <!-- ═══ Global Parallax Background ═══ -->
+    <div id="global-bg" style="position:fixed; inset:0; background:var(--slate-950); z-index:-3;"></div>
+    <canvas id="atom-canvas" style="position:fixed; inset:0; width:100vw; height:100vh; z-index:-2; pointer-events:none;"></canvas>
+    <div id="global-scrim" style="position:fixed; inset:0; background:rgba(10, 11, 18, 0.5); z-index:-1; pointer-events:none;"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- ═══ HUD Viewfinder ═══ -->
+    <div class="hud-corner tl"></div><div class="hud-text tl">SYS.OPS // 89.2% OPTIMAL</div>
+    <div class="hud-corner tr"></div><div class="hud-text tr">LUPINE_GLIMPSE_V1</div>
+    <div class="hud-corner bl"></div><div class="hud-text bl" id="hudCoords">POS: [0.000, 0.000, 0.000]</div>
+    <div class="hud-corner br"></div><div class="hud-text br">ENGINE: WEBGPU // ONLINE</div>
+
+    <!-- ═══ Navigation ═══ -->
+    <nav id="nav">
+        <a href="index.html#" class="nav-brand">
+            <svg class="logo-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Stylized Lupine/Atom Mark -->
+                <circle cx="24" cy="24" r="3" fill="#7b8ae0"/>
+                <ellipse cx="24" cy="24" rx="18" ry="6" stroke="#5565d4" stroke-width="1" fill="none" opacity="0.6">
+                    <animateTransform attributeName="transform" type="rotate" dur="8s" from="0 24 24" to="360 24 24" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="24" cy="24" rx="18" ry="6" stroke="#8b6bc4" stroke-width="1" fill="none" opacity="0.5" transform="rotate(60 24 24)">
+                    <animateTransform attributeName="transform" type="rotate" dur="12s" from="60 24 24" to="420 24 24" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="24" cy="24" rx="18" ry="6" stroke="#4ecdc4" stroke-width="1" fill="none" opacity="0.4" transform="rotate(120 24 24)">
+                    <animateTransform attributeName="transform" type="rotate" dur="10s" from="120 24 24" to="480 24 24" repeatCount="indefinite"/>
+                </ellipse>
+                <!-- Petal shapes (stylized bluebonnet + p-orbitals) -->
+                <path d="M24 6 C26 12, 28 18, 24 21 C20 18, 22 12, 24 6Z" fill="#5565d4" opacity="0.7"/>
+                <path d="M24 42 C22 36, 20 30, 24 27 C28 30, 26 36, 24 42Z" fill="#5565d4" opacity="0.5"/>
+                <path d="M6 24 C12 22, 18 20, 21 24 C18 28, 12 26, 6 24Z" fill="#8b6bc4" opacity="0.6"/>
+                <path d="M42 24 C36 26, 30 28, 27 24 C30 20, 36 22, 42 24Z" fill="#8b6bc4" opacity="0.4"/>
+            </svg>
+            <span class="nav-brand-text">Lupine Materials Science</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html#problem">Problem</a>
+            <a href="index.html#platform">Platform</a>
+            <a href="index.html#product">Product</a>
+            <a href="index.html#research">Research</a>
+            <a href="index.html#market">Market</a>
+            <a href="index.html#contact" class="nav-cta">Contact</a>
+        </div>
+    </nav>
+
+    
+    <!-- ═══ Content ═══ -->
+    <section style="padding: 180px 40px 100px; min-height: 80vh; max-width: 900px; margin: 0 auto;">
+        <div class="hero-label">Lupine Deep Dive</div>
+        <h1 style="font-family:var(--font-serif); font-size:clamp(36px, 5vw, 64px); color:var(--slate-100); margin-bottom:24px; font-weight:400; line-height:1.2;">
+            Aerospace <em>Superalloys</em>
+        </h1>
+        <p style="font-size:20px; color:var(--slate-400); font-weight:300; line-height:1.7; margin-bottom:48px;">
+            Exploring multi-principal element alloys (MPEAs) for high-temperature resilience through massive Permutation sweeps.
+        </p>
+        
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:40px; border-radius:16px;">
+            <p style="color:var(--slate-300); margin-bottom:20px; font-size:15px; line-height:1.8;">
+                This document is part of the Lupine Materials Science enriched architecture profile. It outlines the strategic design decisions, technical implementation details, and business value metrics associated with this specific pipeline segment.
+            </p>
+            <p style="color:var(--slate-300); margin-bottom:32px; font-size:15px; line-height:1.8;">
+                Our core philosophy is that researchers should not have to context-switch between disparate tools. By vertically integrating this capability directly into our Rust-powered, WebGPU-accelerated kernel, we eliminate data silos and accelerate the time to novel material discovery.
+            </p>
+            <a href="index.html" class="btn-secondary" style="font-size:13px; padding:12px 24px;">Return to Hub</a>
+        </div>
+    </section>
+    <!-- ═══ Footer ═══ -->
+    <footer>
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
+
+    <div style="margin-top:40px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:800px; margin-left:auto; margin-right:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Platform</h4>
+            <a href="platform-architecture.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Architecture</a>
+            <a href="ml-potentials-guide.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">ML Potentials</a>
+            <a href="gpu-compute.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">WebGPU Compute</a>
+            <a href="rust-in-science.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Why Rust</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Solutions</h4>
+            <a href="case-study-batteries.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Solid-State Batteries</a>
+            <a href="case-study-superalloys.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Aerospace Alloys</a>
+            <a href="defense-aerospace.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Defense & Gov</a>
+        </div>
+        <div style="text-align:left;">
+            <h4 style="color:var(--slate-300); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Company</h4>
+            <a href="research-manifesto.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Manifesto</a>
+            <a href="sovereignty-materials.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Sovereignty</a>
+            <a href="investors.html" style="display:block; color:var(--slate-500); font-size:13px; margin-bottom:8px; text-decoration:none;">Investors</a>
+        </div>
+    </div>
+
+        <p><span class="footer-brand">Lupine Materials Science</span> / 2026 / Building the infrastructure for materials discovery</p>
+    </footer>
+
+    <script>
+        // ─── Nav scroll behavior ───
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ─── Generate atom grid ───
+        const grid = document.getElementById('atomGrid');
+        if (grid) {
+            for (let i = 0; i < 48; i++) {
+                const atom = document.createElement('div');
+                atom.className = 'fake-atom';
+                atom.style.animationDelay = `${Math.random() * 3}s`;
+                atom.style.opacity = 0.5 + Math.random() * 0.5;
+                grid.appendChild(atom);
+            }
+        }
+
+        // ─── Scroll reveal ───
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px'
+        });
+        reveals.forEach(el => observer.observe(el));
+
+        // ─── Smooth anchor scrolling ───
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // ─── Animated count-up on market/research numbers ───
+        function animateCountUp(el, target, suffix = '', prefix = '', duration = 1800) {
+            const start = performance.now();
+            const isInt = Number.isInteger(target);
+            function tick(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+                const val = isInt ? Math.round(target * eased) : (target * eased).toFixed(1);
+                el.textContent = prefix + val + suffix;
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const raw = el.dataset.countTo;
+                    const prefix = el.dataset.countPrefix || '';
+                    const suffix = el.dataset.countSuffix || '';
+                    const num = parseFloat(raw);
+                    if (!isNaN(num)) {
+                        animateCountUp(el, num, suffix, prefix, 2000);
+                    }
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('[data-count-to]').forEach(el => counterObserver.observe(el));
+
+        // ─── Custom Cursor & Pointer Effects ───
+        if (window.matchMedia("(pointer: fine)").matches) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorRing = document.querySelector('.cursor-ring');
+            
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let dotX = mouseX, dotY = mouseY;
+            let ringX = mouseX, ringY = mouseY;
+
+            // Global exports for WebGPU parallax tracking
+            window.parallaxX = 0;
+            window.parallaxY = 0;
+
+            window.addEventListener('mousemove', e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                window.parallaxX = (mouseX / window.innerWidth) * 2 - 1;
+                window.parallaxY = (mouseY / window.innerHeight) * 2 - 1;
+            });
+
+            function animateCursor() {
+                dotX += (mouseX - dotX) * 0.5;
+                dotY += (mouseY - dotY) * 0.5;
+                ringX += (mouseX - ringX) * 0.15;
+                ringY += (mouseY - ringY) * 0.15;
+
+                if (cursorDot && cursorRing) {
+                    cursorDot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+                    cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+                }
+                requestAnimationFrame(animateCursor);
+            }
+            requestAnimationFrame(animateCursor);
+
+            // Hover state logic
+            document.querySelectorAll('a, button, .btn-primary, .btn-secondary').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+            });
+        }
+
+        // ─── Hacker Scramble Text Flair ───
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+            btn.dataset.originalText = btn.innerText;
+            btn.addEventListener('mouseenter', e => {
+                const target = e.target;
+                let iterations = 0;
+                // Avoid interfering with icons or inner HTML if simple text
+                if (target.children.length === 0) {
+                    clearInterval(target.scrambleInterval);
+                    target.scrambleInterval = setInterval(() => {
+                        target.innerText = target.dataset.originalText.split("")
+                            .map((letter, index) => {
+                                if(index < iterations || letter === " ") return target.dataset.originalText[index];
+                                return letters[Math.floor(Math.random() * 26)];
+                            })
+                            .join("");
+                        if(iterations >= target.dataset.originalText.length) clearInterval(target.scrambleInterval);
+                        iterations += 1/2; // speed of decipher
+                    }, 30);
+                }
+            });
+            btn.addEventListener('mouseleave', e => {
+                if (e.target.children.length === 0) {
+                    clearInterval(e.target.scrambleInterval);
+                    e.target.innerText = e.target.dataset.originalText;
+                }
+            });
+        });
+    </script>
+
+    <!-- ═══ WebGPU MgLi Alloy Atom Background ═══ -->
+    <script>
+    (async function initAtoms() {
+        const canvas = document.getElementById('atom-canvas');
+        if (!canvas || !navigator.gpu) return;
+
+        const adapter = await navigator.gpu.requestAdapter();
+        if (!adapter) return;
+        const device = await adapter.requestDevice();
+
+        const ctx = canvas.getContext('webgpu');
+        const fmt = navigator.gpu.getPreferredCanvasFormat();
+        const dfmt = 'depth24plus';
+
+        // Activate WebGPU mode — hides CSS orbits
+        canvas.closest('.hero').classList.add('webgpu-active');
+
+        let depthTex;
+        function resize() {
+            const dpr = Math.min(devicePixelRatio, 2);
+            canvas.width = canvas.clientWidth * dpr;
+            canvas.height = canvas.clientHeight * dpr;
+            ctx.configure({ device, format: fmt, alphaMode: 'premultiplied' });
+            if (depthTex) depthTex.destroy();
+            depthTex = device.createTexture({
+                size: [canvas.width, canvas.height],
+                format: dfmt,
+                usage: GPUTextureUsage.RENDER_ATTACHMENT,
+            });
+        }
+        resize();
+        addEventListener('resize', resize);
+
+        // ─── Generate MgLi B2 (CsCl-type) lattice ───
+        // Mg at corners, Li at body center
+        const N = 12, a = 3.0, data = [];
+        for (let i = 0; i < N; i++)
+        for (let j = 0; j < N; j++)
+        for (let k = 0; k < N; k++) {
+            const bx = (i - N/2 + 0.5) * a;
+            const by = (j - N/2 + 0.5) * a;
+            const bz = (k - N/2 + 0.5) * a;
+            // Mg — larger, indigo
+            data.push(bx, by, bz, 0.6, 0.482, 0.541, 0.878, Math.random() * 6.28);
+            // Li — smaller, cyan
+            data.push(bx+.5*a, by+.5*a, bz+.5*a, 0.45, 0.306, 0.804, 0.769, Math.random() * 6.28);
+        }
+        const nAtoms = data.length / 8;
+
+        const iBuf = device.createBuffer({
+            size: data.length * 4, usage: GPUBufferUsage.STORAGE, mappedAtCreation: true
+        });
+        new Float32Array(iBuf.getMappedRange()).set(data);
+        iBuf.unmap();
+
+        const uBuf = device.createBuffer({
+            size: 96, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+        });
+
+        // ─── WGSL Shader: Permutation-Animated Sphere Impostors ───
+        const wgsl = `
+struct U { vp: mat4x4<f32>, eye: vec3<f32>, t: f32, res: vec2<f32> };
+struct A { p: vec3<f32>, r: f32, c: vec3<f32>, ph: f32 };
+@group(0) @binding(0) var<uniform> u: U;
+@group(0) @binding(1) var<storage,read> atoms: array<A>;
+
+// Permutation hash
+fn hash(n: f32) -> f32 { return fract(sin(n) * 43758.5453123); }
+
+struct V {
+    @builtin(position) pos: vec4<f32>,
+    @location(0) lp: vec2<f32>,
+    @location(1) wc: vec3<f32>,
+    @location(2) rad: f32,
+    @location(3) col: vec3<f32>,
+    @location(4) dep: f32,
+};
+
+@vertex fn vs(@builtin(vertex_index) vi: u32, @builtin(instance_index) ii: u32) -> V {
+    let q = array(vec2(-1.,-1.), vec2(1.,-1.), vec2(-1.,1.), vec2(1.,-1.), vec2(1.,1.), vec2(-1.,1.));
+    let atom = atoms[ii];
+    let l = q[vi];
+    let fi = f32(ii);
+
+    // Permutation: new alloy configuration every 3.5s
+    let iter = floor(u.t / 3.5);
+    let blend = smoothstep(0.0, 0.7, fract(u.t / 3.5));
+
+    // Hash determines Mg vs Li at each lattice site per iteration
+    let h0 = hash(fi * 127.1 + iter * 311.7);
+    let h1 = hash(fi * 127.1 + (iter + 1.0) * 311.7);
+
+    // Mg: larger indigo | Li: smaller cyan
+    let mg_c = vec3(0.482, 0.541, 0.878);
+    let li_c = vec3(0.306, 0.804, 0.769);
+    let mg_r: f32 = 0.6;
+    let li_r: f32 = 0.45;
+
+    let c0 = select(li_c, mg_c, h0 > 0.5);
+    let c1 = select(li_c, mg_c, h1 > 0.5);
+    let r0 = select(li_r, mg_r, h0 > 0.5);
+    let r1 = select(li_r, mg_r, h1 > 0.5);
+
+    let final_col = mix(c0, c1, blend);
+    let final_rad = mix(r0, r1, blend);
+
+    // Thermal vibration
+    let j = vec3(
+        sin(u.t * 2.0 + atom.ph) * 0.025,
+        cos(u.t * 1.7 + atom.ph * 1.3) * 0.025,
+        sin(u.t * 2.3 + atom.ph * 0.7) * 0.025
+    );
+    let ctr = atom.p + j;
+
+    // Billboard quad facing camera
+    let fw = normalize(u.eye - ctr);
+    let rt = normalize(cross(vec3(0.,1.,0.), fw));
+    let up = cross(fw, rt);
+    let wp = ctr + (rt * l.x + up * l.y) * final_rad * 1.3;
+
+    var o: V;
+    o.pos = u.vp * vec4(wp, 1.);
+    o.lp = l;
+    o.wc = ctr;
+    o.rad = final_rad;
+    o.col = final_col;
+    o.dep = length(u.eye - ctr);
+    return o;
+}
+
+@fragment fn fs(i: V) -> @location(0) vec4<f32> {
+    let dd = length(i.lp);
+    if (dd > 1.) { discard; }
+
+    let z = sqrt(1. - dd * dd);
+    let n = vec3(i.lp, z);
+
+    let ld = normalize(vec3(0.3, 0.6, 1.0));
+    let diff = max(dot(n, ld), 0.);
+    let vd = vec3(0., 0., 1.);
+    let spec = pow(max(dot(n, normalize(ld + vd)), 0.), 80.);
+    let fr = pow(1. - max(dot(n, vd), 0.), 3.);
+
+    // Atmospheric depth fade (slightly dimmer for text contrast)
+    let fade = smoothstep(16., 5., i.dep);
+
+    let col = i.col * (0.08 + diff * 0.55) + vec3(1.) * spec * 0.5 + i.col * fr * 0.25;
+    let al = fade * (0.4 + 0.35 * z);
+    return vec4(col * al, al);
+}
+`;
+
+        const mod = device.createShaderModule({ code: wgsl });
+
+        const bgl = device.createBindGroupLayout({ entries: [
+            { binding: 0, visibility: GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT, buffer: { type: 'uniform' } },
+            { binding: 1, visibility: GPUShaderStage.VERTEX, buffer: { type: 'read-only-storage' } },
+        ]});
+
+        const pipe = device.createRenderPipeline({
+            layout: device.createPipelineLayout({ bindGroupLayouts: [bgl] }),
+            vertex: { module: mod, entryPoint: 'vs' },
+            fragment: { module: mod, entryPoint: 'fs', targets: [{
+                format: fmt,
+                blend: {
+                    color: { srcFactor: 'one', dstFactor: 'one-minus-src-alpha' },
+                    alpha: { srcFactor: 'one', dstFactor: 'one-minus-src-alpha' },
+                },
+            }]},
+            primitive: { topology: 'triangle-list' },
+            depthStencil: { format: dfmt, depthWriteEnabled: true, depthCompare: 'less' },
+        });
+
+        const bg = device.createBindGroup({ layout: bgl, entries: [
+            { binding: 0, resource: { buffer: uBuf } },
+            { binding: 1, resource: { buffer: iBuf } },
+        ]});
+
+        // ─── Matrix helpers ───
+        const V3 = {
+            sub: (a,b) => [a[0]-b[0], a[1]-b[1], a[2]-b[2]],
+            cross: (a,b) => [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]],
+            dot: (a,b) => a[0]*b[0] + a[1]*b[1] + a[2]*b[2],
+            norm: v => { const l = Math.hypot(...v); return v.map(x => x/l); }
+        };
+
+        function perspective(fov, asp, n, f) {
+            const t = 1/Math.tan(fov/2), nf = 1/(n-f);
+            return new Float32Array([t/asp,0,0,0, 0,t,0,0, 0,0,(f+n)*nf,-1, 0,0,2*f*n*nf,0]);
+        }
+
+        function lookAt(e, c, up) {
+            const f = V3.norm(V3.sub(c,e)), s = V3.norm(V3.cross(f,up)), u = V3.cross(s,f);
+            return new Float32Array([
+                s[0],u[0],-f[0],0, s[1],u[1],-f[1],0, s[2],u[2],-f[2],0,
+                -V3.dot(s,e),-V3.dot(u,e),V3.dot(f,e),1
+            ]);
+        }
+
+        function mul(a, b) {
+            const o = new Float32Array(16);
+            for (let i=0;i<4;i++) for (let j=0;j<4;j++) for (let k=0;k<4;k++) o[j*4+i]+=a[k*4+i]*b[j*4+k];
+            return o;
+        }
+
+        // ─── Render loop ───
+        const t0 = performance.now();
+        const iterEl = document.getElementById('iterNum');
+        (function loop() {
+            const t = (performance.now() - t0) / 1000;
+            const asp = canvas.width / canvas.height;
+
+            // Update permutation counter
+            const iter = Math.floor(t / 3.5) + 1;
+            if (iterEl) iterEl.textContent = '#' + iter;
+
+            // Travel path: map scroll window directly into Z depth along the [1,1,1] diagonal
+            const scrollOffset = window.scrollY * 0.015;
+            const pathStart = -18;
+            const cx = pathStart + scrollOffset;
+            const cy = pathStart + scrollOffset;
+            const cz = pathStart + scrollOffset;
+
+            // Smooth parallax tracking
+            window._px = window._px || 0;
+            window._py = window._py || 0;
+            window._px += ((window.parallaxX || 0) - window._px) * 0.05;
+            window._py += ((window.parallaxY || 0) - window._py) * 0.05;
+
+            // Base subtle orbit + Deep Mouse Parallax
+            const ox = Math.sin(t * 0.1) * 1.5 + window._px * 2.5;
+            const oy = Math.sin(t * 0.15) * 0.8 - window._py * 2.5;
+            const oz = Math.cos(t * 0.1) * 1.5;
+
+            const eye = [
+                cx + ox,
+                cy + oy,
+                cz + oz
+            ];
+
+            const hudCoords = document.getElementById('hudCoords');
+            if (hudCoords) {
+                hudCoords.textContent = `POS: [${eye[0].toFixed(3)}, ${eye[1].toFixed(3)}, ${eye[2].toFixed(3)}]`;
+            }
+            
+            // Look slightly ahead down the lattice bond vector
+            const target = [
+                cx + 4,
+                cy + 4,
+                cz + 4
+            ];
+
+            // Build view-projection matrix
+            const ud = new Float32Array(24);
+            ud.set(mul(perspective(0.7, asp, 0.1, 100), lookAt(eye, target, [0,1,0])));
+            ud[16] = eye[0]; ud[17] = eye[1]; ud[18] = eye[2]; ud[19] = t;
+            ud[20] = canvas.width; ud[21] = canvas.height;
+            device.queue.writeBuffer(uBuf, 0, ud);
+
+            const enc = device.createCommandEncoder();
+            const pass = enc.beginRenderPass({
+                colorAttachments: [{
+                    view: ctx.getCurrentTexture().createView(),
+                    clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                    loadOp: 'clear', storeOp: 'store'
+                }],
+                depthStencilAttachment: {
+                    view: depthTex.createView(),
+                    depthClearValue: 1.0,
+                    depthLoadOp: 'clear', depthStoreOp: 'discard'
+                },
+            });
+            pass.setPipeline(pipe);
+            pass.setBindGroup(0, bg);
+            pass.draw(6, nAtoms);
+            pass.end();
+
+            device.queue.submit([enc.finish()]);
+            requestAnimationFrame(loop);
+        })();
+    })();
+    </script>
+</body>
+</html>

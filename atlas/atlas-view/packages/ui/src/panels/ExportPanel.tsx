@@ -58,23 +58,37 @@ export function ExportPanel() {
   const triggerExport = useStore(s => s.triggerExport);
   const totalFrames = file?.trajectory.totalFrames ?? 0;
 
+  const [downloadLink, setDownloadLink] = useState<{url: string, filename: string} | null>(null);
+
   // Clear success message after delay
   useEffect(() => {
-    if (exportSuccess) {
+    if (exportSuccess && !downloadLink) {
       const timer = setTimeout(() => setExportSuccess(false), 3000);
       return () => clearTimeout(timer);
     }
-  }, [exportSuccess]);
+  }, [exportSuccess, downloadLink]);
 
   // Temporary local success handler to map from ExportManager
-  const handleComplete = useCallback(() => {
+  const handleComplete = useCallback((success: boolean, blob?: Blob, filename?: string) => {
     setExporting(false);
-    setExportSuccess(true);
+    if (success) {
+      if (blob && filename) {
+        const url = URL.createObjectURL(blob);
+        alert('DEBUG: downloadLink created for ' + filename);
+        setDownloadLink({ url, filename });
+      } else {
+        alert('DEBUG: success was true but blob/filename was missing!');
+      }
+      setExportSuccess(true);
+    } else {
+      alert("Export failed! Check console for details.");
+    }
   }, []);
 
   const handleExportPNG = useCallback(async () => {
     setExporting(true);
     setExportSuccess(false);
+    setDownloadLink(null);
     
     triggerExport({
         type: 'image',
@@ -282,6 +296,7 @@ export function ExportPanel() {
               onClick={() => {
                 setExporting(true);
                 setExportSuccess(false);
+                setDownloadLink(null);
                 triggerExport({
                   type: 'video',
                   format: 'mp4',
@@ -426,6 +441,31 @@ export function ExportPanel() {
                 Hidden atom types are excluded.
               </div>
             </AtomicGlass>
+
+            {/* The Download Action Button */}
+            {downloadLink && (
+              <a
+                href={downloadLink.url}
+                download={downloadLink.filename}
+                onClick={() => setDownloadLink(null)} // Clear after downloading
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  marginTop: 8, padding: '12px 0',
+                  fontSize: 12, fontWeight: 600,
+                  fontFamily: 'var(--font-mono)',
+                  textTransform: 'uppercase', letterSpacing: '0.04em',
+                  color: '#fff',
+                  background: 'var(--green-600)',
+                  border: '1px solid var(--green-500)',
+                  borderRadius: 'var(--radius-sm)',
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 12px rgba(78, 205, 107, 0.2)'
+                }}
+              >
+                <IconDownload />
+                Download {downloadLink.filename.split('.').pop()?.toUpperCase()}
+              </a>
+            )}
           </QuantumSection>
 
           {/* ─── Current frame info ─── */}

@@ -9,15 +9,7 @@ use crate::fitting::FitResult;
 pub fn linear_fit(data: &[(f64, f64)]) -> FitResult {
     let n = data.len() as f64;
     if n < 2.0 {
-        return FitResult::new(
-            "linear",
-            "insufficient data",
-            vec![],
-            vec![],
-            0.0,
-            f64::INFINITY,
-            0,
-        );
+        return FitResult::new("linear", "insufficient data", vec![], vec![], 0.0, f64::INFINITY, 0);
     }
 
     let sum_x: f64 = data.iter().map(|(x, _)| x).sum();
@@ -27,15 +19,7 @@ pub fn linear_fit(data: &[(f64, f64)]) -> FitResult {
 
     let denom = n * sum_x2 - sum_x * sum_x;
     if denom.abs() < 1e-30 {
-        return FitResult::new(
-            "linear",
-            "singular",
-            vec![],
-            vec![],
-            0.0,
-            f64::INFINITY,
-            data.len(),
-        );
+        return FitResult::new("linear", "singular", vec![], vec![], 0.0, f64::INFINITY, data.len());
     }
 
     let m = (n * sum_xy - sum_x * sum_y) / denom;
@@ -80,10 +64,7 @@ mod tests {
         let data: Vec<(f64, f64)> = (0..10).map(|i| (i as f64, 2.0 * i as f64 + 1.0)).collect();
         let fit = linear_fit(&data);
         assert!((fit.params[0] - 2.0).abs() < 1e-10, "slope should be 2.0");
-        assert!(
-            (fit.params[1] - 1.0).abs() < 1e-10,
-            "intercept should be 1.0"
-        );
+        assert!((fit.params[1] - 1.0).abs() < 1e-10, "intercept should be 1.0");
         assert!((fit.r_squared - 1.0).abs() < 1e-10, "R² should be 1.0");
     }
 }

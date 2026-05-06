@@ -9,6 +9,18 @@ import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
+import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
+
+export interface BondDataset {
+  id: string;
+  source: 'webgpu' | 'cpu' | 'file';
+  label: string;
+  timestamp: number;
+  data?: {
+    pairs: Int32Array;
+    distances: Float32Array;
+  };
+}
 
 export interface ExportRequest {
   type: 'image' | 'video' | 'glb' | 'usdz' | 'complete' | null;
@@ -41,6 +53,12 @@ export interface AppState {
 
   // ─── Visualization ───
   frame: number;
+  /** The directorial color choice. Drives atomColorMode / atomColorSource /
+   *  botanical via setColorScheme. Smart-defaulted on file load. */
+  colorScheme: ColorSchemeId;
+  /** Source of per-type colors when atomColorMode === 'type'. Set by the
+   *  scheme but exposed independently so power users can override. */
+  atomColorSource: AtomColorSource;
   colorMode: ColorMode;
   colorProperty: string | null;
   colormap: ColormapName;
@@ -51,6 +69,22 @@ export interface AppState {
   showAxes: boolean;
   showBonds: boolean;
   bondCutoff: number;
+  bondColorMode: 'type' | 'length' | 'energy' | 'screening';
+  /** Use the WebGPU compute pipeline for bond detection. Falls back to the
+   *  CPU spatial-hash worker when WebGPU is unavailable or init fails. */
+  useGpuBonds: boolean;
+  /** Live status of the GPU pipeline. Drives the HUD and the fallback UI. */
+  gpuBondsStatus: 'idle' | 'ready' | 'unsupported';
+  /** Backend that produced the most recent bond pairs. 'none' until first
+   *  detection completes. Drives the dev HUD; not used by render path. */
+  bondSource: 'cpu' | 'gpu' | 'none';
+  /** Bond count from the most recent detection — for HUD + telemetry. */
+  lastBondCount: number;
+  
+  // ─── Bond Registry (Phase 3) ───
+  bondRegistry: Record<string, BondDataset>;
+  activeBondDataset: string | null;
+
   renderStyle: RenderStyle;
   atomScale: number;
   backgroundPreset: string;
@@ -65,6 +99,17 @@ export interface AppState {
   atomTexture: 'none' | 'scratched' | 'noise';
 
   // ─── Effects ───
+  /** Active postprocess preset. The renderer reads this. Individual ssao /
+   *  bloom / dof flags below are legacy and no longer drive rendering — they
+   *  remain for MobileHUD and AnomalyTracker which read them. */
+  postprocessPreset: 'paper' | 'studio' | 'editorial' | 'cinematic' | 'diagram';
+  /** 0..2 — scales the active preset's effect strengths. 0 disables all
+   *  effects (preset still selected); 1 = preset's authored values. */
+  postprocessIntensity: number;
+  /** 0..1 — when colorScheme is 'property', atoms with high property values
+   *  emit additional light proportional to value × this strength × the
+   *  colormap-mapped color. Reads as "this atom is doing something." */
+  propertyEmissionStrength: number;
   ssao: boolean;
   ssaoIntensity: number;
   bloom: boolean;
@@ -149,10 +194,15 @@ export interface AppState {
   prevFrame: () => void;
   togglePlay: () => void;
   setPlaybackSpeed: (speed: number) => void;
+  setColorScheme: (id: ColorSchemeId) => void;
+  setAtomColorSource: (src: AtomColorSource) => void;
   setColorMode: (mode: ColorMode) => void;
   setColorProperty: (prop: string | null) => void;
   setColormap: (map: ColormapName) => void;
   setAnomalyTracking: (tracking: boolean) => void;
+  setPostprocessPreset: (id: AppState['postprocessPreset']) => void;
+  setPostprocessIntensity: (v: number) => void;
+  setPropertyEmissionStrength: (v: number) => void;
   toggleSSAO: () => void;
   toggleBloom: () => void;
   toggleDOF: () => void;
@@ -165,6 +215,12 @@ export interface AppState {
   toggleAxes: () => void;
   toggleBonds: () => void;
   setBondCutoff: (cutoff: number) => void;
+  setBondColorMode: (mode: AppState['bondColorMode']) => void;
+  setUseGpuBonds: (v: boolean) => void;
+  setGpuBondsStatus: (status: AppState['gpuBondsStatus']) => void;
+  reportBondsUpdate: (source: AppState['bondSource'], count: number) => void;
+  registerBondDataset: (dataset: BondDataset) => void;
+  setActiveBondDataset: (id: string | null) => void;
   setRenderStyle: (style: RenderStyle) => void;
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
@@ -201,6 +257,8 @@ const DEFAULTS = {
   loadProgress: 0,
   error: null,
   frame: 0,
+  colorScheme: 'element' as ColorSchemeId,
+  atomColorSource: 'element' as AtomColorSource,
   colorMode: 'type' as ColorMode,
   colorProperty: null,
   colormap: 'viridis' as ColormapName,
@@ -208,7 +266,19 @@ const DEFAULTS = {
   showCell: true,
   showAxes: true,
   showBonds: false,
-  bondCutoff: 2.5,
+  bondCutoff: 3.2,
+  bondColorMode: 'type' as const,
+  // Default ON: WebGPU bond detection has graceful CPU-worker fallback when
+  // unsupported. Treating it as the primary path simplifies the user's first
+  // experience — no toggle hunt for "why are bonds slow on my machine".
+  useGpuBonds: true,
+  gpuBondsStatus: 'idle' as const,
+  bondSource: 'none' as const,
+  lastBondCount: 0,
+  
+  // ─── Bond Registry ───
+  bondRegistry: {} as Record<string, BondDataset>,
+  activeBondDataset: null as string | null,
   renderStyle: 'standard' as RenderStyle,
   atomScale: 1.0,
   backgroundPreset: 'deep',
@@ -222,6 +292,9 @@ const DEFAULTS = {
   atomTexture: 'none' as const,
 
   // ─── Effects Defaults ───
+  postprocessPreset: 'studio' as const,
+  postprocessIntensity: 1.0,
+  propertyEmissionStrength: 0.6,
   ssao: true,
   ssaoIntensity: 0.65,
   bloom: true,
@@ -265,9 +338,22 @@ export const useStore = create<AppState>()(
     ...DEFAULTS,
 
     setFile: (file) => {
-      const atomCount = file?.trajectory?.frames?.[0]?.positions?.length ? file.trajectory.frames[0].positions.length / 3 : 0;
-      const isMassive = atomCount > 50000;
-      
+      const firstFrame = file?.trajectory?.frames?.[0];
+      const atomCount = firstFrame?.positions?.length ? firstFrame.positions.length / 3 : 0;
+
+      // Drive a sensible first-frame look based on system content. The user
+      // can change anything after, but they should never see "should I enable
+      // bonds?" or "what's a good color scheme?" — we decide.
+      const sceneDirective = pickSceneDirective(atomCount);
+
+      // Pick a coloring scheme based on what the data carries.
+      const hasProperty = !!firstFrame?.properties && firstFrame.properties.size > 0;
+      const uniqueTypes = firstFrame?.types
+        ? new Set(firstFrame.types).size
+        : 0;
+      const schemeId = pickInitialScheme({ hasProperty, uniqueTypes });
+      const scheme = COLOR_SCHEMES[schemeId];
+
       set({
         file,
         frame: 0,
@@ -275,11 +361,18 @@ export const useStore = create<AppState>()(
         error: null,
         loading: false,
         loadProgress: 1,
-        ...(isMassive && {
-          ssao: false,
-          bloom: false,
-          dof: false,
-        }),
+        showBonds: sceneDirective.showBonds,
+        postprocessPreset: sceneDirective.preset,
+        postprocessIntensity: sceneDirective.intensity,
+        // Coloring directive — visible default, easy to override in UI.
+        colorScheme: schemeId,
+        atomColorSource: scheme.atomColorSource,
+        colorMode: scheme.atomColorMode,
+        // Legacy mirrors of preset (PresetLegacyBridge re-syncs but writing
+        // them here avoids a one-frame flash before the bridge catches up).
+        ssao: sceneDirective.preset !== 'diagram',
+        bloom: sceneDirective.preset === 'studio' || sceneDirective.preset === 'editorial' || sceneDirective.preset === 'cinematic',
+        dof: sceneDirective.preset === 'cinematic',
       });
     },
 
@@ -320,11 +413,33 @@ export const useStore = create<AppState>()(
     togglePlay: () => set(s => ({ playing: !s.playing })),
     setPlaybackSpeed: (playbackSpeed) => set({ playbackSpeed }),
 
+    setColorScheme: (colorScheme) => {
+      const scheme = COLOR_SCHEMES[colorScheme];
+      const current = get();
+      set({
+        colorScheme,
+        atomColorSource: scheme.atomColorSource,
+        colorMode: scheme.atomColorMode,
+        renderStyle: scheme.botanical
+          ? 'botanical'
+          : (current.renderStyle === 'botanical' ? 'standard' : current.renderStyle),
+      });
+    },
+    setAtomColorSource: (atomColorSource) => set({ atomColorSource }),
     setColorMode: (colorMode) => set({ colorMode }),
     setColorProperty: (colorProperty) => set({ colorProperty }),
     setColormap: (colormap) => set({ colormap, activeProfile: null }),
     setAnomalyTracking: (anomalyTracking) => set({ anomalyTracking }),
 
+    setPostprocessPreset: (postprocessPreset) => set({ postprocessPreset }),
+    setPostprocessIntensity: (postprocessIntensity) =>
+      set({ postprocessIntensity: Math.max(0, Math.min(2, postprocessIntensity)) }),
+    setPropertyEmissionStrength: (propertyEmissionStrength) =>
+      set({ propertyEmissionStrength: Math.max(0, Math.min(1, propertyEmissionStrength)) }),
+    // Legacy individual toggles — no longer drive the EffectComposer (the
+    // active preset does). Still mutate the legacy flags so MobileHUD's
+    // toggles and AnomalyTracker's DOF check stay coherent until those are
+    // migrated to read from the preset.
     toggleSSAO: () => set(s => ({ ssao: !s.ssao })),
     toggleBloom: () => set(s => ({ bloom: !s.bloom })),
     toggleDOF: () => set(s => ({ dof: !s.dof })),
@@ -338,6 +453,18 @@ export const useStore = create<AppState>()(
     toggleAxes: () => set(s => ({ showAxes: !s.showAxes })),
     toggleBonds: () => set(s => ({ showBonds: !s.showBonds })),
     setBondCutoff: (bondCutoff) => set({ bondCutoff }),
+    setBondColorMode: (bondColorMode) => set({ bondColorMode }),
+    setUseGpuBonds: (useGpuBonds) => set({ useGpuBonds }),
+    setGpuBondsStatus: (gpuBondsStatus) => set({ gpuBondsStatus }),
+    reportBondsUpdate: (bondSource, lastBondCount) => set({ bondSource, lastBondCount }),
+    
+    // Bond Registry Actions
+    registerBondDataset: (dataset: BondDataset) => set((s) => ({
+      bondRegistry: { ...s.bondRegistry, [dataset.id]: dataset },
+      activeBondDataset: s.activeBondDataset === null ? dataset.id : s.activeBondDataset
+    })),
+    setActiveBondDataset: (id: string | null) => set({ activeBondDataset: id }),
+
     setRenderStyle: (renderStyle) => set({ renderStyle }),
     setAtomScale: (atomScale) => set({ atomScale }),
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
@@ -572,7 +699,7 @@ export const useStore = create<AppState>()(
       if (s.dofFocus !== 50)                           delta.df = s.dofFocus;
       if (s.toneMapping !== 'aces')                    delta.tm = s.toneMapping;
       if (s.showBonds)                                 delta.bonds = 1;
-      if (r(s.bondCutoff) !== 2.5)                     delta.bc = r(s.bondCutoff);
+      if (r(s.bondCutoff) !== 3.2)                     delta.bc = r(s.bondCutoff);
       if (s.renderStyle !== 'standard')                delta.rs = s.renderStyle;
       if (r(s.ambientLightIntensity) !== 0.35)         delta.ali = r(s.ambientLightIntensity);
       if (r(s.dirLightIntensity) !== 1.2)              delta.dli = r(s.dirLightIntensity);
@@ -614,7 +741,7 @@ export const useStore = create<AppState>()(
           dofFocus: s.df ?? 50,
           toneMapping: s.tm ?? 'aces',
           showBonds: s.bonds === 1,
-          bondCutoff: s.bc ?? 2.5,
+          bondCutoff: s.bc ?? 3.2,
           renderStyle: s.rs ?? 'standard',
           ambientLightIntensity: s.ali ?? 0.35,
           dirLightIntensity: s.dli ?? 1.2,
@@ -645,3 +772,48 @@ export const useStore = create<AppState>()(
     setFullTrajectoryReady: (ready: boolean) => set(() => ({ fullTrajectoryReady: ready, isStreamingFrames: !ready })),
   }))
 );
+
+/**
+ * Pick the opening-frame visual directive for a freshly-loaded file. This
+ * is the place to encode editorial defaults: small systems get the polished
+ * "studio" look, medium ones stay there with bonds, large ones step down to
+ * "paper" (cheaper effects), and very-large drop to "diagram" (no postprocess,
+ * bonds off — performance over polish). The user can override in the panels.
+ */
+function pickSceneDirective(atomCount: number): {
+  showBonds: boolean;
+  preset: AppState['postprocessPreset'];
+  intensity: number;
+} {
+  if (atomCount === 0) {
+    return { showBonds: false, preset: 'studio', intensity: 1.0 };
+  }
+  if (atomCount < 50_000) {
+    return { showBonds: true, preset: 'studio', intensity: 1.0 };
+  }
+  if (atomCount < 200_000) {
+    // Bonds still on — the GPU pipeline can handle it. Preset drops to paper
+    // for cleaner figure-quality reads at scale; bloom/DOF would clutter.
+    return { showBonds: true, preset: 'paper', intensity: 0.85 };
+  }
+  // Very-large systems — performance over polish on the first frame. User
+  // can flip back into 'studio' if their machine handles it.
+  return { showBonds: false, preset: 'diagram', intensity: 1.0 };
+}
+
+// Dev-only window probe. Lets Needle Tools / Three.js DevTools / a paste-and-
+// poke browser console reach the store without prop-drilling. Gone in prod.
+if (import.meta.env.DEV && typeof window !== 'undefined') {
+  (window as any).__atlas = (window as any).__atlas ?? {};
+  (window as any).__atlas.store = useStore;
+  (window as any).__atlas.getState = () => useStore.getState();
+  // Helpful console one-liners — log on first access, not on every read.
+  if (!(window as any).__atlas.__intro) {
+    (window as any).__atlas.__intro = true;
+    // eslint-disable-next-line no-console
+    console.log(
+      '%c[atlas dev]%c window.__atlas available — store, getState(), three (after Canvas mount)',
+      'color:#1edce0;font-weight:bold', 'color:#94a3b8',
+    );
+  }
+}

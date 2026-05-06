@@ -8,8 +8,8 @@
  *   4. Read back visible atom count for UI stats
  */
 
-import atomShaderSource from './shaders/atom.wgsl?raw';
-import cullingShaderSource from './shaders/culling.wgsl?raw';
+import atomShaderSource from '../shaders/atom.wgsl?raw';
+import cullingShaderSource from '../shaders/culling.wgsl?raw';
 
 export interface AtomPipelineOptions {
   device: GPUDevice;

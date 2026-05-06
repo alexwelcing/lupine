@@ -1,0 +1,200 @@
+---
+import { ClientRouter } from 'astro:transitions';
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = "Lupine Materials Science", description = "Bridging classical physics with next-generation deep learning inference." } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <!-- Tailwind CSS (via CDN to support legacy classes) -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" is:inline></script>
+    <ClientRouter />
+    <script id="tailwind-config" is:inline>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "background": "#12131a",
+              "surface": "#12131a",
+              "surface-dim": "#12131a",
+              "surface-bright": "#383941",
+              "surface-container-lowest": "#0d0e15",
+              "surface-container-low": "#1a1b23",
+              "surface-container": "#1e1f27",
+              "surface-container-high": "#292931",
+              "surface-container-highest": "#34343c",
+              "surface-variant": "#34343c",
+              "on-surface": "#e3e1ec",
+              "on-surface-variant": "#c6c5d5",
+              "outline": "#8f8f9f",
+              "outline-variant": "#454653",
+              "primary": "#bcc3ff",
+              "on-primary": "#051c93",
+              "primary-container": "#5565d4",
+              "on-primary-container": "#f5f3ff",
+              "secondary": "#5dd9d0",
+              "on-secondary": "#003734",
+              "secondary-container": "#00a29a",
+              "on-secondary-container": "#00302d",
+              "tertiary": "#eec058",
+              "on-tertiary": "#402d00",
+              "tertiary-container": "#8e6a00",
+              "on-tertiary-container": "#fff3e1",
+              "error": "#ffb4ab",
+              "on-error": "#690005",
+              "error-container": "#93000a",
+              "on-error-container": "#ffdad6"
+            },
+            "fontFamily": {
+              "headline": ["Playfair Display", "serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["JetBrains Mono", "monospace"]
+            }
+          }
+        }
+      }
+    </script>
+    <style is:global>
+        body {
+            background-color: #0a0b12;
+            color: #e3e1ec;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
+        .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+        .glass-pane, .glass-panel {
+            background: rgba(30, 31, 39, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(227, 225, 236, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Layout overrides for Header compatibility */
+        :root {
+          --surface: #12131a;
+          --primary: #5565d4;
+          --outline-variant: rgba(227, 225, 236, 0.15);
+          --on-surface: #e3e1ec;
+          --on-surface-variant: #c6c5d5;
+          --font-mono: 'JetBrains Mono', monospace;
+          --font-serif: 'Playfair Display', serif;
+          --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          --section-pad-x: 40px;
+        }
+        @media (max-width: 768px) {
+          :root { --section-pad-x: 20px; }
+          .grid-cols-3, [class*="grid-cols-3"] { grid-template-columns: 1fr !important; }
+          .grid-cols-2, [class*="grid-cols-2"] { grid-template-columns: 1fr !important; }
+          .text-8xl, .text-7xl, .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; }
+          .text-5xl { font-size: 2rem !important; }
+          .text-4xl { font-size: 1.75rem !important; }
+          .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+          .p-16, .p-24 { padding: 2rem !important; }
+          .md\:p-24 { padding: 2rem !important; }
+          .gap-8, .gap-12 { gap: 1.5rem !important; }
+          .hidden.md\:flex { display: none !important; }
+          table { font-size: 12px !important; }
+          table td, table th { padding: 8px !important; }
+        }
+        @media (max-width: 480px) {
+          .text-6xl, .text-5xl { font-size: 1.8rem !important; line-height: 1.2 !important; }
+          .text-4xl { font-size: 1.5rem !important; }
+          .text-3xl { font-size: 1.25rem !important; }
+        }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(78, 205, 196, 0.02) 50.5%, transparent 51%);
+            background-size: 100% 4px;
+        }
+        .metallic-gradient {
+            background: linear-gradient(135deg, #bcc3ff 0%, #5565d4 100%);
+        }
+        .ghost-border { border: 1px solid rgba(143, 143, 159, 0.15); }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% -20%, rgba(85, 101, 212, 0.15) 0%, rgba(10, 11, 18, 0) 70%);
+        }
+        
+        /* ─── Kinetic Blueprint Animations ─── */
+        @keyframes terminal-flash {
+            0% { background-color: transparent; }
+            50% { background-color: rgba(0, 218, 243, 0.1); box-shadow: 0 0 12px rgba(0, 218, 243, 0.4); }
+            100% { background-color: transparent; }
+        }
+        .kinetic-hover:hover {
+            animation: terminal-flash 0.15s cubic-bezier(0,0,0.2,1) 1;
+            box-shadow: inset 2px 0 0 #00daf3;
+            transition: none; /* Instant terminal response */
+        }
+        @keyframes cyan-glow-pulse {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(0, 218, 243, 0.2)); }
+            50% { filter: drop-shadow(0 0 16px rgba(0, 218, 243, 0.6)); }
+        }
+        .cyan-glow { animation: cyan-glow-pulse 3s infinite; }
+        
+        @keyframes tech-slide-up {
+            from { transform: translateY(20px); opacity: 0; filter: blur(4px); }
+            to { transform: translateY(0); opacity: 1; filter: blur(0); }
+        }
+        .tech-reveal { animation: tech-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+  </head>
+  <body class="selection:bg-primary-container selection:text-white cursor-none">
+    <!-- Hardware Cursor -->
+    <div id="hardware-cursor" class="hardware-cursor hidden md:block"></div>
+
+    <!-- Persistent Scroll Variable & HUD Updater -->
+    <script>
+      // Scroll handling
+      document.addEventListener('scroll', () => {
+        document.body.style.setProperty('--scroll-y', `${window.scrollY}px`);
+        const hudReadout = document.getElementById('hud-y-pos');
+        if(hudReadout) hudReadout.textContent = `Y:${String(Math.round(window.scrollY)).padStart(4, '0')}`;
+      });
+      
+      // HUD Time
+      setInterval(() => {
+        const hudTime = document.getElementById('hud-time');
+        if(hudTime) hudTime.textContent = new Date().toISOString().substring(11,19) + ' UTC';
+      }, 1000);
+
+      // Hardware Cursor Logic
+      const cursor = document.getElementById('hardware-cursor');
+      if (cursor) {
+        document.addEventListener('mousemove', (e) => {
+          cursor.style.left = `${e.clientX}px`;
+          cursor.style.top = `${e.clientY}px`;
+        });
+        document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
+        document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
+      }
+    </script>
+
+    <!-- Tactical HUD Overlays -->
+    <div class="fixed top-4 left-4 z-50 font-mono-tech text-[10px] text-[#00daf3] opacity-60 tracking-widest pointer-events-none hidden md:block">
+      LAT:30.2672°N // LON:97.7431°W <br/>
+      <span id="hud-time">00:00:00 UTC</span>
+    </div>
+    <div class="fixed bottom-4 right-4 z-50 font-mono-tech text-[10px] text-[#00daf3] opacity-60 tracking-widest pointer-events-none hidden md:block text-right">
+      LUPINE_MONOLITH_v3.0 <br/>
+      <span id="hud-y-pos">Y:0000</span> / Z:001
+    </div>
+
+    <slot />
+  </body>
+</html>

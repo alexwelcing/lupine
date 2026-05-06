@@ -13,6 +13,11 @@ export type {
   VisualizationState,
   ExportImageOptions,
   ExportVideoOptions,
+  BondSourceType,
+  BondProperties,
+  BondData,
+  BondStats,
+  BondDivergence,
 } from './types';
 
 export {

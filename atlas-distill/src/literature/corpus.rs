@@ -26,7 +26,9 @@ impl Paper {
 
     /// Get the best identifier for fetching (DOI preferred, then arXiv).
     pub fn best_id(&self) -> Option<&str> {
-        self.doi.as_deref().or(self.arxiv.as_deref())
+        self.doi
+            .as_deref()
+            .or(self.arxiv.as_deref())
     }
 }
 
@@ -92,7 +94,10 @@ pub fn parse_corpus(markdown: &str) -> Vec<Paper> {
             continue;
         }
 
-        let year = cells[1].trim().parse::<u16>().unwrap_or(2025);
+        let year = cells[1]
+            .trim()
+            .parse::<u16>()
+            .unwrap_or(2025);
 
         let title = cells[2].to_string();
 
@@ -117,7 +122,10 @@ pub fn parse_corpus(markdown: &str) -> Vec<Paper> {
         };
 
         // Pain points from cell 6 (if present)
-        let pain_points = cells.get(6).map(|s| s.to_string()).unwrap_or_default();
+        let pain_points = cells
+            .get(6)
+            .map(|s| s.to_string())
+            .unwrap_or_default();
 
         papers.push(Paper {
             id,
@@ -160,8 +168,7 @@ fn extract_arxiv(text: &str) -> Option<String> {
 
 /// Group papers by tag.
 pub fn group_by_tag(papers: &[Paper]) -> std::collections::HashMap<String, Vec<&Paper>> {
-    let mut groups: std::collections::HashMap<String, Vec<&Paper>> =
-        std::collections::HashMap::new();
+    let mut groups: std::collections::HashMap<String, Vec<&Paper>> = std::collections::HashMap::new();
     for paper in papers {
         for tag in &paper.tags {
             groups.entry(tag.clone()).or_default().push(paper);
@@ -208,7 +215,10 @@ mod tests {
     #[test]
     fn test_parse_doi() {
         let papers = parse_corpus(SAMPLE_TABLE);
-        assert_eq!(papers[1].doi.as_deref(), Some("10.1145/3731599.3767498"));
+        assert_eq!(
+            papers[1].doi.as_deref(),
+            Some("10.1145/3731599.3767498")
+        );
     }
 
     #[test]
@@ -242,6 +252,9 @@ mod tests {
             extract_arxiv("arXiv:2508.13523"),
             Some("2508.13523".to_string())
         );
-        assert_eq!(extract_arxiv("2602.13553"), Some("2602.13553".to_string()));
+        assert_eq!(
+            extract_arxiv("2602.13553"),
+            Some("2602.13553".to_string())
+        );
     }
 }

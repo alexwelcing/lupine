@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useStore } from '../store';
 import { getElementSpec } from '@atlas/core';
+import { COLOR_SCHEMES, SCHEME_ORDER } from '../coloring';
 import {
   QuantumSection,
   OrbitalToggle,
@@ -32,24 +33,27 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
     activeProfile,
     // Data Rep
     colorMode, setColorMode,
+    colorScheme, setColorScheme,
     colorProperty, setColorProperty,
     colormap, setColormap,
     atomScale, setAtomScale,
     showBonds, toggleBonds,
     bondCutoff, setBondCutoff,
+    bondColorMode, setBondColorMode,
+    useGpuBonds, setUseGpuBonds,
+    propertyEmissionStrength, setPropertyEmissionStrength,
     hiddenAtomTypes, toggleAtomType,
     atomTypeScales, setAtomTypeScale,
     // Materials & Lighting
     materialPreset, setMaterialPreset,
+    // atomTexture is exposed under Material & Lighting still — kept for now.
     atomTexture, setAtomTexture,
     environmentPreset, setEnvironmentPreset,
     ambientLightIntensity, setAmbientLightIntensity,
     dirLightIntensity, setDirLightIntensity,
     // Effects
-    ssao, toggleSSAO, ssaoIntensity, setSSAOIntensity,
-    bloom, toggleBloom, bloomIntensity, setBloomIntensity,
-    dof, toggleDOF, autoDepthOfField, toggleAutoDOF, dofFocus, setDOFFocus,
-    toneMapping, setToneMapping,
+    // Post-process state moved to the Effects ("Look") panel — these
+    // destructures are no longer needed by the UI in this file.
     // Context
     backgroundPreset, setBackgroundPreset,
     backgroundVideo, setBackgroundVideo,
@@ -99,7 +103,7 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
     };
   }, [file, frame]);
 
-  const activeEffectsCount = [ssao, bloom, dof, toneMapping !== 'none'].filter(Boolean).length;
+  // (activeEffectsCount removed — post-process is the Effects panel's job.)
 
   return (
     <div style={{
@@ -177,24 +181,80 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
           {/* ═══ Data Representation ═══ */}
           <QuantumSection label="Data Representation" defaultOpen={true}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 12 }}>
+              {/* Color scheme — directorial choice. Picks atom color source +
+                  mode + bond default in one decision. Property selector and
+                  colormap appear below only when relevant to the active scheme. */}
               <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Color By</div>
+                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Color Scheme</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  <IsotopeChip label="Element Type" selected={colorMode === 'type'} onClick={() => setColorMode('type')} />
-                  {availableProperties.map(p => (
-                    <IsotopeChip key={p} label={p} selected={colorMode === 'property' && colorProperty === p} onClick={() => { setColorMode('property'); setColorProperty(p); }} />
-                  ))}
+                  {SCHEME_ORDER.map(id => {
+                    const scheme = COLOR_SCHEMES[id];
+                    return (
+                      <IsotopeChip
+                        key={id}
+                        label={scheme.label}
+                        selected={colorScheme === id}
+                        onClick={() => setColorScheme(id)}
+                      />
+                    );
+                  })}
+                </div>
+                <div style={{ fontSize: 10, color: '#64748b', marginTop: 6, fontStyle: 'italic' }}>
+                  {COLOR_SCHEMES[colorScheme].tagline}
                 </div>
               </div>
 
-              <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Palette</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  {['viridis', 'inferno', 'coolwarm', 'plasma', 'magma', 'cividis', 'neon', 'sunset', 'vaporwave', 'ocean', 'fire', 'ice', 'forest', 'cyberpunk', 'autumn', 'grayscale', 'turbo'].map(c => (
-                    <IsotopeChip key={c} label={c.charAt(0).toUpperCase() + c.slice(1)} selected={colormap === c} onClick={() => setColormap(c as any)} />
-                  ))}
+              {/* Property picker — only shown when the active scheme actually
+                  uses property data. Hidden otherwise to keep the panel quiet. */}
+              {colorScheme === 'property' && availableProperties.length > 0 && (
+                <div>
+                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Property</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                    {availableProperties.map(p => (
+                      <IsotopeChip
+                        key={p}
+                        label={p}
+                        selected={colorProperty === p}
+                        onClick={() => setColorProperty(p)}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* Colormap selector — only relevant when the scheme uses one.
+                  Element / Botanical / Uniform schemes don't, so we hide it. */}
+              {(colorScheme === 'property' || colorScheme === 'family') && (
+                <div>
+                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Palette</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                    {['viridis', 'inferno', 'coolwarm', 'plasma', 'magma', 'cividis', 'neon', 'sunset', 'vaporwave', 'ocean', 'fire', 'ice', 'forest', 'cyberpunk', 'autumn', 'grayscale', 'turbo'].map(c => (
+                      <IsotopeChip key={c} label={c.charAt(0).toUpperCase() + c.slice(1)} selected={colormap === c} onClick={() => setColormap(c as any)} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Property emission glow — atoms with high property values
+                  emit additional light proportional to their colormap-mapped
+                  color. Only shown when property scheme is active (which is
+                  the only mode where it has any effect). */}
+              {colorScheme === 'property' && (
+                <div>
+                  <WaveformSlider
+                    label="PROPERTY GLOW"
+                    value={propertyEmissionStrength}
+                    min={0}
+                    max={1}
+                    step={0.05}
+                    onChange={setPropertyEmissionStrength}
+                    format={v => v.toFixed(2)}
+                  />
+                  <div style={{ fontSize: 10, color: '#64748b', marginTop: 4, fontStyle: 'italic' }}>
+                    Hot atoms emit light. 0 = colormap shading only · 1 = strong glow on high-property sites.
+                  </div>
+                </div>
+              )}
 
               <div>
                 <WaveformSlider label="Global Atom Scale" value={atomScale} min={0.1} max={2.0} step={0.05} onChange={setAtomScale} format={v => v.toFixed(2)} />
@@ -203,8 +263,24 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
               <div style={{ borderTop: '1px solid #1f2937', paddingTop: 12 }}>
                 <OrbitalToggle label="Show Bonds" active={showBonds} onClick={toggleBonds} />
                 {showBonds && (
-                  <div style={{ marginTop: 8 }}>
+                  <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
                     <WaveformSlider label="Bond Cutoff (Å)" value={bondCutoff} min={1.0} max={4.0} step={0.1} onChange={setBondCutoff} format={v => v.toFixed(1)} />
+                    <div>
+                      <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 6 }}>Bond Color Mode</div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                        <IsotopeChip label="Element Type" selected={bondColorMode === 'type'} onClick={() => setBondColorMode('type')} />
+                        <IsotopeChip label="Bond Length" selected={bondColorMode === 'length'} onClick={() => setBondColorMode('length')} />
+                        <IsotopeChip label="Energy" selected={bondColorMode === 'energy'} onClick={() => setBondColorMode('energy')} />
+                        <IsotopeChip label="Screening" selected={bondColorMode === 'screening'} onClick={() => setBondColorMode('screening')} />
+                      </div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 6 }}>Compute Backend</div>
+                      <div style={{ display: 'flex', gap: 4 }}>
+                        <IsotopeChip label="CPU Worker" selected={!useGpuBonds} onClick={() => setUseGpuBonds(false)} />
+                        <IsotopeChip label="WebGPU" selected={useGpuBonds} onClick={() => setUseGpuBonds(true)} />
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -241,19 +317,14 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
           <QuantumSection label="Material & Lighting" defaultOpen={false}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 12 }}>
               <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Base Material</div>
+                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Base Material Override</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                   {['default', 'matte', 'metallic', 'glass', 'plastic'].map(m => (
                     <IsotopeChip key={m} label={m.charAt(0).toUpperCase() + m.slice(1)} selected={materialPreset === m} onClick={() => setMaterialPreset(m as any)} />
                   ))}
                 </div>
-              </div>
-              <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Atom Texture</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  {['none', 'noise', 'scratched'].map(t => (
-                    <IsotopeChip key={t} label={t.charAt(0).toUpperCase() + t.slice(1)} selected={atomTexture === t} onClick={() => setAtomTexture(t as any)} />
-                  ))}
+                <div style={{ fontSize: 10, color: '#64748b', marginTop: 6, fontStyle: 'italic' }}>
+                  Default uses per-element identity (Cu metallic, O glass, …). Other presets force one look across all atoms.
                 </div>
               </div>
               <div>
@@ -273,46 +344,8 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
             </div>
           </QuantumSection>
 
-          {/* ═══ Post-Processing ═══ */}
-          <QuantumSection label={`Post-Processing (${activeEffectsCount} active)`} defaultOpen={false}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 12 }}>
-              <div style={{ padding: '10px', background: '#121418', border: '1px solid #1f2937' }}>
-                <OrbitalToggle label="Ambient Occlusion (SSAO)" active={ssao} onClick={toggleSSAO} />
-                {ssao && (
-                  <div style={{ marginTop: 8 }}>
-                    <WaveformSlider label="Intensity" value={ssaoIntensity} min={0.1} max={2.0} step={0.05} onChange={setSSAOIntensity} format={v => v.toFixed(2)} />
-                  </div>
-                )}
-              </div>
-              <div style={{ padding: '10px', background: '#121418', border: '1px solid #1f2937' }}>
-                <OrbitalToggle label="Emission Bloom" active={bloom} onClick={toggleBloom} />
-                {bloom && (
-                  <div style={{ marginTop: 8 }}>
-                    <WaveformSlider label="Intensity" value={bloomIntensity} min={0.05} max={1.5} step={0.05} onChange={setBloomIntensity} format={v => v.toFixed(2)} />
-                  </div>
-                )}
-              </div>
-              <div style={{ padding: '10px', background: '#121418', border: '1px solid #1f2937' }}>
-                <OrbitalToggle label="Depth of Field" active={dof} onClick={toggleDOF} />
-                {dof && (
-                  <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    <OrbitalToggle label="Auto Focus Target" active={autoDepthOfField} onClick={toggleAutoDOF} />
-                    {!autoDepthOfField && (
-                      <WaveformSlider label="Focus Distance (Å)" value={dofFocus} min={1} max={200} step={1} onChange={setDOFFocus} format={v => v.toFixed(0)} />
-                    )}
-                  </div>
-                )}
-              </div>
-              <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Tone Mapping</div>
-                <div style={{ display: 'flex', gap: 4 }}>
-                  {['none', 'aces', 'reinhard'].map(tm => (
-                    <IsotopeChip key={tm} label={tm.toUpperCase()} selected={toneMapping === tm} onClick={() => setToneMapping(tm as any)} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </QuantumSection>
+          {/* Post-processing controls live in the dedicated Effects ("Look")
+             panel as a directorial preset gallery. Don't duplicate here. */}
 
           {/* ═══ Environment ═══ */}
           <QuantumSection label="Environment & Overlays" defaultOpen={false}>
