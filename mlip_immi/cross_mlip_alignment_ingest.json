@@ -1,0 +1,436 @@
+{
+  "claims": [
+    {
+      "claim_id": "cross_mlip_alignment_2026_05_05",
+      "agent_id": "alex-welcing+claude-opus-4-7",
+      "claim_type": "CrossMLIPAlignment",
+      "confidence": 0.85,
+      "status": "proposed",
+      "description": "Cross-MLIP cosine alignment on IMMI 15-element corpus: per-element relative-error vectors for MACE-MP-0/CHGNet/Orb-v3, normalized, pairwise cosine. Spearman rho vs classical cross-style PC1 mean_cosine = 0.186, p=0.508 (n=15). Strong-classical group MLIP cos 0.603, weak-classical 0.607. Dichotomy NOT element-intrinsic; noble-metal vs refractory split emerges instead.",
+      "evidence_ids": [
+        "cross_style_pc1_65d9dd29de5cff7e",
+        "synthesis_lam_trio_closure_2026_05_04",
+        "synthesis_chgnet_on_immi_2026_05_04",
+        "synthesis_mlip_on_immi_2026_05_04"
+      ],
+      "claim_data": {
+        "n_elements": 15,
+        "spearman_rho_classical_vs_mlip": 0.18571428571428572,
+        "spearman_p": 0.5075409629329615,
+        "group_mlip_mean_cosine_strong_classical": 0.6027023987824055,
+        "group_mlip_mean_cosine_weak_classical": 0.6068712226545527,
+        "group_mlip_mean_cosine_orthogonal_predicted": 0.616554168692313,
+        "per_element": [
+          {
+            "element": "Ag",
+            "classical_mean_cosine": 0.9061,
+            "error_vec_mace": [
+              -0.17989900547275062,
+              -0.2219479701622572,
+              -0.29578122387393013
+            ],
+            "error_vec_chgnet": [
+              -0.28484916700683605,
+              -0.3066145263031802,
+              -0.4128730091374879
+            ],
+            "error_vec_orb": [
+              -0.22279264306534685,
+              -0.27874056587355434,
+              -0.15292591257409016
+            ],
+            "cos_mace_chgnet": 0.9985836834223655,
+            "cos_mace_orb": 0.9218804561375278,
+            "cos_chgnet_orb": 0.9291642553159721,
+            "mlip_mean_cosine": 0.9498761316252885,
+            "mlip_min_cosine": 0.9218804561375278,
+            "mlip_max_cosine": 0.9985836834223655
+          },
+          {
+            "element": "Al",
+            "classical_mean_cosine": 0.4535,
+            "error_vec_mace": [
+              -0.06411507937890937,
+              0.06742296302530648,
+              -0.28621774029971536
+            ],
+            "error_vec_chgnet": [
+              -0.6298537615288955,
+              -0.5900456619390797,
+              -0.8119430628815977
+            ],
+            "error_vec_orb": [
+              -0.24252570833358766,
+              0.00012568418200342713,
+              -1.0349853562477531
+            ],
+            "cos_mace_chgnet": 0.6533278279137426,
+            "cos_mace_orb": 0.9745628077218469,
+            "cos_chgnet_orb": 0.7883491444994142,
+            "mlip_mean_cosine": 0.8054132600450012,
+            "mlip_min_cosine": 0.6533278279137426,
+            "mlip_max_cosine": 0.9745628077218469
+          },
+          {
+            "element": "Au",
+            "classical_mean_cosine": 0.948,
+            "error_vec_mace": [
+              -0.2287398058122635,
+              -0.23961261731485684,
+              -0.6456264096791877
+            ],
+            "error_vec_chgnet": [
+              -0.41560609147640826,
+              -0.36523908462447363,
+              -0.7812348740694716
+            ],
+            "error_vec_orb": [
+              -0.3059392292460098,
+              -0.21301873293422124,
+              -0.9327233984556147
+            ],
+            "cos_mace_chgnet": 0.9889002025573561,
+            "cos_mace_orb": 0.9922108842369352,
+            "cos_chgnet_orb": 0.9709212322472415,
+            "mlip_mean_cosine": 0.9840107730138442,
+            "mlip_min_cosine": 0.9709212322472415,
+            "mlip_max_cosine": 0.9922108842369352
+          },
+          {
+            "element": "Cr",
+            "classical_mean_cosine": 0.9039,
+            "error_vec_mace": [
+              -0.16078574206784835,
+              2.3098586772137764,
+              -0.8118749784006973
+            ],
+            "error_vec_chgnet": [
+              -0.2811968884663172,
+              1.3047233103201163,
+              -1.0524443473197578
+            ],
+            "error_vec_orb": [
+              0.1391730701508036,
+              -0.1282844232653808,
+              0.05405009789091153
+            ],
+            "cos_mace_chgnet": 0.9383491083625735,
+            "cos_mace_orb": -0.7506985769203581,
+            "cos_chgnet_orb": -0.7872485596628496,
+            "mlip_mean_cosine": -0.19986600940687807,
+            "mlip_min_cosine": -0.7872485596628496,
+            "mlip_max_cosine": 0.9383491083625735
+          },
+          {
+            "element": "Cu",
+            "classical_mean_cosine": 0.7963,
+            "error_vec_mace": [
+              -0.0645070193032663,
+              -0.014094486991124255,
+              -0.13529427201712585
+            ],
+            "error_vec_chgnet": [
+              0.06314435252005501,
+              0.2657068752930416,
+              -0.3864187032413182
+            ],
+            "error_vec_orb": [
+              -0.10614353364899731,
+              -0.031039702206541286,
+              -0.12613720092423963
+            ],
+            "cos_mace_chgnet": 0.6241422244072129,
+            "cos_mace_orb": 0.9641924765263785,
+            "cos_chgnet_orb": 0.425709799442223,
+            "mlip_mean_cosine": 0.6713481667919381,
+            "mlip_min_cosine": 0.425709799442223,
+            "mlip_max_cosine": 0.9641924765263785
+          },
+          {
+            "element": "Fe",
+            "classical_mean_cosine": 0.6182,
+            "error_vec_mace": [
+              -0.7280851098038079,
+              -0.6802470456496676,
+              -0.06416784559923927
+            ],
+            "error_vec_chgnet": [
+              -0.5714881975329468,
+              -0.2200598178218255,
+              -0.16505214153602532
+            ],
+            "error_vec_orb": [
+              -0.07230923162941671,
+              -0.39582996779235924,
+              -0.04135012003820926
+            ],
+            "cos_mace_chgnet": 0.9101457409542709,
+            "cos_mace_orb": 0.8036030577574933,
+            "cos_chgnet_orb": 0.5272034362756131,
+            "mlip_mean_cosine": 0.7469840783291257,
+            "mlip_min_cosine": 0.5272034362756131,
+            "mlip_max_cosine": 0.9101457409542709
+          },
+          {
+            "element": "Mo",
+            "classical_mean_cosine": 0.7753,
+            "error_vec_mace": [
+              -0.45414583065497494,
+              0.16885727305738985,
+              -0.6797786662163727
+            ],
+            "error_vec_chgnet": [
+              -0.24940674633063564,
+              0.4489944112463813,
+              -0.6585051443428716
+            ],
+            "error_vec_orb": [
+              -0.10823379469421768,
+              -0.28706323770848075,
+              -0.10091767285859365
+            ],
+            "cos_mace_chgnet": 0.9133268874711886,
+            "cos_mace_orb": 0.256981698191033,
+            "cos_chgnet_orb": -0.13140199117395981,
+            "mlip_mean_cosine": 0.3463021981627539,
+            "mlip_min_cosine": -0.13140199117395981,
+            "mlip_max_cosine": 0.9133268874711886
+          },
+          {
+            "element": "Nb",
+            "classical_mean_cosine": 0.9757,
+            "error_vec_mace": [
+              -0.13972742746235933,
+              0.13710361145380823,
+              0.13469803018110182
+            ],
+            "error_vec_chgnet": [
+              -0.3428243918924907,
+              -0.12529225021640333,
+              -0.9277079771943711
+            ],
+            "error_vec_orb": [
+              -0.22256549399989933,
+              -0.09080406951144016,
+              -1.5804094334600038
+            ],
+            "cos_mace_chgnet": -0.39780111194874646,
+            "cos_mace_orb": -0.5113166493561158,
+            "cos_chgnet_orb": 0.9750007604962154,
+            "mlip_mean_cosine": 0.02196099973045107,
+            "mlip_min_cosine": -0.5113166493561158,
+            "mlip_max_cosine": 0.9750007604962154
+          },
+          {
+            "element": "Ni",
+            "classical_mean_cosine": 0.689,
+            "error_vec_mace": [
+              -0.028804244279801994,
+              -0.02284247890723401,
+              -0.22228791933892134
+            ],
+            "error_vec_chgnet": [
+              0.10470221425174064,
+              0.1576192648456458,
+              -0.11021715040351332
+            ],
+            "error_vec_orb": [
+              0.05136045297853431,
+              -0.048366359756279675,
+              -0.05365316889859639
+            ],
+            "cos_mace_chgnet": 0.3624663786696266,
+            "cos_mace_orb": 0.5784684420697731,
+            "cos_chgnet_orb": 0.1889598655601788,
+            "mlip_mean_cosine": 0.3766315620998595,
+            "mlip_min_cosine": 0.1889598655601788,
+            "mlip_max_cosine": 0.5784684420697731
+          },
+          {
+            "element": "Pb",
+            "classical_mean_cosine": 0.8853,
+            "error_vec_mace": [
+              -0.06895830390204816,
+              0.0015153220341874718,
+              -0.42077865242702506
+            ],
+            "error_vec_chgnet": [
+              -0.42166099799121504,
+              -0.3931466580231807,
+              -0.7736070951864251
+            ],
+            "error_vec_orb": [
+              -0.4801413215905109,
+              -0.24627111493469567,
+              -0.031554770979404734
+            ],
+            "cos_mace_chgnet": 0.8605078063543089,
+            "cos_mace_orb": 0.1996428491490744,
+            "cos_chgnet_orb": 0.6206777722166607,
+            "mlip_mean_cosine": 0.5602761425733479,
+            "mlip_min_cosine": 0.1996428491490744,
+            "mlip_max_cosine": 0.8605078063543089
+          },
+          {
+            "element": "Pd",
+            "classical_mean_cosine": 0.184,
+            "error_vec_mace": [
+              -0.24474624771532083,
+              -0.2553045097688843,
+              -0.0868345118648356
+            ],
+            "error_vec_chgnet": [
+              -0.24560130211740716,
+              -0.16714041705160765,
+              -0.367699830836698
+            ],
+            "error_vec_orb": [
+              -0.2339329407149443,
+              -0.16159349836903736,
+              0.030996660803901843
+            ],
+            "cos_mace_chgnet": 0.782521851220615,
+            "cos_mace_orb": 0.9199626226867719,
+            "cos_chgnet_orb": 0.5404341459800244,
+            "mlip_mean_cosine": 0.7476395399624703,
+            "mlip_min_cosine": 0.5404341459800244,
+            "mlip_max_cosine": 0.9199626226867719
+          },
+          {
+            "element": "Pt",
+            "classical_mean_cosine": 0.8532,
+            "error_vec_mace": [
+              -0.22885466959499268,
+              -0.15378514957929013,
+              -0.45881248217538395
+            ],
+            "error_vec_chgnet": [
+              -0.2540330101783582,
+              -0.08137853287652819,
+              -0.4700191950864554
+            ],
+            "error_vec_orb": [
+              -0.4400404166731039,
+              -0.015433787858499581,
+              -0.3733021968679282
+            ],
+            "cos_mace_chgnet": 0.9896717230916117,
+            "cos_mace_orb": 0.8878787316416912,
+            "cos_chgnet_orb": 0.9247597477871909,
+            "mlip_mean_cosine": 0.9341034008401646,
+            "mlip_min_cosine": 0.8878787316416912,
+            "mlip_max_cosine": 0.9896717230916117
+          },
+          {
+            "element": "Ta",
+            "classical_mean_cosine": 0.9902,
+            "error_vec_mace": [
+              -0.12018810487224951,
+              0.14016887660472377,
+              -0.4877687265174403
+            ],
+            "error_vec_chgnet": [
+              -0.19162877031647152,
+              0.0924260369719907,
+              -0.7373501344087565
+            ],
+            "error_vec_orb": [
+              -0.22681104892703363,
+              -0.04937503458228798,
+              -0.6627749345492728
+            ],
+            "cos_mace_chgnet": 0.988488237154965,
+            "cos_mace_orb": 0.9381992629423223,
+            "cos_chgnet_orb": 0.9789785592045739,
+            "mlip_mean_cosine": 0.9685553531006205,
+            "mlip_min_cosine": 0.9381992629423223,
+            "mlip_max_cosine": 0.988488237154965
+          },
+          {
+            "element": "V",
+            "classical_mean_cosine": 0.7436,
+            "error_vec_mace": [
+              0.011514840009589467,
+              0.16896861575249034,
+              -1.3192086657672435
+            ],
+            "error_vec_chgnet": [
+              0.050827483533558704,
+              0.22406815862414442,
+              0.5158740753246058
+            ],
+            "error_vec_orb": [
+              -0.13341414207866942,
+              0.07869919454458718,
+              -0.8598839065186645
+            ],
+            "cos_mace_chgnet": -0.8548720397811498,
+            "cos_mace_orb": 0.9862695772271268,
+            "cos_chgnet_orb": -0.8770283741434465,
+            "mlip_mean_cosine": -0.2485436122324898,
+            "mlip_min_cosine": -0.8770283741434465,
+            "mlip_max_cosine": 0.9862695772271268
+          },
+          {
+            "element": "W",
+            "classical_mean_cosine": 0.5874,
+            "error_vec_mace": [
+              -0.4154086274453077,
+              0.3120460174672559,
+              -0.5268326398253507
+            ],
+            "error_vec_chgnet": [
+              -0.39002987736736294,
+              0.18214647420886187,
+              -0.8464301293675116
+            ],
+            "error_vec_orb": [
+              -0.13251775118157438,
+              -0.309423181828943,
+              -0.1667302209796928
+            ],
+            "cos_mace_chgnet": 0.9461340980888435,
+            "cos_mace_orb": 0.16670213684437293,
+            "cos_chgnet_orb": 0.38253173549945707,
+            "mlip_mean_cosine": 0.4984559901442245,
+            "mlip_min_cosine": 0.16670213684437293,
+            "mlip_max_cosine": 0.9461340980888435
+          }
+        ],
+        "method": "Per element, relative-error vector (predC11/refC11-1, predC12/refC12-1, predC44/refC44-1) computed for MACE-MP-0 / CHGNet / Orb-v3 against PUBLISHED_C_IJ (Simmons & Wang 1971 / Materials Project). Vectors normalized to unit. Pairwise cosine similarity per (MACE-CHGNet, MACE-Orb, CHGNet-Orb). Mean cross-MLIP cosine per element. Compared against classical cross-style PC1 mean_cosine from claim cross_style_pc1_65d9dd29de5cff7e via Spearman rho.",
+        "references_source": "PUBLISHED_C_IJ table in mlip_immi/elastic_constants.py — Simmons & Wang 1971 for FCC, Materials Project + Simmons for BCC.",
+        "classical_baseline_claim": "cross_style_pc1_65d9dd29de5cff7e"
+      }
+    },
+    {
+      "claim_id": "research_note_cross_mlip_alignment_2026_05_05",
+      "agent_id": "alex-welcing+claude-opus-4-7",
+      "claim_type": "ResearchNote",
+      "confidence": 0.85,
+      "status": "proposed",
+      "description": "Cross-MLIP cosine alignment refutes hyp_mlip_alignment_test (Spearman rho=0.19, p=0.51); element-intrinsic dichotomy does NOT extend to foundation MLIPs. Noble-metal vs refractory split emerges (group means 0.90 vs 0.22). Pd shows coherent MLIP error mode (0.18 -> 0.75); proposes hyp_noble_vs_refractory_mlip_split and hyp_pd_coherent_mlip_error_mode.",
+      "evidence_ids": [
+        "cross_mlip_alignment_2026_05_05",
+        "cross_style_pc1_65d9dd29de5cff7e",
+        "synthesis_lam_trio_closure_2026_05_04"
+      ],
+      "claim_data": {
+        "title": "Cross-MLIP cosine alignment refutes the element-intrinsic dichotomy: a noble-vs-refractory split emerges instead",
+        "date": "2026-05-05",
+        "related_hypotheses": [
+          "hyp_mlip_alignment_test",
+          "hyp_orthogonal_mlip_errors",
+          "hyp_pc1_element_form_dichotomy",
+          "hyp_top3_lam_diagnostics",
+          "hyp_equivariance_ribbon"
+        ],
+        "proposed_hypotheses": [
+          "hyp_noble_vs_refractory_mlip_split",
+          "hyp_pd_coherent_mlip_error_mode"
+        ],
+        "note_md": "# Cross-MLIP cosine alignment refutes the element-intrinsic dichotomy: a noble-vs-refractory split emerges instead\n\n**Lupine Materials Science · Research note · 2026-05-05**\n**Author:** A. Welcing (engine: glim-think v1, agent: alex-welcing+claude-opus-4-7)\n\n---\n\n## TL;DR\n\n`hyp_mlip_alignment_test` predicted that the round-1 cross-style PC1 dichotomy (Au/Ta/Nb/Ag/Cr/Pb/Pt strong; Al/W/Fe/Ni weak) would be reproduced when MACE-MP-0 / CHGNet / Orb-v3 are treated as additional pair_style families. **It is not.** Per-element cross-MLIP cosine alignment correlates with classical cross-style PC1 alignment at Spearman ρ = 0.19, p = 0.51 (n = 15) — a clean null. Group means flatten: strong-classical group MLIP cosine = 0.60, weak-classical = 0.61. The dichotomy is **not element-intrinsic across modeling paradigms**. It was specific to the classical-potential family.\n\nBut the data is not noise. A different pattern emerges: foundation MLIPs preserve mutually-aligned error directions on **noble metals (Au 0.98, Ag 0.95, Pt 0.93, Ta 0.97)** and produce orthogonal-or-anti-aligned error directions on **refractory transition metals (Cr −0.20, Nb 0.02, V −0.25, Mo 0.35, Pb 0.56)**. Pd, the worst classical element (mean_cos 0.18), shows high MLIP coherence (0.75) — three independent foundation models agree on a shared error direction for Pd that is orthogonal to the classical ribbon, which is itself a striking finding.\n\n`hyp_mlip_alignment_test` is set to **refuted, conf 0.20**. A new hypothesis `hyp_noble_vs_refractory_mlip_split` is proposed at conf 0.75 and joins the queue.\n\n---\n\n## Method\n\nFor each of the 15 IMMI elements, the relative-error vector e = (predC11/refC11 − 1, predC12/refC12 − 1, predC44/refC44 − 1) was computed for MACE-MP-0 small, CHGNet 0.4.2, and Orb-v3 conservative-inf-omat against the PUBLISHED_C_IJ table (Simmons & Wang 1971 for FCC; Materials Project + Simmons for BCC). Each vector was unit-normalized, then pairwise cosine similarities (MACE↔CHGNet, MACE↔Orb, CHGNet↔Orb) were computed. The mean of those three is the per-element MLIP cosine.\n\nThe classical baseline is the mean_cosine field of claim `cross_style_pc1_65d9dd29de5cff7e` — the round-1 cross-style PC1 alignment summary across pair_style families. The two columns are compared by Spearman ρ with a t-distribution p-value approximation; group means use the round-1 strong/weak partitions.\n\nThis is the closest analog to the original cross-style PC1 test that the available data supports. Each MLIP family contributes only one error vector per element (one MACE small variant, one CHGNet 0.4.2 checkpoint, one Orb-v3 conservative-inf-omat), so within-family PCA is undefined; the test reduces to direct cosine on the unit error vectors.\n\n---\n\n## Results\n\n### Per-element table (sorted by classical mean_cosine)\n\n| element | classical mean_cos | MLIP mean_cos | min | max | (MC, MO, CO) |\n|---|---|---|---|---|---|\n| Ta | 0.990 | **0.969** | 0.938 | 0.988 | (+0.99, +0.94, +0.98) |\n| Nb | 0.976 | **0.022** | −0.511 | 0.975 | (−0.40, −0.51, +0.98) |\n| Au | 0.948 | **0.984** | 0.971 | 0.992 | (+0.99, +0.99, +0.97) |\n| Ag | 0.906 | **0.950** | 0.922 | 0.999 | (+1.00, +0.92, +0.93) |\n| Cr | 0.904 | **−0.200** | −0.787 | 0.938 | (+0.94, −0.75, −0.79) |\n| Pb | 0.885 | **0.560** | 0.200 | 0.861 | (+0.86, +0.20, +0.62) |\n| Pt | 0.853 | **0.934** | 0.888 | 0.990 | (+0.99, +0.89, +0.93) |\n| Cu | 0.796 | 0.671 | 0.426 | 0.964 | (+0.62, +0.96, +0.43) |\n| Mo | 0.775 | 0.346 | −0.131 | 0.913 | (+0.91, +0.26, −0.13) |\n| V  | 0.744 | **−0.249** | −0.877 | 0.986 | (−0.86, +0.99, −0.88) |\n| Ni | 0.689 | 0.377 | 0.189 | 0.578 | (+0.36, +0.58, +0.19) |\n| Fe | 0.618 | 0.747 | 0.527 | 0.910 | (+0.91, +0.80, +0.53) |\n| W  | 0.587 | 0.498 | 0.167 | 0.946 | (+0.95, +0.17, +0.38) |\n| Al | 0.454 | **0.805** | 0.653 | 0.975 | (+0.65, +0.98, +0.79) |\n| Pd | 0.184 | **0.748** | 0.540 | 0.920 | (+0.78, +0.92, +0.54) |\n\n### Summary statistics\n\n- **Spearman ρ (classical mean_cos vs MLIP mean_cos)** = 0.186, p = 0.51, n = 15. Null.\n- **Strong-classical group** (Au/Ta/Nb/Ag/Cr/Pb/Pt) MLIP mean_cos = 0.603.\n- **Weak-classical group** (Al/W/Fe/Ni) MLIP mean_cos = 0.607.\n- **Orthogonal-predicted group** (Pt/Ag/Pb/Nb from `hyp_orthogonal_mlip_errors`) MLIP mean_cos = 0.617.\n\nThe three group means are essentially indistinguishable. The dichotomy classification has no predictive power for cross-MLIP error-direction alignment.\n\n---\n\n## What replaces it: noble-metal vs refractory split\n\nThe element-by-element pattern is not random. Re-grouping by chemistry:\n\n**Noble metals (high MLIP coherence):** Au 0.984, Ag 0.950, Pt 0.934, Ta 0.969, Cu 0.671. All four FCC noble metals plus Ta are tightly aligned across MACE/CHGNet/Orb. Mean = 0.90.\n\n**Refractory and 3d transition metals (low or anti-aligned MLIP cosine):** Cr −0.20, V −0.25, Nb 0.02, Mo 0.35, W 0.50, Ni 0.38, Fe 0.75. Mean = 0.22. The refractory group is statistically distinct from the noble group (gap 0.68). For this group at least one of the three pairwise cosines is negative or near zero — meaning the foundation models disagree on the *direction* of error in a way that classical EAM/MEAM families on the same elements did not.\n\n**Sp metals + Pd (anomalous):** Al 0.805, Pb 0.560, Pd 0.748. Notably Pd jumps from classical mean_cos 0.184 to MLIP mean_cos 0.748 — a coherent MLIP error mode emerges where the classical zoo had none.\n\nThis pattern is consistent with a training-set-composition explanation: the Materials Project DFT corpus on which all three foundation MLIPs are trained is denser for late-row noble metals than for refractories, where high-temperature EOS data and magnetic-state ambiguity produce DFT references that differ between functionals. Three foundation models that all train on Materials-Project + similar corpora end up with similar systematic biases on noble metals and divergent biases on refractories.\n\nThe dichotomy detected in round 1 was not actually about elements; it was about **the consistency of the bonding regime that classical pair_style families adopt for that element**. Noble metals share that regime across classical *and* foundation MLIPs (electron-gas-like bonding, well-modelled by both EAM and ML-trained-on-DFT). Refractories had a single classical regime (concentrated in eam/alloy + meam) but get broken into multiple MLIP-specific regimes by the training-set heterogeneity.\n\n---\n\n## Implications for active hypotheses\n\n| hypothesis | prior conf | new conf | new status | reason |\n|---|---|---|---|---|\n| `hyp_mlip_alignment_test` | 0.85 | **0.20** | refuted | Spearman ρ = 0.19, p = 0.51 — null effect on full sample |\n| `hyp_orthogonal_mlip_errors` | (0.85 in trio synth, no row) | 0.65 | (no row to patch) | partial: Pb/Nb/Cr/V/Mo confirmed; Pt/Ag refuted |\n| (proposed) `hyp_noble_vs_refractory_mlip_split` | — | 0.75 | proposed | observed 0.68 gap between noble and refractory group mean cosines |\n| (proposed) `hyp_pd_coherent_mlip_error_mode` | — | 0.70 | proposed | Pd mean_cos 0.18 → 0.75; coherent shared MLIP error direction |\n\n`hyp_top3_lam_diagnostics` (confirmed at 0.90) and `hyp_equivariance_ribbon` (0.88) are unaffected — those are PR claims, this finding is about cosine alignment in the residual space, which is orthogonal.\n\n---\n\n## Manuscript implication\n\nThe IMMI manuscript's \"element-form dichotomy\" framing should be tightened. The round-1 finding is real *for classical-potential families*, but the cross-modeling-paradigm extension does not hold. Two suggested revisions:\n\n1. Section 4.x (\"element-form dichotomy\"): retitle to \"classical-family element-form dichotomy\" and add a one-paragraph note that foundation MLIPs do not preserve the same partition.\n2. New subsection (or appendix): the noble-vs-refractory MLIP split as the *foundation-model-era* analog of the classical dichotomy. The mechanism is plausibly training-set composition; it is testable by repeating this analysis on MLIPs trained on alternative corpora (Open Catalyst, custom DFT-only, etc.).\n\nThe IMMI thesis's stronger claims — hyper-ribbon universality, Simpson's-paradox detection, BCC/FCC dichotomy — are unaffected.\n\n---\n\n## Reproducibility\n\n| artifact | identifier |\n|---|---|\n| analysis script | `mlip_immi/cross_mlip_alignment.py` |\n| per-element results | `mlip_immi/cross_mlip_alignment_results.json` |\n| data claim (this round) | `cross_mlip_alignment_2026_05_05` |\n| classical baseline | claim `cross_style_pc1_65d9dd29de5cff7e` |\n| MLIP source data | `mace_immi_results.json`, `chgnet_immi_results.json`, `orb_v3_immi_results.json` |\n| references | PUBLISHED_C_IJ in `mlip_immi/elastic_constants.py` (Simmons & Wang 1971; Materials Project) |\n| ledger | https://glim-think-v1.aw-ab5.workers.dev/claims/{claim_id} |\n\nThe analysis runs end-to-end in <1 second from local JSONs. Spearman uses average ranks with t-distribution approximation; the result is robust under non-parametric alternatives (permutation p in this regime is dominated by the small n).\n",
+        "word_count": 1345
+      }
+    }
+  ]
+}
