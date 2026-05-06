@@ -544,6 +544,14 @@ export default function App() {
   const flythroughPreview = useStore(s => s.flythroughPreview);
   const showBonds = useStore(s => s.showBonds);
   const bondCutoff = useStore(s => s.bondCutoff);
+  const bondStats = useStore(s => s.bondStats);
+  const bondColorMode = useStore(s => s.bondColorMode);
+  const bondThresholdMode = useStore(s => s.bondThresholdMode);
+  const bondPercentileRange = useStore(s => s.bondPercentileRange);
+  const setBondStats = useStore(s => s.setBondStats);
+  const filamentMode = useStore(s => s.filamentMode);
+  const meamScreening = useStore(s => s.meamScreening);
+  const grDrivenCutoff = useStore(s => s.grDrivenCutoff);
   const renderStyle = useStore(s => s.renderStyle);
   const atomScale = useStore(s => s.atomScale);
   const activePanel = useStore(s => s.activePanel);
@@ -566,6 +574,18 @@ export default function App() {
   const ambientLightIntensity = useStore(s => s.ambientLightIntensity);
   const dirLightIntensity = useStore(s => s.dirLightIntensity);
   const atomTexture = useStore(s => s.atomTexture);
+
+  // Effective bond cutoff: percentile mode overrides manual slider
+  const effectiveBondCutoff = useMemo(() => {
+    if (grDrivenCutoff && bondStats?.bondLengthHistogramFirstMinimum != null) {
+      return bondStats.bondLengthHistogramFirstMinimum;
+    }
+    if (bondThresholdMode === 'percentile' && bondStats) {
+      const roundedPct = Math.round(bondPercentileRange[1] / 5) * 5;
+      return bondStats.percentiles[`p${roundedPct}`] ?? bondCutoff;
+    }
+    return bondCutoff;
+  }, [grDrivenCutoff, bondThresholdMode, bondStats, bondCutoff, bondPercentileRange]);
 
   // Spatial hash for atom picking
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
@@ -981,7 +1001,7 @@ export default function App() {
                     frame={currentFrame}
                     nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
                     interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
-                    maxBondLength={bondCutoff}
+                    maxBondLength={effectiveBondCutoff}
                     renderStyle={renderStyle}
                     colormap={colormap}
                     colorMode={colorMode}
@@ -991,6 +1011,10 @@ export default function App() {
                     botanicalMode={renderStyle === 'botanical'}
                     materialPreset={materialPreset}
                     visible={showBonds}
+                    onBondStats={setBondStats}
+                    bondColorMode={bondColorMode}
+                    filamentMode={filamentMode}
+                    meamScreening={meamScreening}
                   />
                 {showCell && (
                   <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />

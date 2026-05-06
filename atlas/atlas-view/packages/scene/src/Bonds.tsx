@@ -15,7 +15,8 @@
 import { useRef, useMemo, useEffect, useState, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
+import type { Frame, ColormapName, RenderStyle, BondStats } from '@atlas/core/types';
+import { getElementSpec } from '@atlas/core';
 import { useGlobalTimer } from './useTimer';
 import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS, COLORMAPS } from './constants';
 
@@ -40,6 +41,10 @@ interface BondsProps {
   botanicalMode?: boolean;
   materialPreset?: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
   visible?: boolean;
+  onBondStats?: (stats: BondStats | null) => void;
+  bondColorMode?: 'type' | 'length' | 'uniform';
+  filamentMode?: boolean;
+  meamScreening?: boolean;
 }
 
 export function Bonds({
@@ -60,21 +65,199 @@ export function Bonds({
   botanicalMode = false,
   materialPreset = 'default',
   visible = true,
+  onBondStats,
+  bondColorMode = 'type',
+  filamentMode = false,
+  meamScreening = false,
 }: BondsProps) {
-  const dummy = useMemo(() => new THREE.Object3D(), []);
   const timer = useGlobalTimer();
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const workerRef = useRef<Worker | null>(null);
 
   // Bond pair data from the worker
   const [bondPairs, setBondPairs] = useState<Int32Array>(new Int32Array(0));
+  const [screeningFactors, setScreeningFactors] = useState<Float32Array | null>(null);
   const bondCount = bondPairs.length / 2;
   const halfCount = bondCount * 2; // Each bond → 2 half-cylinders
 
-  // Tube geometry — 5 radial segments for performance
+  // ─── Compute bond statistics from detected pairs ────────────────────
+  const bondStats = useMemo<BondStats | null>(() => {
+    if (bondCount === 0 || !frame || frame.natoms < 2) return null;
+
+    const positions = frame.positions;
+    const types = frame.types;
+    const count = bondCount;
+
+    // Accumulators
+    let minLen = Infinity;
+    let maxLen = -Infinity;
+    let sum = 0;
+    let sumSq = 0;
+
+    const typePairCounts: Record<string, number> = {};
+    const typePairSums: Record<string, number> = {};
+
+    // First pass: compute lengths + basic stats
+    const lengths = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      const a = bondPairs[i * 2];
+      const b = bondPairs[i * 2 + 1];
+      const dx = positions[b * 3] - positions[a * 3];
+      const dy = positions[b * 3 + 1] - positions[a * 3 + 1];
+      const dz = positions[b * 3 + 2] - positions[a * 3 + 2];
+      const len = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      lengths[i] = len;
+
+      if (len < minLen) minLen = len;
+      if (len > maxLen) maxLen = len;
+      sum += len;
+      sumSq += len * len;
+
+      if (types) {
+        const specA = getElementSpec(types[a]);
+        const specB = getElementSpec(types[b]);
+        const symA = specA?.symbol ?? `T${types[a]}`;
+        const symB = specB?.symbol ?? `T${types[b]}`;
+        const pairKey = symA < symB ? `${symA}–${symB}` : `${symB}–${symA}`;
+        typePairCounts[pairKey] = (typePairCounts[pairKey] ?? 0) + 1;
+        typePairSums[pairKey] = (typePairSums[pairKey] ?? 0) + len;
+      }
+    }
+
+    const mean = sum / count;
+    const variance = sumSq / count - mean * mean;
+    const stdDev = Math.sqrt(Math.max(0, variance));
+
+    // Percentiles: exact sort for ≤200k, histogram for larger
+    let median = mean;
+    const percentiles: Record<string, number> = {};
+
+    const HIST_BINS = 30;
+    const binEdges: number[] = new Array(HIST_BINS + 1);
+    const bins: number[] = new Array(HIST_BINS).fill(0);
+    const range = maxLen - minLen;
+
+    for (let b = 0; b <= HIST_BINS; b++) {
+      binEdges[b] = minLen + (range * b) / HIST_BINS;
+    }
+
+    if (range > 0) {
+      for (let i = 0; i < count; i++) {
+        const len = lengths[i];
+        let binIdx = Math.floor(((len - minLen) / range) * HIST_BINS);
+        if (binIdx < 0) binIdx = 0;
+        if (binIdx >= HIST_BINS) binIdx = HIST_BINS - 1;
+        bins[binIdx]++;
+      }
+    } else {
+      // All bonds have identical length
+      bins[0] = count;
+    }
+
+    if (count <= 200_000) {
+      // Exact sort
+      const sorted = Array.from(lengths).sort((a, b) => a - b);
+      const pct = (p: number) => sorted[Math.min(count - 1, Math.floor((p / 100) * count))];
+      for (let p = 0; p <= 100; p += 5) {
+        percentiles[`p${p}`] = pct(p);
+      }
+      median = percentiles.p50;
+    } else {
+      // Histogram-based percentile approximation
+      const cumulative = new Array(HIST_BINS).fill(0);
+      let running = 0;
+      for (let b = 0; b < HIST_BINS; b++) {
+        running += bins[b];
+        cumulative[b] = running;
+      }
+      const getPct = (p: number) => {
+        const target = (p / 100) * count;
+        for (let b = 0; b < HIST_BINS; b++) {
+          if (cumulative[b] >= target) {
+            const prev = b > 0 ? cumulative[b - 1] : 0;
+            const frac = bins[b] > 0 ? (target - prev) / bins[b] : 0;
+            return binEdges[b] + frac * (binEdges[b + 1] - binEdges[b]);
+          }
+        }
+        return maxLen;
+      };
+      for (let p = 0; p <= 100; p += 5) {
+        percentiles[`p${p}`] = getPct(p);
+      }
+      median = percentiles.p50;
+    }
+
+    const typePairMeans: Record<string, number> = {};
+    for (const key of Object.keys(typePairCounts)) {
+      typePairMeans[key] = typePairSums[key] / typePairCounts[key];
+    }
+
+    // Find first minimum of bond-length histogram (proxy for coordination shell boundary)
+    let bondLengthHistogramFirstMinimum: number | null = null;
+    if (bins.length >= 5) {
+      // 3-bin moving average smoothing
+      const smoothed = bins.map((_, i) => {
+        const a = bins[Math.max(0, i - 1)];
+        const b = bins[i];
+        const c = bins[Math.min(bins.length - 1, i + 1)];
+        return (a + b + c) / 3;
+      });
+      // Find first peak (skip first 2 bins)
+      let peakIdx = -1;
+      for (let i = 2; i < smoothed.length - 1; i++) {
+        if (smoothed[i] > smoothed[i - 1] && smoothed[i] >= smoothed[i + 1]) {
+          peakIdx = i;
+          break;
+        }
+      }
+      // Find first minimum after peak
+      if (peakIdx !== -1) {
+        for (let i = peakIdx + 1; i < smoothed.length - 1; i++) {
+          if (smoothed[i] < smoothed[i - 1] && smoothed[i] <= smoothed[i + 1]) {
+            bondLengthHistogramFirstMinimum = binEdges[i];
+            break;
+          }
+        }
+      }
+    }
+
+    return {
+      count,
+      minLength: minLen,
+      maxLength: maxLen,
+      meanLength: mean,
+      medianLength: median,
+      stdDev,
+      histogram: { bins: Array.from(bins), binEdges },
+      percentiles,
+      typePairCounts,
+      typePairMeans,
+      bondLengthHistogramFirstMinimum,
+    };
+  }, [bondPairs, frame]);
+
+  // Emit stats to parent
+  useEffect(() => {
+    onBondStats?.(bondStats);
+  }, [bondStats, onBondStats]);
+
+  // ─── Coordination numbers (for filament coloring) ───────────────────
+  const coordinationNumbers = useMemo<Float32Array | null>(() => {
+    if (!filamentMode || bondCount === 0 || !frame || frame.natoms < 2) return null;
+    const cn = new Float32Array(frame.natoms);
+    for (let i = 0; i < bondCount; i++) {
+      const a = bondPairs[i * 2];
+      const b = bondPairs[i * 2 + 1];
+      if (a >= 0 && a < frame.natoms) cn[a]++;
+      if (b >= 0 && b < frame.natoms) cn[b]++;
+    }
+    return cn;
+  }, [filamentMode, bondPairs, bondCount, frame]);
+
+  // Tube geometry — 8 radial segments for smoother filament look
   const tubeGeo = useMemo(
-    () => new THREE.CylinderGeometry(1, 1, 1, 5, 1),
-    []
+    () => new THREE.CylinderGeometry(1, 1, 1, filamentMode ? 8 : 5, 1),
+    [filamentMode]
   );
 
   // ─── Web Worker lifecycle ──────────────────────────────────────────
@@ -83,9 +266,10 @@ export function Bonds({
     workerRef.current = worker;
 
     worker.onmessage = (e: MessageEvent) => {
-      const { bondPairs: pairs, count } = e.data;
+      const { bondPairs: pairs, count, screeningFactors: screening } = e.data;
       // pairs is Int32Array [a0,b0, a1,b1, ...]
       setBondPairs(pairs instanceof Int32Array ? pairs : new Int32Array(pairs));
+      setScreeningFactors(screening instanceof Float32Array ? screening : null);
     };
 
     return () => {
@@ -103,12 +287,24 @@ export function Bonds({
       return;
     }
 
-    // Debounce cutoff changes — 300ms delay so slider doesn't spam
+    // Distinguish slider-driven maxBondLength changes (debounce) from playback frame advances (immediate)
+    const prevMaxBondLengthRef = useRef(maxBondLength);
+    const isSliderChange = prevMaxBondLengthRef.current !== maxBondLength;
+    prevMaxBondLengthRef.current = maxBondLength;
+
+    const delay = isSliderChange ? 150 : 0;
+
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     debounceRef.current = setTimeout(() => {
       const worker = workerRef.current;
       if (!worker) return;
+
+      // Guard against frames missing types array (defensive for exotic parsers)
+      if (!frame.types) {
+        setBondPairs(new Int32Array(0));
+        return;
+      }
 
       // Send data to worker — positions and types are transferred (zero-copy)
       // We make copies since the originals are shared with the renderer
@@ -122,15 +318,16 @@ export function Bonds({
           natoms: frame.natoms,
           maxBondLength,
           bonds: frame.bonds && frame.bonds.length > 0 ? new Int32Array(frame.bonds) : null,
+          meamScreening,
         },
         [posCopy.buffer, typesCopy.buffer] // Transfer ownership
       );
-    }, 150);
+    }, delay);
 
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [frame, maxBondLength]);
+  }, [frame, maxBondLength, meamScreening]);
 
   // ─── Capacity management ───────────────────────────────────────────
   const MIN_BOND_CAPACITY = 20000;
@@ -144,6 +341,11 @@ export function Bonds({
   const cpuMatrixArray = useMemo(() => new Float32Array(capacity * 16), [capacity]);
   const cpuColorArray = useMemo(() => new Float32Array(capacity * 3), [capacity]);
   const cpuRadiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
+  const cpuCoordArray = useMemo(() => new Float32Array(capacity), [capacity]);
+
+  // Stable args for the instancedBufferAttribute so R3F doesn't recreate it on every render
+  const instanceColorArgs = useMemo<[Float32Array, number]>(() => [new Float32Array(capacity * 3), 3], [capacity]);
+  const instanceCoordArgs = useMemo<[Float32Array, number]>(() => [new Float32Array(capacity), 1], [capacity]);
 
   // Working arrays for rendering/updating GPU buffers
   const radiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
@@ -151,10 +353,99 @@ export function Bonds({
     tubeGeo.setAttribute('radiusBT', new THREE.InstancedBufferAttribute(radiusBTArray, 2));
   }, [tubeGeo, radiusBTArray]);
 
+  // Coordination number per instance (for filament coloring)
+  const coordArray = useMemo(() => new Float32Array(capacity), [capacity]);
+  useEffect(() => {
+    tubeGeo.setAttribute('coord', new THREE.InstancedBufferAttribute(coordArray, 1));
+  }, [tubeGeo, coordArray]);
+
+  // Screening factor per instance (for MEAM ghosting)
+  const cpuScreeningArray = useMemo(() => new Float32Array(capacity), [capacity]);
+  useEffect(() => {
+    tubeGeo.setAttribute('screening', new THREE.InstancedBufferAttribute(cpuScreeningArray, 1));
+  }, [tubeGeo, cpuScreeningArray]);
+
   // ─── Material ──────────────────────────────────────────────────────
-  const uniformsRef = useRef({ uTime: { value: 0 } });
+  const uniformsRef = useRef({
+    uTime: { value: 0 },
+    uColorLow: { value: new THREE.Color('#3b82f6') },
+    uColorHigh: { value: new THREE.Color('#ef4444') },
+  });
 
   const material = useMemo(() => {
+    if (filamentMode) {
+      return new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: uniformsRef.current.uTime,
+          uColorLow: uniformsRef.current.uColorLow,
+          uColorHigh: uniformsRef.current.uColorHigh,
+        },
+        vertexShader: `
+          attribute vec2 radiusBT;
+          attribute float coord;
+          attribute float screening;
+
+          uniform mat4 modelViewMatrix;
+          uniform mat4 projectionMatrix;
+          uniform mat3 normalMatrix;
+
+          varying float vCoord;
+          varying float vScreening;
+          varying vec2 vBondUv;
+          varying vec3 vNormal;
+          varying vec3 vViewPosition;
+
+          void main() {
+            float r = mix(radiusBT.x, radiusBT.y, position.y + 0.5);
+            vec3 transformed = position;
+            transformed.x *= r;
+            transformed.z *= r;
+
+            vec4 mvPosition = modelViewMatrix * instanceMatrix * vec4(transformed, 1.0);
+            gl_Position = projectionMatrix * mvPosition;
+
+            vCoord = coord;
+            vScreening = screening;
+            vBondUv = uv;
+            vNormal = normalize(normalMatrix * mat3(instanceMatrix) * normal);
+            vViewPosition = -mvPosition.xyz;
+          }
+        `,
+        fragmentShader: `
+          uniform float uTime;
+          uniform vec3 uColorLow;
+          uniform vec3 uColorHigh;
+
+          varying float vCoord;
+          varying float vScreening;
+          varying vec2 vBondUv;
+          varying vec3 vNormal;
+          varying vec3 vViewPosition;
+
+          void main() {
+            vec3 viewDir = normalize(vViewPosition);
+            float ndotv = max(dot(vNormal, viewDir), 0.0);
+            float radialFalloff = pow(ndotv, 3.0);
+
+            float coordNorm = clamp(vCoord / 12.0, 0.0, 1.0);
+            vec3 filamentColor = mix(uColorLow, uColorHigh, coordNorm);
+
+            float flow = sin(vBondUv.y * 20.0 + uTime * 3.0) * 0.3 + 0.7;
+
+            // MEAM screening ghosting
+            float screenFade = smoothstep(0.0, 0.3, vScreening);
+
+            float alpha = radialFalloff * flow * 0.5 * screenFade;
+            gl_FragColor = vec4(filamentColor * alpha * 2.5, alpha);
+          }
+        `,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+      });
+    }
+
     let mat: THREE.Material;
     if (botanicalMode) {
       mat = new THREE.MeshPhysicalMaterial({
@@ -248,7 +539,7 @@ export function Bonds({
       }
     };
     return mat;
-  }, [renderStyle, opacity, botanicalMode, materialPreset]);
+  }, [renderStyle, opacity, botanicalMode, materialPreset, filamentMode]);
 
   // Cleanup
   useEffect(() => {
@@ -391,7 +682,7 @@ export function Bonds({
       let dy = by - ay;
       let dz = bz - az;
       const bondLenSq = dx*dx + dy*dy + dz*dz;
-      if (bondLenSq === 0) continue;
+      if (bondLenSq < 1e-12) continue; // skip degenerate / overlapping atoms
       
       const bondLen = Math.sqrt(bondLenSq);
       const halfLen = bondLen * 0.5;
@@ -418,6 +709,17 @@ export function Bonds({
       // Instance i*2+1 (Top half: Mid → B)
       cpuRadiusBTArray[(i * 2 + 1) * 2] = rMid;
       cpuRadiusBTArray[(i * 2 + 1) * 2 + 1] = rB;
+
+      // Filament coordination & screening data
+      if (filamentMode && coordinationNumbers) {
+        cpuCoordArray[i * 2] = coordinationNumbers[a];
+        cpuCoordArray[i * 2 + 1] = coordinationNumbers[b];
+      }
+      if (filamentMode && screeningFactors) {
+        const s = screeningFactors[i];
+        cpuScreeningArray[i * 2] = s;
+        cpuScreeningArray[i * 2 + 1] = s;
+      }
 
       // Inline Matrix math to skip massive THREE.Object3D overhead
       const nx = dx / bondLen;
@@ -485,29 +787,39 @@ export function Bonds({
       cpuMatrixArray[offB + 15] = 1;
 
       let tcA: [number, number, number];
-      if (botanicalMode && frame.types) {
-        tcA = BOTANICAL_COLORS[frame.types[a]] ?? [0.3, 0.5, 0.2];
-      } else if (isPropMode && propData) {
-        tcA = mapFn(normA);
-      } else if (colorMode === 'uniform') {
-        tcA = mapFn(0.0);
+      let tcB: [number, number, number];
+
+      if (bondColorMode === 'length' && bondStats) {
+        const lenNorm = bondStats.maxLength > bondStats.minLength
+          ? (bondLen - bondStats.minLength) / (bondStats.maxLength - bondStats.minLength)
+          : 0.5;
+        const lenColor = mapFn(Math.max(0, Math.min(1, lenNorm)));
+        tcA = lenColor;
+        tcB = lenColor;
       } else {
-        tcA = frame.types ? mapFn(typeToNorm.get(frame.types[a]) ?? 0.5) : DEFAULT_TYPE_COLOR;
+        if (botanicalMode && frame.types) {
+          tcA = BOTANICAL_COLORS[frame.types[a]] ?? [0.3, 0.5, 0.2];
+        } else if (isPropMode && propData) {
+          tcA = mapFn(normA);
+        } else if (colorMode === 'uniform') {
+          tcA = mapFn(0.0);
+        } else {
+          tcA = frame.types ? mapFn(typeToNorm.get(frame.types[a]) ?? 0.5) : DEFAULT_TYPE_COLOR;
+        }
+
+        if (botanicalMode && frame.types) {
+          tcB = BOTANICAL_COLORS[frame.types[b]] ?? [0.3, 0.5, 0.2];
+        } else if (isPropMode && propData) {
+          tcB = mapFn(normB);
+        } else if (colorMode === 'uniform') {
+          tcB = mapFn(0.0);
+        } else {
+          tcB = frame.types ? mapFn(typeToNorm.get(frame.types[b]) ?? 0.5) : DEFAULT_TYPE_COLOR;
+        }
       }
       cpuColorArray[(i * 2) * 3 + 0] = tcA[0];
       cpuColorArray[(i * 2) * 3 + 1] = tcA[1];
       cpuColorArray[(i * 2) * 3 + 2] = tcA[2];
-
-      let tcB: [number, number, number];
-      if (botanicalMode && frame.types) {
-        tcB = BOTANICAL_COLORS[frame.types[b]] ?? [0.3, 0.5, 0.2];
-      } else if (isPropMode && propData) {
-        tcB = mapFn(normB);
-      } else if (colorMode === 'uniform') {
-        tcB = mapFn(0.0);
-      } else {
-        tcB = frame.types ? mapFn(typeToNorm.get(frame.types[b]) ?? 0.5) : DEFAULT_TYPE_COLOR;
-      }
       cpuColorArray[(i * 2 + 1) * 3 + 0] = tcB[0];
       cpuColorArray[(i * 2 + 1) * 3 + 1] = tcB[1];
       cpuColorArray[(i * 2 + 1) * 3 + 2] = tcB[2];
@@ -522,20 +834,35 @@ export function Bonds({
     const dstCol = mesh.instanceColor ? (mesh.instanceColor.array as Float32Array) : null;
     if (dstCol) {
       dstCol.set(cpuColorArray.subarray(0, totalBonds * 3));
+      (mesh.instanceColor as any).updateRange = { offset: 0, count: totalBonds * 3 };
     }
 
     const dstRadiusBT = tubeGeo.attributes.radiusBT.array as Float32Array;
     dstRadiusBT.set(cpuRadiusBTArray.subarray(0, totalBonds * 2));
+
+    const dstCoord = tubeGeo.attributes.coord?.array as Float32Array | undefined;
+    if (dstCoord) {
+      dstCoord.set(cpuCoordArray.subarray(0, totalBonds));
+      tubeGeo.attributes.coord.needsUpdate = true;
+      (tubeGeo.attributes.coord as any).updateRange = { offset: 0, count: totalBonds };
+    }
+
+    const dstScreening = tubeGeo.attributes.screening?.array as Float32Array | undefined;
+    if (dstScreening) {
+      dstScreening.set(cpuScreeningArray.subarray(0, totalBonds));
+      tubeGeo.attributes.screening.needsUpdate = true;
+      (tubeGeo.attributes.screening as any).updateRange = { offset: 0, count: totalBonds };
+    }
 
     mesh.count = totalBonds;
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     tubeGeo.attributes.radiusBT.needsUpdate = true;
     (tubeGeo.attributes.radiusBT as any).updateRange = { offset: 0, count: totalBonds * 2 };
-  }, [bondPairs, halfCount, capacity, tubeGeo, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, dummy, botanicalMode, isPropMode, propData, pMin, pMax, colorProperty, cpuMatrixArray, cpuColorArray, cpuRadiusBTArray]);
+  }, [bondPairs, halfCount, capacity, tubeGeo, frame, nextFrame, interpolationFactor, colormap, colorMode, periodic, cellBounds, radius, botanicalMode, isPropMode, propData, pMin, pMax, colorProperty, cpuMatrixArray, cpuColorArray, cpuRadiusBTArray, cpuCoordArray, cpuScreeningArray, bondColorMode, bondStats, filamentMode, coordinationNumbers, meamScreening, screeningFactors]);
 
   useFrame(() => {
-    if (botanicalMode) {
+    if (botanicalMode || filamentMode) {
       uniformsRef.current.uTime.value = timer.getElapsedTime();
     }
   });
@@ -561,7 +888,7 @@ export function Bonds({
       frustumCulled={false}
       visible={visible && halfCount > 0}
     >
-      <instancedBufferAttribute attach="instanceColor" args={[new Float32Array(capacity * 3), 3]} />
+      <instancedBufferAttribute attach="instanceColor" args={instanceColorArgs} />
     </instancedMesh>
   );
 }

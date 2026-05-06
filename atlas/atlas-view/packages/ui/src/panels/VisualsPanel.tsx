@@ -37,6 +37,9 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
     atomScale, setAtomScale,
     showBonds, toggleBonds,
     bondCutoff, setBondCutoff,
+    bondStats,
+    bondThresholdMode, setBondThresholdMode,
+    bondPercentileRange,
     hiddenAtomTypes, toggleAtomType,
     atomTypeScales, setAtomTypeScale,
     // Materials & Lighting
@@ -203,8 +206,36 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
               <div style={{ borderTop: '1px solid #1f2937', paddingTop: 12 }}>
                 <OrbitalToggle label="Show Bonds" active={showBonds} onClick={toggleBonds} />
                 {showBonds && (
-                  <div style={{ marginTop: 8 }}>
-                    <WaveformSlider label="Bond Cutoff (Å)" value={bondCutoff} min={1.0} max={4.0} step={0.1} onChange={setBondCutoff} format={v => v.toFixed(1)} />
+                  <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <OrbitalToggle
+                      label="Dynamic Thresholds"
+                      active={bondThresholdMode === 'percentile'}
+                      onClick={() => setBondThresholdMode(bondThresholdMode === 'percentile' ? 'manual' : 'percentile')}
+                    />
+                    {bondThresholdMode === 'manual' ? (
+                      <>
+                        <WaveformSlider
+                          label="Bond Cutoff (Å)"
+                          value={bondCutoff}
+                          min={bondStats ? Math.max(0.5, bondStats.minLength - 0.2) : 1.0}
+                          max={bondStats ? bondStats.maxLength + 0.2 : 4.0}
+                          step={0.05}
+                          onChange={setBondCutoff}
+                          format={v => v.toFixed(2)}
+                        />
+                        {bondStats && (
+                          <div style={{ fontSize: 10, color: '#64748b' }}>
+                            Detected range: <strong style={{ color: '#f8fafc' }}>{bondStats.minLength.toFixed(2)} – {bondStats.maxLength.toFixed(2)} Å</strong> ({bondStats.count.toLocaleString()} bonds)
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      bondStats && (
+                        <div style={{ fontSize: 10, color: '#64748b' }}>
+                          Auto cutoff: <strong style={{ color: '#f8fafc' }}>{(bondStats.percentiles[`p${Math.round(bondPercentileRange[1] / 5) * 5}`] ?? 0).toFixed(2)} Å</strong> ({Math.round(bondPercentileRange[1] / 5) * 5}th percentile)
+                        </div>
+                      )
+                    )}
                   </div>
                 )}
               </div>

@@ -5,8 +5,8 @@
  * For 1M atoms this can take 2-5 seconds — doing it on main thread freezes rendering.
  *
  * Protocol:
- *   Main → Worker: { positions: Float32Array, types: Int32Array, natoms, maxBondLength, bonds? }
- *   Worker → Main: { bondPairs: Int32Array (flat [a0,b0, a1,b1, ...]), count }
+ *   Main → Worker: { positions: Float32Array, types: Int32Array, natoms, maxBondLength, bonds?, meamScreening? }
+ *   Worker → Main: { bondPairs: Int32Array (flat [a0,b0, a1,b1, ...]), count, screeningFactors? }
  */
 
 // Inline spatial hash (can't import modules in a worker blob)
@@ -73,7 +73,7 @@ class WorkerSpatialHash {
 }
 
 self.onmessage = (e: MessageEvent) => {
-  const { positions, types, natoms, maxBondLength, bonds: precomputedBonds } = e.data;
+  const { positions, types, natoms, maxBondLength, bonds: precomputedBonds, meamScreening } = e.data;
 
   // If pre-computed bonds exist in the frame data, just pass them through
   if (precomputedBonds && precomputedBonds.length > 0) {
@@ -93,6 +93,12 @@ self.onmessage = (e: MessageEvent) => {
   const pairBuf = new Int32Array(maxPairs * 2);
   let count = 0;
 
+  // Build neighbor lists for MEAM screening (only if requested)
+  let neighborList: number[][] | null = null;
+  if (meamScreening) {
+    neighborList = Array.from({ length: natoms }, () => []);
+  }
+
   for (let i = 0; i < natoms; i++) {
     const ix = positions[i * 3];
     const iy = positions[i * 3 + 1];
@@ -106,14 +112,81 @@ self.onmessage = (e: MessageEvent) => {
         pairBuf[count * 2] = i;
         pairBuf[count * 2 + 1] = j;
         count++;
+        if (neighborList) {
+          neighborList[i].push(j);
+          neighborList[j].push(i);
+        }
       }
+    }
+  }
+
+  // MEAM geometric screening (computed off-thread so main thread stays smooth)
+  let screeningBuf: Float32Array | null = null;
+  if (meamScreening && neighborList) {
+    screeningBuf = new Float32Array(count);
+    const SCREENING_CUTOFF = 1.25;
+    const isNeighbor = new Uint8Array(natoms);
+
+    for (let i = 0; i < count; i++) {
+      const a = pairBuf[i * 2];
+      const b = pairBuf[i * 2 + 1];
+      const ax = positions[a * 3], ay = positions[a * 3 + 1], az = positions[a * 3 + 2];
+      const bx = positions[b * 3], by = positions[b * 3 + 1], bz = positions[b * 3 + 2];
+      const dx = bx - ax, dy = by - ay, dz = bz - az;
+      const dij = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+      if (dij === 0) {
+        screeningBuf[i] = 1.0;
+        continue;
+      }
+
+      const dijSq = dij * dij;
+      const neighborsB = neighborList[b];
+      for (let n = 0; n < neighborsB.length; n++) isNeighbor[neighborsB[n]] = 1;
+
+      let s = 1.0;
+      const neighborsA = neighborList[a];
+      for (let n = 0; n < neighborsA.length; n++) {
+        const k = neighborsA[n];
+        if (k === b || !isNeighbor[k]) continue;
+
+        const kx = positions[k * 3], ky = positions[k * 3 + 1], kz = positions[k * 3 + 2];
+        const dxik = kx - ax, dyik = ky - ay, dzik = kz - az;
+        const dikSq = dxik * dxik + dyik * dyik + dzik * dzik;
+        if (dikSq >= dijSq) continue;
+
+        const dxjk = kx - bx, dyjk = ky - by, dzjk = kz - bz;
+        const djkSq = dxjk * dxjk + dyjk * dyjk + dzjk * dzjk;
+        if (djkSq >= dijSq) continue;
+
+        const dik = Math.sqrt(dikSq);
+        const djk = Math.sqrt(djkSq);
+        const C = (dik + djk) / dij;
+        if (C < SCREENING_CUTOFF) {
+          s *= 0.15;
+          if (s < 0.001) break;
+        }
+      }
+      screeningBuf[i] = s;
+
+      for (let n = 0; n < neighborsB.length; n++) isNeighbor[neighborsB[n]] = 0;
     }
   }
 
   // Return only the populated portion
   const result = pairBuf.subarray(0, count * 2);
-  (self as any).postMessage(
-    { bondPairs: result, count },
-    [result.buffer] // Transfer ownership — zero-copy
-  );
+  const transferList: ArrayBuffer[] = [result.buffer as ArrayBuffer];
+  if (screeningBuf) {
+    const screeningResult = screeningBuf.subarray(0, count);
+    transferList.push(screeningResult.buffer as ArrayBuffer);
+    (self as any).postMessage(
+      { bondPairs: result, count, screeningFactors: screeningResult },
+      transferList
+    );
+  } else {
+    (self as any).postMessage(
+      { bondPairs: result, count, screeningFactors: null },
+      transferList
+    );
+  }
 };
