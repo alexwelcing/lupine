@@ -244,9 +244,9 @@ const DEFAULTS = {
   atomTexture: 'none' as const,
 
   // ─── Effects Defaults ───
-  ssao: true,
+  ssao: false,
   ssaoIntensity: 0.65,
-  bloom: true,
+  bloom: false,
   bloomIntensity: 0.15,
   dof: false,
   autoDepthOfField: false,
@@ -593,7 +593,7 @@ export const useStore = create<AppState>()(
       if (s.colorMode !== 'type')                     delta.cm = s.colorMode;
       if (s.colorProperty !== null)                    delta.cp = s.colorProperty;
       if (s.colormap !== 'viridis')                    delta.cmap = s.colormap;
-      if (!s.ssao)                                     delta.ssao = 0;
+      if (s.ssao)                                      delta.ssao = 1;
       if (s.bloom)                                     delta.bloom = 1;
       if (s.dof)                                       delta.dof = 1;
       if (!s.showCell)                                 delta.cell = 0;
@@ -641,7 +641,7 @@ export const useStore = create<AppState>()(
           colorMode: s.cm ?? 'type',
           colorProperty: s.cp ?? null,
           colormap: s.cmap ?? 'viridis',
-          ssao: s.ssao !== 0,
+          ssao: s.ssao === 1,
           bloom: s.bloom === 1,
           dof: s.dof === 1,
           showCell: s.cell !== 0,
