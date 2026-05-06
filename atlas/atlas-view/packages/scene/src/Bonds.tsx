@@ -12,6 +12,7 @@
  * - Toggle → instant visibility flip, no recomputation
  */
 
+/// <reference path="./vite-env.d.ts" />
 import { useRef, useMemo, useEffect, useState, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -21,6 +22,10 @@ import { useGlobalTimer } from './useTimer';
 import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS, COLORMAPS } from './constants';
 // Vite worker import: the `?worker` suffix triggers proper bundling so the
 // production output is a real .js worker module, not a raw .ts asset.
+// The triple-slash reference above pulls in the ambient `?worker` module
+// declaration from vite-env.d.ts so this resolves both in @atlas/scene's
+// own tsc run and in any consumer (e.g. @atlas/ui) that compiles this file
+// via the path alias — its `include` would otherwise miss sibling .d.ts.
 import BondWorkerCtor from './bondWorker.ts?worker';
 
 interface BondsProps {
