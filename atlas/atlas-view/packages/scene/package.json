@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./Atoms": "./src/Atoms.tsx",
+    "./Bonds": "./src/Bonds.tsx",
     "./SimulationCell": "./src/SimulationCell.tsx",
     "./AnomalyTracker": "./src/AnomalyTracker.tsx"
   },

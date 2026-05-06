@@ -237,11 +237,15 @@ export function BondAnalysisModule() {
               >
                 Apply {bondPercentileRange[1]}th Percentile Cutoff
               </button>
-              {bondStats && (
-                <div style={{ fontSize: 10, color: 'var(--slate-400)', textAlign: 'center' }}>
-                  Cutoff would be <strong style={{ color: 'var(--lupine-300)' }}>{formatNumber(bondStats.percentiles[`p${bondPercentileRange[1]}` as keyof typeof bondStats.percentiles] as number, 2)} Å</strong>
-                </div>
-              )}
+              {bondStats && (() => {
+                const roundedPct = Math.round(bondPercentileRange[1] / 5) * 5;
+                const cutoffVal = bondStats.percentiles[`p${roundedPct}`];
+                return (
+                  <div style={{ fontSize: 10, color: 'var(--slate-400)', textAlign: 'center' }}>
+                    Cutoff would be <strong style={{ color: 'var(--lupine-300)' }}>{formatNumber(cutoffVal as number, 2)} Å</strong> ({roundedPct}th %ile)
+                  </div>
+                );
+              })()}
             </>
           ) : (
             bondStats && (
