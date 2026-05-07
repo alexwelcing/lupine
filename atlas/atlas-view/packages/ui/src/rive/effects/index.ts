@@ -16,6 +16,7 @@ export { RiveEffectLayer } from './RiveEffectLayer';
 // ─── Component-level (inline) ───
 export { ToolbarRipple } from './ToolbarRipple';
 export { ToggleSpark } from './ToggleSpark';
+export { AnimatedOrbitalToggle } from './AnimatedOrbitalToggle';
 
 // ─── Ambient (always-on) ───
 export { HeaderShimmer } from './HeaderShimmer';

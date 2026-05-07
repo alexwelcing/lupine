@@ -55,6 +55,10 @@ import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
 import { AnnotationsLayer } from './AnnotationsLayer';
+import { SelectionMarkers } from './SelectionMarkers';
+import { CameraFocus } from './CameraFocus';
+import { AtomTrails } from './AtomTrails';
+import { TYPE_RADII } from '@atlas/scene';
 import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
 import { ScaleBar } from '@atlas/scene/ScaleBar';
@@ -472,6 +476,43 @@ export default function App() {
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
   const annotations = useStore(s => s.annotations);
   const labelStyle = useStore(s => s.labelStyle);
+  const selectedAtoms = useStore(s => s.selectedAtoms);
+  const hoveredAtom = useStore(s => s.hoveredAtom);
+
+  // Etched annotation: when the user picks the 'etched' label style and
+  // has at least one annotation, rasterize the most-recent text into a
+  // CanvasTexture and pass it (plus the target atom index) into the atom
+  // impostor shader. The shader gates on uHasEtch and atom-id match, so a
+  // single texture engraves exactly one atom. Multi-atom etching at once
+  // is plumbing-feasible (texture array) but visually noisy; one at a
+  // time reads cleaner. Memoized so editing other annotations doesn't
+  // re-rasterize. Disposes previous texture on text change to avoid leaks.
+  const { etchTexture, etchAtomId } = useMemo<{
+    etchTexture: THREE.CanvasTexture | null;
+    etchAtomId: number | null;
+  }>(() => {
+    if (labelStyle !== 'etched' || annotations.length === 0) {
+      return { etchTexture: null, etchAtomId: null };
+    }
+    const newest = annotations[annotations.length - 1];
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, 256, 256);
+    ctx.fillStyle = 'rgba(255,255,255,1)';
+    ctx.font = 'bold 48px ui-monospace, "SF Mono", Consolas, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(newest.text.slice(0, 16), 128, 128);
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.minFilter = THREE.LinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    tex.needsUpdate = true;
+    return { etchTexture: tex, etchAtomId: newest.atomIndex };
+  }, [labelStyle, annotations]);
+  // Dispose stale textures when the memo recomputes.
+  useEffect(() => () => { etchTexture?.dispose(); }, [etchTexture]);
   const ssao = useStore(s => s.ssao);
   const bloom = useStore(s => s.bloom);
   const dof = useStore(s => s.dof);
@@ -950,6 +991,8 @@ export default function App() {
                   materialPreset={materialPreset}
                   atomTexture={atomTexture}
                   propertyEmissionStrength={propertyEmissionStrength}
+                  etchTexture={etchTexture}
+                  etchAtomId={etchAtomId}
                 />
                 <Bonds
                     frame={currentFrame}
@@ -1008,6 +1051,37 @@ export default function App() {
                   annotations={annotations}
                   style={labelStyle}
                   onDismiss={(id) => useStore.getState().removeAnnotation(id)}
+                />
+
+                {/* Visual feedback for selection + hover. Selection ring pulses
+                    subtly via useFrame so the eye is drawn to the picked atom
+                    without it being noisy. Hover marker is a quieter, no-pulse
+                    pale ring. */}
+                <SelectionMarkers
+                  frame={currentFrame}
+                  selectedAtoms={selectedAtoms}
+                  hoveredAtom={hoveredAtom}
+                  typeRadii={TYPE_RADII}
+                />
+
+                {/* Smoothly dollies camera target toward a single-selection atom.
+                    Never pushes camera out — only re-centers and pulls in if the
+                    user is far. Disabled during flythrough preview which owns
+                    the camera. */}
+                <CameraFocus frame={currentFrame} enabled={!flythroughPreview} />
+
+                {/* Worldline trails for tracked atoms (selected ∪ annotated).
+                    Scoped to bound memory at 1M-atom scenes; samples one new
+                    position per playback frame change so the trail length is
+                    in simulation time. Diffusion + dynamics get visual memory. */}
+                <AtomTrails
+                  frame={currentFrame}
+                  frameKey={interpState.frameIndex}
+                  atomIndices={useMemo(() => {
+                    const set = new Set<number>(selectedAtoms);
+                    for (const ann of annotations) set.add(ann.atomIndex);
+                    return Array.from(set);
+                  }, [selectedAtoms, annotations])}
                 />
 
                 {/* Click-to-annotate: shift+click any atom prompts for label

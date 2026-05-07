@@ -4,10 +4,10 @@ import { getElementSpec } from '@atlas/core';
 import { COLOR_SCHEMES, SCHEME_ORDER } from '../coloring';
 import {
   QuantumSection,
-  OrbitalToggle,
   WaveformSlider,
   IsotopeChip,
 } from '@lupine/ui';
+import { AnimatedOrbitalToggle as OrbitalToggle } from '../rive';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconClose = () => (

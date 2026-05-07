@@ -48,6 +48,12 @@ interface AtomsOptimizedProps {
   /** Where per-type atom colors come from. Overrides the legacy
    *  colormap-only behavior. 'colormap' is the original default. */
   atomColorSource?: 'colormap' | 'element' | 'botanical';
+  /** Etched annotation texture — text rasterized via Canvas2D, alpha
+   *  channel used as the stamp mask. When set together with `etchAtomId`,
+   *  the impostor shader engraves it onto that atom's surface. */
+  etchTexture?: THREE.Texture | null;
+  /** Atom index whose surface gets the etched text. -1 / null disables. */
+  etchAtomId?: number | null;
   /** Strength of property-driven emission (0..1). When > 0 and colorMode
    *  is 'property', atoms glow proportional to their normalized property
    *  value × this strength × the colormap-mapped color. Reads as
@@ -63,6 +69,10 @@ const IMPOSTOR_VERTEX = /* glsl */ `
   attribute float instanceRadius;
   attribute float instanceTypeId;
   attribute float instancePropValue;
+  // Original atom index in the loaded frame. Used by the etched-label
+  // path so a single atom can be picked out of the instanced batch and
+  // get its annotation text engraved on its surface.
+  attribute float instanceAtomId;
 
   // Uniforms for GPU color lookup
   uniform sampler2D uPalette;   // 256×1: typeId → color
@@ -78,10 +88,12 @@ const IMPOSTOR_VERTEX = /* glsl */ `
   varying float vViewRadius;
   varying float vTypeId;
   varying float vPropValue;
+  varying float vAtomId;
 
   void main() {
     vTypeId = instanceTypeId;
     vPropValue = instancePropValue;
+    vAtomId = instanceAtomId;
 
     // ─── GPU-side color lookup ───
     if (uColorMode == 2) {
@@ -131,8 +143,18 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
   varying float vViewRadius;
   varying float vTypeId;
   varying float vPropValue;
+  varying float vAtomId;
 
   uniform mat4 projectionMatrix;
+  // Etched annotation: a Canvas2D-rasterized text texture stamped onto the
+  // facing hemisphere of a single targeted atom. Activated when uHasEtch=1
+  // and the fragment's vAtomId matches uEtchAtomId. Uses the view-space
+  // normal as the stamp UV so the text always reads to camera (it follows
+  // the silhouette, not the world). The alpha channel of the texture
+  // darkens the surface to give an engraved feel.
+  uniform sampler2D tEtchTexture;
+  uniform float uEtchAtomId;
+  uniform int uHasEtch;
   uniform int uTextureMode; // 0: none, 1: noise, 2: scratched
   uniform int uColorMode; // 0=type, 1=uniform, 2=property — same scheme as vertex
   uniform int uMaterialPreset; // 0: per-element (default), 1: matte, 2: metallic, 3: glass, 4: plastic
@@ -369,6 +391,24 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
     }
     vec3 color = diffuseTerm + iblSpecular + specularTerm + backTerm + rimColor + emissive;
 
+    // ─── Etched annotation overlay ────────────────────────────────────
+    // Only the targeted atom executes this branch. We project the
+    // view-space normal into a stamp UV: the camera-facing pole maps to
+    // (0.5, 0.5), edges of the visible hemisphere fall outside [0,1].
+    // etchScale > 1.0 keeps the text inside a small central patch of the
+    // silhouette so it reads as a label, not a tattoo wrapping around.
+    if (uHasEtch == 1 && abs(vAtomId - uEtchAtomId) < 0.5) {
+      float etchScale = 1.5;
+      vec2 etchUv = vec2(normal.x * etchScale + 0.5, -normal.y * etchScale + 0.5);
+      if (etchUv.x > 0.0 && etchUv.x < 1.0 && etchUv.y > 0.0 && etchUv.y < 1.0) {
+        float etchAlpha = texture2D(tEtchTexture, etchUv).a;
+        // Darken where text is (engraved depth) plus a subtle warm tint so
+        // it reads as a stamped marker rather than a paint splotch.
+        vec3 engraved = color * 0.32;
+        color = mix(color, engraved, etchAlpha);
+      }
+    }
+
     // Correct depth via projected hit point
     vec4 clipPos = projectionMatrix * vec4(hitPoint, 1.0);
     float ndcDepth = clipPos.z / clipPos.w;
@@ -464,6 +504,8 @@ export function AtomsOptimized({
   atomTypeScales,
   botanicalMode = false,
   atomColorSource = 'colormap',
+  etchTexture = null,
+  etchAtomId = null,
   propertyEmissionStrength = 0,
   materialPreset = 'default',
   atomTexture = 'none',
@@ -517,6 +559,13 @@ export function AtomsOptimized({
     propAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instancePropValue', propAttr);
 
+    // AtomId — original frame index, used by the etched-label fragment
+    // path to single out one instance. f32 holds atom indices up to ~16M
+    // exactly; well above the 1M scene cap.
+    const atomIdAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
+    atomIdAttr.setUsage(THREE.DynamicDrawUsage);
+    geo.setAttribute('instanceAtomId', atomIdAttr);
+
     geo.instanceCount = 0;
 
     return geo;
@@ -545,6 +594,10 @@ export function AtomsOptimized({
         tEnvMap: { value: null as THREE.Texture | null },
         uEnvIntensity: { value: 1.0 },
         uHasEnv: { value: 0 },
+        // Etched annotation — synced from props in the effect below.
+        tEtchTexture: { value: null as THREE.Texture | null },
+        uEtchAtomId: { value: -1 },
+        uHasEtch: { value: 0 },
         // Property-driven emission strength
         uPropEmission: { value: 0 },
       },
@@ -597,6 +650,15 @@ export function AtomsOptimized({
 
     uniforms.uPropEmission.value = propertyEmissionStrength;
 
+    // Etched annotation sync. The texture itself is owned by the caller
+    // (App.tsx builds it from the active annotation text); we just point
+    // the uniform at it and flip the gating int. -1 atomId is the sentinel
+    // for "no etch" — fragments compare via abs(diff) < 0.5 so any value
+    // outside the live atom range trivially fails.
+    uniforms.tEtchTexture.value = etchTexture ?? null;
+    uniforms.uEtchAtomId.value = etchAtomId ?? -1;
+    uniforms.uHasEtch.value = (etchTexture && etchAtomId != null && etchAtomId >= 0) ? 1 : 0;
+
     if (colorMode === 'uniform') {
       const [r, g, b] = mapFn(0.0);
       uniforms.uUniformColor.value.set(r, g, b);
@@ -646,7 +708,7 @@ export function AtomsOptimized({
     oldColormap.dispose();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength]);
+  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength, etchTexture, etchAtomId]);
 
   // ─── PMREM env sync ───────────────────────────────────────────────
   // scene.environment is set by drei's <Environment> in App.tsx; it can
@@ -714,6 +776,7 @@ export function AtomsOptimized({
     const radArr = (geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute).array as Float32Array;
     const typeArr = (geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute).array as Float32Array;
     const propArr = (geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute).array as Float32Array;
+    const atomIdArr = (geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute).array as Float32Array;
 
     let visibleCount = 0;
 
@@ -766,6 +829,11 @@ export function AtomsOptimized({
         propArr[visibleCount] = 0.0;
       }
 
+      // Pass through the original atom index so the etched-label fragment
+      // can compare against uEtchAtomId. Hidden atoms (skipped above) get
+      // no instance, which is fine — they can't be picked anyway.
+      atomIdArr[visibleCount] = i;
+
       visibleCount++;
     }
 
@@ -778,15 +846,18 @@ export function AtomsOptimized({
     const typeAttr = geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute;
     const propAttr = geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute;
 
+    const atomIdAttr = geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute;
     posAttr.needsUpdate = true;
     radAttr.needsUpdate = true;
     typeAttr.needsUpdate = true;
     propAttr.needsUpdate = true;
+    atomIdAttr.needsUpdate = true;
 
     (posAttr as any).updateRange = { offset: 0, count: visibleCount * 3 };
     (radAttr as any).updateRange = { offset: 0, count: visibleCount };
     (typeAttr as any).updateRange = { offset: 0, count: visibleCount };
     (propAttr as any).updateRange = { offset: 0, count: visibleCount };
+    (atomIdAttr as any).updateRange = { offset: 0, count: visibleCount };
 
     return cleanupIdle;
   }, [
