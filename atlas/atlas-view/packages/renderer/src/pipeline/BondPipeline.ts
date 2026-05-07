@@ -26,6 +26,10 @@ export interface BondPipelineOptions {
   gridDimZ?: number;
   cellSize?: number;
   maxAtomsPerCell?: number;
+  /** Number of triple-buffered staging slots. 3 lets compute/copy/read
+   *  overlap across frames; 1 serializes readback (smaller GPU memory
+   *  footprint — useful at very high atom counts). Defaults to 3. */
+  stagingPoolDepth?: number;
 }
 
 export interface BondReadback {
@@ -73,6 +77,7 @@ export class BondPipeline {
   private gridDimY: number;
   private gridDimZ: number;
   private maxAtomsPerCell: number;
+  private stagingPoolDepth: number;
 
   // Reused scratch — avoids per-frame allocations during playback. Sized
   // for maxAtoms; the unused tail is zero and gated by config.numAtoms.
@@ -99,6 +104,7 @@ export class BondPipeline {
     this.gridDimY = opts.gridDimY ?? 32;
     this.gridDimZ = opts.gridDimZ ?? 32;
     this.maxAtomsPerCell = opts.maxAtomsPerCell ?? 64;
+    this.stagingPoolDepth = Math.max(1, opts.stagingPoolDepth ?? 3);
 
     this.positionScratch = new Float32Array(this.maxAtoms * 4);
     this.positionScratchI32 = new Int32Array(this.positionScratch.buffer);
@@ -153,7 +159,7 @@ export class BondPipeline {
       label: 'Grid Cell Atoms',
     });
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.stagingPoolDepth; i++) {
       this.stagingPool.push({
         indirect: device.createBuffer({
           size: 5 * 4,

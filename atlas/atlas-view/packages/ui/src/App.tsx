@@ -72,6 +72,7 @@ import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
+import { GpuUnlockOverlay } from './rive';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -972,6 +973,9 @@ export default function App() {
 
           {import.meta.env.DEV && <StateInspector />}
 
+          {/* GPU feature unlock overlay — fires on CPU→WebGPU transition */}
+          <GpuUnlockOverlay />
+
           {/* Scale bar for publication figures */}
           {file && currentFrame && showScaleBar && (
             <ScaleBar
@@ -1048,11 +1052,13 @@ export default function App() {
                 msOverflowStyle: 'none'
               }}>
                 <ToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
-                <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis'} onClick={() => setActivePanel('analysis')} />
-                <ToolButton icon={<IconMeasure />} label="Measure" active={activePanel === 'measurement'} onClick={() => setActivePanel('measurement')} />
-                <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export'} onClick={() => setActivePanel('export')} />
-                <ToolButton icon={<IconTelemetry />} label="Telemetry" active={activePanel === 'telemetry'} onClick={() => setActivePanel('telemetry')} />
-                <ToolButton icon={<IconFlythrough />} label="Path" active={activePanel === 'flythrough'} onClick={() => setActivePanel('flythrough')} />
+                <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => setActivePanel('analysis')} />
+                <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => setActivePanel('export')} />
+                {/* Telemetry is a developer surface — visible only with ?dev=1.
+                    Production users see 3 tabs: Visuals · Analysis · Export. */}
+                {(typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('dev')) && (
+                  <ToolButton icon={<IconTelemetry />} label="Telemetry" active={activePanel === 'telemetry'} onClick={() => setActivePanel('telemetry')} />
+                )}
                 <div style={{ width: 1, minWidth: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />
                 <ToolButton icon={<IconReset />} label="Reset" onClick={() => {
                   useStore.getState().reset();
@@ -1088,10 +1094,31 @@ export default function App() {
                   availableProperties={availableProperties}
                 />
               )}
-              {activePanel === 'analysis' && <AnalysisPanel />}
-              {activePanel === 'measurement' && <MeasurementPanel />}
-              {activePanel === 'export' && <FigureExportPanel />}
-              {activePanel === 'flythrough' && <FlythroughPanel />}
+              {/* Consolidated Analysis: inner tab strip switches between
+                  the analysis modules and the measurement workflow. */}
+              {(activePanel === 'analysis' || activePanel === 'measurement') && (
+                <SubTabStrip
+                  active={activePanel}
+                  tabs={[
+                    { id: 'analysis', label: 'Modules' },
+                    { id: 'measurement', label: 'Measure' },
+                  ]}
+                >
+                  {activePanel === 'analysis' ? <AnalysisPanel /> : <MeasurementPanel />}
+                </SubTabStrip>
+              )}
+              {/* Consolidated Export: figures + flythrough path authoring. */}
+              {(activePanel === 'export' || activePanel === 'flythrough') && (
+                <SubTabStrip
+                  active={activePanel}
+                  tabs={[
+                    { id: 'export', label: 'Figures' },
+                    { id: 'flythrough', label: 'Path' },
+                  ]}
+                >
+                  {activePanel === 'export' ? <FigureExportPanel /> : <FlythroughPanel />}
+                </SubTabStrip>
+              )}
               {activePanel === 'telemetry' && (
                 <TelemetryPanel
                   thermo={file?.thermo ?? null}
@@ -1222,6 +1249,58 @@ export default function App() {
 }
 
 // ─── Helper components ────────────────────────────────────────────────
+
+/** Inline tab strip rendered at the top of a consolidated drawer. Switches
+ *  the active panel without closing the drawer — used to fold Measure
+ *  inside Analysis and Path inside Export so the top-level toolbar can
+ *  stay at 3 tabs. Each tab id corresponds to a panel id in activePanel. */
+function SubTabStrip({
+  active,
+  tabs,
+  children,
+}: {
+  active: string;
+  tabs: Array<{ id: string; label: string }>;
+  children: React.ReactNode;
+}) {
+  const setActivePanel = useStore(s => s.setActivePanel);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div style={{
+        display: 'flex',
+        gap: 4,
+        padding: '8px 12px 0 12px',
+        borderBottom: '1px solid var(--border-subtle)',
+        flexShrink: 0,
+      }}>
+        {tabs.map(tab => {
+          const isActive = active === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActivePanel(tab.id as any)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                fontSize: 12,
+                fontWeight: isActive ? 600 : 500,
+                padding: '8px 14px',
+                cursor: 'pointer',
+                borderBottom: isActive ? '2px solid var(--accent)' : '2px solid transparent',
+                marginBottom: -1,
+                transition: 'color 150ms',
+              }}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
+      <div style={{ flex: 1, overflowY: 'auto' }}>{children}</div>
+    </div>
+  );
+}
 
 function ToolButton({ icon, label, active, onClick }: {
   icon: React.ReactNode;

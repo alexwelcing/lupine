@@ -17,6 +17,26 @@ const MAX_ATOMS_PER_CELL = 64;
 const INITIAL_MAX_ATOMS = 100_000;
 const INITIAL_MAX_BONDS = INITIAL_MAX_ATOMS * 12;
 
+/** Bonds-per-atom factor used to size the GPU output buffer. 12 is generous
+ *  for typical solids; at high atom counts we drop it to 6 to keep the
+ *  bondOutBuffer within tens of MB rather than hundreds (1M × 12 × 16B per
+ *  Bond = 192MB, plus 3 staging slots = 768MB → browser OOM). 6 is still
+ *  larger than physical coordination numbers in most systems. */
+function bondsPerAtomFactor(natoms: number): number {
+  if (natoms >= 500_000) return 4;
+  if (natoms >= 100_000) return 6;
+  return 12;
+}
+
+/** Staging pool depth. 3 lets compute/copy/read pipeline. At very large
+ *  atom counts the pool dominates GPU memory, so we drop to 1 — readback
+ *  serializes but each individual readback is still <200ms on a desktop
+ *  GPU. The user's interactive frame rate is set by atom rendering, not
+ *  bond detection cadence. */
+function stagingPoolDepth(natoms: number): number {
+  return natoms >= 500_000 ? 1 : 3;
+}
+
 export interface BondGpuComputeInput {
   positions: Float32Array;
   types: Int32Array;
@@ -86,7 +106,8 @@ export function useBondGpuPipeline(enabled: boolean): UseBondGpuPipelineResult {
 
   const compute = useCallback(async (input: BondGpuComputeInput): Promise<BondReadback | null> => {
     const target = Math.max(input.natoms, INITIAL_MAX_ATOMS);
-    const targetBonds = Math.max(target * 12, INITIAL_MAX_BONDS);
+    const factor = bondsPerAtomFactor(input.natoms);
+    const targetBonds = Math.max(target * factor, INITIAL_MAX_BONDS);
     const ok = await ensureInitialized(stateRef, initPromiseRef, target, targetBonds);
     if (!ok) {
       setUnsupported(true);
@@ -159,6 +180,7 @@ async function ensureInitialized(
       gridDimY: GRID_DIM,
       gridDimZ: GRID_DIM,
       maxAtomsPerCell: MAX_ATOMS_PER_CELL,
+      stagingPoolDepth: stagingPoolDepth(maxAtoms),
     });
     stateRef.current.maxAtoms = maxAtoms;
     stateRef.current.maxBonds = maxBonds;
@@ -180,7 +202,7 @@ async function growPipeline(
 
   // Grow with headroom so we don't grow every frame as data trickles in.
   const newMaxAtoms = Math.max(Math.ceil(newAtomCount * 1.5), stateRef.current.maxAtoms * 2);
-  const newMaxBonds = newMaxAtoms * 12;
+  const newMaxBonds = newMaxAtoms * bondsPerAtomFactor(newAtomCount);
 
   oldPipeline.destroy();
 
@@ -192,6 +214,7 @@ async function growPipeline(
     gridDimY: GRID_DIM,
     gridDimZ: GRID_DIM,
     maxAtomsPerCell: MAX_ATOMS_PER_CELL,
+    stagingPoolDepth: stagingPoolDepth(newMaxAtoms),
   });
   stateRef.current.maxAtoms = newMaxAtoms;
   stateRef.current.maxBonds = newMaxBonds;

@@ -111,13 +111,25 @@ export function Bonds({
   const workerBusyRef = useRef<boolean>(false);
   const pendingMsgRef = useRef<{ msg: any, transferList: ArrayBuffer[] } | null>(null);
 
+  // Auto-force GPU for big systems regardless of the user's toggle: at
+  // hundreds of thousands of atoms the CPU worker is unusable (60+ seconds
+  // per detection, browser kills the tab) and a single CPU dispatch can
+  // OOM the worker thread. The GPU pipeline scans them in milliseconds.
+  // Threshold tuned to where CPU spatial-hash detection starts taking >1s.
+  const FORCE_GPU_ATOM_THRESHOLD = 200_000;
+  const forceGpu = (frame?.natoms ?? 0) > FORCE_GPU_ATOM_THRESHOLD;
+  const wantGpu = useGpu || forceGpu;
+
   // GPU bond pipeline. Initializes lazily; falls back via `unsupported`.
   // Destructure so dep arrays aren't churned by the hook returning a fresh
   // object each render — `compute` is useCallback'd and stable.
-  const { ready: gpuReady, unsupported: gpuUnsupported, compute: gpuCompute } = useBondGpuPipeline(useGpu);
+  const { ready: gpuReady, unsupported: gpuUnsupported, compute: gpuCompute } = useBondGpuPipeline(wantGpu);
   // Effective GPU mode: requested AND not known-unsupported. When GPU init
   // fails, this drops to false and the worker takes over without a hiccup.
-  const gpuActive = useGpu && !gpuUnsupported;
+  // EXCEPT when forceGpu is true and gpu is unsupported — in that case we
+  // simply skip bond detection entirely rather than crash the worker.
+  const gpuActive = wantGpu && !gpuUnsupported;
+  const skipDetection = forceGpu && gpuUnsupported;
 
   // Telemetry: report status changes upward.
   useEffect(() => {
@@ -173,6 +185,22 @@ export function Bonds({
 
   useEffect(() => {
     if (gpuActive) return; // GPU effect below owns dispatch in this mode.
+    // Skip CPU dispatch when bonds are hidden — running spatial-hash + neighbor
+    // scan on a 1M-atom system produces tens of MB of bond pairs that are
+    // never rendered. The user explicitly toggled bonds off; respect it.
+    if (!visible) {
+      setBondPairs(new Int32Array(0));
+      prevFrameRef.current = frame;
+      return;
+    }
+    if (skipDetection) {
+      // Forced-GPU but GPU unavailable. Don't blow up the worker on a
+      // huge system; just leave bonds empty until the user lowers the cutoff
+      // or the system. (Telemetry: gpuStatus already reads 'unsupported'.)
+      setBondPairs(new Int32Array(0));
+      prevFrameRef.current = frame;
+      return;
+    }
     if (!workerRef.current || !frame || frame.natoms < 2) {
       setBondPairs(new Int32Array(0));
       prevFrameRef.current = frame;
@@ -231,7 +259,7 @@ export function Bonds({
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [frame, maxBondLength, gpuActive]);
+  }, [frame, maxBondLength, gpuActive, visible, skipDetection]);
 
   // ─── GPU dispatch ──────────────────────────────────────────────────
   // Runs only when gpuActive is true. Mirrors the worker effect's contract:
@@ -242,6 +270,13 @@ export function Bonds({
 
   useEffect(() => {
     if (!gpuActive) return;
+    // Same visibility-respect as the worker effect — no point computing
+    // millions of bonds the user hid.
+    if (!visible) {
+      setBondPairs(new Int32Array(0));
+      setBondDistances(new Float32Array(0));
+      return;
+    }
     if (!frame || frame.natoms < 2) {
       setBondPairs(new Int32Array(0));
       setBondDistances(new Float32Array(0));
@@ -292,7 +327,7 @@ export function Bonds({
     });
 
     return () => { cancelled = true; };
-  }, [gpuActive, frame, maxBondLength, gpuCompute, onBondsUpdate]);
+  }, [gpuActive, frame, maxBondLength, gpuCompute, onBondsUpdate, visible]);
 
   // ─── Capacity management ───────────────────────────────────────────
   // Grow on demand (with headroom), shrink when sustainably under-utilized.
