@@ -59,6 +59,7 @@ import { SelectionMarkers } from './SelectionMarkers';
 import { CameraFocus } from './CameraFocus';
 import { AtomTrails } from './AtomTrails';
 import { AtomInfoHUD } from './AtomInfoHUD';
+import { MeasurementsLayer } from './MeasurementsLayer';
 import { TYPE_RADII } from '@atlas/scene';
 import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
@@ -1075,6 +1076,15 @@ export default function App() {
                   selectedAtoms={selectedAtoms}
                   activeProperty={colorProperty ?? undefined}
                   onDismissCard={(idx) => useStore.getState().setSelectedAtoms(prev => prev.filter(i => i !== idx))}
+                />
+
+                {/* Geometric measurements between selected atoms. 2 → dashed
+                    distance line, 3 → angle arc, 4 → dihedral readout. Lives
+                    in 3D so it persists across camera moves and exports
+                    cleanly with the figure pipeline. */}
+                <MeasurementsLayer
+                  frame={currentFrame}
+                  selectedAtoms={selectedAtoms}
                 />
 
                 {/* Smoothly dollies camera target toward a single-selection atom.

@@ -38,6 +38,30 @@ import BondWorkerCtor from './bondWorker.ts?worker';
  * Walks both arrays with early exit. ~0.3ms for 27k bonds, far less than
  * the ~1-3ms attribute upload it skips.
  */
+/** Min frame-to-frame max-atom displacement (Å) that triggers bond recompute.
+ *  Below this, bond topology is guaranteed stable for any reasonable cutoff
+ *  (covalent-shortest is ~0.6 Å) so we keep the cached bondPairs and skip
+ *  the spatial-hash + neighbor scan entirely. Tuned conservatively so even
+ *  fast-equilibrating MD won't drop a real bond change. */
+const BOND_RECOMPUTE_DISP_THRESHOLD = 0.05;
+
+/** Returns the max |Δposition| between `curr` and `prev`, sampled at most
+ *  1000 atoms to keep the check sub-millisecond on million-atom scenes.
+ *  Both arrays are flat XYZ; equal length is required (caller checks). */
+function subsampledMaxDisplacement(curr: Float32Array, prev: Float32Array): number {
+  const natoms = curr.length / 3;
+  const stride = Math.max(1, Math.floor(natoms / 1000));
+  let maxSq = 0;
+  for (let i = 0; i < natoms; i += stride) {
+    const dx = curr[i * 3] - prev[i * 3];
+    const dy = curr[i * 3 + 1] - prev[i * 3 + 1];
+    const dz = curr[i * 3 + 2] - prev[i * 3 + 2];
+    const d2 = dx * dx + dy * dy + dz * dz;
+    if (d2 > maxSq) maxSq = d2;
+  }
+  return Math.sqrt(maxSq);
+}
+
 function bondPairsContentEqual(a: Int32Array, b: Int32Array): boolean {
   if (a === b) return true;
   if (a.length !== b.length) return false;
@@ -182,6 +206,11 @@ export function Bonds({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const prevFrameRef = useRef<Frame | null>(null);
+  // Snapshot of the positions array we last actually dispatched bond
+  // detection on. Lets us skip dispatch when atoms have only jittered
+  // (sub-threshold motion) — bond topology doesn't change for ~0.05 Å
+  // moves, so we keep the cached bondPairs and avoid the recompute.
+  const lastDispatchPositionsRef = useRef<Float32Array | null>(null);
 
   useEffect(() => {
     if (gpuActive) return; // GPU effect below owns dispatch in this mode.
@@ -209,6 +238,19 @@ export function Bonds({
 
     const isFrameChange = frame !== prevFrameRef.current;
     prevFrameRef.current = frame;
+
+    // Motion polish: if this is a frame change but atoms have barely moved
+    // (max displacement < threshold), skip dispatch entirely and keep the
+    // previously computed bondPairs. Bond topology does not change for
+    // sub-threshold jitter (covalent bonds are ≥0.6 Å, threshold is 0.05 Å).
+    // Subsamples up to 1000 atoms for the displacement check so the gate
+    // itself stays cheap on million-atom scenes.
+    if (isFrameChange && lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
+      const maxDisp = subsampledMaxDisplacement(frame.positions, lastDispatchPositionsRef.current);
+      if (maxDisp < BOND_RECOMPUTE_DISP_THRESHOLD) {
+        return;
+      }
+    }
 
     // Debounce cutoff changes — 150ms delay so slider doesn't spam
     // Frame changes (playback) should dispatch instantly (0ms) to prevent flickering
@@ -248,6 +290,11 @@ export function Bonds({
         computeStats: !isFrameChange, // Skip expensive stats/sorting during rapid playback
       };
 
+      // Cache the positions we're about to detect on, so the next frame
+      // change can compare against them for motion-skip. Make our own copy
+      // because posCopy is about to be transferred and detached.
+      lastDispatchPositionsRef.current = new Float32Array(frame.positions);
+
       if (workerBusyRef.current) {
         pendingMsgRef.current = { msg, transferList };
       } else {
@@ -282,6 +329,19 @@ export function Bonds({
       setBondDistances(new Float32Array(0));
       return;
     }
+
+    // Motion polish — same skip rule as the CPU path. Atoms that haven't
+    // meaningfully moved keep their cached bondPairs; we don't even
+    // dispatch the GPU compute. Saves a queue submit + readback per frame
+    // during equilibrated playback.
+    if (lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
+      const maxDisp = subsampledMaxDisplacement(frame.positions, lastDispatchPositionsRef.current);
+      if (maxDisp < BOND_RECOMPUTE_DISP_THRESHOLD) {
+        return;
+      }
+    }
+    lastDispatchPositionsRef.current = new Float32Array(frame.positions);
+
     let cancelled = false;
 
     // Build covalent radii table sized for the largest type seen.
