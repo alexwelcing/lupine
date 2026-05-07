@@ -795,64 +795,107 @@ export function AtomsOptimized({
         u.uPxPerWorldAtUnitDepth.value = (0.5 * dpr) / Math.tan(fovRad * 0.5);
       }
     }
+
+    // ─── Progressive upload pump ──────────────────────────────────────
+    // Drives the chunked path armed by the upload effect. Each tick
+    // processes CHUNK_INDICES atom indices (≤ 50K) and grows the visible
+    // instance count. Stale state (frame swapped under us) is gated by
+    // identity check; the new frame's effect will reset uploadStateRef.
+    const st = uploadStateRef.current;
+    if (st.done || st.frame !== frame || !uploadCtxRef.current) return;
+    const remaining = frame.natoms - st.iCursor;
+    if (remaining <= 0) {
+      st.done = true;
+      // Final dirty-mark with the exact total — guards against off-by-one
+      // if the last chunk's slice fell short of the visible count.
+      atomCountRef.current = st.visibleCount;
+      geometry.instanceCount = st.visibleCount;
+      markAttrsDirty(st.visibleCount);
+      return;
+    }
+    const chunkEnd = Math.min(st.iCursor + CHUNK_INDICES, frame.natoms);
+    st.visibleCount = processAtomRange(st.iCursor, chunkEnd, st.visibleCount);
+    st.iCursor = chunkEnd;
+    atomCountRef.current = st.visibleCount;
+    geometry.instanceCount = st.visibleCount;
+    markAttrsDirty(st.visibleCount);
+    if (st.iCursor >= frame.natoms) st.done = true;
   });
 
-  // ─── Upload frame data to GPU (runs ONCE per frame change) ────────
-  const uploadFrame = useCallback(() => {
-    // Defer spatial hash rebuild to idle time
-    const idleCallback = (typeof requestIdleCallback !== 'undefined')
-      ? requestIdleCallback
-      : (cb: () => void) => setTimeout(cb, 0);
-    const cancelIdle = (typeof cancelIdleCallback !== 'undefined')
-      ? cancelIdleCallback
-      : clearTimeout;
-    const idleId = idleCallback(() => {
-      spatialHashRef.current.build(frame.positions, frame.natoms);
-      onSpatialHash?.(spatialHashRef.current);
-    });
-    const cleanupIdle = () => cancelIdle(idleId as any);
+  // ─── Upload frame data to GPU ─────────────────────────────────────
+  //
+  // Architecture for progressive (chunked) upload:
+  //
+  //   - The expensive part is the per-atom write loop. For 1M atoms it
+  //     runs ~50 ms on a desktop and locks the main thread; on a phone
+  //     it's much worse and is what bricks the page on the 1M test.
+  //   - We split the loop across animation frames: each `useFrame` tick
+  //     processes CHUNK_INDICES atom indices (50K) and grows
+  //     `geometry.instanceCount` to the count written so far. The
+  //     renderer paints what's available; the next tick fills in more.
+  //   - Two paths share one inner loop (`processAtomRange`):
+  //       SYNC      — small frames (<PROGRESSIVE_THRESHOLD atoms) and any
+  //                   frame currently being interpolated. The full frame
+  //                   is processed inside the same effect call. Preserves
+  //                   exact pre-existing behavior for playback.
+  //       CHUNKED   — large single-frame loads. The effect resets the
+  //                   pump state; useFrame ticks advance it.
+  //   - `uploadStateRef` tracks the in-progress chunked upload. Frame
+  //     identity changes cancel the in-progress pump (the new frame's
+  //     effect resets the state to point at it).
+  //
+  // The mapping from atom index `i` to instance slot `visibleCount` is
+  // monotonic but not 1:1 — hidden atoms contribute a `continue`. We
+  // carry both counters across chunks so the prefix written remains
+  // contiguous and `geometry.instanceCount` always points to a fully-
+  // populated range.
+  const PROGRESSIVE_THRESHOLD = 100_000; // atoms above which we chunk
+  const CHUNK_INDICES = 50_000;          // atom-index window per tick
+
+  const uploadStateRef = useRef<{
+    frame: Frame | null;          // identity gate — pump cancels on mismatch
+    iCursor: number;              // next atom index to process
+    visibleCount: number;         // instance slots written so far
+    done: boolean;
+  }>({ frame: null, iCursor: 0, visibleCount: 0, done: true });
+
+  // Closure-captured state for the active upload call (set by uploadFrame
+  // before either running sync or handing off to the pump). Refs because
+  // they live across animation frames in the chunked case but are not
+  // React state — mutating them must not re-render.
+  const uploadCtxRef = useRef<{
+    radiiLookup: Float32Array;
+    hiddenLookup: Uint8Array;
+    scaleOverrideLookup: Float32Array;
+    nextPropData: Float32Array | null;
+    bsx: number; bsy: number; bsz: number;
+    hasBounds: boolean;
+    t: number;
+  } | null>(null);
+
+  /** Process atoms [iStart, iEnd) of the current upload context, writing
+   *  visible ones to the geometry attributes starting at `visibleStart`.
+   *  Returns the post-chunk visible count. Pure write — does NOT touch
+   *  `geometry.instanceCount` or attribute dirty flags; callers do that. */
+  const processAtomRange = useCallback((iStart: number, iEnd: number, visibleStart: number): number => {
+    const ctx = uploadCtxRef.current;
+    if (!ctx) return visibleStart;
 
     const positions = frame.positions;
     const types = frame.types;
-
-    const t = interpolationFactor ?? 0;
-    const hasNextFrame = nextFrame && nextFrame.natoms === frame.natoms;
-    const nextPos = hasNextFrame ? nextFrame.positions : null;
-
-    let bsx = 0, bsy = 0, bsz = 0;
-    const hasBounds = !!frame.boxBounds;
-    if (hasBounds) {
-      bsx = frame.boxBounds![1] - frame.boxBounds![0];
-      bsy = frame.boxBounds![3] - frame.boxBounds![2];
-      bsz = frame.boxBounds![5] - frame.boxBounds![4];
-    }
-
-    // Pre-compute radii lookups
+    const nextPos = nextFrame && nextFrame.natoms === frame.natoms ? nextFrame.positions : null;
+    const { radiiLookup, hiddenLookup, scaleOverrideLookup, nextPropData, bsx, bsy, bsz, hasBounds, t } = ctx;
     const MAX_TYPES = 256;
-    const radiiLookup = new Float32Array(MAX_TYPES).fill(1.2);
-    const hiddenLookup = new Uint8Array(MAX_TYPES);
-    const scaleOverrideLookup = new Float32Array(MAX_TYPES).fill(1.0);
 
-    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
-      radiiLookup[typeId] = botanicalMode ? (BOTANICAL_RADII[typeId] ?? 1.2) : (TYPE_RADII[typeId] ?? 1.2);
-      if (hiddenAtomTypes?.has(typeId)) hiddenLookup[typeId] = 1;
-      if (atomTypeScales?.[typeId] !== undefined) scaleOverrideLookup[typeId] = atomTypeScales[typeId];
-    }
-
-    // Property normalization
-    const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
-    const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty!) : null;
-
-    // Get instance attribute arrays directly
     const posArr = (geometry.attributes.instancePosition as THREE.InstancedBufferAttribute).array as Float32Array;
     const radArr = (geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute).array as Float32Array;
     const typeArr = (geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute).array as Float32Array;
     const propArr = (geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute).array as Float32Array;
     const atomIdArr = (geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute).array as Float32Array;
 
-    let visibleCount = 0;
+    let visibleCount = visibleStart;
 
-    for (let i = 0; i < frame.natoms; i++) {
+    for (let i = iStart; i < iEnd; i++) {
       const typeId = types[i] < MAX_TYPES ? types[i] : 0;
       const radius = hiddenLookup[typeId] ? 0 : radiiLookup[typeId] * scale * scaleOverrideLookup[typeId];
       if (radius === 0) continue;
@@ -909,38 +952,125 @@ export function AtomsOptimized({
       visibleCount++;
     }
 
-    atomCountRef.current = visibleCount;
-    geometry.instanceCount = visibleCount;
+    return visibleCount;
+  }, [frame, nextFrame, scale, propData, pMin, pMax, capacity, geometry]);
 
-    // Mark attributes for GPU upload
+  /** Mark the prefix [0, visibleCount) of every per-instance attribute as
+   *  needing upload. Called after each chunk in the progressive path and
+   *  once at the end of the sync path. */
+  const markAttrsDirty = useCallback((visibleCount: number) => {
     const posAttr = geometry.attributes.instancePosition as THREE.InstancedBufferAttribute;
     const radAttr = geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute;
     const typeAttr = geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute;
     const propAttr = geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute;
-
     const atomIdAttr = geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute;
     posAttr.needsUpdate = true;
     radAttr.needsUpdate = true;
     typeAttr.needsUpdate = true;
     propAttr.needsUpdate = true;
     atomIdAttr.needsUpdate = true;
-
     (posAttr as any).updateRange = { offset: 0, count: visibleCount * 3 };
     (radAttr as any).updateRange = { offset: 0, count: visibleCount };
     (typeAttr as any).updateRange = { offset: 0, count: visibleCount };
     (propAttr as any).updateRange = { offset: 0, count: visibleCount };
     (atomIdAttr as any).updateRange = { offset: 0, count: visibleCount };
+  }, [geometry]);
 
-    return cleanupIdle;
+  /** Build the upload context for the current props (radii lookups, etc.)
+   *  and stash it on uploadCtxRef so processAtomRange can read it. Cheap;
+   *  runs once per frame change rather than per chunk. */
+  const buildUploadCtx = useCallback(() => {
+    const t = interpolationFactor ?? 0;
+    const hasBounds = !!frame.boxBounds;
+    let bsx = 0, bsy = 0, bsz = 0;
+    if (hasBounds) {
+      bsx = frame.boxBounds![1] - frame.boxBounds![0];
+      bsy = frame.boxBounds![3] - frame.boxBounds![2];
+      bsz = frame.boxBounds![5] - frame.boxBounds![4];
+    }
+    const MAX_TYPES = 256;
+    const radiiLookup = new Float32Array(MAX_TYPES).fill(1.2);
+    const hiddenLookup = new Uint8Array(MAX_TYPES);
+    const scaleOverrideLookup = new Float32Array(MAX_TYPES).fill(1.0);
+    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
+      radiiLookup[typeId] = botanicalMode ? (BOTANICAL_RADII[typeId] ?? 1.2) : (TYPE_RADII[typeId] ?? 1.2);
+      if (hiddenAtomTypes?.has(typeId)) hiddenLookup[typeId] = 1;
+      if (atomTypeScales?.[typeId] !== undefined) scaleOverrideLookup[typeId] = atomTypeScales[typeId];
+    }
+    const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
+    const nextPropData = hasPropInterpolation ? (nextFrame!.properties!.get(colorProperty!) ?? null) : null;
+    uploadCtxRef.current = {
+      radiiLookup, hiddenLookup, scaleOverrideLookup, nextPropData,
+      bsx, bsy, bsz, hasBounds, t,
+    };
+  }, [frame, nextFrame, interpolationFactor, botanicalMode, hiddenAtomTypes, atomTypeScales, colorProperty]);
+
+  /** Top-level upload effect. Decides between SYNC (small frames or
+   *  interpolated playback) and CHUNKED (large fresh loads) and either
+   *  runs the loop here or arms the useFrame pump below. */
+  // Track last frame identity so we can distinguish "user just loaded a
+  // new file / scrubbed to a new frame" (chunked path is allowed) from
+  // "user changed a color/scale/visibility prop on the same frame" (must
+  // re-upload synchronously to avoid flashing the scene to empty before
+  // the pump rebuilds it).
+  const prevFrameRef = useRef<Frame | null>(null);
+
+  useEffect(() => {
+    // Defer spatial hash rebuild to idle time — same as before. This
+    // does NOT block the upload; the hash is read by atom-picker only.
+    const idleCallback = (typeof requestIdleCallback !== 'undefined')
+      ? requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 0);
+    const cancelIdle = (typeof cancelIdleCallback !== 'undefined')
+      ? cancelIdleCallback
+      : clearTimeout;
+    const idleId = idleCallback(() => {
+      spatialHashRef.current.build(frame.positions, frame.natoms);
+      onSpatialHash?.(spatialHashRef.current);
+    });
+
+    buildUploadCtx();
+
+    const t = interpolationFactor ?? 0;
+    const frameChanged = prevFrameRef.current !== frame;
+    prevFrameRef.current = frame;
+    // Chunk only when:
+    //   - it's a fresh frame load (otherwise prop changes on the same
+    //     frame would flash the scene to empty and re-stream),
+    //   - the frame is large enough to be worth chunking, and
+    //   - we're not interpolating (interpolated frames re-upload per
+    //     animation frame anyway; chunking them spreads playback cost
+    //     instead of saving it).
+    const isProgressive = frameChanged && frame.natoms > PROGRESSIVE_THRESHOLD && t === 0;
+
+    if (!isProgressive) {
+      // SYNC path — preserves exact pre-existing behavior for small
+      // frames, for playback / scrubbing, and for prop-only re-uploads.
+      const finalCount = processAtomRange(0, frame.natoms, 0);
+      atomCountRef.current = finalCount;
+      geometry.instanceCount = finalCount;
+      markAttrsDirty(finalCount);
+      uploadStateRef.current = {
+        frame, iCursor: frame.natoms, visibleCount: finalCount, done: true,
+      };
+    } else {
+      // CHUNKED path — arm the pump. Initial instanceCount = 0 so the
+      // first paint shows nothing; the next useFrame tick processes the
+      // first 50K atoms and the user sees them immediately.
+      atomCountRef.current = 0;
+      geometry.instanceCount = 0;
+      uploadStateRef.current = {
+        frame, iCursor: 0, visibleCount: 0, done: false,
+      };
+    }
+
+    return () => cancelIdle(idleId as any);
   }, [
     frame, nextFrame, interpolationFactor, scale, propData, pMin, pMax,
     hiddenAtomTypes, atomTypeScales, botanicalMode,
     onSpatialHash, capacity, colorProperty, geometry,
+    buildUploadCtx, processAtomRange, markAttrsDirty,
   ]);
-
-  useEffect(() => {
-    return uploadFrame();
-  }, [uploadFrame]);
 
   // Cleanup
   useEffect(() => {
