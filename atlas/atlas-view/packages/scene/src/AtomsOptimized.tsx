@@ -80,6 +80,18 @@ interface AtomsOptimizedProps {
    *  Choose based on device. The shader is recompiled when this changes,
    *  so flipping mid-session is supported but causes a one-time stutter. */
   qualityTier?: 0 | 1 | 2;
+  /** Within-frame streaming gate. The streaming dump parser pre-allocates
+   *  Frame.positions / types / ids to `frame.natoms` but populates them
+   *  incrementally; indices in [loadedAtomCount, frame.natoms) are
+   *  uninitialized and rendering them puts atoms at the origin until the
+   *  parser catches up.
+   *
+   *  When undefined (the default), the renderer treats the full frame
+   *  as ready — preserves current behavior for the WASM all-at-once path.
+   *  When set, the upload upper bound clamps to this count and the
+   *  chunked pump resumes wherever the previous upload left off as the
+   *  count grows. */
+  loadedAtomCount?: number;
 }
 
 // ─── GLSL Shaders ────────────────────────────────────────────────────
@@ -535,6 +547,7 @@ export function AtomsOptimized({
   materialPreset = 'default',
   atomTexture = 'none',
   qualityTier = 2,
+  loadedAtomCount,
 }: AtomsOptimizedProps) {
   const meshRef = useRef<THREE.Mesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
@@ -801,19 +814,30 @@ export function AtomsOptimized({
     // processes CHUNK_INDICES atom indices (≤ 50K) and grows the visible
     // instance count. Stale state (frame swapped under us) is gated by
     // identity check; the new frame's effect will reset uploadStateRef.
+    //
+    // Two clamps on the upper bound:
+    //   - frame.natoms: the geometry / Frame ceiling.
+    //   - loadedAtomCount (when streaming): the populated prefix. Reading
+    //     past this hits zero-initialized typed-array tail and would
+    //     render atoms stuck at the origin until the parser caught up.
+    // The pump pauses when it hits whichever is smaller; the upload
+    // effect un-pauses it when streaming chunks land or a new frame
+    // arrives.
     const st = uploadStateRef.current;
     if (st.done || st.frame !== frame || !uploadCtxRef.current) return;
-    const remaining = frame.natoms - st.iCursor;
+    const cap = Math.min(frame.natoms, loadedAtomCount ?? frame.natoms);
+    const remaining = cap - st.iCursor;
     if (remaining <= 0) {
-      st.done = true;
-      // Final dirty-mark with the exact total — guards against off-by-one
-      // if the last chunk's slice fell short of the visible count.
+      // Pump ran out of loaded atoms. If we've reached the natoms
+      // ceiling we're truly done; otherwise we're waiting for more
+      // atoms to stream in and the next effect run will resume us.
+      if (st.iCursor >= frame.natoms) st.done = true;
       atomCountRef.current = st.visibleCount;
       geometry.instanceCount = st.visibleCount;
       markAttrsDirty(st.visibleCount);
       return;
     }
-    const chunkEnd = Math.min(st.iCursor + CHUNK_INDICES, frame.natoms);
+    const chunkEnd = Math.min(st.iCursor + CHUNK_INDICES, cap);
     st.visibleCount = processAtomRange(st.iCursor, chunkEnd, st.visibleCount);
     st.iCursor = chunkEnd;
     atomCountRef.current = st.visibleCount;
@@ -1034,6 +1058,13 @@ export function AtomsOptimized({
     const t = interpolationFactor ?? 0;
     const frameChanged = prevFrameRef.current !== frame;
     prevFrameRef.current = frame;
+    // Upload upper bound. When the streaming parser is filling Frame
+    // arrays, `loadedAtomCount` is below `frame.natoms` and the renderer
+    // must clamp to it — uninitialized indices [loadedAtomCount, natoms)
+    // are zeros and would render atoms at the origin. When undefined
+    // (the WASM all-at-once path), we treat the full frame as ready.
+    const uploadCap = Math.min(frame.natoms, loadedAtomCount ?? frame.natoms);
+    const isStreaming = (loadedAtomCount ?? frame.natoms) < frame.natoms;
     // Chunk only when:
     //   - it's a fresh frame load (otherwise prop changes on the same
     //     frame would flash the scene to empty and re-stream),
@@ -1043,15 +1074,33 @@ export function AtomsOptimized({
     //     instead of saving it).
     const isProgressive = frameChanged && frame.natoms > PROGRESSIVE_THRESHOLD && t === 0;
 
+    // Streaming continuation: same frame, more atoms have arrived.
+    // Resume the existing pump from where it left off without resetting
+    // the cursor. Only triggers when we're already pumping this frame
+    // and `loadedAtomCount` actually grew past our current cursor.
+    if (
+      !frameChanged
+      && isStreaming
+      && uploadStateRef.current.frame === frame
+      && uploadCap > uploadStateRef.current.iCursor
+    ) {
+      uploadStateRef.current.done = false;
+      return () => cancelIdle(idleId as any);
+    }
+
     if (!isProgressive) {
       // SYNC path — preserves exact pre-existing behavior for small
       // frames, for playback / scrubbing, and for prop-only re-uploads.
-      const finalCount = processAtomRange(0, frame.natoms, 0);
+      // During streaming (uploadCap < natoms), we still process the
+      // loaded prefix synchronously rather than chunked — but that only
+      // happens for non-progressive (small or playback) frames.
+      const finalCount = processAtomRange(0, uploadCap, 0);
       atomCountRef.current = finalCount;
       geometry.instanceCount = finalCount;
       markAttrsDirty(finalCount);
       uploadStateRef.current = {
-        frame, iCursor: frame.natoms, visibleCount: finalCount, done: true,
+        frame, iCursor: uploadCap, visibleCount: finalCount,
+        done: uploadCap >= frame.natoms,
       };
     } else {
       // CHUNKED path — arm the pump. Initial instanceCount = 0 so the
@@ -1067,6 +1116,7 @@ export function AtomsOptimized({
     return () => cancelIdle(idleId as any);
   }, [
     frame, nextFrame, interpolationFactor, scale, propData, pMin, pMax,
+    loadedAtomCount,
     hiddenAtomTypes, atomTypeScales, botanicalMode,
     onSpatialHash, capacity, colorProperty, geometry,
     buildUploadCtx, processAtomRange, markAttrsDirty,

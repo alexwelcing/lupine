@@ -591,29 +591,95 @@ export function Gallery() {
       const resp = await fetch(url);
       if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
       const blob = await resp.blob();
-      const fileObj = new File([blob], example.file.split('/').pop() ?? 'file.dump');
-      const { parseFile } = await import('@atlas/parsers');
-      const result = await parseFile(fileObj);
 
-      if (result.trajectory) {
-        // Re-check actual parsed atom count against device cap. Catches
-        // gallery entries whose `atoms` label understated the real count.
-        const actualAtoms = result.trajectory.frames[0]?.natoms ?? 0;
-        if (actualAtoms > profile.maxAtoms) {
-          useStore.getState().setError(
-            `"${example.title}" parsed to ${formatAtomCount(actualAtoms)} atoms, ` +
-            `over the ${formatAtomCount(profile.maxAtoms)}-atom limit for this device. ` +
-            `Open this scene on a desktop with a discrete GPU.`,
-          );
+      // Streaming-eligible? The streaming dump parser handles the simple
+      // single-frame, orthogonal-box, id/type/x/y/z dialect that the
+      // gallery fixtures use. Probe the first 4 KB of the file to
+      // confirm format AND extract `natoms` from the header — only
+      // then commit to reading full text. Multi-frame, triclinic, or
+      // scaled-coordinate dumps fall through to the WASM path.
+      const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;  // 5 MB
+      const STREAMING_ATOM_THRESHOLD = 100_000;
+      const looksDumpExt = /\.(lammpstrj|dump)$/i.test(example.file);
+      let usedStreaming = false;
+      if (looksDumpExt && blob.size > STREAMING_BYTES_THRESHOLD) {
+        const head = await blob.slice(0, 4096).text();
+        const { canStreamDump } = await import('@atlas/parsers');
+        const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
+        const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
+        if (canStreamDump(head) && headerAtoms >= STREAMING_ATOM_THRESHOLD) {
+          if (headerAtoms > profile.maxAtoms) {
+            useStore.getState().setError(
+              `"${example.title}" has ${formatAtomCount(headerAtoms)} atoms, ` +
+              `over the ${formatAtomCount(profile.maxAtoms)}-atom limit for this device. ` +
+              `Open this scene on a desktop with a discrete GPU.`,
+            );
+            return;
+          }
+          // Read full text once; the streaming parser walks it
+          // incrementally. Phase 2b replaces this with fetch() body
+          // streaming so we don't wait for the full download.
+          const text = await blob.text();
+          const { parseDumpFileStreaming } = await import('@atlas/parsers');
+          const store = useStore.getState();
+          for await (const event of parseDumpFileStreaming(text)) {
+            if (event.type === 'header') {
+              store.setFile({
+                name: example.title,
+                size: blob.size,
+                trajectory: event.trajectory,
+                thermo: null,
+                sourceUrl: url,
+              });
+              // setFile defaulted loadedAtomCount to natoms (the
+              // pre-allocated TypedArray length); reset to 0 so the
+              // renderer doesn't flash uninitialized memory before
+              // the first chunk lands. Both updates batch into one
+              // render.
+              store.setLoadedAtomCount(0);
+            } else if (event.type === 'progress') {
+              store.setLoadedAtomCount(event.loadedAtoms);
+              // Yield to the renderer between chunks so atoms paint
+              // and the page stays interactive. Without this yield
+              // the parser hogs the main thread and the chunked-
+              // upload pump in AtomsOptimized never gets a useFrame
+              // tick.
+              await new Promise<void>((r) => requestAnimationFrame(() => r()));
+            } else if (event.type === 'complete') {
+              store.setLoadedAtomCount(event.loadedAtoms);
+            }
+          }
+          usedStreaming = true;
           return;
         }
-        useStore.getState().setFile({
-          name: example.title,
-          size: blob.size,
-          trajectory: result.trajectory,
-          thermo: result.thermo ?? null,
-          sourceUrl: url,
-        });
+      }
+
+      if (!usedStreaming) {
+        // WASM path. Same flow as before — used for small files,
+        // non-dump formats, multi-frame, triclinic, or any dialect the
+        // streaming parser declined.
+        const fileObj = new File([blob], example.file.split('/').pop() ?? 'file.dump');
+        const { parseFile } = await import('@atlas/parsers');
+        const result = await parseFile(fileObj);
+
+        if (result.trajectory) {
+          const actualAtoms = result.trajectory.frames[0]?.natoms ?? 0;
+          if (actualAtoms > profile.maxAtoms) {
+            useStore.getState().setError(
+              `"${example.title}" parsed to ${formatAtomCount(actualAtoms)} atoms, ` +
+              `over the ${formatAtomCount(profile.maxAtoms)}-atom limit for this device. ` +
+              `Open this scene on a desktop with a discrete GPU.`,
+            );
+            return;
+          }
+          useStore.getState().setFile({
+            name: example.title,
+            size: blob.size,
+            trajectory: result.trajectory,
+            thermo: result.thermo ?? null,
+            sourceUrl: url,
+          });
+        }
       }
     } catch (err: any) {
       console.warn(`Gallery load failed for ${example.id}:`, err.message);

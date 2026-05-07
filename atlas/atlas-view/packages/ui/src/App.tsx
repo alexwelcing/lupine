@@ -562,6 +562,7 @@ export default function App() {
   const ambientLightIntensity = useStore(s => s.ambientLightIntensity);
   const dirLightIntensity = useStore(s => s.dirLightIntensity);
   const atomTexture = useStore(s => s.atomTexture);
+  const loadedAtomCount = useStore(s => s.loadedAtomCount);
 
   // Spatial hash for atom picking
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
@@ -1010,6 +1011,7 @@ export default function App() {
                   renderStyle={renderStyle}
                   maxAtoms={deviceMaxAtoms}
                   qualityTier={deviceQualityTier}
+                  loadedAtomCount={loadedAtomCount}
                   onSpatialHash={setSpatialHash}
                   hiddenAtomTypes={hiddenAtomTypes}
                   atomTypeScales={atomTypeScales}
@@ -1033,7 +1035,15 @@ export default function App() {
                     opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
                     materialPreset={materialPreset}
-                    visible={showBonds}
+                    // Suppress bond detection while atoms are still
+                    // streaming in. The detector reads frame.natoms /
+                    // frame.positions wholesale, but during streaming
+                    // indices [loadedAtomCount, natoms) are zero — the
+                    // detector would see millions of phantom atoms
+                    // clustered at the origin and generate a flood of
+                    // spurious bonds. Re-enables once streaming
+                    // completes (loadedAtomCount === natoms).
+                    visible={showBonds && loadedAtomCount >= currentFrame.natoms}
                     bondColorMode={bondColorMode}
                     useGpu={useGpuBonds}
                     atomColorSource={atomColorSource}

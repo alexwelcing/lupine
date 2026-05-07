@@ -71,6 +71,52 @@ export function FileDropZone() {
     setError(null);
 
     try {
+      // Single-dump-file fast path: probe streaming. Multi-file drops
+      // (e.g. dump + log) and non-dump types fall through to the
+      // existing iterate-and-parse-each loop.
+      const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;
+      const STREAMING_ATOM_THRESHOLD = 100_000;
+      const profile = getDeviceProfile();
+      if (sorted.length === 1 && detectFileType(sorted[0].name) === 'dump' && sorted[0].size > STREAMING_BYTES_THRESHOLD) {
+        const f = sorted[0];
+        const head = await f.slice(0, 4096).text();
+        const { canStreamDump } = await import('@atlas/parsers');
+        const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
+        const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
+        if (canStreamDump(head) && headerAtoms >= STREAMING_ATOM_THRESHOLD) {
+          if (headerAtoms > profile.maxAtoms) {
+            throw new Error(
+              `This trajectory has ${formatAtomCount(headerAtoms)} atoms, ` +
+              `over the ${formatAtomCount(profile.maxAtoms)}-atom memory ` +
+              `budget for this device (${profile.reason}). ` +
+              `Open it on a desktop with more graphics memory.`,
+            );
+          }
+          const text = await f.text();
+          const { parseDumpFileStreaming } = await import('@atlas/parsers');
+          const store = useStore.getState();
+          for await (const event of parseDumpFileStreaming(text)) {
+            if (event.type === 'header') {
+              store.setFile({
+                name: f.name,
+                size: f.size,
+                trajectory: event.trajectory,
+                thermo: null,
+              });
+              // Reset loadedAtomCount that setFile defaulted to natoms
+              // — see Gallery.tsx for the same dance.
+              store.setLoadedAtomCount(0);
+            } else if (event.type === 'progress') {
+              store.setLoadedAtomCount(event.loadedAtoms);
+              await new Promise<void>((r) => requestAnimationFrame(() => r()));
+            } else if (event.type === 'complete') {
+              store.setLoadedAtomCount(event.loadedAtoms);
+            }
+          }
+          return;
+        }
+      }
+
       let trajectory = null;
       let thermo = null;
 
@@ -86,7 +132,6 @@ export function FileDropZone() {
         // gl_FragDepth/IBL/Cook-Torrance so even 1M atoms render. Above
         // the cap the impostor instance buffers (~60 MB per million
         // atoms, CPU + GPU) would OOM the tab.
-        const profile = getDeviceProfile();
         const atoms = trajectory.frames[0]?.natoms ?? 0;
         if (atoms > profile.maxAtoms) {
           throw new Error(

@@ -215,6 +215,17 @@ export interface AppState {
   streamingProgress: number;
   isStreamingFrames: boolean;
   fullTrajectoryReady: boolean;
+  /** Within-frame streaming: how many atoms of `file.trajectory.frames[0]`
+   *  have been populated so far. The streaming parser pre-allocates the
+   *  full TypedArrays (sized to `frame.natoms`) but only fills indices
+   *  [0, loadedAtomCount). The renderer reads this to clamp its upload
+   *  upper bound — the unfilled tail is uninitialized memory and must
+   *  not render, or atoms appear at the origin until streaming catches up.
+   *
+   *  When non-streaming, this stays equal to frame.natoms so consumers
+   *  can ignore the field. Cleared back to 0 on `clearFile` and re-set
+   *  by the streaming load path. */
+  loadedAtomCount: number;
   // ─── Export Pipeline ───
   exportRequest: ExportRequest;
   triggerExport: (req: Partial<ExportRequest>) => void;
@@ -303,6 +314,11 @@ export interface AppState {
   appendFrames: (frames: Frame[]) => void;
   setStreamingProgress: (p: number) => void;
   setFullTrajectoryReady: (ready: boolean) => void;
+  /** Update the within-frame loaded-atom count. Called by the streaming
+   *  parser after each chunk lands; read by AtomsOptimized to clamp the
+   *  upload upper bound. Setter is intentionally direct (no merging or
+   *  clamping) — the streaming pipeline owns this value. */
+  setLoadedAtomCount: (count: number) => void;
 }
 
 const DEFAULTS = {
@@ -388,6 +404,7 @@ const DEFAULTS = {
   streamingProgress: 0,
   isStreamingFrames: false,
   fullTrajectoryReady: true,
+  loadedAtomCount: 0,
 };
 
 export const useStore = create<AppState>()(
@@ -430,6 +447,10 @@ export const useStore = create<AppState>()(
         ssao: sceneDirective.preset !== 'diagram',
         bloom: sceneDirective.preset === 'studio' || sceneDirective.preset === 'editorial' || sceneDirective.preset === 'cinematic',
         dof: sceneDirective.preset === 'cinematic',
+        // Default-fill loadedAtomCount to atomCount so non-streaming
+        // consumers don't need to special-case this field. The streaming
+        // path overrides via setLoadedAtomCount during the load.
+        loadedAtomCount: atomCount,
       });
     },
 
@@ -545,6 +566,10 @@ export const useStore = create<AppState>()(
       error: null,
       activePanel: null,
       exportRequest: { type: null },
+      loadedAtomCount: 0,
+      streamingProgress: 0,
+      isStreamingFrames: false,
+      fullTrajectoryReady: true,
     }),
 
     triggerExport: (req) => set(s => ({ exportRequest: { ...req, type: req.type ?? null } as ExportRequest })),
@@ -860,6 +885,7 @@ export const useStore = create<AppState>()(
     }),
     setStreamingProgress: (p: number) => set(() => ({ streamingProgress: p })),
     setFullTrajectoryReady: (ready: boolean) => set(() => ({ fullTrajectoryReady: ready, isStreamingFrames: !ready })),
+    setLoadedAtomCount: (count: number) => set(() => ({ loadedAtomCount: count })),
   }))
 );
 
