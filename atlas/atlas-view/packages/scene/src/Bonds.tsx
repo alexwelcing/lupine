@@ -21,6 +21,7 @@ import { getElementSpec, hexToRgb } from '@atlas/core';
 import { useGlobalTimer } from './useTimer';
 import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS, COLORMAPS } from './constants';
 import { useBondGpuPipeline } from './useBondGpuPipeline';
+import { getElementProfile, DEFAULT_PROFILE } from './materials';
 // Vite ?worker import: produces a real bundled .js worker module in prod.
 // The plain `new URL('./bondWorker.ts', import.meta.url)` form does NOT
 // emit a worker chunk during Vite's prod build, so it 404s at runtime.
@@ -441,6 +442,12 @@ export function Bonds({
 
     geo.setAttribute('radiusBT', new THREE.InstancedBufferAttribute(new Float32Array(capacity * 2), 2));
     geo.setAttribute('colorT', new THREE.InstancedBufferAttribute(new Float32Array(capacity * 3), 3));
+    // Per-bond PBR material gradient: vec4 (metalnessB, roughnessB,
+    // metalnessT, roughnessT). The fragment shader interpolates along the
+    // bond axis so a Au–Au bond reads gold-shiny end-to-end, an Au–O bond
+    // reads gold→ceramic. Initialized to a neutral default; uploadBondAttributes
+    // overwrites per-frame with values from the elements involved.
+    geo.setAttribute('materialBT', new THREE.InstancedBufferAttribute(new Float32Array(capacity * 4), 4));
 
     // Tangent for MeshPhysicalMaterial's anisotropy. Cylinder is y-aligned,
     // so every vertex's tangent is +Y in local space — becomes the bond
@@ -469,6 +476,7 @@ export function Bonds({
   const cpuColorBArray = useMemo(() => new Float32Array(capacity * 3), [capacity]);
   const cpuColorTArray = useMemo(() => new Float32Array(capacity * 3), [capacity]);
   const cpuRadiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
+  const cpuMaterialBTArray = useMemo(() => new Float32Array(capacity * 4), [capacity]);
 
   // (Per-instance attributes radiusBT/colorT/tangent are now created inside
   //  the tubeGeo useMemo above — they need to exist at the moment the
@@ -548,7 +556,13 @@ export function Bonds({
       shader.vertexShader = `
         attribute vec2 radiusBT;
         attribute vec3 colorT;
+        attribute vec4 materialBT;
         varying float vBondViewDist;
+        // Per-fragment PBR material — bond inherits chemistry from the
+        // two atoms it connects (atomA's metalness/roughness at the
+        // bottom half-cylinder, atomB's at the top, lerped at the seam).
+        varying float vBondMetalness;
+        varying float vBondRoughness;
         ${botanicalMode ? 'uniform float uTime;' : ''}
         ${shader.vertexShader}
       `;
@@ -567,6 +581,11 @@ export function Bonds({
         #ifdef USE_INSTANCING_COLOR
           vColor.rgb = mix(instanceColor.xyz, colorT, position.y + 0.5);
         #endif
+        // Material gradient — same lerp factor as the color gradient so
+        // the chemistry transition reads coherently end-to-end.
+        float matLerp = position.y + 0.5;
+        vBondMetalness = mix(materialBT.x, materialBT.z, matLerp);
+        vBondRoughness = mix(materialBT.y, materialBT.w, matLerp);
         `,
       );
 
@@ -608,10 +627,32 @@ export function Bonds({
       // smoothstep so the boundary doesn't read as a hard ring.
       shader.fragmentShader = `
         varying float vBondViewDist;
+        varying float vBondMetalness;
+        varying float vBondRoughness;
         uniform float uBondFadeStart;
         uniform float uBondFadeEnd;
         ${shader.fragmentShader}
-      `.replace(
+      `
+      // Override Three's metalness/roughness factors per-fragment with the
+      // interpolated per-bond values. The chunks set `metalnessFactor` and
+      // `roughnessFactor` from material uniforms × map samples; we replace
+      // them downstream so per-bond identity wins. Done after both chunks
+      // ran so the surrounding pipeline still works (clearcoat, sheen, etc.
+      // would read the original factors otherwise — none are active here).
+      .replace(
+        '#include <metalnessmap_fragment>',
+        `
+        #include <metalnessmap_fragment>
+        metalnessFactor = vBondMetalness;
+        `,
+      )
+      .replace(
+        '#include <roughnessmap_fragment>',
+        `
+        #include <roughnessmap_fragment>
+        roughnessFactor = vBondRoughness;
+        `,
+      ).replace(
         '#include <dithering_fragment>',
         `
         #include <dithering_fragment>
@@ -956,6 +997,29 @@ export function Bonds({
         const offB = (i * 2 + 1) * 3;
         cpuColorBArray[offB] = tcMidR; cpuColorBArray[offB + 1] = tcMidG; cpuColorBArray[offB + 2] = tcMidB;
         cpuColorTArray[offB] = tcB[0]; cpuColorTArray[offB + 1] = tcB[1]; cpuColorTArray[offB + 2] = tcB[2];
+
+        // ─── Per-bond material identity ────────────────────────────────
+        // Lookup PBR metalness/roughness from each atom's element profile;
+        // gradient across the bond mirrors the color gradient. A Au–Au
+        // bond reads gold-shiny end-to-end; an Au–O bond transitions
+        // gold→ceramic exactly through the seam. Falls back to a neutral
+        // default when atom types aren't known.
+        const profA = frame.types ? getElementProfile(frame.types[a]) : DEFAULT_PROFILE;
+        const profB = frame.types ? getElementProfile(frame.types[b]) : DEFAULT_PROFILE;
+        const midMet = (profA.metalness + profB.metalness) * 0.5;
+        const midRough = (profA.roughness + profB.roughness) * 0.5;
+        // Bottom half: B = atomA's profile, T = midpoint
+        const matOffA = (i * 2) * 4;
+        cpuMaterialBTArray[matOffA + 0] = profA.metalness;
+        cpuMaterialBTArray[matOffA + 1] = profA.roughness;
+        cpuMaterialBTArray[matOffA + 2] = midMet;
+        cpuMaterialBTArray[matOffA + 3] = midRough;
+        // Top half: B = midpoint, T = atomB's profile
+        const matOffB = (i * 2 + 1) * 4;
+        cpuMaterialBTArray[matOffB + 0] = midMet;
+        cpuMaterialBTArray[matOffB + 1] = midRough;
+        cpuMaterialBTArray[matOffB + 2] = profB.metalness;
+        cpuMaterialBTArray[matOffB + 3] = profB.roughness;
       }
     }
 
@@ -966,8 +1030,10 @@ export function Bonds({
     const colorTCap = (dstColorTArr.length / 3) | 0;
     const dstRadiusBTArr = tubeGeo.attributes.radiusBT.array as Float32Array;
     const radiusBTCap = (dstRadiusBTArr.length / 2) | 0;
+    const dstMaterialBTArr = tubeGeo.attributes.materialBT.array as Float32Array;
+    const materialBTCap = (dstMaterialBTArr.length / 4) | 0;
 
-    const totalBonds = Math.min(drawCount, meshColorCap, colorTCap, radiusBTCap);
+    const totalBonds = Math.min(drawCount, meshColorCap, colorTCap, radiusBTCap, materialBTCap);
     if (totalBonds < drawCount) {
       console.warn(
         `[Bonds] attribute capacity mismatch — wanted ${drawCount}, color=${meshColorCap} colorT=${colorTCap} radiusBT=${radiusBTCap}; clipping.`,
@@ -977,12 +1043,15 @@ export function Bonds({
     if (dstColRaw) dstColRaw.set(cpuColorBArray.subarray(0, totalBonds * 3));
     dstColorTArr.set(cpuColorTArray.subarray(0, totalBonds * 3));
     dstRadiusBTArr.set(cpuRadiusBTArray.subarray(0, totalBonds * 2));
+    dstMaterialBTArr.set(cpuMaterialBTArray.subarray(0, totalBonds * 4));
 
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     (tubeGeo.attributes.colorT as any).needsUpdate = true;
     (tubeGeo.attributes.colorT as any).updateRange = { offset: 0, count: totalBonds * 3 };
     (tubeGeo.attributes.radiusBT as any).needsUpdate = true;
     (tubeGeo.attributes.radiusBT as any).updateRange = { offset: 0, count: totalBonds * 2 };
+    (tubeGeo.attributes.materialBT as any).needsUpdate = true;
+    (tubeGeo.attributes.materialBT as any).updateRange = { offset: 0, count: totalBonds * 4 };
 
     // Cache the bondPairs we just uploaded for the next stability check.
     lastAttrBondPairsRef.current = bondPairs;
