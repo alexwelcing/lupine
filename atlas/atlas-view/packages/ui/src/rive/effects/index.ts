@@ -19,6 +19,8 @@ export { ToggleSpark } from './ToggleSpark';
 export { AnimatedOrbitalToggle } from './AnimatedOrbitalToggle';
 export { AnimatedToolButton } from './AnimatedToolButton';
 export { AnimatedCameraPresetButton } from './AnimatedCameraPresetButton';
+export { AnimatedTransportButton } from './AnimatedTransportButton';
+export { AnimatedSlider } from './AnimatedSlider';
 
 // ─── Ambient (always-on) ───
 export { HeaderShimmer } from './HeaderShimmer';

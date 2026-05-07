@@ -30,6 +30,11 @@ interface AtomInfoHUDProps {
   activeProperty?: string;
   /** Click-handler so a user can dismiss a single card without un-selecting. */
   onDismissCard?: (atomIndex: number) => void;
+  /** When set, shows a "Pin" button on the second-and-later cards that
+   *  freezes the current measurement (distance/angle/dihedral) into the
+   *  store. Without it the measurement only exists while the selection
+   *  remains; pinning makes it permanent for figure capture. */
+  onPinMeasurement?: (atomIndices: number[]) => void;
 }
 
 export function AtomInfoHUD({
@@ -37,6 +42,7 @@ export function AtomInfoHUD({
   selectedAtoms,
   activeProperty: _activeProperty,
   onDismissCard,
+  onPinMeasurement,
 }: AtomInfoHUDProps) {
   // Snapshot the first selection's position for distance readouts.
   const referencePos = useMemo(() => {
@@ -152,8 +158,27 @@ export function AtomInfoHUD({
                   marginTop: 5, paddingTop: 5,
                   borderTop: '1px solid rgba(126, 200, 255, 0.15)',
                   color: 'rgba(180, 220, 255, 0.85)', fontSize: 10,
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8,
                 }}>
-                  → #{selectedAtoms[0]}: <strong>{distanceToRef.toFixed(3)} Å</strong>
+                  <span>→ #{selectedAtoms[0]}: <strong>{distanceToRef.toFixed(3)} Å</strong></span>
+                  {onPinMeasurement && i === selectedAtoms.length - 1 && (
+                    <button
+                      onClick={() => onPinMeasurement(selectedAtoms.slice())}
+                      style={{
+                        background: 'rgba(126, 200, 255, 0.14)',
+                        border: '1px solid rgba(126, 200, 255, 0.4)',
+                        borderRadius: 4,
+                        color: 'rgba(206, 232, 255, 0.95)',
+                        padding: '2px 8px',
+                        fontSize: 10,
+                        fontFamily: 'ui-monospace, monospace',
+                        cursor: 'pointer',
+                      }}
+                      title={`Pin this ${selectedAtoms.length === 2 ? 'distance' : selectedAtoms.length === 3 ? 'angle' : 'dihedral'}`}
+                    >
+                      📌 pin
+                    </button>
+                  )}
                 </div>
               )}
             </div>

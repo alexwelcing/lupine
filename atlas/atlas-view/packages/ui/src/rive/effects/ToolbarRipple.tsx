@@ -1,7 +1,7 @@
 /**
  * ToolbarRipple — Inline micro-effect for button interactions.
  *
- * Renders a brief energy ripple on the button that was clicked.
+ * Renders an intense, immediate tactical flash on the button that was clicked.
  * Designed to be composited inside ToolButton, TransportButton, etc.
  *
  * Usage:
@@ -15,11 +15,11 @@ interface ToolbarRippleProps {
   fire: boolean;
   /** Ripple accent color. Default: cyan */
   color?: string;
-  /** Duration in ms. Default: 350 */
+  /** Duration in ms. Default: 50 */
   duration?: number;
 }
 
-export function ToolbarRipple({ fire, color = '#1edce0', duration = 350 }: ToolbarRippleProps) {
+export function ToolbarRipple({ fire, color = '#1edce0', duration = 50 }: ToolbarRippleProps) {
   const [playing, setPlaying] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -37,33 +37,21 @@ export function ToolbarRipple({ fire, color = '#1edce0', duration = 350 }: Toolb
   return (
     <>
       <style>{`
-        @keyframes fx-ripple-expand {
-          0%   { transform: scale(0); opacity: 0.6; }
-          100% { transform: scale(2.5); opacity: 0; }
+        @keyframes fx-tactical-flash {
+          0%   { opacity: 1; transform: scale(1); }
+          100% { opacity: 0; transform: scale(1.05); }
         }
       `}</style>
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          background: color,
           pointerEvents: 'none',
-          overflow: 'hidden',
-          borderRadius: 'inherit',
+          animation: `fx-tactical-flash ${duration}ms ease-out forwards`,
+          mixBlendMode: 'screen',
         }}
-      >
-        <div
-          style={{
-            width: '100%',
-            aspectRatio: '1',
-            borderRadius: '50%',
-            background: `radial-gradient(circle, ${color}33 0%, transparent 70%)`,
-            animation: `fx-ripple-expand ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
-          }}
-        />
-      </div>
+      />
     </>
   );
 }

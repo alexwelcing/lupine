@@ -19,12 +19,21 @@ import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import type { Frame } from '@atlas/core/types';
 
+interface PinnedMeasurementShape {
+  id: string;
+  atomIndices: number[];
+}
+
 interface MeasurementsLayerProps {
   frame: Frame;
   selectedAtoms: number[];
+  /** Persistent measurements from the store. Rendered alongside the live
+   *  selection-driven measurement; doesn't share style — we draw pinned
+   *  ones in a slightly cooler color so the user can tell which is which. */
+  pinned?: PinnedMeasurementShape[];
 }
 
-export function MeasurementsLayer({ frame, selectedAtoms }: MeasurementsLayerProps) {
+export function MeasurementsLayer({ frame, selectedAtoms, pinned = [] }: MeasurementsLayerProps) {
   // Resolve atom positions, dropping any selections that fell off
   // (different file loaded with fewer atoms, etc.).
   const positions = useMemo(() => {
@@ -40,30 +49,73 @@ export function MeasurementsLayer({ frame, selectedAtoms }: MeasurementsLayerPro
     return out;
   }, [frame.natoms, frame.positions, selectedAtoms]);
 
-  if (positions.length < 2) return null;
+  // Resolve pinned measurements' atom positions from the current frame.
+  const pinnedShapes = useMemo(() => {
+    return pinned
+      .map(p => {
+        const pts: THREE.Vector3[] = [];
+        for (const idx of p.atomIndices) {
+          if (idx < 0 || idx >= frame.natoms) return null;
+          pts.push(new THREE.Vector3(
+            frame.positions[idx * 3],
+            frame.positions[idx * 3 + 1],
+            frame.positions[idx * 3 + 2],
+          ));
+        }
+        return pts.length >= 2 ? { id: p.id, points: pts } : null;
+      })
+      .filter((m): m is { id: string; points: THREE.Vector3[] } => m !== null);
+  }, [pinned, frame.natoms, frame.positions]);
+
+  if (positions.length < 2 && pinnedShapes.length === 0) return null;
 
   return (
     <group>
-      {/* Distance segment (and the trunk for angle/dihedral). Always present
-          when ≥2 atoms are selected. */}
-      <DistanceLine a={positions[0]} b={positions[1]} />
-      {positions.length >= 3 && (
+      {/* Live selection-driven measurement. Distance always; angle for 3+;
+          dihedral for 4+. Color: warm (cyan/yellow/violet) for currently-
+          selected. Pinned measurements use a cooler steel color below. */}
+      {positions.length >= 2 && (
         <>
-          <DistanceLine a={positions[1]} b={positions[2]} secondary />
-          <AngleArc a={positions[0]} b={positions[1]} c={positions[2]} />
+          <DistanceLine a={positions[0]} b={positions[1]} />
+          {positions.length >= 3 && (
+            <>
+              <DistanceLine a={positions[1]} b={positions[2]} secondary />
+              <AngleArc a={positions[0]} b={positions[1]} c={positions[2]} />
+            </>
+          )}
+          {positions.length >= 4 && (
+            <>
+              <DistanceLine a={positions[2]} b={positions[3]} secondary />
+              <DihedralReadout
+                a={positions[0]}
+                b={positions[1]}
+                c={positions[2]}
+                d={positions[3]}
+              />
+            </>
+          )}
         </>
       )}
-      {positions.length >= 4 && (
-        <>
-          <DistanceLine a={positions[2]} b={positions[3]} secondary />
-          <DihedralReadout
-            a={positions[0]}
-            b={positions[1]}
-            c={positions[2]}
-            d={positions[3]}
-          />
-        </>
-      )}
+
+      {/* Pinned measurements — cool color so they read as "frozen" vs the
+          warm live one. Same geometry rules. */}
+      {pinnedShapes.map(({ id, points: pts }) => (
+        <group key={id}>
+          <DistanceLine a={pts[0]} b={pts[1]} cool />
+          {pts.length >= 3 && (
+            <>
+              <DistanceLine a={pts[1]} b={pts[2]} cool secondary />
+              <AngleArc a={pts[0]} b={pts[1]} c={pts[2]} cool />
+            </>
+          )}
+          {pts.length >= 4 && (
+            <>
+              <DistanceLine a={pts[2]} b={pts[3]} cool secondary />
+              <DihedralReadout a={pts[0]} b={pts[1]} c={pts[2]} d={pts[3]} cool />
+            </>
+          )}
+        </group>
+      ))}
     </group>
   );
 }
@@ -75,10 +127,12 @@ function DistanceLine({
   a,
   b,
   secondary = false,
+  cool = false,
 }: {
   a: THREE.Vector3;
   b: THREE.Vector3;
   secondary?: boolean;
+  cool?: boolean;
 }) {
   const { geometry, midpoint, distance } = useMemo(() => {
     const geo = new THREE.BufferGeometry().setFromPoints([a, b]);
@@ -100,18 +154,18 @@ function DistanceLine({
         <primitive object={geometry} attach="geometry" />
         <lineDashedMaterial
           attach="material"
-          color={secondary ? '#a8d4ff' : '#7ecfff'}
+          color={cool ? (secondary ? '#94aab8' : '#a4b8c4') : (secondary ? '#a8d4ff' : '#7ecfff')}
           dashSize={0.18}
           gapSize={0.12}
           transparent
-          opacity={0.85}
+          opacity={cool ? 0.65 : 0.85}
           depthWrite={false}
           toneMapped={false}
         />
       </line>
       {!secondary && (
         <Html position={midpoint.toArray() as [number, number, number]} center distanceFactor={11}>
-          <div style={measurementBadgeStyle}>
+          <div style={cool ? coolBadgeStyle : measurementBadgeStyle}>
             {distance.toFixed(3)} Å
           </div>
         </Html>
@@ -128,10 +182,12 @@ function AngleArc({
   a,
   b,
   c,
+  cool = false,
 }: {
   a: THREE.Vector3;
   b: THREE.Vector3;
   c: THREE.Vector3;
+  cool?: boolean;
 }) {
   const { points, label, labelPos } = useMemo(() => {
     const ba = new THREE.Vector3().subVectors(a, b).normalize();
@@ -174,10 +230,22 @@ function AngleArc({
     <group>
       <line>
         <primitive object={geo} attach="geometry" />
-        <lineBasicMaterial attach="material" color="#ffd86b" transparent opacity={0.9} depthWrite={false} toneMapped={false} />
+        <lineBasicMaterial
+          attach="material"
+          color={cool ? '#a8b4b8' : '#ffd86b'}
+          transparent
+          opacity={cool ? 0.7 : 0.9}
+          depthWrite={false}
+          toneMapped={false}
+        />
       </line>
       <Html position={labelPos.toArray() as [number, number, number]} center distanceFactor={11}>
-        <div style={{ ...measurementBadgeStyle, color: '#ffe9a8', borderColor: 'rgba(255, 216, 107, 0.35)' }}>
+        <div
+          style={cool
+            ? { ...coolBadgeStyle, color: '#cfd8dd' }
+            : { ...measurementBadgeStyle, color: '#ffe9a8', borderColor: 'rgba(255, 216, 107, 0.35)' }
+          }
+        >
           {label}
         </div>
       </Html>
@@ -196,11 +264,13 @@ function DihedralReadout({
   b,
   c,
   d,
+  cool = false,
 }: {
   a: THREE.Vector3;
   b: THREE.Vector3;
   c: THREE.Vector3;
   d: THREE.Vector3;
+  cool?: boolean;
 }) {
   const { angleDeg, labelPos } = useMemo(() => {
     // Standard dihedral via cross products. Sign indicates handedness.
@@ -220,7 +290,12 @@ function DihedralReadout({
 
   return (
     <Html position={labelPos.toArray() as [number, number, number]} center distanceFactor={11}>
-      <div style={{ ...measurementBadgeStyle, color: '#d8b8ff', borderColor: 'rgba(180, 140, 240, 0.35)' }}>
+      <div
+        style={cool
+          ? { ...coolBadgeStyle, color: '#bcc8d0' }
+          : { ...measurementBadgeStyle, color: '#d8b8ff', borderColor: 'rgba(180, 140, 240, 0.35)' }
+        }
+      >
         ϕ {angleDeg.toFixed(1)}°
       </div>
     </Html>
@@ -244,4 +319,14 @@ const measurementBadgeStyle: React.CSSProperties = {
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
   letterSpacing: '0.02em',
   userSelect: 'none',
+};
+
+// Cooler-tinted variant for pinned (non-live) measurements so the user
+// can distinguish the active selection's measurement from the frozen
+// historical record at a glance.
+const coolBadgeStyle: React.CSSProperties = {
+  ...measurementBadgeStyle,
+  background: 'rgba(14, 20, 28, 0.78)',
+  border: '1px solid rgba(170, 190, 200, 0.28)',
+  color: 'rgba(206, 218, 226, 0.92)',
 };

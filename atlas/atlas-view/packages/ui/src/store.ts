@@ -11,6 +11,20 @@ import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyl
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
 
+/** A pinned geometric measurement: distance for 2 atoms, angle for 3,
+ *  dihedral for 4. Persists in the store separate from selectedAtoms so
+ *  the user can build up a permanent measurement record while still
+ *  clicking around to inspect other atoms. The MeasurementsLayer renders
+ *  these alongside the live (selection-driven) measurements. */
+export interface PinnedMeasurement {
+  id: string;
+  /** Atom indices in the current frame. Length 2 = distance, 3 = angle, 4 = dihedral. */
+  atomIndices: number[];
+  /** Optional user-supplied label, shown alongside the numeric readout. */
+  label?: string;
+  createdAt: number;
+}
+
 /** A pinned text annotation tied to a specific atom by index in the
  *  current frame. Persists across frame changes; if the atom moves, the
  *  label moves with it (the AnnotationsLayer reads the latest position). */
@@ -184,6 +198,12 @@ export interface AppState {
   clearAnnotations: () => void;
   setLabelStyle: (style: LabelStyle) => void;
 
+  // ─── Pinned measurements ───
+  pinnedMeasurements: PinnedMeasurement[];
+  pinMeasurement: (atomIndices: number[], label?: string) => void;
+  removeMeasurement: (id: string) => void;
+  clearMeasurements: () => void;
+
   // ─── Atom visibility ───
   hiddenAtomTypes: Set<number>;
   atomTypeScales: Record<number, number>; // per-type scale overrides
@@ -355,6 +375,7 @@ const DEFAULTS = {
   hoveredAtom: null as number | null,
   annotations: [] as Annotation[],
   labelStyle: 'tag' as LabelStyle,
+  pinnedMeasurements: [] as PinnedMeasurement[],
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
   anomalyTracking: false,
@@ -591,6 +612,22 @@ export const useStore = create<AppState>()(
     })),
     clearAnnotations: () => set({ annotations: [] }),
     setLabelStyle: (labelStyle) => set({ labelStyle }),
+
+    pinMeasurement: (atomIndices, label) => set((s) => ({
+      pinnedMeasurements: [
+        ...s.pinnedMeasurements,
+        {
+          id: `pm_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+          atomIndices: atomIndices.slice(0, 4), // distance/angle/dihedral max
+          label,
+          createdAt: Date.now(),
+        },
+      ],
+    })),
+    removeMeasurement: (id) => set((s) => ({
+      pinnedMeasurements: s.pinnedMeasurements.filter(m => m.id !== id),
+    })),
+    clearMeasurements: () => set({ pinnedMeasurements: [] }),
 
     toggleAtomType: (type) => set((s) => {
       const next = new Set(s.hiddenAtomTypes);

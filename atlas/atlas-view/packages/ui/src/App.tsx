@@ -79,7 +79,7 @@ import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
-import { GpuUnlockOverlay, RiveEffectLayer, HeaderShimmer, ToolbarRipple, AnimatedToolButton, AnimatedCameraPresetButton } from './rive';
+import { GpuUnlockOverlay, RiveEffectLayer, HeaderShimmer, ToolbarRipple, AnimatedToolButton, AnimatedCameraPresetButton, AnimatedTransportButton } from './rive';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -480,6 +480,7 @@ export default function App() {
   const labelStyle = useStore(s => s.labelStyle);
   const selectedAtoms = useStore(s => s.selectedAtoms);
   const hoveredAtom = useStore(s => s.hoveredAtom);
+  const pinnedMeasurements = useStore(s => s.pinnedMeasurements);
 
   // Etched annotation: when the user picks the 'etched' label style and
   // has at least one annotation, rasterize the most-recent text into a
@@ -1076,15 +1077,18 @@ export default function App() {
                   selectedAtoms={selectedAtoms}
                   activeProperty={colorProperty ?? undefined}
                   onDismissCard={(idx) => useStore.getState().setSelectedAtoms(prev => prev.filter(i => i !== idx))}
+                  onPinMeasurement={(atomIndices) => useStore.getState().pinMeasurement(atomIndices)}
                 />
 
                 {/* Geometric measurements between selected atoms. 2 → dashed
                     distance line, 3 → angle arc, 4 → dihedral readout. Lives
                     in 3D so it persists across camera moves and exports
-                    cleanly with the figure pipeline. */}
+                    cleanly with the figure pipeline. Live (warm) + pinned
+                    (cool) variants render together. */}
                 <MeasurementsLayer
                   frame={currentFrame}
                   selectedAtoms={selectedAtoms}
+                  pinned={pinnedMeasurements}
                 />
 
                 {/* Smoothly dollies camera target toward a single-selection atom.
@@ -1337,12 +1341,12 @@ export default function App() {
         }}>
           {/* Transport controls */}
           <div style={{ display: 'flex', gap: 4 }}>
-            <TransportButton
+            <AnimatedTransportButton
               onClick={() => useStore.getState().setFrame(0)}
               title="First frame"
               icon={<IconFirst />}
             />
-            <TransportButton
+            <AnimatedTransportButton
               onClick={() => useStore.getState().prevFrame()}
               title="Previous [←]"
               icon={<IconPrev />}
@@ -1354,23 +1358,25 @@ export default function App() {
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: 40, height: 32,
-                  background: playing ? '#f59e0b' : '#121418',
-                  border: `1px solid ${playing ? '#f59e0b' : '#334155'}`,
+                  background: playing ? 'rgba(52, 211, 153, 0.2)' : '#121418',
+                  border: `1px solid ${playing ? '#34d399' : '#334155'}`,
+                  boxShadow: playing ? '0 0 15px 2px rgba(52, 211, 153, 0.4)' : 'none',
                   borderRadius: 0,
-                  color: playing ? '#0a0a0c' : '#f8fafc',
+                  color: playing ? '#34d399' : '#f8fafc',
                   cursor: 'pointer',
-                  transition: 'all 100ms ease-out',
+                  transition: 'all 100ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  textShadow: playing ? '0 0 8px rgba(52, 211, 153, 0.8)' : 'none',
                 }}
               >
                 {playing ? <IconPause /> : <IconPlay />}
               </button>
             )}
-            <TransportButton
+            <AnimatedTransportButton
               onClick={nextFrame}
               title="Next [→]"
               icon={<IconNext />}
             />
-            <TransportButton
+            <AnimatedTransportButton
               onClick={() => useStore.getState().setFrame(totalFrames - 1)}
               title="Last frame"
               icon={<IconLast />}
@@ -1487,40 +1493,6 @@ function SubTabStrip({
 
 
 
-function TransportButton({ onClick, title, icon }: {
-  onClick: () => void;
-  title: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      title={title}
-      style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        width: 32, height: 32,
-        color: '#64748b',
-        background: '#121418',
-        border: '1px solid #334155',
-        borderRadius: 0,
-        cursor: 'pointer',
-        transition: 'all 100ms ease-out',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.color = '#f8fafc';
-        e.currentTarget.style.borderColor = '#475569';
-        e.currentTarget.style.background = '#1e293b';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.color = '#64748b';
-        e.currentTarget.style.borderColor = '#334155';
-        e.currentTarget.style.background = '#121418';
-      }}
-    >
-      {icon}
-    </button>
-  );
-}
 
 const kbdStyle: React.CSSProperties = {
   display: 'inline-block',

@@ -23,6 +23,8 @@ export {
   AnimatedOrbitalToggle,
   AnimatedToolButton,
   AnimatedCameraPresetButton,
+  AnimatedTransportButton,
+  AnimatedSlider,
   HeaderShimmer,
   BreathingDot,
 } from './effects';
