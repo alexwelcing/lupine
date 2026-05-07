@@ -15,6 +15,7 @@ import {
   EASING_LABELS, EASING_FUNCTIONS,
   type EasingType, type FlythroughKeyframe,
 } from '../flythrough';
+import { ToggleSpark } from '../rive';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconClose = () => (
@@ -652,11 +653,20 @@ function KeyframeCard({ index, keyframe, isLast, expanded, activeSample, onToggl
 }
 
 // ─── Shared Sub-components ────────────────────────────────────────
+
 function ToggleRow({ label, hint, active, onToggle }: {
   label: string; hint?: string; active: boolean; onToggle: () => void;
 }) {
+  const [fire, setFire] = useState(false);
+  
+  const handleToggle = useCallback(() => {
+    setFire(true);
+    setTimeout(() => setFire(false), 50);
+    onToggle();
+  }, [onToggle]);
+
   return (
-    <button onClick={onToggle} style={{
+    <button onClick={handleToggle} style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       width: '100%', padding: '8px 10px',
       background: active ? 'rgba(245,158,11,0.06)' : '#121418',
@@ -669,6 +679,7 @@ function ToggleRow({ label, hint, active, onToggle }: {
       </div>
       <div style={{ width: 32, height: 16, background: active ? '#f59e0b' : '#334155', position: 'relative', transition: 'background 200ms' }}>
         <div style={{ width: 12, height: 12, background: active ? '#0a0a0c' : '#64748b', position: 'absolute', top: 2, left: active ? 18 : 2, transition: 'left 200ms, background 200ms' }} />
+        <ToggleSpark fire={fire} on={!active} duration={200} />
       </div>
     </button>
   );

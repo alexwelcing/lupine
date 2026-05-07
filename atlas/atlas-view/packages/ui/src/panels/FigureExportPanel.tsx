@@ -13,6 +13,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useStore } from '../store';
 import { getElementSpec } from '@atlas/core';
+import { ToggleSpark } from '../rive';
 
 // ─── Types ────────────────────────────────────────────────────────────
 type ExportMode = 'figure' | 'mp4' | 'gif' | 'glb' | 'usdz';
@@ -762,9 +763,16 @@ function ChipButton({ label, sublabel, active, onClick }: {
 function ToggleRow({ label, hint, active, onToggle }: {
   label: string; hint?: string; active: boolean; onToggle: () => void;
 }) {
+  const [fire, setFire] = useState(false);
+  const handleToggle = useCallback(() => {
+    setFire(true);
+    setTimeout(() => setFire(false), 50);
+    onToggle();
+  }, [onToggle]);
+
   return (
     <button
-      onClick={onToggle}
+      onClick={handleToggle}
       style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         width: '100%', padding: '8px 10px',
@@ -796,6 +804,7 @@ function ToggleRow({ label, hint, active, onToggle }: {
           left: active ? 18 : 2,
           transition: 'left 200ms, background 200ms',
         }} />
+        <ToggleSpark fire={fire} on={!active} duration={200} />
       </div>
     </button>
   );
