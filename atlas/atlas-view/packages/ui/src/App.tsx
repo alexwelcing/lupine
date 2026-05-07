@@ -53,6 +53,8 @@ import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities
 import { LandingPage } from './LandingPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
+import { AtomClusters } from '@atlas/scene/AtomClusters';
+import { buildClusters, type Clusters } from '@atlas/scene/ClusterBuilder';
 import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
 import { AnnotationsLayer } from './AnnotationsLayer';
@@ -563,6 +565,12 @@ export default function App() {
   const dirLightIntensity = useStore(s => s.dirLightIntensity);
   const atomTexture = useStore(s => s.atomTexture);
   const loadedAtomCount = useStore(s => s.loadedAtomCount);
+  // Cluster splats for huge-scene LOD (Phase 4). Built once per frame
+  // identity, AFTER streaming completes — running on a partial frame
+  // would aggregate uninitialized zero-positions into a giant fake
+  // cluster at the origin. Stored as React state so the cluster mesh
+  // remounts when the build finishes.
+  const [clusters, setClusters] = useState<Clusters | null>(null);
 
   // Spatial hash for atom picking
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
@@ -686,6 +694,45 @@ export default function App() {
 
   const currentFrame = file?.trajectory.frames[frame];
   const totalFrames = file?.trajectory.totalFrames ?? 0;
+
+  // Build cluster splats once streaming completes on a sufficiently
+  // large frame. Skips small frames (cluster overhead doesn't pay off
+  // below ~50K atoms), and skips during streaming (ClusterBuilder
+  // would aggregate the unfilled zero-position tail into a giant fake
+  // cluster at the origin). Runs in requestIdleCallback so the build
+  // doesn't compete with the streaming-completion render.
+  useEffect(() => {
+    setClusters(null);  // clear stale clusters when frame changes.
+    if (!currentFrame) return;
+    if (currentFrame.natoms < 50_000) return;
+    if (loadedAtomCount < currentFrame.natoms) return;
+    let cancelled = false;
+    const idleCb = (typeof requestIdleCallback !== 'undefined')
+      ? requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 0);
+    const cancelIdle = (typeof cancelIdleCallback !== 'undefined')
+      ? cancelIdleCallback
+      : clearTimeout;
+    const handle = idleCb(() => {
+      if (cancelled) return;
+      const built = buildClusters(currentFrame, { mobile: deviceQualityTier === 0 });
+      if (!cancelled) setClusters(built);
+    });
+    return () => { cancelled = true; cancelIdle(handle as any); };
+  }, [currentFrame, loadedAtomCount, deviceQualityTier]);
+
+  // Tune the splat fade range to the scene size. Splats begin to
+  // appear when the camera is far enough that an atom would be
+  // sub-pixel; they're fully opaque when atoms are clearly invisible.
+  // We anchor the range on the scene's diagonal so dense small
+  // crystals and sprawling fluids both look right.
+  const clusterFadeNear = useMemo(() => {
+    if (!file) return 80;
+    const { min, max } = file.trajectory.globalBounds;
+    const diag = Math.hypot(max[0] - min[0], max[1] - min[1], max[2] - min[2]);
+    return diag * 0.6;
+  }, [file?.name]);
+  const clusterFadeFar = useMemo(() => clusterFadeNear * 2.5, [clusterFadeNear]);
 
   const cameraDistance = useMemo(() => file
     ? (() => {
@@ -1021,6 +1068,15 @@ export default function App() {
                   propertyEmissionStrength={propertyEmissionStrength}
                   etchTexture={etchTexture}
                   etchAtomId={etchAtomId}
+                />
+                {/* Phase 4: cluster splats fill the far-LOD gap left
+                    by the atom mesh's sub-pixel cull. Built off the
+                    main thread after streaming completes; renders
+                    nothing until then (clusters === null). */}
+                <AtomClusters
+                  clusters={clusters}
+                  fadeNear={clusterFadeNear}
+                  fadeFar={clusterFadeFar}
                 />
                 <Bonds
                     frame={currentFrame}

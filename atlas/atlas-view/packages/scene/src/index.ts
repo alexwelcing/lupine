@@ -1,6 +1,9 @@
 // Scene components
 export { Atoms } from './Atoms';
 export { AtomsOptimized } from './AtomsOptimized';
+export { AtomClusters } from './AtomClusters';
+export { buildClusters, MAX_GRID_DIM, clusterCellRadius } from './ClusterBuilder';
+export type { Clusters } from './ClusterBuilder';
 export { InterpolatedAtoms } from './InterpolatedAtoms';
 export { SimulationCell } from './SimulationCell';
 export { Bonds, DEFAULT_CUTOFFS, buildTypeCutoffs } from './Bonds';
