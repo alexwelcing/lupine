@@ -214,23 +214,6 @@ export interface BondData {
   };
 }
 
-/** Real-time bond topology statistics */
-export interface BondStats {
-  count: number;
-  minLength: number;
-  maxLength: number;
-  meanLength: number;
-  medianLength: number;
-  stdDev: number;
-  histogram: { bins: number[]; binEdges: number[] };
-  percentiles: Record<string, number>;
-  typePairCounts: Record<string, number>;
-  /** Mean bond length per type pair */
-  typePairMeans: Record<string, number>;
-  /** First minimum of bond-length histogram (NOT a g(r) minimum) */
-  histogramFirstMinimum: number | null;
-}
-
 /** Divergence analysis between two bond sources */
 export interface BondDivergence {
   /** Bonds present in source A but not B */

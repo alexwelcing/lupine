@@ -22,7 +22,6 @@ import {
   GlimMERModule, 
   GNNModule, 
   SloppyModelModule,
-  BondAnalysisModule,
 } from './analysis_modules';
 
 export function AnalysisPanel() {
@@ -78,7 +77,6 @@ export function AnalysisPanel() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           
           <RDFModule />
-          <BondAnalysisModule />
           <MSDModule />
           <VoronoiModule />
           <PhononModule />

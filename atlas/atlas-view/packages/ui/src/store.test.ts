@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { resetStore, getStoreState } from './test-utils';
-import { createMockBondStats, createMockTrajectory } from '@atlas/core/test-utils';
+import { createMockTrajectory } from '@atlas/core/test-utils';
 
 describe('Store — Display Toggles', () => {
   beforeEach(() => {
@@ -43,49 +43,6 @@ describe('Store — Bond Settings', () => {
   it('sets bond cutoff', () => {
     getStoreState().setBondCutoff(3.5);
     expect(getStoreState().bondCutoff).toBe(3.5);
-  });
-
-  it('sets bond stats and retrieves them', () => {
-    const stats = createMockBondStats({ count: 250, meanLength: 2.8 });
-    getStoreState().setBondStats(stats);
-    expect(getStoreState().bondStats?.count).toBe(250);
-    expect(getStoreState().bondStats?.meanLength).toBe(2.8);
-  });
-
-  it('applies percentile cutoff from bond stats', () => {
-    const stats = createMockBondStats({ minLength: 1.0, maxLength: 4.0 });
-    // p95 should be around 3.85 (95% of range)
-    stats.percentiles['p95'] = 3.85;
-
-    getStoreState().setBondStats(stats);
-    getStoreState().setBondPercentileRange([5, 95]);
-    getStoreState().applyPercentileCutoff();
-
-    expect(getStoreState().bondCutoff).toBeCloseTo(3.85);
-  });
-
-  it('toggles filament mode', () => {
-    const s = getStoreState();
-    expect(s.filamentMode).toBe(false);
-
-    s.toggleFilamentMode();
-    expect(getStoreState().filamentMode).toBe(true);
-  });
-
-  it('toggles MEAM screening', () => {
-    const s = getStoreState();
-    expect(s.meamScreening).toBe(false);
-
-    s.toggleMeamScreening();
-    expect(getStoreState().meamScreening).toBe(true);
-  });
-
-  it('toggles g(r)-driven cutoff', () => {
-    const s = getStoreState();
-    expect(s.grDrivenCutoff).toBe(false);
-
-    s.toggleGrDrivenCutoff();
-    expect(getStoreState().grDrivenCutoff).toBe(true);
   });
 });
 
@@ -149,7 +106,6 @@ describe('Store — URL Serialization', () => {
     const s = getStoreState();
     s.toggleBonds();
     s.setBondCutoff(3.2);
-    s.toggleFilamentMode();
 
     const encoded = s.encodeToURL();
     resetStore();
@@ -159,7 +115,6 @@ describe('Store — URL Serialization', () => {
 
     expect(restored.showBonds).toBe(true);
     expect(restored.bondCutoff).toBeCloseTo(3.2);
-    expect(restored.filamentMode).toBe(true);
   });
 });
 
