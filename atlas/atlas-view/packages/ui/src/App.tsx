@@ -482,6 +482,17 @@ export default function App() {
   const hoveredAtom = useStore(s => s.hoveredAtom);
   const pinnedMeasurements = useStore(s => s.pinnedMeasurements);
 
+  // Atoms that get worldline trails. Union of currently-selected and
+  // currently-annotated. Lifted to component top so the useMemo's hook
+  // index is stable across renders — embedding it inside conditional JSX
+  // changes the hook count when `currentFrame` flips and crashes React
+  // with "Rendered more hooks than during the previous render."
+  const trackedAtomIndices = useMemo(() => {
+    const set = new Set<number>(selectedAtoms);
+    for (const ann of annotations) set.add(ann.atomIndex);
+    return Array.from(set);
+  }, [selectedAtoms, annotations]);
+
   // Etched annotation: when the user picks the 'etched' label style and
   // has at least one annotation, rasterize the most-recent text into a
   // CanvasTexture and pass it (plus the target atom index) into the atom
@@ -1104,11 +1115,7 @@ export default function App() {
                 <AtomTrails
                   frame={currentFrame}
                   frameKey={interpState.frameIndex}
-                  atomIndices={useMemo(() => {
-                    const set = new Set<number>(selectedAtoms);
-                    for (const ann of annotations) set.add(ann.atomIndex);
-                    return Array.from(set);
-                  }, [selectedAtoms, annotations])}
+                  atomIndices={trackedAtomIndices}
                 />
 
                 {/* Click-to-annotate: shift+click any atom prompts for label
