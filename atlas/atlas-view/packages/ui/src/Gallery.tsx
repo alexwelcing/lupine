@@ -852,6 +852,7 @@ export function Gallery() {
               example={ex}
               hovered={hoveredId === ex.id}
               loading={loadingId === ex.id}
+              deviceCap={deviceCap}
               onHover={() => setHoveredId(ex.id)}
               onLeave={() => setHoveredId(null)}
               onClick={() => handleLoad(ex, false)}

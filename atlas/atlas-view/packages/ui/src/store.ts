@@ -444,7 +444,12 @@ export const useStore = create<AppState>()(
         colorMode: scheme.atomColorMode,
         // Legacy mirrors of preset (PresetLegacyBridge re-syncs but writing
         // them here avoids a one-frame flash before the bridge catches up).
-        ssao: sceneDirective.preset !== 'diagram',
+        // SSAO follows the same threshold as bond detection / preset
+        // selection — anything past 'studio' is large enough that the
+        // SSAO depth pass becomes a frame-rate liability. Bloom and DOF
+        // are already gated to the most-cinematic presets which never
+        // ship for big systems.
+        ssao: sceneDirective.preset === 'studio',
         bloom: sceneDirective.preset === 'studio' || sceneDirective.preset === 'editorial' || sceneDirective.preset === 'cinematic',
         dof: sceneDirective.preset === 'cinematic',
         // Default-fill loadedAtomCount to atomCount so non-streaming

@@ -721,18 +721,20 @@ export default function App() {
     return () => { cancelled = true; cancelIdle(handle as any); };
   }, [currentFrame, loadedAtomCount, deviceQualityTier]);
 
-  // Tune the splat fade range to the scene size. Splats begin to
-  // appear when the camera is far enough that an atom would be
-  // sub-pixel; they're fully opaque when atoms are clearly invisible.
-  // We anchor the range on the scene's diagonal so dense small
-  // crystals and sprawling fluids both look right.
+  // Tune the splat fade range to the scene size. Splats stay invisible
+  // at default zoom (which is ~diagonal × 1.4) so atoms own the visible
+  // detail; they fade in as the user zooms out and atoms hit the
+  // sub-pixel cull. Values picked so the crossover lines up with
+  // pixel-cull range on a typical 1080p viewport: an atom of radius
+  // ~1 Å goes sub-pixel around camera distance ≈ diagonal × 3,
+  // saturated invisible by ≈ diagonal × 10.
   const clusterFadeNear = useMemo(() => {
-    if (!file) return 80;
+    if (!file) return 300;
     const { min, max } = file.trajectory.globalBounds;
     const diag = Math.hypot(max[0] - min[0], max[1] - min[1], max[2] - min[2]);
-    return diag * 0.6;
+    return diag * 3;
   }, [file?.name]);
-  const clusterFadeFar = useMemo(() => clusterFadeNear * 2.5, [clusterFadeNear]);
+  const clusterFadeFar = useMemo(() => clusterFadeNear * 3.3, [clusterFadeNear]);
 
   const cameraDistance = useMemo(() => file
     ? (() => {
