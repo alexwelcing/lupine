@@ -6,7 +6,7 @@
  */
 
 import type { Frame, Trajectory, ThermoData } from '@atlas/core/types';
-import { parseDumpStream } from './dumpStreamParser';
+import { parseDumpStream, parseDumpStreamFromBytes, readableStreamToAsyncIterable } from './dumpStreamParser';
 
 let worker: Worker | null = null;
 let messageId = 0;
@@ -307,6 +307,89 @@ export async function* parseDumpFileStreaming(text: string): AsyncGenerator<
         frames: [event.frame],
         totalFrames: 1,
         atomTypes: [], // populated lazily by the renderer/store as atoms arrive
+        globalBounds: {
+          min: [event.frame.boxBounds[0], event.frame.boxBounds[2], event.frame.boxBounds[4]],
+          max: [event.frame.boxBounds[1], event.frame.boxBounds[3], event.frame.boxBounds[5]],
+        },
+      };
+      yield { type: 'header', trajectory, frame: event.frame };
+    } else if (event.type === 'progress') {
+      yield { type: 'progress', loadedAtoms: event.loadedAtoms };
+    } else if (event.type === 'complete') {
+      yield { type: 'complete', loadedAtoms: event.loadedAtoms };
+    }
+  }
+}
+
+/** Stream-parse from a network Response. Atoms render before the file
+ *  finishes downloading — the dominant network-bound case for the
+ *  gallery's huge fixtures. The Trajectory wrapper is mounted on the
+ *  `header` event with a single partial-frame, then mutated in place
+ *  as bytes arrive (same contract as `parseDumpFileStreaming`).
+ *
+ *  Falls back to fully-buffered text parsing if `response.body` is
+ *  unavailable (older runtimes, or after `.text()` has already
+ *  consumed the body upstream). Caller is expected to have called
+ *  `canStreamDump()` on a peeked head; if the stream turns out to be
+ *  unsupported (triclinic, missing columns), the underlying parser
+ *  throws and the caller falls back to the WASM path. */
+export async function* parseDumpResponseStreaming(
+  response: Response,
+): AsyncGenerator<
+  | { type: 'header'; trajectory: Trajectory; frame: Frame }
+  | { type: 'progress'; loadedAtoms: number }
+  | { type: 'complete'; loadedAtoms: number }
+> {
+  if (!response.body) {
+    const text = await response.text();
+    yield* parseDumpFileStreaming(text);
+    return;
+  }
+  const byteIter = readableStreamToAsyncIterable(response.body);
+  let trajectory: Trajectory | null = null;
+  for await (const event of parseDumpStreamFromBytes(byteIter)) {
+    if (event.type === 'header') {
+      trajectory = {
+        frames: [event.frame],
+        totalFrames: 1,
+        atomTypes: [],
+        globalBounds: {
+          min: [event.frame.boxBounds[0], event.frame.boxBounds[2], event.frame.boxBounds[4]],
+          max: [event.frame.boxBounds[1], event.frame.boxBounds[3], event.frame.boxBounds[5]],
+        },
+      };
+      yield { type: 'header', trajectory, frame: event.frame };
+    } else if (event.type === 'progress') {
+      yield { type: 'progress', loadedAtoms: event.loadedAtoms };
+    } else if (event.type === 'complete') {
+      yield { type: 'complete', loadedAtoms: event.loadedAtoms };
+    }
+  }
+}
+
+/** Stream-parse from a `File`'s `.stream()`. Same contract as the
+ *  Response variant; used by FileDropZone for big drag-dropped dumps.
+ *  Note: in many browsers `File.stream()` actually delivers the whole
+ *  blob in one chunk (no progressive read for local files), but the
+ *  parser progress events still drive the renderer's incremental
+ *  upload — the network round-trip win disappears, but the parse-
+ *  blocks-everything regression we saw with `.text()` is gone. */
+export async function* parseDumpFileStreamingFromFile(
+  file: File,
+): AsyncGenerator<
+  | { type: 'header'; trajectory: Trajectory; frame: Frame }
+  | { type: 'progress'; loadedAtoms: number }
+  | { type: 'complete'; loadedAtoms: number }
+> {
+  const stream = file.stream() as ReadableStream<Uint8Array>;
+  const byteIter = readableStreamToAsyncIterable(stream);
+  let trajectory: Trajectory | null = null;
+  for await (const event of parseDumpStreamFromBytes(byteIter)) {
+    if (event.type === 'header') {
+      trajectory = {
+        frames: [event.frame],
+        totalFrames: 1,
+        atomTypes: [],
         globalBounds: {
           min: [event.frame.boxBounds[0], event.frame.boxBounds[2], event.frame.boxBounds[4]],
           max: [event.frame.boxBounds[1], event.frame.boxBounds[3], event.frame.boxBounds[5]],

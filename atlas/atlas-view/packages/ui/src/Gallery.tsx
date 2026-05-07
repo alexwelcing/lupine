@@ -588,26 +588,50 @@ export function Gallery() {
         return;
       }
 
-      const resp = await fetch(url);
-      if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
-      const blob = await resp.blob();
-
       // Streaming-eligible? The streaming dump parser handles the simple
       // single-frame, orthogonal-box, id/type/x/y/z dialect that the
-      // gallery fixtures use. Probe the first 4 KB of the file to
-      // confirm format AND extract `natoms` from the header — only
-      // then commit to reading full text. Multi-frame, triclinic, or
-      // scaled-coordinate dumps fall through to the WASM path.
+      // gallery fixtures use. We do TWO fetches:
+      //   1. HEAD or Range-byte=0-4095 fetch to probe size + format
+      //      WITHOUT pulling the whole file into memory.
+      //   2. If streaming-eligible, full GET — but with `response.body`
+      //      consumed as a stream so atoms paint while bytes are still
+      //      arriving over the network.
+      // For dev / static-server hosts that don't honor Range requests
+      // we still issue a normal GET and read the head from blob.slice;
+      // the fall-through path doesn't pre-stream.
       const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;  // 5 MB
       const STREAMING_ATOM_THRESHOLD = 100_000;
       const looksDumpExt = /\.(lammpstrj|dump)$/i.test(example.file);
       let usedStreaming = false;
-      if (looksDumpExt && blob.size > STREAMING_BYTES_THRESHOLD) {
-        const head = await blob.slice(0, 4096).text();
+
+      if (looksDumpExt) {
+        // Probe head with a Range request — much cheaper than pulling
+        // the full file. Servers that ignore Range return the whole
+        // file; we still only read the first 4 KB from the response.
+        const probe = await fetch(url, { headers: { Range: 'bytes=0-4095' } });
+        if (!probe.ok && probe.status !== 206) {
+          throw new Error(`Failed to fetch: ${probe.status}`);
+        }
+        const probeBlob = await probe.blob();
+        const head = await probeBlob.slice(0, 4096).text();
+        // Total size: prefer Content-Range from the partial response,
+        // fall back to Content-Length on the original probe (servers
+        // that returned the full body), or to the blob size itself.
+        const contentRange = probe.headers.get('content-range') ?? '';
+        const totalMatch = contentRange.match(/\/(\d+)$/);
+        const totalSize = totalMatch
+          ? parseInt(totalMatch[1], 10)
+          : (parseInt(probe.headers.get('content-length') ?? '0', 10) || probeBlob.size);
+
         const { canStreamDump } = await import('@atlas/parsers');
         const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
         const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
-        if (canStreamDump(head) && headerAtoms >= STREAMING_ATOM_THRESHOLD) {
+
+        if (
+          canStreamDump(head)
+          && totalSize > STREAMING_BYTES_THRESHOLD
+          && headerAtoms >= STREAMING_ATOM_THRESHOLD
+        ) {
           if (headerAtoms > profile.maxAtoms) {
             useStore.getState().setError(
               `"${example.title}" has ${formatAtomCount(headerAtoms)} atoms, ` +
@@ -616,17 +640,17 @@ export function Gallery() {
             );
             return;
           }
-          // Read full text once; the streaming parser walks it
-          // incrementally. Phase 2b replaces this with fetch() body
-          // streaming so we don't wait for the full download.
-          const text = await blob.text();
-          const { parseDumpFileStreaming } = await import('@atlas/parsers');
+          // Real streaming: full fetch, response.body consumed as a
+          // ReadableStream. Atoms render while bytes are still arriving.
+          const streamResp = await fetch(url);
+          if (!streamResp.ok) throw new Error(`Failed to fetch: ${streamResp.status}`);
+          const { parseDumpResponseStreaming } = await import('@atlas/parsers');
           const store = useStore.getState();
-          for await (const event of parseDumpFileStreaming(text)) {
+          for await (const event of parseDumpResponseStreaming(streamResp)) {
             if (event.type === 'header') {
               store.setFile({
                 name: example.title,
-                size: blob.size,
+                size: totalSize,
                 trajectory: event.trajectory,
                 thermo: null,
                 sourceUrl: url,
@@ -640,10 +664,7 @@ export function Gallery() {
             } else if (event.type === 'progress') {
               store.setLoadedAtomCount(event.loadedAtoms);
               // Yield to the renderer between chunks so atoms paint
-              // and the page stays interactive. Without this yield
-              // the parser hogs the main thread and the chunked-
-              // upload pump in AtomsOptimized never gets a useFrame
-              // tick.
+              // and the page stays interactive.
               await new Promise<void>((r) => requestAnimationFrame(() => r()));
             } else if (event.type === 'complete') {
               store.setLoadedAtomCount(event.loadedAtoms);
@@ -658,6 +679,9 @@ export function Gallery() {
         // WASM path. Same flow as before — used for small files,
         // non-dump formats, multi-frame, triclinic, or any dialect the
         // streaming parser declined.
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
+        const blob = await resp.blob();
         const fileObj = new File([blob], example.file.split('/').pop() ?? 'file.dump');
         const { parseFile } = await import('@atlas/parsers');
         const result = await parseFile(fileObj);

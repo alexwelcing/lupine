@@ -92,10 +92,15 @@ export function FileDropZone() {
               `Open it on a desktop with more graphics memory.`,
             );
           }
-          const text = await f.text();
-          const { parseDumpFileStreaming } = await import('@atlas/parsers');
+          // Phase 2b: byte-stream parse via File.stream(). Some browsers
+          // deliver the whole blob in one chunk for local files (no
+          // network round-trip to spread across), but the parser's
+          // progress events still drive the renderer's incremental
+          // upload — the user sees atoms appear as they're decoded
+          // instead of waiting for the full TextDecoder pass to finish.
+          const { parseDumpFileStreamingFromFile } = await import('@atlas/parsers');
           const store = useStore.getState();
-          for await (const event of parseDumpFileStreaming(text)) {
+          for await (const event of parseDumpFileStreamingFromFile(f)) {
             if (event.type === 'header') {
               store.setFile({
                 name: f.name,
