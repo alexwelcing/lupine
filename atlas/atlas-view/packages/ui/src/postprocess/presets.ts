@@ -34,14 +34,11 @@ export interface PostprocessPresetConfig {
   toneMapping: 'aces' | 'reinhard' | 'none';
   /** MSAA samples for the composer when not playing. 0 disables. */
   multisampling: 0 | 2 | 4 | 8;
-  /** Synthetic IBL — sky/ground colors that the atom shader samples for
-   *  reflection. Couples the directorial preset to the metallic env: cinematic
-   *  metals reflect warm sunset; editorial reflect moody darkness; etc. */
+  /** HDRI environment for IBL. The atom impostor shader and bond
+   *  MeshPhysicalMaterial both sample this — single source of truth.
+   *  `null` disables IBL (atoms fall back to neutral grey, bonds get no
+   *  envMap). */
   env: {
-    sky: [number, number, number];
-    ground: [number, number, number];
-    /** Drei `<Environment preset="..."/>` mapping. `null` disables the
-     *  HDRI (no scene.environment set, bonds fall back to synthetic). */
     drei: 'studio' | 'apartment' | 'city' | 'dawn' | 'forest' | 'lobby' | 'night' | 'park' | 'sunset' | 'warehouse' | null;
   };
 }
@@ -58,7 +55,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     vignette: { enabled: false, offset: 0.5, darkness: 0.3 },
     toneMapping: 'aces',
     multisampling: 4,
-    env: { sky: [0.62, 0.66, 0.72], ground: [0.42, 0.42, 0.42], drei: 'apartment' }, // neutral
+    env: { drei: 'apartment' }, // neutral
   },
   studio: {
     id: 'studio',
@@ -71,7 +68,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     vignette: { enabled: true, offset: 0.4, darkness: 0.4 },
     toneMapping: 'aces',
     multisampling: 4,
-    env: { sky: [0.65, 0.72, 0.85], ground: [0.30, 0.26, 0.22], drei: 'studio' }, // cool sky / warm earth
+    env: { drei: 'studio' }, // balanced studio HDRI
   },
   editorial: {
     id: 'editorial',
@@ -84,7 +81,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     vignette: { enabled: true, offset: 0.35, darkness: 0.65 },
     toneMapping: 'aces',
     multisampling: 4,
-    env: { sky: [0.18, 0.22, 0.38], ground: [0.06, 0.05, 0.10], drei: 'night' }, // moody dark
+    env: { drei: 'night' }, // moody dark
   },
   cinematic: {
     id: 'cinematic',
@@ -97,7 +94,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     vignette: { enabled: true, offset: 0.3, darkness: 0.7 },
     toneMapping: 'aces',
     multisampling: 4,
-    env: { sky: [0.95, 0.62, 0.45], ground: [0.18, 0.10, 0.18], drei: 'sunset' }, // warm sunset
+    env: { drei: 'sunset' }, // warm sunset
   },
   diagram: {
     id: 'diagram',
@@ -110,7 +107,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     vignette: { enabled: false, offset: 0.5, darkness: 0.3 },
     toneMapping: 'none',
     multisampling: 4,
-    env: { sky: [0.5, 0.5, 0.5], ground: [0.5, 0.5, 0.5], drei: null }, // flat — disables IBL
+    env: { drei: null }, // flat — disables IBL
   },
 };
 

@@ -468,16 +468,6 @@ export default function App() {
   const atomColorSource = useStore(s => s.atomColorSource);
   const postprocessPreset = useStore(s => s.postprocessPreset);
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
-  // Compute IBL sky/ground for the active preset. Memoized so the prop
-  // identity stays stable across renders that don't change the preset.
-  const envSky = useMemo<[number, number, number]>(
-    () => POSTPROCESS_PRESETS[postprocessPreset].env.sky,
-    [postprocessPreset],
-  );
-  const envGround = useMemo<[number, number, number]>(
-    () => POSTPROCESS_PRESETS[postprocessPreset].env.ground,
-    [postprocessPreset],
-  );
   const ssao = useStore(s => s.ssao);
   const bloom = useStore(s => s.bloom);
   const dof = useStore(s => s.dof);
@@ -905,6 +895,8 @@ export default function App() {
               rotateSpeed={0.5}
               panSpeed={0.4}
               zoomSpeed={0.8}
+              minDistance={Math.max(0.5, cameraDistance * 0.04)}
+              maxDistance={cameraDistance * 6}
               onEnd={(e: any) => {
                 if (e?.target?.object && e?.target?.target) {
                   useStore.getState().setCameraState(
@@ -938,8 +930,6 @@ export default function App() {
                   botanicalMode={renderStyle === 'botanical'}
                   materialPreset={materialPreset}
                   atomTexture={atomTexture}
-                  envSky={envSky}
-                  envGround={envGround}
                   propertyEmissionStrength={propertyEmissionStrength}
                 />
                 <Bonds

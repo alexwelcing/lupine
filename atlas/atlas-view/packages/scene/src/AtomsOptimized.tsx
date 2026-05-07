@@ -16,7 +16,7 @@
  */
 
 import { useRef, useMemo, useEffect, useCallback } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
 import { SpatialHash3D } from './SpatialHash';
@@ -48,11 +48,6 @@ interface AtomsOptimizedProps {
   /** Where per-type atom colors come from. Overrides the legacy
    *  colormap-only behavior. 'colormap' is the original default. */
   atomColorSource?: 'colormap' | 'element' | 'botanical';
-  /** Synthetic IBL: sky and ground colors sampled by reflection vector
-   *  in the atom shader. Tied to the active postprocess preset by App.tsx
-   *  so cinematic metals reflect warm sunset, editorial reflect dark moody, etc. */
-  envSky?: [number, number, number];
-  envGround?: [number, number, number];
   /** Strength of property-driven emission (0..1). When > 0 and colorMode
    *  is 'property', atoms glow proportional to their normalized property
    *  value × this strength × the colormap-mapped color. Reads as
@@ -118,6 +113,14 @@ const IMPOSTOR_VERTEX = /* glsl */ `
   }
 `;
 
+// Three.js exports `cube_uv_reflection_fragment` (and the `defines`-style
+// constants it needs) — including this chunk gives our shader the
+// `textureCubeUV(envMap, direction, roughness)` function that decodes the
+// octahedral-packed cubeUV atlas drei's <Environment> produces. This is
+// the same machinery MeshStandardMaterial uses for PMREM-prefiltered
+// scene.environment.
+const CUBE_UV_CHUNK = THREE.ShaderChunk.cube_uv_reflection_fragment;
+
 const IMPOSTOR_FRAGMENT = /* glsl */ `
   precision highp float;
 
@@ -136,9 +139,26 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
   // 256×2 RGBA: row 0 = (metalness, roughness, anisotropy, subsurface),
   //             row 1 = (emission r, emission g, emission b, intensity).
   uniform sampler2D uMaterialPalette;
-  // IBL synthetic env (driven by postprocess preset).
-  uniform vec3 uSkyColor;
-  uniform vec3 uGroundColor;
+  // IBL — single source of truth. tEnvMap is drei's <Environment> output:
+  // a PMREM-prefiltered, octahedral-packed cubeUV atlas (Three.js's
+  // CubeUVReflectionMapping). textureCubeUV (provided by the
+  // cube_uv_reflection_fragment chunk injected below) decodes it correctly,
+  // including roughness-based mip selection. uHasEnv=0 ('diagram' preset)
+  // falls back to neutral grey so atoms still read.
+  uniform sampler2D tEnvMap;
+  uniform float uEnvIntensity;
+  uniform int uHasEnv;
+  // ENVMAP_TYPE_CUBE_UV gates Three.js's cube_uv_reflection_fragment chunk
+  // so its textureCubeUV() definition is visible to us. CUBEUV_TEXEL_*
+  // and CUBEUV_MAX_MIP are sized for PMREMGenerator's default 256-pixel
+  // base resolution (drei's default). The chunk also requires the uniform
+  // be named "envMap" (not tEnvMap) — alias it.
+  #define ENVMAP_TYPE_CUBE_UV
+  #define CUBEUV_TEXEL_WIDTH 0.0009765625
+  #define CUBEUV_TEXEL_HEIGHT 0.001953125
+  #define CUBEUV_MAX_MIP 8.0
+  #define envMap tEnvMap
+  ${CUBE_UV_CHUNK}
   // Property-driven emission strength. 0 disables; >0 makes atoms glow
   // proportional to their normalized property value × colormap-mapped color.
   uniform float uPropEmission;
@@ -301,16 +321,24 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
       }
     }
 
-    // ─── Synthetic IBL — sky-ground gradient sampled by reflection ──
-    // Sky/ground come from uniforms set by App.tsx based on the active
-    // postprocess preset. Cinematic gives warm sunset reflections;
-    // editorial gives moody dark; paper gives neutral; etc.
+    // ─── PMREM IBL — sample the real environment cube ────────────────
+    // tEnvMap is drei's <Environment>, processed by Three's PMREMGenerator.
+    // textureCubeUV (from cube_uv_reflection_fragment) decodes the
+    // octahedral-packed atlas and selects the right mip from roughness.
+    // Specular probe: along reflection vector. Diffuse irradiance: along
+    // surface normal at near-max roughness (acts as a tinted ambient).
     vec3 reflectVec = reflect(-V, normal);
-    float skyMix = clamp(reflectVec.y * 0.5 + 0.5, 0.0, 1.0);
-    vec3 envSpec = mix(uGroundColor, uSkyColor, skyMix);
-    // Roughness fall-off: blur reflection by lerping toward the env average.
-    vec3 envAvg = (uSkyColor + uGroundColor) * 0.5;
-    envSpec = mix(envSpec, envAvg, roughness);
+    vec3 envSpec;
+    vec3 envAvg;
+    if (uHasEnv == 1) {
+      envSpec = textureCubeUV(tEnvMap, reflectVec, roughness).rgb * uEnvIntensity;
+      envAvg  = textureCubeUV(tEnvMap, normal,     1.0).rgb * uEnvIntensity;
+    } else {
+      // Diagram / no-IBL preset: neutral grey so the BRDF still has a
+      // sensible base term. No directional probe → no speckle from one side.
+      envSpec = vec3(0.5);
+      envAvg  = vec3(0.4);
+    }
 
     // Final combine — Cook-Torrance + Burley diffuse + subsurface backlight + rim + IBL + emission.
     //   - Diffuse uses Burley wrap (wrapNoL) which softens the shadow line.
@@ -436,8 +464,6 @@ export function AtomsOptimized({
   atomTypeScales,
   botanicalMode = false,
   atomColorSource = 'colormap',
-  envSky = [0.65, 0.72, 0.85],
-  envGround = [0.30, 0.26, 0.22],
   propertyEmissionStrength = 0,
   materialPreset = 'default',
   atomTexture = 'none',
@@ -445,6 +471,7 @@ export function AtomsOptimized({
   const meshRef = useRef<THREE.Mesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
   const atomCountRef = useRef(0);
+  const { scene } = useThree();
 
   // Capacity — grow-only, never shrink
   const capacityRef = useRef(Math.max(MIN_CAPACITY, Math.ceil(frame.natoms * 1.2)));
@@ -514,9 +541,10 @@ export function AtomsOptimized({
         uMaterialPreset: { value: 0 },
         // Static — periodic table doesn't change at runtime.
         uMaterialPalette: { value: materialPaletteTex },
-        // IBL synthetic env (driven by postprocess preset via props)
-        uSkyColor: { value: new THREE.Vector3(0.65, 0.72, 0.85) },
-        uGroundColor: { value: new THREE.Vector3(0.30, 0.26, 0.22) },
+        // PMREM env (synced from scene.environment via useFrame below).
+        tEnvMap: { value: null as THREE.Texture | null },
+        uEnvIntensity: { value: 1.0 },
+        uHasEnv: { value: 0 },
         // Property-driven emission strength
         uPropEmission: { value: 0 },
       },
@@ -567,9 +595,6 @@ export function AtomsOptimized({
     if (materialPreset === 'plastic') matMode = 4;
     uniforms.uMaterialPreset.value = matMode;
 
-    // IBL env sync — push the active preset's sky/ground into the shader.
-    uniforms.uSkyColor.value.set(envSky[0], envSky[1], envSky[2]);
-    uniforms.uGroundColor.value.set(envGround[0], envGround[1], envGround[2]);
     uniforms.uPropEmission.value = propertyEmissionStrength;
 
     if (colorMode === 'uniform') {
@@ -621,7 +646,22 @@ export function AtomsOptimized({
     oldColormap.dispose();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, envSky[0], envSky[1], envSky[2], envGround[0], envGround[1], envGround[2], propertyEmissionStrength]);
+  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength]);
+
+  // ─── PMREM env sync ───────────────────────────────────────────────
+  // scene.environment is set by drei's <Environment> in App.tsx; it can
+  // change asynchronously when the active postprocess preset's HDRI swaps.
+  // useFrame keeps the material uniform pointing at whatever's current,
+  // and recomputes the mip count when the texture identity changes (the
+  // PMREM mip count is texture.mipmaps.length - 1, or derived from size).
+  useFrame(() => {
+    const env = (scene as any).environment as THREE.Texture | null;
+    const u = material.uniforms;
+    if (env !== u.tEnvMap.value) {
+      u.tEnvMap.value = env;
+      u.uHasEnv.value = env ? 1 : 0;
+    }
+  });
 
   // ─── Upload frame data to GPU (runs ONCE per frame change) ────────
   const uploadFrame = useCallback(() => {
