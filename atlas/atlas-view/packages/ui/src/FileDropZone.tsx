@@ -81,18 +81,19 @@ export function FileDropZone() {
       }
 
       if (trajectory) {
-        // Device-capability gate. The renderer can technically allocate
-        // multi-million-atom buffers, but pushing that to a phone GPU
-        // freezes the page and requires a device restart. Refuse the
-        // load with a clear message rather than crash the user's device.
+        // Memory-ceiling gate. Below the cap we let the renderer's
+        // quality tier handle the GPU side — fast tier on mobile skips
+        // gl_FragDepth/IBL/Cook-Torrance so even 1M atoms render. Above
+        // the cap the impostor instance buffers (~60 MB per million
+        // atoms, CPU + GPU) would OOM the tab.
         const profile = getDeviceProfile();
         const atoms = trajectory.frames[0]?.natoms ?? 0;
         if (atoms > profile.maxAtoms) {
           throw new Error(
             `This trajectory has ${formatAtomCount(atoms)} atoms, ` +
-            `over the ${formatAtomCount(profile.maxAtoms)}-atom limit ` +
-            `for this device (${profile.reason}). ` +
-            `Open it on a desktop with a discrete GPU.`,
+            `over the ${formatAtomCount(profile.maxAtoms)}-atom memory ` +
+            `budget for this device (${profile.reason}). ` +
+            `Open it on a desktop with more graphics memory.`,
           );
         }
         setFile({

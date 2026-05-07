@@ -49,7 +49,7 @@ import { ChronosHUD } from './ChronosHUD';
 import { VolcanicHUD } from './VolcanicHUD';
 
 import { useStore } from './store';
-import { getMaxSafeAtomCount } from './deviceCapabilities';
+import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities';
 import { LandingPage } from './LandingPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
@@ -568,13 +568,14 @@ export default function App() {
 
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  // Device-capability cap on rendered atoms. Computed once at mount —
-  // hardware doesn't change during a session. Last line of defense:
-  // Gallery and FileDropZone refuse loads above this cap, but if a
-  // shareable URL or programmatic load slips a huge trajectory in, the
-  // renderer itself clips the visible instance count rather than
-  // attempting to draw 1M+ impostor spheres on a phone GPU.
+  // Device-capability budget. Computed once at mount — hardware doesn't
+  // change during a session. The cap reflects MEMORY ceiling now (not GPU
+  // shader cost) since the quality-tier system below makes any tier render
+  // any count. The fast tier specifically restores early-Z on mobile by
+  // skipping gl_FragDepth, so 1M impostor spheres become feasible on a
+  // phone where the premium shader would freeze the page.
   const deviceMaxAtoms = useMemo(() => getMaxSafeAtomCount(), []);
+  const deviceQualityTier = useMemo(() => getDefaultQualityTier(), []);
 
   // Playback timer (replaced with smooth 60fps interpolator)
   const { currentState: interpState, setFrame: setSmoothFrame } = useSmoothFramePlayback(playing, {
@@ -1008,6 +1009,7 @@ export default function App() {
                   scale={atomScale}
                   renderStyle={renderStyle}
                   maxAtoms={deviceMaxAtoms}
+                  qualityTier={deviceQualityTier}
                   onSpatialHash={setSpatialHash}
                   hiddenAtomTypes={hiddenAtomTypes}
                   atomTypeScales={atomTypeScales}

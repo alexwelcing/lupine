@@ -59,6 +59,27 @@ interface AtomsOptimizedProps {
    *  value × this strength × the colormap-mapped color. Reads as
    *  "this atom is energetic". */
   propertyEmissionStrength?: number;
+  /** Render quality tier — picks the fragment-shader complexity.
+   *
+   *  - 0 ('fast'):     simple Lambert + Blinn-Phong specular, no IBL,
+   *                    no Cook-Torrance, NO gl_FragDepth (this is the
+   *                    big mobile win — early-Z works again, fragment
+   *                    throughput goes up ~5-10×). Atom intersection
+   *                    depth is approximated by the quad center, which
+   *                    is invisibly wrong on a zoomed-out 1M-atom scene
+   *                    and the only path that lets a phone render that
+   *                    scene at all.
+   *  - 1 ('standard'): Cook-Torrance D/G/F + two-light direct illumination,
+   *                    correct gl_FragDepth, no IBL probes, no anisotropy,
+   *                    no subsurface. The integrated-laptop-GPU path.
+   *  - 2 ('premium'):  full PBR including PMREM IBL, anisotropy,
+   *                    subsurface, rim, etched annotation, texture mode,
+   *                    property-driven emission. The discrete-GPU path
+   *                    and historical default.
+   *
+   *  Choose based on device. The shader is recompiled when this changes,
+   *  so flipping mid-session is supported but causes a one-time stutter. */
+  qualityTier?: 0 | 1 | 2;
 }
 
 // ─── GLSL Shaders ────────────────────────────────────────────────────
@@ -79,6 +100,16 @@ const IMPOSTOR_VERTEX = /* glsl */ `
   uniform sampler2D uColormap;  // 256×1: propValue [0,1] → color
   uniform int uColorMode;       // 0=type, 1=uniform, 2=property
   uniform vec3 uUniformColor;
+
+  // Vertex-side LOD. uPxPerWorldAtUnitDepth = (viewport_height / 2) / tan(fov/2)
+  // — multiply by (radius / -viewZ) to get the atom's projected pixel radius
+  // for a perspective camera. Atoms below uMinPixelRadius are culled by
+  // pushing gl_Position outside clip space; the rasterizer skips them so the
+  // fragment shader never runs. Saves ~1ms/frame on 1M-atom scenes when
+  // zoomed out far enough that most atoms are sub-pixel. uMinPixelRadius=0
+  // disables culling (default).
+  uniform float uPxPerWorldAtUnitDepth;
+  uniform float uMinPixelRadius;
 
   // Passed to fragment
   varying vec3 vColor;
@@ -116,6 +147,18 @@ const IMPOSTOR_VERTEX = /* glsl */ `
     vViewCenter = viewCenter4.xyz;
     vViewRadius = instanceRadius;
 
+    // Sub-pixel culling. Behind-camera atoms have viewZ > 0 (camera looks
+    // -Z); we pass them through so the rasterizer's standard clipping
+    // handles them — don't rely on viewZ for the radius math.
+    if (uMinPixelRadius > 0.0 && viewCenter4.z < 0.0) {
+      float pixelRadius = instanceRadius * uPxPerWorldAtUnitDepth / -viewCenter4.z;
+      if (pixelRadius < uMinPixelRadius) {
+        // Push outside clip space — guaranteed cull, no fragment work.
+        gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
+        return;
+      }
+    }
+
     // Billboard: offset the quad corner in view space
     vec3 viewPos = viewCenter4.xyz;
     float expand = instanceRadius * 1.3;
@@ -130,10 +173,36 @@ const IMPOSTOR_VERTEX = /* glsl */ `
 // `textureCubeUV(envMap, direction, roughness)` function that decodes the
 // octahedral-packed cubeUV atlas drei's <Environment> produces. This is
 // the same machinery MeshStandardMaterial uses for PMREM-prefiltered
-// scene.environment.
+// scene.environment. Pulled into the shader source only on QUALITY_TIER 2
+// — IBL doesn't fit the fast / standard fragment-throughput budget.
 const CUBE_UV_CHUNK = THREE.ShaderChunk.cube_uv_reflection_fragment;
 
-const IMPOSTOR_FRAGMENT = /* glsl */ `
+/** Build the impostor-sphere fragment shader at the requested quality tier.
+ *
+ * Three.js supports `defines` on ShaderMaterial which become `#define`
+ * directives at the top of the shader, so we could gate everything via
+ * `#if QUALITY_TIER >= N` blocks. We use JS template-literal interpolation
+ * instead because the IBL path needs the cube_uv_reflection_fragment
+ * shader chunk to be physically present in the source string — it
+ * declares `textureCubeUV()`, and even a `#if 0` branch that references
+ * an undeclared function fails GLSL compilation on some drivers.
+ *
+ * Tiers (see AtomsOptimizedProps.qualityTier doc for the full rationale):
+ *   0 — fast      : Lambert + Blinn-Phong, no gl_FragDepth (mobile path)
+ *   1 — standard  : Cook-Torrance direct lighting, gl_FragDepth on
+ *   2 — premium   : full PBR + IBL + anisotropy + etch + texture mode
+ */
+function buildImpostorFragment(tier: 0 | 1 | 2): string {
+  const usesIBL = tier >= 2;
+  const usesCookTorrance = tier >= 1;
+  const usesFragDepth = tier >= 1;
+  const usesEtch = tier >= 2;
+  const usesTextureMode = tier >= 2;
+  const usesAnisotropy = tier >= 2;
+  const usesSubsurface = tier >= 2;
+  const usesRim = tier >= 1;
+
+  return /* glsl */ `
   precision highp float;
 
   varying vec3 vColor;
@@ -146,41 +215,33 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
   varying float vAtomId;
 
   uniform mat4 projectionMatrix;
+${usesEtch ? `
   // Etched annotation: a Canvas2D-rasterized text texture stamped onto the
   // facing hemisphere of a single targeted atom. Activated when uHasEtch=1
-  // and the fragment's vAtomId matches uEtchAtomId. Uses the view-space
-  // normal as the stamp UV so the text always reads to camera (it follows
-  // the silhouette, not the world). The alpha channel of the texture
-  // darkens the surface to give an engraved feel.
+  // and the fragment's vAtomId matches uEtchAtomId.
   uniform sampler2D tEtchTexture;
   uniform float uEtchAtomId;
-  uniform int uHasEtch;
-  uniform int uTextureMode; // 0: none, 1: noise, 2: scratched
+  uniform int uHasEtch;` : ''}
+${usesTextureMode ? `
+  uniform int uTextureMode; // 0: none, 1: noise, 2: scratched` : ''}
   uniform int uColorMode; // 0=type, 1=uniform, 2=property — same scheme as vertex
   uniform int uMaterialPreset; // 0: per-element (default), 1: matte, 2: metallic, 3: glass, 4: plastic
   // 256×2 RGBA: row 0 = (metalness, roughness, anisotropy, subsurface),
   //             row 1 = (emission r, emission g, emission b, intensity).
   uniform sampler2D uMaterialPalette;
-  // IBL — single source of truth. tEnvMap is drei's <Environment> output:
-  // a PMREM-prefiltered, octahedral-packed cubeUV atlas (Three.js's
-  // CubeUVReflectionMapping). textureCubeUV (provided by the
-  // cube_uv_reflection_fragment chunk injected below) decodes it correctly,
-  // including roughness-based mip selection. uHasEnv=0 ('diagram' preset)
-  // falls back to neutral grey so atoms still read.
+${usesIBL ? `
+  // IBL — single source of truth. tEnvMap is drei's <Environment> output,
+  // a PMREM-prefiltered cubeUV atlas. textureCubeUV (declared by the
+  // chunk below) decodes it including roughness-based mip selection.
   uniform sampler2D tEnvMap;
   uniform float uEnvIntensity;
   uniform int uHasEnv;
-  // ENVMAP_TYPE_CUBE_UV gates Three.js's cube_uv_reflection_fragment chunk
-  // so its textureCubeUV() definition is visible to us. CUBEUV_TEXEL_*
-  // and CUBEUV_MAX_MIP are sized for PMREMGenerator's default 256-pixel
-  // base resolution (drei's default). The chunk also requires the uniform
-  // be named "envMap" (not tEnvMap) — alias it.
   #define ENVMAP_TYPE_CUBE_UV
   #define CUBEUV_TEXEL_WIDTH 0.0009765625
   #define CUBEUV_TEXEL_HEIGHT 0.001953125
   #define CUBEUV_MAX_MIP 8.0
   #define envMap tEnvMap
-  ${CUBE_UV_CHUNK}
+  ${CUBE_UV_CHUNK}` : ''}
   // Property-driven emission strength. 0 disables; >0 makes atoms glow
   // proportional to their normalized property value × colormap-mapped color.
   uniform float uPropEmission;
@@ -189,10 +250,11 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
   const vec3 LIGHT_DIR = normalize(vec3(0.4, 0.7, 0.6));
   const vec3 LIGHT_DIR_2 = normalize(vec3(-0.3, -0.2, 0.8));
 
+${usesTextureMode ? `
   // Simple pseudo-random noise function
   float rand(vec2 co) {
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-  }
+  }` : ''}
 
   void main() {
     // Ray-sphere intersection in view space
@@ -240,115 +302,76 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
     else if (uMaterialPreset == 4)   { metalness = 0.0;  roughness = 0.4;  anisotropy = 0.0; subsurface = 0.0; }
     else                             { metalness = 0.1;  roughness = 0.5;  anisotropy = 0.0; subsurface = 0.0; }
 
-    // ─── Cook-Torrance microfacet shading (Tier 1 polish) ───────────
-    // Replaces the Blinn-Phong baseline. Same 4 per-element inputs
-    // (metalness/roughness/anisotropy/subsurface), much more material identity.
-    //
-    //   - GGX D + Smith G + Schlick F microfacet specular
-    //   - Burley-style wrap diffuse for soft shadow rolloff
-    //   - Subsurface backlight: light "transmits" to the shadow side for
-    //     translucent atoms (H, O, noble gases) — they read as dewdrops
-    //     not painted balls
-    //   - Schlick fresnel ramps reflectivity at grazing — gives Cu/Au/Ag
-    //     the chrome-edge that distinguishes them from plastic
-    //   - Anisotropic D-term widens the highlight along screen-space y,
-    //     reads as "brushed" for high-anisotropy metals
-    //
-    // We're in view space here, so the camera direction is +z from any
-    // fragment. That simplifies F/G calculations.
     vec3 V = vec3(0.0, 0.0, 1.0); // view direction in view space, fragment-relative
     vec3 L = LIGHT_DIR;
-    vec3 H = normalize(L + V);
     float NoL = max(dot(normal, L), 0.0);
     float NoV = max(dot(normal, V), 0.0);
+
+    vec3 texColor = vColor;
+${usesTextureMode ? `
+    if (uTextureMode == 1) {
+      float noiseVal = rand(vUv * 500.0);
+      texColor *= mix(0.7, 1.0, noiseVal);
+    } else if (uTextureMode == 2) {
+      float line = rand(floor(vUv * 100.0));
+      if (line > 0.95 && rand(vUv * 50.0) > 0.5) {
+        texColor *= 0.5;
+      }
+    }` : ''}
+
+${usesCookTorrance ? `
+    // ─── Cook-Torrance microfacet shading ───────────────────────────
+    // GGX D + Smith G + Schlick F. Direct-illumination only at this
+    // tier; IBL probes are gated to tier 2 since textureCubeUV is the
+    // dominant cost for mid-range integrated GPUs.
+    vec3 H = normalize(L + V);
     float NoH = max(dot(normal, H), 0.0);
     float LoH = max(dot(L, H), 0.0);
 
-    // GGX normal distribution. alpha grows with roughness² (the standard
-    // perceptually-linear remap). Anisotropy stretches the lobe along
-    // screen-space y by reducing alpha in that direction — a placeholder
-    // until atoms get a real tangent attribute (impostor spheres are
-    // direction-less, so this is the best approximation without a per-
-    // atom orientation hint).
     float alpha = roughness * roughness;
+${usesAnisotropy ? `
+    // Anisotropy widens the GGX lobe along screen-space y. Cheap; only
+    // physically-meaningful with an orientation hint, which impostor
+    // spheres lack — treat as artistic streak control.
     float alphaY = alpha * mix(1.0, 0.4, anisotropy);
     float alphaX = alpha;
-    // Project normal into screen space for anisotropy axis. nx/ny are how
-    // far the normal tilts in screen-space x/y; the squared form is what
-    // GGX needs. For isotropic atoms (anisotropy=0), alphaY==alphaX and
-    // this collapses to standard GGX D.
     float nxSq = normal.x * normal.x;
     float nySq = normal.y * normal.y;
     float nzSq = normal.z * normal.z;
-    float alphaProjSq = (alphaX * alphaX) * nxSq + (alphaY * alphaY) * nySq + alpha * alpha * nzSq;
+    float alphaProjSq = (alphaX * alphaX) * nxSq + (alphaY * alphaY) * nySq + alpha * alpha * nzSq;` : `
+    float alphaProjSq = alpha * alpha;`}
     float D_denom = (NoH * NoH) * (alphaProjSq - 1.0) + 1.0;
     float D = alphaProjSq / max(3.14159 * D_denom * D_denom, 1e-6);
 
-    // Smith G (height-correlated approximation). Cheap.
     float k = (alpha + 1.0) * (alpha + 1.0) / 8.0;
     float G_V = NoV / (NoV * (1.0 - k) + k);
     float G_L = NoL / (NoL * (1.0 - k) + k);
     float G = G_V * G_L;
 
-    // Schlick fresnel. F0 is 0.04 for dielectrics (typical glass/plastic),
-    // base color for metals. The (1-F0)*(1-LoH)^5 ramp gives chrome the
-    // bright edge.
     vec3 F0 = mix(vec3(0.04), vColor, metalness);
     float fresnelRamp = pow(1.0 - LoH, 5.0);
     vec3 F = F0 + (vec3(1.0) - F0) * fresnelRamp;
 
-    // Cook-Torrance specular term. The 4 NoL NoV in the denominator is
-    // standard; the max protects against divide-by-zero at silhouettes.
     vec3 specular = (D * G) * F / max(4.0 * NoL * NoV, 1e-6);
 
-    // ─── Diffuse with subsurface ──────────────────────────────────────
-    // Burley wrap: smooths the shadow terminator. wrapHalf=1 is half-Lambert.
-    float wrapHalf = 0.5; // tuneable; higher = softer transition
+    float wrapHalf = 0.5;
     float wrapNoL = max((dot(normal, L) + wrapHalf) / (1.0 + wrapHalf), 0.0);
-
-    // Subsurface backlight: when the normal points away from the light,
-    // simulate light transmitting through the material to the shadow side.
-    // This is what makes a dewdrop, milky glass, or noble-gas atom read as
-    // "lit from within" rather than as a painted shadow.
+${usesSubsurface ? `
     float backLight = max(dot(-normal, L), 0.0);
-    backLight = pow(backLight, 3.0) * subsurface;
+    backLight = pow(backLight, 3.0) * subsurface;` : `
+    float backLight = 0.0;`}
 
-    // Combine: dielectric portion uses (1-F) energy conservation; metalness
-    // attenuates the diffuse term entirely (metals don't have diffuse).
     vec3 kD = (vec3(1.0) - F) * (1.0 - metalness);
-
-    // Secondary fill light (existing two-light setup) — half-strength,
-    // also wrap-shaded for consistency.
     float wrapNoL2 = max((dot(normal, LIGHT_DIR_2) + wrapHalf) / (1.0 + wrapHalf), 0.0) * 0.3;
 
-    float ambient = 0.15 + subsurface * 0.15; // subsurface elements get a touch more ambient
-
-    // Rim — Schlick-style fresnel rim for visual depth. Stronger on
-    // metallic and subsurface materials, fades on matte dielectrics.
+    float ambient = 0.15 + subsurface * 0.15;
+${usesRim ? `
     float rim = pow(1.0 - NoV, 4.0);
     float rimStrength = mix(0.15, 0.5, metalness) + subsurface * 0.4;
-    vec3 rimColor = mix(vec3(1.0), vColor, metalness) * rim * rimStrength;
-
-    // Apply texture based on uniform
-    vec3 texColor = vColor;
-    if (uTextureMode == 1) {
-      // Noise
-      float noiseVal = rand(vUv * 500.0);
-      texColor *= mix(0.7, 1.0, noiseVal);
-    } else if (uTextureMode == 2) {
-      // Scratched (procedural lines)
-      float line = rand(floor(vUv * 100.0));
-      if (line > 0.95 && rand(vUv * 50.0) > 0.5) {
-        texColor *= 0.5;
-      }
-    }
-
-    // ─── PMREM IBL — sample the real environment cube ────────────────
-    // tEnvMap is drei's <Environment>, processed by Three's PMREMGenerator.
-    // textureCubeUV (from cube_uv_reflection_fragment) decodes the
-    // octahedral-packed atlas and selects the right mip from roughness.
-    // Specular probe: along reflection vector. Diffuse irradiance: along
-    // surface normal at near-max roughness (acts as a tinted ambient).
+    vec3 rimColor = mix(vec3(1.0), vColor, metalness) * rim * rimStrength;` : `
+    vec3 rimColor = vec3(0.0);`}
+${usesIBL ? `
+    // ─── PMREM IBL ─────────────────────────────────────────────────
     vec3 reflectVec = reflect(-V, normal);
     vec3 envSpec;
     vec3 envAvg;
@@ -356,67 +379,69 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
       envSpec = textureCubeUV(tEnvMap, reflectVec, roughness).rgb * uEnvIntensity;
       envAvg  = textureCubeUV(tEnvMap, normal,     1.0).rgb * uEnvIntensity;
     } else {
-      // Diagram / no-IBL preset: neutral grey so the BRDF still has a
-      // sensible base term. No directional probe → no speckle from one side.
       envSpec = vec3(0.5);
       envAvg  = vec3(0.4);
     }
-
-    // Final combine — Cook-Torrance + Burley diffuse + subsurface backlight + rim + IBL + emission.
-    //   - Diffuse uses Burley wrap (wrapNoL) which softens the shadow line.
-    //   - kD = (1-F)(1-metalness) implements energy conservation: metals
-    //     have no diffuse contribution, dielectrics share energy with spec.
-    //   - IBL specular: F0 * envSpec gives metals a real-feeling environment
-    //     reflection that varies with viewing angle. Replaces the flat
-    //     F0 * (ambient + 0.4) baseline.
-    //   - IBL diffuse: envAvg as the ambient-irradiance color (tinted!).
-    //   - Specular is the full Cook-Torrance term × NoL.
-    //   - backLight × texColor gives translucent atoms a subtle glow on
-    //     the shadow side — dewdrop / glass / noble gas read.
-    //   - Rim is fresnel-driven, color-tinted by metalness.
-    //   - Emission: per-element baseline glow from the palette row 1.
     vec3 envIrradiance = envAvg * (ambient + 0.4);
+    vec3 iblSpecular = F0 * envSpec * (0.5 + 0.5 * (1.0 - roughness));` : `
+    // Tier 1 (no IBL): neutral irradiance term so the diffuse channel still
+    // has a sensible base term, and zero IBL specular contribution.
+    vec3 envIrradiance = vec3(ambient + 0.4) * 0.55;
+    vec3 iblSpecular = vec3(0.0);`}
     vec3 diffuseTerm = kD * texColor * (envIrradiance + wrapNoL * 0.7 + wrapNoL2);
-    vec3 iblSpecular = F0 * envSpec * (0.5 + 0.5 * (1.0 - roughness));
     vec3 specularTerm = specular * NoL * 1.5;
     vec3 backTerm = texColor * backLight * 0.6;
-    // Per-element emission baseline + property-driven emission boost.
-    //   - Baseline: per-element emission × intensity (radioactives glow).
-    //   - Property-driven: when in property color mode, atoms with high
-    //     normalized property emit additional light tinted by the colormap-
-    //     mapped color. Reads as "this atom is doing something."
+
     vec3 emissive = emissionColor * emissionIntensity;
     if (uColorMode == 2 && uPropEmission > 0.0) {
       emissive += vColor * vPropValue * uPropEmission;
     }
-    vec3 color = diffuseTerm + iblSpecular + specularTerm + backTerm + rimColor + emissive;
+    vec3 color = diffuseTerm + iblSpecular + specularTerm + backTerm + rimColor + emissive;` : `
+    // ─── Fast-tier shading (Lambert + Blinn-Phong specular) ─────────
+    // Skips the full Cook-Torrance microfacet chain. The whole point: keep
+    // the fragment shader cheap so mobile GPUs can run 1M atoms without
+    // dropping to slideshow framerates. Roughness shapes the specular
+    // exponent so material identity is still visible (chrome looks shinier
+    // than plastic) without the GGX cost.
+    vec3 H = normalize(L + V);
+    float NoH = max(dot(normal, H), 0.0);
+    float NoL2 = max(dot(normal, LIGHT_DIR_2), 0.0) * 0.3;
+    float gloss = mix(8.0, 96.0, 1.0 - roughness);
+    float specHighlight = pow(NoH, gloss) * (1.0 - roughness) * mix(0.4, 0.9, metalness);
+    float ambient = 0.18;
+    vec3 color = texColor * (ambient + NoL * 0.7 + NoL2)
+               + mix(vec3(1.0), texColor, metalness) * specHighlight;
+    if (uColorMode == 2 && uPropEmission > 0.0) {
+      color += vColor * vPropValue * uPropEmission;
+    }
+    color += emissionColor * emissionIntensity;`}
 
-    // ─── Etched annotation overlay ────────────────────────────────────
-    // Only the targeted atom executes this branch. We project the
-    // view-space normal into a stamp UV: the camera-facing pole maps to
-    // (0.5, 0.5), edges of the visible hemisphere fall outside [0,1].
-    // etchScale > 1.0 keeps the text inside a small central patch of the
-    // silhouette so it reads as a label, not a tattoo wrapping around.
+${usesEtch ? `
+    // ─── Etched annotation overlay ──────────────────────────────────
     if (uHasEtch == 1 && abs(vAtomId - uEtchAtomId) < 0.5) {
       float etchScale = 1.5;
       vec2 etchUv = vec2(normal.x * etchScale + 0.5, -normal.y * etchScale + 0.5);
       if (etchUv.x > 0.0 && etchUv.x < 1.0 && etchUv.y > 0.0 && etchUv.y < 1.0) {
         float etchAlpha = texture2D(tEtchTexture, etchUv).a;
-        // Darken where text is (engraved depth) plus a subtle warm tint so
-        // it reads as a stamped marker rather than a paint splotch.
         vec3 engraved = color * 0.32;
         color = mix(color, engraved, etchAlpha);
       }
-    }
+    }` : ''}
 
-    // Correct depth via projected hit point
+${usesFragDepth ? `
+    // Correct sphere-intersection depth so adjacent atoms occlude each
+    // other along the actual hit point, not the billboard quad center.
+    // NB: gl_FragDepth disables hierarchical-Z and early-Z on most mobile
+    // GPUs — that's why fast tier skips this and accepts the (visually
+    // imperceptible at zoom-out) approximation of quad depth.
     vec4 clipPos = projectionMatrix * vec4(hitPoint, 1.0);
     float ndcDepth = clipPos.z / clipPos.w;
-    gl_FragDepth = ndcDepth * 0.5 + 0.5;
+    gl_FragDepth = ndcDepth * 0.5 + 0.5;` : ''}
 
     gl_FragColor = vec4(color, 1.0);
   }
 `;
+}
 
 // ─── Helpers ─────────────────────────────────────────────────────────
 
@@ -509,11 +534,12 @@ export function AtomsOptimized({
   propertyEmissionStrength = 0,
   materialPreset = 'default',
   atomTexture = 'none',
+  qualityTier = 2,
 }: AtomsOptimizedProps) {
   const meshRef = useRef<THREE.Mesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
   const atomCountRef = useRef(0);
-  const { scene } = useThree();
+  const { scene, camera, gl } = useThree();
 
   // Capacity — grow-only, never shrink
   const capacityRef = useRef(Math.max(MIN_CAPACITY, Math.ceil(frame.natoms * 1.2)));
@@ -572,41 +598,60 @@ export function AtomsOptimized({
   }, [capacity]);
 
   // ─── Material: custom shader with GPU color lookup ─────────────────
+  // Rebuilt when qualityTier changes — the fragment shader source itself
+  // depends on the tier (IBL chunk only included at tier 2 since
+  // textureCubeUV must be declared to compile, and we conditionally embed
+  // the cube_uv_reflection_fragment chunk that declares it). The shader
+  // recompile causes a one-time stutter; tier changes are rare in practice.
   const material = useMemo(() => {
     const paletteTex = buildPaletteTexture((i) => DEFAULT_TYPE_COLOR);
     const colormapTex = buildColormapTexture((t) => [t, t, t]);
-
     const materialPaletteTex = buildMaterialPaletteTexture();
+
+    // Build only the uniforms the active tier's shader actually
+    // declares. ShaderMaterial accepts extra uniforms (Three.js silently
+    // ignores ones the shader source doesn't reference), so it's safe
+    // to keep them all here — but we annotate which apply where so the
+    // tier table is legible.
+    const uniforms: Record<string, { value: any }> = {
+      uPalette: { value: paletteTex },                     // all tiers
+      uColormap: { value: colormapTex },                   // all tiers
+      uColorMode: { value: 0 },                            // all tiers
+      uUniformColor: { value: new THREE.Vector3(0.6, 0.6, 0.6) }, // all
+      uMaterialPreset: { value: 0 },                       // all tiers
+      uMaterialPalette: { value: materialPaletteTex },     // all tiers
+      uPropEmission: { value: 0 },                         // all tiers
+      // Vertex-side LOD — sub-pixel atom culling. Disabled by default
+      // (uMinPixelRadius=0). Wired up by useFrame below using camera FOV
+      // and viewport size. Cheap when active, no-op otherwise.
+      uPxPerWorldAtUnitDepth: { value: 1.0 },
+      uMinPixelRadius: { value: 0.0 },
+    };
+    if (qualityTier >= 1) {
+      // Cook-Torrance / standard tier (no IBL) and premium share these.
+      // textureMode is declared/sampled only at premium since the noise
+      // and scratch effects are framing flourishes, not chemistry signals.
+    }
+    if (qualityTier >= 2) {
+      uniforms.uTextureMode = { value: 0 };
+      uniforms.tEnvMap = { value: null as THREE.Texture | null };
+      uniforms.uEnvIntensity = { value: 1.0 };
+      uniforms.uHasEnv = { value: 0 };
+      uniforms.tEtchTexture = { value: null as THREE.Texture | null };
+      uniforms.uEtchAtomId = { value: -1 };
+      uniforms.uHasEtch = { value: 0 };
+    }
 
     return new THREE.ShaderMaterial({
       vertexShader: IMPOSTOR_VERTEX,
-      fragmentShader: IMPOSTOR_FRAGMENT,
-      uniforms: {
-        uPalette: { value: paletteTex },
-        uColormap: { value: colormapTex },
-        uColorMode: { value: 0 },
-        uUniformColor: { value: new THREE.Vector3(0.6, 0.6, 0.6) },
-        uTextureMode: { value: 0 },
-        uMaterialPreset: { value: 0 },
-        // Static — periodic table doesn't change at runtime.
-        uMaterialPalette: { value: materialPaletteTex },
-        // PMREM env (synced from scene.environment via useFrame below).
-        tEnvMap: { value: null as THREE.Texture | null },
-        uEnvIntensity: { value: 1.0 },
-        uHasEnv: { value: 0 },
-        // Etched annotation — synced from props in the effect below.
-        tEtchTexture: { value: null as THREE.Texture | null },
-        uEtchAtomId: { value: -1 },
-        uHasEtch: { value: 0 },
-        // Property-driven emission strength
-        uPropEmission: { value: 0 },
-      },
+      fragmentShader: buildImpostorFragment(qualityTier),
+      uniforms,
       depthWrite: true,
       depthTest: true,
       transparent: false,
       side: THREE.DoubleSide,
     });
-  }, []);
+  }, [qualityTier]);
 
   // ─── Property data ─────────────────────────────────────────────────
   const propData = useMemo(() => {
@@ -635,11 +680,16 @@ export function AtomsOptimized({
     // Update color mode uniform
     uniforms.uColorMode.value = colorMode === 'property' ? 2 : colorMode === 'uniform' ? 1 : 0;
 
-    // Update texture mode uniform
-    let texMode = 0;
-    if (atomTexture === 'noise') texMode = 1;
-    if (atomTexture === 'scratched') texMode = 2;
-    uniforms.uTextureMode.value = texMode;
+    // Update texture mode + etch uniforms only when the active tier
+    // actually compiled them in. Touching uniforms that don't exist on
+    // the material is a silent no-op in Three.js, but the typed reads
+    // (uniforms.uTextureMode.value) would throw.
+    if (uniforms.uTextureMode) {
+      let texMode = 0;
+      if (atomTexture === 'noise') texMode = 1;
+      if (atomTexture === 'scratched') texMode = 2;
+      uniforms.uTextureMode.value = texMode;
+    }
 
     let matMode = 0;
     if (materialPreset === 'matte') matMode = 1;
@@ -650,14 +700,14 @@ export function AtomsOptimized({
 
     uniforms.uPropEmission.value = propertyEmissionStrength;
 
-    // Etched annotation sync. The texture itself is owned by the caller
-    // (App.tsx builds it from the active annotation text); we just point
-    // the uniform at it and flip the gating int. -1 atomId is the sentinel
-    // for "no etch" — fragments compare via abs(diff) < 0.5 so any value
-    // outside the live atom range trivially fails.
-    uniforms.tEtchTexture.value = etchTexture ?? null;
-    uniforms.uEtchAtomId.value = etchAtomId ?? -1;
-    uniforms.uHasEtch.value = (etchTexture && etchAtomId != null && etchAtomId >= 0) ? 1 : 0;
+    // Etched annotation sync. Only present at premium tier — the engraving
+    // shader path is gated to QUALITY_TIER 2 since it does an extra
+    // texture sample per fragment.
+    if (uniforms.tEtchTexture) {
+      uniforms.tEtchTexture.value = etchTexture ?? null;
+      uniforms.uEtchAtomId.value = etchAtomId ?? -1;
+      uniforms.uHasEtch.value = (etchTexture && etchAtomId != null && etchAtomId >= 0) ? 1 : 0;
+    }
 
     if (colorMode === 'uniform') {
       const [r, g, b] = mapFn(0.0);
@@ -716,12 +766,34 @@ export function AtomsOptimized({
   // useFrame keeps the material uniform pointing at whatever's current,
   // and recomputes the mip count when the texture identity changes (the
   // PMREM mip count is texture.mipmaps.length - 1, or derived from size).
+  // ─── Per-frame uniform updates ──────────────────────────────────────
+  // Two jobs: keep the IBL env texture pointing at scene.environment
+  // (premium-tier only) and keep the vertex-shader LOD pixel-projection
+  // uniform in sync with the active camera + viewport so sub-pixel atom
+  // culling is geometrically correct.
   useFrame(() => {
-    const env = (scene as any).environment as THREE.Texture | null;
     const u = material.uniforms;
-    if (env !== u.tEnvMap.value) {
-      u.tEnvMap.value = env;
-      u.uHasEnv.value = env ? 1 : 0;
+    if (u.tEnvMap) {
+      const env = (scene as any).environment as THREE.Texture | null;
+      if (env !== u.tEnvMap.value) {
+        u.tEnvMap.value = env;
+        u.uHasEnv.value = env ? 1 : 0;
+      }
+    }
+    // Pixel-projection factor for the vertex-side LOD. For a perspective
+    // camera, an atom of world radius r at view-space depth -z projects
+    // to (r / -z) * uPxPerWorldAtUnitDepth pixels. Computed from the
+    // active camera's fov and the renderer's drawing-buffer height — both
+    // can change (window resize, fov adjust) so we refresh per-frame.
+    if (u.uPxPerWorldAtUnitDepth) {
+      const persp = camera as THREE.PerspectiveCamera;
+      if (persp.isPerspectiveCamera) {
+        const dpr = (gl as any).getDrawingBufferSize
+          ? (gl as any).getDrawingBufferSize(new THREE.Vector2()).y
+          : (gl.domElement?.height ?? 720);
+        const fovRad = (persp.fov * Math.PI) / 180;
+        u.uPxPerWorldAtUnitDepth.value = (0.5 * dpr) / Math.tan(fovRad * 0.5);
+      }
     }
   });
 
@@ -881,12 +953,63 @@ export function AtomsOptimized({
     };
   }, [geometry, material]);
 
+  // Tier-derived default for the sub-pixel-cull threshold. Fast tier
+  // aggressively culls atoms that would project to less than ~0.6 px
+  // (invisible at the device's DPR but still costing fragment work);
+  // standard tier culls below ~0.3 px; premium leaves it off so
+  // engineers comparing renders see exactly what's there. The vertex
+  // shader treats 0 as "off" and skips the test entirely.
+  useEffect(() => {
+    if (!material.uniforms.uMinPixelRadius) return;
+    const px =
+      qualityTier === 0 ? 0.6 :
+      qualityTier === 1 ? 0.3 :
+      0.0;
+    material.uniforms.uMinPixelRadius.value = px;
+  }, [material, qualityTier]);
+
+  // Bounding sphere for frustum culling — must exist BEFORE the first
+  // render or Three.js will fall back to computing it from the local-
+  // space quad attribute, which always reads as a tiny sphere at origin
+  // and gets erroneously culled. We size it from the simulation cell
+  // (with a small atom-radius pad) so it's a generous over-estimate of
+  // where any atom could be in world space. Re-runs when the cell
+  // dimensions change, which is essentially per-trajectory.
+  useEffect(() => {
+    if (!frame.boxBounds) {
+      // No cell info — disable culling rather than guess. Sets a
+      // very-large sphere so Three.js never culls.
+      geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 1e6);
+      return;
+    }
+    const bb = frame.boxBounds;
+    const cx = (bb[0] + bb[1]) * 0.5;
+    const cy = (bb[2] + bb[3]) * 0.5;
+    const cz = (bb[4] + bb[5]) * 0.5;
+    const dx = bb[1] - bb[0];
+    const dy = bb[3] - bb[2];
+    const dz = bb[5] - bb[4];
+    // Half-diagonal + max atom radius pad so atoms touching the cell
+    // wall aren't culled early.
+    const radius = 0.5 * Math.sqrt(dx * dx + dy * dy + dz * dz) + 5.0;
+    geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(cx, cy, cz), radius);
+  }, [
+    geometry,
+    frame.boxBounds?.[0], frame.boxBounds?.[1],
+    frame.boxBounds?.[2], frame.boxBounds?.[3],
+    frame.boxBounds?.[4], frame.boxBounds?.[5],
+  ]);
+
   return (
     <mesh
       ref={meshRef}
       geometry={geometry}
       material={material}
-      frustumCulled={false}
+      // Frustum culling on — bounding sphere is set above before first
+      // render. Saves the entire pipeline cost when the camera is pointed
+      // away from the cell, which is most of the camera's working volume
+      // on a 1M-atom scene.
+      frustumCulled={true}
     />
   );
 }

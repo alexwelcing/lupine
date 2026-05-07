@@ -19,10 +19,21 @@
 
 export type DeviceTier = 'mobile' | 'low' | 'desktop' | 'high';
 
+/** Quality tier selects the impostor-sphere fragment-shader complexity.
+ *  See AtomsOptimized.tsx for the per-tier work breakdown. */
+export type QualityTier = 0 | 1 | 2;
+
 interface DeviceProfile {
   tier: DeviceTier;
-  /** Hard cap on rendered atom count. Beyond this, decline the load. */
+  /** Hard cap on rendered atom count. Beyond this, the renderer falls back
+   *  to even more aggressive measures (or, if necessary, declines the load).
+   *  Caps are now MEMORY-driven, not GPU-cost-driven, since the quality-tier
+   *  system makes any tier render any count — they reflect the JS-heap and
+   *  GPU buffer ceiling for impostor representation. ~30 MB of buffers per
+   *  million atoms × CPU + GPU = ~60 MB per million. */
   maxAtoms: number;
+  /** Quality tier the renderer should default to on this device. */
+  qualityTier: QualityTier;
   /** Human-readable reason the cap exists, surfaced in error messaging. */
   reason: string;
 }
@@ -30,27 +41,32 @@ interface DeviceProfile {
 const PROFILES: Record<DeviceTier, DeviceProfile> = {
   mobile: {
     tier: 'mobile',
-    // Mobile GPUs (Apple A-series, Snapdragon Adreno, Mali) tile-render at
-    // limited fragment throughput. ~250K impostor spheres is the empirical
-    // ceiling where a mid-range phone holds 30 fps without thermal throttling.
-    maxAtoms: 250_000,
+    // ~30 MB CPU + ~30 MB GPU per million atoms in the impostor format.
+    // 2M is conservative for modern phones; raise once we add streaming.
+    maxAtoms: 2_000_000,
+    // Fast fragment path: skips gl_FragDepth (restores early-Z), no IBL,
+    // no Cook-Torrance. 5-10× more fragment throughput on tile-based GPUs.
+    qualityTier: 0,
     reason: 'mobile devices have limited GPU memory and fragment throughput',
   },
   low: {
     tier: 'low',
-    maxAtoms: 500_000,
+    maxAtoms: 4_000_000,
+    qualityTier: 1,
     reason: 'this device has limited graphics memory',
   },
   desktop: {
     tier: 'desktop',
-    maxAtoms: 2_000_000,
+    maxAtoms: 10_000_000,
+    qualityTier: 1,
     reason: 'this scene exceeds the safe rendering budget for desktop',
   },
   high: {
     tier: 'high',
-    // Desktop with discrete GPU + plenty of RAM. The renderer itself doesn't
-    // have an architectural limit beyond instance attribute capacity.
-    maxAtoms: 10_000_000,
+    // Discrete GPU + plenty of RAM. The renderer itself doesn't have an
+    // architectural limit beyond instance attribute capacity.
+    maxAtoms: 50_000_000,
+    qualityTier: 2,
     reason: 'this scene exceeds the safe rendering budget',
   },
 };
@@ -104,6 +120,11 @@ export function getDeviceTier(): DeviceTier {
 /** Hard cap for safely-renderable atoms on this device. */
 export function getMaxSafeAtomCount(): number {
   return PROFILES[getDeviceTier()].maxAtoms;
+}
+
+/** Quality tier the renderer should default to on this device. */
+export function getDefaultQualityTier(): QualityTier {
+  return PROFILES[getDeviceTier()].qualityTier;
 }
 
 /** Full profile (cap + tier + reason string for messaging). */

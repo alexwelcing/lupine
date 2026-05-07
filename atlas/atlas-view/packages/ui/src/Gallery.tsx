@@ -513,23 +513,24 @@ export function Gallery() {
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
     if (!example.available) return;
 
-    // Device-capability gate: refuse loads we know will overload the GPU
-    // before fetching a 30 MB+ trajectory and allocating instance buffers.
-    // On mobile the 1M-atom test was triggering page freezes and forcing
-    // device restarts — far worse UX than a clear "won't fit" message.
-    // The reverse side of this cap lives in FileDropZone (post-parse) and
-    // App.tsx (maxAtoms on AtomsOptimized) for defense-in-depth.
+    // Memory-ceiling gate. The renderer's quality tier scales the GPU
+    // cost down for mobile (no gl_FragDepth, no IBL, no Cook-Torrance —
+    // 1M atoms are renderable on a phone now), but it can't shrink the
+    // 30 MB+ trajectory parse + 60 MB of instance buffers an over-cap
+    // load would allocate. Above the cap we'd OOM the tab before the
+    // first frame, so this stays a hard refusal. Below the cap we let
+    // the renderer adapt via its quality tier.
     const profile = getDeviceProfile();
     const estimatedAtoms = parseAtomCountLabel(example.atoms);
     if (estimatedAtoms > profile.maxAtoms) {
       useStore.getState().setError(
         `"${example.title}" has ~${formatAtomCount(estimatedAtoms)} atoms, ` +
-        `which exceeds the ${formatAtomCount(profile.maxAtoms)}-atom ` +
-        `safe-render limit for this device (${profile.reason}). ` +
-        `Open this scene on a desktop with a discrete GPU.`,
+        `over the ${formatAtomCount(profile.maxAtoms)}-atom memory budget ` +
+        `for this device (${profile.reason}). ` +
+        `Open this scene on a desktop with more graphics memory.`,
       );
       // Keep the URL in sync — if we were navigated here via ?sim=, drop
-      // it so reloads don't re-trigger the same crashy load.
+      // it so reloads don't re-trigger the same OOM-prone load.
       if (typeof window !== 'undefined') {
         const url = new URL(window.location.href);
         if (url.searchParams.get('sim') === example.id) {
@@ -892,7 +893,7 @@ function PatchCard({
       onMouseLeave={onLeave}
       disabled={loading || !example.available}
       title={exceedsCap
-        ? `~${example.atoms} atoms exceeds the safe-render limit for this device`
+        ? `~${example.atoms} atoms exceeds the memory budget for this device`
         : undefined}
     >
       <div style={sPatchBorder(threadColor)} />
