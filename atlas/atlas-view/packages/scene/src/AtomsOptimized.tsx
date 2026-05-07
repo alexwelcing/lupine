@@ -1064,7 +1064,6 @@ export function AtomsOptimized({
     // are zeros and would render atoms at the origin. When undefined
     // (the WASM all-at-once path), we treat the full frame as ready.
     const uploadCap = Math.min(frame.natoms, loadedAtomCount ?? frame.natoms);
-    const isStreaming = (loadedAtomCount ?? frame.natoms) < frame.natoms;
     // Chunk only when:
     //   - it's a fresh frame load (otherwise prop changes on the same
     //     frame would flash the scene to empty and re-stream),
@@ -1074,15 +1073,24 @@ export function AtomsOptimized({
     //     instead of saving it).
     const isProgressive = frameChanged && frame.natoms > PROGRESSIVE_THRESHOLD && t === 0;
 
-    // Streaming continuation: same frame, more atoms have arrived.
-    // Resume the existing pump from where it left off without resetting
-    // the cursor. Only triggers when we're already pumping this frame
-    // and `loadedAtomCount` actually grew past our current cursor.
+    // Streaming continuation: pump still has atoms left to process for
+    // this frame. Triggers in two cases:
+    //   (1) more atoms streamed in (uploadCap grew past iCursor) — the
+    //       parser is still feeding us, let the pump catch up.
+    //   (2) streaming just completed (loadedAtomCount caught natoms) —
+    //       the pump is short of natoms, let it finish naturally over
+    //       the next few rAF ticks rather than triggering a sync
+    //       re-upload of the entire 1M-atom prefix.
+    // The trade-off: a prop change (color/scale) made WHILE streaming
+    // is in flight won't propagate to atoms uploaded so far — they
+    // keep their old appearance until streaming completes and a later
+    // prop change runs the sync path. Acceptable for the streaming
+    // load window (a few seconds); user typically isn't adjusting
+    // controls during it.
     if (
       !frameChanged
-      && isStreaming
       && uploadStateRef.current.frame === frame
-      && uploadCap > uploadStateRef.current.iCursor
+      && uploadStateRef.current.iCursor < frame.natoms
     ) {
       uploadStateRef.current.done = false;
       return () => cancelIdle(idleId as any);
