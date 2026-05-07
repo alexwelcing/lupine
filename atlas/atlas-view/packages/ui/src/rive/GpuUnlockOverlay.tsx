@@ -1,22 +1,28 @@
 /**
- * GpuUnlockOverlay — Phase 1 CSS-driven "feature unlock" animation.
+ * GpuUnlockOverlay — GPU "feature unlock" animation overlay.
  *
  * Triggered when the bond detection backend transitions from CPU to WebGPU.
  * The overlay is transparent and non-interactive, composited over the
  * Three.js viewport.
  *
- * Phase 2 will replace the CSS animations with a Rive state machine
- * (.riv file), keeping the same hook interface and DOM structure.
+ * Supports two rendering modes:
+ *   - **CSS Mode** (Phase 1): Pure CSS keyframe animations. Always available.
+ *   - **Rive Mode** (Phase 2): Rive state machine canvas overlay.
+ *     Activated by setting ENABLE_RIVE = true after placing the .riv file
+ *     in packages/ui/src/rive/assets/gpu-unlock.riv
  *
- * Visual sequence:
- *   1. Scanline sweep — accent-colored horizontal line sweeps top→bottom (300ms)
- *   2. Badge materialization — "WebGPU ONLINE" badge fades in at center (400ms)
- *   3. Feature chips cascade — unlocked capabilities slide in from badge (600ms)
- *   4. Settle — badge shrinks to a persistent corner indicator (800ms)
+ * Both modes consume the same `useBackendTransition` hook interface.
  */
 
 import { useEffect, useState } from 'react';
 import { useBackendTransition, type TransitionPhase } from './useBackendTransition';
+import { useRiveUnlock } from './useRiveUnlock';
+
+// ─── Phase 2: Rive Mode ────────────────────────────────────────────────
+// Set to `true` once the .riv file is authored and placed in assets/
+const ENABLE_RIVE = false;
+const RIVE_ASSET_PATH = new URL('./assets/gpu-unlock.riv', import.meta.url).href;
+
 
 // ─── Feature chips that cascade during unlock ──────────────────────────
 const UNLOCK_FEATURES = [
@@ -26,6 +32,56 @@ const UNLOCK_FEATURES = [
 ];
 
 export function GpuUnlockOverlay() {
+  // ─── Rive Mode (Phase 2) ──────────────────────────────────────────
+  // When ENABLE_RIVE is true, delegate entirely to the Rive canvas.
+  // The useRiveUnlock hook handles all state machine input mapping.
+  if (ENABLE_RIVE) {
+    return <GpuUnlockOverlayRive />;
+  }
+
+  // ─── CSS Mode (Phase 1) ───────────────────────────────────────────
+  return <GpuUnlockOverlayCss />;
+}
+
+/**
+ * Rive-powered overlay renderer.
+ * Renders a full-viewport transparent canvas controlled by the
+ * GpuUnlockStateMachine state machine inside the .riv file.
+ *
+ * Note: The useRiveUnlock import is tree-shaken by Vite when ENABLE_RIVE
+ * is false, since the GpuUnlockOverlayRive component is never referenced.
+ */
+function GpuUnlockOverlayRive() {
+  const { RiveComponent, phase, dismiss, isLoaded } = useRiveUnlock({
+    src: RIVE_ASSET_PATH,
+  });
+
+  // Don't render the canvas until Rive is loaded or if we're idle with no active animation
+  if (!isLoaded && phase === 'idle') return null;
+
+  return (
+    <div
+      onClick={phase === 'unlocking' ? dismiss : undefined}
+      style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 500,
+        pointerEvents: phase === 'unlocking' ? 'auto' : 'none',
+        cursor: phase === 'unlocking' ? 'pointer' : 'default',
+      }}
+    >
+      <RiveComponent
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      />
+    </div>
+  );
+}
+
+/** CSS-driven overlay renderer (Phase 1 — current default). */
+function GpuUnlockOverlayCss() {
   const { phase, dismiss } = useBackendTransition();
   const [exitingPhase, setExitingPhase] = useState<TransitionPhase | null>(null);
 

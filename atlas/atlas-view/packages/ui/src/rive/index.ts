@@ -1,10 +1,27 @@
 /**
- * Rive integration layer.
+ * Rive integration layer — GPU Feature Unlock + Micro-Effects.
  *
- * Phase 1: CSS-driven animations wired to Zustand store transitions.
- * Phase 2: Swap CSS for @rive-app/react-canvas state machines.
+ * Two layers:
+ *   - Macro: GpuUnlockOverlay (single-moment power-up animation)
+ *   - Micro: effects/* (15+ small effects distributed across the UI)
+ *
+ * Each layer supports CSS (Phase 1) and Rive (Phase 2) rendering.
  */
 
+// ─── Macro overlay ───
 export { GpuUnlockOverlay } from './GpuUnlockOverlay';
 export { useBackendTransition } from './useBackendTransition';
+export { useRiveUnlock } from './useRiveUnlock';
 export type { TransitionPhase, BackendTransition } from './useBackendTransition';
+
+// ─── Micro-effects ───
+export {
+  RiveEffectLayer,
+  useRiveEffect,
+  ToolbarRipple,
+  ToggleSpark,
+  HeaderShimmer,
+  BreathingDot,
+} from './effects';
+
+
