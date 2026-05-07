@@ -49,6 +49,7 @@ import { ChronosHUD } from './ChronosHUD';
 import { VolcanicHUD } from './VolcanicHUD';
 
 import { useStore } from './store';
+import { getMaxSafeAtomCount } from './deviceCapabilities';
 import { LandingPage } from './LandingPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
@@ -567,6 +568,14 @@ export default function App() {
 
   const isMobile = useMediaQuery('(max-width: 768px)');
 
+  // Device-capability cap on rendered atoms. Computed once at mount —
+  // hardware doesn't change during a session. Last line of defense:
+  // Gallery and FileDropZone refuse loads above this cap, but if a
+  // shareable URL or programmatic load slips a huge trajectory in, the
+  // renderer itself clips the visible instance count rather than
+  // attempting to draw 1M+ impostor spheres on a phone GPU.
+  const deviceMaxAtoms = useMemo(() => getMaxSafeAtomCount(), []);
+
   // Playback timer (replaced with smooth 60fps interpolator)
   const { currentState: interpState, setFrame: setSmoothFrame } = useSmoothFramePlayback(playing, {
     frames: file?.trajectory.frames ?? [],
@@ -998,6 +1007,7 @@ export default function App() {
                   atomColorSource={atomColorSource}
                   scale={atomScale}
                   renderStyle={renderStyle}
+                  maxAtoms={deviceMaxAtoms}
                   onSpatialHash={setSpatialHash}
                   hiddenAtomTypes={hiddenAtomTypes}
                   atomTypeScales={atomTypeScales}

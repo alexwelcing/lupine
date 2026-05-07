@@ -9,6 +9,10 @@ import { useCallback, useRef, useState, useEffect } from 'react';
 import { parseFile, detectFileType } from '@atlas/parsers';
 import { useStore } from './store';
 import { Gallery } from './Gallery';
+import {
+  getDeviceProfile,
+  formatAtomCount,
+} from './deviceCapabilities';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconAtoms = () => (
@@ -77,6 +81,20 @@ export function FileDropZone() {
       }
 
       if (trajectory) {
+        // Device-capability gate. The renderer can technically allocate
+        // multi-million-atom buffers, but pushing that to a phone GPU
+        // freezes the page and requires a device restart. Refuse the
+        // load with a clear message rather than crash the user's device.
+        const profile = getDeviceProfile();
+        const atoms = trajectory.frames[0]?.natoms ?? 0;
+        if (atoms > profile.maxAtoms) {
+          throw new Error(
+            `This trajectory has ${formatAtomCount(atoms)} atoms, ` +
+            `over the ${formatAtomCount(profile.maxAtoms)}-atom limit ` +
+            `for this device (${profile.reason}). ` +
+            `Open it on a desktop with a discrete GPU.`,
+          );
+        }
         setFile({
           name: sorted[0].name,
           size: sorted.reduce((s, f) => s + f.size, 0),

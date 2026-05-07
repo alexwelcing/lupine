@@ -12,6 +12,11 @@ import galleryData from './gallery-data.json';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
+import {
+  getDeviceProfile,
+  parseAtomCountLabel,
+  formatAtomCount,
+} from './deviceCapabilities';
 
 // ─── Types ──────────────────────────────────────────────────────────────
 
@@ -485,6 +490,11 @@ export function Gallery() {
   const [filter, setFilter] = useState<Domain | 'All'>('All');
   const [search, setSearch] = useState('');
 
+  // Device cap is computed once at mount — UA / hardwareConcurrency don't
+  // change during a session. Used to mark cards as "won't fit on this device"
+  // before the user taps and crashes their phone.
+  const deviceCap = useMemo(() => getDeviceProfile().maxAtoms, []);
+
   const filteredExamples = useMemo(() => {
     return EXAMPLES.filter(ex => {
       if (filter !== 'All' && ex.domain !== filter) return false;
@@ -502,6 +512,33 @@ export function Gallery() {
 
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
     if (!example.available) return;
+
+    // Device-capability gate: refuse loads we know will overload the GPU
+    // before fetching a 30 MB+ trajectory and allocating instance buffers.
+    // On mobile the 1M-atom test was triggering page freezes and forcing
+    // device restarts — far worse UX than a clear "won't fit" message.
+    // The reverse side of this cap lives in FileDropZone (post-parse) and
+    // App.tsx (maxAtoms on AtomsOptimized) for defense-in-depth.
+    const profile = getDeviceProfile();
+    const estimatedAtoms = parseAtomCountLabel(example.atoms);
+    if (estimatedAtoms > profile.maxAtoms) {
+      useStore.getState().setError(
+        `"${example.title}" has ~${formatAtomCount(estimatedAtoms)} atoms, ` +
+        `which exceeds the ${formatAtomCount(profile.maxAtoms)}-atom ` +
+        `safe-render limit for this device (${profile.reason}). ` +
+        `Open this scene on a desktop with a discrete GPU.`,
+      );
+      // Keep the URL in sync — if we were navigated here via ?sim=, drop
+      // it so reloads don't re-trigger the same crashy load.
+      if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('sim') === example.id) {
+          url.searchParams.delete('sim');
+          window.history.replaceState({}, '', url);
+        }
+      }
+      return;
+    }
 
     if (!isPopState) {
       const url = new URL(window.location.href);
@@ -558,6 +595,17 @@ export function Gallery() {
       const result = await parseFile(fileObj);
 
       if (result.trajectory) {
+        // Re-check actual parsed atom count against device cap. Catches
+        // gallery entries whose `atoms` label understated the real count.
+        const actualAtoms = result.trajectory.frames[0]?.natoms ?? 0;
+        if (actualAtoms > profile.maxAtoms) {
+          useStore.getState().setError(
+            `"${example.title}" parsed to ${formatAtomCount(actualAtoms)} atoms, ` +
+            `over the ${formatAtomCount(profile.maxAtoms)}-atom limit for this device. ` +
+            `Open this scene on a desktop with a discrete GPU.`,
+          );
+          return;
+        }
         useStore.getState().setFile({
           name: example.title,
           size: blob.size,
@@ -695,6 +743,7 @@ export function Gallery() {
                     example={ex}
                     hovered={hoveredId === ex.id}
                     loading={loadingId === ex.id}
+                    deviceCap={deviceCap}
                     onHover={() => setHoveredId(ex.id)}
                     onLeave={() => setHoveredId(null)}
                     onClick={() => handleLoad(ex, false)}
@@ -729,6 +778,7 @@ function PatchCard({
   example,
   hovered,
   loading,
+  deviceCap,
   onHover,
   onLeave,
   onClick,
@@ -736,10 +786,15 @@ function PatchCard({
   example: GalleryExample;
   hovered: boolean;
   loading: boolean;
+  /** Hard atom-count cap for the visiting device. Cards exceeding this
+   *  render dimmed with a "Too large for this device" badge so the user
+   *  isn't surprised by the error after tapping. */
+  deviceCap: number;
   onHover: () => void;
   onLeave: () => void;
   onClick: () => void;
 }) {
+  const exceedsCap = parseAtomCountLabel(example.atoms) > deviceCap;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imgError, setImgError] = useState(false);
   const [glbRot, setGlbRot] = useState({ x: 0, y: 0 });
@@ -831,11 +886,14 @@ function PatchCard({
 
   return (
     <button
-      style={sPatch(hovered, !example.available, threadColor)}
+      style={sPatch(hovered, !example.available || exceedsCap, threadColor)}
       onClick={onClick}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       disabled={loading || !example.available}
+      title={exceedsCap
+        ? `~${example.atoms} atoms exceeds the safe-render limit for this device`
+        : undefined}
     >
       <div style={sPatchBorder(threadColor)} />
 
@@ -880,6 +938,9 @@ function PatchCard({
           <span style={{ ...sPatchDot, background: domainColor }} />
           {example.domain}
           {!example.available && <span style={sPatchSoon}>Soon</span>}
+          {example.available && exceedsCap && (
+            <span style={{ ...sPatchSoon, color: '#f5a05a' }}>Desktop only</span>
+          )}
         </div>
 
         <h4 style={sPatchTitle}>{example.title}</h4>
