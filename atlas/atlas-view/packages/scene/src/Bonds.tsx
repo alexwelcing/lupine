@@ -12,6 +12,7 @@
  * - Toggle → instant visibility flip, no recomputation
  */
 
+/// <reference path="./vite-env.d.ts" />
 import { useRef, useMemo, useEffect, useState, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -20,9 +21,13 @@ import { getElementSpec, hexToRgb } from '@atlas/core';
 import { useGlobalTimer } from './useTimer';
 import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS, COLORMAPS } from './constants';
 import { useBondGpuPipeline } from './useBondGpuPipeline';
-
-// Worker URL — matches the pattern used in @atlas/parsers
-const BOND_WORKER_URL = new URL('./bondWorker.ts', import.meta.url);
+// Vite ?worker import: produces a real bundled .js worker module in prod.
+// The plain `new URL('./bondWorker.ts', import.meta.url)` form does NOT
+// emit a worker chunk during Vite's prod build, so it 404s at runtime.
+// The triple-slash reference at the top of the file pulls in the ambient
+// `?worker` module declaration from vite-env.d.ts so this resolves both
+// in @atlas/scene's own tsc run and in any consumer (e.g. @atlas/ui).
+import BondWorkerCtor from './bondWorker.ts?worker';
 
 /**
  * Content-equality check for bond-pair Int32Arrays. Used by the bond-
@@ -134,7 +139,7 @@ export function Bonds({
 
   // ─── Web Worker lifecycle ──────────────────────────────────────────
   useEffect(() => {
-    const worker = new Worker(BOND_WORKER_URL, { type: 'module' });
+    const worker = new BondWorkerCtor();
     workerRef.current = worker;
 
     worker.onmessage = (e: MessageEvent) => {
