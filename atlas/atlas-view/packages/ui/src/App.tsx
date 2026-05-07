@@ -58,6 +58,7 @@ import { AnnotationsLayer } from './AnnotationsLayer';
 import { SelectionMarkers } from './SelectionMarkers';
 import { CameraFocus } from './CameraFocus';
 import { AtomTrails } from './AtomTrails';
+import { AtomInfoHUD } from './AtomInfoHUD';
 import { TYPE_RADII } from '@atlas/scene';
 import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
@@ -77,7 +78,7 @@ import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
-import { GpuUnlockOverlay, RiveEffectLayer, HeaderShimmer, ToolbarRipple } from './rive';
+import { GpuUnlockOverlay, RiveEffectLayer, HeaderShimmer, ToolbarRipple, AnimatedToolButton, AnimatedCameraPresetButton } from './rive';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -1064,6 +1065,18 @@ export default function App() {
                   typeRadii={TYPE_RADII}
                 />
 
+                {/* Inline data card next to each selected atom: element,
+                    index, position, available property values, and (for
+                    multi-selects) distance to the first selected atom. Closes
+                    the click → information loop without forcing the user to
+                    open a side panel. */}
+                <AtomInfoHUD
+                  frame={currentFrame}
+                  selectedAtoms={selectedAtoms}
+                  activeProperty={colorProperty ?? undefined}
+                  onDismissCard={(idx) => useStore.getState().setSelectedAtoms(prev => prev.filter(i => i !== idx))}
+                />
+
                 {/* Smoothly dollies camera target toward a single-selection atom.
                     Never pushes camera out — only re-centers and pulls in if the
                     user is far. Disabled during flythrough preview which owns
@@ -1177,10 +1190,10 @@ export default function App() {
               gap: 6,
               zIndex: 150,
             }}>
-              <CameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => setCameraPreset('top')} title="Top view (XY plane)" />
-              <CameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => setCameraPreset('side')} title="Side view (XZ plane)" />
-              <CameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => setCameraPreset('front')} title="Front view (YZ plane)" />
-              <CameraPresetButton label="ISO" active={cameraPreset === 'iso'} onClick={() => setCameraPreset('iso')} title="Isometric view" />
+              <AnimatedCameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => setCameraPreset('top')} title="Top view (XY plane)" />
+              <AnimatedCameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => setCameraPreset('side')} title="Side view (XZ plane)" />
+              <AnimatedCameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => setCameraPreset('front')} title="Front view (YZ plane)" />
+              <AnimatedCameraPresetButton label="ISO" active={cameraPreset === 'iso'} onClick={() => setCameraPreset('iso')} title="Isometric view" />
             </div>
           )}
 
@@ -1211,16 +1224,16 @@ export default function App() {
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}>
-                <ToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
-                <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => setActivePanel('analysis')} />
-                <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => setActivePanel('export')} />
+                <AnimatedToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
+                <AnimatedToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => setActivePanel('analysis')} />
+                <AnimatedToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => setActivePanel('export')} />
                 {/* Telemetry is a developer surface — visible only with ?dev=1.
                     Production users see 3 tabs: Visuals · Analysis · Export. */}
                 {(typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('dev')) && (
-                  <ToolButton icon={<IconTelemetry />} label="Telemetry" active={activePanel === 'telemetry'} onClick={() => setActivePanel('telemetry')} />
+                  <AnimatedToolButton icon={<IconTelemetry />} label="Telemetry" active={activePanel === 'telemetry'} onClick={() => setActivePanel('telemetry')} />
                 )}
                 <div style={{ width: 1, minWidth: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />
-                <ToolButton icon={<IconReset />} label="Reset" onClick={() => {
+                <AnimatedToolButton icon={<IconReset />} label="Reset" onClick={() => {
                   useStore.getState().reset();
                 }} />
               </div>
@@ -1462,87 +1475,7 @@ function SubTabStrip({
   );
 }
 
-function ToolButton({ icon, label, active, onClick }: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  onClick: () => void;
-}) {
-  const [clicked, setClicked] = useState(false);
 
-  const handleClick = useCallback(() => {
-    setClicked(true);
-    onClick();
-    // Reset after ripple duration
-    setTimeout(() => setClicked(false), 350);
-  }, [onClick]);
-
-  return (
-    <button
-      onClick={handleClick}
-      title={label}
-      style={{
-        position: 'relative',
-        display: 'flex', alignItems: 'center', gap: 6,
-        padding: '8px 14px',
-        borderRadius: 12,
-        border: 'none',
-        background: active ? 'var(--accent)' : 'transparent',
-        color: active ? 'white' : 'rgba(255,255,255,0.9)',
-        cursor: 'pointer',
-        transition: 'all 150ms ease-out',
-        fontSize: 13,
-        fontWeight: 500,
-        flexShrink: 0,
-        overflow: 'hidden',
-      }}
-      onMouseEnter={(e) => {
-        if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-      }}
-      onMouseLeave={(e) => {
-        if (!active) e.currentTarget.style.background = 'transparent';
-      }}
-    >
-      <ToolbarRipple fire={clicked} color={active ? '#ffffff' : '#1edce0'} />
-      {icon}
-      <span>{label}</span>
-    </button>
-  );
-}
-
-function CameraPresetButton({ label, active, onClick, title }: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-  title: string;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      title={title}
-      style={{
-        width: 40, height: 32,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 11, fontWeight: 600,
-        color: active ? 'white' : 'rgba(255,255,255,0.7)',
-        background: active ? 'var(--accent)' : 'rgba(0,0,0,0.4)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: 8,
-        cursor: 'pointer',
-        backdropFilter: 'blur(8px)',
-        transition: 'all 100ms ease-out',
-      }}
-      onMouseEnter={(e) => {
-        if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-      }}
-      onMouseLeave={(e) => {
-        if (!active) e.currentTarget.style.background = 'rgba(0,0,0,0.4)';
-      }}
-    >
-      {label}
-    </button>
-  );
-}
 
 function TransportButton({ onClick, title, icon }: {
   onClick: () => void;

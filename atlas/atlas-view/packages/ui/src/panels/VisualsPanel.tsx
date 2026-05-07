@@ -66,6 +66,8 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
 
   const file = useStore(s => s.file);
   const frame = useStore(s => s.frame);
+  const lookPreset = useStore(s => s.postprocessPreset);
+  const setLookPreset = useStore(s => s.setPostprocessPreset);
 
   // Derive system context for recommended settings
   const systemInfo = useMemo(() => {
@@ -144,40 +146,52 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
       <div className="lupine-scroll" style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 
-          {/* ═══ Cinematic Profiles ═══ */}
+          {/* ═══ Look ═══
+              Postprocess preset picker. Each preset is a directorial recipe:
+              HDRI + tone curve + a single signature effect (or none, for
+              Diagram). Replaces the legacy "Cinematic Profiles" panel which
+              mapped to a different abstraction. The legacy applyVisualProfile
+              path remains for store consumers; setPostprocessPreset is the
+              new canonical knob. */}
           <div style={{ background: '#0d1117', border: '1px solid #1f2937', padding: '16px' }}>
             <h3 style={{
               fontSize: 14, fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif',
               letterSpacing: '0.05em', color: '#e2e8f0', textTransform: 'uppercase', margin: '0 0 12px 0',
-            }}>Cinematic Profiles</h3>
+            }}>Look</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
-              {[
-                { id: 'publication', label: 'Publication', desc: 'White background, clean SSAO' },
-                { id: 'neon', label: 'Holographic', desc: 'Void background, emission bloom' },
-                { id: 'cinematic', label: 'Cinematic', desc: 'Dark background, DOF, metallic' },
-                { id: 'raw', label: 'Raw Data', desc: 'Fast rendering, linear mapping' },
-              ].map(p => (
-                <button
-                  key={p.id}
-                  onClick={() => applyVisualProfile(p.id as any)}
-                  title={p.desc}
-                  style={{
-                    padding: '10px 12px', background: activeProfile === p.id ? '#0c1a2a' : '#121418',
-                    border: `1px solid ${activeProfile === p.id ? '#1edce0' : '#334155'}`,
-                    borderRadius: 0, cursor: 'pointer', textAlign: 'left', transition: 'border-color 150ms',
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.borderColor = '#1edce0'}
-                  onMouseLeave={(e) => { if (activeProfile !== p.id) e.currentTarget.style.borderColor = '#334155'; }}
-                >
-                  <div style={{
-                    fontSize: 12, fontWeight: 600, fontFamily: 'Space Grotesk, sans-serif',
-                    color: '#f8fafc', marginBottom: 4,
-                  }}>{p.label}</div>
-                  <div style={{
-                    fontSize: 10, color: '#64748b', lineHeight: '1.4',
-                  }}>{p.desc}</div>
-                </button>
-              ))}
+              {([
+                { id: 'paper',     label: 'Paper',     signature: 'SSAO',          desc: 'Print-faithful · neutral exposure' },
+                { id: 'studio',    label: 'Studio',    signature: 'SSAO + bloom',  desc: 'Balanced default · clean lighting' },
+                { id: 'editorial', label: 'Editorial', signature: 'Strong bloom',  desc: 'Moody · for dark slides' },
+                { id: 'cinematic', label: 'Cinematic', signature: 'DOF + bloom',   desc: 'Hero shot · sunset HDRI' },
+                { id: 'diagram',   label: 'Diagram',   signature: '— none —',      desc: 'Pixel-faithful figure mode' },
+              ] as const).map(p => {
+                const active = lookPreset === p.id;
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => setLookPreset(p.id)}
+                    title={p.desc}
+                    style={{
+                      padding: '10px 12px',
+                      background: active ? '#0c1a2a' : '#121418',
+                      border: `1px solid ${active ? '#1edce0' : '#334155'}`,
+                      borderRadius: 0, cursor: 'pointer', textAlign: 'left', transition: 'border-color 150ms',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.borderColor = '#1edce0'}
+                    onMouseLeave={(e) => { if (!active) e.currentTarget.style.borderColor = '#334155'; }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 4 }}>
+                      <span style={{
+                        fontSize: 12, fontWeight: 600, fontFamily: 'Space Grotesk, sans-serif',
+                        color: '#f8fafc',
+                      }}>{p.label}</span>
+                      <span style={{ fontSize: 9, color: '#1edce0', fontFamily: 'ui-monospace, monospace' }}>{p.signature}</span>
+                    </div>
+                    <div style={{ fontSize: 10, color: '#64748b', lineHeight: '1.4' }}>{p.desc}</div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 

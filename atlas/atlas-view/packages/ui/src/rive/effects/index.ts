@@ -17,6 +17,8 @@ export { RiveEffectLayer } from './RiveEffectLayer';
 export { ToolbarRipple } from './ToolbarRipple';
 export { ToggleSpark } from './ToggleSpark';
 export { AnimatedOrbitalToggle } from './AnimatedOrbitalToggle';
+export { AnimatedToolButton } from './AnimatedToolButton';
+export { AnimatedCameraPresetButton } from './AnimatedCameraPresetButton';
 
 // ─── Ambient (always-on) ───
 export { HeaderShimmer } from './HeaderShimmer';

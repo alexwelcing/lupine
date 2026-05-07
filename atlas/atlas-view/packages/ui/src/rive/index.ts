@@ -21,6 +21,8 @@ export {
   ToolbarRipple,
   ToggleSpark,
   AnimatedOrbitalToggle,
+  AnimatedToolButton,
+  AnimatedCameraPresetButton,
   HeaderShimmer,
   BreathingDot,
 } from './effects';
