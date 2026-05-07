@@ -176,25 +176,47 @@ export class BondPipeline {
       code: bondComputeShaderSource,
     });
 
+    // All three compute entry points share the same bind group at @group(0).
+    // We build an explicit layout so a single bindGroup is compatible with
+    // every pipeline. (With `layout: 'auto'`, each pipeline gets a unique
+    // bind-group layout per its used bindings, and WebGPU validation rejects
+    // a bindGroup made for one auto-layout when set on a different pipeline.)
+    this.bindGroupLayout = this.device.createBindGroupLayout({
+      label: 'Bond Compute Bind Group Layout',
+      entries: [
+        { binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'read-only-storage' } },
+        { binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'read-only-storage' } },
+        { binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },
+        { binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },
+        { binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' } },
+        { binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },
+        { binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },
+      ],
+    });
+
+    const pipelineLayout = this.device.createPipelineLayout({
+      label: 'Bond Compute Pipeline Layout',
+      bindGroupLayouts: [this.bindGroupLayout],
+    });
+
     this.clearGridPipeline = this.device.createComputePipeline({
       label: 'Clear Grid Pipeline',
-      layout: 'auto',
+      layout: pipelineLayout,
       compute: { module, entryPoint: 'main_clear_grid' },
     });
 
     this.buildGridPipeline = this.device.createComputePipeline({
       label: 'Build Grid Pipeline',
-      layout: 'auto',
+      layout: pipelineLayout,
       compute: { module, entryPoint: 'main_grid_build' },
     });
 
     this.bondDetectPipeline = this.device.createComputePipeline({
       label: 'Bond Detect Pipeline',
-      layout: 'auto',
+      layout: pipelineLayout,
       compute: { module, entryPoint: 'main_bond_detect' },
     });
 
-    this.bindGroupLayout = this.bondDetectPipeline.getBindGroupLayout(0);
     this.bindGroup = this.device.createBindGroup({
       layout: this.bindGroupLayout,
       entries: [
