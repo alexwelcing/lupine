@@ -42,6 +42,9 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
     bondColorMode, setBondColorMode,
     useGpuBonds, setUseGpuBonds,
     propertyEmissionStrength, setPropertyEmissionStrength,
+    annotations, addAnnotation, removeAnnotation, clearAnnotations,
+    labelStyle, setLabelStyle,
+    selectedAtoms,
     hiddenAtomTypes, toggleAtomType,
     atomTypeScales, setAtomTypeScale,
     // Materials & Lighting
@@ -346,6 +349,93 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
 
           {/* Post-processing controls live in the dedicated Effects ("Look")
              panel as a directorial preset gallery. Don't duplicate here. */}
+
+          {/* ═══ Annotations ═══ */}
+          <QuantumSection label="Annotations" defaultOpen={false}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 12 }}>
+              <div style={{ fontSize: 11, color: '#94a3b8', lineHeight: 1.5 }}>
+                <strong style={{ color: '#cbd5e1' }}>Shift + click</strong> any atom in the scene to add a label.
+                Same data renders in four distinct presentation modes — pick one and watch the scene re-flex.
+              </div>
+
+              <div>
+                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Label Style</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
+                  <IsotopeChip label="Tag" selected={labelStyle === 'tag'} onClick={() => setLabelStyle('tag')} />
+                  <IsotopeChip label="Glyph" selected={labelStyle === 'glyph'} onClick={() => setLabelStyle('glyph')} />
+                  <IsotopeChip label="Halo" selected={labelStyle === 'halo'} onClick={() => setLabelStyle('halo')} />
+                  <IsotopeChip label="Etched" selected={labelStyle === 'etched'} onClick={() => setLabelStyle('etched')} />
+                </div>
+                <div style={{ fontSize: 10, color: '#64748b', marginTop: 6, lineHeight: 1.4 }}>
+                  {labelStyle === 'tag' && 'Frosted-glass card with leader line. Best for readability.'}
+                  {labelStyle === 'glyph' && 'Big, minimal text floating above the atom. Billboarded.'}
+                  {labelStyle === 'halo' && 'Text characters orbit the atom in 3D, slowly rotating.'}
+                  {labelStyle === 'etched' && 'Subtle inline pin — pairs with shader-side surface engraving.'}
+                </div>
+              </div>
+
+              {selectedAtoms.length > 0 && (
+                <button
+                  onClick={() => {
+                    const atomIndex = selectedAtoms[0];
+                    const text = window.prompt('Annotation text', `atom #${atomIndex}`);
+                    if (text && text.trim()) addAnnotation(atomIndex, text.trim());
+                  }}
+                  style={{
+                    background: 'linear-gradient(135deg, #1e3a5f, #2a5080)',
+                    border: '1px solid #3a6bb0',
+                    borderRadius: 6,
+                    color: '#cfe5ff',
+                    padding: '8px 12px',
+                    fontSize: 12,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Annotate atom #{selectedAtoms[0]}
+                </button>
+              )}
+
+              {annotations.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <span style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase' }}>{annotations.length} pinned</span>
+                    <button
+                      onClick={() => clearAnnotations()}
+                      style={{ background: 'transparent', border: 'none', color: '#64748b', fontSize: 10, cursor: 'pointer', textDecoration: 'underline' }}
+                    >
+                      clear all
+                    </button>
+                  </div>
+                  {annotations.map(ann => (
+                    <div
+                      key={ann.id}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        padding: '4px 8px',
+                        background: 'rgba(30, 41, 59, 0.4)',
+                        borderRadius: 4,
+                        fontSize: 11,
+                      }}
+                    >
+                      <span style={{ color: '#64748b', fontFamily: 'var(--font-mono)', minWidth: 36 }}>#{ann.atomIndex}</span>
+                      <span style={{ color: '#cbd5e1', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ann.text}</span>
+                      <button
+                        onClick={() => removeAnnotation(ann.id)}
+                        style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: 14 }}
+                        title="Remove"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ fontSize: 11, color: '#475569', fontStyle: 'italic' }}>No annotations yet.</div>
+              )}
+            </div>
+          </QuantumSection>
 
           {/* ═══ Environment ═══ */}
           <QuantumSection label="Environment & Overlays" defaultOpen={false}>

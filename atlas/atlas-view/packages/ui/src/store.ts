@@ -11,6 +11,28 @@ import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyl
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
 
+/** A pinned text annotation tied to a specific atom by index in the
+ *  current frame. Persists across frame changes; if the atom moves, the
+ *  label moves with it (the AnnotationsLayer reads the latest position). */
+export interface Annotation {
+  id: string;
+  atomIndex: number;
+  text: string;
+  /** ISO timestamp — used for stable ordering and "newest" hero treatment. */
+  createdAt: number;
+}
+
+/** Visual presentation modes for annotations. Each is a distinct R3F/drei
+ *  technique applied to the same underlying data so the user can compare
+ *  styles without re-authoring the labels themselves.
+ *
+ *  - `tag`     : drei `<Html>` frosted-glass card + SVG leader line. Most readable.
+ *  - `glyph`   : drei `<Text>` SDF floating directly above the atom, billboarded.
+ *  - `halo`    : a 3D ring of text characters orbiting the atom in world space.
+ *  - `etched`  : text rasterized to a texture, sampled inside the atom impostor
+ *                shader, modulating albedo so it reads as engraved into the surface. */
+export type LabelStyle = 'tag' | 'glyph' | 'halo' | 'etched';
+
 export interface BondDataset {
   id: string;
   source: 'webgpu' | 'cpu' | 'file';
@@ -149,6 +171,18 @@ export interface AppState {
 
   // ─── Hover ───
   hoveredAtom: number | null;
+
+  // ─── Annotations ───
+  // Pinned text labels anchored to specific atom indices. The user can
+  // create them by clicking an atom + adding text; multiple distinct
+  // visual styles (tag/glyph/halo/etched) are selected globally so the
+  // user can flex the same data through different presentation modes.
+  annotations: Annotation[];
+  labelStyle: LabelStyle;
+  addAnnotation: (atomIndex: number, text: string) => void;
+  removeAnnotation: (id: string) => void;
+  clearAnnotations: () => void;
+  setLabelStyle: (style: LabelStyle) => void;
 
   // ─── Atom visibility ───
   hiddenAtomTypes: Set<number>;
@@ -319,6 +353,8 @@ const DEFAULTS = {
   showThermo: true,
   selectedAtoms: [] as number[],
   hoveredAtom: null as number | null,
+  annotations: [] as Annotation[],
+  labelStyle: 'tag' as LabelStyle,
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
   anomalyTracking: false,
@@ -538,6 +574,23 @@ export const useStore = create<AppState>()(
     })),
 
     setHoveredAtom: (hoveredAtom) => set({ hoveredAtom }),
+
+    addAnnotation: (atomIndex, text) => set((s) => ({
+      annotations: [
+        ...s.annotations,
+        {
+          id: `ann_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+          atomIndex,
+          text,
+          createdAt: Date.now(),
+        },
+      ],
+    })),
+    removeAnnotation: (id) => set((s) => ({
+      annotations: s.annotations.filter(a => a.id !== id),
+    })),
+    clearAnnotations: () => set({ annotations: [] }),
+    setLabelStyle: (labelStyle) => set({ labelStyle }),
 
     toggleAtomType: (type) => set((s) => {
       const next = new Set(s.hiddenAtomTypes);

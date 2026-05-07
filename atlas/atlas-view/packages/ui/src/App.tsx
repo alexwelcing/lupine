@@ -7,7 +7,7 @@
 
 import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
-import { OrbitControls, GizmoHelper, GizmoViewport, Environment } from '@react-three/drei';
+import { OrbitControls, GizmoHelper, GizmoViewport, Environment, ContactShadows } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import { ScenePostprocessing } from './postprocess/ScenePostprocessing';
 import { POSTPROCESS_PRESETS } from './postprocess/presets';
@@ -54,6 +54,7 @@ import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
+import { AnnotationsLayer } from './AnnotationsLayer';
 import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
 import { ScaleBar } from '@atlas/scene/ScaleBar';
@@ -72,7 +73,7 @@ import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
-import { GpuUnlockOverlay } from './rive';
+import { GpuUnlockOverlay, RiveEffectLayer, HeaderShimmer, ToolbarRipple } from './rive';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -469,6 +470,8 @@ export default function App() {
   const atomColorSource = useStore(s => s.atomColorSource);
   const postprocessPreset = useStore(s => s.postprocessPreset);
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
+  const annotations = useStore(s => s.annotations);
+  const labelStyle = useStore(s => s.labelStyle);
   const ssao = useStore(s => s.ssao);
   const bloom = useStore(s => s.bloom);
   const dof = useStore(s => s.dof);
@@ -551,7 +554,22 @@ export default function App() {
       if (e.key === 't' && !e.metaKey && !e.ctrlKey) setActivePanel('telemetry');
     };
     window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    // Track Shift for the click-to-annotate flow. AtomPicker's onClick can't
+    // see the original DOM event, so we mirror the modifier on a global
+    // ambient flag the click handler reads. Released-on-blur to avoid
+    // sticky state when the user alt-tabs while holding shift.
+    const shiftDown = (e: KeyboardEvent) => { if (e.key === 'Shift') (window as any).__atlasShiftHeld = true; };
+    const shiftUp = (e: KeyboardEvent) => { if (e.key === 'Shift') (window as any).__atlasShiftHeld = false; };
+    const blurReset = () => { (window as any).__atlasShiftHeld = false; };
+    window.addEventListener('keydown', shiftDown);
+    window.addEventListener('keyup', shiftUp);
+    window.addEventListener('blur', blurReset);
+    return () => {
+      window.removeEventListener('keydown', handler);
+      window.removeEventListener('keydown', shiftDown);
+      window.removeEventListener('keyup', shiftUp);
+      window.removeEventListener('blur', blurReset);
+    };
   }, [togglePlay, nextFrame, setActivePanel]);
 
   // URL state restore + auto-load
@@ -957,6 +975,68 @@ export default function App() {
                   <SimulationCell bounds={currentFrame.boxBounds} color="#1e3050" opacity={0.3} />
                 )}
 
+                {/* Contact shadow under the molecule. Sized to box-bounds
+                    diagonal × 1.5 so the soft falloff catches even atoms at
+                    the very edge of the cell. Disabled in 'diagram' preset
+                    (flat, figure-faithful) where any shadow would mislead. */}
+                {currentFrame.boxBounds && postprocessPreset !== 'diagram' && (() => {
+                  const b = currentFrame.boxBounds;
+                  const cx = (b[0] + b[1]) / 2;
+                  const cy = b[2]; // floor = min Y of the cell
+                  const cz = (b[4] + b[5]) / 2;
+                  const dx = b[1] - b[0];
+                  const dz = b[5] - b[4];
+                  const planeSize = Math.max(dx, dz) * 1.6;
+                  return (
+                    <ContactShadows
+                      position={[cx, cy - 0.05, cz]}
+                      scale={planeSize}
+                      blur={2.4}
+                      far={Math.max(20, dx * 0.6)}
+                      opacity={postprocessPreset === 'cinematic' ? 0.55 : 0.32}
+                      resolution={1024}
+                      color="#04060c"
+                    />
+                  );
+                })()}
+
+                {/* Pinned text annotations. The same annotation list renders
+                    in one of four visual styles (tag/glyph/halo/etched) chosen
+                    in the Visuals panel — same data, very different presentations. */}
+                <AnnotationsLayer
+                  frame={currentFrame}
+                  annotations={annotations}
+                  style={labelStyle}
+                  onDismiss={(id) => useStore.getState().removeAnnotation(id)}
+                />
+
+                {/* Click-to-annotate: shift+click any atom prompts for label
+                    text. Plain click selects (existing selectedAtoms slice).
+                    Hover state powers the hover indicator in AtomPicker. */}
+                {spatialHash && (
+                  <AtomPicker
+                    frame={currentFrame}
+                    spatialHash={spatialHash}
+                    enabled
+                    onClick={(atomIndex) => {
+                      if (atomIndex == null) return;
+                      // Read the modifier from the latest mouse event via a
+                      // synthetic check on the document — drei doesn't pass
+                      // the original event through. Cheap workaround.
+                      const isAnnotate = (window as any).__atlasShiftHeld === true;
+                      if (isAnnotate) {
+                        const text = window.prompt('Annotation text', `atom #${atomIndex}`);
+                        if (text && text.trim()) {
+                          useStore.getState().addAnnotation(atomIndex, text.trim());
+                        }
+                      } else {
+                        useStore.getState().setSelectedAtoms([atomIndex]);
+                      }
+                    }}
+                    onHover={(atomIndex) => useStore.getState().setHoveredAtom(atomIndex)}
+                  />
+                )}
+
               </SpatialAnchor>
             )}
 
@@ -975,6 +1055,12 @@ export default function App() {
 
           {/* GPU feature unlock overlay — fires on CPU→WebGPU transition */}
           <GpuUnlockOverlay />
+
+          {/* Micro-effects layer — fires on state transitions (file load, panel, mode, etc.) */}
+          <RiveEffectLayer />
+
+          {/* Ambient header shimmer — subtle top-line glow when a file is loaded */}
+          <HeaderShimmer active={!!file} />
 
           {/* Scale bar for publication figures */}
           {file && currentFrame && showScaleBar && (
@@ -1308,11 +1394,21 @@ function ToolButton({ icon, label, active, onClick }: {
   active?: boolean;
   onClick: () => void;
 }) {
+  const [clicked, setClicked] = useState(false);
+
+  const handleClick = useCallback(() => {
+    setClicked(true);
+    onClick();
+    // Reset after ripple duration
+    setTimeout(() => setClicked(false), 350);
+  }, [onClick]);
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       title={label}
       style={{
+        position: 'relative',
         display: 'flex', alignItems: 'center', gap: 6,
         padding: '8px 14px',
         borderRadius: 12,
@@ -1324,6 +1420,7 @@ function ToolButton({ icon, label, active, onClick }: {
         fontSize: 13,
         fontWeight: 500,
         flexShrink: 0,
+        overflow: 'hidden',
       }}
       onMouseEnter={(e) => {
         if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
@@ -1332,6 +1429,7 @@ function ToolButton({ icon, label, active, onClick }: {
         if (!active) e.currentTarget.style.background = 'transparent';
       }}
     >
+      <ToolbarRipple fire={clicked} color={active ? '#ffffff' : '#1edce0'} />
       {icon}
       <span>{label}</span>
     </button>
