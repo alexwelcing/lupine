@@ -97,14 +97,20 @@ interface AtomsOptimizedProps {
 // ─── GLSL Shaders ────────────────────────────────────────────────────
 
 const IMPOSTOR_VERTEX = /* glsl */ `
-  // Per-instance attributes
+  // Per-instance attributes (Phase 3 packed format).
+  //   instancePosition: vec3 in [0,1] from Uint16-normalized; world =
+  //     pos * uPosScale + uPosOffset.
+  //   instanceRadius: float in [0,1] from Uint8-normalized; world =
+  //     r * uMaxRadius.
+  //   instanceTypeId: integer-valued float (Uint8 not normalized,
+  //     0..255). Direct palette UV.
+  //   instancePropValue: float in [0,1] from Uint8-normalized.
+  //   instanceAtomId: full Float32 — used only by the premium-tier
+  //     etched-label path which needs atom indices > 65535.
   attribute vec3 instancePosition;
   attribute float instanceRadius;
   attribute float instanceTypeId;
   attribute float instancePropValue;
-  // Original atom index in the loaded frame. Used by the etched-label
-  // path so a single atom can be picked out of the instanced batch and
-  // get its annotation text engraved on its surface.
   attribute float instanceAtomId;
 
   // Uniforms for GPU color lookup
@@ -112,6 +118,14 @@ const IMPOSTOR_VERTEX = /* glsl */ `
   uniform sampler2D uColormap;  // 256×1: propValue [0,1] → color
   uniform int uColorMode;       // 0=type, 1=uniform, 2=property
   uniform vec3 uUniformColor;
+
+  // Decode params for the packed instance attributes. Set by App.tsx
+  // from frame.boxBounds and the per-frame radius range; constant for
+  // the duration of the frame, so the shader's per-vertex decode is
+  // two MADs.
+  uniform vec3 uPosScale;
+  uniform vec3 uPosOffset;
+  uniform float uMaxRadius;
 
   // Vertex-side LOD. uPxPerWorldAtUnitDepth = (viewport_height / 2) / tan(fov/2)
   // — multiply by (radius / -viewZ) to get the atom's projected pixel radius
@@ -151,19 +165,23 @@ const IMPOSTOR_VERTEX = /* glsl */ `
       vColor = texture2D(uPalette, vec2(u, 0.5)).rgb;
     }
 
+    // Decode packed instance attributes back to world units.
+    vec3 worldPos = instancePosition * uPosScale + uPosOffset;
+    float radius = instanceRadius * uMaxRadius;
+
     vUv = position.xy;
-    vRadius = instanceRadius;
+    vRadius = radius;
 
     // Transform sphere center to view space
-    vec4 viewCenter4 = modelViewMatrix * vec4(instancePosition, 1.0);
+    vec4 viewCenter4 = modelViewMatrix * vec4(worldPos, 1.0);
     vViewCenter = viewCenter4.xyz;
-    vViewRadius = instanceRadius;
+    vViewRadius = radius;
 
     // Sub-pixel culling. Behind-camera atoms have viewZ > 0 (camera looks
     // -Z); we pass them through so the rasterizer's standard clipping
     // handles them — don't rely on viewZ for the radius math.
     if (uMinPixelRadius > 0.0 && viewCenter4.z < 0.0) {
-      float pixelRadius = instanceRadius * uPxPerWorldAtUnitDepth / -viewCenter4.z;
+      float pixelRadius = radius * uPxPerWorldAtUnitDepth / -viewCenter4.z;
       if (pixelRadius < uMinPixelRadius) {
         // Push outside clip space — guaranteed cull, no fragment work.
         gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
@@ -173,7 +191,7 @@ const IMPOSTOR_VERTEX = /* glsl */ `
 
     // Billboard: offset the quad corner in view space
     vec3 viewPos = viewCenter4.xyz;
-    float expand = instanceRadius * 1.3;
+    float expand = radius * 1.3;
     viewPos.xy += position.xy * expand;
 
     gl_Position = projectionMatrix * vec4(viewPos, 1.0);
@@ -580,27 +598,42 @@ export function AtomsOptimized({
     geo.setAttribute('position', new THREE.BufferAttribute(quadPos, 3));
     geo.setIndex(new THREE.BufferAttribute(quadIdx, 1));
 
-    // Per-instance attributes
-    const posAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
+    // Per-instance attributes — packed (Phase 3) to ~13 bytes/atom
+    // (down from 28). The shader decodes via uniforms (uPosScale /
+    // uPosOffset for position, uMaxRadius for radius). Saves ~30 MB
+    // CPU + 30 MB GPU for a 1M-atom scene.
+    //
+    //   instancePosition: vec3 Uint16 (normalized) → fragment of box,
+    //     decoded as world = pos * uPosScale + uPosOffset. 16 bits per
+    //     axis gives ~0.0015 Å precision in a 100 Å box — well below
+    //     atom radius, visually invisible.
+    //   instanceRadius: Uint8 (normalized) → fraction of uMaxRadius
+    //     (~3 Å at scale=1; tracks scale + per-type overrides). 1/256
+    //     ≈ 0.012 Å, invisible.
+    //   instanceTypeId: Uint8 (NOT normalized) → integer-valued float
+    //     0..255 in the shader. Matches the existing 256-entry
+    //     palette texture.
+    //   instancePropValue: Uint8 (normalized) → property value in
+    //     [0,1]. Drives colormap UV; quantized to 256 colormap stops.
+    //   instanceAtomId: Float32 (kept). Used only by the premium-tier
+    //     etched-label path; needs full int range up to natoms (well
+    //     past Uint16's 65535 ceiling for 1M-atom scenes).
+    const posAttr = new THREE.InstancedBufferAttribute(new Uint16Array(capacity * 3), 3, true /* normalized */);
     posAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instancePosition', posAttr);
 
-    const radAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
+    const radAttr = new THREE.InstancedBufferAttribute(new Uint8Array(capacity), 1, true /* normalized */);
     radAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instanceRadius', radAttr);
 
-    // TypeId and PropValue — the shader does the color lookup
-    const typeAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
+    const typeAttr = new THREE.InstancedBufferAttribute(new Uint8Array(capacity), 1, false /* not normalized */);
     typeAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instanceTypeId', typeAttr);
 
-    const propAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
+    const propAttr = new THREE.InstancedBufferAttribute(new Uint8Array(capacity), 1, true /* normalized */);
     propAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instancePropValue', propAttr);
 
-    // AtomId — original frame index, used by the etched-label fragment
-    // path to single out one instance. f32 holds atom indices up to ~16M
-    // exactly; well above the 1M scene cap.
     const atomIdAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
     atomIdAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instanceAtomId', atomIdAttr);
@@ -639,6 +672,16 @@ export function AtomsOptimized({
       // and viewport size. Cheap when active, no-op otherwise.
       uPxPerWorldAtUnitDepth: { value: 1.0 },
       uMinPixelRadius: { value: 0.0 },
+      // Decode params for the packed (Phase 3) per-instance attributes.
+      // uPosScale × instancePosition + uPosOffset → world position;
+      // uMaxRadius × instanceRadius → world radius. Updated per frame
+      // change (see the upload effect — these are stable for the
+      // duration of a frame). Defaults to identity so a non-streaming
+      // load that hasn't run the upload effect yet still renders
+      // sensibly (atoms at 0..1 in identity world).
+      uPosScale: { value: new THREE.Vector3(1, 1, 1) },
+      uPosOffset: { value: new THREE.Vector3(0, 0, 0) },
+      uMaxRadius: { value: 1.0 },
     };
     if (qualityTier >= 1) {
       // Cook-Torrance / standard tier (no IBL) and premium share these.
@@ -895,6 +938,11 @@ export function AtomsOptimized({
     bsx: number; bsy: number; bsz: number;
     hasBounds: boolean;
     t: number;
+    // Phase 3 quantization params, pre-computed per upload so the
+    // inner write loop stays a few MADs without recomputing per-atom.
+    posOffsetX: number; posOffsetY: number; posOffsetZ: number;
+    posInvScaleX: number; posInvScaleY: number; posInvScaleZ: number;
+    invMaxRadius: number;
   } | null>(null);
 
   /** Process atoms [iStart, iEnd) of the current upload context, writing
@@ -908,13 +956,23 @@ export function AtomsOptimized({
     const positions = frame.positions;
     const types = frame.types;
     const nextPos = nextFrame && nextFrame.natoms === frame.natoms ? nextFrame.positions : null;
-    const { radiiLookup, hiddenLookup, scaleOverrideLookup, nextPropData, bsx, bsy, bsz, hasBounds, t } = ctx;
+    const {
+      radiiLookup, hiddenLookup, scaleOverrideLookup, nextPropData,
+      bsx, bsy, bsz, hasBounds, t,
+      posOffsetX, posOffsetY, posOffsetZ,
+      posInvScaleX, posInvScaleY, posInvScaleZ,
+      invMaxRadius,
+    } = ctx;
     const MAX_TYPES = 256;
 
-    const posArr = (geometry.attributes.instancePosition as THREE.InstancedBufferAttribute).array as Float32Array;
-    const radArr = (geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute).array as Float32Array;
-    const typeArr = (geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute).array as Float32Array;
-    const propArr = (geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute).array as Float32Array;
+    // Packed Phase-3 attribute arrays. Position is Uint16 normalized
+    // (vec3 → 6 bytes); radius/typeId/propValue are Uint8; atomId
+    // stays Float32 because the etched-label path needs the full
+    // integer range.
+    const posArr = (geometry.attributes.instancePosition as THREE.InstancedBufferAttribute).array as Uint16Array;
+    const radArr = (geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute).array as Uint8Array;
+    const typeArr = (geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute).array as Uint8Array;
+    const propArr = (geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute).array as Uint8Array;
     const atomIdArr = (geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute).array as Float32Array;
 
     let visibleCount = visibleStart;
@@ -950,23 +1008,44 @@ export function AtomsOptimized({
       }
 
       const pi = visibleCount * 3;
-      posArr[pi]     = x;
-      posArr[pi + 1] = y;
-      posArr[pi + 2] = z;
+      // Quantize position to Uint16 normalized [0,65535] over the box.
+      // The shader reverses with uPosScale * pos + uPosOffset. Out-of-
+      // box atoms (rare in well-behaved LAMMPS dumps) clamp to box
+      // edges via the Math.max/min. The | 0 truncates to integer for
+      // the Uint16Array store — the array's setter would do this
+      // anyway but explicit truncation matches the intent and lets
+      // the JIT pick the integer type early.
+      let qx = ((x - posOffsetX) * posInvScaleX) * 65535;
+      let qy = ((y - posOffsetY) * posInvScaleY) * 65535;
+      let qz = ((z - posOffsetZ) * posInvScaleZ) * 65535;
+      if (qx < 0) qx = 0; else if (qx > 65535) qx = 65535;
+      if (qy < 0) qy = 0; else if (qy > 65535) qy = 65535;
+      if (qz < 0) qz = 0; else if (qz > 65535) qz = 65535;
+      posArr[pi]     = qx | 0;
+      posArr[pi + 1] = qy | 0;
+      posArr[pi + 2] = qz | 0;
 
-      radArr[visibleCount] = radius;
-      typeArr[visibleCount] = typeId;
+      // Quantize radius to Uint8 normalized [0,255] over uMaxRadius.
+      let qr = radius * invMaxRadius * 255;
+      if (qr < 0) qr = 0; else if (qr > 255) qr = 255;
+      radArr[visibleCount] = qr | 0;
 
-      // Normalized property value (for property color mode)
+      // typeId is integer-valued; clamp to the 8-bit palette range.
+      typeArr[visibleCount] = typeId < 256 ? typeId : 255;
+
+      // Normalized property value (for property color mode), quantized
+      // to Uint8. The value is already in [0,1] from min/max scaling.
+      let propNorm = 0;
       if (propData) {
         let val = propData[i];
         if (nextPropData && nextPropData.length > i) {
           val = val + (nextPropData[i] - val) * t;
         }
-        propArr[visibleCount] = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
-      } else {
-        propArr[visibleCount] = 0.0;
+        propNorm = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
       }
+      let qp = propNorm * 255;
+      if (qp < 0) qp = 0; else if (qp > 255) qp = 255;
+      propArr[visibleCount] = qp | 0;
 
       // Pass through the original atom index so the etched-label fragment
       // can compare against uEtchAtomId. Hidden atoms (skipped above) get
@@ -1023,11 +1102,59 @@ export function AtomsOptimized({
     }
     const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
     const nextPropData = hasPropInterpolation ? (nextFrame!.properties!.get(colorProperty!) ?? null) : null;
+
+    // ─── Phase 3 quantization params ────────────────────────────────
+    // Position: pack into [0, 65535] over the simulation cell. Store
+    // 1/scale rather than scale so the inner loop is two MADs +
+    // multiply-by-65535. The shader's matching uniforms (uPosScale,
+    // uPosOffset) are written below.
+    const posOffsetX = hasBounds ? frame.boxBounds![0] : 0;
+    const posOffsetY = hasBounds ? frame.boxBounds![2] : 0;
+    const posOffsetZ = hasBounds ? frame.boxBounds![4] : 0;
+    const posInvScaleX = hasBounds && bsx > 0 ? 1 / bsx : 1;
+    const posInvScaleY = hasBounds && bsy > 0 ? 1 / bsy : 1;
+    const posInvScaleZ = hasBounds && bsz > 0 ? 1 / bsz : 1;
+
+    // Radius: pack into [0, 255] over the maximum possible radius this
+    // frame could produce. Compute the actual max from the radii table
+    // × scale × per-type override so we get tight quantization (1/256
+    // ≈ 0.4% precision). 1e-3 floor avoids divide-by-zero in pathological
+    // empty frames.
+    let maxRadius = 1e-3;
+    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
+      if (hiddenLookup[typeId]) continue;
+      const r = radiiLookup[typeId] * scale * scaleOverrideLookup[typeId];
+      if (r > maxRadius) maxRadius = r;
+    }
+    const invMaxRadius = 1 / maxRadius;
+
     uploadCtxRef.current = {
       radiiLookup, hiddenLookup, scaleOverrideLookup, nextPropData,
       bsx, bsy, bsz, hasBounds, t,
+      posOffsetX, posOffsetY, posOffsetZ,
+      posInvScaleX, posInvScaleY, posInvScaleZ,
+      invMaxRadius,
     };
-  }, [frame, nextFrame, interpolationFactor, botanicalMode, hiddenAtomTypes, atomTypeScales, colorProperty]);
+
+    // Push the matching shader-side decode uniforms. We do it here
+    // (inside buildUploadCtx) so the uniforms always match the values
+    // baked into the just-computed quantization params, even if the
+    // material has been recompiled (qualityTier change) since the last
+    // upload. The shader reads (instancePosition * uPosScale + uPosOffset)
+    // and (instanceRadius * uMaxRadius) — these uniforms must agree
+    // with what processAtomRange writes or atoms render at the wrong
+    // coordinates.
+    const u = material.uniforms;
+    if (u.uPosOffset && u.uPosScale && u.uMaxRadius) {
+      u.uPosOffset.value.set(posOffsetX, posOffsetY, posOffsetZ);
+      u.uPosScale.value.set(
+        hasBounds ? bsx : 1,
+        hasBounds ? bsy : 1,
+        hasBounds ? bsz : 1,
+      );
+      u.uMaxRadius.value = maxRadius;
+    }
+  }, [frame, nextFrame, interpolationFactor, botanicalMode, hiddenAtomTypes, atomTypeScales, colorProperty, scale, material]);
 
   /** Top-level upload effect. Decides between SYNC (small frames or
    *  interpolated playback) and CHUNKED (large fresh loads) and either
