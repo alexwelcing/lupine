@@ -16,7 +16,7 @@ export default function Footer() {
               <span className="font-serif italic text-sm font-semibold tracking-tight text-[var(--on-surface-variant)]">Lupine</span>
             </Link>
             <p className="text-xs text-[var(--on-surface-variant)] max-w-xs leading-relaxed opacity-60">
-              Unified computational materials science. From quantum DFT to billion-atom MD in one Rust codebase.
+              Geometric error analysis for machine-learned interatomic potentials. The audit layer for the MLIP ecosystem.
             </p>
           </div>
 
@@ -45,7 +45,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-[var(--outline-variant)]/50 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="font-mono text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest opacity-50">
-            &copy; {new Date().getFullYear()} Lupine Materials Science. All rights reserved.
+            &copy; {new Date().getFullYear()} Lupine. Geometric error analysis for atomistic ML.
           </div>
           <div className="font-mono text-[10px] text-[var(--on-surface-variant)] opacity-40">
             Apache 2.0 Licensed

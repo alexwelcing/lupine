@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { PageShell } from '../components/ui/PageShell'
 import { motion } from 'framer-motion'
 
@@ -6,10 +6,10 @@ export const Route = createFileRoute('/about')({
   component: About,
   head: () => ({
     meta: [
-      { title: 'About — Lupine Materials Science' },
-      { name: 'description', content: 'Lupine is a unified computational materials science platform combining quantum DFT, ML potentials, and billion-atom MD in a single Rust codebase. Apache 2.0 licensed.' },
-      { property: 'og:title', content: 'About — Lupine Materials Science' },
-      { property: 'og:description', content: 'From electrons to engineering in one Rust codebase. Open-source. Apache 2.0.' },
+      { title: 'About — Lupine' },
+      { name: 'description', content: 'Lupine is the audit layer for the MLIP ecosystem. Cross-potential geometric error analysis across ≈900 published interatomic potentials. After Transtrum, Sethna, Tadmor. Apache 2.0.' },
+      { property: 'og:title', content: 'About — Lupine' },
+      { property: 'og:description', content: 'The audit layer for atomistic ML. Cross-potential geometric error analysis. Apache 2.0.' },
       { property: 'og:url', content: 'https://lupine.science/about' },
     ],
   }),
@@ -18,40 +18,40 @@ export const Route = createFileRoute('/about')({
 const STACK_ITEMS = [
   {
     label: 'Rust + WASM',
-    desc: 'Memory-safe, zero-cost abstractions for compute-heavy potential evaluation and binary asset parsing. Compiles to WASM for browser-native performance.',
+    desc: 'Memory-safe, deterministic builds for the audit engine. A single static binary deploys cleanly into air-gapped environments — bit-identical from one build to the next.',
     accent: 'var(--primary)',
   },
   {
     label: 'WebGPU',
-    desc: 'GPU-accelerated rendering for 10M+ atom visualization at 60fps. Publication-quality SSAO, depth of field, and bloom — no install required.',
+    desc: 'For inspection of the cross-potential error manifold, not for the MD hot path. Researchers explore eigenvalue spectra, MEAM-outlier loadings, and per-property residuals at interactive frame rates.',
     accent: 'var(--accent-cyan)',
   },
   {
     label: 'TanStack Start',
-    desc: 'Type-safe SSR, file-based routing, and React Query for real-time data. Server functions connect directly to edge APIs.',
+    desc: 'Type-safe SSR, file-based routing. The marketing site, the manifest browser, and the research console share a single codebase.',
     accent: 'var(--violet-500)',
   },
   {
     label: 'Cloudflare Workers',
-    desc: 'Edge-deployed APIs on D1 databases. Sub-50ms latency globally. Powers the Live Lab telemetry and autonomous research pipeline.',
+    desc: 'Edge-deployed APIs on D1 for the public manifest ledger. Single-tenant VPC and air-gapped deployments are static-binary installs, no Workers dependency.',
     accent: 'var(--secondary)',
   },
 ]
 
 const MILESTONES = [
-  { date: 'Q1 2025', title: 'Hypothesis Engine', desc: 'First autonomous hypothesis generation from OpenKIM benchmark data.' },
-  { date: 'Q2 2025', title: 'Hyper-Ribbon Discovery', desc: 'Discovered that IP error manifolds are low-dimensional hyper-ribbons. Preprint published.' },
-  { date: 'Q3 2025', title: 'Atlas Viewer v1', desc: 'WebGPU molecular viewer launched. First drag-and-drop LAMMPS visualization in browser.' },
-  { date: 'Q1 2026', title: 'Corpus Expansion', desc: '953 potentials, 18 functional-form families, 7,940 benchmark records. Fingerprint hypothesis confirmed at p<0.001.' },
-  { date: 'Q2 2026', title: 'GLIM-THINK Swarm', desc: 'Five-agent autonomous research swarm deployed with hourly public broadcasts.' },
+  { date: 'Q1 2025', title: 'First cross-potential PCA', desc: 'Initial corpus, OpenKIM ingestion, hyper-ribbon classifier patterned on Transtrum, Machta & Sethna (2011).' },
+  { date: 'Q2 2025', title: 'IMMI submission', desc: 'Cross-potential PCA error analysis preprint. 559-potential corpus.' },
+  { date: 'Q3 2025', title: 'Atlas Viewer v1', desc: 'WebGPU exploration of the error manifold. Drag-and-drop LAMMPS trajectories alongside the audit, in-browser.' },
+  { date: 'Q1 2026', title: 'Corpus expansion', desc: '953 potentials, 18 functional-form families, 7,940 benchmark records. Fingerprint significant at p<0.001 globally; ribbon survives orthogonalization.' },
+  { date: 'Q2 2026', title: 'Harden stage in production', desc: 'Five-agent harden swarm deployed; caught two of its own statistical artifacts (one survived, one did not). Snapshot + de-dup rule shipped with every release.' },
 ]
 
 function About() {
   return (
     <PageShell
       kicker="ABOUT LUPINE"
-      title="Materials infrastructure for a sovereign future."
-      subtitle="Lupine is a unified computational materials science platform. We combine quantum DFT, machine-learned interatomic potentials, and billion-atom molecular dynamics in a single Rust codebase — from electrons to engineering insights."
+      title="The audit layer for atomistic ML."
+      subtitle="Lupine measures where machine-learned interatomic potentials fail, and why, across the population of published potentials. We do not train another foundation MLIP. We sit beside the integrators (LAMMPS, ASE, KIM) the customer already trusts and write a citable error budget."
       maxWidth="5xl"
     >
       {/* Mission Statement */}
@@ -63,28 +63,18 @@ function About() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[var(--on-surface-variant)] leading-relaxed">
               <div>
                 <p className="mb-4">
-                  Materials science is stuck. Researchers juggle FORTRAN codes from the 1980s,
-                  commercial black boxes that cost $50k/seat, and a fragmented ecosystem of
-                  incompatible file formats. Every lab reinvents the same parsing, the same
-                  visualization, the same benchmarking pipeline.
+                  Universal MLIPs have plateaued. UMA, MACE-MP, Orb, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery, the leaderboard maintainers themselves note ~97k prototype overlap between sAlex and the WBM test set, and Deng et al. (<em>npj Comput. Mater.</em> 2024) showed that low test MAE does not prevent systematic PES softening at surfaces, defects, and migration barriers.
                 </p>
                 <p>
-                  Meanwhile, machine-learned interatomic potentials (MLIPs) are transforming
-                  what's computationally possible — but they exist as scattered papers with
-                  no unified evaluation framework.
+                  In other words: the field has gotten very good at training universal potentials and is still bad at telling the user when to trust one. That is the gap.
                 </p>
               </div>
               <div>
                 <p className="mb-4">
-                  Lupine replaces this fragmented stack with a single, modern codebase written
-                  in Rust — memory-safe, GPU-accelerated, and with ML potentials as a
-                  first-class citizen. Everything from parsing LAMMPS dump files to running
-                  billion-atom simulations to publishing interactive visualizations happens
-                  in one unified system.
+                  Lupine is the audit layer. Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson's-paradox detection across ≈900 published potentials — including the universal ones — interpreted through the sloppy-models geometric framework of Transtrum, Machta &amp; Sethna (2011) and the Bayesian-ensemble lineage of Frederiksen, Jacobsen, Brown &amp; Sethna (2004).
                 </p>
                 <p>
-                  Every nation needs sovereign materials simulation infrastructure.
-                  We're building it in the open, under Apache 2.0.
+                  We do not replace DFT, LAMMPS, or any MLIP. We measure where each MLIP is unsafe to extrapolate and write that out as a citable error budget. We are building the trust layer in the open, under Apache 2.0.
                 </p>
               </div>
             </div>
@@ -96,7 +86,7 @@ function About() {
       <section className="mb-16">
         <div className="mb-8">
           <span className="mono-label text-[var(--secondary)] tracking-[0.3em] block mb-3">TECHNICAL FOUNDATION</span>
-          <h2 className="text-3xl">The Stack</h2>
+          <h2 className="text-3xl">The stack</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {STACK_ITEMS.map((item, i) => (
@@ -156,10 +146,9 @@ function About() {
             className="absolute inset-0 -z-[1] pointer-events-none"
             style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(59,130,246,0.06), transparent 70%)' }}
           />
-          <h2 className="text-3xl mb-4">Let's build together.</h2>
+          <h2 className="text-3xl mb-4">Three paths in.</h2>
           <p className="text-[var(--on-surface-variant)] mb-8 max-w-lg mx-auto">
-            If you work in computational materials science, aerospace, energy storage,
-            or deep tech — we should talk.
+            Researchers go to the science. Industry teams pilot a wedge — solid-state electrolytes, Ni-base superalloys, catalysis. Investors find us in the footer.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
