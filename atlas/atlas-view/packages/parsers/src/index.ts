@@ -6,6 +6,7 @@
  */
 
 import type { Frame, Trajectory, ThermoData } from '@atlas/core/types';
+import { parseDumpStream, parseDumpStreamFromBytes, readableStreamToAsyncIterable } from './dumpStreamParser';
 
 let worker: Worker | null = null;
 let messageId = 0;
@@ -270,6 +271,142 @@ export async function parseDataFile(file: File): Promise<Trajectory> {
     globalBounds: { min: [minX, minY, minZ], max: [maxX, maxY, maxZ] },
   };
 }
+
+/**
+ * Streaming dump parser entry. Yields a `header` event first (with the
+ * Frame's TypedArrays pre-allocated to natoms but populated to 0), then
+ * `progress` events as atom batches land, then a final `complete`.
+ *
+ * Suitable for the within-frame progressive rendering path: callers
+ * mount the Frame in the store on `header`, then bump a
+ * `loadedAtomCount` field on each `progress` so the renderer can grow
+ * `geometry.instanceCount` without waiting for the whole file to finish.
+ *
+ * The streaming parser handles only orthogonal-box, simple-column LAMMPS
+ * dumps (id type x y z, any order). Triclinic boxes, scaled coordinates,
+ * and per-atom properties fall back to the WASM all-at-once path —
+ * `canStreamDump()` checks the file head and reports whether streaming
+ * is safe before we commit to it. Caller is expected to read the
+ * file's text once (via `file.text()` or fetched stream) and pass it in
+ * — we don't try to be clever with FileReader.
+ *
+ * The Trajectory wrapper is mounted on `header` with a single
+ * partial-frame, then mutated in-place as atoms arrive — keeping the
+ * render path's "Frame is fixed-natoms" invariant intact while the
+ * `loadedAtomCount` gates visible work.
+ */
+export async function* parseDumpFileStreaming(text: string): AsyncGenerator<
+  | { type: 'header'; trajectory: Trajectory; frame: Frame }
+  | { type: 'progress'; loadedAtoms: number }
+  | { type: 'complete'; loadedAtoms: number }
+> {
+  let trajectory: Trajectory | null = null;
+  for await (const event of parseDumpStream(text)) {
+    if (event.type === 'header') {
+      trajectory = {
+        frames: [event.frame],
+        totalFrames: 1,
+        atomTypes: [], // populated lazily by the renderer/store as atoms arrive
+        globalBounds: {
+          min: [event.frame.boxBounds[0], event.frame.boxBounds[2], event.frame.boxBounds[4]],
+          max: [event.frame.boxBounds[1], event.frame.boxBounds[3], event.frame.boxBounds[5]],
+        },
+      };
+      yield { type: 'header', trajectory, frame: event.frame };
+    } else if (event.type === 'progress') {
+      yield { type: 'progress', loadedAtoms: event.loadedAtoms };
+    } else if (event.type === 'complete') {
+      yield { type: 'complete', loadedAtoms: event.loadedAtoms };
+    }
+  }
+}
+
+/** Stream-parse from a network Response. Atoms render before the file
+ *  finishes downloading — the dominant network-bound case for the
+ *  gallery's huge fixtures. The Trajectory wrapper is mounted on the
+ *  `header` event with a single partial-frame, then mutated in place
+ *  as bytes arrive (same contract as `parseDumpFileStreaming`).
+ *
+ *  Falls back to fully-buffered text parsing if `response.body` is
+ *  unavailable (older runtimes, or after `.text()` has already
+ *  consumed the body upstream). Caller is expected to have called
+ *  `canStreamDump()` on a peeked head; if the stream turns out to be
+ *  unsupported (triclinic, missing columns), the underlying parser
+ *  throws and the caller falls back to the WASM path. */
+export async function* parseDumpResponseStreaming(
+  response: Response,
+): AsyncGenerator<
+  | { type: 'header'; trajectory: Trajectory; frame: Frame }
+  | { type: 'progress'; loadedAtoms: number }
+  | { type: 'complete'; loadedAtoms: number }
+> {
+  if (!response.body) {
+    const text = await response.text();
+    yield* parseDumpFileStreaming(text);
+    return;
+  }
+  const byteIter = readableStreamToAsyncIterable(response.body);
+  let trajectory: Trajectory | null = null;
+  for await (const event of parseDumpStreamFromBytes(byteIter)) {
+    if (event.type === 'header') {
+      trajectory = {
+        frames: [event.frame],
+        totalFrames: 1,
+        atomTypes: [],
+        globalBounds: {
+          min: [event.frame.boxBounds[0], event.frame.boxBounds[2], event.frame.boxBounds[4]],
+          max: [event.frame.boxBounds[1], event.frame.boxBounds[3], event.frame.boxBounds[5]],
+        },
+      };
+      yield { type: 'header', trajectory, frame: event.frame };
+    } else if (event.type === 'progress') {
+      yield { type: 'progress', loadedAtoms: event.loadedAtoms };
+    } else if (event.type === 'complete') {
+      yield { type: 'complete', loadedAtoms: event.loadedAtoms };
+    }
+  }
+}
+
+/** Stream-parse from a `File`'s `.stream()`. Same contract as the
+ *  Response variant; used by FileDropZone for big drag-dropped dumps.
+ *  Note: in many browsers `File.stream()` actually delivers the whole
+ *  blob in one chunk (no progressive read for local files), but the
+ *  parser progress events still drive the renderer's incremental
+ *  upload — the network round-trip win disappears, but the parse-
+ *  blocks-everything regression we saw with `.text()` is gone. */
+export async function* parseDumpFileStreamingFromFile(
+  file: File,
+): AsyncGenerator<
+  | { type: 'header'; trajectory: Trajectory; frame: Frame }
+  | { type: 'progress'; loadedAtoms: number }
+  | { type: 'complete'; loadedAtoms: number }
+> {
+  const stream = file.stream() as ReadableStream<Uint8Array>;
+  const byteIter = readableStreamToAsyncIterable(stream);
+  let trajectory: Trajectory | null = null;
+  for await (const event of parseDumpStreamFromBytes(byteIter)) {
+    if (event.type === 'header') {
+      trajectory = {
+        frames: [event.frame],
+        totalFrames: 1,
+        atomTypes: [],
+        globalBounds: {
+          min: [event.frame.boxBounds[0], event.frame.boxBounds[2], event.frame.boxBounds[4]],
+          max: [event.frame.boxBounds[1], event.frame.boxBounds[3], event.frame.boxBounds[5]],
+        },
+      };
+      yield { type: 'header', trajectory, frame: event.frame };
+    } else if (event.type === 'progress') {
+      yield { type: 'progress', loadedAtoms: event.loadedAtoms };
+    } else if (event.type === 'complete') {
+      yield { type: 'complete', loadedAtoms: event.loadedAtoms };
+    }
+  }
+}
+
+/** Re-export so callers can decide streaming vs. WASM up-front without
+ *  digging into the implementation module. */
+export { canStreamDump } from './dumpStreamParser';
 
 /** Auto-parse a file based on detected type */
 export async function parseFile(file: File): Promise<{

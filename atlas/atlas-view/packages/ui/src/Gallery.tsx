@@ -12,6 +12,11 @@ import galleryData from './gallery-data.json';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
+import {
+  getDeviceProfile,
+  parseAtomCountLabel,
+  formatAtomCount,
+} from './deviceCapabilities';
 
 // ─── Types ──────────────────────────────────────────────────────────────
 
@@ -485,6 +490,11 @@ export function Gallery() {
   const [filter, setFilter] = useState<Domain | 'All'>('All');
   const [search, setSearch] = useState('');
 
+  // Device cap is computed once at mount — UA / hardwareConcurrency don't
+  // change during a session. Used to mark cards as "won't fit on this device"
+  // before the user taps and crashes their phone.
+  const deviceCap = useMemo(() => getDeviceProfile().maxAtoms, []);
+
   const filteredExamples = useMemo(() => {
     return EXAMPLES.filter(ex => {
       if (filter !== 'All' && ex.domain !== filter) return false;
@@ -502,6 +512,34 @@ export function Gallery() {
 
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
     if (!example.available) return;
+
+    // Memory-ceiling gate. The renderer's quality tier scales the GPU
+    // cost down for mobile (no gl_FragDepth, no IBL, no Cook-Torrance —
+    // 1M atoms are renderable on a phone now), but it can't shrink the
+    // 30 MB+ trajectory parse + 60 MB of instance buffers an over-cap
+    // load would allocate. Above the cap we'd OOM the tab before the
+    // first frame, so this stays a hard refusal. Below the cap we let
+    // the renderer adapt via its quality tier.
+    const profile = getDeviceProfile();
+    const estimatedAtoms = parseAtomCountLabel(example.atoms);
+    if (estimatedAtoms > profile.maxAtoms) {
+      useStore.getState().setError(
+        `"${example.title}" has ~${formatAtomCount(estimatedAtoms)} atoms, ` +
+        `over the ${formatAtomCount(profile.maxAtoms)}-atom memory budget ` +
+        `for this device (${profile.reason}). ` +
+        `Open this scene on a desktop with more graphics memory.`,
+      );
+      // Keep the URL in sync — if we were navigated here via ?sim=, drop
+      // it so reloads don't re-trigger the same OOM-prone load.
+      if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('sim') === example.id) {
+          url.searchParams.delete('sim');
+          window.history.replaceState({}, '', url);
+        }
+      }
+      return;
+    }
 
     if (!isPopState) {
       const url = new URL(window.location.href);
@@ -550,21 +588,122 @@ export function Gallery() {
         return;
       }
 
-      const resp = await fetch(url);
-      if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
-      const blob = await resp.blob();
-      const fileObj = new File([blob], example.file.split('/').pop() ?? 'file.dump');
-      const { parseFile } = await import('@atlas/parsers');
-      const result = await parseFile(fileObj);
+      // Streaming-eligible? The streaming dump parser handles the simple
+      // single-frame, orthogonal-box, id/type/x/y/z dialect that the
+      // gallery fixtures use. We do TWO fetches:
+      //   1. HEAD or Range-byte=0-4095 fetch to probe size + format
+      //      WITHOUT pulling the whole file into memory.
+      //   2. If streaming-eligible, full GET — but with `response.body`
+      //      consumed as a stream so atoms paint while bytes are still
+      //      arriving over the network.
+      // For dev / static-server hosts that don't honor Range requests
+      // we still issue a normal GET and read the head from blob.slice;
+      // the fall-through path doesn't pre-stream.
+      const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;  // 5 MB
+      const STREAMING_ATOM_THRESHOLD = 100_000;
+      const looksDumpExt = /\.(lammpstrj|dump)$/i.test(example.file);
+      let usedStreaming = false;
 
-      if (result.trajectory) {
-        useStore.getState().setFile({
-          name: example.title,
-          size: blob.size,
-          trajectory: result.trajectory,
-          thermo: result.thermo ?? null,
-          sourceUrl: url,
-        });
+      if (looksDumpExt) {
+        // Probe head with a Range request — much cheaper than pulling
+        // the full file. Servers that ignore Range return the whole
+        // file; we still only read the first 4 KB from the response.
+        const probe = await fetch(url, { headers: { Range: 'bytes=0-4095' } });
+        if (!probe.ok && probe.status !== 206) {
+          throw new Error(`Failed to fetch: ${probe.status}`);
+        }
+        const probeBlob = await probe.blob();
+        const head = await probeBlob.slice(0, 4096).text();
+        // Total size: prefer Content-Range from the partial response,
+        // fall back to Content-Length on the original probe (servers
+        // that returned the full body), or to the blob size itself.
+        const contentRange = probe.headers.get('content-range') ?? '';
+        const totalMatch = contentRange.match(/\/(\d+)$/);
+        const totalSize = totalMatch
+          ? parseInt(totalMatch[1], 10)
+          : (parseInt(probe.headers.get('content-length') ?? '0', 10) || probeBlob.size);
+
+        const { canStreamDump } = await import('@atlas/parsers');
+        const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
+        const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
+
+        if (
+          canStreamDump(head)
+          && totalSize > STREAMING_BYTES_THRESHOLD
+          && headerAtoms >= STREAMING_ATOM_THRESHOLD
+        ) {
+          if (headerAtoms > profile.maxAtoms) {
+            useStore.getState().setError(
+              `"${example.title}" has ${formatAtomCount(headerAtoms)} atoms, ` +
+              `over the ${formatAtomCount(profile.maxAtoms)}-atom limit for this device. ` +
+              `Open this scene on a desktop with a discrete GPU.`,
+            );
+            return;
+          }
+          // Real streaming: full fetch, response.body consumed as a
+          // ReadableStream. Atoms render while bytes are still arriving.
+          const streamResp = await fetch(url);
+          if (!streamResp.ok) throw new Error(`Failed to fetch: ${streamResp.status}`);
+          const { parseDumpResponseStreaming } = await import('@atlas/parsers');
+          const store = useStore.getState();
+          for await (const event of parseDumpResponseStreaming(streamResp)) {
+            if (event.type === 'header') {
+              store.setFile({
+                name: example.title,
+                size: totalSize,
+                trajectory: event.trajectory,
+                thermo: null,
+                sourceUrl: url,
+              });
+              // setFile defaulted loadedAtomCount to natoms (the
+              // pre-allocated TypedArray length); reset to 0 so the
+              // renderer doesn't flash uninitialized memory before
+              // the first chunk lands. Both updates batch into one
+              // render.
+              store.setLoadedAtomCount(0);
+            } else if (event.type === 'progress') {
+              store.setLoadedAtomCount(event.loadedAtoms);
+              // Yield to the renderer between chunks so atoms paint
+              // and the page stays interactive.
+              await new Promise<void>((r) => requestAnimationFrame(() => r()));
+            } else if (event.type === 'complete') {
+              store.setLoadedAtomCount(event.loadedAtoms);
+            }
+          }
+          usedStreaming = true;
+          return;
+        }
+      }
+
+      if (!usedStreaming) {
+        // WASM path. Same flow as before — used for small files,
+        // non-dump formats, multi-frame, triclinic, or any dialect the
+        // streaming parser declined.
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
+        const blob = await resp.blob();
+        const fileObj = new File([blob], example.file.split('/').pop() ?? 'file.dump');
+        const { parseFile } = await import('@atlas/parsers');
+        const result = await parseFile(fileObj);
+
+        if (result.trajectory) {
+          const actualAtoms = result.trajectory.frames[0]?.natoms ?? 0;
+          if (actualAtoms > profile.maxAtoms) {
+            useStore.getState().setError(
+              `"${example.title}" parsed to ${formatAtomCount(actualAtoms)} atoms, ` +
+              `over the ${formatAtomCount(profile.maxAtoms)}-atom limit for this device. ` +
+              `Open this scene on a desktop with a discrete GPU.`,
+            );
+            return;
+          }
+          useStore.getState().setFile({
+            name: example.title,
+            size: blob.size,
+            trajectory: result.trajectory,
+            thermo: result.thermo ?? null,
+            sourceUrl: url,
+          });
+        }
       }
     } catch (err: any) {
       console.warn(`Gallery load failed for ${example.id}:`, err.message);
@@ -695,6 +834,7 @@ export function Gallery() {
                     example={ex}
                     hovered={hoveredId === ex.id}
                     loading={loadingId === ex.id}
+                    deviceCap={deviceCap}
                     onHover={() => setHoveredId(ex.id)}
                     onLeave={() => setHoveredId(null)}
                     onClick={() => handleLoad(ex, false)}
@@ -712,6 +852,7 @@ export function Gallery() {
               example={ex}
               hovered={hoveredId === ex.id}
               loading={loadingId === ex.id}
+              deviceCap={deviceCap}
               onHover={() => setHoveredId(ex.id)}
               onLeave={() => setHoveredId(null)}
               onClick={() => handleLoad(ex, false)}
@@ -729,6 +870,7 @@ function PatchCard({
   example,
   hovered,
   loading,
+  deviceCap,
   onHover,
   onLeave,
   onClick,
@@ -736,10 +878,15 @@ function PatchCard({
   example: GalleryExample;
   hovered: boolean;
   loading: boolean;
+  /** Hard atom-count cap for the visiting device. Cards exceeding this
+   *  render dimmed with a "Too large for this device" badge so the user
+   *  isn't surprised by the error after tapping. */
+  deviceCap: number;
   onHover: () => void;
   onLeave: () => void;
   onClick: () => void;
 }) {
+  const exceedsCap = parseAtomCountLabel(example.atoms) > deviceCap;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imgError, setImgError] = useState(false);
   const [glbRot, setGlbRot] = useState({ x: 0, y: 0 });
@@ -831,11 +978,14 @@ function PatchCard({
 
   return (
     <button
-      style={sPatch(hovered, !example.available, threadColor)}
+      style={sPatch(hovered, !example.available || exceedsCap, threadColor)}
       onClick={onClick}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       disabled={loading || !example.available}
+      title={exceedsCap
+        ? `~${example.atoms} atoms exceeds the memory budget for this device`
+        : undefined}
     >
       <div style={sPatchBorder(threadColor)} />
 
@@ -880,6 +1030,9 @@ function PatchCard({
           <span style={{ ...sPatchDot, background: domainColor }} />
           {example.domain}
           {!example.available && <span style={sPatchSoon}>Soon</span>}
+          {example.available && exceedsCap && (
+            <span style={{ ...sPatchSoon, color: '#f5a05a' }}>Desktop only</span>
+          )}
         </div>
 
         <h4 style={sPatchTitle}>{example.title}</h4>

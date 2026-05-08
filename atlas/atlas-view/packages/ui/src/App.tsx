@@ -49,9 +49,12 @@ import { ChronosHUD } from './ChronosHUD';
 import { VolcanicHUD } from './VolcanicHUD';
 
 import { useStore } from './store';
+import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities';
 import { LandingPage } from './LandingPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
+import { AtomClusters } from '@atlas/scene/AtomClusters';
+import { buildClusters, type Clusters } from '@atlas/scene/ClusterBuilder';
 import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
 import { AnnotationsLayer } from './AnnotationsLayer';
@@ -561,11 +564,27 @@ export default function App() {
   const ambientLightIntensity = useStore(s => s.ambientLightIntensity);
   const dirLightIntensity = useStore(s => s.dirLightIntensity);
   const atomTexture = useStore(s => s.atomTexture);
+  const loadedAtomCount = useStore(s => s.loadedAtomCount);
+  // Cluster splats for huge-scene LOD (Phase 4). Built once per frame
+  // identity, AFTER streaming completes — running on a partial frame
+  // would aggregate uninitialized zero-positions into a giant fake
+  // cluster at the origin. Stored as React state so the cluster mesh
+  // remounts when the build finishes.
+  const [clusters, setClusters] = useState<Clusters | null>(null);
 
   // Spatial hash for atom picking
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
+
+  // Device-capability budget. Computed once at mount — hardware doesn't
+  // change during a session. The cap reflects MEMORY ceiling now (not GPU
+  // shader cost) since the quality-tier system below makes any tier render
+  // any count. The fast tier specifically restores early-Z on mobile by
+  // skipping gl_FragDepth, so 1M impostor spheres become feasible on a
+  // phone where the premium shader would freeze the page.
+  const deviceMaxAtoms = useMemo(() => getMaxSafeAtomCount(), []);
+  const deviceQualityTier = useMemo(() => getDefaultQualityTier(), []);
 
   // Playback timer (replaced with smooth 60fps interpolator)
   const { currentState: interpState, setFrame: setSmoothFrame } = useSmoothFramePlayback(playing, {
@@ -675,6 +694,47 @@ export default function App() {
 
   const currentFrame = file?.trajectory.frames[frame];
   const totalFrames = file?.trajectory.totalFrames ?? 0;
+
+  // Build cluster splats once streaming completes on a sufficiently
+  // large frame. Skips small frames (cluster overhead doesn't pay off
+  // below ~50K atoms), and skips during streaming (ClusterBuilder
+  // would aggregate the unfilled zero-position tail into a giant fake
+  // cluster at the origin). Runs in requestIdleCallback so the build
+  // doesn't compete with the streaming-completion render.
+  useEffect(() => {
+    setClusters(null);  // clear stale clusters when frame changes.
+    if (!currentFrame) return;
+    if (currentFrame.natoms < 50_000) return;
+    if (loadedAtomCount < currentFrame.natoms) return;
+    let cancelled = false;
+    const idleCb = (typeof requestIdleCallback !== 'undefined')
+      ? requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 0);
+    const cancelIdle = (typeof cancelIdleCallback !== 'undefined')
+      ? cancelIdleCallback
+      : clearTimeout;
+    const handle = idleCb(() => {
+      if (cancelled) return;
+      const built = buildClusters(currentFrame, { mobile: deviceQualityTier === 0 });
+      if (!cancelled) setClusters(built);
+    });
+    return () => { cancelled = true; cancelIdle(handle as any); };
+  }, [currentFrame, loadedAtomCount, deviceQualityTier]);
+
+  // Tune the splat fade range to the scene size. Splats stay invisible
+  // at default zoom (which is ~diagonal × 1.4) so atoms own the visible
+  // detail; they fade in as the user zooms out and atoms hit the
+  // sub-pixel cull. Values picked so the crossover lines up with
+  // pixel-cull range on a typical 1080p viewport: an atom of radius
+  // ~1 Å goes sub-pixel around camera distance ≈ diagonal × 3,
+  // saturated invisible by ≈ diagonal × 10.
+  const clusterFadeNear = useMemo(() => {
+    if (!file) return 300;
+    const { min, max } = file.trajectory.globalBounds;
+    const diag = Math.hypot(max[0] - min[0], max[1] - min[1], max[2] - min[2]);
+    return diag * 3;
+  }, [file?.name]);
+  const clusterFadeFar = useMemo(() => clusterFadeNear * 3.3, [clusterFadeNear]);
 
   const cameraDistance = useMemo(() => file
     ? (() => {
@@ -998,6 +1058,9 @@ export default function App() {
                   atomColorSource={atomColorSource}
                   scale={atomScale}
                   renderStyle={renderStyle}
+                  maxAtoms={deviceMaxAtoms}
+                  qualityTier={deviceQualityTier}
+                  loadedAtomCount={loadedAtomCount}
                   onSpatialHash={setSpatialHash}
                   hiddenAtomTypes={hiddenAtomTypes}
                   atomTypeScales={atomTypeScales}
@@ -1007,6 +1070,15 @@ export default function App() {
                   propertyEmissionStrength={propertyEmissionStrength}
                   etchTexture={etchTexture}
                   etchAtomId={etchAtomId}
+                />
+                {/* Phase 4: cluster splats fill the far-LOD gap left
+                    by the atom mesh's sub-pixel cull. Built off the
+                    main thread after streaming completes; renders
+                    nothing until then (clusters === null). */}
+                <AtomClusters
+                  clusters={clusters}
+                  fadeNear={clusterFadeNear}
+                  fadeFar={clusterFadeFar}
                 />
                 <Bonds
                     frame={currentFrame}
@@ -1021,7 +1093,15 @@ export default function App() {
                     opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
                     materialPreset={materialPreset}
-                    visible={showBonds}
+                    // Suppress bond detection while atoms are still
+                    // streaming in. The detector reads frame.natoms /
+                    // frame.positions wholesale, but during streaming
+                    // indices [loadedAtomCount, natoms) are zero — the
+                    // detector would see millions of phantom atoms
+                    // clustered at the origin and generate a flood of
+                    // spurious bonds. Re-enables once streaming
+                    // completes (loadedAtomCount === natoms).
+                    visible={showBonds && loadedAtomCount >= currentFrame.natoms}
                     bondColorMode={bondColorMode}
                     useGpu={useGpuBonds}
                     atomColorSource={atomColorSource}
