@@ -94,7 +94,7 @@ export function AtomInfoHUD({
         return (
           <Html
             key={atomIndex}
-            position={[x, y + spec.radius * 1.2 + 0.4, z]}
+            position={[x, y + spec.displayRadius * 1.2 + 0.4, z]}
             center
             distanceFactor={11}
             style={{ pointerEvents: 'auto' }}
