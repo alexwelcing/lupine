@@ -16,22 +16,22 @@ function NotFoundComponent() {
     <main className="flex-1 flex flex-col items-center justify-center px-6 py-32">
       <div className="text-center max-w-lg">
         <div className="font-mono text-xs font-semibold text-[var(--primary)] uppercase tracking-[0.3em] mb-6">404 — NOT FOUND</div>
-        <h1 className="font-serif text-5xl lg:text-7xl mb-6 text-[var(--slate-100)]">Lost in the manifold.</h1>
+        <h1 className="font-serif text-5xl lg:text-7xl mb-6 text-[var(--slate-100)]">Off the ribbon.</h1>
         <p className="text-[var(--on-surface-variant)] text-lg mb-10 leading-relaxed">
-          The page you requested does not exist in this configuration space.
+          The page you requested is not in our manifest. It may have been retired, renamed, or never existed at all.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/"
             className="px-6 py-3 bg-[var(--primary)] text-[var(--primary-foreground)] font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:opacity-90 transition-opacity no-underline"
           >
-            Return Home
+            Return home
           </Link>
           <Link
             to="/research"
             className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)] transition-colors no-underline"
           >
-            Read the Research
+            Read the preprint
           </Link>
         </div>
       </div>
@@ -44,9 +44,9 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'Lupine Materials Science' },
-      { name: 'description', content: 'Open-source materials science platform with 559 interatomic potentials, a WebGPU molecular viewer, and autonomous research intelligence. Built in Rust, Apache 2.0.' },
-      { property: 'og:site_name', content: 'Lupine Materials Science' },
+      { title: 'Lupine — geometric error analysis for atomistic ML' },
+      { name: 'description', content: 'The audit layer for the MLIP ecosystem. Cross-potential geometric error analysis across ≈900 published interatomic potentials and 7,940 benchmark records. After Transtrum, Sethna, Tadmor. Apache 2.0, Rust.' },
+      { property: 'og:site_name', content: 'Lupine' },
       { property: 'og:type', content: 'website' },
       { property: 'og:image', content: 'https://lupine.science/logo512.png' },
       { name: 'twitter:card', content: 'summary_large_image' },

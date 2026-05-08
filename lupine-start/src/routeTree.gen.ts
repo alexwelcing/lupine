@@ -13,8 +13,10 @@ import { Route as SlideshowRouteImport } from './routes/slideshow'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProcessRouteImport } from './routes/process'
+import { Route as PilotsRouteImport } from './routes/pilots'
 import { Route as OpsRouteImport } from './routes/ops'
 import { Route as LiveRouteImport } from './routes/live'
+import { Route as LineageRouteImport } from './routes/lineage'
 import { Route as InvestorRelationsRouteImport } from './routes/investor-relations'
 import { Route as EvolutionRouteImport } from './routes/evolution'
 import { Route as ConsoleRouteImport } from './routes/console'
@@ -42,6 +44,11 @@ const ProcessRoute = ProcessRouteImport.update({
   path: '/process',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PilotsRoute = PilotsRouteImport.update({
+  id: '/pilots',
+  path: '/pilots',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OpsRoute = OpsRouteImport.update({
   id: '/ops',
   path: '/ops',
@@ -50,6 +57,11 @@ const OpsRoute = OpsRouteImport.update({
 const LiveRoute = LiveRouteImport.update({
   id: '/live',
   path: '/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LineageRoute = LineageRouteImport.update({
+  id: '/lineage',
+  path: '/lineage',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InvestorRelationsRoute = InvestorRelationsRouteImport.update({
@@ -90,8 +102,10 @@ export interface FileRoutesByFullPath {
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
+  '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
+  '/pilots': typeof PilotsRoute
   '/process': typeof ProcessRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
@@ -104,8 +118,10 @@ export interface FileRoutesByTo {
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
+  '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
+  '/pilots': typeof PilotsRoute
   '/process': typeof ProcessRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
@@ -119,8 +135,10 @@ export interface FileRoutesById {
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
+  '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
+  '/pilots': typeof PilotsRoute
   '/process': typeof ProcessRoute
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
@@ -135,8 +153,10 @@ export interface FileRouteTypes {
     | '/console'
     | '/evolution'
     | '/investor-relations'
+    | '/lineage'
     | '/live'
     | '/ops'
+    | '/pilots'
     | '/process'
     | '/proof'
     | '/research'
@@ -149,8 +169,10 @@ export interface FileRouteTypes {
     | '/console'
     | '/evolution'
     | '/investor-relations'
+    | '/lineage'
     | '/live'
     | '/ops'
+    | '/pilots'
     | '/process'
     | '/proof'
     | '/research'
@@ -163,8 +185,10 @@ export interface FileRouteTypes {
     | '/console'
     | '/evolution'
     | '/investor-relations'
+    | '/lineage'
     | '/live'
     | '/ops'
+    | '/pilots'
     | '/process'
     | '/proof'
     | '/research'
@@ -178,8 +202,10 @@ export interface RootRouteChildren {
   ConsoleRoute: typeof ConsoleRoute
   EvolutionRoute: typeof EvolutionRoute
   InvestorRelationsRoute: typeof InvestorRelationsRoute
+  LineageRoute: typeof LineageRoute
   LiveRoute: typeof LiveRoute
   OpsRoute: typeof OpsRoute
+  PilotsRoute: typeof PilotsRoute
   ProcessRoute: typeof ProcessRoute
   ProofRoute: typeof ProofRoute
   ResearchRoute: typeof ResearchRoute
@@ -216,6 +242,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pilots': {
+      id: '/pilots'
+      path: '/pilots'
+      fullPath: '/pilots'
+      preLoaderRoute: typeof PilotsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ops': {
       id: '/ops'
       path: '/ops'
@@ -228,6 +261,13 @@ declare module '@tanstack/react-router' {
       path: '/live'
       fullPath: '/live'
       preLoaderRoute: typeof LiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lineage': {
+      id: '/lineage'
+      path: '/lineage'
+      fullPath: '/lineage'
+      preLoaderRoute: typeof LineageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/investor-relations': {
@@ -282,8 +322,10 @@ const rootRouteChildren: RootRouteChildren = {
   ConsoleRoute: ConsoleRoute,
   EvolutionRoute: EvolutionRoute,
   InvestorRelationsRoute: InvestorRelationsRoute,
+  LineageRoute: LineageRoute,
   LiveRoute: LiveRoute,
   OpsRoute: OpsRoute,
+  PilotsRoute: PilotsRoute,
   ProcessRoute: ProcessRoute,
   ProofRoute: ProofRoute,
   ResearchRoute: ResearchRoute,

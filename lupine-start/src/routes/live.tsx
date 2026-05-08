@@ -11,8 +11,8 @@ export const Route = createFileRoute('/live')({
   component: LiveLabComponent,
   head: () => ({
     meta: [
-      { title: 'Live Lab — GLIM-THINK Autonomous Swarm' },
-      { name: 'description', content: 'Real-time telemetry of the GLIM-THINK autonomous swarm. Continuous experiment design, error manifold discovery, and model falsification.' },
+      { title: 'Live Lab — harden-stage telemetry' },
+      { name: 'description', content: 'Real-time telemetry of the harden stage behind Lupine\'s audit layer: hypotheses being tested, manifest entries being added, refutations being recorded. Public D1 ledger, no curation.' },
     ],
   }),
 })

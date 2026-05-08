@@ -99,6 +99,17 @@ function HeroSection() {
           >
             Read the IMMI preprint
           </Link>
+          <Link
+            to="/pilots"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
+            style={{
+              color: 'var(--slate-200)',
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid var(--slate-700)',
+            }}
+          >
+            Pilot a wedge
+          </Link>
           <a
             href="https://github.com/alexwelcing/lupine"
             target="_blank"
@@ -118,7 +129,7 @@ function HeroSection() {
           className="mt-10 mx-auto text-[13px] italic leading-relaxed"
           style={{ color: 'var(--slate-500)', maxWidth: 620, animation: 'fade-up 0.8s 1s both' }}
         >
-          "Hyper-ribbons are characterized by a geometric series of widths" — Transtrum, Machta &amp; Sethna, <em>Phys. Rev. E</em> 83, 036701 (2011). We apply that geometry to the population of published interatomic potentials.
+          "Hyper-ribbons are characterized by a geometric series of widths" — Transtrum, Machta &amp; Sethna, <em>Phys. Rev. E</em> 83, 036701 (2011). We apply that geometry to the population of published interatomic potentials. <Link to="/lineage" className="underline decoration-dotted underline-offset-4 hover:text-[var(--lupine-400)] transition-colors not-italic">See the full lineage →</Link>
         </p>
       </div>
     </section>

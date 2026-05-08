@@ -7,10 +7,10 @@ export const Route = createFileRoute('/atlas-viewer')({
   component: AtlasViewerPage,
   head: () => ({
     meta: [
-      { title: 'Atlas Viewer — Browser-Based Molecular Visualization for Researchers' },
-      { name: 'description', content: 'Atlas Viewer renders 10M+ atoms at 60fps directly in your browser using WebGPU. No install, no license. Drag a LAMMPS dump, XYZ, or PDB file and get publication-quality 3D instantly.' },
-      { property: 'og:title', content: 'Atlas Viewer — WebGPU Molecular Visualization' },
-      { property: 'og:description', content: 'Render 10M+ atoms at 60fps in the browser. No desktop app required. Free and open-source.' },
+      { title: 'Atlas Viewer — WebGPU exploration of the audit layer' },
+      { name: 'description', content: 'The browser-native interface for inspecting Lupine\'s cross-potential error manifold and your own MD trajectories side-by-side. WebGPU rendering of up to 10M atoms at 60fps. No install, no license. Drag a LAMMPS dump, XYZ, or PDB.' },
+      { property: 'og:title', content: 'Atlas Viewer — WebGPU exploration of the audit layer' },
+      { property: 'og:description', content: 'See the audit results and your own MD trajectories together, in the browser. WebGPU. No install. Apache 2.0.' },
       { property: 'og:url', content: 'https://lupine.science/atlas-viewer' },
     ],
   }),
@@ -111,12 +111,12 @@ function AtlasViewerPage() {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="max-w-2xl"
           >
-            <div className="mono-label text-[var(--accent-cyan)] mb-6 tracking-[0.3em]">ATLAS VIEWER</div>
+            <div className="mono-label text-[var(--accent-cyan)] mb-6 tracking-[0.3em]">ATLAS VIEWER · INSPECTION INTERFACE</div>
             <h1 className="text-4xl lg:text-6xl xl:text-7xl mb-8 leading-[1.05] text-white font-serif">
-              See your <em className="italic text-[var(--accent-cyan)]">molecules</em>,<br />not your installer.
+              See your <em className="italic text-[var(--accent-cyan)]">trajectories</em>,<br />and the audit beside them.
             </h1>
             <p className="text-white/70 text-lg lg:text-xl mb-10 max-w-xl leading-relaxed font-light">
-              Drag a LAMMPS dump, XYZ, or PDB file into your browser and get publication-quality 3D visualization in two seconds. No install, no license, no Python scripts.
+              The browser-native interface for inspecting Lupine's cross-potential error manifold next to your own MD runs. Drag a LAMMPS dump, XYZ, or PDB and get publication-quality 3D in two seconds. No install, no license, no Python scripts. Free during the pilot.
             </p>
             <div className="flex gap-4 flex-wrap">
               <a
