@@ -7,10 +7,10 @@ export const Route = createFileRoute('/lineage')({
   component: LineagePage,
   head: () => ({
     meta: [
-      { title: 'Lineage — the citation chain Lupine builds on' },
-      { name: 'description', content: 'The 22-year lineage from Frederiksen, Jacobsen, Brown & Sethna (2004) through Transtrum, Machta & Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), and Deng et al. (2024) — and the narrow novelty Lupine contributes on top of it.' },
-      { property: 'og:title', content: 'Lineage — the citation chain Lupine builds on' },
-      { property: 'og:description', content: 'The lineage Lupine cites is the lineage Lupine extends. Hyper-ribbon is borrowed from Transtrum, Machta & Sethna (2011), not coined here.' },
+      { title: 'Lineage — sloppy-models materials science meets learning mechanics' },
+      { name: 'description', content: 'The 22-year sloppy-models lineage (Frederiksen 2004 → Transtrum/Sethna 2011 → Wen et al. 2017 → Kurniawan 2022 → Deng 2024) intersected with the emerging learning-mechanics program (Simon et al. 2026, Bordelon/Atanasov/Pehlevan 2025, Saxe et al. 2014). The narrow novelty Lupine contributes sits at the intersection.' },
+      { property: 'og:title', content: 'Lineage — sloppy-models materials science meets learning mechanics' },
+      { property: 'og:description', content: 'The lineage we cite is the lineage we extend. Two parallel programs, one applied wedge.' },
       { property: 'og:url', content: 'https://lupine.science/lineage' },
     ],
   }),
@@ -115,11 +115,28 @@ const PRIORS = [
     role: 'context',
   },
   {
+    year: '2025',
+    cite: 'Bordelon, Atanasov & Pehlevan',
+    venue: 'ICLR',
+    title: 'How feature learning can improve neural scaling laws',
+    note: 'Establishes that targeting the dominant modes of the data-dependent kernel improves scaling exponents — a parameter-efficient retraining objective rather than brute-force training. The deep-learning analog of what cross-potential PCA names for MLIPs.',
+    role: 'context',
+  },
+  {
+    year: '2026',
+    cite: 'Simon, Kunin, Atanasov et al.',
+    venue: 'arXiv:2604.21691',
+    title: 'There Will Be a Scientific Theory of Deep Learning',
+    note: 'Names the emerging "learning mechanics": five lines of evidence (solvable settings, simplifying limits, simple empirical laws, hyperparameter disentanglement, universal phenomena) that point at a coherent science of how neural networks train. Our hyper-ribbon observation reads as one specific instance of items (iii) and (v) for a specific physical system. The paper makes the audit-as-physics framing explicit; we ship the applied case for atomistic ML.',
+    role: 'context',
+    pinned: true,
+  },
+  {
     year: '2026',
     cite: 'Welcing (Lupine)',
     venue: 'IMMI preprint',
     title: 'Cross-potential geometric error analysis for interatomic potentials',
-    note: 'The narrow novelty: PCA-based error-fingerprinting across the full population of ≈900 published interatomic potentials, interpreted through the sloppy-models geometric framework. Cross-potential, not within-potential. Empirical, not a theorem.',
+    note: 'The narrow novelty: PCA-based error-fingerprinting across the full population of ≈900 published interatomic potentials, interpreted through the sloppy-models geometric framework. Cross-potential, not within-potential. Empirical, not a theorem. Read alongside Simon et al. (2026), it is also a low-rank retraining target — the same modes that name the failure are the modes that fix it.',
     role: 'lupine',
     pinned: true,
   },
@@ -128,17 +145,17 @@ const PRIORS = [
 const CONTRIBUTION_BULLETS = [
   {
     label: 'What Lupine contributes',
-    body: 'PCA-based error-fingerprinting across the population of published interatomic potentials simultaneously, interpreted through the sloppy-models geometric framework. No published paper has done this cross-potential cut.',
+    body: 'PCA-based error-fingerprinting across the population of published interatomic potentials simultaneously, interpreted through the sloppy-models geometric framework. Read as applied learning mechanics, the same artifact is a low-rank retraining target — the cross-potential analog of the kernel-mode targeting that Bordelon, Atanasov & Pehlevan (2025) show improves scaling exponents.',
     accent: 'var(--primary)',
   },
   {
     label: 'What Lupine borrows',
-    body: '"Hyper-ribbon" terminology (Transtrum, Machta & Sethna 2011). The Bayesian-ensemble framing for IPs (Frederiksen et al. 2004). The OpenKIM infrastructure and the KIM-API integration (Tadmor / Elliott / Sethna).',
+    body: '"Hyper-ribbon" terminology and the geometric framework (Transtrum, Machta & Sethna 2011). The Bayesian-ensemble framing for IPs (Frederiksen et al. 2004). The OpenKIM infrastructure (Tadmor / Elliott / Sethna). The "five lines of evidence" framing for an empirical-laws program (Simon et al. 2026).',
     accent: 'var(--secondary)',
   },
   {
     label: 'What Lupine does not claim',
-    body: 'A new theorem about manifold dimensionality. A replacement for DFT, LAMMPS, ASE, or KIM. A new universal MLIP. A discovery of synthesizable materials. None of these. The novelty is empirical and narrow on purpose.',
+    body: 'A new theorem about manifold dimensionality. A replacement for DFT, LAMMPS, ASE, or KIM. A new universal MLIP. A discovery of synthesizable materials. A scaling-law exponent prediction (yet — see Open Direction 7 of Simon et al. 2026). The novelty is empirical and narrow on purpose.',
     accent: 'var(--accent-cyan)',
   },
 ]
@@ -147,8 +164,8 @@ function LineagePage() {
   return (
     <PageShell
       kicker="LINEAGE · 2003 → 2026"
-      title="The lineage we cite is the lineage we extend."
-      subtitle="The audit layer rests on a 22-year chain of work at the intersection of sloppy models, Bayesian uncertainty, and interatomic potentials. We name the chain because the chain is what makes a narrow contribution credible."
+      title="Two lineages, one wedge."
+      subtitle="The audit-and-accelerator position rests on the intersection of two parallel programs: the sloppy-models materials lineage (Frederiksen → Transtrum → Sethna → Tadmor → Wen → Kurniawan → Deng) and the learning-mechanics program named by Simon et al. (2026). Both ask the same empirical question — when do high-dimensional learning systems collapse onto a low-dimensional ridge? — and both answer in the same vocabulary. We name the chains because the chains are what make a narrow contribution credible."
       maxWidth="5xl"
     >
       <div className="space-y-20">
@@ -261,7 +278,8 @@ function LineagePage() {
             <ul className="space-y-5 text-[var(--on-surface-variant)] leading-relaxed">
               <li>
                 <strong className="text-[var(--on-surface)]">Reviews go faster.</strong> Senior
-                reviewers (Sethna, Tadmor, Elliott, Cheetham, Persson) recognize the framework on
+                reviewers (Sethna, Tadmor, Elliott, Cheetham, Persson on the materials side; Simon,
+                Kunin, Atanasov, Pehlevan on the deep-learning side) recognize the framework on
                 page one, because they wrote it. The discussion can move directly to the empirical
                 contribution rather than relitigating the foundations.
               </li>
@@ -274,8 +292,17 @@ function LineagePage() {
               <li>
                 <strong className="text-[var(--on-surface)]">The narrow claim is defensible.</strong>{' '}
                 "Cross-potential PCA error-fingerprinting" is a well-defined empirical procedure
-                with a clear precedent literature. It is much easier to defend than "we
-                rediscovered the geometry of sloppy models."
+                with a clear precedent literature on both sides — sloppy-models materials science
+                and learning mechanics. It is much easier to defend than "we rediscovered the
+                geometry of sloppy models" or "we built a foundation MLIP."
+              </li>
+              <li>
+                <strong className="text-[var(--on-surface)]">The audit becomes an accelerator.</strong>{' '}
+                Bordelon, Atanasov &amp; Pehlevan (2025) prove that targeting the dominant kernel
+                modes yields better scaling exponents than brute-force training; Saxe et al. (2014)
+                prove that linear networks acquire those modes in order of magnitude anyway. The
+                hyper-ribbon Lupine measures is the cross-potential analog of that target. The
+                lineage is what makes that analogy honest rather than a stretch.
               </li>
             </ul>
           </Card>

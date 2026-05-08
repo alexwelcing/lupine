@@ -268,7 +268,7 @@ function ResearchPage() {
           Pooled across 15 elements, PR shifted from <strong>1.001 → 1.001</strong> after orthogonalization. Per element, the most striking case is Cu: 81.6% of error variance lay along <InlineMath math="\\mathbf{u}_\\mathrm{ref}" />, yet the residual 18.4% <strong>still forms a 1D ribbon</strong> (PR 1.004 → 1.004). Fe is the one nuanced case — PR 2.41 → 1.65, partial scale coupling, but the residual remains structured rather than isotropic. <strong>The hyper-ribbon geometry is not a scale artifact; it survives orthogonalization at population level.</strong>
         </p>
 
-        <h2>5. Discussion &amp; Conclusions</h2>
+        <h2>5. Discussion</h2>
         <p>
           The hyper-ribbon signature has three operational implications. First, because effective dimensionality is ≈1.4 in our 3D elastic-constant space, a universal potential needs to capture one or two dominant error modes — not every property independently. Second, Simpson's paradox warns against pooling errors across crystal structures without stratification: a potential that appears superior in aggregate may be inferior within each subgroup, mirroring the GGA/GGA+U inconsistency Deng et al. (2024) flagged in MPtrj-trained universal MLIPs. Third, the high <InlineMath math="I^2" /> implies that material-specific fine-tuning will outperform a single global fit at fixed parameter budget.
         </p>
@@ -280,6 +280,25 @@ function ResearchPage() {
         </p>
         <p>
           The framework is extensible: additional properties (phonons, defects, surfaces) increase ambient dimensionality <InlineMath math="m" /> but need not increase effective dimensionality if they lie in the same ribbon. Future work will test this on amorphous and multi-component systems, and on the molecular potentials surveyed by MACE-OFF (JACS 2025) and OrbMol. The geometric framework, Simpson's-paradox detection, null-model significance engine, and orthogonalization confound tests are implemented and reproducible in <code>lupine-distill</code>.
+        </p>
+
+        <h2>6. Connection to learning mechanics</h2>
+        <p>
+          Simon, Kunin, Atanasov, Cohen, Jacot, Michaud, Boix-Adserà, Ghosh, Kamb, Ottlik, Bordelon, Guth, Karkada &amp; Turnbull (arXiv:2604.21691, 2026) make the case that a scientific theory of deep learning — a "mechanics of the learning process" — is emerging, and identify five lines of evidence: (i) analytically solvable settings, (ii) insightful limits, (iii) simple empirical laws that capture macroscopic statistics, (iv) hyperparameter disentanglement, and (v) universal phenomena across systems and tasks. Our hyper-ribbon observation reads most naturally as an instance of items (iii) and (v) applied to a specific physical system: machine-learned interatomic potentials.
+        </p>
+        <p>
+          Three connections are explicit. <strong>Greedy low-rank acquisition.</strong> Saxe, McClelland &amp; Ganguli (2014) showed that deep linear networks acquire singular modes of the input–output correlation in order of magnitude, with larger-singular-value modes emerging first. Our cross-potential PCA reports exactly such an ordering, applied to error vectors instead of features: <InlineMath math="\\lambda_1 \\gg \\lambda_2 \\gg \\dots" />. <strong>Neural feature ansatz.</strong> Radhakrishnan et al. (2024) established that the Gram matrix of first-layer weights aligns with the average gradient outer product. The interatomic-potential analog — Frederiksen et al. (2004) and Wen et al. (2017) — is that the Fisher information matrix for an IP collapses onto a small number of stiff directions. Both are statements that learning systems concentrate information on a few axes. <strong>Universal representations.</strong> Huh et al. (2024) and Bansal et al. (2021) report convergent representations across architectures trained on shared data structure; we report convergent error structure across functional-form families trained on shared DFT references. The MEAM PR = 2.24 outlier is the universality-class boundary: angular partial-density potentials live on a different ribbon from radial ones, and the boundary is identifiable from the geometry alone.
+        </p>
+        <p>
+          The operational consequence: the dominant error modes are not just the right thing to <em>report</em>, they are the right thing to <em>retrain</em>. Bordelon, Atanasov &amp; Pehlevan (2025), <em>How feature learning can improve neural scaling laws</em>, establish that a parameter-efficient retraining objective targeting the top modes of the data-dependent kernel improves scaling exponents. The hyper-ribbon Lupine measures is the cross-potential analog of that target: a low-rank, citable, falsifiable specification of which directions in error space a foundation MLIP needs to fix to recover trustable performance. Audit and accelerator are the same artifact, viewed from two directions.
+        </p>
+        <p>
+          Open Direction 7 of Simon et al. (2026) asks whether scaling-law exponents can be predicted <em>a priori</em> from properties of the architecture and dataset. For interatomic potentials, the equivalent question — whether the sample complexity of a foundation MLIP fine-tune can be predicted from properties of the cross-potential error manifold — is now empirically tractable. We do not claim to have answered it. We claim that the manifest is the right place to look.
+        </p>
+
+        <h2>7. Conclusions</h2>
+        <p>
+          Across 953 potentials, 18 functional-form families, and 7,940 benchmark records we observe the empirical signature of a hyper-ribbon: a low-dimensional ridge of dominant error modes embedded in a much higher-ambient-dimensional property space. The framework — PCA, bootstrap uncertainty, Simpson's-paradox detection, random-effects meta-analysis — provides quantitative diagnostics for potential selection that go beyond pointwise MAE comparisons and beyond saturated leaderboard scores. Read as applied learning mechanics, the same framework provides a low-rank retraining target for foundation MLIPs: the modes that name the failure are the modes that fix it. The tools are implemented in the open-source <code>atlas-distill</code> engine, and the manifest of audited potentials, snapshot date, and de-duplication rules ship with each release.
         </p>
 
         <h2 className="mt-16">References</h2>
@@ -300,6 +319,15 @@ function ResearchPage() {
           <li>Wines, D. &amp; Choudhary, K. CHIPS-FF: Evaluating Universal Machine Learning Force Fields for Material Properties. <em>ACS Materials Letters</em> (2025).</li>
           <li>DerSimonian, R. &amp; Laird, N. Meta-analysis in clinical trials. <em>Control. Clin. Trials</em> 7, 177–188 (1986).</li>
           <li>Simpson, E. H. The interpretation of interaction in contingency tables. <em>J. R. Stat. Soc. Series B</em> 13, 238–241 (1951).</li>
+          <li>Simon, J., Kunin, D., Atanasov, A., Cohen, J., Jacot, A., Michaud, E. J., Boix-Adserà, E., Ghosh, N., Kamb, M., Ottlik, B., Bordelon, B., Guth, F., Karkada, D. &amp; Turnbull, J. There Will Be a Scientific Theory of Deep Learning. arXiv:2604.21691 (2026).</li>
+          <li>Saxe, A. M., McClelland, J. L. &amp; Ganguli, S. Exact solutions to the nonlinear dynamics of learning in deep linear neural networks. <em>ICLR</em> (2014).</li>
+          <li>Radhakrishnan, A., Beaglehole, D., Pandit, P. &amp; Belkin, M. Mechanism for feature learning in neural networks and backpropagation-free machine learning models. <em>Science</em> <strong>383</strong>, 1461–1467 (2024).</li>
+          <li>Bordelon, B., Atanasov, A. &amp; Pehlevan, C. How feature learning can improve neural scaling laws. <em>ICLR</em> (2025).</li>
+          <li>Bordelon, B., Atanasov, A. &amp; Pehlevan, C. A dynamical model of neural scaling laws. arXiv:2402.01092 (2024).</li>
+          <li>Huh, M., Cheung, B., Wang, T. &amp; Isola, P. Position: The Platonic Representation Hypothesis. <em>ICML</em> (2024).</li>
+          <li>Bansal, Y., Nakkiran, P. &amp; Barak, B. Revisiting model stitching to compare neural representations. <em>NeurIPS</em> (2021).</li>
+          <li>Yang, G. et al. Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer (µP). arXiv:2203.03466 (2022).</li>
+          <li>Kaplan, J. et al. Scaling Laws for Neural Language Models. arXiv:2001.08361 (2020).</li>
         </ol>
       </div>
     </PageShell>

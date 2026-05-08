@@ -16,7 +16,7 @@ export default function Footer() {
               <span className="font-serif italic text-sm font-semibold tracking-tight text-[var(--on-surface-variant)]">Lupine</span>
             </Link>
             <p className="text-xs text-[var(--on-surface-variant)] max-w-xs leading-relaxed opacity-60">
-              Geometric error analysis for machine-learned interatomic potentials. The audit layer for the MLIP ecosystem.
+              The audit layer for the MLIP ecosystem — and the low-rank retraining target that compounds out of it. Applied learning mechanics for atomistic ML.
             </p>
           </div>
 

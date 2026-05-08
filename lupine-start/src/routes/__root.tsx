@@ -44,8 +44,8 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'Lupine — geometric error analysis for atomistic ML' },
-      { name: 'description', content: 'The audit layer for the MLIP ecosystem. Cross-potential geometric error analysis across ≈900 published interatomic potentials and 7,940 benchmark records. After Transtrum, Sethna, Tadmor. Apache 2.0, Rust.' },
+      { title: 'Lupine — applied learning mechanics for atomistic ML' },
+      { name: 'description', content: 'The audit layer for the MLIP ecosystem — and the accelerator that compounds out of it. Cross-potential geometric error analysis across ≈900 published interatomic potentials and 7,940 benchmark records. After Transtrum, Sethna, Tadmor on the materials side; after Simon et al. 2026 on the deep-learning side. Apache 2.0, Rust.' },
       { property: 'og:site_name', content: 'Lupine' },
       { property: 'og:type', content: 'website' },
       { property: 'og:image', content: 'https://lupine.science/logo512.png' },

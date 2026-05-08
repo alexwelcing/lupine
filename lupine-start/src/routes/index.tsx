@@ -88,7 +88,7 @@ function HeroSection() {
             animation: 'fade-up 0.8s 0.6s both',
           }}
         >
-          UMA, MACE-MP, Orb-v3, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery and still under-predict PES curvature at surfaces, defects, and migration barriers (Deng et al., <em>npj Comput. Mater.</em> 2024). Lupine is the audit layer that turns that quiet failure into a measured, citable error budget across ≈900 published potentials.
+          UMA, MACE-MP, Orb-v3, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery and still under-predict PES curvature at surfaces, defects, and migration barriers (Deng et al., <em>npj Comput. Mater.</em> 2024). Lupine is the audit layer that turns that quiet failure into a measured, citable error budget — and a low-dimensional retraining target. The geometry that names the failure is the geometry that fixes it.
         </p>
 
         <div className="flex gap-4 justify-center flex-wrap" style={{ animation: 'fade-up 0.8s 0.8s both' }}>
@@ -377,6 +377,77 @@ function WhatWeBuild() {
   )
 }
 
+/* ─── Audit + Accelerator ─── */
+function AuditAccelerator() {
+  const moves = [
+    {
+      label: 'Audit',
+      title: 'Localize the failure mode.',
+      body: 'Cross-potential PCA returns a participation ratio PR/m well below 1 across ≈900 potentials. The empirical signature of a hyper-ribbon — a low-dimensional ridge of dominant error directions — is the same low-effective-dimensionality signature that a maturing science of deep learning calls a "simple empirical law" of learning (Simon et al., 2026, §2.3, §2.5).',
+      accent: 'var(--lupine-400)',
+    },
+    {
+      label: 'Accelerator',
+      title: 'Retrain only the modes that matter.',
+      body: 'Once the dominant error directions are named, the customer\'s MLIP fine-tune does not have to re-learn everything. Saxe et al. (2014) showed that linear networks acquire singular modes in order of magnitude; Bordelon, Atanasov & Pehlevan (2025) showed that capturing the top modes faster gives improved scaling laws. The hyper-ribbon Lupine measures is the explicit, low-rank target that compresses retraining onto the modes that actually move test loss.',
+      accent: 'var(--violet-300)',
+    },
+    {
+      label: 'Compounding',
+      title: 'The same data feeds both.',
+      body: 'Every audit run adds rows to the manifest. Every manifest row sharpens the ribbon. Every sharper ribbon gives a tighter retraining target — fewer parameters, fewer DFT calls, fewer compute-hours per fine-tune. This is the Datadog-then-DataRobot arc, applied to the science of MLIPs.',
+      accent: 'var(--accent-cyan)',
+    },
+  ]
+
+  return (
+    <section className="px-6 py-20 lg:py-28">
+      <div className="max-w-[1100px] mx-auto">
+        <Reveal>
+          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)]">Audit + accelerator</div>
+        </Reveal>
+        <Reveal>
+          <h2 className="font-serif font-normal leading-[1.2] mb-5 text-[var(--slate-100)]" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            Learning mechanics for atomistic ML.
+          </h2>
+        </Reveal>
+        <Reveal>
+          <p className="font-light text-base leading-relaxed mb-14 text-[var(--slate-400)]" style={{ maxWidth: 700 }}>
+            Simon et al. (2026) — <em>There Will Be a Scientific Theory of Deep Learning</em> — name five lines of evidence for an emerging mechanics of learning: solvable settings, simplifying limits, simple empirical laws, hyperparameter disentanglement, and universal phenomena. The hyper-ribbon Lupine measures across published interatomic potentials is one specific instance of the third and fifth: a low-dimensional empirical regularity that recurs across very different systems. That makes the audit layer more than a measurement tool.
+          </p>
+        </Reveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {moves.map((m, i) => (
+            <Reveal key={m.label} delay={i * 0.08}>
+              <div
+                className="rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 h-full"
+                style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  borderTop: `2px solid ${m.accent}`,
+                }}
+              >
+                <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-3" style={{ color: m.accent }}>
+                  {m.label}
+                </div>
+                <h3 className="font-serif text-xl mb-3 text-[var(--slate-100)] italic">{m.title}</h3>
+                <p className="text-sm leading-relaxed text-[var(--slate-400)]">{m.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.3}>
+          <p className="mt-10 text-[13px] italic leading-relaxed text-center text-[var(--slate-500)]" style={{ maxWidth: 760, margin: '40px auto 0' }}>
+            "Where mechanistic interpretability aims to be the biology of deep learning, learning mechanics should aspire to be its physics" — Simon et al. (2026). For atomistic ML specifically, that physics is what cross-potential geometry already looks like.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Why Lupine ─── */
 function WhyLupine() {
   const rows = [
@@ -384,6 +455,7 @@ function WhyLupine() {
     ['Replaces DFT or LAMMPS', 'No', 'No', 'No'],
     ['Cross-potential error manifold', '—', '—', '≈900 potentials'],
     ['Per-trajectory error budget', '—', '—', 'Yes'],
+    ['Low-rank retraining target', '—', '—', 'Yes (PR/m < 0.9)'],
     ['Synthesizability claims', '—', '—', 'No (Cheetham & Seshadri 2024)'],
     ['License', 'Closed / Apache 2.0', 'Closed / Apache 2.0', 'Apache 2.0'],
   ]
@@ -521,6 +593,7 @@ function LandingPage() {
         <EvolutionFeature />
         <StatsStrip />
         <WhatWeBuild />
+        <AuditAccelerator />
         <WhyLupine />
         <CTASection />
       </main>

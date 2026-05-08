@@ -8,7 +8,7 @@ export const Route = createFileRoute('/investor-relations')({
   head: () => ({
     meta: [
       { title: 'Investor brief — Lupine' },
-      { name: 'description', content: 'The audit layer for atomistic ML. Foundation MLIPs are saturating Matbench Discovery at F1 ≈ 0.93 while still failing silently on production trajectories. We measure where, and why, across ≈900 published potentials. Infrastructure, not another foundation model.' },
+      { name: 'description', content: 'The audit layer for atomistic ML — and the accelerator that compounds out of it. Foundation MLIPs are saturating Matbench Discovery at F1 ≈ 0.93 while still failing silently on production trajectories. We measure where and why across ≈900 published potentials, and the cross-potential geometry doubles as a low-rank retraining target. Infrastructure, not another foundation model.' },
     ],
   }),
 })
@@ -31,10 +31,10 @@ function InvestorRelationsPage() {
             >
               <div className="mono-label text-[var(--tertiary)] mb-6 tracking-[0.3em]">INVESTOR BRIEF · MAY 2026</div>
               <h1 className="text-5xl lg:text-7xl mb-8 leading-[1.1] text-[var(--on-surface)]">
-                The audit layer for <em className="italic text-[var(--primary)] glow-primary">atomistic ML.</em>
+                The audit layer that <em className="italic text-[var(--primary)] glow-primary">compounds into a shortcut.</em>
               </h1>
               <p className="text-[var(--on-surface-variant)] text-xl md:text-2xl mb-12 max-w-3xl leading-relaxed font-light">
-                Foundation MLIPs are saturating Matbench Discovery at F1 ≈ 0.93 while still failing silently on production trajectories. We measure where, and why, across the population of published potentials. Infrastructure, not another foundation model.
+                Foundation MLIPs are saturating Matbench Discovery at F1 ≈ 0.93 while still failing silently on production trajectories. We measure where and why across the population of published potentials — and the cross-potential geometry that names the failure is the same geometry that compresses the fix. Infrastructure for atomistic ML, applied learning mechanics, one product.
               </p>
 
               <div className="flex gap-6 items-center flex-wrap">
@@ -93,9 +93,51 @@ function InvestorRelationsPage() {
         <div className="max-w-4xl mx-auto text-center py-12">
           <span className="mono-label text-[var(--primary)] opacity-60 mb-12 block">Thesis</span>
           <blockquote className="text-3xl md:text-5xl font-serif leading-tight text-[var(--on-surface)] italic">
-            "Every Orb, MACE, UMA, and SevenNet user has the same unanswered question: <span className="text-[var(--primary)] glow-primary">when do I trust this?</span> Lupine is the company that answers it."
+            "Every Orb, MACE, UMA, and SevenNet user has the same unanswered question: <span className="text-[var(--primary)] glow-primary">when do I trust this?</span> The same geometry that answers it tells them which two or three modes their next fine-tune actually needs to target."
           </blockquote>
           <div className="mt-16 w-24 h-px bg-gradient-to-r from-transparent via-[var(--outline-variant)] to-transparent mx-auto"></div>
+        </div>
+      </Section>
+
+      {/* Audit compounds into shortcut */}
+      <Section>
+        <div className="max-w-5xl mx-auto py-8">
+          <span className="mono-label text-[var(--primary)] mb-4 block">Audit + accelerator</span>
+          <h2 className="text-4xl mb-6">A measurement business that compounds into a model business.</h2>
+          <p className="text-lg text-[var(--on-surface-variant)] leading-relaxed mb-6">
+            The cleanest analog is software observability — Datadog and Splunk wrote the layer that decides whether the applications they monitor are safe to run. The MLIP analog of that is where Lupine starts. But the science of MLIPs gives us a second engine the SaaS-observability companies do not have.
+          </p>
+          <p className="text-lg text-[var(--on-surface-variant)] leading-relaxed mb-6">
+            Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026) — <em>There Will Be a Scientific Theory of Deep Learning</em> — make the case that an empirical-laws science of how neural networks train is now emerging, with low-effective-dimensionality structure, simple macroscopic statistics, and universal phenomena across architectures and tasks. Bordelon, Atanasov &amp; Pehlevan (2025) show that targeting the dominant kernel modes improves scaling exponents in deep networks. Saxe, McClelland &amp; Ganguli (2014) show that linear networks acquire those modes in order of magnitude anyway.
+          </p>
+          <p className="text-lg text-[var(--on-surface-variant)] leading-relaxed mb-6">
+            Translate that into our setting: the cross-potential ribbon Lupine measures across ≈900 published interatomic potentials is the same low-effective-dimensionality structure, applied to a specific physical system. <strong className="text-[var(--on-surface)]">It is simultaneously an error budget (the audit deliverable) and a low-rank retraining target (the accelerator deliverable).</strong> Customer pays for the audit; the data Lupine collects to deliver it sharpens the retraining target; the next customer's audit is cheaper and the next customer's retraining target is tighter.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <Card elevated style={{ borderTop: '2px solid var(--primary)' }}>
+              <span className="mono-label text-[var(--primary)] block mb-3">Year 1 unit economics</span>
+              <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                Per-workflow audit pilots, four-week scope, single-tenant deployment in customer VPC or air-gapped. Top-of-funnel research credibility from the IMMI preprint and the open-source <code>atlas-distill</code> engine. Margin from focused scope, not from breadth.
+              </p>
+            </Card>
+            <Card elevated style={{ borderTop: '2px solid var(--violet-300)' }}>
+              <span className="mono-label text-[var(--violet-300)] block mb-3">Year 2–3 product pivot</span>
+              <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                The same audit data, repackaged as a retraining-target subscription for foundation-MLIP teams (UMA, Orb, MACE-MP, SevenNet, the next three) and for industrial fine-tune teams. Datadog → DataRobot, but the customer is the model builder, not the application owner.
+              </p>
+            </Card>
+            <Card elevated style={{ borderTop: '2px solid var(--accent-cyan)' }}>
+              <span className="mono-label text-[var(--accent-cyan)] block mb-3">Why the moat compounds</span>
+              <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                Every audit run adds rows to the manifest. Every manifest row sharpens the ribbon. Every sharper ribbon gives a tighter retraining target. The geometry is empirical — the same data the audit is paid for is the data the accelerator improves on. That is the rare structure where a measurement business gets cheaper and a model business gets sharper from the same line item.
+              </p>
+            </Card>
+          </div>
+
+          <p className="mt-12 text-base italic text-[var(--on-surface-variant)] leading-relaxed">
+            "Where mechanistic interpretability aims to be the biology of deep learning, learning mechanics should aspire to be its physics" — Simon et al. (2026). For atomistic ML specifically, that physics is what cross-potential geometry already looks like. We ship the applied case.
+          </p>
         </div>
       </Section>
 
@@ -182,6 +224,10 @@ function InvestorRelationsPage() {
             <div>
               <p className="text-[var(--on-surface)] font-medium mb-2">"Hyper-ribbon" is not our coinage.</p>
               <p>Transtrum, Machta &amp; Sethna introduced it in <em>Phys. Rev. E</em> 83, 036701 (2011). We cite it. Failing to cite would be embarrassing — Sethna and Tadmor are likely IMMI reviewers, and OpenKIM is the infrastructure our manifest sits on. The novelty we own is narrower and more durable: cross-potential PCA error-fingerprinting across the full population of published interatomic potentials.</p>
+            </div>
+            <div>
+              <p className="text-[var(--on-surface)] font-medium mb-2">We do not promise scaling-law exponents we cannot back up.</p>
+              <p>Open Direction 7 of Simon et al. (2026) — predict scaling-law exponents <em>a priori</em> — is genuinely open. We claim that the manifest is the right place to look, and that named retraining targets compound retraining sample efficiency in the direction Bordelon, Atanasov &amp; Pehlevan (2025) document for general kernel methods. We do not claim a closed-form prediction yet. The honest position is more durable than the inflated one.</p>
             </div>
           </div>
         </div>

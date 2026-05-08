@@ -50,8 +50,8 @@ function About() {
   return (
     <PageShell
       kicker="ABOUT LUPINE"
-      title="The audit layer for atomistic ML."
-      subtitle="Lupine measures where machine-learned interatomic potentials fail, and why, across the population of published potentials. We do not train another foundation MLIP. We sit beside the integrators (LAMMPS, ASE, KIM) the customer already trusts and write a citable error budget."
+      title="Applied learning mechanics for atomistic ML."
+      subtitle="Lupine measures where machine-learned interatomic potentials fail, and why, across the population of published potentials — and the cross-potential geometry that names the failure doubles as a low-rank retraining target. We do not train another foundation MLIP. We sit beside the integrators (LAMMPS, ASE, KIM) the customer already trusts, write a citable error budget, and hand the model team the modes that matter."
       maxWidth="5xl"
     >
       {/* Mission Statement */}
@@ -73,8 +73,11 @@ function About() {
                 <p className="mb-4">
                   Lupine is the audit layer. Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson's-paradox detection across ≈900 published potentials — including the universal ones — interpreted through the sloppy-models geometric framework of Transtrum, Machta &amp; Sethna (2011) and the Bayesian-ensemble lineage of Frederiksen, Jacobsen, Brown &amp; Sethna (2004).
                 </p>
+                <p className="mb-4">
+                  Read alongside Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026) — <em>There Will Be a Scientific Theory of Deep Learning</em> — the same artifact is also a low-rank retraining target. The cross-potential ribbon is the empirical mark of a learnable system: the small number of error modes that any next fine-tune actually needs to capture. Audit and accelerator are the same artifact, viewed from two directions.
+                </p>
                 <p>
-                  We do not replace DFT, LAMMPS, or any MLIP. We measure where each MLIP is unsafe to extrapolate and write that out as a citable error budget. We are building the trust layer in the open, under Apache 2.0.
+                  We do not replace DFT, LAMMPS, or any MLIP. We measure where each MLIP is unsafe to extrapolate, write that out as a citable error budget, and hand the customer's model team the modes that matter. We are building the trust layer in the open, under Apache 2.0.
                 </p>
               </div>
             </div>
