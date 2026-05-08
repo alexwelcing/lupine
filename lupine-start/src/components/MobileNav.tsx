@@ -2,12 +2,24 @@ import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const NAV_SECTIONS = [
+interface NavItem {
+  to: string
+  label: string
+  live?: boolean
+}
+
+interface NavSection {
+  label: string | null
+  items: NavItem[]
+}
+
+const NAV_SECTIONS: NavSection[] = [
   {
     label: null,
     items: [
       { to: '/', label: 'Home' },
       { to: '/research', label: 'Research' },
+      { to: '/pilots', label: 'Pilots' },
       { to: '/live', label: 'Live Lab', live: true },
       { to: '/about', label: 'About' },
     ],
@@ -15,12 +27,13 @@ const NAV_SECTIONS = [
   {
     label: 'MORE',
     items: [
+      { to: '/lineage', label: 'Lineage' },
       { to: '/console', label: 'Research Console' },
-      { to: '/slideshow', label: 'Slideshow' },
       { to: '/atlas-viewer', label: 'Atlas Viewer' },
       { to: '/proof', label: 'Research Defense' },
       { to: '/process', label: 'Operating Report' },
-      { to: '/investor-relations', label: 'Investor Relations' },
+      { to: '/investor-relations', label: 'Investor Brief' },
+      { to: '/slideshow', label: 'Slideshow' },
       { to: '/ops', label: 'Ops Dashboard' },
     ],
   },

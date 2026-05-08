@@ -26,9 +26,9 @@ const WEDGES = [
       'MLIP-driven NEB on Li-ion conductors is unstable exactly where it matters: at the migration saddle, where Deng et al. (2024) showed universal MLIPs systematically soften the PES.',
     deliverable:
       'Cross-potential audit across the customer-defined MLIP set (typically 6–10 candidates from UMA / MACE-MP / Orb / SevenNet plus internal fine-tunes), localized to migration-barrier curvature, written back as a per-trajectory error budget that travels with every NEB run — and as a 2–3 mode retraining target that compresses fine-tune compute against the modes that actually move test loss (cf. Bordelon, Atanasov & Pehlevan 2025).',
-    metricLabel: 'Migration-barrier disagreement',
-    metricValue: '0.18 eV (1σ)',
-    metricNote: 'Cross-MLIP agreement on Li migration in solid-state electrolytes — small enough to look like consensus, large enough to flip a screening decision.',
+    metricLabel: 'Migration-barrier spread',
+    metricValue: '0.1–0.3 eV',
+    metricNote: 'The order of magnitude a typical pilot surfaces — small enough that the aggregate score looks like consensus, large enough that the within-MLIP disagreement flips a screening decision.',
   },
   {
     id: 'superalloys',
@@ -39,9 +39,9 @@ const WEDGES = [
       'Pooling errors across γ and γ′ phases is a textbook Simpson\'s paradox: a potential that wins in aggregate can be inferior on the property the customer cares about (γ/γ′ misfit strain, anti-phase boundary energy, creep activation enthalpy).',
     deliverable:
       'Phase-stratified random-effects meta-analysis with Simpson\'s-paradox detection. We refuse to declare a global winner when the within-phase evidence does not support one, report the within-phase ranking the aggregate would have hidden, and hand the customer a two-mode retraining objective that operates on the misfit-strain residual rather than re-fitting the whole γ/γ′ stack.',
-    metricLabel: 'Cross-phase ribbon dimensionality',
-    metricValue: 'PR/m = 0.43',
-    metricNote: 'Hyper-ribbon survives stratification by phase across the customer\'s composition window — but the per-phase ranking is the deliverable.',
+    metricLabel: 'Effective dimensionality',
+    metricValue: 'PR/m < 1',
+    metricNote: 'The hyper-ribbon criterion (Transtrum, Machta & Sethna 2011) survives stratification by γ/γ′ phase across the customer\'s composition window. The per-phase ranking is the deliverable.',
   },
   {
     id: 'catalysis',
@@ -52,9 +52,9 @@ const WEDGES = [
       'GGA / GGA+U inconsistencies in MPtrj and Alexandria training data create spurious metal-oxide repulsion. The result is the cross-potential variance Deng et al. flagged — most damaging in adsorbate binding energies and surface reaction barriers.',
     deliverable:
       'OOD detection on adsorbate-coverage configurations, plus property-specific uncertainty for binding energies and reaction barriers. The customer keeps their MLIP; we attach a calibrated confidence to every screening prediction, plus a low-rank correction term that targets the binding-energy residual specifically — a small, sample-efficient fine-tune object instead of a full retrain.',
-    metricLabel: 'Adsorbate OOD detection',
-    metricValue: 'AUROC 0.91',
-    metricNote: 'Receiver-operator curve on held-out adsorbate sites the universal MLIP was not trained on. Calibrated against the customer\'s reference DFT.',
+    metricLabel: 'Adsorbate OOD detector',
+    metricValue: 'calibrated',
+    metricNote: 'A receiver-operator curve on held-out adsorbate sites the universal MLIP was not trained on, calibrated against the customer\'s reference DFT. Per-pilot AUROC depends on coverage, MLIP, and reference quality — we report the curve, not a headline number.',
   },
 ]
 
@@ -67,6 +67,9 @@ function PilotsPage() {
       maxWidth="5xl"
     >
       <div className="space-y-12">
+        <p className="text-[12px] font-mono uppercase tracking-widest text-[var(--on-surface-variant)] opacity-70 -mt-4">
+          Illustrative wedges · the metric values describe the order of magnitude a typical pilot surfaces, not a published measurement on a specific customer's MLIP set.
+        </p>
         {WEDGES.map((w, i) => (
           <motion.section
             key={w.id}

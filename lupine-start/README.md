@@ -1,12 +1,12 @@
-# Lupine — Materials Science Platform
+# Lupine — applied learning mechanics for atomistic ML
 
-**Unified computational materials science infrastructure.** From electrons to engineering insights in a single codebase.
+**The audit layer for the MLIP ecosystem — and the low-rank retraining target that compounds out of it.** Cross-potential geometric error analysis across ≈900 published interatomic potentials. Built on the sloppy-models lineage of Frederiksen, Jacobsen, Brown & Sethna (2004), Transtrum, Machta & Sethna (2011), Wen et al. (2017), and Kurniawan et al. (2022); read alongside Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026), it is one applied case of the emerging mechanics of learning.
 
-## Quick Start
+## Quick start
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
@@ -16,42 +16,47 @@ Open [http://localhost:3000](http://localhost:3000)
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
 | Frontend | TanStack Start, React 19, TypeScript | SSR, file-based routing, server functions |
-| Styling | Tailwind CSS v4, custom tokens | "Living Manuscript" design system |
-| Animation | Framer Motion | Page transitions, scroll reveals |
-| Data | TanStack Query, Cloudflare Workers | Real-time telemetry, edge APIs |
-| Rendering | WebGPU (Atlas Viewer) | 10M+ atom visualization at 60fps |
-| Compute | Rust + WASM | Memory-safe parsers, potential evaluation |
+| Styling | Tailwind CSS v4, custom tokens | Theme-aware tokens, dark + light modes |
+| Animation | Framer Motion | Bespoke SVG visuals for the audit/accelerator/compounding cards, reduced-motion-aware |
+| Data | TanStack Query, Cloudflare Workers | Public manifest ledger, harden-stage telemetry |
+| Inspection | WebGPU (Atlas Viewer) | Browser-native exploration of the cross-potential error manifold |
+| Engine | Rust + WASM (`atlas-distill`) | Single static binary, deterministic build, air-gap-compatible |
 
 ## Routes
 
 | Route | Description |
 |-------|-------------|
-| `/` | Homepage — hero, pillars, stats, IP comparison |
-| `/research` | Flagship paper — Hyper-Ribbon classifier results |
-| `/live` | Live Lab — real-time swarm telemetry & research diary |
-| `/atlas-viewer` | WebGPU molecular visualization product page |
-| `/about` | Team, mission, stack, timeline |
-| `/proof` | Research defense — rebuttal to preprint critique |
-| `/investor-relations` | IR page with secure data room CTA |
+| `/` | Hero + audit/accelerator/compounding cards with bespoke animated SVGs |
+| `/research` | IMMI preprint — cross-potential geometric error analysis with the full citation chain |
+| `/lineage` | Two parallel programs: sloppy-models materials science + learning mechanics |
+| `/pilots` | Three named wedges: solid-state electrolytes, Ni-base superalloys, electrocatalysis |
+| `/atlas-viewer` | WebGPU exploration of the manifold and customer trajectories |
+| `/investor-relations` | Audit-compounds-into-shortcut thesis, manifest, diligence answers |
+| `/about` | Mission, stack, milestones |
+| `/proof` | Response to preprint critique |
+| `/process` | Operating report on the harden stage that sits behind the audit |
+| `/evolution` | Round-by-round trail of the harden stage |
+| `/console` | Tabular browser for the manifest ledger |
+| `/live` | Harden-stage telemetry feed |
 | `/ops` | Deployment telemetry (GitHub Actions) |
 
-## Design System
+## Design system
 
-Two visual modes:
-- **Dark (Obsidian)** — default. Slate-950 surfaces, Lupine Blue (#3b82f6) primary.
-- **Light (Living Manuscript)** — warm paper (#fef8f5) surfaces, Texas Bluebonnet (#475b9c) primary.
+Two visual modes, both anchored on the same tokens:
+- **Dark** — slate-950 surfaces, Lupine Blue (#3b82f6) primary.
+- **Light** — warm paper (#fef8f5) surfaces, Texas Bluebonnet (#475b9c) primary.
 
-Tokens defined in `src/styles/tokens.css`. Component styles in `src/styles/components.css`.
+Tokens in `src/styles/tokens.css`; component styles in `src/styles/components.css`. The bespoke visuals on `/` use theme-aware `var(--surface-container-low)` / `var(--on-surface-variant)` / `color-mix(...)` so they look right in both modes, and the flywheel respects `prefers-reduced-motion`.
 
 ## Build
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ## Deploy
 
-Deploys to Google Cloud Run via `cloudbuild.yaml`. On push to `main`:
+Cloud Run via `cloudbuild.yaml`:
 
 ```bash
 gcloud builds submit --config cloudbuild.yaml

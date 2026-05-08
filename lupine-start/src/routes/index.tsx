@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState, useMemo, type ReactNode, type FC } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -35,7 +35,7 @@ const PCAVisual: FC<VisualProps> = ({ accent }) => {
   return (
     <div
       className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
-      style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
       aria-hidden="true"
     >
       <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
@@ -44,8 +44,8 @@ const PCAVisual: FC<VisualProps> = ({ accent }) => {
           {[40, 80, 120].map((y) => <line key={`h${y}`} x1={30} y1={y} x2={270} y2={y} />)}
         </g>
 
-        <text x={264} y={170} fontSize={7} fontFamily="monospace" fill="rgba(255,255,255,0.35)" textAnchor="end">C₁₁ residual</text>
-        <text x={20} y={28} fontSize={7} fontFamily="monospace" fill="rgba(255,255,255,0.35)">C₁₂ residual</text>
+        <text x={264} y={170} fontSize={7} fontFamily="monospace" fill="var(--on-surface-variant)" opacity="0.6" textAnchor="end">C₁₁ residual</text>
+        <text x={20} y={28} fontSize={7} fontFamily="monospace" fill="var(--on-surface-variant)" opacity="0.6">C₁₂ residual</text>
 
         {dots.map((d, i) => (
           <motion.circle
@@ -82,7 +82,7 @@ const PCAVisual: FC<VisualProps> = ({ accent }) => {
         <g transform="translate(195, 145)">
           <motion.text
             x={0} y={-44}
-            fontSize={6.5} fontFamily="monospace" fill="rgba(255,255,255,0.55)"
+            fontSize={6.5} fontFamily="monospace" fill="var(--on-surface-variant)"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 2.4 }}
@@ -130,13 +130,13 @@ const RetrainingTargetVisual: FC<VisualProps> = ({ accent }) => {
   return (
     <div
       className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
-      style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
       aria-hidden="true"
     >
       <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
         <motion.text
           x={150} y={14} fontSize={7} fontFamily="monospace" textAnchor="middle"
-          fill="rgba(255,255,255,0.55)" letterSpacing="0.05em"
+          fill="var(--on-surface-variant)" letterSpacing="0.05em"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -149,7 +149,7 @@ const RetrainingTargetVisual: FC<VisualProps> = ({ accent }) => {
             <motion.rect
               key={i}
               x={c.x} y={c.y} width={14} height={14} rx={1.5}
-              fill={hot ? accent : 'rgba(255,255,255,0.07)'}
+              fill={hot ? accent : 'color-mix(in srgb, var(--on-surface) 8%, transparent)'}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: hot ? 1 : 0.42 }}
               transition={{ delay: hot ? 1.4 : 0.008 * i, duration: 0.5 }}
@@ -186,7 +186,7 @@ const RetrainingTargetVisual: FC<VisualProps> = ({ accent }) => {
 
         <motion.text
           x={150} y={177} fontSize={7} fontFamily="monospace" textAnchor="middle"
-          fill="rgba(255,255,255,0.55)" letterSpacing="0.05em"
+          fill="var(--on-surface-variant)" letterSpacing="0.05em"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 2.5 }}
@@ -201,6 +201,7 @@ const RetrainingTargetVisual: FC<VisualProps> = ({ accent }) => {
    Three nodes (Manifest · Ribbon · Target) in a cycle. Arrows draw, hold,
    fade in a continuous staggered loop. The picture of the data flywheel. */
 const FlywheelVisual: FC<VisualProps> = ({ accent }) => {
+  const prefersReducedMotion = useReducedMotion()
   const nodes = [
     { label: 'MANIFEST', x: 75, y: 70, sub: '≈900 → 1k+' },
     { label: 'RIBBON', x: 225, y: 70, sub: 'PR/m ↓' },
@@ -215,7 +216,7 @@ const FlywheelVisual: FC<VisualProps> = ({ accent }) => {
   return (
     <div
       className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
-      style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
       aria-hidden="true"
     >
       <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
@@ -225,25 +226,40 @@ const FlywheelVisual: FC<VisualProps> = ({ accent }) => {
           </marker>
         </defs>
 
-        {arcs.map((d, i) => (
-          <motion.path
-            key={i}
-            d={d}
-            fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="4 4"
-            markerEnd="url(#fly-arrow)"
-            opacity={0.75}
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 1, 1, 0] }}
-            transition={{
-              delay: i * 1.0,
-              duration: 3,
-              repeat: Infinity,
-              repeatDelay: 0,
-              times: [0, 0.45, 0.85, 1],
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
+        {arcs.map((d, i) =>
+          prefersReducedMotion ? (
+            // Reduced-motion fallback: draw the arcs once and hold
+            <motion.path
+              key={i}
+              d={d}
+              fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="4 4"
+              markerEnd="url(#fly-arrow)"
+              opacity={0.75}
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ delay: 0.2 + i * 0.15, duration: 0.6, ease: 'easeOut' }}
+              viewport={{ once: true, margin: '-40px' }}
+            />
+          ) : (
+            <motion.path
+              key={i}
+              d={d}
+              fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="4 4"
+              markerEnd="url(#fly-arrow)"
+              opacity={0.75}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: [0, 1, 1, 0] }}
+              transition={{
+                delay: i * 1.0,
+                duration: 3,
+                repeat: Infinity,
+                repeatDelay: 0,
+                times: [0, 0.45, 0.85, 1],
+                ease: 'easeInOut',
+              }}
+            />
+          ),
+        )}
 
         {nodes.map((n, i) => (
           <motion.g
@@ -258,7 +274,7 @@ const FlywheelVisual: FC<VisualProps> = ({ accent }) => {
             <circle cx={n.x} cy={n.y} r={3} fill="white" />
             <text
               x={n.x} y={n.y - 26}
-              fontSize={7.5} fontFamily="monospace" fill="rgba(255,255,255,0.85)"
+              fontSize={7.5} fontFamily="monospace" fill="var(--on-surface)"
               textAnchor="middle" letterSpacing="0.12em"
             >
               {n.label}
