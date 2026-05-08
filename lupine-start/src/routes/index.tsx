@@ -1,16 +1,305 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useEffect, useRef, useState, useCallback, type ReactNode } from 'react'
+import { useEffect, useRef, useState, useMemo, type ReactNode, type FC } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+
+/* ─── Module-level deterministic PRNG so SSR + hydration agree on scatter ─── */
+function makeRng(seed: number) {
+  let s = seed
+  return () => {
+    s = (s * 9301 + 49297) % 233280
+    return s / 233280
+  }
+}
+
+interface VisualProps { accent: string }
+
+/* ─── Visual 1 · AUDIT
+   30+ scattered potentials in a 2D error space collapse onto a principal
+   component. Eigenvalues drop geometrically — λ₁ ≫ λ₂ ≫ λ₃. The picture
+   of "PR/m well below 1." */
+const PCAVisual: FC<VisualProps> = ({ accent }) => {
+  const dots = useMemo(() => {
+    const rng = makeRng(42)
+    return Array.from({ length: 36 }, (_, i) => {
+      const t = i / 35 - 0.5
+      const perp = (rng() - 0.5) * 0.18
+      return {
+        x: 150 + t * 105 - perp * 28,
+        y: 95 - t * 55 + perp * 28,
+      }
+    })
+  }, [])
+
+  return (
+    <div
+      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
+      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
+        <g stroke={accent} strokeWidth="0.5" opacity="0.07">
+          {[60, 120, 180, 240].map((x) => <line key={`v${x}`} x1={x} y1={20} x2={x} y2={160} />)}
+          {[40, 80, 120].map((y) => <line key={`h${y}`} x1={30} y1={y} x2={270} y2={y} />)}
+        </g>
+
+        <text x={264} y={170} fontSize={7} fontFamily="monospace" fill="var(--on-surface-variant)" opacity="0.6" textAnchor="end">C₁₁ residual</text>
+        <text x={20} y={28} fontSize={7} fontFamily="monospace" fill="var(--on-surface-variant)" opacity="0.6">C₁₂ residual</text>
+
+        {dots.map((d, i) => (
+          <motion.circle
+            key={i}
+            cx={d.x} cy={d.y} r={2.3}
+            fill={accent}
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 0.7, scale: 1 }}
+            transition={{ delay: 0.025 * i, duration: 0.3, ease: 'easeOut' }}
+            viewport={{ once: true, margin: '-40px' }}
+          />
+        ))}
+
+        <motion.line
+          x1={45} y1={148} x2={255} y2={42}
+          stroke={accent} strokeWidth={2}
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          transition={{ delay: 1.1, duration: 1.2, ease: 'easeInOut' }}
+          viewport={{ once: true, margin: '-40px' }}
+          style={{ filter: `drop-shadow(0 0 6px ${accent})` }}
+        />
+
+        <motion.text
+          x={258} y={38}
+          fontSize={9} fontFamily="monospace" fill={accent} fontWeight={600}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 2.2 }}
+          viewport={{ once: true, margin: '-40px' }}
+        >PC1</motion.text>
+
+        {/* Eigenvalue spectrum collapsing geometrically */}
+        <g transform="translate(195, 145)">
+          <motion.text
+            x={0} y={-44}
+            fontSize={6.5} fontFamily="monospace" fill="var(--on-surface-variant)"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 2.4 }}
+            viewport={{ once: true, margin: '-40px' }}
+          >λ₁ ≫ λ₂ ≫ λ₃</motion.text>
+          {[
+            { h: 32, x: 0 },
+            { h: 11, x: 14 },
+            { h: 4, x: 28 },
+          ].map((b, i) => (
+            <motion.rect
+              key={i}
+              x={b.x} y={-b.h} width={10} height={b.h}
+              fill={accent}
+              initial={{ scaleY: 0, opacity: 0.4 }}
+              whileInView={{ scaleY: 1, opacity: 0.85 - i * 0.18 }}
+              transition={{ delay: 2.6 + i * 0.18, duration: 0.55 }}
+              style={{ transformOrigin: 'center bottom', transformBox: 'fill-box' }}
+              viewport={{ once: true, margin: '-40px' }}
+            />
+          ))}
+        </g>
+      </svg>
+    </div>
+  )
+}
+
+/* ─── Visual 2 · ACCELERATOR
+   60-mode parameter grid; the 3 dominant modes light up; a fine-tune
+   gradient flows only into them. The picture of "low-rank retraining
+   target." */
+const RetrainingTargetVisual: FC<VisualProps> = ({ accent }) => {
+  const HIGHLIGHTED = useMemo(() => new Set([14, 32, 51]), [])
+  const cells = useMemo(
+    () =>
+      Array.from({ length: 60 }, (_, i) => ({
+        x: 22 + (i % 12) * 22,
+        y: 32 + Math.floor(i / 12) * 22,
+        idx: i,
+      })),
+    [],
+  )
+  const targets = cells.filter((c) => HIGHLIGHTED.has(c.idx))
+
+  return (
+    <div
+      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
+      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
+        <motion.text
+          x={150} y={14} fontSize={7} fontFamily="monospace" textAnchor="middle"
+          fill="var(--on-surface-variant)" letterSpacing="0.05em"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          viewport={{ once: true, margin: '-40px' }}
+        >parameter space (60 modes)</motion.text>
+
+        {cells.map((c, i) => {
+          const hot = HIGHLIGHTED.has(c.idx)
+          return (
+            <motion.rect
+              key={i}
+              x={c.x} y={c.y} width={14} height={14} rx={1.5}
+              fill={hot ? accent : 'color-mix(in srgb, var(--on-surface) 8%, transparent)'}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: hot ? 1 : 0.42 }}
+              transition={{ delay: hot ? 1.4 : 0.008 * i, duration: 0.5 }}
+              viewport={{ once: true, margin: '-40px' }}
+            />
+          )
+        })}
+
+        {targets.map((c, i) => (
+          <motion.circle
+            key={`g${i}`}
+            cx={c.x + 7} cy={c.y + 7} r={18}
+            fill={accent}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.32 }}
+            transition={{ delay: 1.6 + i * 0.08, duration: 0.6 }}
+            viewport={{ once: true, margin: '-40px' }}
+            style={{ filter: 'blur(8px)' }}
+          />
+        ))}
+
+        {targets.map((c, i) => (
+          <motion.line
+            key={`f${i}`}
+            x1={150} y1={170}
+            x2={c.x + 7} y2={c.y + 14}
+            stroke={accent} strokeWidth={1} strokeDasharray="2 3"
+            initial={{ pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 0.55 }}
+            transition={{ delay: 2.0 + i * 0.12, duration: 0.55 }}
+            viewport={{ once: true, margin: '-40px' }}
+          />
+        ))}
+
+        <motion.text
+          x={150} y={177} fontSize={7} fontFamily="monospace" textAnchor="middle"
+          fill="var(--on-surface-variant)" letterSpacing="0.05em"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 2.5 }}
+          viewport={{ once: true, margin: '-40px' }}
+        >fine-tune ∇L → 3 dominant modes</motion.text>
+      </svg>
+    </div>
+  )
+}
+
+/* ─── Visual 3 · COMPOUNDING
+   Three nodes (Manifest · Ribbon · Target) in a cycle. Arrows draw, hold,
+   fade in a continuous staggered loop. The picture of the data flywheel. */
+const FlywheelVisual: FC<VisualProps> = ({ accent }) => {
+  const prefersReducedMotion = useReducedMotion()
+  const nodes = [
+    { label: 'MANIFEST', x: 75, y: 70, sub: '≈900 → 1k+' },
+    { label: 'RIBBON', x: 225, y: 70, sub: 'PR/m ↓' },
+    { label: 'TARGET', x: 150, y: 145, sub: 'modes ↓' },
+  ]
+  const arcs = [
+    'M 92 60 Q 150 30 208 60',
+    'M 220 88 Q 240 130 168 142',
+    'M 132 142 Q 60 130 80 88',
+  ]
+
+  return (
+    <div
+      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
+      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
+        <defs>
+          <marker id="fly-arrow" markerWidth={6} markerHeight={6} refX={5} refY={3} orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L6,3 L0,6 Z" fill={accent} />
+          </marker>
+        </defs>
+
+        {arcs.map((d, i) =>
+          prefersReducedMotion ? (
+            // Reduced-motion fallback: draw the arcs once and hold
+            <motion.path
+              key={i}
+              d={d}
+              fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="4 4"
+              markerEnd="url(#fly-arrow)"
+              opacity={0.75}
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ delay: 0.2 + i * 0.15, duration: 0.6, ease: 'easeOut' }}
+              viewport={{ once: true, margin: '-40px' }}
+            />
+          ) : (
+            <motion.path
+              key={i}
+              d={d}
+              fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="4 4"
+              markerEnd="url(#fly-arrow)"
+              opacity={0.75}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: [0, 1, 1, 0] }}
+              transition={{
+                delay: i * 1.0,
+                duration: 3,
+                repeat: Infinity,
+                repeatDelay: 0,
+                times: [0, 0.45, 0.85, 1],
+                ease: 'easeInOut',
+              }}
+            />
+          ),
+        )}
+
+        {nodes.map((n, i) => (
+          <motion.g
+            key={n.label}
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.18, duration: 0.4 }}
+            viewport={{ once: true, margin: '-40px' }}
+          >
+            <circle cx={n.x} cy={n.y} r={20} fill={accent} opacity={0.18} />
+            <circle cx={n.x} cy={n.y} r={12} fill={accent} opacity={0.8} />
+            <circle cx={n.x} cy={n.y} r={3} fill="white" />
+            <text
+              x={n.x} y={n.y - 26}
+              fontSize={7.5} fontFamily="monospace" fill="var(--on-surface)"
+              textAnchor="middle" letterSpacing="0.12em"
+            >
+              {n.label}
+            </text>
+            <text
+              x={n.x} y={n.y + 32}
+              fontSize={7} fontFamily="monospace" fill={accent} textAnchor="middle"
+            >
+              {n.sub}
+            </text>
+          </motion.g>
+        ))}
+      </svg>
+    </div>
+  )
+}
 
 export const Route = createFileRoute('/')({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: 'Lupine Materials Science — Open-Source Computational Materials Platform' },
-      { name: 'description', content: 'Open-source materials science platform with 559 interatomic potentials, a WebGPU molecular viewer, and autonomous research intelligence. Built in Rust, Apache 2.0.' },
-      { property: 'og:title', content: 'Lupine Materials Science' },
-      { property: 'og:description', content: 'Open-source materials science platform. 559 potentials. WebGPU viewer. Autonomous research. Built in Rust.' },
+      { title: 'Lupine — Geometric error analysis for machine-learned interatomic potentials' },
+      { name: 'description', content: 'Lupine is the audit layer for the MLIP ecosystem. We measure where universal interatomic potentials fail, and why, using sloppy-models geometry across ≈900 published potentials and 7,940 benchmark records. Apache 2.0, Rust.' },
+      { property: 'og:title', content: 'Lupine — the audit layer for the MLIP ecosystem' },
+      { property: 'og:description', content: 'Cross-potential geometric error analysis across ≈900 published interatomic potentials. After Transtrum, Sethna, Tadmor.' },
       { property: 'og:url', content: 'https://lupine.science/' },
     ],
   }),
@@ -59,12 +348,12 @@ function HeroSection() {
         }}
       />
 
-      <div className="relative z-[2] max-w-[780px]">
+      <div className="relative z-[2] max-w-[820px]">
         <div
           className="text-xs font-semibold uppercase tracking-[0.25em] mb-6"
           style={{ color: 'var(--lupine-400)', animation: 'fade-up 0.8s 0.2s both' }}
         >
-          Open-Source Materials Science
+          Geometric error analysis · MLIP audit layer
         </div>
 
         <h1
@@ -75,8 +364,8 @@ function HeroSection() {
             animation: 'fade-up 0.8s 0.4s both',
           }}
         >
-          Discover <em className="italic text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, var(--lupine-400), var(--violet-300))' }}>New Materials</em>
-          <br />Before They Exist
+          Universal MLIPs <em className="italic text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, var(--lupine-400), var(--violet-300))' }}>fail silently.</em>
+          <br />We measure where, and why.
         </h1>
 
         <p
@@ -84,11 +373,11 @@ function HeroSection() {
           style={{
             fontSize: 17,
             color: 'var(--slate-400)',
-            maxWidth: 560,
+            maxWidth: 620,
             animation: 'fade-up 0.8s 0.6s both',
           }}
         >
-          559 interatomic potentials. 15 metals benchmarked. A WebGPU molecular viewer and an autonomous research engine — all in one Rust codebase, Apache 2.0 licensed.
+          UMA, MACE-MP, Orb-v3, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery and still under-predict PES curvature at surfaces, defects, and migration barriers (Deng et al., <em>npj Comput. Mater.</em> 2024). Lupine is the audit layer that turns that quiet failure into a measured, citable error budget — and a low-dimensional retraining target. The geometry that names the failure is the geometry that fixes it.
         </p>
 
         <div className="flex gap-4 justify-center flex-wrap" style={{ animation: 'fade-up 0.8s 0.8s both' }}>
@@ -97,10 +386,10 @@ function HeroSection() {
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
             style={{ background: 'linear-gradient(135deg, var(--lupine-700), var(--lupine-600))' }}
           >
-            Explore the Research
+            Read the IMMI preprint
           </Link>
           <Link
-            to="/live"
+            to="/pilots"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
             style={{
               color: 'var(--slate-200)',
@@ -108,9 +397,29 @@ function HeroSection() {
               border: '1px solid var(--slate-700)',
             }}
           >
-            Live Lab
+            Pilot a wedge
           </Link>
+          <a
+            href="https://github.com/alexwelcing/lupine"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
+            style={{
+              color: 'var(--slate-200)',
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid var(--slate-700)',
+            }}
+          >
+            atlas-distill on GitHub
+          </a>
         </div>
+
+        <p
+          className="mt-10 mx-auto text-[13px] italic leading-relaxed"
+          style={{ color: 'var(--slate-500)', maxWidth: 620, animation: 'fade-up 0.8s 1s both' }}
+        >
+          "Hyper-ribbons are characterized by a geometric series of widths" — Transtrum, Machta &amp; Sethna, <em>Phys. Rev. E</em> 83, 036701 (2011). We apply that geometry to the population of published interatomic potentials. <Link to="/lineage" className="underline decoration-dotted underline-offset-4 hover:text-[var(--lupine-400)] transition-colors not-italic">See the full lineage →</Link>
+        </p>
       </div>
     </section>
   )
@@ -119,9 +428,9 @@ function HeroSection() {
 /* ─── Evolution Feature (2nd primary) ─── */
 function EvolutionFeature() {
   const stages = [
-    { label: 'Organize', desc: 'Typed corpus of claims + literature, 7,940 records.' },
-    { label: 'Harden', desc: 'Bootstrap, permutation, matched-n controls — kill artifacts.' },
-    { label: 'Evaluate', desc: 'Strict hypothesis lifecycle with a Lean-readiness gate.' },
+    { label: 'Organize', desc: 'Typed corpus of ≈900 potentials and 7,940 benchmark records, with snapshot date and de-duplication rule.' },
+    { label: 'Harden', desc: 'Bootstrap, permutation, matched-n controls, Simpson\'s-paradox detection — kill artifacts before they cite.' },
+    { label: 'Evaluate', desc: 'Strict hypothesis lifecycle with a Lean-readiness gate, after Frederiksen et al. 2004 and Wen et al. 2017.' },
   ]
 
   return (
@@ -139,7 +448,7 @@ function EvolutionFeature() {
           <div className="lg:col-span-7">
             <Reveal>
               <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--violet-300)]">
-                The Autonomous Research Engine
+                The harden stage
               </div>
             </Reveal>
             <Reveal delay={0.1}>
@@ -164,10 +473,7 @@ function EvolutionFeature() {
                 className="font-light leading-relaxed mb-4 text-[var(--slate-300)]"
                 style={{ fontSize: 17, maxWidth: 580 }}
               >
-                Five rounds, four days, and the system caught two of its own statistical artifacts
-                using the same matched-n bootstrap method — once on a d-band-fullness claim, once
-                on a MEAM-anomaly claim. Two different scientific domains, same self-correction
-                operator. That is the harden stage doing its job repeatedly.
+                Across five rounds and four days, the harden stage caught two of its own statistical artifacts using the same matched-n bootstrap method — once on a d-band-fullness claim, once on a MEAM-anomaly claim. Two different domains, same self-correction operator. The MEAM result survived: a participation ratio of 2.24 across 167 potentials, recovering the cross-potential anomaly Hale, Trautt &amp; Becker (2018) reported. The d-band claim did not. That is what the harden stage is for.
               </p>
             </Reveal>
             <Reveal delay={0.3}>
@@ -175,9 +481,7 @@ function EvolutionFeature() {
                 className="font-light leading-relaxed mb-8 text-[var(--slate-400)]"
                 style={{ fontSize: 15, maxWidth: 580 }}
               >
-                Read the round-by-round trail of how the canonical hypotheses moved, why
-                refutations always leave behind a narrower defensible claim, and how this projects
-                to a 10⁷-record, thousand-round version under BigQuery + GCP.
+                Read the round-by-round trail of how each canonical hypothesis moved, why refutations always leave behind a narrower defensible claim, and how the same operator extends to a 10⁷-record, thousand-round version of the audit.
               </p>
             </Reveal>
             <Reveal delay={0.4}>
@@ -190,7 +494,7 @@ function EvolutionFeature() {
                       'linear-gradient(135deg, var(--violet-600, #7c3aed), var(--lupine-600))',
                   }}
                 >
-                  Read the Evolution Report
+                  Read the round-by-round trail
                 </Link>
                 <Link
                   to="/process"
@@ -201,7 +505,7 @@ function EvolutionFeature() {
                     border: '1px solid var(--slate-700)',
                   }}
                 >
-                  Operating Report
+                  Operating report
                 </Link>
               </div>
             </Reveal>
@@ -219,7 +523,7 @@ function EvolutionFeature() {
                 }}
               >
                 <div className="text-[10px] font-bold uppercase tracking-[0.3em] mb-5 text-[var(--violet-300)]">
-                  The three-stage cycle
+                  Organize · harden · evaluate
                 </div>
                 <div className="space-y-4">
                   {stages.map((s, i) => (
@@ -258,7 +562,7 @@ function EvolutionFeature() {
                     2 / 2
                   </div>
                   <div className="text-[10px] uppercase tracking-widest text-[var(--slate-500)]">
-                    Confounders caught · Same method · Two days
+                    Confounders caught · same matched-n bootstrap · two days
                   </div>
                 </div>
               </div>
@@ -273,9 +577,9 @@ function EvolutionFeature() {
 /* ─── Stats Strip ─── */
 function StatsStrip() {
   const stats = [
-    { value: '559', label: 'Potentials' },
-    { value: '15', label: 'Metals Benchmarked' },
-    { value: '60+', label: 'Papers Analyzed' },
+    { value: '≈900', label: 'Potentials in manifest' },
+    { value: '18', label: 'Functional-form families' },
+    { value: '7,940', label: 'Benchmark records' },
     { value: 'Apache 2.0', label: 'License' },
   ]
 
@@ -308,17 +612,17 @@ function WhatWeBuild() {
   const pillars = [
     {
       title: 'Potential Atlas',
-      desc: '559 interatomic potentials from OpenKIM and NIST IPR. 15 metals benchmarked with 1,677 predictions analyzed.',
+      desc: '≈900 published interatomic potentials from OpenKIM, NIST IPR, ColabFit, and author-distributed MLIP releases (MACE-MP, MatterSim, Orb, CHGNet, GAP). Snapshot date and de-duplication rule shipped with every release.',
       accent: 'var(--lupine-500)',
     },
     {
-      title: 'Distill Engine',
-      desc: 'Autonomous research intelligence that extracts, validates, and discovers mathematical relationships from 60+ published papers.',
+      title: 'atlas-distill engine',
+      desc: 'Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson\'s-paradox detection. Open source, Apache 2.0, written in Rust. Sits beside LAMMPS / ASE / KIM — does not replace them.',
       accent: 'var(--violet-500)',
     },
     {
-      title: 'Hyper-Ribbon Geometry',
-      desc: 'Our discovery: universal potentials need only capture a small number of orthogonal error modes. Published and peer-reviewed.',
+      title: 'Hyper-ribbon geometry',
+      desc: 'After Transtrum, Machta &amp; Sethna (2011) and Frederiksen, Jacobsen, Brown &amp; Sethna (2004). The empirical claim, restated for cross-potential errors: a small number of orthogonal modes account for most of the variance.',
       accent: 'var(--accent-cyan)',
     },
   ]
@@ -327,16 +631,16 @@ function WhatWeBuild() {
     <section className="px-6 py-20 lg:py-28">
       <div className="max-w-[1000px] mx-auto">
         <Reveal>
-          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)]">What We Build</div>
+          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)]">What we build</div>
         </Reveal>
         <Reveal>
           <h2 className="font-serif font-normal leading-[1.2] mb-5 text-[var(--slate-100)]" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-            From electrons to engineering.<br />One unified system.
+            A cross-potential view,<br />not another foundation model.
           </h2>
         </Reveal>
         <Reveal>
-          <p className="font-light text-base leading-relaxed mb-14 text-[var(--slate-400)]" style={{ maxWidth: 560 }}>
-            Lupine replaces the fragmented materials science stack with a single, modern codebase written in Rust — memory-safe, GPU-accelerated, and with ML potentials as a first-class citizen.
+          <p className="font-light text-base leading-relaxed mb-14 text-[var(--slate-400)]" style={{ maxWidth: 600 }}>
+            We do not train a competitor to UMA, Orb, MACE-MP, or SevenNet-Omni. We measure them — together with the long tail of EAM, MEAM, ReaxFF, GAP, NequIP, and DeePMD potentials they are quietly being asked to replace — and write a citable error budget against the customer's own benchmark.
           </p>
         </Reveal>
 
@@ -362,24 +666,106 @@ function WhatWeBuild() {
   )
 }
 
+/* ─── Audit + Accelerator ─── */
+function AuditAccelerator() {
+  const moves: Array<{
+    Visual: FC<VisualProps>
+    label: string
+    title: string
+    body: string
+    accent: string
+  }> = [
+    {
+      Visual: PCAVisual,
+      label: 'Audit',
+      title: 'Localize the failure mode.',
+      body: 'Cross-potential PCA returns a participation ratio PR/m well below 1 across ≈900 potentials. The empirical signature of a hyper-ribbon — a low-dimensional ridge of dominant error directions — is the same low-effective-dimensionality signature that a maturing science of deep learning calls a "simple empirical law" of learning (Simon et al., 2026, §2.3, §2.5).',
+      accent: 'var(--lupine-400)',
+    },
+    {
+      Visual: RetrainingTargetVisual,
+      label: 'Accelerator',
+      title: 'Retrain only the modes that matter.',
+      body: 'Once the dominant error directions are named, the customer\'s MLIP fine-tune does not have to re-learn everything. Saxe et al. (2014) showed that linear networks acquire singular modes in order of magnitude; Bordelon, Atanasov & Pehlevan (2025) showed that capturing the top modes faster gives improved scaling laws. The hyper-ribbon Lupine measures is the explicit, low-rank target that compresses retraining onto the modes that actually move test loss.',
+      accent: 'var(--violet-300)',
+    },
+    {
+      Visual: FlywheelVisual,
+      label: 'Compounding',
+      title: 'The same data feeds both.',
+      body: 'Every audit run adds rows to the manifest. Every manifest row sharpens the ribbon. Every sharper ribbon gives a tighter retraining target — fewer parameters, fewer DFT calls, fewer compute-hours per fine-tune. This is the Datadog-then-DataRobot arc, applied to the science of MLIPs.',
+      accent: 'var(--accent-cyan)',
+    },
+  ]
+
+  return (
+    <section className="px-6 py-20 lg:py-28">
+      <div className="max-w-[1100px] mx-auto">
+        <Reveal>
+          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)]">Audit + accelerator</div>
+        </Reveal>
+        <Reveal>
+          <h2 className="font-serif font-normal leading-[1.2] mb-5 text-[var(--slate-100)]" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            Learning mechanics for atomistic ML.
+          </h2>
+        </Reveal>
+        <Reveal>
+          <p className="font-light text-base leading-relaxed mb-14 text-[var(--slate-400)]" style={{ maxWidth: 700 }}>
+            Simon et al. (2026) — <em>There Will Be a Scientific Theory of Deep Learning</em> — name five lines of evidence for an emerging mechanics of learning: solvable settings, simplifying limits, simple empirical laws, hyperparameter disentanglement, and universal phenomena. The hyper-ribbon Lupine measures across published interatomic potentials is one specific instance of the third and fifth: a low-dimensional empirical regularity that recurs across very different systems. That makes the audit layer more than a measurement tool.
+          </p>
+        </Reveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {moves.map((m, i) => (
+            <Reveal key={m.label} delay={i * 0.08}>
+              <div
+                className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 h-full flex flex-col"
+                style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  borderTop: `2px solid ${m.accent}`,
+                }}
+              >
+                <m.Visual accent={m.accent} />
+                <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-3" style={{ color: m.accent }}>
+                  {m.label}
+                </div>
+                <h3 className="font-serif text-xl mb-3 text-[var(--slate-100)] italic">{m.title}</h3>
+                <p className="text-sm leading-relaxed text-[var(--slate-400)]">{m.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.3}>
+          <p className="mt-10 text-[13px] italic leading-relaxed text-center text-[var(--slate-500)]" style={{ maxWidth: 760, margin: '40px auto 0' }}>
+            "Where mechanistic interpretability aims to be the biology of deep learning, learning mechanics should aspire to be its physics" — Simon et al. (2026). For atomistic ML specifically, that physics is what cross-potential geometry already looks like.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Why Lupine ─── */
 function WhyLupine() {
   const rows = [
-    ['WebGPU Visualization', '—', '—', 'Native'],
-    ['Potential Database', '—', '—', '559 entries'],
-    ['Research Intelligence', '—', '—', 'Automated'],
-    ['Browser-based', '—', '—', 'Yes'],
-    ['License', 'Commercial', 'GPL', 'Apache 2.0'],
-    ['Language', 'Fortran', 'C++', 'Rust'],
+    ['Trains a new universal potential', 'Yes', 'Yes', 'No'],
+    ['Replaces DFT or LAMMPS', 'No', 'No', 'No'],
+    ['Cross-potential error manifold', '—', '—', '≈900 potentials'],
+    ['Per-trajectory error budget', '—', '—', 'Yes'],
+    ['Low-rank retraining target', '—', '—', 'Yes (PR/m < 0.9)'],
+    ['Synthesizability claims', '—', '—', 'No (Cheetham & Seshadri 2024)'],
+    ['License', 'Closed / Apache 2.0', 'Closed / Apache 2.0', 'Apache 2.0'],
   ]
 
   return (
     <section className="px-6 py-20 lg:py-28">
       <div className="max-w-[900px] mx-auto">
         <Reveal>
-          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)] text-center">Why Lupine</div>
+          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)] text-center">Scope</div>
           <h2 className="font-serif font-normal leading-[1.2] mb-12 text-[var(--slate-100)] text-center" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-            Compared to existing tools
+            What this is, and what it is not
           </h2>
         </Reveal>
 
@@ -388,7 +774,7 @@ function WhyLupine() {
             <table className="w-full text-[13px]" style={{ borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ background: 'var(--slate-800)' }}>
-                  {['Capability', 'VASP', 'LAMMPS', 'Lupine'].map((h, i) => (
+                  {['Capability', 'Foundation MLIPs (UMA, Orb, MACE-MP)', 'Custom DFT-trained MLIPs', 'Lupine'].map((h, i) => (
                     <th
                       key={h}
                       className="text-left px-5 py-4 font-semibold text-[11px] uppercase tracking-widest border-b"
@@ -426,6 +812,12 @@ function WhyLupine() {
             </table>
           </div>
         </Reveal>
+
+        <Reveal delay={0.1}>
+          <p className="mt-8 text-[13px] italic leading-relaxed text-center text-[var(--slate-500)]" style={{ maxWidth: 720, margin: '32px auto 0' }}>
+            We do not replace DFT — DFT is the training signal. We do not replace LAMMPS, ASE, or KIM — these are integrators, and our analysis runs alongside them. "Stable on the convex hull" is not "synthesizable" (Cheetham &amp; Seshadri, <em>Chem. Mater.</em> 2024).
+          </p>
+        </Reveal>
       </div>
     </section>
   )
@@ -439,28 +831,30 @@ function CTASection() {
         className="absolute inset-0 -z-[1] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(59,130,246,0.08), transparent 70%)' }}
       />
-      <div className="max-w-[600px] mx-auto">
+      <div className="max-w-[640px] mx-auto">
         <Reveal>
           <h2 className="font-serif font-normal leading-[1.2] mb-5 text-[var(--slate-100)]" style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}>
-            Materials infrastructure<br />is the new frontier.
+            Three paths in.
           </h2>
         </Reveal>
         <Reveal>
           <p className="font-light text-base leading-relaxed mb-10 text-[var(--slate-400)]">
-            If you work in computational materials science, aerospace, energy storage, or deep tech investment — we should talk.
+            Researchers go to the science. Industry teams pilot a wedge. Investors find us in the footer.
           </p>
         </Reveal>
         <Reveal>
           <div className="flex gap-4 justify-center flex-wrap">
-            <a
-              href="mailto:alexwelcing@gmail.com"
+            <Link
+              to="/research"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
               style={{ background: 'linear-gradient(135deg, var(--lupine-700), var(--lupine-600))' }}
             >
-              Contact
-            </a>
-            <Link
-              to="/research"
+              Read the preprint
+            </Link>
+            <a
+              href="https://github.com/alexwelcing/lupine"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
               style={{
                 color: 'var(--slate-200)',
@@ -468,8 +862,19 @@ function CTASection() {
                 border: '1px solid var(--slate-700)',
               }}
             >
-              Read the Research
-            </Link>
+              atlas-distill on GitHub
+            </a>
+            <a
+              href="mailto:alexwelcing@gmail.com?subject=Lupine%20pilot"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
+              style={{
+                color: 'var(--slate-200)',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid var(--slate-700)',
+              }}
+            >
+              Pilot with our team
+            </a>
           </div>
         </Reveal>
       </div>
@@ -487,6 +892,7 @@ function LandingPage() {
         <EvolutionFeature />
         <StatsStrip />
         <WhatWeBuild />
+        <AuditAccelerator />
         <WhyLupine />
         <CTASection />
       </main>

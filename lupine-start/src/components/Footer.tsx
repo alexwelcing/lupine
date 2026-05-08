@@ -16,28 +16,31 @@ export default function Footer() {
               <span className="font-serif italic text-sm font-semibold tracking-tight text-[var(--on-surface-variant)]">Lupine</span>
             </Link>
             <p className="text-xs text-[var(--on-surface-variant)] max-w-xs leading-relaxed opacity-60">
-              Unified computational materials science. From quantum DFT to billion-atom MD in one Rust codebase.
+              The audit layer for the MLIP ecosystem — and the low-rank retraining target that compounds out of it. Applied learning mechanics for atomistic ML.
             </p>
           </div>
 
           {/* Links */}
           <div className="flex flex-wrap gap-10">
             <div className="flex flex-col gap-3">
-              <span className="font-mono text-[var(--on-surface-variant)] opacity-40 text-[10px] uppercase tracking-widest">Platform</span>
-              <Link to="/" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Home</Link>
+              <span className="font-mono text-[var(--on-surface-variant)] opacity-40 text-[10px] uppercase tracking-widest">Audit layer</span>
               <Link to="/research" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Research</Link>
-              <Link to="/live" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Live Lab</Link>
+              <Link to="/lineage" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Lineage</Link>
+              <Link to="/proof" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Research Defense</Link>
               <Link to="/atlas-viewer" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Atlas Viewer</Link>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="font-mono text-[var(--on-surface-variant)] opacity-40 text-[10px] uppercase tracking-widest">Company</span>
+              <span className="font-mono text-[var(--on-surface-variant)] opacity-40 text-[10px] uppercase tracking-widest">Engagement</span>
+              <Link to="/pilots" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Pilots</Link>
               <Link to="/about" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">About</Link>
-              <Link to="/investor-relations" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Investors</Link>
-              <Link to="/proof" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Research Defense</Link>
+              <Link to="/process" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Operating Report</Link>
+              <Link to="/investor-relations" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Investor Brief</Link>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="font-mono text-[var(--on-surface-variant)] opacity-40 text-[10px] uppercase tracking-widest">Connect</span>
+              <span className="font-mono text-[var(--on-surface-variant)] opacity-40 text-[10px] uppercase tracking-widest">Open work</span>
               <a href="https://github.com/alexwelcing/lupine" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">GitHub</a>
+              <Link to="/live" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Live Lab</Link>
+              <Link to="/console" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Console</Link>
               <a href="mailto:alexwelcing@gmail.com" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Contact</a>
             </div>
           </div>
@@ -45,7 +48,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-[var(--outline-variant)]/50 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="font-mono text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest opacity-50">
-            &copy; {new Date().getFullYear()} Lupine Materials Science. All rights reserved.
+            &copy; {new Date().getFullYear()} Lupine. Geometric error analysis for atomistic ML.
           </div>
           <div className="font-mono text-[10px] text-[var(--on-surface-variant)] opacity-40">
             Apache 2.0 Licensed

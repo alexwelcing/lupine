@@ -7,17 +7,17 @@ export const Route = createFileRoute('/evolution')({
   component: EvolutionPage,
   head: () => ({
     meta: [
-      { title: 'The Loop That Caught Itself — Lupine Evolution Report' },
+      { title: 'The loop that caught itself — Lupine evolution report' },
       {
         name: 'description',
         content:
-          'How the Lupine autonomous research system organizes information, hardens logic, and evaluates ideas — and how it has demonstrated self-correction by detecting two independent sample-size confounders with the same matched-n bootstrap method.',
+          'How the harden stage of the Lupine audit layer organizes the manifest, hardens logic against statistical artifacts, and evaluates cross-potential claims — and how it has demonstrated self-correction by refuting two of its own hypotheses (one survived, one did not) using the same matched-n bootstrap method.',
       },
-      { property: 'og:title', content: 'The Loop That Caught Itself — Lupine Evolution Report' },
+      { property: 'og:title', content: 'The loop that caught itself — Lupine evolution report' },
       {
         property: 'og:description',
         content:
-          'A three-stage research cycle (organize → harden → evaluate) demonstrated at small scale, projected to large scale via BigQuery + GCP.',
+          'A three-stage cycle (organize → harden → evaluate) sitting behind the audit layer. Demonstrated at small scale, mapped to a 10⁷-record version under BigQuery.',
       },
       { property: 'og:url', content: 'https://lupine.science/evolution' },
     ],
@@ -208,9 +208,9 @@ const verdictPill = (tone: string) => {
 function EvolutionPage() {
   return (
     <PageShell
-      kicker="EVOLUTION OF THE WORK // 2026-05-02 → 2026-05-05"
-      title="The Loop That Caught Itself"
-      subtitle="An autonomous research cycle — organize information, harden logic, evaluate ideas — demonstrated at small scale, with the system catching two of its own statistical artifacts in two days using the same method. This page tells the story of how the ideas moved, why the matched-n bootstrap is now load-bearing, and what the X-scale, Y-iteration projection looks like under BigQuery + GCP."
+      kicker="HARDEN STAGE EVOLUTION // 2026-05-02 → 2026-05-05"
+      title="The loop that caught itself."
+      subtitle="The harden stage of Lupine's audit layer — organize the manifest, harden the logic, evaluate the claim — demonstrated at small scale, with the system refuting two of its own hypotheses using the same method (one survived, one did not). This page tells the story of how the canonical claims moved, why the matched-n bootstrap is now load-bearing, and what the 10⁷-record version under BigQuery looks like."
       maxWidth="5xl"
     >
       <div className="space-y-20">

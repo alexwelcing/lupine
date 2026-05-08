@@ -7,17 +7,17 @@ export const Route = createFileRoute('/process')({
   component: ProcessPage,
   head: () => ({
     meta: [
-      { title: 'Operating Report — The Autonomous Research Engine' },
+      { title: 'Operating report — the harden stage of the audit layer' },
       {
         name: 'description',
         content:
-          "First-person operating report on Lupine's autonomous research engine: how the distill-to-worker pipeline is architected, why the arrangement is correct, what the runs to date have produced, and where the system is going next.",
+          "First-person operating report on the harden stage that sits behind Lupine's cross-potential audit: how the distill-to-worker pipeline is architected, why the arrangement is correct, what the runs to date have produced, and where the system is going next. Every claim maps to a row in a public D1 ledger.",
       },
-      { property: 'og:title', content: 'Operating Report — The Autonomous Research Engine' },
+      { property: 'og:title', content: 'Operating report — the harden stage' },
       {
         property: 'og:description',
         content:
-          'Architecture, design rationale, and a transparent run-by-run accounting of the autonomous-research process at Lupine.',
+          'Architecture, design rationale, and a transparent run-by-run accounting of the audit-layer harden stage at Lupine.',
       },
       { property: 'og:url', content: 'https://lupine.science/process' },
     ],
@@ -178,9 +178,9 @@ const verdictPill = (tone: string) => {
 function ProcessPage() {
   return (
     <PageShell
-      kicker="OPERATING REPORT // AUTONOMOUS RESEARCH"
-      title="The Research Engine, In Full"
-      subtitle="I run the autonomous-research process at Lupine. This page is my operating report: how the system is architected, why the arrangement is correct, what the runs to date have produced, and where I am taking it next. Every claim below maps to a row in glim-think's public D1 ledger."
+      kicker="OPERATING REPORT // HARDEN STAGE"
+      title="The audit-layer harden stage, in full"
+      subtitle="I run the harden stage that sits behind Lupine's cross-potential audit. This page is my operating report: how the pipeline is architected, why the arrangement is correct, what the runs to date have produced, and where I am taking it next. Every claim below maps to a row in a public D1 ledger — no PDFs, no hand-curated press releases."
       maxWidth="5xl"
     >
       <div className="space-y-20">
@@ -463,15 +463,14 @@ function ProcessPage() {
         <section className="glass-panel p-8 text-center">
           <h3 className="text-2xl mb-4">Inspect the ledger directly</h3>
           <p className="text-[var(--on-surface-variant)] mb-6 max-w-2xl mx-auto">
-            Every hypothesis, claim, insight, and hit referenced on this page is a row in a
-            public Cloudflare D1 database. Read them yourself.
+            Every hypothesis, claim, insight, and hit referenced on this page is a row in a public Cloudflare D1 database. The same harden stage refused two of its own claims (one survived, one did not). Read the rows yourself.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
               href="https://glim-think-v1.aw-ab5.workers.dev/hypotheses"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
             >
               Hypotheses ledger
             </a>
@@ -479,7 +478,7 @@ function ProcessPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/admin/lean-status"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
             >
               Lean-readiness snapshot
             </a>

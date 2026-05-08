@@ -3,20 +3,26 @@ import { useState, useRef, useEffect } from 'react'
 import MobileNav from './MobileNav'
 import ThemeToggle from './ThemeToggle'
 
-const PRIMARY_NAV = [
+const PRIMARY_NAV: ReadonlyArray<{
+  to: string
+  label: string
+  live?: boolean
+}> = [
   { to: '/', label: 'Home' },
   { to: '/research', label: 'Research' },
+  { to: '/pilots', label: 'Pilots' },
   { to: '/live', label: 'Live Lab', live: true },
   { to: '/about', label: 'About' },
-] as const
+]
 
 const MORE_NAV = [
-  { to: '/console', label: 'Research Console', desc: 'Tabular browser for the full Cloudflare ledger' },
-  { to: '/slideshow', label: 'Slideshow', desc: '100+ MiniMax stills across 10 categories' },
-  { to: '/atlas-viewer', label: 'Atlas Viewer', desc: 'WebGPU molecular visualization' },
+  { to: '/lineage', label: 'Lineage', desc: 'The 22-year citation chain we extend' },
+  { to: '/console', label: 'Research Console', desc: 'Tabular browser for the manifest ledger' },
+  { to: '/atlas-viewer', label: 'Atlas Viewer', desc: 'WebGPU exploration of the error manifold' },
   { to: '/proof', label: 'Research Defense', desc: 'Response to preprint critique' },
-  { to: '/process', label: 'Operating Report', desc: 'Autonomous-research engine, run by run' },
-  { to: '/investor-relations', label: 'Investor Relations', desc: 'Data room & diligence' },
+  { to: '/process', label: 'Operating Report', desc: 'Harden stage, run by run' },
+  { to: '/investor-relations', label: 'Investor Brief', desc: 'Manifest, thesis, diligence answers' },
+  { to: '/slideshow', label: 'Slideshow', desc: 'Visual brief, 100+ stills' },
   { to: '/ops', label: 'Ops Dashboard', desc: 'Deployment telemetry' },
 ] as const
 

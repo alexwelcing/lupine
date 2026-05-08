@@ -66,11 +66,11 @@ export const Route = createFileRoute('/console')({
   }),
   head: () => ({
     meta: [
-      { title: 'Research Console — Cloudflare Ledger Explorer' },
+      { title: 'Research console — manifest ledger explorer' },
       {
         name: 'description',
         content:
-          'Tabular browser for every entity in the GLIM Cloudflare deployment: hypotheses, claims, insights, papers, hits, critiques, deployments, and agent storage.',
+          'Tabular browser for every entity behind the Lupine audit layer: hypotheses, cross-potential claims, insights from the literature pipeline, papers, hits, critiques, deployments, and agent storage. Public D1 ledger, no curation.',
       },
     ],
   }),
@@ -151,9 +151,9 @@ function ConsolePage() {
 
   return (
     <PageShell
-      kicker="RESEARCH CONSOLE"
-      title="The full Cloudflare ledger, in one table"
-      subtitle="Every hypothesis, claim, insight, paper, hit, critique, vignette, deployment, and agent instance — structured for at-a-glance reading, sortable, filterable, exportable, and one click from its raw JSON."
+      kicker="RESEARCH CONSOLE · MANIFEST LEDGER"
+      title="The audit ledger, in one table"
+      subtitle="Every hypothesis, cross-potential claim, insight, paper, hit, critique, vignette, deployment, and agent instance behind the audit layer — structured for at-a-glance reading, sortable, filterable, exportable, and one click from its raw JSON."
       maxWidth="full"
     >
       <div className="flex flex-wrap gap-2 mb-6 border-b border-[var(--outline-variant)] pb-4">

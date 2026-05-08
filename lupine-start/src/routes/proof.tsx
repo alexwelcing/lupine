@@ -6,8 +6,8 @@ export const Route = createFileRoute('/proof')({
   component: ProofPage,
   head: () => ({
     meta: [
-      { title: 'Research Defense — Causal Geometry of Prediction Errors' },
-      { name: 'description', content: 'A rigorous response to critique of Welcing (2025). Computational experiment, formal causal identification, and reproducible code.' },
+      { title: 'Research defense — cross-potential geometric error analysis' },
+      { name: 'description', content: 'A rigorous response to critique of Welcing (2025). Computational experiment, formal causal identification, reproducible code, and acknowledged lineage from Frederiksen (2004), Transtrum/Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), and Deng et al. (2024).' },
     ],
   }),
 })
@@ -15,9 +15,9 @@ export const Route = createFileRoute('/proof')({
 function ProofPage() {
   return (
     <PageShell
-      kicker="RESEARCH DEFENSE: LIVE"
-      title="The Causal Geometry of Prediction Errors"
-      subtitle="A rigorous response to critique of Welcing (2025). Every claim below is backed by computational experiment, formal causal identification, or reproducible code. This is not a preprint — it is a theorem with data."
+      kicker="RESEARCH DEFENSE · LIVE"
+      title="Cross-potential geometric error analysis — the defense."
+      subtitle="A rigorous response to critique of Welcing (2025). Every claim below is backed by computational experiment, formal causal identification, or reproducible code, and the lineage is named: Frederiksen, Jacobsen, Brown & Sethna (2004), Transtrum, Machta & Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), Deng et al. (2024). Hyper-ribbon is borrowed terminology, properly cited."
       maxWidth="5xl"
     >
       <div className="space-y-8">
@@ -90,28 +90,26 @@ function ProofPage() {
 
       {/* Call to action */}
       <div className="mt-16 glass-panel p-8 text-center">
-        <h3 className="text-2xl mb-4">The Experiment is Open</h3>
+        <h3 className="text-2xl mb-4">The experiment is open</h3>
         <p className="text-[var(--on-surface-variant)] mb-6 max-w-2xl mx-auto">
-          Every figure, every number, and every line of code is reproducible.
-          The atlas-distill engine is open-source. The OpenKIM data is public.
-          The causal proof is formal. Run it yourself.
+          Every figure, every number, and every line of code is reproducible. The atlas-distill engine is Apache 2.0. The OpenKIM, NIST IPR, and ColabFit corpora are public. The manifest snapshot date and de-duplication rule ship with each release. Run it yourself; if your numbers disagree with ours, file a PR.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <a
             href="https://github.com/alexwelcing/lupine/tree/main/swarm_preprint_review"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
           >
-            View Research Artifacts
+            Research artifacts
           </a>
           <a
             href="https://glim-think-v1.aw-ab5.workers.dev/feed"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors"
+            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
           >
-            Live System Feed
+            Live system feed
           </a>
         </div>
       </div>

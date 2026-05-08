@@ -1,8 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Section, SectionHeader } from '../components/ui/Section'
 import { motion } from 'framer-motion'
 import { Card } from '../components/ui/Card'
-import { Badge } from '../components/ui/Badge'
 import { PageShell } from '../components/ui/PageShell'
 import { InlineMath, BlockMath } from '../components/KaTeX'
 
@@ -10,13 +8,13 @@ export const Route = createFileRoute('/research')({
   component: ResearchPage,
   head: () => ({
     meta: [
-      { title: 'The Causal Geometry of Prediction Errors — Lupine Research' },
-      { name: 'description', content: 'Hyper-ribbon manifold analysis of interatomic potential prediction errors. 953 potentials, 15 metals, 18 functional-form families, 7,940 records. Fingerprint hypothesis confirmed at p<0.001; ribbon survives orthogonalization against the reference-value direction.' },
-      { property: 'og:title', content: 'The Causal Geometry of Prediction Errors — Lupine Research' },
-      { property: 'og:description', content: 'Hyper-ribbon manifold analysis of interatomic potential prediction errors. 953 potentials, 15 metals, 18 functional-form families, 7,940 records. Fingerprint hypothesis confirmed at p<0.001.' },
+      { title: 'Cross-potential geometric error analysis — Lupine Research' },
+      { name: 'description', content: 'After Transtrum, Machta & Sethna (2011) and Frederiksen, Jacobsen, Brown & Sethna (2004): cross-potential PCA error analysis across 953 published interatomic potentials, 18 functional-form families, 7,940 benchmark records. The empirical signature of a hyper-ribbon, contributed in the cross-potential setting.' },
+      { property: 'og:title', content: 'Cross-potential geometric error analysis — Lupine Research' },
+      { property: 'og:description', content: 'Sloppy-models geometry applied to ≈900 published interatomic potentials. After Transtrum, Sethna, Tadmor.' },
       { property: 'og:url', content: 'https://lupine.science/research' },
-      { name: 'twitter:title', content: 'The Causal Geometry of Prediction Errors — Lupine Research' },
-      { name: 'twitter:description', content: 'Hyper-ribbon manifold analysis of interatomic potential prediction errors with Simpson\'s paradox detection.' },
+      { name: 'twitter:title', content: 'Cross-potential geometric error analysis — Lupine Research' },
+      { name: 'twitter:description', content: 'Cross-potential PCA across ≈900 published interatomic potentials, with Simpson\'s-paradox detection and meta-analysis.' },
     ],
   })
 })
@@ -54,37 +52,40 @@ const ribbonSpineRows = [
 function ResearchPage() {
   return (
     <PageShell
-      kicker="IMMI PREPRINT // LUPINE SYSTEMS"
-      title="Hyper-Ribbon Geometry of Interatomic Potential Error Manifolds"
-      subtitle="A Statistical Framework for Universal Potential Design"
+      kicker="IMMI PREPRINT // LUPINE"
+      title="Cross-Potential Geometric Error Analysis for Interatomic Potentials"
+      subtitle="Sloppy-models geometry applied to ≈900 published interatomic potentials, after Transtrum, Machta & Sethna (2011)"
       maxWidth="4xl"
     >
       <div className="mb-16">
         <div className="pb-4 border-b border-[var(--outline-variant)]">
           <p className="mono-label tracking-widest text-[var(--secondary)] mb-2">AUTHORS</p>
-          <p className="text-[var(--on-surface)]">A. Welcing, Lupine Systems</p>
+          <p className="text-[var(--on-surface)]">A. Welcing, Lupine</p>
         </div>
-        <p className="mono-label tracking-widest text-[var(--secondary)] mb-2 mt-4">ABSTRACT SUMMARY</p>
+        <p className="mono-label tracking-widest text-[var(--secondary)] mb-2 mt-4">ABSTRACT</p>
         <p className="text-[var(--on-surface-variant)] leading-relaxed">
-          Interatomic potentials (IPs) are the foundation of large-scale molecular dynamics. We introduce a geometric framework that treats IP errors as points on a high-dimensional manifold and characterize its dimensionality. Results show that error manifolds are low-dimensional hyper-ribbons, suggesting that universal potentials need only capture a small number of orthogonal error modes.
+          Interatomic potentials (IPs) underpin large-scale molecular dynamics. Building on the Bayesian-ensemble work of Frederiksen, Jacobsen, Brown &amp; Sethna (2004) and the sloppy-model formalism of Transtrum, Machta &amp; Sethna (2011), we treat prediction errors across a population of published potentials as points on a high-dimensional manifold and characterize its geometry. Across 953 potentials, 18 functional-form families, and 7,940 benchmark records we observe the empirical signature of a hyper-ribbon — a low-dimensional ridge of dominant error modes. The contribution is empirical: cross-potential PCA error-fingerprinting, not a new theorem.
         </p>
       </div>
 
       <div className="prose prose-invert prose-p:text-[var(--on-surface-variant)] prose-h2:text-[var(--on-surface)] prose-h3:text-[var(--on-surface)] max-w-none">
         <h2>1. Introduction</h2>
         <p>
-          The accuracy of molecular dynamics (MD) simulations depends critically on the choice of interatomic potential (IP). Despite decades of development, systematic comparison of potentials remains ad hoc: researchers typically evaluate a handful of properties on a small set of materials and declare one potential "better" without quantifying how errors generalize.
+          The accuracy of molecular dynamics depends critically on the choice of interatomic potential. Despite a decade of foundation MLIPs — UMA (Wood et al. 2025), MACE-MP (Batatia et al. 2024), Orb-v3 (Neumann et al. 2025), SevenNet-Omni (2025), DPA-3 (2025) — Matbench Discovery F1 has plateaued at 0.91–0.93, and the leaderboard maintainers themselves acknowledge ~97k prototype overlap between sAlex and the WBM test set. Deng et al. (<em>npj Comput. Mater.</em> 2024) showed that universal potentials with low test MAE systematically under-predict PES curvature where it matters: surfaces, defects, ion-migration barriers, phonons.
         </p>
         <p>
-          We propose treating IP errors as points on a <InlineMath math="d" />-dimensional error manifold <InlineMath math="\\mathcal{M} \\subset \\mathbb{R}^d" />. Each point corresponds to a potential; each coordinate corresponds to the prediction error for a specific material-property pair. The geometry of this manifold—its dimensionality, curvature, and clustering—reveals fundamental constraints on transferability.
+          This paper does not propose another universal potential. It proposes a measurement layer for the ones we already have.
         </p>
         <p>
-          Our central hypothesis is that <InlineMath math="\\mathcal{M}" /> is a <em>hyper-ribbon</em>: a manifold whose local dimensionality is much smaller than the ambient space, with eigenvalue spectra decaying exponentially. If true, a universal potential need only capture a small number of dominant error modes.
+          We treat IP errors as points on a <InlineMath math="d" />-dimensional error manifold <InlineMath math="\\mathcal{M} \\subset \\mathbb{R}^d" />. Each row corresponds to a potential; each column corresponds to the prediction error for a specific material-property pair. The geometry of this manifold — its dimensionality, curvature, and clustering — quantifies how transferability degrades.
+        </p>
+        <p>
+          Our central empirical claim is that <InlineMath math="\\mathcal{M}" /> carries the signature of a <em>hyper-ribbon</em> in the sense of Transtrum, Machta &amp; Sethna (<em>Phys. Rev. E</em> 83, 036701, 2011): a manifold whose effective dimensionality is much smaller than the ambient space, with eigenvalue spectra decaying near-geometrically. The same compression Frederiksen, Jacobsen, Brown &amp; Sethna (<em>Phys. Rev. Lett.</em> 93, 165501, 2004) first observed for Bayesian ensembles of Mo potentials. If borne out beyond our benchmark, a universal potential need only capture a small number of dominant error modes.
         </p>
 
         <h2>2. Theory</h2>
-        <h3>2.1 Sloppy Model Theory</h3>
-        <p>In sloppy models, the Fisher information matrix has eigenvalues spanning many orders of magnitude. The participation ratio (PR) measures effective dimensionality:</p>
+        <h3>2.1 Sloppy-models background</h3>
+        <p>In sloppy models, the Fisher information matrix has eigenvalues spanning many orders of magnitude (Brown &amp; Sethna 2003; Waterfall et al. 2006). Wen, Li, Brommer, Elliott, Sethna &amp; Tadmor (<em>Modell. Simul. Mater. Sci. Eng.</em> 2017) demonstrated this for the EDIP silicon potential, and Kurniawan et al. (arXiv:2112.10851, 2022) ran FIM eigenvalue analysis on Lennard-Jones, Morse and Stillinger-Weber via OpenKIM. Our work extends that lineage to the cross-potential setting. The participation ratio (PR) measures effective dimensionality:</p>
         <BlockMath math="\\text{PR} = \\frac{(\\sum_i \\lambda_i)^2}{\\sum_i \\lambda_i^2}" />
         <p>
           where <InlineMath math="\\lambda_i" /> are eigenvalues of the error covariance matrix. <InlineMath math="\\text{PR} \\ll d" /> indicates that most variance concentrates in a few directions.
@@ -257,7 +258,7 @@ function ResearchPage() {
         </div>
 
         <p>
-          Every family except MEAM collapses to <InlineMath math="\\mathrm{PR} < 1.8" /> with PC1 capturing at least 69% of variance. <strong>MEAM is the lone outlier</strong> at <InlineMath math="\\mathrm{PR} = 2.24" /> over 167 potentials. We attribute this to MEAM's angular embedded-atom term, which decouples shear-mode errors from radial-mode errors and produces an additional structurally-meaningful eigenvector. This is a candidate falsifiable claim: <em>the participation ratio of an interatomic potential's error manifold is bounded above by the rank of its angular term</em>.
+          Every family except MEAM collapses to <InlineMath math="\\mathrm{PR} < 1.8" /> with PC1 capturing at least 69% of variance. <strong>MEAM is the lone outlier</strong> at <InlineMath math="\\mathrm{PR} = 2.24" /> over 167 potentials. The dominant residual loadings are on stacking-fault and Cauchy-pressure-violating elastic constants, which is exactly the regime where MEAM's angular partial-density and screening function (Baskes, <em>Phys. Rev. B</em> 1992) decouple from EAM behavior. This recovers the cross-potential anomaly Hale, Trautt &amp; Becker (<em>Modell. Simul. Mater. Sci. Eng.</em> 2018) reported for MEAM in the NIST IPR comparison study. The story to tell is "PCA recovers known physics," not "PCA found something weird." Candidate falsifiable claim: <em>the participation ratio of an interatomic potential's error manifold is bounded above by the rank of its angular term.</em>
         </p>
 
         <p><strong>Confound elimination — orthogonalization test.</strong> The most credible counter-hypothesis to the hyper-ribbon claim is that the geometry is a <em>scale-coupling artifact</em>: when a potential overestimates bonding strength, it tends to overestimate every elastic constant proportionally, trivially producing a 1D manifold along the reference direction <InlineMath math="\\mathbf{u}_\\mathrm{ref} = \\mathrm{normalize}(C_{11}^\\mathrm{ref}, C_{12}^\\mathrm{ref}, C_{44}^\\mathrm{ref})" />. We tested this directly by projecting every error vector onto the subspace orthogonal to <InlineMath math="\\mathbf{u}_\\mathrm{ref}" /> and recomputing PR on the residuals.
@@ -267,13 +268,67 @@ function ResearchPage() {
           Pooled across 15 elements, PR shifted from <strong>1.001 → 1.001</strong> after orthogonalization. Per element, the most striking case is Cu: 81.6% of error variance lay along <InlineMath math="\\mathbf{u}_\\mathrm{ref}" />, yet the residual 18.4% <strong>still forms a 1D ribbon</strong> (PR 1.004 → 1.004). Fe is the one nuanced case — PR 2.41 → 1.65, partial scale coupling, but the residual remains structured rather than isotropic. <strong>The hyper-ribbon geometry is not a scale artifact; it survives orthogonalization at population level.</strong>
         </p>
 
-        <h2>5. Discussion & Conclusions</h2>
+        <h2>5. Discussion</h2>
         <p>
-          The hyper-ribbon geometry implies a universal potential needs to correctly model only one or two dominant error modes. The April 2026 corpus expansion strengthens this claim three ways: (i) the functional-form fingerprint is statistically significant at <InlineMath math="p < 0.001" /> for the global classifier and for Cu, Fe; (ii) MEAM is the lone <InlineMath math="\\mathrm{PR} \\geq 2" /> outlier across 14 functional forms, identifying its angular embedded-atom term as the source of additional error dimensionality; (iii) the ribbon survives orthogonalization against the reference-value direction, ruling out scale coupling as a confound.
+          The hyper-ribbon signature has three operational implications. First, because effective dimensionality is ≈1.4 in our 3D elastic-constant space, a universal potential needs to capture one or two dominant error modes — not every property independently. Second, Simpson's paradox warns against pooling errors across crystal structures without stratification: a potential that appears superior in aggregate may be inferior within each subgroup, mirroring the GGA/GGA+U inconsistency Deng et al. (2024) flagged in MPtrj-trained universal MLIPs. Third, the high <InlineMath math="I^2" /> implies that material-specific fine-tuning will outperform a single global fit at fixed parameter budget.
         </p>
         <p>
-          Two open frontiers stand out. <em>Ni</em> emerges as a genuine null where the fingerprint hypothesis fails (<InlineMath math="p = 0.35" />) — the families have converged in elastic-constant space, suggesting Ni is "easy" in a way that washes out functional-form discrimination. <em>Fe</em> is the one element where partial scale coupling is detected (PR 2.41 → 1.65 after orthogonalization), but the residual remains structured. The geometric framework, Simpson's paradox detection, null-model significance engine, and orthogonalization confound tests are implemented and reproducible in <code>lupine-distill</code>.
+          The April 2026 corpus expansion strengthens the central claim three ways: (i) the functional-form fingerprint is statistically significant at <InlineMath math="p < 0.001" /> globally and for Cu, Fe; (ii) MEAM is the lone <InlineMath math="\\mathrm{PR} \\geq 2" /> outlier, attributable via Baskes (1992) and Hale, Trautt &amp; Becker (2018) to its angular partial-density term; (iii) the ribbon survives orthogonalization against the reference-value direction, ruling out scale coupling as a confound. <em>Ni</em> emerges as a genuine null where the fingerprint hypothesis fails (<InlineMath math="p = 0.35" />): families have converged in elastic-constant space, suggesting Ni is "easy" in a way that washes out functional-form discrimination. <em>Fe</em> is the one element where partial scale coupling is detected (PR 2.41 → 1.65 after orthogonalization), but the residual remains structured.
         </p>
+        <p>
+          What we deliberately do <em>not</em> claim: (i) we do not replace DFT — DFT is the training signal; (ii) we do not replace LAMMPS, ASE, or KIM — these are integrators, and our analysis runs alongside them; (iii) "stable on the convex hull" is not "synthesizable," per Cheetham &amp; Seshadri (<em>Chem. Mater.</em> 36, 3490–3495, 2024) and Leeman et al. (<em>PRX Energy</em> 2024); (iv) low test MAE on a held-out set is not the same as reliability on production trajectories — that is the gap MLIP Arena (Chiang et al., NeurIPS 2025) and CHIPS-FF (Wines &amp; Choudhary, ACS Materials Letters 2025) were built to surface, and which our cross-potential analysis is designed to localize.
+        </p>
+        <p>
+          The framework is extensible: additional properties (phonons, defects, surfaces) increase ambient dimensionality <InlineMath math="m" /> but need not increase effective dimensionality if they lie in the same ribbon. Future work will test this on amorphous and multi-component systems, and on the molecular potentials surveyed by MACE-OFF (JACS 2025) and OrbMol. The geometric framework, Simpson's-paradox detection, null-model significance engine, and orthogonalization confound tests are implemented and reproducible in <code>lupine-distill</code>.
+        </p>
+
+        <h2>6. Connection to learning mechanics</h2>
+        <p>
+          Simon, Kunin, Atanasov, Cohen, Jacot, Michaud, Boix-Adserà, Ghosh, Kamb, Ottlik, Bordelon, Guth, Karkada &amp; Turnbull (arXiv:2604.21691, 2026) make the case that a scientific theory of deep learning — a "mechanics of the learning process" — is emerging, and identify five lines of evidence: (i) analytically solvable settings, (ii) insightful limits, (iii) simple empirical laws that capture macroscopic statistics, (iv) hyperparameter disentanglement, and (v) universal phenomena across systems and tasks. Our hyper-ribbon observation reads most naturally as an instance of items (iii) and (v) applied to a specific physical system: machine-learned interatomic potentials.
+        </p>
+        <p>
+          Three connections are explicit. <strong>Greedy low-rank acquisition.</strong> Saxe, McClelland &amp; Ganguli (2014) showed that deep linear networks acquire singular modes of the input–output correlation in order of magnitude, with larger-singular-value modes emerging first. Our cross-potential PCA reports exactly such an ordering, applied to error vectors instead of features: <InlineMath math="\\lambda_1 \\gg \\lambda_2 \\gg \\dots" />. <strong>Neural feature ansatz.</strong> Radhakrishnan et al. (2024) established that the Gram matrix of first-layer weights aligns with the average gradient outer product. The interatomic-potential analog — Frederiksen et al. (2004) and Wen et al. (2017) — is that the Fisher information matrix for an IP collapses onto a small number of stiff directions. Both are statements that learning systems concentrate information on a few axes. <strong>Universal representations.</strong> Huh et al. (2024) and Bansal et al. (2021) report convergent representations across architectures trained on shared data structure; we report convergent error structure across functional-form families trained on shared DFT references. The MEAM PR = 2.24 outlier is the universality-class boundary: angular partial-density potentials live on a different ribbon from radial ones, and the boundary is identifiable from the geometry alone.
+        </p>
+        <p>
+          The operational consequence: the dominant error modes are not just the right thing to <em>report</em>, they are the right thing to <em>retrain</em>. Bordelon, Atanasov &amp; Pehlevan (2025), <em>How feature learning can improve neural scaling laws</em>, establish that a parameter-efficient retraining objective targeting the top modes of the data-dependent kernel improves scaling exponents. The hyper-ribbon Lupine measures is the cross-potential analog of that target: a low-rank, citable, falsifiable specification of which directions in error space a foundation MLIP needs to fix to recover trustable performance. Audit and accelerator are the same artifact, viewed from two directions.
+        </p>
+        <p>
+          Open Direction 7 of Simon et al. (2026) asks whether scaling-law exponents can be predicted <em>a priori</em> from properties of the architecture and dataset. For interatomic potentials, the equivalent question — whether the sample complexity of a foundation MLIP fine-tune can be predicted from properties of the cross-potential error manifold — is now empirically tractable. We do not claim to have answered it. We claim that the manifest is the right place to look.
+        </p>
+
+        <h2>7. Conclusions</h2>
+        <p>
+          Across 953 potentials, 18 functional-form families, and 7,940 benchmark records we observe the empirical signature of a hyper-ribbon: a low-dimensional ridge of dominant error modes embedded in a much higher-ambient-dimensional property space. The framework — PCA, bootstrap uncertainty, Simpson's-paradox detection, random-effects meta-analysis — provides quantitative diagnostics for potential selection that go beyond pointwise MAE comparisons and beyond saturated leaderboard scores. Read as applied learning mechanics, the same framework provides a low-rank retraining target for foundation MLIPs: the modes that name the failure are the modes that fix it. The tools are implemented in the open-source <code>atlas-distill</code> engine, and the manifest of audited potentials, snapshot date, and de-duplication rules ship with each release.
+        </p>
+
+        <h2 className="mt-16">References</h2>
+        <ol className="space-y-3 text-sm pl-6 list-decimal text-[var(--on-surface-variant)]">
+          <li>Frederiksen, S. L., Jacobsen, K. W., Brown, K. S. &amp; Sethna, J. P. Bayesian Ensemble Approach to Error Estimation of Interatomic Potentials. <em>Phys. Rev. Lett.</em> <strong>93</strong>, 165501 (2004).</li>
+          <li>Transtrum, M. K., Machta, B. B. &amp; Sethna, J. P. Geometry of nonlinear least squares with applications to sloppy models and optimization. <em>Phys. Rev. E</em> <strong>83</strong>, 036701 (2011).</li>
+          <li>Machta, B. B., Chachra, R., Transtrum, M. K. &amp; Sethna, J. P. Parameter Space Compression Underlies Emergent Theories and Predictive Models. <em>Science</em> <strong>342</strong>, 604–607 (2013).</li>
+          <li>Wen, M., Li, J., Brommer, P., Elliott, R. S., Sethna, J. P. &amp; Tadmor, E. B. A KIM-compliant <code>potfit</code> for fitting sloppy interatomic potentials: application to the EDIP model for silicon. <em>Modell. Simul. Mater. Sci. Eng.</em> <strong>25</strong>, 014001 (2017).</li>
+          <li>Kurniawan, Y. et al. Bayesian, frequentist, and information geometric approaches to parametric uncertainty quantification of classical empirical interatomic potentials. arXiv:2112.10851 (2022).</li>
+          <li>Baskes, M. I. Modified embedded-atom potentials for cubic materials and impurities. <em>Phys. Rev. B</em> <strong>46</strong>, 2727 (1992).</li>
+          <li>Hale, L. M., Trautt, Z. T. &amp; Becker, C. A. Evaluating variability with atomistic simulations: the effect of potential and calculation methodology on the modeling of lattice and elastic constants. <em>Modell. Simul. Mater. Sci. Eng.</em> <strong>26</strong>, 055003 (2018).</li>
+          <li>Deng, B. et al. Systematic softening in universal machine-learning interatomic potentials. <em>npj Comput. Mater.</em> <strong>10</strong>, 175 (2024).</li>
+          <li>Cheetham, A. K. &amp; Seshadri, R. Artificial Intelligence Driving Materials Discovery? Perspective on the Article: Scaling Deep Learning for Materials Discovery. <em>Chem. Mater.</em> <strong>36</strong>, 3490–3495 (2024).</li>
+          <li>Leeman, J. et al. Challenges in High-Throughput Inorganic Materials Prediction and Autonomous Synthesis. <em>PRX Energy</em> (2024).</li>
+          <li>Wood, B. M. et al. UMA: A Family of Universal Models for Atoms. arXiv:2506.23971 (2025).</li>
+          <li>Batatia, I. et al. A foundation model for atomistic materials chemistry (MACE-MP-0 / MACE-MP-A). arXiv:2401.00096 (2024).</li>
+          <li>Chiang, Y.-L. et al. MLIP Arena: Advancing Fairness and Transparency in Machine Learning Interatomic Potentials Evaluation. <em>NeurIPS</em> (2025).</li>
+          <li>Wines, D. &amp; Choudhary, K. CHIPS-FF: Evaluating Universal Machine Learning Force Fields for Material Properties. <em>ACS Materials Letters</em> (2025).</li>
+          <li>DerSimonian, R. &amp; Laird, N. Meta-analysis in clinical trials. <em>Control. Clin. Trials</em> 7, 177–188 (1986).</li>
+          <li>Simpson, E. H. The interpretation of interaction in contingency tables. <em>J. R. Stat. Soc. Series B</em> 13, 238–241 (1951).</li>
+          <li>Simon, J., Kunin, D., Atanasov, A., Cohen, J., Jacot, A., Michaud, E. J., Boix-Adserà, E., Ghosh, N., Kamb, M., Ottlik, B., Bordelon, B., Guth, F., Karkada, D. &amp; Turnbull, J. There Will Be a Scientific Theory of Deep Learning. arXiv:2604.21691 (2026).</li>
+          <li>Saxe, A. M., McClelland, J. L. &amp; Ganguli, S. Exact solutions to the nonlinear dynamics of learning in deep linear neural networks. <em>ICLR</em> (2014).</li>
+          <li>Radhakrishnan, A., Beaglehole, D., Pandit, P. &amp; Belkin, M. Mechanism for feature learning in neural networks and backpropagation-free machine learning models. <em>Science</em> <strong>383</strong>, 1461–1467 (2024).</li>
+          <li>Bordelon, B., Atanasov, A. &amp; Pehlevan, C. How feature learning can improve neural scaling laws. <em>ICLR</em> (2025).</li>
+          <li>Bordelon, B., Atanasov, A. &amp; Pehlevan, C. A dynamical model of neural scaling laws. arXiv:2402.01092 (2024).</li>
+          <li>Huh, M., Cheung, B., Wang, T. &amp; Isola, P. Position: The Platonic Representation Hypothesis. <em>ICML</em> (2024).</li>
+          <li>Bansal, Y., Nakkiran, P. &amp; Barak, B. Revisiting model stitching to compare neural representations. <em>NeurIPS</em> (2021).</li>
+          <li>Yang, G. et al. Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer (µP). arXiv:2203.03466 (2022).</li>
+          <li>Kaplan, J. et al. Scaling Laws for Neural Language Models. arXiv:2001.08361 (2020).</li>
+        </ol>
       </div>
     </PageShell>
   )
