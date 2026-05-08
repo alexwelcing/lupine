@@ -1,7 +1,280 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, useMemo, type ReactNode, type FC } from 'react'
+import { motion } from 'framer-motion'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+
+/* ─── Module-level deterministic PRNG so SSR + hydration agree on scatter ─── */
+function makeRng(seed: number) {
+  let s = seed
+  return () => {
+    s = (s * 9301 + 49297) % 233280
+    return s / 233280
+  }
+}
+
+interface VisualProps { accent: string }
+
+/* ─── Visual 1 · AUDIT
+   30+ scattered potentials in a 2D error space collapse onto a principal
+   component. Eigenvalues drop geometrically — λ₁ ≫ λ₂ ≫ λ₃. The picture
+   of "PR/m well below 1." */
+const PCAVisual: FC<VisualProps> = ({ accent }) => {
+  const dots = useMemo(() => {
+    const rng = makeRng(42)
+    return Array.from({ length: 36 }, (_, i) => {
+      const t = i / 35 - 0.5
+      const perp = (rng() - 0.5) * 0.18
+      return {
+        x: 150 + t * 105 - perp * 28,
+        y: 95 - t * 55 + perp * 28,
+      }
+    })
+  }, [])
+
+  return (
+    <div
+      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
+      style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
+        <g stroke={accent} strokeWidth="0.5" opacity="0.07">
+          {[60, 120, 180, 240].map((x) => <line key={`v${x}`} x1={x} y1={20} x2={x} y2={160} />)}
+          {[40, 80, 120].map((y) => <line key={`h${y}`} x1={30} y1={y} x2={270} y2={y} />)}
+        </g>
+
+        <text x={264} y={170} fontSize={7} fontFamily="monospace" fill="rgba(255,255,255,0.35)" textAnchor="end">C₁₁ residual</text>
+        <text x={20} y={28} fontSize={7} fontFamily="monospace" fill="rgba(255,255,255,0.35)">C₁₂ residual</text>
+
+        {dots.map((d, i) => (
+          <motion.circle
+            key={i}
+            cx={d.x} cy={d.y} r={2.3}
+            fill={accent}
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 0.7, scale: 1 }}
+            transition={{ delay: 0.025 * i, duration: 0.3, ease: 'easeOut' }}
+            viewport={{ once: true, margin: '-40px' }}
+          />
+        ))}
+
+        <motion.line
+          x1={45} y1={148} x2={255} y2={42}
+          stroke={accent} strokeWidth={2}
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          transition={{ delay: 1.1, duration: 1.2, ease: 'easeInOut' }}
+          viewport={{ once: true, margin: '-40px' }}
+          style={{ filter: `drop-shadow(0 0 6px ${accent})` }}
+        />
+
+        <motion.text
+          x={258} y={38}
+          fontSize={9} fontFamily="monospace" fill={accent} fontWeight={600}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 2.2 }}
+          viewport={{ once: true, margin: '-40px' }}
+        >PC1</motion.text>
+
+        {/* Eigenvalue spectrum collapsing geometrically */}
+        <g transform="translate(195, 145)">
+          <motion.text
+            x={0} y={-44}
+            fontSize={6.5} fontFamily="monospace" fill="rgba(255,255,255,0.55)"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 2.4 }}
+            viewport={{ once: true, margin: '-40px' }}
+          >λ₁ ≫ λ₂ ≫ λ₃</motion.text>
+          {[
+            { h: 32, x: 0 },
+            { h: 11, x: 14 },
+            { h: 4, x: 28 },
+          ].map((b, i) => (
+            <motion.rect
+              key={i}
+              x={b.x} y={-b.h} width={10} height={b.h}
+              fill={accent}
+              initial={{ scaleY: 0, opacity: 0.4 }}
+              whileInView={{ scaleY: 1, opacity: 0.85 - i * 0.18 }}
+              transition={{ delay: 2.6 + i * 0.18, duration: 0.55 }}
+              style={{ transformOrigin: 'center bottom', transformBox: 'fill-box' }}
+              viewport={{ once: true, margin: '-40px' }}
+            />
+          ))}
+        </g>
+      </svg>
+    </div>
+  )
+}
+
+/* ─── Visual 2 · ACCELERATOR
+   60-mode parameter grid; the 3 dominant modes light up; a fine-tune
+   gradient flows only into them. The picture of "low-rank retraining
+   target." */
+const RetrainingTargetVisual: FC<VisualProps> = ({ accent }) => {
+  const HIGHLIGHTED = useMemo(() => new Set([14, 32, 51]), [])
+  const cells = useMemo(
+    () =>
+      Array.from({ length: 60 }, (_, i) => ({
+        x: 22 + (i % 12) * 22,
+        y: 32 + Math.floor(i / 12) * 22,
+        idx: i,
+      })),
+    [],
+  )
+  const targets = cells.filter((c) => HIGHLIGHTED.has(c.idx))
+
+  return (
+    <div
+      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
+      style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
+        <motion.text
+          x={150} y={14} fontSize={7} fontFamily="monospace" textAnchor="middle"
+          fill="rgba(255,255,255,0.55)" letterSpacing="0.05em"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          viewport={{ once: true, margin: '-40px' }}
+        >parameter space (60 modes)</motion.text>
+
+        {cells.map((c, i) => {
+          const hot = HIGHLIGHTED.has(c.idx)
+          return (
+            <motion.rect
+              key={i}
+              x={c.x} y={c.y} width={14} height={14} rx={1.5}
+              fill={hot ? accent : 'rgba(255,255,255,0.07)'}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: hot ? 1 : 0.42 }}
+              transition={{ delay: hot ? 1.4 : 0.008 * i, duration: 0.5 }}
+              viewport={{ once: true, margin: '-40px' }}
+            />
+          )
+        })}
+
+        {targets.map((c, i) => (
+          <motion.circle
+            key={`g${i}`}
+            cx={c.x + 7} cy={c.y + 7} r={18}
+            fill={accent}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.32 }}
+            transition={{ delay: 1.6 + i * 0.08, duration: 0.6 }}
+            viewport={{ once: true, margin: '-40px' }}
+            style={{ filter: 'blur(8px)' }}
+          />
+        ))}
+
+        {targets.map((c, i) => (
+          <motion.line
+            key={`f${i}`}
+            x1={150} y1={170}
+            x2={c.x + 7} y2={c.y + 14}
+            stroke={accent} strokeWidth={1} strokeDasharray="2 3"
+            initial={{ pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 0.55 }}
+            transition={{ delay: 2.0 + i * 0.12, duration: 0.55 }}
+            viewport={{ once: true, margin: '-40px' }}
+          />
+        ))}
+
+        <motion.text
+          x={150} y={177} fontSize={7} fontFamily="monospace" textAnchor="middle"
+          fill="rgba(255,255,255,0.55)" letterSpacing="0.05em"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 2.5 }}
+          viewport={{ once: true, margin: '-40px' }}
+        >fine-tune ∇L → 3 dominant modes</motion.text>
+      </svg>
+    </div>
+  )
+}
+
+/* ─── Visual 3 · COMPOUNDING
+   Three nodes (Manifest · Ribbon · Target) in a cycle. Arrows draw, hold,
+   fade in a continuous staggered loop. The picture of the data flywheel. */
+const FlywheelVisual: FC<VisualProps> = ({ accent }) => {
+  const nodes = [
+    { label: 'MANIFEST', x: 75, y: 70, sub: '≈900 → 1k+' },
+    { label: 'RIBBON', x: 225, y: 70, sub: 'PR/m ↓' },
+    { label: 'TARGET', x: 150, y: 145, sub: 'modes ↓' },
+  ]
+  const arcs = [
+    'M 92 60 Q 150 30 208 60',
+    'M 220 88 Q 240 130 168 142',
+    'M 132 142 Q 60 130 80 88',
+  ]
+
+  return (
+    <div
+      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
+      style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
+        <defs>
+          <marker id="fly-arrow" markerWidth={6} markerHeight={6} refX={5} refY={3} orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L6,3 L0,6 Z" fill={accent} />
+          </marker>
+        </defs>
+
+        {arcs.map((d, i) => (
+          <motion.path
+            key={i}
+            d={d}
+            fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="4 4"
+            markerEnd="url(#fly-arrow)"
+            opacity={0.75}
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: [0, 1, 1, 0] }}
+            transition={{
+              delay: i * 1.0,
+              duration: 3,
+              repeat: Infinity,
+              repeatDelay: 0,
+              times: [0, 0.45, 0.85, 1],
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+
+        {nodes.map((n, i) => (
+          <motion.g
+            key={n.label}
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.18, duration: 0.4 }}
+            viewport={{ once: true, margin: '-40px' }}
+          >
+            <circle cx={n.x} cy={n.y} r={20} fill={accent} opacity={0.18} />
+            <circle cx={n.x} cy={n.y} r={12} fill={accent} opacity={0.8} />
+            <circle cx={n.x} cy={n.y} r={3} fill="white" />
+            <text
+              x={n.x} y={n.y - 26}
+              fontSize={7.5} fontFamily="monospace" fill="rgba(255,255,255,0.85)"
+              textAnchor="middle" letterSpacing="0.12em"
+            >
+              {n.label}
+            </text>
+            <text
+              x={n.x} y={n.y + 32}
+              fontSize={7} fontFamily="monospace" fill={accent} textAnchor="middle"
+            >
+              {n.sub}
+            </text>
+          </motion.g>
+        ))}
+      </svg>
+    </div>
+  )
+}
 
 export const Route = createFileRoute('/')({
   component: LandingPage,
@@ -379,20 +652,29 @@ function WhatWeBuild() {
 
 /* ─── Audit + Accelerator ─── */
 function AuditAccelerator() {
-  const moves = [
+  const moves: Array<{
+    Visual: FC<VisualProps>
+    label: string
+    title: string
+    body: string
+    accent: string
+  }> = [
     {
+      Visual: PCAVisual,
       label: 'Audit',
       title: 'Localize the failure mode.',
       body: 'Cross-potential PCA returns a participation ratio PR/m well below 1 across ≈900 potentials. The empirical signature of a hyper-ribbon — a low-dimensional ridge of dominant error directions — is the same low-effective-dimensionality signature that a maturing science of deep learning calls a "simple empirical law" of learning (Simon et al., 2026, §2.3, §2.5).',
       accent: 'var(--lupine-400)',
     },
     {
+      Visual: RetrainingTargetVisual,
       label: 'Accelerator',
       title: 'Retrain only the modes that matter.',
       body: 'Once the dominant error directions are named, the customer\'s MLIP fine-tune does not have to re-learn everything. Saxe et al. (2014) showed that linear networks acquire singular modes in order of magnitude; Bordelon, Atanasov & Pehlevan (2025) showed that capturing the top modes faster gives improved scaling laws. The hyper-ribbon Lupine measures is the explicit, low-rank target that compresses retraining onto the modes that actually move test loss.',
       accent: 'var(--violet-300)',
     },
     {
+      Visual: FlywheelVisual,
       label: 'Compounding',
       title: 'The same data feeds both.',
       body: 'Every audit run adds rows to the manifest. Every manifest row sharpens the ribbon. Every sharper ribbon gives a tighter retraining target — fewer parameters, fewer DFT calls, fewer compute-hours per fine-tune. This is the Datadog-then-DataRobot arc, applied to the science of MLIPs.',
@@ -421,13 +703,14 @@ function AuditAccelerator() {
           {moves.map((m, i) => (
             <Reveal key={m.label} delay={i * 0.08}>
               <div
-                className="rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 h-full"
+                className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 h-full flex flex-col"
                 style={{
                   background: 'rgba(255,255,255,0.02)',
                   border: '1px solid rgba(255,255,255,0.06)',
                   borderTop: `2px solid ${m.accent}`,
                 }}
               >
+                <m.Visual accent={m.accent} />
                 <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-3" style={{ color: m.accent }}>
                   {m.label}
                 </div>
