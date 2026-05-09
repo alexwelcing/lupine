@@ -37,7 +37,7 @@
       "method": "Procedural Math Sculpture",
       "potential": "Brand Identity Architecture",
       "temperature": "0 K",
-      "reference": "Lupine Materials Science — lupine.science"
+      "reference": "Lupine Materials Science \u2014 lupine.science"
     },
     "featured": true
   },
@@ -59,7 +59,7 @@
       "method": "Ab Initio Assembly",
       "potential": "Lennard-Jones",
       "temperature": "0 K",
-      "reference": "Lupine Materials Science — lupine.science"
+      "reference": "Lupine Materials Science \u2014 lupine.science"
     },
     "featured": true
   },
@@ -81,7 +81,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -104,7 +104,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "9 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -127,7 +127,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -150,7 +150,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "5 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -173,7 +173,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "8 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -196,7 +196,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "11 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -219,7 +219,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "1 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -242,7 +242,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "2 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -265,7 +265,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "7 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -288,7 +288,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "3 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupine Materials Science \u2014 hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -319,7 +319,7 @@
   {
     "id": "dang_cu_dislocation",
     "title": "FCC Cu Dislocation-GB Tracking",
-    "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation–grain-boundary interactions matrix",
+    "subtitle": "Khanh Dang et al. (Sci Data 2025): Dislocation\u2013grain-boundary interactions matrix",
     "domain": "Advanced Theory & Validation",
     "atoms": "Variable",
     "frames": "1",
@@ -613,7 +613,7 @@
   },
   {
     "id": "cuzr_melt",
-    "title": "Cu₆₄Zr₃₆ Metallic Glass",
+    "title": "Cu\u2086\u2084Zr\u2083\u2086 Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
     "domain": "Metals & Alloys",
     "atoms": "5,000",
@@ -637,7 +637,7 @@
   {
     "id": "al_polycrystal",
     "title": "Al Polycrystal (Voronoi)",
-    "subtitle": "Grain boundary structure in FCC aluminum with Σ5 misorientation",
+    "subtitle": "Grain boundary structure in FCC aluminum with \u03a35 misorientation",
     "domain": "Metals & Alloys",
     "atoms": "32,000",
     "frames": "1",
@@ -660,7 +660,7 @@
   {
     "id": "ni_superalloy",
     "title": "Ni-Based Superalloy",
-    "subtitle": "γ/γ′ microstructure with cuboidal precipitates",
+    "subtitle": "\u03b3/\u03b3\u2032 microstructure with cuboidal precipitates",
     "domain": "Metals & Alloys",
     "atoms": "108,000",
     "frames": "12",
@@ -725,7 +725,7 @@
   {
     "id": "dislocation_cu",
     "title": "Cu Edge Dislocation",
-    "subtitle": "1/2⟨110⟩ dislocation on (111) plane with stacking fault",
+    "subtitle": "1/2\u27e8110\u27e9 dislocation on (111) plane with stacking fault",
     "domain": "Defects & Mechanics",
     "atoms": "28,800",
     "frames": "1",
@@ -893,7 +893,7 @@
   },
   {
     "id": "mos2_sheet",
-    "title": "MoS₂ Monolayer",
+    "title": "MoS\u2082 Monolayer",
     "subtitle": "2D semiconductor with puckered structure",
     "domain": "Nanomaterials",
     "atoms": "24,000",
@@ -914,7 +914,7 @@
   },
   {
     "id": "sio2_glass",
-    "title": "SiO₂ Amorphous Silica",
+    "title": "SiO\u2082 Amorphous Silica",
     "subtitle": "Vitreous silica with tetrahedral network structure",
     "domain": "Ceramics & Oxides",
     "atoms": "24,000",
@@ -928,7 +928,7 @@
     ],
     "metadata": {
       "method": "Melt-quench with Vashishta potential",
-      "potential": "Vashishta (SiO₂)",
+      "potential": "Vashishta (SiO\u2082)",
       "temperature": "300-4000 K",
       "reference": "Continuous random network"
     },
@@ -936,7 +936,7 @@
   },
   {
     "id": "al2o3_sapphire",
-    "title": "α-Al₂O₃ (Sapphire)",
+    "title": "\u03b1-Al\u2082O\u2083 (Sapphire)",
     "subtitle": "Corundum structure with basal plane surface",
     "domain": "Ceramics & Oxides",
     "atoms": "18,000",
@@ -956,7 +956,7 @@
   },
   {
     "id": "zro2_tetragonal",
-    "title": "ZrO₂ Tetragonal",
+    "title": "ZrO\u2082 Tetragonal",
     "subtitle": "Yttria-stabilized zirconia (YSZ) with oxygen vacancies",
     "domain": "Ceramics & Oxides",
     "atoms": "32,768",
@@ -972,13 +972,13 @@
       "method": "Oxide MD",
       "potential": "Buckingham",
       "temperature": "1200 K",
-      "reference": "8% Y₂O₃ stabilized"
+      "reference": "8% Y\u2082O\u2083 stabilized"
     }
   },
   {
     "id": "pe_chain",
     "title": "Polyethylene Chain",
-    "subtitle": "Single C₁₀₀₀H₂₀₀₂ chain with united-atom model",
+    "subtitle": "Single C\u2081\u2080\u2080\u2080H\u2082\u2080\u2080\u2082 chain with united-atom model",
     "domain": "Polymers & Soft Matter",
     "atoms": "3,000",
     "frames": "1",
@@ -1043,7 +1043,7 @@
   {
     "id": "sulfur_cathode",
     "title": "Li-S Cathode",
-    "subtitle": "Sulfur nanoparticle with Li₂S coating",
+    "subtitle": "Sulfur nanoparticle with Li\u2082S coating",
     "domain": "Energy Materials",
     "atoms": "8,000",
     "frames": "1",
@@ -1079,7 +1079,7 @@
       "method": "Liquid MD",
       "potential": "TIP4P/2005",
       "temperature": "300 K",
-      "density": "0.997 g/cm³",
+      "density": "0.997 g/cm\u00b3",
       "reference": "Standard water model"
     }
   },
@@ -3003,7 +3003,7 @@
     ],
     "metadata": {
       "method": "Benchmark MD",
-      "potential": "LJ (σ=3.4Å, ε=0.238kcal)",
+      "potential": "LJ (\u03c3=3.4\u00c5, \u03b5=0.238kcal)",
       "temperature": "85 K",
       "reference": "Standard benchmark system"
     }
@@ -3011,7 +3011,7 @@
   {
     "id": "fcc_perf",
     "title": "1M Atom FCC Benchmark",
-    "subtitle": "Performance test — pure copper crystal",
+    "subtitle": "Performance test \u2014 pure copper crystal",
     "domain": "Methods",
     "atoms": "1,000,000",
     "frames": "1",
@@ -3034,8 +3034,8 @@
     "title": "NIST IPR Top-100 Catalog",
     "subtitle": "40 pure elements + 60 binary alloys ranked by LAMMPS-record count. 434 potentials, 626 parameter files.",
     "domain": "Methods",
-    "atoms": "—",
-    "frames": "—",
+    "atoms": "\u2014",
+    "frames": "\u2014",
     "file": "procedural",
     "available": false,
     "colors": [
@@ -3045,10 +3045,562 @@
     ],
     "metadata": {
       "method": "NIST IPR mirror catalog",
-      "potential": "Various (eam/alloy, meam, tersoff, …)",
+      "potential": "Various (eam/alloy, meam, tersoff, \u2026)",
       "manifest": "atlas/nist_ipr/chem_class/manifest.json",
       "reference": "atlas/nist_ipr/chem_class/README.md"
     },
     "featured": true
+  },
+  {
+    "id": "c60_thermal_breathing",
+    "title": "C60 Thermal Breathing (1500 K)",
+    "subtitle": "Buckminsterfullerene cage in NVT MD: sp2 bond network breathes radially while Stone-Wales-like distortions ripple through the truncated icosahedron.",
+    "domain": "Nanomaterials",
+    "atoms": "60",
+    "frames": "80",
+    "file": "archive/c60_thermal_1500k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#222222",
+      "#444444",
+      "#888888"
+    ],
+    "metadata": {
+      "method": "Tight-binding MD",
+      "potential": "Tersoff / Brenner",
+      "temperature": "1500 K",
+      "ensemble": "NVT",
+      "reference": "Kim & Tomanek, Melting the Fullerenes: A Molecular Dynamics Study, Phys. Rev. Lett. 72, 2418 (1994).",
+      "doi": "10.1103/PhysRevLett.72.2418",
+      "property": "ke (per-atom kinetic energy proxy)"
+    },
+    "featured": true
+  },
+  {
+    "id": "pe_tensile_failure",
+    "title": "Polyethylene Tensile Failure",
+    "subtitle": "All-atom (CH2)40 chain pulled along its backbone until the central C-C bond ruptures. Per-atom strain peaks at the rupture site moments before bond cleavage.",
+    "domain": "Polymers & Soft Matter",
+    "atoms": "120",
+    "frames": "100",
+    "file": "archive/pe_tensile_failure.lammpstrj",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#cccccc",
+      "#ff4060"
+    ],
+    "metadata": {
+      "method": "Reactive MD with bond-order potential",
+      "potential": "AIREBO",
+      "temperature": "300 K",
+      "ensemble": "NVT (uniaxial strain)",
+      "reference": "Stuart, Tutein, Harrison, A reactive potential for hydrocarbons with intermolecular interactions, J. Chem. Phys. 112, 6472 (2000).",
+      "doi": "10.1063/1.481208",
+      "property": "strain (per-bond axial strain)"
+    },
+    "featured": true
+  },
+  {
+    "id": "diels_alder_reaction",
+    "title": "Diels-Alder Cycloaddition",
+    "subtitle": "1,3-butadiene + ethylene -> cyclohexene. Concerted [4+2]: two pi bonds break, two sigma C-C bonds form across the transition state in a single coordinated motion.",
+    "domain": "Biomolecules",
+    "atoms": "16",
+    "frames": "60",
+    "file": "archive/diels_alder_reaction.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#ffffff",
+      "#1ff01f"
+    ],
+    "metadata": {
+      "method": "Born-Oppenheimer MD along intrinsic reaction coordinate",
+      "potential": "B3LYP / 6-31G(d) (DFT)",
+      "temperature": "298 K",
+      "ensemble": "NVE",
+      "reference": "Houk, Lin, Brown, Evidence for the concerted mechanism of the Diels-Alder reaction of butadiene with ethylene, J. Am. Chem. Soc. 108, 554 (1986).",
+      "doi": "10.1021/ja00263a059",
+      "property": "rc (reaction coordinate, 0 reactant -> 1 product)"
+    },
+    "featured": true
+  },
+  {
+    "id": "methane_oxidation_reaxff",
+    "title": "Methane Oxidation (ReaxFF)",
+    "subtitle": "CH4 + 2 O2 -> CO2 + 2 H2O combustion onset. Four C-H and two O=O bonds break while two C=O and four O-H bonds form; partial charges flow with the electrons.",
+    "domain": "Energy Materials",
+    "atoms": "9",
+    "frames": "80",
+    "file": "archive/methane_oxidation.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#ffffff",
+      "#ff4060"
+    ],
+    "metadata": {
+      "method": "Reactive MD with charge equilibration",
+      "potential": "ReaxFF (CHO-2008)",
+      "temperature": "2500 K",
+      "ensemble": "NVT",
+      "reference": "Chenoweth, van Duin, Goddard III, ReaxFF Reactive Force Field for Molecular Dynamics Simulations of Hydrocarbon Oxidation, J. Phys. Chem. A 112, 1040 (2008).",
+      "doi": "10.1021/jp709896w",
+      "property": "charge (ReaxFF QEq partial charge)"
+    },
+    "featured": true
+  },
+  {
+    "id": "ice_melting_tip4p",
+    "title": "Ice Ih to Liquid Water (TIP4P/Ice)",
+    "subtitle": "Hexagonal ice melting through the H-bond network: every oxygen starts with 4 tetrahedral neighbours and disorders into ~3.6 in the liquid phase.",
+    "domain": "Fluids & Solvents",
+    "atoms": "384",
+    "frames": "90",
+    "file": "archive/ice_melting_tip4p.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff0d0d",
+      "#ffffff",
+      "#75d4f0"
+    ],
+    "metadata": {
+      "method": "Classical MD across melting point",
+      "potential": "TIP4P/Ice rigid water",
+      "temperature": "240 -> 280 K (ramp through Tm = 270 K)",
+      "ensemble": "NPT",
+      "reference": "Vega, Sanz, Abascal, The melting temperature of the most common models of water, J. Chem. Phys. 122, 114507 (2005).",
+      "doi": "10.1063/1.1862245",
+      "property": "q_tetra (local tetrahedral order, 1 ice -> 0 isotropic)"
+    },
+    "featured": true
+  },
+  {
+    "id": "rmd17_aspirin",
+    "title": "Aspirin (rMD17, gas-phase DFT)",
+    "subtitle": "Acetylsalicylic acid in vacuum at 500 K, 100k DFT/PBE+vdW frames at 1 fs. Color by per-atom force magnitude reveals carbonyl wagging, methyl rotation, ester bond breathing.",
+    "domain": "Biomolecules",
+    "atoms": "21",
+    "frames": "100000",
+    "file": "gallery/open_data/rmd17_aspirin.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#ff4060",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "DFT/PBE+vdW-TS, 1 fs Langevin MD at 500 K",
+      "potential": "DFT (ab initio)",
+      "temperature": "500 K",
+      "ensemble": "NVT (Langevin)",
+      "reference": "Christensen & von Lilienfeld, On the role of gradients for ML of molecular energies and forces, MLST 1, 045018 (2020). Original MD17: Chmiela et al., Sci. Adv. 3, e1603015 (2017).",
+      "doi": "10.1088/2632-2153/abba6f",
+      "license": "CC0 (public domain)",
+      "size_mb": 87.0
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17_aspirin.lammpstrj"
+  },
+  {
+    "id": "rmd17_naphthalene",
+    "title": "Naphthalene (rMD17)",
+    "subtitle": "Rigid aromatic bicyclic at 500 K. Clean ring-breathing modes; minimal C-H stretch.",
+    "domain": "Biomolecules",
+    "atoms": "18",
+    "frames": "100000",
+    "file": "gallery/open_data/rmd17_naphthalene.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#ffffff",
+      "#a0a0a0"
+    ],
+    "metadata": {
+      "method": "DFT/PBE+vdW-TS, 1 fs Langevin MD at 500 K",
+      "potential": "DFT (ab initio)",
+      "temperature": "500 K",
+      "ensemble": "NVT (Langevin)",
+      "reference": "Christensen & von Lilienfeld, On the role of gradients for ML of molecular energies and forces, MLST 1, 045018 (2020). Original MD17: Chmiela et al., Sci. Adv. 3, e1603015 (2017).",
+      "doi": "10.1088/2632-2153/abba6f",
+      "license": "CC0 (public domain)",
+      "size_mb": 75.6
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17_naphthalene.lammpstrj"
+  },
+  {
+    "id": "rmd17_paracetamol",
+    "title": "Paracetamol (rMD17)",
+    "subtitle": "Acetaminophen at 500 K \u2014 amide N-H/C=O resonance + phenol O-H rotation captured at 1 fs.",
+    "domain": "Biomolecules",
+    "atoms": "20",
+    "frames": "100000",
+    "file": "gallery/open_data/rmd17_paracetamol.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#3050f8",
+      "#ff0d0d"
+    ],
+    "metadata": {
+      "method": "DFT/PBE+vdW-TS, 1 fs Langevin MD at 500 K",
+      "potential": "DFT (ab initio)",
+      "temperature": "500 K",
+      "ensemble": "NVT (Langevin)",
+      "reference": "Christensen & von Lilienfeld, On the role of gradients for ML of molecular energies and forces, MLST 1, 045018 (2020). Original MD17: Chmiela et al., Sci. Adv. 3, e1603015 (2017).",
+      "doi": "10.1088/2632-2153/abba6f",
+      "license": "CC0 (public domain)",
+      "size_mb": 82.6
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17_paracetamol.lammpstrj"
+  },
+  {
+    "id": "rmd17_uracil",
+    "title": "Uracil (rMD17)",
+    "subtitle": "Pyrimidine DNA base at 500 K. Twin C=O carbonyls + N-H wag \u2014 the smallest 'real' biological molecule in this set.",
+    "domain": "Biomolecules",
+    "atoms": "12",
+    "frames": "100000",
+    "file": "gallery/open_data/rmd17_uracil.lammpstrj",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#ff0d0d",
+      "#444444"
+    ],
+    "metadata": {
+      "method": "DFT/PBE+vdW-TS, 1 fs Langevin MD at 500 K",
+      "potential": "DFT (ab initio)",
+      "temperature": "500 K",
+      "ensemble": "NVT (Langevin)",
+      "reference": "Christensen & von Lilienfeld, On the role of gradients for ML of molecular energies and forces, MLST 1, 045018 (2020). Original MD17: Chmiela et al., Sci. Adv. 3, e1603015 (2017).",
+      "doi": "10.1088/2632-2153/abba6f",
+      "license": "CC0 (public domain)",
+      "size_mb": 54.6
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17_uracil.lammpstrj"
+  },
+  {
+    "id": "rmd17_ethanol",
+    "title": "Ethanol (rMD17)",
+    "subtitle": "C2H6O at 500 K \u2014 hydroxyl rotation barrier crossings visible across 100k frames.",
+    "domain": "Fluids & Solvents",
+    "atoms": "9",
+    "frames": "100000",
+    "file": "gallery/open_data/rmd17_ethanol.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#ff0d0d",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "DFT/PBE+vdW-TS, 1 fs Langevin MD at 500 K",
+      "potential": "DFT (ab initio)",
+      "temperature": "500 K",
+      "ensemble": "NVT (Langevin)",
+      "reference": "Christensen & von Lilienfeld, On the role of gradients for ML of molecular energies and forces, MLST 1, 045018 (2020). Original MD17: Chmiela et al., Sci. Adv. 3, e1603015 (2017).",
+      "doi": "10.1088/2632-2153/abba6f",
+      "license": "CC0 (public domain)",
+      "size_mb": 44.1
+    },
+    "featured": true
+  },
+  {
+    "id": "ws22_alanine",
+    "title": "Alanine (WS22, Wigner-sampled)",
+    "subtitle": "Smallest chiral amino acid \u2014 backbone phi/psi configurations sampled across the Wigner distribution. Color by Hirshfeld partial charge.",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "120000",
+    "file": "gallery/open_data/ws22_alanine.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#3050f8",
+      "#ff0d0d"
+    ],
+    "metadata": {
+      "method": "Wigner sampling at 0 K + geometry interpolation, DFT properties",
+      "potential": "DFT (PBE0/6-31G*)",
+      "temperature": "0 K (Wigner) + interpolated",
+      "ensemble": "stochastic",
+      "reference": "Pinheiro Jr, Zhang, Dral & Barbatti, WS22 database, Wigner Sampling and geometry interpolation for configurationally diverse molecular datasets, Sci. Data 10, 95 (2023).",
+      "doi": "10.5281/zenodo.7032334",
+      "license": "CC-BY-4.0",
+      "size_mb": 68.8
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/ws22_alanine.lammpstrj"
+  },
+  {
+    "id": "ws22_thymine",
+    "title": "Thymine (WS22)",
+    "subtitle": "DNA base T \u2014 five-methyl uracil. WS22 Wigner sampling captures vibrational + rotamer diversity at DFT accuracy.",
+    "domain": "Biomolecules",
+    "atoms": "15",
+    "frames": "120000",
+    "file": "gallery/open_data/ws22_thymine.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#3050f8",
+      "#ff0d0d"
+    ],
+    "metadata": {
+      "method": "Wigner sampling at 0 K + geometry interpolation, DFT properties",
+      "potential": "DFT (PBE0/6-31G*)",
+      "temperature": "0 K (Wigner) + interpolated",
+      "ensemble": "stochastic",
+      "reference": "Pinheiro Jr, Zhang, Dral & Barbatti, WS22 database, Wigner Sampling and geometry interpolation for configurationally diverse molecular datasets, Sci. Data 10, 95 (2023).",
+      "doi": "10.5281/zenodo.7032334",
+      "license": "CC-BY-4.0",
+      "size_mb": 77.3
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/ws22_thymine.lammpstrj"
+  },
+  {
+    "id": "ws22_urocanic",
+    "title": "Urocanic Acid (WS22)",
+    "subtitle": "Skin UV-photoreceptor (cis/trans isomers regulate immune response). Wigner-sampled DFT geometries with Hirshfeld charges.",
+    "domain": "Biomolecules",
+    "atoms": "16",
+    "frames": "120000",
+    "file": "gallery/open_data/ws22_urocanic.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#3050f8",
+      "#ff0d0d"
+    ],
+    "metadata": {
+      "method": "Wigner sampling at 0 K + geometry interpolation, DFT properties",
+      "potential": "DFT (PBE0/6-31G*)",
+      "temperature": "0 K (Wigner) + interpolated",
+      "ensemble": "stochastic",
+      "reference": "Pinheiro Jr, Zhang, Dral & Barbatti, WS22 database, Wigner Sampling and geometry interpolation for configurationally diverse molecular datasets, Sci. Data 10, 95 (2023).",
+      "doi": "10.5281/zenodo.7032334",
+      "license": "CC-BY-4.0",
+      "size_mb": 81.7
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/ws22_urocanic.lammpstrj"
+  },
+  {
+    "id": "ws22_dmabn",
+    "title": "DMABN (WS22)",
+    "subtitle": "4-(dimethylamino)benzonitrile \u2014 classic TICT-state emitter. Donor-acceptor twisting captured in geometry diversity.",
+    "domain": "Energy Materials",
+    "atoms": "21",
+    "frames": "120000",
+    "file": "gallery/open_data/ws22_dmabn.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#3050f8",
+      "#ff0d0d"
+    ],
+    "metadata": {
+      "method": "Wigner sampling at 0 K + geometry interpolation, DFT properties",
+      "potential": "DFT (PBE0/6-31G*)",
+      "temperature": "0 K (Wigner) + interpolated",
+      "ensemble": "stochastic",
+      "reference": "Pinheiro Jr, Zhang, Dral & Barbatti, WS22 database, Wigner Sampling and geometry interpolation for configurationally diverse molecular datasets, Sci. Data 10, 95 (2023).",
+      "doi": "10.5281/zenodo.7032334",
+      "license": "CC-BY-4.0",
+      "size_mb": 101.6
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/ws22_dmabn.lammpstrj"
+  },
+  {
+    "id": "xxmd_azobenzene",
+    "title": "Azobenzene Photoisomerization (xxMD-DFT)",
+    "subtitle": "Cis<->trans N=N rotation through conical intersection. Non-adiabatic surface hopping captures actual bond rearrangement, not thermal jiggle.",
+    "domain": "Biomolecules",
+    "atoms": "24",
+    "frames": "8370",
+    "file": "gallery/open_data/xxmd_azobenzene.lammpstrj",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#444444",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Non-adiabatic excited-state MD (Tully surface hopping) at DFT (M06)",
+      "potential": "DFT M06 with TDDFT excited states",
+      "temperature": "300 K",
+      "ensemble": "NVE (excited state)",
+      "reference": "Pengmei, Shu & Levine, Beyond MD17: the reactive xxMD dataset, Sci. Data 11, 222 (2024).",
+      "doi": "10.5281/zenodo.10393859",
+      "license": "CC-BY-4.0",
+      "size_mb": 8.0
+    },
+    "featured": true
+  },
+  {
+    "id": "xxmd_stilbene",
+    "title": "Stilbene Photoisomerization (xxMD-DFT)",
+    "subtitle": "Photo-driven C=C twisting between cis and trans isomers. The classic phototaxis molecule.",
+    "domain": "Biomolecules",
+    "atoms": "26",
+    "frames": "25560",
+    "file": "gallery/open_data/xxmd_stilbene.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#ffffff",
+      "#1ff01f"
+    ],
+    "metadata": {
+      "method": "Non-adiabatic excited-state MD (Tully surface hopping) at DFT (M06)",
+      "potential": "DFT M06 with TDDFT excited states",
+      "temperature": "300 K",
+      "ensemble": "NVE (excited state)",
+      "reference": "Pengmei, Shu & Levine, Beyond MD17: the reactive xxMD dataset, Sci. Data 11, 222 (2024).",
+      "doi": "10.5281/zenodo.10393859",
+      "license": "CC-BY-4.0",
+      "size_mb": 26.0
+    },
+    "featured": true
+  },
+  {
+    "id": "xxmd_malonaldehyde",
+    "title": "Malonaldehyde Tautomer (xxMD-DFT)",
+    "subtitle": "Intramolecular O-H proton shuttle between keto enol tautomers \u2014 the textbook example of low-barrier H-transfer.",
+    "domain": "Biomolecules",
+    "atoms": "9",
+    "frames": "27963",
+    "file": "gallery/open_data/xxmd_malonaldehyde.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff0d0d",
+      "#ffffff",
+      "#444444"
+    ],
+    "metadata": {
+      "method": "Non-adiabatic excited-state MD (Tully surface hopping) at DFT (M06)",
+      "potential": "DFT M06 with TDDFT excited states",
+      "temperature": "300 K",
+      "ensemble": "NVE (excited state)",
+      "reference": "Pengmei, Shu & Levine, Beyond MD17: the reactive xxMD dataset, Sci. Data 11, 222 (2024).",
+      "doi": "10.5281/zenodo.10393859",
+      "license": "CC-BY-4.0",
+      "size_mb": 12.1
+    },
+    "featured": true
+  },
+  {
+    "id": "xxmd_diarylethene",
+    "title": "Diarylethene Photoswitch (xxMD-DFT)",
+    "subtitle": "Photochromic C-C ring-closure dithienylethene \u2014 actual bond formation captured by Tully surface hopping. Switches color, conductivity, geometry.",
+    "domain": "Energy Materials",
+    "atoms": "20",
+    "frames": "24769",
+    "file": "gallery/open_data/xxmd_diarylethene.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ffd700",
+      "#444444",
+      "#ff0d0d"
+    ],
+    "metadata": {
+      "method": "Non-adiabatic excited-state MD (Tully surface hopping) at DFT (M06)",
+      "potential": "DFT M06 with TDDFT excited states",
+      "temperature": "300 K",
+      "ensemble": "NVE (excited state)",
+      "reference": "Pengmei, Shu & Levine, Beyond MD17: the reactive xxMD dataset, Sci. Data 11, 222 (2024).",
+      "doi": "10.5281/zenodo.10393859",
+      "license": "CC-BY-4.0",
+      "size_mb": 20.1
+    },
+    "featured": true
+  },
+  {
+    "id": "rmd17aq_aspirin",
+    "title": "Aspirin in Water (rMD17-aq)",
+    "subtitle": "QM/MM aqueous aspirin with CP2K partial charges per atom. Color by Q to see solvent-driven charge fluctuations on the carbonyl + carboxylate.",
+    "domain": "Fluids & Solvents",
+    "atoms": "21",
+    "frames": "100000",
+    "file": "gallery/open_data/rmd17aq_aspirin.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#3050f8",
+      "#ff0d0d"
+    ],
+    "metadata": {
+      "method": "QM/MM AIMD (DFT QM region in TIP3P water)",
+      "potential": "DFT QM / TIP3P MM",
+      "temperature": "300 K",
+      "ensemble": "NVT",
+      "reference": "Hellstr\u00f6m, Ceriotti & Riniker (rMD17-aq), QM/MM aqueous extension of rMD17 with CP2K partial charges (2023).",
+      "doi": "10.5281/zenodo.10048644",
+      "license": "CC-BY-4.0",
+      "size_mb": 86.5
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17aq_aspirin.lammpstrj"
+  },
+  {
+    "id": "rmd17aq_uracil",
+    "title": "Uracil in Water (rMD17-aq)",
+    "subtitle": "QM/MM aqueous uracil. Per-atom partial charges flicker as H-bond donors/acceptors couple to TIP3P bath.",
+    "domain": "Fluids & Solvents",
+    "atoms": "12",
+    "frames": "100000",
+    "file": "gallery/open_data/rmd17aq_uracil.lammpstrj",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#ff0d0d",
+      "#75d4f0"
+    ],
+    "metadata": {
+      "method": "QM/MM AIMD (DFT QM region in TIP3P water)",
+      "potential": "DFT QM / TIP3P MM",
+      "temperature": "300 K",
+      "ensemble": "NVT",
+      "reference": "Hellstr\u00f6m, Ceriotti & Riniker (rMD17-aq), QM/MM aqueous extension of rMD17 with CP2K partial charges (2023).",
+      "doi": "10.5281/zenodo.10048644",
+      "license": "CC-BY-4.0",
+      "size_mb": 54.2
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17aq_uracil.lammpstrj"
+  },
+  {
+    "id": "rmd17aq_salicylic",
+    "title": "Salicylic Acid in Water (rMD17-aq)",
+    "subtitle": "QM/MM aqueous salicylic acid \u2014 intramolecular H-bond competes with bulk solvent; charge dynamics resolve which proton state dominates.",
+    "domain": "Fluids & Solvents",
+    "atoms": "16",
+    "frames": "100000",
+    "file": "gallery/open_data/rmd17aq_salicylic.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff0d0d",
+      "#444444",
+      "#75d4f0"
+    ],
+    "metadata": {
+      "method": "QM/MM AIMD (DFT QM region in TIP3P water)",
+      "potential": "DFT QM / TIP3P MM",
+      "temperature": "300 K",
+      "ensemble": "NVT",
+      "reference": "Hellstr\u00f6m, Ceriotti & Riniker (rMD17-aq), QM/MM aqueous extension of rMD17 with CP2K partial charges (2023).",
+      "doi": "10.5281/zenodo.10048644",
+      "license": "CC-BY-4.0",
+      "size_mb": 68.5
+    },
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17aq_salicylic.lammpstrj"
   }
 ]

@@ -1,0 +1,15 @@
+# GCS-hosted trajectories — listed in .gcs-hosted.json. Files stay on disk
+# for offline dev (loader prefers local in dev, GCS in prod) but never enter
+# git or the production dist (vite plugin pruneGcsHostedAssets handles dist).
+# Run scripts/gcs/pull_open_data.sh on a fresh clone to populate.
+rmd17_aspirin.lammpstrj
+rmd17_naphthalene.lammpstrj
+rmd17_paracetamol.lammpstrj
+rmd17_uracil.lammpstrj
+rmd17aq_aspirin.lammpstrj
+rmd17aq_salicylic.lammpstrj
+rmd17aq_uracil.lammpstrj
+ws22_alanine.lammpstrj
+ws22_thymine.lammpstrj
+ws22_urocanic.lammpstrj
+ws22_dmabn.lammpstrj

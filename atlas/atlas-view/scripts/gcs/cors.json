@@ -1,0 +1,22 @@
+[
+  {
+    "origin": [
+      "https://atlas-viewer-350452481649.us-central1.run.app",
+      "https://lupine.science",
+      "https://www.lupine.science",
+      "http://localhost:3000",
+      "http://localhost:3001"
+    ],
+    "method": ["GET", "HEAD", "OPTIONS"],
+    "responseHeader": [
+      "Content-Type",
+      "Content-Length",
+      "Content-Range",
+      "Range",
+      "Accept-Ranges",
+      "Cache-Control",
+      "ETag"
+    ],
+    "maxAgeSeconds": 3600
+  }
+]

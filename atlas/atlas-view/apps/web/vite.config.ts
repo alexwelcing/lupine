@@ -90,6 +90,43 @@ function galleryAssetUploadPlugin() {
   };
 }
 
+/**
+ * GCS-Hosted Asset Pruning Plugin
+ *
+ * Some open-data trajectories are large (>50 MB) and live in
+ * gs://shed-489901-atlas-artifacts/atlas/open_data/ at runtime. The dev
+ * server still serves them from /public/ (offline dev), but the production
+ * build must not ship them in dist — gallery-data.json sourceUrl points
+ * at the bucket and the Gallery loader picks GCS in prod automatically.
+ *
+ * The list lives in a single JSON next to public/ so the bundle script
+ * stays in sync with the gallery entries.
+ */
+function pruneGcsHostedAssets() {
+  const STASH_LIST = path.resolve(__dirname, 'public/gallery/open_data/.gcs-hosted.json');
+  return {
+    name: 'prune-gcs-hosted-assets',
+    apply: 'build' as const,
+    closeBundle() {
+      if (!fs.existsSync(STASH_LIST)) return;
+      const list: string[] = JSON.parse(fs.readFileSync(STASH_LIST, 'utf-8'));
+      const distDir = path.resolve(__dirname, 'dist');
+      let removed = 0;
+      for (const rel of list) {
+        const p = path.join(distDir, rel);
+        if (fs.existsSync(p)) {
+          fs.unlinkSync(p);
+          removed++;
+        }
+      }
+      if (removed > 0) {
+        // eslint-disable-next-line no-console
+        console.log(`[prune-gcs-hosted-assets] excluded ${removed} files from dist (served from GCS at runtime)`);
+      }
+    },
+  };
+}
+
 function parseMultipart(buffer: Buffer, boundary: string): any[] {
   const parts: any[] = [];
   const boundaryBuffer = Buffer.from(`--${boundary}`);
@@ -123,6 +160,7 @@ export default defineConfig({
     wasm(),
     topLevelAwait(),
     galleryAssetUploadPlugin(),
+    pruneGcsHostedAssets(),
   ],
   resolve: {
     dedupe: ['three', '@react-three/fiber', '@react-three/drei', 'react', 'react-dom', 'zustand'],

@@ -40,6 +40,7 @@ interface GalleryExample {
   atoms: string;
   frames: string;
   file: string;
+  sourceUrl?: string;
   available: boolean;
   colors: [string, string, string];
   metadata?: {
@@ -550,10 +551,17 @@ export function Gallery() {
     setLoadingId(example.id);
     useStore.getState().setLoading(true, 0);
     try {
+      // sourceUrl wins in production: gallery entries can point at any
+      // open-data URL (Zenodo, Materials Cloud, GCS bucket, ...) so we
+      // avoid bundling massive trajectories in /public. In dev we prefer
+      // the local file when available — fetching ~100 MB over the network
+      // on every reload is painful even with browser caching.
       const base = (import.meta as any).env?.BASE_URL || '/';
       const cleanFile = example.file.replace(/^\/+/, '');
       const cleanBase = base.endsWith('/') ? base : `${base}/`;
-      const url = `${cleanBase}${cleanFile}`;
+      const localUrl = `${cleanBase}${cleanFile}`;
+      const isDev = (import.meta as any).env?.DEV;
+      const url = (isDev || !example.sourceUrl) ? localUrl : example.sourceUrl;
 
       if (example.id === 'lupine_brand_asset') {
         const scientificUrl = `${cleanBase}gallery/curated/lupine_bluebonnet.xyz`.replace(/([^:]\/)\/+/g, "$1");
