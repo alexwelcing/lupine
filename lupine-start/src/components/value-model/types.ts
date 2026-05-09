@@ -77,6 +77,15 @@ export interface ValueModelData {
   }
   thirty_year_arc: ArcPhase[]
   matter_stack: StackLayer[]
+  credo: CredoLine[]
+}
+
+export interface CredoLine {
+  id: string
+  order: number
+  title: string
+  body: string
+  tier: string
 }
 
 export interface ArcPhase {

@@ -12,11 +12,13 @@ import { ReturnsWaterfall } from '../components/value-model/ReturnsWaterfall'
 import { Takeaway } from '../components/value-model/Takeaway'
 import { HorizonChart } from '../components/value-model/HorizonChart'
 import { StackDiagram } from '../components/value-model/StackDiagram'
+import { Credo } from '../components/value-model/Credo'
 
 const data = valueModelData as ValueModelData
 
 // In-page anchor nav. IDs match ScrollSection ids below.
 const SECTIONS = [
+  { id: 'credo', label: 'What we believe' },
   { id: 'arc', label: '30-yr arc' },
   { id: 'stack', label: 'The stack' },
   { id: 'why-now', label: 'Why now' },
@@ -108,11 +110,38 @@ function HomePage() {
       </nav>
 
       {/* ============================================================
-          01 / The 30-year arc — phases the world is moving through
+          01 / Credo — the ideals that drive the rest of the document
           ============================================================ */}
-      <ScrollSection id="arc">
+      <ScrollSection id="credo">
         <SectionHeader
-          eyebrow="01 / Where this is going"
+          eyebrow="01 / What we believe"
+          title={
+            <>
+              The ideals that{' '}
+              <em className="italic text-[var(--secondary)]">
+                pull the work
+              </em>
+              .
+            </>
+          }
+          lead={
+            <>
+              Before the arc, before the stack, before any math: the
+              commitments that tell you what kind of company this is. None
+              of them are negotiable. All of them are testable against what
+              we actually ship.
+            </>
+          }
+        />
+        <Credo data={data} />
+      </ScrollSection>
+
+      {/* ============================================================
+          02 / The 30-year arc — phases the world is moving through
+          ============================================================ */}
+      <ScrollSection id="arc" className="bg-[var(--surface-container-low)]">
+        <SectionHeader
+          eyebrow="02 / Where this is going"
           title={
             <>
               Step 1 of a{' '}
@@ -148,11 +177,11 @@ function HomePage() {
       </ScrollSection>
 
       {/* ============================================================
-          02 / The matter stack — Lupine's structural position
+          03 / The matter stack — Lupine's structural position
           ============================================================ */}
-      <ScrollSection id="stack" className="bg-[var(--surface-container-low)]">
+      <ScrollSection id="stack">
         <SectionHeader
-          eyebrow="02 / Where this sits"
+          eyebrow="03 / Where this sits"
           title={
             <>
               We are the{' '}
@@ -186,11 +215,11 @@ function HomePage() {
       </ScrollSection>
 
       {/* ============================================================
-          03 / Why now — the convergence is happening this decade
+          04 / Why now — the convergence is happening this decade
           ============================================================ */}
-      <ScrollSection id="why-now">
+      <ScrollSection id="why-now" className="bg-[var(--surface-container-low)]">
         <SectionHeader
-          eyebrow="03 / Why this is the decade"
+          eyebrow="04 / Why this is the decade"
           title={
             <>
               Three curves are{' '}
@@ -231,11 +260,11 @@ function HomePage() {
       </ScrollSection>
 
       {/* ============================================================
-          04 / The math — explicitly framed as the floor, not the ceiling
+          05 / The math — explicitly framed as the floor, not the ceiling
           ============================================================ */}
-      <ScrollSection id="math" className="bg-[var(--surface-container-low)]">
+      <ScrollSection id="math">
         <SectionHeader
-          eyebrow="04 / The math (the floor)"
+          eyebrow="05 / The math (the floor)"
           title={
             <>
               If you scale us as a 2010s software company,{' '}
@@ -328,11 +357,11 @@ function HomePage() {
       </ScrollSection>
 
       {/* ============================================================
-          05 / Ask
+          06 / Ask
           ============================================================ */}
-      <ScrollSection id="ask">
+      <ScrollSection id="ask" className="bg-[var(--surface-container-low)]">
         <SectionHeader
-          eyebrow="05 / The ask"
+          eyebrow="06 / The ask"
           title={
             <>
               Seed{' '}
@@ -456,7 +485,7 @@ function Hero() {
             roadmap. The decade ahead is the convergence — a generation that
             can specify any molecule and have it manifest.
           </p>
-          <p className="text-xl text-[var(--on-surface)] max-w-4xl leading-relaxed font-light mb-12">
+          <p className="text-xl text-[var(--on-surface)] max-w-4xl leading-relaxed font-light mb-10">
             Lupine builds the{' '}
             <strong className="text-[var(--secondary)]">audit substrate</strong>{' '}
             for that stack — the methodology that names where atomistic
@@ -467,6 +496,20 @@ function Hero() {
               We are step 1.
             </span>
           </p>
+
+          {/* Bridge into the credo: tells the reader the next thing
+              they will see is what we believe, before any math. */}
+          <a
+            href="#credo"
+            className="inline-flex items-baseline gap-3 mb-12 group no-underline"
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--tertiary)] group-hover:text-[var(--secondary)] transition-colors">
+              Start with the ideals
+            </span>
+            <span className="text-[var(--tertiary)] group-hover:text-[var(--secondary)] transition-colors">
+              ↓
+            </span>
+          </a>
 
           <div className="flex flex-wrap gap-3 font-mono text-[10px] uppercase tracking-[0.2em]">
             <HorizonChip label="Phase 1 · 2025-2030" highlight>Trustworthy prediction</HorizonChip>

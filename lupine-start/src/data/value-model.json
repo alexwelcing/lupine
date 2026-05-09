@@ -651,5 +651,56 @@
       "is_lupine": false,
       "tier": "verified"
     }
+  ],
+  "credo": [
+    {
+      "id": "scarcity-is-engineering",
+      "order": 1,
+      "title": "Scarcity is an engineering problem.",
+      "body": "The 20th century treated material scarcity as a fixed feature of reality and built economic theory around it. The 21st century has the science to dissolve it \u2014 atomistic prediction, generative matter, autonomous synthesis, atomic-precision manufacturing. The Replicator is a feasible engineering target on a 30-year horizon, not a metaphor for one.",
+      "tier": "directional"
+    },
+    {
+      "id": "audit-is-public-good",
+      "order": 2,
+      "title": "The audit layer is a public good.",
+      "body": "Foundation models for matter need to be trustworthy before they can be deployed at civilization scale. The methodology that names where they fail compounds for everyone or it compounds for no one. We ship Apache 2.0 because anything else makes the substrate brittle. Closed validation does not survive contact with reality.",
+      "tier": "verified"
+    },
+    {
+      "id": "truth-before-product",
+      "order": 3,
+      "title": "Truth before product.",
+      "body": "The first artifact was a peer-reviewed paper. Integrating Materials and Manufacturing Innovation 2026, in press. The methodology will be cited longer than any single deployment of it. We measure the physics first, then we build the engine. Reverse the order and you ship hallucination dressed as software.",
+      "tier": "verified"
+    },
+    {
+      "id": "thirty-year-timescale",
+      "order": 4,
+      "title": "The right timescale is 30 years.",
+      "body": "Civilization-scale problems do not fit a venture fund's LP horizon. The math an investor can score in five years is the floor \u2014 what happens if Lupine becomes a respectable software-of-record company. The platform a generation can build over thirty years is the ceiling. We optimize for the platform; the math just has to clear.",
+      "tier": "directional"
+    },
+    {
+      "id": "sovereignty-and-openness",
+      "order": 5,
+      "title": "Sovereignty and openness are the same commitment.",
+      "body": "You cannot expropriate methodology you can read. Open-core is not a marketing position; it is the only architecture that lets sovereign-mandated buyers \u2014 CHIPS-funded foundries, ITAR-eligible defense programs, MGI national labs \u2014 trust the substrate they depend on. The closed alternative gets banned in their procurement before it gets bought.",
+      "tier": "triangulated"
+    },
+    {
+      "id": "compounding-learning",
+      "order": 6,
+      "title": "Compounding learning beats compounding capital.",
+      "body": "Every customer engagement leaves training signal. The benchmark improves. The methodology paper improves. The next customer gets a better engine than the previous one did. The moat is not the contract; the moat is that we are the canonical place where the field agrees on what counts as truth.",
+      "tier": "directional"
+    },
+    {
+      "id": "unfashionable-step-one",
+      "order": 7,
+      "title": "Step 1 is unfashionable.",
+      "body": "Generative matter is on the cover of the magazine. Autonomous synthesis is the flagship NSF program. Atomic-precision manufacturing has the dramatic name. The audit layer underneath is invisible, slow, load-bearing. We took it because it is load-bearing. Step 1 is the part everyone wants to skip; that is exactly why it is the seat to claim.",
+      "tier": "directional"
+    }
   ]
 }

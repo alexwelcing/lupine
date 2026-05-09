@@ -393,6 +393,7 @@ def main(check_only: bool = False) -> int:
     comps_rows = load("comparable_companies_v2.csv")
     arc_rows = load("thirty_year_arc.csv")
     stack_rows = load("matter_stack.csv")
+    credo_rows = load("credo.csv")
 
     scenarios = build_fcf_streams(revenue_rows, dcf_input_rows)
     wacc_in = build_wacc_inputs(dcf_input_rows)
@@ -412,7 +413,7 @@ def main(check_only: bool = False) -> int:
     # Build a JSON payload the lupine-start /value-model route consumes
     json_payload = build_json_payload(
         revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows,
-        scenarios, wacc_in, arc_rows, stack_rows,
+        scenarios, wacc_in, arc_rows, stack_rows, credo_rows,
     )
     json_text = json.dumps(json_payload, indent=2) + "\n"
 
@@ -444,7 +445,7 @@ def main(check_only: bool = False) -> int:
     return 0
 
 
-def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in, arc_rows, stack_rows) -> dict:
+def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in, arc_rows, stack_rows, credo_rows) -> dict:
     """Single JSON document the React route consumes.
 
     Schema is stable; bump version + migrate consumers if changed.
@@ -623,6 +624,16 @@ def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, co
                 "tier": r["tier"],
             }
             for r in stack_rows
+        ],
+        "credo": [
+            {
+                "id": r["id"],
+                "order": int(r["order"]),
+                "title": r["title"],
+                "body": r["body"],
+                "tier": r["tier"],
+            }
+            for r in sorted(credo_rows, key=lambda r: int(r["order"]))
         ],
     }
 
