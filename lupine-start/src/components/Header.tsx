@@ -22,6 +22,7 @@ const MORE_NAV = [
   { to: '/proof', label: 'Research Defense', desc: 'Response to preprint critique' },
   { to: '/process', label: 'Operating Report', desc: 'Harden stage, run by run' },
   { to: '/investor-relations', label: 'Investor Brief', desc: 'Manifest, thesis, diligence answers' },
+  { to: '/value-model', label: 'Value Model', desc: 'Animated DCF, sensitivity, comps, returns' },
   { to: '/slideshow', label: 'Slideshow', desc: 'Visual brief, 100+ stills' },
   { to: '/ops', label: 'Ops Dashboard', desc: 'Deployment telemetry' },
 ] as const

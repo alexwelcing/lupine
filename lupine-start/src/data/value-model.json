@@ -1,0 +1,562 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-05-09",
+  "round": {
+    "check_size_usd_m": 8.0,
+    "post_money_usd_m": 150.0,
+    "ownership_pct": 0.05333333333333334
+  },
+  "years": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032
+  ],
+  "sector_unlock": {
+    "compute": [
+      2.0,
+      4.8,
+      10.0,
+      18.0,
+      28.0,
+      34.0,
+      38.0
+    ],
+    "travel": [
+      3.1,
+      7.8,
+      17.2,
+      35.1,
+      54.6,
+      66.3,
+      74.1
+    ],
+    "bio": [
+      0.7,
+      2.0,
+      5.0,
+      10.0,
+      16.5,
+      22.4,
+      27.1
+    ],
+    "total": [
+      5.8,
+      14.6,
+      32.2,
+      63.1,
+      99.1,
+      122.7,
+      139.2
+    ]
+  },
+  "lupine": {
+    "revenue_total_m": [
+      0.35,
+      4.2,
+      16.15,
+      35.0,
+      62.4,
+      94.5,
+      133.3
+    ],
+    "penetration_pct": [
+      0.1,
+      0.3,
+      0.7,
+      1.5,
+      2.5,
+      3.5,
+      4.5
+    ],
+    "attributed_unlock_m": [
+      5.8,
+      43.8,
+      225.4,
+      946.5,
+      2477.5,
+      4294.5,
+      6264.0
+    ],
+    "capture_pct": [
+      6.0344827586206895,
+      9.589041095890412,
+      7.165039929015084,
+      3.6978341257263603,
+      2.518668012108981,
+      2.2004889975550124,
+      2.128033205619413
+    ],
+    "yoy_growth_pct": [
+      599.9999999999999,
+      1100.0000000000002,
+      284.5238095238095,
+      116.71826625386998,
+      78.28571428571429,
+      51.442307692307686,
+      41.058201058201064
+    ],
+    "fy26_fy30_cagr_pct": 265.4089129501425,
+    "fy28_fy32_cagr_pct": 69.4979327137531
+  },
+  "dcf": {
+    "wacc_inputs": {
+      "risk_free_rate": 0.044000000000000004,
+      "beta": 1.4,
+      "equity_risk_premium": 0.055,
+      "cost_of_equity": 0.121,
+      "wacc": 0.121,
+      "wacc_bear": 0.14,
+      "wacc_bull": 0.105,
+      "g_base": 0.03,
+      "g_bear": 0.02,
+      "g_bull": 0.035
+    },
+    "scenarios": {
+      "bear": {
+        "wacc": 0.14,
+        "terminal_growth": 0.02,
+        "fcfs": [
+          -2.4,
+          -3.5,
+          -2.0,
+          0.5,
+          3.0,
+          6.0,
+          9.5
+        ],
+        "pv_fcfs": [
+          -2.2478059477960652,
+          -2.8754827548560775,
+          -1.441344739276229,
+          0.3160843726482958,
+          1.6636019613068198,
+          2.9185999321172273,
+          4.053611016829483
+        ],
+        "discount_factors": [
+          0.936585811581694,
+          0.8215665013874507,
+          0.7206723696381145,
+          0.6321687452965916,
+          0.5545339871022733,
+          0.48643332201953793,
+          0.42669589650836665
+        ],
+        "sum_pv_fcfs": 2.3872638409734543,
+        "pv_terminal": 34.4556936430506,
+        "enterprise_value": 36.842957484024055,
+        "terminal_pct_of_ev": 0.9352043374365745
+      },
+      "base": {
+        "wacc": 0.121,
+        "terminal_growth": 0.03,
+        "fcfs": [
+          -2.25,
+          -2.08,
+          1.99,
+          9.21,
+          20.38,
+          34.12,
+          50.78
+        ],
+        "pv_fcfs": [
+          -2.1251016662461697,
+          -1.7524874480293524,
+          1.4956812348085546,
+          6.175042999379946,
+          12.189304408422688,
+          18.20447476603683,
+          24.16886270682762
+        ],
+        "discount_factors": [
+          0.9444896294427422,
+          0.842542042321804,
+          0.7515986104565602,
+          0.670471552592828,
+          0.598101295800917,
+          0.5335426367537173,
+          0.4759523967472946
+        ],
+        "sum_pv_fcfs": 58.355777001200124,
+        "pv_terminal": 273.55965481354343,
+        "enterprise_value": 331.91543181474356,
+        "terminal_pct_of_ev": 0.82418480309234
+      },
+      "bull": {
+        "wacc": 0.105,
+        "terminal_growth": 0.035,
+        "fcfs": [
+          -1.9,
+          -0.2,
+          7.0,
+          28.0,
+          65.0,
+          120.0,
+          180.0
+        ],
+        "pv_fcfs": [
+          -1.8074756777870775,
+          -0.17218153634551825,
+          5.453713820898767,
+          19.74195048289147,
+          41.47468588842745,
+          69.2928967157855,
+          94.06275572278577
+        ],
+        "discount_factors": [
+          0.9513029883089882,
+          0.8609076817275911,
+          0.7791019744141096,
+          0.7050696601032667,
+          0.6380720905911915,
+          0.5774408059648792,
+          0.5225708651265876
+        ],
+        "sum_pv_fcfs": 228.04634541665638,
+        "pv_terminal": 1390.7850310440467,
+        "enterprise_value": 1618.831376460703,
+        "terminal_pct_of_ev": 0.8591290305261808
+      }
+    },
+    "sensitivity": {
+      "wacc_axis": [
+        0.10099999999999999,
+        0.111,
+        0.121,
+        0.131,
+        0.141
+      ],
+      "g_axis": [
+        0.019999999999999997,
+        0.024999999999999998,
+        0.03,
+        0.034999999999999996,
+        0.04
+      ],
+      "grid": [
+        [
+          406.8118610722383,
+          431.10780828723273,
+          458.8257198987055,
+          490.74331508767386,
+          527.8933029305717
+        ],
+        [
+          348.57468113363944,
+          366.7589369798816,
+          387.1881626836846,
+          410.30544440114573,
+          436.6786812900804
+        ],
+        [
+          302.4373607731226,
+          316.4087381938908,
+          331.91543181474356,
+          349.2252293449977,
+          368.67203891602395
+        ],
+        [
+          265.10008112925846,
+          276.06459874743143,
+          288.114712169384,
+          301.4200457394566,
+          316.1875038776691
+        ],
+        [
+          234.35568408929464,
+          243.11254188211032,
+          252.65830578238695,
+          263.1046134468406,
+          274.58520899886383
+        ]
+      ]
+    }
+  },
+  "comps": {
+    "sim_set": [
+      {
+        "id": "synopsys",
+        "company": "Synopsys",
+        "ticker": "NASDAQ:SNPS",
+        "sector": "Engineering software (EDA)",
+        "ev_revenue": 12.7,
+        "ev_ebitda": 38.0,
+        "gross_margin": 80.0,
+        "rev_growth": 15.0,
+        "rev_ltm": 7000.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "cadence",
+        "company": "Cadence Design Systems",
+        "ticker": "NASDAQ:CDNS",
+        "sector": "Engineering software (EDA)",
+        "ev_revenue": 16.4,
+        "ev_ebitda": 40.0,
+        "gross_margin": 89.0,
+        "rev_growth": 14.0,
+        "rev_ltm": 4500.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "ansys-pre",
+        "company": "ANSYS pre-acquisition",
+        "ticker": "NASDAQ:ANSS",
+        "sector": "Engineering simulation",
+        "ev_revenue": 15.5,
+        "ev_ebitda": 35.0,
+        "gross_margin": 90.0,
+        "rev_growth": 11.0,
+        "rev_ltm": 2200.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "altair",
+        "company": "Altair Engineering",
+        "ticker": "NASDAQ:ALTR",
+        "sector": "Engineering simulation",
+        "ev_revenue": 15.6,
+        "ev_ebitda": 28.0,
+        "gross_margin": 70.0,
+        "rev_growth": 12.0,
+        "rev_ltm": 640.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "veeva",
+        "company": "Veeva Systems",
+        "ticker": "NYSE:VEEV",
+        "sector": "Vertical SaaS for life sciences",
+        "ev_revenue": 10.7,
+        "ev_ebitda": 40.0,
+        "gross_margin": 73.0,
+        "rev_growth": 15.0,
+        "rev_ltm": 2800.0,
+        "tier": "disclosed"
+      }
+    ],
+    "ai_bio_set": [
+      {
+        "id": "schrodinger",
+        "company": "Schrodinger",
+        "ticker": "NASDAQ:SDGR",
+        "sector": "Materials + drug discovery software",
+        "ev_revenue": 14.8,
+        "ev_ebitda": null,
+        "gross_margin": 72.0,
+        "rev_growth": 18.0,
+        "rev_ltm": 250.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "recursion",
+        "company": "Recursion Pharmaceuticals",
+        "ticker": "NASDAQ:RXRX",
+        "sector": "AI for drug discovery",
+        "ev_revenue": 37.5,
+        "ev_ebitda": null,
+        "gross_margin": 55.0,
+        "rev_growth": 40.0,
+        "rev_ltm": 80.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "relay-therapeutics",
+        "company": "Relay Therapeutics",
+        "ticker": "NASDAQ:RLAY",
+        "sector": "Computational drug discovery",
+        "ev_revenue": 160.0,
+        "ev_ebitda": null,
+        "gross_margin": null,
+        "rev_growth": null,
+        "rev_ltm": 5.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "roivant",
+        "company": "Roivant Sciences",
+        "ticker": "NASDAQ:ROIV",
+        "sector": "Drug development platform",
+        "ev_revenue": 93.8,
+        "ev_ebitda": null,
+        "gross_margin": 40.0,
+        "rev_growth": null,
+        "rev_ltm": 80.0,
+        "tier": "disclosed"
+      }
+    ],
+    "others": [
+      {
+        "id": "schrodinger-software-only",
+        "company": "Schrodinger software segment only",
+        "ticker": "NASDAQ:SDGR",
+        "sector": "Materials science software",
+        "ev_revenue": 30.0,
+        "ev_ebitda": null,
+        "gross_margin": 75.0,
+        "rev_growth": 22.0,
+        "rev_ltm": 120.0,
+        "tier": "triangulated"
+      },
+      {
+        "id": "exscientia",
+        "company": "Exscientia (acquired by Recursion)",
+        "ticker": "private",
+        "sector": "AI drug discovery",
+        "ev_revenue": 25.0,
+        "ev_ebitda": null,
+        "gross_margin": 60.0,
+        "rev_growth": 25.0,
+        "rev_ltm": 30.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "palantir",
+        "company": "Palantir",
+        "ticker": "NASDAQ:PLTR",
+        "sector": "Defense + commercial AI software",
+        "ev_revenue": 60.9,
+        "ev_ebitda": 30.0,
+        "gross_margin": 80.0,
+        "rev_growth": 30.0,
+        "rev_ltm": 3200.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "arista",
+        "company": "Arista Networks",
+        "ticker": "NYSE:ANET",
+        "sector": "Datacenter networking",
+        "ev_revenue": 18.6,
+        "ev_ebitda": 42.0,
+        "gross_margin": 64.0,
+        "rev_growth": 15.0,
+        "rev_ltm": 7000.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "nvidia",
+        "company": "NVIDIA",
+        "ticker": "NASDAQ:NVDA",
+        "sector": "AI compute",
+        "ev_revenue": 22.7,
+        "ev_ebitda": 55.0,
+        "gross_margin": 75.0,
+        "rev_growth": 55.0,
+        "rev_ltm": 130000.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "citrine",
+        "company": "Citrine Informatics (private)",
+        "ticker": "private",
+        "sector": "Materials informatics",
+        "ev_revenue": 13.0,
+        "ev_ebitda": null,
+        "gross_margin": 55.0,
+        "rev_growth": 30.0,
+        "rev_ltm": 15.0,
+        "tier": "triangulated"
+      },
+      {
+        "id": "orbital-materials",
+        "company": "Orbital Materials (private)",
+        "ticker": "private",
+        "sector": "Foundation MLIP",
+        "ev_revenue": 40.0,
+        "ev_ebitda": null,
+        "gross_margin": null,
+        "rev_growth": null,
+        "rev_ltm": 2.0,
+        "tier": "disclosed"
+      },
+      {
+        "id": "mattersmith-private",
+        "company": "MatterSim spinout (hypothetical)",
+        "ticker": "private",
+        "sector": "Foundation MLIP",
+        "ev_revenue": null,
+        "ev_ebitda": null,
+        "gross_margin": null,
+        "rev_growth": null,
+        "rev_ltm": null,
+        "tier": "directional"
+      },
+      {
+        "id": "xtalpi",
+        "company": "XtalPi",
+        "ticker": "private",
+        "sector": "Computational drug + materials",
+        "ev_revenue": 11.9,
+        "ev_ebitda": null,
+        "gross_margin": 55.0,
+        "rev_growth": 28.0,
+        "rev_ltm": 80.0,
+        "tier": "disclosed"
+      }
+    ],
+    "sim_median_ev_rev": 15.5,
+    "ai_bio_median_ev_rev": 65.65
+  },
+  "implied_valuation": [
+    {
+      "label": "FY27 base ARR",
+      "arr_m": 4.2
+    },
+    {
+      "label": "FY28 base ARR",
+      "arr_m": 16.15
+    },
+    {
+      "label": "FY30 base ARR",
+      "arr_m": 62.4
+    },
+    {
+      "label": "FY32 base ARR",
+      "arr_m": 133.3
+    },
+    {
+      "label": "FY30 bull ARR",
+      "arr_m": 200.0
+    },
+    {
+      "label": "FY30 bear ARR",
+      "arr_m": 22.0
+    }
+  ],
+  "returns": {
+    "outcomes": [
+      {
+        "name": "Zero",
+        "p": 0.5,
+        "exit_m": 0.0
+      },
+      {
+        "name": "Modest",
+        "p": 0.2,
+        "exit_m": 100.0
+      },
+      {
+        "name": "Strategic",
+        "p": 0.2,
+        "exit_m": 500.0
+      },
+      {
+        "name": "Moonshot",
+        "p": 0.07,
+        "exit_m": 3000.0
+      },
+      {
+        "name": "Asymmetric tail",
+        "p": 0.03,
+        "exit_m": 15000.0
+      }
+    ],
+    "weighted_ev_on_slice_m": 41.6,
+    "weighted_irr_5y": 0.3905950167030172
+  }
+}
