@@ -3,14 +3,48 @@
 This folder is the **single source of truth** for Lupine's investment
 thesis, market analysis, partner strategy, financial model, and GTM
 plan. It is structured so that every quantitative claim resolves to a
-versioned cell in `data/`.
+versioned cell in `data/` or `value-model/`.
+
+## v2 update — value-unlock model + DCF + comps + IC memo
+
+The original `data/*.csv` layer used founder estimates and
+triangulated TAM proxies. **It has been superseded** for value /
+revenue / valuation claims by `value-model/`, which is built bottom-up
+from materials-acceleration economics across compute, travel, and bio
+(McKinsey, Bain, BNEF, IEA, FDA, BCG, Frost & Sullivan, agency primary
+docs).
+
+Canonical v2 artifacts:
+
+- **`IC_MEMO.md`** — investment committee memo, the synthesis
+  doc. Drafted following the IC-memo skill from
+  `~/.claude/plugins/financial-services/`.
+- **`thesis/value-unlock-thesis.md`** — the new framing: Lupine as
+  software-of-record for materials acceleration; ~$151B/yr 2030
+  sector unlock; ~2-5% capture economics akin to Synopsys/Cadence.
+- **`financials/Lupine_DCF_Model.xlsx`** — full DCF (185 formulas,
+  validated PASS by the dcf-model skill validator). Bear/Base/Bull
+  scenario blocks, two sensitivity tables, WACC sub-sheet.
+- **`financials/Lupine_Comps_Analysis.xlsx`** — comparable-companies
+  analysis with implied valuation table.
+- **`value-model/`** — source CSVs for the v2 model:
+  `sector_value_unlock.csv`, `materials_acceleration_economics.csv`,
+  `value_capture_mechanisms.csv`, `lupine_revenue_v2.csv`,
+  `dcf_inputs.csv`, `comparable_companies_v2.csv`.
+- **`scripts/build_dcf.py`** + **`scripts/build_comps.py`** — the
+  generators. Edit a value-model CSV cell, re-run the script, the
+  xlsx model regenerates.
+
+The original `data/*.csv` and the v1 narrative documents remain in
+place for reference, but every forward-looking financial claim should
+cite `value-model/` and read alongside `IC_MEMO.md`.
 
 ## Reading order
 
 If you have ten minutes:
-1. `EXECUTIVE_SUMMARY.md`
-2. `thesis/investment-thesis.md`
-3. `thesis/moonshot-math.md`
+1. `IC_MEMO.md`
+2. `thesis/value-unlock-thesis.md`
+3. `EXECUTIVE_SUMMARY.md`
 
 If you have an hour, add:
 - `market/tam-sam-som.md`

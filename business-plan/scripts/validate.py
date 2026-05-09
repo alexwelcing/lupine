@@ -23,7 +23,7 @@ from pathlib import Path
 ALLOWED_TIERS = {"verified", "disclosed", "triangulated", "directional", "projection"}
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
+DATA_DIRS = [ROOT / "data", ROOT / "value-model"]
 NARRATIVE_DIRS = [
     ROOT,
     ROOT / "thesis",
@@ -46,7 +46,11 @@ def load_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
 
 def lint_csvs() -> list[str]:
     errors: list[str] = []
-    for csv_path in sorted(DATA_DIR.glob("*.csv")):
+    csv_paths = []
+    for d in DATA_DIRS:
+        if d.exists():
+            csv_paths.extend(sorted(d.glob("*.csv")))
+    for csv_path in csv_paths:
         header, rows = load_csv(csv_path)
         if "id" not in header:
             errors.append(f"{csv_path.name}: missing required `id` column")
@@ -77,11 +81,14 @@ def lint_csvs() -> list[str]:
 def index_data() -> dict[str, set[str]]:
     """Return {csv_basename_without_ext: {ids...}} plus full filename keys."""
     index: dict[str, set[str]] = {}
-    for csv_path in DATA_DIR.glob("*.csv"):
-        _, rows = load_csv(csv_path)
-        ids = {row["id"].strip() for row in rows if row.get("id")}
-        index[csv_path.stem] = ids
-        index[csv_path.name] = ids
+    for d in DATA_DIRS:
+        if not d.exists():
+            continue
+        for csv_path in d.glob("*.csv"):
+            _, rows = load_csv(csv_path)
+            ids = {row["id"].strip() for row in rows if row.get("id")}
+            index[csv_path.stem] = ids
+            index[csv_path.name] = ids
     return index
 
 
@@ -129,7 +136,7 @@ def validate_references(index: dict[str, set[str]]) -> list[str]:
 
 def validate_projections_ordering() -> list[str]:
     errors: list[str] = []
-    path = DATA_DIR / "projections_bear_bull.csv"
+    path = ROOT / "data" / "projections_bear_bull.csv"
     if not path.exists():
         return [f"{path.name}: missing"]
     _, rows = load_csv(path)
@@ -179,7 +186,7 @@ def main() -> int:
             print(f"  - {e}")
         return 1
 
-    csv_count = len(list(DATA_DIR.glob("*.csv")))
+    csv_count = sum(len(list(d.glob("*.csv"))) for d in DATA_DIRS if d.exists())
     md_count = sum(1 for d in NARRATIVE_DIRS for _ in d.glob("*.md"))
     print(f"OK: {csv_count} CSVs lint clean, {md_count} narrative files cross-resolve.")
     return 0
