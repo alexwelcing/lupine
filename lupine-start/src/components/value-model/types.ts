@@ -78,6 +78,81 @@ export interface ValueModelData {
   thirty_year_arc: ArcPhase[]
   matter_stack: StackLayer[]
   credo: CredoLine[]
+  ceiling: Ceiling
+}
+
+export interface Phase4Sector {
+  id: string
+  sector: string
+  subsector: string
+  annual_value_usd_b: number
+  year_at_scale: number
+  tier: string
+  notes: string
+}
+
+export interface PlatformComp {
+  id: string
+  company: string
+  category: string
+  revenue_usd_b: number
+  ev_usd_b: number
+  ev_revenue_x: number
+  ecosystem_value_usd_b: number
+  capture_rate_pct: number
+  year: number | null
+  tier: string
+}
+
+export interface CeilingScenario {
+  id: string
+  name: string
+  year_horizon: number | null
+  addressable_value_usd_b: number
+  capture_rate_pct: number
+  implied_revenue_usd_b: number
+  multiple: number
+  implied_ev_usd_b: number
+  probability: number
+  tier: string
+  notes: string
+}
+
+export interface StrategicAcquirer {
+  id: string
+  acquirer: string
+  rationale: string
+  npv_to_acquirer_usd_b: number
+  plausible_acquisition_price_usd_b: number
+  year_horizon: number | null
+  tier: string
+}
+
+export interface QuantumUnlock {
+  id: string
+  unlock: string
+  materials_layer: string
+  classical_baseline_usd_t: number
+  quantum_uplift_x: number
+  quantum_addressable_usd_t: number
+  year_at_scale: number | null
+  reference_program: string
+  tier: string
+}
+
+export interface Ceiling {
+  phase4_addressable_total_usd_b: number
+  phase4_sectors: Phase4Sector[]
+  platform_comps: PlatformComp[]
+  scenarios: CeilingScenario[]
+  weighted_ev_conditional_usd_b: number
+  weighted_probability_total: number
+  strategic_acquirers: StrategicAcquirer[]
+  median_acquisition_price_usd_b: number
+  quantum_unlocks: QuantumUnlock[]
+  quantum_total_addressable_usd_b: number
+  quantum_total_classical_baseline_usd_b: number
+  quantum_aggregate_uplift_x: number
 }
 
 export interface CredoLine {

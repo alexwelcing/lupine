@@ -13,6 +13,10 @@ import { Takeaway } from '../components/value-model/Takeaway'
 import { HorizonChart } from '../components/value-model/HorizonChart'
 import { StackDiagram } from '../components/value-model/StackDiagram'
 import { Credo } from '../components/value-model/Credo'
+import { PlatformValueChart } from '../components/value-model/PlatformValueChart'
+import { PlatformCompsTable } from '../components/value-model/PlatformCompsTable'
+import { CeilingScenarios } from '../components/value-model/CeilingScenarios'
+import { QuantumUnlocks } from '../components/value-model/QuantumUnlocks'
 
 const data = valueModelData as ValueModelData
 
@@ -22,7 +26,8 @@ const SECTIONS = [
   { id: 'arc', label: '30-yr arc' },
   { id: 'stack', label: 'The stack' },
   { id: 'why-now', label: 'Why now' },
-  { id: 'math', label: 'The math (floor)' },
+  { id: 'ceiling', label: 'The ceiling' },
+  { id: 'math', label: 'The floor' },
   { id: 'ask', label: 'Ask' },
 ] as const
 
@@ -260,39 +265,230 @@ function HomePage() {
       </ScrollSection>
 
       {/* ============================================================
-          05 / The math — explicitly framed as the floor, not the ceiling
+          05 / The ceiling — McKinsey-style platform-tier valuation
           ============================================================ */}
-      <ScrollSection id="math">
+      <ScrollSection id="ceiling">
         <SectionHeader
-          eyebrow="05 / The math (the floor)"
+          eyebrow="05 / If we are right about the stack"
           title={
             <>
-              If you scale us as a 2010s software company,{' '}
+              The ceiling is{' '}
               <em className="italic text-[var(--secondary)]">
-                this is the conservative shape
+                ${(data.ceiling.weighted_ev_conditional_usd_b / 1000).toFixed(1)}T
+              </em>{' '}
+              conditional weighted EV.
+            </>
+          }
+          lead={
+            <>
+              The math in section 06 prices Lupine as a software-of-record
+              company on classical materials acceleration only. This section
+              prices Lupine as the audit substrate for a{' '}
+              <strong className="text-[var(--on-surface)]">
+                ~$
+                {(data.ceiling.quantum_total_addressable_usd_b / 1000).toFixed(0)}T/yr
+              </strong>{' '}
+              quantum-enabled materials economy at phase-5 maturity —{' '}
+              {data.ceiling.quantum_aggregate_uplift_x.toFixed(0)}× the
+              classical baseline. The two methodologies differ by an order
+              of magnitude in addressable, an order of magnitude in capture
+              rate, and{' '}
+              <strong className="text-[var(--secondary)]">
+                ~
+                {Math.round(
+                  (data.ceiling.weighted_ev_conditional_usd_b * 1000) /
+                  data.dcf.scenarios.base.enterprise_value /
+                  1000,
+                ).toLocaleString()}
+                ,000×
+              </strong>{' '}
+              in implied conditional EV — because they answer fundamentally
+              different questions about what Lupine is.
+            </>
+          }
+        />
+
+        {/* Sub-block A: phase-4 addressable value */}
+        <div className="mt-2">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            A · What's at stake when phase-4 lands
+          </div>
+          <PlatformValueChart data={data} />
+          <Takeaway label="The denominator">
+            ~$
+            {(data.ceiling.phase4_addressable_total_usd_b / 1000).toFixed(1)}T
+            of annual economic activity at phase-4 maturity (2045) — drugs
+            $1.2T, semiconductors $800B, batteries $500B, ag/food $400B,
+            catalysis $300B, polymers and aerospace $250B each, biopolymers
+            and energy systems $180-200B. Sized bottom-up from McKinsey,
+            BNEF, BCG, Frost & Sullivan, and direct industry numbers; held
+            at the conservative midpoint of the $2-5T range these reports
+            bracket.
+          </Takeaway>
+        </div>
+
+        {/* Sub-block B: capture rates from real platform comps */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            B · What audit-substrate companies actually capture
+          </div>
+          <PlatformCompsTable data={data} />
+          <Takeaway label="The capture-rate bracket">
+            Modern platform infrastructure earns 0.05–0.30% of the ecosystem
+            it serves (GitHub, Hugging Face, Cloudflare, Datadog, Snowflake,
+            Shopify). Mature simulation/audit platforms earn 0.9–1.4% once
+            they fully consolidate (Synopsys, Cadence). Lupine's ceiling
+            scenarios anchor on these brackets, not on aspirational numbers.
+          </Takeaway>
+        </div>
+
+        {/* Sub-block C: phase-5 quantum unlocks (the multiplier layer) */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            C · Phase-5 quantum unlocks (the multiplier layer)
+          </div>
+          <QuantumUnlocks data={data} />
+          <Takeaway label="Why quantum changes the magnitude, not the speed" tone="positive">
+            Phase-4 sized the addressable as $
+            {(data.ceiling.phase4_addressable_total_usd_b / 1000).toFixed(0)}T
+            of accelerated classical materials work. Phase-5 quantum unlocks
+            don&apos;t just speed that up — they enable economic regimes
+            classical chemistry could not produce: fault-tolerant quantum
+            computing substrate, room-temperature superconductors,
+            commercial fusion magnets, post-CMOS spintronics, single-molecule
+            quantum sensing, quantum-limit photovoltaics. The aggregate uplift
+            is{' '}
+            <strong className="text-[var(--secondary)]">
+              {data.ceiling.quantum_aggregate_uplift_x.toFixed(0)}×
+            </strong>{' '}
+            the classical baseline (~$
+            {(data.ceiling.quantum_total_addressable_usd_b / 1000).toFixed(0)}T/yr
+            addressable), and the audit substrate is structurally
+            non-negotiable because quantum-classical hybrid simulations fail
+            in ways classical methods cannot detect.
+          </Takeaway>
+        </div>
+
+        {/* Sub-block D: outcome distribution */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            D · The conditional outcome distribution
+          </div>
+          <CeilingScenarios data={data} />
+          <Takeaway label="What this number means" tone="positive">
+            ${(data.ceiling.weighted_ev_conditional_usd_b / 1000).toFixed(2)}T
+            (= ${data.ceiling.weighted_ev_conditional_usd_b.toFixed(0)}B) is
+            the probability-weighted EV across the seven scenarios above,{' '}
+            <em>conditional on execution</em>. Multiply by 50% (the
+            unconditional probability the company doesn&apos;t fail outright,
+            priced explicitly in the math floor) and you get a{' '}
+            <strong className="text-[var(--on-surface)]">
+              ~$
+              {(data.ceiling.weighted_ev_conditional_usd_b / 1000 / 2).toFixed(2)}T
+            </strong>{' '}
+            unconditional ceiling. That is{' '}
+            <strong className="text-[var(--secondary)]">
+              ~{Math.round(
+                (data.ceiling.weighted_ev_conditional_usd_b * 1000) /
+                2 /
+                data.dcf.scenarios.base.enterprise_value /
+                1000,
+              ).toLocaleString()}
+              ,000×
+            </strong>{' '}
+            the math floor&apos;s $
+            {data.dcf.scenarios.base.enterprise_value.toFixed(0)}M base DCF —
+            four orders of magnitude. The math floor measures the wrong
+            altitude.
+          </Takeaway>
+        </div>
+
+        {/* Sub-block E: strategic acquirers */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            E · Who pays for it before it gets there
+          </div>
+          <div className="grid lg:grid-cols-2 gap-3">
+            {data.ceiling.strategic_acquirers.map((a, i) => (
+              <motion.div
+                key={a.id}
+                className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] p-5"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-15% 0px' }}
+                transition={{ duration: 0.45, delay: 0.05 + i * 0.08 }}
+              >
+                <div className="flex items-baseline justify-between gap-3 mb-2">
+                  <h4 className="text-base font-semibold text-[var(--on-surface)]">
+                    {a.acquirer}
+                  </h4>
+                  <div className="font-mono text-sm text-[var(--secondary)] tabular-nums flex-shrink-0">
+                    ~${a.plausible_acquisition_price_usd_b.toFixed(1)}B
+                  </div>
+                </div>
+                <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                  {a.rationale}
+                </p>
+                <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant-mid)] mt-3">
+                  5-yr NPV to acquirer ~${a.npv_to_acquirer_usd_b.toFixed(0)}B
+                  · {a.year_horizon}-yr horizon
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <Takeaway
+            label={`Median plausible acquisition price ~$${data.ceiling.median_acquisition_price_usd_b.toFixed(1)}B`}
+            tone="positive"
+          >
+            Six named strategic acquirers — Microsoft (Azure Quantum
+            Elements), Google DeepMind (GNoME lineage), Schrödinger,
+            Synopsys/Cadence (post-ANSYS), IBM Research, defense primes.
+            Median plausible all-cash acquisition price across the five
+            commercial acquirers is ${data.ceiling.median_acquisition_price_usd_b.toFixed(1)}B
+            at a 5-year horizon. The Microsoft + GitHub 2018 acquisition
+            ($7.5B for the developer-platform substrate) is the closest
+            structural analog.
+          </Takeaway>
+        </div>
+      </ScrollSection>
+
+      {/* ============================================================
+          06 / The math — explicitly framed as the floor, not the ceiling
+          ============================================================ */}
+      <ScrollSection id="math" className="bg-[var(--surface-container-low)]">
+        <SectionHeader
+          eyebrow="06 / The math (the floor)"
+          title={
+            <>
+              And the floor —{' '}
+              <em className="italic text-[var(--secondary)]">
+                the conservative cross-check
               </em>
               .
             </>
           }
           lead={
             <>
-              The math below treats Lupine like a vertical SaaS comp —
-              Synopsys / Cadence / Veeva — and prices in only the revenue
-              that flows from being the audit-and-compute substrate, not the
-              upside from being the platform under generative matter or
-              autonomous synthesis. Even on this floor, the DCF says{' '}
+              The ceiling above prices Lupine as the audit substrate for a
+              quantum-enabled materials economy. This section prices Lupine
+              as if neither the quantum unlocks nor the platform position
+              materialize — a respectable Synopsys / Cadence / Veeva-tier
+              vertical software company on a 5-year horizon, classical
+              materials only. Even under this strictly-conservative frame
+              the DCF clears: $
               <strong className="text-[var(--on-surface)]">
-                ${baseEv.toFixed(0)}M intrinsic
+                {baseEv.toFixed(0)}M intrinsic
               </strong>{' '}
               vs the ${proposedPost}M proposed post (
               <strong className="text-[var(--secondary)]">
                 +{baseSafetyPct.toFixed(0)}%
               </strong>{' '}
-              margin of safety) and{' '}
+              margin of safety),{' '}
               <strong className="text-[var(--secondary)]">
-                +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% probability-weighted IRR
+                +{(data.returns.weighted_irr_5y * 100).toFixed(0)}%
+                probability-weighted IRR
               </strong>
-              . The ceiling is in the previous two sections.
+              . The math clears on the floor; the upside is in section 05.
             </>
           }
         />
@@ -357,11 +553,11 @@ function HomePage() {
       </ScrollSection>
 
       {/* ============================================================
-          06 / Ask
+          07 / Ask
           ============================================================ */}
-      <ScrollSection id="ask" className="bg-[var(--surface-container-low)]">
+      <ScrollSection id="ask">
         <SectionHeader
-          eyebrow="06 / The ask"
+          eyebrow="07 / The ask"
           title={
             <>
               Seed{' '}
@@ -516,6 +712,7 @@ function Hero() {
             <HorizonChip label="Phase 2 · 2028-2034">Generative matter</HorizonChip>
             <HorizonChip label="Phase 3 · 2032-2042">Closed-loop synthesis</HorizonChip>
             <HorizonChip label="Phase 4 · 2040-2055">Programmable matter</HorizonChip>
+            <HorizonChip label="Phase 5 · 2050-2080">Quantum-enabled materials</HorizonChip>
           </div>
         </motion.div>
       </div>

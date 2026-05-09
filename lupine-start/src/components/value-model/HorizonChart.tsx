@@ -18,10 +18,11 @@ const PHASE_COLORS: Record<number, string> = {
   2: '#3b82f6', // blue
   3: '#c4b5fd', // lavender
   4: '#f472b6', // pink — distant horizon
+  5: '#fb923c', // amber — phase-5 quantum unlocks
 }
 
 const TIMELINE_START = 2025
-const TIMELINE_END = 2055
+const TIMELINE_END = 2080
 
 export function HorizonChart({ data }: { data: ValueModelData }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -31,8 +32,8 @@ export function HorizonChart({ data }: { data: ValueModelData }) {
   const yearToPct = (year: number) =>
     ((year - TIMELINE_START) / (TIMELINE_END - TIMELINE_START)) * 100
 
-  // Decade tick labels
-  const decades = [2025, 2030, 2035, 2040, 2045, 2050, 2055]
+  // Decade tick labels (extended to phase-5 horizon 2080)
+  const decades = [2025, 2030, 2035, 2040, 2045, 2050, 2055, 2060, 2065, 2070, 2075, 2080]
 
   return (
     <div ref={ref} className="w-full">
