@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import sys
 from datetime import date
 from pathlib import Path
@@ -43,6 +44,7 @@ from lib_finance import (
 ROOT = Path(__file__).resolve().parent.parent
 VALUE_MODEL = ROOT / "value-model"
 OUT = ROOT / "financials" / "analysis_report.md"
+OUT_JSON = ROOT / "financials" / "analysis_data.json"
 
 # ---------------------------------------------------------------------------
 # CSV loading
@@ -405,18 +407,183 @@ def main(check_only: bool = False) -> int:
     ]
     report = "\n".join(pieces)
 
+    # Build a JSON payload the lupine-start /value-model route consumes
+    json_payload = build_json_payload(
+        revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows,
+        scenarios, wacc_in,
+    )
+    json_text = json.dumps(json_payload, indent=2) + "\n"
+
     if check_only:
         existing = OUT.read_text() if OUT.exists() else ""
+        existing_json = OUT_JSON.read_text() if OUT_JSON.exists() else ""
+        stale = []
         if existing != report:
-            print("analysis_report.md is OUT OF SYNC with CSVs", file=sys.stderr)
+            stale.append("analysis_report.md")
+        if existing_json != json_text:
+            stale.append("analysis_data.json")
+        if stale:
+            print(f"OUT OF SYNC with CSVs: {', '.join(stale)}", file=sys.stderr)
             return 2
-        print("analysis_report.md is in sync.")
+        print("analysis_report.md and analysis_data.json are in sync.")
         return 0
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(report)
+    OUT_JSON.write_text(json_text)
     print(f"Wrote {OUT.relative_to(ROOT.parent)}")
+    print(f"Wrote {OUT_JSON.relative_to(ROOT.parent)}")
+
+    # Mirror JSON into lupine-start so the React route stays in sync.
+    react_data_path = ROOT.parent / "lupine-start" / "src" / "data" / "value-model.json"
+    if react_data_path.parent.exists():
+        react_data_path.write_text(json_text)
+        print(f"Wrote {react_data_path.relative_to(ROOT.parent)}")
     return 0
+
+
+def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in) -> dict:
+    """Single JSON document the React route consumes.
+
+    Schema is stable; bump version + migrate consumers if changed.
+    """
+    years = [2026 + i for i in range(7)]
+
+    def rev(rid):
+        return [num(find(revenue_rows, id=rid)[f"fy{y}"]) for y in years]
+
+    sector_unlock_compute = rev("sector-unlock-compute")
+    sector_unlock_travel = rev("sector-unlock-travel")
+    sector_unlock_bio = rev("sector-unlock-bio")
+    sector_unlock_total = rev("sector-unlock-total")
+
+    revenue_total = rev("rev-total")
+    penetration_pct = rev("lupine-penetration-pct")
+    attributed_unlock_m = rev("lupine-attributed-unlock")
+    capture_pct = [revenue_total[i] / attributed_unlock_m[i] * 100 for i in range(7)]
+
+    # DCF results
+    dcf_results = {}
+    for scen, fcfs in scenarios.items():
+        w = wacc_in[f"wacc_{scen}" if scen != "base" else "wacc"]
+        g = wacc_in[f"g_{scen}"]
+        r = dcf(fcfs, w, g)
+        dcf_results[scen] = {
+            "wacc": w,
+            "terminal_growth": g,
+            "fcfs": fcfs,
+            "pv_fcfs": r.pv_fcfs,
+            "discount_factors": r.discount_factors,
+            "sum_pv_fcfs": r.sum_pv_fcfs,
+            "pv_terminal": r.pv_terminal,
+            "enterprise_value": r.enterprise_value,
+            "terminal_pct_of_ev": r.terminal_pct_of_ev,
+        }
+
+    # Sensitivity grid (base FCFs)
+    base_w = wacc_in["wacc"]
+    base_g = wacc_in["g_base"]
+    wacc_axis = [base_w - 0.020, base_w - 0.010, base_w, base_w + 0.010, base_w + 0.020]
+    g_axis = [base_g - 0.010, base_g - 0.005, base_g, base_g + 0.005, base_g + 0.010]
+    grid = wacc_sensitivity(scenarios["base"], wacc_axis, g_axis)
+
+    # Comps
+    sim_set = ["synopsys", "cadence", "ansys-pre", "altair", "veeva"]
+    ai_bio_set = ["recursion", "schrodinger", "relay-therapeutics", "roivant"]
+
+    def _clean(v):
+        # NaN is not valid JSON per RFC 8259 — coerce to None so the
+        # consuming React route can use null-safe handling.
+        if isinstance(v, float) and v != v:
+            return None
+        return v
+
+    def comp_to_json(r):
+        return {
+            "id": r["id"],
+            "company": r["company"],
+            "ticker": r["ticker"],
+            "sector": r["sector"],
+            "ev_revenue": _clean(num(r.get("ev_revenue_x"), float("nan"))),
+            "ev_ebitda": _clean(num(r.get("ev_ebitda_x"), float("nan"))),
+            "gross_margin": _clean(num(r.get("gross_margin_pct"), float("nan"))),
+            "rev_growth": _clean(num(r.get("rev_growth_pct"), float("nan"))),
+            "rev_ltm": _clean(num(r.get("revenue_ltm_usd_m"), float("nan"))),
+            "tier": r["tier"],
+        }
+
+    sim_comps = [r for r in comps_rows if r["id"] in sim_set]
+    ai_bio_comps = [r for r in comps_rows if r["id"] in ai_bio_set]
+    other_comps = [r for r in comps_rows if r["id"] not in sim_set + ai_bio_set]
+
+    sim_median = median_multiple(sim_comps, "ev_revenue_x")
+    ai_median = median_multiple(ai_bio_comps, "ev_revenue_x")
+
+    # Returns
+    outcomes = [
+        {"name": "Zero", "p": 0.50, "exit_m": 0.0},
+        {"name": "Modest", "p": 0.20, "exit_m": 100.0},
+        {"name": "Strategic", "p": 0.20, "exit_m": 500.0},
+        {"name": "Moonshot", "p": 0.07, "exit_m": 3000.0},
+        {"name": "Asymmetric tail", "p": 0.03, "exit_m": 15000.0},
+    ]
+    check_size = 8.0
+    post_money = 150.0
+    ownership = check_size / post_money
+    ev_total = sum(o["p"] * o["exit_m"] * ownership for o in outcomes)
+    weighted_irr = irr_5y_from_multiple(check_size, ev_total)
+
+    return {
+        "schema_version": 1,
+        "generated_on": date.today().isoformat(),
+        "round": {
+            "check_size_usd_m": check_size,
+            "post_money_usd_m": post_money,
+            "ownership_pct": ownership,
+        },
+        "years": years,
+        "sector_unlock": {
+            "compute": sector_unlock_compute,
+            "travel": sector_unlock_travel,
+            "bio": sector_unlock_bio,
+            "total": sector_unlock_total,
+        },
+        "lupine": {
+            "revenue_total_m": revenue_total,
+            "penetration_pct": penetration_pct,
+            "attributed_unlock_m": attributed_unlock_m,
+            "capture_pct": capture_pct,
+        },
+        "dcf": {
+            "wacc_inputs": wacc_in,
+            "scenarios": dcf_results,
+            "sensitivity": {
+                "wacc_axis": wacc_axis,
+                "g_axis": g_axis,
+                "grid": grid,
+            },
+        },
+        "comps": {
+            "sim_set": [comp_to_json(r) for r in sim_comps],
+            "ai_bio_set": [comp_to_json(r) for r in ai_bio_comps],
+            "others": [comp_to_json(r) for r in other_comps],
+            "sim_median_ev_rev": sim_median,
+            "ai_bio_median_ev_rev": ai_median,
+        },
+        "implied_valuation": [
+            {"label": "FY27 base ARR", "arr_m": revenue_total[1]},
+            {"label": "FY28 base ARR", "arr_m": revenue_total[2]},
+            {"label": "FY30 base ARR", "arr_m": revenue_total[4]},
+            {"label": "FY32 base ARR", "arr_m": revenue_total[6]},
+            {"label": "FY30 bull ARR", "arr_m": 200.0},
+            {"label": "FY30 bear ARR", "arr_m": 22.0},
+        ],
+        "returns": {
+            "outcomes": outcomes,
+            "weighted_ev_on_slice_m": ev_total,
+            "weighted_irr_5y": weighted_irr,
+        },
+    }
 
 
 if __name__ == "__main__":

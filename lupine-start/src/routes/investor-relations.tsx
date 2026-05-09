@@ -44,6 +44,12 @@ function InvestorRelationsPage() {
                 >
                   Read the preprint
                 </Link>
+                <Link
+                  to="/value-model"
+                  className="px-6 py-3 border border-[var(--secondary)] text-[var(--secondary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--secondary)] hover:text-[var(--surface)] transition-colors no-underline"
+                >
+                  Value model →
+                </Link>
                 <a
                   href="mailto:alexwelcing@gmail.com?subject=Lupine%20data%20room%20request"
                   className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
