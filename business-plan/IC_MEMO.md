@@ -2,8 +2,9 @@
 
 > **Following the IC-memo methodology in
 > `~/.claude/plugins/financial-services/.../private-equity/skills/ic-memo/SKILL.md`.
-> Numbers anchor to `value-model/` CSVs and the DCF + comps Excel
-> models in `financials/`.**
+> Numbers anchor to `value-model/` CSVs and the computed analysis in
+> `financials/analysis_report.md`. Re-run
+> `python3 business-plan/scripts/analyze.py` to refresh.**
 
 | Field | Value |
 |-------|-------|
@@ -54,20 +55,22 @@ valuation ($150M post on $8M round, ~5.3% ownership), conditioned on:
 two paid industry pilots converted by month 18, (3) DFT engine alpha
 shipped by month 24.
 
-**Headline returns (5-year hold from seed).**
+**Headline returns (5-year hold from seed; computed in
+`financials/analysis_report.md` §5).**
 
 | Outcome | Probability | Lupine equity value at exit | Investor IRR (5-yr hold) |
 |---------|-------------|------------------------------|---------------------------|
 | Zero | 50% | $0 | -100% |
 | Modest | 20% | $100M | -8% |
 | Strategic | 20% | $500M | +27% |
-| Moonshot | 7% | $3,000M | +81% |
-| Asymmetric tail | 3% | $15,000M | +152% |
-| **Probability-weighted** | | | **~28% IRR** |
+| Moonshot | 7% | $3,000M | +82% |
+| Asymmetric tail | 3% | $15,000M | +151% |
+| **Probability-weighted EV on slice ($8M / 5.3%)** | | **$41.6M** | **+39% IRR** |
 
-**DCF intrinsic vs proposed post-money** (`Lupine_DCF_Model.xlsx`,
-base case): **$332M intrinsic equity value vs $150M proposed post**,
-+121% margin of safety. Bear case $37M, bull case $1,619M.
+**DCF intrinsic vs proposed post-money** (`financials/analysis_report.md`
+§2, base case): **$331.9M intrinsic equity value vs $150M proposed
+post**, **+121.3% margin of safety**. Bear case $36.8M, bull case
+$1,618.8M.
 
 **Top 3 risks.**
 
@@ -275,46 +278,49 @@ Five pillars — the asymmetry the round captures:
 
 ## VII. Returns Analysis
 
-**DCF intrinsic value (Lupine_DCF_Model.xlsx).**
+**DCF intrinsic value (computed in `financials/analysis_report.md` §2).**
 
-| Scenario | Sum PV FCFs | PV Terminal | EV | Equity value | vs $150M post |
-|----------|-------------|-------------|-----|---------------|----------------|
-| Bear (WACC 14.0%, g 2.0%) | (~$3M neg) | ~$40M | $37M | $37M | -75% |
-| **Base (WACC 12.1%, g 3.0%)** | **$58M** | **$274M** | **$332M** | **$332M** | **+121%** |
-| Bull (WACC 10.5%, g 3.5%) | $200M | $1,420M | $1,619M | $1,619M | +979% |
+| Scenario | Σ PV FCFs | PV Terminal | EV | TV % of EV | vs $150M post |
+|----------|-----------|-------------|-----|-------------|----------------|
+| Bear (WACC 14.0%, g 2.0%) | $2.4M | $34.5M | $36.8M | 93.5% | -75% |
+| **Base (WACC 12.1%, g 3.0%)** | **$58.4M** | **$273.6M** | **$331.9M** | 82.4% | **+121.3%** |
+| Bull (WACC 10.5%, g 3.5%) | $228.0M | $1,390.8M | $1,618.8M | 85.9% | +979% |
 
 **TV % of EV (caveat).** Base case 82.4% — above the 50-70% skill
 guidance for over-reliance on terminal assumptions. *This is
 expected for a seed-stage hyper-growth software model* and is
 consistent with how mature simulation comps were valued at their
-own seed/Series A; it is honestly flagged here. Sensitivity table 1
-in `Lupine_DCF_Model.xlsx` shows the +/-2% WACC band.
+own seed/Series A; it is honestly flagged here. Section §3 of the
+report contains the full WACC × terminal-growth sensitivity grid.
 
-**Comparable-company implied valuation.** Source:
-`Lupine_Comps_Analysis.xlsx`,
-[data:comparable_companies_v2.csv].
+**Comparable-company implied valuation** — medians computed from
+public-company constituents in `value-model/comparable_companies_v2.csv`,
+report §4:
 
-| ARR scenario | At simulation median (15x) | At AI-bio median (40x) |
-|--------------|----------------------------|--------------------------|
-| FY27 base $4.2M ARR | $63M | $168M |
-| FY28 base $16.2M ARR | $243M | $646M |
-| FY30 base $62.4M ARR | $936M | $2,496M |
-| FY30 bull $200M ARR | $3,000M | $8,000M |
-| FY30 bear $22M ARR | $330M | $880M |
+| ARR scenario | At sim median (15.5x EV/Rev) | At AI-bio median (65.7x EV/Rev) |
+|--------------|-------------------------------|-----------------------------------|
+| FY27 base $4.2M ARR | $65M | $276M |
+| FY28 base $16.1M ARR | $250M | $1,060M |
+| FY30 base $62.4M ARR | $967M | $4,097M |
+| FY32 base $133.3M ARR | $2,066M | $8,751M |
+| FY30 bull $200M ARR | $3,100M | $13,130M |
+| FY30 bear $22M ARR | $341M | $1,444M |
 
-**Probability-weighted IRR (5-year hold from seed):**
+**Probability-weighted IRR (5-year hold from seed; computed §5).**
 
 | Outcome | P | EV at exit | Investor return on $8M / 5.3% slice | IRR |
 |---------|---|-------------|--------------------------------------|------|
-| Zero | 50% | $0 | $0 | -100% |
-| Modest | 20% | $100M | $5.3M | -8% |
-| Strategic | 20% | $500M | $26.5M | +27% |
-| Moonshot | 7% | $3B | $159M | +81% |
-| Asymmetric tail | 3% | $15B | $795M | +152% |
-| **Weighted** | 100% | | | **~28%** |
+| Zero | 50% | $0 | $0.0 | -100% |
+| Modest | 20% | $100M | $5.3 | -8% |
+| Strategic | 20% | $500M | $26.7 | +27% |
+| Moonshot | 7% | $3B | $160.0 | +82% |
+| Asymmetric tail | 3% | $15B | $800.0 | +151% |
+| **Probability-weighted EV** | 100% | | **$41.6M** | **+39%** |
 
-A 28% probability-weighted IRR over 5 years is in the right band for
-a high-quality seed deeptech check.
+A +39% probability-weighted IRR over 5 years is in the right band for
+a high-quality seed deeptech check; the IRR is computed off the
+expected-value of returns ($41.6M from $8M check), not a probability-
+weighted average of per-outcome IRRs.
 
 **Key sensitivities.**
 
@@ -388,6 +394,7 @@ intrinsic (+121%) and the comp-set multiples (FY30 base ARR at 15x
 implies $936M EV).
 
 **Authorized signatories below.** Memo prepared from
-`business-plan/value-model/` source CSVs and the DCF + comps Excel
-models in `business-plan/financials/`. All quantitative claims
+`business-plan/value-model/` source CSVs and the computed analysis in
+`business-plan/financials/analysis_report.md` (regenerated by
+`business-plan/scripts/analyze.py`). All quantitative claims
 traceable to a versioned cell.

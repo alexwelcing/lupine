@@ -159,20 +159,37 @@ Three things:
 
 ## Reading the rest of the model
 
-- **`value-model/sector_value_unlock.csv`** — the sector economics.
-- **`value-model/materials_acceleration_economics.csv`** — the
-  acceleration levers that drive the value unlock.
-- **`value-model/value_capture_mechanisms.csv`** — Lupine's
-  monetization options.
-- **`value-model/lupine_revenue_v2.csv`** — the resulting revenue
-  projection (this replaces `data/projections_base.csv` for any
-  forward-looking analysis).
-- **`value-model/dcf_inputs.csv`** — DCF assumption set.
-- **`value-model/comparable_companies_v2.csv`** — comps for the
-  multiples-based valuation cross-check.
-- **`financials/Lupine_DCF_Model.xlsx`** — the DCF model, validated
-  by the dcf-model skill (PASS, 0 formula errors, 185 formulas).
-- **`financials/Lupine_Comps_Analysis.xlsx`** — the comps analysis.
+Source data (`value-model/`):
+
+- **`sector_value_unlock.csv`** — the sector economics.
+- **`materials_acceleration_economics.csv`** — the acceleration levers
+  that drive the value unlock.
+- **`value_capture_mechanisms.csv`** — Lupine's monetization options.
+- **`lupine_revenue_v2.csv`** — the resulting revenue projection
+  (this replaces `data/projections_base.csv` for any forward-looking
+  analysis).
+- **`dcf_inputs.csv`** — DCF assumption set.
+- **`comparable_companies_v2.csv`** — comps for the multiples-based
+  valuation cross-check.
+
+Code (`scripts/`):
+
+- **`lib_finance.py`** — pure-Python DCF, WACC, sensitivity, and
+  comps-median functions (no external deps).
+- **`analyze.py`** — loads all `value-model/*.csv`, runs DCF for
+  bear/base/bull, computes the WACC × terminal-growth sensitivity
+  grid, computes comp medians and implied Lupine valuation, runs the
+  probability-weighted return analysis, and writes the report.
+
+Computed output (`financials/`):
+
+- **`analysis_report.md`** — the regenerable analysis report. Bear
+  $36.8M / Base $331.9M / Bull $1,618.8M intrinsic equity values;
+  +121.3% margin of safety vs $150M proposed post; +39% probability-
+  weighted IRR over a 5-year hold.
+
+Synthesis:
+
 - **`IC_MEMO.md`** — the synthesis IC memo.
 
 The original `data/` folder remains for reference but is *superseded*
