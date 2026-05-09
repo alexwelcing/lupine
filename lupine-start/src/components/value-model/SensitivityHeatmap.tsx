@@ -16,9 +16,21 @@ interface InnerProps {
   height: number
   baseWacc: number
   baseG: number
+  inView: boolean
+  titleId: string
 }
 
-function Inner({ waccAxis, gAxis, grid, width, height, baseWacc, baseG }: InnerProps) {
+function Inner({
+  waccAxis,
+  gAxis,
+  grid,
+  width,
+  height,
+  baseWacc,
+  baseG,
+  inView,
+  titleId,
+}: InnerProps) {
   const innerW = Math.max(0, width - margin.left - margin.right)
   const innerH = Math.max(0, height - margin.top - margin.bottom)
 
@@ -36,7 +48,13 @@ function Inner({ waccAxis, gAxis, grid, width, height, baseWacc, baseG }: InnerP
   const [hover, setHover] = useState<{ i: number; j: number } | null>(null)
 
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} role="img" aria-labelledby={titleId}>
+      <title id={titleId}>
+        5×5 sensitivity heatmap: equity value ($M) at varying WACC (rows) and
+        terminal growth rates (columns) using base-case free cash flows.
+        Center cell highlighted = model base case. Diverging color scale red
+        (low) to blue (high).
+      </title>
       <Group left={margin.left} top={margin.top}>
         {grid.map((row, i) =>
           row.map((v, j) => {
@@ -62,7 +80,7 @@ function Inner({ waccAxis, gAxis, grid, width, height, baseWacc, baseG }: InnerP
                   stroke={isCenter ? 'rgba(255,255,255,0.85)' : 'rgba(11,18,32,0.9)'}
                   strokeWidth={isCenter ? 2 : 1}
                   initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 0.92, scale: 1 }}
+                  animate={inView ? { opacity: 0.92, scale: 1 } : { opacity: 0, scale: 0.85 }}
                   transition={{
                     duration: 0.4,
                     delay: 0.04 * (i * gAxis.length + j),
@@ -152,23 +170,21 @@ export function SensitivityHeatmap({ data }: { data: ValueModelData }) {
         Center cell highlighted = model base case.
       </div>
       <div className="h-[420px] w-full">
-        {inView && (
-          <ParentSize>
-            {({ width, height }) =>
-              width > 0 && height > 0 ? (
-                <Inner
-                  waccAxis={data.dcf.sensitivity.wacc_axis}
-                  gAxis={data.dcf.sensitivity.g_axis}
-                  grid={data.dcf.sensitivity.grid}
-                  width={width}
-                  height={height}
-                  baseWacc={baseWacc}
-                  baseG={baseG}
-                />
-              ) : null
-            }
-          </ParentSize>
-        )}
+        <ParentSize>
+          {({ width, height }) => (
+            <Inner
+              waccAxis={data.dcf.sensitivity.wacc_axis}
+              gAxis={data.dcf.sensitivity.g_axis}
+              grid={data.dcf.sensitivity.grid}
+              width={width || 800}
+              height={height || 420}
+              baseWacc={baseWacc}
+              baseG={baseG}
+              inView={inView}
+              titleId="sensitivity-heatmap-title"
+            />
+          )}
+        </ParentSize>
       </div>
     </div>
   )

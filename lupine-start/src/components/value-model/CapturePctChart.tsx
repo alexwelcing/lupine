@@ -18,9 +18,20 @@ interface InnerProps {
   capturePct: number[]
   width: number
   height: number
+  inView: boolean
+  titleId: string
 }
 
-function Inner({ years, attributedUnlockM, revenueM, capturePct, width, height }: InnerProps) {
+function Inner({
+  years,
+  attributedUnlockM,
+  revenueM,
+  capturePct,
+  width,
+  height,
+  inView,
+  titleId,
+}: InnerProps) {
   const innerW = Math.max(0, width - margin.left - margin.right)
   const innerH = Math.max(0, height - margin.top - margin.bottom)
 
@@ -52,7 +63,13 @@ function Inner({ years, attributedUnlockM, revenueM, capturePct, width, height }
     .join(' ')
 
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} role="img" aria-labelledby={titleId}>
+      <title id={titleId}>
+        Dual-axis line chart: Lupine-attributed value unlock and revenue (left
+        axis, $M) versus blended capture rate as a percent of attributed value
+        (right axis). Capture rate converges to roughly 2-3% mature, the
+        Synopsys / Cadence software-of-record band.
+      </title>
       <defs>
         <linearGradient id="unlock-grad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.35" />
@@ -71,7 +88,7 @@ function Inner({ years, attributedUnlockM, revenueM, capturePct, width, height }
           d={`${unlockPath} L${xScale(years[years.length - 1])},${innerH} L${xScale(years[0])},${innerH} Z`}
           fill="url(#unlock-grad)"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: inView ? 1 : 0 }}
           transition={{ duration: 1.0, delay: 0.6 }}
         />
         {/* Attributed unlock line */}
@@ -82,7 +99,7 @@ function Inner({ years, attributedUnlockM, revenueM, capturePct, width, height }
           strokeWidth={2.2}
           strokeLinecap="round"
           initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
+          animate={{ pathLength: inView ? 1 : 0 }}
           transition={{ duration: 1.4, ease: [0.22, 0.61, 0.36, 1] }}
         />
         {/* Lupine revenue line */}
@@ -94,7 +111,7 @@ function Inner({ years, attributedUnlockM, revenueM, capturePct, width, height }
           strokeLinecap="round"
           strokeDasharray="4 3"
           initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
+          animate={{ pathLength: inView ? 1 : 0 }}
           transition={{ duration: 1.4, ease: [0.22, 0.61, 0.36, 1], delay: 0.3 }}
         />
         {/* Capture % line on right axis */}
@@ -105,7 +122,7 @@ function Inner({ years, attributedUnlockM, revenueM, capturePct, width, height }
           strokeWidth={1.8}
           strokeDasharray="2 5"
           initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
+          animate={{ pathLength: inView ? 1 : 0 }}
           transition={{ duration: 1.6, ease: [0.22, 0.61, 0.36, 1], delay: 0.5 }}
         />
 
@@ -118,7 +135,7 @@ function Inner({ years, attributedUnlockM, revenueM, capturePct, width, height }
             r={3.5}
             fill="#4ecdc4"
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            animate={inView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
             transition={{ duration: 0.4, delay: 1.0 + i * 0.08 }}
           />
         ))}
@@ -187,22 +204,20 @@ export function CapturePctChart({ data }: { data: ValueModelData }) {
         <Legend color="#c4b5fd" label="Capture % (right axis)" dashed />
       </div>
       <div className="h-[360px] w-full">
-        {inView && (
-          <ParentSize>
-            {({ width, height }) =>
-              width > 0 && height > 0 ? (
-                <Inner
-                  years={data.years}
-                  attributedUnlockM={data.lupine.attributed_unlock_m}
-                  revenueM={data.lupine.revenue_total_m}
-                  capturePct={data.lupine.capture_pct}
-                  width={width}
-                  height={height}
-                />
-              ) : null
-            }
-          </ParentSize>
-        )}
+        <ParentSize>
+          {({ width, height }) => (
+            <Inner
+              years={data.years}
+              attributedUnlockM={data.lupine.attributed_unlock_m}
+              revenueM={data.lupine.revenue_total_m}
+              capturePct={data.lupine.capture_pct}
+              width={width || 800}
+              height={height || 360}
+              inView={inView}
+              titleId="capture-pct-title"
+            />
+          )}
+        </ParentSize>
       </div>
     </div>
   )

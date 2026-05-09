@@ -36,9 +36,11 @@ interface InnerProps {
   width: number
   height: number
   simMedian: number
+  inView: boolean
+  titleId: string
 }
 
-function Inner({ points, width, height, simMedian }: InnerProps) {
+function Inner({ points, width, height, simMedian, inView, titleId }: InnerProps) {
   const innerW = Math.max(0, width - margin.left - margin.right)
   const innerH = Math.max(0, height - margin.top - margin.bottom)
 
@@ -60,7 +62,13 @@ function Inner({ points, width, height, simMedian }: InnerProps) {
   const [hover, setHover] = useState<string | null>(null)
 
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} role="img" aria-labelledby={titleId}>
+      <title id={titleId}>
+        Bubble scatter: comparable companies plotted on revenue growth (x) vs
+        EV / Revenue multiple (y, log scale). Bubble size = revenue LTM. Sim
+        median reference line at {simMedian.toFixed(1)}x. Lupine&apos;s FY30
+        base case projected on the cluster.
+      </title>
       <Group left={margin.left} top={margin.top}>
         <GridRows
           scale={yScale}
@@ -96,37 +104,65 @@ function Inner({ points, width, height, simMedian }: InnerProps) {
           sim median {simMedian.toFixed(1)}x
         </text>
 
-        {finitePts.map((p) => (
-          <g
-            key={p.id}
-            onMouseEnter={() => setHover(p.id)}
-            onMouseLeave={() => setHover(null)}
-          >
-            <motion.circle
-              cx={xScale(p.x)}
-              cy={yScale(p.y)}
-              fill={GROUP_COLORS[p.group]}
-              fillOpacity={p.group === 'lupine' ? 0.95 : 0.7}
-              stroke={p.group === 'lupine' ? '#0b1220' : 'transparent'}
-              strokeWidth={p.group === 'lupine' ? 2 : 0}
-              initial={{ r: 0, opacity: 0 }}
-              animate={{ r: sizeScale(p.size), opacity: 1 }}
-              transition={{ duration: 0.5, delay: p.delay }}
-            />
-            {(hover === p.id || p.group === 'lupine') && (
-              <text
-                x={xScale(p.x) + sizeScale(p.size) + 6}
-                y={yScale(p.y) + 4}
-                fontSize={11}
-                fill={p.group === 'lupine' ? '#4ecdc4' : 'rgba(226,232,240,0.85)'}
-                style={{ fontFamily: 'var(--font-sans)' }}
-                fontWeight={p.group === 'lupine' ? 600 : 400}
-              >
-                {p.label}
-              </text>
-            )}
-          </g>
-        ))}
+        {finitePts.map((p) => {
+          // Always show labels for the named-comparable groups + Lupine.
+          // Hover on "other" comps reveals their label.
+          const showLabel =
+            p.group === 'lupine' ||
+            p.group === 'sim' ||
+            p.group === 'ai_bio' ||
+            hover === p.id
+          const isHovered = hover === p.id
+          return (
+            <g
+              key={p.id}
+              onMouseEnter={() => setHover(p.id)}
+              onMouseLeave={() => setHover(null)}
+            >
+              <motion.circle
+                cx={xScale(p.x)}
+                cy={yScale(p.y)}
+                fill={GROUP_COLORS[p.group]}
+                fillOpacity={
+                  p.group === 'lupine' ? 0.95 : isHovered ? 0.95 : 0.65
+                }
+                stroke={p.group === 'lupine' ? '#0b1220' : 'transparent'}
+                strokeWidth={p.group === 'lupine' ? 2 : 0}
+                initial={{ r: 0, opacity: 0 }}
+                animate={
+                  inView
+                    ? { r: sizeScale(p.size), opacity: 1 }
+                    : { r: 0, opacity: 0 }
+                }
+                transition={{ duration: 0.5, delay: p.delay }}
+              />
+              {showLabel && (
+                <motion.text
+                  x={xScale(p.x) + sizeScale(p.size) + 6}
+                  y={yScale(p.y) + 4}
+                  fontSize={p.group === 'lupine' ? 12 : 10.5}
+                  fill={
+                    p.group === 'lupine'
+                      ? '#4ecdc4'
+                      : isHovered
+                        ? '#e2e8f0'
+                        : 'rgba(226,232,240,0.7)'
+                  }
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    pointerEvents: 'none',
+                  }}
+                  fontWeight={p.group === 'lupine' || isHovered ? 600 : 500}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: inView ? 1 : 0 }}
+                  transition={{ duration: 0.4, delay: p.delay + 0.2 }}
+                >
+                  {p.label}
+                </motion.text>
+              )}
+            </g>
+          )
+        })}
 
         <AxisLeft
           scale={yScale}
@@ -206,13 +242,16 @@ export function CompsScatter({ data }: { data: ValueModelData }) {
     ...data.comps.others.slice(0, 6).map((r, i) => toPoint(r, 'other', 0.6 + i * 0.05)),
   ]
 
-  // Project Lupine onto the scatter at FY30 base case
+  // Project Lupine onto the scatter at FY30 base case.
+  // Growth rate = FY28-FY32 CAGR (the "mature" rate comparable to public
+  // company growth) instead of the spike YoY rate which is inflated by the
+  // small starting base. This figure comes from analyze.py's derived field.
   const fy30Rev = data.lupine.revenue_total_m[4]
-  // Lupine implied multiple at sim median
+  const lupineGrowth = data.lupine.fy28_fy32_cagr_pct
   points.push({
     id: 'lupine',
-    label: `Lupine FY30 base (${fy30Rev.toFixed(0)}M)`,
-    x: 60, // base-case FY30 revenue growth approx (rough; high)
+    label: `Lupine FY30 base (${fy30Rev.toFixed(0)}M, ${lupineGrowth.toFixed(0)}% CAGR)`,
+    x: lupineGrowth,
     y: data.comps.sim_median_ev_rev,
     size: fy30Rev,
     group: 'lupine',
@@ -228,23 +267,23 @@ export function CompsScatter({ data }: { data: ValueModelData }) {
         <Legend color={GROUP_COLORS.lupine} label="Lupine FY30 base (projected)" />
       </div>
       <div className="text-xs text-[var(--on-surface-variant-mid)] font-mono mb-3">
-        Bubble size = revenue LTM. Hover for company labels. Y-axis log scale.
+        Bubble size = revenue LTM. Y-axis log. Lupine growth axis = FY28→FY32
+        CAGR ({data.lupine.fy28_fy32_cagr_pct.toFixed(0)}%) — the mature rate
+        comparable to public-company growth.
       </div>
       <div className="h-[480px] w-full">
-        {inView && (
-          <ParentSize>
-            {({ width, height }) =>
-              width > 0 && height > 0 ? (
-                <Inner
-                  points={points}
-                  width={width}
-                  height={height}
-                  simMedian={data.comps.sim_median_ev_rev}
-                />
-              ) : null
-            }
-          </ParentSize>
-        )}
+        <ParentSize>
+          {({ width, height }) => (
+            <Inner
+              points={points}
+              width={width || 800}
+              height={height || 480}
+              simMedian={data.comps.sim_median_ev_rev}
+              inView={inView}
+              titleId="comps-scatter-title"
+            />
+          )}
+        </ParentSize>
       </div>
     </div>
   )

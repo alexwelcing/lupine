@@ -19,9 +19,11 @@ interface InnerProps {
   scenarios: ValueModelData['dcf']['scenarios']
   width: number
   height: number
+  inView: boolean
+  titleId: string
 }
 
-function Inner({ years, scenarios, width, height }: InnerProps) {
+function Inner({ years, scenarios, width, height, inView, titleId }: InnerProps) {
   const innerW = Math.max(0, width - margin.left - margin.right)
   const innerH = Math.max(0, height - margin.top - margin.bottom)
 
@@ -51,7 +53,12 @@ function Inner({ years, scenarios, width, height }: InnerProps) {
   const zero = yScale(0)
 
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} role="img" aria-labelledby={titleId}>
+      <title id={titleId}>
+        Grouped-bar chart: free cash flow projection by year for bear, base,
+        and bull scenarios from FY26 through FY32. Bars below the dashed zero
+        line are negative (cash burn). Base case crosses break-even in FY28.
+      </title>
       <Group left={margin.left} top={margin.top}>
         <GridRows
           scale={yScale}
@@ -84,7 +91,11 @@ function Inner({ years, scenarios, width, height }: InnerProps) {
                   fill={SCEN_COLORS[s]}
                   rx={2}
                   initial={{ y: zero, height: 0, opacity: 0 }}
-                  animate={{ y: top, height: h, opacity: 0.92 }}
+                  animate={
+                    inView
+                      ? { y: top, height: h, opacity: 0.92 }
+                      : { y: zero, height: 0, opacity: 0 }
+                  }
                   transition={{
                     duration: 0.6,
                     delay: 0.04 * yi + si * 0.08,
@@ -188,20 +199,18 @@ export function DcfScenarioChart({ data }: { data: ValueModelData }) {
       </div>
 
       <div className="h-[340px] w-full">
-        {inView && (
-          <ParentSize>
-            {({ width, height }) =>
-              width > 0 && height > 0 ? (
-                <Inner
-                  years={data.years}
-                  scenarios={data.dcf.scenarios}
-                  width={width}
-                  height={height}
-                />
-              ) : null
-            }
-          </ParentSize>
-        )}
+        <ParentSize>
+          {({ width, height }) => (
+            <Inner
+              years={data.years}
+              scenarios={data.dcf.scenarios}
+              width={width || 800}
+              height={height || 340}
+              inView={inView}
+              titleId="dcf-scenario-title"
+            />
+          )}
+        </ParentSize>
       </div>
     </div>
   )

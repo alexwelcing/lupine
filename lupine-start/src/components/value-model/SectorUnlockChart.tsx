@@ -33,9 +33,11 @@ interface InnerProps {
   data: SectorPoint[]
   width: number
   height: number
+  inView: boolean
+  titleId: string
 }
 
-function Inner({ data, width, height }: InnerProps) {
+function Inner({ data, width, height, inView, titleId }: InnerProps) {
   const innerW = Math.max(0, width - margin.left - margin.right)
   const innerH = Math.max(0, height - margin.top - margin.bottom)
 
@@ -58,7 +60,12 @@ function Inner({ data, width, height }: InnerProps) {
   })
 
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} role="img" aria-labelledby={titleId}>
+      <title id={titleId}>
+        Stacked-bar chart: annual accelerated value unlock across compute,
+        travel, and bio sectors from FY26 through FY32. Total reaches roughly
+        $151B/yr by FY30 and $139B by FY32 (figures in $B/yr).
+      </title>
       <Group left={margin.left} top={margin.top}>
         <GridRows
           scale={yScale}
@@ -83,7 +90,11 @@ function Inner({ data, width, height }: InnerProps) {
                   width={bar.width}
                   fill={bar.color}
                   initial={{ y: innerH, height: 0, opacity: 0 }}
-                  animate={{ y: bar.y, height: bar.height, opacity: 0.92 }}
+                  animate={
+                    inView
+                      ? { y: bar.y, height: bar.height, opacity: 0.92 }
+                      : { y: innerH, height: 0, opacity: 0 }
+                  }
                   transition={{
                     duration: 0.7,
                     delay: 0.05 * bar.index + (stack.key === 'Compute' ? 0 : stack.key === 'Travel' ? 0.1 : 0.2),
@@ -138,7 +149,8 @@ export function SectorUnlockChart({ data }: { data: ValueModelData }) {
   }))
 
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-20% 0px' })
+  const inView = useInView(ref, { once: true, margin: '-15% 0px' })
+  const titleId = 'sector-unlock-title'
 
   return (
     <div ref={ref} className="w-full">
@@ -157,15 +169,17 @@ export function SectorUnlockChart({ data }: { data: ValueModelData }) {
         </div>
       </div>
       <div className="h-[360px] w-full">
-        {inView && (
-          <ParentSize>
-            {({ width, height }) =>
-              width > 0 && height > 0 ? (
-                <Inner data={points} width={width} height={height} />
-              ) : null
-            }
-          </ParentSize>
-        )}
+        <ParentSize>
+          {({ width, height }) => (
+            <Inner
+              data={points}
+              width={width || 800}
+              height={height || 360}
+              inView={inView}
+              titleId={titleId}
+            />
+          )}
+        </ParentSize>
       </div>
     </div>
   )

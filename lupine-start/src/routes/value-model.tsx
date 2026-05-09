@@ -12,6 +12,17 @@ import { ReturnsWaterfall } from '../components/value-model/ReturnsWaterfall'
 
 const data = valueModelData as ValueModelData
 
+// Section IDs match the ScrollSection `id` props below; keep in sync.
+const SECTIONS = [
+  { id: 'sector-unlock', label: 'Sector unlock' },
+  { id: 'capture', label: 'Capture %' },
+  { id: 'dcf', label: 'DCF' },
+  { id: 'sensitivity', label: 'Sensitivity' },
+  { id: 'comps', label: 'Comps' },
+  { id: 'returns', label: 'Returns' },
+  { id: 'ask', label: 'Ask' },
+] as const
+
 export const Route = createFileRoute('/value-model')({
   component: ValueModelPage,
   head: () => ({
@@ -37,6 +48,27 @@ function ValueModelPage() {
       />
 
       <Hero data={data} />
+
+      {/* In-page anchor nav — sticky once you scroll past the hero. */}
+      <nav
+        aria-label="Section navigation"
+        className="sticky top-16 z-30 border-y border-[var(--outline-variant)] bg-[var(--surface)]/90 backdrop-blur-md"
+      >
+        <div className="container mx-auto max-w-7xl px-6 lg:px-12 flex gap-1 lg:gap-2 overflow-x-auto py-2 text-[10px] lg:text-[11px] font-mono uppercase tracking-widest">
+          {SECTIONS.map((s, i) => (
+            <a
+              key={s.id}
+              href={`#${s.id}`}
+              className="whitespace-nowrap px-2 py-1 rounded text-[var(--on-surface-variant)] hover:text-[var(--secondary)] hover:bg-[var(--surface-container-low)] transition-colors no-underline"
+            >
+              <span className="text-[var(--on-surface-variant-mid)]">
+                {String(i + 1).padStart(2, '0')}
+              </span>{' '}
+              {s.label}
+            </a>
+          ))}
+        </div>
+      </nav>
 
       <ScrollSection id="sector-unlock" className="bg-[var(--surface-container-low)]">
         <SectionHeader

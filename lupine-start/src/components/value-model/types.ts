@@ -49,6 +49,9 @@ export interface ValueModelData {
     penetration_pct: number[]
     attributed_unlock_m: number[]
     capture_pct: number[]
+    yoy_growth_pct: number[]
+    fy26_fy30_cagr_pct: number
+    fy28_fy32_cagr_pct: number
   }
   dcf: {
     wacc_inputs: Record<string, number>

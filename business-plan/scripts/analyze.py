@@ -462,6 +462,16 @@ def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, co
     attributed_unlock_m = rev("lupine-attributed-unlock")
     capture_pct = [revenue_total[i] / attributed_unlock_m[i] * 100 for i in range(7)]
 
+    # YoY growth rates and CAGR — used by the comps scatter to place
+    # Lupine on the growth axis with a CSV-derived value rather than a
+    # founder estimate.
+    yoy_growth_pct = []
+    for i in range(7):
+        prev = 0.05 if i == 0 else revenue_total[i - 1]
+        yoy_growth_pct.append((revenue_total[i] / prev - 1.0) * 100 if prev > 0 else 0.0)
+    fy26_to_fy30_cagr = (revenue_total[4] / revenue_total[0]) ** (1 / 4) - 1
+    fy28_to_fy32_cagr = (revenue_total[6] / revenue_total[2]) ** (1 / 4) - 1
+
     # DCF results
     dcf_results = {}
     for scen, fcfs in scenarios.items():
@@ -553,6 +563,9 @@ def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, co
             "penetration_pct": penetration_pct,
             "attributed_unlock_m": attributed_unlock_m,
             "capture_pct": capture_pct,
+            "yoy_growth_pct": yoy_growth_pct,
+            "fy26_fy30_cagr_pct": fy26_to_fy30_cagr * 100,
+            "fy28_fy32_cagr_pct": fy28_to_fy32_cagr * 100,
         },
         "dcf": {
             "wacc_inputs": wacc_in,

@@ -15,9 +15,19 @@ interface InnerProps {
   weightedEv: number
   width: number
   height: number
+  inView: boolean
+  titleId: string
 }
 
-function Inner({ outcomes, ownership, weightedEv, width, height }: InnerProps) {
+function Inner({
+  outcomes,
+  ownership,
+  weightedEv,
+  width,
+  height,
+  inView,
+  titleId,
+}: InnerProps) {
   const innerW = Math.max(0, width - margin.left - margin.right)
   const innerH = Math.max(0, height - margin.top - margin.bottom)
 
@@ -56,7 +66,13 @@ function Inner({ outcomes, ownership, weightedEv, width, height }: InnerProps) {
   cumulative.push(0) // weighted EV bar starts from 0
 
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} role="img" aria-labelledby={titleId}>
+      <title id={titleId}>
+        Probability-weighted returns waterfall: each scenario contributes
+        probability × exit value × ownership to the expected value of the
+        seed slice. Five outcomes (Zero through Asymmetric tail) sum to the
+        teal &quot;Weighted EV&quot; bar at right.
+      </title>
       <Group left={margin.left} top={margin.top}>
         <GridRows scale={yScale} width={innerW} stroke="rgba(148,163,184,0.10)" numTicks={5} />
 
@@ -77,7 +93,7 @@ function Inner({ outcomes, ownership, weightedEv, width, height }: InnerProps) {
                 opacity={0.92}
                 rx={2}
                 initial={{ y: yScale(0), height: 0 }}
-                animate={{ y: top, height: h }}
+                animate={inView ? { y: top, height: h } : { y: yScale(0), height: 0 }}
                 transition={{ duration: 0.5, delay: 0.12 * i }}
               />
               <motion.text
@@ -89,7 +105,7 @@ function Inner({ outcomes, ownership, weightedEv, width, height }: InnerProps) {
                 fontWeight={600}
                 style={{ fontFamily: 'var(--font-sans)' }}
                 initial={{ opacity: 0, y: top }}
-                animate={{ opacity: 1, y: top - 8 }}
+                animate={inView ? { opacity: 1, y: top - 8 } : { opacity: 0, y: top }}
                 transition={{ duration: 0.4, delay: 0.12 * i + 0.4 }}
               >
                 ${b.contribution.toFixed(1)}M
@@ -103,7 +119,7 @@ function Inner({ outcomes, ownership, weightedEv, width, height }: InnerProps) {
                   fill="rgba(148,163,184,0.7)"
                   style={{ fontFamily: 'var(--font-sans)' }}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: inView ? 1 : 0 }}
                   transition={{ duration: 0.4, delay: 0.12 * i + 0.5 }}
                 >
                   P {(b.p * 100).toFixed(0)}% · Exit ${b.exit_m.toLocaleString()}M
@@ -172,21 +188,19 @@ export function ReturnsWaterfall({ data }: { data: ValueModelData }) {
         teal bar = sum (the probability-weighted dollar value of the slice).
       </div>
       <div className="h-[420px] w-full">
-        {inView && (
-          <ParentSize>
-            {({ width, height }) =>
-              width > 0 && height > 0 ? (
-                <Inner
-                  outcomes={data.returns.outcomes}
-                  ownership={data.round.ownership_pct}
-                  weightedEv={data.returns.weighted_ev_on_slice_m}
-                  width={width}
-                  height={height}
-                />
-              ) : null
-            }
-          </ParentSize>
-        )}
+        <ParentSize>
+          {({ width, height }) => (
+            <Inner
+              outcomes={data.returns.outcomes}
+              ownership={data.round.ownership_pct}
+              weightedEv={data.returns.weighted_ev_on_slice_m}
+              width={width || 800}
+              height={height || 420}
+              inView={inView}
+              titleId="returns-waterfall-title"
+            />
+          )}
+        </ParentSize>
       </div>
     </div>
   )
