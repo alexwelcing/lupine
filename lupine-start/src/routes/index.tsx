@@ -13,6 +13,9 @@ import { Takeaway } from '../components/value-model/Takeaway'
 import { HorizonChart } from '../components/value-model/HorizonChart'
 import { StackDiagram } from '../components/value-model/StackDiagram'
 import { Credo } from '../components/value-model/Credo'
+import { PlatformValueChart } from '../components/value-model/PlatformValueChart'
+import { PlatformCompsTable } from '../components/value-model/PlatformCompsTable'
+import { CeilingScenarios } from '../components/value-model/CeilingScenarios'
 
 const data = valueModelData as ValueModelData
 
@@ -22,7 +25,8 @@ const SECTIONS = [
   { id: 'arc', label: '30-yr arc' },
   { id: 'stack', label: 'The stack' },
   { id: 'why-now', label: 'Why now' },
-  { id: 'math', label: 'The math (floor)' },
+  { id: 'ceiling', label: 'The ceiling' },
+  { id: 'math', label: 'The floor' },
   { id: 'ask', label: 'Ask' },
 ] as const
 
@@ -260,27 +264,170 @@ function HomePage() {
       </ScrollSection>
 
       {/* ============================================================
-          05 / The math — explicitly framed as the floor, not the ceiling
+          05 / The ceiling — McKinsey-style platform-tier valuation
           ============================================================ */}
-      <ScrollSection id="math">
+      <ScrollSection id="ceiling">
         <SectionHeader
-          eyebrow="05 / The math (the floor)"
+          eyebrow="05 / If we are right about the stack"
           title={
             <>
-              If you scale us as a 2010s software company,{' '}
+              The ceiling is{' '}
               <em className="italic text-[var(--secondary)]">
-                this is the conservative shape
+                ${data.ceiling.weighted_ev_conditional_usd_b.toFixed(0)}B
+              </em>{' '}
+              conditional weighted EV.
+            </>
+          }
+          lead={
+            <>
+              The math in section 06 prices Lupine as a software-of-record
+              company. This section prices Lupine as the audit substrate for
+              a multi-trillion-dollar civilizational unlock. Both
+              methodologies are defensible; they differ by{' '}
+              <strong className="text-[var(--on-surface)]">
+                roughly 600×
+              </strong>{' '}
+              because they answer different questions about what Lupine is.
+              We model the upside outcomes explicitly here so the numbers
+              are not implied.
+            </>
+          }
+        />
+
+        {/* Sub-block A: phase-4 addressable value */}
+        <div className="mt-2">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            A · What's at stake when phase-4 lands
+          </div>
+          <PlatformValueChart data={data} />
+          <Takeaway label="The denominator">
+            ~$
+            {(data.ceiling.phase4_addressable_total_usd_b / 1000).toFixed(1)}T
+            of annual economic activity at phase-4 maturity (2045) — drugs
+            $1.2T, semiconductors $800B, batteries $500B, ag/food $400B,
+            catalysis $300B, polymers and aerospace $250B each, biopolymers
+            and energy systems $180-200B. Sized bottom-up from McKinsey,
+            BNEF, BCG, Frost & Sullivan, and direct industry numbers; held
+            at the conservative midpoint of the $2-5T range these reports
+            bracket.
+          </Takeaway>
+        </div>
+
+        {/* Sub-block B: capture rates from real platform comps */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            B · What audit-substrate companies actually capture
+          </div>
+          <PlatformCompsTable data={data} />
+          <Takeaway label="The capture-rate bracket">
+            Modern platform infrastructure earns 0.05–0.30% of the ecosystem
+            it serves (GitHub, Hugging Face, Cloudflare, Datadog, Snowflake,
+            Shopify). Mature simulation/audit platforms earn 0.9–1.4% once
+            they fully consolidate (Synopsys, Cadence). Lupine's ceiling
+            scenarios anchor on these brackets, not on aspirational numbers.
+          </Takeaway>
+        </div>
+
+        {/* Sub-block C: outcome distribution */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            C · The conditional outcome distribution
+          </div>
+          <CeilingScenarios data={data} />
+          <Takeaway label="What this number means" tone="positive">
+            $
+            {data.ceiling.weighted_ev_conditional_usd_b.toFixed(0)}B is the
+            probability-weighted EV across the five scenarios above,{' '}
+            <em>conditional on execution</em>. Multiply by 50% (the
+            unconditional probability the company doesn't fail outright) and
+            you get a $
+            {(data.ceiling.weighted_ev_conditional_usd_b / 2).toFixed(0)}B
+            unconditional ceiling. That is{' '}
+            <strong className="text-[var(--secondary)]">
+              ~{(
+                data.ceiling.weighted_ev_conditional_usd_b /
+                2 /
+                (data.dcf.scenarios.base.enterprise_value / 1000)
+              ).toFixed(0)}
+              ×
+            </strong>{' '}
+            the math floor's $
+            {data.dcf.scenarios.base.enterprise_value.toFixed(0)}M base DCF.
+            The math floor measures the wrong altitude.
+          </Takeaway>
+        </div>
+
+        {/* Sub-block D: strategic acquirers */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            D · Who pays for it before it gets there
+          </div>
+          <div className="grid lg:grid-cols-2 gap-3">
+            {data.ceiling.strategic_acquirers.map((a, i) => (
+              <motion.div
+                key={a.id}
+                className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] p-5"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-15% 0px' }}
+                transition={{ duration: 0.45, delay: 0.05 + i * 0.08 }}
+              >
+                <div className="flex items-baseline justify-between gap-3 mb-2">
+                  <h4 className="text-base font-semibold text-[var(--on-surface)]">
+                    {a.acquirer}
+                  </h4>
+                  <div className="font-mono text-sm text-[var(--secondary)] tabular-nums flex-shrink-0">
+                    ~${a.plausible_acquisition_price_usd_b.toFixed(1)}B
+                  </div>
+                </div>
+                <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                  {a.rationale}
+                </p>
+                <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant-mid)] mt-3">
+                  5-yr NPV to acquirer ~${a.npv_to_acquirer_usd_b.toFixed(0)}B
+                  · {a.year_horizon}-yr horizon
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <Takeaway
+            label={`Median plausible acquisition price ~$${data.ceiling.median_acquisition_price_usd_b.toFixed(1)}B`}
+            tone="positive"
+          >
+            Six named strategic acquirers — Microsoft (Azure Quantum
+            Elements), Google DeepMind (GNoME lineage), Schrödinger,
+            Synopsys/Cadence (post-ANSYS), IBM Research, defense primes.
+            Median plausible all-cash acquisition price across the five
+            commercial acquirers is ${data.ceiling.median_acquisition_price_usd_b.toFixed(1)}B
+            at a 5-year horizon. The Microsoft + GitHub 2018 acquisition
+            ($7.5B for the developer-platform substrate) is the closest
+            structural analog.
+          </Takeaway>
+        </div>
+      </ScrollSection>
+
+      {/* ============================================================
+          06 / The math — explicitly framed as the floor, not the ceiling
+          ============================================================ */}
+      <ScrollSection id="math" className="bg-[var(--surface-container-low)]">
+        <SectionHeader
+          eyebrow="06 / The math (the floor)"
+          title={
+            <>
+              And the floor —{' '}
+              <em className="italic text-[var(--secondary)]">
+                the conservative cross-check
               </em>
               .
             </>
           }
           lead={
             <>
-              The math below treats Lupine like a vertical SaaS comp —
-              Synopsys / Cadence / Veeva — and prices in only the revenue
-              that flows from being the audit-and-compute substrate, not the
-              upside from being the platform under generative matter or
-              autonomous synthesis. Even on this floor, the DCF says{' '}
+              The ceiling above prices Lupine as the audit substrate for
+              programmable matter. This section prices Lupine as if the
+              ceiling never lands — a respectable Synopsys / Cadence /
+              Veeva-tier vertical software company on a 5-year horizon. Even
+              under this strictly-conservative frame, the DCF says{' '}
               <strong className="text-[var(--on-surface)]">
                 ${baseEv.toFixed(0)}M intrinsic
               </strong>{' '}
@@ -292,7 +439,7 @@ function HomePage() {
               <strong className="text-[var(--secondary)]">
                 +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% probability-weighted IRR
               </strong>
-              . The ceiling is in the previous two sections.
+              . The math clears on the floor; the upside lives above.
             </>
           }
         />
@@ -357,11 +504,11 @@ function HomePage() {
       </ScrollSection>
 
       {/* ============================================================
-          06 / Ask
+          07 / Ask
           ============================================================ */}
-      <ScrollSection id="ask" className="bg-[var(--surface-container-low)]">
+      <ScrollSection id="ask">
         <SectionHeader
-          eyebrow="06 / The ask"
+          eyebrow="07 / The ask"
           title={
             <>
               Seed{' '}

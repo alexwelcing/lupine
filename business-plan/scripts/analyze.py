@@ -394,6 +394,10 @@ def main(check_only: bool = False) -> int:
     arc_rows = load("thirty_year_arc.csv")
     stack_rows = load("matter_stack.csv")
     credo_rows = load("credo.csv")
+    p4_value_rows = load("phase4_addressable_value.csv")
+    platform_comps_rows = load("platform_comps.csv")
+    ceiling_rows = load("ceiling_scenarios.csv")
+    acquirer_rows = load("strategic_acquirer_npv.csv")
 
     scenarios = build_fcf_streams(revenue_rows, dcf_input_rows)
     wacc_in = build_wacc_inputs(dcf_input_rows)
@@ -414,6 +418,7 @@ def main(check_only: bool = False) -> int:
     json_payload = build_json_payload(
         revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows,
         scenarios, wacc_in, arc_rows, stack_rows, credo_rows,
+        p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows,
     )
     json_text = json.dumps(json_payload, indent=2) + "\n"
 
@@ -445,7 +450,7 @@ def main(check_only: bool = False) -> int:
     return 0
 
 
-def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in, arc_rows, stack_rows, credo_rows) -> dict:
+def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in, arc_rows, stack_rows, credo_rows, p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows) -> dict:
     """Single JSON document the React route consumes.
 
     Schema is stable; bump version + migrate consumers if changed.
@@ -635,6 +640,101 @@ def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, co
             }
             for r in sorted(credo_rows, key=lambda r: int(r["order"]))
         ],
+        "ceiling": build_ceiling(p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows),
+    }
+
+
+def build_ceiling(p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows) -> dict:
+    """Aggregate the platform-tier (McKinsey-style) valuation payload."""
+    # Phase-4 addressable value by sector, excluding the total row
+    sectors = []
+    total_addressable = 0.0
+    for r in p4_value_rows:
+        if not r["id"] or r["id"] == "total":
+            continue
+        v = num(r["annual_value_usd_b"])
+        sectors.append({
+            "id": r["id"],
+            "sector": r["sector"],
+            "subsector": r["subsector"],
+            "annual_value_usd_b": v,
+            "year_at_scale": int(r["year_at_scale"]),
+            "tier": r["tier"],
+            "notes": r["notes"],
+        })
+        total_addressable += v
+
+    # Platform comps + medians
+    comps = []
+    for r in platform_comps_rows:
+        if not r["id"]:
+            continue
+        comps.append({
+            "id": r["id"],
+            "company": r["company"],
+            "category": r["category"],
+            "revenue_usd_b": num(r["revenue_usd_b"], 0.0),
+            "ev_usd_b": num(r["ev_usd_b"], 0.0),
+            "ev_revenue_x": num(r["ev_revenue_x"], 0.0),
+            "ecosystem_value_usd_b": num(r["ecosystem_value_usd_b"], 0.0),
+            "capture_rate_pct": num(r["capture_rate_pct"], 0.0),
+            "year": int(r["year"]) if r["year"] else None,
+            "tier": r["tier"],
+        })
+
+    # Ceiling scenarios
+    scenarios = []
+    weighted_ev = 0.0
+    weighted_p = 0.0
+    for r in ceiling_rows:
+        if not r["id"]:
+            continue
+        p = num(r["probability"], 0.0)
+        ev = num(r["implied_ev_usd_b"], 0.0)
+        scenarios.append({
+            "id": r["id"],
+            "name": r["name"],
+            "year_horizon": int(r["year_horizon"]) if r["year_horizon"] else None,
+            "addressable_value_usd_b": num(r["addressable_value_usd_b"], 0.0),
+            "capture_rate_pct": num(r["capture_rate_pct"], 0.0),
+            "implied_revenue_usd_b": num(r["implied_revenue_usd_b"], 0.0),
+            "multiple": num(r["multiple"], 0.0),
+            "implied_ev_usd_b": ev,
+            "probability": p,
+            "tier": r["tier"],
+            "notes": r["notes"],
+        })
+        weighted_ev += p * ev
+        weighted_p += p
+
+    # Strategic acquirers
+    acquirers = []
+    median_acquisition_price = None
+    for r in acquirer_rows:
+        if not r["id"]:
+            continue
+        if r["id"] == "median":
+            median_acquisition_price = num(r["plausible_acquisition_price_usd_b"], 0.0)
+            continue
+        acquirers.append({
+            "id": r["id"],
+            "acquirer": r["acquirer"],
+            "rationale": r["strategic_rationale"],
+            "npv_to_acquirer_usd_b": num(r["5yr_npv_to_acquirer_usd_b"], 0.0),
+            "plausible_acquisition_price_usd_b": num(r["plausible_acquisition_price_usd_b"], 0.0),
+            "year_horizon": int(r["year_horizon"]) if r["year_horizon"] else None,
+            "tier": r["tier"],
+        })
+
+    return {
+        "phase4_addressable_total_usd_b": total_addressable,
+        "phase4_sectors": sectors,
+        "platform_comps": comps,
+        "scenarios": scenarios,
+        "weighted_ev_conditional_usd_b": weighted_ev,
+        "weighted_probability_total": weighted_p,
+        "strategic_acquirers": acquirers,
+        "median_acquisition_price_usd_b": median_acquisition_price,
     }
 
 
