@@ -40,6 +40,7 @@ interface GalleryExample {
   atoms: string;
   frames: string;
   file: string;
+  sourceUrl?: string;
   available: boolean;
   colors: [string, string, string];
   metadata?: {
@@ -550,10 +551,14 @@ export function Gallery() {
     setLoadingId(example.id);
     useStore.getState().setLoading(true, 0);
     try {
+      // sourceUrl wins when present: gallery entries can point at any
+      // open-data URL (Zenodo, Materials Cloud, HF dataset CDN, ...) so we
+      // avoid bundling massive trajectories in /public. Local `file` is
+      // still the path for in-tree fixtures.
       const base = (import.meta as any).env?.BASE_URL || '/';
       const cleanFile = example.file.replace(/^\/+/, '');
       const cleanBase = base.endsWith('/') ? base : `${base}/`;
-      const url = `${cleanBase}${cleanFile}`;
+      const url = example.sourceUrl ?? `${cleanBase}${cleanFile}`;
 
       if (example.id === 'lupine_brand_asset') {
         const scientificUrl = `${cleanBase}gallery/curated/lupine_bluebonnet.xyz`.replace(/([^:]\/)\/+/g, "$1");

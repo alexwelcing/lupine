@@ -1,0 +1,28 @@
+[
+  {
+    "id": "rmd17_uracil",
+    "title": "Uracil (rMD17)",
+    "local": {
+      "label": "LOCAL",
+      "url": "http://localhost:3000/gallery/open_data/rmd17_uracil.lammpstrj",
+      "ok": true,
+      "code": 200,
+      "size_mb": 54.560144,
+      "ttfb_ms_median": 15.486,
+      "total_s_median": 0.235948,
+      "throughput_mbps_median": 1849.904008,
+      "runs": 3
+    },
+    "remote": {
+      "label": "REMOTE",
+      "url": "https://ndownloader.figshare.com/files/62265745",
+      "ok": true,
+      "code": 200,
+      "size_mb": 88.801794,
+      "ttfb_ms_median": 689.0039999999999,
+      "total_s_median": 4.365888,
+      "throughput_mbps_median": 162.71932,
+      "runs": 3
+    }
+  }
+]
