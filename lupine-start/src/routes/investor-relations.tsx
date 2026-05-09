@@ -45,10 +45,10 @@ function InvestorRelationsPage() {
                   Read the preprint
                 </Link>
                 <Link
-                  to="/value-model"
+                  to="/"
                   className="px-6 py-3 border border-[var(--secondary)] text-[var(--secondary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--secondary)] hover:text-[var(--surface)] transition-colors no-underline"
                 >
-                  Value model →
+                  Step 1 of a Replicator →
                 </Link>
                 <a
                   href="mailto:alexwelcing@gmail.com?subject=Lupine%20data%20room%20request"

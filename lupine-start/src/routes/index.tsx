@@ -1,902 +1,611 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { useEffect, useRef, useState, useMemo, type ReactNode, type FC } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import { createFileRoute } from '@tanstack/react-router'
+import { motion, useScroll } from 'framer-motion'
+import valueModelData from '../data/value-model.json'
+import type { ValueModelData } from '../components/value-model/types'
+import { ScrollSection } from '../components/value-model/ScrollSection'
+import { SectorUnlockChart } from '../components/value-model/SectorUnlockChart'
+import { CapturePctChart } from '../components/value-model/CapturePctChart'
+import { DcfScenarioChart } from '../components/value-model/DcfScenarioChart'
+import { SensitivityHeatmap } from '../components/value-model/SensitivityHeatmap'
+import { CompsScatter } from '../components/value-model/CompsScatter'
+import { ReturnsWaterfall } from '../components/value-model/ReturnsWaterfall'
+import { Takeaway } from '../components/value-model/Takeaway'
+import { HorizonChart } from '../components/value-model/HorizonChart'
+import { StackDiagram } from '../components/value-model/StackDiagram'
+import { Credo } from '../components/value-model/Credo'
 
-/* ─── Module-level deterministic PRNG so SSR + hydration agree on scatter ─── */
-function makeRng(seed: number) {
-  let s = seed
-  return () => {
-    s = (s * 9301 + 49297) % 233280
-    return s / 233280
-  }
-}
+const data = valueModelData as ValueModelData
 
-interface VisualProps { accent: string }
-
-/* ─── Visual 1 · AUDIT
-   30+ scattered potentials in a 2D error space collapse onto a principal
-   component. Eigenvalues drop geometrically — λ₁ ≫ λ₂ ≫ λ₃. The picture
-   of "PR/m well below 1." */
-const PCAVisual: FC<VisualProps> = ({ accent }) => {
-  const dots = useMemo(() => {
-    const rng = makeRng(42)
-    return Array.from({ length: 36 }, (_, i) => {
-      const t = i / 35 - 0.5
-      const perp = (rng() - 0.5) * 0.18
-      return {
-        x: 150 + t * 105 - perp * 28,
-        y: 95 - t * 55 + perp * 28,
-      }
-    })
-  }, [])
-
-  return (
-    <div
-      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
-      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
-        <g stroke={accent} strokeWidth="0.5" opacity="0.07">
-          {[60, 120, 180, 240].map((x) => <line key={`v${x}`} x1={x} y1={20} x2={x} y2={160} />)}
-          {[40, 80, 120].map((y) => <line key={`h${y}`} x1={30} y1={y} x2={270} y2={y} />)}
-        </g>
-
-        <text x={264} y={170} fontSize={7} fontFamily="monospace" fill="var(--on-surface-variant)" opacity="0.6" textAnchor="end">C₁₁ residual</text>
-        <text x={20} y={28} fontSize={7} fontFamily="monospace" fill="var(--on-surface-variant)" opacity="0.6">C₁₂ residual</text>
-
-        {dots.map((d, i) => (
-          <motion.circle
-            key={i}
-            cx={d.x} cy={d.y} r={2.3}
-            fill={accent}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 0.7, scale: 1 }}
-            transition={{ delay: 0.025 * i, duration: 0.3, ease: 'easeOut' }}
-            viewport={{ once: true, margin: '-40px' }}
-          />
-        ))}
-
-        <motion.line
-          x1={45} y1={148} x2={255} y2={42}
-          stroke={accent} strokeWidth={2}
-          initial={{ pathLength: 0, opacity: 0 }}
-          whileInView={{ pathLength: 1, opacity: 1 }}
-          transition={{ delay: 1.1, duration: 1.2, ease: 'easeInOut' }}
-          viewport={{ once: true, margin: '-40px' }}
-          style={{ filter: `drop-shadow(0 0 6px ${accent})` }}
-        />
-
-        <motion.text
-          x={258} y={38}
-          fontSize={9} fontFamily="monospace" fill={accent} fontWeight={600}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 2.2 }}
-          viewport={{ once: true, margin: '-40px' }}
-        >PC1</motion.text>
-
-        {/* Eigenvalue spectrum collapsing geometrically */}
-        <g transform="translate(195, 145)">
-          <motion.text
-            x={0} y={-44}
-            fontSize={6.5} fontFamily="monospace" fill="var(--on-surface-variant)"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 2.4 }}
-            viewport={{ once: true, margin: '-40px' }}
-          >λ₁ ≫ λ₂ ≫ λ₃</motion.text>
-          {[
-            { h: 32, x: 0 },
-            { h: 11, x: 14 },
-            { h: 4, x: 28 },
-          ].map((b, i) => (
-            <motion.rect
-              key={i}
-              x={b.x} y={-b.h} width={10} height={b.h}
-              fill={accent}
-              initial={{ scaleY: 0, opacity: 0.4 }}
-              whileInView={{ scaleY: 1, opacity: 0.85 - i * 0.18 }}
-              transition={{ delay: 2.6 + i * 0.18, duration: 0.55 }}
-              style={{ transformOrigin: 'center bottom', transformBox: 'fill-box' }}
-              viewport={{ once: true, margin: '-40px' }}
-            />
-          ))}
-        </g>
-      </svg>
-    </div>
-  )
-}
-
-/* ─── Visual 2 · ACCELERATOR
-   60-mode parameter grid; the 3 dominant modes light up; a fine-tune
-   gradient flows only into them. The picture of "low-rank retraining
-   target." */
-const RetrainingTargetVisual: FC<VisualProps> = ({ accent }) => {
-  const HIGHLIGHTED = useMemo(() => new Set([14, 32, 51]), [])
-  const cells = useMemo(
-    () =>
-      Array.from({ length: 60 }, (_, i) => ({
-        x: 22 + (i % 12) * 22,
-        y: 32 + Math.floor(i / 12) * 22,
-        idx: i,
-      })),
-    [],
-  )
-  const targets = cells.filter((c) => HIGHLIGHTED.has(c.idx))
-
-  return (
-    <div
-      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
-      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
-        <motion.text
-          x={150} y={14} fontSize={7} fontFamily="monospace" textAnchor="middle"
-          fill="var(--on-surface-variant)" letterSpacing="0.05em"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          viewport={{ once: true, margin: '-40px' }}
-        >parameter space (60 modes)</motion.text>
-
-        {cells.map((c, i) => {
-          const hot = HIGHLIGHTED.has(c.idx)
-          return (
-            <motion.rect
-              key={i}
-              x={c.x} y={c.y} width={14} height={14} rx={1.5}
-              fill={hot ? accent : 'color-mix(in srgb, var(--on-surface) 8%, transparent)'}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: hot ? 1 : 0.42 }}
-              transition={{ delay: hot ? 1.4 : 0.008 * i, duration: 0.5 }}
-              viewport={{ once: true, margin: '-40px' }}
-            />
-          )
-        })}
-
-        {targets.map((c, i) => (
-          <motion.circle
-            key={`g${i}`}
-            cx={c.x + 7} cy={c.y + 7} r={18}
-            fill={accent}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.32 }}
-            transition={{ delay: 1.6 + i * 0.08, duration: 0.6 }}
-            viewport={{ once: true, margin: '-40px' }}
-            style={{ filter: 'blur(8px)' }}
-          />
-        ))}
-
-        {targets.map((c, i) => (
-          <motion.line
-            key={`f${i}`}
-            x1={150} y1={170}
-            x2={c.x + 7} y2={c.y + 14}
-            stroke={accent} strokeWidth={1} strokeDasharray="2 3"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 0.55 }}
-            transition={{ delay: 2.0 + i * 0.12, duration: 0.55 }}
-            viewport={{ once: true, margin: '-40px' }}
-          />
-        ))}
-
-        <motion.text
-          x={150} y={177} fontSize={7} fontFamily="monospace" textAnchor="middle"
-          fill="var(--on-surface-variant)" letterSpacing="0.05em"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 2.5 }}
-          viewport={{ once: true, margin: '-40px' }}
-        >fine-tune ∇L → 3 dominant modes</motion.text>
-      </svg>
-    </div>
-  )
-}
-
-/* ─── Visual 3 · COMPOUNDING
-   Three nodes (Manifest · Ribbon · Target) in a cycle. Arrows draw, hold,
-   fade in a continuous staggered loop. The picture of the data flywheel. */
-const FlywheelVisual: FC<VisualProps> = ({ accent }) => {
-  const prefersReducedMotion = useReducedMotion()
-  const nodes = [
-    { label: 'MANIFEST', x: 75, y: 70, sub: '≈900 → 1k+' },
-    { label: 'RIBBON', x: 225, y: 70, sub: 'PR/m ↓' },
-    { label: 'TARGET', x: 150, y: 145, sub: 'modes ↓' },
-  ]
-  const arcs = [
-    'M 92 60 Q 150 30 208 60',
-    'M 220 88 Q 240 130 168 142',
-    'M 132 142 Q 60 130 80 88',
-  ]
-
-  return (
-    <div
-      className="relative h-[180px] w-full mb-6 overflow-hidden rounded-lg"
-      style={{ background: 'var(--surface-container-low, rgba(255,255,255,0.02))', border: '1px solid var(--outline-variant, rgba(255,255,255,0.05))' }}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 300 180" className="absolute inset-0 w-full h-full">
-        <defs>
-          <marker id="fly-arrow" markerWidth={6} markerHeight={6} refX={5} refY={3} orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L6,3 L0,6 Z" fill={accent} />
-          </marker>
-        </defs>
-
-        {arcs.map((d, i) =>
-          prefersReducedMotion ? (
-            // Reduced-motion fallback: draw the arcs once and hold
-            <motion.path
-              key={i}
-              d={d}
-              fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="4 4"
-              markerEnd="url(#fly-arrow)"
-              opacity={0.75}
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              transition={{ delay: 0.2 + i * 0.15, duration: 0.6, ease: 'easeOut' }}
-              viewport={{ once: true, margin: '-40px' }}
-            />
-          ) : (
-            <motion.path
-              key={i}
-              d={d}
-              fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="4 4"
-              markerEnd="url(#fly-arrow)"
-              opacity={0.75}
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: [0, 1, 1, 0] }}
-              transition={{
-                delay: i * 1.0,
-                duration: 3,
-                repeat: Infinity,
-                repeatDelay: 0,
-                times: [0, 0.45, 0.85, 1],
-                ease: 'easeInOut',
-              }}
-            />
-          ),
-        )}
-
-        {nodes.map((n, i) => (
-          <motion.g
-            key={n.label}
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: i * 0.18, duration: 0.4 }}
-            viewport={{ once: true, margin: '-40px' }}
-          >
-            <circle cx={n.x} cy={n.y} r={20} fill={accent} opacity={0.18} />
-            <circle cx={n.x} cy={n.y} r={12} fill={accent} opacity={0.8} />
-            <circle cx={n.x} cy={n.y} r={3} fill="white" />
-            <text
-              x={n.x} y={n.y - 26}
-              fontSize={7.5} fontFamily="monospace" fill="var(--on-surface)"
-              textAnchor="middle" letterSpacing="0.12em"
-            >
-              {n.label}
-            </text>
-            <text
-              x={n.x} y={n.y + 32}
-              fontSize={7} fontFamily="monospace" fill={accent} textAnchor="middle"
-            >
-              {n.sub}
-            </text>
-          </motion.g>
-        ))}
-      </svg>
-    </div>
-  )
-}
+// In-page anchor nav. IDs match ScrollSection ids below.
+const SECTIONS = [
+  { id: 'credo', label: 'What we believe' },
+  { id: 'arc', label: '30-yr arc' },
+  { id: 'stack', label: 'The stack' },
+  { id: 'why-now', label: 'Why now' },
+  { id: 'math', label: 'The math (floor)' },
+  { id: 'ask', label: 'Ask' },
+] as const
 
 export const Route = createFileRoute('/')({
-  component: LandingPage,
+  component: HomePage,
   head: () => ({
     meta: [
-      { title: 'Lupine — Geometric error analysis for machine-learned interatomic potentials' },
-      { name: 'description', content: 'Lupine is the audit layer for the MLIP ecosystem. We measure where universal interatomic potentials fail, and why, using sloppy-models geometry across ≈900 published potentials and 7,940 benchmark records. Apache 2.0, Rust.' },
-      { property: 'og:title', content: 'Lupine — the audit layer for the MLIP ecosystem' },
-      { property: 'og:description', content: 'Cross-potential geometric error analysis across ≈900 published interatomic potentials. After Transtrum, Sethna, Tadmor.' },
-      { property: 'og:url', content: 'https://lupine.science/' },
+      { title: 'Lupine Materials Science — the audit substrate for matter' },
+      {
+        name: 'description',
+        content:
+          'Step 1 of a real-world Replicator. Lupine builds the audit substrate for the matter stack: trustworthy atomistic prediction, then generative matter, then closed-loop synthesis, then programmable matter — a 30-year arc. Investor math is the floor; platform infrastructure is the ceiling.',
+      },
+      { property: 'og:title', content: 'Lupine — Step 1 of a real-world Replicator' },
+      {
+        property: 'og:description',
+        content:
+          'The audit substrate for atomistic ML. Foundation MLIPs cleared the science bar; the audit layer is what makes the next 30 years of generative matter, autonomous synthesis, and programmable matter trustworthy. We are step 1.',
+      },
     ],
   }),
 })
 
-/* ─── Scroll Reveal ─── */
-function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
+function HomePage() {
+  const { scrollYProgress } = useScroll()
 
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(el) } },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  // Pre-computed narrative numbers used in section headers + takeaways.
+  const proposedPost = data.round.post_money_usd_m
+  const checkSize = data.round.check_size_usd_m
+  const ownership = data.round.ownership_pct
+  const fy30Total = data.sector_unlock.total[4]
+  const fy30Rev = data.lupine.revenue_total_m[4]
+  const fy30Attributed = data.lupine.attributed_unlock_m[4]
+  const fy30Capture = data.lupine.capture_pct[4]
+  const baseEv = data.dcf.scenarios.base.enterprise_value
+  const baseSafetyPct = (baseEv / proposedPost - 1) * 100
+  const simMedian = data.comps.sim_median_ev_rev
+  const compImpliedEv = fy30Rev * simMedian
+  const sensGrid = data.dcf.sensitivity.grid
+  const worstCorner = Math.min(...sensGrid.flat())
+  const bestCorner = Math.max(...sensGrid.flat())
+  const allClear = sensGrid.flat().every((v) => v > proposedPost)
+  const outcomeContribs = data.returns.outcomes.map((o) => ({
+    name: o.name,
+    p: o.p,
+    contrib: o.p * o.exit_m * ownership,
+  }))
+  const totalEv = data.returns.weighted_ev_on_slice_m
+  const upperTail = outcomeContribs
+    .filter((o) => o.name === 'Moonshot' || o.name === 'Asymmetric tail')
+    .reduce((acc, o) => acc + o.contrib, 0)
+  const upperTailPct = (upperTail / totalEv) * 100
+  const upperTailProbPct =
+    outcomeContribs
+      .filter((o) => o.name === 'Moonshot' || o.name === 'Asymmetric tail')
+      .reduce((acc, o) => acc + o.p, 0) * 100
 
   return (
+    <main className="relative flex-1 bg-[var(--surface)] text-[var(--on-surface)] overflow-x-hidden">
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#3b82f6] via-[#c4b5fd] to-[#4ecdc4] z-50 origin-left"
+        style={{ scaleX: scrollYProgress }}
+      />
+
+      <Hero />
+
+      <nav
+        aria-label="Section navigation"
+        className="sticky top-16 z-30 border-y border-[var(--outline-variant)] bg-[var(--surface)]/90 backdrop-blur-md"
+      >
+        <div className="container mx-auto max-w-7xl px-6 lg:px-12 flex gap-1 lg:gap-2 overflow-x-auto py-2 text-[10px] lg:text-[11px] font-mono uppercase tracking-widest">
+          {SECTIONS.map((s, i) => (
+            <a
+              key={s.id}
+              href={`#${s.id}`}
+              className="whitespace-nowrap px-2 py-1 rounded text-[var(--on-surface-variant)] hover:text-[var(--secondary)] hover:bg-[var(--surface-container-low)] transition-colors no-underline"
+            >
+              <span className="text-[var(--on-surface-variant-mid)]">
+                {String(i + 1).padStart(2, '0')}
+              </span>{' '}
+              {s.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      {/* ============================================================
+          01 / Credo — the ideals that drive the rest of the document
+          ============================================================ */}
+      <ScrollSection id="credo">
+        <SectionHeader
+          eyebrow="01 / What we believe"
+          title={
+            <>
+              The ideals that{' '}
+              <em className="italic text-[var(--secondary)]">
+                pull the work
+              </em>
+              .
+            </>
+          }
+          lead={
+            <>
+              Before the arc, before the stack, before any math: the
+              commitments that tell you what kind of company this is. None
+              of them are negotiable. All of them are testable against what
+              we actually ship.
+            </>
+          }
+        />
+        <Credo data={data} />
+      </ScrollSection>
+
+      {/* ============================================================
+          02 / The 30-year arc — phases the world is moving through
+          ============================================================ */}
+      <ScrollSection id="arc" className="bg-[var(--surface-container-low)]">
+        <SectionHeader
+          eyebrow="02 / Where this is going"
+          title={
+            <>
+              Step 1 of a{' '}
+              <em className="italic text-[var(--secondary)]">
+                real-world Replicator
+              </em>
+              .
+            </>
+          }
+          lead={
+            <>
+              Matter is the last frontier of civilization-scale software.
+              Foundation models for matter exist. Self-driving labs are
+              shipping. Atomic-precision manufacturing is on a real research
+              roadmap. The decade ahead is the convergence — a generation
+              that can specify any molecule and have it manifest. Lupine
+              builds the audit substrate that lets the higher layers of that
+              stack be trusted with reality.
+            </>
+          }
+        />
+        <HorizonChart data={data} />
+        <Takeaway label="Why phase 1 is the load-bearing one" tone="positive">
+          Generative models for matter are roughly where AlphaFold-1 was in
+          2018: clearly working, not yet trustworthy. Without a layer that
+          names where atomistic predictions fail and feeds those failures
+          back into the next generation, phase 2 stacks generative
+          hallucination on top of unmeasured prediction error and the whole
+          pipeline gets worse, not better. Lupine ships the methodology that
+          makes phase 1 trustworthy — and the methodology compounds into
+          training signal for every layer above it.
+        </Takeaway>
+      </ScrollSection>
+
+      {/* ============================================================
+          03 / The matter stack — Lupine's structural position
+          ============================================================ */}
+      <ScrollSection id="stack">
+        <SectionHeader
+          eyebrow="03 / Where this sits"
+          title={
+            <>
+              We are the{' '}
+              <em className="italic text-[var(--secondary)]">
+                validation substrate
+              </em>{' '}
+              for the matter stack.
+            </>
+          }
+          lead={
+            <>
+              The applications are visible. The generative models are
+              fashionable. The compute primitives are 30 years old and
+              improving. The audit layer in the middle — the one that catches
+              when a foundation model proposes a structure that physics
+              rejects, and that compresses the error into corrections — is
+              structurally underweight in the current ecosystem. That is the
+              layer Lupine ships.
+            </>
+          }
+        />
+        <StackDiagram data={data} />
+        <Takeaway label="The structural bet" tone="positive">
+          Every other layer of the stack has well-funded incumbents racing.
+          Validation has none. The Lupine wager is that within 3-5 years the
+          field realizes &quot;audit layer for atomistic ML&quot; is its own
+          discipline — the way observability became its own discipline for
+          software in the 2010s — and the team that ships the canonical
+          open-core engine owns the ground floor.
+        </Takeaway>
+      </ScrollSection>
+
+      {/* ============================================================
+          04 / Why now — the convergence is happening this decade
+          ============================================================ */}
+      <ScrollSection id="why-now" className="bg-[var(--surface-container-low)]">
+        <SectionHeader
+          eyebrow="04 / Why this is the decade"
+          title={
+            <>
+              Three curves are{' '}
+              <em className="italic text-[var(--secondary)]">
+                bending at the same time
+              </em>
+              .
+            </>
+          }
+          lead={
+            <>
+              Foundation MLIPs cleared the science bar (sub-2 meV/atom on
+              broad benchmarks, 2024). WebGPU made browser-native scientific
+              compute real (2024-25). Sovereignty became a procurement
+              requirement (CHIPS Act $447B fab capex announced through 2030;
+              IRA $300B+ committed battery manufacturing). The audit layer
+              becomes infrastructure now or never.
+            </>
+          }
+        />
+        <div className="grid lg:grid-cols-3 gap-3 mt-2">
+          <Curve
+            label="Atomistic ML"
+            line="MACE → MatterSim → OMat24 → ?"
+            note="Foundation MLIPs went from research curiosity to deployable infrastructure in 36 months. The next 36 will move them into production design loops."
+          />
+          <Curve
+            label="Autonomous synthesis"
+            line="A-Lab → MGI 2031 → self-driving everywhere"
+            note="The Materials Genome Initiative's 20-year mandate (2011-2031) targets the closed-loop transition. We're 6 years from the deadline; the lab equipment exists."
+          />
+          <Curve
+            label="Sovereignty mandate"
+            line="CHIPS → IRA → MGI 2025 plan"
+            note="$700B+ in announced US capex needs US/allied-licensed materials infrastructure. Vienna-held VASP cannot defensibly serve this buyer base."
+          />
+        </div>
+      </ScrollSection>
+
+      {/* ============================================================
+          05 / The math — explicitly framed as the floor, not the ceiling
+          ============================================================ */}
+      <ScrollSection id="math">
+        <SectionHeader
+          eyebrow="05 / The math (the floor)"
+          title={
+            <>
+              If you scale us as a 2010s software company,{' '}
+              <em className="italic text-[var(--secondary)]">
+                this is the conservative shape
+              </em>
+              .
+            </>
+          }
+          lead={
+            <>
+              The math below treats Lupine like a vertical SaaS comp —
+              Synopsys / Cadence / Veeva — and prices in only the revenue
+              that flows from being the audit-and-compute substrate, not the
+              upside from being the platform under generative matter or
+              autonomous synthesis. Even on this floor, the DCF says{' '}
+              <strong className="text-[var(--on-surface)]">
+                ${baseEv.toFixed(0)}M intrinsic
+              </strong>{' '}
+              vs the ${proposedPost}M proposed post (
+              <strong className="text-[var(--secondary)]">
+                +{baseSafetyPct.toFixed(0)}%
+              </strong>{' '}
+              margin of safety) and{' '}
+              <strong className="text-[var(--secondary)]">
+                +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% probability-weighted IRR
+              </strong>
+              . The ceiling is in the previous two sections.
+            </>
+          }
+        />
+
+        <div className="mt-2">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            A · Sector unlock + Lupine attribution
+          </div>
+          <SectorUnlockChart data={data} />
+          <CapturePctChart data={data} />
+          <Takeaway label="The math chain in numbers">
+            FY30 mid-ramp:{' '}
+            <strong className="text-[var(--on-surface)]">${fy30Total.toFixed(0)}B</strong>{' '}
+            of accelerated value across the three sectors. Lupine touches{' '}
+            <strong className="text-[var(--on-surface)]">
+              {data.lupine.penetration_pct[4].toFixed(1)}%
+            </strong>{' '}
+            of the edge, attributing{' '}
+            <strong className="text-[var(--on-surface)]">
+              ${(fy30Attributed / 1000).toFixed(1)}B
+            </strong>{' '}
+            of unlock; revenue ${fy30Rev.toFixed(0)}M ({fy30Capture.toFixed(1)}%
+            capture, the Synopsys/Cadence band).
+          </Takeaway>
+        </div>
+
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            B · DCF intrinsic + sensitivity
+          </div>
+          <DcfScenarioChart data={data} />
+          <SensitivityHeatmap data={data} />
+          <Takeaway
+            label={allClear ? 'Every WACC × g cell clears the proposed post' : 'Some cells breach the post'}
+            tone={allClear ? 'positive' : 'caution'}
+          >
+            Equity value across the 25-cell sensitivity grid spans{' '}
+            <strong className="text-[var(--on-surface)]">${worstCorner.toFixed(0)}M</strong>{' '}
+            (worst) to{' '}
+            <strong className="text-[var(--on-surface)]">${bestCorner.toFixed(0)}M</strong>{' '}
+            (best).{' '}
+            {allClear &&
+              `The worst case is still +${((worstCorner / proposedPost - 1) * 100).toFixed(0)}% over the $${proposedPost}M proposed post.`}
+          </Takeaway>
+        </div>
+
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            C · Comp set cross-check + probability-weighted returns
+          </div>
+          <CompsScatter data={data} />
+          <ReturnsWaterfall data={data} />
+          <Takeaway label="Where the IRR comes from" tone="positive">
+            At sim median {simMedian.toFixed(1)}x EV/Revenue, FY30 base ARR
+            implies ${compImpliedEv.toFixed(0)}M EV — {(compImpliedEv / baseEv).toFixed(1)}×
+            the DCF base. The Moonshot + Asymmetric tail outcomes (combined{' '}
+            {upperTailProbPct.toFixed(0)}% probability) contribute{' '}
+            {upperTailPct.toFixed(0)}% of the weighted EV; the 50% probability
+            of zero is fully baked in.
+          </Takeaway>
+        </div>
+      </ScrollSection>
+
+      {/* ============================================================
+          06 / Ask
+          ============================================================ */}
+      <ScrollSection id="ask" className="bg-[var(--surface-container-low)]">
+        <SectionHeader
+          eyebrow="06 / The ask"
+          title={
+            <>
+              Seed{' '}
+              <em className="italic text-[var(--secondary)]">
+                ${checkSize}M
+              </em>{' '}
+              at ${proposedPost}M post — to ship the audit substrate.
+            </>
+          }
+          lead={
+            <>
+              The capital funds the engineering and the methodology
+              publications that make phase 1 trustworthy. The milestones are
+              the markers that we&apos;re actually building toward the arc,
+              not just the math.
+            </>
+          }
+        />
+        <div className="mt-6 grid md:grid-cols-3 gap-3">
+          {[
+            {
+              mo: 12,
+              what: 'Federal direct contract in flight',
+              unlocks:
+                'Non-dilutive runway + the credibility marker that lets us be cited as named tooling in DARPA / DOE / NSF proposals',
+            },
+            {
+              mo: 18,
+              what: 'Two paid pilots converted to production',
+              unlocks:
+                'First $750K-$1.5M ACV recurring + named industry references; signal that the audit layer is procurement-grade',
+            },
+            {
+              mo: 24,
+              what: 'DFT engine alpha + open benchmark published',
+              unlocks:
+                'Closes the unified DFT → ML → MD pipeline; the open benchmark becomes the canonical place to compare foundation MLIPs and the methodology paper compounds the IP',
+            },
+          ].map((m, i) => (
+            <motion.div
+              key={m.mo}
+              className="rounded-md border border-[var(--outline-variant)] p-5 bg-[var(--surface-container)] flex flex-col gap-2"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-15% 0px' }}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.12 }}
+            >
+              <div className="text-xs uppercase tracking-wider text-[var(--on-surface-variant-mid)]">
+                Month {m.mo}
+              </div>
+              <div className="text-base text-[var(--on-surface)] font-medium">
+                {m.what}
+              </div>
+              <div className="text-xs text-[var(--on-surface-variant)] leading-relaxed pt-1 border-t border-[var(--outline-variant)]/60">
+                <span className="font-mono uppercase tracking-wider text-[var(--secondary)] text-[10px]">
+                  Unlocks &nbsp;
+                </span>
+                {m.unlocks}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <Takeaway label="What this round is actually buying" tone="positive">
+          The 24-month plan is to ship phase 1 — the audit substrate that
+          phases 2-4 depend on — with peer-reviewed methodology, an open
+          benchmark, and a federal-grade reference deployment. The math
+          floor (${baseEv.toFixed(0)}M DCF intrinsic, +
+          {(data.returns.weighted_irr_5y * 100).toFixed(0)}% weighted IRR) is
+          what happens if Lupine becomes a respectable software-of-record
+          company. The ceiling is what happens if it becomes infrastructure
+          for the matter stack.
+        </Takeaway>
+      </ScrollSection>
+
+      <footer className="px-6 lg:px-12 py-12 text-xs text-[var(--on-surface-variant-mid)] font-mono border-t border-[var(--outline-variant)]">
+        <div className="container mx-auto max-w-7xl">
+          Generated {data.generated_on}. Source of truth:{' '}
+          <code>business-plan/value-model/*.csv</code>. Regenerate with{' '}
+          <code>python3 business-plan/scripts/analyze.py</code>.
+        </div>
+      </footer>
+    </main>
+  )
+}
+
+function Hero() {
+  return (
+    <section className="relative pt-[160px] pb-[120px] px-6 lg:px-12 overflow-hidden">
+      {/* Ambient backdrop: a slow-rotating lattice gradient evoking
+          atomic structure, brand-tinted. */}
+      <div className="absolute inset-0">
+        <motion.div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(78,205,196,0.10),transparent_60%)]"
+          animate={{ scale: [1, 1.06, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(196,181,253,0.08),transparent_55%)]"
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </div>
+
+      <div className="container mx-auto max-w-7xl relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-6">
+            Lupine Materials Science · audit substrate for the matter stack
+          </div>
+          <h1 className="text-5xl lg:text-7xl mb-8 leading-[1.02] max-w-5xl">
+            Step 1 of a real-world{' '}
+            <em className="italic text-[var(--secondary)]">Replicator</em>.
+          </h1>
+          <p className="text-xl text-[var(--on-surface-variant)] max-w-4xl leading-relaxed font-light mb-6">
+            Matter is the last frontier of civilization-scale software.
+            Foundation models for matter exist now. Self-driving labs are
+            shipping. Atomic-precision manufacturing is on a real research
+            roadmap. The decade ahead is the convergence — a generation that
+            can specify any molecule and have it manifest.
+          </p>
+          <p className="text-xl text-[var(--on-surface)] max-w-4xl leading-relaxed font-light mb-10">
+            Lupine builds the{' '}
+            <strong className="text-[var(--secondary)]">audit substrate</strong>{' '}
+            for that stack — the methodology that names where atomistic
+            predictions fail, and compresses the failure into closed-loop
+            self-correction. Without it, every layer above stacks
+            hallucination on top of unmeasured error.{' '}
+            <span className="text-[var(--on-surface-variant)]">
+              We are step 1.
+            </span>
+          </p>
+
+          {/* Bridge into the credo: tells the reader the next thing
+              they will see is what we believe, before any math. */}
+          <a
+            href="#credo"
+            className="inline-flex items-baseline gap-3 mb-12 group no-underline"
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--tertiary)] group-hover:text-[var(--secondary)] transition-colors">
+              Start with the ideals
+            </span>
+            <span className="text-[var(--tertiary)] group-hover:text-[var(--secondary)] transition-colors">
+              ↓
+            </span>
+          </a>
+
+          <div className="flex flex-wrap gap-3 font-mono text-[10px] uppercase tracking-[0.2em]">
+            <HorizonChip label="Phase 1 · 2025-2030" highlight>Trustworthy prediction</HorizonChip>
+            <HorizonChip label="Phase 2 · 2028-2034">Generative matter</HorizonChip>
+            <HorizonChip label="Phase 3 · 2032-2042">Closed-loop synthesis</HorizonChip>
+            <HorizonChip label="Phase 4 · 2040-2055">Programmable matter</HorizonChip>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+function Curve({
+  label,
+  line,
+  note,
+}: {
+  label: string
+  line: string
+  note: string
+}) {
+  return (
+    <motion.div
+      className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] p-5 flex flex-col gap-3"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-15% 0px' }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--secondary)]">
+        {label}
+      </div>
+      <div className="text-sm font-mono text-[var(--on-surface)] leading-snug">
+        {line}
+      </div>
+      <div className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+        {note}
+      </div>
+    </motion.div>
+  )
+}
+
+function HorizonChip({
+  label,
+  children,
+  highlight = false,
+}: {
+  label: string
+  children: React.ReactNode
+  highlight?: boolean
+}) {
+  return (
     <div
-      ref={ref}
-      className={className}
+      className="rounded border px-3 py-2 flex flex-col gap-0.5"
       style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(24px)',
-        transition: `all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s`,
+        borderColor: highlight ? '#4ecdc4' : 'var(--outline-variant)',
+        background: highlight
+          ? 'linear-gradient(135deg, rgba(78,205,196,0.16), rgba(78,205,196,0.04))'
+          : 'var(--surface-container)',
       }}
     >
-      {children}
+      <span
+        style={{
+          color: highlight ? '#4ecdc4' : 'var(--on-surface-variant-mid)',
+        }}
+      >
+        {label}
+      </span>
+      <span className="text-[12px] tracking-normal normal-case font-sans text-[var(--on-surface)] font-medium">
+        {children}
+      </span>
     </div>
   )
 }
 
-/* ─── Hero ─── */
-function HeroSection() {
+function SectionHeader({
+  eyebrow,
+  title,
+  lead,
+}: {
+  eyebrow: string
+  title: React.ReactNode
+  lead: React.ReactNode
+}) {
   return (
-    <section className="relative flex flex-col justify-center items-center text-center px-6 pt-32 pb-20 lg:pt-40 lg:pb-28">
-      {/* Subtle radial glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 70% 50% at 50% 40%, rgba(59,130,246,0.08) 0%, transparent 70%)',
-        }}
-      />
-
-      <div className="relative z-[2] max-w-[820px]">
-        <div
-          className="text-xs font-semibold uppercase tracking-[0.25em] mb-6"
-          style={{ color: 'var(--lupine-400)', animation: 'fade-up 0.8s 0.2s both' }}
-        >
-          Geometric error analysis · MLIP audit layer
-        </div>
-
-        <h1
-          className="font-serif font-normal leading-[1.12] mb-7"
-          style={{
-            fontSize: 'clamp(32px, 5vw, 64px)',
-            color: 'var(--slate-100)',
-            animation: 'fade-up 0.8s 0.4s both',
-          }}
-        >
-          Universal MLIPs <em className="italic text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, var(--lupine-400), var(--violet-300))' }}>fail silently.</em>
-          <br />We measure where, and why.
-        </h1>
-
-        <p
-          className="font-light mx-auto mb-10 leading-relaxed"
-          style={{
-            fontSize: 17,
-            color: 'var(--slate-400)',
-            maxWidth: 620,
-            animation: 'fade-up 0.8s 0.6s both',
-          }}
-        >
-          UMA, MACE-MP, Orb-v3, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery and still under-predict PES curvature at surfaces, defects, and migration barriers (Deng et al., <em>npj Comput. Mater.</em> 2024). Lupine is the audit layer that turns that quiet failure into a measured, citable error budget — and a low-dimensional retraining target. The geometry that names the failure is the geometry that fixes it.
-        </p>
-
-        <div className="flex gap-4 justify-center flex-wrap" style={{ animation: 'fade-up 0.8s 0.8s both' }}>
-          <Link
-            to="/research"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
-            style={{ background: 'linear-gradient(135deg, var(--lupine-700), var(--lupine-600))' }}
-          >
-            Read the IMMI preprint
-          </Link>
-          <Link
-            to="/pilots"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
-            style={{
-              color: 'var(--slate-200)',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid var(--slate-700)',
-            }}
-          >
-            Pilot a wedge
-          </Link>
-          <a
-            href="https://github.com/alexwelcing/lupine"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
-            style={{
-              color: 'var(--slate-200)',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid var(--slate-700)',
-            }}
-          >
-            atlas-distill on GitHub
-          </a>
-        </div>
-
-        <p
-          className="mt-10 mx-auto text-[13px] italic leading-relaxed"
-          style={{ color: 'var(--slate-500)', maxWidth: 620, animation: 'fade-up 0.8s 1s both' }}
-        >
-          "Hyper-ribbons are characterized by a geometric series of widths" — Transtrum, Machta &amp; Sethna, <em>Phys. Rev. E</em> 83, 036701 (2011). We apply that geometry to the population of published interatomic potentials. <Link to="/lineage" className="underline decoration-dotted underline-offset-4 hover:text-[var(--lupine-400)] transition-colors not-italic">See the full lineage →</Link>
-        </p>
+    <div className="mb-12 max-w-4xl">
+      <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-4">
+        {eyebrow}
       </div>
-    </section>
-  )
-}
-
-/* ─── Evolution Feature (2nd primary) ─── */
-function EvolutionFeature() {
-  const stages = [
-    { label: 'Organize', desc: 'Typed corpus of ≈900 potentials and 7,940 benchmark records, with snapshot date and de-duplication rule.' },
-    { label: 'Harden', desc: 'Bootstrap, permutation, matched-n controls, Simpson\'s-paradox detection — kill artifacts before they cite.' },
-    { label: 'Evaluate', desc: 'Strict hypothesis lifecycle with a Lean-readiness gate, after Frederiksen et al. 2004 and Wen et al. 2017.' },
-  ]
-
-  return (
-    <section className="relative px-6 py-20 lg:py-24">
-      <div
-        className="absolute inset-0 -z-[1] pointer-events-none opacity-60"
-        style={{
-          background:
-            'radial-gradient(ellipse 50% 60% at 30% 50%, rgba(139,92,246,0.08), transparent 70%)',
-        }}
-      />
-      <div className="max-w-[1100px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          {/* Left column — message */}
-          <div className="lg:col-span-7">
-            <Reveal>
-              <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--violet-300)]">
-                The harden stage
-              </div>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h2
-                className="font-serif font-normal leading-[1.15] mb-6 text-[var(--slate-100)]"
-                style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}
-              >
-                The loop that{' '}
-                <em
-                  className="italic text-transparent bg-clip-text"
-                  style={{
-                    backgroundImage:
-                      'linear-gradient(135deg, var(--lupine-400), var(--violet-300))',
-                  }}
-                >
-                  caught itself.
-                </em>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p
-                className="font-light leading-relaxed mb-4 text-[var(--slate-300)]"
-                style={{ fontSize: 17, maxWidth: 580 }}
-              >
-                Across five rounds and four days, the harden stage caught two of its own statistical artifacts using the same matched-n bootstrap method — once on a d-band-fullness claim, once on a MEAM-anomaly claim. Two different domains, same self-correction operator. The MEAM result survived: a participation ratio of 2.24 across 167 potentials, recovering the cross-potential anomaly Hale, Trautt &amp; Becker (2018) reported. The d-band claim did not. That is what the harden stage is for.
-              </p>
-            </Reveal>
-            <Reveal delay={0.3}>
-              <p
-                className="font-light leading-relaxed mb-8 text-[var(--slate-400)]"
-                style={{ fontSize: 15, maxWidth: 580 }}
-              >
-                Read the round-by-round trail of how each canonical hypothesis moved, why refutations always leave behind a narrower defensible claim, and how the same operator extends to a 10⁷-record, thousand-round version of the audit.
-              </p>
-            </Reveal>
-            <Reveal delay={0.4}>
-              <div className="flex gap-4 flex-wrap">
-                <Link
-                  to="/evolution"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, var(--violet-600, #7c3aed), var(--lupine-600))',
-                  }}
-                >
-                  Read the round-by-round trail
-                </Link>
-                <Link
-                  to="/process"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
-                  style={{
-                    color: 'var(--slate-200)',
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid var(--slate-700)',
-                  }}
-                >
-                  Operating report
-                </Link>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Right column — three-stage visual */}
-          <div className="lg:col-span-5">
-            <Reveal delay={0.2}>
-              <div
-                className="rounded-2xl p-6 lg:p-7"
-                style={{
-                  background:
-                    'linear-gradient(160deg, rgba(139,92,246,0.06), rgba(59,130,246,0.04))',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                }}
-              >
-                <div className="text-[10px] font-bold uppercase tracking-[0.3em] mb-5 text-[var(--violet-300)]">
-                  Organize · harden · evaluate
-                </div>
-                <div className="space-y-4">
-                  {stages.map((s, i) => (
-                    <div
-                      key={s.label}
-                      className="flex items-start gap-4 pb-4"
-                      style={{
-                        borderBottom:
-                          i < stages.length - 1
-                            ? '1px solid rgba(255,255,255,0.05)'
-                            : undefined,
-                      }}
-                    >
-                      <div
-                        className="font-serif font-bold text-2xl shrink-0 w-10 text-center"
-                        style={{ color: 'var(--lupine-400)' }}
-                      >
-                        {i + 1}
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-[var(--slate-100)] mb-1">
-                          {s.label}
-                        </div>
-                        <div className="text-[13px] leading-relaxed text-[var(--slate-400)]">
-                          {s.desc}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div
-                  className="mt-5 pt-5 text-center"
-                  style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-                >
-                  <div className="font-serif text-3xl font-bold text-[var(--lupine-400)] leading-none mb-1">
-                    2 / 2
-                  </div>
-                  <div className="text-[10px] uppercase tracking-widest text-[var(--slate-500)]">
-                    Confounders caught · same matched-n bootstrap · two days
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Stats Strip ─── */
-function StatsStrip() {
-  const stats = [
-    { value: '≈900', label: 'Potentials in manifest' },
-    { value: '18', label: 'Functional-form families' },
-    { value: '7,940', label: 'Benchmark records' },
-    { value: 'Apache 2.0', label: 'License' },
-  ]
-
-  return (
-    <section className="px-6 pb-16">
-      <div className="max-w-[1000px] mx-auto">
-        <Reveal>
-          <div
-            className="rounded-2xl p-6 lg:p-8 flex flex-wrap items-center justify-center gap-8 lg:gap-14"
-            style={{
-              background: 'linear-gradient(135deg, rgba(59,130,246,0.06), rgba(139,92,246,0.04))',
-              border: '1px solid rgba(255,255,255,0.06)',
-            }}
-          >
-            {stats.map((s) => (
-              <div key={s.label} className="text-center min-w-[100px]">
-                <div className="font-serif text-2xl font-bold text-[var(--lupine-400)]">{s.value}</div>
-                <div className="text-[11px] uppercase tracking-widest mt-1 text-[var(--slate-500)]">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-/* ─── What We Build ─── */
-function WhatWeBuild() {
-  const pillars = [
-    {
-      title: 'Potential Atlas',
-      desc: '≈900 published interatomic potentials from OpenKIM, NIST IPR, ColabFit, and author-distributed MLIP releases (MACE-MP, MatterSim, Orb, CHGNet, GAP). Snapshot date and de-duplication rule shipped with every release.',
-      accent: 'var(--lupine-500)',
-    },
-    {
-      title: 'atlas-distill engine',
-      desc: 'Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson\'s-paradox detection. Open source, Apache 2.0, written in Rust. Sits beside LAMMPS / ASE / KIM — does not replace them.',
-      accent: 'var(--violet-500)',
-    },
-    {
-      title: 'Hyper-ribbon geometry',
-      desc: 'After Transtrum, Machta &amp; Sethna (2011) and Frederiksen, Jacobsen, Brown &amp; Sethna (2004). The empirical claim, restated for cross-potential errors: a small number of orthogonal modes account for most of the variance.',
-      accent: 'var(--accent-cyan)',
-    },
-  ]
-
-  return (
-    <section className="px-6 py-20 lg:py-28">
-      <div className="max-w-[1000px] mx-auto">
-        <Reveal>
-          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)]">What we build</div>
-        </Reveal>
-        <Reveal>
-          <h2 className="font-serif font-normal leading-[1.2] mb-5 text-[var(--slate-100)]" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-            A cross-potential view,<br />not another foundation model.
-          </h2>
-        </Reveal>
-        <Reveal>
-          <p className="font-light text-base leading-relaxed mb-14 text-[var(--slate-400)]" style={{ maxWidth: 600 }}>
-            We do not train a competitor to UMA, Orb, MACE-MP, or SevenNet-Omni. We measure them — together with the long tail of EAM, MEAM, ReaxFF, GAP, NequIP, and DeePMD potentials they are quietly being asked to replace — and write a citable error budget against the customer's own benchmark.
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {pillars.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.1}>
-              <div
-                className="rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1"
-                style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  borderTop: `2px solid ${p.accent}`,
-                }}
-              >
-                <h3 className="text-base font-semibold mb-3 text-[var(--slate-100)]">{p.title}</h3>
-                <p className="text-sm leading-relaxed text-[var(--slate-400)]">{p.desc}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Audit + Accelerator ─── */
-function AuditAccelerator() {
-  const moves: Array<{
-    Visual: FC<VisualProps>
-    label: string
-    title: string
-    body: string
-    accent: string
-  }> = [
-    {
-      Visual: PCAVisual,
-      label: 'Audit',
-      title: 'Localize the failure mode.',
-      body: 'Cross-potential PCA returns a participation ratio PR/m well below 1 across ≈900 potentials. The empirical signature of a hyper-ribbon — a low-dimensional ridge of dominant error directions — is the same low-effective-dimensionality signature that a maturing science of deep learning calls a "simple empirical law" of learning (Simon et al., 2026, §2.3, §2.5).',
-      accent: 'var(--lupine-400)',
-    },
-    {
-      Visual: RetrainingTargetVisual,
-      label: 'Accelerator',
-      title: 'Retrain only the modes that matter.',
-      body: 'Once the dominant error directions are named, the customer\'s MLIP fine-tune does not have to re-learn everything. Saxe et al. (2014) showed that linear networks acquire singular modes in order of magnitude; Bordelon, Atanasov & Pehlevan (2025) showed that capturing the top modes faster gives improved scaling laws. The hyper-ribbon Lupine measures is the explicit, low-rank target that compresses retraining onto the modes that actually move test loss.',
-      accent: 'var(--violet-300)',
-    },
-    {
-      Visual: FlywheelVisual,
-      label: 'Compounding',
-      title: 'The same data feeds both.',
-      body: 'Every audit run adds rows to the manifest. Every manifest row sharpens the ribbon. Every sharper ribbon gives a tighter retraining target — fewer parameters, fewer DFT calls, fewer compute-hours per fine-tune. This is the Datadog-then-DataRobot arc, applied to the science of MLIPs.',
-      accent: 'var(--accent-cyan)',
-    },
-  ]
-
-  return (
-    <section className="px-6 py-20 lg:py-28">
-      <div className="max-w-[1100px] mx-auto">
-        <Reveal>
-          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)]">Audit + accelerator</div>
-        </Reveal>
-        <Reveal>
-          <h2 className="font-serif font-normal leading-[1.2] mb-5 text-[var(--slate-100)]" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-            Learning mechanics for atomistic ML.
-          </h2>
-        </Reveal>
-        <Reveal>
-          <p className="font-light text-base leading-relaxed mb-14 text-[var(--slate-400)]" style={{ maxWidth: 700 }}>
-            Simon et al. (2026) — <em>There Will Be a Scientific Theory of Deep Learning</em> — name five lines of evidence for an emerging mechanics of learning: solvable settings, simplifying limits, simple empirical laws, hyperparameter disentanglement, and universal phenomena. The hyper-ribbon Lupine measures across published interatomic potentials is one specific instance of the third and fifth: a low-dimensional empirical regularity that recurs across very different systems. That makes the audit layer more than a measurement tool.
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {moves.map((m, i) => (
-            <Reveal key={m.label} delay={i * 0.08}>
-              <div
-                className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 h-full flex flex-col"
-                style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  borderTop: `2px solid ${m.accent}`,
-                }}
-              >
-                <m.Visual accent={m.accent} />
-                <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-3" style={{ color: m.accent }}>
-                  {m.label}
-                </div>
-                <h3 className="font-serif text-xl mb-3 text-[var(--slate-100)] italic">{m.title}</h3>
-                <p className="text-sm leading-relaxed text-[var(--slate-400)]">{m.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={0.3}>
-          <p className="mt-10 text-[13px] italic leading-relaxed text-center text-[var(--slate-500)]" style={{ maxWidth: 760, margin: '40px auto 0' }}>
-            "Where mechanistic interpretability aims to be the biology of deep learning, learning mechanics should aspire to be its physics" — Simon et al. (2026). For atomistic ML specifically, that physics is what cross-potential geometry already looks like.
-          </p>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Why Lupine ─── */
-function WhyLupine() {
-  const rows = [
-    ['Trains a new universal potential', 'Yes', 'Yes', 'No'],
-    ['Replaces DFT or LAMMPS', 'No', 'No', 'No'],
-    ['Cross-potential error manifold', '—', '—', '≈900 potentials'],
-    ['Per-trajectory error budget', '—', '—', 'Yes'],
-    ['Low-rank retraining target', '—', '—', 'Yes (PR/m < 0.9)'],
-    ['Synthesizability claims', '—', '—', 'No (Cheetham & Seshadri 2024)'],
-    ['License', 'Closed / Apache 2.0', 'Closed / Apache 2.0', 'Apache 2.0'],
-  ]
-
-  return (
-    <section className="px-6 py-20 lg:py-28">
-      <div className="max-w-[900px] mx-auto">
-        <Reveal>
-          <div className="text-[11px] font-bold uppercase tracking-[0.3em] mb-4 text-[var(--lupine-400)] text-center">Scope</div>
-          <h2 className="font-serif font-normal leading-[1.2] mb-12 text-[var(--slate-100)] text-center" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-            What this is, and what it is not
-          </h2>
-        </Reveal>
-
-        <Reveal>
-          <div className="overflow-x-auto rounded-2xl" style={{ border: '1px solid var(--slate-700)' }}>
-            <table className="w-full text-[13px]" style={{ borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ background: 'var(--slate-800)' }}>
-                  {['Capability', 'Foundation MLIPs (UMA, Orb, MACE-MP)', 'Custom DFT-trained MLIPs', 'Lupine'].map((h, i) => (
-                    <th
-                      key={h}
-                      className="text-left px-5 py-4 font-semibold text-[11px] uppercase tracking-widest border-b"
-                      style={{
-                        color: i === 3 ? 'var(--lupine-300)' : 'var(--slate-300)',
-                        background: i === 3 ? 'rgba(59,130,246,0.1)' : undefined,
-                        borderColor: 'var(--slate-700)',
-                      }}
-                    >
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row, ri) => (
-                  <tr key={ri} className="hover:bg-white/[0.02] transition-colors">
-                    {row.map((cell, ci) => (
-                      <td
-                        key={ci}
-                        className="px-5 py-3"
-                        style={{
-                          color: ci === 0 ? 'var(--slate-300)' : ci === 3 ? 'var(--lupine-300)' : 'var(--slate-500)',
-                          fontWeight: ci === 0 || ci === 3 ? 500 : 400,
-                          background: ci === 3 ? 'rgba(59,130,246,0.04)' : undefined,
-                          borderBottom: '1px solid rgba(255,255,255,0.03)',
-                        }}
-                      >
-                        {cell}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <p className="mt-8 text-[13px] italic leading-relaxed text-center text-[var(--slate-500)]" style={{ maxWidth: 720, margin: '32px auto 0' }}>
-            We do not replace DFT — DFT is the training signal. We do not replace LAMMPS, ASE, or KIM — these are integrators, and our analysis runs alongside them. "Stable on the convex hull" is not "synthesizable" (Cheetham &amp; Seshadri, <em>Chem. Mater.</em> 2024).
-          </p>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-/* ─── CTA ─── */
-function CTASection() {
-  return (
-    <section className="relative text-center px-6 py-24 lg:py-32">
-      <div
-        className="absolute inset-0 -z-[1] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(59,130,246,0.08), transparent 70%)' }}
-      />
-      <div className="max-w-[640px] mx-auto">
-        <Reveal>
-          <h2 className="font-serif font-normal leading-[1.2] mb-5 text-[var(--slate-100)]" style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}>
-            Three paths in.
-          </h2>
-        </Reveal>
-        <Reveal>
-          <p className="font-light text-base leading-relaxed mb-10 text-[var(--slate-400)]">
-            Researchers go to the science. Industry teams pilot a wedge. Investors find us in the footer.
-          </p>
-        </Reveal>
-        <Reveal>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link
-              to="/research"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
-              style={{ background: 'linear-gradient(135deg, var(--lupine-700), var(--lupine-600))' }}
-            >
-              Read the preprint
-            </Link>
-            <a
-              href="https://github.com/alexwelcing/lupine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
-              style={{
-                color: 'var(--slate-200)',
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid var(--slate-700)',
-              }}
-            >
-              atlas-distill on GitHub
-            </a>
-            <a
-              href="mailto:alexwelcing@gmail.com?subject=Lupine%20pilot"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
-              style={{
-                color: 'var(--slate-200)',
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid var(--slate-700)',
-              }}
-            >
-              Pilot with our team
-            </a>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Main Landing Page ─── */
-function LandingPage() {
-  return (
-    <div className="relative" style={{ color: 'var(--slate-200)' }}>
-      <Header />
-      <main>
-        <HeroSection />
-        <EvolutionFeature />
-        <StatsStrip />
-        <WhatWeBuild />
-        <AuditAccelerator />
-        <WhyLupine />
-        <CTASection />
-      </main>
-      <Footer />
+      <h2 className="text-4xl lg:text-5xl mb-6 leading-[1.1] text-[var(--on-surface)]">
+        {title}
+      </h2>
+      <p className="text-lg text-[var(--on-surface-variant)] leading-relaxed font-light">
+        {lead}
+      </p>
     </div>
   )
 }
