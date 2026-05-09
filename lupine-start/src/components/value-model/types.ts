@@ -75,4 +75,28 @@ export interface ValueModelData {
     weighted_ev_on_slice_m: number
     weighted_irr_5y: number
   }
+  thirty_year_arc: ArcPhase[]
+  matter_stack: StackLayer[]
+}
+
+export interface ArcPhase {
+  id: string
+  phase: number
+  start_year: number
+  end_year: number
+  name: string
+  capability: string
+  lupine_role: string
+  reference_programs: string
+  tier: string
+}
+
+export interface StackLayer {
+  id: string
+  layer_order: number
+  layer_name: string
+  description: string
+  examples: string
+  is_lupine: boolean
+  tier: string
 }

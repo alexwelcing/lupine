@@ -391,6 +391,8 @@ def main(check_only: bool = False) -> int:
     sector_rows = load("sector_value_unlock.csv")
     accel_rows = load("materials_acceleration_economics.csv")
     comps_rows = load("comparable_companies_v2.csv")
+    arc_rows = load("thirty_year_arc.csv")
+    stack_rows = load("matter_stack.csv")
 
     scenarios = build_fcf_streams(revenue_rows, dcf_input_rows)
     wacc_in = build_wacc_inputs(dcf_input_rows)
@@ -410,7 +412,7 @@ def main(check_only: bool = False) -> int:
     # Build a JSON payload the lupine-start /value-model route consumes
     json_payload = build_json_payload(
         revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows,
-        scenarios, wacc_in,
+        scenarios, wacc_in, arc_rows, stack_rows,
     )
     json_text = json.dumps(json_payload, indent=2) + "\n"
 
@@ -442,7 +444,7 @@ def main(check_only: bool = False) -> int:
     return 0
 
 
-def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in) -> dict:
+def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in, arc_rows, stack_rows) -> dict:
     """Single JSON document the React route consumes.
 
     Schema is stable; bump version + migrate consumers if changed.
@@ -596,6 +598,32 @@ def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, co
             "weighted_ev_on_slice_m": ev_total,
             "weighted_irr_5y": weighted_irr,
         },
+        "thirty_year_arc": [
+            {
+                "id": r["id"],
+                "phase": int(r["phase"]),
+                "start_year": int(r["start_year"]),
+                "end_year": int(r["end_year"]),
+                "name": r["name"],
+                "capability": r["capability"],
+                "lupine_role": r["lupine_role"],
+                "reference_programs": r["reference_programs"],
+                "tier": r["tier"],
+            }
+            for r in arc_rows
+        ],
+        "matter_stack": [
+            {
+                "id": r["id"],
+                "layer_order": int(r["layer_order"]),
+                "layer_name": r["layer_name"],
+                "description": r["description"],
+                "examples": r["examples"],
+                "is_lupine": r["is_lupine"].lower() == "true",
+                "tier": r["tier"],
+            }
+            for r in stack_rows
+        ],
     }
 
 

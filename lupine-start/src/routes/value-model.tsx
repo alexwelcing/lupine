@@ -10,17 +10,17 @@ import { SensitivityHeatmap } from '../components/value-model/SensitivityHeatmap
 import { CompsScatter } from '../components/value-model/CompsScatter'
 import { ReturnsWaterfall } from '../components/value-model/ReturnsWaterfall'
 import { Takeaway } from '../components/value-model/Takeaway'
+import { HorizonChart } from '../components/value-model/HorizonChart'
+import { StackDiagram } from '../components/value-model/StackDiagram'
 
 const data = valueModelData as ValueModelData
 
 // Section IDs match the ScrollSection `id` props below; keep in sync.
 const SECTIONS = [
-  { id: 'sector-unlock', label: 'Sector unlock' },
-  { id: 'capture', label: 'Capture %' },
-  { id: 'dcf', label: 'DCF' },
-  { id: 'sensitivity', label: 'Sensitivity' },
-  { id: 'comps', label: 'Comps' },
-  { id: 'returns', label: 'Returns' },
+  { id: 'arc', label: '30-yr arc' },
+  { id: 'stack', label: 'The stack' },
+  { id: 'why-now', label: 'Why now' },
+  { id: 'math', label: 'The math (floor)' },
   { id: 'ask', label: 'Ask' },
 ] as const
 
@@ -32,7 +32,7 @@ export const Route = createFileRoute('/value-model')({
       {
         name: 'description',
         content:
-          'Animated longform analysis of the Lupine investment thesis: $151B/yr 2030 sector unlock across compute, travel, and bio. Bottom-up DCF, sensitivity heatmap, comp set, probability-weighted returns. Numbers regenerable from business-plan/value-model/*.csv.',
+          'Step 1 of a real-world Replicator. Lupine is the audit substrate for the matter stack: trustworthy atomistic prediction, then generative matter, then closed-loop synthesis, then programmable matter — a 30-year arc. The investor math is the floor, not the ceiling.',
       },
     ],
   }),
@@ -47,13 +47,8 @@ function ValueModelPage() {
   const checkSize = data.round.check_size_usd_m
   const ownership = data.round.ownership_pct
   const fy30Total = data.sector_unlock.total[4]
-  // The materials_acceleration_economics CSV anchors a mature steady-state
-  // around $151B/yr (achieved as the three sectors fully ramp through ~2034).
-  // The sector_unlock series reaches $99B by FY30 and $139B by FY32 —
-  // those are the mid-ramp values. Be explicit so the hero KPI and the
-  // chain sentence stay honest with each other.
-  const matureUnlock = 151
-  const fy32Total = data.sector_unlock.total[6]
+  // (matureUnlock $151B and fy32Total $139B are referenced in the section
+  // copy via inline strings; see the math section narrative.)
   const fy30Rev = data.lupine.revenue_total_m[4]
   const fy30Attributed = data.lupine.attributed_unlock_m[4]
   const fy30Capture = data.lupine.capture_pct[4]
@@ -89,35 +84,7 @@ function ValueModelPage() {
         style={{ scaleX: scrollYProgress }}
       />
 
-      <Hero data={data} chainSentence={
-        <>
-          Three sectors gate on a{' '}
-          <strong className="text-[var(--on-surface)]">${matureUnlock}B/yr</strong>{' '}
-          mature opportunity (
-          <strong className="text-[var(--on-surface)]">${fy30Total.toFixed(0)}B</strong>{' '}
-          by FY30 mid-ramp, ${fy32Total.toFixed(0)}B by FY32){' '}
-          {' →'} Lupine captures{' '}
-          <strong className="text-[var(--on-surface)]">{fy30Capture.toFixed(1)}%</strong>{' '}
-          at maturity, the Synopsys-tier software-of-record band{' '}
-          {' →'}{' '}
-          <strong className="text-[var(--on-surface)]">${fy30Rev.toFixed(0)}M ARR</strong>{' '}
-          in FY30 base{' '}
-          {' →'} DCF says{' '}
-          <strong className="text-[var(--on-surface)]">
-            ${baseEv.toFixed(0)}M intrinsic
-          </strong>{' '}
-          {' →'}{' '}
-          <strong className="text-[var(--secondary)]">
-            +{baseSafetyPct.toFixed(0)}%
-          </strong>{' '}
-          margin of safety on the ${proposedPost}M proposed post{' '}
-          {' →'}{' '}
-          <strong className="text-[var(--secondary)]">
-            +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% probability-weighted IRR
-          </strong>{' '}
-          over a 5-year hold.
-        </>
-      } />
+      <Hero />
 
       {/* In-page anchor nav — sticky once you scroll past the hero. */}
       <nav
@@ -140,302 +107,250 @@ function ValueModelPage() {
         </div>
       </nav>
 
-      <ScrollSection id="sector-unlock" className="bg-[var(--surface-container-low)]">
+      {/* ============================================================
+          01 / The 30-year arc — phases the world is moving through
+          ============================================================ */}
+      <ScrollSection id="arc">
         <SectionHeader
-          eyebrow="01 / Sector value unlock"
+          eyebrow="01 / Where this is going"
           title={
             <>
-              Three sectors gate on{' '}
-              <em className="italic text-[var(--secondary)]">materials acceleration</em>.
-            </>
-          }
-          lead={
-            <>
-              We size the opportunity bottom-up, not as a software-seat TAM.
-              The mature steady-state across compute, travel, and bio is{' '}
-              <strong className="text-[var(--on-surface)]">
-                ~${matureUnlock}B/yr
-              </strong>{' '}
-              in accelerated economic activity. By FY30 the ramp reaches{' '}
-              <strong className="text-[var(--on-surface)]">
-                ~${fy30Total.toFixed(0)}B/yr
-              </strong>{' '}
-              and by FY32{' '}
-              <strong className="text-[var(--on-surface)]">
-                ${fy32Total.toFixed(0)}B/yr
-              </strong>
-              .
-            </>
-          }
-        />
-        <SectorUnlockChart data={data} />
-        <Takeaway label="The opportunity in one number">
-          The mature steady-state across compute, travel, and bio is{' '}
-          <strong className="text-[var(--on-surface)]">~$151B/yr</strong>{' '}
-          in accelerated economic activity. The ramp curve reaches{' '}
-          <strong className="text-[var(--on-surface)]">${fy30Total.toFixed(0)}B</strong>{' '}
-          by FY30 (compute ${data.sector_unlock.compute[4].toFixed(0)}B + travel{' '}
-          ${data.sector_unlock.travel[4].toFixed(0)}B + bio{' '}
-          ${data.sector_unlock.bio[4].toFixed(0)}B) and{' '}
-          <strong className="text-[var(--on-surface)]">${fy32Total.toFixed(0)}B</strong>{' '}
-          by FY32. This is the denominator Lupine's revenue scales against.
-        </Takeaway>
-        <FootnoteRow
-          items={[
-            {
-              label: 'Compute',
-              value: `$${data.sector_unlock.compute[4].toFixed(0)}B/yr 2030`,
-              note: 'CHIPS Act, EUV resist, 2D channels, advanced packaging',
-            },
-            {
-              label: 'Travel',
-              value: `$${data.sector_unlock.travel[4].toFixed(0)}B/yr 2030`,
-              note: 'IRA battery capex, solid-state, Si anode, eVTOL, AM qual',
-            },
-            {
-              label: 'Bio',
-              value: `$${data.sector_unlock.bio[4].toFixed(0)}B/yr 2030`,
-              note: 'Cell-therapy scaffolds, drug delivery, LNP, synbio, ag',
-            },
-          ]}
-        />
-      </ScrollSection>
-
-      <ScrollSection id="capture">
-        <SectionHeader
-          eyebrow="02 / Lupine attribution"
-          title={
-            <>
-              Capture rate converges to{' '}
-              <em className="italic text-[var(--secondary)]">2-3% mature</em>.
-            </>
-          }
-          lead={
-            <>
-              Lupine isn't the entire opportunity — it is the engine that
-              compresses the bottleneck. As penetration ramps from{' '}
-              {data.lupine.penetration_pct[0]}% to {data.lupine.penetration_pct[6]}% of edge
-              materials simulation, revenue scales with attributed unlock and
-              capture rate settles in the band Synopsys / Cadence earn against
-              semi design productivity.
-            </>
-          }
-        />
-        <CapturePctChart data={data} />
-        <Takeaway label="What this looks like in FY30">
-          Lupine touches{' '}
-          <strong className="text-[var(--on-surface)]">
-            {data.lupine.penetration_pct[4].toFixed(1)}%
-          </strong>{' '}
-          of edge materials simulation, attributed to roughly{' '}
-          <strong className="text-[var(--on-surface)]">
-            ${(fy30Attributed / 1000).toFixed(1)}B
-          </strong>{' '}
-          of value unlocked. From that, Lupine earns{' '}
-          <strong className="text-[var(--on-surface)]">${fy30Rev.toFixed(0)}M</strong>{' '}
-          ({fy30Capture.toFixed(1)}% capture) — the same software-of-record
-          ratio Synopsys and Cadence earn against semi design productivity.
-        </Takeaway>
-      </ScrollSection>
-
-      <ScrollSection id="dcf" className="bg-[var(--surface-container-low)]">
-        <SectionHeader
-          eyebrow="03 / DCF intrinsic value"
-          title={
-            <>
-              Base case{' '}
+              Step 1 of a{' '}
               <em className="italic text-[var(--secondary)]">
-                ${data.dcf.scenarios.base.enterprise_value.toFixed(0)}M
-              </em>{' '}
-              vs ${data.round.post_money_usd_m}M proposed post.
-            </>
-          }
-          lead={
-            <>
-              Mid-year discount, 7-year projection, Gordon-growth terminal.
-              Bear/base/bull WACCs span {(data.dcf.scenarios.bull.wacc * 100).toFixed(1)}%–
-              {(data.dcf.scenarios.bear.wacc * 100).toFixed(1)}%. Margin of safety vs
-              proposed post in base case:{' '}
-              <strong className="text-[var(--secondary)]">
-                +
-                {(
-                  (data.dcf.scenarios.base.enterprise_value /
-                    data.round.post_money_usd_m -
-                    1) *
-                  100
-                ).toFixed(1)}
-                %
-              </strong>
-              .
-            </>
-          }
-        />
-        <DcfScenarioChart data={data} />
-        <Takeaway label="Why this is a +121% margin of safety" tone="positive">
-          The DCF says Lupine is intrinsically worth{' '}
-          <strong className="text-[var(--on-surface)]">${baseEv.toFixed(0)}M</strong>{' '}
-          today on base-case projections; the seed prices the company at{' '}
-          <strong className="text-[var(--on-surface)]">${proposedPost}M</strong>.
-          Even the bear scenario (
-          ${data.dcf.scenarios.bear.enterprise_value.toFixed(0)}M, WACC{' '}
-          {(data.dcf.scenarios.bear.wacc * 100).toFixed(0)}%, no upside) clears
-          half the round; the bull scenario (
-          ${data.dcf.scenarios.bull.enterprise_value.toFixed(0)}M)
-          is where the asymmetric upside lives.
-        </Takeaway>
-      </ScrollSection>
-
-      <ScrollSection id="sensitivity">
-        <SectionHeader
-          eyebrow="04 / Sensitivity"
-          title={
-            <>
-              The asymmetry holds across the{' '}
-              <em className="italic text-[var(--secondary)]">±2% WACC band</em>.
-            </>
-          }
-          lead={
-            <>
-              Equity value at varying WACC × terminal growth on the base-case
-              FCFs. Even the worst grid corner (highest WACC, lowest g) clears
-              the proposed post-money. Center cell (highlighted) is the
-              model's actual base case.
-            </>
-          }
-        />
-        <SensitivityHeatmap data={data} />
-        <Takeaway
-          label={allClear ? 'Every cell clears the proposed post' : 'Watch this corner'}
-          tone={allClear ? 'positive' : 'caution'}
-        >
-          Across all 25 scenarios in the WACC × terminal-growth grid, equity
-          value ranges from{' '}
-          <strong className="text-[var(--on-surface)]">
-            ${worstCorner.toFixed(0)}M
-          </strong>{' '}
-          (worst corner) to{' '}
-          <strong className="text-[var(--on-surface)]">
-            ${bestCorner.toFixed(0)}M
-          </strong>{' '}
-          (best corner).{' '}
-          {allClear ? (
-            <>
-              The worst case is still{' '}
-              <strong className="text-[var(--secondary)]">
-                +{((worstCorner / proposedPost - 1) * 100).toFixed(0)}%
-              </strong>{' '}
-              over the ${proposedPost}M proposed post — the asymmetry holds
-              even when both inputs move against us.
-            </>
-          ) : (
-            <>
-              Cells below the dashed corner do not clear the ${proposedPost}M
-              proposed post, so the model is sensitive to WACC + g moving
-              together against base.
-            </>
-          )}
-        </Takeaway>
-      </ScrollSection>
-
-      <ScrollSection id="comps" className="bg-[var(--surface-container-low)]">
-        <SectionHeader
-          eyebrow="05 / Comparable companies"
-          title={
-            <>
-              At the simulation comp median{' '}
-              <em className="italic text-[var(--secondary)]">
-                {data.comps.sim_median_ev_rev.toFixed(1)}x
+                real-world Replicator
               </em>
-              , FY30 base ARR implies ~$
-              {(data.lupine.revenue_total_m[4] * data.comps.sim_median_ev_rev).toFixed(0)}M EV.
+              .
             </>
           }
           lead={
             <>
-              Lupine projects into the engineering-simulation cluster
-              (Synopsys, Cadence, ANSYS, Altair, Veeva), not the AI-for-bio
-              premium cluster. The cross-check on the DCF: at FY30 base ARR
-              applied at sim median, implied EV = $
-              {(data.lupine.revenue_total_m[4] * data.comps.sim_median_ev_rev).toFixed(0)}M, in
-              the same neighborhood as the DCF base ($
-              {data.dcf.scenarios.base.enterprise_value.toFixed(0)}M).
+              Matter is the last frontier of civilization-scale software.
+              Foundation models for matter exist. Self-driving labs are
+              shipping. Atomic-precision manufacturing is on a real research
+              roadmap. The decade ahead is the convergence — a generation
+              that can specify any molecule and have it manifest. Lupine
+              builds the audit substrate that lets the higher layers of that
+              stack be trusted with reality.
             </>
           }
         />
-        <CompsScatter data={data} />
-        <Takeaway label="Cross-check on the DCF" tone="positive">
-          Apply the engineering-simulation comp median{' '}
-          <strong className="text-[var(--on-surface)]">{simMedian.toFixed(1)}x</strong>{' '}
-          EV/Revenue to FY30 base ARR (${fy30Rev.toFixed(0)}M) and you get{' '}
-          <strong className="text-[var(--on-surface)]">
-            ${compImpliedEv.toFixed(0)}M EV
-          </strong>{' '}
-          — almost{' '}
-          <strong className="text-[var(--secondary)]">
-            {(compImpliedEv / baseEv).toFixed(1)}×
-          </strong>{' '}
-          the DCF base (${baseEv.toFixed(0)}M). Two methodologies, same
-          neighborhood — the DCF is conservative, not stretched.
+        <HorizonChart data={data} />
+        <Takeaway label="Why phase 1 is the load-bearing one" tone="positive">
+          Generative models for matter are roughly where AlphaFold-1 was in
+          2018: clearly working, not yet trustworthy. Without a layer that
+          names where atomistic predictions fail and feeds those failures
+          back into the next generation, phase 2 stacks generative
+          hallucination on top of unmeasured prediction error and the whole
+          pipeline gets worse, not better. Lupine ships the methodology that
+          makes phase 1 trustworthy — and the methodology compounds into
+          training signal for every layer above it.
         </Takeaway>
       </ScrollSection>
 
-      <ScrollSection id="returns">
+      {/* ============================================================
+          02 / The matter stack — Lupine's structural position
+          ============================================================ */}
+      <ScrollSection id="stack" className="bg-[var(--surface-container-low)]">
         <SectionHeader
-          eyebrow="06 / Probability-weighted returns"
+          eyebrow="02 / Where this sits"
           title={
             <>
-              Expected 5-year IRR{' '}
+              We are the{' '}
               <em className="italic text-[var(--secondary)]">
-                {data.returns.weighted_irr_5y >= 0 ? '+' : ''}
-                {(data.returns.weighted_irr_5y * 100).toFixed(1)}%
+                validation substrate
               </em>{' '}
-              on the slice.
+              for the matter stack.
             </>
           }
           lead={
             <>
-              50% probability of zero is conservative for a company already
-              shipping product with peer-reviewed methodology IP. The upper
-              tail (Moonshot + Asymmetric, 10% combined) is what funds the
-              seed price; the EV math is dominated by it.
+              The applications are visible. The generative models are
+              fashionable. The compute primitives are 30 years old and
+              improving. The audit layer in the middle — the one that catches
+              when a foundation model proposes a structure that physics
+              rejects, and that compresses the error into corrections — is
+              structurally underweight in the current ecosystem. That is the
+              layer Lupine ships.
             </>
           }
         />
-        <ReturnsWaterfall data={data} />
-        <Takeaway label="Where the IRR comes from" tone="positive">
-          The Moonshot + Asymmetric tail outcomes (combined{' '}
-          <strong className="text-[var(--on-surface)]">{upperTailProbPct.toFixed(0)}%</strong>{' '}
-          probability) contribute{' '}
-          <strong className="text-[var(--on-surface)]">${upperTail.toFixed(1)}M</strong>{' '}
-          of the ${totalEv.toFixed(1)}M weighted slice value —{' '}
-          <strong className="text-[var(--secondary)]">
-            {upperTailPct.toFixed(0)}% of the EV
-          </strong>
-          . The 50% probability of zero is fully baked in; the asymmetric
-          distribution is what funds the seed price.
+        <StackDiagram data={data} />
+        <Takeaway label="The structural bet" tone="positive">
+          Every other layer of the stack has well-funded incumbents racing.
+          Validation has none. The Lupine wager is that within 3-5 years the
+          field realizes "audit layer for atomistic ML" is its own discipline
+          — the way observability became its own discipline for software in
+          the 2010s — and the team that ships the canonical open-core engine
+          owns the ground floor.
         </Takeaway>
       </ScrollSection>
 
-      <ScrollSection id="ask" className="bg-[var(--surface-container-low)]">
+      {/* ============================================================
+          03 / Why now — the convergence is happening this decade
+          ============================================================ */}
+      <ScrollSection id="why-now">
         <SectionHeader
-          eyebrow="07 / Ask"
+          eyebrow="03 / Why this is the decade"
+          title={
+            <>
+              Three curves are{' '}
+              <em className="italic text-[var(--secondary)]">
+                bending at the same time
+              </em>
+              .
+            </>
+          }
+          lead={
+            <>
+              Foundation MLIPs cleared the science bar (sub-2 meV/atom on
+              broad benchmarks, 2024). WebGPU made browser-native scientific
+              compute real (2024-25). Sovereignty became a procurement
+              requirement (CHIPS Act $447B fab capex announced through 2030;
+              IRA $300B+ committed battery manufacturing). The audit layer
+              becomes infrastructure now or never.
+            </>
+          }
+        />
+        <div className="grid lg:grid-cols-3 gap-3 mt-2">
+          <Curve
+            label="Atomistic ML"
+            line="MACE → MatterSim → OMat24 → ?"
+            note="Foundation MLIPs went from research curiosity to deployable infrastructure in 36 months. The next 36 will move them into production design loops."
+          />
+          <Curve
+            label="Autonomous synthesis"
+            line="A-Lab → MGI 2031 → self-driving everywhere"
+            note="The Materials Genome Initiative's 20-year mandate (2011-2031) targets the closed-loop transition. We're 6 years from the deadline; the lab equipment exists."
+          />
+          <Curve
+            label="Sovereignty mandate"
+            line="CHIPS → IRA → MGI 2025 plan"
+            note="$700B+ in announced US capex needs US/allied-licensed materials infrastructure. Vienna-held VASP cannot defensibly serve this buyer base."
+          />
+        </div>
+      </ScrollSection>
+
+      {/* ============================================================
+          04 / The math — explicitly framed as the floor, not the ceiling
+          ============================================================ */}
+      <ScrollSection id="math" className="bg-[var(--surface-container-low)]">
+        <SectionHeader
+          eyebrow="04 / The math (the floor)"
+          title={
+            <>
+              If you scale us as a 2010s software company,{' '}
+              <em className="italic text-[var(--secondary)]">
+                this is the conservative shape
+              </em>
+              .
+            </>
+          }
+          lead={
+            <>
+              The math below treats Lupine like a vertical SaaS comp —
+              Synopsys / Cadence / Veeva — and prices in only the revenue
+              that flows from being the audit-and-compute substrate, not the
+              upside from being the platform under generative matter or
+              autonomous synthesis. Even on this floor, the DCF says{' '}
+              <strong className="text-[var(--on-surface)]">
+                ${baseEv.toFixed(0)}M intrinsic
+              </strong>{' '}
+              vs the ${proposedPost}M proposed post (
+              <strong className="text-[var(--secondary)]">
+                +{baseSafetyPct.toFixed(0)}%
+              </strong>{' '}
+              margin of safety) and{' '}
+              <strong className="text-[var(--secondary)]">
+                +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% probability-weighted IRR
+              </strong>
+              . The ceiling is in the previous two sections.
+            </>
+          }
+        />
+
+        {/* Sub-block A: sector unlock + capture */}
+        <div className="mt-2">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            A · Sector unlock + Lupine attribution
+          </div>
+          <SectorUnlockChart data={data} />
+          <CapturePctChart data={data} />
+          <Takeaway label="The math chain in numbers">
+            FY30 mid-ramp:{' '}
+            <strong className="text-[var(--on-surface)]">${fy30Total.toFixed(0)}B</strong>{' '}
+            of accelerated value across the three sectors. Lupine touches{' '}
+            <strong className="text-[var(--on-surface)]">
+              {data.lupine.penetration_pct[4].toFixed(1)}%
+            </strong>{' '}
+            of the edge, attributing{' '}
+            <strong className="text-[var(--on-surface)]">
+              ${(fy30Attributed / 1000).toFixed(1)}B
+            </strong>{' '}
+            of unlock; revenue ${fy30Rev.toFixed(0)}M ({fy30Capture.toFixed(1)}%
+            capture, the Synopsys/Cadence band).
+          </Takeaway>
+        </div>
+
+        {/* Sub-block B: DCF + sensitivity */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            B · DCF intrinsic + sensitivity
+          </div>
+          <DcfScenarioChart data={data} />
+          <SensitivityHeatmap data={data} />
+          <Takeaway
+            label={allClear ? 'Every WACC × g cell clears the proposed post' : 'Some cells breach the post'}
+            tone={allClear ? 'positive' : 'caution'}
+          >
+            Equity value across the 25-cell sensitivity grid spans{' '}
+            <strong className="text-[var(--on-surface)]">${worstCorner.toFixed(0)}M</strong>{' '}
+            (worst) to{' '}
+            <strong className="text-[var(--on-surface)]">${bestCorner.toFixed(0)}M</strong>{' '}
+            (best).{' '}
+            {allClear &&
+              `The worst case is still +${((worstCorner / proposedPost - 1) * 100).toFixed(0)}% over the $${proposedPost}M proposed post.`}
+          </Takeaway>
+        </div>
+
+        {/* Sub-block C: comps + returns */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            C · Comp set cross-check + probability-weighted returns
+          </div>
+          <CompsScatter data={data} />
+          <ReturnsWaterfall data={data} />
+          <Takeaway label="Where the IRR comes from" tone="positive">
+            At sim median {simMedian.toFixed(1)}x EV/Revenue, FY30 base ARR
+            implies ${compImpliedEv.toFixed(0)}M EV — {(compImpliedEv / baseEv).toFixed(1)}×
+            the DCF base. The Moonshot + Asymmetric tail outcomes (combined{' '}
+            {upperTailProbPct.toFixed(0)}% probability) contribute{' '}
+            {upperTailPct.toFixed(0)}% of the weighted EV; the 50% probability
+            of zero is fully baked in.
+          </Takeaway>
+        </div>
+      </ScrollSection>
+
+      {/* ============================================================
+          05 / Ask
+          ============================================================ */}
+      <ScrollSection id="ask">
+        <SectionHeader
+          eyebrow="05 / The ask"
           title={
             <>
               Seed{' '}
               <em className="italic text-[var(--secondary)]">
-                ${data.round.check_size_usd_m}M
+                ${checkSize}M
               </em>{' '}
-              at ${data.round.post_money_usd_m}M post, contingent on three
-              milestones.
+              at ${proposedPost}M post — to ship the audit substrate.
             </>
           }
           lead={
             <>
-              Federal direct contract in flight by month 12. Two paid pilots
-              converted by month 18. DFT engine alpha shipped by month 24. If
-              two of three land, Series A on terms early FY28 at $300M+ post on
-              revenue trajectory; if not, $1M SBIR Phase II is the contingency
-              bridge.
+              The capital funds the engineering and the methodology
+              publications that make phase 1 trustworthy. The milestones are
+              the markers that we&apos;re actually building toward the arc,
+              not just the math.
             </>
           }
         />
@@ -445,19 +360,19 @@ function ValueModelPage() {
               mo: 12,
               what: 'Federal direct contract in flight',
               unlocks:
-                'Non-dilutive runway extension + a credibility marker that triggers Series A on revenue trajectory',
+                'Non-dilutive runway + the credibility marker that lets us be cited as named tooling in DARPA / DOE / NSF proposals',
             },
             {
               mo: 18,
               what: 'Two paid pilots converted to production',
               unlocks:
-                'First $750K-$1.5M ACV recurring revenue + named industry references for the next sales cycle',
+                'First $750K-$1.5M ACV recurring + named industry references; signal that the audit layer is procurement-grade',
             },
             {
               mo: 24,
-              what: 'DFT engine alpha shipped + benchmark published',
+              what: 'DFT engine alpha + open benchmark published',
               unlocks:
-                'Closes the unified DFT → ML → MD pipeline gap; Series A on terms at $300M+ post on revenue + product completeness',
+                'Closes the unified DFT → ML → MD pipeline; the open benchmark becomes the canonical place to compare foundation MLIPs and the methodology paper compounds the IP',
             },
           ].map((m, i) => (
             <motion.div
@@ -483,15 +398,15 @@ function ValueModelPage() {
             </motion.div>
           ))}
         </div>
-        <Takeaway label="The bargain" tone="positive">
-          ${checkSize}M check, {(ownership * 100).toFixed(1)}% slice, three
-          milestones in 24 months. Hit two of three →{' '}
-          <strong className="text-[var(--on-surface)]">
-            +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% expected IRR
-          </strong>{' '}
-          over a 5-year hold, with the asymmetric tail providing{' '}
-          {upperTailPct.toFixed(0)}% of that EV. Miss two of three → flat
-          bridge round; SBIR Phase II ($1M, non-dilutive) is the contingency.
+        <Takeaway label="What this round is actually buying" tone="positive">
+          The 24-month plan is to ship phase 1 — the audit substrate that
+          phases 2-4 depend on — with peer-reviewed methodology, an open
+          benchmark, and a federal-grade reference deployment. The math
+          floor (${baseEv.toFixed(0)}M DCF intrinsic, +
+          {(data.returns.weighted_irr_5y * 100).toFixed(0)}% weighted IRR) is
+          what happens if Lupine becomes a respectable software-of-record
+          company. The ceiling is what happens if it becomes infrastructure
+          for the matter stack.
         </Takeaway>
       </ScrollSection>
 
@@ -506,16 +421,24 @@ function ValueModelPage() {
   )
 }
 
-function Hero({
-  data,
-  chainSentence,
-}: {
-  data: ValueModelData
-  chainSentence: React.ReactNode
-}) {
+function Hero() {
   return (
     <section className="relative pt-[160px] pb-[120px] px-6 lg:px-12 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.10),transparent_60%)]" />
+      {/* Ambient backdrop: a slow-rotating lattice gradient evoking
+          atomic structure, brand-tinted. */}
+      <div className="absolute inset-0">
+        <motion.div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(78,205,196,0.10),transparent_60%)]"
+          animate={{ scale: [1, 1.06, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(196,181,253,0.08),transparent_55%)]"
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </div>
+
       <div className="container mx-auto max-w-7xl relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -523,47 +446,103 @@ function Hero({
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-6">
-            Value model · animated longform · {data.generated_on}
+            World model · 30-year arc · audit substrate for matter
           </div>
-          <h1 className="text-5xl lg:text-7xl mb-8 leading-[1.05] max-w-5xl">
-            Materials acceleration is a{' '}
-            <em className="italic text-[var(--secondary)]">$151B/yr</em>{' '}
-            economic question. Lupine is the engine that compresses it.
+          <h1 className="text-5xl lg:text-7xl mb-8 leading-[1.02] max-w-5xl">
+            Step 1 of a real-world{' '}
+            <em className="italic text-[var(--secondary)]">Replicator</em>.
           </h1>
-          <p className="text-xl text-[var(--on-surface-variant)] max-w-3xl leading-relaxed font-light mb-8">
-            Compute. Travel. Bio. Three sectors with documented procurement
-            budgets, each gating on the same materials simulation bottleneck.
-            This is the bottom-up valuation: re-derived from sector
-            economics, computed in code, regenerable from the underlying CSVs.
+          <p className="text-xl text-[var(--on-surface-variant)] max-w-4xl leading-relaxed font-light mb-6">
+            Matter is the last frontier of civilization-scale software.
+            Foundation models for matter exist now. Self-driving labs are
+            shipping. Atomic-precision manufacturing is on a real research
+            roadmap. The decade ahead is the convergence — a generation that
+            can specify any molecule and have it manifest.
+          </p>
+          <p className="text-xl text-[var(--on-surface)] max-w-4xl leading-relaxed font-light mb-12">
+            Lupine builds the{' '}
+            <strong className="text-[var(--secondary)]">audit substrate</strong>{' '}
+            for that stack — the methodology that names where atomistic
+            predictions fail, and compresses the failure into closed-loop
+            self-correction. Without it, every layer above stacks
+            hallucination on top of unmeasured error.{' '}
+            <span className="text-[var(--on-surface-variant)]">
+              We are step 1.
+            </span>
           </p>
 
-          {/* The chain sentence: trace numbers end-to-end so investors don't
-              have to assemble them from the sections below. */}
-          <div className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] px-6 py-5 mb-10 max-w-4xl">
-            <div className="mono-label text-[var(--tertiary)] text-[10px] uppercase tracking-[0.25em] mb-2">
-              The argument in one sentence
-            </div>
-            <p className="text-base lg:text-lg text-[var(--on-surface-variant)] leading-relaxed">
-              {chainSentence}
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-x-8 gap-y-3 font-mono text-sm text-[var(--on-surface-variant)]">
-            <Kpi label="Mature unlock" value="$151B/yr" sub="3-sector steady-state" />
-            <Kpi
-              label="Base DCF EV"
-              value={`$${data.dcf.scenarios.base.enterprise_value.toFixed(0)}M`}
-              sub={`+${((data.dcf.scenarios.base.enterprise_value / data.round.post_money_usd_m - 1) * 100).toFixed(0)}% vs $${data.round.post_money_usd_m}M post`}
-            />
-            <Kpi
-              label="Weighted IRR"
-              value={`${data.returns.weighted_irr_5y >= 0 ? '+' : ''}${(data.returns.weighted_irr_5y * 100).toFixed(1)}%`}
-              sub="5-year hold"
-            />
+          <div className="flex flex-wrap gap-3 font-mono text-[10px] uppercase tracking-[0.2em]">
+            <HorizonChip label="Phase 1 · 2025-2030" highlight>Trustworthy prediction</HorizonChip>
+            <HorizonChip label="Phase 2 · 2028-2034">Generative matter</HorizonChip>
+            <HorizonChip label="Phase 3 · 2032-2042">Closed-loop synthesis</HorizonChip>
+            <HorizonChip label="Phase 4 · 2040-2055">Programmable matter</HorizonChip>
           </div>
         </motion.div>
       </div>
     </section>
+  )
+}
+
+function Curve({
+  label,
+  line,
+  note,
+}: {
+  label: string
+  line: string
+  note: string
+}) {
+  return (
+    <motion.div
+      className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] p-5 flex flex-col gap-3"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-15% 0px' }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--secondary)]">
+        {label}
+      </div>
+      <div className="text-sm font-mono text-[var(--on-surface)] leading-snug">
+        {line}
+      </div>
+      <div className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+        {note}
+      </div>
+    </motion.div>
+  )
+}
+
+function HorizonChip({
+  label,
+  children,
+  highlight = false,
+}: {
+  label: string
+  children: React.ReactNode
+  highlight?: boolean
+}) {
+  return (
+    <div
+      className="rounded border px-3 py-2 flex flex-col gap-0.5"
+      style={{
+        borderColor: highlight ? '#4ecdc4' : 'var(--outline-variant)',
+        background: highlight
+          ? 'linear-gradient(135deg, rgba(78,205,196,0.16), rgba(78,205,196,0.04))'
+          : 'var(--surface-container)',
+      }}
+    >
+      <span
+        style={{
+          color: highlight ? '#4ecdc4' : 'var(--on-surface-variant-mid)',
+        }}
+      >
+        {label}
+      </span>
+      <span className="text-[12px] tracking-normal normal-case font-sans text-[var(--on-surface)] font-medium">
+        {children}
+      </span>
+    </div>
   )
 }
 
@@ -591,45 +570,5 @@ function SectionHeader({
   )
 }
 
-function FootnoteRow({
-  items,
-}: {
-  items: { label: string; value: string; note: string }[]
-}) {
-  return (
-    <div className="grid md:grid-cols-3 gap-3 mt-6">
-      {items.map((it, i) => (
-        <motion.div
-          key={it.label}
-          className="rounded-md border border-[var(--outline-variant)] p-4 bg-[var(--surface-container)]"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-15% 0px' }}
-          transition={{ duration: 0.45, delay: 0.05 + i * 0.1 }}
-        >
-          <div className="text-xs uppercase tracking-wider text-[var(--on-surface-variant-mid)] mb-1">
-            {it.label}
-          </div>
-          <div className="text-2xl text-[var(--on-surface)] font-semibold mb-1">
-            {it.value}
-          </div>
-          <div className="text-xs text-[var(--on-surface-variant)] font-mono">
-            {it.note}
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  )
-}
-
-function Kpi({ label, value, sub }: { label: string; value: string; sub: string }) {
-  return (
-    <div>
-      <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--on-surface-variant-mid)]">
-        {label}
-      </div>
-      <div className="text-2xl text-[var(--on-surface)] font-semibold leading-tight">{value}</div>
-      <div className="text-xs text-[var(--on-surface-variant-mid)]">{sub}</div>
-    </div>
-  )
-}
+// FootnoteRow + Kpi were used in earlier hero/sector layouts; removed as
+// the Replicator-frame Hero replaces both with HorizonChip.

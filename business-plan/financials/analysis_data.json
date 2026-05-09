@@ -558,5 +558,98 @@
     ],
     "weighted_ev_on_slice_m": 41.6,
     "weighted_irr_5y": 0.3905950167030172
-  }
+  },
+  "thirty_year_arc": [
+    {
+      "id": "phase-1",
+      "phase": 1,
+      "start_year": 2025,
+      "end_year": 2030,
+      "name": "Trustworthy prediction",
+      "capability": "Foundation MLIPs hit DFT-equivalent accuracy at 100x speed; the bottleneck moves from 'can we simulate?' to 'can we trust it?'",
+      "lupine_role": "Lupine ships the audit substrate (atlas-distill engine + IMMI 2026 paper on prediction-error geometry) \u2014 the methodology that names where simulations fail and how to compress that failure into closed-loop self-correction.",
+      "reference_programs": "MACE, NequIP, MatterSim, ORB, OMat24, eqV2, SevenNet; OpenKIM benchmarks; Materials Project; CHIPS Act materials qual",
+      "tier": "verified"
+    },
+    {
+      "id": "phase-2",
+      "phase": 2,
+      "start_year": 2028,
+      "end_year": 2034,
+      "name": "Generative matter",
+      "capability": "Foundation models that propose novel matter configurations from desired properties; active-learning loops close the prediction-fitting gap",
+      "lupine_role": "The audit layer becomes existential. Generative models hallucinate; physical reality doesn't. Lupine's UQ + causal-error detection is what separates a generative proposal from a manufacturable molecule.",
+      "reference_programs": "DeepMind GNoME (Nov 2023, 381K stable structures); Microsoft MatterSim; Meta OMat24; FAIR-Chem; Mat3ra; XtalPi",
+      "tier": "disclosed"
+    },
+    {
+      "id": "phase-3",
+      "phase": 3,
+      "start_year": 2032,
+      "end_year": 2042,
+      "name": "Closed-loop autonomous synthesis",
+      "capability": "Self-driving laboratories that propose, synthesize, and characterize novel matter at the molecule and crystal scales; cycle time drops from years to days",
+      "lupine_role": "Lupine becomes the verification layer between generative proposal and experimental synthesis \u2014 every synthesis is a labeled training example for the next generation of foundation models.",
+      "reference_programs": "NSF Materials Innovation Platforms (MIPs); DARPA SURGE/PRIME; ARPA-E CATALCHEM-E; MGI 2031 mandate; Toyota TRI; A-Lab Berkeley",
+      "tier": "verified"
+    },
+    {
+      "id": "phase-4",
+      "phase": 4,
+      "start_year": 2040,
+      "end_year": 2055,
+      "name": "Programmable matter",
+      "capability": "Distributed atomic-precision manufacturing for narrow material classes (drugs polymers alloys semiconductors food substrates); the Replicator hardware exists for designed matter",
+      "lupine_role": "The audit substrate is now infrastructure \u2014 like TCP/IP for matter. Lupine's open-core position means the methodology compounds across every closed-loop design system on the planet.",
+      "reference_programs": "Drexler atomic-precision manufacturing roadmap; DARPA Atoms-to-Product (legacy); national lab additive manufacturing programs",
+      "tier": "directional"
+    }
+  ],
+  "matter_stack": [
+    {
+      "id": "applications",
+      "layer_order": 5,
+      "layer_name": "Application surfaces",
+      "description": "The end uses that pay for materials engineering today and that programmable matter will reshape over 30 years.",
+      "examples": "Drug design \u00b7 semiconductor process integration \u00b7 battery cell chemistry \u00b7 aerospace alloys \u00b7 cell therapy scaffolds \u00b7 food substrates \u00b7 regenerative medicine",
+      "is_lupine": false,
+      "tier": "verified"
+    },
+    {
+      "id": "generative",
+      "layer_order": 4,
+      "layer_name": "Generative matter",
+      "description": "Foundation models that propose novel matter configurations from a target property specification.",
+      "examples": "DeepMind GNoME \u00b7 MatterSim \u00b7 OMat24 \u00b7 GNN crystal generators \u00b7 diffusion models for molecular structures",
+      "is_lupine": false,
+      "tier": "verified"
+    },
+    {
+      "id": "audit",
+      "layer_order": 3,
+      "layer_name": "Validation & error-correction substrate",
+      "description": "Methodology + tooling that names where the layers above fail and compresses that failure into the layers below.",
+      "examples": "Lupine atlas-distill (Rust) \u00b7 sloppy-model geometry \u00b7 multi-fidelity UQ \u00b7 Pearl causal inference \u00b7 Simpson's-paradox detection \u00b7 OpenKIM-grade benchmarks \u00b7 IMMI 2026 paper",
+      "is_lupine": true,
+      "tier": "verified"
+    },
+    {
+      "id": "compute",
+      "layer_order": 2,
+      "layer_name": "Compute substrate",
+      "description": "Numerical primitives the audit and generative layers stand on.",
+      "examples": "Plane-wave DFT (VASP / QE / ABINIT / GPAW) \u00b7 LAMMPS-class MD \u00b7 ML-potential inference (MACE/NequIP/Allegro) \u00b7 WebGPU / GPU acceleration \u00b7 cloud HPC",
+      "is_lupine": false,
+      "tier": "verified"
+    },
+    {
+      "id": "physical",
+      "layer_order": 1,
+      "layer_name": "Physical reality",
+      "description": "The ground truth: experiments, synthesis, characterization.",
+      "examples": "Beamlines \u00b7 electron microscopes \u00b7 X-ray diffraction \u00b7 synthesis robotics \u00b7 DOE user facilities \u00b7 self-driving labs",
+      "is_lupine": false,
+      "tier": "verified"
+    }
+  ]
 }
