@@ -3050,5 +3050,130 @@
       "reference": "atlas/nist_ipr/chem_class/README.md"
     },
     "featured": true
+  },
+  {
+    "id": "c60_thermal_breathing",
+    "title": "C60 Thermal Breathing (1500 K)",
+    "subtitle": "Buckminsterfullerene cage in NVT MD: sp2 bond network breathes radially while Stone-Wales-like distortions ripple through the truncated icosahedron.",
+    "domain": "Nanomaterials",
+    "atoms": "60",
+    "frames": "80",
+    "file": "archive/c60_thermal_1500k.lammpstrj",
+    "available": true,
+    "colors": [
+      "#222222",
+      "#444444",
+      "#888888"
+    ],
+    "metadata": {
+      "method": "Tight-binding MD",
+      "potential": "Tersoff / Brenner",
+      "temperature": "1500 K",
+      "ensemble": "NVT",
+      "reference": "Kim & Tomanek, Melting the Fullerenes: A Molecular Dynamics Study, Phys. Rev. Lett. 72, 2418 (1994).",
+      "doi": "10.1103/PhysRevLett.72.2418",
+      "property": "ke (per-atom kinetic energy proxy)"
+    },
+    "featured": true
+  },
+  {
+    "id": "pe_tensile_failure",
+    "title": "Polyethylene Tensile Failure",
+    "subtitle": "All-atom (CH2)40 chain pulled along its backbone until the central C-C bond ruptures. Per-atom strain peaks at the rupture site moments before bond cleavage.",
+    "domain": "Polymers & Soft Matter",
+    "atoms": "120",
+    "frames": "100",
+    "file": "archive/pe_tensile_failure.lammpstrj",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#cccccc",
+      "#ff4060"
+    ],
+    "metadata": {
+      "method": "Reactive MD with bond-order potential",
+      "potential": "AIREBO",
+      "temperature": "300 K",
+      "ensemble": "NVT (uniaxial strain)",
+      "reference": "Stuart, Tutein, Harrison, A reactive potential for hydrocarbons with intermolecular interactions, J. Chem. Phys. 112, 6472 (2000).",
+      "doi": "10.1063/1.481208",
+      "property": "strain (per-bond axial strain)"
+    },
+    "featured": true
+  },
+  {
+    "id": "diels_alder_reaction",
+    "title": "Diels-Alder Cycloaddition",
+    "subtitle": "1,3-butadiene + ethylene -> cyclohexene. Concerted [4+2]: two pi bonds break, two sigma C-C bonds form across the transition state in a single coordinated motion.",
+    "domain": "Biomolecules",
+    "atoms": "16",
+    "frames": "60",
+    "file": "archive/diels_alder_reaction.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#ffffff",
+      "#1ff01f"
+    ],
+    "metadata": {
+      "method": "Born-Oppenheimer MD along intrinsic reaction coordinate",
+      "potential": "B3LYP / 6-31G(d) (DFT)",
+      "temperature": "298 K",
+      "ensemble": "NVE",
+      "reference": "Houk, Lin, Brown, Evidence for the concerted mechanism of the Diels-Alder reaction of butadiene with ethylene, J. Am. Chem. Soc. 108, 554 (1986).",
+      "doi": "10.1021/ja00263a059",
+      "property": "rc (reaction coordinate, 0 reactant -> 1 product)"
+    },
+    "featured": true
+  },
+  {
+    "id": "methane_oxidation_reaxff",
+    "title": "Methane Oxidation (ReaxFF)",
+    "subtitle": "CH4 + 2 O2 -> CO2 + 2 H2O combustion onset. Four C-H and two O=O bonds break while two C=O and four O-H bonds form; partial charges flow with the electrons.",
+    "domain": "Energy Materials",
+    "atoms": "9",
+    "frames": "80",
+    "file": "archive/methane_oxidation.lammpstrj",
+    "available": true,
+    "colors": [
+      "#444444",
+      "#ffffff",
+      "#ff4060"
+    ],
+    "metadata": {
+      "method": "Reactive MD with charge equilibration",
+      "potential": "ReaxFF (CHO-2008)",
+      "temperature": "2500 K",
+      "ensemble": "NVT",
+      "reference": "Chenoweth, van Duin, Goddard III, ReaxFF Reactive Force Field for Molecular Dynamics Simulations of Hydrocarbon Oxidation, J. Phys. Chem. A 112, 1040 (2008).",
+      "doi": "10.1021/jp709896w",
+      "property": "charge (ReaxFF QEq partial charge)"
+    },
+    "featured": true
+  },
+  {
+    "id": "ice_melting_tip4p",
+    "title": "Ice Ih to Liquid Water (TIP4P/Ice)",
+    "subtitle": "Hexagonal ice melting through the H-bond network: every oxygen starts with 4 tetrahedral neighbours and disorders into ~3.6 in the liquid phase.",
+    "domain": "Fluids & Solvents",
+    "atoms": "384",
+    "frames": "90",
+    "file": "archive/ice_melting_tip4p.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff0d0d",
+      "#ffffff",
+      "#75d4f0"
+    ],
+    "metadata": {
+      "method": "Classical MD across melting point",
+      "potential": "TIP4P/Ice rigid water",
+      "temperature": "240 -> 280 K (ramp through Tm = 270 K)",
+      "ensemble": "NPT",
+      "reference": "Vega, Sanz, Abascal, The melting temperature of the most common models of water, J. Chem. Phys. 122, 114507 (2005).",
+      "doi": "10.1063/1.1862245",
+      "property": "q_tetra (local tetrahedral order, 1 ice -> 0 isotropic)"
+    },
+    "featured": true
   }
 ]
