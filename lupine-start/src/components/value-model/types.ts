@@ -128,6 +128,18 @@ export interface StrategicAcquirer {
   tier: string
 }
 
+export interface QuantumUnlock {
+  id: string
+  unlock: string
+  materials_layer: string
+  classical_baseline_usd_t: number
+  quantum_uplift_x: number
+  quantum_addressable_usd_t: number
+  year_at_scale: number | null
+  reference_program: string
+  tier: string
+}
+
 export interface Ceiling {
   phase4_addressable_total_usd_b: number
   phase4_sectors: Phase4Sector[]
@@ -137,6 +149,10 @@ export interface Ceiling {
   weighted_probability_total: number
   strategic_acquirers: StrategicAcquirer[]
   median_acquisition_price_usd_b: number
+  quantum_unlocks: QuantumUnlock[]
+  quantum_total_addressable_usd_b: number
+  quantum_total_classical_baseline_usd_b: number
+  quantum_aggregate_uplift_x: number
 }
 
 export interface CredoLine {

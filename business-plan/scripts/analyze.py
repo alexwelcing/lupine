@@ -398,6 +398,7 @@ def main(check_only: bool = False) -> int:
     platform_comps_rows = load("platform_comps.csv")
     ceiling_rows = load("ceiling_scenarios.csv")
     acquirer_rows = load("strategic_acquirer_npv.csv")
+    quantum_rows = load("quantum_unlocks.csv")
 
     scenarios = build_fcf_streams(revenue_rows, dcf_input_rows)
     wacc_in = build_wacc_inputs(dcf_input_rows)
@@ -419,6 +420,7 @@ def main(check_only: bool = False) -> int:
         revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows,
         scenarios, wacc_in, arc_rows, stack_rows, credo_rows,
         p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows,
+        quantum_rows,
     )
     json_text = json.dumps(json_payload, indent=2) + "\n"
 
@@ -450,7 +452,7 @@ def main(check_only: bool = False) -> int:
     return 0
 
 
-def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in, arc_rows, stack_rows, credo_rows, p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows) -> dict:
+def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, comps_rows, scenarios, wacc_in, arc_rows, stack_rows, credo_rows, p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows, quantum_rows) -> dict:
     """Single JSON document the React route consumes.
 
     Schema is stable; bump version + migrate consumers if changed.
@@ -640,11 +642,11 @@ def build_json_payload(revenue_rows, dcf_input_rows, sector_rows, accel_rows, co
             }
             for r in sorted(credo_rows, key=lambda r: int(r["order"]))
         ],
-        "ceiling": build_ceiling(p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows),
+        "ceiling": build_ceiling(p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows, quantum_rows),
     }
 
 
-def build_ceiling(p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows) -> dict:
+def build_ceiling(p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_rows, quantum_rows) -> dict:
     """Aggregate the platform-tier (McKinsey-style) valuation payload."""
     # Phase-4 addressable value by sector, excluding the total row
     sectors = []
@@ -726,6 +728,32 @@ def build_ceiling(p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_row
             "tier": r["tier"],
         })
 
+    # Quantum unlocks (phase 5 multiplier layer)
+    quantum_unlocks = []
+    quantum_total_addressable_usd_b = 0.0
+    quantum_total_classical_baseline_usd_b = 0.0
+    quantum_aggregate_uplift_x = None
+    for r in quantum_rows:
+        if not r["id"]:
+            continue
+        if r["id"] == "total-quantum-addressable":
+            # Aggregate row: capture the totals + weighted uplift
+            quantum_total_addressable_usd_b = num(r["quantum_addressable_usd_t"], 0.0) * 1000
+            quantum_total_classical_baseline_usd_b = num(r["classical_baseline_usd_t"], 0.0) * 1000
+            quantum_aggregate_uplift_x = num(r["quantum_uplift_x"], 0.0)
+            continue
+        quantum_unlocks.append({
+            "id": r["id"],
+            "unlock": r["unlock"],
+            "materials_layer": r["materials_layer"],
+            "classical_baseline_usd_t": num(r["classical_baseline_usd_t"], 0.0),
+            "quantum_uplift_x": num(r["quantum_uplift_x"], 0.0),
+            "quantum_addressable_usd_t": num(r["quantum_addressable_usd_t"], 0.0),
+            "year_at_scale": int(r["year_at_scale"]) if r["year_at_scale"] else None,
+            "reference_program": r["reference_program"],
+            "tier": r["tier"],
+        })
+
     return {
         "phase4_addressable_total_usd_b": total_addressable,
         "phase4_sectors": sectors,
@@ -735,6 +763,10 @@ def build_ceiling(p4_value_rows, platform_comps_rows, ceiling_rows, acquirer_row
         "weighted_probability_total": weighted_p,
         "strategic_acquirers": acquirers,
         "median_acquisition_price_usd_b": median_acquisition_price,
+        "quantum_unlocks": quantum_unlocks,
+        "quantum_total_addressable_usd_b": quantum_total_addressable_usd_b,
+        "quantum_total_classical_baseline_usd_b": quantum_total_classical_baseline_usd_b,
+        "quantum_aggregate_uplift_x": quantum_aggregate_uplift_x,
     }
 
 

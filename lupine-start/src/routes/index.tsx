@@ -16,6 +16,7 @@ import { Credo } from '../components/value-model/Credo'
 import { PlatformValueChart } from '../components/value-model/PlatformValueChart'
 import { PlatformCompsTable } from '../components/value-model/PlatformCompsTable'
 import { CeilingScenarios } from '../components/value-model/CeilingScenarios'
+import { QuantumUnlocks } from '../components/value-model/QuantumUnlocks'
 
 const data = valueModelData as ValueModelData
 
@@ -273,7 +274,7 @@ function HomePage() {
             <>
               The ceiling is{' '}
               <em className="italic text-[var(--secondary)]">
-                ${data.ceiling.weighted_ev_conditional_usd_b.toFixed(0)}B
+                ${(data.ceiling.weighted_ev_conditional_usd_b / 1000).toFixed(1)}T
               </em>{' '}
               conditional weighted EV.
             </>
@@ -281,15 +282,28 @@ function HomePage() {
           lead={
             <>
               The math in section 06 prices Lupine as a software-of-record
-              company. This section prices Lupine as the audit substrate for
-              a multi-trillion-dollar civilizational unlock. Both
-              methodologies are defensible; they differ by{' '}
+              company on classical materials acceleration only. This section
+              prices Lupine as the audit substrate for a{' '}
               <strong className="text-[var(--on-surface)]">
-                roughly 600×
+                ~$
+                {(data.ceiling.quantum_total_addressable_usd_b / 1000).toFixed(0)}T/yr
               </strong>{' '}
-              because they answer different questions about what Lupine is.
-              We model the upside outcomes explicitly here so the numbers
-              are not implied.
+              quantum-enabled materials economy at phase-5 maturity —{' '}
+              {data.ceiling.quantum_aggregate_uplift_x.toFixed(0)}× the
+              classical baseline. The two methodologies differ by an order
+              of magnitude in addressable, an order of magnitude in capture
+              rate, and{' '}
+              <strong className="text-[var(--secondary)]">
+                ~
+                {Math.round(
+                  (data.ceiling.weighted_ev_conditional_usd_b * 1000) /
+                  data.dcf.scenarios.base.enterprise_value /
+                  1000,
+                ).toLocaleString()}
+                ,000×
+              </strong>{' '}
+              in implied conditional EV — because they answer fundamentally
+              different questions about what Lupine is.
             </>
           }
         />
@@ -328,39 +342,71 @@ function HomePage() {
           </Takeaway>
         </div>
 
-        {/* Sub-block C: outcome distribution */}
+        {/* Sub-block C: phase-5 quantum unlocks (the multiplier layer) */}
         <div className="mt-12">
           <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
-            C · The conditional outcome distribution
+            C · Phase-5 quantum unlocks (the multiplier layer)
           </div>
-          <CeilingScenarios data={data} />
-          <Takeaway label="What this number means" tone="positive">
-            $
-            {data.ceiling.weighted_ev_conditional_usd_b.toFixed(0)}B is the
-            probability-weighted EV across the five scenarios above,{' '}
-            <em>conditional on execution</em>. Multiply by 50% (the
-            unconditional probability the company doesn't fail outright) and
-            you get a $
-            {(data.ceiling.weighted_ev_conditional_usd_b / 2).toFixed(0)}B
-            unconditional ceiling. That is{' '}
+          <QuantumUnlocks data={data} />
+          <Takeaway label="Why quantum changes the magnitude, not the speed" tone="positive">
+            Phase-4 sized the addressable as $
+            {(data.ceiling.phase4_addressable_total_usd_b / 1000).toFixed(0)}T
+            of accelerated classical materials work. Phase-5 quantum unlocks
+            don&apos;t just speed that up — they enable economic regimes
+            classical chemistry could not produce: fault-tolerant quantum
+            computing substrate, room-temperature superconductors,
+            commercial fusion magnets, post-CMOS spintronics, single-molecule
+            quantum sensing, quantum-limit photovoltaics. The aggregate uplift
+            is{' '}
             <strong className="text-[var(--secondary)]">
-              ~{(
-                data.ceiling.weighted_ev_conditional_usd_b /
-                2 /
-                (data.dcf.scenarios.base.enterprise_value / 1000)
-              ).toFixed(0)}
-              ×
+              {data.ceiling.quantum_aggregate_uplift_x.toFixed(0)}×
             </strong>{' '}
-            the math floor's $
-            {data.dcf.scenarios.base.enterprise_value.toFixed(0)}M base DCF.
-            The math floor measures the wrong altitude.
+            the classical baseline (~$
+            {(data.ceiling.quantum_total_addressable_usd_b / 1000).toFixed(0)}T/yr
+            addressable), and the audit substrate is structurally
+            non-negotiable because quantum-classical hybrid simulations fail
+            in ways classical methods cannot detect.
           </Takeaway>
         </div>
 
-        {/* Sub-block D: strategic acquirers */}
+        {/* Sub-block D: outcome distribution */}
         <div className="mt-12">
           <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
-            D · Who pays for it before it gets there
+            D · The conditional outcome distribution
+          </div>
+          <CeilingScenarios data={data} />
+          <Takeaway label="What this number means" tone="positive">
+            ${(data.ceiling.weighted_ev_conditional_usd_b / 1000).toFixed(2)}T
+            (= ${data.ceiling.weighted_ev_conditional_usd_b.toFixed(0)}B) is
+            the probability-weighted EV across the seven scenarios above,{' '}
+            <em>conditional on execution</em>. Multiply by 50% (the
+            unconditional probability the company doesn&apos;t fail outright,
+            priced explicitly in the math floor) and you get a{' '}
+            <strong className="text-[var(--on-surface)]">
+              ~$
+              {(data.ceiling.weighted_ev_conditional_usd_b / 1000 / 2).toFixed(2)}T
+            </strong>{' '}
+            unconditional ceiling. That is{' '}
+            <strong className="text-[var(--secondary)]">
+              ~{Math.round(
+                (data.ceiling.weighted_ev_conditional_usd_b * 1000) /
+                2 /
+                data.dcf.scenarios.base.enterprise_value /
+                1000,
+              ).toLocaleString()}
+              ,000×
+            </strong>{' '}
+            the math floor&apos;s $
+            {data.dcf.scenarios.base.enterprise_value.toFixed(0)}M base DCF —
+            four orders of magnitude. The math floor measures the wrong
+            altitude.
+          </Takeaway>
+        </div>
+
+        {/* Sub-block E: strategic acquirers */}
+        <div className="mt-12">
+          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+            E · Who pays for it before it gets there
           </div>
           <div className="grid lg:grid-cols-2 gap-3">
             {data.ceiling.strategic_acquirers.map((a, i) => (
@@ -423,23 +469,26 @@ function HomePage() {
           }
           lead={
             <>
-              The ceiling above prices Lupine as the audit substrate for
-              programmable matter. This section prices Lupine as if the
-              ceiling never lands — a respectable Synopsys / Cadence /
-              Veeva-tier vertical software company on a 5-year horizon. Even
-              under this strictly-conservative frame, the DCF says{' '}
+              The ceiling above prices Lupine as the audit substrate for a
+              quantum-enabled materials economy. This section prices Lupine
+              as if neither the quantum unlocks nor the platform position
+              materialize — a respectable Synopsys / Cadence / Veeva-tier
+              vertical software company on a 5-year horizon, classical
+              materials only. Even under this strictly-conservative frame
+              the DCF clears: $
               <strong className="text-[var(--on-surface)]">
-                ${baseEv.toFixed(0)}M intrinsic
+                {baseEv.toFixed(0)}M intrinsic
               </strong>{' '}
               vs the ${proposedPost}M proposed post (
               <strong className="text-[var(--secondary)]">
                 +{baseSafetyPct.toFixed(0)}%
               </strong>{' '}
-              margin of safety) and{' '}
+              margin of safety),{' '}
               <strong className="text-[var(--secondary)]">
-                +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% probability-weighted IRR
+                +{(data.returns.weighted_irr_5y * 100).toFixed(0)}%
+                probability-weighted IRR
               </strong>
-              . The math clears on the floor; the upside lives above.
+              . The math clears on the floor; the upside is in section 05.
             </>
           }
         />
@@ -663,6 +712,7 @@ function Hero() {
             <HorizonChip label="Phase 2 · 2028-2034">Generative matter</HorizonChip>
             <HorizonChip label="Phase 3 · 2032-2042">Closed-loop synthesis</HorizonChip>
             <HorizonChip label="Phase 4 · 2040-2055">Programmable matter</HorizonChip>
+            <HorizonChip label="Phase 5 · 2050-2080">Quantum-enabled materials</HorizonChip>
           </div>
         </motion.div>
       </div>
