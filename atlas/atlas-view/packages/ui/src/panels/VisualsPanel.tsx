@@ -38,7 +38,7 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
     colormap, setColormap,
     atomScale, setAtomScale,
     showBonds, toggleBonds,
-    bondCutoff, setBondCutoff,
+    bondTolerance, setBondTolerance,
     bondColorMode, setBondColorMode,
     useGpuBonds, setUseGpuBonds,
     propertyEmissionStrength, setPropertyEmissionStrength,
@@ -281,7 +281,12 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
                 <OrbitalToggle label="Show Bonds" active={showBonds} onClick={toggleBonds} />
                 {showBonds && (
                   <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    <WaveformSlider label="Bond Cutoff (Å)" value={bondCutoff} min={1.0} max={4.0} step={0.1} onChange={setBondCutoff} format={v => v.toFixed(1)} />
+                    <WaveformSlider label="Bond Tolerance (Å)" value={bondTolerance} min={0.0} max={1.5} step={0.05} onChange={setBondTolerance} format={v => v.toFixed(2)} />
+                    <BondCutoffReadout tolerance={bondTolerance} />
+                    {/* Slider is now the tolerance knob: every per-pair
+                        cutoff is r_cov(A)+r_cov(B)+tolerance. The hard
+                        upper cap (formerly the slider value) auto-derives
+                        from the largest covalent pair in the loaded file. */}
                     <div>
                       <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 6 }}>Bond Color Mode</div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
@@ -475,6 +480,58 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
 
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Active per-pair cutoff readout — surfaces the math the slider drives so
+ * the user can see the link between "tolerance" and the bond cutoffs that
+ * actually fire. Walks the unique types in the current frame, computes
+ * cutoff = r_cov(A) + r_cov(B) + tolerance for every pair, and shows
+ * the min/max range. Two-element systems also render the single pair
+ * inline (e.g., "C–C: 1.97 Å") so common materials read clearly.
+ */
+function BondCutoffReadout({ tolerance }: { tolerance: number }) {
+  const file = useStore(s => s.file);
+  const frameIdx = useStore(s => s.frame);
+
+  const info = useMemo(() => {
+    if (!file) return null;
+    const f = file.trajectory.frames[frameIdx];
+    if (!f) return null;
+
+    const seen = new Set<number>();
+    for (let i = 0; i < f.natoms; i++) seen.add(f.types[i]);
+    const types = Array.from(seen);
+    if (types.length === 0) return null;
+
+    const radii = types.map((t) => ({ t, sym: getElementSpec(t).symbol, r: getElementSpec(t).radius }));
+    const pairs: Array<{ key: string; cutoff: number }> = [];
+    for (let i = 0; i < radii.length; i++) {
+      for (let j = i; j < radii.length; j++) {
+        const a = radii[i]; const b = radii[j];
+        const cutoff = a.r + b.r + tolerance;
+        const key = a.t <= b.t ? `${a.sym}–${b.sym}` : `${b.sym}–${a.sym}`;
+        pairs.push({ key, cutoff });
+      }
+    }
+    pairs.sort((p, q) => q.cutoff - p.cutoff); // longest first
+    return { pairs, count: types.length };
+  }, [file, frameIdx, tolerance]);
+
+  if (!info) return null;
+
+  const { pairs, count } = info;
+  const min = pairs[pairs.length - 1].cutoff;
+  const max = pairs[0].cutoff;
+  const inline = count <= 2
+    ? pairs.map(p => `${p.key} ${p.cutoff.toFixed(2)} Å`).join(' · ')
+    : `${pairs.length} pairs · ${min.toFixed(2)}–${max.toFixed(2)} Å`;
+
+  return (
+    <div style={{ fontSize: 10, color: '#94a3b8', lineHeight: 1.4, fontStyle: 'italic' }}>
+      Active cutoffs: {inline}
     </div>
   );
 }

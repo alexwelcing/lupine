@@ -18,6 +18,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 import { useStore } from './store';
+import { getElementSpec } from '@atlas/core';
 import * as THREE from 'three';
 import { sampleFlythrough, getSequenceDuration } from './flythrough';
 
@@ -198,9 +199,12 @@ function VideoCaptureLoop({
         }
       }
 
-      // Cinematic bond pulse (breathes in to reveal bonds, breathes out)
+      // Cinematic bond pulse (breathes in to reveal bonds, breathes out).
+      // Drives `bondTolerance` now that the tolerance is the user-facing
+      // bonding knob — pulse 0 → ~1.0 Å takes per-pair cutoffs from
+      // r_cov(A)+r_cov(B) up to a generous reveal, then back down.
       const pulse = Math.sin(progress * Math.PI); // 0 -> 1 -> 0
-      useStore.getState().setBondCutoff(Math.max(0, pulse * 2.5));
+      useStore.getState().setBondTolerance(Math.max(0, pulse * 1.0));
 
       // Subtle atom scaling
       useStore.getState().setAtomScale(0.85 + pulse * 0.15);
@@ -310,7 +314,7 @@ function VideoCaptureLoop({
 
           // Restore Cinematic Mutations
           if (originalStoreState.current) {
-            useStore.getState().setBondCutoff(originalStoreState.current.bondCutoff);
+            useStore.getState().setBondTolerance(originalStoreState.current.bondTolerance);
             useStore.getState().setAtomScale(originalStoreState.current.atomScale);
             useStore.getState().setFrame(originalStoreState.current.frame);
             originalStoreState.current = null;
@@ -349,7 +353,7 @@ export function ExportManager() {
   const originalPixelRatio = useRef<number>(1);
   const originalCameraPosition = useRef<THREE.Vector3 | null>(null);
   const originalSize = useRef<{ width: number; height: number; aspect: number } | null>(null);
-  const originalStoreState = useRef<{ bondCutoff: number; atomScale: number; frame: number } | null>(null);
+  const originalStoreState = useRef<{ bondTolerance: number; atomScale: number; frame: number } | null>(null);
 
   // ─── Image Export ─────────────────────────────────────────────
   const handleImageExport = useCallback(() => {
@@ -508,8 +512,23 @@ export function ExportManager() {
 
       // ── Build bond cylinders (if bonds are visible) ──
       if (state.showBonds && currentFrame.natoms < 50000) {
-        const bondCutoff = state.bondCutoff ?? 2.5;
-        const cutoffSq = bondCutoff * bondCutoff;
+        // Mirror the live viewer's element-aware test:
+        //   d ≤ r_cov(A) + r_cov(B) + tolerance
+        // GLB export was previously a flat distance threshold which gave
+        // wildly different bond sets from what the user saw on-screen
+        // (e.g., LLZO La–O at 2.6 Å was kept by the flat cutoff but
+        // dropped by the in-app element-aware filter). Use the same
+        // tolerance the slider controls so the export matches the view.
+        const tolerance = state.bondTolerance ?? 0.45;
+        const radiusForType = new Map<number, number>();
+        for (let i = 0; i < currentFrame.natoms; i++) {
+          const t = currentFrame.types[i];
+          if (!radiusForType.has(t)) radiusForType.set(t, getElementSpec(t).radius);
+        }
+        let maxR = 0;
+        radiusForType.forEach((r) => { if (r > maxR) maxR = r; });
+        const hardCapSq = (2 * maxR + tolerance + 0.5) ** 2; // outer cap on the O(N²) loop
+
         const bonds: [number, number][] = [];
 
         // Simple O(n²) for small systems, spatial hash for larger
@@ -518,12 +537,16 @@ export function ExportManager() {
           const xi = currentFrame.positions[i * 3];
           const yi = currentFrame.positions[i * 3 + 1];
           const zi = currentFrame.positions[i * 3 + 2];
+          const ri = radiusForType.get(currentFrame.types[i]) ?? 1.4;
           for (let j = i + 1; j < currentFrame.natoms; j++) {
             const dx = currentFrame.positions[j * 3] - xi;
             const dy = currentFrame.positions[j * 3 + 1] - yi;
             const dz = currentFrame.positions[j * 3 + 2] - zi;
             const distSq = dx * dx + dy * dy + dz * dz;
-            if (distSq < cutoffSq && distSq > 0.01) {
+            if (distSq <= 0.01 || distSq > hardCapSq) continue;
+            const rj = radiusForType.get(currentFrame.types[j]) ?? 1.4;
+            const cutoff = ri + rj + tolerance;
+            if (distSq < cutoff * cutoff) {
               bonds.push([i, j]);
             }
           }
@@ -659,7 +682,7 @@ export function ExportManager() {
     if (req.cinematic) {
       const state = useStore.getState();
       originalStoreState.current = {
-        bondCutoff: state.bondCutoff,
+        bondTolerance: state.bondTolerance,
         atomScale: state.atomScale,
         frame: state.frame,
       };

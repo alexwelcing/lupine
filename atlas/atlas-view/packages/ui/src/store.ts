@@ -104,7 +104,18 @@ export interface AppState {
   showCell: boolean;
   showAxes: boolean;
   showBonds: boolean;
+  /** Hard upper-cap on bond length (Å). Auto-derived per-frame from
+   *  `2·max(r_cov) + bondTolerance + slack` so the spatial-hash cell size
+   *  always covers what the element-aware filter would accept. Kept in the
+   *  store for URL round-tripping, but the slider no longer drives it
+   *  directly — `bondTolerance` is the user-facing knob. */
   bondCutoff: number;
+  /** Element-aware tolerance (Å) added on top of `r_cov(A) + r_cov(B)` when
+   *  deciding whether two atoms are bonded. This is now the slider's value:
+   *  raising it loosens every per-pair cutoff at once, lowering it tightens
+   *  them. 0.45 Å is the default Cordero-pair slack and matches the
+   *  worker's previous hard-coded value. */
+  bondTolerance: number;
   bondColorMode: 'type' | 'length' | 'energy' | 'screening';
   /** Use the WebGPU compute pipeline for bond detection. Falls back to the
    *  CPU spatial-hash worker when WebGPU is unavailable or init fails. */
@@ -280,6 +291,7 @@ export interface AppState {
   toggleAxes: () => void;
   toggleBonds: () => void;
   setBondCutoff: (cutoff: number) => void;
+  setBondTolerance: (tolerance: number) => void;
   setBondColorMode: (mode: AppState['bondColorMode']) => void;
   setUseGpuBonds: (v: boolean) => void;
   setGpuBondsStatus: (status: AppState['gpuBondsStatus']) => void;
@@ -337,6 +349,7 @@ const DEFAULTS = {
   showAxes: true,
   showBonds: false,
   bondCutoff: 3.2,
+  bondTolerance: 0.45,
   bondColorMode: 'type' as const,
   // Default ON: WebGPU bond detection has graceful CPU-worker fallback when
   // unsupported. Treating it as the primary path simplifies the user's first
@@ -536,6 +549,7 @@ export const useStore = create<AppState>()(
     toggleAxes: () => set(s => ({ showAxes: !s.showAxes })),
     toggleBonds: () => set(s => ({ showBonds: !s.showBonds })),
     setBondCutoff: (bondCutoff) => set({ bondCutoff }),
+    setBondTolerance: (bondTolerance) => set({ bondTolerance }),
     setBondColorMode: (bondColorMode) => set({ bondColorMode }),
     setUseGpuBonds: (useGpuBonds) => set({ useGpuBonds }),
     setGpuBondsStatus: (gpuBondsStatus) => set({ gpuBondsStatus }),
@@ -820,6 +834,7 @@ export const useStore = create<AppState>()(
       if (s.toneMapping !== 'aces')                    delta.tm = s.toneMapping;
       if (s.showBonds)                                 delta.bonds = 1;
       if (r(s.bondCutoff) !== 3.2)                     delta.bc = r(s.bondCutoff);
+      if (r(s.bondTolerance) !== 0.45)                 delta.bt = r(s.bondTolerance);
       if (s.renderStyle !== 'standard')                delta.rs = s.renderStyle;
       if (r(s.ambientLightIntensity) !== 0.35)         delta.ali = r(s.ambientLightIntensity);
       if (r(s.dirLightIntensity) !== 1.2)              delta.dli = r(s.dirLightIntensity);
@@ -862,6 +877,7 @@ export const useStore = create<AppState>()(
           toneMapping: s.tm ?? 'aces',
           showBonds: s.bonds === 1,
           bondCutoff: s.bc ?? 3.2,
+          bondTolerance: s.bt ?? 0.45,
           renderStyle: s.rs ?? 'standard',
           ambientLightIntensity: s.ali ?? 0.35,
           dirLightIntensity: s.dli ?? 1.2,

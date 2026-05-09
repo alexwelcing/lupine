@@ -81,6 +81,10 @@ interface BondsProps {
   colorProperty?: string;
   propRange?: [number, number];
   maxBondLength?: number;
+  /** Element-aware bonding tolerance (Å). Added to `r_cov(A) + r_cov(B)` per
+   *  pair when deciding whether two atoms are bonded. The user-facing slider
+   *  drives this. Default 0.45 mirrors the Cordero pair-radius slack. */
+  tolerance?: number;
   typeCutoffs?: Map<string, number>;
   periodic?: boolean;
   cellBounds?: [number, number, number, number, number, number];
@@ -114,6 +118,7 @@ export function Bonds({
   colorProperty,
   propRange,
   maxBondLength = 3.2,
+  tolerance = 0.45,
   typeCutoffs,
   periodic = false,
   cellBounds,
@@ -212,6 +217,11 @@ export function Bonds({
   // (sub-threshold motion) — bond topology doesn't change for ~0.05 Å
   // moves, so we keep the cached bondPairs and avoid the recompute.
   const lastDispatchPositionsRef = useRef<Float32Array | null>(null);
+  // Snapshot of the tolerance + max-bond-length we last dispatched on. The
+  // motion-skip path must NOT fire when the user has slid the tolerance
+  // knob; topology changes immediately even if atoms haven't moved.
+  const lastDispatchToleranceRef = useRef<number>(NaN);
+  const lastDispatchMaxBondLengthRef = useRef<number>(NaN);
 
   useEffect(() => {
     if (gpuActive) return; // GPU effect below owns dispatch in this mode.
@@ -246,7 +256,10 @@ export function Bonds({
     // sub-threshold jitter (covalent bonds are ≥0.6 Å, threshold is 0.05 Å).
     // Subsamples up to 1000 atoms for the displacement check so the gate
     // itself stays cheap on million-atom scenes.
-    if (isFrameChange && lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
+    const cpuParamsUnchanged =
+      lastDispatchToleranceRef.current === tolerance &&
+      lastDispatchMaxBondLengthRef.current === maxBondLength;
+    if (isFrameChange && cpuParamsUnchanged && lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
       const maxDisp = subsampledMaxDisplacement(frame.positions, lastDispatchPositionsRef.current);
       if (maxDisp < BOND_RECOMPUTE_DISP_THRESHOLD) {
         return;
@@ -286,7 +299,7 @@ export function Bonds({
         natoms: frame.natoms,
         maxBondLength,
         covalentRadii,
-        tolerance: 0.45,
+        tolerance,
         bonds: frame.bonds && frame.bonds.length > 0 ? new Int32Array(frame.bonds) : null,
         computeStats: !isFrameChange, // Skip expensive stats/sorting during rapid playback
       };
@@ -295,6 +308,8 @@ export function Bonds({
       // change can compare against them for motion-skip. Make our own copy
       // because posCopy is about to be transferred and detached.
       lastDispatchPositionsRef.current = new Float32Array(frame.positions);
+      lastDispatchToleranceRef.current = tolerance;
+      lastDispatchMaxBondLengthRef.current = maxBondLength;
 
       if (workerBusyRef.current) {
         pendingMsgRef.current = { msg, transferList };
@@ -307,7 +322,7 @@ export function Bonds({
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [frame, maxBondLength, gpuActive, visible, skipDetection]);
+  }, [frame, maxBondLength, tolerance, gpuActive, visible, skipDetection]);
 
   // ─── GPU dispatch ──────────────────────────────────────────────────
   // Runs only when gpuActive is true. Mirrors the worker effect's contract:
@@ -334,14 +349,22 @@ export function Bonds({
     // Motion polish — same skip rule as the CPU path. Atoms that haven't
     // meaningfully moved keep their cached bondPairs; we don't even
     // dispatch the GPU compute. Saves a queue submit + readback per frame
-    // during equilibrated playback.
-    if (lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
+    // during equilibrated playback. Tolerance changes also need a fresh
+    // dispatch (the user is dragging the slider — bonds should re-compute
+    // as cutoffs widen/narrow), so the skip only fires when tolerance and
+    // maxBondLength match the last dispatch as well.
+    const paramsUnchanged =
+      lastDispatchToleranceRef.current === tolerance &&
+      lastDispatchMaxBondLengthRef.current === maxBondLength;
+    if (paramsUnchanged && lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
       const maxDisp = subsampledMaxDisplacement(frame.positions, lastDispatchPositionsRef.current);
       if (maxDisp < BOND_RECOMPUTE_DISP_THRESHOLD) {
         return;
       }
     }
     lastDispatchPositionsRef.current = new Float32Array(frame.positions);
+    lastDispatchToleranceRef.current = tolerance;
+    lastDispatchMaxBondLengthRef.current = maxBondLength;
 
     let cancelled = false;
 
@@ -372,7 +395,7 @@ export function Bonds({
       types: typesArray,
       natoms: frame.natoms,
       covalentRadii,
-      tolerance: 0.45,
+      tolerance,
       maxBondLength,
       boxExtent,
     }).then((readback) => {
@@ -388,7 +411,7 @@ export function Bonds({
     });
 
     return () => { cancelled = true; };
-  }, [gpuActive, frame, maxBondLength, gpuCompute, onBondsUpdate, visible]);
+  }, [gpuActive, frame, maxBondLength, tolerance, gpuCompute, onBondsUpdate, visible]);
 
   // ─── Capacity management ───────────────────────────────────────────
   // Grow on demand (with headroom), shrink when sustainably under-utilized.
