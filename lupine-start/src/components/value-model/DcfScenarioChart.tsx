@@ -149,6 +149,8 @@ export function DcfScenarioChart({ data }: { data: ValueModelData }) {
     { scen: 'bull', label: 'Bull' },
   ]
 
+  const proposedPost = data.round.post_money_usd_m
+
   return (
     <div ref={ref} className="w-full">
       <div className="flex items-center gap-6 mb-6 flex-wrap text-sm text-[var(--on-surface-variant)]">
@@ -170,6 +172,15 @@ export function DcfScenarioChart({ data }: { data: ValueModelData }) {
       <div className="grid md:grid-cols-3 gap-3 mb-6">
         {evCards.map(({ scen, label }) => {
           const r = data.dcf.scenarios[scen]
+          const deltaPct = (r.enterprise_value / proposedPost - 1) * 100
+          // Bear is negative (downside), base/bull are positive (upside).
+          const deltaSign = deltaPct >= 0 ? '+' : ''
+          const deltaColor =
+            deltaPct >= 50
+              ? '#4ecdc4'
+              : deltaPct >= 0
+                ? '#3b82f6'
+                : '#f87171' // soft red for the downside scenario
           return (
             <motion.div
               key={scen}
@@ -189,6 +200,13 @@ export function DcfScenarioChart({ data }: { data: ValueModelData }) {
                 style={{ color: SCEN_COLORS[scen] }}
               >
                 ${r.enterprise_value.toFixed(1)}M
+              </div>
+              <div
+                className="text-sm font-semibold mb-1"
+                style={{ color: deltaColor }}
+              >
+                {deltaSign}
+                {deltaPct.toFixed(0)}% vs ${proposedPost}M post
               </div>
               <div className="text-xs text-[var(--on-surface-variant)] font-mono">
                 Σ PV FCF ${r.sum_pv_fcfs.toFixed(0)}M · TV ${r.pv_terminal.toFixed(0)}M

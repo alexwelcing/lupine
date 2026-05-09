@@ -9,6 +9,7 @@ import { DcfScenarioChart } from '../components/value-model/DcfScenarioChart'
 import { SensitivityHeatmap } from '../components/value-model/SensitivityHeatmap'
 import { CompsScatter } from '../components/value-model/CompsScatter'
 import { ReturnsWaterfall } from '../components/value-model/ReturnsWaterfall'
+import { Takeaway } from '../components/value-model/Takeaway'
 
 const data = valueModelData as ValueModelData
 
@@ -40,6 +41,47 @@ export const Route = createFileRoute('/value-model')({
 function ValueModelPage() {
   const { scrollYProgress } = useScroll()
 
+  // Pre-computed narrative numbers used in section headers + takeaways.
+  // Sourced from the JSON; kept here so the JSX stays readable.
+  const proposedPost = data.round.post_money_usd_m
+  const checkSize = data.round.check_size_usd_m
+  const ownership = data.round.ownership_pct
+  const fy30Total = data.sector_unlock.total[4]
+  // The materials_acceleration_economics CSV anchors a mature steady-state
+  // around $151B/yr (achieved as the three sectors fully ramp through ~2034).
+  // The sector_unlock series reaches $99B by FY30 and $139B by FY32 —
+  // those are the mid-ramp values. Be explicit so the hero KPI and the
+  // chain sentence stay honest with each other.
+  const matureUnlock = 151
+  const fy32Total = data.sector_unlock.total[6]
+  const fy30Rev = data.lupine.revenue_total_m[4]
+  const fy30Attributed = data.lupine.attributed_unlock_m[4]
+  const fy30Capture = data.lupine.capture_pct[4]
+  const baseEv = data.dcf.scenarios.base.enterprise_value
+  const baseSafetyPct = (baseEv / proposedPost - 1) * 100
+  const simMedian = data.comps.sim_median_ev_rev
+  const compImpliedEv = fy30Rev * simMedian
+  // Sensitivity grid corners (5x5; index [0][0] is highest WACC + lowest g)
+  const sensGrid = data.dcf.sensitivity.grid
+  const worstCorner = Math.min(...sensGrid.flat())
+  const bestCorner = Math.max(...sensGrid.flat())
+  const allClear = sensGrid.flat().every((v) => v > proposedPost)
+  // Returns: contribution of each outcome to weighted EV ($M on slice)
+  const outcomeContribs = data.returns.outcomes.map((o) => ({
+    name: o.name,
+    p: o.p,
+    contrib: o.p * o.exit_m * ownership,
+  }))
+  const totalEv = data.returns.weighted_ev_on_slice_m
+  const upperTail = outcomeContribs
+    .filter((o) => o.name === 'Moonshot' || o.name === 'Asymmetric tail')
+    .reduce((acc, o) => acc + o.contrib, 0)
+  const upperTailPct = (upperTail / totalEv) * 100
+  const upperTailProbPct =
+    outcomeContribs
+      .filter((o) => o.name === 'Moonshot' || o.name === 'Asymmetric tail')
+      .reduce((acc, o) => acc + o.p, 0) * 100
+
   return (
     <main className="relative flex-1 bg-[var(--surface)] text-[var(--on-surface)] overflow-x-hidden">
       <motion.div
@@ -47,7 +89,35 @@ function ValueModelPage() {
         style={{ scaleX: scrollYProgress }}
       />
 
-      <Hero data={data} />
+      <Hero data={data} chainSentence={
+        <>
+          Three sectors gate on a{' '}
+          <strong className="text-[var(--on-surface)]">${matureUnlock}B/yr</strong>{' '}
+          mature opportunity (
+          <strong className="text-[var(--on-surface)]">${fy30Total.toFixed(0)}B</strong>{' '}
+          by FY30 mid-ramp, ${fy32Total.toFixed(0)}B by FY32){' '}
+          {' →'} Lupine captures{' '}
+          <strong className="text-[var(--on-surface)]">{fy30Capture.toFixed(1)}%</strong>{' '}
+          at maturity, the Synopsys-tier software-of-record band{' '}
+          {' →'}{' '}
+          <strong className="text-[var(--on-surface)]">${fy30Rev.toFixed(0)}M ARR</strong>{' '}
+          in FY30 base{' '}
+          {' →'} DCF says{' '}
+          <strong className="text-[var(--on-surface)]">
+            ${baseEv.toFixed(0)}M intrinsic
+          </strong>{' '}
+          {' →'}{' '}
+          <strong className="text-[var(--secondary)]">
+            +{baseSafetyPct.toFixed(0)}%
+          </strong>{' '}
+          margin of safety on the ${proposedPost}M proposed post{' '}
+          {' →'}{' '}
+          <strong className="text-[var(--secondary)]">
+            +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% probability-weighted IRR
+          </strong>{' '}
+          over a 5-year hold.
+        </>
+      } />
 
       {/* In-page anchor nav — sticky once you scroll past the hero. */}
       <nav
@@ -81,21 +151,35 @@ function ValueModelPage() {
           }
           lead={
             <>
-              We size the opportunity bottom-up, not as a software-seat TAM. By
-              2030 the annual economic value of accelerated materials
-              qualification across compute, travel, and bio reaches{' '}
+              We size the opportunity bottom-up, not as a software-seat TAM.
+              The mature steady-state across compute, travel, and bio is{' '}
               <strong className="text-[var(--on-surface)]">
-                ~${data.sector_unlock.total[4].toFixed(0)}B/yr
-              </strong>
-              , growing to{' '}
-              <strong className="text-[var(--on-surface)]">
-                ${data.sector_unlock.total[6].toFixed(0)}B/yr
+                ~${matureUnlock}B/yr
               </strong>{' '}
-              by FY32.
+              in accelerated economic activity. By FY30 the ramp reaches{' '}
+              <strong className="text-[var(--on-surface)]">
+                ~${fy30Total.toFixed(0)}B/yr
+              </strong>{' '}
+              and by FY32{' '}
+              <strong className="text-[var(--on-surface)]">
+                ${fy32Total.toFixed(0)}B/yr
+              </strong>
+              .
             </>
           }
         />
         <SectorUnlockChart data={data} />
+        <Takeaway label="The opportunity in one number">
+          The mature steady-state across compute, travel, and bio is{' '}
+          <strong className="text-[var(--on-surface)]">~$151B/yr</strong>{' '}
+          in accelerated economic activity. The ramp curve reaches{' '}
+          <strong className="text-[var(--on-surface)]">${fy30Total.toFixed(0)}B</strong>{' '}
+          by FY30 (compute ${data.sector_unlock.compute[4].toFixed(0)}B + travel{' '}
+          ${data.sector_unlock.travel[4].toFixed(0)}B + bio{' '}
+          ${data.sector_unlock.bio[4].toFixed(0)}B) and{' '}
+          <strong className="text-[var(--on-surface)]">${fy32Total.toFixed(0)}B</strong>{' '}
+          by FY32. This is the denominator Lupine's revenue scales against.
+        </Takeaway>
         <FootnoteRow
           items={[
             {
@@ -138,6 +222,20 @@ function ValueModelPage() {
           }
         />
         <CapturePctChart data={data} />
+        <Takeaway label="What this looks like in FY30">
+          Lupine touches{' '}
+          <strong className="text-[var(--on-surface)]">
+            {data.lupine.penetration_pct[4].toFixed(1)}%
+          </strong>{' '}
+          of edge materials simulation, attributed to roughly{' '}
+          <strong className="text-[var(--on-surface)]">
+            ${(fy30Attributed / 1000).toFixed(1)}B
+          </strong>{' '}
+          of value unlocked. From that, Lupine earns{' '}
+          <strong className="text-[var(--on-surface)]">${fy30Rev.toFixed(0)}M</strong>{' '}
+          ({fy30Capture.toFixed(1)}% capture) — the same software-of-record
+          ratio Synopsys and Cadence earn against semi design productivity.
+        </Takeaway>
       </ScrollSection>
 
       <ScrollSection id="dcf" className="bg-[var(--surface-container-low)]">
@@ -173,6 +271,18 @@ function ValueModelPage() {
           }
         />
         <DcfScenarioChart data={data} />
+        <Takeaway label="Why this is a +121% margin of safety" tone="positive">
+          The DCF says Lupine is intrinsically worth{' '}
+          <strong className="text-[var(--on-surface)]">${baseEv.toFixed(0)}M</strong>{' '}
+          today on base-case projections; the seed prices the company at{' '}
+          <strong className="text-[var(--on-surface)]">${proposedPost}M</strong>.
+          Even the bear scenario (
+          ${data.dcf.scenarios.bear.enterprise_value.toFixed(0)}M, WACC{' '}
+          {(data.dcf.scenarios.bear.wacc * 100).toFixed(0)}%, no upside) clears
+          half the round; the bull scenario (
+          ${data.dcf.scenarios.bull.enterprise_value.toFixed(0)}M)
+          is where the asymmetric upside lives.
+        </Takeaway>
       </ScrollSection>
 
       <ScrollSection id="sensitivity">
@@ -194,6 +304,37 @@ function ValueModelPage() {
           }
         />
         <SensitivityHeatmap data={data} />
+        <Takeaway
+          label={allClear ? 'Every cell clears the proposed post' : 'Watch this corner'}
+          tone={allClear ? 'positive' : 'caution'}
+        >
+          Across all 25 scenarios in the WACC × terminal-growth grid, equity
+          value ranges from{' '}
+          <strong className="text-[var(--on-surface)]">
+            ${worstCorner.toFixed(0)}M
+          </strong>{' '}
+          (worst corner) to{' '}
+          <strong className="text-[var(--on-surface)]">
+            ${bestCorner.toFixed(0)}M
+          </strong>{' '}
+          (best corner).{' '}
+          {allClear ? (
+            <>
+              The worst case is still{' '}
+              <strong className="text-[var(--secondary)]">
+                +{((worstCorner / proposedPost - 1) * 100).toFixed(0)}%
+              </strong>{' '}
+              over the ${proposedPost}M proposed post — the asymmetry holds
+              even when both inputs move against us.
+            </>
+          ) : (
+            <>
+              Cells below the dashed corner do not clear the ${proposedPost}M
+              proposed post, so the model is sensitive to WACC + g moving
+              together against base.
+            </>
+          )}
+        </Takeaway>
       </ScrollSection>
 
       <ScrollSection id="comps" className="bg-[var(--surface-container-low)]">
@@ -222,6 +363,20 @@ function ValueModelPage() {
           }
         />
         <CompsScatter data={data} />
+        <Takeaway label="Cross-check on the DCF" tone="positive">
+          Apply the engineering-simulation comp median{' '}
+          <strong className="text-[var(--on-surface)]">{simMedian.toFixed(1)}x</strong>{' '}
+          EV/Revenue to FY30 base ARR (${fy30Rev.toFixed(0)}M) and you get{' '}
+          <strong className="text-[var(--on-surface)]">
+            ${compImpliedEv.toFixed(0)}M EV
+          </strong>{' '}
+          — almost{' '}
+          <strong className="text-[var(--secondary)]">
+            {(compImpliedEv / baseEv).toFixed(1)}×
+          </strong>{' '}
+          the DCF base (${baseEv.toFixed(0)}M). Two methodologies, same
+          neighborhood — the DCF is conservative, not stretched.
+        </Takeaway>
       </ScrollSection>
 
       <ScrollSection id="returns">
@@ -247,6 +402,18 @@ function ValueModelPage() {
           }
         />
         <ReturnsWaterfall data={data} />
+        <Takeaway label="Where the IRR comes from" tone="positive">
+          The Moonshot + Asymmetric tail outcomes (combined{' '}
+          <strong className="text-[var(--on-surface)]">{upperTailProbPct.toFixed(0)}%</strong>{' '}
+          probability) contribute{' '}
+          <strong className="text-[var(--on-surface)]">${upperTail.toFixed(1)}M</strong>{' '}
+          of the ${totalEv.toFixed(1)}M weighted slice value —{' '}
+          <strong className="text-[var(--secondary)]">
+            {upperTailPct.toFixed(0)}% of the EV
+          </strong>
+          . The 50% probability of zero is fully baked in; the asymmetric
+          distribution is what funds the seed price.
+        </Takeaway>
       </ScrollSection>
 
       <ScrollSection id="ask" className="bg-[var(--surface-container-low)]">
@@ -274,25 +441,58 @@ function ValueModelPage() {
         />
         <div className="mt-6 grid md:grid-cols-3 gap-3">
           {[
-            { mo: 12, what: 'Federal direct contract in flight' },
-            { mo: 18, what: 'Two paid pilots converted to production' },
-            { mo: 24, what: 'DFT engine alpha shipped + benchmark published' },
+            {
+              mo: 12,
+              what: 'Federal direct contract in flight',
+              unlocks:
+                'Non-dilutive runway extension + a credibility marker that triggers Series A on revenue trajectory',
+            },
+            {
+              mo: 18,
+              what: 'Two paid pilots converted to production',
+              unlocks:
+                'First $750K-$1.5M ACV recurring revenue + named industry references for the next sales cycle',
+            },
+            {
+              mo: 24,
+              what: 'DFT engine alpha shipped + benchmark published',
+              unlocks:
+                'Closes the unified DFT → ML → MD pipeline gap; Series A on terms at $300M+ post on revenue + product completeness',
+            },
           ].map((m, i) => (
             <motion.div
               key={m.mo}
-              className="rounded-md border border-[var(--outline-variant)] p-5 bg-[var(--surface-container)]"
+              className="rounded-md border border-[var(--outline-variant)] p-5 bg-[var(--surface-container)] flex flex-col gap-2"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-15% 0px' }}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.12 }}
             >
-              <div className="text-xs uppercase tracking-wider text-[var(--on-surface-variant-mid)] mb-2">
+              <div className="text-xs uppercase tracking-wider text-[var(--on-surface-variant-mid)]">
                 Month {m.mo}
               </div>
-              <div className="text-base text-[var(--on-surface)] font-medium">{m.what}</div>
+              <div className="text-base text-[var(--on-surface)] font-medium">
+                {m.what}
+              </div>
+              <div className="text-xs text-[var(--on-surface-variant)] leading-relaxed pt-1 border-t border-[var(--outline-variant)]/60">
+                <span className="font-mono uppercase tracking-wider text-[var(--secondary)] text-[10px]">
+                  Unlocks &nbsp;
+                </span>
+                {m.unlocks}
+              </div>
             </motion.div>
           ))}
         </div>
+        <Takeaway label="The bargain" tone="positive">
+          ${checkSize}M check, {(ownership * 100).toFixed(1)}% slice, three
+          milestones in 24 months. Hit two of three →{' '}
+          <strong className="text-[var(--on-surface)]">
+            +{(data.returns.weighted_irr_5y * 100).toFixed(0)}% expected IRR
+          </strong>{' '}
+          over a 5-year hold, with the asymmetric tail providing{' '}
+          {upperTailPct.toFixed(0)}% of that EV. Miss two of three → flat
+          bridge round; SBIR Phase II ($1M, non-dilutive) is the contingency.
+        </Takeaway>
       </ScrollSection>
 
       <footer className="px-6 lg:px-12 py-12 text-xs text-[var(--on-surface-variant-mid)] font-mono border-t border-[var(--outline-variant)]">
@@ -306,7 +506,13 @@ function ValueModelPage() {
   )
 }
 
-function Hero({ data }: { data: ValueModelData }) {
+function Hero({
+  data,
+  chainSentence,
+}: {
+  data: ValueModelData
+  chainSentence: React.ReactNode
+}) {
   return (
     <section className="relative pt-[160px] pb-[120px] px-6 lg:px-12 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.10),transparent_60%)]" />
@@ -330,12 +536,24 @@ function Hero({ data }: { data: ValueModelData }) {
             This is the bottom-up valuation: re-derived from sector
             economics, computed in code, regenerable from the underlying CSVs.
           </p>
+
+          {/* The chain sentence: trace numbers end-to-end so investors don't
+              have to assemble them from the sections below. */}
+          <div className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] px-6 py-5 mb-10 max-w-4xl">
+            <div className="mono-label text-[var(--tertiary)] text-[10px] uppercase tracking-[0.25em] mb-2">
+              The argument in one sentence
+            </div>
+            <p className="text-base lg:text-lg text-[var(--on-surface-variant)] leading-relaxed">
+              {chainSentence}
+            </p>
+          </div>
+
           <div className="flex flex-wrap gap-x-8 gap-y-3 font-mono text-sm text-[var(--on-surface-variant)]">
-            <Kpi label="Mature unlock" value="$151B/yr" sub="2030 across 3 sectors" />
+            <Kpi label="Mature unlock" value="$151B/yr" sub="3-sector steady-state" />
             <Kpi
               label="Base DCF EV"
               value={`$${data.dcf.scenarios.base.enterprise_value.toFixed(0)}M`}
-              sub={`vs $${data.round.post_money_usd_m}M proposed post`}
+              sub={`+${((data.dcf.scenarios.base.enterprise_value / data.round.post_money_usd_m - 1) * 100).toFixed(0)}% vs $${data.round.post_money_usd_m}M post`}
             />
             <Kpi
               label="Weighted IRR"
