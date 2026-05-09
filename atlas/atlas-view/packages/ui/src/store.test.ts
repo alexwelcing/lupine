@@ -44,6 +44,16 @@ describe('Store — Bond Settings', () => {
     getStoreState().setBondCutoff(3.5);
     expect(getStoreState().bondCutoff).toBe(3.5);
   });
+
+  it('sets bond tolerance (the slider new role)', () => {
+    // Default mirrors the worker's previous hard-coded slack so existing
+    // scenes detect the same bond set out of the box.
+    expect(getStoreState().bondTolerance).toBe(0.45);
+    getStoreState().setBondTolerance(0.2);
+    expect(getStoreState().bondTolerance).toBe(0.2);
+    getStoreState().setBondTolerance(1.0);
+    expect(getStoreState().bondTolerance).toBe(1.0);
+  });
 });
 
 describe('Store — Playback', () => {
@@ -106,6 +116,7 @@ describe('Store — URL Serialization', () => {
     const s = getStoreState();
     s.toggleBonds();
     s.setBondCutoff(3.2);
+    s.setBondTolerance(0.7);
 
     const encoded = s.encodeToURL();
     resetStore();
@@ -115,6 +126,7 @@ describe('Store — URL Serialization', () => {
 
     expect(restored.showBonds).toBe(true);
     expect(restored.bondCutoff).toBeCloseTo(3.2);
+    expect(restored.bondTolerance).toBeCloseTo(0.7);
   });
 });
 

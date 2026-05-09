@@ -2,13 +2,25 @@ import { ColormapName, ELEMENT_DATA, hexToRgb } from '@atlas/core';
 
 /** CPK-inspired element type colors — shared across Atoms and Bonds */
 export const TYPE_COLORS: Record<number, [number, number, number]> = {};
+/** Atom render radii (Å). Sourced from `ELEMENT_DATA[t].displayRadius`, which
+ *  is decoupled from the covalent radius used for bond detection. Atoms drawn
+ *  at full covalent radius hide the bond cylinder for tight pairs (C–C, Cu–Cu,
+ *  Au–Au, …): half_bond ≤ atom_radius, so the bond is buried inside the
+ *  spheres. The display radius is the ball-and-stick value — atom small enough
+ *  that bonds always poke out — while the bond detector keeps using the true
+ *  covalent radius via `getElementSpec(t).radius`. */
 export const TYPE_RADII: Record<number, number> = {};
+/** Covalent radii (Å) — kept available for any path that needs the true
+ *  covalent value (bond detection, coordination analysis). Mirrors the
+ *  `radius` field of `ELEMENT_DATA`. */
+export const TYPE_COVALENT_RADII: Record<number, number> = {};
 
 // Migrate global dictionary over to static objects for fast renderer lookups
 for (const [typeStr, data] of Object.entries(ELEMENT_DATA)) {
   const t = parseInt(typeStr, 10);
   TYPE_COLORS[t] = hexToRgb(data.color);
-  TYPE_RADII[t] = data.radius;
+  TYPE_RADII[t] = data.displayRadius;
+  TYPE_COVALENT_RADII[t] = data.radius;
 }
 
 export const DEFAULT_TYPE_COLOR: [number, number, number] = [0.6, 0.6, 0.6];

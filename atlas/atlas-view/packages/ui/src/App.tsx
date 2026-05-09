@@ -539,7 +539,7 @@ export default function App() {
   const showAxes = useStore(s => s.showAxes);
   const flythroughPreview = useStore(s => s.flythroughPreview);
   const showBonds = useStore(s => s.showBonds);
-  const bondCutoff = useStore(s => s.bondCutoff);
+  const bondTolerance = useStore(s => s.bondTolerance);
   const useGpuBonds = useStore(s => s.useGpuBonds);
   const bondColorMode = useStore(s => s.bondColorMode);
   const renderStyle = useStore(s => s.renderStyle);
@@ -694,6 +694,33 @@ export default function App() {
 
   const currentFrame = file?.trajectory.frames[frame];
   const totalFrames = file?.trajectory.totalFrames ?? 0;
+
+  // Auto-derive the spatial-hash upper cap from the element-aware cutoff so
+  // the bond detector can never under-size its search radius. Walks the
+  // unique types in the current frame, finds the largest pair of covalent
+  // radii, and adds tolerance + a 0.5 Å slack. Bonds.tsx queries the
+  // spatial hash with this radius, so any pair the element-aware filter
+  // would accept is in scope. Capped at 6 Å (sane upper bound for any
+  // single chemical bond) to keep the spatial hash from collapsing into a
+  // single cell on systems with rare-earth radii. This is what the slider
+  // previously controlled directly; the slider now drives `bondTolerance`
+  // and the cap follows automatically.
+  const effectiveBondCutoff = useMemo(() => {
+    if (!currentFrame || !currentFrame.types || currentFrame.natoms === 0) {
+      return Math.min(6, 2 * 1.4 + bondTolerance);
+    }
+    const seen = new Set<number>();
+    let maxR = 0;
+    for (let i = 0; i < currentFrame.natoms; i++) {
+      const t = currentFrame.types[i];
+      if (seen.has(t)) continue;
+      seen.add(t);
+      const r = getElementSpec(t).radius;
+      if (r > maxR) maxR = r;
+    }
+    if (maxR === 0) maxR = 1.4;
+    return Math.min(6, 2 * maxR + bondTolerance + 0.5);
+  }, [currentFrame, bondTolerance]);
 
   // Build cluster splats once streaming completes on a sufficiently
   // large frame. Skips small frames (cluster overhead doesn't pay off
@@ -1084,7 +1111,8 @@ export default function App() {
                     frame={currentFrame}
                     nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
                     interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
-                    maxBondLength={bondCutoff}
+                    maxBondLength={effectiveBondCutoff}
+                    tolerance={bondTolerance}
                     renderStyle={renderStyle}
                     colormap={colormap}
                     colorMode={colorMode}
