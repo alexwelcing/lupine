@@ -3184,7 +3184,6 @@
     "atoms": "21",
     "frames": "100000",
     "file": "gallery/open_data/rmd17_aspirin.lammpstrj",
-    "sourceUrl": "https://ndownloader.figshare.com/files/62265757",
     "available": true,
     "colors": [
       "#444444",
@@ -3201,7 +3200,8 @@
       "license": "CC0 (public domain)",
       "size_mb": 87.0
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17_aspirin.lammpstrj"
   },
   {
     "id": "rmd17_naphthalene",
@@ -3211,7 +3211,6 @@
     "atoms": "18",
     "frames": "100000",
     "file": "gallery/open_data/rmd17_naphthalene.lammpstrj",
-    "sourceUrl": "https://ndownloader.figshare.com/files/62265751",
     "available": true,
     "colors": [
       "#444444",
@@ -3228,7 +3227,8 @@
       "license": "CC0 (public domain)",
       "size_mb": 75.6
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17_naphthalene.lammpstrj"
   },
   {
     "id": "rmd17_paracetamol",
@@ -3238,7 +3238,6 @@
     "atoms": "20",
     "frames": "100000",
     "file": "gallery/open_data/rmd17_paracetamol.lammpstrj",
-    "sourceUrl": "https://ndownloader.figshare.com/files/62265760",
     "available": true,
     "colors": [
       "#444444",
@@ -3255,7 +3254,8 @@
       "license": "CC0 (public domain)",
       "size_mb": 82.6
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17_paracetamol.lammpstrj"
   },
   {
     "id": "rmd17_uracil",
@@ -3265,7 +3265,6 @@
     "atoms": "12",
     "frames": "100000",
     "file": "gallery/open_data/rmd17_uracil.lammpstrj",
-    "sourceUrl": "https://ndownloader.figshare.com/files/62265745",
     "available": true,
     "colors": [
       "#3050f8",
@@ -3282,7 +3281,8 @@
       "license": "CC0 (public domain)",
       "size_mb": 54.6
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17_uracil.lammpstrj"
   },
   {
     "id": "rmd17_ethanol",
@@ -3292,7 +3292,6 @@
     "atoms": "9",
     "frames": "100000",
     "file": "gallery/open_data/rmd17_ethanol.lammpstrj",
-    "sourceUrl": "https://ndownloader.figshare.com/files/62265733",
     "available": true,
     "colors": [
       "#444444",
@@ -3319,7 +3318,6 @@
     "atoms": "13",
     "frames": "120000",
     "file": "gallery/open_data/ws22_alanine.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/7032334/files/ws22_alanine.npz",
     "available": true,
     "colors": [
       "#444444",
@@ -3336,7 +3334,8 @@
       "license": "CC-BY-4.0",
       "size_mb": 68.8
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/ws22_alanine.lammpstrj"
   },
   {
     "id": "ws22_thymine",
@@ -3346,7 +3345,6 @@
     "atoms": "15",
     "frames": "120000",
     "file": "gallery/open_data/ws22_thymine.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/7032334/files/ws22_thymine.npz",
     "available": true,
     "colors": [
       "#444444",
@@ -3363,7 +3361,8 @@
       "license": "CC-BY-4.0",
       "size_mb": 77.3
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/ws22_thymine.lammpstrj"
   },
   {
     "id": "ws22_urocanic",
@@ -3373,7 +3372,6 @@
     "atoms": "16",
     "frames": "120000",
     "file": "gallery/open_data/ws22_urocanic.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/7032334/files/ws22_urocanic.npz",
     "available": true,
     "colors": [
       "#444444",
@@ -3390,7 +3388,8 @@
       "license": "CC-BY-4.0",
       "size_mb": 81.7
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/ws22_urocanic.lammpstrj"
   },
   {
     "id": "ws22_dmabn",
@@ -3400,7 +3399,6 @@
     "atoms": "21",
     "frames": "120000",
     "file": "gallery/open_data/ws22_dmabn.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/7032334/files/ws22_dmabn.npz",
     "available": true,
     "colors": [
       "#444444",
@@ -3417,7 +3415,8 @@
       "license": "CC-BY-4.0",
       "size_mb": 101.6
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/ws22_dmabn.lammpstrj"
   },
   {
     "id": "xxmd_azobenzene",
@@ -3427,7 +3426,6 @@
     "atoms": "24",
     "frames": "8370",
     "file": "gallery/open_data/xxmd_azobenzene.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/10393859/files/xxMD-main.zip",
     "available": true,
     "colors": [
       "#3050f8",
@@ -3454,7 +3452,6 @@
     "atoms": "26",
     "frames": "25560",
     "file": "gallery/open_data/xxmd_stilbene.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/10393859/files/xxMD-main.zip",
     "available": true,
     "colors": [
       "#444444",
@@ -3481,7 +3478,6 @@
     "atoms": "9",
     "frames": "27963",
     "file": "gallery/open_data/xxmd_malonaldehyde.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/10393859/files/xxMD-main.zip",
     "available": true,
     "colors": [
       "#ff0d0d",
@@ -3508,7 +3504,6 @@
     "atoms": "20",
     "frames": "24769",
     "file": "gallery/open_data/xxmd_diarylethene.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/10393859/files/xxMD-main.zip",
     "available": true,
     "colors": [
       "#ffd700",
@@ -3535,7 +3530,6 @@
     "atoms": "21",
     "frames": "100000",
     "file": "gallery/open_data/rmd17aq_aspirin.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/10048644/files/aspirin.zip",
     "available": true,
     "colors": [
       "#444444",
@@ -3552,7 +3546,8 @@
       "license": "CC-BY-4.0",
       "size_mb": 86.5
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17aq_aspirin.lammpstrj"
   },
   {
     "id": "rmd17aq_uracil",
@@ -3562,7 +3557,6 @@
     "atoms": "12",
     "frames": "100000",
     "file": "gallery/open_data/rmd17aq_uracil.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/10048644/files/uracil.zip",
     "available": true,
     "colors": [
       "#3050f8",
@@ -3579,7 +3573,8 @@
       "license": "CC-BY-4.0",
       "size_mb": 54.2
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17aq_uracil.lammpstrj"
   },
   {
     "id": "rmd17aq_salicylic",
@@ -3589,7 +3584,6 @@
     "atoms": "16",
     "frames": "100000",
     "file": "gallery/open_data/rmd17aq_salicylic.lammpstrj",
-    "sourceUrl": "https://zenodo.org/records/10048644/files/salicylic.zip",
     "available": true,
     "colors": [
       "#ff0d0d",
@@ -3606,6 +3600,7 @@
       "license": "CC-BY-4.0",
       "size_mb": 68.5
     },
-    "featured": true
+    "featured": true,
+    "sourceUrl": "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data/rmd17aq_salicylic.lammpstrj"
   }
 ]

@@ -2,11 +2,44 @@
 
 16 molecular dynamics trajectories sourced from open-data repositories,
 converted to LAMMPS dump format at full published fidelity (no frame
-downsampling). Each gallery entry has both a local `file` path *and* a
-`sourceUrl` pointing back at the original dataset record on Zenodo /
-figshare / Materials Cloud. The viewer prefers `sourceUrl` when present so
-deployments without these large files still work; the local copy is for
-fast loads on the canonical site.
+downsampling).
+
+## Hosting split
+
+| Tier | Count | Where it lives | When | Total |
+|---|---|---|---|---|
+| **Bundled** (≤50 MB) | 5 (4 xxMD + ethanol) | `apps/web/public/gallery/open_data/` (committed) | Loads from Vite dev server / nginx in the Cloud Run container | ~110 MB |
+| **GCS-hosted** (>50 MB) | 11 | `gs://shed-489901-atlas-artifacts/atlas/open_data/` (public, CORS-enabled) | Browser fetches directly from `storage.googleapis.com`; vite plugin `pruneGcsHostedAssets` strips them from `dist/` so the Cloud Run container stays slim | ~795 MB |
+
+The list of GCS-hosted files lives in [`.gcs-hosted.json`](./.gcs-hosted.json) — single source of truth shared by `.gitignore`, the Vite plugin, the upload script, and the pull script.
+
+Loader behavior (in `Gallery.tsx`):
+- **Dev** — always prefers the local file (fast offline reload).
+- **Prod** — prefers `sourceUrl` when set, falls back to local. The Vite plugin guarantees the local fallback isn't actually shipped, so prod always hits GCS for the 11 large files.
+
+## First-time setup (fresh clone)
+
+```bash
+# 1. Re-generate the bundled small files from open-data sources
+python3 scripts/convert_open_md_to_lammpstrj.py
+
+# 2. Pull the 11 large files from GCS for offline dev (anonymous HTTPS, no auth)
+bash scripts/gcs/pull_open_data.sh
+```
+
+## Updating trajectories / re-uploading to GCS
+
+```bash
+# Run from your workstation with `gcloud auth login` for project shed-489901
+bash scripts/gcs/upload_open_data.sh
+```
+
+The upload script:
+1. sets the bucket-level CORS policy from `scripts/gcs/cors.json` (idempotent),
+2. uploads each file with `Cache-Control: public, max-age=31536000, immutable`
+   (file contents are derived from immutable Zenodo / figshare records, so
+   browsers and the CDN can cache forever),
+3. sanity-checks the CORS response on a sample object.
 
 ## Source records
 

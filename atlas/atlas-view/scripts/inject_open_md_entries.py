@@ -57,28 +57,27 @@ XXMD_REF = {
     "ensemble": "NVE (excited state)",
 }
 
-# Source URLs (Zenodo direct, figshare ndownloader)
-SRC = {
-    "rmd17_aspirin":      "https://ndownloader.figshare.com/files/62265757",
-    "rmd17_naphthalene":  "https://ndownloader.figshare.com/files/62265751",
-    "rmd17_paracetamol":  "https://ndownloader.figshare.com/files/62265760",
-    "rmd17_uracil":       "https://ndownloader.figshare.com/files/62265745",
-    "rmd17_ethanol":      "https://ndownloader.figshare.com/files/62265733",
-    "ws22_alanine":       "https://zenodo.org/records/7032334/files/ws22_alanine.npz",
-    "ws22_thymine":       "https://zenodo.org/records/7032334/files/ws22_thymine.npz",
-    "ws22_urocanic":      "https://zenodo.org/records/7032334/files/ws22_urocanic.npz",
-    "ws22_dmabn":         "https://zenodo.org/records/7032334/files/ws22_dmabn.npz",
-    "rmd17aq_aspirin":    "https://zenodo.org/records/10048644/files/aspirin.zip",
-    "rmd17aq_uracil":     "https://zenodo.org/records/10048644/files/uracil.zip",
-    "rmd17aq_salicylic":  "https://zenodo.org/records/10048644/files/salicylic.zip",
-    # xxMD: outer zip; we bundle the locally-converted .lammpstrj. The
-    # remote URL points to the *original* zip — useful for citation; not
-    # directly fetchable as a single trajectory file.
-    "xxmd_azobenzene":     "https://zenodo.org/records/10393859/files/xxMD-main.zip",
-    "xxmd_stilbene":       "https://zenodo.org/records/10393859/files/xxMD-main.zip",
-    "xxmd_malonaldehyde":  "https://zenodo.org/records/10393859/files/xxMD-main.zip",
-    "xxmd_diarylethene":   "https://zenodo.org/records/10393859/files/xxMD-main.zip",
+# sourceUrl = parseable URL the browser can fetch directly. Only set for
+# the >50 MB trajectories that live in our public GCS bucket as
+# .lammpstrj. Files <=50 MB stay bundled and have no sourceUrl (the
+# upstream record is .npz/.zip which the in-browser parser can't read).
+# The original Zenodo / figshare record DOI lives in metadata.doi for
+# citation regardless of sourceUrl.
+GCS_BASE = "https://storage.googleapis.com/shed-489901-atlas-artifacts/atlas/open_data"
+GCS_HOSTED = {
+    "rmd17_aspirin", "rmd17_naphthalene", "rmd17_paracetamol", "rmd17_uracil",
+    "rmd17aq_aspirin", "rmd17aq_uracil", "rmd17aq_salicylic",
+    "ws22_alanine", "ws22_thymine", "ws22_urocanic", "ws22_dmabn",
 }
+def _src(eid: str) -> str | None:
+    return f"{GCS_BASE}/{eid}.lammpstrj" if eid in GCS_HOSTED else None
+SRC = {eid: _src(eid) for eid in (
+    "rmd17_aspirin", "rmd17_naphthalene", "rmd17_paracetamol", "rmd17_uracil",
+    "rmd17_ethanol",
+    "ws22_alanine", "ws22_thymine", "ws22_urocanic", "ws22_dmabn",
+    "xxmd_azobenzene", "xxmd_stilbene", "xxmd_malonaldehyde", "xxmd_diarylethene",
+    "rmd17aq_aspirin", "rmd17aq_uracil", "rmd17aq_salicylic",
+)}
 
 ENTRY_DEFS = [
     # rMD17 (CC0 — gas-phase DFT, force magnitude per atom)
@@ -169,7 +168,6 @@ def build_entry(eid: str, title: str, subtitle: str, domain: str,
         "atoms": str(n_atoms),
         "frames": str(n_frames),
         "file": rel_file,
-        "sourceUrl": SRC[eid],
         "available": True,
         "colors": colors,
         "metadata": {
@@ -184,6 +182,9 @@ def build_entry(eid: str, title: str, subtitle: str, domain: str,
         },
         "featured": True,
     }
+    src = SRC.get(eid)
+    if src:
+        entry["sourceUrl"] = src
     return entry
 
 
