@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ValueModelRouteImport } from './routes/value-model'
 import { Route as SlideshowRouteImport } from './routes/slideshow'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as ProofRouteImport } from './routes/proof'
@@ -25,11 +24,6 @@ import { Route as AtlasViewerRouteImport } from './routes/atlas-viewer'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
-const ValueModelRoute = ValueModelRouteImport.update({
-  id: '/value-model',
-  path: '/value-model',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SlideshowRoute = SlideshowRouteImport.update({
   id: '/slideshow',
   path: '/slideshow',
@@ -116,7 +110,6 @@ export interface FileRoutesByFullPath {
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
   '/slideshow': typeof SlideshowRoute
-  '/value-model': typeof ValueModelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -133,7 +126,6 @@ export interface FileRoutesByTo {
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
   '/slideshow': typeof SlideshowRoute
-  '/value-model': typeof ValueModelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -151,7 +143,6 @@ export interface FileRoutesById {
   '/proof': typeof ProofRoute
   '/research': typeof ResearchRoute
   '/slideshow': typeof SlideshowRoute
-  '/value-model': typeof ValueModelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -170,7 +161,6 @@ export interface FileRouteTypes {
     | '/proof'
     | '/research'
     | '/slideshow'
-    | '/value-model'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -187,7 +177,6 @@ export interface FileRouteTypes {
     | '/proof'
     | '/research'
     | '/slideshow'
-    | '/value-model'
   id:
     | '__root__'
     | '/'
@@ -204,7 +193,6 @@ export interface FileRouteTypes {
     | '/proof'
     | '/research'
     | '/slideshow'
-    | '/value-model'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -222,18 +210,10 @@ export interface RootRouteChildren {
   ProofRoute: typeof ProofRoute
   ResearchRoute: typeof ResearchRoute
   SlideshowRoute: typeof SlideshowRoute
-  ValueModelRoute: typeof ValueModelRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/value-model': {
-      id: '/value-model'
-      path: '/value-model'
-      fullPath: '/value-model'
-      preLoaderRoute: typeof ValueModelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/slideshow': {
       id: '/slideshow'
       path: '/slideshow'
@@ -350,7 +330,6 @@ const rootRouteChildren: RootRouteChildren = {
   ProofRoute: ProofRoute,
   ResearchRoute: ResearchRoute,
   SlideshowRoute: SlideshowRoute,
-  ValueModelRoute: ValueModelRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

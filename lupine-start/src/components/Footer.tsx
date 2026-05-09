@@ -35,7 +35,6 @@ export default function Footer() {
               <Link to="/about" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">About</Link>
               <Link to="/process" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Operating Report</Link>
               <Link to="/investor-relations" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Investor Brief</Link>
-              <Link to="/value-model" className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest hover:text-[var(--primary)] transition-colors no-underline">Value Model</Link>
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-mono text-[var(--on-surface-variant)] opacity-40 text-[10px] uppercase tracking-widest">Open work</span>

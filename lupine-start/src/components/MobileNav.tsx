@@ -33,7 +33,6 @@ const NAV_SECTIONS: NavSection[] = [
       { to: '/proof', label: 'Research Defense' },
       { to: '/process', label: 'Operating Report' },
       { to: '/investor-relations', label: 'Investor Brief' },
-      { to: '/value-model', label: 'Value Model' },
       { to: '/slideshow', label: 'Slideshow' },
       { to: '/ops', label: 'Ops Dashboard' },
     ],
