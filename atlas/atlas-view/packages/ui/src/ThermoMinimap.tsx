@@ -96,7 +96,7 @@ export function ThermoMinimap({
 
   if (!temps) {
     return (
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', position: 'relative' }}>
         <input
           type="range"
           min={0}
@@ -104,11 +104,39 @@ export function ThermoMinimap({
           step={0.01}
           value={currentFrame}
           onChange={(e) => onFrameChange(+e.target.value)}
-          style={{ width: '100%' }}
+          style={{ 
+            width: '100%',
+            height: 4,
+            background: '#1e293b',
+            appearance: 'none',
+            outline: 'none',
+            cursor: 'pointer',
+          }}
+          className="amped-slider"
         />
+        <style>{`
+          .amped-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 8px;
+            height: 20px;
+            background: #1edce0;
+            border-radius: 0;
+            cursor: pointer;
+            box-shadow: 0 0 10px 2px rgba(30, 220, 224, 0.5);
+            transition: transform 100ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
+          .amped-slider::-webkit-slider-thumb:hover {
+            transform: scaleY(1.2);
+            background: #f8fafc;
+            box-shadow: 0 0 15px 3px rgba(30, 220, 224, 0.8);
+          }
+        `}</style>
       </div>
     );
   }
+
+  // Calculate the x position of the thumb
+  const thumbX = (currentFrame / Math.max(1, totalFrames - 1)) * 100;
 
   return (
     <div
@@ -122,12 +150,28 @@ export function ThermoMinimap({
         borderRadius: 0,
         overflow: 'hidden',
         border: '1px solid #334155',
+        background: '#0a0a0c',
       }}
     >
       <canvas
         ref={canvasRef}
-        style={{ width: '100%', height: '100%', display: 'block' }}
+        style={{ width: '100%', height: '100%', display: 'block', opacity: 0.8 }}
       />
+      
+      {/* High-fidelity glowing thumb overlay */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: `${thumbX}%`,
+        width: 2,
+        background: '#1edce0',
+        boxShadow: '0 0 12px 2px rgba(30, 220, 224, 0.9), 0 0 4px 1px #fff',
+        transform: 'translateX(-50%)',
+        pointerEvents: 'none',
+        transition: 'left 50ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+      }} />
+
       {/* Invisible range input for accessibility + drag scrubbing */}
       <input
         type="range"

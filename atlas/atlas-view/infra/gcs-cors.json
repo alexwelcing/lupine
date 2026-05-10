@@ -1,0 +1,23 @@
+[
+  {
+    "origin": [
+      "https://glim.lupine.dev",
+      "https://atlas.lupine.dev",
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "http://localhost:5174"
+    ],
+    "method": ["GET", "HEAD", "OPTIONS"],
+    "responseHeader": [
+      "Content-Type",
+      "Content-Range",
+      "Content-Length",
+      "Accept-Ranges",
+      "ETag",
+      "Cache-Control",
+      "Content-Encoding",
+      "Access-Control-Allow-Origin"
+    ],
+    "maxAgeSeconds": 86400
+  }
+]

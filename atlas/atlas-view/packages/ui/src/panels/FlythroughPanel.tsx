@@ -15,7 +15,7 @@ import {
   EASING_LABELS, EASING_FUNCTIONS,
   type EasingType, type FlythroughKeyframe,
 } from '../flythrough';
-import { ToggleSpark } from '../rive';
+import { ToggleSpark, AnimatedSlider } from '../rive';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconClose = () => (
@@ -565,11 +565,10 @@ function KeyframeCard({ index, keyframe, isLast, expanded, activeSample, onToggl
           {!isLast && (
             <div>
               <div style={fieldLabel}>TRANSITION DURATION (s)</div>
-              <input
-                type="range" min="0.5" max="10" step="0.5"
+              <AnimatedSlider
+                min={0.5} max={10} step={0.5}
                 value={keyframe.transitionDuration}
                 onChange={e => onUpdate({ transitionDuration: parseFloat(e.target.value) })}
-                style={{ width: '100%', accentColor: '#f59e0b' }}
               />
               <div style={{ fontSize: 10, color: '#94a3b8', fontFamily: 'var(--font-mono)', textAlign: 'right' }}>
                 {keyframe.transitionDuration.toFixed(1)}s
@@ -580,11 +579,10 @@ function KeyframeCard({ index, keyframe, isLast, expanded, activeSample, onToggl
           {/* Hold duration */}
           <div>
             <div style={fieldLabel}>HOLD AT STOP (s)</div>
-            <input
-              type="range" min="0" max="5" step="0.25"
+            <AnimatedSlider
+              min={0} max={5} step={0.25}
               value={keyframe.holdDuration}
               onChange={e => onUpdate({ holdDuration: parseFloat(e.target.value) })}
-              style={{ width: '100%', accentColor: '#f59e0b' }}
             />
             <div style={{ fontSize: 10, color: '#94a3b8', fontFamily: 'var(--font-mono)', textAlign: 'right' }}>
               {keyframe.holdDuration.toFixed(2)}s

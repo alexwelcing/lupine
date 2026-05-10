@@ -7,7 +7,7 @@ import {
   WaveformSlider,
   IsotopeChip,
 } from '@lupine/ui';
-import { AnimatedOrbitalToggle as OrbitalToggle } from '../rive';
+import { AnimatedOrbitalToggle as OrbitalToggle, AnimatedSlider } from '../rive';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconClose = () => (
@@ -321,12 +321,13 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
                           <span style={{ color: '#f8fafc', fontSize: 12, fontWeight: 500 }}>{t.spec.symbol}</span>
                           <span style={{ color: '#64748b', fontSize: 10, fontFamily: 'var(--font-mono)' }}>({t.count})</span>
                         </div>
-                        <input
-                          type="range" min="0" max="2" step="0.1"
-                          value={atomTypeScales[t.type] ?? 1.0}
-                          onChange={(e) => setAtomTypeScale(t.type, parseFloat(e.target.value))}
-                          style={{ width: 80 }}
-                        />
+                        <div style={{ width: 80 }}>
+                          <AnimatedSlider
+                            min={0} max={2} step={0.1}
+                            value={atomTypeScales[t.type] ?? 1.0}
+                            onChange={(e) => setAtomTypeScale(t.type, parseFloat(e.target.value))}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
