@@ -10,6 +10,7 @@ import { subscribeWithSelector } from 'zustand/middleware';
 import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
+import { MATERIAL_SCENES, getScene, DEFAULT_SCENE_ID } from '@atlas/scene/materials';
 
 /** A pinned geometric measurement: distance for 2 atoms, angle for 3,
  *  dihedral for 4. Persists in the store separate from selectedAtoms so
@@ -86,6 +87,12 @@ export interface AppState {
   loading: boolean;
   loadProgress: number;
   error: string | null;
+  streamingTelemetry: {
+    bytesTransferred: number;
+    cacheHits: number;
+    cacheMisses: number;
+    cacheSize: number;
+  } | null;
 
   // ─── Visualization ───
   frame: number;
@@ -139,11 +146,30 @@ export interface AppState {
   backgroundVideo: string | null;
   environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none';
   materialPreset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
+  /** Active material scene ID. Scenes coordinate material + lighting + env
+   *  + post into a holistic authored look. */
+  materialScene: string;
+  /** 0 = pure per-element identity, 1 = full preset override. Scenes set
+   *  this; user can refine with a slider. */
+  materialIntensity: number;
 
   // ─── Lighting & Texture ───
   ambientLightIntensity: number;
   dirLightIntensity: number;
+  /** Rim / backlight intensity. Adds a backlit edge for depth separation. */
+  rimLightIntensity: number;
   atomTexture: 'none' | 'scratched' | 'noise';
+  surfaceRoughness: number;
+  surfacePolish: number;
+  surfaceClearcoat: number;
+  keyLightAzimuth: number;
+  keyLightElevation: number;
+  fillLightAzimuth: number;
+  fillLightElevation: number;
+  rimLightAzimuth: number;
+  rimLightElevation: number;
+  fillLightColor: string;
+  rimLightColor: string;
 
   // ─── Effects ───
   /** Active postprocess preset. The renderer reads this. Individual ssao /
@@ -262,9 +288,10 @@ export interface AppState {
   setViewportMode: (mode: AppState['viewportMode']) => void;
 
   // ─── Actions ───
-  setFile: (file: LoadedFile) => void;
+  setFile: (file: LoadedFile | null) => void;
   setLoading: (loading: boolean, progress?: number) => void;
   setError: (error: string | null) => void;
+  setStreamingTelemetry: (stats: AppState['streamingTelemetry']) => void;
   setFrame: (frame: number) => void;
   nextFrame: () => void;
   prevFrame: () => void;
@@ -305,9 +332,24 @@ export interface AppState {
   setBackgroundVideo: (videoUrl: string | null) => void;
   setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none') => void;
   setMaterialPreset: (preset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic') => void;
+  setMaterialScene: (sceneId: string) => void;
+  setMaterialIntensity: (v: number) => void;
+  applyMaterialScene: (sceneId: string) => void;
   setAmbientLightIntensity: (val: number) => void;
   setDirLightIntensity: (val: number) => void;
+  setRimLightIntensity: (val: number) => void;
   setAtomTexture: (tex: 'none' | 'scratched' | 'noise') => void;
+  setSurfaceRoughness: (val: number) => void;
+  setSurfacePolish: (val: number) => void;
+  setSurfaceClearcoat: (val: number) => void;
+  setKeyLightAzimuth: (val: number) => void;
+  setKeyLightElevation: (val: number) => void;
+  setFillLightAzimuth: (val: number) => void;
+  setFillLightElevation: (val: number) => void;
+  setRimLightAzimuth: (val: number) => void;
+  setRimLightElevation: (val: number) => void;
+  setFillLightColor: (val: string) => void;
+  setRimLightColor: (val: string) => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
   clearFile: () => void;
   reset: () => void;
@@ -338,6 +380,7 @@ const DEFAULTS = {
   loading: false,
   loadProgress: 0,
   error: null,
+  streamingTelemetry: null,
   frame: 0,
   colorScheme: 'element' as ColorSchemeId,
   atomColorSource: 'element' as AtomColorSource,
@@ -369,10 +412,24 @@ const DEFAULTS = {
   backgroundVideo: null as string | null,
   environmentPreset: 'studio' as const,
   materialPreset: 'default' as const,
+  materialScene: DEFAULT_SCENE_ID,
+  materialIntensity: 0.0,
 
-  ambientLightIntensity: 0.35,
-  dirLightIntensity: 1.2,
+  ambientLightIntensity: 0.5,
+  dirLightIntensity: 1.5,
+  rimLightIntensity: 0.3,
   atomTexture: 'none' as const,
+  surfaceRoughness: 0.0,
+  surfacePolish: 0.0,
+  surfaceClearcoat: 0.0,
+  keyLightAzimuth: 40,
+  keyLightElevation: 45,
+  fillLightAzimuth: -120,
+  fillLightElevation: 10,
+  rimLightAzimuth: 160,
+  rimLightElevation: 30,
+  fillLightColor: '#8888ff',
+  rimLightColor: '#ffffff',
 
   // ─── Effects Defaults ───
   postprocessPreset: 'studio' as const,
@@ -472,12 +529,10 @@ export const useStore = create<AppState>()(
       });
     },
 
-    setLoading: (loading, progress) => set({
-      loading,
-      loadProgress: progress ?? (loading ? 0 : 1),
-    }),
+    setLoading: (loading, progress) => set((s) => ({ loading, loadProgress: progress ?? s.loadProgress })),
 
     setError: (error) => set({ error, loading: false }),
+    setStreamingTelemetry: (stats) => set({ streamingTelemetry: stats }),
     setViewportMode: (viewportMode) => set({ viewportMode }),
 
     setFrame: (frame) => {
@@ -569,9 +624,43 @@ export const useStore = create<AppState>()(
     setBackgroundVideo: (backgroundVideo) => set({ backgroundVideo }),
     setEnvironmentPreset: (environmentPreset) => set({ environmentPreset }),
     setMaterialPreset: (materialPreset) => set({ materialPreset }),
+    setMaterialScene: (materialScene) => set({ materialScene }),
+    setMaterialIntensity: (materialIntensity) => set({ materialIntensity: Math.max(0, Math.min(1, materialIntensity)) }),
+
+    applyMaterialScene: (sceneId: string) => {
+      const scene = getScene(sceneId);
+      if (!scene) return;
+      set({
+        materialScene: sceneId,
+        materialPreset: scene.materialPreset,
+        materialIntensity: scene.materialIntensity,
+        environmentPreset: scene.environmentPreset,
+        ambientLightIntensity: scene.ambientIntensity,
+        dirLightIntensity: scene.dirLightIntensity,
+        rimLightIntensity: scene.rimLightIntensity,
+        postprocessPreset: scene.postprocessPreset,
+        toneMapping: scene.toneMapping,
+        backgroundPreset: scene.backgroundPreset,
+        atomTexture: scene.atomTexture,
+        activeProfile: null, // Clear legacy profile
+      });
+    },
+
     setAmbientLightIntensity: (ambientLightIntensity) => set({ ambientLightIntensity }),
     setDirLightIntensity: (dirLightIntensity) => set({ dirLightIntensity }),
+    setRimLightIntensity: (rimLightIntensity) => set({ rimLightIntensity: Math.max(0, Math.min(2, rimLightIntensity)) }),
     setAtomTexture: (atomTexture) => set({ atomTexture }),
+    setSurfaceRoughness: (surfaceRoughness) => set({ surfaceRoughness: Math.max(-1, Math.min(1, surfaceRoughness)) }),
+    setSurfacePolish: (surfacePolish) => set({ surfacePolish: Math.max(-1, Math.min(1, surfacePolish)) }),
+    setSurfaceClearcoat: (surfaceClearcoat) => set({ surfaceClearcoat: Math.max(0, Math.min(1, surfaceClearcoat)) }),
+    setKeyLightAzimuth: (keyLightAzimuth) => set({ keyLightAzimuth }),
+    setKeyLightElevation: (keyLightElevation) => set({ keyLightElevation }),
+    setFillLightAzimuth: (fillLightAzimuth) => set({ fillLightAzimuth }),
+    setFillLightElevation: (fillLightElevation) => set({ fillLightElevation }),
+    setRimLightAzimuth: (rimLightAzimuth) => set({ rimLightAzimuth }),
+    setRimLightElevation: (rimLightElevation) => set({ rimLightElevation }),
+    setFillLightColor: (fillLightColor) => set({ fillLightColor }),
+    setRimLightColor: (rimLightColor) => set({ rimLightColor }),
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),
@@ -839,6 +928,17 @@ export const useStore = create<AppState>()(
       if (r(s.ambientLightIntensity) !== 0.35)         delta.ali = r(s.ambientLightIntensity);
       if (r(s.dirLightIntensity) !== 1.2)              delta.dli = r(s.dirLightIntensity);
       if (s.atomTexture !== 'none')                    delta.at = s.atomTexture;
+      if (r(s.surfaceRoughness) !== 0.0)               delta.sr = r(s.surfaceRoughness);
+      if (r(s.surfacePolish) !== 0.0)                  delta.sp = r(s.surfacePolish);
+      if (r(s.surfaceClearcoat) !== 0.0)               delta.scc = r(s.surfaceClearcoat);
+      if (r(s.keyLightAzimuth) !== 40.0)               delta.kla = r(s.keyLightAzimuth);
+      if (r(s.keyLightElevation) !== 45.0)             delta.kle = r(s.keyLightElevation);
+      if (r(s.fillLightAzimuth) !== -120.0)            delta.fla = r(s.fillLightAzimuth);
+      if (r(s.fillLightElevation) !== 10.0)            delta.fle = r(s.fillLightElevation);
+      if (r(s.rimLightAzimuth) !== 160.0)              delta.rla = r(s.rimLightAzimuth);
+      if (r(s.rimLightElevation) !== 30.0)             delta.rle = r(s.rimLightElevation);
+      if (s.fillLightColor !== '#5577ff')              delta.flc = s.fillLightColor;
+      if (s.rimLightColor !== '#ff7755')               delta.rlc = s.rimLightColor;
 
       const json = JSON.stringify(delta);
       // URL-safe base64: replace +/= with -_. for shorter, URL-friendly tokens
@@ -882,6 +982,17 @@ export const useStore = create<AppState>()(
           ambientLightIntensity: s.ali ?? 0.35,
           dirLightIntensity: s.dli ?? 1.2,
           atomTexture: s.at ?? 'none',
+          surfaceRoughness: s.sr ?? 0.0,
+          surfacePolish: s.sp ?? 0.0,
+          surfaceClearcoat: s.scc ?? 0.0,
+          keyLightAzimuth: s.kla ?? 40,
+          keyLightElevation: s.kle ?? 45,
+          fillLightAzimuth: s.fla ?? -120,
+          fillLightElevation: s.fle ?? 10,
+          rimLightAzimuth: s.rla ?? 160,
+          rimLightElevation: s.rle ?? 30,
+          fillLightColor: s.flc ?? '#5577ff',
+          rimLightColor: s.rlc ?? '#ff7755',
         });
       } catch {
         console.warn('Failed to decode URL state');

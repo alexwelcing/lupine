@@ -116,10 +116,13 @@ export function ThermoMinimap({
         />
         <style>{`
           .amped-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
             appearance: none;
             width: 8px;
             height: 20px;
+            margin-top: -8px;
             background: #1edce0;
+            border: none;
             border-radius: 0;
             cursor: pointer;
             box-shadow: 0 0 10px 2px rgba(30, 220, 224, 0.5);
@@ -129,6 +132,27 @@ export function ThermoMinimap({
             transform: scaleY(1.2);
             background: #f8fafc;
             box-shadow: 0 0 15px 3px rgba(30, 220, 224, 0.8);
+          }
+          .amped-slider::-moz-range-thumb {
+            width: 8px;
+            height: 20px;
+            background: #1edce0;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            box-shadow: 0 0 10px 2px rgba(30, 220, 224, 0.5);
+            transition: transform 100ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
+          .amped-slider::-moz-range-thumb:hover {
+            transform: scaleY(1.2);
+            background: #f8fafc;
+            box-shadow: 0 0 15px 3px rgba(30, 220, 224, 0.8);
+          }
+          .amped-slider::-moz-range-track {
+            height: 4px;
+            background: #1e293b;
+            border: none;
+            border-radius: 0;
           }
         `}</style>
       </div>

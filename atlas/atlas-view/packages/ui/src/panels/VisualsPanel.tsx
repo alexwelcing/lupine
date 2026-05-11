@@ -8,6 +8,75 @@ import {
   IsotopeChip,
 } from '@lupine/ui';
 import { AnimatedOrbitalToggle as OrbitalToggle, AnimatedSlider } from '../rive';
+import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
+import { TrackballPanner, ScrubbableNumber, RotaryKnob, ProColorSwatch } from './ProControls';
+
+// ─── Material Scene Card ──────────────────────────────────────────────
+function MaterialSceneCard({ scene, active, onClick }: { scene: MaterialScene, active: boolean, onClick: () => void }) {
+  const [imgError, setImgError] = useState(false);
+  const snapshotUrl = `/gallery/snapshots/scene_${scene.id}.jpg`;
+
+  return (
+    <div
+      onClick={onClick}
+      onContextMenu={(e) => {
+        // Dev utility: right-click to take a snapshot of this preset
+        e.preventDefault();
+        const state = useStore.getState();
+        state.triggerExport({
+          type: 'image',
+          resolution: { width: 140, height: 128 },
+          format: 'jpeg',
+          baseName: `scene_${scene.id}`,
+        });
+      }}
+      title="Left-click to apply. Right-click to generate snapshot."
+      style={{
+        position: 'relative',
+        flex: '1 1 calc(25% - 6px)',
+        minWidth: 70,
+        height: 64,
+        background: scene.cardGradient,
+        borderRadius: 8,
+        border: `1px solid ${active ? scene.accentColor : '#334155'}`,
+        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 4,
+        overflow: 'hidden',
+        transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+        boxShadow: active ? `0 0 16px ${scene.accentColor}40, inset 0 0 8px ${scene.accentColor}20` : 'none',
+      }}
+    >
+      {!imgError && (
+        <img
+          src={snapshotUrl}
+          onError={() => setImgError(true)}
+          style={{
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+            objectFit: 'cover', opacity: active ? 1 : 0.4,
+            transition: 'opacity 0.2s', zIndex: 0,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
+      <div style={{ zIndex: 1, position: 'relative', fontSize: 20, textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>{scene.icon}</div>
+      <div style={{ zIndex: 1, position: 'relative', fontSize: 10, fontWeight: 600, color: active ? '#fff' : '#94a3b8', textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>
+        {scene.label}
+      </div>
+      {active && (
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+          background: scene.accentColor,
+          boxShadow: `0 0 8px ${scene.accentColor}`,
+          zIndex: 2
+        }} />
+      )}
+    </div>
+  );
+}
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconClose = () => (
@@ -49,11 +118,24 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
     atomTypeScales, setAtomTypeScale,
     // Materials & Lighting
     materialPreset, setMaterialPreset,
-    // atomTexture is exposed under Material & Lighting still — kept for now.
+    materialScene, applyMaterialScene,
+    materialIntensity, setMaterialIntensity,
+    surfaceRoughness, setSurfaceRoughness,
+    surfacePolish, setSurfacePolish,
+    surfaceClearcoat, setSurfaceClearcoat,
     atomTexture, setAtomTexture,
     environmentPreset, setEnvironmentPreset,
     ambientLightIntensity, setAmbientLightIntensity,
     dirLightIntensity, setDirLightIntensity,
+    rimLightIntensity, setRimLightIntensity,
+    keyLightAzimuth, setKeyLightAzimuth,
+    keyLightElevation, setKeyLightElevation,
+    fillLightAzimuth, setFillLightAzimuth,
+    fillLightElevation, setFillLightElevation,
+    rimLightAzimuth, setRimLightAzimuth,
+    rimLightElevation, setRimLightElevation,
+    fillLightColor, setFillLightColor,
+    rimLightColor, setRimLightColor,
     // Effects
     // Post-process state moved to the Effects ("Look") panel — these
     // destructures are no longer needed by the UI in this file.
@@ -68,6 +150,9 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
   const frame = useStore(s => s.frame);
   const lookPreset = useStore(s => s.postprocessPreset);
   const setLookPreset = useStore(s => s.setPostprocessPreset);
+
+  const [presetToken, setPresetToken] = useState('');
+  const [tokenCopied, setTokenCopied] = useState(false);
 
   // Derive system context for recommended settings
   const systemInfo = useMemo(() => {
@@ -146,13 +231,74 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
       <div className="lupine-scroll" style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 
-          {/* ═══ Look ═══
-              Postprocess preset picker. Each preset is a directorial recipe:
-              HDRI + tone curve + a single signature effect (or none, for
-              Diagram). Replaces the legacy "Cinematic Profiles" panel which
-              mapped to a different abstraction. The legacy applyVisualProfile
-              path remains for store consumers; setPostprocessPreset is the
-              new canonical knob. */}
+          {/* Look-Dev Preset System */}
+          <QuantumSection label="Look-Dev Configuration" defaultOpen={false}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 12 }}>
+              <div style={{ fontSize: 10, color: '#94a3b8', lineHeight: 1.4 }}>
+                Export your current visual state as a compact token, or paste a token to restore a Laboratory look.
+              </div>
+              <div style={{ display: 'flex', gap: 6 }}>
+                <input
+                  type="text"
+                  value={presetToken}
+                  onChange={e => setPresetToken(e.target.value)}
+                  placeholder="Paste preset token..."
+                  style={{
+                    flex: 1,
+                    background: '#0d1117',
+                    border: '1px solid #1f2937',
+                    color: '#f8fafc',
+                    padding: '6px 8px',
+                    fontSize: 11,
+                    fontFamily: 'var(--font-mono)',
+                    outline: 'none',
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    if (presetToken) {
+                      useStore.getState().decodeFromURL(presetToken);
+                      setPresetToken('');
+                    }
+                  }}
+                  style={{
+                    background: '#1edce020',
+                    color: '#1edce0',
+                    border: '1px solid #1edce040',
+                    padding: '4px 12px',
+                    fontSize: 10,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    textTransform: 'uppercase'
+                  }}
+                >
+                  Load
+                </button>
+                <button
+                  onClick={() => {
+                    const token = useStore.getState().encodeToURL();
+                    navigator.clipboard.writeText(token);
+                    setTokenCopied(true);
+                    setTimeout(() => setTokenCopied(false), 2000);
+                  }}
+                  style={{
+                    background: '#334155',
+                    color: '#f8fafc',
+                    border: '1px solid #475569',
+                    padding: '4px 12px',
+                    fontSize: 10,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    textTransform: 'uppercase'
+                  }}
+                >
+                  {tokenCopied ? 'Copied' : 'Export'}
+                </button>
+              </div>
+            </div>
+          </QuantumSection>
+
+          {/* ═══ Look ═══ */}
           <div style={{ background: '#0d1117', border: '1px solid #1f2937', padding: '16px' }}>
             <h3 style={{
               fontSize: 14, fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif',
@@ -167,28 +313,76 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
                 { id: 'diagram',   label: 'Diagram',   signature: '— none —',      desc: 'Pixel-faithful figure mode' },
               ] as const).map(p => {
                 const active = lookPreset === p.id;
+                const snapshotUrl = `/gallery/snapshots/look_${p.id}.jpg`;
                 return (
                   <button
                     key={p.id}
                     onClick={() => setLookPreset(p.id)}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      const state = useStore.getState();
+                      // Force apply the preset first
+                      setLookPreset(p.id);
+                      
+                      // Wait a beat for the render, then capture and upload
+                      setTimeout(() => {
+                        state.triggerExport({
+                          type: 'image',
+                          resolution: { width: 320, height: 160 },
+                          format: 'jpeg',
+                          baseName: `look_${p.id}`,
+                          onComplete: async (success, blob) => {
+                            if (success && blob) {
+                              const form = new FormData();
+                              form.append('id', `look_${p.id}`);
+                              form.append('type', 'snapshot');
+                              form.append('file', blob, `look_${p.id}.jpg`);
+                              try {
+                                const res = await fetch('/api/gallery-assets/upload', { method: 'POST', body: form });
+                                if (res.ok) console.log(`✓ Snapshot generated: look_${p.id}.jpg`);
+                              } catch (err) {
+                                console.error('Failed to upload snapshot:', err);
+                              }
+                            }
+                          }
+                        });
+                      }, 250);
+                    }}
                     title={p.desc}
                     style={{
+                      position: 'relative',
                       padding: '10px 12px',
                       background: active ? '#0c1a2a' : '#121418',
                       border: `1px solid ${active ? '#1edce0' : '#334155'}`,
-                      borderRadius: 0, cursor: 'pointer', textAlign: 'left', transition: 'border-color 150ms',
+                      borderRadius: 4, cursor: 'pointer', textAlign: 'left', transition: 'border-color 150ms',
+                      overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: 4
                     }}
                     onMouseEnter={(e) => e.currentTarget.style.borderColor = '#1edce0'}
                     onMouseLeave={(e) => { if (!active) e.currentTarget.style.borderColor = '#334155'; }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 4 }}>
+                    <img 
+                      src={snapshotUrl} 
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      style={{
+                        position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                        objectFit: 'cover', opacity: active ? 0.8 : 0.2, zIndex: 0, pointerEvents: 'none',
+                        transition: 'opacity 0.2s'
+                      }}
+                    />
+                    <div style={{ zIndex: 1, position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                       <span style={{
                         fontSize: 12, fontWeight: 600, fontFamily: 'Space Grotesk, sans-serif',
-                        color: '#f8fafc',
+                        color: active ? '#fff' : '#f8fafc', textShadow: '0 1px 4px rgba(0,0,0,0.8)'
                       }}>{p.label}</span>
-                      <span style={{ fontSize: 9, color: '#1edce0', fontFamily: 'ui-monospace, monospace' }}>{p.signature}</span>
+                      <span style={{ fontSize: 9, color: active ? '#1edce0' : '#94a3b8', fontFamily: 'ui-monospace, monospace', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>{p.signature}</span>
                     </div>
-                    <div style={{ fontSize: 10, color: '#64748b', lineHeight: '1.4' }}>{p.desc}</div>
+                    <div style={{ zIndex: 1, position: 'relative', fontSize: 10, color: active ? '#cbd5e1' : '#64748b', lineHeight: '1.4', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>{p.desc}</div>
+                    {active && (
+                      <div style={{
+                        position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+                        background: '#1edce0', boxShadow: '0 0 8px #1edce0', zIndex: 2
+                      }} />
+                    )}
                   </button>
                 );
               })}
@@ -337,31 +531,181 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
           </QuantumSection>
 
           {/* ═══ Material & Lighting ═══ */}
-          <QuantumSection label="Material & Lighting" defaultOpen={false}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 12 }}>
+          <QuantumSection label="Material Lab" defaultOpen={false}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginTop: 12 }}>
+              
+              {/* Material Scenes */}
               <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Base Material Override</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  {['default', 'matte', 'metallic', 'glass', 'plastic'].map(m => (
-                    <IsotopeChip key={m} label={m.charAt(0).toUpperCase() + m.slice(1)} selected={materialPreset === m} onClick={() => setMaterialPreset(m as any)} />
+                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8, display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Material Scene</span>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {MATERIAL_SCENES.map(scene => (
+                    <MaterialSceneCard
+                      key={scene.id}
+                      scene={scene}
+                      active={materialScene === scene.id}
+                      onClick={() => applyMaterialScene(scene.id)}
+                    />
                   ))}
                 </div>
-                <div style={{ fontSize: 10, color: '#64748b', marginTop: 6, fontStyle: 'italic' }}>
-                  Default uses per-element identity (Cu metallic, O glass, …). Other presets force one look across all atoms.
+                <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 8, fontStyle: 'italic', lineHeight: 1.4 }}>
+                  {MATERIAL_SCENES.find(s => s.id === materialScene)?.description}
                 </div>
               </div>
-              <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Environment Lighting</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  {['studio', 'dawn', 'night', 'warehouse', 'forest', 'apartment', 'none'].map(e => (
-                    <IsotopeChip key={e} label={e.charAt(0).toUpperCase() + e.slice(1)} selected={environmentPreset === e} onClick={() => setEnvironmentPreset(e as any)} />
-                  ))}
+
+              {/* Surface Character */}
+              <div style={{ padding: '12px', background: '#0a0d14', borderRadius: 8, border: '1px solid #1e293b' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Surface Character
+                  </div>
+                  {(surfaceRoughness !== 0 || surfacePolish !== 0 || surfaceClearcoat !== 0) && (
+                    <button
+                      onClick={() => {
+                        setSurfaceRoughness(0);
+                        setSurfacePolish(0);
+                        setSurfaceClearcoat(0);
+                      }}
+                      style={{
+                        background: 'transparent',
+                        border: '1px solid #334155',
+                        borderRadius: 4,
+                        color: '#94a3b8',
+                        fontSize: 9,
+                        padding: '2px 6px',
+                        cursor: 'pointer',
+                        textTransform: 'uppercase'
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#64748b'; }}
+                      onMouseLeave={e => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = '#334155'; }}
+                    >
+                      Reset to Scene
+                    </button>
+                  )}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <WaveformSlider 
+                    label="Element Identity" 
+                    value={1.0 - materialIntensity} 
+                    min={0.0} max={1.0} step={0.05} 
+                    onChange={v => setMaterialIntensity(1.0 - v)} 
+                    format={v => Math.round(v * 100) + '%'} 
+                  />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: '#475569', marginTop: -8 }}>
+                    <span>Global Preset</span>
+                    <span>Per-Element</span>
+                  </div>
+                  
+                  {/* Granular Surface Tuning */}
+                  <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: 8, padding: '16px 12px', background: '#121318', borderRadius: 6, border: '1px solid #1e293b' }}>
+                    <RotaryKnob 
+                      label="Roughness" 
+                      value={surfaceRoughness} 
+                      min={-1.0} max={1.0} step={0.05} 
+                      fractionDigits={2}
+                      onChange={setSurfaceRoughness} 
+                    />
+                    <RotaryKnob 
+                      label="Polish" 
+                      value={surfacePolish} 
+                      min={-1.0} max={1.0} step={0.05} 
+                      fractionDigits={2}
+                      onChange={setSurfacePolish} 
+                    />
+                    <RotaryKnob 
+                      label="Clearcoat" 
+                      value={surfaceClearcoat} 
+                      min={0.0} max={1.0} step={0.05} 
+                      fractionDigits={2}
+                      onChange={setSurfaceClearcoat} 
+                    />
+                  </div>
+                  <div style={{ display: 'flex', gap: 6, marginTop: 12, flexWrap: 'wrap' }}>
+                    <IsotopeChip label="Glass" selected={materialPreset === 'glass'} onClick={() => setMaterialPreset('glass')} />
+                    <IsotopeChip label="Plastic" selected={materialPreset === 'plastic'} onClick={() => setMaterialPreset('plastic')} />
+                    <IsotopeChip label="Default" selected={materialPreset === 'default'} onClick={() => setMaterialPreset('default')} />
+                  </div>
                 </div>
               </div>
-              <div>
-                <WaveformSlider label="Ambient Light" value={ambientLightIntensity} min={0.0} max={2.0} step={0.05} onChange={setAmbientLightIntensity} format={v => v.toFixed(2)} />
-                <div style={{ marginTop: 8 }}>
-                  <WaveformSlider label="Directional Light" value={dirLightIntensity} min={0.0} max={3.0} step={0.05} onChange={setDirLightIntensity} format={v => v.toFixed(2)} />
+
+              {/* Light Rig */}
+              <div style={{ padding: '16px', background: '#0a0d14', borderRadius: 8, border: '1px solid #1e293b' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: 14, verticalAlign: 'text-bottom', marginRight: 6 }}>highlight</span>
+                    STUDIO LIGHTING RIG
+                  </div>
+                  <div style={{ fontSize: 9, color: '#475569', textTransform: 'uppercase' }}>3-Point System</div>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                  {/* Key Light */}
+                  <div style={{ padding: '12px', background: '#121318', borderRadius: 6, border: '1px solid #1e293b', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 600 }}>KEY</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0', background: '#050608', borderRadius: 4, border: '1px inset #222', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5)' }}>
+                      <TrackballPanner azimuth={keyLightAzimuth} elevation={keyLightElevation} size={80} onChange={(az, el) => { setKeyLightAzimuth(az); setKeyLightElevation(el); }} />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <RotaryKnob label="Intensity" value={dirLightIntensity} min={0.0} max={5.0} step={0.05} fractionDigits={2} size={48} onChange={setDirLightIntensity} />
+                    </div>
+                  </div>
+
+                  {/* Fill Light */}
+                  <div style={{ padding: '12px', background: '#121318', borderRadius: 6, border: '1px solid #1e293b', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 600 }}>FILL</span>
+                      <ProColorSwatch color={fillLightColor} onChange={setFillLightColor} />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0', background: '#050608', borderRadius: 4, border: '1px inset #222', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5)' }}>
+                      <TrackballPanner azimuth={fillLightAzimuth} elevation={fillLightElevation} size={80} onChange={(az, el) => { setFillLightAzimuth(az); setFillLightElevation(el); }} />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <RotaryKnob label="Intensity" value={ambientLightIntensity} min={0.0} max={5.0} step={0.05} fractionDigits={2} size={48} onChange={setAmbientLightIntensity} />
+                    </div>
+                  </div>
+
+                  {/* Rim Light */}
+                  <div style={{ padding: '12px', background: '#121318', borderRadius: 6, border: '1px solid #1e293b', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 600 }}>RIM</span>
+                      <ProColorSwatch color={rimLightColor} onChange={setRimLightColor} />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0', background: '#050608', borderRadius: 4, border: '1px inset #222', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5)' }}>
+                      <TrackballPanner azimuth={rimLightAzimuth} elevation={rimLightElevation} size={80} onChange={(az, el) => { setRimLightAzimuth(az); setRimLightElevation(el); }} />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <RotaryKnob label="Intensity" value={rimLightIntensity} min={0.0} max={5.0} step={0.05} fractionDigits={2} size={48} onChange={setRimLightIntensity} />
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: 16, borderTop: '1px solid #1e293b', paddingTop: 16 }}>
+                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8, letterSpacing: '0.05em', fontWeight: 600 }}>Environment Map</div>
+                  <select
+                    value={environmentPreset}
+                    onChange={e => setEnvironmentPreset(e.target.value as any)}
+                    style={{
+                      width: '100%',
+                      background: '#121824',
+                      color: '#f8fafc',
+                      border: '1px solid #334155',
+                      borderRadius: 4,
+                      padding: '6px 8px',
+                      fontSize: 11,
+                      outline: 'none'
+                    }}
+                  >
+                    <option value="studio">Studio (Neutral)</option>
+                    <option value="apartment">Apartment (Warm)</option>
+                    <option value="warehouse">Warehouse (Industrial)</option>
+                    <option value="city">City (Cool)</option>
+                    <option value="dawn">Dawn (Soft)</option>
+                    <option value="night">Night (Dark)</option>
+                    <option value="forest">Forest (Organic)</option>
+                    <option value="none">None (Direct Only)</option>
+                  </select>
                 </div>
               </div>
             </div>

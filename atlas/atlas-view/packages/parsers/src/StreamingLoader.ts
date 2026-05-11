@@ -88,6 +88,7 @@ export interface StreamingLoaderEvents {
   onFrame?: (frameIndex: number, frame: Frame) => void;
   onProgress?: (phase: 'header' | 'index' | 'frame', progress: number) => void;
   onError?: (error: Error) => void;
+  onTelemetry?: (stats: { bytesTransferred: number; cacheHits: number; cacheMisses: number; cacheSize: number }) => void;
 }
 
 export class StreamingLoader {
@@ -106,10 +107,24 @@ export class StreamingLoader {
   /** Total file size from HEAD request */
   private fileSize = 0;
 
+  // Telemetry stats
+  private totalBytesTransferred = 0;
+  private cacheHits = 0;
+  private cacheMisses = 0;
+
   constructor(url: string, events: StreamingLoaderEvents = {}, maxCachedFrames = 20) {
     this.url = url;
     this.events = events;
     this.frameCache = new FrameCache(maxCachedFrames);
+  }
+
+  private emitTelemetry() {
+    this.events.onTelemetry?.({
+      bytesTransferred: this.totalBytesTransferred,
+      cacheHits: this.cacheHits,
+      cacheMisses: this.cacheMisses,
+      cacheSize: this.frameCache.size,
+    });
   }
 
   // ── Phase 1: Header ─────────────────────────────────────────────
@@ -139,8 +154,10 @@ export class StreamingLoader {
     }
 
     const buffer = await resp.arrayBuffer();
+    this.totalBytesTransferred += buffer.byteLength;
     this.header = parseHeader(buffer);
     this.events.onProgress?.('header', 1);
+    this.emitTelemetry();
 
     return this.header;
   }
@@ -172,8 +189,10 @@ export class StreamingLoader {
     }
 
     const buffer = await resp.arrayBuffer();
+    this.totalBytesTransferred += buffer.byteLength;
     this.index = parseFrameIndex(buffer, this.header.totalFrames);
     this.events.onProgress?.('index', 1);
+    this.emitTelemetry();
 
     // Emit full metadata now that we have header + index
     const meta = this.getMetadata();
@@ -191,7 +210,14 @@ export class StreamingLoader {
   async fetchFrame(frameIndex: number, signal?: AbortSignal): Promise<Frame> {
     // Check cache first
     const cached = this.frameCache.get(frameIndex);
-    if (cached) return cached;
+    if (cached) {
+      this.cacheHits++;
+      this.emitTelemetry();
+      return cached;
+    }
+    
+    this.cacheMisses++;
+    this.emitTelemetry();
 
     // Check if already in flight
     const existing = this.inflight.get(frameIndex);
@@ -236,6 +262,8 @@ export class StreamingLoader {
     }
 
     let buffer = await resp.arrayBuffer();
+    this.totalBytesTransferred += buffer.byteLength;
+    this.emitTelemetry();
 
     // Decompress if needed
     if (this.header!.compressed && entry.compressedSize !== entry.rawSize) {

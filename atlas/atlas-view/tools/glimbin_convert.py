@@ -466,7 +466,7 @@ def upload_to_gcs(local_path: str, gcs_uri: str):
     blob.cache_control = "public, max-age=2592000, immutable"
     blob.content_type = "application/octet-stream"
     
-    print(f"Uploading {local_path} → gs://{bucket_name}/{blob_name} ...")
+    print(f"Uploading {local_path} -> gs://{bucket_name}/{blob_name} ...")
     blob.upload_from_filename(local_path)
     print(f"Uploaded: gs://{bucket_name}/{blob_name}")
     print(f"Public URL: https://storage.googleapis.com/{bucket_name}/{blob_name}")
@@ -559,8 +559,8 @@ Examples:
     
     ratio = input_size / output_size if output_size > 0 else 0
     print(f"  Output size: {output_size / 1e6:.1f} MB")
-    print(f"  Compression: {ratio:.1f}× smaller")
-    print(f"  ✓ Written: {output_path}")
+    print(f"  Compression: {ratio:.1f}x smaller")
+    print(f"  [OK] Written: {output_path}")
     
     # Upload
     if args.upload:

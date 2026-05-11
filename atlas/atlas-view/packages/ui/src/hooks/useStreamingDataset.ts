@@ -28,6 +28,13 @@ interface StreamingDatasetState {
   metaProgress: number;
   /** Whether the loader is actively fetching a frame */
   fetchingFrame: boolean;
+  /** Telemetry stats from the StreamingLoader */
+  telemetry: {
+    bytesTransferred: number;
+    cacheHits: number;
+    cacheMisses: number;
+    cacheSize: number;
+  } | null;
 }
 
 /**
@@ -45,6 +52,7 @@ export function useStreamingDataset(url: string | null): StreamingDatasetState {
     meta: null,
     metaProgress: 0,
     fetchingFrame: false,
+    telemetry: null,
   });
 
   const loaderRef = useRef<StreamingLoader | null>(null);
@@ -67,7 +75,7 @@ export function useStreamingDataset(url: string | null): StreamingDatasetState {
     let cancelled = false;
 
     const load = async () => {
-      setState({ loading: true, error: null, meta: null, metaProgress: 0, fetchingFrame: false });
+      setState({ loading: true, error: null, meta: null, metaProgress: 0, fetchingFrame: false, telemetry: null });
       useStore.getState().setLoading(true, 0);
 
       try {
@@ -100,6 +108,10 @@ export function useStreamingDataset(url: string | null): StreamingDatasetState {
             if (cancelled || !mountedRef.current) return;
             setState(s => ({ ...s, error: error.message, loading: false }));
             useStore.getState().setError(error.message);
+          },
+          onTelemetry: (stats) => {
+            if (cancelled || !mountedRef.current) return;
+            setState(s => ({ ...s, telemetry: stats }));
           },
         });
 

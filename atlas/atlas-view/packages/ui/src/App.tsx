@@ -47,6 +47,7 @@ export const xrStore = createXRStore({
 import { MobileHUD } from './MobileHUD';
 import { ChronosHUD } from './ChronosHUD';
 import { VolcanicHUD } from './VolcanicHUD';
+import { TelemetryHUD } from './TelemetryHUD';
 
 import { useStore } from './store';
 import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities';
@@ -475,6 +476,19 @@ export default function App() {
   const colorProperty = useStore(s => s.colorProperty);
   const environmentPreset = useStore(s => s.environmentPreset);
   const materialPreset = useStore(s => s.materialPreset);
+  const materialIntensity = useStore(s => s.materialIntensity);
+  const rimLightIntensity = useStore(s => s.rimLightIntensity);
+  const surfaceRoughness = useStore(s => s.surfaceRoughness);
+  const surfacePolish = useStore(s => s.surfacePolish);
+  const surfaceClearcoat = useStore(s => s.surfaceClearcoat);
+  const keyLightAzimuth = useStore(s => s.keyLightAzimuth);
+  const keyLightElevation = useStore(s => s.keyLightElevation);
+  const fillLightAzimuth = useStore(s => s.fillLightAzimuth);
+  const fillLightElevation = useStore(s => s.fillLightElevation);
+  const rimLightAzimuth = useStore(s => s.rimLightAzimuth);
+  const rimLightElevation = useStore(s => s.rimLightElevation);
+  const fillLightColor = useStore(s => s.fillLightColor);
+  const rimLightColor = useStore(s => s.rimLightColor);
   const colormap = useStore(s => s.colormap);
   const atomColorSource = useStore(s => s.atomColorSource);
   const postprocessPreset = useStore(s => s.postprocessPreset);
@@ -679,6 +693,9 @@ export default function App() {
             const loader = new StreamingLoader(loadUrl, {
               onProgress: (_phase, progress) => {
                 useStore.getState().setLoading(true, progress * 0.6);
+              },
+              onTelemetry: (stats) => {
+                useStore.getState().setStreamingTelemetry(stats);
               },
             });
 
@@ -1097,13 +1114,38 @@ export default function App() {
             <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} />
 
             <ambientLight intensity={ambientLightIntensity} />
-            <directionalLight position={[5, 8, 6]} intensity={dirLightIntensity} />
-            {(!file?.trajectory?.frames?.[0]?.positions?.length || file.trajectory.frames[0].positions.length / 3 <= 50000) && (
-              <>
-                <directionalLight position={[-3, -2, 4]} intensity={dirLightIntensity * 0.3} />
-                <directionalLight position={[0, -5, -3]} intensity={dirLightIntensity * 0.15} color="#8888ff" />
-              </>
-            )}
+            {(() => {
+              const r = 11.18;
+              const kaz = keyLightAzimuth * Math.PI / 180;
+              const kel = keyLightElevation * Math.PI / 180;
+              const kx = r * Math.cos(kel) * Math.sin(kaz);
+              const ky = r * Math.sin(kel);
+              const kz = r * Math.cos(kel) * Math.cos(kaz);
+
+              const faz = fillLightAzimuth * Math.PI / 180;
+              const fel = fillLightElevation * Math.PI / 180;
+              const fx = r * Math.cos(fel) * Math.sin(faz);
+              const fy = r * Math.sin(fel);
+              const fz = r * Math.cos(fel) * Math.cos(faz);
+
+              const raz = rimLightAzimuth * Math.PI / 180;
+              const rel = rimLightElevation * Math.PI / 180;
+              const rx = r * Math.cos(rel) * Math.sin(raz);
+              const ry = r * Math.sin(rel);
+              const rz = r * Math.cos(rel) * Math.cos(raz);
+
+              return (
+                <>
+                  <directionalLight position={[kx, ky, kz]} intensity={dirLightIntensity} />
+                  {(!file?.trajectory?.frames?.[0]?.positions?.length || file.trajectory.frames[0].positions.length / 3 <= 50000) && (
+                    <>
+                      <directionalLight position={[fx, fy, fz]} intensity={dirLightIntensity * 0.3} color={fillLightColor} />
+                      <directionalLight position={[rx, ry, rz]} intensity={dirLightIntensity * 0.15} color={rimLightColor} />
+                    </>
+                  )}
+                </>
+              );
+            })()}
           {/* HDRI environment, coupled to the postprocess preset. Bonds (which
               use MeshPhysicalMaterial) automatically pick this up via
               scene.environment for IBL specular — they reflect studio in
@@ -1158,13 +1200,25 @@ export default function App() {
                   scale={atomScale}
                   renderStyle={renderStyle}
                   maxAtoms={deviceMaxAtoms}
-                  qualityTier={deviceQualityTier}
                   loadedAtomCount={loadedAtomCount}
                   onSpatialHash={setSpatialHash}
                   hiddenAtomTypes={hiddenAtomTypes}
                   atomTypeScales={atomTypeScales}
                   botanicalMode={renderStyle === 'botanical'}
                   materialPreset={materialPreset}
+                  materialIntensity={materialIntensity}
+                  rimLightIntensity={rimLightIntensity}
+                  surfaceRoughness={surfaceRoughness}
+                  surfacePolish={surfacePolish}
+                  surfaceClearcoat={surfaceClearcoat}
+                  keyLightAzimuth={keyLightAzimuth}
+                  keyLightElevation={keyLightElevation}
+                  fillLightAzimuth={fillLightAzimuth}
+                  fillLightElevation={fillLightElevation}
+                  rimLightAzimuth={rimLightAzimuth}
+                  rimLightElevation={rimLightElevation}
+                  fillLightColor={fillLightColor}
+                  rimLightColor={rimLightColor}
                   atomTexture={atomTexture}
                   propertyEmissionStrength={propertyEmissionStrength}
                   etchTexture={etchTexture}
@@ -1193,14 +1247,19 @@ export default function App() {
                     opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
                     materialPreset={materialPreset}
+                    materialIntensity={materialIntensity}
+                    rimLightIntensity={rimLightIntensity}
+                    surfaceRoughness={surfaceRoughness}
+                    surfacePolish={surfacePolish}
+                    surfaceClearcoat={surfaceClearcoat}
+                    fillLightColor={fillLightColor}
+                    rimLightColor={rimLightColor}
+                    fillLightAzimuth={fillLightAzimuth}
+                    fillLightElevation={fillLightElevation}
+                    rimLightAzimuth={rimLightAzimuth}
+                    rimLightElevation={rimLightElevation}
                     // Suppress bond detection while atoms are still
-                    // streaming in. The detector reads frame.natoms /
-                    // frame.positions wholesale, but during streaming
-                    // indices [loadedAtomCount, natoms) are zero — the
-                    // detector would see millions of phantom atoms
-                    // clustered at the origin and generate a flood of
-                    // spurious bonds. Re-enables once streaming
-                    // completes (loadedAtomCount === natoms).
+                    // streaming in to prevent phantom bonds at origin.
                     visible={showBonds && loadedAtomCount >= currentFrame.natoms}
                     bondColorMode={bondColorMode}
                     useGpu={useGpuBonds}
@@ -1379,6 +1438,8 @@ export default function App() {
               </div>
             </div>
           )}
+
+          <TelemetryHUD />
 
           {/* Camera preset buttons */}
           {file && (

@@ -19,10 +19,13 @@ export function AnimatedSlider({ value, min, max, step = 1, onChange, style, ...
     <div style={{ position: 'relative', width: '100%', height: 24, display: 'flex', alignItems: 'center' }}>
       <style>{`
         .amped-ui-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
           appearance: none;
           width: 8px;
           height: 16px;
+          margin-top: -6px;
           background: #1edce0;
+          border: none;
           border-radius: 0;
           cursor: pointer;
           box-shadow: 0 0 10px 2px rgba(30, 220, 224, 0.4);
@@ -33,7 +36,30 @@ export function AnimatedSlider({ value, min, max, step = 1, onChange, style, ...
           background: #f8fafc;
           box-shadow: 0 0 15px 3px rgba(30, 220, 224, 0.8), 0 0 4px 1px #fff;
         }
+        .amped-ui-slider::-moz-range-thumb {
+          width: 8px;
+          height: 16px;
+          background: #1edce0;
+          border: none;
+          border-radius: 0;
+          cursor: pointer;
+          box-shadow: 0 0 10px 2px rgba(30, 220, 224, 0.4);
+          transition: transform 100ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 100ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .amped-ui-slider::-moz-range-thumb:hover, .amped-ui-slider:active::-moz-range-thumb {
+          transform: scaleY(1.3);
+          background: #f8fafc;
+          box-shadow: 0 0 15px 3px rgba(30, 220, 224, 0.8), 0 0 4px 1px #fff;
+        }
         .amped-ui-slider::-webkit-slider-runnable-track {
+          width: 100%;
+          height: 4px;
+          cursor: pointer;
+          background: #1e293b;
+          border: 1px solid #334155;
+          border-radius: 0;
+        }
+        .amped-ui-slider::-moz-range-track {
           width: 100%;
           height: 4px;
           cursor: pointer;
