@@ -234,6 +234,10 @@ export function Bonds({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const prevFrameRef = useRef<Frame | null>(null);
+  // Track natoms to detect molecule switches — when natoms changes, the
+  // user loaded a completely different system. All cached dispatch state
+  // must be invalidated to prevent stale bonds from persisting.
+  const prevNatomsRef = useRef<number>(0);
   // Snapshot of the positions array we last actually dispatched bond
   // detection on. Lets us skip dispatch when atoms have only jittered
   // (sub-threshold motion) — bond topology doesn't change for ~0.05 Å
@@ -272,6 +276,22 @@ export function Bonds({
     const isFrameChange = frame !== prevFrameRef.current;
     prevFrameRef.current = frame;
 
+    // Detect molecule switch: natoms changed OR the positions buffer is a
+    // different TypedArray (covers same-size molecules). A trajectory's
+    // frames share their positions buffer during playback, but a gallery
+    // load always allocates fresh arrays.
+    const isMoleculeSwitch =
+      frame.natoms !== prevNatomsRef.current ||
+      (lastDispatchPositionsRef.current !== null &&
+       frame.positions.buffer !== lastDispatchPositionsRef.current.buffer &&
+       frame.positions.length !== lastDispatchPositionsRef.current.length);
+    prevNatomsRef.current = frame.natoms;
+    if (isMoleculeSwitch) {
+      lastDispatchPositionsRef.current = null;
+      lastDispatchToleranceRef.current = NaN;
+      lastDispatchMaxBondLengthRef.current = NaN;
+    }
+
     // Motion polish: if this is a frame change but atoms have barely moved
     // (max displacement < threshold), skip dispatch entirely and keep the
     // previously computed bondPairs. Bond topology does not change for
@@ -281,7 +301,7 @@ export function Bonds({
     const cpuParamsUnchanged =
       lastDispatchToleranceRef.current === tolerance &&
       lastDispatchMaxBondLengthRef.current === maxBondLength;
-    if (isFrameChange && cpuParamsUnchanged && lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
+    if (!isMoleculeSwitch && isFrameChange && cpuParamsUnchanged && lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
       const maxDisp = subsampledMaxDisplacement(frame.positions, lastDispatchPositionsRef.current);
       if (maxDisp < BOND_RECOMPUTE_DISP_THRESHOLD) {
         return;
@@ -368,6 +388,15 @@ export function Bonds({
       return;
     }
 
+    // Detect molecule switch in GPU mode too — natoms change means new system.
+    const gpuMoleculeSwitch = frame.natoms !== prevNatomsRef.current;
+    prevNatomsRef.current = frame.natoms;
+    if (gpuMoleculeSwitch) {
+      lastDispatchPositionsRef.current = null;
+      lastDispatchToleranceRef.current = NaN;
+      lastDispatchMaxBondLengthRef.current = NaN;
+    }
+
     // Motion polish — same skip rule as the CPU path. Atoms that haven't
     // meaningfully moved keep their cached bondPairs; we don't even
     // dispatch the GPU compute. Saves a queue submit + readback per frame
@@ -378,7 +407,7 @@ export function Bonds({
     const paramsUnchanged =
       lastDispatchToleranceRef.current === tolerance &&
       lastDispatchMaxBondLengthRef.current === maxBondLength;
-    if (paramsUnchanged && lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
+    if (!gpuMoleculeSwitch && paramsUnchanged && lastDispatchPositionsRef.current && frame.positions.length === lastDispatchPositionsRef.current.length) {
       const maxDisp = subsampledMaxDisplacement(frame.positions, lastDispatchPositionsRef.current);
       if (maxDisp < BOND_RECOMPUTE_DISP_THRESHOLD) {
         return;
