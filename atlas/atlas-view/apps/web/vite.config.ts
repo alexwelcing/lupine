@@ -180,19 +180,28 @@ export default defineConfig({
   build: {
     target: 'esnext',
     sourcemap: false,
+    chunkSizeWarningLimit: 3000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-          'vendor-react': ['react', 'react-dom'],
-          'vendor-postprocess': ['postprocessing', '@react-three/postprocessing'],
+        manualChunks(id) {
+          if (id.includes('music_room')) return 'env-music-room';
+          if (id.includes('living_room')) return 'env-living-room';
+          if (id.includes('city')) return 'env-city';
+          if (id.includes('park')) return 'env-park';
+          
+          if (id.includes('node_modules')) {
+            if (id.includes('/node_modules/three/')) return 'vendor-three';
+            if (id.includes('/node_modules/@react-three/')) return 'vendor-react-three';
+            if (id.includes('/node_modules/postprocessing/')) return 'vendor-postprocess';
+            if (id.includes('/node_modules/react/') || id.includes('/node_modules/react-dom/')) return 'vendor-react';
+          }
         },
       },
     },
   },
   server: {
     port: 3000,
-    strictPort: true,
+    strictPort: false,
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp',

@@ -44,6 +44,23 @@ interface AtomsOptimizedProps {
   atomTypeScales?: Record<number, number>;
   botanicalMode?: boolean;
   materialPreset?: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
+  /** 0 = pure per-element identity, 1 = full preset override. Scenes can
+   *  blend, e.g. 0.7 means 70% preset + 30% element character. */
+  materialIntensity?: number;
+  /** Rim / backlight intensity. Adds a backlit edge for depth separation.
+   *  0 = material-driven only, >0 = additive rim boost. */
+  rimLightIntensity?: number;
+  surfaceRoughness?: number;
+  surfacePolish?: number;
+  surfaceClearcoat?: number;
+  keyLightAzimuth?: number;
+  keyLightElevation?: number;
+  fillLightAzimuth?: number;
+  fillLightElevation?: number;
+  rimLightAzimuth?: number;
+  rimLightElevation?: number;
+  fillLightColor?: string;
+  rimLightColor?: string;
   atomTexture?: 'none' | 'scratched' | 'noise';
   /** Where per-type atom colors come from. Overrides the legacy
    *  colormap-only behavior. 'colormap' is the original default. */
@@ -59,58 +76,22 @@ interface AtomsOptimizedProps {
    *  value × this strength × the colormap-mapped color. Reads as
    *  "this atom is energetic". */
   propertyEmissionStrength?: number;
-  /** Render quality tier — picks the fragment-shader complexity.
-   *
-   *  - 0 ('fast'):     simple Lambert + Blinn-Phong specular, no IBL,
-   *                    no Cook-Torrance, NO gl_FragDepth (this is the
-   *                    big mobile win — early-Z works again, fragment
-   *                    throughput goes up ~5-10×). Atom intersection
-   *                    depth is approximated by the quad center, which
-   *                    is invisibly wrong on a zoomed-out 1M-atom scene
-   *                    and the only path that lets a phone render that
-   *                    scene at all.
-   *  - 1 ('standard'): Cook-Torrance D/G/F + two-light direct illumination,
-   *                    correct gl_FragDepth, no IBL probes, no anisotropy,
-   *                    no subsurface. The integrated-laptop-GPU path.
-   *  - 2 ('premium'):  full PBR including PMREM IBL, anisotropy,
-   *                    subsurface, rim, etched annotation, texture mode,
-   *                    property-driven emission. The discrete-GPU path
-   *                    and historical default.
-   *
-   *  Choose based on device. The shader is recompiled when this changes,
-   *  so flipping mid-session is supported but causes a one-time stutter. */
-  qualityTier?: 0 | 1 | 2;
-  /** Within-frame streaming gate. The streaming dump parser pre-allocates
-   *  Frame.positions / types / ids to `frame.natoms` but populates them
-   *  incrementally; indices in [loadedAtomCount, frame.natoms) are
-   *  uninitialized and rendering them puts atoms at the origin until the
-   *  parser catches up.
-   *
-   *  When undefined (the default), the renderer treats the full frame
-   *  as ready — preserves current behavior for the WASM all-at-once path.
-   *  When set, the upload upper bound clamps to this count and the
-   *  chunked pump resumes wherever the previous upload left off as the
-   *  count grows. */
+  /** How many atoms have been uploaded so far (for progressive streaming).
+   *  Defaults to frame.natoms when not set. */
   loadedAtomCount?: number;
 }
 
 // ─── GLSL Shaders ────────────────────────────────────────────────────
 
 const IMPOSTOR_VERTEX = /* glsl */ `
-  // Per-instance attributes (Phase 3 packed format).
-  //   instancePosition: vec3 in [0,1] from Uint16-normalized; world =
-  //     pos * uPosScale + uPosOffset.
-  //   instanceRadius: float in [0,1] from Uint8-normalized; world =
-  //     r * uMaxRadius.
-  //   instanceTypeId: integer-valued float (Uint8 not normalized,
-  //     0..255). Direct palette UV.
-  //   instancePropValue: float in [0,1] from Uint8-normalized.
-  //   instanceAtomId: full Float32 — used only by the premium-tier
-  //     etched-label path which needs atom indices > 65535.
+  // Per-instance attributes
   attribute vec3 instancePosition;
   attribute float instanceRadius;
   attribute float instanceTypeId;
   attribute float instancePropValue;
+  // Original atom index in the loaded frame. Used by the etched-label
+  // path so a single atom can be picked out of the instanced batch and
+  // get its annotation text engraved on its surface.
   attribute float instanceAtomId;
 
   // Uniforms for GPU color lookup
@@ -118,24 +99,6 @@ const IMPOSTOR_VERTEX = /* glsl */ `
   uniform sampler2D uColormap;  // 256×1: propValue [0,1] → color
   uniform int uColorMode;       // 0=type, 1=uniform, 2=property
   uniform vec3 uUniformColor;
-
-  // Decode params for the packed instance attributes. Set by App.tsx
-  // from frame.boxBounds and the per-frame radius range; constant for
-  // the duration of the frame, so the shader's per-vertex decode is
-  // two MADs.
-  uniform vec3 uPosScale;
-  uniform vec3 uPosOffset;
-  uniform float uMaxRadius;
-
-  // Vertex-side LOD. uPxPerWorldAtUnitDepth = (viewport_height / 2) / tan(fov/2)
-  // — multiply by (radius / -viewZ) to get the atom's projected pixel radius
-  // for a perspective camera. Atoms below uMinPixelRadius are culled by
-  // pushing gl_Position outside clip space; the rasterizer skips them so the
-  // fragment shader never runs. Saves ~1ms/frame on 1M-atom scenes when
-  // zoomed out far enough that most atoms are sub-pixel. uMinPixelRadius=0
-  // disables culling (default).
-  uniform float uPxPerWorldAtUnitDepth;
-  uniform float uMinPixelRadius;
 
   // Passed to fragment
   varying vec3 vColor;
@@ -165,33 +128,17 @@ const IMPOSTOR_VERTEX = /* glsl */ `
       vColor = texture2D(uPalette, vec2(u, 0.5)).rgb;
     }
 
-    // Decode packed instance attributes back to world units.
-    vec3 worldPos = instancePosition * uPosScale + uPosOffset;
-    float radius = instanceRadius * uMaxRadius;
-
     vUv = position.xy;
-    vRadius = radius;
+    vRadius = instanceRadius;
 
     // Transform sphere center to view space
-    vec4 viewCenter4 = modelViewMatrix * vec4(worldPos, 1.0);
+    vec4 viewCenter4 = modelViewMatrix * vec4(instancePosition, 1.0);
     vViewCenter = viewCenter4.xyz;
-    vViewRadius = radius;
-
-    // Sub-pixel culling. Behind-camera atoms have viewZ > 0 (camera looks
-    // -Z); we pass them through so the rasterizer's standard clipping
-    // handles them — don't rely on viewZ for the radius math.
-    if (uMinPixelRadius > 0.0 && viewCenter4.z < 0.0) {
-      float pixelRadius = radius * uPxPerWorldAtUnitDepth / -viewCenter4.z;
-      if (pixelRadius < uMinPixelRadius) {
-        // Push outside clip space — guaranteed cull, no fragment work.
-        gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
-        return;
-      }
-    }
+    vViewRadius = instanceRadius;
 
     // Billboard: offset the quad corner in view space
     vec3 viewPos = viewCenter4.xyz;
-    float expand = radius * 1.3;
+    float expand = instanceRadius * 1.3;
     viewPos.xy += position.xy * expand;
 
     gl_Position = projectionMatrix * vec4(viewPos, 1.0);
@@ -203,36 +150,10 @@ const IMPOSTOR_VERTEX = /* glsl */ `
 // `textureCubeUV(envMap, direction, roughness)` function that decodes the
 // octahedral-packed cubeUV atlas drei's <Environment> produces. This is
 // the same machinery MeshStandardMaterial uses for PMREM-prefiltered
-// scene.environment. Pulled into the shader source only on QUALITY_TIER 2
-// — IBL doesn't fit the fast / standard fragment-throughput budget.
+// scene.environment.
 const CUBE_UV_CHUNK = THREE.ShaderChunk.cube_uv_reflection_fragment;
 
-/** Build the impostor-sphere fragment shader at the requested quality tier.
- *
- * Three.js supports `defines` on ShaderMaterial which become `#define`
- * directives at the top of the shader, so we could gate everything via
- * `#if QUALITY_TIER >= N` blocks. We use JS template-literal interpolation
- * instead because the IBL path needs the cube_uv_reflection_fragment
- * shader chunk to be physically present in the source string — it
- * declares `textureCubeUV()`, and even a `#if 0` branch that references
- * an undeclared function fails GLSL compilation on some drivers.
- *
- * Tiers (see AtomsOptimizedProps.qualityTier doc for the full rationale):
- *   0 — fast      : Lambert + Blinn-Phong, no gl_FragDepth (mobile path)
- *   1 — standard  : Cook-Torrance direct lighting, gl_FragDepth on
- *   2 — premium   : full PBR + IBL + anisotropy + etch + texture mode
- */
-function buildImpostorFragment(tier: 0 | 1 | 2): string {
-  const usesIBL = tier >= 2;
-  const usesCookTorrance = tier >= 1;
-  const usesFragDepth = tier >= 1;
-  const usesEtch = tier >= 2;
-  const usesTextureMode = tier >= 2;
-  const usesAnisotropy = tier >= 2;
-  const usesSubsurface = tier >= 2;
-  const usesRim = tier >= 1;
-
-  return /* glsl */ `
+const IMPOSTOR_FRAGMENT = /* glsl */ `
   precision highp float;
 
   varying vec3 vColor;
@@ -245,46 +166,68 @@ function buildImpostorFragment(tier: 0 | 1 | 2): string {
   varying float vAtomId;
 
   uniform mat4 projectionMatrix;
-${usesEtch ? `
   // Etched annotation: a Canvas2D-rasterized text texture stamped onto the
   // facing hemisphere of a single targeted atom. Activated when uHasEtch=1
-  // and the fragment's vAtomId matches uEtchAtomId.
+  // and the fragment's vAtomId matches uEtchAtomId. Uses the view-space
+  // normal as the stamp UV so the text always reads to camera (it follows
+  // the silhouette, not the world). The alpha channel of the texture
+  // darkens the surface to give an engraved feel.
   uniform sampler2D tEtchTexture;
   uniform float uEtchAtomId;
-  uniform int uHasEtch;` : ''}
-${usesTextureMode ? `
-  uniform int uTextureMode; // 0: none, 1: noise, 2: scratched` : ''}
+  uniform int uHasEtch;
+  uniform int uTextureMode; // 0: none, 1: noise, 2: scratched
   uniform int uColorMode; // 0=type, 1=uniform, 2=property — same scheme as vertex
   uniform int uMaterialPreset; // 0: per-element (default), 1: matte, 2: metallic, 3: glass, 4: plastic
+  // 0..1: blend between per-element identity (0) and preset override (1).
+  // Lets Material Scenes partially preserve element character while
+  // applying a global look.
+  uniform float uMaterialIntensity;
+  // User-controllable rim light boost (additive over the material-driven rim).
+  uniform float uRimLight;
+  // Granular Surface Character overrides.
+  // uSurfaceRoughness and uSurfacePolish act as offsets to the active material profile.
+  uniform float uSurfaceRoughness;
+  uniform float uSurfacePolish;
+  uniform float uSurfaceClearcoat;
+  uniform vec3 uLightDir;
+  uniform vec3 uFillLightDir;
+  uniform vec3 uRimLightDir;
+  uniform vec3 uFillLightColor;
+  uniform vec3 uRimLightColor;
   // 256×2 RGBA: row 0 = (metalness, roughness, anisotropy, subsurface),
   //             row 1 = (emission r, emission g, emission b, intensity).
   uniform sampler2D uMaterialPalette;
-${usesIBL ? `
-  // IBL — single source of truth. tEnvMap is drei's <Environment> output,
-  // a PMREM-prefiltered cubeUV atlas. textureCubeUV (declared by the
-  // chunk below) decodes it including roughness-based mip selection.
+  // IBL — single source of truth. tEnvMap is drei's <Environment> output:
+  // a PMREM-prefiltered, octahedral-packed cubeUV atlas (Three.js's
+  // CubeUVReflectionMapping). textureCubeUV (provided by the
+  // cube_uv_reflection_fragment chunk injected below) decodes it correctly,
+  // including roughness-based mip selection. uHasEnv=0 ('diagram' preset)
+  // falls back to neutral grey so atoms still read.
   uniform sampler2D tEnvMap;
   uniform float uEnvIntensity;
   uniform int uHasEnv;
+  // ENVMAP_TYPE_CUBE_UV gates Three.js's cube_uv_reflection_fragment chunk
+  // so its textureCubeUV() definition is visible to us. CUBEUV_TEXEL_*
+  // and CUBEUV_MAX_MIP are sized for PMREMGenerator's default 256-pixel
+  // base resolution (drei's default). The chunk also requires the uniform
+  // be named "envMap" (not tEnvMap) — alias it.
   #define ENVMAP_TYPE_CUBE_UV
   #define CUBEUV_TEXEL_WIDTH 0.0009765625
   #define CUBEUV_TEXEL_HEIGHT 0.001953125
   #define CUBEUV_MAX_MIP 8.0
   #define envMap tEnvMap
-  ${CUBE_UV_CHUNK}` : ''}
+  ${CUBE_UV_CHUNK}
   // Property-driven emission strength. 0 disables; >0 makes atoms glow
   // proportional to their normalized property value × colormap-mapped color.
   uniform float uPropEmission;
 
-  // Two-light setup in view space
-  const vec3 LIGHT_DIR = normalize(vec3(0.4, 0.7, 0.6));
-  const vec3 LIGHT_DIR_2 = normalize(vec3(-0.3, -0.2, 0.8));
+  // Three-light setup in view space
+  // Key, fill, and rim light dirs are dynamic and passed via uniforms.
 
-${usesTextureMode ? `
   // Simple pseudo-random noise function
   float rand(vec2 co) {
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-  }` : ''}
+  }
 
   void main() {
     // Ray-sphere intersection in view space
@@ -307,101 +250,186 @@ ${usesTextureMode ? `
     vec3 normal = normalize(hitPoint - vViewCenter);
 
     // ─── Material lookup ────────────────────────────────────────────
-    // Default (0): sample per-element profile from the material palette.
-    // Presets 1-4: keep the legacy fixed-look behavior so the panel option
-    // still works as a global override.
+    // Always sample per-element profile from the material palette first.
+    // Then, if a preset override is active (uMaterialPreset > 0), blend
+    // between per-element and preset based on uMaterialIntensity.
+    // This is the key upgrade: Material Scenes can partially preserve
+    // element character (Au still looks gold-ish on 'Forge' at 0.7).
     float metalness, roughness, anisotropy, subsurface;
     vec3 emissionColor = vec3(0.0);
     float emissionIntensity = 0.0;
-    if (uMaterialPreset == 0) {
-      // Material palette is 256×2: row 0 at v=0.25 holds material params,
-      // row 1 at v=0.75 holds (emission rgb, intensity).
-      vec2 paletteUv = vec2((vTypeId + 0.5) / 256.0, 0.25);
-      vec4 m = texture2D(uMaterialPalette, paletteUv);
-      metalness = m.r;
-      roughness = m.g;
-      anisotropy = m.b;
-      subsurface = m.a;
 
-      vec4 e = texture2D(uMaterialPalette, vec2(paletteUv.x, 0.75));
-      emissionColor = e.rgb;
-      emissionIntensity = e.a;
-    } else if (uMaterialPreset == 1) { metalness = 0.05; roughness = 0.85; anisotropy = 0.0; subsurface = 0.0; }
-    else if (uMaterialPreset == 2)   { metalness = 0.8;  roughness = 0.2;  anisotropy = 0.0; subsurface = 0.0; }
-    else if (uMaterialPreset == 3)   { metalness = 0.1;  roughness = 0.1;  anisotropy = 0.0; subsurface = 0.4; }
-    else if (uMaterialPreset == 4)   { metalness = 0.0;  roughness = 0.4;  anisotropy = 0.0; subsurface = 0.0; }
-    else                             { metalness = 0.1;  roughness = 0.5;  anisotropy = 0.0; subsurface = 0.0; }
+    // Step 1: per-element identity (always sampled)
+    vec2 paletteUv = vec2((vTypeId + 0.5) / 256.0, 0.25);
+    vec4 elemMat = texture2D(uMaterialPalette, paletteUv);
+    float elemMetal = elemMat.r;
+    float elemRough = elemMat.g;
+    float elemAniso = elemMat.b;
+    float elemSSS   = elemMat.a;
 
+    vec4 e = texture2D(uMaterialPalette, vec2(paletteUv.x, 0.75));
+    emissionColor = e.rgb;
+    emissionIntensity = e.a;
+
+    // Step 2: preset override values
+    float presetMetal, presetRough, presetAniso, presetSSS;
+    if (uMaterialPreset == 1)      { presetMetal = 0.05; presetRough = 0.85; presetAniso = 0.0; presetSSS = 0.0; }
+    else if (uMaterialPreset == 2) { presetMetal = 0.8;  presetRough = 0.2;  presetAniso = 0.0; presetSSS = 0.0; }
+    else if (uMaterialPreset == 3) { presetMetal = 0.1;  presetRough = 0.1;  presetAniso = 0.0; presetSSS = 0.4; }
+    else if (uMaterialPreset == 4) { presetMetal = 0.0;  presetRough = 0.4;  presetAniso = 0.0; presetSSS = 0.0; }
+    else                           { presetMetal = elemMetal; presetRough = elemRough; presetAniso = elemAniso; presetSSS = elemSSS; }
+
+    // Step 3: blend by materialIntensity
+    metalness  = mix(elemMetal, presetMetal, uMaterialIntensity);
+    roughness  = mix(elemRough, presetRough, uMaterialIntensity);
+    anisotropy = mix(elemAniso, presetAniso, uMaterialIntensity);
+    subsurface = mix(elemSSS,   presetSSS,   uMaterialIntensity);
+
+    // Step 4: apply granular user offsets (Polish/Roughness)
+    metalness = clamp(metalness + uSurfacePolish, 0.0, 1.0);
+    roughness = clamp(roughness + uSurfaceRoughness, 0.0, 1.0);
+
+    // ─── Cook-Torrance microfacet shading (Tier 1 polish) ───────────
+    // Replaces the Blinn-Phong baseline. Same 4 per-element inputs
+    // (metalness/roughness/anisotropy/subsurface), much more material identity.
+    //
+    //   - GGX D + Smith G + Schlick F microfacet specular
+    //   - Burley-style wrap diffuse for soft shadow rolloff
+    //   - Subsurface backlight: light "transmits" to the shadow side for
+    //     translucent atoms (H, O, noble gases) — they read as dewdrops
+    //     not painted balls
+    //   - Schlick fresnel ramps reflectivity at grazing — gives Cu/Au/Ag
+    //     the chrome-edge that distinguishes them from plastic
+    //   - Anisotropic D-term widens the highlight along screen-space y,
+    //     reads as "brushed" for high-anisotropy metals
+    //
+    // We're in view space here, so the camera direction is +z from any
+    // fragment. That simplifies F/G calculations.
     vec3 V = vec3(0.0, 0.0, 1.0); // view direction in view space, fragment-relative
-    vec3 L = LIGHT_DIR;
+    vec3 L = uLightDir;
+    vec3 H = normalize(L + V);
     float NoL = max(dot(normal, L), 0.0);
     float NoV = max(dot(normal, V), 0.0);
-
-    vec3 texColor = vColor;
-${usesTextureMode ? `
-    if (uTextureMode == 1) {
-      float noiseVal = rand(vUv * 500.0);
-      texColor *= mix(0.7, 1.0, noiseVal);
-    } else if (uTextureMode == 2) {
-      float line = rand(floor(vUv * 100.0));
-      if (line > 0.95 && rand(vUv * 50.0) > 0.5) {
-        texColor *= 0.5;
-      }
-    }` : ''}
-
-${usesCookTorrance ? `
-    // ─── Cook-Torrance microfacet shading ───────────────────────────
-    // GGX D + Smith G + Schlick F. Direct-illumination only at this
-    // tier; IBL probes are gated to tier 2 since textureCubeUV is the
-    // dominant cost for mid-range integrated GPUs.
-    vec3 H = normalize(L + V);
     float NoH = max(dot(normal, H), 0.0);
     float LoH = max(dot(L, H), 0.0);
 
+    // GGX normal distribution. alpha grows with roughness² (the standard
+    // perceptually-linear remap). Anisotropy stretches the lobe along
+    // screen-space y by reducing alpha in that direction — a placeholder
+    // until atoms get a real tangent attribute (impostor spheres are
+    // direction-less, so this is the best approximation without a per-
+    // atom orientation hint).
     float alpha = roughness * roughness;
-${usesAnisotropy ? `
-    // Anisotropy widens the GGX lobe along screen-space y. Cheap; only
-    // physically-meaningful with an orientation hint, which impostor
-    // spheres lack — treat as artistic streak control.
     float alphaY = alpha * mix(1.0, 0.4, anisotropy);
     float alphaX = alpha;
+    // Project normal into screen space for anisotropy axis. nx/ny are how
+    // far the normal tilts in screen-space x/y; the squared form is what
+    // GGX needs. For isotropic atoms (anisotropy=0), alphaY==alphaX and
+    // this collapses to standard GGX D.
     float nxSq = normal.x * normal.x;
     float nySq = normal.y * normal.y;
     float nzSq = normal.z * normal.z;
-    float alphaProjSq = (alphaX * alphaX) * nxSq + (alphaY * alphaY) * nySq + alpha * alpha * nzSq;` : `
-    float alphaProjSq = alpha * alpha;`}
+    float alphaProjSq = (alphaX * alphaX) * nxSq + (alphaY * alphaY) * nySq + alpha * alpha * nzSq;
     float D_denom = (NoH * NoH) * (alphaProjSq - 1.0) + 1.0;
     float D = alphaProjSq / max(3.14159 * D_denom * D_denom, 1e-6);
 
+    // Smith G (height-correlated approximation). Cheap.
     float k = (alpha + 1.0) * (alpha + 1.0) / 8.0;
     float G_V = NoV / (NoV * (1.0 - k) + k);
     float G_L = NoL / (NoL * (1.0 - k) + k);
     float G = G_V * G_L;
 
+    // Schlick fresnel. F0 is 0.04 for dielectrics (typical glass/plastic),
+    // base color for metals. The (1-F0)*(1-LoH)^5 ramp gives chrome the
+    // bright edge.
     vec3 F0 = mix(vec3(0.04), vColor, metalness);
     float fresnelRamp = pow(1.0 - LoH, 5.0);
     vec3 F = F0 + (vec3(1.0) - F0) * fresnelRamp;
 
+    // Cook-Torrance specular term. The 4 NoL NoV in the denominator is
+    // standard; the max protects against divide-by-zero at silhouettes.
     vec3 specular = (D * G) * F / max(4.0 * NoL * NoV, 1e-6);
 
-    float wrapHalf = 0.5;
+    // ─── Clearcoat (Tier 2 polish) ──────────────────────────────────
+    // A secondary specular lobe on top of the base material.
+    // Fixed low roughness, high F0 to simulate a polished resin/varnish layer.
+    float clearcoat = uSurfaceClearcoat;
+    if (clearcoat > 0.0) {
+      float ccRoughness = 0.1;
+      float ccAlpha = ccRoughness * ccRoughness;
+      float ccAlphaSq = ccAlpha * ccAlpha;
+      float ccD_denom = (NoH * NoH) * (ccAlphaSq - 1.0) + 1.0;
+      float ccD = ccAlphaSq / max(3.14159 * ccD_denom * ccD_denom, 1e-6);
+
+      float cck = (ccAlpha + 1.0) * (ccAlpha + 1.0) / 8.0;
+      float ccG_V = NoV / (NoV * (1.0 - cck) + cck);
+      float ccG_L = NoL / (NoL * (1.0 - cck) + cck);
+      float ccG = ccG_V * ccG_L;
+
+      // Clearcoat F0 is fixed at 0.04 (IOR ~1.5)
+      vec3 ccF0 = vec3(0.04);
+      vec3 ccF = ccF0 + (vec3(1.0) - ccF0) * fresnelRamp;
+
+      vec3 ccSpecular = (ccD * ccG) * ccF / max(4.0 * NoL * NoV, 1e-6);
+
+      // Add clearcoat specular, and energy conserve the base layer
+      specular = specular * (1.0 - ccF * clearcoat) + ccSpecular * clearcoat;
+    }
+
+    // ─── Diffuse with subsurface ──────────────────────────────────────
+    // Burley wrap: smooths the shadow terminator. wrapHalf=1 is half-Lambert.
+    float wrapHalf = 0.5; // tuneable; higher = softer transition
     float wrapNoL = max((dot(normal, L) + wrapHalf) / (1.0 + wrapHalf), 0.0);
-${usesSubsurface ? `
+
+    // Subsurface backlight: when the normal points away from the light,
+    // simulate light transmitting through the material to the shadow side.
+    // This is what makes a dewdrop, milky glass, or noble-gas atom read as
+    // "lit from within" rather than as a painted shadow.
     float backLight = max(dot(-normal, L), 0.0);
-    backLight = pow(backLight, 3.0) * subsurface;` : `
-    float backLight = 0.0;`}
+    backLight = pow(backLight, 3.0) * subsurface;
 
+    // Combine: dielectric portion uses (1-F) energy conservation; metalness
+    // attenuates the diffuse term entirely (metals don't have diffuse).
     vec3 kD = (vec3(1.0) - F) * (1.0 - metalness);
-    float wrapNoL2 = max((dot(normal, LIGHT_DIR_2) + wrapHalf) / (1.0 + wrapHalf), 0.0) * 0.3;
 
-    float ambient = 0.15 + subsurface * 0.15;
-${usesRim ? `
+    // Secondary fill light — wrap-shaded for consistency.
+    float wrapNoL2 = max((dot(normal, uFillLightDir) + wrapHalf) / (1.0 + wrapHalf), 0.0) * 0.3;
+
+    // Ambient floor — raised for metals since they have near-zero kD
+    // (no diffuse channel) and depend entirely on env reflections.
+    // When the PMREM probe is missing, metals would be invisible.
+    float ambient = 0.15 + subsurface * 0.15 + metalness * 0.25;
+
+    // Rim — Schlick-style fresnel rim for visual depth. Material-driven
+    // base + user-controllable uRimLight additive boost for depth separation.
     float rim = pow(1.0 - NoV, 4.0);
-    float rimStrength = mix(0.15, 0.5, metalness) + subsurface * 0.4;
-    vec3 rimColor = mix(vec3(1.0), vColor, metalness) * rim * rimStrength;` : `
-    vec3 rimColor = vec3(0.0);`}
-${usesIBL ? `
-    // ─── PMREM IBL ─────────────────────────────────────────────────
+    float rimDirMask = max(dot(normal, uRimLightDir), 0.0);
+    float rimBase = mix(0.15, 0.5, metalness) + subsurface * 0.4;
+    // Base rim comes from all sides (white/vColor), extra rim light is directional and tinted
+    vec3 rimBaseColor = mix(vec3(1.0), vColor, metalness) * rim * rimBase;
+    vec3 rimDirColor = uRimLightColor * rim * uRimLight * rimDirMask;
+    vec3 rimColor = rimBaseColor + rimDirColor;
+
+    // Apply texture based on uniform
+    vec3 texColor = vColor;
+    if (uTextureMode == 1) {
+      // Noise
+      float noiseVal = rand(vUv * 500.0);
+      texColor *= mix(0.7, 1.0, noiseVal);
+    } else if (uTextureMode == 2) {
+      // Scratched (procedural lines)
+      float line = rand(floor(vUv * 100.0));
+      if (line > 0.95 && rand(vUv * 50.0) > 0.5) {
+        texColor *= 0.5;
+      }
+    }
+
+    // ─── PMREM IBL — sample the real environment cube ────────────────
+    // tEnvMap is drei's <Environment>, processed by Three's PMREMGenerator.
+    // textureCubeUV (from cube_uv_reflection_fragment) decodes the
+    // octahedral-packed atlas and selects the right mip from roughness.
+    // Specular probe: along reflection vector. Diffuse irradiance: along
+    // surface normal at near-max roughness (acts as a tinted ambient).
     vec3 reflectVec = reflect(-V, normal);
     vec3 envSpec;
     vec3 envAvg;
@@ -409,69 +437,82 @@ ${usesIBL ? `
       envSpec = textureCubeUV(tEnvMap, reflectVec, roughness).rgb * uEnvIntensity;
       envAvg  = textureCubeUV(tEnvMap, normal,     1.0).rgb * uEnvIntensity;
     } else {
-      envSpec = vec3(0.5);
-      envAvg  = vec3(0.4);
+      // No PMREM env — use brighter fallback so atoms are always visible.
+      // Metals depend entirely on env reflections; without a probe,
+      // specular is the only light path that survives (kD≈0). The
+      // directional-dependent specular from LIGHT_DIR alone can leave
+      // shadow-side fragments at pixel values [2,3,6]. Fix: strong
+      // fallback probe that guarantees readability.
+      envSpec = vec3(0.8);
+      envAvg  = vec3(0.6);
     }
+
+    // Final combine — Cook-Torrance + Burley diffuse + subsurface backlight + rim + IBL + emission.
+    //   - Diffuse uses Burley wrap (wrapNoL) which softens the shadow line.
+    //   - kD = (1-F)(1-metalness) implements energy conservation: metals
+    //     have no diffuse contribution, dielectrics share energy with spec.
+    //   - IBL specular: F0 * envSpec gives metals a real-feeling environment
+    //     reflection that varies with viewing angle. Replaces the flat
+    //     F0 * (ambient + 0.4) baseline.
+    //   - IBL diffuse: envAvg as the ambient-irradiance color (tinted!).
+    //   - Specular is the full Cook-Torrance term × NoL.
+    //   - backLight × texColor gives translucent atoms a subtle glow on
+    //     the shadow side — dewdrop / glass / noble gas read.
+    //   - Rim is fresnel-driven, color-tinted by metalness.
+    //   - Emission: per-element baseline glow from the palette row 1.
     vec3 envIrradiance = envAvg * (ambient + 0.4);
-    vec3 iblSpecular = F0 * envSpec * (0.5 + 0.5 * (1.0 - roughness));` : `
-    // Tier 1 (no IBL): neutral irradiance term so the diffuse channel still
-    // has a sensible base term, and zero IBL specular contribution.
-    vec3 envIrradiance = vec3(ambient + 0.4) * 0.55;
-    vec3 iblSpecular = vec3(0.0);`}
-    vec3 diffuseTerm = kD * texColor * (envIrradiance + wrapNoL * 0.7 + wrapNoL2);
+    // Main directional light is considered white, fill light is tinted
+    vec3 diffuseIrradiance = envIrradiance + vec3(1.0) * wrapNoL * 0.7 + uFillLightColor * wrapNoL2;
+    vec3 diffuseTerm = kD * texColor * diffuseIrradiance;
+    vec3 iblSpecular = F0 * envSpec * (0.5 + 0.5 * (1.0 - roughness));
     vec3 specularTerm = specular * NoL * 1.5;
     vec3 backTerm = texColor * backLight * 0.6;
-
+    // Per-element emission baseline + property-driven emission boost.
+    //   - Baseline: per-element emission × intensity (radioactives glow).
+    //   - Property-driven: when in property color mode, atoms with high
+    //     normalized property emit additional light tinted by the colormap-
+    //     mapped color. Reads as "this atom is doing something."
     vec3 emissive = emissionColor * emissionIntensity;
     if (uColorMode == 2 && uPropEmission > 0.0) {
       emissive += vColor * vPropValue * uPropEmission;
     }
-    vec3 color = diffuseTerm + iblSpecular + specularTerm + backTerm + rimColor + emissive;` : `
-    // ─── Fast-tier shading (Lambert + Blinn-Phong specular) ─────────
-    // Skips the full Cook-Torrance microfacet chain. The whole point: keep
-    // the fragment shader cheap so mobile GPUs can run 1M atoms without
-    // dropping to slideshow framerates. Roughness shapes the specular
-    // exponent so material identity is still visible (chrome looks shinier
-    // than plastic) without the GGX cost.
-    vec3 H = normalize(L + V);
-    float NoH = max(dot(normal, H), 0.0);
-    float NoL2 = max(dot(normal, LIGHT_DIR_2), 0.0) * 0.3;
-    float gloss = mix(8.0, 96.0, 1.0 - roughness);
-    float specHighlight = pow(NoH, gloss) * (1.0 - roughness) * mix(0.4, 0.9, metalness);
-    float ambient = 0.18;
-    vec3 color = texColor * (ambient + NoL * 0.7 + NoL2)
-               + mix(vec3(1.0), texColor, metalness) * specHighlight;
-    if (uColorMode == 2 && uPropEmission > 0.0) {
-      color += vColor * vPropValue * uPropEmission;
-    }
-    color += emissionColor * emissionIntensity;`}
+    vec3 color = diffuseTerm + iblSpecular + specularTerm + backTerm + rimColor + emissive;
 
-${usesEtch ? `
-    // ─── Etched annotation overlay ──────────────────────────────────
+    // ─── Minimum visibility floor ──────────────────────────────────
+    // Guarantee atoms are always distinguishable from the background,
+    // even when the env map fails to load or metallic BRDF zeroes out
+    // the diffuse channel. This is a perceptual safety net, not a
+    // physical term — it adds a tiny amount of base color so no atom
+    // ever renders as pure black.
+    vec3 minFloor = texColor * 0.08;
+    color = max(color, minFloor);
+
+    // ─── Etched annotation overlay ────────────────────────────────────
+    // Only the targeted atom executes this branch. We project the
+    // view-space normal into a stamp UV: the camera-facing pole maps to
+    // (0.5, 0.5), edges of the visible hemisphere fall outside [0,1].
+    // etchScale > 1.0 keeps the text inside a small central patch of the
+    // silhouette so it reads as a label, not a tattoo wrapping around.
     if (uHasEtch == 1 && abs(vAtomId - uEtchAtomId) < 0.5) {
       float etchScale = 1.5;
       vec2 etchUv = vec2(normal.x * etchScale + 0.5, -normal.y * etchScale + 0.5);
       if (etchUv.x > 0.0 && etchUv.x < 1.0 && etchUv.y > 0.0 && etchUv.y < 1.0) {
         float etchAlpha = texture2D(tEtchTexture, etchUv).a;
+        // Darken where text is (engraved depth) plus a subtle warm tint so
+        // it reads as a stamped marker rather than a paint splotch.
         vec3 engraved = color * 0.32;
         color = mix(color, engraved, etchAlpha);
       }
-    }` : ''}
+    }
 
-${usesFragDepth ? `
-    // Correct sphere-intersection depth so adjacent atoms occlude each
-    // other along the actual hit point, not the billboard quad center.
-    // NB: gl_FragDepth disables hierarchical-Z and early-Z on most mobile
-    // GPUs — that's why fast tier skips this and accepts the (visually
-    // imperceptible at zoom-out) approximation of quad depth.
+    // Correct depth via projected hit point
     vec4 clipPos = projectionMatrix * vec4(hitPoint, 1.0);
     float ndcDepth = clipPos.z / clipPos.w;
-    gl_FragDepth = ndcDepth * 0.5 + 0.5;` : ''}
+    gl_FragDepth = ndcDepth * 0.5 + 0.5;
 
     gl_FragColor = vec4(color, 1.0);
   }
 `;
-}
 
 // ─── Helpers ─────────────────────────────────────────────────────────
 
@@ -563,14 +604,26 @@ export function AtomsOptimized({
   etchAtomId = null,
   propertyEmissionStrength = 0,
   materialPreset = 'default',
+  materialIntensity = 0.0,
+  rimLightIntensity = 0.0,
+  surfaceRoughness = 0.0,
+  surfacePolish = 0.0,
+  surfaceClearcoat = 0.0,
+  keyLightAzimuth = 40,
+  keyLightElevation = 45,
+  fillLightAzimuth = -120,
+  fillLightElevation = 10,
+  rimLightAzimuth = 160,
+  rimLightElevation = 30,
+  fillLightColor = '#8888ff',
+  rimLightColor = '#ffffff',
   atomTexture = 'none',
-  qualityTier = 2,
   loadedAtomCount,
 }: AtomsOptimizedProps) {
   const meshRef = useRef<THREE.Mesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
   const atomCountRef = useRef(0);
-  const { scene, camera, gl } = useThree();
+  const { scene } = useThree();
 
   // Capacity — grow-only, never shrink
   const capacityRef = useRef(Math.max(MIN_CAPACITY, Math.ceil(frame.natoms * 1.2)));
@@ -598,42 +651,27 @@ export function AtomsOptimized({
     geo.setAttribute('position', new THREE.BufferAttribute(quadPos, 3));
     geo.setIndex(new THREE.BufferAttribute(quadIdx, 1));
 
-    // Per-instance attributes — packed (Phase 3) to ~13 bytes/atom
-    // (down from 28). The shader decodes via uniforms (uPosScale /
-    // uPosOffset for position, uMaxRadius for radius). Saves ~30 MB
-    // CPU + 30 MB GPU for a 1M-atom scene.
-    //
-    //   instancePosition: vec3 Uint16 (normalized) → fragment of box,
-    //     decoded as world = pos * uPosScale + uPosOffset. 16 bits per
-    //     axis gives ~0.0015 Å precision in a 100 Å box — well below
-    //     atom radius, visually invisible.
-    //   instanceRadius: Uint8 (normalized) → fraction of uMaxRadius
-    //     (~3 Å at scale=1; tracks scale + per-type overrides). 1/256
-    //     ≈ 0.012 Å, invisible.
-    //   instanceTypeId: Uint8 (NOT normalized) → integer-valued float
-    //     0..255 in the shader. Matches the existing 256-entry
-    //     palette texture.
-    //   instancePropValue: Uint8 (normalized) → property value in
-    //     [0,1]. Drives colormap UV; quantized to 256 colormap stops.
-    //   instanceAtomId: Float32 (kept). Used only by the premium-tier
-    //     etched-label path; needs full int range up to natoms (well
-    //     past Uint16's 65535 ceiling for 1M-atom scenes).
-    const posAttr = new THREE.InstancedBufferAttribute(new Uint16Array(capacity * 3), 3, true /* normalized */);
+    // Per-instance attributes
+    const posAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
     posAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instancePosition', posAttr);
 
-    const radAttr = new THREE.InstancedBufferAttribute(new Uint8Array(capacity), 1, true /* normalized */);
+    const radAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
     radAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instanceRadius', radAttr);
 
-    const typeAttr = new THREE.InstancedBufferAttribute(new Uint8Array(capacity), 1, false /* not normalized */);
+    // TypeId and PropValue — the shader does the color lookup
+    const typeAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
     typeAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instanceTypeId', typeAttr);
 
-    const propAttr = new THREE.InstancedBufferAttribute(new Uint8Array(capacity), 1, true /* normalized */);
+    const propAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
     propAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instancePropValue', propAttr);
 
+    // AtomId — original frame index, used by the etched-label fragment
+    // path to single out one instance. f32 holds atom indices up to ~16M
+    // exactly; well above the 1M scene cap.
     const atomIdAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
     atomIdAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instanceAtomId', atomIdAttr);
@@ -644,70 +682,51 @@ export function AtomsOptimized({
   }, [capacity]);
 
   // ─── Material: custom shader with GPU color lookup ─────────────────
-  // Rebuilt when qualityTier changes — the fragment shader source itself
-  // depends on the tier (IBL chunk only included at tier 2 since
-  // textureCubeUV must be declared to compile, and we conditionally embed
-  // the cube_uv_reflection_fragment chunk that declares it). The shader
-  // recompile causes a one-time stutter; tier changes are rare in practice.
   const material = useMemo(() => {
     const paletteTex = buildPaletteTexture((i) => DEFAULT_TYPE_COLOR);
     const colormapTex = buildColormapTexture((t) => [t, t, t]);
-    const materialPaletteTex = buildMaterialPaletteTexture();
 
-    // Build only the uniforms the active tier's shader actually
-    // declares. ShaderMaterial accepts extra uniforms (Three.js silently
-    // ignores ones the shader source doesn't reference), so it's safe
-    // to keep them all here — but we annotate which apply where so the
-    // tier table is legible.
-    const uniforms: Record<string, { value: any }> = {
-      uPalette: { value: paletteTex },                     // all tiers
-      uColormap: { value: colormapTex },                   // all tiers
-      uColorMode: { value: 0 },                            // all tiers
-      uUniformColor: { value: new THREE.Vector3(0.6, 0.6, 0.6) }, // all
-      uMaterialPreset: { value: 0 },                       // all tiers
-      uMaterialPalette: { value: materialPaletteTex },     // all tiers
-      uPropEmission: { value: 0 },                         // all tiers
-      // Vertex-side LOD — sub-pixel atom culling. Disabled by default
-      // (uMinPixelRadius=0). Wired up by useFrame below using camera FOV
-      // and viewport size. Cheap when active, no-op otherwise.
-      uPxPerWorldAtUnitDepth: { value: 1.0 },
-      uMinPixelRadius: { value: 0.0 },
-      // Decode params for the packed (Phase 3) per-instance attributes.
-      // uPosScale × instancePosition + uPosOffset → world position;
-      // uMaxRadius × instanceRadius → world radius. Updated per frame
-      // change (see the upload effect — these are stable for the
-      // duration of a frame). Defaults to identity so a non-streaming
-      // load that hasn't run the upload effect yet still renders
-      // sensibly (atoms at 0..1 in identity world).
-      uPosScale: { value: new THREE.Vector3(1, 1, 1) },
-      uPosOffset: { value: new THREE.Vector3(0, 0, 0) },
-      uMaxRadius: { value: 1.0 },
-    };
-    if (qualityTier >= 1) {
-      // Cook-Torrance / standard tier (no IBL) and premium share these.
-      // textureMode is declared/sampled only at premium since the noise
-      // and scratch effects are framing flourishes, not chemistry signals.
-    }
-    if (qualityTier >= 2) {
-      uniforms.uTextureMode = { value: 0 };
-      uniforms.tEnvMap = { value: null as THREE.Texture | null };
-      uniforms.uEnvIntensity = { value: 1.0 };
-      uniforms.uHasEnv = { value: 0 };
-      uniforms.tEtchTexture = { value: null as THREE.Texture | null };
-      uniforms.uEtchAtomId = { value: -1 };
-      uniforms.uHasEtch = { value: 0 };
-    }
+    const materialPaletteTex = buildMaterialPaletteTexture();
 
     return new THREE.ShaderMaterial({
       vertexShader: IMPOSTOR_VERTEX,
-      fragmentShader: buildImpostorFragment(qualityTier),
-      uniforms,
+      fragmentShader: IMPOSTOR_FRAGMENT,
+      uniforms: {
+        uPalette: { value: paletteTex },
+        uColormap: { value: colormapTex },
+        uColorMode: { value: 0 },
+        uUniformColor: { value: new THREE.Vector3(0.6, 0.6, 0.6) },
+        uTextureMode: { value: 0 },
+        uMaterialPreset: { value: 0 },
+        uMaterialIntensity: { value: 0.0 },
+        uRimLight: { value: 0.0 },
+        uSurfaceRoughness: { value: 0.0 },
+        uSurfacePolish: { value: 0.0 },
+        uSurfaceClearcoat: { value: 0.0 },
+        uLightDir: { value: new THREE.Vector3(0.4, 0.7, 0.6) },
+        uFillLightDir: { value: new THREE.Vector3(-0.3, -0.2, 0.8) },
+        uRimLightDir: { value: new THREE.Vector3(0.0, 0.0, -1.0) },
+        uFillLightColor: { value: new THREE.Color('#8888ff') },
+        uRimLightColor: { value: new THREE.Color('#ffffff') },
+        // Static — periodic table doesn't change at runtime.
+        uMaterialPalette: { value: materialPaletteTex },
+        // PMREM env (synced from scene.environment via useFrame below).
+        tEnvMap: { value: null as THREE.Texture | null },
+        uEnvIntensity: { value: 1.0 },
+        uHasEnv: { value: 0 },
+        // Etched annotation — synced from props in the effect below.
+        tEtchTexture: { value: null as THREE.Texture | null },
+        uEtchAtomId: { value: -1 },
+        uHasEtch: { value: 0 },
+        // Property-driven emission strength
+        uPropEmission: { value: 0 },
+      },
       depthWrite: true,
       depthTest: true,
       transparent: false,
       side: THREE.DoubleSide,
     });
-  }, [qualityTier]);
+  }, []);
 
   // ─── Property data ─────────────────────────────────────────────────
   const propData = useMemo(() => {
@@ -736,16 +755,11 @@ export function AtomsOptimized({
     // Update color mode uniform
     uniforms.uColorMode.value = colorMode === 'property' ? 2 : colorMode === 'uniform' ? 1 : 0;
 
-    // Update texture mode + etch uniforms only when the active tier
-    // actually compiled them in. Touching uniforms that don't exist on
-    // the material is a silent no-op in Three.js, but the typed reads
-    // (uniforms.uTextureMode.value) would throw.
-    if (uniforms.uTextureMode) {
-      let texMode = 0;
-      if (atomTexture === 'noise') texMode = 1;
-      if (atomTexture === 'scratched') texMode = 2;
-      uniforms.uTextureMode.value = texMode;
-    }
+    // Update texture mode uniform
+    let texMode = 0;
+    if (atomTexture === 'noise') texMode = 1;
+    if (atomTexture === 'scratched') texMode = 2;
+    uniforms.uTextureMode.value = texMode;
 
     let matMode = 0;
     if (materialPreset === 'matte') matMode = 1;
@@ -753,17 +767,24 @@ export function AtomsOptimized({
     if (materialPreset === 'glass') matMode = 3;
     if (materialPreset === 'plastic') matMode = 4;
     uniforms.uMaterialPreset.value = matMode;
+    uniforms.uMaterialIntensity.value = materialIntensity ?? 0.0;
+    uniforms.uRimLight.value = rimLightIntensity ?? 0.0;
+    uniforms.uSurfaceRoughness.value = surfaceRoughness ?? 0.0;
+    uniforms.uSurfacePolish.value = surfacePolish ?? 0.0;
 
     uniforms.uPropEmission.value = propertyEmissionStrength;
 
-    // Etched annotation sync. Only present at premium tier — the engraving
-    // shader path is gated to QUALITY_TIER 2 since it does an extra
-    // texture sample per fragment.
-    if (uniforms.tEtchTexture) {
-      uniforms.tEtchTexture.value = etchTexture ?? null;
-      uniforms.uEtchAtomId.value = etchAtomId ?? -1;
-      uniforms.uHasEtch.value = (etchTexture && etchAtomId != null && etchAtomId >= 0) ? 1 : 0;
-    }
+    uniforms.uFillLightColor.value.set(fillLightColor);
+    uniforms.uRimLightColor.value.set(rimLightColor);
+
+    // Etched annotation sync. The texture itself is owned by the caller
+    // (App.tsx builds it from the active annotation text); we just point
+    // the uniform at it and flip the gating int. -1 atomId is the sentinel
+    // for "no etch" — fragments compare via abs(diff) < 0.5 so any value
+    // outside the live atom range trivially fails.
+    uniforms.tEtchTexture.value = etchTexture ?? null;
+    uniforms.uEtchAtomId.value = etchAtomId ?? -1;
+    uniforms.uHasEtch.value = (etchTexture && etchAtomId != null && etchAtomId >= 0) ? 1 : 0;
 
     if (colorMode === 'uniform') {
       const [r, g, b] = mapFn(0.0);
@@ -814,170 +835,111 @@ export function AtomsOptimized({
     oldColormap.dispose();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength, etchTexture, etchAtomId]);
+  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength, etchTexture, etchAtomId, materialIntensity, rimLightIntensity, surfaceRoughness, surfacePolish, surfaceClearcoat, fillLightColor, rimLightColor]);
 
-  // ─── PMREM env sync ───────────────────────────────────────────────
+  // ─── PMREM env sync and dynamic lighting ───────────────────────────────────────────────
   // scene.environment is set by drei's <Environment> in App.tsx; it can
   // change asynchronously when the active postprocess preset's HDRI swaps.
   // useFrame keeps the material uniform pointing at whatever's current,
   // and recomputes the mip count when the texture identity changes (the
   // PMREM mip count is texture.mipmaps.length - 1, or derived from size).
-  // ─── Per-frame uniform updates ──────────────────────────────────────
-  // Two jobs: keep the IBL env texture pointing at scene.environment
-  // (premium-tier only) and keep the vertex-shader LOD pixel-projection
-  // uniform in sync with the active camera + viewport so sub-pixel atom
-  // culling is geometrically correct.
-  useFrame(() => {
+  useFrame(({ camera }) => {
+    const env = (scene as any).environment as THREE.Texture | null;
     const u = material.uniforms;
-    if (u.tEnvMap) {
-      const env = (scene as any).environment as THREE.Texture | null;
-      if (env !== u.tEnvMap.value) {
-        u.tEnvMap.value = env;
-        u.uHasEnv.value = env ? 1 : 0;
-      }
-    }
-    // Pixel-projection factor for the vertex-side LOD. For a perspective
-    // camera, an atom of world radius r at view-space depth -z projects
-    // to (r / -z) * uPxPerWorldAtUnitDepth pixels. Computed from the
-    // active camera's fov and the renderer's drawing-buffer height — both
-    // can change (window resize, fov adjust) so we refresh per-frame.
-    if (u.uPxPerWorldAtUnitDepth) {
-      const persp = camera as THREE.PerspectiveCamera;
-      if (persp.isPerspectiveCamera) {
-        const dpr = (gl as any).getDrawingBufferSize
-          ? (gl as any).getDrawingBufferSize(new THREE.Vector2()).y
-          : (gl.domElement?.height ?? 720);
-        const fovRad = (persp.fov * Math.PI) / 180;
-        u.uPxPerWorldAtUnitDepth.value = (0.5 * dpr) / Math.tan(fovRad * 0.5);
-      }
+    if (env !== u.tEnvMap.value) {
+      u.tEnvMap.value = env;
+      u.uHasEnv.value = env ? 1 : 0;
     }
 
-    // ─── Progressive upload pump ──────────────────────────────────────
-    // Drives the chunked path armed by the upload effect. Each tick
-    // processes CHUNK_INDICES atom indices (≤ 50K) and grows the visible
-    // instance count. Stale state (frame swapped under us) is gated by
-    // identity check; the new frame's effect will reset uploadStateRef.
-    //
-    // Two clamps on the upper bound:
-    //   - frame.natoms: the geometry / Frame ceiling.
-    //   - loadedAtomCount (when streaming): the populated prefix. Reading
-    //     past this hits zero-initialized typed-array tail and would
-    //     render atoms stuck at the origin until the parser caught up.
-    // The pump pauses when it hits whichever is smaller; the upload
-    // effect un-pauses it when streaming chunks land or a new frame
-    // arrives.
-    const st = uploadStateRef.current;
-    if (st.done || st.frame !== frame || !uploadCtxRef.current) return;
-    const cap = Math.min(frame.natoms, loadedAtomCount ?? frame.natoms);
-    const remaining = cap - st.iCursor;
-    if (remaining <= 0) {
-      // Pump ran out of loaded atoms. If we've reached the natoms
-      // ceiling we're truly done; otherwise we're waiting for more
-      // atoms to stream in and the next effect run will resume us.
-      if (st.iCursor >= frame.natoms) st.done = true;
-      atomCountRef.current = st.visibleCount;
-      geometry.instanceCount = st.visibleCount;
-      markAttrsDirty(st.visibleCount);
-      return;
-    }
-    const chunkEnd = Math.min(st.iCursor + CHUNK_INDICES, cap);
-    st.visibleCount = processAtomRange(st.iCursor, chunkEnd, st.visibleCount);
-    st.iCursor = chunkEnd;
-    atomCountRef.current = st.visibleCount;
-    geometry.instanceCount = st.visibleCount;
-    markAttrsDirty(st.visibleCount);
-    if (st.iCursor >= frame.natoms) st.done = true;
+    // Continuously transform the light directions into view space
+    // so the impostor shader gets them relative to the camera.
+    const kAz = (keyLightAzimuth ?? 40) * Math.PI / 180;
+    const kEl = (keyLightElevation ?? 45) * Math.PI / 180;
+    const kx = Math.cos(kEl) * Math.sin(kAz);
+    const ky = Math.sin(kEl);
+    const kz = Math.cos(kEl) * Math.cos(kAz);
+    const lightWorldDir = new THREE.Vector3(kx, ky, kz).normalize();
+    const lightViewDir = lightWorldDir.clone().transformDirection(camera.matrixWorldInverse).normalize();
+    u.uLightDir.value.copy(lightViewDir);
+
+    const fAz = (fillLightAzimuth ?? -120) * Math.PI / 180;
+    const fEl = (fillLightElevation ?? 10) * Math.PI / 180;
+    const fx = Math.cos(fEl) * Math.sin(fAz);
+    const fy = Math.sin(fEl);
+    const fz = Math.cos(fEl) * Math.cos(fAz);
+    const fillWorldDir = new THREE.Vector3(fx, fy, fz).normalize();
+    const fillViewDir = fillWorldDir.clone().transformDirection(camera.matrixWorldInverse).normalize();
+    u.uFillLightDir.value.copy(fillViewDir);
+
+    const rAz = (rimLightAzimuth ?? 160) * Math.PI / 180;
+    const rEl = (rimLightElevation ?? 30) * Math.PI / 180;
+    const rx = Math.cos(rEl) * Math.sin(rAz);
+    const ry = Math.sin(rEl);
+    const rz = Math.cos(rEl) * Math.cos(rAz);
+    const rimWorldDir = new THREE.Vector3(rx, ry, rz).normalize();
+    const rimViewDir = rimWorldDir.clone().transformDirection(camera.matrixWorldInverse).normalize();
+    u.uRimLightDir.value.copy(rimViewDir);
   });
 
-  // ─── Upload frame data to GPU ─────────────────────────────────────
-  //
-  // Architecture for progressive (chunked) upload:
-  //
-  //   - The expensive part is the per-atom write loop. For 1M atoms it
-  //     runs ~50 ms on a desktop and locks the main thread; on a phone
-  //     it's much worse and is what bricks the page on the 1M test.
-  //   - We split the loop across animation frames: each `useFrame` tick
-  //     processes CHUNK_INDICES atom indices (50K) and grows
-  //     `geometry.instanceCount` to the count written so far. The
-  //     renderer paints what's available; the next tick fills in more.
-  //   - Two paths share one inner loop (`processAtomRange`):
-  //       SYNC      — small frames (<PROGRESSIVE_THRESHOLD atoms) and any
-  //                   frame currently being interpolated. The full frame
-  //                   is processed inside the same effect call. Preserves
-  //                   exact pre-existing behavior for playback.
-  //       CHUNKED   — large single-frame loads. The effect resets the
-  //                   pump state; useFrame ticks advance it.
-  //   - `uploadStateRef` tracks the in-progress chunked upload. Frame
-  //     identity changes cancel the in-progress pump (the new frame's
-  //     effect resets the state to point at it).
-  //
-  // The mapping from atom index `i` to instance slot `visibleCount` is
-  // monotonic but not 1:1 — hidden atoms contribute a `continue`. We
-  // carry both counters across chunks so the prefix written remains
-  // contiguous and `geometry.instanceCount` always points to a fully-
-  // populated range.
-  const PROGRESSIVE_THRESHOLD = 100_000; // atoms above which we chunk
-  const CHUNK_INDICES = 50_000;          // atom-index window per tick
-
-  const uploadStateRef = useRef<{
-    frame: Frame | null;          // identity gate — pump cancels on mismatch
-    iCursor: number;              // next atom index to process
-    visibleCount: number;         // instance slots written so far
-    done: boolean;
-  }>({ frame: null, iCursor: 0, visibleCount: 0, done: true });
-
-  // Closure-captured state for the active upload call (set by uploadFrame
-  // before either running sync or handing off to the pump). Refs because
-  // they live across animation frames in the chunked case but are not
-  // React state — mutating them must not re-render.
-  const uploadCtxRef = useRef<{
-    radiiLookup: Float32Array;
-    hiddenLookup: Uint8Array;
-    scaleOverrideLookup: Float32Array;
-    nextPropData: Float32Array | null;
-    bsx: number; bsy: number; bsz: number;
-    hasBounds: boolean;
-    t: number;
-    // Phase 3 quantization params, pre-computed per upload so the
-    // inner write loop stays a few MADs without recomputing per-atom.
-    posOffsetX: number; posOffsetY: number; posOffsetZ: number;
-    posInvScaleX: number; posInvScaleY: number; posInvScaleZ: number;
-    invMaxRadius: number;
-  } | null>(null);
-
-  /** Process atoms [iStart, iEnd) of the current upload context, writing
-   *  visible ones to the geometry attributes starting at `visibleStart`.
-   *  Returns the post-chunk visible count. Pure write — does NOT touch
-   *  `geometry.instanceCount` or attribute dirty flags; callers do that. */
-  const processAtomRange = useCallback((iStart: number, iEnd: number, visibleStart: number): number => {
-    const ctx = uploadCtxRef.current;
-    if (!ctx) return visibleStart;
+  // ─── Upload frame data to GPU (runs ONCE per frame change) ────────
+  const uploadFrame = useCallback(() => {
+    // Defer spatial hash rebuild to idle time
+    const idleCallback = (typeof requestIdleCallback !== 'undefined')
+      ? requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 0);
+    const cancelIdle = (typeof cancelIdleCallback !== 'undefined')
+      ? cancelIdleCallback
+      : clearTimeout;
+    const idleId = idleCallback(() => {
+      spatialHashRef.current.build(frame.positions, frame.natoms);
+      onSpatialHash?.(spatialHashRef.current);
+    });
+    const cleanupIdle = () => cancelIdle(idleId as any);
 
     const positions = frame.positions;
     const types = frame.types;
-    const nextPos = nextFrame && nextFrame.natoms === frame.natoms ? nextFrame.positions : null;
-    const {
-      radiiLookup, hiddenLookup, scaleOverrideLookup, nextPropData,
-      bsx, bsy, bsz, hasBounds, t,
-      posOffsetX, posOffsetY, posOffsetZ,
-      posInvScaleX, posInvScaleY, posInvScaleZ,
-      invMaxRadius,
-    } = ctx;
-    const MAX_TYPES = 256;
 
-    // Packed Phase-3 attribute arrays. Position is Uint16 normalized
-    // (vec3 → 6 bytes); radius/typeId/propValue are Uint8; atomId
-    // stays Float32 because the etched-label path needs the full
-    // integer range.
-    const posArr = (geometry.attributes.instancePosition as THREE.InstancedBufferAttribute).array as Uint16Array;
-    const radArr = (geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute).array as Uint8Array;
-    const typeArr = (geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute).array as Uint8Array;
-    const propArr = (geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute).array as Uint8Array;
+    const t = interpolationFactor ?? 0;
+    const hasNextFrame = nextFrame && nextFrame.natoms === frame.natoms;
+    const nextPos = hasNextFrame ? nextFrame.positions : null;
+
+    let bsx = 0, bsy = 0, bsz = 0;
+    const hasBounds = !!frame.boxBounds;
+    if (hasBounds) {
+      bsx = frame.boxBounds![1] - frame.boxBounds![0];
+      bsy = frame.boxBounds![3] - frame.boxBounds![2];
+      bsz = frame.boxBounds![5] - frame.boxBounds![4];
+    }
+
+    // Pre-compute radii lookups
+    const MAX_TYPES = 256;
+    const radiiLookup = new Float32Array(MAX_TYPES).fill(1.2);
+    const hiddenLookup = new Uint8Array(MAX_TYPES);
+    const scaleOverrideLookup = new Float32Array(MAX_TYPES).fill(1.0);
+
+    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
+      radiiLookup[typeId] = botanicalMode ? (BOTANICAL_RADII[typeId] ?? 1.2) : (TYPE_RADII[typeId] ?? 1.2);
+      if (hiddenAtomTypes?.has(typeId)) hiddenLookup[typeId] = 1;
+      if (atomTypeScales?.[typeId] !== undefined) scaleOverrideLookup[typeId] = atomTypeScales[typeId];
+    }
+
+    // Property normalization
+    const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
+    const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty!) : null;
+
+    // Get instance attribute arrays directly
+    const posArr = (geometry.attributes.instancePosition as THREE.InstancedBufferAttribute).array as Float32Array;
+    const radArr = (geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute).array as Float32Array;
+    const typeArr = (geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute).array as Float32Array;
+    const propArr = (geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute).array as Float32Array;
     const atomIdArr = (geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute).array as Float32Array;
 
-    let visibleCount = visibleStart;
+    let visibleCount = 0;
 
-    for (let i = iStart; i < iEnd; i++) {
+    // When streaming, only render atoms that have been received
+    const effectiveAtomCount = loadedAtomCount ?? frame.natoms;
+
+    for (let i = 0; i < effectiveAtomCount; i++) {
       const typeId = types[i] < MAX_TYPES ? types[i] : 0;
       const radius = hiddenLookup[typeId] ? 0 : radiiLookup[typeId] * scale * scaleOverrideLookup[typeId];
       if (radius === 0) continue;
@@ -1008,44 +970,23 @@ export function AtomsOptimized({
       }
 
       const pi = visibleCount * 3;
-      // Quantize position to Uint16 normalized [0,65535] over the box.
-      // The shader reverses with uPosScale * pos + uPosOffset. Out-of-
-      // box atoms (rare in well-behaved LAMMPS dumps) clamp to box
-      // edges via the Math.max/min. The | 0 truncates to integer for
-      // the Uint16Array store — the array's setter would do this
-      // anyway but explicit truncation matches the intent and lets
-      // the JIT pick the integer type early.
-      let qx = ((x - posOffsetX) * posInvScaleX) * 65535;
-      let qy = ((y - posOffsetY) * posInvScaleY) * 65535;
-      let qz = ((z - posOffsetZ) * posInvScaleZ) * 65535;
-      if (qx < 0) qx = 0; else if (qx > 65535) qx = 65535;
-      if (qy < 0) qy = 0; else if (qy > 65535) qy = 65535;
-      if (qz < 0) qz = 0; else if (qz > 65535) qz = 65535;
-      posArr[pi]     = qx | 0;
-      posArr[pi + 1] = qy | 0;
-      posArr[pi + 2] = qz | 0;
+      posArr[pi]     = x;
+      posArr[pi + 1] = y;
+      posArr[pi + 2] = z;
 
-      // Quantize radius to Uint8 normalized [0,255] over uMaxRadius.
-      let qr = radius * invMaxRadius * 255;
-      if (qr < 0) qr = 0; else if (qr > 255) qr = 255;
-      radArr[visibleCount] = qr | 0;
+      radArr[visibleCount] = radius;
+      typeArr[visibleCount] = typeId;
 
-      // typeId is integer-valued; clamp to the 8-bit palette range.
-      typeArr[visibleCount] = typeId < 256 ? typeId : 255;
-
-      // Normalized property value (for property color mode), quantized
-      // to Uint8. The value is already in [0,1] from min/max scaling.
-      let propNorm = 0;
+      // Normalized property value (for property color mode)
       if (propData) {
         let val = propData[i];
         if (nextPropData && nextPropData.length > i) {
           val = val + (nextPropData[i] - val) * t;
         }
-        propNorm = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
+        propArr[visibleCount] = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
+      } else {
+        propArr[visibleCount] = 0.0;
       }
-      let qp = propNorm * 255;
-      if (qp < 0) qp = 0; else if (qp > 255) qp = 255;
-      propArr[visibleCount] = qp | 0;
 
       // Pass through the original atom index so the etched-label fragment
       // can compare against uEtchAtomId. Hidden atoms (skipped above) get
@@ -1055,207 +996,38 @@ export function AtomsOptimized({
       visibleCount++;
     }
 
-    return visibleCount;
-  }, [frame, nextFrame, scale, propData, pMin, pMax, capacity, geometry]);
+    atomCountRef.current = visibleCount;
+    geometry.instanceCount = visibleCount;
 
-  /** Mark the prefix [0, visibleCount) of every per-instance attribute as
-   *  needing upload. Called after each chunk in the progressive path and
-   *  once at the end of the sync path. */
-  const markAttrsDirty = useCallback((visibleCount: number) => {
+    // Mark attributes for GPU upload
     const posAttr = geometry.attributes.instancePosition as THREE.InstancedBufferAttribute;
     const radAttr = geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute;
     const typeAttr = geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute;
     const propAttr = geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute;
+
     const atomIdAttr = geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute;
     posAttr.needsUpdate = true;
     radAttr.needsUpdate = true;
     typeAttr.needsUpdate = true;
     propAttr.needsUpdate = true;
     atomIdAttr.needsUpdate = true;
+
     (posAttr as any).updateRange = { offset: 0, count: visibleCount * 3 };
     (radAttr as any).updateRange = { offset: 0, count: visibleCount };
     (typeAttr as any).updateRange = { offset: 0, count: visibleCount };
     (propAttr as any).updateRange = { offset: 0, count: visibleCount };
     (atomIdAttr as any).updateRange = { offset: 0, count: visibleCount };
-  }, [geometry]);
 
-  /** Build the upload context for the current props (radii lookups, etc.)
-   *  and stash it on uploadCtxRef so processAtomRange can read it. Cheap;
-   *  runs once per frame change rather than per chunk. */
-  const buildUploadCtx = useCallback(() => {
-    const t = interpolationFactor ?? 0;
-    const hasBounds = !!frame.boxBounds;
-    let bsx = 0, bsy = 0, bsz = 0;
-    if (hasBounds) {
-      bsx = frame.boxBounds![1] - frame.boxBounds![0];
-      bsy = frame.boxBounds![3] - frame.boxBounds![2];
-      bsz = frame.boxBounds![5] - frame.boxBounds![4];
-    }
-    const MAX_TYPES = 256;
-    const radiiLookup = new Float32Array(MAX_TYPES).fill(1.2);
-    const hiddenLookup = new Uint8Array(MAX_TYPES);
-    const scaleOverrideLookup = new Float32Array(MAX_TYPES).fill(1.0);
-    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
-      radiiLookup[typeId] = botanicalMode ? (BOTANICAL_RADII[typeId] ?? 1.2) : (TYPE_RADII[typeId] ?? 1.2);
-      if (hiddenAtomTypes?.has(typeId)) hiddenLookup[typeId] = 1;
-      if (atomTypeScales?.[typeId] !== undefined) scaleOverrideLookup[typeId] = atomTypeScales[typeId];
-    }
-    const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
-    const nextPropData = hasPropInterpolation ? (nextFrame!.properties!.get(colorProperty!) ?? null) : null;
-
-    // ─── Phase 3 quantization params ────────────────────────────────
-    // Position: pack into [0, 65535] over the simulation cell. Store
-    // 1/scale rather than scale so the inner loop is two MADs +
-    // multiply-by-65535. The shader's matching uniforms (uPosScale,
-    // uPosOffset) are written below.
-    const posOffsetX = hasBounds ? frame.boxBounds![0] : 0;
-    const posOffsetY = hasBounds ? frame.boxBounds![2] : 0;
-    const posOffsetZ = hasBounds ? frame.boxBounds![4] : 0;
-    const posInvScaleX = hasBounds && bsx > 0 ? 1 / bsx : 1;
-    const posInvScaleY = hasBounds && bsy > 0 ? 1 / bsy : 1;
-    const posInvScaleZ = hasBounds && bsz > 0 ? 1 / bsz : 1;
-
-    // Radius: pack into [0, 255] over the maximum possible radius this
-    // frame could produce. Compute the actual max from the radii table
-    // × scale × per-type override so we get tight quantization (1/256
-    // ≈ 0.4% precision). 1e-3 floor avoids divide-by-zero in pathological
-    // empty frames.
-    let maxRadius = 1e-3;
-    for (let typeId = 0; typeId < MAX_TYPES; typeId++) {
-      if (hiddenLookup[typeId]) continue;
-      const r = radiiLookup[typeId] * scale * scaleOverrideLookup[typeId];
-      if (r > maxRadius) maxRadius = r;
-    }
-    const invMaxRadius = 1 / maxRadius;
-
-    uploadCtxRef.current = {
-      radiiLookup, hiddenLookup, scaleOverrideLookup, nextPropData,
-      bsx, bsy, bsz, hasBounds, t,
-      posOffsetX, posOffsetY, posOffsetZ,
-      posInvScaleX, posInvScaleY, posInvScaleZ,
-      invMaxRadius,
-    };
-
-    // Push the matching shader-side decode uniforms. We do it here
-    // (inside buildUploadCtx) so the uniforms always match the values
-    // baked into the just-computed quantization params, even if the
-    // material has been recompiled (qualityTier change) since the last
-    // upload. The shader reads (instancePosition * uPosScale + uPosOffset)
-    // and (instanceRadius * uMaxRadius) — these uniforms must agree
-    // with what processAtomRange writes or atoms render at the wrong
-    // coordinates.
-    const u = material.uniforms;
-    if (u.uPosOffset && u.uPosScale && u.uMaxRadius) {
-      u.uPosOffset.value.set(posOffsetX, posOffsetY, posOffsetZ);
-      u.uPosScale.value.set(
-        hasBounds ? bsx : 1,
-        hasBounds ? bsy : 1,
-        hasBounds ? bsz : 1,
-      );
-      u.uMaxRadius.value = maxRadius;
-    }
-  }, [frame, nextFrame, interpolationFactor, botanicalMode, hiddenAtomTypes, atomTypeScales, colorProperty, scale, material]);
-
-  /** Top-level upload effect. Decides between SYNC (small frames or
-   *  interpolated playback) and CHUNKED (large fresh loads) and either
-   *  runs the loop here or arms the useFrame pump below. */
-  // Track last frame identity so we can distinguish "user just loaded a
-  // new file / scrubbed to a new frame" (chunked path is allowed) from
-  // "user changed a color/scale/visibility prop on the same frame" (must
-  // re-upload synchronously to avoid flashing the scene to empty before
-  // the pump rebuilds it).
-  const prevFrameRef = useRef<Frame | null>(null);
-
-  useEffect(() => {
-    // Defer spatial hash rebuild to idle time — same as before. This
-    // does NOT block the upload; the hash is read by atom-picker only.
-    const idleCallback = (typeof requestIdleCallback !== 'undefined')
-      ? requestIdleCallback
-      : (cb: () => void) => setTimeout(cb, 0);
-    const cancelIdle = (typeof cancelIdleCallback !== 'undefined')
-      ? cancelIdleCallback
-      : clearTimeout;
-    const idleId = idleCallback(() => {
-      spatialHashRef.current.build(frame.positions, frame.natoms);
-      onSpatialHash?.(spatialHashRef.current);
-    });
-
-    buildUploadCtx();
-
-    const t = interpolationFactor ?? 0;
-    const frameChanged = prevFrameRef.current !== frame;
-    prevFrameRef.current = frame;
-    // Upload upper bound. When the streaming parser is filling Frame
-    // arrays, `loadedAtomCount` is below `frame.natoms` and the renderer
-    // must clamp to it — uninitialized indices [loadedAtomCount, natoms)
-    // are zeros and would render atoms at the origin. When undefined
-    // (the WASM all-at-once path), we treat the full frame as ready.
-    const uploadCap = Math.min(frame.natoms, loadedAtomCount ?? frame.natoms);
-    // Chunk only when:
-    //   - it's a fresh frame load (otherwise prop changes on the same
-    //     frame would flash the scene to empty and re-stream),
-    //   - the frame is large enough to be worth chunking, and
-    //   - we're not interpolating (interpolated frames re-upload per
-    //     animation frame anyway; chunking them spreads playback cost
-    //     instead of saving it).
-    const isProgressive = frameChanged && frame.natoms > PROGRESSIVE_THRESHOLD && t === 0;
-
-    // Streaming continuation: pump still has atoms left to process for
-    // this frame. Triggers in two cases:
-    //   (1) more atoms streamed in (uploadCap grew past iCursor) — the
-    //       parser is still feeding us, let the pump catch up.
-    //   (2) streaming just completed (loadedAtomCount caught natoms) —
-    //       the pump is short of natoms, let it finish naturally over
-    //       the next few rAF ticks rather than triggering a sync
-    //       re-upload of the entire 1M-atom prefix.
-    // The trade-off: a prop change (color/scale) made WHILE streaming
-    // is in flight won't propagate to atoms uploaded so far — they
-    // keep their old appearance until streaming completes and a later
-    // prop change runs the sync path. Acceptable for the streaming
-    // load window (a few seconds); user typically isn't adjusting
-    // controls during it.
-    if (
-      !frameChanged
-      && uploadStateRef.current.frame === frame
-      && uploadStateRef.current.iCursor < frame.natoms
-    ) {
-      uploadStateRef.current.done = false;
-      return () => cancelIdle(idleId as any);
-    }
-
-    if (!isProgressive) {
-      // SYNC path — preserves exact pre-existing behavior for small
-      // frames, for playback / scrubbing, and for prop-only re-uploads.
-      // During streaming (uploadCap < natoms), we still process the
-      // loaded prefix synchronously rather than chunked — but that only
-      // happens for non-progressive (small or playback) frames.
-      const finalCount = processAtomRange(0, uploadCap, 0);
-      atomCountRef.current = finalCount;
-      geometry.instanceCount = finalCount;
-      markAttrsDirty(finalCount);
-      uploadStateRef.current = {
-        frame, iCursor: uploadCap, visibleCount: finalCount,
-        done: uploadCap >= frame.natoms,
-      };
-    } else {
-      // CHUNKED path — arm the pump. Initial instanceCount = 0 so the
-      // first paint shows nothing; the next useFrame tick processes the
-      // first 50K atoms and the user sees them immediately.
-      atomCountRef.current = 0;
-      geometry.instanceCount = 0;
-      uploadStateRef.current = {
-        frame, iCursor: 0, visibleCount: 0, done: false,
-      };
-    }
-
-    return () => cancelIdle(idleId as any);
+    return cleanupIdle;
   }, [
     frame, nextFrame, interpolationFactor, scale, propData, pMin, pMax,
-    loadedAtomCount,
     hiddenAtomTypes, atomTypeScales, botanicalMode,
     onSpatialHash, capacity, colorProperty, geometry,
-    buildUploadCtx, processAtomRange, markAttrsDirty,
   ]);
+
+  useEffect(() => {
+    return uploadFrame();
+  }, [uploadFrame]);
 
   // Cleanup
   useEffect(() => {
@@ -1268,63 +1040,12 @@ export function AtomsOptimized({
     };
   }, [geometry, material]);
 
-  // Tier-derived default for the sub-pixel-cull threshold. Fast tier
-  // aggressively culls atoms that would project to less than ~0.6 px
-  // (invisible at the device's DPR but still costing fragment work);
-  // standard tier culls below ~0.3 px; premium leaves it off so
-  // engineers comparing renders see exactly what's there. The vertex
-  // shader treats 0 as "off" and skips the test entirely.
-  useEffect(() => {
-    if (!material.uniforms.uMinPixelRadius) return;
-    const px =
-      qualityTier === 0 ? 0.6 :
-      qualityTier === 1 ? 0.3 :
-      0.0;
-    material.uniforms.uMinPixelRadius.value = px;
-  }, [material, qualityTier]);
-
-  // Bounding sphere for frustum culling — must exist BEFORE the first
-  // render or Three.js will fall back to computing it from the local-
-  // space quad attribute, which always reads as a tiny sphere at origin
-  // and gets erroneously culled. We size it from the simulation cell
-  // (with a small atom-radius pad) so it's a generous over-estimate of
-  // where any atom could be in world space. Re-runs when the cell
-  // dimensions change, which is essentially per-trajectory.
-  useEffect(() => {
-    if (!frame.boxBounds) {
-      // No cell info — disable culling rather than guess. Sets a
-      // very-large sphere so Three.js never culls.
-      geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 1e6);
-      return;
-    }
-    const bb = frame.boxBounds;
-    const cx = (bb[0] + bb[1]) * 0.5;
-    const cy = (bb[2] + bb[3]) * 0.5;
-    const cz = (bb[4] + bb[5]) * 0.5;
-    const dx = bb[1] - bb[0];
-    const dy = bb[3] - bb[2];
-    const dz = bb[5] - bb[4];
-    // Half-diagonal + max atom radius pad so atoms touching the cell
-    // wall aren't culled early.
-    const radius = 0.5 * Math.sqrt(dx * dx + dy * dy + dz * dz) + 5.0;
-    geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(cx, cy, cz), radius);
-  }, [
-    geometry,
-    frame.boxBounds?.[0], frame.boxBounds?.[1],
-    frame.boxBounds?.[2], frame.boxBounds?.[3],
-    frame.boxBounds?.[4], frame.boxBounds?.[5],
-  ]);
-
   return (
     <mesh
       ref={meshRef}
       geometry={geometry}
       material={material}
-      // Frustum culling on — bounding sphere is set above before first
-      // render. Saves the entire pipeline cost when the camera is pointed
-      // away from the cell, which is most of the camera's working volume
-      // on a 1M-atom scene.
-      frustumCulled={true}
+      frustumCulled={false}
     />
   );
 }

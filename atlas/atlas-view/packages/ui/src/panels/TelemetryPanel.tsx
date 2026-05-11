@@ -349,6 +349,7 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
   const colormap = useStore(s => s.colormap);
   const anomalyTracking = useStore(s => s.anomalyTracking);
   const setAnomalyTracking = useStore(s => s.setAnomalyTracking);
+  const streamingTelemetry = useStore(s => s.streamingTelemetry);
 
   const [expandedProp, setExpandedProp] = useState<string | null>(null);
   const [autoJumpSpikes, setAutoJumpSpikes] = useState(false);
@@ -514,6 +515,74 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
           </svg>
         </button>
       </div>
+
+      {/* Streaming Telemetry */}
+      {streamingTelemetry && (
+        <div style={{
+          padding: '12px 16px',
+          borderBottom: '1px solid var(--border-subtle)',
+          background: 'var(--bg-elevated)',
+        }}>
+          <div style={{
+            fontSize: 9, fontWeight: 700, letterSpacing: '0.1em',
+            color: 'var(--text-dim)', textTransform: 'uppercase',
+            marginBottom: 8,
+          }}>
+            STREAMING TELEMETRY
+          </div>
+          <div style={{
+            display: 'grid', gridTemplateColumns: '1fr 1fr',
+            gap: 8,
+          }}>
+            {[
+              { 
+                label: 'EGRESS', 
+                value: `${(streamingTelemetry.bytesTransferred / 1024 / 1024).toFixed(2)} MB`, 
+                color: 'var(--accent)' 
+              },
+              { 
+                label: 'LRU CACHE', 
+                value: `${streamingTelemetry.cacheSize} frames`, 
+                color: 'var(--accent)' 
+              },
+              { 
+                label: 'CACHE HITS', 
+                value: streamingTelemetry.cacheHits, 
+                color: SPIKE_COLORS.nominal 
+              },
+              { 
+                label: 'CACHE MISSES', 
+                value: streamingTelemetry.cacheMisses, 
+                color: SPIKE_COLORS.spike 
+              },
+            ].map(({ label, value, color }) => (
+              <div
+                key={label}
+                style={{
+                  padding: '6px 8px',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-subtle)',
+                  display: 'flex', flexDirection: 'column', gap: 2,
+                }}
+              >
+                <div style={{
+                  fontSize: 8, fontWeight: 700, letterSpacing: '0.05em',
+                  color: 'var(--text-dim)',
+                }}>
+                  {label}
+                </div>
+                <div style={{
+                  fontSize: 13, fontWeight: 700,
+                  fontFamily: 'var(--font-mono)',
+                  color,
+                }}>
+                  {value}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Research Showcase Context */}
       {isResearch && (

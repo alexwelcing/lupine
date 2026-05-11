@@ -11,3 +11,5 @@ export {
   categoryForAtomicNumber,
   buildMaterialPaletteData,
 } from './elementProfiles';
+export type { MaterialScene } from './scenes';
+export { MATERIAL_SCENES, getScene, DEFAULT_SCENE_ID } from './scenes';

@@ -6,7 +6,7 @@
     "domain": "Metals & Alloys",
     "atoms": "1,000,000",
     "frames": "1",
-    "file": "scale_tests/massive_1m.lammpstrj",
+    "file": "https://storage.googleapis.com/glim-datasets/sims/massive_1m.glimbin",
     "available": true,
     "colors": [
       "#b87333",
@@ -38,6 +38,226 @@
       "potential": "Brand Identity Architecture",
       "temperature": "0 K",
       "reference": "Lupine Materials Science \u2014 lupine.science"
+    },
+    "featured": true
+  },
+  {
+    "id": "brilliant_diamond_macro",
+    "title": "Brilliant Diamond",
+    "subtitle": "Macroscopic diamond crystal structure demo.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/brilliant_diamond_macro.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "rough_octahedron_diamond",
+    "title": "Rough Octahedron Diamond",
+    "subtitle": "Natural diamond crystal habit.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/rough_octahedron_diamond.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "caffeine",
+    "title": "Caffeine",
+    "subtitle": "Central nervous system stimulant.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/caffeine.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "dopamine",
+    "title": "Dopamine",
+    "subtitle": "Neuromodulatory molecule.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/dopamine.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "serotonin",
+    "title": "Serotonin",
+    "subtitle": "Monoamine neurotransmitter.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/serotonin.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "psilocybin",
+    "title": "Psilocybin",
+    "subtitle": "Naturally occurring psychedelic prodrug.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/psilocybin.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "lsd",
+    "title": "LSD",
+    "subtitle": "Lysergic acid diethylamide.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/lsd.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "aspirin",
+    "title": "Aspirin",
+    "subtitle": "Acetylsalicylic acid.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/aspirin.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "thc",
+    "title": "THC",
+    "subtitle": "Tetrahydrocannabinol.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/thc.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "cholesterol",
+    "title": "Cholesterol",
+    "subtitle": "Lipid molecule.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/cholesterol.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
+    },
+    "featured": true
+  },
+  {
+    "id": "diamond_crystal",
+    "title": "Diamond Crystal",
+    "subtitle": "Carbon crystal lattice.",
+    "domain": "Curated Molecules (Streaming)",
+    "atoms": "Varies",
+    "frames": "1",
+    "file": "https://storage.googleapis.com/glim-datasets/molecules/diamond_crystal.glimbin",
+    "available": true,
+    "colors": [
+      "#1edce0",
+      "#b87333",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Streaming CDN",
+      "potential": "N/A"
     },
     "featured": true
   },
@@ -300,7 +520,7 @@
     "domain": "Advanced Theory & Validation",
     "atoms": "1,000",
     "frames": "30",
-    "file": "archive/oscillation_timeseries.lammpstrj",
+    "file": "https://storage.googleapis.com/glim-datasets/sims/oscillation_timeseries.glimbin",
     "available": true,
     "colors": [
       "#f542d4",

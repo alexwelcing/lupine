@@ -93,6 +93,17 @@ interface BondsProps {
   renderStyle?: RenderStyle;
   botanicalMode?: boolean;
   materialPreset?: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
+  materialIntensity?: number;
+  rimLightIntensity?: number;
+  surfaceRoughness?: number;
+  surfacePolish?: number;
+  surfaceClearcoat?: number;
+  fillLightColor?: string;
+  rimLightColor?: string;
+  fillLightAzimuth?: number;
+  fillLightElevation?: number;
+  rimLightAzimuth?: number;
+  rimLightElevation?: number;
   visible?: boolean;
   bondColorMode?: 'type' | 'length' | 'energy' | 'screening';
   /** Route bond detection through the WebGPU compute pipeline instead of
@@ -127,6 +138,17 @@ export function Bonds({
   renderStyle = 'standard',
   botanicalMode = false,
   materialPreset = 'default',
+  materialIntensity = 0.0,
+  rimLightIntensity = 0.3,
+  surfaceRoughness = 0.0,
+  surfacePolish = 0.0,
+  surfaceClearcoat = 0.0,
+  fillLightColor = '#5577ff',
+  rimLightColor = '#ff7755',
+  fillLightAzimuth = -120,
+  fillLightElevation = 10,
+  rimLightAzimuth = 160,
+  rimLightElevation = 30,
   visible = true,
   bondColorMode = 'type',
   useGpu = false,
@@ -506,7 +528,40 @@ export function Bonds({
   //  InstancedMesh remounts via key={capacity}, not in a post-commit useEffect.)
 
   // ─── Material ──────────────────────────────────────────────────────
-  const uniformsRef = useRef({ uTime: { value: 0 } });
+  const uniformsRef = useRef({ 
+    uTime: { value: 0 },
+    uSurfaceRoughness: { value: surfaceRoughness },
+    uSurfacePolish: { value: surfacePolish },
+    uFillLightColor: { value: new THREE.Color(fillLightColor) },
+    uRimLightColor: { value: new THREE.Color(rimLightColor) },
+    uFillLightDir: { value: new THREE.Vector3() },
+    uRimLightDir: { value: new THREE.Vector3() },
+    uRimLight: { value: rimLightIntensity },
+  });
+
+  useEffect(() => {
+    uniformsRef.current.uSurfaceRoughness.value = surfaceRoughness;
+    uniformsRef.current.uSurfacePolish.value = surfacePolish;
+    uniformsRef.current.uFillLightColor.value.set(fillLightColor);
+    uniformsRef.current.uRimLightColor.value.set(rimLightColor);
+    uniformsRef.current.uRimLight.value = rimLightIntensity;
+
+    const faz = fillLightAzimuth * Math.PI / 180;
+    const fel = fillLightElevation * Math.PI / 180;
+    uniformsRef.current.uFillLightDir.value.set(
+      Math.cos(fel) * Math.sin(faz),
+      Math.sin(fel),
+      Math.cos(fel) * Math.cos(faz)
+    ).normalize();
+
+    const raz = rimLightAzimuth * Math.PI / 180;
+    const rel = rimLightElevation * Math.PI / 180;
+    uniformsRef.current.uRimLightDir.value.set(
+      Math.cos(rel) * Math.sin(raz),
+      Math.sin(rel),
+      Math.cos(rel) * Math.cos(raz)
+    ).normalize();
+  }, [surfaceRoughness, surfacePolish, fillLightColor, rimLightColor, rimLightIntensity, fillLightAzimuth, fillLightElevation, rimLightAzimuth, rimLightElevation]);
 
   const material = useMemo(() => {
     let mat: THREE.Material;
@@ -558,6 +613,8 @@ export function Bonds({
       }
       mat = new THREE.MeshPhysicalMaterial({
         ...matConfig,
+        clearcoat: surfaceClearcoat,
+        clearcoatRoughness: 0.1,
         transparent: true,
         opacity,
       });
@@ -575,6 +632,9 @@ export function Bonds({
       // pattern so we don't churn the material.
       shader.uniforms.uBondFadeStart = { value: 60.0 };
       shader.uniforms.uBondFadeEnd = { value: 200.0 };
+
+      shader.uniforms.uSurfaceRoughness = uniformsRef.current.uSurfaceRoughness;
+      shader.uniforms.uSurfacePolish = uniformsRef.current.uSurfacePolish;
 
       shader.vertexShader = `
         attribute vec2 radiusBT;
@@ -654,6 +714,13 @@ export function Bonds({
         varying float vBondRoughness;
         uniform float uBondFadeStart;
         uniform float uBondFadeEnd;
+        uniform float uSurfaceRoughness;
+        uniform float uSurfacePolish;
+        uniform vec3 uFillLightColor;
+        uniform vec3 uRimLightColor;
+        uniform vec3 uFillLightDir;
+        uniform vec3 uRimLightDir;
+        uniform float uRimLight;
         ${shader.fragmentShader}
       `
       // Override Three's metalness/roughness factors per-fragment with the
@@ -666,14 +733,14 @@ export function Bonds({
         '#include <metalnessmap_fragment>',
         `
         #include <metalnessmap_fragment>
-        metalnessFactor = vBondMetalness;
+        metalnessFactor = clamp(vBondMetalness + uSurfacePolish, 0.0, 1.0);
         `,
       )
       .replace(
         '#include <roughnessmap_fragment>',
         `
         #include <roughnessmap_fragment>
-        roughnessFactor = vBondRoughness;
+        roughnessFactor = clamp(vBondRoughness + uSurfaceRoughness, 0.0, 1.0);
         `,
       ).replace(
         '#include <dithering_fragment>',
@@ -681,12 +748,29 @@ export function Bonds({
         #include <dithering_fragment>
         float bondFade = 1.0 - smoothstep(uBondFadeStart, uBondFadeEnd, vBondViewDist);
         gl_FragColor.a *= bondFade;
-        ${botanicalMode ? `
-        // Velvet rim/fuzz (Schlick approximation)
+        
         vec3 viewDir = normalize(vViewPosition);
         float ndotv = max(0.0, dot(geometryNormal, viewDir));
-        float fresnel = pow(1.0 - ndotv, 3.0);
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb + vec3(0.15, 0.2, 0.05), fresnel * 0.6);
+        float fresnel = pow(1.0 - ndotv, 4.0);
+        
+        // Additive rim lighting tinted by uRimLightColor, masked by directional light
+        // Transforms world-space rim dir into view space for dot product
+        vec3 rimLightViewDir = normalize((viewMatrix * vec4(uRimLightDir, 0.0)).xyz);
+        float rimDirMask = max(0.0, dot(geometryNormal, rimLightViewDir));
+        vec3 rimColor = uRimLightColor * fresnel * uRimLight * rimDirMask;
+        
+        // Wrap shading fill light contribution
+        vec3 fillLightViewDir = normalize((viewMatrix * vec4(uFillLightDir, 0.0)).xyz);
+        float wrapHalf = 0.5;
+        float wrapNoL2 = max((dot(geometryNormal, fillLightViewDir) + wrapHalf) / (1.0 + wrapHalf), 0.0) * 0.3;
+        vec3 fillColor = uFillLightColor * wrapNoL2;
+        
+        gl_FragColor.rgb += rimColor + fillColor;
+
+        ${botanicalMode ? `
+        // Velvet rim/fuzz (Schlick approximation)
+        float botFresnel = pow(1.0 - ndotv, 3.0);
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb + vec3(0.15, 0.2, 0.05), botFresnel * 0.6);
         ` : ''}
         `,
       );

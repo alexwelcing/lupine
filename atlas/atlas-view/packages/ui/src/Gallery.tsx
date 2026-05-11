@@ -550,21 +550,32 @@ export function Gallery() {
 
     setLoadingId(example.id);
     useStore.getState().setLoading(true, 0);
+
+    // Clean up any existing streaming loader from a previous load
+    if ((window as any).__atlasStreamingCleanup) {
+      (window as any).__atlasStreamingCleanup();
+      delete (window as any).__atlasStreamingCleanup;
+    }
+
     try {
-      // sourceUrl wins in production: gallery entries can point at any
-      // open-data URL (Zenodo, Materials Cloud, GCS bucket, ...) so we
-      // avoid bundling massive trajectories in /public. In dev we prefer
-      // the local file when available — fetching ~100 MB over the network
-      // on every reload is painful even with browser caching.
+      // URL resolution: handles three cases
+      // 1. Absolute URLs in file field (GCS, CDN) — use directly
+      // 2. sourceUrl override (open-data repos) — prefer in production
+      // 3. Relative local paths — prepend base URL
+      const isAbsoluteUrl = example.file.startsWith('http://') || example.file.startsWith('https://');
       const base = (import.meta as any).env?.BASE_URL || '/';
       const cleanFile = example.file.replace(/^\/+/, '');
       const cleanBase = base.endsWith('/') ? base : `${base}/`;
       const localUrl = `${cleanBase}${cleanFile}`;
       const isDev = (import.meta as any).env?.DEV;
-      const url = (isDev || !example.sourceUrl) ? localUrl : example.sourceUrl;
+      // Absolute URLs bypass all local path logic. Otherwise,
+      // prefer sourceUrl in production, local file in dev.
+      const url = isAbsoluteUrl
+        ? example.file
+        : (isDev || !example.sourceUrl) ? localUrl : example.sourceUrl;
 
       if (example.id === 'lupine_brand_asset') {
-        const scientificUrl = `${cleanBase}gallery/curated/lupine_bluebonnet.xyz`.replace(/([^:]\/)\/+/g, "$1");
+        const scientificUrl = `${cleanBase}gallery/curated/lupine_bluebonnet.xyz`.replace(/([^:])\/\/+/g, "$1/");
         const resp = await fetch(scientificUrl);
         const blob = await resp.blob();
         const fileObj = new File([blob], 'lupine_bluebonnet.xyz');
@@ -596,17 +607,74 @@ export function Gallery() {
         return;
       }
 
-      // Streaming-eligible? The streaming dump parser handles the simple
-      // single-frame, orthogonal-box, id/type/x/y/z dialect that the
-      // gallery fixtures use. We do TWO fetches:
-      //   1. HEAD or Range-byte=0-4095 fetch to probe size + format
-      //      WITHOUT pulling the whole file into memory.
-      //   2. If streaming-eligible, full GET — but with `response.body`
-      //      consumed as a stream so atoms paint while bytes are still
-      //      arriving over the network.
-      // For dev / static-server hosts that don't honor Range requests
-      // we still issue a normal GET and read the head from blob.slice;
-      // the fall-through path doesn't pre-stream.
+      // ── Streaming path for .glimbin files (GCS CDN) ──
+      const { isGlimbinUrl } = await import('@atlas/parsers/StreamingLoader');
+      if (isGlimbinUrl(url)) {
+        const { StreamingLoader } = await import('@atlas/parsers/StreamingLoader');
+        const loader = new StreamingLoader(url, {
+          onProgress: (_phase, progress) => {
+            useStore.getState().setLoading(true, progress * 0.6);
+          },
+          onTelemetry: (stats) => {
+            useStore.getState().setStreamingTelemetry(stats);
+          },
+        });
+
+        const header = await loader.fetchHeader();
+        await loader.fetchIndex();
+        const frame0 = await loader.fetchFrame(0);
+        const meta = loader.getMetadata()!;
+
+        // Build trajectory with frame 0 loaded; rest fetched on-demand
+        const placeholderFrames = new Array(meta.totalFrames);
+        placeholderFrames[0] = frame0;
+
+        useStore.getState().setFile({
+          name: example.title,
+          size: meta.fileSize,
+          trajectory: {
+            frames: placeholderFrames,
+            totalFrames: meta.totalFrames,
+            atomTypes: meta.atomTypes,
+            globalBounds: meta.globalBounds,
+          },
+          thermo: null,
+          sourceUrl: url,
+        });
+
+        // On-demand frame fetching: subscribe to timeline scrubs
+        const unsubFrameWatch = useStore.subscribe(
+          (s) => s.frame,
+          async (frameIndex) => {
+            const currentFile = useStore.getState().file;
+            if (!currentFile) return;
+            if (currentFile.trajectory.frames[frameIndex]) return;
+            try {
+              const frame = await loader.fetchFrame(frameIndex);
+              const file = useStore.getState().file;
+              if (file) {
+                file.trajectory.frames[frameIndex] = frame;
+                useStore.setState({ file: { ...file } });
+              }
+              const isPlaying = useStore.getState().playing;
+              loader.prefetch(frameIndex, isPlaying ? 1 : 0, isPlaying ? 8 : 3);
+            } catch (err: any) {
+              console.warn(`[streaming] Frame ${frameIndex} fetch failed:`, err.message);
+            }
+          }
+        );
+
+        // Stash cleanup for navigation
+        (window as any).__atlasStreamingCleanup = () => {
+          unsubFrameWatch();
+          loader.dispose();
+        };
+
+        setLoadingId(null);
+        return;
+      }
+
+      // ── Streaming dump parser for large .lammpstrj/.dump files ──
       const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;  // 5 MB
       const STREAMING_ATOM_THRESHOLD = 100_000;
       const looksDumpExt = /\.(lammpstrj|dump)$/i.test(example.file);

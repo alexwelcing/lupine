@@ -484,6 +484,9 @@ export function ExportManager() {
             break;
         }
 
+        matConfig.metalness = Math.max(0.0, Math.min(1.0, matConfig.metalness + (state.surfacePolish || 0.0)));
+        matConfig.roughness = Math.max(0.0, Math.min(1.0, matConfig.roughness + (state.surfaceRoughness || 0.0)));
+
         const MaterialClass = state.materialPreset === 'glass' ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
         const material = new MaterialClass({
           color: new THREE.Color(r, g, b),
@@ -570,6 +573,9 @@ export function ExportManager() {
               matConfig = { metalness: 0.0, roughness: 0.4 };
               break;
           }
+
+          matConfig.metalness = Math.max(0.0, Math.min(1.0, matConfig.metalness + (state.surfacePolish || 0.0)));
+          matConfig.roughness = Math.max(0.0, Math.min(1.0, matConfig.roughness + (state.surfaceRoughness || 0.0)));
 
           const MaterialClass = state.materialPreset === 'glass' ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
           const bondMat = new MaterialClass({
