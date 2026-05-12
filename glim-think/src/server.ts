@@ -38,10 +38,15 @@ import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
 import { searchLiterature, isLiteratureSource, rowToPaper } from "./literature";
 import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
-import { dispatchAtlasJob, type TaskPayload as AtlasTaskPayload } from "./research/dispatch";
+import {
+  dispatchAtlasJob,
+  dispatchAtlasJobBatch,
+  type TaskPayload as AtlasTaskPayload,
+  type BatchDispatchItem as AtlasBatchItem,
+} from "./research/dispatch";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
-import { handleBeatsPost, handleBeatsOptions } from "./feed/beats";
+import { handleBeatsPost, handleBeatsOptions, handleBeatsGet } from "./feed/beats";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
 import { testMiniMaxCall, listMiniMaxModels, sweepMiniMaxEndpoints, exerciseDeepTier } from "./agents/models";
 import { runDiag, probeDOSynthesize, probeDOKV } from "./admin/diag";
@@ -909,6 +914,9 @@ ${narrative}
         if (request.method === "OPTIONS") return handleBeatsOptions();
         if (request.method === "POST") {
           return handleBeatsPost(request, env, bodyText);
+        }
+        if (request.method === "GET") {
+          return handleBeatsGet(request, env);
         }
       }
 
@@ -2092,6 +2100,70 @@ ${narrative}
           permutation_n: body.permutation_n,
         });
         return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      // === Batch fan-out: enqueue one atlas-distill Cloud Run Job per
+      // hypothesis in a single Worker call. Designed for 100+ research-loop
+      // bursts where the hourly orchestrator tick is too narrow. CF Access
+      // gates /admin/* upstream of here.
+      if (url.pathname === "/admin/dispatch-batch" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as {
+          hypothesis_ids?: string[];
+          status?: string;
+          limit?: number;
+          command?: string;
+          args?: string[];
+          fixture_url?: string;
+          beat_emit_url?: string;
+          concurrency?: number;
+        };
+        if (!body.command) return jsonError("Missing command", 400);
+        if (!body.fixture_url) return jsonError("Missing fixture_url", 400);
+
+        // Resolve hypothesis IDs: explicit list wins; otherwise pull from D1
+        // by status (default 'proposed') with optional limit.
+        let hypothesisIds: string[] = [];
+        if (Array.isArray(body.hypothesis_ids) && body.hypothesis_ids.length > 0) {
+          hypothesisIds = body.hypothesis_ids.filter((s) => typeof s === "string");
+        } else {
+          const statusFilter = body.status ?? "proposed";
+          const limit = Math.min(Math.max(body.limit ?? 100, 1), 500);
+          const rows = await env.LEDGER
+            .prepare("SELECT id FROM hypotheses WHERE status = ?1 ORDER BY updated_at ASC LIMIT ?2")
+            .bind(statusFilter, limit)
+            .all();
+          hypothesisIds = (rows.results ?? []).map((r) => (r as { id: string }).id);
+        }
+        if (hypothesisIds.length === 0) {
+          return Response.json(
+            { dispatched: 0, failed: 0, task_names: [], errors: [], note: "no hypotheses matched" },
+            { headers: JSON_CORS_HEADERS },
+          );
+        }
+
+        const beatUrl = body.beat_emit_url ?? `${url.origin}/feed/beats`;
+        const baseArgs = Array.isArray(body.args) ? body.args : [];
+        const items: AtlasBatchItem[] = hypothesisIds.map((hid) => ({
+          hypothesis_id: hid,
+          payload: {
+            fixture_url: body.fixture_url!,
+            command: body.command!,
+            args: [...baseArgs, "--hypothesis-id", hid],
+            beat_emit_url: beatUrl,
+          },
+        }));
+
+        try {
+          const result = await dispatchAtlasJobBatch(env, items, body.concurrency ?? 10);
+          return Response.json(
+            { ...result, requested: hypothesisIds.length },
+            { headers: JSON_CORS_HEADERS },
+          );
+        } catch (e) {
+          const msg = e instanceof Error ? e.message : String(e);
+          const status = /required|must be|not set|invalid/i.test(msg) ? 400 : 502;
+          return jsonError(msg, status);
+        }
       }
 
       if (url.pathname === "/admin/iterate" && request.method === "POST") {
