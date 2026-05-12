@@ -406,16 +406,20 @@ pub fn generate_bcc_paradox_example() -> Vec<GroupedPoint> {
     let mut data = Vec::new();
 
     // Soft BCC metals: positive errors, within-metal positive slope
-    let soft = [("Fe", vec![(230.0, 8.0), (135.0, 4.0), (117.0, 2.0)]),
+    let soft = [
+        ("Fe", vec![(230.0, 8.0), (135.0, 4.0), (117.0, 2.0)]),
         ("V", vec![(230.0, 9.0), (119.0, 5.0), (44.0, 3.0)]),
         ("Nb", vec![(247.0, 11.0), (135.0, 6.0), (29.0, 4.0)]),
-        ("Ta", vec![(266.0, 8.0), (158.0, 4.0), (87.0, 2.0)])];
+        ("Ta", vec![(266.0, 8.0), (158.0, 4.0), (87.0, 2.0)]),
+    ];
 
     // Stiff BCC metals: negative errors, within-metal positive slope
     // (higher ref → less negative error)
-    let stiff = [("Cr", vec![(350.0, -6.0), (67.0, -3.0), (101.0, -2.0)]),
+    let stiff = [
+        ("Cr", vec![(350.0, -6.0), (67.0, -3.0), (101.0, -2.0)]),
         ("Mo", vec![(440.0, -10.0), (172.0, -5.0), (106.0, -3.0)]),
-        ("W", vec![(522.0, -12.0), (204.0, -6.0), (161.0, -4.0)])];
+        ("W", vec![(522.0, -12.0), (204.0, -6.0), (161.0, -4.0)]),
+    ];
 
     for (metal, points) in soft.iter().chain(stiff.iter()) {
         for (x, y) in points {

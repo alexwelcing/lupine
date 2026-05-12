@@ -37,7 +37,15 @@ pub fn power_law_fit(data: &[(f64, f64)]) -> FitResult {
 
     let denom = n * sum_lx2 - sum_lx * sum_lx;
     if denom.abs() < 1e-30 {
-        return FitResult::new("power_law", "singular", vec![], vec![], 0.0, f64::INFINITY, data.len());
+        return FitResult::new(
+            "power_law",
+            "singular",
+            vec![],
+            vec![],
+            0.0,
+            f64::INFINITY,
+            data.len(),
+        );
     }
 
     let b = (n * sum_lxly - sum_lx * sum_ly) / denom;
@@ -53,7 +61,11 @@ pub fn power_law_fit(data: &[(f64, f64)]) -> FitResult {
         .map(|(x, y)| (y - a * x.powf(b)).powi(2))
         .sum();
 
-    let r_squared = if ss_tot > 1e-30 { 1.0 - ss_res / ss_tot } else { 0.0 };
+    let r_squared = if ss_tot > 1e-30 {
+        1.0 - ss_res / ss_tot
+    } else {
+        0.0
+    };
     let rms = (ss_res / data.len() as f64).sqrt();
 
     let equation = format!("y = {:.6e} · x^{:.4}", a, b);

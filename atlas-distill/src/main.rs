@@ -1,3 +1,5 @@
+#![allow(dead_code, clippy::needless_range_loop)]
+
 mod causal;
 mod commands;
 mod discovery;
@@ -229,11 +231,17 @@ fn load_grouped_csv(path: &Path) -> Result<Vec<causal::GroupedPoint>> {
 
     let header = lines.next().ok_or_else(|| anyhow::anyhow!("Empty CSV"))?;
     let cols: Vec<&str> = header.split(',').map(|s| s.trim()).collect();
-    let group_idx = cols.iter().position(|c| c.eq_ignore_ascii_case("group"))
+    let group_idx = cols
+        .iter()
+        .position(|c| c.eq_ignore_ascii_case("group"))
         .ok_or_else(|| anyhow::anyhow!("CSV header missing 'group' column"))?;
-    let x_idx = cols.iter().position(|c| c.eq_ignore_ascii_case("x"))
+    let x_idx = cols
+        .iter()
+        .position(|c| c.eq_ignore_ascii_case("x"))
         .ok_or_else(|| anyhow::anyhow!("CSV header missing 'x' column"))?;
-    let y_idx = cols.iter().position(|c| c.eq_ignore_ascii_case("y"))
+    let y_idx = cols
+        .iter()
+        .position(|c| c.eq_ignore_ascii_case("y"))
         .ok_or_else(|| anyhow::anyhow!("CSV header missing 'y' column"))?;
 
     let mut points = Vec::new();
@@ -243,9 +251,11 @@ fn load_grouped_csv(path: &Path) -> Result<Vec<causal::GroupedPoint>> {
         if fields.len() <= max_idx {
             anyhow::bail!("CSV row {} has too few columns", lineno + 2);
         }
-        let x = fields[x_idx].parse::<f64>()
+        let x = fields[x_idx]
+            .parse::<f64>()
             .map_err(|e| anyhow::anyhow!("Row {} column x: {}", lineno + 2, e))?;
-        let y = fields[y_idx].parse::<f64>()
+        let y = fields[y_idx]
+            .parse::<f64>()
             .map_err(|e| anyhow::anyhow!("Row {} column y: {}", lineno + 2, e))?;
         points.push(causal::GroupedPoint {
             group: fields[group_idx].to_string(),
@@ -261,7 +271,7 @@ fn load_grouped_csv(path: &Path) -> Result<Vec<causal::GroupedPoint>> {
     Ok(points)
 }
 
-fn cmd_thermo(path: &PathBuf, x_col: &str, y_col: Option<&str>) -> Result<()> {
+fn cmd_thermo(path: &Path, x_col: &str, y_col: Option<&str>) -> Result<()> {
     eprintln!("  ✦ Parsing thermo log: {}", path.display());
     let runs = ingest::thermo::parse_log(path)?;
     eprintln!("  ✦ Found {} run(s)", runs.len());
@@ -290,7 +300,7 @@ fn cmd_thermo(path: &PathBuf, x_col: &str, y_col: Option<&str>) -> Result<()> {
     Ok(())
 }
 
-fn cmd_trajectory(path: &PathBuf, do_msd: bool, do_rdf: bool, do_vacf: bool) -> Result<()> {
+fn cmd_trajectory(path: &Path, do_msd: bool, do_rdf: bool, do_vacf: bool) -> Result<()> {
     eprintln!("  ✦ Parsing trajectory: {}", path.display());
     let frames = ingest::trajectory::parse_dump(path)?;
     eprintln!("  ✦ Found {} frame(s)", frames.len());
@@ -326,7 +336,12 @@ fn cmd_trajectory(path: &PathBuf, do_msd: bool, do_rdf: bool, do_vacf: bool) -> 
 }
 
 fn cmd_scan(x_col: &str, y_col: &str, files: &[PathBuf]) -> Result<()> {
-    eprintln!("  ✦ Scanning {} files for {} vs {}", files.len(), x_col, y_col);
+    eprintln!(
+        "  ✦ Scanning {} files for {} vs {}",
+        files.len(),
+        x_col,
+        y_col
+    );
 
     let mut points: Vec<(f64, f64)> = Vec::new();
 
@@ -353,7 +368,7 @@ fn cmd_scan(x_col: &str, y_col: &str, files: &[PathBuf]) -> Result<()> {
     Ok(())
 }
 
-fn cmd_fit(data_path: &PathBuf, model: &str, degree: usize) -> Result<()> {
+fn cmd_fit(data_path: &Path, model: &str, degree: usize) -> Result<()> {
     eprintln!("  ✦ Loading data from: {}", data_path.display());
 
     let content = std::fs::read_to_string(data_path)?;
@@ -370,8 +385,7 @@ fn cmd_fit(data_path: &PathBuf, model: &str, degree: usize) -> Result<()> {
             .filter(|s| !s.is_empty())
             .collect();
         if parts.len() >= 2 {
-            if let (Ok(x), Ok(y)) = (parts[0].parse::<f64>(), parts[1].parse::<f64>())
-            {
+            if let (Ok(x), Ok(y)) = (parts[0].parse::<f64>(), parts[1].parse::<f64>()) {
                 points.push((x, y));
             }
         }
@@ -400,7 +414,10 @@ fn cmd_fit(data_path: &PathBuf, model: &str, degree: usize) -> Result<()> {
             let fit = fitting::symbolic::symbolic_fit(&points, 500, 50);
             discovery::scan::Discovery::from_fit("x", "y", "symbolic", &fit)
         }
-        _ => anyhow::bail!("Unknown model: {}. Use: linear, power, arrhenius, polynomial, symbolic", model),
+        _ => anyhow::bail!(
+            "Unknown model: {}. Use: linear, power, arrhenius, polynomial, symbolic",
+            model
+        ),
     };
 
     report::print_discovery(&result);
@@ -417,7 +434,10 @@ fn cmd_literature(action: LitAction) -> Result<()> {
             // Print summary
             let freq = literature::corpus::tag_frequency(&papers);
             eprintln!("  ╔════════════════════════════════════════════════════════════╗");
-            eprintln!("  ║  Research Corpus: {} papers                        ", papers.len());
+            eprintln!(
+                "  ║  Research Corpus: {} papers                        ",
+                papers.len()
+            );
             eprintln!("  ╠════════════════════════════════════════════════════════════╣");
             eprintln!("  ║  Year distribution:");
             let y2025 = papers.iter().filter(|p| p.year == 2025).count();
@@ -430,8 +450,14 @@ fn cmd_literature(action: LitAction) -> Result<()> {
                 eprintln!("  ║    {:20} {:3} {}", tag, count, bar);
             }
             eprintln!("  ║");
-            eprintln!("  ║  Papers with DOI: {}", papers.iter().filter(|p| p.doi.is_some()).count());
-            eprintln!("  ║  Papers with arXiv: {}", papers.iter().filter(|p| p.arxiv.is_some()).count());
+            eprintln!(
+                "  ║  Papers with DOI: {}",
+                papers.iter().filter(|p| p.doi.is_some()).count()
+            );
+            eprintln!(
+                "  ║  Papers with arXiv: {}",
+                papers.iter().filter(|p| p.arxiv.is_some()).count()
+            );
             eprintln!("  ╚════════════════════════════════════════════════════════════╝");
 
             // Dump as JSON
@@ -457,11 +483,7 @@ fn cmd_literature(action: LitAction) -> Result<()> {
                 if ds.points.len() < 3 {
                     continue;
                 }
-                let result = discovery::scan::fit_observable(
-                    &ds.x_label,
-                    &ds.y_label,
-                    &ds.points,
-                );
+                let result = discovery::scan::fit_observable(&ds.x_label, &ds.y_label, &ds.points);
 
                 // Check if the discovered model matches the expected model
                 let expected = &seed.testable_as;
@@ -469,13 +491,15 @@ fn cmd_literature(action: LitAction) -> Result<()> {
                 let status = if matched { "✅" } else { "⚠️" };
 
                 eprintln!("  {} {} ", status, seed.name);
-                eprintln!("      Expected: {} | Found: {} | R² = {:.6}",
+                eprintln!(
+                    "      Expected: {} | Found: {} | R² = {:.6}",
                     expected, result.best_model, result.r_squared
                 );
 
                 if !seed.parameters.is_empty() {
                     for param in &seed.parameters {
-                        eprintln!("      {} = {:.4} {} (typical: {:.4})",
+                        eprintln!(
+                            "      {} = {:.4} {} (typical: {:.4})",
                             param.name, param.typical_value, param.unit, param.typical_value
                         );
                     }
@@ -486,12 +510,21 @@ fn cmd_literature(action: LitAction) -> Result<()> {
             Ok(())
         }
 
-        LitAction::Fetch { corpus, output, limit, cache_dir } => {
+        LitAction::Fetch {
+            corpus,
+            output,
+            limit,
+            cache_dir,
+        } => {
             eprintln!("  ✦ Parsing corpus: {}", corpus.display());
             let papers = literature::corpus::parse_corpus_file(&corpus)?;
             eprintln!("  ✦ Found {} papers", papers.len());
 
-            let fetch_count = if limit == 0 { papers.len() } else { limit.min(papers.len()) };
+            let fetch_count = if limit == 0 {
+                papers.len()
+            } else {
+                limit.min(papers.len())
+            };
             eprintln!("  ✦ Will fetch up to {} paper abstracts", fetch_count);
             eprintln!("  ✦ Cache: {}", cache_dir.display());
 
@@ -533,7 +566,11 @@ fn cmd_literature(action: LitAction) -> Result<()> {
                 all_values.extend(values);
             }
 
-            eprintln!("\n  ✦ Total: {} values from {} papers", all_values.len(), content.len());
+            eprintln!(
+                "\n  ✦ Total: {} values from {} papers",
+                all_values.len(),
+                content.len()
+            );
 
             // Build datasets
             let datasets = literature::dataset::build_datasets(&all_values);

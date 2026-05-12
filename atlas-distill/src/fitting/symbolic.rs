@@ -167,7 +167,10 @@ impl Expr {
                 if rng.gen_bool(0.3) {
                     Expr::Pow(Box::new(base.mutate(rng)), exp.clone())
                 } else {
-                    Expr::Pow(base.clone(), Box::new(Expr::Const(rng.gen_range(-3.0..4.0_f64).round())))
+                    Expr::Pow(
+                        base.clone(),
+                        Box::new(Expr::Const(rng.gen_range(-3.0..4.0_f64).round())),
+                    )
                 }
             }
             Expr::Exp(a) => Expr::Exp(Box::new(a.mutate(rng))),
@@ -392,7 +395,11 @@ pub fn symbolic_fit(data: &[(f64, f64)], pop_size: usize, generations: usize) ->
         })
         .sum();
 
-    let r_squared = if ss_tot > 1e-30 { 1.0 - ss_res / ss_tot } else { 0.0 };
+    let r_squared = if ss_tot > 1e-30 {
+        1.0 - ss_res / ss_tot
+    } else {
+        0.0
+    };
     let rms = (ss_res / data.len() as f64).sqrt();
 
     let equation = format!("y = {}", expr);
@@ -459,10 +466,7 @@ mod tests {
     #[test]
     fn test_complexity() {
         let expr = Expr::Add(
-            Box::new(Expr::Mul(
-                Box::new(Expr::Const(2.0)),
-                Box::new(Expr::Var),
-            )),
+            Box::new(Expr::Mul(Box::new(Expr::Const(2.0)), Box::new(Expr::Var))),
             Box::new(Expr::Const(1.0)),
         );
         assert_eq!(expr.complexity(), 5); // Add + Mul + Const + Var + Const
