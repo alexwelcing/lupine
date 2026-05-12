@@ -60,6 +60,7 @@ import {
   runSlideshowBatch,
   listSlideshowImages,
 } from "./research/slideshow";
+import { checkAccess, isGatedRoute } from "./middleware/access";
 
 async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
@@ -135,6 +136,18 @@ export default {
           env
         );
         if (agentResponse) return agentResponse;
+      }
+
+      // ─── Cloudflare Access gate (unit 10) ───
+      // Gates /admin/*, /ops/* (non-GET), and the write endpoints
+      // POST /run, POST /fleet/run, POST /ingest/batch, POST /broadcasts/trigger.
+      // Public routes (/feed/*, /health, /research/*, /live, /agents/*, /graph*)
+      // are intentionally unguarded — see middleware/access.ts::isGatedRoute.
+      // DEV bypass via env.DEV_MODE === "true" is documented in wrangler.toml.
+      if (isGatedRoute(url.pathname, request.method)) {
+        const allowed = [env.ADMIN_EMAIL ?? ""].filter(Boolean);
+        const denial = await checkAccess(request, env, allowed);
+        if (denial) return denial;
       }
 
       // ─── HTTP API routes ───

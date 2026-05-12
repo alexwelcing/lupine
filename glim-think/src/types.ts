@@ -152,6 +152,17 @@ export interface Env {
    * api.minimaxi.com for the international plan). Default: api.minimax.chat/v1. */
   MINIMAX_BASE_URL?: string;
   HF_API_KEY?: string;
+  /** Cloudflare Access team subdomain (e.g. "lupine" for lupine.cloudflareaccess.com).
+   * Used by middleware/access.ts to fetch JWKS and verify Cf-Access-Jwt-Assertion
+   * on /admin/*, /ops/* writes, and other gated routes. */
+  CF_ACCESS_TEAM_DOMAIN?: string;
+  /** Audience tag of the CF Access application policy fronting this worker. */
+  CF_ACCESS_AUD?: string;
+  /** Email allow-list for gated routes (single address; expand to comma-split
+   * if multi-admin becomes a need). */
+  ADMIN_EMAIL?: string;
+  /** When "true", access middleware is bypassed entirely. Local dev only. */
+  DEV_MODE?: string;
   ORCHESTRATOR: DurableObjectNamespace;
   MANIFOLD_AGENT: DurableObjectNamespace;
   CAUSAL_AGENT: DurableObjectNamespace;
