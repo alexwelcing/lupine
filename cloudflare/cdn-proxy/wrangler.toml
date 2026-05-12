@@ -1,0 +1,28 @@
+name = "cdn-proxy"
+main = "src/worker.ts"
+compatibility_date = "2026-05-01"
+
+# ─── Route ───
+# Bind to cdn.lupine.dev once the DNS record is proxied through Cloudflare.
+# Uncomment after the DNS cutover (see docs/infrastructure/cdn.md §3).
+#
+# [[routes]]
+# pattern = "cdn.lupine.dev/*"
+# zone_name = "lupine.dev"
+
+# ─── Vars ───
+# ORIGIN_BUCKET is the GCS bucket name (no `gs://` prefix).
+# Override ORIGIN_HOST only if pointing at a non-default GCS host (e.g. a
+# regional endpoint). Leave unset for storage.googleapis.com.
+[vars]
+ORIGIN_BUCKET = "shed-489901-atlas-artifacts"
+
+# ─── Observability ───
+[observability]
+enabled = true
+
+# ─── Limits ───
+# Plenty of headroom for streaming Range responses; the Worker only
+# rewrites headers, the body streams straight through.
+[limits]
+cpu_ms = 50

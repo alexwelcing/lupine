@@ -1,7 +1,8 @@
 import { createServerFn } from '@tanstack/react-start'
 
-const FEED_URL = 'https://glim-think-v1.aw-ab5.workers.dev/feed'
-const OPS_URL = 'https://glim-think-v1.aw-ab5.workers.dev/ops/deployments'
+const WORKER_BASE = import.meta.env.VITE_GLIM_THINK_URL ?? 'https://glim-think-v1.aw-ab5.workers.dev'
+const FEED_URL = `${WORKER_BASE}/feed`
+const OPS_URL = `${WORKER_BASE}/ops/deployments`
 
 export const getLiveFeed = createServerFn({ method: 'GET' })
   .handler(async () => {

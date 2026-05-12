@@ -59,7 +59,9 @@ export interface Critique {
  * Row in the `claims` D1 table — adjudicated discovery claims produced by
  * lupine-distill (Rust) and ingested via POST /claims/ingest. Schema mirrors
  * lupine-distill/src/db/schema.rs so rows round-trip without transform.
- * See migrations/0004_claims.sql.
+ * See migrations/0004_claims.sql AND docs/contracts/lupine_distill_to_vectorize.md
+ * (the contract doc is the canonical source; this interface and the matching
+ * Rust `WorkerSyncClaim` are asserted against it).
  */
 export type ClaimStatus = "proposed" | "confirmed" | "refuted" | "formally_proven" | "insufficient";
 
@@ -72,6 +74,23 @@ export interface ClaimRecord {
   confidence: number;
   status: string;
   description: string;
+  created_at: string;
+}
+
+/**
+ * Projection of `ClaimRecord` that lives in the Vectorize index metadata
+ * column. `description` is the embedded text and is NOT in metadata;
+ * `claim_data` and `evidence_ids` are joined back from D1 on read.
+ *
+ * Cloudflare Vectorize indexes are immutable on metadata field set, so any
+ * change here is breaking and requires a new index. See
+ * docs/contracts/lupine_distill_to_vectorize.md.
+ */
+export interface VectorizeClaimMetadata {
+  agent_id: string;
+  claim_type: string;
+  status: string;
+  confidence: number;
   created_at: string;
 }
 
@@ -152,10 +171,20 @@ export interface Env {
    * api.minimaxi.com for the international plan). Default: api.minimax.chat/v1. */
   MINIMAX_BASE_URL?: string;
   HF_API_KEY?: string;
-  /** When "true", /feed/beats skips OIDC JWT verification. Local dev only. */
+  /** Cloudflare Access team subdomain (e.g. "lupine" for lupine.cloudflareaccess.com).
+   * Used by middleware/access.ts to fetch JWKS and verify Cf-Access-Jwt-Assertion
+   * on /admin/*, /ops/* writes, and other gated routes. */
+  CF_ACCESS_TEAM_DOMAIN?: string;
+  /** Audience tag of the CF Access application policy fronting this worker. */
+  CF_ACCESS_AUD?: string;
+  /** Email allow-list for gated routes (single address; expand to comma-split
+   * if multi-admin becomes a need). */
+  ADMIN_EMAIL?: string;
+  /** When "true", bypasses both CF Access middleware AND /feed/beats OIDC JWT
+   * verification. Local dev only. */
   DEV_MODE?: string;
-  /** Public URL this Worker is reachable at. Used as the expected `aud`
-   *  claim when verifying OIDC tokens. Defaults to the request origin. */
+  /** Public URL this Worker is reachable at. Used as the expected `aud` claim
+   * when verifying OIDC tokens on /feed/beats. Defaults to the request origin. */
   WORKER_URL?: string;
   ORCHESTRATOR: DurableObjectNamespace;
   MANIFOLD_AGENT: DurableObjectNamespace;
