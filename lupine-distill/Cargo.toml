@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 description = "Ground-truth research engine for interatomic potential discovery"
 
+[lib]
+name = "lupine_distill"
+path = "src/lib.rs"
+
 [[bin]]
 name = "distill"
 path = "src/main.rs"

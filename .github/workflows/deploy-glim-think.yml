@@ -33,6 +33,10 @@ jobs:
         continue-on-error: true
         run: npm run lint
 
+      - name: Run unit tests
+        working-directory: glim-think
+        run: npm test
+
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:

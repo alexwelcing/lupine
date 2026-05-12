@@ -1,13 +1,15 @@
+mod causal;
 mod discovery;
 mod fitting;
 mod ingest;
 mod literature;
 mod observables;
 mod report;
+mod stats;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 #[derive(Parser)]
 #[command(name = "atlas-distill")]
@@ -75,6 +77,14 @@ enum Commands {
         #[command(subcommand)]
         action: LitAction,
     },
+    /// Detect Simpson's paradox in grouped bivariate data
+    DetectParadox {
+        /// Path to CSV with columns: group,x,y (header required)
+        data: PathBuf,
+        /// Use BCC-flavored validation: require pooled vs within-group sign reversal
+        #[arg(long)]
+        bcc: bool,
+    },
 }
 
 #[derive(Subcommand)]
@@ -134,7 +144,79 @@ fn main() -> Result<()> {
             degree,
         } => cmd_fit(&data, &model, degree),
         Commands::Literature { action } => cmd_literature(action),
+        Commands::DetectParadox { data, bcc } => cmd_detect_paradox(&data, bcc),
     }
+}
+
+fn cmd_detect_paradox(data_path: &Path, bcc: bool) -> Result<()> {
+    eprintln!("  ✦ Loading grouped data: {}", data_path.display());
+    let points = load_grouped_csv(data_path)?;
+    eprintln!("  ✦ Loaded {} points across grouped data", points.len());
+
+    let result = causal::detect_simpsons_paradox(&points);
+    causal::print_summary(&result);
+
+    if bcc {
+        let reversal = result.pooled_r.is_finite()
+            && result.markers.pooled_within_r.is_finite()
+            && result.pooled_r.signum() != result.markers.pooled_within_r.signum();
+
+        if !reversal {
+            anyhow::bail!(
+                "BCC paradox check failed: expected pooled/within-group sign reversal, got pooled r={:+.3} within r={:+.3}",
+                result.pooled_r,
+                result.markers.pooled_within_r
+            );
+        }
+
+        eprintln!(
+            "  ✦ BCC paradox confirmed: pooled r={:+.3}, within r={:+.3}",
+            result.pooled_r, result.markers.pooled_within_r
+        );
+    }
+
+    Ok(())
+}
+
+fn load_grouped_csv(path: &Path) -> Result<Vec<causal::GroupedPoint>> {
+    let content = std::fs::read_to_string(path)?;
+    let mut lines = content.lines().filter(|l| {
+        let t = l.trim();
+        !t.is_empty() && !t.starts_with('#')
+    });
+
+    let header = lines.next().ok_or_else(|| anyhow::anyhow!("Empty CSV"))?;
+    let cols: Vec<&str> = header.split(',').map(|s| s.trim()).collect();
+    let group_idx = cols.iter().position(|c| c.eq_ignore_ascii_case("group"))
+        .ok_or_else(|| anyhow::anyhow!("CSV header missing 'group' column"))?;
+    let x_idx = cols.iter().position(|c| c.eq_ignore_ascii_case("x"))
+        .ok_or_else(|| anyhow::anyhow!("CSV header missing 'x' column"))?;
+    let y_idx = cols.iter().position(|c| c.eq_ignore_ascii_case("y"))
+        .ok_or_else(|| anyhow::anyhow!("CSV header missing 'y' column"))?;
+
+    let mut points = Vec::new();
+    for (lineno, line) in lines.enumerate() {
+        let fields: Vec<&str> = line.split(',').map(|s| s.trim()).collect();
+        let max_idx = group_idx.max(x_idx).max(y_idx);
+        if fields.len() <= max_idx {
+            anyhow::bail!("CSV row {} has too few columns", lineno + 2);
+        }
+        let x = fields[x_idx].parse::<f64>()
+            .map_err(|e| anyhow::anyhow!("Row {} column x: {}", lineno + 2, e))?;
+        let y = fields[y_idx].parse::<f64>()
+            .map_err(|e| anyhow::anyhow!("Row {} column y: {}", lineno + 2, e))?;
+        points.push(causal::GroupedPoint {
+            group: fields[group_idx].to_string(),
+            x,
+            y,
+        });
+    }
+
+    if points.is_empty() {
+        anyhow::bail!("No data rows found in CSV");
+    }
+
+    Ok(points)
 }
 
 fn cmd_thermo(path: &PathBuf, x_col: &str, y_col: Option<&str>) -> Result<()> {

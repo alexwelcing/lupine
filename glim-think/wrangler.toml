@@ -112,3 +112,26 @@ dead_letter_queue = "glim-research-dlq"
 # ZAI_API_KEY
 # MINIMAX_API_KEY
 # HF_API_KEY
+
+# ─── Cloudflare Access gating (unit 10) ───
+# /admin/*, /ops/* writes, and the write endpoints (POST /run, /fleet/run,
+# /ingest/batch, /broadcasts/trigger) are protected by middleware/access.ts.
+# Access policies themselves live in the Cloudflare dashboard (Zero Trust →
+# Access → Applications), NOT here — wrangler only needs the team subdomain,
+# audience tag, and admin allow-list so the worker can verify the JWT that
+# Access injects via the `Cf-Access-Jwt-Assertion` header.
+#
+# Set the production values via:
+#   wrangler secret put CF_ACCESS_TEAM_DOMAIN   # e.g. "lupine"
+#   wrangler secret put CF_ACCESS_AUD           # audience claim from the Access policy
+#   wrangler secret put ADMIN_EMAIL             # e.g. "alex@lupine.io"
+#
+# For local dev, put DEV_MODE=true in .dev.vars to bypass the middleware;
+# never set DEV_MODE=true in deployed environments.
+#
+# Example [vars] (uncomment and override locally as needed):
+# [vars]
+# CF_ACCESS_TEAM_DOMAIN = "lupine"           # https://lupine.cloudflareaccess.com
+# CF_ACCESS_AUD = "<policy-aud-claim>"
+# ADMIN_EMAIL = "alex@lupine.io"
+# DEV_MODE = "false"                         # "true" only in .dev.vars

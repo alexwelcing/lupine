@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-action@stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Cache cargo registry
         uses: actions/cache@v4
@@ -42,8 +42,12 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}
 
+      - name: Paradox smoke test
+        run: cargo run --release --bin atlas-distill -- detect-paradox --bcc tests/fixtures/bcc_smoke.csv
+        working-directory: atlas-distill
+
       - name: Run tests
-        run: cargo test --release -p atlas-distill
+        run: cargo test --release -p atlas-distill --bin atlas-distill
 
       - name: Check formatting
         run: cargo fmt -- --check

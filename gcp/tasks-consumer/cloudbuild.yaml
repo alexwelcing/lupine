@@ -1,0 +1,79 @@
+# Cloud Build configuration for tasks-consumer.
+# Builds the Rust binary, packages it into a Docker image, and deploys as a
+# Cloud Run SERVICE (atlas-distill is a Cloud Run JOB; the consumer that
+# dispatches to it is the service).
+
+steps:
+  - name: 'rust:1.88-slim-bookworm'
+    entrypoint: 'cargo'
+    args: ['test', '--release', '--manifest-path', 'gcp/tasks-consumer/Cargo.toml']
+
+  - name: 'rust:1.88-slim-bookworm'
+    entrypoint: 'cargo'
+    args:
+      - 'build'
+      - '--release'
+      - '--manifest-path'
+      - 'gcp/tasks-consumer/Cargo.toml'
+      - '--bin'
+      - 'tasks-consumer'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${COMMIT_SHA}'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:latest'
+      - '-f'
+      - 'gcp/tasks-consumer/Dockerfile'
+      - '.'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${COMMIT_SHA}'
+
+  # Deploy as Cloud Run Service. SERVICE_URL is populated by gcloud from the
+  # service's URL once the revision is up, so OIDC `aud` matches.
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'tasks-consumer'
+      - '--image=${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${COMMIT_SHA}'
+      - '--region=${_REGION}'
+      - '--project=${_PROJECT_ID}'
+      - '--service-account=tasks-consumer-runner@${_PROJECT_ID}.iam.gserviceaccount.com'
+      - '--set-env-vars=GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill'
+      - '--no-allow-unauthenticated'
+      - '--memory=256Mi'
+      - '--cpu=1'
+      - '--max-instances=10'
+      - '--concurrency=80'
+      - '--timeout=120s'
+
+  # Stamp SERVICE_URL onto the deployed revision so OIDC `aud` check matches.
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        URL=$(gcloud run services describe tasks-consumer \
+          --region=${_REGION} --project=${_PROJECT_ID} \
+          --format='value(status.url)')
+        gcloud run services update tasks-consumer \
+          --region=${_REGION} --project=${_PROJECT_ID} \
+          --set-env-vars=SERVICE_URL=$$URL,GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill
+
+substitutions:
+  _PROJECT_ID: shed-489901
+  _REGION: us-central1
+  _REPOSITORY: cloud-run-source-deploy
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${COMMIT_SHA}'

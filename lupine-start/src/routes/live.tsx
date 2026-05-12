@@ -17,7 +17,7 @@ export const Route = createFileRoute('/live')({
   }),
 })
 
-const WORKER_BASE = 'https://glim-think-v1.aw-ab5.workers.dev'
+const WORKER_BASE = import.meta.env.VITE_GLIM_THINK_URL ?? 'https://glim-think-v1.aw-ab5.workers.dev'
 const FEED_SWARM_URL = `${WORKER_BASE}/feed/swarm`
 const FEED_EXPERIMENTS_URL = `${WORKER_BASE}/feed/experiments`
 const FEED_METRICS_URL = `${WORKER_BASE}/feed/metrics`
