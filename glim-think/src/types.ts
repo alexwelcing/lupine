@@ -59,7 +59,9 @@ export interface Critique {
  * Row in the `claims` D1 table — adjudicated discovery claims produced by
  * lupine-distill (Rust) and ingested via POST /claims/ingest. Schema mirrors
  * lupine-distill/src/db/schema.rs so rows round-trip without transform.
- * See migrations/0004_claims.sql.
+ * See migrations/0004_claims.sql AND docs/contracts/lupine_distill_to_vectorize.md
+ * (the contract doc is the canonical source; this interface and the matching
+ * Rust `WorkerSyncClaim` are asserted against it).
  */
 export type ClaimStatus = "proposed" | "confirmed" | "refuted" | "formally_proven" | "insufficient";
 
@@ -72,6 +74,23 @@ export interface ClaimRecord {
   confidence: number;
   status: string;
   description: string;
+  created_at: string;
+}
+
+/**
+ * Projection of `ClaimRecord` that lives in the Vectorize index metadata
+ * column. `description` is the embedded text and is NOT in metadata;
+ * `claim_data` and `evidence_ids` are joined back from D1 on read.
+ *
+ * Cloudflare Vectorize indexes are immutable on metadata field set, so any
+ * change here is breaking and requires a new index. See
+ * docs/contracts/lupine_distill_to_vectorize.md.
+ */
+export interface VectorizeClaimMetadata {
+  agent_id: string;
+  claim_type: string;
+  status: string;
+  confidence: number;
   created_at: string;
 }
 
