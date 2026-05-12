@@ -135,3 +135,16 @@ dead_letter_queue = "glim-research-dlq"
 # CF_ACCESS_AUD = "<policy-aud-claim>"
 # ADMIN_EMAIL = "alex@lupine.io"
 # DEV_MODE = "false"                         # "true" only in .dev.vars
+
+# ─── Research loop (handoff unit 8) ───
+# Worker publishes Cloud Tasks → tasks-consumer Cloud Run Service →
+# atlas-distill Cloud Run Job. Atlas-distill emit-beat then POSTs back to
+# WORKER_URL/feed/beats with an OIDC token whose `aud` must match WORKER_URL.
+[vars]
+WORKER_URL = "https://glim-think-v1.aw-ab5.workers.dev"
+TASKS_CONSUMER_URL = "https://tasks-consumer-350452481649.us-central1.run.app"
+TASKS_CONSUMER_AUDIENCE = "https://tasks-consumer-350452481649.us-central1.run.app"
+TASKS_CONSUMER_INVOKER_SA = "atlas-distill-runner@shed-489901.iam.gserviceaccount.com"
+GCP_PROJECT_ID = "shed-489901"
+GCP_TASKS_LOCATION = "us-central1"
+GCP_TASKS_QUEUE = "atlas-distill-jobs"
