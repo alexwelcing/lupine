@@ -142,8 +142,8 @@ dead_letter_queue = "glim-research-dlq"
 # WORKER_URL/feed/beats with an OIDC token whose `aud` must match WORKER_URL.
 [vars]
 WORKER_URL = "https://glim-think-v1.aw-ab5.workers.dev"
-TASKS_CONSUMER_URL = "https://tasks-consumer-350452481649.us-central1.run.app"
-TASKS_CONSUMER_AUDIENCE = "https://tasks-consumer-350452481649.us-central1.run.app"
+TASKS_CONSUMER_URL = "https://tasks-consumer-edbhtpvina-uc.a.run.app"
+TASKS_CONSUMER_AUDIENCE = "https://tasks-consumer-edbhtpvina-uc.a.run.app"
 TASKS_CONSUMER_INVOKER_SA = "atlas-distill-runner@shed-489901.iam.gserviceaccount.com"
 GCP_PROJECT_ID = "shed-489901"
 GCP_TASKS_LOCATION = "us-central1"
