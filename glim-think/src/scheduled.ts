@@ -457,6 +457,7 @@ interface PendingCritique {
 /**
  * Top-level dispatcher. Routes by cron expression so multiple sibling
  * units can coexist in the same scheduled handler.
+ */
 export async function drainCritiques(
   env: Env,
   _ctx: ExecutionContext,

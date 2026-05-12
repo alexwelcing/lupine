@@ -8,7 +8,8 @@
     "deploy": "wrangler deploy",
     "types": "wrangler types",
     "lint": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@ai-sdk/openai-compatible": "^2.0.45",
@@ -21,8 +22,9 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250410.0",
+    "@vitest/coverage-v8": "^4.1.6",
     "typescript": "^5.8.0",
-    "vitest": "^2.1.9",
+    "vitest": "^4.1.6",
     "wrangler": "^4.0.0"
   }
 }
