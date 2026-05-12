@@ -5,4 +5,5 @@
 //! HTTPS) spin up a tokio runtime locally rather than forcing the whole
 //! binary into async.
 
+pub mod auto_research;
 pub mod emit_beat;
