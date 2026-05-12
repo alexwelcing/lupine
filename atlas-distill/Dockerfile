@@ -1,5 +1,6 @@
 # Multi-stage build for atlas-distill
-# Stage 1: Build the Rust binary
+# Stage 1: Build the Rust binary (standalone — atlas-distill has no workspace
+# parent and no path-dependencies on sibling crates, so a flat copy is enough).
 FROM rust:1.88-slim-bookworm AS builder
 
 WORKDIR /app
@@ -10,26 +11,21 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy workspace manifests first for layer caching. The Docker workspace is
-# intentionally smaller than the repo workspace to keep Cloud Build context lean.
-COPY atlas-distill/Cargo.docker.toml ./Cargo.toml
-COPY Cargo.lock ./
-COPY atlas-distill/Cargo.toml ./atlas-distill/Cargo.toml
-COPY lupine-ops/Cargo.toml ./lupine-ops/Cargo.toml
+# Copy manifest + lockfile first for cargo layer caching
+COPY atlas-distill/Cargo.toml atlas-distill/Cargo.lock ./
 
-# Copy workspace source code
-COPY atlas-distill/src ./atlas-distill/src
-COPY lupine-ops/src ./lupine-ops/src
+# Copy source
+COPY atlas-distill/src ./src
 
 # Build release binary
-RUN cargo build --release -p atlas-distill --bin atlas-distill
+RUN cargo build --release --bin atlas-distill
 
 # Stage 2: Minimal runtime image
 FROM debian:bookworm-slim AS runtime
 
 WORKDIR /app
 
-# Install runtime dependencies (SSL certs for ureq)
+# Install runtime dependencies (SSL certs for ureq + reqwest)
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
