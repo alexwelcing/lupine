@@ -57,7 +57,7 @@ fn gen_arrhenius_diffusion(out: &Path) {
             let step = i * 1000;
             let t = step as f64 * dt; // time in ps
             let msd = 6.0 * d * t; // MSD = 6Dt
-            // Add realistic noise
+                                   // Add realistic noise
             let noise = ((step as f64 * 0.0137).sin()) * 0.02 * msd.max(0.001);
             let temp_fluct = temp + ((step as f64 * 0.0031).sin()) * temp * 0.02;
             let pe = -3.2 + 0.001 * temp;
@@ -76,12 +76,14 @@ fn gen_arrhenius_diffusion(out: &Path) {
             )
             .unwrap();
         }
-        writeln!(f, "Loop time of 45.2 on 8 procs for {} steps", nsteps * 1000).unwrap();
+        writeln!(
+            f,
+            "Loop time of 45.2 on 8 procs for {} steps",
+            nsteps * 1000
+        )
+        .unwrap();
 
-        eprintln!(
-            "  ✦ {} — D = {:.4e}, expected Eₐ = 0.35 eV",
-            filename, d
-        );
+        eprintln!("  ✦ {} — D = {:.4e}, expected Eₐ = 0.35 eV", filename, d);
     }
 
     // Also generate a summary CSV for the scan command
@@ -107,7 +109,12 @@ fn gen_power_law_hardening(out: &Path) {
     let mut f = fs::File::create(out.join("stress_strain.log")).unwrap();
     writeln!(f, "LAMMPS (2 Aug 2023)").unwrap();
     writeln!(f, "# Uniaxial tension simulation").unwrap();
-    writeln!(f, "# Known: σ = {} · ε^{} (Hollomon), E = {} MPa", k, n, e_modulus).unwrap();
+    writeln!(
+        f,
+        "# Known: σ = {} · ε^{} (Hollomon), E = {} MPa",
+        k, n, e_modulus
+    )
+    .unwrap();
     writeln!(f).unwrap();
 
     writeln!(f, "Step v_strain Pxx Temp Lx").unwrap();
@@ -209,7 +216,10 @@ fn gen_anomalous_diffusion_trajectory(out: &Path) {
         }
     }
 
-    eprintln!("  ✦ anomalous_diffusion.dump — β={}, {} frames, {} atoms", beta, nframes, natoms);
+    eprintln!(
+        "  ✦ anomalous_diffusion.dump — β={}, {} frames, {} atoms",
+        beta, nframes, natoms
+    );
 }
 
 // ─── 4. LJ Equation of State ────────────────────────────────────────────────
@@ -322,7 +332,12 @@ fn gen_thermal_expansion(out: &Path) {
     let mut f = fs::File::create(out.join("thermal_expansion.log")).unwrap();
     writeln!(f, "LAMMPS (2 Aug 2023)").unwrap();
     writeln!(f, "# NPT thermal expansion simulation").unwrap();
-    writeln!(f, "# Known: ρ(T) = {} · (1 - {} · (T - {}))", rho0, alpha, t0).unwrap();
+    writeln!(
+        f,
+        "# Known: ρ(T) = {} · (1 - {} · (T - {}))",
+        rho0, alpha, t0
+    )
+    .unwrap();
     writeln!(f).unwrap();
 
     writeln!(f, "Step Temp Density Volume Press Lx Ly Lz").unwrap();
@@ -369,7 +384,9 @@ fn gen_temperature_sweep_multi(out: &Path) {
     let ea = 0.42; // eV
     let kb = 8.617333e-5;
 
-    let temperatures = [400.0, 500.0, 600.0, 700.0, 800.0, 900.0, 1000.0, 1100.0, 1200.0];
+    let temperatures = [
+        400.0, 500.0, 600.0, 700.0, 800.0, 900.0, 1000.0, 1100.0, 1200.0,
+    ];
 
     for &temp in &temperatures {
         let d = d0 * ((-ea / (kb * temp)) as f64).exp();
@@ -454,7 +471,10 @@ fn gen_grain_growth_kinetics(out: &Path) {
     }
     writeln!(f, "Loop time of 4500.0 on 256 procs").unwrap();
 
-    eprintln!("  ✦ grain_growth.log — parabolic law, K={} nm²/ps", k_growth);
+    eprintln!(
+        "  ✦ grain_growth.log — parabolic law, K={} nm²/ps",
+        k_growth
+    );
 }
 
 // ─── 9. Nucleation Barrier (CNT) ────────────────────────────────────────────

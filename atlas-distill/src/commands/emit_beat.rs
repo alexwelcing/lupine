@@ -97,9 +97,7 @@ async fn run_async(
     let mut req = client.post(&endpoint).json(&body);
 
     if dev_mode_bypass {
-        eprintln!(
-            "  ! emit-beat: --dev-mode-bypass enabled, skipping OIDC token mint"
-        );
+        eprintln!("  ! emit-beat: --dev-mode-bypass enabled, skipping OIDC token mint");
     } else {
         let token = mint_oidc_token(&client, normalized_url).await?;
         req = req.bearer_auth(token);
@@ -139,10 +137,7 @@ async fn mint_oidc_token(client: &reqwest::Client, audience: &str) -> Result<Str
 
 /// Cloud Run / GCE metadata server: GET .../identity?audience=<aud>&format=full
 /// Returns the JWT as the raw response body when the request succeeds.
-async fn metadata_id_token(
-    client: &reqwest::Client,
-    audience: &str,
-) -> Result<String> {
+async fn metadata_id_token(client: &reqwest::Client, audience: &str) -> Result<String> {
     let resp = client
         .get(METADATA_IDENTITY_URL)
         .header("Metadata-Flavor", "Google")
@@ -152,10 +147,7 @@ async fn metadata_id_token(
         .await
         .with_context(|| "metadata server unreachable")?;
     if !resp.status().is_success() {
-        return Err(anyhow!(
-            "metadata server returned {}",
-            resp.status()
-        ));
+        return Err(anyhow!("metadata server returned {}", resp.status()));
     }
     let token = resp.text().await.context("read metadata id_token body")?;
     if token.trim().is_empty() {
@@ -194,17 +186,12 @@ struct TokenResponse {
 /// Local fallback: read SA key from GOOGLE_APPLICATION_CREDENTIALS, sign a
 /// JWT-bearer assertion targeting the worker URL, exchange at the Google
 /// token endpoint for the OIDC ID token.
-async fn sa_key_id_token(
-    client: &reqwest::Client,
-    audience: &str,
-) -> Result<String> {
-    let key_path = std::env::var("GOOGLE_APPLICATION_CREDENTIALS").context(
-        "no metadata server and GOOGLE_APPLICATION_CREDENTIALS is not set",
-    )?;
+async fn sa_key_id_token(client: &reqwest::Client, audience: &str) -> Result<String> {
+    let key_path = std::env::var("GOOGLE_APPLICATION_CREDENTIALS")
+        .context("no metadata server and GOOGLE_APPLICATION_CREDENTIALS is not set")?;
     let key_text = std::fs::read_to_string(&key_path)
         .with_context(|| format!("read SA key file: {}", key_path))?;
-    let key: ServiceAccountKey =
-        serde_json::from_str(&key_text).context("parse SA key JSON")?;
+    let key: ServiceAccountKey = serde_json::from_str(&key_text).context("parse SA key JSON")?;
     let token_uri = key.token_uri.as_deref().unwrap_or(GOOGLE_TOKEN_URI);
 
     let private_key = RsaPrivateKey::from_pkcs8_pem(&key.private_key)
@@ -216,12 +203,10 @@ async fn sa_key_id_token(
         .map(|d| d.as_secs())
         .unwrap_or(0);
 
-    let header_b64 = URL_SAFE_NO_PAD.encode(
-        serde_json::to_vec(&JwtHeader {
-            alg: "RS256",
-            typ: "JWT",
-        })?,
-    );
+    let header_b64 = URL_SAFE_NO_PAD.encode(serde_json::to_vec(&JwtHeader {
+        alg: "RS256",
+        typ: "JWT",
+    })?);
     let claims_b64 = URL_SAFE_NO_PAD.encode(serde_json::to_vec(&JwtBearerClaims {
         iss: &key.client_email,
         aud: token_uri,
@@ -246,15 +231,8 @@ async fn sa_key_id_token(
     if !resp.status().is_success() {
         let status = resp.status();
         let body = resp.text().await.unwrap_or_default();
-        return Err(anyhow!(
-            "token exchange failed: {} body {}",
-            status,
-            body
-        ));
+        return Err(anyhow!("token exchange failed: {} body {}", status, body));
     }
-    let parsed: TokenResponse = resp
-        .json()
-        .await
-        .context("parse token exchange response")?;
+    let parsed: TokenResponse = resp.json().await.context("parse token exchange response")?;
     Ok(parsed.id_token)
 }

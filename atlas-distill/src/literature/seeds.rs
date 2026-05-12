@@ -328,8 +328,18 @@ fn reaxff_bond_order() -> SeedRelationship {
         equation: "BO = exp(p · (r/r₀)^p₂)".to_string(),
         domain: "Reactive MD".to_string(),
         parameters: vec![
-            SeedParameter { name: "p_bo".to_string(), typical_value: -6.0, unit: "dimensionless".to_string(), range: (-10.0, -1.0) },
-            SeedParameter { name: "r0".to_string(), typical_value: 1.5, unit: "Å".to_string(), range: (1.0, 3.0) },
+            SeedParameter {
+                name: "p_bo".to_string(),
+                typical_value: -6.0,
+                unit: "dimensionless".to_string(),
+                range: (-10.0, -1.0),
+            },
+            SeedParameter {
+                name: "r0".to_string(),
+                typical_value: 1.5,
+                unit: "Å".to_string(),
+                range: (1.0, 3.0),
+            },
         ],
         reference: "van Duin et al., J. Phys. Chem. A 105, 9396 (2001)".to_string(),
         testable_as: "symbolic".to_string(),
@@ -426,8 +436,18 @@ fn hall_petch() -> SeedRelationship {
         equation: "σ_y = σ_0 + k·d^(-1/2)".to_string(),
         domain: "Metals / mechanical".to_string(),
         parameters: vec![
-            SeedParameter { name: "sigma_0".to_string(), typical_value: 25.0, unit: "MPa".to_string(), range: (5.0, 200.0) },
-            SeedParameter { name: "k_HP".to_string(), typical_value: 500.0, unit: "MPa·nm^0.5".to_string(), range: (100.0, 2000.0) },
+            SeedParameter {
+                name: "sigma_0".to_string(),
+                typical_value: 25.0,
+                unit: "MPa".to_string(),
+                range: (5.0, 200.0),
+            },
+            SeedParameter {
+                name: "k_HP".to_string(),
+                typical_value: 500.0,
+                unit: "MPa·nm^0.5".to_string(),
+                range: (100.0, 2000.0),
+            },
         ],
         reference: "Hall, Proc. Phys. Soc. B 64, 747 (1951)".to_string(),
         testable_as: "power_law".to_string(),
@@ -495,14 +515,20 @@ fn wiedemann_franz() -> SeedRelationship {
 pub fn print_seeds_summary() {
     let seeds = all_seeds();
     eprintln!("\n  ╔════════════════════════════════════════════════════════════╗");
-    eprintln!("  ║  Canonical MD Relationships ({} seeds)              ", seeds.len());
+    eprintln!(
+        "  ║  Canonical MD Relationships ({} seeds)              ",
+        seeds.len()
+    );
     eprintln!("  ╠════════════════════════════════════════════════════════════╣");
 
     for seed in &seeds {
         eprintln!("  ║");
         eprintln!("  ║  {} ", seed.name);
         eprintln!("  ║    {} ", seed.equation);
-        eprintln!("  ║    Domain: {}  |  Fit via: {}", seed.domain, seed.testable_as);
+        eprintln!(
+            "  ║    Domain: {}  |  Fit via: {}",
+            seed.domain, seed.testable_as
+        );
         eprintln!("  ║    Ref: {}", seed.reference);
         if !seed.data.is_empty() {
             eprintln!("  ║    Data: {} points", seed.data.len());
@@ -543,7 +569,7 @@ mod tests {
         let seed = hall_petch();
         // Yield stress should decrease with grain size
         let small_grain = seed.data.first().unwrap().1; // d = 1 nm
-        let large_grain = seed.data.last().unwrap().1;  // d = 50 nm
+        let large_grain = seed.data.last().unwrap().1; // d = 50 nm
         assert!(small_grain > large_grain);
     }
 }

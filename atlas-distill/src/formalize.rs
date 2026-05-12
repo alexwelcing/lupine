@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-pub fn write_lean_spec(empirical: Option<&PathBuf>) -> anyhow::Result<()> {
+pub fn write_lean_spec(empirical: Option<&Path>) -> anyhow::Result<()> {
     let hall_petch_lean_code = r#"import Mathlib.Data.Real.Basic
 import Mathlib.Data.Real.Sqrt
 import Mathlib.Tactic.Linarith
