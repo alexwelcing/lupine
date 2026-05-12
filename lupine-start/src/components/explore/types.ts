@@ -1,5 +1,5 @@
 // Shared types + worker base URL for the /console route.
-export const WORKER = 'https://glim-think-v1.aw-ab5.workers.dev'
+export const WORKER = import.meta.env.VITE_GLIM_THINK_URL ?? 'https://glim-think-v1.aw-ab5.workers.dev'
 
 export type TabKey =
   | 'hypotheses'
