@@ -58,6 +58,30 @@ def test_space_base_passes_through_direct_subdomain() -> None:
     assert base == "https://AlexWelcing-glim-mlip-bench.hf.space"
 
 
+def test_direct_subdomain_routes_through_gradio_sse(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A direct *.hf.space URL must take the Gradio SSE path (POST to
+    /gradio_api/call/<api>), not the local-server fallback. Regression
+    guard: _is_local_server previously returned True for any URL missing
+    "huggingface.co", silently bypassing the SSE flow."""
+    rec: list[dict[str, Any]] = []
+    _patch_gradio_flow(monkeypatch, rec, [[{"element": "Al", "c11": 108.0}]])
+    out = glim_mlip._call_gradio(
+        "https://AlexWelcing-glim-mlip-bench.hf.space",
+        "predict_batch",
+        ["Al", "chgnet", "{}"],
+    )
+    assert rec[0]["url"] == "https://AlexWelcing-glim-mlip-bench.hf.space/gradio_api/call/predict_batch"
+    assert rec[0]["json"] == {"data": ["Al", "chgnet", "{}"]}
+    assert out == [{"element": "Al", "c11": 108.0}]
+
+
+def test_is_local_server_classification() -> None:
+    assert glim_mlip._is_local_server("http://localhost:7860") is True
+    assert glim_mlip._is_local_server("http://127.0.0.1:7860") is True
+    assert glim_mlip._is_local_server("https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench") is False
+    assert glim_mlip._is_local_server("https://AlexWelcing-glim-mlip-bench.hf.space") is False
+
+
 def test_predict_single(runner: CliRunner, monkeypatch: pytest.MonkeyPatch) -> None:
     rec: list[dict[str, Any]] = []
     payload = [{"element": "Al", "mlip": "chgnet", "c11": 108.0}]

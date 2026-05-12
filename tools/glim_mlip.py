@@ -44,7 +44,11 @@ def _space_base(space_url: str) -> str:
 
 
 def _is_local_server(space_url: str) -> bool:
-    return "localhost" in space_url or "127.0.0.1" in space_url or "huggingface.co" not in space_url
+    """A URL is a local server if it's loopback, OR if it's neither a
+    huggingface.co/spaces/... URL nor a direct *.hf.space subdomain."""
+    if "localhost" in space_url or "127.0.0.1" in space_url:
+        return True
+    return "huggingface.co" not in space_url and ".hf.space" not in space_url
 
 
 def _call_gradio(space_url: str, api_name: str, data: list[Any], timeout: float = 300.0) -> Any:
