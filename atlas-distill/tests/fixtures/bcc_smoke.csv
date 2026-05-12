@@ -1,0 +1,29 @@
+# BCC paradox smoke fixture.
+# Columns: group,x,y
+# group: BCC metal identity (Simpson confounder)
+# x: reference elastic constant (GPa)
+# y: prediction error (predicted - reference, GPa)
+# Soft metals (Fe/V/Nb/Ta): positive errors, stiff metals (Cr/Mo/W): negative errors.
+# Within each metal the slope is positive; pooled the slope is negative.
+group,x,y
+Fe,230.0,8.0
+Fe,135.0,4.0
+Fe,117.0,2.0
+V,230.0,9.0
+V,119.0,5.0
+V,44.0,3.0
+Nb,247.0,11.0
+Nb,135.0,6.0
+Nb,29.0,4.0
+Ta,266.0,8.0
+Ta,158.0,4.0
+Ta,87.0,2.0
+Cr,350.0,-6.0
+Cr,67.0,-3.0
+Cr,101.0,-2.0
+Mo,440.0,-10.0
+Mo,172.0,-5.0
+Mo,106.0,-3.0
+W,522.0,-12.0
+W,204.0,-6.0
+W,161.0,-4.0
