@@ -1,4 +1,5 @@
 mod causal;
+mod commands;
 mod discovery;
 mod fitting;
 mod ingest;
@@ -77,6 +78,32 @@ enum Commands {
         #[command(subcommand)]
         action: LitAction,
     },
+    /// Emit a single beat to the glim-think CF Worker (POST /feed/beats).
+    /// Mints a GCP OIDC token via gcp_auth (audience = worker URL) and posts
+    /// the beat JSON body. Use --dev-mode-bypass for local smoke tests against
+    /// `wrangler dev` with DEV_MODE=true set.
+    EmitBeat {
+        /// CF Worker base URL (e.g. https://glim-think-v1.aw-ab5.workers.dev
+        /// or http://localhost:8787 for local dev).
+        #[arg(long)]
+        worker_url: String,
+        /// Producer agent name (e.g. "atlas-distill", "manifold-sweeper").
+        #[arg(long)]
+        agent: String,
+        /// One-line summary of what just happened.
+        #[arg(long)]
+        summary: String,
+        /// Optional JSON object of metrics (passed through to D1 as TEXT).
+        #[arg(long)]
+        metrics: Option<String>,
+        /// Optional beat_id. Defaults to a fresh UUIDv4.
+        #[arg(long)]
+        beat_id: Option<String>,
+        /// Skip OIDC token mint and send no Authorization header. Use only
+        /// against a Worker with DEV_MODE=true. Never use against production.
+        #[arg(long)]
+        dev_mode_bypass: bool,
+    },
     /// Detect Simpson's paradox in grouped bivariate data
     DetectParadox {
         /// Path to CSV with columns: group,x,y (header required)
@@ -144,6 +171,21 @@ fn main() -> Result<()> {
             degree,
         } => cmd_fit(&data, &model, degree),
         Commands::Literature { action } => cmd_literature(action),
+        Commands::EmitBeat {
+            worker_url,
+            agent,
+            summary,
+            metrics,
+            beat_id,
+            dev_mode_bypass,
+        } => commands::emit_beat::run(
+            &worker_url,
+            &agent,
+            &summary,
+            metrics.as_deref(),
+            beat_id.as_deref(),
+            dev_mode_bypass,
+        ),
         Commands::DetectParadox { data, bcc } => cmd_detect_paradox(&data, bcc),
     }
 }

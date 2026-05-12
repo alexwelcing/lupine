@@ -180,8 +180,12 @@ export interface Env {
   /** Email allow-list for gated routes (single address; expand to comma-split
    * if multi-admin becomes a need). */
   ADMIN_EMAIL?: string;
-  /** When "true", access middleware is bypassed entirely. Local dev only. */
+  /** When "true", bypasses both CF Access middleware AND /feed/beats OIDC JWT
+   * verification. Local dev only. */
   DEV_MODE?: string;
+  /** Public URL this Worker is reachable at. Used as the expected `aud` claim
+   * when verifying OIDC tokens on /feed/beats. Defaults to the request origin. */
+  WORKER_URL?: string;
   ORCHESTRATOR: DurableObjectNamespace;
   MANIFOLD_AGENT: DurableObjectNamespace;
   CAUSAL_AGENT: DurableObjectNamespace;
