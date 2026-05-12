@@ -17,8 +17,38 @@
 //! See also: glim-think/migrations/0004_claims.sql for the receiving
 //! schema, and glim-think/src/server.ts for the `/claims/ingest` route.
 
+use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::time::Duration;
+
+/// On-the-wire shape of a single claim row sent to `glim-think`'s
+/// `/claims/ingest` endpoint. This is the canonical Rust-side projection of
+/// the contract at `docs/contracts/lupine_distill_to_vectorize.md` and is
+/// asserted against by `lupine-distill/tests/vectorize_schema.rs`.
+///
+/// `claim_data` is `serde_json::Value` so producers can pass either a parsed
+/// object or a raw JSON string (both forms are accepted by the worker, per
+/// the contract). `evidence_ids` is `Vec<String>` because the canonical form
+/// is a JSON array of record_ids; the worker's `JSON.stringify` round-trip
+/// preserves order.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct WorkerSyncClaim {
+    pub claim_id: String,
+    pub agent_id: String,
+    pub claim_type: String,
+    pub claim_data: Value,
+    pub evidence_ids: Vec<String>,
+    pub confidence: f64,
+    pub status: String,
+    pub description: String,
+    pub created_at: String,
+}
+
+/// Wire envelope for `POST /claims/ingest`. The route accepts a batch.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct WorkerSyncIngestBody {
+    pub claims: Vec<WorkerSyncClaim>,
+}
 
 const DEFAULT_WORKER_URL: &str = "https://glim-think-v1.aw-ab5.workers.dev";
 const SYNC_TIMEOUT_SECS: u64 = 8;
@@ -55,20 +85,24 @@ pub fn try_push_claim(
         return;
     }
 
+    // Constructing the body through the typed `WorkerSyncClaim` rather than
+    // raw `json!` keeps this call site in lock-step with the contract test in
+    // `tests/vectorize_schema.rs` — any field rename ripples through the type
+    // system, not just the wire bytes.
     let parsed_data: Value = serde_json::from_str(claim_data).unwrap_or(json!({}));
-    let body = json!({
-        "claims": [{
-            "claim_id": claim_id,
-            "agent_id": agent_id,
-            "claim_type": claim_type,
-            "claim_data": parsed_data,
-            "evidence_ids": [],
-            "confidence": confidence,
-            "status": status,
-            "description": description,
-            "created_at": current_iso8601(),
-        }]
-    });
+    let body = WorkerSyncIngestBody {
+        claims: vec![WorkerSyncClaim {
+            claim_id: claim_id.to_string(),
+            agent_id: agent_id.to_string(),
+            claim_type: claim_type.to_string(),
+            claim_data: parsed_data,
+            evidence_ids: Vec::new(),
+            confidence,
+            status: status.to_string(),
+            description: description.to_string(),
+            created_at: current_iso8601(),
+        }],
+    };
 
     let url = format!("{}/claims/ingest", worker_url());
     let agent = match ureq::AgentBuilder::new()
