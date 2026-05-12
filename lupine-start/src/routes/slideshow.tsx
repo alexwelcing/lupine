@@ -6,7 +6,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-const WORKER = 'https://glim-think-v1.aw-ab5.workers.dev'
+const WORKER = import.meta.env.VITE_GLIM_THINK_URL ?? 'https://glim-think-v1.aw-ab5.workers.dev'
 const ADVANCE_MS_DEFAULT = 5500
 
 interface SlideshowImage {

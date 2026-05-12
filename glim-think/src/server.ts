@@ -38,6 +38,7 @@ import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
 import { searchLiterature, isLiteratureSource, rowToPaper } from "./literature";
 import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
+import { dispatchAtlasJob, type TaskPayload as AtlasTaskPayload } from "./research/dispatch";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
@@ -60,6 +61,7 @@ import {
   runSlideshowBatch,
   listSlideshowImages,
 } from "./research/slideshow";
+import { checkAccess, isGatedRoute } from "./middleware/access";
 
 async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
@@ -135,6 +137,18 @@ export default {
           env
         );
         if (agentResponse) return agentResponse;
+      }
+
+      // ─── Cloudflare Access gate (unit 10) ───
+      // Gates /admin/*, /ops/* (non-GET), and the write endpoints
+      // POST /run, POST /fleet/run, POST /ingest/batch, POST /broadcasts/trigger.
+      // Public routes (/feed/*, /health, /research/*, /live, /agents/*, /graph*)
+      // are intentionally unguarded — see middleware/access.ts::isGatedRoute.
+      // DEV bypass via env.DEV_MODE === "true" is documented in wrangler.toml.
+      if (isGatedRoute(url.pathname, request.method)) {
+        const allowed = [env.ADMIN_EMAIL ?? ""].filter(Boolean);
+        const denial = await checkAccess(request, env, allowed);
+        if (denial) return denial;
       }
 
       // ─── HTTP API routes ───
@@ -1602,6 +1616,28 @@ ${narrative}
           // Useful to test the auto-research loop without waiting.
           const result = await runOrchestratorTick(env);
           return Response.json(result, { headers: JSON_CORS_HEADERS });
+        }
+
+        // === Unit 8: dispatch to GCP heavy compute ===
+        // Publishes a Cloud Tasks task that fans out to the atlas-distill
+        // Cloud Run Job via the tasks-consumer service. Auth posture matches
+        // the rest of /research/* (open in dev; production gating tracked
+        // separately — see PR notes for unit 08).
+        if (url.pathname === "/research/dispatch" && request.method === "POST") {
+          let body: AtlasTaskPayload;
+          try {
+            body = JSON.parse(bodyText || "{}") as AtlasTaskPayload;
+          } catch (e) {
+            return jsonError(`invalid JSON: ${e instanceof Error ? e.message : String(e)}`, 400);
+          }
+          try {
+            const result = await dispatchAtlasJob(env, body);
+            return Response.json(result, { headers: JSON_CORS_HEADERS });
+          } catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            const status = /required|must be|not set|invalid/i.test(msg) ? 400 : 502;
+            return jsonError(msg, status);
+          }
         }
 
         if (url.pathname === "/research/jobs" && request.method === "GET") {

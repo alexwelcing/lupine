@@ -13,7 +13,8 @@ export const Route = createFileRoute('/ops')({
   }),
 })
 
-const OPS_URL = 'https://glim-think-v1.aw-ab5.workers.dev/ops/deployments'
+const WORKER_BASE = import.meta.env.VITE_GLIM_THINK_URL ?? 'https://glim-think-v1.aw-ab5.workers.dev'
+const OPS_URL = `${WORKER_BASE}/ops/deployments`
 
 function timeAgo(dateString: string) {
   if (!dateString) return ''

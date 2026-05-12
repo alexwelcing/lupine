@@ -54,3 +54,11 @@ export {
   parseFrameData,
   writeHeader,
 } from './glimbin';
+
+// ─── CDN base resolution (Bandwidth Alliance scaffolding) ───────────
+export {
+  ATLAS_ARTIFACTS_BUCKET,
+  DEFAULT_ATLAS_CDN_BASE,
+  getAtlasCdnBase,
+  cdnUrl,
+} from './cdn';
