@@ -174,7 +174,7 @@ pub fn group_by_tag(papers: &[Paper]) -> std::collections::HashMap<String, Vec<&
 pub fn tag_frequency(papers: &[Paper]) -> Vec<(String, usize)> {
     let groups = group_by_tag(papers);
     let mut freq: Vec<(String, usize)> = groups.into_iter().map(|(k, v)| (k, v.len())).collect();
-    freq.sort_by(|a, b| b.1.cmp(&a.1));
+    freq.sort_by_key(|b| std::cmp::Reverse(b.1));
     freq
 }
 
