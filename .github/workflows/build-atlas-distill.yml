@@ -105,7 +105,7 @@ jobs:
             --max-retries=3 \
             --memory=2Gi \
             --cpu=2 \
-            --timeout=3600s
+            --task-timeout=3600s
 
       - name: Verify deployment
         run: |
