@@ -38,6 +38,7 @@ import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
 import { searchLiterature, isLiteratureSource, rowToPaper } from "./literature";
 import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
+import { dispatchAtlasJob, type TaskPayload as AtlasTaskPayload } from "./research/dispatch";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
@@ -1602,6 +1603,28 @@ ${narrative}
           // Useful to test the auto-research loop without waiting.
           const result = await runOrchestratorTick(env);
           return Response.json(result, { headers: JSON_CORS_HEADERS });
+        }
+
+        // === Unit 8: dispatch to GCP heavy compute ===
+        // Publishes a Cloud Tasks task that fans out to the atlas-distill
+        // Cloud Run Job via the tasks-consumer service. Auth posture matches
+        // the rest of /research/* (open in dev; production gating tracked
+        // separately — see PR notes for unit 08).
+        if (url.pathname === "/research/dispatch" && request.method === "POST") {
+          let body: AtlasTaskPayload;
+          try {
+            body = JSON.parse(bodyText || "{}") as AtlasTaskPayload;
+          } catch (e) {
+            return jsonError(`invalid JSON: ${e instanceof Error ? e.message : String(e)}`, 400);
+          }
+          try {
+            const result = await dispatchAtlasJob(env, body);
+            return Response.json(result, { headers: JSON_CORS_HEADERS });
+          } catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            const status = /required|must be|not set|invalid/i.test(msg) ? 400 : 502;
+            return jsonError(msg, status);
+          }
         }
 
         if (url.pathname === "/research/jobs" && request.method === "GET") {
