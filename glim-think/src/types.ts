@@ -152,6 +152,11 @@ export interface Env {
    * api.minimaxi.com for the international plan). Default: api.minimax.chat/v1. */
   MINIMAX_BASE_URL?: string;
   HF_API_KEY?: string;
+  /** When "true", /feed/beats skips OIDC JWT verification. Local dev only. */
+  DEV_MODE?: string;
+  /** Public URL this Worker is reachable at. Used as the expected `aud`
+   *  claim when verifying OIDC tokens. Defaults to the request origin. */
+  WORKER_URL?: string;
   ORCHESTRATOR: DurableObjectNamespace;
   MANIFOLD_AGENT: DurableObjectNamespace;
   CAUSAL_AGENT: DurableObjectNamespace;

@@ -40,6 +40,7 @@ import { searchLiterature, isLiteratureSource, rowToPaper } from "./literature";
 import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
+import { handleBeatsPost, handleBeatsOptions } from "./feed/beats";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
 import { testMiniMaxCall, listMiniMaxModels, sweepMiniMaxEndpoints, exerciseDeepTier } from "./agents/models";
 import { runDiag, probeDOSynthesize, probeDOKV } from "./admin/diag";
@@ -886,6 +887,17 @@ ${narrative}
       // Real-time Dashboard Feed API (split into edge-cached endpoints in Phase D).
       // /feed/* routes are handled by feed/split.ts. /feed (no suffix) is a
       // back-compat shim that returns the union for clients on the old protocol.
+      //
+      // POST /feed/beats lives outside split.ts because it's a write path with
+      // its own OIDC-JWT auth, separate from the cached read endpoints. See
+      // docs/handoff/05_secure_live_ticker_architecture.md (producer ingress).
+      if (url.pathname === "/feed/beats") {
+        if (request.method === "OPTIONS") return handleBeatsOptions();
+        if (request.method === "POST") {
+          return handleBeatsPost(request, env, bodyText);
+        }
+      }
+
       const feedResponse = await handleFeedRoute(request, env);
       if (feedResponse) return feedResponse;
 

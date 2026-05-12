@@ -13,6 +13,17 @@ anyhow = "1"
 rand = "0.8"
 regex = "1"
 ureq = { version = "2", features = ["json"] }
+# emit-beat: OIDC token minting + HTTP POST to the CF Worker /feed/beats.
+# tokio runtime is opt-in (only the emit-beat command spins it up via
+# Runtime::new().block_on() — main() stays sync for all other commands).
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros"] }
+uuid = { version = "1", features = ["v4"] }
+# Local OIDC token mint (when not on Cloud Run): sign a JWT with the SA
+# private key, exchange at Google's token endpoint for an ID token.
+base64 = "0.22"
+rsa = { version = "0.9", features = ["sha2"] }
+sha2 = "0.10"
 
 [profile.release]
 opt-level = 3
