@@ -230,12 +230,131 @@ export async function dispatchAtlasJob(
   return { task_name: data.name, dev_mode: false };
 }
 
+export interface BatchDispatchItem {
+  payload: TaskPayload;
+  hypothesis_id?: string;
+}
+
+export interface BatchDispatchResult {
+  dispatched: number;
+  failed: number;
+  task_names: string[];
+  errors: { hypothesis_id?: string; error: string }[];
+  dev_mode: boolean;
+}
+
+/**
+ * Build the Cloud Tasks `task` body for a single payload. Pulled out so the
+ * batch dispatcher can reuse it without duplicating the structure.
+ */
+function buildTaskBody(env: DispatchEnv, payload: TaskPayload): Record<string, unknown> {
+  const consumerUrl = env.TASKS_CONSUMER_URL!;
+  const audience = env.TASKS_CONSUMER_AUDIENCE ?? consumerUrl;
+  const bodyB64 = btoa(JSON.stringify(payload));
+  const httpRequest: Record<string, unknown> = {
+    httpMethod: "POST",
+    url: `${consumerUrl.replace(/\/+$/, "")}/run`,
+    headers: { "Content-Type": "application/json" },
+    body: bodyB64,
+  };
+  if (env.TASKS_CONSUMER_INVOKER_SA) {
+    httpRequest.oidcToken = {
+      serviceAccountEmail: env.TASKS_CONSUMER_INVOKER_SA,
+      audience,
+    };
+  }
+  return { task: { httpRequest } };
+}
+
+/**
+ * Publish many Cloud Tasks tasks with a single OAuth access token. Concurrency
+ * bounded by `concurrency` (default 10) so we don't hammer the Cloud Tasks API
+ * quota. Per-item failures don't abort the batch — they're collected in
+ * `errors[]` so the caller can retry the failed slice.
+ */
+export async function dispatchAtlasJobBatch(
+  env: DispatchEnv,
+  items: BatchDispatchItem[],
+  concurrency = 10,
+): Promise<BatchDispatchResult> {
+  if (!Array.isArray(items) || items.length === 0) {
+    return { dispatched: 0, failed: 0, task_names: [], errors: [], dev_mode: isDevMode(env) };
+  }
+  for (const item of items) validatePayload(item.payload);
+
+  const consumerUrl = env.TASKS_CONSUMER_URL;
+  if (!consumerUrl) throw new Error("TASKS_CONSUMER_URL is not set");
+  const project = env.GCP_PROJECT_ID ?? DEFAULT_PROJECT;
+  const location = env.GCP_TASKS_LOCATION ?? DEFAULT_LOCATION;
+  const queue = env.GCP_TASKS_QUEUE ?? DEFAULT_QUEUE;
+  const url =
+    `${TASKS_API_BASE}/projects/${project}/locations/${location}/queues/${queue}/tasks`;
+  const devMode = isDevMode(env);
+
+  if (devMode) {
+    const names = items.map((_, i) =>
+      `projects/${project}/locations/${location}/queues/${queue}/tasks/dev-${Date.now()}-${i}`,
+    );
+    return { dispatched: items.length, failed: 0, task_names: names, errors: [], dev_mode: true };
+  }
+
+  if (!env.GCP_SA_KEY) throw new Error("GCP_SA_KEY is not set");
+  const sa = parseServiceAccountKey(env.GCP_SA_KEY);
+  const token = await mintAccessToken(sa);
+
+  const task_names: string[] = [];
+  const errors: { hypothesis_id?: string; error: string }[] = [];
+
+  for (let start = 0; start < items.length; start += concurrency) {
+    const slice = items.slice(start, start + concurrency);
+    const results = await Promise.allSettled(
+      slice.map(async (item) => {
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(buildTaskBody(env, item.payload)),
+        });
+        if (!resp.ok) {
+          const text = await resp.text();
+          throw new Error(`Cloud Tasks create ${resp.status}: ${text.slice(0, 200)}`);
+        }
+        const data = (await resp.json()) as { name?: string };
+        if (!data.name) throw new Error("Cloud Tasks response missing task name");
+        return { name: data.name, hypothesis_id: item.hypothesis_id };
+      }),
+    );
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i];
+      if (r.status === "fulfilled") {
+        task_names.push(r.value.name);
+      } else {
+        errors.push({
+          hypothesis_id: slice[i].hypothesis_id,
+          error: r.reason instanceof Error ? r.reason.message : String(r.reason),
+        });
+      }
+    }
+  }
+
+  return {
+    dispatched: task_names.length,
+    failed: errors.length,
+    task_names,
+    errors,
+    dev_mode: false,
+  };
+}
+
 /** Test seam — exported for unit tests so we don't have to mint real JWTs. */
 export const __internal = {
   parseServiceAccountKey,
   validatePayload,
   isDevMode,
   base64UrlEncode,
+  buildTaskBody,
 };
 
 /** Augment Env without forcing every consumer to add the new fields. */

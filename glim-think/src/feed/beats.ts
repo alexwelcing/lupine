@@ -303,3 +303,51 @@ export function handleBeatsOptions(): Response {
     headers: { ...BEATS_CORS, "Access-Control-Max-Age": "86400" },
   });
 }
+
+interface BeatRow {
+  beat_id: string;
+  agent: string;
+  summary: string;
+  metrics: string | null;
+  ts: number;
+}
+
+/**
+ * Public read endpoint backing the live dashboard ticker. No auth — beats
+ * are non-sensitive heartbeats. Returns most-recent-first, capped at 100.
+ */
+export async function handleBeatsGet(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const limit = Math.min(
+    Math.max(parseInt(url.searchParams.get("limit") ?? "20", 10) || 20, 1),
+    100,
+  );
+  const sinceParam = url.searchParams.get("since");
+  const since = sinceParam ? parseInt(sinceParam, 10) || 0 : 0;
+
+  try {
+    const rows = await env.LEDGER
+      .prepare(
+        `SELECT beat_id, agent, summary, metrics, ts
+           FROM lab_beats
+          WHERE ts >= ?1
+          ORDER BY ts DESC
+          LIMIT ?2`,
+      )
+      .bind(since, limit)
+      .all();
+    const beats = (rows.results ?? []).map((r) => {
+      const row = r as unknown as BeatRow;
+      return {
+        beat_id: row.beat_id,
+        agent: row.agent,
+        summary: row.summary,
+        metrics: row.metrics ? JSON.parse(row.metrics) : null,
+        ts: row.ts,
+      };
+    });
+    return jsonResponse({ beats, count: beats.length });
+  } catch (e) {
+    return jsonResponse({ beats: [], count: 0, error: String(e) }, 500);
+  }
+}

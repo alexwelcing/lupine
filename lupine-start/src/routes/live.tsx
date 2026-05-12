@@ -25,6 +25,7 @@ const FEED_BROADCAST_URL = `${WORKER_BASE}/feed/broadcast`
 const FEED_HYPOTHESES_URL = `${WORKER_BASE}/feed/hypotheses`
 const FEED_RECENT_CLAIMS_URL = `${WORKER_BASE}/feed/recent-claims`
 const FEED_VIGNETTE_URL = `${WORKER_BASE}/feed/vignette`
+const FEED_BEATS_URL = `${WORKER_BASE}/feed/beats?limit=20`
 const BROADCASTS_URL = `${WORKER_BASE}/broadcasts?limit=10`
 
 function timeAgo(dateString: string) {
@@ -97,6 +98,14 @@ type Vignette = {
   completed_at: string | null
 }
 
+type Beat = {
+  beat_id: string
+  agent: string
+  summary: string
+  metrics: Record<string, unknown> | null
+  ts: number
+}
+
 function LiveLabComponent() {
   const swarmQuery = useQuery({
     queryKey: ['feed-swarm'],
@@ -133,6 +142,11 @@ function LiveLabComponent() {
     queryFn: () => fetchJson(FEED_VIGNETTE_URL),
     refetchInterval: 60_000,
   })
+  const beatsQuery = useQuery<{ beats: Beat[]; count: number }>({
+    queryKey: ['feed-beats'],
+    queryFn: () => fetchJson(FEED_BEATS_URL),
+    refetchInterval: 5_000,
+  })
   const { data: broadcastData } = useQuery({
     queryKey: ['lab-broadcasts'],
     queryFn: () => fetchJson(BROADCASTS_URL),
@@ -149,6 +163,7 @@ function LiveLabComponent() {
   const activeHypotheses = hypotheses.filter(h => h.status === 'testing' || h.status === 'proposed')
   const claimCount = recentClaims.length
   const vignette = vignetteQuery.data
+  const beats = beatsQuery.data?.beats ?? []
   const latestBroadcast = latestBroadcastQuery.data || broadcastData?.broadcasts?.[0]
   const broadcasts = broadcastData?.broadcasts || (latestBroadcast ? [latestBroadcast] : [])
 
@@ -262,6 +277,45 @@ function LiveLabComponent() {
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
         {/* Swarm Telemetry Sidebar */}
         <div className="xl:col-span-4 flex flex-col gap-6">
+          {/* Producer-heartbeat ticker (atlas-distill emit-beat -> /feed/beats). */}
+          <div className="glass-panel p-0 overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--outline-variant)]">
+              <h3 className="mono-label text-[var(--secondary)] flex items-center gap-2">
+                <Radio size={14} />
+                PRODUCER HEARTBEATS
+              </h3>
+              <span className="font-mono text-[9px] text-[var(--on-surface-variant)] uppercase tracking-widest">
+                {beats.length}/20
+              </span>
+            </div>
+            <div className="p-4 space-y-2 max-h-96 overflow-y-auto">
+              {beats.length === 0 ? (
+                <div className="px-2 py-6 text-center font-mono text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest">
+                  Awaiting first beat
+                </div>
+              ) : (
+                beats.map((beat) => (
+                  <div
+                    key={beat.beat_id}
+                    className="border-l-2 border-[var(--primary)] pl-3 py-1.5"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--primary)]">
+                        {beat.agent}
+                      </span>
+                      <span className="font-mono text-[9px] text-[var(--on-surface-variant)]">
+                        {timeAgo(new Date(beat.ts * 1000).toISOString())}
+                      </span>
+                    </div>
+                    <div className="text-xs text-[var(--on-surface)] mt-0.5 line-clamp-2">
+                      {beat.summary}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
           <div className="glass-panel p-0 overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--outline-variant)]">
               <h3 className="mono-label text-[var(--secondary)] flex items-center gap-2">
