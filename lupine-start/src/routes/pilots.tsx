@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { motion } from 'framer-motion'
 import { Card } from '../components/ui/Card'
 import { PageShell } from '../components/ui/PageShell'
 
@@ -71,32 +70,28 @@ function PilotsPage() {
           Illustrative wedges · the metric values describe the order of magnitude a typical pilot surfaces, not a published measurement on a specific customer's MLIP set.
         </p>
         {WEDGES.map((w, i) => (
-          <motion.section
+          <section
             key={w.id}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.06 }}
           >
             <Card elevated style={{ borderTop: `2px solid ${w.accent}` }}>
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 <div className="lg:col-span-7">
                   <span className="mono-label block mb-3" style={{ color: w.accent }}>{w.eyebrow}</span>
-                  <h2 className="text-3xl lg:text-4xl mb-6 text-[var(--on-surface)]">{w.title}</h2>
-                  <div className="space-y-4 text-[var(--on-surface-variant)] leading-relaxed">
+                  <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">{w.title}</h2>
+                  <div className="space-y-5 text-[var(--on-surface-variant)]">
                     <div>
                       <span className="mono-label text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest block mb-1">The pain</span>
-                      <p>{w.pain}</p>
+                      <p className="font-serif text-base leading-relaxed">{w.pain}</p>
                     </div>
                     <div>
                       <span className="mono-label text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest block mb-1">What Lupine delivers</span>
-                      <p>{w.deliverable}</p>
+                      <p className="font-serif text-base leading-relaxed">{w.deliverable}</p>
                     </div>
                   </div>
                 </div>
                 <div className="lg:col-span-5">
                   <div
-                    className="p-6 h-full flex flex-col justify-center rounded-lg"
+                    className="p-6 h-full flex flex-col justify-center rounded-md"
                     style={{
                       background: 'var(--surface-container-low)',
                       border: '1px solid var(--outline-variant)',
@@ -113,15 +108,15 @@ function PilotsPage() {
                 </div>
               </div>
             </Card>
-          </motion.section>
+          </section>
         ))}
 
         {/* === DUAL DELIVERABLE === */}
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">WHY THE WEDGES PAY OFF TWICE</span>
-            <h2 className="text-3xl lg:text-4xl mb-4">The same geometry, two deliverables.</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The same geometry, two deliverables.</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               Cross-potential PCA returns a small number of dominant error directions and a much
               larger number of negligible ones. That is the same low-effective-dimensionality
               signature that Simon et al. (2026, <em>There Will Be a Scientific Theory of Deep
@@ -165,8 +160,8 @@ function PilotsPage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">HOW A PILOT RUNS</span>
-            <h2 className="text-3xl lg:text-4xl mb-4">Four weeks. One workflow. No migration.</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Four weeks. One workflow. No migration.</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               Pilots are scoped tight on purpose. We do not promise material discoveries; we
               promise a measured error budget on the customer's own MLIP candidates, attached to
               the customer's own production trajectories.
@@ -179,19 +174,15 @@ function PilotsPage() {
               { week: 'Week 3', title: 'Localize', body: 'Per-property residual loadings, identification of the dominant failure modes, comparison against the customer\'s prior MLIP-selection rationale.' },
               { week: 'Week 4', title: 'Integrate', body: 'Per-trajectory error-budget sidecar wired into the customer\'s CI / orchestration. Pilot deliverable signed off; conversion to ongoing audit at customer\'s discretion.' },
             ].map((s, i) => (
-              <motion.div
+              <div
                 key={s.week}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
               >
                 <Card elevated className="h-full">
                   <span className="mono-label text-[var(--primary)] block mb-2">{s.week}</span>
                   <h3 className="text-lg mb-2 text-[var(--on-surface)]">{s.title}</h3>
                   <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{s.body}</p>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
@@ -236,13 +227,13 @@ function PilotsPage() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
               href="mailto:alexwelcing@gmail.com?subject=Lupine%20pilot%20-%20wedge%20discussion"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
             >
               Email founders@lupine
             </a>
             <Link
               to="/research"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
             >
               Read the preprint first
             </Link>

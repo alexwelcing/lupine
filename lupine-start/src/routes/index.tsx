@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { motion, useScroll } from 'framer-motion'
 import valueModelData from '../data/value-model.json'
 import type { ValueModelData } from '../components/value-model/types'
 import { ScrollSection } from '../components/value-model/ScrollSection'
@@ -52,7 +51,6 @@ export const Route = createFileRoute('/')({
 })
 
 function HomePage() {
-  const { scrollYProgress } = useScroll()
 
   // Pre-computed narrative numbers used in section headers + takeaways.
   const proposedPost = data.round.post_money_usd_m
@@ -86,17 +84,14 @@ function HomePage() {
       .reduce((acc, o) => acc + o.p, 0) * 100
 
   return (
-    <main className="relative flex-1 bg-[var(--surface)] text-[var(--on-surface)] overflow-x-hidden">
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#3b82f6] via-[#c4b5fd] to-[#4ecdc4] z-50 origin-left"
-        style={{ scaleX: scrollYProgress }}
-      />
+    <div className="relative w-screen h-screen overflow-hidden bg-[var(--surface)] text-[var(--on-surface)]">
+      <main className="relative flex flex-row w-screen h-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth z-10">
 
       <Hero />
 
       <nav
         aria-label="Section navigation"
-        className="sticky top-16 z-30 border-y border-[var(--outline-variant)] bg-[var(--surface)]/90 backdrop-blur-md"
+        className="fixed bottom-6 left-6 z-30 border border-[var(--outline-variant)] bg-[var(--surface)]/90 backdrop-blur-md rounded-md"
       >
         <div className="container mx-auto max-w-7xl px-6 lg:px-12 flex gap-1 lg:gap-2 overflow-x-auto py-2 text-[10px] lg:text-[11px] font-mono uppercase tracking-widest">
           {SECTIONS.map((s, i) => (
@@ -410,13 +405,9 @@ function HomePage() {
           </div>
           <div className="grid lg:grid-cols-2 gap-3">
             {data.ceiling.strategic_acquirers.map((a, i) => (
-              <motion.div
+              <div
                 key={a.id}
                 className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] p-5"
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-15% 0px' }}
-                transition={{ duration: 0.45, delay: 0.05 + i * 0.08 }}
               >
                 <div className="flex items-baseline justify-between gap-3 mb-2">
                   <h4 className="text-base font-semibold text-[var(--on-surface)]">
@@ -433,7 +424,7 @@ function HomePage() {
                   5-yr NPV to acquirer ~${a.npv_to_acquirer_usd_b.toFixed(0)}B
                   · {a.year_horizon}-yr horizon
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
           <Takeaway
@@ -597,13 +588,9 @@ function HomePage() {
                 'Closes the unified DFT → ML → MD pipeline; the open benchmark becomes the canonical place to compare foundation MLIPs and the methodology paper compounds the IP',
             },
           ].map((m, i) => (
-            <motion.div
+            <div
               key={m.mo}
               className="rounded-md border border-[var(--outline-variant)] p-5 bg-[var(--surface-container)] flex flex-col gap-2"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-15% 0px' }}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.12 }}
             >
               <div className="text-xs uppercase tracking-wider text-[var(--on-surface-variant-mid)]">
                 Month {m.mo}
@@ -617,7 +604,7 @@ function HomePage() {
                 </span>
                 {m.unlocks}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
         <Takeaway label="What this round is actually buying" tone="positive">
@@ -632,89 +619,74 @@ function HomePage() {
         </Takeaway>
       </ScrollSection>
 
-      <footer className="px-6 lg:px-12 py-12 text-xs text-[var(--on-surface-variant-mid)] font-mono border-t border-[var(--outline-variant)]">
-        <div className="container mx-auto max-w-7xl">
-          Generated {data.generated_on}. Source of truth:{' '}
-          <code>business-plan/value-model/*.csv</code>. Regenerate with{' '}
-          <code>python3 business-plan/scripts/analyze.py</code>.
-        </div>
-      </footer>
-    </main>
+      <ScrollSection id="footer">
+        <footer className="w-full text-xs text-[var(--on-surface-variant-mid)] font-mono border-t border-[var(--outline-variant)] py-12">
+          <div className="container mx-auto max-w-7xl">
+            Generated {data.generated_on}. Source of truth:{' '}
+            <code>business-plan/value-model/*.csv</code>. Regenerate with{' '}
+            <code>python3 business-plan/scripts/analyze.py</code>.
+          </div>
+        </footer>
+      </ScrollSection>
+      </main>
+    </div>
   )
 }
 
 function Hero() {
   return (
-    <section className="relative pt-[160px] pb-[120px] px-6 lg:px-12 overflow-hidden">
-      {/* Ambient backdrop: a slow-rotating lattice gradient evoking
-          atomic structure, brand-tinted. */}
-      <div className="absolute inset-0">
-        <motion.div
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(78,205,196,0.10),transparent_60%)]"
-          animate={{ scale: [1, 1.06, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+    <section className="relative min-w-[100vw] h-screen shrink-0 snap-start snap-always flex flex-col justify-center px-6 lg:px-12 overflow-hidden border-r border-[var(--outline-variant)]">
+      {/* Ambient backdrop */}
+      <div className="absolute inset-0 z-0">
+        <div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(107,138,175,0.06),transparent_60%)]"
         />
-        <motion.div
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(196,181,253,0.08),transparent_55%)]"
-          animate={{ opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        <div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(107,138,175,0.03),transparent_55%)]"
         />
       </div>
 
-      <div className="container mx-auto max-w-7xl relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-6">
-            Lupine Materials Science · audit substrate for the matter stack
+      <div className="container mx-auto max-w-7xl relative z-10 flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+        <div className="flex-1">
+          <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-6 flex items-center gap-4">
+            <span className="w-8 h-px bg-[var(--tertiary)] opacity-50"></span>
+            Lupine Materials Science
           </div>
-          <h1 className="text-5xl lg:text-7xl mb-8 leading-[1.02] max-w-5xl">
+          <h1 className="text-5xl lg:text-[5.5rem] mb-8 leading-[1.08] max-w-5xl font-display tracking-tight text-[var(--on-surface)]">
             Step 1 of a real-world{' '}
             <em className="italic text-[var(--secondary)]">Replicator</em>.
           </h1>
-          <p className="text-xl text-[var(--on-surface-variant)] max-w-4xl leading-relaxed font-light mb-6">
-            Matter is the last frontier of civilization-scale software.
-            Foundation models for matter exist now. Self-driving labs are
-            shipping. Atomic-precision manufacturing is on a real research
-            roadmap. The decade ahead is the convergence — a generation that
-            can specify any molecule and have it manifest.
+          <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant-mid)] max-w-3xl mb-6">
+            Matter is the last frontier of civilization-scale software. Beneath the foundation models lies a strict geometry: let <span className="font-sans italic font-medium">ℳ</span> be the manifold of published interatomic potentials. Across <span className="font-sans italic font-medium">ℳ</span>, the Fisher Information Matrix of any universal MLIP exhibits a hyper-ribbon—a hierarchy of eigenvalues spanning decades where predictions orthogonal to the stiffest principal components inevitably diverge.
           </p>
-          <p className="text-xl text-[var(--on-surface)] max-w-4xl leading-relaxed font-light mb-10">
+          <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-10">
             Lupine builds the{' '}
-            <strong className="text-[var(--secondary)]">audit substrate</strong>{' '}
-            for that stack — the methodology that names where atomistic
-            predictions fail, and compresses the failure into closed-loop
-            self-correction. Without it, every layer above stacks
-            hallucination on top of unmeasured error.{' '}
-            <span className="text-[var(--on-surface-variant)]">
-              We are step 1.
-            </span>
+            <strong className="text-[var(--secondary)] font-normal">audit substrate</strong>{' '}
+            that isolates those sloppy axes. We define the methodology that names exactly where atomistic predictions break, compressing the manifold's low-rank errors into closed-loop self-correction. The decade ahead is convergence.
           </p>
 
-          {/* Bridge into the credo: tells the reader the next thing
-              they will see is what we believe, before any math. */}
           <a
             href="#credo"
-            className="inline-flex items-baseline gap-3 mb-12 group no-underline"
+            className="inline-flex items-center gap-3 mb-12 group no-underline border border-[var(--outline-variant)] px-5 py-2.5 rounded-md hover:bg-[var(--surface-container-low)] transition-all"
           >
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--tertiary)] group-hover:text-[var(--secondary)] transition-colors">
-              Start with the ideals
+            <span className="text-sm text-[var(--on-surface-variant)] group-hover:text-[var(--on-surface)] transition-colors">
+              Read the thesis
             </span>
-            <span className="text-[var(--tertiary)] group-hover:text-[var(--secondary)] transition-colors">
-              ↓
+            <span className="text-[var(--on-surface-variant-mid)] group-hover:text-[var(--on-surface)] transition-colors">
+              →
             </span>
           </a>
 
-          <div className="flex flex-wrap gap-3 font-mono text-[10px] uppercase tracking-[0.2em]">
-            <HorizonChip label="Phase 1 · 2025-2030" highlight>Trustworthy prediction</HorizonChip>
-            <HorizonChip label="Phase 2 · 2028-2034">Generative matter</HorizonChip>
-            <HorizonChip label="Phase 3 · 2032-2042">Closed-loop synthesis</HorizonChip>
-            <HorizonChip label="Phase 4 · 2040-2055">Programmable matter</HorizonChip>
-            <HorizonChip label="Phase 5 · 2050-2080">Quantum-enabled materials</HorizonChip>
-          </div>
-        </motion.div>
+          <PhaseTimeline />
+        </div>
+
+        {/* Visual offset: subtle geometric element */}
+        <div className="hidden lg:flex w-[300px] h-[300px] opacity-20 select-none relative shrink-0 items-center justify-center">
+          <div className="absolute inset-6 border border-[var(--outline-variant)] rounded-lg" />
+          <div className="absolute top-1/4 bottom-1/4 left-1/2 w-px bg-[var(--outline-variant)]" />
+          <div className="absolute left-1/4 right-1/4 top-1/2 h-px bg-[var(--outline-variant)]" />
+          <div className="w-3 h-3 rounded-full bg-[var(--primary)] opacity-40" />
+        </div>
       </div>
     </section>
   )
@@ -730,12 +702,8 @@ function Curve({
   note: string
 }) {
   return (
-    <motion.div
+    <div
       className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] p-5 flex flex-col gap-3"
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-15% 0px' }}
-      transition={{ duration: 0.5 }}
     >
       <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--secondary)]">
         {label}
@@ -746,39 +714,62 @@ function Curve({
       <div className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
         {note}
       </div>
-    </motion.div>
+    </div>
   )
 }
 
-function HorizonChip({
-  label,
-  children,
-  highlight = false,
-}: {
-  label: string
-  children: React.ReactNode
-  highlight?: boolean
-}) {
+function PhaseTimeline() {
+  const phases = [
+    { id: 1, label: 'Phase 1', years: '2025–2030', title: 'Trustworthy prediction', status: 'active' },
+    { id: 2, label: 'Phase 2', years: '2028–2034', title: 'Generative matter', status: 'upcoming' },
+    { id: 3, label: 'Phase 3', years: '2032–2042', title: 'Closed-loop autonomous synthesis', status: 'upcoming' },
+    { id: 4, label: 'Phase 4', years: '2040–2055', title: 'Programmable matter', status: 'upcoming' },
+    { id: 5, label: 'Phase 5', years: '2050–2080', title: 'Quantum-enabled materials economy', status: 'upcoming' },
+  ]
+
   return (
-    <div
-      className="rounded border px-3 py-2 flex flex-col gap-0.5"
-      style={{
-        borderColor: highlight ? '#4ecdc4' : 'var(--outline-variant)',
-        background: highlight
-          ? 'linear-gradient(135deg, rgba(78,205,196,0.16), rgba(78,205,196,0.04))'
-          : 'var(--surface-container)',
-      }}
-    >
-      <span
-        style={{
-          color: highlight ? '#4ecdc4' : 'var(--on-surface-variant-mid)',
-        }}
-      >
-        {label}
-      </span>
-      <span className="text-[12px] tracking-normal normal-case font-sans text-[var(--on-surface)] font-medium">
-        {children}
-      </span>
+    <div className="w-full mt-4 select-none relative pb-4">
+      {/* Desktop Track */}
+      <div className="hidden lg:block absolute top-[7px] left-0 right-0 h-px bg-[var(--outline-variant)] z-0" />
+      {/* Mobile Track */}
+      <div className="lg:hidden absolute top-0 bottom-0 left-[7px] w-px bg-[var(--outline-variant)] z-0" />
+      
+      <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-4 relative z-10">
+        {phases.map((phase) => (
+          <div key={phase.id} className="relative flex flex-row lg:flex-col items-start gap-4 lg:gap-3 lg:w-1/5 group cursor-default">
+            {/* Node */}
+            <div className="flex items-center gap-3 mt-[2px] lg:mt-0">
+              <div 
+                className={`w-4 h-4 rounded-full border-2 flex-shrink-0 transition-all duration-500`}
+                style={{
+                  borderColor: phase.status === 'active' ? 'var(--primary)' : 'var(--outline-variant)',
+                  backgroundColor: phase.status === 'active' ? 'var(--primary)' : 'var(--surface-container)',
+                  boxShadow: phase.status === 'active' ? '0 0 16px rgba(107, 138, 175, 0.4)' : 'none'
+                }}
+              />
+              <div className="hidden lg:block font-mono text-[10px] uppercase tracking-[0.2em] transition-colors" style={{ color: phase.status === 'active' ? 'var(--primary)' : 'var(--on-surface-variant-mid)' }}>
+                {phase.years}
+              </div>
+            </div>
+            
+            {/* Content */}
+            <div className="flex flex-col">
+              <div className="lg:hidden font-mono text-[10px] uppercase tracking-[0.2em] mb-1 transition-colors" style={{ color: phase.status === 'active' ? 'var(--primary)' : 'var(--on-surface-variant-mid)' }}>
+                {phase.years}
+              </div>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant)] mb-1 group-hover:text-[var(--on-surface)] transition-colors duration-300">
+                {phase.label}
+              </span>
+              <span 
+                className="font-serif italic text-base lg:text-lg leading-snug group-hover:text-[var(--primary)] transition-colors duration-300"
+                style={{ color: phase.status === 'active' ? 'var(--on-surface)' : 'var(--on-surface-variant)' }}
+              >
+                {phase.title}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -793,14 +784,18 @@ function SectionHeader({
   lead: React.ReactNode
 }) {
   return (
-    <div className="mb-12 max-w-4xl">
-      <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-4">
+    <div className="mb-16 max-w-4xl relative">
+      {/* Visual Offset: Geometric wireframe accent */}
+      <div className="absolute -left-8 top-2 w-4 h-4 border-t-2 border-l-2 border-[var(--primary)] opacity-50 hidden lg:block" />
+      <div className="absolute -left-8 bottom-2 w-4 h-4 border-b-2 border-l-2 border-[var(--primary)] opacity-50 hidden lg:block" />
+
+      <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-5">
         {eyebrow}
       </div>
-      <h2 className="text-4xl lg:text-5xl mb-6 leading-[1.1] text-[var(--on-surface)]">
+      <h2 className="text-4xl md:text-5xl font-display tracking-tight text-[var(--on-surface)] mb-5">
         {title}
       </h2>
-      <p className="text-lg text-[var(--on-surface-variant)] leading-relaxed font-light">
+      <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant-mid)] max-w-3xl">
         {lead}
       </p>
     </div>
