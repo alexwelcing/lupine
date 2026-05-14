@@ -369,9 +369,12 @@ export function Bonds({
   // ─── GPU dispatch ──────────────────────────────────────────────────
   // Runs only when gpuActive is true. Mirrors the worker effect's contract:
   // updates bondPairs / bondDistances state when the GPU readback resolves.
-  // `lastDispatchedFrameRef` prevents stale readbacks from older frames
-  // overwriting newer state during rapid playback.
+  // `gpuDispatchGenRef` is a monotonically increasing generation counter that
+  // replaces the old `cancelled` boolean for staleness detection. The boolean
+  // approach raced with React's synchronous effect cleanup, causing valid
+  // readbacks to be discarded during molecule switches.
   const lastDispatchedFrameRef = useRef<Frame | null>(null);
+  const gpuDispatchGenRef = useRef(0);
 
   useEffect(() => {
     if (!gpuActive) return;
@@ -388,8 +391,13 @@ export function Bonds({
       return;
     }
 
-    // Detect molecule switch in GPU mode too — natoms change means new system.
-    const gpuMoleculeSwitch = frame.natoms !== prevNatomsRef.current;
+    // Detect molecule switch in GPU mode too — natoms change OR a different
+    // positions buffer means a new system was loaded.
+    const gpuMoleculeSwitch =
+      frame.natoms !== prevNatomsRef.current ||
+      (lastDispatchPositionsRef.current !== null &&
+       frame.positions.buffer !== lastDispatchPositionsRef.current.buffer &&
+       frame.positions.length !== lastDispatchPositionsRef.current.length);
     prevNatomsRef.current = frame.natoms;
     if (gpuMoleculeSwitch) {
       lastDispatchPositionsRef.current = null;
@@ -417,8 +425,6 @@ export function Bonds({
     lastDispatchToleranceRef.current = tolerance;
     lastDispatchMaxBondLengthRef.current = maxBondLength;
 
-    let cancelled = false;
-
     // Build covalent radii table sized for the largest type seen.
     const typesArray = frame.types || new Int32Array(frame.natoms);
     const uniqueTypes = new Set(typesArray);
@@ -438,8 +444,17 @@ export function Bonds({
       boxExtent = Math.max(dx, dy, dz);
     }
 
+    // Increment the dispatch generation. The async readback uses this to
+    // check freshness — if a newer dispatch has been initiated by the time
+    // the readback lands, the result is stale and gets discarded. This is
+    // strictly superior to a `cancelled` boolean set from useEffect cleanup,
+    // because React's cleanup fires synchronously during re-render, which
+    // can race with the async GPU readback and discard valid results from
+    // the most-recent dispatch.
+    gpuDispatchGenRef.current += 1;
+    const thisGeneration = gpuDispatchGenRef.current;
+
     lastDispatchedFrameRef.current = frame;
-    const dispatchedFrame = frame;
 
     void gpuCompute({
       positions: frame.positions,
@@ -450,9 +465,9 @@ export function Bonds({
       maxBondLength,
       boxExtent,
     }).then((readback) => {
-      if (cancelled || !readback) return;
-      // Discard if a newer frame was dispatched after us.
-      if (lastDispatchedFrameRef.current !== dispatchedFrame) return;
+      if (!readback) return;
+      // Discard if a newer dispatch was initiated after this one.
+      if (gpuDispatchGenRef.current !== thisGeneration) return;
       // readBondsAsync returns freshly-allocated arrays — no need to clone.
       setBondPairs(readback.pairs);
       setBondDistances(readback.distances);
@@ -461,7 +476,8 @@ export function Bonds({
       console.warn('[Bonds] GPU compute failed, falling back to worker:', err);
     });
 
-    return () => { cancelled = true; };
+    // No cleanup needed — staleness is tracked via gpuDispatchGenRef, not a
+    // boolean that races with React's synchronous effect teardown.
   }, [gpuActive, frame, maxBondLength, tolerance, gpuCompute, onBondsUpdate, visible]);
 
   // ─── Capacity management ───────────────────────────────────────────
