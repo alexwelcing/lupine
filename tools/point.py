@@ -238,6 +238,14 @@ def cmd_deploy(target: str) -> int:
         res = _run(["wrangler", "deploy"], cwd=REPO_ROOT / "glim-think")
         print(res.stdout)
         return res.returncode
+    elif target == "atlas-view":
+        res = _run(["wrangler", "pages", "deploy", "apps/web/dist", "--project-name", "atlas-view"], cwd=REPO_ROOT / "atlas" / "atlas-view")
+        print(res.stdout)
+        return res.returncode
+    elif target == "lupine-start":
+        res = _run(["gcloud", "builds", "submit", "--config", "cloudbuild.yaml", "."], cwd=REPO_ROOT / "lupine-start")
+        print(res.stdout)
+        return res.returncode
     else:
         _fail(f"Unknown deploy target: {target}")
         return 1
