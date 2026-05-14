@@ -38,100 +38,116 @@ export function AtomPicker({
   onSelect,
   selectionMode = 'single',
 }: AtomPickerProps) {
-  const { camera, size, scene, raycaster } = useThree();
-  const raycasterRef = useRef(new THREE.Raycaster());
-  const mouseRef = useRef(new THREE.Vector2());
+  const { camera, scene, get, gl } = useThree();
   const [hoveredAtom, setHoveredAtom] = useState<number | null>(null);
   const [selectedAtoms, setSelectedAtoms] = useState<Set<number>>(new Set());
   const measureAtomsRef = useRef<number[]>([]); // For measurement mode
 
-  // Visual indicator for hovered atom
-  const indicatorRef = useRef<THREE.Mesh>(null);
-
   // Pick atom at screen position
-  const pickAtom = useCallback((screenX: number, screenY: number): PickedAtom | null => {
-    // Convert to NDC
-    mouseRef.current.x = (screenX / size.width) * 2 - 1;
-    mouseRef.current.y = -(screenY / size.height) * 2 + 1;
+  const pickAtom = useCallback((): PickedAtom | null => {
+    const state = get();
+    const pointer = state.pointer;
+    const raycaster = state.raycaster;
 
     // Raycast into scene
-    raycasterRef.current.setFromCamera(mouseRef.current, camera);
-    const ray = raycasterRef.current.ray;
+    raycaster.setFromCamera(pointer, camera);
+    const ray = raycaster.ray;
 
     // March along ray, checking spatial hash at intervals
     const step = 0.5; // Check every 0.5 Angstrom
     const maxDist = 1000; // Maximum search distance
+
+    let bestSolidHit: { index: number; distToRay: number } | null = null;
+    let bestSoftHit: { index: number; screenDist: number; distance: number } | null = null;
 
     for (let t = 0; t < maxDist; t += step) {
       const point = ray.at(t, new THREE.Vector3());
       const nearby = spatialHash.query(point.x, point.y, point.z, radius);
 
       if (nearby.length > 0) {
-        // Found candidate atoms - find closest by actual distance
-        let closest: { index: number; dist: number } | null = null;
+        let currentSliceSolid: { index: number; distToRay: number } | null = null;
         
-        for (const { index, dist } of nearby) {
-          // Screen-space distance check for precision
+        for (const { index } of nearby) {
           const atomX = frame.positions[index * 3];
           const atomY = frame.positions[index * 3 + 1];
           const atomZ = frame.positions[index * 3 + 2];
           const atomPos = new THREE.Vector3(atomX, atomY, atomZ);
           
-          // Project to screen space
-          atomPos.project(camera);
-          const screenDist = Math.hypot(
-            atomPos.x - mouseRef.current.x,
-            atomPos.y - mouseRef.current.y
-          );
+          // 1. World-space intersection (Solves the zoomed-in bug)
+          const distToRay = ray.distanceToPoint(atomPos);
+          const worldRadius = radius * 1.2;
           
-          // Must be within reasonable screen distance and ray distance
-          if (screenDist < 0.05 && (!closest || dist < closest.dist)) {
-            closest = { index, dist };
+          // 2. Screen-space intersection (Solves the zoomed-out bug)
+          atomPos.project(camera);
+          const pointer = get().pointer;
+          const dxPixels = (atomPos.x - pointer.x) * gl.domElement.clientWidth / 2;
+          const dyPixels = (atomPos.y - pointer.y) * gl.domElement.clientHeight / 2;
+          const screenDistPixels = Math.hypot(dxPixels, dyPixels);
+          const minClickPixels = 15; // 15px forgiveness zone
+          
+          // Must be in front of the camera (NDC z < 1.0)
+          if (atomPos.z < 1.0) {
+            const isSolid = distToRay < worldRadius;
+            const isSoft = screenDistPixels < minClickPixels;
+            
+            if (isSolid) {
+              if (!currentSliceSolid || distToRay < currentSliceSolid.distToRay) {
+                currentSliceSolid = { index, distToRay };
+              }
+            } else if (isSoft) {
+              // Only record soft hits if we haven't hit a solid target yet
+              if (!bestSolidHit && !currentSliceSolid) {
+                if (!bestSoftHit || screenDistPixels < bestSoftHit.screenDist) {
+                  const worldPos = new THREE.Vector3(atomX, atomY, atomZ);
+                  bestSoftHit = { index, screenDist: screenDistPixels, distance: ray.origin.distanceTo(worldPos) };
+                }
+              }
+            }
           }
         }
-
-        if (closest) {
-          return {
-            index: closest.index,
-            distance: closest.dist,
-            worldPosition: new THREE.Vector3(
-              frame.positions[closest.index * 3],
-              frame.positions[closest.index * 3 + 1],
-              frame.positions[closest.index * 3 + 2]
-            ),
-          };
+        
+        if (currentSliceSolid) {
+          bestSolidHit = currentSliceSolid;
+          break; // Found the closest solid hit, stop marching!
         }
       }
     }
 
+    const hit = bestSolidHit || bestSoftHit;
+    if (hit) {
+      const worldPos = new THREE.Vector3(
+        frame.positions[hit.index * 3],
+        frame.positions[hit.index * 3 + 1],
+        frame.positions[hit.index * 3 + 2]
+      );
+      return {
+        index: hit.index,
+        distance: 'distance' in hit ? hit.distance : ray.origin.distanceTo(worldPos),
+        worldPosition: worldPos,
+      };
+    }
+
     return null;
-  }, [camera, frame.positions, radius, size, spatialHash]);
+  }, [camera, frame.positions, radius, gl, spatialHash]);
 
   // Mouse move handler
   const handleMouseMove = useCallback((e: MouseEvent) => {
     // If the user is dragging the mouse (orbiting the camera), skip expensive raymarching!
     if (!enabled || e.buttons > 0) return;
     
-    const picked = pickAtom(e.clientX, e.clientY);
+    const picked = pickAtom();
     
     if (picked?.index !== hoveredAtom) {
       setHoveredAtom(picked?.index ?? null);
       onHover?.(picked?.index ?? null);
-      
-      // Update visual indicator
-      if (indicatorRef.current && picked) {
-        indicatorRef.current.position.copy(picked.worldPosition);
-        indicatorRef.current.visible = true;
-        
-        // Scale based on atom type
-        const type = frame.types[picked.index];
-        const baseRadius = [1.28, 0.73, 1.60, 1.44][type - 1] ?? 1.2;
-        indicatorRef.current.scale.setScalar(baseRadius * 1.2);
-      } else if (indicatorRef.current) {
-        indicatorRef.current.visible = false;
-      }
     }
   }, [enabled, hoveredAtom, onHover, pickAtom, frame.types]);
+
+  // Pointer down tracking for distinguishing clicks from drags
+  const pointerDownPosRef = useRef({ x: 0, y: 0 });
+  const handlePointerDown = useCallback((e: PointerEvent) => {
+    pointerDownPosRef.current = { x: e.clientX, y: e.clientY };
+  }, []);
 
   // Click handler
   const handleClick = useCallback((e: MouseEvent) => {
@@ -139,7 +155,14 @@ export function AtomPicker({
     // Strictly isolate canvas clicks (prevent UI panel clicks from triggering deselection)
     if (!(e.target instanceof HTMLCanvasElement)) return;
     
-    const picked = pickAtom(e.clientX, e.clientY);
+    // Distinguish click from drag (especially on mobile)
+    const dx = e.clientX - pointerDownPosRef.current.x;
+    const dy = e.clientY - pointerDownPosRef.current.y;
+    if (Math.hypot(dx, dy) > 5) {
+      return; // It was a drag, ignore as a click
+    }
+    
+    const picked = pickAtom();
     const index = picked?.index ?? null;
     
     onClick?.(index);
@@ -199,100 +222,18 @@ export function AtomPicker({
   useEffect(() => {
     if (!enabled) return;
     
+    window.addEventListener('pointerdown', handlePointerDown);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('click', handleClick);
     window.addEventListener('keydown', handleKeyDown);
     
     return () => {
+      window.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('click', handleClick);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [enabled, handleMouseMove, handleClick, handleKeyDown]);
+  }, [enabled, handlePointerDown, handleMouseMove, handleClick, handleKeyDown]);
 
-  return (
-    <>
-      {/* Hover indicator */}
-      <mesh ref={indicatorRef} visible={false}>
-        <sphereGeometry args={[1, 16, 12]} />
-        <meshBasicMaterial 
-          color="#00c8f0" 
-          transparent 
-          opacity={0.3} 
-          depthTest={false}
-        />
-      </mesh>
-      
-      {/* Selection indicators */}
-      {Array.from(selectedAtoms).map(index => (
-        <SelectionIndicator
-          key={index}
-          position={[
-            frame.positions[index * 3],
-            frame.positions[index * 3 + 1],
-            frame.positions[index * 3 + 2],
-          ]}
-          index={index}
-        />
-      ))}
-    </>
-  );
-}
-
-// Individual selection indicator
-function SelectionIndicator({ position, index }: { position: [number, number, number]; index: number }) {
-  return (
-    <mesh position={position}>
-      <sphereGeometry args={[1.3, 16, 12]} />
-      <meshBasicMaterial 
-        color="#00c8f0" 
-        transparent 
-        opacity={0.15}
-        depthTest={false}
-      />
-      {/* Selection ring */}
-      <mesh scale={1.4}>
-        <ringGeometry args={[0.9, 1.0, 32]} />
-        <meshBasicMaterial 
-          color="#00c8f0" 
-          transparent 
-          opacity={0.8}
-          side={THREE.DoubleSide}
-          depthTest={false}
-        />
-      </mesh>
-      {/* Atom number label */}
-      <sprite position={[0, 2, 0]}>
-        <spriteMaterial
-          attach="material"
-          transparent
-          opacity={0.9}
-        >
-          <canvasTexture
-            attach="map"
-            args={[createLabelCanvas(`#${index + 1}`)]}
-          />
-        </spriteMaterial>
-      </sprite>
-    </mesh>
-  );
-}
-
-// Create text label canvas
-function createLabelCanvas(text: string): HTMLCanvasElement {
-  const canvas = document.createElement('canvas');
-  canvas.width = 64;
-  canvas.height = 32;
-  const ctx = canvas.getContext('2d')!;
-  
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(0, 0, 64, 32);
-  
-  ctx.font = 'bold 14px monospace';
-  ctx.fillStyle = '#00c8f0';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(text, 32, 16);
-  
-  return canvas;
+  return null;
 }
