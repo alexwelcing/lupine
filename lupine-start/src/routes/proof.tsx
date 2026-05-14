@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { motion } from 'framer-motion'
 import { PageShell } from '../components/ui/PageShell'
 
 export const Route = createFileRoute('/proof')({
@@ -99,7 +98,7 @@ function ProofPage() {
             href="https://github.com/alexwelcing/lupine/tree/main/swarm_preprint_review"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
           >
             Research artifacts
           </a>
@@ -107,7 +106,7 @@ function ProofPage() {
             href="https://glim-think-v1.aw-ab5.workers.dev/feed"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
           >
             Live system feed
           </a>
@@ -124,19 +123,16 @@ function CritiqueCard({ number, critique, rebuttal, evidence }: {
   evidence: string[]
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+    <div
       className="glass-panel overflow-hidden"
     >
       <div className="p-8">
         <div className="flex items-start gap-4 mb-6">
-          <span className="flex-shrink-0 w-10 h-10 bg-[var(--error-container)] text-[var(--error)] font-display text-lg flex items-center justify-center border border-[var(--error)]/20">
+          <span className="flex-shrink-0 w-10 h-10 bg-[var(--error-container)] text-[var(--error)] font-mono text-lg flex items-center justify-center border border-[var(--error)]/20">
             {number}
           </span>
           <div>
-            <h3 className="text-[var(--error)] font-display text-sm uppercase tracking-widest mb-2">
+            <h3 className="text-[var(--error)] font-mono text-sm uppercase tracking-widest mb-2">
               The Critique
             </h3>
             <p className="text-[var(--on-surface-variant)] leading-relaxed">
@@ -146,14 +142,14 @@ function CritiqueCard({ number, critique, rebuttal, evidence }: {
         </div>
 
         <div className="flex items-start gap-4 mb-6">
-          <span className="flex-shrink-0 w-10 h-10 bg-[var(--secondary-container)] text-[var(--secondary)] font-display text-lg flex items-center justify-center border border-[var(--secondary)]/20">
+          <span className="flex-shrink-0 w-10 h-10 bg-[var(--secondary-container)] text-[var(--secondary)] font-mono text-lg flex items-center justify-center border border-[var(--secondary)]/20">
             ✓
           </span>
           <div>
-            <h3 className="text-[var(--secondary)] font-display text-sm uppercase tracking-widest mb-2">
+            <h3 className="text-[var(--secondary)] font-mono text-sm uppercase tracking-widest mb-2">
               The Rebuttal
             </h3>
-            <p className="text-[var(--on-surface)] leading-relaxed">
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface)] max-w-3xl">
               {rebuttal}
             </p>
           </div>
@@ -171,6 +167,6 @@ function CritiqueCard({ number, critique, rebuttal, evidence }: {
           </ul>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }

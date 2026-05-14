@@ -1,56 +1,35 @@
-# gcloud builds submit honors this file when packing source for upload.
-# We aggressively prune anything not needed for Rust/Docker builds.
-
 .git/
-.github/
 node_modules/
-**/node_modules/
-.next/
-.output/
-.wrangler/
-dist/
-build/
-target/
-**/target/
-
-# Heavy datasets and artifacts (binary, not source)
-*.glimbin
-**/*.glimbin
-*.parquet
-**/*.parquet
-*.zip
-**/*.zip
-*.tar.gz
-**/*.tar.gz
-*.lammps
-*.dump
-
-# Project-specific heavy dirs
-atlas/atlas-view/archive/
-atlas/atlas-view/apps/web/public/scale_tests/
-atlas/lammps_src/
-.session-wip-backup-*/
-
-# Editor / OS
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-*.swp
-*.bak
-**/*.bak
-
-# Build/lock cruft we don't ship in containers
-.pytest_cache/
-__pycache__/
-**/__pycache__/
 .venv/
-**/.venv/
 venv/
-
-# Lighthouse / reports
-*lighthouse-report*.json
-
-# Logs
-*.log
-**/*.log
+**/node_modules/
+**/dist/
+**/.turbo/
+.idea/
+.vscode/
+tmp/
+scratch/
+atlas/
+lean-spec/
+mlip_immi/
+paper/
+paper-engine/
+paper-engine-node/
+tools/
+distiller/
+asylum/
+mix/
+lupine-dspy/
+minimax-mcp/
+glim-think/
+atlas-launch-video/
+library-site/
+lupine-site/
+atlas-distill/
+lupine-distill/
+distill-cli/
+lupine-ops/
+atlas-view-native/
+atlas-tui/
+axiom/
+!lupine-start/

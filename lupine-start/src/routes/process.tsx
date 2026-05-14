@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { motion } from 'framer-motion'
 import { Card } from '../components/ui/Card'
 import { PageShell } from '../components/ui/PageShell'
+import { DataList, DataListRow, DataListCell, DataListHeader, DataListHeaderCell } from '../components/ui/DataList'
 
 export const Route = createFileRoute('/process')({
   component: ProcessPage,
@@ -190,40 +190,38 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §1 — ARCHITECTURE
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">How a research round flows</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">How a research round flows</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               A round begins as a hypothesis row and ends as either an updated confidence with
               evidence_ids attached, a refutation, or a deferred verdict that the formalization
               gate refused to clear. The pipeline is six components, each owning one job.
             </p>
           </div>
 
-          <Card elevated noPadding className="overflow-x-auto">
-            <table className="evidence-table w-full">
-              <thead>
-                <tr>
-                  <th>Component</th>
-                  <th>Stack</th>
-                  <th>Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pipelineRows.map((row, i) => (
-                  <tr key={i}>
-                    <td>
-                      <strong className="text-[var(--on-surface)]">{row.component}</strong>
-                    </td>
-                    <td className="font-mono text-xs text-[var(--on-surface-variant)] whitespace-nowrap">
-                      {row.stack}
-                    </td>
-                    <td className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
-                      {row.role}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Card>
+          <DataList>
+            <DataListHeader gridCols="grid-cols-[1.2fr_1.5fr_3fr]">
+              <DataListHeaderCell>Component</DataListHeaderCell>
+              <DataListHeaderCell>Stack</DataListHeaderCell>
+              <DataListHeaderCell>Role</DataListHeaderCell>
+            </DataListHeader>
+            {pipelineRows.map((row, i) => (
+              <DataListRow key={i} gridCols="grid-cols-[1.2fr_1.5fr_3fr]">
+                <DataListCell label="Component">
+                  <strong className="text-[var(--on-surface)] font-mono">{row.component}</strong>
+                </DataListCell>
+                <DataListCell label="Stack">
+                  <span className="font-mono text-xs text-[var(--primary)] whitespace-nowrap">
+                    {row.stack}
+                  </span>
+                </DataListCell>
+                <DataListCell label="Role">
+                  <span className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                    {row.role}
+                  </span>
+                </DataListCell>
+              </DataListRow>
+            ))}
+          </DataList>
 
           <div className="mt-8 glass-panel p-6 border-l-2 border-[var(--primary)]">
             <h4 className="mono-label text-[var(--primary)] mb-3">Round lifecycle</h4>
@@ -249,8 +247,8 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §2 — DESIGN RATIONALE
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">Why this is the correct arrangement</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Why this is the correct arrangement</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               The four principles below are not aesthetic choices. Each one prevents a specific
               failure mode I have already watched another version of this system commit.
             </p>
@@ -258,12 +256,8 @@ function ProcessPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {principleCards.map((c, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
               >
                 <Card elevated className="h-full">
                   <span className="mono-label text-[var(--primary)] block mb-3">
@@ -274,7 +268,7 @@ function ProcessPage() {
                     {c.body}
                   </p>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
@@ -285,8 +279,8 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §3 — RUNS TO DATE
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">Three rounds, in order, with no edits</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Three rounds, in order, with no edits</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               I am reporting all three rounds, including the one that produced no convergence.
               The point of an operating report is not to highlight wins; it is to show that the
               gate works on real failure modes too.
@@ -295,11 +289,8 @@ function ProcessPage() {
 
           <div className="space-y-6">
             {runRows.map((r, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
               >
                 <Card elevated noPadding>
                   <div className="p-6 border-b border-[var(--outline-variant)] flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -334,7 +325,7 @@ function ProcessPage() {
                     </p>
                   </div>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
@@ -345,10 +336,10 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §4 — DIRECT EVIDENCE FROM ROUND 3
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
               Two quotes the reasoner pulled from the literature
             </h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               Round 3's narrative cited these two papers verbatim. They support the LAM-trio
               hypothesis empirically, even though the full Lean-readiness bar is not yet met.
             </p>
@@ -382,7 +373,7 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §5 — WHAT THE RUNS TAUGHT ME
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">Honest read of where this is</h2>
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Honest read of where this is</h2>
           </div>
 
           <Card elevated>
@@ -413,50 +404,46 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §6 — NEXT INVESTMENTS
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">What I am building next, in priority order</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">What I am building next, in priority order</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               Each priority below corresponds to a measurable lift on either convergence rate or
               gate quality. P0 ships in the next two weeks; P1 within the month; P2 once the
               cost ledger is in place to inform tradeoffs.
             </p>
           </div>
 
-          <Card elevated noPadding className="overflow-x-auto">
-            <table className="evidence-table w-full">
-              <thead>
-                <tr>
-                  <th>Priority</th>
-                  <th>Investment</th>
-                  <th>Why now</th>
-                </tr>
-              </thead>
-              <tbody>
-                {nextRows.map((row, i) => (
-                  <tr key={i}>
-                    <td>
-                      <span
-                        className={`font-mono text-[10px] px-2 py-1 border uppercase tracking-wider ${verdictPill(
-                          row.priority === 'P0'
-                            ? 'primary'
-                            : row.priority === 'P1'
-                              ? 'warning'
-                              : 'muted',
-                        )}`}
-                      >
-                        {row.priority}
-                      </span>
-                    </td>
-                    <td>
-                      <strong className="text-[var(--on-surface)]">{row.item}</strong>
-                    </td>
-                    <td className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
-                      {row.why}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Card>
+          <DataList>
+            <DataListHeader gridCols="grid-cols-[100px_1fr_1.5fr]">
+              <DataListHeaderCell>Priority</DataListHeaderCell>
+              <DataListHeaderCell>Investment</DataListHeaderCell>
+              <DataListHeaderCell>Why now</DataListHeaderCell>
+            </DataListHeader>
+            {nextRows.map((row, i) => (
+              <DataListRow key={i} gridCols="grid-cols-[100px_1fr_1.5fr]">
+                <DataListCell label="Priority">
+                  <span
+                    className={`font-mono text-[10px] px-2 py-1 border uppercase tracking-wider ${verdictPill(
+                      row.priority === 'P0'
+                        ? 'primary'
+                        : row.priority === 'P1'
+                          ? 'warning'
+                          : 'muted',
+                    )}`}
+                  >
+                    {row.priority}
+                  </span>
+                </DataListCell>
+                <DataListCell label="Investment">
+                  <strong className="text-[var(--on-surface)] font-mono">{row.item}</strong>
+                </DataListCell>
+                <DataListCell label="Why now">
+                  <span className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                    {row.why}
+                  </span>
+                </DataListCell>
+              </DataListRow>
+            ))}
+          </DataList>
         </section>
 
         {/* === CTA === */}
@@ -470,7 +457,7 @@ function ProcessPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/hypotheses"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
             >
               Hypotheses ledger
             </a>
@@ -478,7 +465,7 @@ function ProcessPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/admin/lean-status"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
             >
               Lean-readiness snapshot
             </a>

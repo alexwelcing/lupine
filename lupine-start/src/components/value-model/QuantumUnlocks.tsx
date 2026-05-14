@@ -132,7 +132,7 @@ function UnlockRow({
 
         {/* Classical → quantum bars */}
         <div className="lg:min-w-[280px] flex flex-col gap-1">
-          <div className="relative h-3 bg-[var(--surface-container-low)] rounded-sm overflow-hidden">
+          <div className="relative h-3 bg-[var(--surface-container-low)] rounded-full overflow-hidden">
             {/* Classical baseline (slate) */}
             <motion.div
               className="absolute left-0 top-0 h-full"

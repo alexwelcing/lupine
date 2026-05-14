@@ -60,7 +60,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={cycle}
-      className="w-8 h-8 flex items-center justify-center rounded-none text-[var(--on-surface-variant)] hover:text-[var(--primary)] transition-colors border border-[var(--outline-variant)] hover:border-[var(--primary)]/30"
+      className="w-8 h-8 flex items-center justify-center rounded-md text-[var(--on-surface-variant)] hover:text-[var(--primary)] transition-colors border border-[var(--outline-variant)] hover:border-[var(--primary)]/30"
       title={`Theme: ${labels[theme]} (click to cycle)`}
       aria-label={`Current theme: ${labels[theme]}. Click to cycle.`}
     >

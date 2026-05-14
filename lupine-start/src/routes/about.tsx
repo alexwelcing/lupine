@@ -1,7 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PageShell } from '../components/ui/PageShell'
-import { motion } from 'framer-motion'
-
 export const Route = createFileRoute('/about')({
   component: About,
   head: () => ({
@@ -59,22 +57,26 @@ function About() {
         <div className="glass-panel p-8 md:p-12 relative overflow-hidden">
           <div className="absolute -top-20 -right-20 w-48 h-48 bg-[var(--primary)] opacity-[0.04] blur-[60px] rounded-full" />
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl mb-6 italic">Why we exist</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[var(--on-surface-variant)] leading-relaxed">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-12 leading-[1.05] text-[var(--on-surface)]">Why we exist</h2>
+            
+            <div className="mb-12 md:pl-8 border-l-4 border-[var(--primary-container)] py-2">
+              <p className="font-serif italic text-2xl md:text-3xl lg:text-4xl text-[var(--on-surface)] leading-snug tracking-tight max-w-3xl">
+                "The field has gotten very good at training universal potentials, and is still bad at telling the user when to trust one. That is the gap."
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 text-lg text-[var(--on-surface-variant)] leading-relaxed">
               <div>
-                <p className="mb-4">
-                  Universal MLIPs have plateaued. UMA, MACE-MP, Orb, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery, the leaderboard maintainers themselves note ~97k prototype overlap between sAlex and the WBM test set, and Deng et al. (<em>npj Comput. Mater.</em> 2024) showed that low test MAE does not prevent systematic PES softening at surfaces, defects, and migration barriers.
-                </p>
-                <p>
-                  In other words: the field has gotten very good at training universal potentials and is still bad at telling the user when to trust one. That is the gap.
+                <p className="mb-6">
+                  <span className="font-display text-4xl float-left mr-3 leading-none text-[var(--primary)] mt-1">U</span>niversal MLIPs have plateaued. UMA, MACE-MP, Orb, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery. The leaderboard maintainers themselves note ~97k prototype overlap between sAlex and the WBM test set, and Deng et al. (<em className="font-serif text-[var(--on-surface)]">npj Comput. Mater.</em> 2024) showed that low test MAE does not prevent systematic PES softening at surfaces, defects, and migration barriers.
                 </p>
               </div>
               <div>
-                <p className="mb-4">
+                <p className="mb-6">
                   Lupine is the audit layer. Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson's-paradox detection across ≈900 published potentials — including the universal ones — interpreted through the sloppy-models geometric framework of Transtrum, Machta &amp; Sethna (2011) and the Bayesian-ensemble lineage of Frederiksen, Jacobsen, Brown &amp; Sethna (2004).
                 </p>
-                <p className="mb-4">
-                  Read alongside Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026) — <em>There Will Be a Scientific Theory of Deep Learning</em> — the same artifact is also a low-rank retraining target. The cross-potential ribbon is the empirical mark of a learnable system: the small number of error modes that any next fine-tune actually needs to capture. Audit and accelerator are the same artifact, viewed from two directions.
+                <p className="mb-6">
+                  Read alongside Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026) — <em className="font-serif text-[var(--on-surface)]">There Will Be a Scientific Theory of Deep Learning</em> — the same artifact is also a low-rank retraining target. The cross-potential ribbon is the empirical mark of a learnable system: the small number of error modes that any next fine-tune actually needs to capture.
                 </p>
                 <p>
                   We do not replace DFT, LAMMPS, or any MLIP. We measure where each MLIP is unsafe to extrapolate, write that out as a citable error budget, and hand the customer's model team the modes that matter. We are building the trust layer in the open, under Apache 2.0.
@@ -89,22 +91,18 @@ function About() {
       <section className="mb-16">
         <div className="mb-8">
           <span className="mono-label text-[var(--secondary)] tracking-[0.3em] block mb-3">TECHNICAL FOUNDATION</span>
-          <h2 className="text-3xl">The stack</h2>
+          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The stack</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {STACK_ITEMS.map((item, i) => (
-            <motion.div
+            <div
               key={item.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
               className="glass-panel-elevated p-8 hover:-translate-y-0.5 transition-transform"
               style={{ borderTop: `2px solid ${item.accent}` }}
             >
               <div className="mono-label mb-3" style={{ color: item.accent }}>{item.label}</div>
               <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{item.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -113,22 +111,18 @@ function About() {
       <section className="mb-16">
         <div className="mb-8">
           <span className="mono-label text-[var(--primary)] tracking-[0.3em] block mb-3">RESEARCH TIMELINE</span>
-          <h2 className="text-3xl">Milestones</h2>
+          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Milestones</h2>
         </div>
         <div className="relative">
           {/* Vertical line */}
           <div className="absolute left-[18px] top-0 bottom-0 w-px bg-[var(--outline-variant)]" />
           <div className="space-y-8">
             {MILESTONES.map((m, i) => (
-              <motion.div
+              <div
                 key={m.date}
-                initial={{ opacity: 0, x: -12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
                 className="flex gap-6 items-start"
               >
-                <div className="relative z-10 flex-shrink-0 w-9 h-9 rounded-full border border-[var(--outline-variant)] bg-[var(--surface)] flex items-center justify-center">
+                <div className="relative z-10 flex-shrink-0 w-9 h-9 rounded-md border border-[var(--outline-variant)] bg-[var(--surface)] flex items-center justify-center">
                   <span className="w-2.5 h-2.5 rounded-full bg-[var(--primary)]" />
                 </div>
                 <div className="glass-panel p-6 flex-1">
@@ -136,7 +130,7 @@ function About() {
                   <h3 className="text-lg font-semibold text-[var(--on-surface)] mb-2 not-italic">{m.title}</h3>
                   <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{m.desc}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -149,14 +143,14 @@ function About() {
             className="absolute inset-0 -z-[1] pointer-events-none"
             style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(59,130,246,0.06), transparent 70%)' }}
           />
-          <h2 className="text-3xl mb-4">Three paths in.</h2>
+          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Three paths in.</h2>
           <p className="text-[var(--on-surface-variant)] mb-8 max-w-lg mx-auto">
             Researchers go to the science. Industry teams pilot a wedge — solid-state electrolytes, Ni-base superalloys, catalysis. Investors find us in the footer.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
               href="mailto:alexwelcing@gmail.com"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-[14px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 border border-white/10"
               style={{ background: 'linear-gradient(135deg, var(--lupine-700), var(--lupine-600))' }}
             >
               Contact
@@ -165,7 +159,7 @@ function About() {
               href="https://github.com/alexwelcing/lupine"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-[14px] font-semibold no-underline transition-all duration-300 hover:-translate-y-0.5"
               style={{
                 color: 'var(--on-surface)',
                 background: 'rgba(255,255,255,0.04)',

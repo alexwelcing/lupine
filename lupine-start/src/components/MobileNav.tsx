@@ -97,7 +97,7 @@ export default function MobileNav() {
                             : 'text-[var(--on-surface-variant)] hover:text-[var(--on-surface)]'
                         }`}
                       >
-                        {item.live && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-[pulse-cyan_2s_infinite]" />}
+                        {item.live && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-[pulse-soft_3s_infinite]" />}
                         {item.label}
                       </Link>
                     </motion.div>

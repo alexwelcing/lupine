@@ -142,7 +142,7 @@ function SlideshowPage() {
       {/* header */}
       <header className="px-6 lg:px-12 py-4 border-b border-[var(--outline-variant)] flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-baseline gap-4 flex-wrap">
-          <h1 className="font-display text-lg uppercase tracking-widest">
+          <h1 className="font-mono text-lg uppercase tracking-widest">
             Slideshow
           </h1>
           <span className="font-mono text-xs text-[var(--on-surface-variant)]">
@@ -212,7 +212,7 @@ function SlideshowPage() {
                 {CATEGORY_LABELS[current.category] ?? current.category}
               </span>
             </div>
-            <h2 className="font-display text-2xl mb-4 leading-tight">{current.slug}</h2>
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">{current.slug}</h2>
             <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed mb-6">
               {current.prompt}
             </p>

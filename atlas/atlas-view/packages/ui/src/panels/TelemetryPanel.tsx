@@ -454,6 +454,36 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
     };
   }, [isResearch, currentFrame]);
 
+  // Dynamic Heatmap Data
+  const dynamicMaterials = useMemo(() => {
+    return (heatmapData as any)?.per_element?.map((e: any) => e.element) || [];
+  }, []);
+
+  const dynamicHeatmapData = useMemo(() => {
+    if (!heatmapData || !(heatmapData as any).per_element) return [];
+    
+    let modelKey = 'pet-mad-1.5';
+    if (currentPotentialName) {
+      const normalized = currentPotentialName.toLowerCase();
+      if (normalized.includes('mace')) modelKey = 'mace';
+      else if (normalized.includes('chgnet')) modelKey = 'chgnet';
+      else if (normalized.includes('orb')) modelKey = 'orb';
+      else if (normalized.includes('pet-mad-1.5') || normalized.includes('pet-mad 1.5') || normalized.includes('v1.5')) modelKey = 'pet-mad-1.5';
+      else if (normalized.includes('pet-mad')) modelKey = 'pet-mad';
+    }
+    
+    const data: { material: string; property: string; absError: number }[] = [];
+    (heatmapData as any).per_element.forEach((el: any) => {
+      const vectors = el.error_vectors[modelKey] || el.error_vectors['pet-mad-1.5'];
+      if (vectors) {
+        data.push({ material: el.element, property: 'C11', absError: Math.abs(vectors[0]) });
+        data.push({ material: el.element, property: 'C12', absError: Math.abs(vectors[1]) });
+        data.push({ material: el.element, property: 'C44', absError: Math.abs(vectors[2]) });
+      }
+    });
+    return data;
+  }, [currentPotentialName]);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0, height: '100%', overflow: 'hidden' }}>
       {/* Header stats */}
@@ -799,45 +829,11 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <ErrorHeatmap
-            materials={['Al', 'Cu', 'Ni', 'Fe', 'Au', 'W']}
-            properties={['C11', 'C12', 'C44', 'a0', 'Ecoh']}
-            data={[
-              { material: 'Al', property: 'C11', absError: 0.05 },
-              { material: 'Al', property: 'C12', absError: 0.004 },
-              { material: 'Al', property: 'C44', absError: 0.108 },
-              { material: 'Al', property: 'a0', absError: 0.000 },
-              { material: 'Al', property: 'Ecoh', absError: 0.008 },
-
-              { material: 'Cu', property: 'C11', absError: 0.008 },
-              { material: 'Cu', property: 'C12', absError: 0.009 },
-              { material: 'Cu', property: 'C44', absError: 0.010 },
-              { material: 'Cu', property: 'a0', absError: 0.000 },
-              { material: 'Cu', property: 'Ecoh', absError: 0.000 },
-
-              { material: 'Ni', property: 'C11', absError: 0.005 },
-              { material: 'Ni', property: 'C12', absError: 0.003 },
-              { material: 'Ni', property: 'C44', absError: 0.001 },
-              { material: 'Ni', property: 'a0', absError: 0.001 },
-              { material: 'Ni', property: 'Ecoh', absError: 0.002 },
-
-              { material: 'Fe', property: 'C11', absError: 0.005 },
-              { material: 'Fe', property: 'C12', absError: 0.012 },
-              { material: 'Fe', property: 'C44', absError: 0.006 },
-              { material: 'Fe', property: 'a0', absError: 0.000 },
-              { material: 'Fe', property: 'Ecoh', absError: 0.000 },
-
-              { material: 'Au', property: 'C11', absError: 0.047 },
-              { material: 'Au', property: 'C12', absError: 0.026 },
-              { material: 'Au', property: 'C44', absError: 0.065 },
-              { material: 'Au', property: 'a0', absError: 0.000 },
-              { material: 'Au', property: 'Ecoh', absError: 0.000 },
-
-              { material: 'W', property: 'C11', absError: 0.001 },
-              { material: 'W', property: 'C12', absError: 0.002 },
-              { material: 'W', property: 'C44', absError: 0.002 },
-              { material: 'W', property: 'a0', absError: 0.000 },
-              { material: 'W', property: 'Ecoh', absError: 0.000 },
-            ]}
+            materials={dynamicMaterials.length > 0 ? dynamicMaterials : ['Al', 'Cu', 'Ni', 'Fe', 'Au', 'W']}
+            properties={['C11', 'C12', 'C44']}
+            data={dynamicHeatmapData}
+            height={Math.max(120, dynamicMaterials.length * 14 + 14)}
+            width={240}
           />
         </div>
 

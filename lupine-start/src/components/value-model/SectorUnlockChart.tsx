@@ -158,7 +158,7 @@ export function SectorUnlockChart({ data }: { data: ValueModelData }) {
         {KEYS.map((k) => (
           <div key={k} className="flex items-center gap-2 text-sm text-[var(--on-surface-variant)]">
             <span
-              className="inline-block w-3 h-3 rounded-sm"
+              className="inline-block w-3 h-3 rounded-full"
               style={{ background: COLORS[k] }}
             />
             <span className="font-medium">{k}</span>

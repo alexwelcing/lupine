@@ -16,20 +16,20 @@ function NotFoundComponent() {
     <main className="flex-1 flex flex-col items-center justify-center px-6 py-32">
       <div className="text-center max-w-lg">
         <div className="font-mono text-xs font-semibold text-[var(--primary)] uppercase tracking-[0.3em] mb-6">404 — NOT FOUND</div>
-        <h1 className="font-serif text-5xl lg:text-7xl mb-6 text-[var(--slate-100)]">Off the ribbon.</h1>
+        <h1 className="font-display tracking-tight text-5xl lg:text-7xl mb-8 leading-[1.05] text-[var(--on-surface)]">Off the ribbon.</h1>
         <p className="text-[var(--on-surface-variant)] text-lg mb-10 leading-relaxed">
           The page you requested is not in our manifest. It may have been retired, renamed, or never existed at all.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/"
-            className="px-6 py-3 bg-[var(--primary)] text-[var(--primary-foreground)] font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:opacity-90 transition-opacity no-underline"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--primary-foreground)] font-sans text-sm font-semibold uppercase tracking-widest rounded-md hover:opacity-90 transition-opacity no-underline"
           >
             Return home
           </Link>
           <Link
             to="/research"
-            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-sans text-sm font-semibold uppercase tracking-widest rounded-lg hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)] transition-colors no-underline"
+            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-sans text-sm font-semibold uppercase tracking-widest rounded-md hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)] transition-colors no-underline"
           >
             Read the preprint
           </Link>
@@ -67,7 +67,22 @@ export const Route = createRootRoute({
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap',
+      },
+      /* Self-hosted font preloads — eliminates FOUT for critical text */
+      {
+        rel: 'preload',
+        href: '/fonts/RumelazGekinsa-Regular.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossOrigin: 'anonymous',
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/CSClaireMono-Regular.otf',
+        as: 'font',
+        type: 'font/otf',
+        crossOrigin: 'anonymous',
       },
     ],
   }),

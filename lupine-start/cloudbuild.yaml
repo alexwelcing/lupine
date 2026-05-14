@@ -7,8 +7,6 @@ steps:
       - '-t'
       - 'gcr.io/$PROJECT_ID/lupine-site:latest'
       - '.'
-    dir: 'lupine-start'
-
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/lupine-site:$SHORT_SHA']
 

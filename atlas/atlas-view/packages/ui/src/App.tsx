@@ -1577,7 +1577,7 @@ export default function App() {
       {isBatchExport && <BatchAssetGenerator />}
 
       {/* ─── Timeline ─── */}
-      {file && (
+      {file && totalFrames > 1 && (
         <div style={{
           height: 60, flexShrink: 0,
           display: 'flex', alignItems: 'center', gap: 16,
@@ -1599,26 +1599,13 @@ export default function App() {
               title="Previous [←]"
               icon={<IconPrev />}
             />
-            {totalFrames > 1 && (
-              <button
-                onClick={togglePlay}
-                title="Play/Pause [Space]"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 40, height: 32,
-                  background: playing ? 'rgba(52, 211, 153, 0.2)' : '#121418',
-                  border: `1px solid ${playing ? '#34d399' : '#334155'}`,
-                  boxShadow: playing ? '0 0 15px 2px rgba(52, 211, 153, 0.4)' : 'none',
-                  borderRadius: 0,
-                  color: playing ? '#34d399' : '#f8fafc',
-                  cursor: 'pointer',
-                  transition: 'all 100ms cubic-bezier(0.34, 1.56, 0.64, 1)',
-                  textShadow: playing ? '0 0 8px rgba(52, 211, 153, 0.8)' : 'none',
-                }}
-              >
-                {playing ? <IconPause /> : <IconPlay />}
-              </button>
-            )}
+            <AnimatedTransportButton
+              onClick={togglePlay}
+              title="Play/Pause [Space]"
+              icon={playing ? <IconPause /> : <IconPlay />}
+              active={playing}
+              width={40}
+            />
             <AnimatedTransportButton
               onClick={nextFrame}
               title="Next [→]"

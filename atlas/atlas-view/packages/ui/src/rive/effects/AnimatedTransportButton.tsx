@@ -5,9 +5,11 @@ interface AnimatedTransportButtonProps {
   onClick: () => void;
   title: string;
   icon: React.ReactNode;
+  active?: boolean;
+  width?: number;
 }
 
-export function AnimatedTransportButton({ onClick, title, icon }: AnimatedTransportButtonProps) {
+export function AnimatedTransportButton({ onClick, title, icon, active = false, width = 32 }: AnimatedTransportButtonProps) {
   const [clicked, setClicked] = useState(false);
 
   const handleClick = useCallback(() => {
@@ -31,26 +33,27 @@ export function AnimatedTransportButton({ onClick, title, icon }: AnimatedTransp
         style={{
           position: 'relative',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          width: 32, height: 32,
-          color: clicked ? '#1edce0' : '#64748b',
-          background: clicked ? 'rgba(30, 220, 224, 0.15)' : '#121418',
+          width: width, height: 32,
+          color: (clicked || active) ? '#1edce0' : '#64748b',
+          background: (clicked || active) ? 'rgba(30, 220, 224, 0.15)' : '#121418',
           border: '1px solid',
-          borderColor: clicked ? '#1edce0' : '#334155',
+          borderColor: (clicked || active) ? '#1edce0' : '#334155',
           borderRadius: 0,
           cursor: 'pointer',
           transition: 'all 100ms cubic-bezier(0.34, 1.56, 0.64, 1)',
           animation: clicked ? 'fx-transport-snap 250ms cubic-bezier(0.34, 1.56, 0.64, 1)' : 'none',
           overflow: 'hidden',
+          boxShadow: active ? '0 0 15px 2px rgba(30, 220, 224, 0.4)' : 'none',
         }}
         onMouseEnter={(e) => {
-          if (!clicked) {
+          if (!clicked && !active) {
             e.currentTarget.style.color = '#f8fafc';
             e.currentTarget.style.borderColor = 'rgba(30, 220, 224, 0.5)';
             e.currentTarget.style.background = '#1e293b';
           }
         }}
         onMouseLeave={(e) => {
-          if (!clicked) {
+          if (!clicked && !active) {
             e.currentTarget.style.color = '#64748b';
             e.currentTarget.style.borderColor = '#334155';
             e.currentTarget.style.background = '#121418';
@@ -62,7 +65,7 @@ export function AnimatedTransportButton({ onClick, title, icon }: AnimatedTransp
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'transform 100ms cubic-bezier(0.34, 1.56, 0.64, 1)',
           transform: clicked ? 'scale(1.1)' : 'scale(1)',
-          textShadow: clicked ? '0 0 8px rgba(30, 220, 224, 0.8)' : 'none',
+          textShadow: (clicked || active) ? '0 0 8px rgba(30, 220, 224, 0.8)' : 'none',
         }}>
           {icon}
         </div>

@@ -237,8 +237,8 @@ Be quantitative. Cite specific numbers.`;
 
     // Load records (matching the get_families/load_records tool flow).
     const sql = family === "all"
-      ? `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE element = ?1`
-      : `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE element = ?1 AND pair_style = ?2`;
+      ? `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE (element = ?1 OR ?1 = 'all')`
+      : `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE (element = ?1 OR ?1 = 'all') AND pair_style = ?2`;
     const records = family === "all"
       ? await this.queryLedger<{ potential_label: string; property: string; reference: number; predicted: number; pair_style: string }>(sql, opts.element)
       : await this.queryLedger<{ potential_label: string; property: string; reference: number; predicted: number; pair_style: string }>(sql, opts.element, family);

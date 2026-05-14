@@ -38,7 +38,7 @@ export function SectionHeader({ title, label, description, centered = false }: {
       <span className="mono-label text-[var(--secondary)] mb-4 block">{label}</span>
       <h2 className="text-4xl lg:text-5xl mb-6">{title}</h2>
       {description && (
-        <p className="text-[var(--on-surface-variant)] text-lg max-w-3xl leading-relaxed">
+        <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
           {description}
         </p>
       )}

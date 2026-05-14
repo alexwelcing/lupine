@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 import valueModelData from '../data/value-model.json'
 import type { ValueModelData } from '../components/value-model/types'
 import { ScrollSection } from '../components/value-model/ScrollSection'
@@ -85,7 +87,10 @@ function HomePage() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[var(--surface)] text-[var(--on-surface)]">
-      <main className="relative flex flex-row w-screen h-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth z-10">
+      <div className="absolute top-0 w-full z-50">
+        <Header />
+      </div>
+      <main className="relative flex flex-row w-screen h-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth z-10 pt-16">
 
       <Hero />
 
@@ -620,13 +625,9 @@ function HomePage() {
       </ScrollSection>
 
       <ScrollSection id="footer">
-        <footer className="w-full text-xs text-[var(--on-surface-variant-mid)] font-mono border-t border-[var(--outline-variant)] py-12">
-          <div className="container mx-auto max-w-7xl">
-            Generated {data.generated_on}. Source of truth:{' '}
-            <code>business-plan/value-model/*.csv</code>. Regenerate with{' '}
-            <code>python3 business-plan/scripts/analyze.py</code>.
-          </div>
-        </footer>
+        <div className="h-full flex flex-col justify-end">
+          <Footer />
+        </div>
       </ScrollSection>
       </main>
     </div>

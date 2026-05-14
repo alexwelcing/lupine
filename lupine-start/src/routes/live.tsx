@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { motion, AnimatePresence } from 'framer-motion'
 import { marked } from 'marked'
 import { useQuery } from '@tanstack/react-query'
 import { Activity, Atom, CheckCircle2, Clock3, FlaskConical, Radio, Sparkles, XCircle } from 'lucide-react'
@@ -46,19 +45,19 @@ const AGENT_ICONS: Record<string, string> = {
 }
 
 const AGENT_COLORS: Record<string, string> = {
-  orchestrator: '#00fbfb',
-  manifold: '#ebb2ff',
-  causal: '#d4a843',
+  orchestrator: '#6b8aaf',
+  manifold: '#a893c4',
+  causal: '#b89a5a',
   theorist: '#7b8ae0',
-  experiment: '#4ecdc4',
+  experiment: '#5a9e97',
 }
 
 const ELEMENT_COLORS: Record<string, string> = {
-  Al: '#00fbfb',
-  Cu: '#d4a843',
-  Ni: '#ebb2ff',
-  Fe: '#e8834a',
-  Si: '#4ecdc4',
+  Al: '#6b8aaf',
+  Cu: '#b89a5a',
+  Ni: '#a893c4',
+  Fe: '#c47a50',
+  Si: '#5a9e97',
   Ti: '#7b8ae0',
 }
 
@@ -224,12 +223,14 @@ function LiveLabComponent() {
                 {latestBroadcast?.created_at ? timeAgo(latestBroadcast.created_at) : 'awaiting first broadcast'}
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl mb-5 max-w-4xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-8 leading-[1.05] text-[var(--on-surface)]">
               {latestBroadcast?.title || 'The hourly lab broadcast is standing by.'}
             </h2>
-            <p className="text-base md:text-lg leading-relaxed text-[var(--on-surface-variant)] max-w-4xl">
-              {latestBroadcast?.summary || 'GLIM-THINK will publish a concise progress signal here after the scheduled worker writes the first broadcast artifact.'}
-            </p>
+            <div className="mb-10 pl-6 border-l-2 border-[var(--secondary)] py-1">
+              <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+                {latestBroadcast?.summary || 'GLIM-THINK will publish a concise progress signal here after the scheduled worker writes the first broadcast artifact.'}
+              </p>
+            </div>
             <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
               <BroadcastMetric label="Records" value={broadcastMetrics?.totalRecords ?? '--'} icon={<Atom size={16} />} />
               <BroadcastMetric label="Claims" value={broadcastMetrics?.totalClaims ?? '--'} icon={<Sparkles size={16} />} />
@@ -251,7 +252,7 @@ function LiveLabComponent() {
                 broadcasts.slice(0, 5).map((broadcast: any) => (
                   <div key={broadcast.broadcast_id} className="border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
                     <div className="mb-2 flex items-center justify-between gap-3">
-                      <span className="font-display text-sm font-semibold text-[var(--on-surface)]">{broadcast.title}</span>
+                      <span className="font-mono text-sm font-semibold text-[var(--on-surface)]">{broadcast.title}</span>
                       <span className="mono-label text-[var(--primary)]">{broadcast.cadence}</span>
                     </div>
                     <p className="line-clamp-2 text-xs leading-relaxed text-[var(--on-surface-variant)]">{broadcast.summary}</p>
@@ -269,7 +270,7 @@ function LiveLabComponent() {
       {/* Top Stats Bar — counts straight from hypotheses + claims tables */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard label="Active agents" value={Object.values(swarm).filter((a: any) => a.status === 'active').length} total={Object.keys(swarm).length} color="var(--primary)" icon={<Activity size={18} />} />
-        <StatCard label="Hypotheses" value={activeHypotheses.length} color="#4ecdc4" icon={<FlaskConical size={18} />} />
+        <StatCard label="Hypotheses" value={activeHypotheses.length} color="#5a9e97" icon={<FlaskConical size={18} />} />
         <StatCard label="Claims" value={claimCount} color="var(--secondary)" icon={<CheckCircle2 size={18} />} />
         <StatCard label="Refuted" value={refutedHypotheses.length} color="var(--error)" icon={<XCircle size={18} />} />
       </div>
@@ -345,11 +346,8 @@ function LiveLabComponent() {
                 </div>
               ) : (
                 Object.entries(data.swarm_status).map(([agentName, info]: any, idx) => (
-                  <motion.div
+                  <div
                     key={agentName}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.08 }}
                     className={`group flex items-start gap-3 p-3 rounded border transition-colors ${
                       info.status === 'active'
                         ? 'border-[var(--primary)]/20 bg-[var(--primary)]/[0.03]'
@@ -369,8 +367,8 @@ function LiveLabComponent() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-0.5">
-                        <span className="font-display text-[12px] font-bold tracking-wide text-[var(--on-surface)] uppercase truncate">{agentName}</span>
-                        <span className={`flex-shrink-0 font-mono text-[8px] px-1.5 py-0.5 rounded-none uppercase tracking-wider border ${
+                        <span className="font-mono text-[12px] font-bold tracking-wide text-[var(--on-surface)] uppercase truncate">{agentName}</span>
+                        <span className={`flex-shrink-0 font-mono text-[8px] px-1.5 py-0.5 rounded-sm uppercase tracking-wider border ${
                           info.status === 'active'
                             ? 'bg-[var(--primary-container)] text-[var(--primary)] border-[var(--primary)]/30'
                             : 'bg-[var(--surface-container-high)] text-[var(--on-surface-variant)] border-[var(--outline-variant)]'
@@ -385,7 +383,7 @@ function LiveLabComponent() {
                         {timeAgo(info.last_seen)}
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))
               )}
             </div>
@@ -523,7 +521,7 @@ function HypothesisRow({ h }: { h: { id: string; title: string; status: string; 
         <span className="mono-label text-[var(--on-surface-variant-mid)]">conf {conf}</span>
         <span className="mono-label text-[var(--on-surface-variant-mid)] ml-auto">{timeAgo(h.updated_at)}</span>
       </div>
-      <p className="font-sans text-[13px] leading-relaxed text-[var(--on-surface)]">{h.title}</p>
+      <p className="font-serif text-[15px] leading-relaxed text-[var(--on-surface)]">{h.title}</p>
     </div>
   )
 }
@@ -616,7 +614,7 @@ function ClaimRow({ c }: { c: RecentClaim }) {
           <audio src={c.audio_url} controls preload="none" className="w-full h-8" />
         </div>
       )}
-      <p className="font-sans text-[13px] leading-relaxed text-[var(--on-surface-variant)] line-clamp-3">
+      <p className="font-serif text-[15px] leading-relaxed text-[var(--on-surface-variant)] line-clamp-3">
         {c.description}
       </p>
     </div>
@@ -632,16 +630,14 @@ function BroadcastMetric({ label, value, icon }: { label: string; value: number 
         <span className="mono-label">{label}</span>
         <span className="text-[var(--primary)]">{icon}</span>
       </div>
-      <div className="font-display text-2xl font-bold text-[var(--on-surface)]">{value}</div>
+      <div className="font-mono text-2xl font-bold text-[var(--on-surface)]" style={{ fontVariantNumeric: 'tabular-nums' }}>{value}</div>
     </div>
   )
 }
 
 function StatCard({ label, value, total, color, icon }: { label: string; value: number; total?: number; color: string; icon: ReactNode }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
+    <div
       className="glass-panel p-5 flex flex-col"
     >
       <div className="mb-2 flex items-center justify-between gap-3">
@@ -649,29 +645,24 @@ function StatCard({ label, value, total, color, icon }: { label: string; value: 
         <span style={{ color }}>{icon}</span>
       </div>
       <div className="flex items-baseline gap-1.5">
-        <motion.span
+        <span
           key={value}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="font-display text-3xl font-bold"
-          style={{ color }}
+          className="font-mono text-3xl font-bold"
+          style={{ color, fontVariantNumeric: 'tabular-nums' }}
         >
           {value}
-        </motion.span>
+        </span>
         {total !== undefined && (
           <span className="font-mono text-[11px] text-[var(--on-surface-variant)]">/ {total}</span>
         )}
       </div>
       <div className="mt-3 h-1 w-full bg-[var(--surface-container-high)] rounded-full overflow-hidden">
-        <motion.div
+        <div
           className="h-full rounded-full"
           style={{ backgroundColor: color }}
-          initial={{ width: 0 }}
-          animate={{ width: `${total ? (value / total) * 100 : Math.min(value * 10, 100)}%` }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
         />
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -689,7 +680,7 @@ function MetricRow({ label, value, highlight, activeColor }: { label: string; va
     <div className="flex items-center justify-between py-1">
       <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-widest">{label}</span>
       <span
-        className="font-display text-[13px] font-semibold uppercase"
+        className="font-mono text-[13px] font-semibold uppercase"
         style={{ color: highlight ? activeColor : 'var(--on-surface)' }}
       >
         {highlight && <span className="inline-block w-1.5 h-1.5 rounded-full mr-2" style={{ backgroundColor: activeColor }}></span>}
@@ -716,17 +707,15 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
           </h4>
           <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-wider ml-4">{subtitle}</span>
         </div>
-        <span className="font-display text-lg font-bold" style={{ color: accent, opacity: 0.4 }}>
+        <span className="font-mono text-lg font-bold" style={{ color: accent, opacity: 0.4 }}>
           {items?.length || 0}
         </span>
       </div>
 
       <div className="space-y-3 min-h-[120px]">
-        <AnimatePresence mode="popLayout">
+        
           {!items || items.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+            <div
               className="flex flex-col items-center justify-center py-8 px-4 border border-dashed border-[var(--outline-variant)] rounded bg-[var(--surface-container-low)]/50"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--on-surface-variant-mid)" strokeWidth="1" className="mb-2 opacity-50">
@@ -734,16 +723,12 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
                 <path d="M9 3v18" />
               </svg>
               <p className="font-mono text-[10px] text-[var(--on-surface-variant-mid)] text-center leading-relaxed">{empty}</p>
-            </motion.div>
+            </div>
           ) : (
             items.slice(0, 6).map((e: any, idx: number) => (
-              <motion.div
+              <div
                 key={e.id || e.experiment_id || `${e.element}-${idx}`}
                 layout
-                initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ delay: idx * 0.05, type: 'spring', stiffness: 300, damping: 25 }}
                 className="group relative overflow-hidden"
               >
                 {/* Left accent border */}
@@ -755,7 +740,7 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
                       <div className="flex items-center gap-2 mb-1.5">
                         {/* Element badge */}
                         <span
-                          className="inline-flex items-center justify-center w-6 h-6 font-display text-[10px] font-bold rounded border"
+                          className="inline-flex items-center justify-center w-6 h-6 font-mono text-[10px] font-bold rounded border"
                           style={{
                             backgroundColor: `${ELEMENT_COLORS[e.element] || accent}15`,
                             borderColor: `${ELEMENT_COLORS[e.element] || accent}40`,
@@ -764,7 +749,7 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
                         >
                           {e.element}
                         </span>
-                        <span className="font-display text-[13px] font-bold text-[var(--on-surface)] truncate">
+                        <span className="font-mono text-[13px] font-bold text-[var(--on-surface)] truncate">
                           {e.potential_label || e.pair_style || 'Auto'}
                         </span>
                       </div>
@@ -787,10 +772,10 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))
           )}
-        </AnimatePresence>
+        
 
         {items && items.length > 6 && (
           <div className="text-center pt-2">
@@ -807,7 +792,7 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
 function Chip({ label, variant = 'default' }: { label: string; variant?: 'default' | 'status' }) {
   const isStatus = variant === 'status'
   return (
-    <span className={`inline-flex items-center font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded-none border ${
+    <span className={`inline-flex items-center font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm border ${
       isStatus
         ? 'bg-[var(--primary-container)] text-[var(--primary)] border-[var(--primary)]/20'
         : 'bg-[var(--surface-container)] text-[var(--on-surface-variant)] border-[var(--outline-variant)]'
