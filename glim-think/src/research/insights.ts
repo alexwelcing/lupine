@@ -526,7 +526,7 @@ export interface LeanReadiness {
     verdict_stable_3_rounds: boolean;
     high_relevance_insights_gte_5: boolean;
     no_recent_refutations: boolean;
-    formalizable_claim_shape: boolean;
+    numeric_anchors_gte_3: boolean;
   };
 }
 
@@ -549,16 +549,23 @@ function assessLeanReadiness(rounds: IterateRoundResult[], highRelCount: number)
   const insightsOk = highRelCount >= 5;
   const noRecentRefutations =
     recent.length === 0 || !recent.some((r) => r.verdict === "refutes");
+  // Require ≥3 distinct numeric anchors (e.g. "0.85", "346.7", "0.019")
+  // in the narrative before formalization is allowed. Round 3 narrowly
+  // passed the old single-number check on one quote — that bar was too soft.
+  const MIN_NUMERIC_ANCHORS = 3;
+  const numericAnchors = new Set(
+    (last?.narrative ?? "").match(/\b\d+\.\d+\b/g) ?? [],
+  );
   const formalizable =
     (last?.verdict === "supports" || last?.verdict === "refutes") &&
-    /[0-9]+\.[0-9]+/.test(last?.narrative ?? "");
+    numericAnchors.size >= MIN_NUMERIC_ANCHORS;
 
   const checklist = {
     confidence_gte_0_85: confidenceOk,
     verdict_stable_3_rounds: stableVerdict,
     high_relevance_insights_gte_5: insightsOk,
     no_recent_refutations: noRecentRefutations,
-    formalizable_claim_shape: formalizable,
+    numeric_anchors_gte_3: formalizable,
   };
 
   const ready = Object.values(checklist).every(Boolean);
@@ -567,7 +574,7 @@ function assessLeanReadiness(rounds: IterateRoundResult[], highRelCount: number)
   if (!stableVerdict) reasons.push(`verdict not stable across 3 rounds`);
   if (!insightsOk) reasons.push(`only ${highRelCount} high-relevance insights (need >= 5)`);
   if (!noRecentRefutations) reasons.push(`recent round produced refutation`);
-  if (!formalizable) reasons.push(`verdict open OR narrative lacks numerical anchors`);
+  if (!formalizable) reasons.push(`verdict open OR only ${numericAnchors.size} numeric anchors (need >= ${MIN_NUMERIC_ANCHORS})`);
   if (ready) reasons.push("all gates passed — Lean formalization can begin");
 
   return { ready, reasons, checklist };

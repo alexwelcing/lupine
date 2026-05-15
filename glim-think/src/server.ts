@@ -20,6 +20,10 @@
  *   /literature/search  — POST: arXiv + Semantic Scholar + OpenAlex search (cached)
  *   /literature/papers  — GET: list cached papers (filterable by source/year)
  *   /literature/papers/:doi — GET: fetch a single cached paper
+ *   /admin/hitlist       — GET: list research hits (filterable by kind/status/hypothesis)
+ *   /admin/hitlist/:id   — PATCH: transition hit status (open → pursuing → resolved/dismissed)
+ *   /admin/iterate-with-seed — POST: pre-seed harvest/comprehend then iterate
+ *   /research/hits       — GET: public read-only triage surface for research hits
  */
 
 import { routeAgentRequest } from "agents";
@@ -2181,6 +2185,122 @@ ${narrative}
           sources: body.sources,
         });
         return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      // ─── Hit triage routes ─────────────────────────────────────────
+      // Admin: filtered listing with operator controls
+      if (url.pathname === "/admin/hitlist" && request.method === "GET") {
+        const kind = url.searchParams.get("kind") as HitKind | null;
+        const status = url.searchParams.get("status") as HitStatus | null;
+        const hypothesisId = url.searchParams.get("hypothesis_id");
+        const limit = parseInt(url.searchParams.get("limit") ?? "30", 10) || 30;
+        const result = await listHits(env, {
+          kind: kind ?? undefined,
+          status: status ?? undefined,
+          hypothesis_id: hypothesisId ?? undefined,
+          limit,
+        });
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      // Admin: transition hit status (open → pursuing → resolved/dismissed)
+      if (url.pathname.startsWith("/admin/hitlist/") && request.method === "PATCH") {
+        const hitId = url.pathname.slice("/admin/hitlist/".length);
+        if (!hitId) return jsonError("Missing hit id in URL", 400);
+        const body = JSON.parse(bodyText || "{}") as {
+          status?: string;
+          note?: string;
+        };
+        if (!body.status) return jsonError("Missing status in body", 400);
+        const result = await updateHitStatus(env, {
+          id: hitId,
+          status: body.status as HitStatus,
+          note: body.note,
+        });
+        if (!result.ok) return jsonError(result.error ?? "update failed", 404);
+        return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      // Public: read-only triage surface for researchers
+      if (url.pathname === "/research/hits" && request.method === "GET") {
+        const kind = url.searchParams.get("kind") as HitKind | null;
+        const status = url.searchParams.get("status") as HitStatus | null;
+        const hypothesisId = url.searchParams.get("hypothesis_id");
+        const limit = parseInt(url.searchParams.get("limit") ?? "30", 10) || 30;
+        const result = await listHits(env, {
+          kind: kind ?? undefined,
+          status: status ?? undefined,
+          hypothesis_id: hypothesisId ?? undefined,
+          limit,
+        });
+        return Response.json(result, {
+          headers: { ...JSON_CORS_HEADERS, "Cache-Control": "public, max-age=30" },
+        });
+      }
+
+      // ─── Iterate with pre-seed ─────────────────────────────────────
+      // Bundles the manual pre-seed pattern (N harvest + N comprehend calls)
+      // into a single shot before entering the normal iterate loop.
+      if (url.pathname === "/admin/iterate-with-seed" && request.method === "POST") {
+        const body = JSON.parse(bodyText || "{}") as {
+          hypothesis_id?: string;
+          seed_queries?: string[];
+          max_rounds?: number;
+          papers_per_query?: number;
+          sources?: string[];
+        };
+        if (!body.hypothesis_id) return jsonError("Missing hypothesis_id", 400);
+        const seedQueries = Array.isArray(body.seed_queries) ? body.seed_queries : [];
+        const papersPerQuery = Math.min(body.papers_per_query ?? 3, 6);
+        const sources = (body.sources ?? ["arxiv", "openalex"]) as Array<
+          "arxiv" | "openalex" | "semantic_scholar"
+        >;
+
+        // Phase 1: pre-seed — harvest and comprehend each seed query
+        let seedPapersAdded = 0;
+        let seedInsightsAdded = 0;
+        for (const query of seedQueries.slice(0, 10)) {
+          const cleaned = query.trim().slice(0, 250);
+          if (cleaned.length < 5) continue;
+          try {
+            const harvest = await searchLit(env, cleaned, {
+              max: papersPerQuery,
+              sources,
+            });
+            for (const [, papers] of Object.entries(harvest.results) as Array<[string, Array<{ doi: string }>]>) {
+              for (const paper of papers) {
+                seedPapersAdded += 1;
+                const comp = await comprehendPaper(env, {
+                  paper_doi: paper.doi,
+                  hypothesis_id: body.hypothesis_id,
+                });
+                if (comp.ok) seedInsightsAdded += 1;
+              }
+            }
+          } catch (e) {
+            console.error(`iterate-with-seed: harvest failed for "${cleaned}":`, e);
+          }
+        }
+
+        // Phase 2: normal iterate loop
+        const iterResult = await iterateOnHypothesis(env, {
+          hypothesis_id: body.hypothesis_id,
+          max_rounds: body.max_rounds,
+          papers_per_query: papersPerQuery,
+          sources: body.sources,
+        });
+
+        return Response.json(
+          {
+            ...iterResult,
+            seed_queries_used: seedQueries.length,
+            seed_papers_added: seedPapersAdded,
+            seed_insights_added: seedInsightsAdded,
+            total_papers_added: iterResult.total_papers_added + seedPapersAdded,
+            total_insights_added: iterResult.total_insights_added + seedInsightsAdded,
+          },
+          { headers: JSON_CORS_HEADERS },
+        );
       }
 
       if (url.pathname === "/admin/insights" && request.method === "GET") {
