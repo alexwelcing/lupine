@@ -49,7 +49,9 @@ pub fn run(hypothesis_id: &str, fixture_url: &str, beat_emit_url: &str) -> Resul
 async fn run_async(hypothesis_id: &str, fixture_url: &str, beat_emit_url: &str) -> Result<()> {
     // Strip the trailing /feed/beats so emit_beat_async (which appends it)
     // produces the right endpoint.
-    let worker_base = beat_emit_url.trim_end_matches('/').trim_end_matches("/feed/beats");
+    let worker_base = beat_emit_url
+        .trim_end_matches('/')
+        .trim_end_matches("/feed/beats");
 
     let client = reqwest::Client::builder()
         .timeout(Duration::from_secs(60))
@@ -76,7 +78,10 @@ async fn run_async(hypothesis_id: &str, fixture_url: &str, beat_emit_url: &str) 
                 worker_base,
                 "atlas-distill",
                 &msg,
-                Some(metrics_with_hypothesis(json!({"error": e.to_string()}), hypothesis_id)),
+                Some(metrics_with_hypothesis(
+                    json!({"error": e.to_string()}),
+                    hypothesis_id,
+                )),
                 None,
                 false,
             )
@@ -87,14 +92,20 @@ async fn run_async(hypothesis_id: &str, fixture_url: &str, beat_emit_url: &str) 
     Ok(())
 }
 
-fn metrics_with_hypothesis(mut metrics: serde_json::Value, hypothesis_id: &str) -> serde_json::Value {
+fn metrics_with_hypothesis(
+    mut metrics: serde_json::Value,
+    hypothesis_id: &str,
+) -> serde_json::Value {
     if let Some(obj) = metrics.as_object_mut() {
         obj.insert("hypothesis_id".into(), json!(hypothesis_id));
     }
     metrics
 }
 
-async fn analyze(client: &reqwest::Client, fixture_url: &str) -> Result<(String, serde_json::Value)> {
+async fn analyze(
+    client: &reqwest::Client,
+    fixture_url: &str,
+) -> Result<(String, serde_json::Value)> {
     let csv = download_gcs(client, fixture_url).await?;
     let (n, n_groups, r_pooled, r_per_group_signs) = pooled_pearson(&csv)?;
     let summary = format!(
@@ -137,7 +148,10 @@ async fn metadata_access_token(client: &reqwest::Client) -> Result<String> {
         .await
         .context("metadata server unreachable")?;
     if !resp.status().is_success() {
-        return Err(anyhow!("metadata token endpoint returned {}", resp.status()));
+        return Err(anyhow!(
+            "metadata token endpoint returned {}",
+            resp.status()
+        ));
     }
     let t: Token = resp.json().await.context("parse metadata token")?;
     Ok(t.access_token)
