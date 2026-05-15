@@ -99,7 +99,7 @@ mod tests {
         // Generate data with Ea = 0.5 eV, A = 1e10
         let a = 1e10;
         let ea = 0.5; // eV
-        let temps = vec![300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 900.0, 1000.0];
+        let temps = [300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 900.0, 1000.0];
 
         let data: Vec<(f64, f64)> = temps
             .iter()

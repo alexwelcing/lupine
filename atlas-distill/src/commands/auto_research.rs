@@ -177,7 +177,7 @@ async fn download_gcs(client: &reqwest::Client, fixture_url: &str) -> Result<Str
         let body = resp.text().await.unwrap_or_default();
         return Err(anyhow!("GCS download {}: {}", s, body));
     }
-    Ok(resp.text().await.context("read GCS body")?)
+    resp.text().await.context("read GCS body")
 }
 
 /// Parse a tiny CSV of (group, x, y) and compute summary stats.
