@@ -112,6 +112,18 @@ dead_letter_queue = "glim-research-dlq"
 # ZAI_API_KEY
 # MINIMAX_API_KEY
 # HF_API_KEY
+#
+# Cloudflare AI Gateway (no new bindings — these are plain secrets):
+#   wrangler secret put AI_GATEWAY_TOKEN        # cf-aig bearer token
+#   wrangler secret put AI_GATEWAY_ACCOUNT_ID   # account id (URL segment)
+#   wrangler secret put AI_GATEWAY_NAME         # gateway name (URL segment)
+#   wrangler secret put AI_GATEWAY_AUTH_TOKEN   # OPTIONAL: only for an
+#       authenticated gateway (sent as cf-aig-authorization). Distinct from
+#       AI_GATEWAY_TOKEN. Leave unset for unauthenticated gateways.
+# When TOKEN+ACCOUNT_ID+NAME are all set the router sends Workers AI through
+# AI Gateway (caching, analytics, rate limits). ZAI/MiniMax/HF stay direct
+# (Gateway compat rejects ZAI/MiniMax). Unset any one to roll back Workers
+# AI to a direct env.AI.run call.
 
 # ─── Cloudflare Access gating (unit 10) ───
 # /admin/*, /ops/* writes, and the write endpoints (POST /run, /fleet/run,
