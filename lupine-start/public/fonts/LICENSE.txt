@@ -1,0 +1,21 @@
+FONT LICENSE NOTICE
+===================
+
+This project uses the following self-hosted typefaces under
+commercial license. The license holder is Alex Welcing.
+
+1. CS Claire Mono
+   Designer: Craft Supply Co.
+   License:  Commercial Desktop + Web License
+   Usage:    Monospaced data labels, code, technical notation
+   Files:    CSClaireMono-Regular.otf, CSClaireMono-Italic.otf
+
+2. Rumelaz Gekinsa
+   Designer: Usman Albaehaqi / Graphicxell Studio
+   License:  Commercial Desktop + Web License
+   Usage:    Editorial serif headings, pull-quotes, brand wordmark
+   Files:    RumelazGekinsa-Regular.woff2, RumelazGekinsa-Italic.woff2
+
+These fonts are NOT open source and must not be redistributed
+outside of this project's web deployment. If you are forking
+this repository, you must obtain your own licenses.
