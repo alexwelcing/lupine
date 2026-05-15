@@ -171,6 +171,18 @@ export interface Env {
    * api.minimaxi.com for the international plan). Default: api.minimax.chat/v1. */
   MINIMAX_BASE_URL?: string;
   HF_API_KEY?: string;
+  /** Cloudflare AI Gateway auth token (`cf-aig` bearer). Set in prod via
+   * `wrangler secret put AI_GATEWAY_TOKEN`; the local value lives only in
+   * the gitignored `.dev.vars`. When this AND `AI_GATEWAY_ACCOUNT_ID` AND
+   * `AI_GATEWAY_NAME` are all present, the router sends Gateway-eligible
+   * providers (Workers AI, ZAI, MiniMax) through Cloudflare AI Gateway.
+   * If any is absent the router falls back to direct provider fetches —
+   * this absence IS the one-flag rollback switch (see router.ts). */
+  AI_GATEWAY_TOKEN?: string;
+  /** Cloudflare account id that owns the AI Gateway (URL path segment). */
+  AI_GATEWAY_ACCOUNT_ID?: string;
+  /** AI Gateway name — the `{gateway}` URL path segment. */
+  AI_GATEWAY_NAME?: string;
   /** Cloudflare Access team subdomain (e.g. "lupine" for lupine.cloudflareaccess.com).
    * Used by middleware/access.ts to fetch JWKS and verify Cf-Access-Jwt-Assertion
    * on /admin/*, /ops/* writes, and other gated routes. */
@@ -186,6 +198,12 @@ export interface Env {
   /** Public URL this Worker is reachable at. Used as the expected `aud` claim
    * when verifying OIDC tokens on /feed/beats. Defaults to the request origin. */
   WORKER_URL?: string;
+  /** Phoenix Cloud OTLP collector endpoint (e.g. https://app.phoenix.arize.com/v1/traces) */
+  PHOENIX_COLLECTOR_ENDPOINT?: string;
+  /** Phoenix Cloud API key for trace ingestion. */
+  PHOENIX_API_KEY?: string;
+  /** Phoenix Cloud project name. Default: "glim-think" */
+  PHOENIX_PROJECT_NAME?: string;
   ORCHESTRATOR: DurableObjectNamespace;
   MANIFOLD_AGENT: DurableObjectNamespace;
   CAUSAL_AGENT: DurableObjectNamespace;
