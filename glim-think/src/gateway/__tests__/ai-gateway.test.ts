@@ -111,6 +111,41 @@ describe("AIGatewayProvider — happy path", () => {
     await new AIGatewayProvider(BASE_CFG).complete("hi", { cacheTtl: 300 });
     const headers = calls[0].init.headers as Record<string, string>;
     expect(headers["cf-aig-cache-ttl"]).toBe("300");
+    expect(headers["cf-aig-skip-cache"]).toBeUndefined();
+  });
+
+  it("unauthenticated gateway: Authorization only, NO cf-aig-authorization", async () => {
+    const { calls } = stubFetch([mockResponse()]);
+    await new AIGatewayProvider(BASE_CFG).complete("hi");
+    const headers = calls[0].init.headers as Record<string, string>;
+    expect(headers["Authorization"]).toBe("Bearer test-token");
+    expect(headers["cf-aig-authorization"]).toBeUndefined();
+  });
+
+  it("authenticated gateway: cf-aig-authorization uses the distinct gateway token", async () => {
+    const { calls } = stubFetch([mockResponse()]);
+    await new AIGatewayProvider({ ...BASE_CFG, gatewayAuthToken: "gw-secret" }).complete(
+      "hi"
+    );
+    const headers = calls[0].init.headers as Record<string, string>;
+    expect(headers["cf-aig-authorization"]).toBe("Bearer gw-secret");
+    expect(headers["Authorization"]).toBe("Bearer test-token"); // provider token unchanged
+  });
+
+  it("TTL 0 → cf-aig-skip-cache: true, no cf-aig-cache-ttl", async () => {
+    const { calls } = stubFetch([mockResponse()]);
+    await new AIGatewayProvider(BASE_CFG).complete("hi", { cacheTtl: 0 });
+    const headers = calls[0].init.headers as Record<string, string>;
+    expect(headers["cf-aig-skip-cache"]).toBe("true");
+    expect(headers["cf-aig-cache-ttl"]).toBeUndefined();
+  });
+
+  it("sub-60 positive TTL is clamped up to the 60s Cloudflare floor", async () => {
+    const { calls } = stubFetch([mockResponse()]);
+    await new AIGatewayProvider(BASE_CFG).complete("hi", { cacheTtl: 30 });
+    const headers = calls[0].init.headers as Record<string, string>;
+    expect(headers["cf-aig-cache-ttl"]).toBe("60");
+    expect(headers["cf-aig-skip-cache"]).toBeUndefined();
   });
 });
 

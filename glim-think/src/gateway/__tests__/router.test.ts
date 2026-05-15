@@ -109,16 +109,17 @@ describe("ModelRouter — cache TTL by tier (Gateway-routed Workers AI)", () => 
     expect(cap[0].headers["cf-aig-cache-ttl"]).toBe("300");
   });
 
-  it("experiment_design sends cf-aig-cache-ttl: 0 (never cache)", async () => {
+  it("experiment_design (TTL 0) sends cf-aig-skip-cache, not cf-aig-cache-ttl", async () => {
     const cap = stubFetch(["x"]);
     await new ModelRouter(makeEnv()).complete("experiment_design", "p");
-    expect(cap[0].headers["cf-aig-cache-ttl"]).toBe("0");
+    expect(cap[0].headers["cf-aig-skip-cache"]).toBe("true");
+    expect(cap[0].headers["cf-aig-cache-ttl"]).toBeUndefined();
   });
 
   it("opts.cacheTtl overrides the tier default", async () => {
     const cap = stubFetch(["x"]);
-    await new ModelRouter(makeEnv()).complete("ingestion", "p", { cacheTtl: 42 });
-    expect(cap[0].headers["cf-aig-cache-ttl"]).toBe("42");
+    await new ModelRouter(makeEnv()).complete("ingestion", "p", { cacheTtl: 600 });
+    expect(cap[0].headers["cf-aig-cache-ttl"]).toBe("600");
   });
 });
 

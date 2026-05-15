@@ -183,6 +183,11 @@ export interface Env {
   AI_GATEWAY_ACCOUNT_ID?: string;
   /** AI Gateway name — the `{gateway}` URL path segment. */
   AI_GATEWAY_NAME?: string;
+  /** Gateway-level auth token for an AUTHENTICATED AI Gateway, sent as
+   * `cf-aig-authorization`. Distinct from `AI_GATEWAY_TOKEN` (the provider
+   * token). Leave unset for unauthenticated gateways (e.g. `glimgate`) —
+   * sending it with a non-gateway token returns 401. */
+  AI_GATEWAY_AUTH_TOKEN?: string;
   /** Cloudflare Access team subdomain (e.g. "lupine" for lupine.cloudflareaccess.com).
    * Used by middleware/access.ts to fetch JWKS and verify Cf-Access-Jwt-Assertion
    * on /admin/*, /ops/* writes, and other gated routes. */

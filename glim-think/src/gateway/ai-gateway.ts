@@ -56,6 +56,14 @@ export interface AIGatewayConfig {
   model: string;
   /** Logical provider name — used for chains, `gen_ai.system`, KV usage. */
   name: string;
+  /**
+   * Gateway-level auth token for an AUTHENTICATED AI Gateway, sent as
+   * `cf-aig-authorization`. This is a DISTINCT credential from `token`
+   * (the provider token in `Authorization`). Leave undefined for
+   * unauthenticated gateways — sending `cf-aig-authorization` with a
+   * non-gateway token 401s (verified live against `glimgate`).
+   */
+  gatewayAuthToken?: string;
 }
 
 interface OpenAIChatCompletion {
@@ -184,10 +192,30 @@ export class AIGatewayProvider implements Provider {
     cacheTtl: number
   ): Promise<Response> {
     const headers: Record<string, string> = {
+      // `Authorization` = PROVIDER token. For Workers AI via the `compat`
+      // endpoint this Cloudflare token is the provider credential
+      // (verified live: 200 against `glimgate`).
       Authorization: `Bearer ${this.cfg.token}`,
       "Content-Type": "application/json",
-      "cf-aig-cache-ttl": String(cacheTtl),
     };
+    // `cf-aig-authorization` = GATEWAY auth token, ONLY for authenticated
+    // gateways and ONLY when a dedicated gateway token is configured.
+    // Sending it with the provider token on an unauthenticated gateway
+    // returns 401 (verified live against `glimgate`), so it is opt-in.
+    // https://developers.cloudflare.com/ai-gateway/configuration/authentication/
+    if (this.cfg.gatewayAuthToken) {
+      headers["cf-aig-authorization"] = `Bearer ${this.cfg.gatewayAuthToken}`;
+    }
+
+    // Cloudflare's `cf-aig-cache-ttl` minimum is 60s and `0` does NOT
+    // bypass the cache — `cf-aig-skip-cache: true` does. So the
+    // "never cache" tiers (TTL ≤ 0) skip; positive TTLs are clamped up
+    // to the 60s floor. https://developers.cloudflare.com/ai-gateway/features/caching/
+    if (cacheTtl <= 0) {
+      headers["cf-aig-skip-cache"] = "true";
+    } else {
+      headers["cf-aig-cache-ttl"] = String(Math.max(60, Math.floor(cacheTtl)));
+    }
 
     let res = await fetch(this.url(), { method: "POST", headers, body });
     if (res.ok || !this.isRetryable(res.status)) return res;

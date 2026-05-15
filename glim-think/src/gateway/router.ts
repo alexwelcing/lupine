@@ -25,6 +25,7 @@ import { AIGatewayProvider } from "./ai-gateway";
 import { getAgentQualityTrend } from "../evals/store";
 import { runHeuristics } from "../evals/heuristics";
 import type { Env } from "../types";
+import { trace } from "@opentelemetry/api";
 
 /** Pass-rate below which we escalate to the strength-first chain. */
 const QUALITY_THRESHOLD = 0.6;
@@ -88,6 +89,7 @@ export class ModelRouter {
             pathSegment: "compat",
             model: WORKERS_AI_GATEWAY_MODEL,
             name: "workers-ai",
+            gatewayAuthToken: env.AI_GATEWAY_AUTH_TOKEN,
           })
         : new WorkersAIProvider(env.AI, WORKERS_AI_MODEL)
     );
@@ -142,6 +144,13 @@ export class ModelRouter {
     const agentClass = opts?.agentClass;
     const qualityGate = opts?.qualityGate ?? false;
     const chain = await this.resolveChain(tier, agentClass);
+    const span = trace.getActiveSpan();
+
+    if (span) {
+      span.setAttribute("gateway.tier", tier);
+      span.setAttribute("gateway.chain_length", chain.length);
+      span.setAttribute("gateway.agent_class", agentClass ?? "unknown");
+    }
 
     // Derive the Gateway cache TTL once per request and pass it down via a
     // NEW opts object (never mutate the caller's). Direct providers ignore
@@ -150,6 +159,8 @@ export class ModelRouter {
       ...opts,
       cacheTtl: this.cacheTtlForTier(tier, opts?.cacheTtl),
     };
+
+    let gateTriggered = false;
 
     for (let i = 0; i < chain.length; i++) {
       const name = chain[i];
@@ -163,6 +174,7 @@ export class ModelRouter {
         if (qualityGate && agentClass && i < chain.length - 1) {
           const heuristic = runHeuristics(result.text);
           if (heuristic.score < QUALITY_GATE_THRESHOLD) {
+            gateTriggered = true;
             console.warn(
               `[gateway] ${name} output failed quality gate (score=${heuristic.score.toFixed(2)}) for ${agentClass}, falling back to ${chain[i + 1]}`
             );
@@ -170,9 +182,22 @@ export class ModelRouter {
           }
         }
 
+        if (span) {
+          span.setAttribute("gateway.provider", name);
+          span.setAttribute("gateway.fallback_index", i);
+          span.setAttribute("gateway.cache_hit", result.cacheHit ?? false);
+          span.setAttribute("gateway.latency_ms", result.latencyMs);
+          span.setAttribute("gateway.quality_gate_triggered", gateTriggered);
+          span.setAttribute("gateway.tokens_prompt", result.usage?.promptTokens ?? 0);
+          span.setAttribute("gateway.tokens_completion", result.usage?.completionTokens ?? 0);
+        }
+
         return result;
       } catch (e) {
         console.warn(`${name} failed:`, e);
+        if (span) {
+          span.setAttribute(`gateway.provider_${name}_failed`, true);
+        }
         if (i === chain.length - 1) throw e;
       }
     }
