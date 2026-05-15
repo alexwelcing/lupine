@@ -23,11 +23,15 @@
  * are acked + logged so they don't loop.
  */
 
+import { trace, SpanStatusCode } from "@opentelemetry/api";
 import type { Env } from "../types";
+import { traceEnv } from "../telemetry/storage";
+import { withTaskPipeline } from "../telemetry/pipeline";
 import { createLabBroadcast } from "../scheduled";
 import { evaluateHypothesis } from "./evaluate";
 import { generateAndStoreImage } from "../agents/image";
 import { generateAndStoreAudio } from "../agents/tts";
+import { accumulateCost } from "../telemetry/pipeline";
 
 export type ResearchTaskKind =
   | "round"
@@ -194,6 +198,11 @@ export async function enqueueTask(
     .first<{ job_id: string; outcome: string }>();
 
   if (existing) {
+    const span = trace.getActiveSpan();
+    if (span) {
+      span.setAttribute("queue.enqueue.dedup", true);
+      span.setAttribute("queue.enqueue.existing_outcome", existing.outcome);
+    }
     return {
       job_id: existing.job_id,
       status: "duplicate",
@@ -210,6 +219,13 @@ export async function enqueueTask(
     .run();
 
   await env.RESEARCH_QUEUE.send({ ...task, job_id: jobId });
+
+  const span = trace.getActiveSpan();
+  if (span) {
+    span.setAttribute("queue.enqueue.dedup", false);
+    span.setAttribute("queue.enqueue.job_id", jobId);
+  }
+
   return { job_id: jobId, status: "enqueued" };
 }
 
@@ -248,6 +264,33 @@ async function markFinished(
  * exhaustion).
  */
 async function runTask(env: Env, task: ResearchTask & { job_id?: string }): Promise<void> {
+  const tracer = trace.getTracer("glim-think.queue");
+  const start = Date.now();
+  return tracer.startActiveSpan(`queue.task.${task.kind}`, async (span) => {
+    span.setAttribute("queue.task.kind", task.kind);
+    span.setAttribute("queue.task.dedup_key", task.dedup_key);
+    let success = false;
+    try {
+      await runTaskInner(env, task);
+      success = true;
+      span.setStatus({ code: SpanStatusCode.OK });
+    } catch (err) {
+      span.recordException(err as Error);
+      span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+      throw err;
+    } finally {
+      const latency = Date.now() - start;
+      span.setAttribute("queue.task.latency_ms", latency);
+      span.setAttribute("queue.task.success", success);
+      // Latency anomaly flag: >30s for compute tasks, >60s for image/audio
+      const threshold = task.kind === "claim-image" || task.kind === "claim-audio" ? 60000 : 30000;
+      span.setAttribute("queue.task.latency_anomaly", latency > threshold);
+      span.end();
+    }
+  });
+}
+
+async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }): Promise<void> {
   if (task.kind === "broadcast") {
     await createLabBroadcast(env, task.source);
     return;
@@ -397,27 +440,50 @@ export async function consumeBatch(
   batch: MessageBatch<ResearchTask & { job_id: string }>,
   env: Env,
 ): Promise<void> {
-  await ensureSchema(env);
-
-  for (const message of batch.messages) {
-    const task = message.body;
-    const jobId = task.job_id;
+  traceEnv(env);
+  const tracer = trace.getTracer("glim-think.queue");
+  await tracer.startActiveSpan("queue.consumeBatch", async (batchSpan) => {
+    batchSpan.setAttribute("queue.batch.size", batch.messages.length);
     try {
-      await markStarted(env, jobId);
-      await runTask(env, task);
-      await markFinished(env, jobId, "success");
-      message.ack();
-    } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : String(e);
-      console.error(`research queue: job ${jobId} failed:`, msg);
-      // Heuristic: 4xx or shape error → permanent failure
-      if (msg.includes("400") || msg.includes("Unknown task kind")) {
-        await markFinished(env, jobId, "failed", msg);
-        message.ack();
-      } else {
-        // Bubble up so queue runtime applies retry / DLQ policy
-        throw e;
+      await ensureSchema(env);
+
+      for (const message of batch.messages) {
+        const task = message.body;
+        const jobId = task.job_id;
+        await tracer.startActiveSpan("queue.processMessage", async (msgSpan) => {
+          msgSpan.setAttribute("queue.message.job_id", jobId);
+          msgSpan.setAttribute("queue.message.kind", task.kind);
+          try {
+            await markStarted(env, jobId);
+            await withTaskPipeline(task.kind, task.dedup_key, async () => runTask(env, task));
+            await markFinished(env, jobId, "success");
+            message.ack();
+            msgSpan.setStatus({ code: SpanStatusCode.OK });
+          } catch (e: unknown) {
+            const msg = e instanceof Error ? e.message : String(e);
+            console.error(`research queue: job ${jobId} failed:`, msg);
+            msgSpan.recordException(e as Error);
+            msgSpan.setStatus({ code: SpanStatusCode.ERROR, message: msg });
+            // Heuristic: 4xx or shape error → permanent failure
+            if (msg.includes("400") || msg.includes("Unknown task kind")) {
+              await markFinished(env, jobId, "failed", msg);
+              message.ack();
+            } else {
+              // Bubble up so queue runtime applies retry / DLQ policy
+              throw e;
+            }
+          } finally {
+            msgSpan.end();
+          }
+        });
       }
+      batchSpan.setStatus({ code: SpanStatusCode.OK });
+    } catch (err) {
+      batchSpan.recordException(err as Error);
+      batchSpan.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+      throw err;
+    } finally {
+      batchSpan.end();
     }
-  }
+  });
 }

@@ -1,0 +1,709 @@
+{
+  "name": "glim-experiment-design",
+  "count": 37,
+  "examples": [
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mendelev-2010 or Sturgeon-2000 potential better predicts C11 for Al.",
+        "context": "Element: Al, Property: C11, Best candidate: Mendelev-2010 (-1.8% error), Worst candidate: Sturgeon-2000 (-12.6% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for Al using both potentials would discriminate between them. The Mendelev-2010 potential predicts 106.259743575141 GPa (reference: 108.2), while Sturgeon-2000 predicts 94.6182749190722 GPa. The expected discriminative power is 10.8 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Mendelev-2010",
+        "worst_potential": "Sturgeon-2000",
+        "discriminative_power_pct": 10.759
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Al",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mishin-1999 or Sturgeon-2000 potential better predicts C12 for Al.",
+        "context": "Element: Al, Property: C12, Best candidate: Mishin-1999 (0.4% error), Worst candidate: Sturgeon-2000 (11.2% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for Al using both potentials would discriminate between them. The Mishin-1999 potential predicts 61.5547453947956 GPa (reference: 61.3), while Sturgeon-2000 predicts 68.1798349332263 GPa. The expected discriminative power is 10.8 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Mishin-1999",
+        "worst_potential": "Sturgeon-2000",
+        "discriminative_power_pct": 10.808
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Al",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mendelev-2010 or Sturgeon-2000 potential better predicts C44 for Al.",
+        "context": "Element: Al, Property: C44, Best candidate: Mendelev-2010 (5.9% error), Worst candidate: Sturgeon-2000 (49.0% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for Al using both potentials would discriminate between them. The Mendelev-2010 potential predicts 30.1717200727219 GPa (reference: 28.5), while Sturgeon-2000 predicts 42.4708883959332 GPa. The expected discriminative power is 43.2 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Mendelev-2010",
+        "worst_potential": "Sturgeon-2000",
+        "discriminative_power_pct": 43.155
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Al",
+        "property": "C44"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Zope-2003 or Winey-2009 potential better predicts a0 for Al.",
+        "context": "Element: Al, Property: a0, Best candidate: Zope-2003 (-0.0% error), Worst candidate: Winey-2009 (-0.6% error)"
+      },
+      "output": {
+        "answer": "A a0 calculation for Al using both potentials would discriminate between them. The Zope-2003 potential predicts 4.04999996753358 A (reference: 4.05), while Winey-2009 predicts 4.02484538561055 A. The expected discriminative power is 0.6 percentage points of error difference.",
+        "recommended_experiment": "a0 calculation",
+        "best_potential": "Zope-2003",
+        "worst_potential": "Winey-2009",
+        "discriminative_power_pct": 0.621
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Al",
+        "property": "a0"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Sturgeon-2000 or Winey-2009 potential better predicts Ecoh for Al.",
+        "context": "Element: Al, Property: Ecoh, Best candidate: Sturgeon-2000 (0.0% error), Worst candidate: Winey-2009 (-21.9% error)"
+      },
+      "output": {
+        "answer": "A Ecoh calculation for Al using both potentials would discriminate between them. The Sturgeon-2000 potential predicts -3.3900019328239 eV/atom (reference: -3.39), while Winey-2009 predicts -2.6459796171601 eV/atom. The expected discriminative power is 21.9 percentage points of error difference.",
+        "recommended_experiment": "Ecoh calculation",
+        "best_potential": "Sturgeon-2000",
+        "worst_potential": "Winey-2009",
+        "discriminative_power_pct": 21.948
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Al",
+        "property": "Ecoh"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Adams-1989 or Ackland-1987 potential better predicts C11 for Cu.",
+        "context": "Element: Cu, Property: C11, Best candidate: Adams-1989 (-0.2% error), Worst candidate: Ackland-1987 (37.3% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for Cu using both potentials would discriminate between them. The Adams-1989 potential predicts 168.062571830634 GPa (reference: 168.4), while Ackland-1987 predicts 231.215784136212 GPa. The expected discriminative power is 37.5 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Adams-1989",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 37.502
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Cu",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mishin-2001 or Ackland-1987 potential better predicts C12 for Cu.",
+        "context": "Element: Cu, Property: C12, Best candidate: Mishin-2001 (1.0% error), Worst candidate: Ackland-1987 (12.9% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for Cu using both potentials would discriminate between them. The Mishin-2001 potential predicts 122.604214854317 GPa (reference: 121.4), while Ackland-1987 predicts 137.00603577412 GPa. The expected discriminative power is 11.9 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Mishin-2001",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 11.863
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Cu",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mishin-2001 or Ackland-1987 potential better predicts C44 for Cu.",
+        "context": "Element: Cu, Property: C44, Best candidate: Mishin-2001 (1.0% error), Worst candidate: Ackland-1987 (83.1% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for Cu using both potentials would discriminate between them. The Mishin-2001 potential predicts 76.1899581257661 GPa (reference: 75.4), while Ackland-1987 predicts 138.031011103507 GPa. The expected discriminative power is 82.0 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Mishin-2001",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 82.017
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Cu",
+        "property": "C44"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Foiles-1986 or Borovikov-2015 potential better predicts a0 for Cu.",
+        "context": "Element: Cu, Property: a0, Best candidate: Foiles-1986 (-0.0% error), Worst candidate: Borovikov-2015 (0.7% error)"
+      },
+      "output": {
+        "answer": "A a0 calculation for Cu using both potentials would discriminate between them. The Foiles-1986 potential predicts 3.61499997576462 A (reference: 3.615), while Borovikov-2015 predicts 3.63922110648869 A. The expected discriminative power is 0.7 percentage points of error difference.",
+        "recommended_experiment": "a0 calculation",
+        "best_potential": "Foiles-1986",
+        "worst_potential": "Borovikov-2015",
+        "discriminative_power_pct": 0.67
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Cu",
+        "property": "a0"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Ackland-1987 or Mendelev-2008 potential better predicts Ecoh for Cu.",
+        "context": "Element: Cu, Property: Ecoh, Best candidate: Ackland-1987 (0.8% error), Worst candidate: Mendelev-2008 (-5.9% error)"
+      },
+      "output": {
+        "answer": "A Ecoh calculation for Cu using both potentials would discriminate between them. The Ackland-1987 potential predicts -3.51935302639108 eV/atom (reference: -3.49), while Mendelev-2008 predicts -3.28311620915219 eV/atom. The expected discriminative power is 6.8 percentage points of error difference.",
+        "recommended_experiment": "Ecoh calculation",
+        "best_potential": "Ackland-1987",
+        "worst_potential": "Mendelev-2008",
+        "discriminative_power_pct": 6.769
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Cu",
+        "property": "Ecoh"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mendelev-2012 or Oliveira-2026 potential better predicts C11 for Ni.",
+        "context": "Element: Ni, Property: C11, Best candidate: Mendelev-2012 (0.2% error), Worst candidate: Oliveira-2026 (18.7% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for Ni using both potentials would discriminate between them. The Mendelev-2012 potential predicts 247.016843310398 GPa (reference: 246.5), while Oliveira-2026 predicts 292.488662960108 GPa. The expected discriminative power is 18.4 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Mendelev-2012",
+        "worst_potential": "Oliveira-2026",
+        "discriminative_power_pct": 18.447
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ni",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mendelev-2012 or Oliveira-2026 potential better predicts C12 for Ni.",
+        "context": "Element: Ni, Property: C12, Best candidate: Mendelev-2012 (-0.0% error), Worst candidate: Oliveira-2026 (12.7% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for Ni using both potentials would discriminate between them. The Mendelev-2012 potential predicts 147.295139583981 GPa (reference: 147.3), while Oliveira-2026 predicts 166.062593319468 GPa. The expected discriminative power is 12.7 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Mendelev-2012",
+        "worst_potential": "Oliveira-2026",
+        "discriminative_power_pct": 12.741
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ni",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mishin-1999 or Adams-1989 potential better predicts C44 for Ni.",
+        "context": "Element: Ni, Property: C44, Best candidate: Mishin-1999 (0.1% error), Worst candidate: Adams-1989 (7.1% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for Ni using both potentials would discriminate between them. The Mishin-1999 potential predicts 124.838117594854 GPa (reference: 124.7), while Adams-1989 predicts 133.505081142698 GPa. The expected discriminative power is 7.0 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Mishin-1999",
+        "worst_potential": "Adams-1989",
+        "discriminative_power_pct": 6.95
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ni",
+        "property": "C44"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Ackland-1987 or Oliveira-2026 potential better predicts a0 for Ni.",
+        "context": "Element: Ni, Property: a0, Best candidate: Ackland-1987 (0.0% error), Worst candidate: Oliveira-2026 (-0.4% error)"
+      },
+      "output": {
+        "answer": "A a0 calculation for Ni using both potentials would discriminate between them. The Ackland-1987 potential predicts 3.52422036511869 A (reference: 3.524), while Oliveira-2026 predicts 3.50950749150006 A. The expected discriminative power is 0.4 percentage points of error difference.",
+        "recommended_experiment": "a0 calculation",
+        "best_potential": "Ackland-1987",
+        "worst_potential": "Oliveira-2026",
+        "discriminative_power_pct": 0.418
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ni",
+        "property": "a0"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Oliveira-2026 or Mendelev-2012 potential better predicts Ecoh for Ni.",
+        "context": "Element: Ni, Property: Ecoh, Best candidate: Oliveira-2026 (0.1% error), Worst candidate: Mendelev-2012 (-1.2% error)"
+      },
+      "output": {
+        "answer": "A Ecoh calculation for Ni using both potentials would discriminate between them. The Oliveira-2026 potential predicts -4.4460791696859 eV/atom (reference: -4.44), while Mendelev-2012 predicts -4.38550876957346 eV/atom. The expected discriminative power is 1.4 percentage points of error difference.",
+        "recommended_experiment": "Ecoh calculation",
+        "best_potential": "Oliveira-2026",
+        "worst_potential": "Mendelev-2012",
+        "discriminative_power_pct": 1.364
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ni",
+        "property": "Ecoh"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Williams-2006 or Ackland-1987 potential better predicts C11 for Ag.",
+        "context": "Element: Ag, Property: C11, Best candidate: Williams-2006 (0.2% error), Worst candidate: Ackland-1987 (39.1% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for Ag using both potentials would discriminate between them. The Williams-2006 potential predicts 124.239179798937 GPa (reference: 124), while Ackland-1987 predicts 172.427923401711 GPa. The expected discriminative power is 38.9 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Williams-2006",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 38.862
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ag",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Williams-2006 or Ackland-1987 potential better predicts C12 for Ag.",
+        "context": "Element: Ag, Property: C12, Best candidate: Williams-2006 (0.5% error), Worst candidate: Ackland-1987 (51.8% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for Ag using both potentials would discriminate between them. The Williams-2006 potential predicts 93.87369668605 GPa (reference: 93.4), while Ackland-1987 predicts 141.77678583622 GPa. The expected discriminative power is 51.3 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Williams-2006",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 51.288
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ag",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Williams-2006 or Ackland-1987 potential better predicts C44 for Ag.",
+        "context": "Element: Ag, Property: C44, Best candidate: Williams-2006 (0.7% error), Worst candidate: Ackland-1987 (87.5% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for Ag using both potentials would discriminate between them. The Williams-2006 potential predicts 46.4193055928319 GPa (reference: 46.1), while Ackland-1987 predicts 86.4148351850066 GPa. The expected discriminative power is 86.8 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Williams-2006",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 86.758
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ag",
+        "property": "C44"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Ackland-1987 or Williams-2006 potential better predicts a0 for Ag.",
+        "context": "Element: Ag, Property: a0, Best candidate: Ackland-1987 (0.0% error), Worst candidate: Williams-2006 (0.1% error)"
+      },
+      "output": {
+        "answer": "A a0 calculation for Ag using both potentials would discriminate between them. The Ackland-1987 potential predicts 4.08600067212411 A (reference: 4.085), while Williams-2006 predicts 4.090000144871 A. The expected discriminative power is 0.1 percentage points of error difference.",
+        "recommended_experiment": "a0 calculation",
+        "best_potential": "Ackland-1987",
+        "worst_potential": "Williams-2006",
+        "discriminative_power_pct": 0.098
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ag",
+        "property": "a0"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Ackland-1987 or Zhou-2004 potential better predicts Ecoh for Ag.",
+        "context": "Element: Ag, Property: Ecoh, Best candidate: Ackland-1987 (0.6% error), Worst candidate: Zhou-2004 (-3.4% error)"
+      },
+      "output": {
+        "answer": "A Ecoh calculation for Ag using both potentials would discriminate between them. The Ackland-1987 potential predicts -2.96744390102708 eV/atom (reference: -2.95), while Zhou-2004 predicts -2.84999503731192 eV/atom. The expected discriminative power is 4.0 percentage points of error difference.",
+        "recommended_experiment": "Ecoh calculation",
+        "best_potential": "Ackland-1987",
+        "worst_potential": "Zhou-2004",
+        "discriminative_power_pct": 3.981
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Ag",
+        "property": "Ecoh"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Zhou-2004 or Ackland-1987 potential better predicts C11 for Au.",
+        "context": "Element: Au, Property: C11, Best candidate: Zhou-2004 (-2.3% error), Worst candidate: Ackland-1987 (33.5% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for Au using both potentials would discriminate between them. The Zhou-2004 potential predicts 187.892630583916 GPa (reference: 192.3), while Ackland-1987 predicts 256.787858247189 GPa. The expected discriminative power is 35.8 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Zhou-2004",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 35.827
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Au",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Norman-2012 or Ackland-1987 potential better predicts C12 for Au.",
+        "context": "Element: Au, Property: C12, Best candidate: Norman-2012 (-1.9% error), Worst candidate: Ackland-1987 (39.6% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for Au using both potentials would discriminate between them. The Norman-2012 potential predicts 159.976448458084 GPa (reference: 163.1), while Ackland-1987 predicts 227.623830237274 GPa. The expected discriminative power is 41.5 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Norman-2012",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 41.476
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Au",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Zhou-2004 or Ackland-1987 potential better predicts C44 for Au.",
+        "context": "Element: Au, Property: C44, Best candidate: Zhou-2004 (1.4% error), Worst candidate: Ackland-1987 (140.0% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for Au using both potentials would discriminate between them. The Zhou-2004 potential predicts 42.6003130933722 GPa (reference: 42), while Ackland-1987 predicts 100.815992238289 GPa. The expected discriminative power is 138.6 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Zhou-2004",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 138.609
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Au",
+        "property": "C44"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Ackland-1987 or Norman-2012 potential better predicts a0 for Au.",
+        "context": "Element: Au, Property: a0, Best candidate: Ackland-1987 (0.0% error), Worst candidate: Norman-2012 (-0.2% error)"
+      },
+      "output": {
+        "answer": "A a0 calculation for Au using both potentials would discriminate between them. The Ackland-1987 potential predicts 4.07800072611969 A (reference: 4.078), while Norman-2012 predicts 4.0685006539571 A. The expected discriminative power is 0.2 percentage points of error difference.",
+        "recommended_experiment": "a0 calculation",
+        "best_potential": "Ackland-1987",
+        "worst_potential": "Norman-2012",
+        "discriminative_power_pct": 0.233
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Au",
+        "property": "a0"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Olsson-2010 or Norman-2012 potential better predicts Ecoh for Au.",
+        "context": "Element: Au, Property: Ecoh, Best candidate: Olsson-2010 (-0.0% error), Worst candidate: Norman-2012 (12.8% error)"
+      },
+      "output": {
+        "answer": "A Ecoh calculation for Au using both potentials would discriminate between them. The Olsson-2010 potential predicts -3.80999999999434 eV/atom (reference: -3.81), while Norman-2012 predicts -4.29936280838569 eV/atom. The expected discriminative power is 12.8 percentage points of error difference.",
+        "recommended_experiment": "Ecoh calculation",
+        "best_potential": "Olsson-2010",
+        "worst_potential": "Norman-2012",
+        "discriminative_power_pct": 12.844
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Au",
+        "property": "Ecoh"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Zhou-2004 or Wang-2017 potential better predicts C11 for Fe.",
+        "context": "Element: Fe, Property: C11, Best candidate: Zhou-2004 (0.6% error), Worst candidate: Wang-2017 (24.0% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for Fe using both potentials would discriminate between them. The Zhou-2004 potential predicts 231.313377489364 GPa (reference: 230), while Wang-2017 predicts 285.283471880657 GPa. The expected discriminative power is 23.5 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Zhou-2004",
+        "worst_potential": "Wang-2017",
+        "discriminative_power_pct": 23.465
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Fe",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Olsson-2009 or Wang-2017 potential better predicts C12 for Fe.",
+        "context": "Element: Fe, Property: C12, Best candidate: Olsson-2009 (0.6% error), Worst candidate: Wang-2017 (88.6% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for Fe using both potentials would discriminate between them. The Olsson-2009 potential predicts 135.749970006566 GPa (reference: 135), while Wang-2017 predicts 254.582519975972 GPa. The expected discriminative power is 88.0 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Olsson-2009",
+        "worst_potential": "Wang-2017",
+        "discriminative_power_pct": 88.024
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Fe",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Mendelev-2003 or Wang-2017 potential better predicts C44 for Fe.",
+        "context": "Element: Fe, Property: C44, Best candidate: Mendelev-2003 (-0.6% error), Worst candidate: Wang-2017 (123.8% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for Fe using both potentials would discriminate between them. The Mendelev-2003 potential predicts 116.349901601642 GPa (reference: 117), while Wang-2017 predicts 261.85973869577 GPa. The expected discriminative power is 124.4 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Mendelev-2003",
+        "worst_potential": "Wang-2017",
+        "discriminative_power_pct": 124.367
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Fe",
+        "property": "C44"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Zhou-2004 or Ackland-1987 potential better predicts C11 for Mo.",
+        "context": "Element: Mo, Property: C11, Best candidate: Zhou-2004 (3.7% error), Worst candidate: Ackland-1987 (5.6% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for Mo using both potentials would discriminate between them. The Zhou-2004 potential predicts 456.308883254656 GPa (reference: 440), while Ackland-1987 predicts 464.715426546305 GPa. The expected discriminative power is 1.9 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Zhou-2004",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 1.911
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Mo",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Zhou-2004 or Ackland-1987 potential better predicts C12 for Mo.",
+        "context": "Element: Mo, Property: C12, Best candidate: Zhou-2004 (-2.7% error), Worst candidate: Ackland-1987 (-6.1% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for Mo using both potentials would discriminate between them. The Zhou-2004 potential predicts 167.406449860533 GPa (reference: 172), while Ackland-1987 predicts 161.521296186047 GPa. The expected discriminative power is 3.4 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Zhou-2004",
+        "worst_potential": "Ackland-1987",
+        "discriminative_power_pct": 3.422
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Mo",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Ackland-1987 or Zhou-2004 potential better predicts C44 for Mo.",
+        "context": "Element: Mo, Property: C44, Best candidate: Ackland-1987 (2.8% error), Worst candidate: Zhou-2004 (8.8% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for Mo using both potentials would discriminate between them. The Ackland-1987 potential predicts 108.91589967207 GPa (reference: 106), while Zhou-2004 predicts 115.338450288377 GPa. The expected discriminative power is 6.1 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Ackland-1987",
+        "worst_potential": "Zhou-2004",
+        "discriminative_power_pct": 6.059
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "Mo",
+        "property": "C44"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Wilson-2016 or Mason-2017 potential better predicts C11 for W.",
+        "context": "Element: W, Property: C11, Best candidate: Wilson-2016 (0.0% error), Worst candidate: Mason-2017 (4.0% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for W using both potentials would discriminate between them. The Wilson-2016 potential predicts 522.098200867283 GPa (reference: 522), while Mason-2017 predicts 542.858544264778 GPa. The expected discriminative power is 4.0 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Wilson-2016",
+        "worst_potential": "Mason-2017",
+        "discriminative_power_pct": 3.977
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "W",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Wilson-2016 or Zhou-2004 potential better predicts C12 for W.",
+        "context": "Element: W, Property: C12, Best candidate: Wilson-2016 (-0.0% error), Worst candidate: Zhou-2004 (-0.9% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for W using both potentials would discriminate between them. The Wilson-2016 potential predicts 203.998945929554 GPa (reference: 204), while Zhou-2004 predicts 202.171371201506 GPa. The expected discriminative power is 0.9 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Wilson-2016",
+        "worst_potential": "Zhou-2004",
+        "discriminative_power_pct": 0.896
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "W",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Ackland-1987 or Han-2003 potential better predicts C44 for W.",
+        "context": "Element: W, Property: C44, Best candidate: Ackland-1987 (-0.2% error), Worst candidate: Han-2003 (1.4% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for W using both potentials would discriminate between them. The Ackland-1987 potential predicts 160.620876505167 GPa (reference: 161), while Han-2003 predicts 163.198757526744 GPa. The expected discriminative power is 1.6 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Ackland-1987",
+        "worst_potential": "Han-2003",
+        "discriminative_power_pct": 1.601
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "W",
+        "property": "C44"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Ackland-1987 or Han-2003 potential better predicts C11 for V.",
+        "context": "Element: V, Property: C11, Best candidate: Ackland-1987 (-0.9% error), Worst candidate: Han-2003 (-1.1% error)"
+      },
+      "output": {
+        "answer": "A C11 calculation for V using both potentials would discriminate between them. The Ackland-1987 potential predicts 227.905637839735 GPa (reference: 230), while Han-2003 predicts 227.565631707683 GPa. The expected discriminative power is 0.1 percentage points of error difference.",
+        "recommended_experiment": "C11 calculation",
+        "best_potential": "Ackland-1987",
+        "worst_potential": "Han-2003",
+        "discriminative_power_pct": 0.148
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "V",
+        "property": "C11"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Han-2003 or Olsson-2009 potential better predicts C12 for V.",
+        "context": "Element: V, Property: C12, Best candidate: Han-2003 (0.1% error), Worst candidate: Olsson-2009 (0.3% error)"
+      },
+      "output": {
+        "answer": "A C12 calculation for V using both potentials would discriminate between them. The Han-2003 potential predicts 119.098197081419 GPa (reference: 119), while Olsson-2009 predicts 119.345189472385 GPa. The expected discriminative power is 0.2 percentage points of error difference.",
+        "recommended_experiment": "C12 calculation",
+        "best_potential": "Han-2003",
+        "worst_potential": "Olsson-2009",
+        "discriminative_power_pct": 0.208
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "V",
+        "property": "C12"
+      }
+    },
+    {
+      "input": {
+        "question": "Design a discriminative experiment to determine whether the Han-2003 or Olsson-2009 potential better predicts C44 for V.",
+        "context": "Element: V, Property: C44, Best candidate: Han-2003 (-0.8% error), Worst candidate: Olsson-2009 (5.7% error)"
+      },
+      "output": {
+        "answer": "A C44 calculation for V using both potentials would discriminate between them. The Han-2003 potential predicts 43.1550400923076 GPa (reference: 43.5), while Olsson-2009 predicts 45.9659025044754 GPa. The expected discriminative power is 6.5 percentage points of error difference.",
+        "recommended_experiment": "C44 calculation",
+        "best_potential": "Han-2003",
+        "worst_potential": "Olsson-2009",
+        "discriminative_power_pct": 6.462
+      },
+      "metadata": {
+        "source": "nist_benchmark",
+        "dataset_type": "experiment_design",
+        "element": "V",
+        "property": "C44"
+      }
+    }
+  ]
+}

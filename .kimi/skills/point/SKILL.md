@@ -101,6 +101,22 @@ Update the repository inventory and skill registry. Re-scans:
 - Build artifacts and cache states
 - Updates `.kimi/skills/glim-repo/SKILL.md` if structural changes detected
 
+### `point hive --query <query>`
+
+Activate the local Lupine Hermes Hive — dispatch multi-model research squad.
+
+```bash
+# Full squad activation
+python tools/hive.py run --squad --query "$query"
+
+# Specific agents
+python tools/hive.py run --profiles manifold,causal --query "$query"
+```
+
+This runs Hermes agents in parallel (Manifold, Causal, Theorist, Experiment),
+collects outputs into the SQLite kanban, and posts a consolidated beat to
+the glim-think swarm.
+
 ### `point deploy <target>`
 
 Deploy to cloud targets without git push.
@@ -129,6 +145,9 @@ point research "Why does Cu LJ overestimate C44?"
 
 # Run the full ODF MVP
 point distill
+
+# Activate the research squad
+point hive --query "Why does Cu LJ overestimate C44?"
 
 # Deploy the research worker
 point deploy glim-think

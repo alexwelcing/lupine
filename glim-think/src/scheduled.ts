@@ -10,7 +10,9 @@
  *   4. Write it to R2 at `diary/snapshots/YYYY-MM-DD.md` (UTC date).
  *   5. Insert a `deployments` row tagged `service='cron-fleet'`.
  */
+import { trace } from "@opentelemetry/api";
 import type { Env } from "./types";
+import { traceEnv } from "./telemetry/storage";
 import { recordCronRun, runSmoketest } from "./ops/observability";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
@@ -270,6 +272,11 @@ export async function scheduled(
   env: Env,
   ctx: ExecutionContext,
 ): Promise<void> {
+  traceEnv(env);
+  // Tag the active span (created by instrument() wrapper) with cron details
+  trace.getActiveSpan()?.setAttribute("cron.expression", event.cron);
+  trace.getActiveSpan()?.setAttribute("cron.scheduled_time", event.scheduledTime);
+
   // Phase A — every cron is wrapped in recordCronRun for heartbeat
   // tracking. The wrapper writes started_at/finished_at/outcome to the
   // cron_runs table; /health surfaces the latest row per cron.

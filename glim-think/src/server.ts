@@ -26,8 +26,12 @@
  *   /research/hits       — GET: public read-only triage surface for research hits
  */
 
+import { instrument } from "@microlabs/otel-cf-workers";
 import { routeAgentRequest } from "agents";
+import { traceEnv } from "./telemetry/storage";
+import { withPipelineSpan } from "./telemetry/pipeline";
 import { Orchestrator } from "./agents/orchestrator";
+import { phoenixConfig } from "./telemetry/phoenix";
 import { Manifold } from "./agents/manifold";
 import { Causal } from "./agents/causal";
 import { Theorist } from "./agents/theorist";
@@ -40,6 +44,8 @@ import { ModelRouter } from "./gateway/router";
 import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
 import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
+import { getRecentEvals, getEvalSummary, getAgentQualityTrend } from "./evals/store";
+import { PhoenixApi } from "./phoenix/api";
 import { searchLiterature, isLiteratureSource, rowToPaper } from "./literature";
 import { enqueueTask, consumeBatch, type ResearchTask } from "./research/queue";
 import {
@@ -72,6 +78,15 @@ import {
   listSlideshowImages,
 } from "./research/slideshow";
 import { checkAccess, isGatedRoute } from "./middleware/access";
+import {
+  bootstrapAgenda,
+  agendaStatus,
+  listAgendaTasks,
+  claimAgendaTasks,
+  completeAgendaTask,
+  updateAgendaTaskStatus,
+  type TaskStatus
+} from "./agenda";
 
 async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
@@ -125,13 +140,21 @@ function jsonError(message: string, status: number): Response {
 
 // Re-export all Durable Object classes for wrangler
 export {
-  Orchestrator, Manifold, Causal, Theorist, Experiment,
-  FleetOrchestrator, DashboardAgent, ExtensionManager, Literaturist,
+  Orchestrator,
+  Manifold,
+  Causal,
+  Theorist,
+  Experiment,
+  FleetOrchestrator,
+  DashboardAgent,
+  ExtensionManager,
+  Literaturist,
 };
 
-export default {
+const handler = {
   async fetch(request: Request, env: Env, ctx?: ExecutionContext): Promise<Response> {
     try {
+      traceEnv(env);
       const url = new URL(request.url);
 
       // Pre-read POST/PATCH body so it can be reused after agent routing
@@ -319,6 +342,7 @@ export default {
       // Orchestrator: trigger a research analysis directly via D1
       // (Can't route through stub.fetch() because Think intercepts it)
       if (url.pathname === "/run" && request.method === "POST") {
+        return await withPipelineSpan("research.pipeline.run", { "http.route": "/run", "pipeline.trigger": "http" }, async () => {
         const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
         const element = typeof body.element === "string" ? body.element : null;
         const analysisTypes = Array.isArray(body.analysis_types) ? body.analysis_types as string[] : ["manifold", "causal"];
@@ -488,6 +512,7 @@ export default {
             const aiResult = await router.complete("hypothesis", articlePrompt, {
               temperature: 0.6,
               maxTokens: 2048,
+              agentClass: "AutoDiary",
               systemPrompt: `You are a rigorous materials science research analyst writing entries for a running research diary. You are given statistical analysis results from a corpus of interatomic potential benchmarks (elastic constants C11, C12, C44 measured across many potentials and elements).
 
 Your job:
@@ -549,6 +574,7 @@ ${narrative}
         }
 
         return Response.json(results);
+        });
       }
 
       // Fleet operations
@@ -747,6 +773,7 @@ ${narrative}
           const result = await router.complete("hypothesis", prompt, {
             temperature: 0.7,
             maxTokens: 1024,
+            agentClass: "DiaryDraft",
             systemPrompt: `You are a materials science research assistant writing a running lab diary. Interpret LAMMPS benchmark results concisely. Write 2-3 paragraphs of markdown. Focus on physical insight: what do the errors reveal about the potential's strengths and weaknesses? Mention specific properties. Keep it technical but readable.`,
           });
           const text = (result.text ?? "").trim();
@@ -1542,6 +1569,7 @@ ${narrative}
         const nowIso = () => new Date().toISOString();
 
         if (url.pathname === "/research/round" && request.method === "POST") {
+          return await withPipelineSpan("research.pipeline.round", { "http.route": "/research/round", "pipeline.trigger": "http" }, async () => {
           const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
           const element = typeof body.element === "string" ? body.element : "";
           if (!element) return jsonError("Missing 'element'", 400);
@@ -1566,6 +1594,7 @@ ${narrative}
             analysis_types: analysis,
             exclude_styles: exclude,
             only_styles: only,
+          });
           });
         }
 
@@ -2171,6 +2200,7 @@ ${narrative}
       }
 
       if (url.pathname === "/admin/iterate" && request.method === "POST") {
+        return await withPipelineSpan("research.pipeline.iterate", { "http.route": "/admin/iterate", "pipeline.trigger": "http" }, async () => {
         const body = JSON.parse(bodyText || "{}") as {
           hypothesis_id?: string;
           max_rounds?: number;
@@ -2185,6 +2215,7 @@ ${narrative}
           sources: body.sources,
         });
         return Response.json(result, { headers: JSON_CORS_HEADERS });
+        });
       }
 
       // ─── Hit triage routes ─────────────────────────────────────────
@@ -2242,6 +2273,7 @@ ${narrative}
       // Bundles the manual pre-seed pattern (N harvest + N comprehend calls)
       // into a single shot before entering the normal iterate loop.
       if (url.pathname === "/admin/iterate-with-seed" && request.method === "POST") {
+        return await withPipelineSpan("research.pipeline.iterate-seed", { "http.route": "/admin/iterate-with-seed", "pipeline.trigger": "http" }, async () => {
         const body = JSON.parse(bodyText || "{}") as {
           hypothesis_id?: string;
           seed_queries?: string[];
@@ -2301,6 +2333,7 @@ ${narrative}
           },
           { headers: JSON_CORS_HEADERS },
         );
+        });
       }
 
       if (url.pathname === "/admin/insights" && request.method === "GET") {
@@ -2948,6 +2981,155 @@ ${narrative}
         return Response.json({ papers, count: papers.length });
       }
 
+      // -- Agenda Routes --
+      if (url.pathname === "/admin/agenda/bootstrap" && request.method === "POST") {
+        const body = await request.json() as { reset?: boolean; template_name?: string };
+        const result = await bootstrapAgenda(env, body.reset, body.template_name);
+        return Response.json(result);
+      }
+
+      if (url.pathname === "/admin/agenda/status" && request.method === "GET") {
+        const result = await agendaStatus(env);
+        return Response.json(result);
+      }
+
+      if (url.pathname === "/admin/agenda/tasks" && request.method === "GET") {
+        const result = await listAgendaTasks(env, {
+          status: url.searchParams.get("status") as TaskStatus | undefined,
+          type: url.searchParams.get("type") || undefined,
+          limit: url.searchParams.has("limit") ? parseInt(url.searchParams.get("limit")!) : undefined,
+          offset: url.searchParams.has("offset") ? parseInt(url.searchParams.get("offset")!) : undefined,
+        });
+        return Response.json(result);
+      }
+
+      if (url.pathname === "/admin/agenda/claim" && request.method === "POST") {
+        const body = await request.json() as { count?: number; worker_id?: string; type_preference?: string };
+        const result = await claimAgendaTasks(env, body.count, body.worker_id, body.type_preference);
+        return Response.json(result);
+      }
+
+      const completeMatch = url.pathname.match(/^\/admin\/agenda\/tasks\/([^\/]+)\/complete$/);
+      if (completeMatch && request.method === "POST") {
+        const taskId = completeMatch[1];
+        const body = await request.json() as { output: any };
+        const result = await completeAgendaTask(env, taskId, body.output);
+        return Response.json(result);
+      }
+
+      const updateMatch = url.pathname.match(/^\/admin\/agenda\/tasks\/([^\/]+)$/);
+      if (updateMatch && request.method === "PATCH") {
+        const taskId = updateMatch[1];
+        const body = await request.json() as { status: TaskStatus; result_metadata?: any; attempts?: number };
+        const result = await updateAgendaTaskStatus(env, taskId, body.status, body.result_metadata, body.attempts);
+        return Response.json(result);
+      }
+
+      if (url.pathname === "/admin/phoenix-status" && request.method === "GET") {
+        const endpoint = env.PHOENIX_COLLECTOR_ENDPOINT;
+        const apiKey = env.PHOENIX_API_KEY;
+        const projectName = env.PHOENIX_PROJECT_NAME?.trim() || "glim-think";
+        if (!endpoint || !apiKey) {
+          return Response.json({ ok: false, error: "PHOENIX_COLLECTOR_ENDPOINT or PHOENIX_API_KEY not set" });
+        }
+        const phoenix = new PhoenixApi(endpoint, apiKey, projectName);
+        const probe = await phoenix.probe();
+        return Response.json({
+          ...probe,
+          endpoint: endpoint.replace(/\/$/, "").replace(/\/v1\/traces$/, ""),
+          project_name: projectName,
+        });
+      }
+
+      if (url.pathname === "/admin/evals/recent" && request.method === "GET") {
+        const rows = await getRecentEvals(env, {
+          limit: url.searchParams.has("limit") ? parseInt(url.searchParams.get("limit")!) : 50,
+          agent: url.searchParams.get("agent") || undefined,
+          minScore: url.searchParams.has("minScore") ? parseFloat(url.searchParams.get("minScore")!) : undefined,
+        });
+        return Response.json({ rows });
+      }
+
+      if (url.pathname === "/admin/evals/summary" && request.method === "GET") {
+        const days = url.searchParams.has("days") ? parseInt(url.searchParams.get("days")!) : 1;
+        const summary = await getEvalSummary(env, days);
+        return Response.json({ days, summary });
+      }
+
+      if (url.pathname === "/admin/evals/trend" && request.method === "GET") {
+        const agent = url.searchParams.get("agent");
+        if (!agent) return jsonError("Missing ?agent= parameter", 400);
+        const days = url.searchParams.has("days") ? parseInt(url.searchParams.get("days")!) : 7;
+        const trend = await getAgentQualityTrend(env, agent, days);
+        return Response.json({ agent, days, trend });
+      }
+
+      if (url.pathname === "/admin/phoenix/low-scores" && request.method === "GET") {
+        const endpoint = env.PHOENIX_COLLECTOR_ENDPOINT;
+        const apiKey = env.PHOENIX_API_KEY;
+        const projectName = env.PHOENIX_PROJECT_NAME?.trim() || "glim-think";
+        if (!endpoint || !apiKey) {
+          return jsonError("Phoenix not configured", 503);
+        }
+        const limit = Math.min(parseInt(url.searchParams.get("limit") ?? "20", 10), 100);
+        const minScore = parseFloat(url.searchParams.get("min_score") ?? "0.5");
+        const evaluatorName = url.searchParams.get("evaluator") || undefined;
+
+        try {
+          const phoenix = new PhoenixApi(endpoint, apiKey, projectName);
+          const { data: spans } = await phoenix.getSpans({ limit: limit * 3 });
+          const spanIds = spans.map((s) => s.span_id);
+          const { data: annotations } = await phoenix.getSpanAnnotations(spanIds, evaluatorName);
+
+          const lowScores: Array<{
+            span_id: string;
+            trace_id: string;
+            name: string;
+            start_time: string;
+            annotations: Array<{
+              name: string;
+              score: number | null;
+              label: string | null;
+              explanation: string | null;
+            }>;
+          }> = [];
+
+          for (const span of spans) {
+            const spanAnnotations = annotations.filter((a) => a.span_id === span.span_id);
+            const hasLowScore = spanAnnotations.some(
+              (a) => a.result.score != null && a.result.score < minScore
+            );
+            if (hasLowScore || (!evaluatorName && spanAnnotations.length > 0)) {
+              lowScores.push({
+                span_id: span.span_id,
+                trace_id: span.trace_id,
+                name: span.name,
+                start_time: span.start_time,
+                annotations: spanAnnotations.map((a) => ({
+                  name: a.name,
+                  score: a.result.score,
+                  label: a.result.label,
+                  explanation: a.result.explanation,
+                })),
+              });
+            }
+            if (lowScores.length >= limit) break;
+          }
+
+          return Response.json({
+            project: projectName,
+            limit,
+            minScore,
+            evaluator: evaluatorName ?? "any",
+            count: lowScores.length,
+            spans: lowScores,
+          }, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          console.error("[phoenix-low-scores] error:", e);
+          return jsonError(`Phoenix query failed: ${String(e)}`, 502);
+        }
+      }
+
       return new Response("Not found", { status: 404 });
     } catch (e) {
       console.error("Worker error:", e);
@@ -2965,6 +3147,8 @@ ${narrative}
     );
   },
 } satisfies ExportedHandler<Env>;
+
+export default instrument(handler, phoenixConfig);
 
 function buildDiaryPrompt(element: string, potential: string, structure: string, records: Array<{ property: string; reference: number; predicted: number; unit: string }>): string {
   let lines = `Experiment: ${potential} on ${element} (${structure} structure)\n\nResults:\n`;

@@ -10,6 +10,64 @@ import { GlimThinkAgent } from "./base";
 import { tool } from "ai";
 import { z } from "zod";
 import type { ToolSet } from "ai";
+import { trace } from "@opentelemetry/api";
+
+/** Valid chemical symbols (periodic table, first 103). */
+const VALID_ELEMENTS = new Set([
+  "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne",
+  "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca",
+  "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
+  "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr",
+  "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn",
+  "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd",
+  "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb",
+  "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg",
+  "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th",
+  "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm",
+  "Md", "No", "Lr",
+]);
+
+const BCC_ELEMENTS = new Set(["Fe", "Cr", "Mo", "W", "V", "Nb", "Ta", "Li", "Na", "K", "Ba"]);
+const HCP_ELEMENTS = new Set(["Ti", "Zr", "Hf", "Co", "Mg", "Zn", "Cd", "Be"]);
+const KNOWN_LAMMPS_TYPES = new Set(["surface_energy", "vacancy_energy", "stacking_fault", "elastic_constants"]);
+
+function validateExperimentDesign(input: {
+  element: string;
+  pairStyle: string;
+  structure: string;
+  discriminativeProperty: string;
+  lammpsType: string;
+}): { valid: boolean; score: number; checks: Record<string, boolean> } {
+  const checks: Record<string, boolean> = {};
+  let score = 0;
+
+  // 1. Element is a valid symbol
+  checks.element_valid = VALID_ELEMENTS.has(input.element);
+  if (checks.element_valid) score += 0.2;
+
+  // 2. Structure matches element's natural structure
+  const expectedStructure = BCC_ELEMENTS.has(input.element) ? "bcc" : HCP_ELEMENTS.has(input.element) ? "hcp" : "fcc";
+  checks.structure_matches_element = input.structure === expectedStructure;
+  if (checks.structure_matches_element) score += 0.2;
+
+  // 3. pair_style is non-empty and looks like a LAMMPS pair style
+  checks.pair_style_nonempty = input.pairStyle.length > 0 && /^[a-zA-Z0-9_\/\-]+$/.test(input.pairStyle);
+  if (checks.pair_style_nonempty) score += 0.15;
+
+  // 4. discriminative_property is non-empty and specific
+  const dp = input.discriminativeProperty.trim();
+  checks.discriminative_property_nonempty = dp.length > 5;
+  checks.discriminative_property_specific = /\b(energy|constant|fault|surface|vacancy|modulus|stacking)\b/i.test(dp);
+  if (checks.discriminative_property_nonempty) score += 0.15;
+  if (checks.discriminative_property_specific) score += 0.15;
+
+  // 5. lammps_input_type is known
+  checks.lammps_type_known = KNOWN_LAMMPS_TYPES.has(input.lammpsType);
+  if (checks.lammps_type_known) score += 0.15;
+
+  score = Math.round(Math.min(1, score) * 100) / 100;
+  return { valid: score >= 0.7, score, checks };
+}
 
 export class Experiment extends GlimThinkAgent {
   getSystemPrompt(): string {
@@ -87,16 +145,31 @@ Experiment design principles:
           const experimentId = crypto.randomUUID();
           const runId = crypto.randomUUID();
 
+          const lammpsType = discriminativeProperty.includes("surface") ? "surface_energy" :
+            discriminativeProperty.includes("vacancy") ? "vacancy_energy" :
+            discriminativeProperty.includes("stacking") ? "stacking_fault" : "elastic_constants";
+
           const spec = JSON.stringify({
-            lammps_input_type: discriminativeProperty.includes("surface") ? "surface_energy" :
-              discriminativeProperty.includes("vacancy") ? "vacancy_energy" :
-              discriminativeProperty.includes("stacking") ? "stacking_fault" : "elastic_constants",
+            lammps_input_type: lammpsType,
             supercell: 3,
             temperature: 0.0,
             relaxation: true,
             discriminative_property: discriminativeProperty,
             test_strategy: testStrategy,
           });
+
+          // Code-eval: validate experiment design before inserting
+          const validation = validateExperimentDesign({
+            element, pairStyle, structure, discriminativeProperty, lammpsType,
+          });
+          const activeSpan = trace.getActiveSpan();
+          if (activeSpan) {
+            activeSpan.setAttribute("eval.code.experiment.valid", validation.valid);
+            for (const [k, v] of Object.entries(validation.checks)) {
+              activeSpan.setAttribute(`eval.code.experiment.${k}`, v);
+            }
+            activeSpan.setAttribute("eval.code.experiment.score", validation.score);
+          }
 
           // Insert into D1
           await this.env.LEDGER.prepare(
@@ -125,6 +198,7 @@ Experiment design principles:
             element,
             potential: potentialLabel,
             discriminativeProperty,
+            validation,
           };
         },
       }),

@@ -139,29 +139,39 @@ const evidenceQuotes = [
 
 const nextRows = [
   {
-    priority: 'P0',
+    priority: 'DONE',
     item: 'Wire the LAM trio (MACE-MP, CHGNet, Orb) into the IMMI 15-element benchmark',
-    why: "Round-3's narrative flagged that no cited paper directly tests the hyper-ribbon manifold on these models. Close the gap by running them ourselves and writing the resulting PR + alignment metrics back as Claim rows. This converts the open verdict into a measurable one.",
+    why: "COMPLETED: The LAM trio was integrated into the benchmark suite. Cross-MLIP alignment metrics and baseline performances have been generated and logged.",
   },
   {
-    priority: 'P0',
+    priority: 'DONE',
     item: 'Tighten the numerical-anchor check inside the Lean-readiness gate',
-    why: 'The current rule looks for any quantitative anchor. We need ≥ 3 distinct numeric anchors per claim before formalization is allowed. Round 3 narrowly passed the existing rule on a single quote; that bar is too soft.',
+    why: 'COMPLETED: Hardened the gate to require ≥ 3 distinct numerical anchors before formalization is allowed. The gate is now significantly more robust.',
   },
   {
-    priority: 'P1',
+    priority: 'DONE',
     item: 'Promote the manual pre-seed pattern into a single endpoint',
-    why: "Today an operator runs four /admin/harvest calls plus six /admin/comprehend calls before /admin/iterate. Bundle this into /admin/iterate-with-seed?seed_queries=… so future rounds get the same convergence advantage in one shot.",
+    why: "COMPLETED: Implemented the atomic /admin/iterate-with-seed endpoint, wrapping harvest and comprehend cycles into one robust call.",
   },
   {
-    priority: 'P1',
+    priority: 'DONE',
     item: 'Hits triage surface on /research',
-    why: "Round 3 inserted three actionable hits (the M2.7 reasoner's flagged follow-ups). They need a public triage UI so operators can mark each as addressed, deferred, or out-of-scope, with a comment trail back to the originating hypothesis.",
+    why: "COMPLETED: Added /admin/hitlist and /research/hits routes to allow operators to actively triage, defer, or act on insights extracted by the reasoner.",
   },
   {
-    priority: 'P2',
+    priority: 'DONE',
+    item: 'Phonon Sentinel displacement sweep',
+    why: "COMPLETED: Implemented the Phonon Sentinel protocol. Shifted to recording Hessian/force-constant sensitivity with dynamic-stability classification. Verified Al, Cu, Ni, Ag as dynamically stable.",
+  },
+  {
+    priority: 'DONE',
+    item: 'Wire the autonomous research agenda loop into the server lifecycle',
+    why: "COMPLETED: Integrated the agenda framework into the main server API (/admin/agenda/* endpoints). The system can now autonomously bootstrap, claim, execute, and complete research tasks continuously.",
+  },
+  {
+    priority: 'DONE',
     item: 'Cost ledger per round',
-    why: 'Each round currently spends 100–300 model-tokens-equivalent across harvest, comprehend, and reason. Track the per-round spend so we can compare convergence-quality per dollar across hypothesis types and decide where pre-seeding pays for itself.',
+    why: 'COMPLETED: Plumbed token tracking through the generation lifecycle. Added `tokens_spent_this_round` to `IterateRoundResult` and `total_tokens_spent` to the global `IterateResult` to allow cost-benefit comparisons of convergence quality vs pre-seeding.',
   },
 ]
 

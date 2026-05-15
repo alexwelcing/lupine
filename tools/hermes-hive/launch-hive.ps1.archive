@@ -1,0 +1,122 @@
+﻿#Requires -Version 7
+<#
+.SYNOPSIS
+    Launch the Lupine Hermes Hive — a multi-terminal research squad.
+
+.DESCRIPTION
+    Opens 4 Windows Terminal panes, each running a Hermes agent profile:
+      - Terminal 1: Manifold  (α) — MiniMax-M2.7   — deep geometric analysis
+      - Terminal 2: Causal    (δ) — MiniMax-M2.7   — paradox screening
+      - Terminal 3: Theorist  (γ) — GLM-5-turbo    — hypothesis generation
+      - Terminal 4: Experiment(ε) — OpenRouter     — LAMMPS experiment design
+
+    All agents share a local SQLite kanban and dispatch to the glim-think swarm.
+
+.PARAMETER Profiles
+    Comma-separated list of profiles to launch (default: all 4).
+
+.PARAMETER GlimThinkUrl
+    Override the glim-think swarm base URL.
+
+.EXAMPLE
+    .\launch-hive.ps1
+    .\launch-hive.ps1 -Profiles "manifold,theorist"
+    .\launch-hive.ps1 -GlimThinkUrl "http://localhost:8787"
+#>
+param(
+    [string]$Profiles = "manifold,causal,theorist,experiment",
+    [string]$GlimThinkUrl = "https://glim-think.lupine.workers.dev"
+)
+
+$ErrorActionPreference = "Stop"
+
+# Resolve paths
+$HiveDir = $PSScriptRoot
+$RepoRoot = (Resolve-Path "$HiveDir\..\..").Path
+$HermesBin = "$env:LOCALAPPDATA\hermes\bin\hermes.cmd"
+
+# Verify Hermes is installed
+if (-not (Test-Path $HermesBin)) {
+    Write-Error "Hermes not found at $HermesBin. Run Phase 1 install first."
+    exit 1
+}
+
+# Ensure data directory exists
+$DataDir = "$HiveDir\data"
+New-Item -ItemType Directory -Path $DataDir -Force | Out-Null
+
+# Ensure SQLite db is initialized
+$env:GLIM_THINK_URL = $GlimThinkUrl
+& python "$HiveDir\hive-wire.py" profile list | Out-Null
+
+# Profile display names and colors
+$ProfileMeta = @{
+    "manifold"    = @{ Label = "Manifold (α)";  Color = "#5b8cff"; Icon = "📐" }
+    "causal"      = @{ Label = "Causal (δ)";    Color = "#c084fc"; Icon = "🔍" }
+    "theorist"    = @{ Label = "Theorist (γ)";  Color = "#4ade80"; Icon = "💡" }
+    "experiment"  = @{ Label = "Experiment (ε)";Color = "#fb923c"; Icon = "⚗️" }
+    "literaturist"= @{ Label = "Literaturist (β)";Color = "#38bdf8"; Icon = "📚" }
+}
+
+$Selected = $Profiles -split "," | ForEach-Object { $_.Trim() }
+
+Write-Host ""
+Write-Host "╔══════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+Write-Host "║        🐺 LUPINE HERMES HIVE — Launch Sequence              ║" -ForegroundColor Cyan
+Write-Host "╠══════════════════════════════════════════════════════════════╣" -ForegroundColor Cyan
+Write-Host "║  Swarm endpoint: $GlimThinkUrl" -ForegroundColor Cyan
+Write-Host "║  Hive data:      $DataDir" -ForegroundColor Cyan
+Write-Host "║  Profiles:       $($Selected -join ', ')" -ForegroundColor Cyan
+Write-Host "╚══════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host ""
+
+# Check if Windows Terminal is available
+$wt = Get-Command wt -ErrorAction SilentlyContinue
+
+foreach ($prof in $Selected) {
+    $meta = $ProfileMeta[$prof]
+    if (-not $meta) {
+        Write-Warning "Unknown profile '$prof', skipping."
+        continue
+    }
+
+    $profilePath = "$HiveDir\profiles\$prof.json"
+    if (-not (Test-Path $profilePath)) {
+        Write-Warning "Profile file not found: $profilePath"
+        continue
+    }
+
+    $title = "Lupine Hive — $($meta.Label)"
+    $prompt = "You are the $($meta.Label) agent. The Hive Wire is active. Use your tools to coordinate with the swarm."
+
+    Write-Host "Launching $($meta.Icon) $($meta.Label) ..." -ForegroundColor ($meta.Color)
+
+    if ($wt) {
+        # Launch in new Windows Terminal tab
+        wt --window 0 new-tab `
+            --title "$title" `
+            --tabColor "$($meta.Color)" `
+            --startingDirectory "$RepoRoot" `
+            powershell -NoExit -Command {
+                param($HermesBin, $ProfilePath, $Title, $Prompt, $HiveDir, $GlimUrl)
+                $env:GLIM_THINK_URL = $GlimUrl
+                $env:HIVE_DIR = $HiveDir
+                Write-Host "[$Title] Hive Wire connected." -ForegroundColor Green
+                & $HermesBin chat --quiet --prompt $Prompt --accept-hooks
+            } -Args $HermesBin, $profilePath, $title, $prompt, $HiveDir, $GlimThinkUrl
+    } else {
+        # Fallback: launch separate PowerShell windows
+        Start-Process powershell -ArgumentList @(
+            "-NoExit",
+            "-Command",
+            "`$env:GLIM_THINK_URL='$GlimThinkUrl'; `$env:HIVE_DIR='$HiveDir'; Write-Host '[$title] Hive Wire connected.' -ForegroundColor Green; & '$HermesBin' chat --quiet --prompt '$prompt' --accept-hooks"
+        ) -WorkingDirectory $RepoRoot
+    }
+
+    Start-Sleep -Milliseconds 800
+}
+
+Write-Host ""
+Write-Host "✅ Hive launched. Each terminal is an independent agent connected to the swarm." -ForegroundColor Green
+Write-Host "   Use the Hive Wire to coordinate:  cd $HiveDir; python hive-wire.py task list" -ForegroundColor Gray
+Write-Host ""

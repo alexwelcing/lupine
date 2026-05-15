@@ -43,3 +43,44 @@ atlas/atlas-view/.verify-artifacts/
 lupine-site/.astro/
 lupine-site/playwright-report/
 lupine-site/test-results/
+
+# --------------------------
+# Cleanup 2026-05-15
+# --------------------------
+
+# Scratch & test dumps
+_scratch_tests/
+*.pb
+*.b64
+*.bak
+*.err
+*lighthouse-report.json
+
+# Font archives
+lupine-start/*.zip
+lupine-start/cs-claire-mono-monospaced-typeface-*/
+lupine-start/rumelaz-gekinsa-serif-family-classic-elegant-*/
+
+# ML virtual envs & working directories
+mlip_immi/.venv-upet/
+mlip_immi/phonon_wd_*/
+mlip_immi/*_results.json
+mlip_immi/phonon_sentinel_pet_mad_1.5.json
+
+# Additional directories and files (2026-05-15)
+.session-wip-backup-*/
+lupine-media/
+atlas/atlas-view/archive/
+distiller/agents/profiles/.archive/
+*.glimbin
+atlas-distill/*.json
+.vscode/
+
+# Tools data
+tools/hermes-hive/data/
+
+# Large binary files & media
+*.lammpstrj
+*.mp4
+*.z64
+*.tar.zst

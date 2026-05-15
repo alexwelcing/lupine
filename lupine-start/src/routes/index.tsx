@@ -90,7 +90,7 @@ function HomePage() {
       <div className="absolute top-0 w-full z-50">
         <Header />
       </div>
-      <main className="relative flex flex-row w-screen h-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth z-10 pt-16">
+      <main className="relative flex flex-row w-screen h-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth z-10">
 
       <Hero />
 
@@ -113,7 +113,6 @@ function HomePage() {
           ))}
         </div>
       </nav>
-
       {/* ============================================================
           01 / Credo — the ideals that drive the rest of the document
           ============================================================ */}
@@ -403,49 +402,6 @@ function HomePage() {
           </Takeaway>
         </div>
 
-        {/* Sub-block E: strategic acquirers */}
-        <div className="mt-12">
-          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
-            E · Who pays for it before it gets there
-          </div>
-          <div className="grid lg:grid-cols-2 gap-3">
-            {data.ceiling.strategic_acquirers.map((a, i) => (
-              <div
-                key={a.id}
-                className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] p-5"
-              >
-                <div className="flex items-baseline justify-between gap-3 mb-2">
-                  <h4 className="text-base font-semibold text-[var(--on-surface)]">
-                    {a.acquirer}
-                  </h4>
-                  <div className="font-mono text-sm text-[var(--secondary)] tabular-nums flex-shrink-0">
-                    ~${a.plausible_acquisition_price_usd_b.toFixed(1)}B
-                  </div>
-                </div>
-                <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
-                  {a.rationale}
-                </p>
-                <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant-mid)] mt-3">
-                  5-yr NPV to acquirer ~${a.npv_to_acquirer_usd_b.toFixed(0)}B
-                  · {a.year_horizon}-yr horizon
-                </div>
-              </div>
-            ))}
-          </div>
-          <Takeaway
-            label={`Median plausible acquisition price ~$${data.ceiling.median_acquisition_price_usd_b.toFixed(1)}B`}
-            tone="positive"
-          >
-            Six named strategic acquirers — Microsoft (Azure Quantum
-            Elements), Google DeepMind (GNoME lineage), Schrödinger,
-            Synopsys/Cadence (post-ANSYS), IBM Research, defense primes.
-            Median plausible all-cash acquisition price across the five
-            commercial acquirers is ${data.ceiling.median_acquisition_price_usd_b.toFixed(1)}B
-            at a 5-year horizon. The Microsoft + GitHub 2018 acquisition
-            ($7.5B for the developer-platform substrate) is the closest
-            structural analog.
-          </Takeaway>
-        </div>
       </ScrollSection>
 
       {/* ============================================================
@@ -636,9 +592,11 @@ function HomePage() {
 
 function Hero() {
   return (
-    <section className="relative min-w-[100vw] h-screen shrink-0 snap-start snap-always flex flex-col justify-center px-6 lg:px-12 overflow-hidden border-r border-[var(--outline-variant)]">
+    <section 
+      className="relative min-w-[100vw] h-screen shrink-0 snap-start snap-always border-r border-[var(--outline-variant)]"
+    >
       {/* Ambient backdrop */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <div
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(107,138,175,0.06),transparent_60%)]"
         />
@@ -647,8 +605,15 @@ function Hero() {
         />
       </div>
 
-      <div className="container mx-auto max-w-7xl relative z-10 flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-        <div className="flex-1">
+      <div 
+        className="absolute inset-0 overflow-y-auto overflow-x-hidden px-6 lg:px-12"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent 0px, black 120px, black calc(100% - 120px), transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, black 120px, black calc(100% - 120px), transparent 100%)'
+        }}
+      >
+        <div className="container mx-auto max-w-7xl relative z-10 w-full min-h-full flex flex-col justify-center pt-32 pb-36 lg:flex-row lg:items-center gap-16 lg:gap-24">
+          <div className="flex-1">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-6 flex items-center gap-4">
             <span className="w-8 h-px bg-[var(--tertiary)] opacity-50"></span>
             Lupine Materials Science
@@ -688,6 +653,7 @@ function Hero() {
           <div className="absolute left-1/4 right-1/4 top-1/2 h-px bg-[var(--outline-variant)]" />
           <div className="w-3 h-3 rounded-full bg-[var(--primary)] opacity-40" />
         </div>
+      </div>
       </div>
     </section>
   )
@@ -790,13 +756,13 @@ function SectionHeader({
       <div className="absolute -left-8 top-2 w-4 h-4 border-t-2 border-l-2 border-[var(--primary)] opacity-50 hidden lg:block" />
       <div className="absolute -left-8 bottom-2 w-4 h-4 border-b-2 border-l-2 border-[var(--primary)] opacity-50 hidden lg:block" />
 
-      <div className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--tertiary)] mb-5">
+      <div className="font-mono text-xl md:text-2xl uppercase tracking-[0.2em] text-[var(--tertiary)] mb-5">
         {eyebrow}
       </div>
-      <h2 className="text-4xl md:text-5xl font-display tracking-tight text-[var(--on-surface)] mb-5">
+      <h2 className="text-5xl md:text-6xl font-display tracking-tight text-[var(--on-surface)] mb-5 mt-2">
         {title}
       </h2>
-      <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant-mid)] max-w-3xl">
+      <p className="font-serif italic text-2xl md:text-3xl leading-snug text-[var(--on-surface-variant-mid)] max-w-3xl">
         {lead}
       </p>
     </div>

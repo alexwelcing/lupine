@@ -108,13 +108,14 @@ const DASHBOARD_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLIM Think Dashboard</title>
+<title>Lupine — Live Dashboard</title>
 <style>
-:root { --bg: #0a0b12; --surface: #12131a; --text: #e2e2e9; --muted: #8e8e99; --accent: #4f6ef7; }
+:root { --bg: #0a0b12; --surface: #12131a; --text: #e2e2e9; --muted: #8e8e99; --accent: #5b8cff; --lpn-aurora: #00d4aa; --lpn-signal: #5b8cff; --lpn-text-muted: #5a5e75; --lpn-border: #1e2030; --lpn-bg-raised: #12131a; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; line-height: 1.5; }
-header { padding: 2rem; border-bottom: 1px solid #1e1f27; }
-h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+body { background: var(--bg); color: var(--text); font-family: "Inter", system-ui, -apple-system, sans-serif; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+header { padding: 2rem; border-bottom: 1px solid var(--lpn-border); display:flex; align-items:center; justify-content:space-between; }
+h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; font-family: "Space Grotesk", sans-serif; }
+.brand-pill { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lpn-text-muted); border: 1px solid var(--lpn-border); padding: 3px 10px; border-radius: 999px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; padding: 2rem; }
 .card { background: var(--surface); border: 1px solid #1e1f27; border-radius: 12px; padding: 1.25rem; }
 .card h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.5rem; }
@@ -127,7 +128,7 @@ button:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
-<header><h1>GLIM Think // Live Dashboard</h1></header>
+<header><h1>Lupine // Live Dashboard</h1><span class="brand-pill">Via Hermes Hive</span></header>
 <div class="grid">
   <div class="card"><h3>Total Records</h3><div class="value" id="totalRecords">—</div></div>
   <div class="card"><h3>Experiments Run</h3><div class="value" id="experimentRecords">—</div></div>

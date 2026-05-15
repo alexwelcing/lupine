@@ -10,6 +10,7 @@ import { GlimThinkAgent } from "./base";
 import { tool } from "ai";
 import { z } from "zod";
 import type { ToolSet } from "ai";
+import { trace, SpanStatusCode } from "@opentelemetry/api";
 import type { Claim } from "../types";
 
 export class Manifold extends GlimThinkAgent {
@@ -198,6 +199,60 @@ Be quantitative. Cite specific numbers.`;
    * Called by the queue consumer for `manifold_analysis` task kind.
    */
   async runAnalysis(opts: {
+    element: string;
+    family?: string;
+    force?: boolean;
+  }): Promise<{
+    ok: boolean;
+    cached?: boolean;
+    claim_id?: string;
+    pr?: number;
+    log_spacing_r2?: number;
+    eigenvalues?: number[];
+    hyper_ribbon?: boolean;
+    potential_count?: number;
+    property_count?: number;
+    error?: string;
+  }> {
+    const tracer = trace.getTracer("glim-think.agent");
+    return tracer.startActiveSpan("Manifold.runAnalysis", async (span) => {
+      span.setAttribute("agent.class", "Manifold");
+      span.setAttribute("manifold.element", opts.element);
+      span.setAttribute("manifold.family", opts.family ?? "all");
+      try {
+        const result = await this._runAnalysisInner(opts);
+        span.setAttribute("manifold.pr", result.pr ?? 0);
+        span.setAttribute("manifold.hyper_ribbon", result.hyper_ribbon ?? false);
+        span.setAttribute("manifold.potential_count", result.potential_count ?? 0);
+        span.setAttribute("manifold.property_count", result.property_count ?? 0);
+        span.setAttribute("output.value", JSON.stringify(result));
+
+        // Code-eval: manifold geometry checks
+        const eigenvalues = result.eigenvalues ?? [];
+        const pr = result.pr ?? 0;
+        const logR2 = result.log_spacing_r2 ?? 0;
+        const dim = result.property_count ?? 0;
+        const allPositive = eigenvalues.every(v => v > 0);
+        const sorted = eigenvalues.every((v, i) => i === 0 || v <= eigenvalues[i - 1]);
+        span.setAttribute("eval.code.eigenvalues_positive", allPositive);
+        span.setAttribute("eval.code.eigenvalues_sorted", sorted);
+        span.setAttribute("eval.code.pr_in_range", dim > 0 && pr >= 1 && pr <= dim);
+        span.setAttribute("eval.code.data_sufficient", (result.potential_count ?? 0) >= 3 && dim >= 3);
+        span.setAttribute("eval.code.log_r2_valid", Math.abs(logR2) <= 1);
+
+        span.setStatus({ code: SpanStatusCode.OK });
+        return result;
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        throw err;
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  private async _runAnalysisInner(opts: {
     element: string;
     family?: string;
     force?: boolean;

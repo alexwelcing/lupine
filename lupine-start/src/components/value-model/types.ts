@@ -118,15 +118,6 @@ export interface CeilingScenario {
   notes: string
 }
 
-export interface StrategicAcquirer {
-  id: string
-  acquirer: string
-  rationale: string
-  npv_to_acquirer_usd_b: number
-  plausible_acquisition_price_usd_b: number
-  year_horizon: number | null
-  tier: string
-}
 
 export interface QuantumUnlock {
   id: string
@@ -147,8 +138,7 @@ export interface Ceiling {
   scenarios: CeilingScenario[]
   weighted_ev_conditional_usd_b: number
   weighted_probability_total: number
-  strategic_acquirers: StrategicAcquirer[]
-  median_acquisition_price_usd_b: number
+
   quantum_unlocks: QuantumUnlock[]
   quantum_total_addressable_usd_b: number
   quantum_total_classical_baseline_usd_b: number
