@@ -157,7 +157,7 @@ export function DcfScenarioChart({ data }: { data: ValueModelData }) {
         {evCards.map(({ scen, label }) => (
           <span key={scen} className="flex items-center gap-2">
             <span
-              className="inline-block w-3 h-3 rounded-sm"
+              className="inline-block w-3 h-3 rounded-full"
               style={{ background: SCEN_COLORS[scen] }}
             />
             <span className="font-medium">{label}</span>

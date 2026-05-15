@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { motion } from 'framer-motion'
 import { Section, SectionHeader } from '../components/ui/Section'
 import { Card } from '../components/ui/Card'
 
@@ -105,14 +104,11 @@ function AtlasViewerPage() {
 
         {/* Content overlay */}
         <div className="relative z-10 container mx-auto max-w-7xl px-6 lg:px-12 pb-16 lg:pb-24 pt-[180px]">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
+          <div
             className="max-w-2xl"
           >
             <div className="mono-label text-[var(--accent-cyan)] mb-6 tracking-[0.3em]">ATLAS VIEWER · INSPECTION INTERFACE</div>
-            <h1 className="text-4xl lg:text-6xl xl:text-7xl mb-8 leading-[1.05] text-white font-serif">
+            <h1 className="font-display tracking-tight text-5xl lg:text-7xl mb-8 leading-[1.05] text-[var(--on-surface)]">
               See your <em className="italic text-[var(--accent-cyan)]">trajectories</em>,<br />and the audit beside them.
             </h1>
             <p className="text-white/70 text-lg lg:text-xl mb-10 max-w-xl leading-relaxed font-light">
@@ -136,7 +132,7 @@ function AtlasViewerPage() {
                 View Source
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom fade into content */}
@@ -147,7 +143,7 @@ function AtlasViewerPage() {
       <Section bg="light">
         <div className="max-w-3xl mx-auto text-center">
           <span className="mono-label text-[var(--primary)] opacity-60 mb-8 block">THE PROBLEM</span>
-          <h2 className="text-3xl lg:text-5xl mb-8 leading-tight">
+          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
             Molecular visualization is stuck in 2005.
           </h2>
           <p className="text-[var(--on-surface-variant)] text-lg leading-relaxed mb-12">
@@ -375,8 +371,8 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
       <section className="relative text-center px-6 py-24 lg:py-32">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(78,205,196,0.06), transparent 70%)' }} />
         <div className="max-w-xl mx-auto relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="font-serif text-4xl lg:text-5xl mb-6 text-[var(--on-surface)]">
+          <div>
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
               Stop installing.<br />Start <em className="italic text-[var(--accent-cyan)]">seeing</em>.
             </h2>
             <p className="text-[var(--on-surface-variant)] text-lg mb-10 leading-relaxed">
@@ -400,7 +396,7 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
                 View Source
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

@@ -20,6 +20,28 @@
     "featured": true
   },
   {
+    "id": "lupine_genesis",
+    "title": "Lupine: Genesis",
+    "subtitle": "200-frame molecular dynamics trajectory of the first successful Lupine synthesis.",
+    "domain": "Nanomaterials",
+    "atoms": "9,595",
+    "frames": "200",
+    "file": "gallery/curated/lupine_genesis.lammpstrj",
+    "available": true,
+    "colors": [
+      "#3050f8",
+      "#1ff01f",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "GROMACS MD",
+      "potential": "Lupine-Proprietary",
+      "temperature": "300 K",
+      "reference": "Lupine Materials Science Research Group"
+    },
+    "featured": true
+  },
+  {
     "id": "lupine_brand_asset",
     "title": "Lupine Brand Asset (Procedural Hill)",
     "subtitle": "Procedurally generated rolling hill of Texas state flowers with dynamic GPU wind sway.",

@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery } from '@tanstack/react-query'
 import { PageShell } from '../components/ui/PageShell'
 
@@ -55,7 +54,7 @@ function OpsDashboard() {
     >
       <div className="glass-panel p-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-4 border-b border-[var(--outline-variant)]">
-          <h2 className="text-2xl">Recent Deployments</h2>
+          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Recent Deployments</h2>
           <span className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest mt-2 md:mt-0">
             {deployments.length} runs tracked
           </span>
@@ -82,17 +81,14 @@ function OpsDashboard() {
                 </tr>
               </thead>
               <tbody>
-                <AnimatePresence>
+                
                   {deployments.map((d: any, i: number) => (
                     <motion.tr
                       key={d.id || i}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.03 }}
                       className="border-b border-[var(--outline-variant)]/50 hover:bg-[var(--surface-container-high)]/30 transition-colors"
                     >
                       <td className="py-4 px-4">
-                        <span className="font-display text-[14px] font-bold text-[var(--on-surface)] uppercase">
+                        <span className="font-mono text-[14px] font-bold text-[var(--on-surface)] uppercase">
                           {d.service}
                         </span>
                       </td>
@@ -132,7 +128,7 @@ function OpsDashboard() {
                       </td>
                     </motion.tr>
                   ))}
-                </AnimatePresence>
+                
               </tbody>
             </table>
           </div>

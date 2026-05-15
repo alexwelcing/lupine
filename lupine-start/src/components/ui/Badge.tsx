@@ -7,7 +7,7 @@ export interface BadgeProps {
 }
 
 export function Badge({ children, variant = 'default', className = '' }: BadgeProps) {
-  const baseClass = 'inline-flex items-center px-2 py-0.5 rounded-none font-mono text-[9px] uppercase tracking-[0.1em]'
+  const baseClass = 'inline-flex items-center px-2 py-0.5 rounded-sm font-mono text-[9px] uppercase tracking-[0.08em]'
   
   let variantClass = ''
   switch (variant) {

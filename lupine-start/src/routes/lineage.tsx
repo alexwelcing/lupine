@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { motion } from 'framer-motion'
 import { Card } from '../components/ui/Card'
 import { PageShell } from '../components/ui/PageShell'
 
@@ -173,25 +172,21 @@ function LineagePage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">§0 — FRAME</span>
-            <h2 className="text-3xl lg:text-4xl mb-4">Borrowed, contributed, refused</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Borrowed, contributed, refused</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               Three columns, all on one page, in the same place a reviewer would expect them. The most defensible scientific position is also the most narrow: take the existing geometric framework, point it at the population of published potentials, and report what it says.
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {CONTRIBUTION_BULLETS.map((c, i) => (
-              <motion.div
+              <div
                 key={c.label}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
               >
                 <Card elevated className="h-full" style={{ borderTop: `2px solid ${c.accent}` }}>
                   <span className="mono-label block mb-3" style={{ color: c.accent }}>{c.label}</span>
                   <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{c.body}</p>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
@@ -200,8 +195,8 @@ function LineagePage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">§1 — TIMELINE</span>
-            <h2 className="text-3xl lg:text-4xl mb-4">Twenty-two years, in order</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Twenty-two years, in order</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               Each entry below is a specific paper with a specific role. Pinned entries are the two
               load-bearing citations: Transtrum/Machta/Sethna (2011) for the geometric framework,
               and the Lupine 2026 entry for the cross-potential extension that sits on top.
@@ -211,16 +206,12 @@ function LineagePage() {
             <div className="absolute left-[18px] top-0 bottom-0 w-px bg-[var(--outline-variant)]" />
             <div className="space-y-6">
               {PRIORS.map((p, i) => (
-                <motion.div
+                <div
                   key={`${p.year}-${p.cite}`}
-                  initial={{ opacity: 0, x: -12 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.04 }}
                   className="flex gap-6 items-start"
                 >
                   <div
-                    className="relative z-10 flex-shrink-0 w-9 h-9 rounded-full border flex items-center justify-center"
+                    className="relative z-10 flex-shrink-0 w-9 h-9 rounded-md border flex items-center justify-center"
                     style={{
                       borderColor: p.role === 'lupine' ? 'var(--primary)' : 'var(--outline-variant)',
                       background: 'var(--surface)',
@@ -244,7 +235,7 @@ function LineagePage() {
                     style={p.pinned ? { borderTop: '2px solid var(--primary)' } : undefined}
                   >
                     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-2">
-                      <span className="font-display text-base text-[var(--on-surface)]">
+                      <span className="font-mono text-base text-[var(--on-surface)]">
                         {p.year} · {p.cite}
                       </span>
                       <span className="mono-label text-[10px] text-[var(--on-surface-variant)]">
@@ -259,7 +250,7 @@ function LineagePage() {
                     <h3 className="text-base mb-2 italic text-[var(--on-surface)]">{p.title}</h3>
                     <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{p.note}</p>
                   </Card>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -269,8 +260,8 @@ function LineagePage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">§2 — IMPLICATION</span>
-            <h2 className="text-3xl lg:text-4xl mb-4">Why the lineage matters operationally</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Why the lineage matters operationally</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
               Three operational consequences of standing on this chain.
             </p>
           </div>
@@ -310,7 +301,7 @@ function LineagePage() {
 
         {/* === CTA === */}
         <section className="glass-panel p-8 text-center">
-          <h3 className="text-2xl mb-4">Read the preprint that cites this chain</h3>
+          <h3 className="text-2xl mb-4 font-display tracking-tight">Read the preprint that cites this chain</h3>
           <p className="text-[var(--on-surface-variant)] mb-6 max-w-2xl mx-auto">
             The preprint reproduces the lineage in a full reference list at the end of section 6,
             with the exact venues, page numbers, and arXiv identifiers.
@@ -318,13 +309,13 @@ function LineagePage() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               to="/research"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
             >
               Open the preprint
             </Link>
             <Link
               to="/proof"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
             >
               Research defense
             </Link>

@@ -106,7 +106,7 @@ export function HorizonChart({ data }: { data: ValueModelData }) {
                 </span>
                 {isCurrent && (
                   <motion.span
-                    className="ml-2 font-mono text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-full"
+                    className="ml-2 font-mono text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-sm"
                     style={{
                       background: '#4ecdc4',
                       color: '#0b1220',

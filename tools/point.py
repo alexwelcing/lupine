@@ -235,8 +235,17 @@ def cmd_deploy(target: str) -> int:
         return 1
     _header(f"DEPLOY {target}")
     if target == "glim-think":
-        res = _run(["wrangler", "deploy"], cwd=REPO_ROOT / "glim-think")
-        print(res.stdout)
+        res = _run(["npx.cmd", "wrangler", "deploy"], cwd=REPO_ROOT / "glim-think")
+        print(res.stdout.encode('cp1252', 'replace').decode('cp1252'))
+        return res.returncode
+    elif target == "atlas-view":
+        res = _run(["npx.cmd", "wrangler", "pages", "deploy", "apps/web/dist", "--project-name", "atlas-view", "--commit-dirty=true"], cwd=REPO_ROOT / "atlas" / "atlas-view")
+        print(res.stdout.encode('cp1252', 'replace').decode('cp1252'))
+        return res.returncode
+    elif target == "lupine-start":
+        short_sha = _run(["git", "rev-parse", "--short", "HEAD"]).stdout.strip()
+        res = _run(["gcloud.cmd", "builds", "submit", "--config", "cloudbuild.yaml", f"--substitutions=SHORT_SHA={short_sha}", "."], cwd=REPO_ROOT / "lupine-start")
+        print(res.stdout.encode('cp1252', 'replace').decode('cp1252'))
         return res.returncode
     else:
         _fail(f"Unknown deploy target: {target}")

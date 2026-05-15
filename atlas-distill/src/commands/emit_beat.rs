@@ -51,6 +51,33 @@ pub fn run(
     ))
 }
 
+/// Async variant for callers that already have a tokio runtime (e.g. the
+/// `auto-research` command). Pass the worker base URL (no /feed/beats
+/// suffix); the function appends it internally and uses the base as the
+/// OIDC audience.
+pub async fn emit_beat_async(
+    worker_url: &str,
+    agent: &str,
+    summary: &str,
+    metrics: Option<serde_json::Value>,
+    beat_id: Option<String>,
+    dev_mode_bypass: bool,
+) -> Result<()> {
+    let metrics_str = match metrics {
+        Some(v) => Some(serde_json::to_string(&v)?),
+        None => None,
+    };
+    run_async(
+        worker_url,
+        agent,
+        summary,
+        metrics_str.as_deref(),
+        beat_id.as_deref(),
+        dev_mode_bypass,
+    )
+    .await
+}
+
 async fn run_async(
     worker_url: &str,
     agent: &str,

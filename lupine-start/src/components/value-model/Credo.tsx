@@ -36,7 +36,7 @@ export function Credo({ data }: { data: ValueModelData }) {
                   {line.title}
                 </em>
               </h3>
-              <p className="text-base lg:text-lg text-[var(--on-surface-variant)] leading-[1.7] font-light">
+              <p className="font-serif italic text-xl lg:text-2xl text-[var(--on-surface-variant)] leading-snug">
                 {line.body}
               </p>
             </div>

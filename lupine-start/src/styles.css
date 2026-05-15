@@ -2,18 +2,18 @@
    LUPINE MATERIALS SCIENCE — design system entry
 
    Two coexisting systems share this stylesheet:
-     • Lab (Obsidian)        — operational routes
-     • Marketing (Editorial) — landing & viewer surfaces
+     • Dark (Slate)           — default, research-forward
+     • Light (Living Manuscript) — warm paper palette
 
    See lupine-start/DESIGN.md for the full system reference. Module breakdown:
 
      styles/tokens.css       CSS custom properties for both systems
      styles/typography.css   Body, headings, mono-label
-     styles/components.css   .glass-panel, .badge, .evidence-table, .bg-noise…
+     styles/components.css   .glass-panel, .badge, .bg-noise…
      styles/animations.css   @keyframes for ambient motion
 
-   Fonts (Inter / Space Grotesk / Playfair Display) are loaded from a single
-   Google Fonts <link> in src/routes/__root.tsx — do not duplicate here.
+   Fonts (Inter / JetBrains Mono / Space Grotesk / Playfair Display) are loaded
+   from a single Google Fonts <link> in src/routes/__root.tsx.
 
    Tailwind v4 ordering note: @theme inline MUST come before @import "tailwindcss"
    so the default spacing scale is available during utility generation.
@@ -23,6 +23,7 @@
 @import "shadcn/tailwind.css";
 
 @import "./styles/tokens.css";
+@import "./styles/fonts.css";
 @import "./styles/typography.css";
 @import "./styles/components.css";
 @import "./styles/animations.css";
@@ -30,9 +31,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
+  --font-sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Rumelaz Gekinsa", "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
+  --font-mono: "CS Claire Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-display: "Rumelaz Gekinsa", "Playfair Display", Georgia, serif;
+  --font-heading: "Rumelaz Gekinsa", "Playfair Display", Georgia, serif;
+  --font-ui: "Space Grotesk", Inter, system-ui, sans-serif;
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -82,9 +86,31 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-base;
   }
+
   html {
     @apply font-sans;
+  }
+
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  /* Subtle scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--outline-variant);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--on-surface-variant-mid);
   }
 }

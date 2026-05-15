@@ -1,5 +1,4 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 interface Props {
   children: ReactNode
@@ -12,32 +11,15 @@ interface Props {
 /**
  * Scrollytelling section wrapper.
  *
- * Uses Framer Motion's `useInView` (no scrollama dependency) to trigger
- * entry animations the first time the section enters the viewport.
- * Children become the animated subject; provide them with their own
- * inner motion.div if you want staggered reveals.
+ * Converted to static horizontal snap-scroll section.
  */
-export function ScrollSection({ children, id, className = '', from = 'bottom' }: Props) {
-  const ref = useRef<HTMLElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-15% 0px' })
-
-  const initial =
-    from === 'left'
-      ? { opacity: 0, x: -40 }
-      : from === 'right'
-        ? { opacity: 0, x: 40 }
-        : { opacity: 0, y: 40 }
-
+export function ScrollSection({ children, id, className = '' }: Props) {
   return (
-    <motion.section
-      ref={ref}
+    <section
       id={id}
-      className={`relative py-[100px] px-6 lg:px-12 ${className}`}
-      initial={initial}
-      animate={inView ? { opacity: 1, x: 0, y: 0 } : initial}
-      transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1] }}
+      className={`min-w-[100vw] h-screen shrink-0 snap-start snap-always overflow-y-auto overflow-x-hidden relative flex flex-col justify-center px-6 lg:px-12 border-r border-[var(--outline-variant)] ${className}`}
     >
-      <div className="container mx-auto max-w-7xl">{children}</div>
-    </motion.section>
+      <div className="container mx-auto max-w-7xl relative z-10 w-full">{children}</div>
+    </section>
   )
 }

@@ -1,6 +1,6 @@
 """Cross-MLIP cosine alignment analysis on the IMMI 15-element corpus.
 
-Tests `hyp_mlip_alignment_test`: do MLIPs (MACE-MP-0, CHGNet, Orb-v3)
+Tests `hyp_mlip_alignment_test`: do MLIPs (MACE-MP-0, CHGNet, Orb-v3, PET-MAD)
 reproduce the round-1 cross-style PC1 dichotomy when treated as additional
 pair_style families? Predicts strong-alignment elements (Au, Ta, Nb, Ag, Cr,
 Pb, Pt) keep high cross-MLIP cosine; weak-alignment elements (Al, W, Fe, Ni)
@@ -11,7 +11,7 @@ should be low because the LAM-trio closure observed non-monotonic PR there.
 
 Method: per element, build a 3-vector of relative errors
 (pred/ref - 1) for (C11, C12, C44) per MLIP, normalize to unit, compute
-pairwise cosines (MACE-CHGNet, MACE-Orb, CHGNet-Orb), report mean.
+all pairwise cosines across available models, report mean.
 
 Outputs:
     mlip_immi/cross_mlip_alignment_results.json   (per-element + summary stats)
@@ -71,15 +71,12 @@ ORTHOGONAL_PREDICTED = ("Pt", "Ag", "Pb", "Nb")
 class ElementAlignment:
     element: str
     classical_mean_cosine: float
-    error_vec_mace: tuple[float, float, float]
-    error_vec_chgnet: tuple[float, float, float]
-    error_vec_orb: tuple[float, float, float]
-    cos_mace_chgnet: float
-    cos_mace_orb: float
-    cos_chgnet_orb: float
+    error_vectors: dict[str, tuple[float, float, float]]  # model_name -> (e11, e12, e44)
+    pairwise_cosines: dict[str, float]  # "model_a-model_b" -> cosine
     mlip_mean_cosine: float
     mlip_min_cosine: float
     mlip_max_cosine: float
+    n_models: int
 
 
 def _load_results(path: Path) -> dict[str, dict[str, float]]:
@@ -207,34 +204,79 @@ def _betainc_regularized(a: float, b: float, x: float) -> float:
     return front * h
 
 
-def main() -> None:
-    mace = _load_results(HERE / "mace_immi_results.json")
-    chgnet = _load_results(HERE / "chgnet_immi_results.json")
-    orb = _load_results(HERE / "orb_v3_immi_results.json")
+# ─── Model registry (auto-discovered) ─────────────────────────────────
 
-    elements = sorted(set(mace) & set(chgnet) & set(orb) & set(PUBLISHED_C_IJ))
+# Ordered list of (short_name, results_filename) — any that exist on disk
+# are included in the analysis.
+_MODEL_FILES = [
+    ("mace",      "mace_immi_results.json"),
+    ("chgnet",    "chgnet_immi_results.json"),
+    ("orb",       "orb_v3_immi_results.json"),
+    ("pet-mad",   "pet_mad_immi_results.json"),
+    ("pet-mad-1.5", "pet_mad_1.5_immi_results.json"),
+]
+
+
+def _discover_models() -> dict[str, dict[str, dict[str, float]]]:
+    """Return {model_name: {element: {C11, C12, C44}}} for every result file found."""
+    available: dict[str, dict[str, dict[str, float]]] = {}
+    for name, fname in _MODEL_FILES:
+        path = HERE / fname
+        if path.exists():
+            available[name] = _load_results(path)
+            print(f"  + loaded {name} from {fname} ({len(available[name])} elements)")
+        else:
+            print(f"  - {name}: {fname} not found, skipping")
+    return available
+
+
+def main() -> None:
+    print("Discovering MLIP result files...")
+    models = _discover_models()
+
+    if len(models) < 2:
+        print("\nNeed at least 2 MLIP result files for pairwise alignment. Aborting.")
+        return
+
+    model_names = list(models.keys())
+    print(f"\nRunning {len(model_names)}-model alignment: {', '.join(model_names)}")
+
+    # Elements present in ALL loaded models
+    elements = sorted(
+        set.intersection(*(set(d.keys()) for d in models.values()))
+        & set(PUBLISHED_C_IJ)
+    )
+    print(f"Common elements: {len(elements)} — {', '.join(elements)}")
+
+    # All ordered pairs for pairwise cosine
+    from itertools import combinations
+    pair_keys = list(combinations(model_names, 2))
+
     rows: list[ElementAlignment] = []
     for el in elements:
         ref = PUBLISHED_C_IJ[el]
-        e_mace = _relative_error_vector(mace[el], ref)
-        e_chgnet = _relative_error_vector(chgnet[el], ref)
-        e_orb = _relative_error_vector(orb[el], ref)
-        c_mc = _cosine(e_mace, e_chgnet)
-        c_mo = _cosine(e_mace, e_orb)
-        c_co = _cosine(e_chgnet, e_orb)
-        cosines = (c_mc, c_mo, c_co)
+        error_vecs: dict[str, np.ndarray] = {}
+        for name in model_names:
+            error_vecs[name] = _relative_error_vector(models[name][el], ref)
+
+        pairwise: dict[str, float] = {}
+        for a, b in pair_keys:
+            key = f"{a}-{b}"
+            pairwise[key] = _cosine(error_vecs[a], error_vecs[b])
+
+        cosines = list(pairwise.values())
         rows.append(ElementAlignment(
             element=el,
-            classical_mean_cosine=float(CLASSICAL_MEAN_COSINE[el]),
-            error_vec_mace=tuple(float(x) for x in e_mace),
-            error_vec_chgnet=tuple(float(x) for x in e_chgnet),
-            error_vec_orb=tuple(float(x) for x in e_orb),
-            cos_mace_chgnet=c_mc,
-            cos_mace_orb=c_mo,
-            cos_chgnet_orb=c_co,
+            classical_mean_cosine=float(CLASSICAL_MEAN_COSINE.get(el, float("nan"))),
+            error_vectors={
+                name: tuple(float(x) for x in vec)
+                for name, vec in error_vecs.items()
+            },
+            pairwise_cosines=pairwise,
             mlip_mean_cosine=float(np.mean(cosines)),
             mlip_min_cosine=float(min(cosines)),
             mlip_max_cosine=float(max(cosines)),
+            n_models=len(model_names),
         ))
 
     by_el = {r.element: r for r in rows}
@@ -243,12 +285,15 @@ def main() -> None:
         present = [by_el[e].mlip_mean_cosine for e in elements if e in by_el]
         return float(np.mean(present)) if present else float("nan")
 
-    classical_xs = [r.classical_mean_cosine for r in rows]
-    mlip_ys = [r.mlip_mean_cosine for r in rows]
+    classical_xs = [r.classical_mean_cosine for r in rows if not np.isnan(r.classical_mean_cosine)]
+    mlip_ys = [r.mlip_mean_cosine for r in rows if not np.isnan(r.classical_mean_cosine)]
     rho, p = _spearman(classical_xs, mlip_ys)
 
     summary = {
         "n_elements": len(rows),
+        "n_models": len(model_names),
+        "models": model_names,
+        "pairwise_keys": [f"{a}-{b}" for a, b in pair_keys],
         "spearman_rho_classical_vs_mlip": rho,
         "spearman_p": p,
         "group_mlip_mean_cosine_strong_classical": group_mean(STRONG_CLASSICAL),
@@ -256,12 +301,12 @@ def main() -> None:
         "group_mlip_mean_cosine_orthogonal_predicted": group_mean(ORTHOGONAL_PREDICTED),
         "per_element": [asdict(r) for r in rows],
         "method": (
-            "Per element, relative-error vector (predC11/refC11-1, predC12/refC12-1, "
-            "predC44/refC44-1) computed for MACE-MP-0 / CHGNet / Orb-v3 against "
-            "PUBLISHED_C_IJ (Simmons & Wang 1971 / Materials Project). Vectors normalized "
-            "to unit. Pairwise cosine similarity per (MACE-CHGNet, MACE-Orb, CHGNet-Orb). "
-            "Mean cross-MLIP cosine per element. Compared against classical cross-style "
-            "PC1 mean_cosine from claim cross_style_pc1_65d9dd29de5cff7e via Spearman rho."
+            f"Per element, relative-error vector (predC11/refC11-1, predC12/refC12-1, "
+            f"predC44/refC44-1) computed for {' / '.join(model_names)} against "
+            f"PUBLISHED_C_IJ (Simmons & Wang 1971 / Materials Project). Vectors normalized "
+            f"to unit. All {len(pair_keys)} pairwise cosine similarities computed. "
+            f"Mean cross-MLIP cosine per element. Compared against classical cross-style "
+            f"PC1 mean_cosine from claim cross_style_pc1_65d9dd29de5cff7e via Spearman rho."
         ),
         "references_source": (
             "PUBLISHED_C_IJ table in mlip_immi/elastic_constants.py — Simmons & Wang 1971 "
@@ -272,21 +317,29 @@ def main() -> None:
 
     out_path = HERE / "cross_mlip_alignment_results.json"
     out_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
-    print(f"wrote {out_path}")
+    print(f"\nwrote {out_path}")
 
     # Pretty-print summary
-    print(f"\nn_elements: {len(rows)}")
+    print(f"\nn_elements: {len(rows)}, n_models: {len(model_names)}")
     print(f"Spearman rho (classical mean_cos vs MLIP mean_cos): {rho:.3f} (p={p:.3f})")
     print(f"strong-classical group MLIP mean_cos: {summary['group_mlip_mean_cosine_strong_classical']:.3f}")
     print(f"weak-classical group MLIP mean_cos:   {summary['group_mlip_mean_cosine_weak_classical']:.3f}")
     print(f"orthogonal-predicted group:           {summary['group_mlip_mean_cosine_orthogonal_predicted']:.3f}")
     print()
-    print(f"{'element':>4} {'classical':>9} {'mlip_mean':>9} {'min':>7} {'max':>7}  cosines (MC,MO,CO)")
+
+    # Header line
+    pair_labels = [f"{a[:3]}-{b[:3]}" for a, b in pair_keys]
+    hdr = f"{'el':>4} {'classical':>9} {'mlip_mean':>9} {'min':>7} {'max':>7}  " + "  ".join(
+        f"{lbl:>8}" for lbl in pair_labels
+    )
+    print(hdr)
     for r in sorted(rows, key=lambda x: -x.classical_mean_cosine):
+        pair_vals = "  ".join(
+            f"{r.pairwise_cosines[k]:>+8.3f}" for k in r.pairwise_cosines
+        )
         print(
             f"{r.element:>4} {r.classical_mean_cosine:>9.3f} {r.mlip_mean_cosine:>9.3f}"
-            f" {r.mlip_min_cosine:>7.3f} {r.mlip_max_cosine:>7.3f}"
-            f"  ({r.cos_mace_chgnet:+.3f}, {r.cos_mace_orb:+.3f}, {r.cos_chgnet_orb:+.3f})"
+            f" {r.mlip_min_cosine:>7.3f} {r.mlip_max_cosine:>7.3f}  {pair_vals}"
         )
 
 

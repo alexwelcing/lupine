@@ -10,49 +10,47 @@
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  --font-sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
-  --radius: 0.75rem;
+  --radius: 0.375rem;
   --section-pad-y: 6rem;
 
   /* ─── Core surfaces ─── */
-  --background: #020617;
-  --foreground: #e2e8f0;
-  --card: #0b1220;
-  --card-foreground: #e2e8f0;
-  --popover: #0b1220;
-  --popover-foreground: #e2e8f0;
+  --background: #0f1114;
+  --foreground: #e8e6e3;
+  --card: #161a1e;
+  --card-foreground: #e8e6e3;
+  --popover: #161a1e;
+  --popover-foreground: #e8e6e3;
 
-  /* ─── Brand: Lupine blue ─── */
-  --primary: #3b82f6;
-  --primary-foreground: #f8fafc;
-  --primary-container: rgba(59, 130, 246, 0.12);
-  --lupine-300: #93bbfd;
-  --lupine-400: #60a5fa;
-  --lupine-500: #3b82f6;
-  --lupine-600: #2563eb;
-  --lupine-700: #1d4ed8;
+  /* ─── Brand: Lupine slate-blue ─── */
+  --primary: #6b8aaf;
+  --primary-foreground: #0f1114;
+  --primary-container: rgba(107, 138, 175, 0.12);
+  --lupine-300: #8ea8c8;
+  --lupine-400: #7a99bc;
+  --lupine-500: #6b8aaf;
+  --lupine-600: #567394;
+  --lupine-700: #435c78;
 
   /* ─── Semantic ─── */
-  --secondary: #4ecdc4;
-  --secondary-foreground: #020617;
-  --secondary-container: rgba(78, 205, 196, 0.12);
-  --tertiary: #c4b5fd;
-  --muted: #0f172a;
-  --muted-foreground: #94a3b8;
-  --accent: #0f172a;
-  --accent-foreground: #e2e8f0;
-  --accent-cyan: #4ecdc4;
-  --destructive: #ef4444;
-  --error: #ef4444;
-  --error-container: rgba(239, 68, 68, 0.12);
-  --on-secondary: #020617;
+  --secondary: #7a99bc;
+  --secondary-foreground: #0f1114;
+  --secondary-container: rgba(107, 138, 175, 0.10);
+  --tertiary: #8a9bae;
+  --muted: #1a1e22;
+  --muted-foreground: #8a8d91;
+  --accent: #1a1e22;
+  --accent-foreground: #e8e6e3;
+  --accent-cyan: #6b8aaf;
+  --destructive: #c45050;
+  --error: #c45050;
+  --error-container: rgba(196, 80, 80, 0.10);
+  --on-secondary: #0f1114;
 
   /* ─── Borders & inputs ─── */
-  --border: #1e293b;
-  --input: #1e293b;
-  --ring: #3b82f6;
-  --outline-variant: rgba(148, 163, 184, 0.2);
+  --border: #252a2f;
+  --input: #252a2f;
+  --ring: #6b8aaf;
+  --outline-variant: rgba(255, 255, 255, 0.15);
 
   /* ─── Violet accents ─── */
   --violet-300: #c4b5fd;
@@ -72,23 +70,23 @@
   --slate-950: #020617;
 
   /* ─── Surface aliases ─── */
-  --surface: #0b1220;
-  --surface-container: #111827;
-  --surface-container-low: #0d1526;
-  --surface-container-lowest: #131b2e;
-  --surface-container-high: #1a2438;
-  --surface-variant: #1e293b;
-  --on-surface: #e2e8f0;
-  --on-surface-variant: #94a3b8;
-  --on-surface-variant-mid: #64748b;
-  --on-primary: #020617;
+  --surface: #0f1114;
+  --surface-container: #161a1e;
+  --surface-container-low: #1a1e23;
+  --surface-container-lowest: #0c0e11;
+  --surface-container-high: #1f2328;
+  --surface-variant: #252a30;
+  --on-surface: #e8e6e3;
+  --on-surface-variant: #a0a4a8;
+  --on-surface-variant-mid: #6d7278;
+  --on-primary: #0f1114;
 
   /* ─── Chart ─── */
-  --chart-1: #3b82f6;
-  --chart-2: #8b5cf6;
-  --chart-3: #4ecdc4;
-  --chart-4: #f59e0b;
-  --chart-5: #ef4444;
+  --chart-1: #6b8aaf;
+  --chart-2: #8a7bb5;
+  --chart-3: #5a9e97;
+  --chart-4: #b89a5a;
+  --chart-5: #b56b6b;
 
   /* ─── Sidebar (shadcn) ─── */
   --sidebar: #0b1220;

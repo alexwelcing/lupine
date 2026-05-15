@@ -211,7 +211,9 @@ def make_calculator(model: str = "mace-mp-0"):
        - mace-mp-0 (default; small variant for CPU speed)
        - chgnet (412k-param universal force field)
        - orb-v3 (Orbital Materials orb_v3_conservative_inf_omat)
-    All three expose ASE Calculator interface so the strain-energy code is unchanged.
+       - pet-mad (UPET PET-MAD v1.0, PBEsol, 85 elements, ~3.3M params)
+       - pet-mad-1.5 (UPET PET-MAD v1.5, r2SCAN, 102 elements — recommended)
+    All expose ASE Calculator interface so the strain-energy code is unchanged.
     """
     if model == "mace-mp-0":
         from mace.calculators import mace_mp
@@ -224,7 +226,13 @@ def make_calculator(model: str = "mace-mp-0"):
         from orb_models.forcefield.inference.calculator import ORBCalculator
         m, adapter = orb_v3_conservative_inf_omat(device="cpu")
         return ORBCalculator(m, atoms_adapter=adapter, device="cpu")
-    raise ValueError(f"unknown model: {model}; supported: mace-mp-0, chgnet, orb-v3")
+    if model in ("pet-mad", "pet-mad-1.5"):
+        from upet.calculator import UPETCalculator
+        version = "1.5.0" if model == "pet-mad-1.5" else "1.0.2"
+        return UPETCalculator(model="pet-mad-s", version=version, device="cpu")
+    raise ValueError(
+        f"unknown model: {model}; supported: mace-mp-0, chgnet, orb-v3, pet-mad, pet-mad-1.5"
+    )
 
 
 def fmt_compare(el: str, predicted: ElasticResult) -> str:
@@ -248,7 +256,8 @@ def main():
     parser.add_argument("--element", help="single element to compute")
     parser.add_argument("--validate", action="store_true", help="compare against published values")
     parser.add_argument("--all", action="store_true", help="run all 15 IMMI elements")
-    parser.add_argument("--model", default="mace-mp-0", choices=["mace-mp-0", "chgnet", "orb-v3"],
+    parser.add_argument("--model", default="mace-mp-0",
+                        choices=["mace-mp-0", "chgnet", "orb-v3", "pet-mad", "pet-mad-1.5"],
                         help="foundation MLIP to evaluate")
     parser.add_argument("--output", default=None, help="JSON output path (default: {model}_immi_results.json)")
     args = parser.parse_args()

@@ -191,7 +191,7 @@ export function PlatformValueChart({ data }: { data: ValueModelData }) {
               className="flex items-baseline gap-2 py-1 px-2 rounded bg-[var(--surface-container)]"
             >
               <span
-                className="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0"
+                className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
                 style={{ background: SECTOR_PALETTE[i] ?? '#94a3b8' }}
               />
               <span className="text-[var(--on-surface)] flex-1 truncate">

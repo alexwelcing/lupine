@@ -39,6 +39,7 @@ interface GalleryExample {
   domain: Domain;
   atoms: string;
   frames: string;
+  isTrajectory?: boolean;
   file: string;
   sourceUrl?: string;
   available: boolean;
@@ -1116,7 +1117,16 @@ function PatchCard({
 
         <div style={sPatchTags}>
           <span style={sPatchTag}>{example.atoms} atoms</span>
-          <span style={sPatchTag}>{example.frames} frames</span>
+          <span style={sPatchTag}>
+            {parseInt(example.frames) > 1 ? (
+              <>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 4px #34d399' }} />
+                {example.frames} frames
+              </>
+            ) : (
+              'Snapshot'
+            )}
+          </span>
         </div>
 
         {hovered && example.metadata && (

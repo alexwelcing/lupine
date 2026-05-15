@@ -28,25 +28,25 @@ export function PlatformCompsTable({ data }: { data: ValueModelData }) {
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr className="text-[var(--on-surface-variant-mid)] font-mono uppercase tracking-widest text-[10px]">
-              <th className="text-left py-3 px-3 border-b border-[var(--outline-variant)]">
+              <th className="text-left py-3 px-3 border-b border-[var(--outline-variant)] whitespace-nowrap">
                 Platform
               </th>
-              <th className="text-left py-3 px-3 border-b border-[var(--outline-variant)]">
+              <th className="text-left py-3 px-3 border-b border-[var(--outline-variant)] whitespace-nowrap">
                 Category
               </th>
-              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)]">
+              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)] whitespace-nowrap">
                 Revenue ($B)
               </th>
-              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)]">
+              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)] whitespace-nowrap">
                 EV ($B)
               </th>
-              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)]">
+              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)] whitespace-nowrap">
                 EV / Rev
               </th>
-              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)]">
+              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)] whitespace-nowrap">
                 Ecosystem ($B)
               </th>
-              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)]">
+              <th className="text-right py-3 px-3 border-b border-[var(--outline-variant)] whitespace-nowrap">
                 Capture %
               </th>
             </tr>
@@ -107,7 +107,7 @@ function CompRow({
           : 'border-b border-[var(--outline-variant)]/40'
       }
     >
-      <td className="py-2.5 px-3">
+      <td className="py-2.5 px-3 whitespace-nowrap">
         <span
           className={
             isTeal
@@ -118,18 +118,18 @@ function CompRow({
           {comp.company}
         </span>
       </td>
-      <td className="py-2.5 px-3 text-[var(--on-surface-variant)] text-xs">
+      <td className="py-2.5 px-3 text-[var(--on-surface-variant)] text-xs whitespace-nowrap">
         {comp.category}
       </td>
-      <td className="py-2.5 px-3 text-right text-[var(--on-surface-variant)] font-mono tabular-nums">
+      <td className="py-2.5 px-3 text-right text-[var(--on-surface-variant)] font-mono tabular-nums whitespace-nowrap">
         {comp.revenue_usd_b > 0 ? `$${comp.revenue_usd_b.toFixed(1)}` : '—'}
       </td>
-      <td className="py-2.5 px-3 text-right text-[var(--on-surface-variant)] font-mono tabular-nums">
+      <td className="py-2.5 px-3 text-right text-[var(--on-surface-variant)] font-mono tabular-nums whitespace-nowrap">
         {comp.ev_usd_b > 0 ? `$${comp.ev_usd_b.toFixed(0)}` : '—'}
       </td>
       <td
         className={
-          'py-2.5 px-3 text-right font-mono tabular-nums ' +
+          'py-2.5 px-3 text-right font-mono tabular-nums whitespace-nowrap ' +
           (isTeal
             ? 'text-[var(--secondary)] font-semibold'
             : 'text-[var(--on-surface)]')
@@ -137,14 +137,14 @@ function CompRow({
       >
         {comp.ev_revenue_x > 0 ? `${comp.ev_revenue_x.toFixed(1)}x` : '—'}
       </td>
-      <td className="py-2.5 px-3 text-right text-[var(--on-surface-variant-mid)] font-mono tabular-nums text-xs">
+      <td className="py-2.5 px-3 text-right text-[var(--on-surface-variant-mid)] font-mono tabular-nums text-xs whitespace-nowrap">
         {comp.ecosystem_value_usd_b > 0
           ? `$${comp.ecosystem_value_usd_b.toLocaleString()}`
           : '—'}
       </td>
       <td
         className={
-          'py-2.5 px-3 text-right font-mono tabular-nums ' +
+          'py-2.5 px-3 text-right font-mono tabular-nums whitespace-nowrap ' +
           (isTeal
             ? 'text-[var(--secondary)] font-semibold'
             : 'text-[var(--on-surface)]')

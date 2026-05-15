@@ -91,7 +91,10 @@ export class FleetOrchestrator implements DurableObject {
   }
 
   async runFleet(opts: { elements?: string[]; iterations?: number }) {
-    const elements = opts.elements ?? ELEMENTS;
+    let elements = opts.elements ?? ELEMENTS;
+    if (elements.length === 1 && elements[0].toLowerCase() === "all") {
+      elements = ELEMENTS;
+    }
     const fleetBatchId = `fleet-batch-${Date.now()}`;
     const dateHour = new Date().toISOString().slice(0, 13);
     const results: Array<{ element: string; status: string; manifold_job?: string; error?: string }> = [];

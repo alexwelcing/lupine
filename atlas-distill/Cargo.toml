@@ -19,6 +19,7 @@ ureq = { version = "2", features = ["json"] }
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
 tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros"] }
 uuid = { version = "1", features = ["v4"] }
+urlencoding = "2"
 # Local OIDC token mint (when not on Cloud Run): sign a JWT with the SA
 # private key, exchange at Google's token endpoint for an ID token.
 base64 = "0.22"

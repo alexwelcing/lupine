@@ -114,6 +114,21 @@ enum Commands {
         #[arg(long)]
         bcc: bool,
     },
+    /// Hypothesis-bound research loop. Downloads a fixture from GCS, runs a
+    /// small analysis, and emits a beat back to the worker. Wired to be
+    /// invoked by tasks-consumer (Cloud Tasks fan-out from
+    /// /admin/dispatch-batch).
+    AutoResearch {
+        /// Hypothesis identifier this run is bound to (e.g. "h_mlip_escape_Au")
+        #[arg(long)]
+        hypothesis_id: String,
+        /// Fixture object on GCS (gs://bucket/key)
+        #[arg(long)]
+        fixture_url: String,
+        /// Full worker URL for beat ingestion (.../feed/beats)
+        #[arg(long)]
+        beat_emit_url: String,
+    },
 }
 
 #[derive(Subcommand)]
@@ -189,6 +204,11 @@ fn main() -> Result<()> {
             dev_mode_bypass,
         ),
         Commands::DetectParadox { data, bcc } => cmd_detect_paradox(&data, bcc),
+        Commands::AutoResearch {
+            hypothesis_id,
+            fixture_url,
+            beat_emit_url,
+        } => commands::auto_research::run(&hypothesis_id, &fixture_url, &beat_emit_url),
     }
 }
 

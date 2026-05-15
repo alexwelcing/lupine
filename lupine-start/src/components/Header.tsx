@@ -44,7 +44,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-[var(--surface)]/90 backdrop-blur-md border-b border-[var(--outline-variant)]">
       <div className="container mx-auto px-6 lg:px-12 h-16 flex items-center justify-between max-w-7xl">
         <Link to="/" className="flex items-center gap-3 no-underline group">
-          <div className="w-7 h-7 rounded-sm bg-[var(--primary)] flex items-center justify-center transition-transform group-hover:scale-105">
+          <div className="w-7 h-7 rounded-md bg-[var(--primary)] flex items-center justify-center transition-transform group-hover:scale-105">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="8" cy="8" r="6" stroke="#131313" strokeWidth="1.5" />
               <circle cx="8" cy="8" r="2" fill="#131313" />
@@ -65,7 +65,7 @@ export default function Header() {
               }`}
             >
               {item.live && (
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-[pulse-cyan_2s_infinite]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-[pulse-soft_3s_infinite]" />
               )}
               {item.label}
             </Link>

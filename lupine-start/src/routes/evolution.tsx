@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { motion } from 'framer-motion'
 import { Card } from '../components/ui/Card'
 import { PageShell } from '../components/ui/PageShell'
+import { DataList, DataListHeader, DataListHeaderCell, DataListRow, DataListCell } from '../components/ui/DataList'
 
 export const Route = createFileRoute('/evolution')({
   component: EvolutionPage,
@@ -220,8 +220,8 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §0 — FRAME
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">The cycle, in one sentence</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The cycle, in one sentence</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
               Every round of work in this project is a loop:{' '}
               <strong className="text-[var(--on-surface)]">organize information</strong> into a typed
               corpus,{' '}
@@ -241,22 +241,18 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §1 — THE THREE STAGES
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">What each stage owns</h2>
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">What each stage owns</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {stageCards.map((c, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
               >
                 <Card elevated className="h-full">
                   <span className="mono-label text-[var(--primary)] block mb-3">{c.label}</span>
                   <h3 className="text-xl mb-3 text-[var(--on-surface)]">{c.title}</h3>
-                  <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed mb-5">
+                  <p className="font-serif text-[15px] text-[var(--on-surface-variant)] leading-relaxed mb-5">
                     {c.body}
                   </p>
                   <div className="space-y-2 border-t border-[var(--outline-variant)] pt-4">
@@ -268,7 +264,7 @@ function EvolutionPage() {
                     ))}
                   </div>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
@@ -279,8 +275,8 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §2 — IDEA EVOLUTION
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">How the canonical claims have moved</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">How the canonical claims have moved</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
               Nine canonical hypotheses, in order of when they entered the testing lifecycle. The
               column on the right names the spinoff that survived — refutations are not dead
               ends; they reliably leave behind a narrower, defensible claim.
@@ -288,50 +284,46 @@ function EvolutionPage() {
           </div>
 
           <Card elevated noPadding className="overflow-x-auto">
-            <table className="evidence-table w-full">
-              <thead>
-                <tr>
-                  <th>Round / Date</th>
-                  <th>Hypothesis</th>
-                  <th>Movement</th>
-                  <th>Verdict</th>
-                  <th>Spinoff</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ideaEvolutionRows.map((r, i) => (
-                  <tr key={i}>
-                    <td className="whitespace-nowrap">
-                      <span className="mono-label text-[var(--on-surface-variant)] block">
-                        {r.round}
-                      </span>
-                      <span className="font-mono text-xs text-[var(--on-surface-variant)]">
-                        {r.date}
-                      </span>
-                    </td>
-                    <td>
-                      <strong className="text-[var(--on-surface)] block mb-1">{r.claim}</strong>
-                      <span className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
-                        {r.framing}
-                      </span>
-                    </td>
-                    <td className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
-                      {r.movement}
-                    </td>
-                    <td>
-                      <span
-                        className={`font-mono text-[10px] px-2 py-1 border uppercase tracking-wider whitespace-nowrap ${verdictPill(r.verdictTone)}`}
-                      >
-                        {r.verdict}
-                      </span>
-                    </td>
-                    <td className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
-                      {r.spinoff}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <DataList gridCols="grid-cols-[1fr_2fr_2fr_1fr_2fr]">
+              <DataListHeader>
+                <DataListHeaderCell>Round / Date</DataListHeaderCell>
+                <DataListHeaderCell>Hypothesis</DataListHeaderCell>
+                <DataListHeaderCell>Movement</DataListHeaderCell>
+                <DataListHeaderCell>Verdict</DataListHeaderCell>
+                <DataListHeaderCell>Spinoff</DataListHeaderCell>
+              </DataListHeader>
+              {ideaEvolutionRows.map((r, i) => (
+                <DataListRow key={i}>
+                  <DataListCell label="Round / Date" className="whitespace-nowrap">
+                    <span className="mono-label text-[var(--on-surface-variant)] block">
+                      {r.round}
+                    </span>
+                    <span className="font-mono text-xs text-[var(--on-surface-variant)]">
+                      {r.date}
+                    </span>
+                  </DataListCell>
+                  <DataListCell label="Hypothesis">
+                    <strong className="text-[var(--on-surface)] block mb-1">{r.claim}</strong>
+                    <span className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
+                      {r.framing}
+                    </span>
+                  </DataListCell>
+                  <DataListCell label="Movement" className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
+                    {r.movement}
+                  </DataListCell>
+                  <DataListCell label="Verdict">
+                    <span
+                      className={`font-mono text-[10px] px-2 py-1 border uppercase tracking-wider whitespace-nowrap ${verdictPill(r.verdictTone)}`}
+                    >
+                      {r.verdict}
+                    </span>
+                  </DataListCell>
+                  <DataListCell label="Spinoff" className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
+                    {r.spinoff}
+                  </DataListCell>
+                </DataListRow>
+              ))}
+            </DataList>
           </Card>
         </section>
 
@@ -341,10 +333,10 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §3 — THE CONVERGENCE DEMONSTRATION
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
               The same matched-n bootstrap caught two artifacts in two days
             </h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
               This is the load-bearing claim about the system. Two independent hypotheses, in
               different domains (electronic-structure vs many-body rank), both turned out to be
               sample-size confounders rather than physical phenomena. The same deterministic
@@ -355,11 +347,8 @@ function EvolutionPage() {
 
           <div className="space-y-6">
             {convergenceRows.map((r, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
               >
                 <Card elevated noPadding>
                   <div className="p-6 border-b border-[var(--outline-variant)] flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -410,7 +399,7 @@ function EvolutionPage() {
                     </div>
                   </div>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -432,10 +421,10 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §4 — THE X-SCALE, Y-ITERATION PROJECTION
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
               What this looks like at full corpus + thousands of rounds
             </h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
               The point of demonstrating self-correction at small scale is to motivate the cost of
               running it at full scale. If a five-round, ~10⁴-record system already catches its
               own confounders, a ~10⁷-record, thousand-round system should produce a measurable
@@ -444,34 +433,30 @@ function EvolutionPage() {
           </div>
 
           <Card elevated noPadding className="overflow-x-auto">
-            <table className="evidence-table w-full">
-              <thead>
-                <tr>
-                  <th>Axis</th>
-                  <th>Today (May 2026)</th>
-                  <th>Grand finale</th>
-                  <th>Enabler</th>
-                </tr>
-              </thead>
-              <tbody>
-                {projectionRows.map((r, i) => (
-                  <tr key={i}>
-                    <td>
-                      <strong className="text-[var(--on-surface)] whitespace-nowrap">{r.axis}</strong>
-                    </td>
-                    <td className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
-                      {r.today}
-                    </td>
-                    <td className="text-xs text-[var(--on-surface)] leading-relaxed">
-                      {r.grandFinale}
-                    </td>
-                    <td className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
-                      {r.enabler}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <DataList gridCols="grid-cols-[1fr_2fr_2fr_1fr]">
+              <DataListHeader>
+                <DataListHeaderCell>Axis</DataListHeaderCell>
+                <DataListHeaderCell>Today (May 2026)</DataListHeaderCell>
+                <DataListHeaderCell>Grand finale</DataListHeaderCell>
+                <DataListHeaderCell>Enabler</DataListHeaderCell>
+              </DataListHeader>
+              {projectionRows.map((r, i) => (
+                <DataListRow key={i}>
+                  <DataListCell label="Axis">
+                    <strong className="text-[var(--on-surface)] whitespace-nowrap">{r.axis}</strong>
+                  </DataListCell>
+                  <DataListCell label="Today (May 2026)" className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
+                    {r.today}
+                  </DataListCell>
+                  <DataListCell label="Grand finale" className="text-xs text-[var(--on-surface)] leading-relaxed">
+                    {r.grandFinale}
+                  </DataListCell>
+                  <DataListCell label="Enabler" className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
+                    {r.enabler}
+                  </DataListCell>
+                </DataListRow>
+              ))}
+            </DataList>
           </Card>
         </section>
 
@@ -481,8 +466,8 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §5 — GRAND FINALE INFRASTRUCTURE
             </span>
-            <h2 className="text-3xl lg:text-4xl mb-4">BigQuery + GCP, mapped to the loop</h2>
-            <p className="text-[var(--on-surface-variant)] leading-relaxed max-w-3xl">
+            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">BigQuery + GCP, mapped to the loop</h2>
+            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
               Cloudflare D1 has carried us through ~10⁴ records and is the right system of record at
               that scale. Beyond ~10⁶ records we will hit D1's storage and query limits, and the
               analytical workloads (SQL aggregations across hypotheses, claim_types, agents,
@@ -552,7 +537,7 @@ function EvolutionPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/hypotheses"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-display text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
             >
               Hypotheses ledger
             </a>
@@ -560,13 +545,13 @@ function EvolutionPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/claims/research_note_meam_bootstrap_2026_05_05"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-display text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors"
             >
               Most recent closure
             </a>
             <a
               href="/process"
-              className="px-6 py-3 border border-[var(--outline)] text-[var(--on-surface)] font-display text-sm uppercase tracking-widest hover:bg-[var(--surface-container-high)] transition-colors"
+              className="px-6 py-3 border border-[var(--outline)] text-[var(--on-surface)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--surface-container-high)] transition-colors"
             >
               Operating report
             </a>

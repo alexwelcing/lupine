@@ -1,6 +1,50 @@
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY SYSTEM — Lupine Quantum Ledger
+   
+   Three voices:
+   · Rumelaz Gekinsa (serif)  → editorial headings, display text
+   · CS Claire Mono (mono)    → data labels, code, notation
+   · Inter (sans)             → body text, paragraphs
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Monospaced Data Labels ─── */
 .mono-label {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+/* ─── Editorial Serif Heading ─── */
+.serif-heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+}
+
+/* ─── Serif Pull Quote ─── */
+.serif-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+
+/* ─── Mono Data Value (large) ─── */
+.mono-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Mono Inline Code ─── */
+.mono-code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  letter-spacing: 0;
+  background: var(--surface-container);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius);
 }
