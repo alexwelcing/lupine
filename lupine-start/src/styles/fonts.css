@@ -1,0 +1,46 @@
+/* ═══════════════════════════════════════════════════════════════
+   SELF-HOSTED FONT FACES
+   
+   CS Claire Mono  — Monospaced. Replaces JetBrains Mono for
+                     data labels, code, and technical notation.
+   Rumelaz Gekinsa — Classic serif. Replaces Playfair Display
+                     for editorial headings and pull-quotes.
+   
+   Both are loaded from /fonts/ in the public directory.
+   Formats prioritise woff2 → woff → opentype for progressive
+   enhancement across browser support.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── CS Claire Mono ─── */
+@font-face {
+  font-family: "CS Claire Mono";
+  src: url("/fonts/CSClaireMono-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CS Claire Mono";
+  src: url("/fonts/CSClaireMono-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ─── Rumelaz Gekinsa ─── */
+@font-face {
+  font-family: "Rumelaz Gekinsa";
+  src: url("/fonts/RumelazGekinsa-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Rumelaz Gekinsa";
+  src: url("/fonts/RumelazGekinsa-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
