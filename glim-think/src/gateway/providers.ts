@@ -7,6 +7,7 @@
 
 import { trace, SpanStatusCode } from "@opentelemetry/api";
 import { accumulateCost } from "../telemetry/pipeline";
+import { annotateGatewayLLMSpan } from "./openinference-span";
 
 export interface ModelResponse {
   text: string;
@@ -69,6 +70,14 @@ export class WorkersAIProvider implements Provider {
           latencyMs: Date.now() - start,
         };
         span.setStatus({ code: SpanStatusCode.OK });
+        annotateGatewayLLMSpan(span, {
+          provider: this.name,
+          model: this.model,
+          systemPrompt: opts?.systemPrompt,
+          prompt,
+          outputText: response.text,
+          usage: response.usage,
+        });
         accumulateCost(this.name, response.usage);
         return response;
       } catch (err) {
@@ -133,6 +142,14 @@ export class OpenAIProvider implements Provider {
           span.setAttribute("gen_ai.usage.output_tokens", response.usage.completionTokens);
         }
         span.setStatus({ code: SpanStatusCode.OK });
+        annotateGatewayLLMSpan(span, {
+          provider: this.name,
+          model: this.model,
+          systemPrompt: opts?.systemPrompt,
+          prompt,
+          outputText: response.text,
+          usage: response.usage,
+        });
         accumulateCost(this.name, response.usage);
         return response;
       } catch (err) {
@@ -196,6 +213,14 @@ export class AnthropicProvider implements Provider {
           span.setAttribute("gen_ai.usage.output_tokens", response.usage.completionTokens);
         }
         span.setStatus({ code: SpanStatusCode.OK });
+        annotateGatewayLLMSpan(span, {
+          provider: this.name,
+          model: this.model,
+          systemPrompt: opts?.systemPrompt,
+          prompt,
+          outputText: response.text,
+          usage: response.usage,
+        });
         accumulateCost(this.name, response.usage);
         return response;
       } catch (err) {
@@ -250,6 +275,14 @@ export class GeminiProvider implements Provider {
           latencyMs: Date.now() - start,
         };
         span.setStatus({ code: SpanStatusCode.OK });
+        annotateGatewayLLMSpan(span, {
+          provider: this.name,
+          model: this.model,
+          systemPrompt: opts?.systemPrompt,
+          prompt,
+          outputText: response.text,
+          usage: response.usage,
+        });
         accumulateCost(this.name, response.usage);
         return response;
       } catch (err) {
@@ -331,6 +364,14 @@ export class ZAIProvider implements Provider {
           latencyMs: Date.now() - start,
         };
         span.setStatus({ code: SpanStatusCode.OK });
+        annotateGatewayLLMSpan(span, {
+          provider: this.name,
+          model: this.model,
+          systemPrompt: opts?.systemPrompt,
+          prompt,
+          outputText: response.text,
+          usage: response.usage,
+        });
         accumulateCost(this.name, response.usage);
         return response;
       } catch (err) {
@@ -390,6 +431,14 @@ export class MiniMaxProvider implements Provider {
           latencyMs: Date.now() - start,
         };
         span.setStatus({ code: SpanStatusCode.OK });
+        annotateGatewayLLMSpan(span, {
+          provider: this.name,
+          model: this.model,
+          systemPrompt: opts?.systemPrompt,
+          prompt,
+          outputText: response.text,
+          usage: response.usage,
+        });
         accumulateCost(this.name, response.usage);
         return response;
       } catch (err) {
@@ -442,6 +491,14 @@ export class HFProvider implements Provider {
           latencyMs: Date.now() - start,
         };
         span.setStatus({ code: SpanStatusCode.OK });
+        annotateGatewayLLMSpan(span, {
+          provider: this.name,
+          model: this.model,
+          systemPrompt: opts?.systemPrompt,
+          prompt,
+          outputText: response.text,
+          usage: response.usage,
+        });
         accumulateCost(this.name, response.usage);
         return response;
       } catch (err) {
