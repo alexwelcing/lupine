@@ -24,7 +24,7 @@
  */
 
 import { trace, SpanStatusCode } from "@opentelemetry/api";
-import { getAgentByName } from "agents";
+import { getNamedAgentStub } from "../agents/named-stub";
 import type { Env } from "../types";
 import { traceEnv } from "../telemetry/storage";
 import { withTaskPipeline } from "../telemetry/pipeline";
@@ -369,7 +369,7 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     // else "Attempting to read .name on Manifold before it was set"
     // (cloudflare/workerd#2240). The HTTP path gets this via
     // routeAgentRequest; the queue path must do it explicitly.
-    const stub = await getAgentByName(env.MANIFOLD_AGENT, `manifold-${task.element}`);
+    const stub = await getNamedAgentStub(env.MANIFOLD_AGENT, `manifold-${task.element}`);
     const result = (await (stub as unknown as {
       runAnalysis: (opts: { element: string; family?: string }) => Promise<{ ok: boolean; error?: string }>;
     }).runAnalysis({ element: task.element, family: task.family }));
@@ -381,7 +381,7 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
 
   if (task.kind === "causal_screen") {
     // getAgentByName sets the stub name (see manifold_analysis note above).
-    const stub = await getAgentByName(env.CAUSAL_AGENT, "causal-main");
+    const stub = await getNamedAgentStub(env.CAUSAL_AGENT, "causal-main");
     const result = (await (stub as unknown as {
       runScreen: (opts: { grouping: "element" | "pair_style" | "potential_label" }) => Promise<{ ok: boolean; error?: string }>;
     }).runScreen({ grouping: task.grouping }));
