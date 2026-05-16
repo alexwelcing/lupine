@@ -32,13 +32,20 @@ jobs:
         run: |
           npm install --prefer-offline --no-audit
 
+      # `tsc --noEmit` hangs indefinitely in CI on this project (observed:
+      # 15 min, killed by the job cap, deploy skipped). continue-on-error
+      # does NOT cover a hang — it only applies once a step finishes. A
+      # step-level timeout bounds it; lint is advisory here, not a deploy
+      # gate, so a timed-out type check must not block the deploy.
       - name: Type check
         working-directory: glim-think
         continue-on-error: true
+        timeout-minutes: 4
         run: npm run lint
 
       - name: Run unit tests
         working-directory: glim-think
+        timeout-minutes: 6
         run: npm test
 
       - name: Deploy to Cloudflare Workers
