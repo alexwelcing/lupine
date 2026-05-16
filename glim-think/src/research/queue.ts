@@ -43,7 +43,8 @@ export type ResearchTaskKind =
   | "claim-audio"
   | "manifold_analysis"   // Phase A Option-C: dispatch to Manifold DO
   | "causal_screen"       // Phase A Option-C: dispatch to Causal DO
-  | "causal_structure_property"; // Round C2: structure×property screen
+  | "causal_structure_property"   // Round C2: structure×property screen
+  | "causal_structure_scalefree"; // Round C3′: scale-free structure screen
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -126,6 +127,11 @@ export interface CausalStructurePropertyTask extends ResearchTaskBase {
   kind: "causal_structure_property";
 }
 
+/** Round C3′: scale-free BCC/FCC screen (range-restriction test). */
+export interface CausalStructureScaleFreeTask extends ResearchTaskBase {
+  kind: "causal_structure_scalefree";
+}
+
 export type ResearchTask =
   | RoundTask
   | LiteratureTask
@@ -135,7 +141,8 @@ export type ResearchTask =
   | ClaimAudioTask
   | ManifoldAnalysisTask
   | CausalScreenTask
-  | CausalStructurePropertyTask;
+  | CausalStructurePropertyTask
+  | CausalStructureScaleFreeTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -405,6 +412,17 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     }).runStructurePropertyScreen());
     if (!result.ok) {
       throw new Error(`Causal.runStructurePropertyScreen failed: ${result.error ?? "unknown"}`);
+    }
+    return;
+  }
+
+  if (task.kind === "causal_structure_scalefree") {
+    const stub = await getNamedAgentStub(env.CAUSAL_AGENT, "causal-main");
+    const result = (await (stub as unknown as {
+      runStructureScaleFreeScreen: () => Promise<{ ok: boolean; error?: string }>;
+    }).runStructureScaleFreeScreen());
+    if (!result.ok) {
+      throw new Error(`Causal.runStructureScaleFreeScreen failed: ${result.error ?? "unknown"}`);
     }
     return;
   }

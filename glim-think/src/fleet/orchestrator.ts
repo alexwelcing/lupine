@@ -158,11 +158,25 @@ export class FleetOrchestrator implements DurableObject {
       structureProperty = { status: "failed", error: String(e) };
     }
 
+    // 4. Round C3′ — scale-free BCC/FCC screen (range-restriction test).
+    let structureScaleFree: { status: string; job_id?: string; error?: string };
+    try {
+      const enq = await enqueueTask(this.env, {
+        kind: "causal_structure_scalefree",
+        dedup_key: `auto-scalefree:${dateHour}`,
+        enqueued_at: new Date().toISOString(),
+      });
+      structureScaleFree = { status: enq.status, job_id: enq.job_id };
+    } catch (e) {
+      structureScaleFree = { status: "failed", error: String(e) };
+    }
+
     return {
       fleets: results.length,
       results,
       causal_screens: causalResults,
       structure_property: structureProperty,
+      structure_scalefree: structureScaleFree,
     };
   }
 

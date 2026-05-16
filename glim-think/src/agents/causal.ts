@@ -371,6 +371,112 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
   }
 
   /**
+   * Round C3′ — scale-free BCC/FCC screen. C2 refuted the Cauchy mechanism
+   * (FCC dead uniformly across C11/C12/C44). This tests the range-restriction
+   * hypothesis: is FCC's near-zero Pearson r an artifact of small reference
+   * variance + small ABSOLUTE error (potentials accurate, correlation blind →
+   * aggregate leaderboards doubly wrong for close-packed metals), or genuine
+   * large error? Reports per structure×property: reference mean/std, absolute
+   * MAE/RMSE, relative MAE (scale-free), and r. → ScaleFreeStructureScreen.
+   */
+  async runStructureScaleFreeScreen(): Promise<{
+    ok: boolean;
+    claim_id?: string;
+    error?: string;
+    summary?: unknown;
+  }> {
+    const tracer = trace.getTracer("glim-think.causal");
+    return tracer.startActiveSpan("Causal.runStructureScaleFreeScreen", async (span) => {
+      try {
+        await this.onStart();
+        const r4 = (x: number) => (Number.isFinite(x) ? Math.round(x * 10000) / 10000 : null);
+        const structExpr = groupKeyExpr("structure");
+        const props = ["C11", "C12", "C44"];
+        const cells: Array<Record<string, unknown>> = [];
+
+        for (const p of props) {
+          const rows = await this.queryLedger<{ struct: string; reference: number; predicted: number }>(
+            `SELECT ${structExpr} as struct, reference, predicted FROM records WHERE property = '${p}'`,
+          );
+          const byS: Record<string, { ref: number[]; pred: number[] }> = {};
+          for (const x of rows) {
+            (byS[x.struct] ||= { ref: [], pred: [] }).ref.push(x.reference);
+            byS[x.struct].pred.push(x.predicted);
+          }
+          for (const s of ["bcc", "fcc"]) {
+            const g = byS[s];
+            if (!g || g.ref.length < 3) { cells.push({ property: p, structure: s, error: "insufficient" }); continue; }
+            const n = g.ref.length;
+            const mean = g.ref.reduce((a, b) => a + b, 0) / n;
+            const refStd = Math.sqrt(g.ref.reduce((a, b) => a + (b - mean) ** 2, 0) / n);
+            const absErr = g.ref.map((ref, i) => Math.abs(g.pred[i] - ref));
+            const mae = absErr.reduce((a, b) => a + b, 0) / n;
+            const rmse = Math.sqrt(g.ref.reduce((a, ref, i) => a + (g.pred[i] - ref) ** 2, 0) / n);
+            const meanAbsRef = g.ref.reduce((a, b) => a + Math.abs(b), 0) / n;
+            cells.push({
+              property: p, structure: s, n,
+              ref_mean: r4(mean), ref_std: r4(refStd),
+              mae: r4(mae), rmse: r4(rmse),
+              rel_mae: r4(meanAbsRef > 0 ? mae / meanAbsRef : NaN), // scale-free
+              nrmse_std: r4(refStd > 0 ? rmse / refStd : NaN),       // error vs signal spread
+              pearson_r: r4(this.pearsonR(g.ref, g.pred)),
+            });
+          }
+        }
+
+        const get = (p: string, s: string) => cells.find((c) => c.property === p && c.structure === s) as Record<string, number> | undefined;
+        const avg = (s: string, k: string) => {
+          const v = props.map((p) => get(p, s)?.[k]).filter((x): x is number => typeof x === "number");
+          return v.length ? v.reduce((a, b) => a + b, 0) / v.length : NaN;
+        };
+        const fccRelMae = avg("fcc", "rel_mae"), bccRelMae = avg("bcc", "rel_mae");
+        const fccStd = avg("fcc", "ref_std"), bccStd = avg("bcc", "ref_std");
+        const fccR = avg("fcc", "pearson_r");
+        // Range-restriction: FCC reference variance much smaller than BCC,
+        // FCC absolute relative error modest (<0.25), yet FCC r near zero.
+        const rangeRestricted =
+          Number.isFinite(fccStd) && Number.isFinite(bccStd) && fccStd < 0.6 * bccStd &&
+          Number.isFinite(fccRelMae) && fccRelMae < 0.25 &&
+          Number.isFinite(fccR) && Math.abs(fccR) < 0.25;
+        const verdict = rangeRestricted
+          ? "RANGE-RESTRICTION CONFIRMED: FCC potentials are absolutely accurate (low relative error) over a narrow reference range; near-zero Pearson r is a variance-normalized-metric artifact. Aggregate correlation/RMSE leaderboards are DOUBLY misleading for close-packed metals (masked by aggregation AND by metric choice)."
+          : "RANGE-RESTRICTION NOT SUPPORTED: FCC shows genuinely large relative error — potentials really do under-predict close-packed elastic constants; aggregation still masks a real differential-accuracy failure.";
+
+        const claimId = `causal_scalefree_${Date.now()}`;
+        const claimData = { analysis: "structure_scale_free", cells, fcc_rel_mae: r4(fccRelMae), bcc_rel_mae: r4(bccRelMae), fcc_ref_std: r4(fccStd), bcc_ref_std: r4(bccStd), fcc_pearson_r: r4(fccR), range_restricted: rangeRestricted, verdict };
+        const description =
+          `Round C3′ scale-free BCC/FCC — FCC rel_MAE=${r4(fccRelMae)} (ref_std=${r4(fccStd)}, r=${r4(fccR)}) vs ` +
+          `BCC rel_MAE=${r4(bccRelMae)} (ref_std=${r4(bccStd)}). ${verdict}`;
+        const now = new Date().toISOString();
+        try {
+          await this.env.LEDGER
+            .prepare(
+              `INSERT INTO claims
+                (claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at, timestamp)
+              VALUES (?1, 'agent_delta_causal', 'ScaleFreeStructureScreen', ?2, '[]', ?3, 'proposed', ?4, ?5, ?5)
+              ON CONFLICT(claim_id) DO NOTHING`,
+            )
+            .bind(claimId, JSON.stringify(claimData), rangeRestricted ? 0.8 : 0.6, description, now)
+            .run();
+        } catch (e) {
+          console.error("Causal.runStructureScaleFreeScreen: claim insert failed:", e);
+        }
+
+        span.setAttribute("causal.scalefree.range_restricted", rangeRestricted);
+        span.setAttribute("output.value", JSON.stringify(claimData));
+        span.setStatus({ code: SpanStatusCode.OK });
+        return { ok: true, claim_id: claimId, summary: claimData };
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        return { ok: false, error: String(err) };
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  /**
    * Round C2 — property-resolved BCC/FCC screen. Tests whether the within-FCC
    * predictive collapse (Round B: fcc r≈0.06 vs bcc r≈0.90) is concentrated in
    * the Cauchy pair (C12/C44) versus C11. The EAM lineage is constrained near
