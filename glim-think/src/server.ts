@@ -30,16 +30,16 @@ import { instrument } from "@microlabs/otel-cf-workers";
 import { routeAgentRequest } from "agents";
 import { traceEnv } from "./telemetry/storage";
 import { withPipelineSpan } from "./telemetry/pipeline";
-import { Orchestrator } from "./agents/orchestrator";
+import { Orchestrator as OrchestratorDO } from "./agents/orchestrator";
 import { phoenixConfig } from "./telemetry/phoenix";
-import { Manifold } from "./agents/manifold";
-import { Causal } from "./agents/causal";
-import { Theorist } from "./agents/theorist";
-import { Experiment } from "./agents/experiment";
-import { Literaturist } from "./agents/literaturist";
-import { FleetOrchestrator } from "./fleet/orchestrator";
-import { DashboardAgent } from "./dashboard/stream";
-import { ExtensionManager } from "./extensions/manager";
+import { Manifold as ManifoldDO } from "./agents/manifold";
+import { Causal as CausalDO } from "./agents/causal";
+import { Theorist as TheoristDO } from "./agents/theorist";
+import { Experiment as ExperimentDO } from "./agents/experiment";
+import { Literaturist as LiteraturistDO } from "./agents/literaturist";
+import { FleetOrchestrator as FleetOrchestratorDO } from "./fleet/orchestrator";
+import { DashboardAgent as DashboardAgentDO } from "./dashboard/stream";
+import { ExtensionManager as ExtensionManagerDO } from "./extensions/manager";
 import { ModelRouter } from "./gateway/router";
 import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
 import { respondToCritique } from "./critiques/dispatcher";
@@ -78,7 +78,7 @@ import {
   listSlideshowImages,
 } from "./research/slideshow";
 import { checkAccess, isGatedRoute } from "./middleware/access"
-import { __unwrappedFetch } from "@microlabs/otel-cf-workers";
+import { __unwrappedFetch, instrumentDO } from "@microlabs/otel-cf-workers";
 import { phoenixConfig } from "./telemetry/phoenix";
 
 
@@ -133,17 +133,22 @@ function jsonError(message: string, status: number): Response {
 }
 
 // Re-export all Durable Object classes for wrangler
-export {
-  Orchestrator,
-  Manifold,
-  Causal,
-  Theorist,
-  Experiment,
-  FleetOrchestrator,
-  DashboardAgent,
-  ExtensionManager,
-  Literaturist,
-};
+// Each agent/research span (Manifold.runAnalysis, Causal.runScreen,
+// *.synthesize, …) is created INSIDE a Durable Object isolate. instrument()
+// only wraps the main Worker handler — DO isolates have no OTel provider
+// unless wrapped with instrumentDO(). Without this, the richest research
+// telemetry (pr, hyper_ribbon, eigenvalues, pooled_r, reversal) is created
+// and silently dropped, and the combo evaluators have nothing to score.
+// Same phoenixConfig → same OpenInference projection + relay → Phoenix.
+export const Orchestrator = instrumentDO(OrchestratorDO, phoenixConfig);
+export const Manifold = instrumentDO(ManifoldDO, phoenixConfig);
+export const Causal = instrumentDO(CausalDO, phoenixConfig);
+export const Theorist = instrumentDO(TheoristDO, phoenixConfig);
+export const Experiment = instrumentDO(ExperimentDO, phoenixConfig);
+export const FleetOrchestrator = instrumentDO(FleetOrchestratorDO, phoenixConfig);
+export const DashboardAgent = instrumentDO(DashboardAgentDO, phoenixConfig);
+export const ExtensionManager = instrumentDO(ExtensionManagerDO, phoenixConfig);
+export const Literaturist = instrumentDO(LiteraturistDO, phoenixConfig);
 
 // Worker entrypoint wrapped with OpenTelemetry → Phoenix Cloud export.
 // `phoenixConfig` resolves to a localhost no-op exporter when the

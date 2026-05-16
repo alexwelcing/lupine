@@ -281,10 +281,39 @@ Be quantitative. Cite specific numbers.`;
         WHERE family = ${family} AND element = ${opts.element}
       `;
       if (cached.length > 0) {
+        const claimId = String(cached[0].claim_id ?? "");
+        // Rehydrate the FULL scientific payload from the persisted claim.
+        // The manifold_runs row only stores claim_id+pr; returning just those
+        // strips eigenvalues / property_count / data-sufficiency, which both
+        // the combo evaluator and downstream causal/theorist reasoning need
+        // (an eval-surfaced research-quality defect — see PHOENIX_EVALS_CASE_STUDY).
+        try {
+          const row = await this.env.LEDGER
+            .prepare(`SELECT claim_data FROM claims WHERE claim_id = ?1`)
+            .bind(claimId)
+            .first<{ claim_data?: string }>();
+          if (row?.claim_data) {
+            const cd = JSON.parse(row.claim_data) as Record<string, unknown>;
+            return {
+              ok: true,
+              cached: true,
+              claim_id: claimId,
+              pr: Number(cd.pr ?? cached[0].pr ?? 0),
+              log_spacing_r2: typeof cd.log_spacing_r2 === "number" ? cd.log_spacing_r2 : undefined,
+              eigenvalues: Array.isArray(cd.eigenvalues) ? (cd.eigenvalues as number[]) : undefined,
+              hyper_ribbon: typeof cd.hyper_ribbon === "boolean" ? cd.hyper_ribbon : undefined,
+              potential_count: typeof cd.potential_count === "number" ? cd.potential_count : undefined,
+              property_count: typeof cd.property_count === "number" ? cd.property_count : undefined,
+            };
+          }
+        } catch (e) {
+          console.error("Manifold.runAnalysis: cache rehydrate failed:", e);
+        }
+        // Fallback: claim missing/corrupt — stripped result (still valid).
         return {
           ok: true,
           cached: true,
-          claim_id: String(cached[0].claim_id ?? ""),
+          claim_id: claimId,
           pr: Number(cached[0].pr ?? 0),
         };
       }
