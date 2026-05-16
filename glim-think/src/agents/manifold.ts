@@ -320,9 +320,13 @@ Be quantitative. Cite specific numbers.`;
     }
 
     // Load records (matching the get_families/load_records tool flow).
+    // Defense-in-depth contamination gate: exclude physically-impossible
+    // predicted Cij (|pred|>1500 GPa or ≤0) — PR/eigenvalues are extremely
+    // sensitive to such outliers (Round B/C false-discovery cause).
+    const CLEAN = `ABS(predicted) <= 1500 AND predicted > 0`;
     const sql = family === "all"
-      ? `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE (element = ?1 OR ?1 = 'all')`
-      : `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE (element = ?1 OR ?1 = 'all') AND pair_style = ?2`;
+      ? `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE (element = ?1 OR ?1 = 'all') AND ${CLEAN}`
+      : `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE (element = ?1 OR ?1 = 'all') AND pair_style = ?2 AND ${CLEAN}`;
     const records = family === "all"
       ? await this.queryLedger<{ potential_label: string; property: string; reference: number; predicted: number; pair_style: string }>(sql, opts.element)
       : await this.queryLedger<{ potential_label: string; property: string; reference: number; predicted: number; pair_style: string }>(sql, opts.element, family);

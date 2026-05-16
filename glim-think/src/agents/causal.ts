@@ -371,6 +371,108 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
   }
 
   /**
+   * Data purge — durable corpus cleanup. Permanently removes physically
+   * impossible records (|predicted| > 1500 GPa, ≤ 0, or non-finite) that
+   * corrupt every pooled/correlation/PR metric (Round B/C false-discovery
+   * root cause). Reports counts + sources, verifies zero corrupt remain.
+   * Idempotent: re-running deletes nothing and re-confirms clean.
+   */
+  async runDataPurge(): Promise<{
+    ok: boolean;
+    claim_id?: string;
+    error?: string;
+    summary?: unknown;
+  }> {
+    const tracer = trace.getTracer("glim-think.causal");
+    return tracer.startActiveSpan("Causal.runDataPurge", async (span) => {
+      try {
+        await this.onStart();
+        const CORRUPT = `predicted IS NULL OR ABS(predicted) > 1500 OR predicted <= 0`;
+
+        const before = await this.queryLedger<{ n: number }>(`SELECT COUNT(*) as n FROM records`);
+        const totalBefore = Number(before[0]?.n ?? 0);
+
+        const corruptRows = await this.queryLedger<{
+          structure: string; property: string; provenance: string; potential_label: string;
+        }>(
+          `SELECT ${groupKeyExpr("structure")} as structure, property, provenance, potential_label
+             FROM records WHERE ${CORRUPT}`,
+        );
+        const corruptCount = corruptRows.length;
+
+        const byStruct: Record<string, number> = {};
+        const byProperty: Record<string, number> = {};
+        const bySource: Record<string, number> = {};
+        for (const r of corruptRows) {
+          byStruct[r.structure] = (byStruct[r.structure] || 0) + 1;
+          byProperty[r.property] = (byProperty[r.property] || 0) + 1;
+          const k = `${r.provenance || "?"}|${r.potential_label || "?"}`;
+          bySource[k] = (bySource[k] || 0) + 1;
+        }
+
+        let deleted = 0;
+        if (corruptCount > 0) {
+          const res = await this.env.LEDGER
+            .prepare(`DELETE FROM records WHERE ${CORRUPT}`)
+            .run();
+          deleted = Number((res as { meta?: { changes?: number } }).meta?.changes ?? corruptCount);
+        }
+
+        // Verify: zero corrupt must remain (idempotency / resolution check).
+        const after = await this.queryLedger<{ n: number; c: number }>(
+          `SELECT COUNT(*) as n, SUM(CASE WHEN ${CORRUPT} THEN 1 ELSE 0 END) as c FROM records`,
+        );
+        const totalAfter = Number(after[0]?.n ?? 0);
+        const corruptRemaining = Number(after[0]?.c ?? 0);
+        const verifiedClean = corruptRemaining === 0;
+
+        const topSources = Object.entries(bySource).sort((a, b) => b[1] - a[1]).slice(0, 10)
+          .map(([source, n]) => ({ source, count: n }));
+        const claimId = `data_purge_${Date.now()}`;
+        const claimData = {
+          analysis: "data_purge",
+          criterion: "predicted IS NULL OR |predicted| > 1500 GPa OR predicted <= 0",
+          total_before: totalBefore, total_after: totalAfter,
+          corrupt_found: corruptCount, deleted,
+          corrupt_remaining: corruptRemaining, verified_clean: verifiedClean,
+          by_structure: byStruct, by_property: byProperty,
+          top_sources: topSources,
+        };
+        const description =
+          `Data purge — deleted ${deleted} physically-impossible records ` +
+          `(${totalBefore}→${totalAfter}); corrupt remaining=${corruptRemaining}; ` +
+          `verified_clean=${verifiedClean}.`;
+        const now = new Date().toISOString();
+        try {
+          await this.env.LEDGER
+            .prepare(
+              `INSERT INTO claims
+                (claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at, timestamp)
+              VALUES (?1, 'agent_delta_causal', 'DataPurge', ?2, '[]', ?3, 'proposed', ?4, ?5, ?5)
+              ON CONFLICT(claim_id) DO NOTHING`,
+            )
+            .bind(claimId, JSON.stringify(claimData), verifiedClean ? 0.95 : 0.5, description, now)
+            .run();
+        } catch (e) {
+          console.error("Causal.runDataPurge: claim insert failed:", e);
+        }
+
+        span.setAttribute("causal.purge.deleted", deleted);
+        span.setAttribute("causal.purge.verified_clean", verifiedClean);
+        span.setAttribute("output.value", JSON.stringify(claimData));
+        span.setStatus({ code: SpanStatusCode.OK });
+        return { ok: true, claim_id: claimId, summary: claimData };
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        return { ok: false, error: String(err) };
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  /**
    * Round C4 — data-integrity remediation. C3′ exposed physically impossible
    * FCC predicted elastic constants (MAE ~3000 GPa, RMSE ~50000 GPa on ~150
    * GPa quantities). Metallic Cij are < ~1500 GPa; anything beyond is corrupt

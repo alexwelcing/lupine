@@ -101,6 +101,20 @@ export class FleetOrchestrator implements DurableObject {
     const dateHour = new Date().toISOString().slice(0, 13);
     const results: Array<{ element: string; status: string; manifold_job?: string; error?: string }> = [];
 
+    // 0. Durable corpus cleanup first — every screen below then runs on clean
+    //    data (idempotent; no-op once the corpus is clean).
+    let dataPurge: { status: string; job_id?: string; error?: string };
+    try {
+      const enq = await enqueueTask(this.env, {
+        kind: "data_purge",
+        dedup_key: `auto-datapurge:${dateHour}`,
+        enqueued_at: new Date().toISOString(),
+      });
+      dataPurge = { status: enq.status, job_id: enq.job_id };
+    } catch (e) {
+      dataPurge = { status: "failed", error: String(e) };
+    }
+
     // 1. One manifold_analysis task per element.
     for (const el of elements) {
       const fleetId = `${fleetBatchId}-${el}`;
@@ -187,6 +201,7 @@ export class FleetOrchestrator implements DurableObject {
     return {
       fleets: results.length,
       results,
+      data_purge: dataPurge,
       causal_screens: causalResults,
       structure_property: structureProperty,
       structure_scalefree: structureScaleFree,

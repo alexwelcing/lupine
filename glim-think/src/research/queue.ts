@@ -45,7 +45,8 @@ export type ResearchTaskKind =
   | "causal_screen"       // Phase A Option-C: dispatch to Causal DO
   | "causal_structure_property"   // Round C2: structure×property screen
   | "causal_structure_scalefree"  // Round C3′: scale-free structure screen
-  | "causal_data_integrity";      // Round C4: contamination quarantine + clean re-screen
+  | "causal_data_integrity"       // Round C4: contamination quarantine + clean re-screen
+  | "data_purge";                 // Durable corpus cleanup (delete corrupt records)
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -138,6 +139,11 @@ export interface CausalDataIntegrityTask extends ResearchTaskBase {
   kind: "causal_data_integrity";
 }
 
+/** Durable corpus cleanup — permanently delete physically-impossible records. */
+export interface DataPurgeTask extends ResearchTaskBase {
+  kind: "data_purge";
+}
+
 export type ResearchTask =
   | RoundTask
   | LiteratureTask
@@ -149,7 +155,8 @@ export type ResearchTask =
   | CausalScreenTask
   | CausalStructurePropertyTask
   | CausalStructureScaleFreeTask
-  | CausalDataIntegrityTask;
+  | CausalDataIntegrityTask
+  | DataPurgeTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -441,6 +448,17 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     }).runDataIntegrityScreen());
     if (!result.ok) {
       throw new Error(`Causal.runDataIntegrityScreen failed: ${result.error ?? "unknown"}`);
+    }
+    return;
+  }
+
+  if (task.kind === "data_purge") {
+    const stub = await getNamedAgentStub(env.CAUSAL_AGENT, "causal-main");
+    const result = (await (stub as unknown as {
+      runDataPurge: () => Promise<{ ok: boolean; error?: string }>;
+    }).runDataPurge());
+    if (!result.ok) {
+      throw new Error(`Causal.runDataPurge failed: ${result.error ?? "unknown"}`);
     }
     return;
   }

@@ -850,7 +850,18 @@ ${narrative}
         }
 
         let inserted = 0;
+        let rejected = 0;
         for (const r of records) {
+          // Contamination guard: physically impossible elastic-constant
+          // predictions (unit errors / non-converged sentinels) corrupt every
+          // downstream pooled/correlation metric. Metallic Cij are < ~1500
+          // GPa and positive (Born stability). Reject at the door so CSV
+          // re-seeds can't reintroduce the Round B/C contamination.
+          const pred = Number(r.predicted);
+          if (!Number.isFinite(pred) || Math.abs(pred) > 1500 || pred <= 0) {
+            rejected++;
+            continue;
+          }
           try {
             await env.LEDGER.prepare(
               `INSERT INTO records (record_id, element, potential_id, potential_label, pair_style, property, reference, predicted, unit, provenance, agent_id, timestamp)
@@ -866,7 +877,7 @@ ${narrative}
             console.error("Ingest error for record", r.recordId, e);
           }
         }
-        return Response.json({ ingested: inserted, total: records.length });
+        return Response.json({ ingested: inserted, rejected, total: records.length });
       }
 
       // Diary narrative generation
