@@ -319,19 +319,14 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
     // until atoms get a real tangent attribute (impostor spheres are
     // direction-less, so this is the best approximation without a per-
     // atom orientation hint).
+    // Isotropic GGX. The former anisotropy term stretched the lobe in
+    // SCREEN space (a self-described placeholder) — it wobbled as the
+    // camera moved. Removed for stable, consistent highlights; matches
+    // the bonds going isotropic.
     float alpha = roughness * roughness;
-    float alphaY = alpha * mix(1.0, 0.4, anisotropy);
-    float alphaX = alpha;
-    // Project normal into screen space for anisotropy axis. nx/ny are how
-    // far the normal tilts in screen-space x/y; the squared form is what
-    // GGX needs. For isotropic atoms (anisotropy=0), alphaY==alphaX and
-    // this collapses to standard GGX D.
-    float nxSq = normal.x * normal.x;
-    float nySq = normal.y * normal.y;
-    float nzSq = normal.z * normal.z;
-    float alphaProjSq = (alphaX * alphaX) * nxSq + (alphaY * alphaY) * nySq + alpha * alpha * nzSq;
-    float D_denom = (NoH * NoH) * (alphaProjSq - 1.0) + 1.0;
-    float D = alphaProjSq / max(3.14159 * D_denom * D_denom, 1e-6);
+    float a2 = alpha * alpha;
+    float D_denom = (NoH * NoH) * (a2 - 1.0) + 1.0;
+    float D = a2 / max(3.14159 * D_denom * D_denom, 1e-6);
 
     // Smith G (height-correlated approximation). Cheap.
     float k = (alpha + 1.0) * (alpha + 1.0) / 8.0;
@@ -434,7 +429,11 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
     vec3 envSpec;
     vec3 envAvg;
     if (uHasEnv == 1) {
-      envSpec = textureCubeUV(tEnvMap, reflectVec, roughness).rgb * uEnvIntensity;
+      // Roughness floor for the mip select: impostor-sphere normals vary
+      // fast across a pixel, so sampling the sharpest env mips on low-
+      // roughness metals aliased into a crawling shimmer under motion.
+      // Clamping to ~0.18 costs negligible sharpness, kills the strobe.
+      envSpec = textureCubeUV(tEnvMap, reflectVec, max(roughness, 0.18)).rgb * uEnvIntensity;
       envAvg  = textureCubeUV(tEnvMap, normal,     1.0).rgb * uEnvIntensity;
     } else {
       // No PMREM env — use brighter fallback so atoms are always visible.
