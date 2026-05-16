@@ -33,7 +33,14 @@ function tracedD1Statement(stmt: D1PreparedStatement, sql: string): D1PreparedSt
           span.setAttribute("db.operation", method);
           const start = performance.now();
           try {
-            const result = await (value as (...a: unknown[]) => unknown).apply(target, args);
+            // Invoke THROUGH the target (not value.apply(target,…)). Under
+            // instrumentDO the binding is already an otel proxy; manually
+            // re-applying a detached native method with the proxy as receiver
+            // throws "Illegal invocation: incorrect this reference". Calling
+            // target[prop](...) lets each proxy layer bind its own receiver.
+            const result = await (
+              target as unknown as Record<string, (...a: unknown[]) => unknown>
+            )[prop as string](...args);
             if (method === "all" && result && typeof result === "object" && "results" in result) {
               span.setAttribute("db.response.returned_rows", (result as { results: unknown[] }).results.length);
             }
@@ -75,7 +82,14 @@ export function traceD1(db: D1Database): D1Database {
             span.setAttribute("db.operation", method);
             const start = performance.now();
             try {
-              const result = await (value as (...a: unknown[]) => unknown).apply(target, args);
+              // Invoke THROUGH the target (not value.apply(target,…)). Under
+            // instrumentDO the binding is already an otel proxy; manually
+            // re-applying a detached native method with the proxy as receiver
+            // throws "Illegal invocation: incorrect this reference". Calling
+            // target[prop](...) lets each proxy layer bind its own receiver.
+            const result = await (
+              target as unknown as Record<string, (...a: unknown[]) => unknown>
+            )[prop as string](...args);
               span.setStatus({ code: SpanStatusCode.OK });
               return result;
             } catch (err) {
@@ -116,7 +130,14 @@ export function traceKV(kv: KVNamespace): KVNamespace {
           if (key) span.setAttribute("kv.key", sanitizeKey(key));
           const start = performance.now();
           try {
-            const result = await (value as (...a: unknown[]) => unknown).apply(target, args);
+            // Invoke THROUGH the target (not value.apply(target,…)). Under
+            // instrumentDO the binding is already an otel proxy; manually
+            // re-applying a detached native method with the proxy as receiver
+            // throws "Illegal invocation: incorrect this reference". Calling
+            // target[prop](...) lets each proxy layer bind its own receiver.
+            const result = await (
+              target as unknown as Record<string, (...a: unknown[]) => unknown>
+            )[prop as string](...args);
             span.setStatus({ code: SpanStatusCode.OK });
             return result;
           } catch (err) {
@@ -170,7 +191,14 @@ function tracedR2ObjectBody(body: R2ObjectBody, key: string): R2ObjectBody {
           span.setAttribute("r2.operation", `body.${method}`);
           const start = performance.now();
           try {
-            const result = await (value as (...a: unknown[]) => unknown).apply(target, args);
+            // Invoke THROUGH the target (not value.apply(target,…)). Under
+            // instrumentDO the binding is already an otel proxy; manually
+            // re-applying a detached native method with the proxy as receiver
+            // throws "Illegal invocation: incorrect this reference". Calling
+            // target[prop](...) lets each proxy layer bind its own receiver.
+            const result = await (
+              target as unknown as Record<string, (...a: unknown[]) => unknown>
+            )[prop as string](...args);
             span.setStatus({ code: SpanStatusCode.OK });
             return result;
           } catch (err) {
@@ -206,7 +234,14 @@ export function traceR2(bucket: R2Bucket): R2Bucket {
           if (key) span.setAttribute("r2.key", sanitizeKey(key));
           const start = performance.now();
           try {
-            const result = await (value as (...a: unknown[]) => unknown).apply(target, args);
+            // Invoke THROUGH the target (not value.apply(target,…)). Under
+            // instrumentDO the binding is already an otel proxy; manually
+            // re-applying a detached native method with the proxy as receiver
+            // throws "Illegal invocation: incorrect this reference". Calling
+            // target[prop](...) lets each proxy layer bind its own receiver.
+            const result = await (
+              target as unknown as Record<string, (...a: unknown[]) => unknown>
+            )[prop as string](...args);
             if (method === "put" && result && typeof result === "object" && "size" in result) {
               span.setAttribute("r2.object.size", (result as { size: number }).size);
             }
