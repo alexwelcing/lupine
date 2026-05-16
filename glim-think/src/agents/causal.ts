@@ -371,6 +371,105 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
   }
 
   /**
+   * Round C2 — property-resolved BCC/FCC screen. Tests whether the within-FCC
+   * predictive collapse (Round B: fcc r≈0.06 vs bcc r≈0.90) is concentrated in
+   * the Cauchy pair (C12/C44) versus C11. The EAM lineage is constrained near
+   * the Cauchy relation C12=C44; FCC noble metals have anomalous Cauchy
+   * pressure, so the mechanism predicts FCC skill survives in C11 but collapses
+   * in C12/C44. Deterministic stats → StructurePropertyScreen claim.
+   */
+  async runStructurePropertyScreen(): Promise<{
+    ok: boolean;
+    claim_id?: string;
+    error?: string;
+    summary?: unknown;
+  }> {
+    const tracer = trace.getTracer("glim-think.causal");
+    return tracer.startActiveSpan("Causal.runStructurePropertyScreen", async (span) => {
+      try {
+        await this.onStart();
+        const r4 = (x: number) => (Number.isFinite(x) ? Math.round(x * 10000) / 10000 : null);
+        const structExpr = groupKeyExpr("structure");
+        const props = ["C11", "C12", "C44"];
+        const perProperty: Array<Record<string, unknown>> = [];
+
+        for (const p of props) {
+          const rows = await this.queryLedger<{ struct: string; reference: number; predicted: number }>(
+            `SELECT ${structExpr} as struct, reference, predicted FROM records WHERE property = '${p}'`,
+          );
+          if (rows.length < 4) {
+            perProperty.push({ property: p, error: "insufficient", n: rows.length });
+            continue;
+          }
+          const pooled = this.pearsonR(rows.map((x) => x.reference), rows.map((x) => x.predicted));
+          const byS: Record<string, { ref: number[]; pred: number[] }> = {};
+          for (const x of rows) {
+            (byS[x.struct] ||= { ref: [], pred: [] }).ref.push(x.reference);
+            byS[x.struct].pred.push(x.predicted);
+          }
+          const w = (k: string) =>
+            byS[k] && byS[k].ref.length >= 3 ? this.pearsonR(byS[k].ref, byS[k].pred) : NaN;
+          perProperty.push({
+            property: p,
+            pooled_r: r4(pooled),
+            bcc_r: r4(w("bcc")),
+            bcc_n: byS.bcc?.ref.length ?? 0,
+            fcc_r: r4(w("fcc")),
+            fcc_n: byS.fcc?.ref.length ?? 0,
+          });
+        }
+
+        const byP = Object.fromEntries(perProperty.map((x) => [x.property as string, x]));
+        const num = (v: unknown) => (typeof v === "number" ? v : NaN);
+        const fccC11 = Math.abs(num(byP.C11?.fcc_r));
+        const fccC12 = Math.abs(num(byP.C12?.fcc_r));
+        const fccC44 = Math.abs(num(byP.C44?.fcc_r));
+        // Cauchy-localized: FCC keeps materially more skill in C11 than in the
+        // C12/C44 Cauchy pair (≥0.25 Pearson-r gap).
+        const cauchyLocalized =
+          Number.isFinite(fccC11) &&
+          Number.isFinite(fccC12) &&
+          Number.isFinite(fccC44) &&
+          fccC11 - Math.max(fccC12, fccC44) >= 0.25;
+        const verdict = cauchyLocalized
+          ? "SUPPORTS C2: within-FCC predictive collapse is concentrated in the Cauchy pair (C12/C44); C11 retains skill — consistent with the EAM Cauchy-relation limitation."
+          : "OPEN/REFUTES C2: within-FCC skill is not specifically localized to C12/C44 — Cauchy-relation mechanism not confirmed by this stratification.";
+
+        const claimId = `causal_structprop_${Date.now()}`;
+        const claimData = { analysis: "structure_x_property", per_property: perProperty, cauchy_localized: cauchyLocalized, verdict };
+        const description =
+          `Round C2 structure×property screen — FCC r [C11=${byP.C11?.fcc_r}, C12=${byP.C12?.fcc_r}, C44=${byP.C44?.fcc_r}] ` +
+          `vs BCC r [C11=${byP.C11?.bcc_r}, C12=${byP.C12?.bcc_r}, C44=${byP.C44?.bcc_r}]. ${verdict}`;
+        const now = new Date().toISOString();
+        try {
+          await this.env.LEDGER
+            .prepare(
+              `INSERT INTO claims
+                (claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at, timestamp)
+              VALUES (?1, 'agent_delta_causal', 'StructurePropertyScreen', ?2, '[]', ?3, 'proposed', ?4, ?5, ?5)
+              ON CONFLICT(claim_id) DO NOTHING`,
+            )
+            .bind(claimId, JSON.stringify(claimData), cauchyLocalized ? 0.8 : 0.5, description, now)
+            .run();
+        } catch (e) {
+          console.error("Causal.runStructurePropertyScreen: claim insert failed:", e);
+        }
+
+        span.setAttribute("causal.structprop.cauchy_localized", cauchyLocalized);
+        span.setAttribute("output.value", JSON.stringify(claimData));
+        span.setStatus({ code: SpanStatusCode.OK });
+        return { ok: true, claim_id: claimId, summary: claimData };
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        return { ok: false, error: String(err) };
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  /**
    * Storage stats RPC for /graph/agents.json. Returns DO-local row counts.
    */
   async getStorageStats(): Promise<Record<string, number>> {

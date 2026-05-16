@@ -145,10 +145,24 @@ export class FleetOrchestrator implements DurableObject {
       }
     }
 
+    // 3. Round C2 — property-resolved BCC/FCC screen (one per run).
+    let structureProperty: { status: string; job_id?: string; error?: string };
+    try {
+      const enq = await enqueueTask(this.env, {
+        kind: "causal_structure_property",
+        dedup_key: `auto-structprop:${dateHour}`,
+        enqueued_at: new Date().toISOString(),
+      });
+      structureProperty = { status: enq.status, job_id: enq.job_id };
+    } catch (e) {
+      structureProperty = { status: "failed", error: String(e) };
+    }
+
     return {
       fleets: results.length,
       results,
       causal_screens: causalResults,
+      structure_property: structureProperty,
     };
   }
 
