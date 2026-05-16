@@ -641,7 +641,7 @@ export function Bonds({
           matConfig = { metalness: 0.05, roughness: 0.85 };
           break;
         case 'metallic':
-          matConfig = { metalness: 0.8, roughness: 0.2, envMapIntensity: 2.0, anisotropy: 0.5 };
+          matConfig = { metalness: 0.8, roughness: 0.2, envMapIntensity: 2.0 };
           break;
         case 'glass':
           matConfig = { metalness: 0.3, roughness: 0.05, envMapIntensity: 1.5 };
@@ -651,9 +651,9 @@ export function Bonds({
           break;
         case 'default':
         default:
-          // Default uses anisotropy=0.4 — visible streak along the bond
-          // axis without overpowering the gradient color.
-          matConfig = { metalness: 0.35, roughness: 0.45, envMapIntensity: 1.0, anisotropy: 0.4 };
+          // Isotropic: the anisotropic streak (formerly 0.4) caused
+          // specular strobing on thin moving cylinders and is gone.
+          matConfig = { metalness: 0.35, roughness: 0.45, envMapIntensity: 1.0 };
           break;
       }
       mat = new THREE.MeshPhysicalMaterial({
@@ -683,39 +683,16 @@ export function Bonds({
 
       shader.vertexShader = `
         attribute vec2 radiusBT;
-        attribute vec3 colorT;
-        attribute vec4 materialBT;
         varying float vBondViewDist;
-        // Per-fragment PBR material — bond inherits chemistry from the
-        // two atoms it connects (atomA's metalness/roughness at the
-        // bottom half-cylinder, atomB's at the top, lerped at the seam).
-        varying float vBondMetalness;
-        varying float vBondRoughness;
         ${botanicalMode ? 'uniform float uTime;' : ''}
         ${shader.vertexShader}
       `;
 
-      // Override Three's color_vertex chunk so vColor is the per-fragment
-      // gradient rather than a flat instanceColor tint. instanceColor.xyz
-      // remains the "bottom" of the gradient; colorT is the "top".
-      //
-      // Write to .rgb (not vColor directly) because vColor is vec3 OR vec4
-      // depending on which color define Three sets — `.rgb` handles both
-      // and leaves any alpha untouched.
-      shader.vertexShader = shader.vertexShader.replace(
-        '#include <color_vertex>',
-        `
-        #include <color_vertex>
-        #ifdef USE_INSTANCING_COLOR
-          vColor.rgb = mix(instanceColor.xyz, colorT, position.y + 0.5);
-        #endif
-        // Material gradient — same lerp factor as the color gradient so
-        // the chemistry transition reads coherently end-to-end.
-        float matLerp = position.y + 0.5;
-        vBondMetalness = mix(materialBT.x, materialBT.z, matLerp);
-        vBondRoughness = mix(materialBT.y, materialBT.w, matLerp);
-        `,
-      );
+      // Flat per-half color: each bond's two instances carry a solid
+      // endpoint color via instanceColor (default <color_vertex> handles
+      // it). No per-fragment A→mid→B gradient and no per-bond material
+      // gradient — that stack produced visual noise and bloom strobing.
+      // metalness/roughness now come uniformly from the material preset.
 
       let vertexChunk = `
         #include <begin_vertex>
@@ -755,8 +732,6 @@ export function Bonds({
       // smoothstep so the boundary doesn't read as a hard ring.
       shader.fragmentShader = `
         varying float vBondViewDist;
-        varying float vBondMetalness;
-        varying float vBondRoughness;
         uniform float uBondFadeStart;
         uniform float uBondFadeEnd;
         uniform float uSurfaceRoughness;
@@ -768,24 +743,20 @@ export function Bonds({
         uniform float uRimLight;
         ${shader.fragmentShader}
       `
-      // Override Three's metalness/roughness factors per-fragment with the
-      // interpolated per-bond values. The chunks set `metalnessFactor` and
-      // `roughnessFactor` from material uniforms × map samples; we replace
-      // them downstream so per-bond identity wins. Done after both chunks
-      // ran so the surrounding pipeline still works (clearcoat, sheen, etc.
-      // would read the original factors otherwise — none are active here).
+      // Surface knobs still nudge the uniform material factors (the rig's
+      // Roughness/Polish controls keep working); no per-bond gradient.
       .replace(
         '#include <metalnessmap_fragment>',
         `
         #include <metalnessmap_fragment>
-        metalnessFactor = clamp(vBondMetalness + uSurfacePolish, 0.0, 1.0);
+        metalnessFactor = clamp(metalnessFactor + uSurfacePolish, 0.0, 1.0);
         `,
       )
       .replace(
         '#include <roughnessmap_fragment>',
         `
         #include <roughnessmap_fragment>
-        roughnessFactor = clamp(vBondRoughness + uSurfaceRoughness, 0.0, 1.0);
+        roughnessFactor = clamp(roughnessFactor + uSurfaceRoughness, 0.0, 1.0);
         `,
       ).replace(
         '#include <dithering_fragment>',
@@ -1133,21 +1104,16 @@ export function Bonds({
           tcB = frame.types ? colorForType(frame.types[b]) : DEFAULT_TYPE_COLOR;
         }
 
-        // Midpoint color — linear average. The shader lerps in the same
-        // (linear) space, so the seam at position.y=0.5 of the bottom half
-        // matches position.y=-0.5 of the top half exactly.
-        const tcMidR = (tcA[0] + tcB[0]) * 0.5;
-        const tcMidG = (tcA[1] + tcB[1]) * 0.5;
-        const tcMidB = (tcA[2] + tcB[2]) * 0.5;
-
-        // Bottom half (i*2): bottom = A, top = midpoint.
+        // Flat per-half: instance i*2 = solid A, instance i*2+1 = solid B.
+        // Hard split at the geometric midpoint — the universal 2-tone bond
+        // convention. colorT writes retained (attribute still allocated;
+        // shader ignores it) until the Phase-2 buffer prune.
         const offA = (i * 2) * 3;
         cpuColorBArray[offA] = tcA[0]; cpuColorBArray[offA + 1] = tcA[1]; cpuColorBArray[offA + 2] = tcA[2];
-        cpuColorTArray[offA] = tcMidR; cpuColorTArray[offA + 1] = tcMidG; cpuColorTArray[offA + 2] = tcMidB;
+        cpuColorTArray[offA] = tcA[0]; cpuColorTArray[offA + 1] = tcA[1]; cpuColorTArray[offA + 2] = tcA[2];
 
-        // Top half (i*2+1): bottom = midpoint, top = B.
         const offB = (i * 2 + 1) * 3;
-        cpuColorBArray[offB] = tcMidR; cpuColorBArray[offB + 1] = tcMidG; cpuColorBArray[offB + 2] = tcMidB;
+        cpuColorBArray[offB] = tcB[0]; cpuColorBArray[offB + 1] = tcB[1]; cpuColorBArray[offB + 2] = tcB[2];
         cpuColorTArray[offB] = tcB[0]; cpuColorTArray[offB + 1] = tcB[1]; cpuColorTArray[offB + 2] = tcB[2];
 
         // ─── Per-bond material identity ────────────────────────────────

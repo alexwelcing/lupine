@@ -148,12 +148,16 @@ export function scalePreset(preset: PostprocessPresetConfig, intensity: number):
 /** Strip expensive passes for playback. Tone mapping survives because it's
  *  cheap and required for color fidelity; everything else costs frames. */
 export function reduceForPlayback(preset: PostprocessPresetConfig): PostprocessPresetConfig {
+  // Keep the enabled SET identical to the paused state so composerKey()
+  // is stable — toggling effects on play caused a full EffectComposer
+  // remount (one-frame black flash) every play/pause. Instead we only
+  // cheapen parameters (prop-level, no remount): drop MSAA and soften
+  // the expensive passes while the trajectory animates.
   return {
     ...preset,
-    ssao: { ...preset.ssao, enabled: false },
-    bloom: { ...preset.bloom, enabled: false },
-    dof: { ...preset.dof, enabled: false },
-    vignette: { ...preset.vignette, enabled: false },
+    ssao: { ...preset.ssao, intensity: preset.ssao.intensity * 0.5 },
+    bloom: { ...preset.bloom, intensity: preset.bloom.intensity * 0.6 },
+    dof: { ...preset.dof, bokehScale: Math.min(preset.dof.bokehScale, 2) },
     multisampling: 0,
   };
 }
