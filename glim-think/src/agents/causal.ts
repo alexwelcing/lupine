@@ -371,6 +371,103 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
   }
 
   /**
+   * Corpus audit — property-aware data-quality inventory. The hard
+   * |pred|>1500/≤0 purge gate is elastic-constant-specific; E_coh (eV),
+   * a0 (Å), surface/vacancy energies live on different scales and signs, so
+   * a global absolute bound is itself myopic (can under-clean subtle unit
+   * errors and over-clean legitimate negative/large values). This reports,
+   * per property: n, robust reference/predicted spread, and a SCALE-FREE
+   * outlier flag |pred-ref|/|ref| > 5 (>500% error — corrupt at any scale,
+   * any property). Output drives a property-aware gate. → CorpusAudit claim.
+   */
+  async runCorpusAudit(): Promise<{
+    ok: boolean;
+    claim_id?: string;
+    error?: string;
+    summary?: unknown;
+  }> {
+    const tracer = trace.getTracer("glim-think.causal");
+    return tracer.startActiveSpan("Causal.runCorpusAudit", async (span) => {
+      try {
+        await this.onStart();
+        const r4 = (x: number) => (Number.isFinite(x) ? Math.round(x * 10000) / 10000 : null);
+        const med = (a: number[]) => {
+          if (!a.length) return NaN;
+          const s = [...a].sort((x, y) => x - y);
+          const m = Math.floor(s.length / 2);
+          return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+        };
+        const rows = await this.queryLedger<{ property: string; reference: number; predicted: number }>(
+          `SELECT property, reference, predicted FROM records`,
+        );
+        const byProp: Record<string, { ref: number[]; pred: number[]; rel: number[] }> = {};
+        for (const x of rows) {
+          (byProp[x.property] ||= { ref: [], pred: [], rel: [] });
+          byProp[x.property].ref.push(x.reference);
+          byProp[x.property].pred.push(x.predicted);
+          if (Math.abs(x.reference) > 1e-9) {
+            byProp[x.property].rel.push(Math.abs(x.predicted - x.reference) / Math.abs(x.reference));
+          }
+        }
+        const properties = Object.entries(byProp).map(([p, g]) => {
+          const relOutliers = g.rel.filter((v) => v > 5).length; // >500% error
+          const negRef = g.ref.filter((v) => v < 0).length;
+          const negPred = g.pred.filter((v) => v < 0).length;
+          return {
+            property: p,
+            n: g.ref.length,
+            ref_min: r4(Math.min(...g.ref)), ref_med: r4(med(g.ref)), ref_max: r4(Math.max(...g.ref)),
+            pred_min: r4(Math.min(...g.pred)), pred_med: r4(med(g.pred)), pred_max: r4(Math.max(...g.pred)),
+            rel_err_med: r4(med(g.rel)),
+            scalefree_outliers: relOutliers,
+            outlier_rate: r4(g.rel.length ? relOutliers / g.rel.length : 0),
+            neg_reference: negRef, neg_predicted: negPred,
+            sign_convention_risk: negRef > 0 || negPred > 0, // global pred<=0 gate is unsafe here
+          };
+        }).sort((a, b) => (b.scalefree_outliers - a.scalefree_outliers));
+
+        const totalOutliers = properties.reduce((s, p) => s + p.scalefree_outliers, 0);
+        const signRisky = properties.filter((p) => p.sign_convention_risk).map((p) => p.property);
+        const verdict =
+          (totalOutliers === 0
+            ? "CLEAN: no record exceeds 500% relative error on any property — the purge resolved the contamination corpus-wide."
+            : `RESIDUAL: ${totalOutliers} record(s) still exceed 500% relative error — subtler unit errors the |pred|>1500 bound missed; needs a property-aware relative gate.`) +
+          (signRisky.length
+            ? ` SIGN-CONVENTION RISK on [${signRisky.join(", ")}] — the blanket predicted<=0 purge term must be removed/scoped (it can delete legitimate negative values like binding energies).`
+            : "");
+
+        const claimId = `corpus_audit_${Date.now()}`;
+        const claimData = { analysis: "corpus_audit", total_records: rows.length, total_scalefree_outliers: totalOutliers, sign_convention_risk_properties: signRisky, properties, verdict };
+        const description = `Corpus audit — ${rows.length} records, ${properties.length} properties, ${totalOutliers} >500%-error outliers remaining. ${verdict}`;
+        const now = new Date().toISOString();
+        try {
+          await this.env.LEDGER
+            .prepare(
+              `INSERT INTO claims
+                (claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at, timestamp)
+              VALUES (?1, 'agent_delta_causal', 'CorpusAudit', ?2, '[]', ?3, 'proposed', ?4, ?5, ?5)
+              ON CONFLICT(claim_id) DO NOTHING`,
+            )
+            .bind(claimId, JSON.stringify(claimData), totalOutliers === 0 ? 0.9 : 0.6, description, now)
+            .run();
+        } catch (e) {
+          console.error("Causal.runCorpusAudit: claim insert failed:", e);
+        }
+        span.setAttribute("causal.audit.outliers", totalOutliers);
+        span.setAttribute("output.value", JSON.stringify(claimData));
+        span.setStatus({ code: SpanStatusCode.OK });
+        return { ok: true, claim_id: claimId, summary: claimData };
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        return { ok: false, error: String(err) };
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  /**
    * Data purge — durable corpus cleanup. Permanently removes physically
    * impossible records (|predicted| > 1500 GPa, ≤ 0, or non-finite) that
    * corrupt every pooled/correlation/PR metric (Round B/C false-discovery

@@ -115,6 +115,20 @@ export class FleetOrchestrator implements DurableObject {
       dataPurge = { status: "failed", error: String(e) };
     }
 
+    // 0.5 Property-aware audit — verifies the purge resolved contamination
+    //     corpus-wide (scale-free, every property) each cycle.
+    let corpusAudit: { status: string; job_id?: string; error?: string };
+    try {
+      const enq = await enqueueTask(this.env, {
+        kind: "corpus_audit",
+        dedup_key: `auto-corpusaudit:${dateHour}`,
+        enqueued_at: new Date().toISOString(),
+      });
+      corpusAudit = { status: enq.status, job_id: enq.job_id };
+    } catch (e) {
+      corpusAudit = { status: "failed", error: String(e) };
+    }
+
     // 1. One manifold_analysis task per element.
     for (const el of elements) {
       const fleetId = `${fleetBatchId}-${el}`;
@@ -202,6 +216,7 @@ export class FleetOrchestrator implements DurableObject {
       fleets: results.length,
       results,
       data_purge: dataPurge,
+      corpus_audit: corpusAudit,
       causal_screens: causalResults,
       structure_property: structureProperty,
       structure_scalefree: structureScaleFree,
