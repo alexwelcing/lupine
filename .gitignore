@@ -12,7 +12,7 @@ wasm-out/
 *.dump
 .wrangler/
 **/.wrangler/
-.claude/worktrees/
+
 **/.turbo/
 
 # Archive for old internal research, docs, and plans
@@ -84,3 +84,8 @@ tools/hermes-hive/data/
 *.mp4
 *.z64
 *.tar.zst
+
+# AI Agent workspaces
+.claude/
+.kimi/
+.sisyphus/
