@@ -141,9 +141,9 @@ function ResearchPage() {
                 <DataListHeaderCell>τMK</DataListHeaderCell>
               </DataListHeader>
               {table1Rows.map((row, idx) => (
-                <DataListRow key={idx}>
+                <DataListRow key={idx} gridCols="grid-cols-4">
                   <DataListCell label="Potential">
-                    <strong className="text-[var(--on-surface)]">{row.parameter}</strong>
+                    <span className="text-[var(--on-surface)]">{row.parameter}</span>
                   </DataListCell>
                   <DataListCell label="PR [95% CI]" className="font-mono text-sm">
                     {row.reference}
@@ -151,7 +151,7 @@ function ResearchPage() {
                   <DataListCell label="R²log [95% CI]" className="font-mono text-sm">
                     {row.observed}
                   </DataListCell>
-                  <DataListCell label="τMK" className="font-mono text-sm text-[var(--primary)] glow-primary">
+                  <DataListCell label="τMK" className="font-mono text-sm text-[var(--primary)]">
                     {row.delta}
                   </DataListCell>
                 </DataListRow>
@@ -162,29 +162,65 @@ function ResearchPage() {
 
         <p>Figure 1 shows eigenvalue spectra on log scale with geometric fits. The near-linear decay confirms the hyper-ribbon structure.</p>
         
-        {/* Visual SVG Injection Area */}
-        <div className="my-8 relative overflow-hidden glass-panel-elevated p-6 group h-[400px] flex items-center justify-center">
-          <div className="absolute inset-0 bg-noise opacity-30"></div>
-          <div className="text-center z-10">
-            <svg width="200" height="200" viewBox="0 0 200 200" className="mx-auto mb-4 opacity-70">
-              <circle cx="100" cy="100" r="80" fill="none" stroke="var(--primary)" strokeWidth="1" strokeDasharray="4 4"
-                className="glow-primary"
-              />
-              <circle cx="100" cy="100" r="50" fill="none" stroke="var(--secondary)" strokeWidth="1" strokeDasharray="2 8"
-                className="glow-secondary"
-              />
-            </svg>
-            <div className="mono-label text-[var(--primary)] glow-primary">FIG 1. SPECTRA MANIFOLD</div>
+        {/* Figure 1: Eigenvalue Spectra */}
+        <figure className="my-8">
+          <div className="glass-panel-elevated overflow-hidden">
+            <img
+              src="/assets/fig1_eigenvalue_spectra.png"
+              alt="FCC elastic constant error eigenvalue spectra showing hyper-ribbon decay across SW, LJ, and EAM potentials with geometric fits."
+              className="w-full h-auto"
+              loading="lazy"
+            />
           </div>
-        </div>
+          <figcaption className="mt-3 px-1">
+            <span className="mono-label text-[var(--primary)]">FIG 1.</span>
+            <span className="text-sm text-[var(--on-surface-variant)] ml-2">
+              FCC elastic constant error eigenvalue spectra on log scale. SW (PR = 1.29), LJ (PR = 1.36), and EAM (PR = 1.41) all exhibit near-geometric decay (R² &gt; 0.97), confirming the hyper-ribbon structure predicted by Transtrum, Machta &amp; Sethna (2011).
+            </span>
+          </figcaption>
+        </figure>
 
         <h3>4.2 Bootstrap Confidence Intervals</h3>
         <p>Figure 2 displays PR with 95% CIs. All intervals exclude the maximal dimensionality (3.0), confirming sub-manifold structure.</p>
+
+        <figure className="my-8">
+          <div className="glass-panel-elevated overflow-hidden">
+            <img
+              src="/assets/fig2_dimensionality.png"
+              alt="Error manifold compression by potential: effective dimensionality (PR) for SW, LJ, and EAM with bootstrap 95% confidence intervals."
+              className="w-full h-auto max-h-[600px] object-contain bg-white"
+              loading="lazy"
+            />
+          </div>
+          <figcaption className="mt-3 px-1">
+            <span className="mono-label text-[var(--primary)]">FIG 2.</span>
+            <span className="text-sm text-[var(--on-surface-variant)] ml-2">
+              Effective dimensionality (participation ratio) with bootstrap 95% CIs. SW: 1.29 [1.09, 2.09], LJ: 1.36 [1.04, 1.50], EAM: 1.41 [1.17, 2.17]. All exclude the maximal PR = 3.0.
+            </span>
+          </figcaption>
+        </figure>
 
         <h3>4.3 Simpson's Paradox in BCC Data</h3>
         <p>
           Figure 3 demonstrates the paradox: pooled correlation between <InlineMath math="C_{11}" /> and <InlineMath math="C_{12}" /> errors is <InlineMath math="r = -0.435" />, while within-group correlations average <InlineMath math="r_w = +0.147" />. 57% of material-level correlations have the opposite sign from the pooled estimate.
         </p>
+
+        <figure className="my-8">
+          <div className="glass-panel-elevated overflow-hidden">
+            <img
+              src="/assets/fig3_paradox.png"
+              alt="Simpson's paradox in BCC data: within-group correlations are positive (left), pooled correlation is negative (right)."
+              className="w-full h-auto max-h-[600px] object-contain bg-white"
+              loading="lazy"
+            />
+          </div>
+          <figcaption className="mt-3 px-1">
+            <span className="mono-label text-[var(--primary)]">FIG 3.</span>
+            <span className="text-sm text-[var(--on-surface-variant)] ml-2">
+              Left: within-group correlations for Fe, Cr, V, Mo, Nb, W, Ta are positive. Right: pooled correlation reverses sign to r = –0.435. Simpson's paradox detected: pooled vs. within-group sign reversal.
+            </span>
+          </figcaption>
+        </figure>
 
         <h3>4.4 Empirical Validation on Expanded Corpus (April 2026)</h3>
         <p>
@@ -208,9 +244,9 @@ function ResearchPage() {
                 <DataListHeaderCell>p-value</DataListHeaderCell>
               </DataListHeader>
               {significanceRows.map((row, idx) => (
-                <DataListRow key={idx}>
+                <DataListRow key={idx} gridCols="grid-cols-5">
                   <DataListCell label="Test">
-                    <strong className="text-[var(--on-surface)]">{row.test}</strong>
+                    <span className="text-[var(--on-surface)]">{row.test}</span>
                   </DataListCell>
                   <DataListCell label="Observed" className="font-mono text-sm">
                     {row.observed}
@@ -221,7 +257,7 @@ function ResearchPage() {
                   <DataListCell label="Null 95% CI" className="font-mono text-sm">
                     {row.ci}
                   </DataListCell>
-                  <DataListCell label="p-value" className={`font-mono text-sm ${row.verdict === 'significant' ? 'text-[var(--primary)] glow-primary' : 'text-[var(--on-surface-variant)]'}`}>
+                  <DataListCell label="p-value" className={`font-mono text-sm ${row.verdict === 'significant' ? 'text-[var(--primary)]' : 'text-[var(--on-surface-variant)]'}`}>
                     {row.p}
                   </DataListCell>
                 </DataListRow>
@@ -250,9 +286,9 @@ function ResearchPage() {
                 <DataListHeaderCell>n</DataListHeaderCell>
               </DataListHeader>
               {ribbonSpineRows.map((row, idx) => (
-                <DataListRow key={idx}>
+                <DataListRow key={idx} gridCols="grid-cols-4">
                   <DataListCell label="pair_style">
-                    <strong className={row.outlier ? 'text-[var(--primary)] glow-primary' : 'text-[var(--on-surface)]'}>{row.style}</strong>
+                    <span className={row.outlier ? 'text-[var(--primary)]' : 'text-[var(--on-surface)]'}>{row.style}</span>
                   </DataListCell>
                   <DataListCell label="PC1 share" className="font-mono text-sm">
                     {row.pc1}

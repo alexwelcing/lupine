@@ -1,10 +1,18 @@
 /* ═══════════════════════════════════════════════════════════════
-   TYPOGRAPHY SYSTEM — Lupine Quantum Ledger
-   
+   TYPOGRAPHY SYSTEM — Lupine Materials Science
+
    Three voices:
    · Rumelaz Gekinsa (serif)  → editorial headings, display text
    · CS Claire Mono (mono)    → data labels, code, notation
    · Inter (sans)             → body text, paragraphs
+
+   WEIGHT RESTRICTION:
+   Rumelaz Gekinsa and CS Claire Mono only ship Regular (400).
+   Never use font-bold, font-semibold, or font-medium with
+   font-display, font-serif, or font-mono. The browser will
+   refuse to synthesize them (font-synthesis: none), so the
+   weight declaration simply has no effect.
+   Use size, color, tracking, and italic for hierarchy instead.
    ═══════════════════════════════════════════════════════════════ */
 
 /* ─── Monospaced Data Labels ─── */

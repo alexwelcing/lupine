@@ -12,8 +12,8 @@
      styles/components.css   .glass-panel, .badge, .bg-noise…
      styles/animations.css   @keyframes for ambient motion
 
-   Fonts (Inter / JetBrains Mono / Space Grotesk / Playfair Display) are loaded
-   from a single Google Fonts <link> in src/routes/__root.tsx.
+   Google Fonts (Inter + Space Grotesk) are loaded in src/routes/__root.tsx.
+   Self-hosted fonts (Rumelaz Gekinsa + CS Claire Mono) are preloaded there.
 
    Tailwind v4 ordering note: @theme inline MUST come before @import "tailwindcss"
    so the default spacing scale is available during utility generation.
@@ -96,6 +96,11 @@
   ::selection {
     background-color: var(--primary);
     color: var(--primary-foreground);
+  }
+
+  /* Custom fonts only ship Regular (400). Prevent ugly browser-synthesized bold/italic. */
+  .font-display, .font-serif, .font-mono {
+    font-synthesis: none;
   }
 
   /* Subtle scrollbars */

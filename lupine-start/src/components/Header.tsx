@@ -50,7 +50,7 @@ export default function Header() {
               <circle cx="8" cy="8" r="2" fill="#131313" />
             </svg>
           </div>
-          <span className="font-serif italic text-lg font-semibold text-[var(--on-surface)] tracking-tight">Lupine</span>
+          <span className="font-serif italic text-lg text-[var(--on-surface)] tracking-tight">Lupine</span>
         </Link>
         
         <nav className="hidden md:flex items-center gap-8">
@@ -58,7 +58,7 @@ export default function Header() {
             <Link
               key={item.to}
               to={item.to}
-              className={`font-mono text-xs font-semibold uppercase tracking-widest no-underline transition-colors ${
+              className={`font-mono text-xs uppercase tracking-widest no-underline transition-colors ${
                 item.live
                   ? 'text-[var(--primary)] relative flex items-center gap-2'
                   : 'text-[var(--on-surface-variant)] hover:text-[var(--primary)]'
@@ -75,7 +75,7 @@ export default function Header() {
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setMoreOpen(!moreOpen)}
-              className={`font-mono text-xs font-semibold uppercase tracking-widest transition-colors flex items-center gap-1.5 ${
+              className={`font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-1.5 ${
                 moreOpen ? 'text-[var(--primary)]' : 'text-[var(--on-surface-variant)] hover:text-[var(--primary)]'
               }`}
             >
@@ -100,7 +100,7 @@ export default function Header() {
                     onClick={() => setMoreOpen(false)}
                     className="block px-5 py-3 no-underline hover:bg-[var(--surface-container-high)]/50 transition-colors group"
                   >
-                    <span className="font-mono text-[11px] font-semibold text-[var(--on-surface)] uppercase tracking-widest group-hover:text-[var(--primary)] transition-colors">
+                    <span className="font-mono text-[11px] text-[var(--on-surface)] uppercase tracking-widest group-hover:text-[var(--primary)] transition-colors">
                       {item.label}
                     </span>
                     <span className="block text-[11px] text-[var(--on-surface-variant-mid)] mt-0.5">

@@ -1,14 +1,20 @@
 /* ═══════════════════════════════════════════════════════════════
    SELF-HOSTED FONT FACES
-   
+
    CS Claire Mono  — Monospaced. Replaces JetBrains Mono for
                      data labels, code, and technical notation.
    Rumelaz Gekinsa — Classic serif. Replaces Playfair Display
                      for editorial headings and pull-quotes.
-   
+
    Both are loaded from /fonts/ in the public directory.
    Formats prioritise woff2 → woff → opentype for progressive
    enhancement across browser support.
+
+   WEIGHT RESTRICTION — CRITICAL:
+   These families ship Regular (400) and Italic only.
+   They do NOT have Bold or Medium weights.
+   Always pair with font-synthesis: none so the browser never
+   fakes a weight that does not exist.
    ═══════════════════════════════════════════════════════════════ */
 
 /* ─── CS Claire Mono ─── */
@@ -18,6 +24,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  font-synthesis: none;
 }
 
 @font-face {
@@ -26,6 +33,7 @@
   font-weight: 400;
   font-style: italic;
   font-display: swap;
+  font-synthesis: none;
 }
 
 /* ─── Rumelaz Gekinsa ─── */
@@ -35,6 +43,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  font-synthesis: none;
 }
 
 @font-face {
@@ -43,4 +52,5 @@
   font-weight: 400;
   font-style: italic;
   font-display: swap;
+  font-synthesis: none;
 }

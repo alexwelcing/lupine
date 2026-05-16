@@ -15,7 +15,7 @@ function NotFoundComponent() {
   return (
     <main className="flex-1 flex flex-col items-center justify-center px-6 py-32">
       <div className="text-center max-w-lg">
-        <div className="font-mono text-xs font-semibold text-[var(--primary)] uppercase tracking-[0.3em] mb-6">404 — NOT FOUND</div>
+        <div className="font-mono text-xs text-[var(--primary)] uppercase tracking-[0.3em] mb-6">404 — NOT FOUND</div>
         <h1 className="font-display tracking-tight text-5xl lg:text-7xl mb-8 leading-[1.05] text-[var(--on-surface)]">Off the ribbon.</h1>
         <p className="text-[var(--on-surface-variant)] text-lg mb-10 leading-relaxed">
           The page you requested is not in our manifest. It may have been retired, renamed, or never existed at all.
@@ -67,7 +67,7 @@ export const Route = createRootRoute({
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap',
       },
       /* Self-hosted font preloads — eliminates FOUT for critical text */
       {
@@ -79,7 +79,21 @@ export const Route = createRootRoute({
       },
       {
         rel: 'preload',
+        href: '/fonts/RumelazGekinsa-Italic.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossOrigin: 'anonymous',
+      },
+      {
+        rel: 'preload',
         href: '/fonts/CSClaireMono-Regular.otf',
+        as: 'font',
+        type: 'font/otf',
+        crossOrigin: 'anonymous',
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/CSClaireMono-Italic.otf',
         as: 'font',
         type: 'font/otf',
         crossOrigin: 'anonymous',

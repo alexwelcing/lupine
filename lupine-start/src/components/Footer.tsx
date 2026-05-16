@@ -13,7 +13,7 @@ export default function Footer() {
                 <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" />
                 <circle cx="8" cy="8" r="2" fill="currentColor" />
               </svg>
-              <span className="font-serif italic text-sm font-semibold tracking-tight text-[var(--on-surface-variant)]">Lupine</span>
+              <span className="font-serif italic text-sm tracking-tight text-[var(--on-surface-variant)]">Lupine</span>
             </Link>
             <p className="text-xs text-[var(--on-surface-variant)] max-w-xs leading-relaxed opacity-60">
               The audit layer for the MLIP ecosystem — and the low-rank retraining target that compounds out of it. Applied learning mechanics for atomistic ML.

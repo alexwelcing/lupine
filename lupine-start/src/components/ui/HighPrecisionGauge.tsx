@@ -56,7 +56,7 @@ export function HighPrecisionGauge({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className={cn("font-display font-bold text-2xl tracking-tighter", glowClass)}>
+        <span className={cn("font-display text-2xl tracking-tighter", glowClass)}>
           {Math.round(value)}
         </span>
         {label && (

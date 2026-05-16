@@ -252,7 +252,7 @@ function LiveLabComponent() {
                 broadcasts.slice(0, 5).map((broadcast: any) => (
                   <div key={broadcast.broadcast_id} className="border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
                     <div className="mb-2 flex items-center justify-between gap-3">
-                      <span className="font-mono text-sm font-semibold text-[var(--on-surface)]">{broadcast.title}</span>
+                      <span className="font-mono text-sm text-[var(--on-surface)]">{broadcast.title}</span>
                       <span className="mono-label text-[var(--primary)]">{broadcast.cadence}</span>
                     </div>
                     <p className="line-clamp-2 text-xs leading-relaxed text-[var(--on-surface-variant)]">{broadcast.summary}</p>
@@ -367,7 +367,7 @@ function LiveLabComponent() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-0.5">
-                        <span className="font-mono text-[12px] font-bold tracking-wide text-[var(--on-surface)] uppercase truncate">{agentName}</span>
+                        <span className="font-mono text-[12px] tracking-wide text-[var(--on-surface)] uppercase truncate">{agentName}</span>
                         <span className={`flex-shrink-0 font-mono text-[8px] px-1.5 py-0.5 rounded-sm uppercase tracking-wider border ${
                           info.status === 'active'
                             ? 'bg-[var(--primary-container)] text-[var(--primary)] border-[var(--primary)]/30'
@@ -630,7 +630,7 @@ function BroadcastMetric({ label, value, icon }: { label: string; value: number 
         <span className="mono-label">{label}</span>
         <span className="text-[var(--primary)]">{icon}</span>
       </div>
-      <div className="font-mono text-2xl font-bold text-[var(--on-surface)]" style={{ fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+      <div className="font-mono text-2xl text-[var(--on-surface)]" style={{ fontVariantNumeric: 'tabular-nums' }}>{value}</div>
     </div>
   )
 }
@@ -647,7 +647,7 @@ function StatCard({ label, value, total, color, icon }: { label: string; value: 
       <div className="flex items-baseline gap-1.5">
         <span
           key={value}
-          className="font-mono text-3xl font-bold"
+          className="font-mono text-3xl"
           style={{ color, fontVariantNumeric: 'tabular-nums' }}
         >
           {value}
@@ -680,7 +680,7 @@ function MetricRow({ label, value, highlight, activeColor }: { label: string; va
     <div className="flex items-center justify-between py-1">
       <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-widest">{label}</span>
       <span
-        className="font-mono text-[13px] font-semibold uppercase"
+        className="font-mono text-[13px] uppercase"
         style={{ color: highlight ? activeColor : 'var(--on-surface)' }}
       >
         {highlight && <span className="inline-block w-1.5 h-1.5 rounded-full mr-2" style={{ backgroundColor: activeColor }}></span>}
@@ -707,7 +707,7 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
           </h4>
           <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-wider ml-4">{subtitle}</span>
         </div>
-        <span className="font-mono text-lg font-bold" style={{ color: accent, opacity: 0.4 }}>
+        <span className="font-mono text-lg" style={{ color: accent, opacity: 0.4 }}>
           {items?.length || 0}
         </span>
       </div>
@@ -740,7 +740,7 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
                       <div className="flex items-center gap-2 mb-1.5">
                         {/* Element badge */}
                         <span
-                          className="inline-flex items-center justify-center w-6 h-6 font-mono text-[10px] font-bold rounded border"
+                          className="inline-flex items-center justify-center w-6 h-6 font-mono text-[10px] rounded border"
                           style={{
                             backgroundColor: `${ELEMENT_COLORS[e.element] || accent}15`,
                             borderColor: `${ELEMENT_COLORS[e.element] || accent}40`,
@@ -749,7 +749,7 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
                         >
                           {e.element}
                         </span>
-                        <span className="font-mono text-[13px] font-bold text-[var(--on-surface)] truncate">
+                        <span className="font-mono text-[13px] text-[var(--on-surface)] truncate">
                           {e.potential_label || e.pair_style || 'Auto'}
                         </span>
                       </div>
