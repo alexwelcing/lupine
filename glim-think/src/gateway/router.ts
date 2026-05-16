@@ -17,6 +17,7 @@ import {
   TaskTier,
   ModelOpts,
   WorkersAIProvider,
+  OpenAIProvider,
   ZAIProvider,
   MiniMaxProvider,
   HFProvider,
@@ -94,6 +95,14 @@ export class ModelRouter {
           })
         : new WorkersAIProvider(env.AI, WORKERS_AI_MODEL)
     );
+
+    // OpenAI — strong, reliable general model. Direct API with the saved
+    // OPENAI_API_KEY. Primary for the quality tiers (hypothesis /
+    // experiment_design / code_review) so research synthesis runs on a
+    // first-class model instead of falling back to workers-ai.
+    if (env.OPENAI_API_KEY) {
+      this.providers.set("openai", new OpenAIProvider(env.OPENAI_API_KEY, "gpt-4.1"));
+    }
 
     // Zhipu AI (ZAI) — strong reasoning, OpenAI-compatible. Direct: not
     // a Gateway-supported provider.
@@ -253,6 +262,7 @@ export class ModelRouter {
         return ["workers-ai"];
       case "hypothesis":
         return [
+          ...(this.providers.has("openai") ? ["openai"] : []),
           ...(this.providers.has("gemini") ? ["gemini"] : []),
           ...(this.providers.has("zai") ? ["zai"] : []),
           ...(this.providers.has("minimax") ? ["minimax"] : []),
@@ -261,6 +271,7 @@ export class ModelRouter {
         ];
       case "experiment_design":
         return [
+          ...(this.providers.has("openai") ? ["openai"] : []),
           ...(this.providers.has("gemini") ? ["gemini"] : []),
           ...(this.providers.has("minimax") ? ["minimax"] : []),
           ...(this.providers.has("zai") ? ["zai"] : []),
@@ -268,6 +279,7 @@ export class ModelRouter {
         ];
       case "code_review":
         return [
+          ...(this.providers.has("openai") ? ["openai"] : []),
           ...(this.providers.has("gemini") ? ["gemini"] : []),
           ...(this.providers.has("zai") ? ["zai"] : []),
           ...(this.providers.has("minimax") ? ["minimax"] : []),
@@ -284,6 +296,7 @@ export class ModelRouter {
    */
   private strengthFirstChain(): string[] {
     return [
+      ...(this.providers.has("openai") ? ["openai"] : []),
       ...(this.providers.has("gemini") ? ["gemini"] : []),
       ...(this.providers.has("minimax") ? ["minimax"] : []),
       ...(this.providers.has("zai") ? ["zai"] : []),
