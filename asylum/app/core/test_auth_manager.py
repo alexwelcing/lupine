@@ -1,3 +1,0 @@
-# Generated Test for app\core\auth_manager.py
-# [Minimax Response] Coding plan for: 
-        You are a QA Engineer. Write a comprehens...

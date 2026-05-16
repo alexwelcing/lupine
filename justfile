@@ -40,10 +40,6 @@ bench-tests:
 build-rust:
     cargo build --workspace
 
-# Run atlas-tui
-tui:
-    cargo run -p atlas-tui
-
 # --- DEPLOYMENT ---
 
 # Build everything and deploy to Google Cloud Run
