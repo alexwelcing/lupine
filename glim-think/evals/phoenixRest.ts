@@ -113,6 +113,44 @@ export interface SpanAnnotation {
   metadata?: Record<string, unknown>;
 }
 
+export interface DatasetExample {
+  input: Record<string, unknown>;
+  output: Record<string, unknown>;
+  metadata: Record<string, unknown>;
+}
+
+/**
+ * Create a dataset and upload examples via REST
+ * (POST /v1/datasets/upload, action=create then append). Parallel-array
+ * payload shape is what Phoenix Cloud expects.
+ */
+export async function uploadDataset(
+  name: string,
+  description: string,
+  examples: DatasetExample[],
+): Promise<void> {
+  const BATCH = 100;
+  for (let i = 0; i < examples.length; i += BATCH) {
+    const batch = examples.slice(i, i + BATCH);
+    const body = {
+      action: i === 0 ? "create" : "append",
+      name,
+      description,
+      inputs: batch.map((e) => e.input),
+      outputs: batch.map((e) => e.output),
+      metadata: batch.map((e) => e.metadata),
+    };
+    const r = await fetch(`${apiBase()}/v1/datasets/upload`, {
+      method: "POST",
+      headers: authHeaders(true),
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) {
+      throw new Error(`Phoenix dataset upload REST ${r.status}: ${(await r.text()).slice(0, 200)}`);
+    }
+  }
+}
+
 /** Write annotations back to Phoenix in batches (POST /v1/span_annotations). */
 export async function logAnnotations(annotations: SpanAnnotation[]): Promise<number> {
   let written = 0;

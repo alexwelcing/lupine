@@ -10,33 +10,9 @@
 
 import { config } from "dotenv";
 config({ path: "../.env" });
-import { createClient } from "@arizeai/phoenix-client";
-import { createDataset, appendDatasetExamples } from "@arizeai/phoenix-client/datasets";
 import * as fs from "fs";
 import * as path from "path";
-
-const PHOENIX_API_KEY = process.env.PHOENIX_API_KEY?.trim();
-const PHOENIX_COLLECTOR_ENDPOINT = process.env.PHOENIX_COLLECTOR_ENDPOINT?.trim();
-
-function getPhoenixHost(): string {
-  if (PHOENIX_COLLECTOR_ENDPOINT) {
-    return PHOENIX_COLLECTOR_ENDPOINT.replace(/\/v1\/traces\/?$/, "");
-  }
-  throw new Error("PHOENIX_COLLECTOR_ENDPOINT must be set");
-}
-
-function getClient() {
-  if (!PHOENIX_API_KEY) throw new Error("PHOENIX_API_KEY not set");
-  return createClient({
-    options: {
-      baseUrl: getPhoenixHost(),
-      headers: {
-        Authorization: `Bearer ${PHOENIX_API_KEY}`,
-        "User-Agent": "glim-think-eval/1.0.0 (dataset-builder)",
-      },
-    },
-  });
-}
+import { uploadDataset as restUploadDataset } from "./phoenixRest.js";
 
 // ─── CSV Parser ───
 
@@ -249,35 +225,17 @@ function buildExperimentDataset(rows: BenchmarkRow[]): DatasetExample[] {
 // ─── Upload / Save ───
 
 async function uploadDataset(name: string, examples: DatasetExample[]) {
-  const client = getClient();
-  console.log(`[dataset] Creating "${name}" with ${examples.length} examples...`);
-
-  const dataset = await createDataset({
-    client,
+  console.log(`[dataset] Uploading "${name}" with ${examples.length} examples via REST...`);
+  await restUploadDataset(
     name,
-    description: `GLIM benchmark dataset generated from NIST IPR data. ${examples.length} examples.`,
-  });
-
-  console.log(`[dataset] Created dataset ID: ${dataset.id}`);
-
-  // Upload in batches of 100
-  const BATCH_SIZE = 100;
-  for (let i = 0; i < examples.length; i += BATCH_SIZE) {
-    const batch = examples.slice(i, i + BATCH_SIZE);
-    await appendDatasetExamples({
-      client,
-      datasetId: dataset.id,
-      examples: batch.map((ex) => ({
-        input: ex.input,
-        output: ex.output,
-        metadata: ex.metadata,
-      })),
-    });
-    console.log(`[dataset] Uploaded batch ${i / BATCH_SIZE + 1} (${batch.length} examples)`);
-  }
-
+    `GLIM benchmark dataset generated from NIST IPR data. ${examples.length} examples.`,
+    examples.map((ex) => ({
+      input: ex.input as Record<string, unknown>,
+      output: ex.output as Record<string, unknown>,
+      metadata: (ex.metadata ?? {}) as Record<string, unknown>,
+    })),
+  );
   console.log(`[dataset] "${name}" upload complete.`);
-  return dataset;
 }
 
 function saveDatasetLocal(name: string, examples: DatasetExample[]) {
@@ -305,12 +263,14 @@ async function main() {
     const examples = builder(rows);
     saveDatasetLocal(name, examples);
 
-    if (PHOENIX_API_KEY) {
+    if (process.env.PHOENIX_API_KEY?.trim()) {
       try {
         await uploadDataset(name, examples);
       } catch (e) {
         console.warn(`[dataset] Upload failed for "${name}": ${(e as Error).message}`);
       }
+    } else {
+      console.log(`[dataset] PHOENIX_API_KEY not set — saved "${name}" locally only.`);
     }
   }
 
