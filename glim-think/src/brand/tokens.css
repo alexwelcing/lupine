@@ -1,0 +1,149 @@
+/**
+ * Lupine via Hermes — Design Tokens
+ *
+ * A distinct visual identity for GLIM research outputs.
+ * Colors: deep space blues, aurora teals, warning ambers.
+ * Typography: scientific monospace for data, geometric sans for structure.
+ */
+
+:root {
+  /* ── Surface ── */
+  --lpn-bg-deep:      #05060a;
+  --lpn-bg-base:      #0a0b12;
+  --lpn-bg-raised:    #12131a;
+  --lpn-bg-sunken:    #070810;
+  --lpn-border:       #1e2030;
+  --lpn-border-hover: #2a2d40;
+
+  /* ── Text ── */
+  --lpn-text-primary:   #e8e9f0;
+  --lpn-text-secondary: #8b8fa3;
+  --lpn-text-muted:     #5a5e75;
+  --lpn-text-inverse:   #05060a;
+
+  /* ── Accent: Lupine Aurora ── */
+  --lpn-aurora:       #00d4aa;
+  --lpn-aurora-dim:   #00a884;
+  --lpn-aurora-glow:  rgba(0, 212, 170, 0.15);
+
+  /* ── Accent: Hermes Signal ── */
+  --lpn-signal:       #5b8cff;
+  --lpn-signal-dim:   #3d6fd8;
+  --lpn-signal-glow:  rgba(91, 140, 255, 0.15);
+
+  /* ── Semantic: Data ── */
+  --lpn-data-good:    #4ade80;
+  --lpn-data-warn:    #fbbf24;
+  --lpn-data-bad:     #f87171;
+  --lpn-data-info:    #38bdf8;
+
+  /* ── Semantic: Agents ── */
+  --lpn-agent-manifold:    #5b8cff;
+  --lpn-agent-causal:      #c084fc;
+  --lpn-agent-theorist:    #4ade80;
+  --lpn-agent-experiment:  #fb923c;
+  --lpn-agent-literaturist:#38bdf8;
+
+  /* ── Typography ── */
+  --lpn-font-sans:   "Inter", "SF Pro Display", ui-sans-serif, system-ui, sans-serif;
+  --lpn-font-mono:   "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --lpn-font-display:"Space Grotesk", var(--lpn-font-sans);
+
+  /* ── Spacing ── */
+  --lpn-radius-sm: 4px;
+  --lpn-radius-md: 8px;
+  --lpn-radius-lg: 12px;
+  --lpn-radius-xl: 20px;
+
+  /* ── Shadows ── */
+  --lpn-shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --lpn-shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+  --lpn-shadow-glow-aurora: 0 0 20px var(--lpn-aurora-glow);
+  --lpn-shadow-glow-signal: 0 0 20px var(--lpn-signal-glow);
+}
+
+/* ── Base ── */
+.lpn-root {
+  background: var(--lpn-bg-base);
+  color: var(--lpn-text-primary);
+  font-family: var(--lpn-font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.lpn-root * {
+  box-sizing: border-box;
+}
+
+/* ── Typography helpers ── */
+.lpn-h1 { font-family: var(--lpn-font-display); font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; }
+.lpn-h2 { font-family: var(--lpn-font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin: 24px 0 12px; }
+.lpn-h3 { font-family: var(--lpn-font-sans); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--lpn-text-secondary); margin: 20px 0 8px; }
+.lpn-body { font-size: 13px; color: var(--lpn-text-secondary); }
+.lpn-mono { font-family: var(--lpn-font-mono); font-size: 12px; }
+.lpn-caption { font-size: 11px; color: var(--lpn-text-muted); }
+
+/* ── Cards ── */
+.lpn-card {
+  background: var(--lpn-bg-raised);
+  border: 1px solid var(--lpn-border);
+  border-radius: var(--lpn-radius-md);
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+.lpn-card:hover { border-color: var(--lpn-border-hover); }
+.lpn-card-aurora { box-shadow: inset 0 1px 0 rgba(0,212,170,0.08); }
+.lpn-card-signal { box-shadow: inset 0 1px 0 rgba(91,140,255,0.08); }
+
+/* ── Badges ── */
+.lpn-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--lpn-bg-sunken);
+  border: 1px solid var(--lpn-border);
+  color: var(--lpn-text-secondary);
+}
+.lpn-badge-aurora { color: var(--lpn-aurora); border-color: var(--lpn-aurora-dim); background: rgba(0,212,170,0.08); }
+.lpn-badge-signal { color: var(--lpn-signal); border-color: var(--lpn-signal-dim); background: rgba(91,140,255,0.08); }
+.lpn-badge-manifold    { color: var(--lpn-agent-manifold);    border-color: var(--lpn-agent-manifold);    background: rgba(91,140,255,0.08); }
+.lpn-badge-causal      { color: var(--lpn-agent-causal);      border-color: var(--lpn-agent-causal);      background: rgba(192,132,252,0.08); }
+.lpn-badge-theorist    { color: var(--lpn-agent-theorist);    border-color: var(--lpn-agent-theorist);    background: rgba(74,222,128,0.08); }
+.lpn-badge-experiment  { color: var(--lpn-agent-experiment);  border-color: var(--lpn-agent-experiment);  background: rgba(251,146,60,0.08); }
+.lpn-badge-literaturist{ color: var(--lpn-agent-literaturist);border-color: var(--lpn-agent-literaturist);background: rgba(56,189,248,0.08); }
+
+/* ── Tables ── */
+.lpn-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.lpn-table th { text-align: left; padding: 8px 12px; color: var(--lpn-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10px; border-bottom: 1px solid var(--lpn-border); }
+.lpn-table td { padding: 8px 12px; border-bottom: 1px solid var(--lpn-border); color: var(--lpn-text-secondary); }
+.lpn-table tr:hover td { background: rgba(255,255,255,0.02); }
+.lpn-table .num { font-family: var(--lpn-font-mono); text-align: right; color: var(--lpn-text-primary); }
+
+/* ── Metrics ── */
+.lpn-metric { display: flex; flex-direction: column; gap: 2px; }
+.lpn-metric-value { font-family: var(--lpn-font-mono); font-size: 22px; font-weight: 700; color: var(--lpn-text-primary); }
+.lpn-metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--lpn-text-muted); }
+.lpn-metric-delta { font-size: 11px; font-family: var(--lpn-font-mono); }
+.lpn-metric-delta.up   { color: var(--lpn-data-good); }
+.lpn-metric-delta.down { color: var(--lpn-data-bad); }
+
+/* ── Dividers ── */
+.lpn-rule { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--lpn-border), transparent); margin: 24px 0; }
+
+/* ── Scrollbar ── */
+.lpn-root ::-webkit-scrollbar { width: 8px; height: 8px; }
+.lpn-root ::-webkit-scrollbar-track { background: var(--lpn-bg-sunken); }
+.lpn-root ::-webkit-scrollbar-thumb { background: var(--lpn-border); border-radius: 4px; }
+.lpn-root ::-webkit-scrollbar-thumb:hover { background: var(--lpn-border-hover); }
+
+/* ── Print ── */
+@media print {
+  .lpn-root { background: #fff; color: #000; }
+  .lpn-card { border: 1px solid #ccc; box-shadow: none; }
+}

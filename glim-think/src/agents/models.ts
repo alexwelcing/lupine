@@ -177,7 +177,7 @@ function spendMiddleware(env: Env): LanguageModelV2Middleware {
   };
 }
 
-function miniMaxModel(env: Env, modelOverride?: string) {
+export function miniMaxModel(env: Env, modelOverride?: string) {
   const { baseURL, model: defaultModel } = miniMaxConfig(env);
   const model = modelOverride ?? defaultModel;
   const base = createOpenAICompatible({
@@ -372,6 +372,7 @@ export async function exerciseDeepTier(env: Env): Promise<{
       model,
       maxOutputTokens: 64,
       prompt: "In one sentence, what is a hyper-ribbon error manifold?",
+      experimental_telemetry: { isEnabled: true, functionId: "models.health-check" },
     });
     const totalTokens =
       (result.usage?.inputTokens ?? 0) +

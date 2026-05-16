@@ -58,16 +58,12 @@ function Layer({
       className="relative rounded-md border px-5 py-4"
       style={{
         background: isLupine
-          ? 'linear-gradient(135deg, rgba(78,205,196,0.18) 0%, rgba(78,205,196,0.06) 100%)'
-          : isApplications
-            ? 'rgba(196,181,253,0.06)'
-            : isPhysical
-              ? 'rgba(148,163,184,0.06)'
-              : 'var(--surface-container)',
+          ? 'linear-gradient(135deg, rgba(0,255,255,0.1) 0%, rgba(0,255,255,0.02) 100%)'
+          : 'var(--surface-container-high)',
         borderColor: isLupine
-          ? '#4ecdc4'
-          : 'var(--outline-variant)',
-        boxShadow: isLupine ? '0 0 0 1px rgba(78,205,196,0.45), 0 8px 32px rgba(78,205,196,0.10)' : 'none',
+          ? '#00ffff'
+          : 'var(--outline)',
+        boxShadow: isLupine ? '0 0 0 1px rgba(0,255,255,0.3), 0 8px 32px rgba(0,255,255,0.1)' : 'none',
       }}
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
@@ -77,7 +73,7 @@ function Layer({
       {isLupine && (
         <span
           className="absolute -left-3 top-1/2 -translate-y-1/2 font-mono text-[9px] uppercase tracking-widest font-bold px-2 py-1 rounded"
-          style={{ background: '#4ecdc4', color: '#0b1220' }}
+          style={{ background: '#00ffff', color: '#000000' }}
         >
           Lupine
         </span>
@@ -86,16 +82,16 @@ function Layer({
       <div className="flex items-baseline justify-between gap-3 flex-wrap">
         <div className="flex items-baseline gap-3">
           <span
-            className="font-mono text-[10px] uppercase tracking-widest"
+            className="font-mono text-xs uppercase tracking-widest"
             style={{
-              color: isLupine ? '#4ecdc4' : 'var(--on-surface-variant-mid)',
+              color: isLupine ? '#00ffff' : 'var(--on-surface-variant)',
             }}
           >
             L{layer.layer_order}
           </span>
           <h4
-            className="text-base font-semibold"
-            style={{ color: isLupine ? '#e2e8f0' : 'var(--on-surface)' }}
+            className="text-lg font-semibold tracking-tight"
+            style={{ color: isLupine ? '#ffffff' : 'var(--on-surface)' }}
           >
             {layer.layer_name}
           </h4>
@@ -103,20 +99,20 @@ function Layer({
       </div>
 
       <p
-        className="text-sm leading-relaxed mt-1.5"
+        className="text-base leading-relaxed mt-2"
         style={{
-          color: isLupine ? 'rgba(226,232,240,0.85)' : 'var(--on-surface-variant)',
+          color: isLupine ? 'rgba(255,255,255,0.9)' : 'var(--on-surface)',
         }}
       >
         {layer.description}
       </p>
 
       <p
-        className="text-[11px] leading-relaxed mt-2 font-mono"
+        className="text-sm leading-relaxed mt-3 font-mono"
         style={{
           color: isLupine
-            ? 'rgba(78,205,196,0.9)'
-            : 'var(--on-surface-variant-mid)',
+            ? '#00ffff'
+            : 'var(--on-surface-variant)',
         }}
       >
         {layer.examples}

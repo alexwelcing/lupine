@@ -1052,63 +1052,6 @@
     ],
     "weighted_ev_conditional_usd_b": 7014.6825,
     "weighted_probability_total": 1.0,
-    "strategic_acquirers": [
-      {
-        "id": "microsoft-aqe",
-        "acquirer": "Microsoft (Azure Quantum Elements)",
-        "rationale": "AQE is Microsoft's flagship materials-AI platform launched 2023; the audit substrate is the layer they cannot ship internally without 5+ years of methodology work. Buying Lupine is buying the validation discipline.",
-        "npv_to_acquirer_usd_b": 30.0,
-        "plausible_acquisition_price_usd_b": 8.0,
-        "year_horizon": 3,
-        "tier": "directional"
-      },
-      {
-        "id": "google-deepmind",
-        "acquirer": "Google DeepMind (GNoME lineage)",
-        "rationale": "GNoME (Nov 2023) showed Google can ship generative matter; the audit layer is what makes it deployable. Acquisition keeps the substrate from going to Microsoft.",
-        "npv_to_acquirer_usd_b": 25.0,
-        "plausible_acquisition_price_usd_b": 6.0,
-        "year_horizon": 3,
-        "tier": "directional"
-      },
-      {
-        "id": "schrodinger",
-        "acquirer": "Schr\u00f6dinger",
-        "rationale": "The closest direct strategic \u2014 Schr\u00f6dinger's materials science segment ($120M ARR) competes for the same buyer set. Acquiring Lupine means owning both the closed proprietary stack and the open audit substrate.",
-        "npv_to_acquirer_usd_b": 10.0,
-        "plausible_acquisition_price_usd_b": 3.0,
-        "year_horizon": 3,
-        "tier": "directional"
-      },
-      {
-        "id": "synopsys-cadence",
-        "acquirer": "Synopsys / Cadence (post-ANSYS)",
-        "rationale": "Synopsys's ANSYS acquisition closed early 2025; the materials substrate is the natural next consolidation. Audit layer for atomistic ML maps directly to the EDA-of-matter thesis.",
-        "npv_to_acquirer_usd_b": 20.0,
-        "plausible_acquisition_price_usd_b": 6.0,
-        "year_horizon": 5,
-        "tier": "directional"
-      },
-      {
-        "id": "ibm-research",
-        "acquirer": "IBM Research",
-        "rationale": "IBM has the materials research org but not the productized engine; would acquire to anchor a hybrid quantum + AI materials offering.",
-        "npv_to_acquirer_usd_b": 8.0,
-        "plausible_acquisition_price_usd_b": 2.0,
-        "year_horizon": 5,
-        "tier": "directional"
-      },
-      {
-        "id": "defense-prime",
-        "acquirer": "Defense prime (Lockheed / Northrop / RTX)",
-        "rationale": "For ITAR-eligible deployments + hypersonics + advanced alloy programs, owning the audit substrate becomes a national-security argument. Less likely as full acquirer; more likely as anchor customer + minority strategic.",
-        "npv_to_acquirer_usd_b": 5.0,
-        "plausible_acquisition_price_usd_b": 1.5,
-        "year_horizon": 5,
-        "tier": "directional"
-      }
-    ],
-    "median_acquisition_price_usd_b": 4.5,
     "quantum_unlocks": [
       {
         "id": "fault-tolerant-qubits",

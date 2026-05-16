@@ -242,9 +242,9 @@ function InvestorRelationsPage() {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0110 0v4"></path>
               </svg>
-              <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Data room — by request</h2>
+              <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Data room</h2>
               <p className="text-[var(--on-surface-variant)] mb-12 max-w-lg mx-auto leading-relaxed">
-                Cap table, full benchmark manifest with snapshot date and de-duplication rule, current pilot scopes, and the cross-potential PCA results behind the IMMI submission. NDA on request.
+                Cap table, full benchmark manifest with snapshot date and de-duplication rule, current pilot scopes, and the cross-potential PCA results behind the IMMI submission. Fully transparent, no NDA required.
               </p>
               <div className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
                 <a
@@ -257,7 +257,7 @@ function InvestorRelationsPage() {
 
               <div className="mt-16 flex flex-wrap justify-center gap-8 items-center">
                 <div className="flex items-center gap-2 mono-label text-[var(--on-surface-variant)] opacity-50">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> NDA on request
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path d="M9 12l2 2 4-4" /></svg> No NDA required
                 </div>
                 <div className="flex items-center gap-2 mono-label text-[var(--on-surface-variant)] opacity-50">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ITAR-compatible deployment

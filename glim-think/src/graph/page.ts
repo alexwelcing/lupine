@@ -12,7 +12,7 @@ export const GRAPH_HTML = `<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GLIM Knowledge Graph</title>
+<title>Lupine — Knowledge Graph</title>
 <script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
 <script src="https://unpkg.com/layout-base@2.0.1/layout-base.js"></script>
 <script src="https://unpkg.com/cose-base@2.2.0/cose-base.js"></script>
@@ -22,10 +22,13 @@ export const GRAPH_HTML = `<!doctype html>
     --bg: #0a0b12;
     --bg-2: #12131a;
     --bg-3: #1c1d27;
-    --line: #232531;
-    --text: #e6e6ec;
-    --muted: #8e8e9d;
+    --line: #1e2030;
+    --text: #e8e9f0;
+    --muted: #8b8fa3;
     --accent: #5b8cff;
+    --lpn-aurora: #00d4aa;
+    --lpn-signal: #5b8cff;
+    --lpn-text-muted: #5a5e75;
     /* runtime data palette */
     --hyp: #ffb454;
     --claim: #c084fc;
@@ -58,7 +61,8 @@ export const GRAPH_HTML = `<!doctype html>
     grid-template-areas: 'header header' 'graph panel'; }
   header { grid-area: header; padding: 10px 18px; border-bottom: 1px solid var(--line);
     display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--bg-2); }
-  header h1 { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  header h1 { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-family: "Space Grotesk", sans-serif; }
+  header .brand { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lpn-text-muted); border: 1px solid var(--line); padding: 2px 8px; border-radius: 999px; margin-left: auto; }
   header .stat { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 11px;
     color: var(--muted); white-space: nowrap; }
   header .stat b { color: var(--text); }
@@ -142,7 +146,8 @@ export const GRAPH_HTML = `<!doctype html>
 </head>
 <body>
 <header>
-  <h1>GLIM // Graph</h1>
+  <h1>Lupine // Graph</h1>
+  <span class="brand">Via Hermes Hive</span>
   <div class="tabs" id="tabs">
     <button data-mode="data" class="active">data</button>
     <button data-mode="arch">architecture</button>

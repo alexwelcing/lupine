@@ -10,6 +10,7 @@ import { selectModel } from "./models";
 import { tool } from "ai";
 import { z } from "zod";
 import type { ToolSet } from "ai";
+import { trace, SpanStatusCode } from "@opentelemetry/api";
 
 const GROUPINGS = ["element", "pair_style", "potential_label"] as const;
 
@@ -195,6 +196,54 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
     within_count?: number;
     error?: string;
   }> {
+    const tracer = trace.getTracer("glim-think.agent");
+    return tracer.startActiveSpan("Causal.runScreen", async (span) => {
+      span.setAttribute("agent.class", "Causal");
+      span.setAttribute("causal.grouping", opts.grouping);
+      try {
+        const result = await this._runScreenInner(opts);
+        span.setAttribute("causal.reversal", result.reversal ?? false);
+        span.setAttribute("causal.pooled_r", result.pooled_r ?? 0);
+        span.setAttribute("causal.mean_within_r", result.mean_within_r ?? 0);
+        span.setAttribute("causal.within_count", result.within_count ?? 0);
+        span.setAttribute("causal.pattern", result.pattern ?? "");
+        span.setAttribute("output.value", JSON.stringify(result));
+
+        // Code-eval: numerical consistency checks
+        const pooledR = result.pooled_r ?? 0;
+        const meanWithinR = result.mean_within_r ?? 0;
+        const reversal = result.reversal ?? false;
+        const signDiffers = (pooledR > 0 && meanWithinR < 0) || (pooledR < 0 && meanWithinR > 0);
+        span.setAttribute("eval.code.reversal_valid", reversal === signDiffers);
+        span.setAttribute("eval.code.correlations_in_range", Math.abs(pooledR) <= 1 && Math.abs(meanWithinR) <= 1);
+        span.setAttribute("eval.code.min_groups", (result.within_count ?? 0) >= 2);
+        span.setAttribute("eval.code.pattern_nonempty", (result.pattern ?? "").length > 10);
+
+        span.setStatus({ code: SpanStatusCode.OK });
+        return result;
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        throw err;
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  private async _runScreenInner(opts: {
+    grouping: "element" | "pair_style" | "potential_label";
+  }): Promise<{
+    ok: boolean;
+    cached?: boolean;
+    claim_id?: string;
+    pooled_r?: number;
+    mean_within_r?: number;
+    reversal?: boolean;
+    pattern?: string;
+    within_count?: number;
+    error?: string;
+  }> {
     await this.onStart();
 
     // Idempotency: skip if grouping already screened.
@@ -332,6 +381,66 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
   // Writes a DBandClosure claim to env.LEDGER with the full evidence chain.
 
   async runDBandAnalysis(opts: { bootstrap_n?: number; permutation_n?: number } = {}): Promise<{
+    ok: boolean;
+    cached?: boolean;
+    claim_id?: string;
+    n_elements?: number;
+    spearman_rho?: number;
+    spearman_p_param?: number;
+    spearman_p_perm?: number;
+    bootstrap_ci_95?: [number, number];
+    mann_whitney_u?: number;
+    mann_whitney_p?: number;
+    closed_shell_mean?: number;
+    open_shell_mean?: number;
+    closed_shell_n?: number;
+    open_shell_n?: number;
+    verdict?: 'supports' | 'refutes' | 'inconclusive';
+    details?: Array<{ element: string; d_count: number; group: string; alignment: number; rank_d: number; rank_align: number }>;
+    error?: string;
+  }> {
+    const tracer = trace.getTracer("glim-think.agent");
+    return tracer.startActiveSpan("Causal.runDBandAnalysis", async (span) => {
+      span.setAttribute("agent.class", "Causal");
+      try {
+        const result = await this._runDBandInner(opts);
+        span.setAttribute("causal.verdict", result.verdict ?? "inconclusive");
+        span.setAttribute("causal.spearman_rho", result.spearman_rho ?? 0);
+        span.setAttribute("causal.spearman_p_perm", result.spearman_p_perm ?? 1);
+        span.setAttribute("causal.n_elements", result.n_elements ?? 0);
+        span.setAttribute("output.value", JSON.stringify(result));
+
+        // Code-eval: statistical rigor checks
+        const rho = result.spearman_rho ?? 0;
+        const pPerm = result.spearman_p_perm ?? 1;
+        const ci = result.bootstrap_ci_95;
+        const n = result.n_elements ?? 0;
+        const verdict = result.verdict ?? "inconclusive";
+        const significant = pPerm < 0.05;
+        const strongEffect = Math.abs(rho) > 0.5;
+        const verdictConsistent =
+          (verdict === "supports" && significant && strongEffect && rho > 0) ||
+          (verdict === "refutes" && significant && strongEffect && rho < 0) ||
+          (verdict === "inconclusive" && (!significant || !strongEffect));
+        span.setAttribute("eval.code.rho_in_range", Math.abs(rho) <= 1);
+        span.setAttribute("eval.code.p_values_valid", pPerm >= 0 && pPerm <= 1);
+        span.setAttribute("eval.code.ci_contains_rho", ci ? ci[0] < ci[1] && rho >= ci[0] && rho <= ci[1] : false);
+        span.setAttribute("eval.code.sample_adequate", n >= 10);
+        span.setAttribute("eval.code.verdict_consistent", verdictConsistent);
+
+        span.setStatus({ code: SpanStatusCode.OK });
+        return result;
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        throw err;
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  private async _runDBandInner(opts: { bootstrap_n?: number; permutation_n?: number } = {}): Promise<{
     ok: boolean;
     cached?: boolean;
     claim_id?: string;

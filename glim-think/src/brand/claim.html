@@ -1,0 +1,29 @@
+<!--
+  Lupine Claim Card — inline component for dashboards and reports.
+  Usage: Replace {{PLACEHOLDERS}} before injecting into a page.
+-->
+<div class="lpn-card" style="border-left: 3px solid var(--lpn-agent-{{AGENT_COLOR}}); padding-left: 14px;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+    <div style="flex: 1;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <span class="lpn-badge lpn-badge-{{AGENT_COLOR}}">{{AGENT_NAME}}</span>
+        <span class="lpn-badge">{{STATUS}}</span>
+        <span class="lpn-caption">{{TIMESTAMP}}</span>
+      </div>
+      <p style="margin: 0; font-size: 13px; color: var(--lpn-text-primary); line-height: 1.5;">
+        {{DESCRIPTION}}
+      </p>
+      {{#EVIDENCE}}
+      <p class="lpn-caption" style="margin: 6px 0 0;">
+        Evidence: {{EVIDENCE}}
+      </p>
+      {{/EVIDENCE}}
+    </div>
+    <div style="text-align: right; flex-shrink: 0;">
+      <div class="lpn-metric">
+        <span class="lpn-metric-value" style="font-size: 16px; color: var(--lpn-agent-{{AGENT_COLOR}});">{{CONFIDENCE}}</span>
+        <span class="lpn-metric-label">Confidence</span>
+      </div>
+    </div>
+  </div>
+</div>

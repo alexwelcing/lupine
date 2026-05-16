@@ -1,0 +1,16 @@
+{
+  "name": "glim-think-evals",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "eval:run": "tsx run-evals.ts"
+  },
+  "dependencies": {
+    "@arizeai/phoenix-client": "^6.10.0",
+    "@arizeai/phoenix-evals": "^1.0.3",
+    "@ai-sdk/openai": "^2.0.45",
+    "ai": "^6.0.168",
+    "dotenv": "^16.5.0",
+    "tsx": "^4.19.0"
+  }
+}

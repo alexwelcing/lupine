@@ -1,45 +1,88 @@
 # Hermes Profiles and Agent Roles
 
-This project uses Hermes as an orchestration harness for long-lived, profile-isolated scientific workflows.
+## Status: Migrated to Lupine Hermes Hive
 
-## Profile implementations
+The old in-repo Hermes profile configs (`agents/profiles/*/hermes-*.yaml`) have been archived to `agents/profiles/.archive/`. They targeted Hermes v0.12.0, which was broken on Windows and 1422 commits behind upstream.
 
-Implemented profile configs and memory templates:
-- `agents/profiles/corpus/profile.yaml`
-- `agents/profiles/distill/profile.yaml`
-- `agents/profiles/formalize/profile.yaml`
-- `agents/profiles/loop/profile.yaml`
+The new local agent layer lives in `tools/hermes-hive/` and is designed for:
+- **Fresh Hermes v0.13+** installed via `uv` into an isolated venv
+- **Subprocess-safe squad dispatch** via `tools/hive.py` on Windows
+- **Direct swarm dispatch** to glim-think via a custom skill
+- **Shared SQLite kanban** for cross-agent task coordination
 
-Each profile has a colocated `MEMORY.md` to encode persistent constraints and context.
+## New Architecture
 
-## Profiles
+```
+Local Windows Machine
+  └─ python tools/hive.py run --squad --query "..."
+       ├─ hermes-launch.py  (prompt_toolkit monkey-patch for headless Windows)
+       ├─ Hermes + MiniMax-M2.7  → Manifold Agent (α)
+       ├─ Hermes + MiniMax-M2.7  → Causal Agent (δ)
+       ├─ Hermes + MiniMax-M2.7  → Theorist Agent (γ)
+       ├─ Hermes + MiniMax-M2.7  → Experiment Agent (ε)
+       ├─ Hermes + MiniMax-M2.7  → Literaturist Agent (β)
+       └─ Shared SQLite kanban (hive-wire.py)  → glim-think swarm
+```
 
-- `corpus`: ingestion, extraction, parsing, bibliography sync
-- `distill`: Rust transforms + Python operator discovery
-- `formalize`: Lean theorem targeting and proof execution
-- `loop`: internal success-loop packaging and run closure
+## Windows Console Fix
 
-## Agents
+Hermes uses `prompt_toolkit` which requires a real Windows console (`cmd.exe`). When launched via `subprocess.Popen` or background tasks, it crashes with:
 
-- **LiteratureAgent**: discovers and queues relevant MD/materials sources
-- **ExtractionAgent**: converts sources into canonical benchmark records
-- **PhysicsAgent**: checks plausibility constraints and regime assumptions
-- **OperatorAgent**: proposes candidate distillation operators from error structure
-- **CounterexampleAgent**: stress-tests candidates against held-out data and constraints
-- **FormalizationAgent**: generates Lean definitions and theorem skeletons
-- **ProofAgent**: discharges lemmas/theorems and updates proof status
-- **ReleaseAgent**: packages datasets/reports/operator docs for publication
+```
+NoConsoleScreenBufferError: Found xterm-256color, while expecting a Windows console.
+```
 
-Starter role cards currently exist for:
-- `agents/roles/LiteratureAgent.md`
-- `agents/roles/OperatorAgent.md`
+We solve this with **`tools/hermes-hive/hermes-launch.py`**, which monkey-patches `prompt_toolkit` to use `PlainTextOutput` before importing Hermes. This disables rich formatting but makes Hermes fully functional in headless/subprocess contexts.
 
-## End-to-end flow
+## Files
 
-`LiteratureAgent -> ExtractionAgent -> PhysicsAgent -> OperatorAgent -> CounterexampleAgent -> FormalizationAgent -> ProofAgent -> ReleaseAgent`
+| Path | Purpose |
+|------|---------|
+| `tools/hive.py` | Main activation script — run this to dispatch the squad |
+| `tools/hermes-hive/hermes-launch.py` | Subprocess-safe Hermes launcher (prompt_toolkit monkey-patch) |
+| `tools/hermes-hive/hive-wire.py` | SQLite kanban + glim-think API client + budget guard |
+| `tools/hermes-hive/profiles/*.json` | Agent-specific system prompts and model configs |
+| `tools/hermes-hive/skill/SKILL.md` | Hermes skill documentation |
+| `tools/hermes-hive/skill/tools.py` | Tool implementations for swarm dispatch |
 
-## Operating principles
+## Usage
 
-- profile memory is isolated by workflow to reduce cross-contamination,
-- every stage emits provenance and run metadata,
-- promotion is gated by schema validity, evidence quality, and proof status.
+```bash
+# Run the full squad
+python tools/hive.py run --squad --query "Analyze Al hyper-ribbon"
+
+# Run specific agents
+python tools/hive.py run --profiles manifold,causal --query "Screen for paradoxes"
+
+# Check status
+python tools/hive.py status
+```
+
+## End-to-end flow (simplified)
+
+1. Operator or agent runs `python tools/hive.py run --squad --query "..."`
+2. `hive.py` reads profiles and launches Hermes via `hermes-launch.py` for each agent
+3. Agents run in parallel (default) or sequentially (`--sequential`)
+4. Each agent's output is stored in local SQLite kanban and log files
+5. A consolidated beat is posted to glim-think swarm
+6. A consolidated claim is drafted for review
+
+## Provider status
+
+| Provider | Status | Notes |
+|----------|--------|-------|
+| MiniMax | ✅ Working | All profiles route here by default |
+| OpenAI Codex | ❌ Auth required | Refresh token consumed by another client; run `codex` in terminal to refresh |
+| Z.ai / GLM | ❌ Hangs | API endpoint unresponsive in subprocess context |
+| Hugging Face | ❌ Auth required | `HF_TOKEN` returns 401 for gated models |
+
+To add a provider, edit the profile JSON and ensure the corresponding API key is in your environment.
+
+## Old profiles (archived)
+
+- `corpus` — ingestion, extraction, parsing
+- `distill` — Rust transforms + Python operator discovery
+- `formalize` — Lean theorem targeting
+- `loop` — internal success-loop packaging
+
+These are preserved in `agents/profiles/.archive/` for reference but are not maintained.

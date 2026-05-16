@@ -17,7 +17,7 @@
  *   GET  /admin/insights   → list recent insights for human review
  */
 import type { Env } from "../types";
-import { selectModel } from "../agents/models";
+import { selectModel, extractMiniMaxTokens } from "../agents/models";
 import { generateText } from "ai";
 import { searchLiterature } from "../literature";
 import { parseHitlistBlock, persistHits } from "./hits";
@@ -99,6 +99,7 @@ export async function comprehendPaper(
   raw?: string;
   error?: string;
   latency_ms: number;
+  tokens_spent: number;
 }> {
   await ensureSchema(env);
   const start = Date.now();
@@ -112,7 +113,7 @@ export async function comprehendPaper(
     .first<PaperRow>()
     .catch(() => null);
   if (!paper) {
-    return { ok: false, error: `paper not found: ${opts.paper_doi}`, latency_ms: Date.now() - start };
+    return { ok: false, error: `paper not found: ${opts.paper_doi}`, latency_ms: Date.now() - start, tokens_spent: 0 };
   }
 
   const hyp = await env.LEDGER
@@ -121,7 +122,7 @@ export async function comprehendPaper(
     .first<HypothesisRow>()
     .catch(() => null);
   if (!hyp) {
-    return { ok: false, error: `hypothesis not found: ${opts.hypothesis_id}`, latency_ms: Date.now() - start };
+    return { ok: false, error: `hypothesis not found: ${opts.hypothesis_id}`, latency_ms: Date.now() - start, tokens_spent: 0 };
   }
 
   const prompt = [
@@ -169,8 +170,15 @@ export async function comprehendPaper(
 
   const model = selectModel(env, "deep");
   let raw = "";
+  let tokens_spent = 0;
   try {
-    const result = await generateText({ model, prompt, maxOutputTokens: 2048 });
+    const result = await generateText({
+      model,
+      prompt,
+      maxOutputTokens: 2048,
+      experimental_telemetry: { isEnabled: true, functionId: "research.comprehend-paper" },
+    });
+    tokens_spent = extractMiniMaxTokens(result.usage);
     raw = (result.text ?? "")
       .replace(/<think>[\s\S]*?<\/think>\s*/g, "")
       .trim();
@@ -179,6 +187,7 @@ export async function comprehendPaper(
       ok: false,
       error: `M2.7 generateText failed: ${e instanceof Error ? e.message : String(e)}`,
       latency_ms: Date.now() - start,
+      tokens_spent: 0,
     };
   }
 
@@ -222,6 +231,7 @@ export async function comprehendPaper(
     extracted,
     raw,
     latency_ms: Date.now() - start,
+    tokens_spent,
   };
 }
 
@@ -319,6 +329,7 @@ export async function reasonOnHypothesis(
   hits_inserted?: string[];
   hits_skipped_duplicate?: number;
   latency_ms: number;
+  tokens_spent: number;
   error?: string;
 }> {
   await ensureSchema(env);
@@ -330,7 +341,7 @@ export async function reasonOnHypothesis(
     .first<HypothesisRow>()
     .catch(() => null);
   if (!hyp) {
-    return { ok: false, insights_used: [], error: `hypothesis not found`, latency_ms: Date.now() - start };
+    return { ok: false, insights_used: [], error: `hypothesis not found`, latency_ms: Date.now() - start, tokens_spent: 0 };
   }
 
   const insights = await topInsightsForHypothesis(env, hyp.id, opts.insight_limit ?? 5);
@@ -403,10 +414,17 @@ export async function reasonOnHypothesis(
 
   const model = selectModel(env, "deep");
   let raw = "";
+  let tokens_spent = 0;
   try {
     // M2.7 spends ~half the token budget on <think> before producing the
     // visible narrative. Default 3000 → effectively ~1500 visible tokens.
-    const result = await generateText({ model, prompt, maxOutputTokens: opts.max_tokens ?? 3000 });
+    const result = await generateText({
+      model,
+      prompt,
+      maxOutputTokens: opts.max_tokens ?? 3000,
+      experimental_telemetry: { isEnabled: true, functionId: "research.reason-on-hypothesis" },
+    });
+    tokens_spent = extractMiniMaxTokens(result.usage);
     raw = (result.text ?? "")
       .replace(/<think>[\s\S]*?<\/think>\s*/g, "")
       .trim();
@@ -417,6 +435,7 @@ export async function reasonOnHypothesis(
       insights_used: insights,
       error: `M2.7 generateText failed: ${e instanceof Error ? e.message : String(e)}`,
       latency_ms: Date.now() - start,
+      tokens_spent: 0,
     };
   }
 
@@ -489,6 +508,7 @@ export async function reasonOnHypothesis(
     hits_inserted: hitsInserted,
     hits_skipped_duplicate: hitsSkipped,
     latency_ms: Date.now() - start,
+    tokens_spent,
   };
 }
 
@@ -502,6 +522,7 @@ export interface IterateRoundResult {
   papers_harvested_this_round: number;
   papers_comprehended_this_round: number;
   hits_inserted_this_round: number;
+  tokens_spent_this_round: number;
   narrative: string;
   claim_id?: string;
 }
@@ -514,6 +535,7 @@ export interface IterateResult {
   convergence_reason: string;
   total_papers_added: number;
   total_insights_added: number;
+  total_tokens_spent: number;
   duration_ms: number;
   lean_readiness: LeanReadiness;
 }
@@ -773,6 +795,7 @@ export async function iterateOnHypothesis(
       convergence_reason: "hypothesis not found",
       total_papers_added: 0,
       total_insights_added: 0,
+      total_tokens_spent: 0,
       duration_ms: Date.now() - start,
       lean_readiness: assessLeanReadiness([], 0),
     };
@@ -782,9 +805,11 @@ export async function iterateOnHypothesis(
   const seenQueries = new Set<string>();
   let totalPapersAdded = 0;
   let totalInsightsAdded = 0;
+  let totalTokensSpent = 0;
   let convergenceReason = "max rounds reached";
 
   for (let round = 1; round <= maxRounds; round++) {
+    let roundTokens = 0;
     const reasoned = await reasonOnHypothesis(env, {
       hypothesis_id: hyp.id,
       insight_limit: 7,
@@ -794,6 +819,7 @@ export async function iterateOnHypothesis(
       convergenceReason = `reason failed in round ${round}: ${reasoned.error}`;
       break;
     }
+    roundTokens += reasoned.tokens_spent ?? 0;
 
     const insightsCount = reasoned.insights_used.length;
     const highRelCount = reasoned.insights_used.filter((i) => i.relevance_score >= HIGH_RELEVANCE_THRESHOLD).length;
@@ -824,6 +850,7 @@ export async function iterateOnHypothesis(
                 hypothesis_id: hyp.id,
               });
               if (comp.ok) papersComprehendedThisRound += 1;
+              roundTokens += comp.tokens_spent ?? 0;
             }
           }
         } catch (e) {
@@ -844,9 +871,12 @@ export async function iterateOnHypothesis(
       papers_harvested_this_round: papersHarvestedThisRound,
       papers_comprehended_this_round: papersComprehendedThisRound,
       hits_inserted_this_round: reasoned.hits_inserted?.length ?? 0,
+      tokens_spent_this_round: roundTokens,
       narrative: reasoned.narrative ?? "",
       claim_id: reasoned.claim_id,
     });
+    
+    totalTokensSpent += roundTokens;
 
     if (round >= 2) {
       const prev = rounds[rounds.length - 2];
@@ -878,6 +908,7 @@ export async function iterateOnHypothesis(
     convergence_reason: convergenceReason,
     total_papers_added: totalPapersAdded,
     total_insights_added: totalInsightsAdded,
+    total_tokens_spent: totalTokensSpent,
     duration_ms: Date.now() - start,
     lean_readiness: assessLeanReadiness(rounds, finalHighRel),
   };

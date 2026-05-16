@@ -172,6 +172,7 @@ export async function runDiag(env: Env): Promise<{
         model,
         maxOutputTokens: 16,
         prompt: "ping",
+        experimental_telemetry: { isEnabled: true, functionId: "admin.diag.unwrapped-sdk" },
       });
       return {
         ok: true,
@@ -202,6 +203,7 @@ export async function runDiag(env: Env): Promise<{
         model: wrapped,
         maxOutputTokens: 16,
         prompt: "ping",
+        experimental_telemetry: { isEnabled: true, functionId: "admin.diag.wrapped-sdk" },
       });
       const fired = middlewareCounters.wrapGenerate > generateBefore;
       return {
@@ -235,6 +237,7 @@ export async function runDiag(env: Env): Promise<{
         model: wrapped,
         maxOutputTokens: 16,
         prompt: "ping",
+        experimental_telemetry: { isEnabled: true, functionId: "admin.diag.wrapped-stream" },
       });
       let chunks = 0;
       let finalText = "";
@@ -273,6 +276,7 @@ export async function runDiag(env: Env): Promise<{
         model,
         maxOutputTokens: 256,
         prompt: "Use the get_weather tool to get the weather in Tokyo.",
+        experimental_telemetry: { isEnabled: true, functionId: "admin.diag.tool-call" },
         tools: {
           get_weather: tool({
             description: "Look up the current weather for a city.",
