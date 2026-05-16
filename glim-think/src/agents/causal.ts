@@ -279,7 +279,7 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
     }
 
     const rows = await this.queryLedger<{ key: string; reference: number; predicted: number }>(
-      `SELECT ${opts.grouping} as key, reference, predicted FROM records`,
+      `SELECT ${groupKeyExpr(opts.grouping)} as key, reference, predicted FROM records`,
     );
     if (rows.length < 4) {
       return { ok: false, error: `insufficient data (n=${rows.length})` };
