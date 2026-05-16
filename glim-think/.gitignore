@@ -5,3 +5,7 @@ node_modules/
 # OTLP relay shared secret (local only)
 otlp-relay/.relay-token.local
 *.relay-token.local
+
+# scratch verification cut-timestamps
+.batch_cut
+.fleet_cut
