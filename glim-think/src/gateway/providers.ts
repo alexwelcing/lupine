@@ -217,7 +217,7 @@ export class AnthropicProvider implements Provider {
 // ─── Google Gemini ───
 export class GeminiProvider implements Provider {
   name = "gemini";
-  constructor(private apiKey: string, private model: string = "gemini-2.5-pro-preview-03-25") {}
+  constructor(private apiKey: string, private model: string = "gemini-3.1-pro") {}
 
   async complete(prompt: string, opts?: ModelOpts): Promise<ModelResponse> {
     const tracer = trace.getTracer("glim-think.gateway");

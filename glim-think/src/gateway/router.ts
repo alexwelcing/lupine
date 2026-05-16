@@ -20,6 +20,7 @@ import {
   ZAIProvider,
   MiniMaxProvider,
   HFProvider,
+  GeminiProvider,
 } from "./providers";
 import { AIGatewayProvider } from "./ai-gateway";
 import { getAgentQualityTrend } from "../evals/store";
@@ -113,6 +114,25 @@ export class ModelRouter {
     // its `inputs` (non-chat) format isn't OpenAI-compatible (gotcha §8.3).
     if (env.HF_API_KEY) {
       this.providers.set("huggingface", new HFProvider(env.HF_API_KEY, "mistralai/Mistral-7B-Instruct-v0.3"));
+    }
+
+    // Google Gemini — state of the art reasoning. Gateway-routed for trace context
+    // and OpenAI-compatible translation via AI Gateway's Universal API.
+    if (env.GOOGLE_API_KEY) {
+      this.providers.set(
+        "gemini",
+        useGateway
+          ? new AIGatewayProvider({
+              token: env.GOOGLE_API_KEY,
+              accountId: env.AI_GATEWAY_ACCOUNT_ID as string,
+              gatewayName: env.AI_GATEWAY_NAME as string,
+              pathSegment: "google-ai-studio",
+              model: "gemini-3.1-pro",
+              name: "gemini",
+              gatewayAuthToken: env.AI_GATEWAY_AUTH_TOKEN,
+            })
+          : new GeminiProvider(env.GOOGLE_API_KEY, "gemini-3.1-pro")
+      );
     }
   }
 
@@ -233,6 +253,7 @@ export class ModelRouter {
         return ["workers-ai"];
       case "hypothesis":
         return [
+          ...(this.providers.has("gemini") ? ["gemini"] : []),
           ...(this.providers.has("zai") ? ["zai"] : []),
           ...(this.providers.has("minimax") ? ["minimax"] : []),
           ...(this.providers.has("huggingface") ? ["huggingface"] : []),
@@ -240,12 +261,14 @@ export class ModelRouter {
         ];
       case "experiment_design":
         return [
+          ...(this.providers.has("gemini") ? ["gemini"] : []),
           ...(this.providers.has("minimax") ? ["minimax"] : []),
           ...(this.providers.has("zai") ? ["zai"] : []),
           "workers-ai",
         ];
       case "code_review":
         return [
+          ...(this.providers.has("gemini") ? ["gemini"] : []),
           ...(this.providers.has("zai") ? ["zai"] : []),
           ...(this.providers.has("minimax") ? ["minimax"] : []),
           "workers-ai",
@@ -261,6 +284,7 @@ export class ModelRouter {
    */
   private strengthFirstChain(): string[] {
     return [
+      ...(this.providers.has("gemini") ? ["gemini"] : []),
       ...(this.providers.has("minimax") ? ["minimax"] : []),
       ...(this.providers.has("zai") ? ["zai"] : []),
       ...(this.providers.has("huggingface") ? ["huggingface"] : []),
