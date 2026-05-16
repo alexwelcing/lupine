@@ -536,7 +536,7 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
         const claimId = `data_purge_${Date.now()}`;
         const claimData = {
           analysis: "data_purge",
-          criterion: "predicted IS NULL OR |predicted| > 1500 GPa OR predicted <= 0",
+          criterion: "predicted/reference NULL OR |predicted| > 1500 GPa OR predicted ≤ 0 OR reference ≤ 0 OR |predicted-reference| > 5·|reference| (>500% scale-free)",
           total_before: totalBefore, total_after: totalAfter,
           corrupt_found: corruptCount, deleted,
           corrupt_remaining: corruptRemaining, verified_clean: verifiedClean,
