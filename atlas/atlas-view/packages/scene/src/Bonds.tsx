@@ -21,7 +21,6 @@ import { getElementSpec, hexToRgb } from '@atlas/core';
 import { useGlobalTimer } from './useTimer';
 import { DEFAULT_TYPE_COLOR, getTypeColorFromColormap, BOTANICAL_COLORS, COLORMAPS } from './constants';
 import { useBondGpuPipeline } from './useBondGpuPipeline';
-import { getElementProfile, DEFAULT_PROFILE } from './materials';
 // Vite ?worker import: produces a real bundled .js worker module in prod.
 // The plain `new URL('./bondWorker.ts', import.meta.url)` form does NOT
 // emit a worker chunk during Vite's prod build, so it 404s at runtime.
@@ -519,58 +518,30 @@ export function Bonds({
   }
   const capacity = capacityRef.current;
 
-  // Tube geometry. Capacity-keyed so the geometry-attached InstancedBuffer-
-  // Attributes (colorT, radiusBT, tangent) grow when the capacity ratchet
-  // bumps. If we kept the geometry stable and used setAttribute later, the
-  // InstancedMesh's cached attribute bindings would still reference the old
-  // (small) buffers — the 13.5k-atom CuZr fixture caught this:
-  // `colorT=20000 radiusBT=20000` while `color=181656` from instanceColor
-  // JSX which DID grow. Cylinder vertex/index data is constant; only
-  // attribute sizes change.
+  // Tube geometry. Capacity-keyed so the geometry-attached radiusBT
+  // InstancedBufferAttribute grows when the capacity ratchet bumps. If we
+  // kept the geometry stable and used setAttribute later, the InstancedMesh's
+  // cached attribute bindings would still reference the old (small) buffer —
+  // the 13.5k-atom CuZr fixture caught this. Cylinder vertex/index data is
+  // constant; only the per-instance attribute size changes.
+  // (Phase-2 prune: colorT/materialBT/tangent attributes removed — bonds are
+  // now flat per-half via instanceColor and isotropic, so none were used.)
   const tubeGeo = useMemo(() => {
     const geo = new THREE.CylinderGeometry(1, 1, 1, 4, 1);
-
     geo.setAttribute('radiusBT', new THREE.InstancedBufferAttribute(new Float32Array(capacity * 2), 2));
-    geo.setAttribute('colorT', new THREE.InstancedBufferAttribute(new Float32Array(capacity * 3), 3));
-    // Per-bond PBR material gradient: vec4 (metalnessB, roughnessB,
-    // metalnessT, roughnessT). The fragment shader interpolates along the
-    // bond axis so a Au–Au bond reads gold-shiny end-to-end, an Au–O bond
-    // reads gold→ceramic. Initialized to a neutral default; uploadBondAttributes
-    // overwrites per-frame with values from the elements involved.
-    geo.setAttribute('materialBT', new THREE.InstancedBufferAttribute(new Float32Array(capacity * 4), 4));
-
-    // Tangent for MeshPhysicalMaterial's anisotropy. Cylinder is y-aligned,
-    // so every vertex's tangent is +Y in local space — becomes the bond
-    // axis after the instanceMatrix transform.
-    const vertCount = geo.attributes.position.count;
-    const tangentArray = new Float32Array(vertCount * 4);
-    for (let i = 0; i < vertCount; i++) {
-      tangentArray[i * 4 + 1] = 1;
-      tangentArray[i * 4 + 3] = 1;
-    }
-    geo.setAttribute('tangent', new THREE.BufferAttribute(tangentArray, 4));
-
     return geo;
   }, [capacity]);
 
-  // CPU-side state arrays for bulk GPU upload.
-  //
-  // Color is split into "B" (bottom) and "T" (top) per half-cylinder so the
-  // shader can lerp along the bond axis. For each bond i:
-  //   instance i*2   (atom A's half):   colorB = A's color, colorT = midpoint
-  //   instance i*2+1 (atom B's half):   colorB = midpoint,  colorT = B's color
-  // This produces a continuous A → mid → B gradient with no visible seam,
-  // making the per-atom property gradient mathematically legible. For per-bond
-  // modes (length, energy), B == T and the bond renders uniformly.
+  // CPU-side state arrays for bulk GPU upload. instance i*2 = atom-A half
+  // (solid A color), instance i*2+1 = atom-B half (solid B color); the
+  // bond reads as a hard-split 2-tone cylinder. radiusBT tapers each half.
   const cpuMatrixArray = useMemo(() => new Float32Array(capacity * 16), [capacity]);
   const cpuColorBArray = useMemo(() => new Float32Array(capacity * 3), [capacity]);
-  const cpuColorTArray = useMemo(() => new Float32Array(capacity * 3), [capacity]);
   const cpuRadiusBTArray = useMemo(() => new Float32Array(capacity * 2), [capacity]);
-  const cpuMaterialBTArray = useMemo(() => new Float32Array(capacity * 4), [capacity]);
 
-  // (Per-instance attributes radiusBT/colorT/tangent are now created inside
-  //  the tubeGeo useMemo above — they need to exist at the moment the
-  //  InstancedMesh remounts via key={capacity}, not in a post-commit useEffect.)
+  // (The radiusBT per-instance attribute is created inside the tubeGeo
+  //  useMemo above — it must exist at the moment the InstancedMesh remounts
+  //  via key={capacity}, not in a post-commit useEffect.)
 
   // ─── Material ──────────────────────────────────────────────────────
   const uniformsRef = useRef({ 
@@ -627,14 +598,9 @@ export function Bonds({
         opacity,
       });
     } else {
-      // Switched to MeshPhysicalMaterial for native anisotropy support —
-      // bonds have a clear tangent direction (the bond axis), so we get
-      // the brushed-metal streak effect that's correct for the geometry.
-      // The cost over Standard is real but bounded (~10-15% more fragment
-      // work for the anisotropy term); transmission/clearcoat are NOT
-      // enabled here so we don't pay for those passes. Tangent attribute
-      // is set on tubeGeo below; for our y-aligned cylinder it's always
-      // (0, 1, 0, 1) per vertex.
+      // MeshPhysicalMaterial, isotropic. Anisotropy was removed (it strobed
+      // on thin moving cylinders); clearcoat (surface knob) is the only
+      // Physical-only feature still used, transmission stays off.
       let matConfig: THREE.MeshPhysicalMaterialParameters = {};
       switch (materialPreset) {
         case 'matte':
@@ -954,8 +920,8 @@ export function Bonds({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bondPairs, halfCount, capacity, frame, nextFrame, interpolationFactor, periodic, cellBounds]);
 
-  /** Compute per-bond COLORS and RADII. Writes cpuColorBArray, cpuColorTArray,
-   *  cpuRadiusBTArray and uploads instanceColor + colorT + radiusBT. Runs on
+  /** Compute per-bond COLORS and RADII. Writes cpuColorBArray +
+   *  cpuRadiusBTArray and uploads instanceColor + radiusBT. Runs on
    *  bondPairs / scheme / colorMode / property data changes. In non-property
    *  modes, this fires only when the bond set changes — not per playback
    *  frame, saving ~35% of upload bandwidth. In property mode it fires per
@@ -1068,9 +1034,7 @@ export function Bonds({
         const offA = (i * 2) * 3;
         const offB = (i * 2 + 1) * 3;
         cpuColorBArray[offA] = tcLen[0]; cpuColorBArray[offA + 1] = tcLen[1]; cpuColorBArray[offA + 2] = tcLen[2];
-        cpuColorTArray[offA] = tcLen[0]; cpuColorTArray[offA + 1] = tcLen[1]; cpuColorTArray[offA + 2] = tcLen[2];
         cpuColorBArray[offB] = tcLen[0]; cpuColorBArray[offB + 1] = tcLen[1]; cpuColorBArray[offB + 2] = tcLen[2];
-        cpuColorTArray[offB] = tcLen[0]; cpuColorTArray[offB + 1] = tcLen[1]; cpuColorTArray[offB + 2] = tcLen[2];
       } else {
         // Endpoint colors must match what AtomsOptimized used for the same
         // type, otherwise the bond gradient terminates in colors that don't
@@ -1106,70 +1070,35 @@ export function Bonds({
 
         // Flat per-half: instance i*2 = solid A, instance i*2+1 = solid B.
         // Hard split at the geometric midpoint — the universal 2-tone bond
-        // convention. colorT writes retained (attribute still allocated;
-        // shader ignores it) until the Phase-2 buffer prune.
+        // convention. Material (metalness/roughness) comes uniformly from
+        // the active material preset; no per-bond gradient.
         const offA = (i * 2) * 3;
         cpuColorBArray[offA] = tcA[0]; cpuColorBArray[offA + 1] = tcA[1]; cpuColorBArray[offA + 2] = tcA[2];
-        cpuColorTArray[offA] = tcA[0]; cpuColorTArray[offA + 1] = tcA[1]; cpuColorTArray[offA + 2] = tcA[2];
 
         const offB = (i * 2 + 1) * 3;
         cpuColorBArray[offB] = tcB[0]; cpuColorBArray[offB + 1] = tcB[1]; cpuColorBArray[offB + 2] = tcB[2];
-        cpuColorTArray[offB] = tcB[0]; cpuColorTArray[offB + 1] = tcB[1]; cpuColorTArray[offB + 2] = tcB[2];
-
-        // ─── Per-bond material identity ────────────────────────────────
-        // Lookup PBR metalness/roughness from each atom's element profile;
-        // gradient across the bond mirrors the color gradient. A Au–Au
-        // bond reads gold-shiny end-to-end; an Au–O bond transitions
-        // gold→ceramic exactly through the seam. Falls back to a neutral
-        // default when atom types aren't known.
-        const profA = frame.types ? getElementProfile(frame.types[a]) : DEFAULT_PROFILE;
-        const profB = frame.types ? getElementProfile(frame.types[b]) : DEFAULT_PROFILE;
-        const midMet = (profA.metalness + profB.metalness) * 0.5;
-        const midRough = (profA.roughness + profB.roughness) * 0.5;
-        // Bottom half: B = atomA's profile, T = midpoint
-        const matOffA = (i * 2) * 4;
-        cpuMaterialBTArray[matOffA + 0] = profA.metalness;
-        cpuMaterialBTArray[matOffA + 1] = profA.roughness;
-        cpuMaterialBTArray[matOffA + 2] = midMet;
-        cpuMaterialBTArray[matOffA + 3] = midRough;
-        // Top half: B = midpoint, T = atomB's profile
-        const matOffB = (i * 2 + 1) * 4;
-        cpuMaterialBTArray[matOffB + 0] = midMet;
-        cpuMaterialBTArray[matOffB + 1] = midRough;
-        cpuMaterialBTArray[matOffB + 2] = profB.metalness;
-        cpuMaterialBTArray[matOffB + 3] = profB.roughness;
       }
     }
 
     // ─── GPU upload — colors + radii only. Matrix is owned by uploadBondMatrices.
     const dstColRaw = mesh.instanceColor ? (mesh.instanceColor.array as Float32Array) : null;
     const meshColorCap = dstColRaw ? (dstColRaw.length / 3) | 0 : Infinity;
-    const dstColorTArr = tubeGeo.attributes.colorT.array as Float32Array;
-    const colorTCap = (dstColorTArr.length / 3) | 0;
     const dstRadiusBTArr = tubeGeo.attributes.radiusBT.array as Float32Array;
     const radiusBTCap = (dstRadiusBTArr.length / 2) | 0;
-    const dstMaterialBTArr = tubeGeo.attributes.materialBT.array as Float32Array;
-    const materialBTCap = (dstMaterialBTArr.length / 4) | 0;
 
-    const totalBonds = Math.min(drawCount, meshColorCap, colorTCap, radiusBTCap, materialBTCap);
+    const totalBonds = Math.min(drawCount, meshColorCap, radiusBTCap);
     if (totalBonds < drawCount) {
       console.warn(
-        `[Bonds] attribute capacity mismatch — wanted ${drawCount}, color=${meshColorCap} colorT=${colorTCap} radiusBT=${radiusBTCap}; clipping.`,
+        `[Bonds] attribute capacity mismatch — wanted ${drawCount}, color=${meshColorCap} radiusBT=${radiusBTCap}; clipping.`,
       );
     }
 
     if (dstColRaw) dstColRaw.set(cpuColorBArray.subarray(0, totalBonds * 3));
-    dstColorTArr.set(cpuColorTArray.subarray(0, totalBonds * 3));
     dstRadiusBTArr.set(cpuRadiusBTArray.subarray(0, totalBonds * 2));
-    dstMaterialBTArr.set(cpuMaterialBTArray.subarray(0, totalBonds * 4));
 
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
-    (tubeGeo.attributes.colorT as any).needsUpdate = true;
-    (tubeGeo.attributes.colorT as any).updateRange = { offset: 0, count: totalBonds * 3 };
     (tubeGeo.attributes.radiusBT as any).needsUpdate = true;
     (tubeGeo.attributes.radiusBT as any).updateRange = { offset: 0, count: totalBonds * 2 };
-    (tubeGeo.attributes.materialBT as any).needsUpdate = true;
-    (tubeGeo.attributes.materialBT as any).updateRange = { offset: 0, count: totalBonds * 4 };
 
     // Cache the bondPairs we just uploaded for the next stability check.
     lastAttrBondPairsRef.current = bondPairs;
