@@ -22,7 +22,7 @@ import { createClassificationEvaluator } from "@arizeai/phoenix-evals";
 import { openai } from "@ai-sdk/openai";
 import { COMBO_EVALUATORS } from "./combo-evaluators.js";
 import { fetchSpans } from "./spans.js";
-import { classifySpan, extractIO } from "./openinference.js";
+import { classifySpan, extractIO, extractLLMMeta } from "./openinference.js";
 import { fetchProjectSpans, logAnnotations, type SpanAnnotation } from "./phoenixRest.js";
 
 const PROJECT_NAME = process.env.PHOENIX_PROJECT_NAME ?? "glim-think";
@@ -113,6 +113,9 @@ interface LLMSpan {
   spanId: string;
   input: string;
   output: string;
+  model: string;
+  provider: string;
+  agent: string;
 }
 
 async function fetchLLMSpans(limit = 500): Promise<LLMSpan[]> {
@@ -127,9 +130,38 @@ async function fetchLLMSpans(limit = 500): Promise<LLMSpan[]> {
     if (classifySpan(s.name, attrs) !== "llm") continue;
     const { input, output } = extractIO(attrs);
     const spanId = s.span_id || s.id;
-    if (input && output && spanId) results.push({ spanId, input, output });
+    if (!input || !output || !spanId) continue;
+    const { model } = extractLLMMeta(attrs);
+    // Provider from the gateway.<provider> span name; agent from the
+    // router-stamped gateway.agent_class. These let us attribute every
+    // eval score to the model/provider/agent that produced it.
+    const provider = /^gateway\.([a-z0-9-]+)/i.exec(s.name)?.[1] ?? "unknown";
+    const agent = String(attrs["gateway.agent_class"] ?? attrs["agent.class"] ?? "unknown");
+    results.push({
+      spanId, input, output,
+      model: model ?? "unknown",
+      provider,
+      agent,
+    });
   }
   return results;
+}
+
+// ─── Model-performance scorecard ───
+// Attributes every LLM eval score to the model/provider/agent that produced
+// the span, so we can answer "which model is actually best, per task" and
+// trend it. cell key = `${model}` and `${model}|${agent}`.
+interface ScoreCell { n: number; pass: number; sum: number }
+const SCORECARD: Map<string, Map<string, ScoreCell>> = new Map(); // bucket → evaluator → cell
+
+function recordScore(bucket: string, evaluator: string, passed: boolean, score: number) {
+  if (!SCORECARD.has(bucket)) SCORECARD.set(bucket, new Map());
+  const m = SCORECARD.get(bucket)!;
+  const c = m.get(evaluator) ?? { n: 0, pass: 0, sum: 0 };
+  c.n += 1;
+  c.pass += passed ? 1 : 0;
+  c.sum += Number.isFinite(score) ? score : 0;
+  m.set(evaluator, c);
 }
 
 async function runLLMEvaluator(evalConfig: EvalConfig, spans: LLMSpan[]) {
@@ -141,16 +173,25 @@ async function runLLMEvaluator(evalConfig: EvalConfig, spans: LLMSpan[]) {
   });
 
   const spanAnnotations: SpanAnnotation[] = await Promise.all(
-    spans.map(async ({ spanId, input, output }) => {
-      const { label, score, explanation } = await evaluator.evaluate({ input, output });
+    spans.map(async (sp) => {
+      const { label, score, explanation } = await evaluator.evaluate({ input: sp.input, output: sp.output });
+      const passed = label === evalConfig.positiveLabel;
+      const numScore = typeof score === "number" ? score : passed ? 1 : 0;
+      // Attribute to model (and model|agent) for the scorecard + trend.
+      recordScore(sp.model, evalConfig.name, passed, numScore);
+      recordScore(`${sp.model}|${sp.agent}`, evalConfig.name, passed, numScore);
       return {
-        span_id: spanId,
+        span_id: sp.spanId,
         name: evalConfig.name,
         label,
         score,
         explanation,
         annotator_kind: "LLM" as const,
-        metadata: { evaluator: evalConfig.name, input: input.slice(0, 500), output: output.slice(0, 500) },
+        metadata: {
+          evaluator: evalConfig.name,
+          model: sp.model, provider: sp.provider, agent: sp.agent,
+          input: sp.input.slice(0, 500), output: sp.output.slice(0, 500),
+        },
       };
     }),
   );
@@ -161,6 +202,67 @@ async function runLLMEvaluator(evalConfig: EvalConfig, spans: LLMSpan[]) {
     Math.max(1, spanAnnotations.length);
   console.log(`  ${evalConfig.name}: ${spanAnnotations.length} spans, pass rate ${(passRate * 100).toFixed(1)}%`);
   return spanAnnotations;
+}
+
+/**
+ * Emit the per-model scorecard: log it and persist as a ModelScorecard
+ * claim (durable trend, router-consumable later). Skips persistence if the
+ * worker token isn't configured (local runs still print).
+ */
+async function emitModelScorecard() {
+  const models = [...SCORECARD.keys()].filter((k) => !k.includes("|")).sort();
+  if (models.length === 0) {
+    console.log("[evals] Model scorecard: no model-attributed LLM spans this run.");
+    return;
+  }
+  const evaluators = LLM_EVALS.map((e) => e.name);
+  const table: Record<string, Record<string, { n: number; pass_rate: number; mean_score: number }>> = {};
+  console.log("[evals] ── Model performance scorecard ──");
+  for (const bucket of [...SCORECARD.keys()].sort()) {
+    const m = SCORECARD.get(bucket)!;
+    const row: Record<string, { n: number; pass_rate: number; mean_score: number }> = {};
+    const parts: string[] = [];
+    for (const ev of evaluators) {
+      const c = m.get(ev);
+      if (!c || c.n === 0) continue;
+      const pr = c.pass / c.n;
+      row[ev] = { n: c.n, pass_rate: Math.round(pr * 1000) / 1000, mean_score: Math.round((c.sum / c.n) * 1000) / 1000 };
+      parts.push(`${ev}=${(pr * 100).toFixed(0)}%(n${c.n})`);
+    }
+    if (parts.length) {
+      table[bucket] = row;
+      console.log(`  ${bucket.padEnd(28)} ${parts.join("  ")}`);
+    }
+  }
+
+  const worker = process.env.WORKER_URL || "https://glim-think-v1.aw-ab5.workers.dev";
+  const token = process.env.INTERNAL_TASK_TOKEN?.trim();
+  if (!token) {
+    console.log("[evals] INTERNAL_TASK_TOKEN unset — scorecard logged only (not persisted).");
+    return;
+  }
+  const now = new Date().toISOString();
+  const claim = {
+    claim_id: `model_scorecard_${Date.now()}`,
+    agent_id: "agent_eval_harness",
+    claim_type: "ModelScorecard",
+    claim_data: JSON.stringify({ window: "per_run", generated_at: now, scorecard: table }),
+    evidence_ids: "[]",
+    confidence: 0.9,
+    status: "proposed",
+    description: `Model performance scorecard — ${models.length} models × ${evaluators.length} evaluators (completeness/hallucination/reasoning), attributed from LLM span annotations.`,
+    created_at: now,
+  };
+  try {
+    const r = await fetch(`${worker}/claims/ingest`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Internal-Token": token },
+      body: JSON.stringify({ claims: [claim] }),
+    });
+    console.log(`[evals] ModelScorecard persisted: HTTP ${r.status}`);
+  } catch (e) {
+    console.warn(`[evals] ModelScorecard persist failed: ${String(e)}`);
+  }
 }
 
 // ─── Phase 1: Combo evaluators ───
@@ -261,6 +363,7 @@ async function main() {
       console.log(`[evals] Running ${evalConfig.name}...`);
       await runLLMEvaluator(evalConfig, spans);
     }
+    await emitModelScorecard();
   }
 
   console.log(`[evals] All evaluations complete. Combo: ${combo.scored}, Generic LLM: ${spans.length}`);

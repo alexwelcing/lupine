@@ -44,6 +44,9 @@ jobs:
           PHOENIX_COLLECTOR_ENDPOINT: ${{ secrets.PHOENIX_COLLECTOR_ENDPOINT }}
           PHOENIX_PROJECT_NAME: glim-think
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Lets the runner persist the per-model ModelScorecard claim
+          # through the Access gate (POST /claims/ingest).
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
         run: npx tsx run-evals.ts
 
       # Health gate: surfaces projection/export/relay breakage as a CI signal.
