@@ -115,7 +115,11 @@ export class ModelRouter {
     if (env.MINIMAX_API_KEY) {
       this.providers.set(
         "minimax",
-        new MiniMaxProvider(env.MINIMAX_API_KEY, env.MINIMAX_MODEL ?? "MiniMax-Text-2.7")
+        new MiniMaxProvider(
+          env.MINIMAX_API_KEY,
+          env.MINIMAX_MODEL?.trim() || "MiniMax-M2.7",
+          env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1",
+        )
       );
     }
 

@@ -388,7 +388,15 @@ export class ZAIProvider implements Provider {
 // ─── MiniMax ───
 export class MiniMaxProvider implements Provider {
   name = "minimax";
-  constructor(private apiKey: string, private model: string = "MiniMax-Text-2.7") {}
+  // baseURL defaults to the INTERNATIONAL OpenAI-compatible endpoint. The
+  // old hardcoded api.minimax.chat/v1/text/chatcompletion_v2 (China, legacy
+  // base_resp shape) returns 2049 "invalid api key" for sk-cp-* keys —
+  // those are minimax.io keys. This matches the working models.ts path.
+  constructor(
+    private apiKey: string,
+    private model: string = "MiniMax-M2.7",
+    private baseURL: string = "https://api.minimax.io/v1",
+  ) {}
 
   async complete(prompt: string, opts?: ModelOpts): Promise<ModelResponse> {
     const tracer = trace.getTracer("glim-think.gateway");
@@ -397,7 +405,7 @@ export class MiniMaxProvider implements Provider {
       span.setAttribute("gen_ai.request.model", this.model);
       const start = Date.now();
       try {
-        const res = await fetch("https://api.minimax.chat/v1/text/chatcompletion_v2", {
+        const res = await fetch(`${this.baseURL.replace(/\/$/, "")}/chat/completions`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${this.apiKey}`,
@@ -416,10 +424,11 @@ export class MiniMaxProvider implements Provider {
 
         const rawText = await res.text();
         if (!res.ok) throw new Error(`MiniMax ${res.status}: ${rawText}`);
-        const data = JSON.parse(rawText) as {
-          base_resp?: { status_code?: number };
-          choices?: { message?: { content?: string } }[];
+        const data = JSON.parse(rawText) as OpenAIChatCompletion & {
+          base_resp?: { status_code?: number; status_msg?: string };
         };
+        // International API is OpenAI-compatible but still includes base_resp;
+        // a non-zero status_code is a hard error even with HTTP 200.
         if (data.base_resp?.status_code !== undefined && data.base_resp.status_code !== 0) {
           throw new Error(`MiniMax API error: ${JSON.stringify(data.base_resp)}`);
         }
@@ -429,6 +438,9 @@ export class MiniMaxProvider implements Provider {
           provider: this.name,
           model: this.model,
           latencyMs: Date.now() - start,
+          usage: data.usage
+            ? { promptTokens: data.usage.prompt_tokens, completionTokens: data.usage.completion_tokens }
+            : undefined,
         };
         span.setStatus({ code: SpanStatusCode.OK });
         annotateGatewayLLMSpan(span, {

@@ -95,8 +95,8 @@ describe("ModelRouter — tier → route mapping", () => {
       "design it"
     );
     expect(res.provider).toBe("minimax");
-    expect(cap[0].url).toContain("api.minimax.chat");
-    expect(cap[0].body.model).toBe("MiniMax-Text-2.7");
+    expect(cap[0].url).toContain("api.minimax.io");
+    expect(cap[0].body.model).toBe("MiniMax-M2.7");
   });
 });
 
@@ -140,7 +140,7 @@ describe("ModelRouter — eval-aware escalation (mocked D1)", () => {
       agentClass: "Theorist",
     });
     expect(res.provider).toBe("minimax");
-    expect(cap[0].url).toContain("api.minimax.chat");
+    expect(cap[0].url).toContain("api.minimax.io");
   });
 });
 
