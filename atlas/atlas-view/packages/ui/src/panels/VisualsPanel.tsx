@@ -6,8 +6,9 @@ import {
   QuantumSection,
   WaveformSlider,
   IsotopeChip,
+  OrbitalToggle,
 } from '@lupine/ui';
-import { AnimatedOrbitalToggle as OrbitalToggle, AnimatedSlider } from '../rive';
+import { Slider } from '../controls';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { TrackballPanner, ScrubbableNumber, RotaryKnob, ProColorSwatch } from './ProControls';
 
@@ -516,7 +517,7 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
                           <span style={{ color: '#64748b', fontSize: 10, fontFamily: 'var(--font-mono)' }}>({t.count})</span>
                         </div>
                         <div style={{ width: 80 }}>
-                          <AnimatedSlider
+                          <Slider
                             min={0} max={2} step={0.1}
                             value={atomTypeScales[t.type] ?? 1.0}
                             onChange={(e) => setAtomTypeScale(t.type, parseFloat(e.target.value))}

@@ -15,7 +15,7 @@ import {
   EASING_LABELS, EASING_FUNCTIONS,
   type EasingType, type FlythroughKeyframe,
 } from '../flythrough';
-import { ToggleSpark, AnimatedSlider } from '../rive';
+import { Slider } from '../controls';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconClose = () => (
@@ -565,7 +565,7 @@ function KeyframeCard({ index, keyframe, isLast, expanded, activeSample, onToggl
           {!isLast && (
             <div>
               <div style={fieldLabel}>TRANSITION DURATION (s)</div>
-              <AnimatedSlider
+              <Slider
                 min={0.5} max={10} step={0.5}
                 value={keyframe.transitionDuration}
                 onChange={e => onUpdate({ transitionDuration: parseFloat(e.target.value) })}
@@ -579,7 +579,7 @@ function KeyframeCard({ index, keyframe, isLast, expanded, activeSample, onToggl
           {/* Hold duration */}
           <div>
             <div style={fieldLabel}>HOLD AT STOP (s)</div>
-            <AnimatedSlider
+            <Slider
               min={0} max={5} step={0.25}
               value={keyframe.holdDuration}
               onChange={e => onUpdate({ holdDuration: parseFloat(e.target.value) })}
@@ -655,16 +655,8 @@ function KeyframeCard({ index, keyframe, isLast, expanded, activeSample, onToggl
 function ToggleRow({ label, hint, active, onToggle }: {
   label: string; hint?: string; active: boolean; onToggle: () => void;
 }) {
-  const [fire, setFire] = useState(false);
-  
-  const handleToggle = useCallback(() => {
-    setFire(true);
-    setTimeout(() => setFire(false), 50);
-    onToggle();
-  }, [onToggle]);
-
   return (
-    <button onClick={handleToggle} style={{
+    <button onClick={onToggle} style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       width: '100%', padding: '8px 10px',
       background: active ? 'rgba(245,158,11,0.06)' : '#121418',
@@ -677,7 +669,6 @@ function ToggleRow({ label, hint, active, onToggle }: {
       </div>
       <div style={{ width: 32, height: 16, background: active ? '#f59e0b' : '#334155', position: 'relative', transition: 'background 200ms' }}>
         <div style={{ width: 12, height: 12, background: active ? '#0a0a0c' : '#64748b', position: 'absolute', top: 2, left: active ? 18 : 2, transition: 'left 200ms, background 200ms' }} />
-        <ToggleSpark fire={fire} on={!active} duration={200} />
       </div>
     </button>
   );

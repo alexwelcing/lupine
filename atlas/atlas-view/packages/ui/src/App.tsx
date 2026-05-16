@@ -83,7 +83,7 @@ import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
-import { GpuUnlockOverlay, RiveEffectLayer, HeaderShimmer, ToolbarRipple, AnimatedToolButton, AnimatedCameraPresetButton, AnimatedTransportButton } from './rive';
+import { ToolButton, CameraPresetButton, TransportButton } from './controls';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -1400,14 +1400,7 @@ export default function App() {
 
           {import.meta.env.DEV && <StateInspector />}
 
-          {/* GPU feature unlock overlay — fires on CPU→WebGPU transition */}
-          <GpuUnlockOverlay />
-
-          {/* Micro-effects layer — fires on state transitions (file load, panel, mode, etc.) */}
-          <RiveEffectLayer />
-
-          {/* Ambient header shimmer — subtle top-line glow when a file is loaded */}
-          <HeaderShimmer active={!!file} />
+          {/* (removed: GPU-unlock overlay, micro-effects layer, header shimmer) */}
 
           {/* Scale bar for publication figures */}
           {file && currentFrame && showScaleBar && (
@@ -1452,10 +1445,10 @@ export default function App() {
               gap: 6,
               zIndex: 150,
             }}>
-              <AnimatedCameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => setCameraPreset('top')} title="Top view (XY plane)" />
-              <AnimatedCameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => setCameraPreset('side')} title="Side view (XZ plane)" />
-              <AnimatedCameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => setCameraPreset('front')} title="Front view (YZ plane)" />
-              <AnimatedCameraPresetButton label="ISO" active={cameraPreset === 'iso'} onClick={() => setCameraPreset('iso')} title="Isometric view" />
+              <CameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => setCameraPreset('top')} title="Top view (XY plane)" />
+              <CameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => setCameraPreset('side')} title="Side view (XZ plane)" />
+              <CameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => setCameraPreset('front')} title="Front view (YZ plane)" />
+              <CameraPresetButton label="ISO" active={cameraPreset === 'iso'} onClick={() => setCameraPreset('iso')} title="Isometric view" />
             </div>
           )}
 
@@ -1486,16 +1479,16 @@ export default function App() {
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}>
-                <AnimatedToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
-                <AnimatedToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => setActivePanel('analysis')} />
-                <AnimatedToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => setActivePanel('export')} />
+                <ToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
+                <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => setActivePanel('analysis')} />
+                <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => setActivePanel('export')} />
                 {/* Telemetry is a developer surface — visible only with ?dev=1.
                     Production users see 3 tabs: Visuals · Analysis · Export. */}
                 {(typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('dev')) && (
-                  <AnimatedToolButton icon={<IconTelemetry />} label="Telemetry" active={activePanel === 'telemetry'} onClick={() => setActivePanel('telemetry')} />
+                  <ToolButton icon={<IconTelemetry />} label="Telemetry" active={activePanel === 'telemetry'} onClick={() => setActivePanel('telemetry')} />
                 )}
                 <div style={{ width: 1, minWidth: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />
-                <AnimatedToolButton icon={<IconReset />} label="Reset" onClick={() => {
+                <ToolButton icon={<IconReset />} label="Reset" onClick={() => {
                   useStore.getState().reset();
                 }} />
               </div>
@@ -1589,29 +1582,29 @@ export default function App() {
         }}>
           {/* Transport controls */}
           <div style={{ display: 'flex', gap: 4 }}>
-            <AnimatedTransportButton
+            <TransportButton
               onClick={() => useStore.getState().setFrame(0)}
               title="First frame"
               icon={<IconFirst />}
             />
-            <AnimatedTransportButton
+            <TransportButton
               onClick={() => useStore.getState().prevFrame()}
               title="Previous [←]"
               icon={<IconPrev />}
             />
-            <AnimatedTransportButton
+            <TransportButton
               onClick={togglePlay}
               title="Play/Pause [Space]"
               icon={playing ? <IconPause /> : <IconPlay />}
               active={playing}
               width={40}
             />
-            <AnimatedTransportButton
+            <TransportButton
               onClick={nextFrame}
               title="Next [→]"
               icon={<IconNext />}
             />
-            <AnimatedTransportButton
+            <TransportButton
               onClick={() => useStore.getState().setFrame(totalFrames - 1)}
               title="Last frame"
               icon={<IconLast />}
