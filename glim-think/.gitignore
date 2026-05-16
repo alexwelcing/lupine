@@ -1,3 +1,7 @@
 .dev.vars
 .wrangler/
 node_modules/
+
+# OTLP relay shared secret (local only)
+otlp-relay/.relay-token.local
+*.relay-token.local

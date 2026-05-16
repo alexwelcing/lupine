@@ -14,6 +14,7 @@
   "dependencies": {
     "@ai-sdk/openai-compatible": "^2.0.45",
     "@arizeai/openinference-semantic-conventions": "^2.3.0",
+    "@arizeai/openinference-vercel": "^2.7.5",
     "@cloudflare/shell": "^0.3.3",
     "@cloudflare/think": "^0.4.0",
     "@microlabs/otel-cf-workers": "^1.0.0-rc.52",

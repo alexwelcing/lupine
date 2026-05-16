@@ -7,6 +7,7 @@
 
 import { createClient } from "@arizeai/phoenix-client";
 import { getSpans } from "@arizeai/phoenix-client/spans";
+import { classifySpan } from "./openinference.js";
 
 export interface LLMSpan {
   id: string;
@@ -72,22 +73,10 @@ export async function fetchSpans(limit = 500): Promise<LLMSpan[]> {
     const name = span.name ?? span.span_name ?? "";
     const attrs = span.attributes ?? {};
 
-    // Only keep evaluable spans
-    const hasOutput = attrs["output.value"] || attrs["ai.text"];
-    const isLLM = name.includes("generateText") || name.includes("streamText") || name.startsWith("gateway.");
-    const isDomain =
-      name.includes("Causal.runScreen") ||
-      name.includes("Causal.runDBandAnalysis") ||
-      name.includes("Manifold.runAnalysis") ||
-      name.includes("Experiment") ||
-      name.startsWith("queue.task") ||
-      name.includes("gateway.complete");
-    const hasMetrics =
-      attrs["eval.code.experiment.valid"] != null ||
-      attrs["queue.task.latency_ms"] != null ||
-      attrs["gateway.provider"] != null;
-
-    if (!hasOutput && !isDomain && !hasMetrics) continue;
+    // Keep only evaluable spans: OpenInference-classified LLM spans or the
+    // manual domain spans the combo evaluators score. Everything else
+    // (storage, rpc, plumbing) is skipped.
+    if (classifySpan(name, attrs) === "skip") continue;
 
     items.push({
       id: span.context?.span_id ?? span.span_id ?? span.id ?? "",

@@ -1,0 +1,14 @@
+{
+  "name": "glim-think-otlp-relay",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Phoenix OTLP egress relay — forwards Worker traces to Phoenix Cloud from GCP's network (Cloudflare edge black-holes Worker→CF-zone OTLP).",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

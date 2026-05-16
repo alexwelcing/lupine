@@ -6,9 +6,10 @@
     "eval:run": "tsx run-evals.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^2.0.45",
+    "@arizeai/openinference-semantic-conventions": "^2.3.0",
     "@arizeai/phoenix-client": "^6.10.0",
     "@arizeai/phoenix-evals": "^1.0.3",
-    "@ai-sdk/openai": "^2.0.45",
     "ai": "^6.0.168",
     "dotenv": "^16.5.0",
     "tsx": "^4.19.0"

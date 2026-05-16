@@ -24,6 +24,7 @@ import { createClient } from "@arizeai/phoenix-client";
 import { getSpans, logSpanAnnotations } from "@arizeai/phoenix-client/spans";
 import { COMBO_EVALUATORS } from "./combo-evaluators.js";
 import { fetchSpans } from "./spans.js";
+import { classifySpan, extractIO } from "./openinference.js";
 
 const PROJECT_NAME = process.env.PHOENIX_PROJECT_NAME ?? "glim-think";
 const PHOENIX_API_KEY = process.env.PHOENIX_API_KEY;
@@ -149,14 +150,9 @@ async function fetchLLMSpans(limit = 500): Promise<LLMSpan[]> {
       id?: string;
     };
     const name = span.name ?? span.span_name ?? "";
-    if (!name.includes("generateText") && !name.includes("streamText") && !name.startsWith("gateway.")) {
-      continue;
-    }
     const attrs = span.attributes ?? {};
-    const rawInput = attrs["input.value"] ?? attrs["ai.prompt"] ?? attrs["input"];
-    const rawOutput = attrs["output.value"] ?? attrs["ai.text"] ?? attrs["output"];
-    const input = typeof rawInput === "string" ? rawInput : rawInput != null ? JSON.stringify(rawInput) : null;
-    const output = typeof rawOutput === "string" ? rawOutput : rawOutput != null ? JSON.stringify(rawOutput) : null;
+    if (classifySpan(name, attrs) !== "llm") continue;
+    const { input, output } = extractIO(attrs);
     const rawId = span.context?.span_id ?? span.span_id ?? span.id;
     const spanId = rawId != null ? String(rawId) : null;
     if (input && output && spanId) results.push({ spanId, input, output });

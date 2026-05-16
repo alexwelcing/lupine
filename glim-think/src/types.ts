@@ -209,6 +209,14 @@ export interface Env {
   PHOENIX_API_KEY?: string;
   /** Phoenix Cloud project name. Default: "glim-think" */
   PHOENIX_PROJECT_NAME?: string;
+  /**
+   * GCP Cloud Run OTLP relay base URL. Cloudflare black-holes Worker→Phoenix
+   * Cloud OTLP at the edge (see OBSERVABILITY.md); when set, traces export
+   * through this relay (GCP→Phoenix ingests fine). Strongly recommended.
+   */
+  PHOENIX_RELAY_URL?: string;
+  /** Shared secret authenticating the Worker to the OTLP relay. */
+  PHOENIX_RELAY_TOKEN?: string;
   ORCHESTRATOR: DurableObjectNamespace;
   MANIFOLD_AGENT: DurableObjectNamespace;
   CAUSAL_AGENT: DurableObjectNamespace;
