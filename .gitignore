@@ -49,7 +49,7 @@ lupine-site/test-results/
 # --------------------------
 
 # Scratch & test dumps
-_scratch_tests/
+
 *.pb
 *.b64
 *.bak
@@ -68,7 +68,6 @@ mlip_immi/*_results.json
 mlip_immi/phonon_sentinel_pet_mad_1.5.json
 
 # Additional directories and files (2026-05-15)
-.session-wip-backup-*/
 lupine-media/
 atlas/atlas-view/archive/
 distiller/agents/profiles/.archive/
