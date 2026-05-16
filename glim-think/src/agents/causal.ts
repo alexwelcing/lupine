@@ -371,6 +371,112 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
   }
 
   /**
+   * Multi-property seed — de-myopization step 1. The corpus is ~99.5%
+   * elastic constants; the hyper-ribbon is therefore a single-property
+   * result. The ingested MLIP records (MACE/CHGNet/Orb) already carry
+   * `a0_optimized` in their provenance JSON — recover it as a genuine
+   * SECOND property (lattice constant) paired with authoritative
+   * experimental a0, so the joint error manifold spans Cij + a0 and we can
+   * test whether PR<2 survives a heterogeneous property space. Real data
+   * only (no fabricated predictions). Idempotent (deterministic recordId).
+   */
+  async runMultiPropertySeed(): Promise<{
+    ok: boolean;
+    claim_id?: string;
+    error?: string;
+    summary?: unknown;
+  }> {
+    const tracer = trace.getTracer("glim-think.causal");
+    return tracer.startActiveSpan("Causal.runMultiPropertySeed", async (span) => {
+      try {
+        await this.onStart();
+        // Authoritative experimental lattice constants (Å, ~300K; Kittel /
+        // CRC). Reference side of the new a0 property for the IMMI 15.
+        const A0: Record<string, number> = {
+          Al: 4.05, Cu: 3.615, Ni: 3.524, Ag: 4.085, Au: 4.078, Pt: 3.924,
+          Pd: 3.891, Pb: 4.951, Fe: 2.866, Cr: 2.884, Mo: 3.147, W: 3.165,
+          V: 3.024, Nb: 3.301, Ta: 3.306,
+        };
+        const rows = await this.queryLedger<{
+          element: string; potential_label: string; potential_id: string;
+          pair_style: string; a0pred: number;
+        }>(
+          `SELECT DISTINCT element, potential_label, potential_id, pair_style,
+                  CAST(json_extract(provenance, '$.a0_optimized') AS REAL) as a0pred
+             FROM records
+            WHERE json_extract(provenance, '$.a0_optimized') IS NOT NULL`,
+        );
+
+        let inserted = 0, skipped = 0;
+        const byElement: Record<string, number> = {};
+        for (const r of rows) {
+          const ref = A0[r.element];
+          const pred = Number(r.a0pred);
+          // Same property-aware contamination gate as the rest of the corpus.
+          if (
+            !ref || !Number.isFinite(pred) || pred <= 0 || ref <= 0 ||
+            Math.abs(pred - ref) > 5 * Math.abs(ref)
+          ) { skipped++; continue; }
+          const recordId = `a0::${r.potential_label}::${r.element}`;
+          try {
+            await this.env.LEDGER
+              .prepare(
+                `INSERT INTO records
+                  (record_id, element, potential_id, potential_label, pair_style, property, reference, predicted, unit, provenance, agent_id, timestamp)
+                 VALUES (?1, ?2, ?3, ?4, ?5, 'a0', ?6, ?7, 'angstrom', ?8, 'agent_delta_causal', ?9)
+                 ON CONFLICT(record_id) DO UPDATE SET predicted=excluded.predicted, reference=excluded.reference`,
+              )
+              .bind(
+                recordId, r.element, r.potential_id || r.potential_label, r.potential_label,
+                r.pair_style || "mlip", ref, pred,
+                JSON.stringify({ type: "RecoveredFromProvenance", source_field: "a0_optimized", reference_basis: "experimental_a0_kittel_crc" }),
+                new Date().toISOString(),
+              )
+              .run();
+            inserted++;
+            byElement[r.element] = (byElement[r.element] || 0) + 1;
+          } catch (e) {
+            console.error("multiPropertySeed insert failed:", e);
+            skipped++;
+          }
+        }
+
+        const claimId = `multiproperty_seed_${Date.now()}`;
+        const claimData = {
+          analysis: "multiproperty_seed", new_property: "a0",
+          candidates: rows.length, inserted, skipped, by_element: byElement,
+          note: "a0 predicted recovered from MLIP provenance; reference = experimental. E_coh/B0 still need predicted values from the atlas-distill/MLIP compute pipeline (property-agnostic /ingest/batch).",
+        };
+        const description = `Multi-property seed — recovered ${inserted} real a0 records (lattice constant) across ${Object.keys(byElement).length} elements from MLIP provenance; ${skipped} skipped. Joint error manifold now spans Cij + a0.`;
+        const now = new Date().toISOString();
+        try {
+          await this.env.LEDGER
+            .prepare(
+              `INSERT INTO claims
+                (claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at, timestamp)
+              VALUES (?1, 'agent_delta_causal', 'MultiPropertySeed', ?2, '[]', ?3, 'proposed', ?4, ?5, ?5)
+              ON CONFLICT(claim_id) DO NOTHING`,
+            )
+            .bind(claimId, JSON.stringify(claimData), 0.8, description, now)
+            .run();
+        } catch (e) {
+          console.error("Causal.runMultiPropertySeed: claim insert failed:", e);
+        }
+        span.setAttribute("causal.multiseed.inserted", inserted);
+        span.setAttribute("output.value", JSON.stringify(claimData));
+        span.setStatus({ code: SpanStatusCode.OK });
+        return { ok: true, claim_id: claimId, summary: claimData };
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        return { ok: false, error: String(err) };
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  /**
    * Corpus audit — property-aware data-quality inventory. The hard
    * |pred|>1500/≤0 purge gate is elastic-constant-specific; E_coh (eV),
    * a0 (Å), surface/vacancy energies live on different scales and signs, so

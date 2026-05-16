@@ -47,7 +47,8 @@ export type ResearchTaskKind =
   | "causal_structure_scalefree"  // Round C3′: scale-free structure screen
   | "causal_data_integrity"       // Round C4: contamination quarantine + clean re-screen
   | "data_purge"                  // Durable corpus cleanup (delete corrupt records)
-  | "corpus_audit";               // Property-aware data-quality audit
+  | "corpus_audit"                // Property-aware data-quality audit
+  | "multiproperty_seed";         // De-myopization: recover a0 as a 2nd property
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -114,6 +115,7 @@ export interface ManifoldAnalysisTask extends ResearchTaskBase {
   kind: "manifold_analysis";
   element: string;
   family?: string;
+  force?: boolean;
 }
 
 /**
@@ -150,6 +152,11 @@ export interface CorpusAuditTask extends ResearchTaskBase {
   kind: "corpus_audit";
 }
 
+/** Recover a0 from MLIP provenance as a genuine 2nd property family. */
+export interface MultiPropertySeedTask extends ResearchTaskBase {
+  kind: "multiproperty_seed";
+}
+
 export type ResearchTask =
   | RoundTask
   | LiteratureTask
@@ -163,7 +170,8 @@ export type ResearchTask =
   | CausalStructureScaleFreeTask
   | CausalDataIntegrityTask
   | DataPurgeTask
-  | CorpusAuditTask;
+  | CorpusAuditTask
+  | MultiPropertySeedTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -406,8 +414,8 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     // routeAgentRequest; the queue path must do it explicitly.
     const stub = await getNamedAgentStub(env.MANIFOLD_AGENT, `manifold-${task.element}`);
     const result = (await (stub as unknown as {
-      runAnalysis: (opts: { element: string; family?: string }) => Promise<{ ok: boolean; error?: string }>;
-    }).runAnalysis({ element: task.element, family: task.family }));
+      runAnalysis: (opts: { element: string; family?: string; force?: boolean }) => Promise<{ ok: boolean; error?: string }>;
+    }).runAnalysis({ element: task.element, family: task.family, force: task.force }));
     if (!result.ok) {
       throw new Error(`Manifold.runAnalysis failed: ${result.error ?? "unknown"}`);
     }
@@ -477,6 +485,17 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     }).runCorpusAudit());
     if (!result.ok) {
       throw new Error(`Causal.runCorpusAudit failed: ${result.error ?? "unknown"}`);
+    }
+    return;
+  }
+
+  if (task.kind === "multiproperty_seed") {
+    const stub = await getNamedAgentStub(env.CAUSAL_AGENT, "causal-main");
+    const result = (await (stub as unknown as {
+      runMultiPropertySeed: () => Promise<{ ok: boolean; error?: string }>;
+    }).runMultiPropertySeed());
+    if (!result.ok) {
+      throw new Error(`Causal.runMultiPropertySeed failed: ${result.error ?? "unknown"}`);
     }
     return;
   }

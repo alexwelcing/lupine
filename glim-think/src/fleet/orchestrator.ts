@@ -131,6 +131,20 @@ export class FleetOrchestrator implements DurableObject {
       corpusAudit = { status: "failed", error: String(e) };
     }
 
+    // 0.7 Multi-property seed — recover a0 (2nd property) from MLIP
+    //     provenance so the joint manifold spans Cij + a0. Idempotent.
+    let multiSeed: { status: string; job_id?: string; error?: string };
+    try {
+      const enq = await enqueueTask(this.env, {
+        kind: "multiproperty_seed",
+        dedup_key: `auto-multiseed:${new Date().toISOString()}`,
+        enqueued_at: new Date().toISOString(),
+      });
+      multiSeed = { status: enq.status, job_id: enq.job_id };
+    } catch (e) {
+      multiSeed = { status: "failed", error: String(e) };
+    }
+
     // 1. One manifold_analysis task per element.
     for (const el of elements) {
       const fleetId = `${fleetBatchId}-${el}`;
@@ -141,9 +155,15 @@ export class FleetOrchestrator implements DurableObject {
       try {
         const enq = await enqueueTask(this.env, {
           kind: "manifold_analysis",
-          dedup_key: `auto-manifold:${el}:${dateHour}`,
+          // Per-run dedup + force: manifold is pure local compute (cheap, no
+          // LLM) — recompute every cycle so PR reflects the CURRENT property
+          // set (Cij + a0 + future properties), not a stale single-property
+          // cache. This is the de-myopization: the ribbon is re-tested
+          // against the full property space each run.
+          dedup_key: `auto-manifold:${el}:${new Date().toISOString()}`,
           enqueued_at: new Date().toISOString(),
           element: el,
+          force: true,
         });
         this.state.storage.sql.exec(
           `UPDATE fleets SET status = 'enqueued', completed_at = datetime('now') WHERE fleet_id = ?`,
@@ -219,6 +239,7 @@ export class FleetOrchestrator implements DurableObject {
       results,
       data_purge: dataPurge,
       corpus_audit: corpusAudit,
+      multiproperty_seed: multiSeed,
       causal_screens: causalResults,
       structure_property: structureProperty,
       structure_scalefree: structureScaleFree,
