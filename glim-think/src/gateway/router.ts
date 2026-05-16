@@ -57,6 +57,9 @@ const WORKERS_AI_MODEL = "@cf/meta/llama-3.1-8b-instruct";
 const WORKERS_AI_GATEWAY_MODEL = `workers-ai/${WORKERS_AI_MODEL}`;
 
 export class ModelRouter {
+  /** Process-wide round-robin index for balancing MiniMax ↔ GLM. Static so
+   * it persists across per-request ModelRouter instances within an isolate. */
+  private static rrCounter = 0;
   private providers: Map<string, Provider> = new Map();
   private env: Env;
 
@@ -271,35 +274,36 @@ export class ModelRouter {
     return this.fallbackChain(tier);
   }
 
+  /**
+   * Round-robin the two research workhorses (MiniMax ↔ GLM/zai) so load is
+   * balanced across requests. OpenAI (gpt-5.5) is intentionally NOT here —
+   * it is the last-resort decider (appended after the pair) and the
+   * escalation lead in strengthFirstChain.
+   */
+  private balancedScienceLead(): string[] {
+    const pair: string[] = [];
+    if (this.providers.has("minimax")) pair.push("minimax");
+    if (this.providers.has("zai")) pair.push("zai");
+    if (pair.length === 2 && ModelRouter.rrCounter++ % 2 === 1) pair.reverse();
+    return pair;
+  }
+
   /** Standard tier-optimized chain. */
   private fallbackChain(tier: TaskTier): string[] {
     switch (tier) {
       case "ingestion":
       case "screening":
+        // High-volume / low-stakes — keep on the free model to preserve
+        // the token-plan + gpt-5.5 budget for the science tiers.
         return ["workers-ai"];
       case "hypothesis":
-        return [
-          ...(this.providers.has("openai") ? ["openai"] : []),
-          ...(this.providers.has("gemini") ? ["gemini"] : []),
-          ...(this.providers.has("zai") ? ["zai"] : []),
-          ...(this.providers.has("minimax") ? ["minimax"] : []),
-          ...(this.providers.has("huggingface") ? ["huggingface"] : []),
-          "workers-ai",
-        ];
       case "experiment_design":
-        return [
-          ...(this.providers.has("openai") ? ["openai"] : []),
-          ...(this.providers.has("gemini") ? ["gemini"] : []),
-          ...(this.providers.has("minimax") ? ["minimax"] : []),
-          ...(this.providers.has("zai") ? ["zai"] : []),
-          "workers-ai",
-        ];
       case "code_review":
+        // MiniMax & GLM share the everyday science load (balanced);
+        // OpenAI gpt-5.5 is the last decider before the free floor.
         return [
+          ...this.balancedScienceLead(),
           ...(this.providers.has("openai") ? ["openai"] : []),
-          ...(this.providers.has("gemini") ? ["gemini"] : []),
-          ...(this.providers.has("zai") ? ["zai"] : []),
-          ...(this.providers.has("minimax") ? ["minimax"] : []),
           "workers-ai",
         ];
       default:
@@ -312,12 +316,13 @@ export class ModelRouter {
    * regardless of task tier. Used when an agent's recent quality is poor.
    */
   private strengthFirstChain(): string[] {
+    // Quality escalation: OpenAI gpt-5.5 is the top-ranked decider and
+    // steps in FIRST when an agent's recent eval pass-rate is poor, then
+    // the science workhorses, then the free floor.
     return [
       ...(this.providers.has("openai") ? ["openai"] : []),
-      ...(this.providers.has("gemini") ? ["gemini"] : []),
       ...(this.providers.has("minimax") ? ["minimax"] : []),
       ...(this.providers.has("zai") ? ["zai"] : []),
-      ...(this.providers.has("huggingface") ? ["huggingface"] : []),
       "workers-ai",
     ];
   }

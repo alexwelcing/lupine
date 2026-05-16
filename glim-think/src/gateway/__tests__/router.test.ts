@@ -79,24 +79,41 @@ describe("ModelRouter — tier → route mapping", () => {
     expect(cap[0].body.model).toBe("workers-ai/@cf/meta/llama-3.1-8b-instruct");
   });
 
-  it("hypothesis → ZAI glm-5.1 first, DIRECT (not via Gateway)", async () => {
-    const cap = stubFetch(["a hypothesis"]);
-    const res = await new ModelRouter(makeEnv(KEYS)).complete("hypothesis", "why?");
-    expect(res.provider).toBe("zai");
-    expect(cap[0].url).toContain("api.z.ai/api/coding/paas/v4");
-    expect(cap[0].url).not.toContain("gateway.ai.cloudflare.com");
-    expect(cap[0].body.model).toBe("glm-5.1");
+  it("science tiers lead with a balanced MiniMax/GLM workhorse, DIRECT (not Gateway)", async () => {
+    for (const tier of ["hypothesis", "experiment_design", "code_review"] as const) {
+      const cap = stubFetch(["x"]);
+      const res = await new ModelRouter(makeEnv(KEYS)).complete(tier, "q");
+      expect(["minimax", "zai"]).toContain(res.provider);
+      expect(cap[0].url).not.toContain("gateway.ai.cloudflare.com");
+      expect(cap[0].url).toMatch(/api\.minimax\.io|api\.z\.ai\/api\/coding\/paas\/v4/);
+    }
   });
 
-  it("experiment_design → MiniMax first, DIRECT", async () => {
-    const cap = stubFetch(["a design"]);
-    const res = await new ModelRouter(makeEnv(KEYS)).complete(
-      "experiment_design",
-      "design it"
+  it("MiniMax ↔ GLM alternate across requests (round-robin balance)", async () => {
+    const env = makeEnv(KEYS); // both ZAI + MiniMax present
+    const seen: string[] = [];
+    for (let i = 0; i < 4; i++) {
+      stubFetch(["x"]);
+      seen.push((await new ModelRouter(env).complete("hypothesis", "q")).provider);
+    }
+    // Both workhorses must appear — load is shared, not pinned to one.
+    expect(new Set(seen)).toEqual(new Set(["minimax", "zai"]));
+  });
+
+  it("OpenAI is the last decider (after the pair), not the lead", async () => {
+    // Only OpenAI key + the free floor: OpenAI is reached only because the
+    // science workhorses are absent — it never leads the normal chain.
+    const cap = stubFetch(["decided"]);
+    const res = await new ModelRouter(makeEnv({ OPENAI_API_KEY: "ok" })).complete(
+      "hypothesis",
+      "why?"
     );
-    expect(res.provider).toBe("minimax");
-    expect(cap[0].url).toContain("api.minimax.io");
-    expect(cap[0].body.model).toBe("MiniMax-M2.7");
+    expect(res.provider).toBe("openai");
+    expect(cap[0].url).toContain("api.openai.com");
+    const body = cap[0].body as Record<string, unknown>;
+    expect(body.model).toBe("gpt-5.5");
+    expect(body.max_completion_tokens).toBeDefined(); // gpt-5.x shape
+    expect(body.temperature).toBeUndefined(); // gpt-5.x: default only
   });
 });
 
@@ -156,7 +173,9 @@ describe("ModelRouter — quality gate (real heuristics)", () => {
       agentClass: "Theorist",
       qualityGate: true,
     });
-    expect(res.provider).toBe("minimax"); // 2nd rung of the hypothesis chain
+    // Low score on the first workhorse falls back to the next rung — the
+    // other balanced science provider (minimax↔zai), not pinned to one.
+    expect(["minimax", "zai"]).toContain(res.provider);
     expect(cap).toHaveLength(2);
   });
 });
