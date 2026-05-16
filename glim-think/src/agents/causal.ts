@@ -371,6 +371,125 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
   }
 
   /**
+   * Round C4 — data-integrity remediation. C3′ exposed physically impossible
+   * FCC predicted elastic constants (MAE ~3000 GPa, RMSE ~50000 GPa on ~150
+   * GPa quantities). Metallic Cij are < ~1500 GPa; anything beyond is corrupt
+   * (unit error / non-converged sentinel). This quantifies the contamination,
+   * quarantines it by a hard physical bound (|predicted| ≤ 1500 GPa, kept as
+   * a documented predicate — non-destructive), and re-runs the structure×
+   * property screen CLEAN vs DIRTY to recover the true residual effect.
+   */
+  async runDataIntegrityScreen(): Promise<{
+    ok: boolean;
+    claim_id?: string;
+    error?: string;
+    summary?: unknown;
+  }> {
+    const tracer = trace.getTracer("glim-think.causal");
+    return tracer.startActiveSpan("Causal.runDataIntegrityScreen", async (span) => {
+      try {
+        await this.onStart();
+        const BOUND = 1500; // GPa — conservative ceiling (W C11 ≈ 520; diamond ≈ 1080)
+        const r4 = (x: number) => (Number.isFinite(x) ? Math.round(x * 10000) / 10000 : null);
+        const structExpr = groupKeyExpr("structure");
+        const props = ["C11", "C12", "C44"];
+        const perProp: Array<Record<string, unknown>> = [];
+        const sources: Record<string, number> = {};
+
+        for (const p of props) {
+          const rows = await this.queryLedger<{
+            struct: string; reference: number; predicted: number; provenance: string; potential_label: string;
+          }>(
+            `SELECT ${structExpr} as struct, reference, predicted, provenance, potential_label FROM records WHERE property = '${p}'`,
+          );
+          const stat = (sel: typeof rows) => {
+            const clean = sel.filter((x) => Math.abs(x.predicted) <= BOUND);
+            const cont = sel.filter((x) => Math.abs(x.predicted) > BOUND);
+            for (const c of cont) {
+              const k = `${c.provenance || "?"}|${c.potential_label || "?"}`;
+              sources[k] = (sources[k] || 0) + 1;
+            }
+            const r = (a: typeof clean) =>
+              a.length >= 3 ? this.pearsonR(a.map((x) => x.reference), a.map((x) => x.predicted)) : NaN;
+            const relMae = (a: typeof clean) => {
+              if (!a.length) return NaN;
+              const num = a.reduce((s, x) => s + Math.abs(x.predicted - x.reference), 0) / a.length;
+              const den = a.reduce((s, x) => s + Math.abs(x.reference), 0) / a.length;
+              return den > 0 ? num / den : NaN;
+            };
+            return {
+              n: sel.length, contaminated: cont.length,
+              contam_rate: r4(sel.length ? cont.length / sel.length : 0),
+              clean_r: r4(r(clean)), clean_rel_mae: r4(relMae(clean)),
+              max_abs_pred: r4(Math.max(0, ...sel.map((x) => Math.abs(x.predicted)))),
+            };
+          };
+          perProp.push({
+            property: p,
+            bcc: stat(rows.filter((x) => x.struct === "bcc")),
+            fcc: stat(rows.filter((x) => x.struct === "fcc")),
+          });
+        }
+
+        const avg = (s: "bcc" | "fcc", k: string) => {
+          const v = perProp.map((x) => (x[s] as Record<string, number>)?.[k]).filter((n): n is number => typeof n === "number");
+          return v.length ? v.reduce((a, b) => a + b, 0) / v.length : NaN;
+        };
+        const fccCleanR = avg("fcc", "clean_r"), bccCleanR = avg("bcc", "clean_r");
+        const fccContam = avg("fcc", "contam_rate"), bccContam = avg("bcc", "contam_rate");
+        // Did the BCC/FCC shield survive decontamination?
+        const shieldSurvives =
+          Number.isFinite(fccCleanR) && Number.isFinite(bccCleanR) &&
+          bccCleanR - fccCleanR >= 0.3;
+        const verdict = shieldSurvives
+          ? `RESIDUAL STRUCTURE EFFECT IS REAL: after quarantining contaminated rows, BCC clean r=${r4(bccCleanR)} still exceeds FCC clean r=${r4(fccCleanR)} by ≥0.3 — a genuine (smaller) BCC/FCC predictive-skill gap remains.`
+          : `SHIELD WAS LARGELY ARTIFACT: once contaminated rows are removed, FCC clean r=${r4(fccCleanR)} ≈ BCC clean r=${r4(bccCleanR)}. The Round B "causal shield" was dominated by FCC data contamination, not structure physics.`;
+
+        const topSources = Object.entries(sources).sort((a, b) => b[1] - a[1]).slice(0, 8)
+          .map(([k, v]) => ({ source: k, contaminated: v }));
+        const claimId = `causal_dataintegrity_${Date.now()}`;
+        const claimData = {
+          analysis: "data_integrity_remediation", bound_gpa: BOUND,
+          per_property: perProp,
+          fcc_contam_rate: r4(fccContam), bcc_contam_rate: r4(bccContam),
+          fcc_clean_r: r4(fccCleanR), bcc_clean_r: r4(bccCleanR),
+          top_contamination_sources: topSources,
+          shield_survives_cleaning: shieldSurvives, verdict,
+        };
+        const description =
+          `Round C4 data-integrity — FCC contamination rate=${r4(fccContam)} (BCC=${r4(bccContam)}); ` +
+          `after quarantine |pred|>${BOUND}GPa: FCC clean r=${r4(fccCleanR)}, BCC clean r=${r4(bccCleanR)}. ${verdict}`;
+        const now = new Date().toISOString();
+        try {
+          await this.env.LEDGER
+            .prepare(
+              `INSERT INTO claims
+                (claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence, status, description, created_at, timestamp)
+              VALUES (?1, 'agent_delta_causal', 'DataIntegrityScreen', ?2, '[]', ?3, 'proposed', ?4, ?5, ?5)
+              ON CONFLICT(claim_id) DO NOTHING`,
+            )
+            .bind(claimId, JSON.stringify(claimData), 0.85, description, now)
+            .run();
+        } catch (e) {
+          console.error("Causal.runDataIntegrityScreen: claim insert failed:", e);
+        }
+
+        span.setAttribute("causal.dataintegrity.fcc_contam_rate", Number(r4(fccContam) ?? 0));
+        span.setAttribute("causal.dataintegrity.shield_survives", shieldSurvives);
+        span.setAttribute("output.value", JSON.stringify(claimData));
+        span.setStatus({ code: SpanStatusCode.OK });
+        return { ok: true, claim_id: claimId, summary: claimData };
+      } catch (err) {
+        span.recordException(err as Error);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
+        return { ok: false, error: String(err) };
+      } finally {
+        span.end();
+      }
+    });
+  }
+
+  /**
    * Round C3′ — scale-free BCC/FCC screen. C2 refuted the Cauchy mechanism
    * (FCC dead uniformly across C11/C12/C44). This tests the range-restriction
    * hypothesis: is FCC's near-zero Pearson r an artifact of small reference

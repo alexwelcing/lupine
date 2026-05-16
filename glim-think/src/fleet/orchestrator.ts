@@ -171,12 +171,26 @@ export class FleetOrchestrator implements DurableObject {
       structureScaleFree = { status: "failed", error: String(e) };
     }
 
+    // 5. Round C4 — data-integrity remediation (contamination quarantine).
+    let dataIntegrity: { status: string; job_id?: string; error?: string };
+    try {
+      const enq = await enqueueTask(this.env, {
+        kind: "causal_data_integrity",
+        dedup_key: `auto-dataintegrity:${dateHour}`,
+        enqueued_at: new Date().toISOString(),
+      });
+      dataIntegrity = { status: enq.status, job_id: enq.job_id };
+    } catch (e) {
+      dataIntegrity = { status: "failed", error: String(e) };
+    }
+
     return {
       fleets: results.length,
       results,
       causal_screens: causalResults,
       structure_property: structureProperty,
       structure_scalefree: structureScaleFree,
+      data_integrity: dataIntegrity,
     };
   }
 

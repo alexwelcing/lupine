@@ -44,7 +44,8 @@ export type ResearchTaskKind =
   | "manifold_analysis"   // Phase A Option-C: dispatch to Manifold DO
   | "causal_screen"       // Phase A Option-C: dispatch to Causal DO
   | "causal_structure_property"   // Round C2: structure×property screen
-  | "causal_structure_scalefree"; // Round C3′: scale-free structure screen
+  | "causal_structure_scalefree"  // Round C3′: scale-free structure screen
+  | "causal_data_integrity";      // Round C4: contamination quarantine + clean re-screen
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -132,6 +133,11 @@ export interface CausalStructureScaleFreeTask extends ResearchTaskBase {
   kind: "causal_structure_scalefree";
 }
 
+/** Round C4: data-integrity remediation (contamination quarantine + re-screen). */
+export interface CausalDataIntegrityTask extends ResearchTaskBase {
+  kind: "causal_data_integrity";
+}
+
 export type ResearchTask =
   | RoundTask
   | LiteratureTask
@@ -142,7 +148,8 @@ export type ResearchTask =
   | ManifoldAnalysisTask
   | CausalScreenTask
   | CausalStructurePropertyTask
-  | CausalStructureScaleFreeTask;
+  | CausalStructureScaleFreeTask
+  | CausalDataIntegrityTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -423,6 +430,17 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     }).runStructureScaleFreeScreen());
     if (!result.ok) {
       throw new Error(`Causal.runStructureScaleFreeScreen failed: ${result.error ?? "unknown"}`);
+    }
+    return;
+  }
+
+  if (task.kind === "causal_data_integrity") {
+    const stub = await getNamedAgentStub(env.CAUSAL_AGENT, "causal-main");
+    const result = (await (stub as unknown as {
+      runDataIntegrityScreen: () => Promise<{ ok: boolean; error?: string }>;
+    }).runDataIntegrityScreen());
+    if (!result.ok) {
+      throw new Error(`Causal.runDataIntegrityScreen failed: ${result.error ?? "unknown"}`);
     }
     return;
   }
