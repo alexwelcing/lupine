@@ -20,28 +20,12 @@ import { config } from "dotenv";
 config({ path: "../.env" });
 import { createClassificationEvaluator } from "@arizeai/phoenix-evals";
 import { openai } from "@ai-sdk/openai";
-import { createClient } from "@arizeai/phoenix-client";
-import { getSpans, logSpanAnnotations } from "@arizeai/phoenix-client/spans";
 import { COMBO_EVALUATORS } from "./combo-evaluators.js";
 import { fetchSpans } from "./spans.js";
+import { classifySpan, extractIO } from "./openinference.js";
+import { fetchProjectSpans, logAnnotations, type SpanAnnotation } from "./phoenixRest.js";
 
 const PROJECT_NAME = process.env.PHOENIX_PROJECT_NAME ?? "glim-think";
-const PHOENIX_API_KEY = process.env.PHOENIX_API_KEY;
-const PHOENIX_COLLECTOR_ENDPOINT = process.env.PHOENIX_COLLECTOR_ENDPOINT;
-
-function getPhoenixHost(): string {
-  if (PHOENIX_COLLECTOR_ENDPOINT) {
-    return PHOENIX_COLLECTOR_ENDPOINT.replace(/\/v1\/traces\/?$/, "");
-  }
-  throw new Error("PHOENIX_COLLECTOR_ENDPOINT or PHOENIX_HOST must be set");
-}
-
-const phoenixClient = createClient({
-  options: {
-    baseUrl: getPhoenixHost(),
-    headers: PHOENIX_API_KEY ? { Authorization: `Bearer ${PHOENIX_API_KEY}` } : {},
-  },
-});
 
 // ─── Phase 2: Generic LLM evaluators ───
 
@@ -132,33 +116,17 @@ interface LLMSpan {
 }
 
 async function fetchLLMSpans(limit = 500): Promise<LLMSpan[]> {
-  const { spans } = await getSpans({
-    client: phoenixClient,
-    project: { projectName: PROJECT_NAME },
-    limit,
-  });
-
+  const spans = await fetchProjectSpans({ max: limit });
   const results: LLMSpan[] = [];
-  for (const s of spans as unknown[]) {
-    const span = s as {
-      name?: string;
-      span_name?: string;
-      attributes?: Record<string, unknown>;
-      context?: { span_id?: string };
-      span_id?: string;
-      id?: string;
-    };
-    const name = span.name ?? span.span_name ?? "";
-    if (!name.includes("generateText") && !name.includes("streamText") && !name.startsWith("gateway.")) {
-      continue;
+  for (const s of spans) {
+    // Phoenix normalizes openinference.span.kind into span_kind.
+    const attrs: Record<string, unknown> = { ...s.attributes };
+    if (s.span_kind && s.span_kind !== "UNKNOWN") {
+      attrs["openinference.span.kind"] = s.span_kind;
     }
-    const attrs = span.attributes ?? {};
-    const rawInput = attrs["input.value"] ?? attrs["ai.prompt"] ?? attrs["input"];
-    const rawOutput = attrs["output.value"] ?? attrs["ai.text"] ?? attrs["output"];
-    const input = typeof rawInput === "string" ? rawInput : rawInput != null ? JSON.stringify(rawInput) : null;
-    const output = typeof rawOutput === "string" ? rawOutput : rawOutput != null ? JSON.stringify(rawOutput) : null;
-    const rawId = span.context?.span_id ?? span.span_id ?? span.id;
-    const spanId = rawId != null ? String(rawId) : null;
+    if (classifySpan(s.name, attrs) !== "llm") continue;
+    const { input, output } = extractIO(attrs);
+    const spanId = s.span_id || s.id;
     if (input && output && spanId) results.push({ spanId, input, output });
   }
   return results;
@@ -172,23 +140,25 @@ async function runLLMEvaluator(evalConfig: EvalConfig, spans: LLMSpan[]) {
     name: evalConfig.name,
   });
 
-  const spanAnnotations = await Promise.all(
+  const spanAnnotations: SpanAnnotation[] = await Promise.all(
     spans.map(async ({ spanId, input, output }) => {
       const { label, score, explanation } = await evaluator.evaluate({ input, output });
       return {
-        spanId,
-        name: evalConfig.name as "completeness" | "hallucination" | "reasoning",
+        span_id: spanId,
+        name: evalConfig.name,
         label,
         score,
         explanation,
-        annotatorKind: "LLM" as const,
+        annotator_kind: "LLM" as const,
         metadata: { evaluator: evalConfig.name, input: input.slice(0, 500), output: output.slice(0, 500) },
       };
     }),
   );
 
-  await logSpanAnnotations({ client: phoenixClient, spanAnnotations, sync: true });
-  const passRate = spanAnnotations.filter((a) => a.label === evalConfig.positiveLabel).length / spanAnnotations.length;
+  await logAnnotations(spanAnnotations);
+  const passRate =
+    spanAnnotations.filter((a) => a.label === evalConfig.positiveLabel).length /
+    Math.max(1, spanAnnotations.length);
   console.log(`  ${evalConfig.name}: ${spanAnnotations.length} spans, pass rate ${(passRate * 100).toFixed(1)}%`);
   return spanAnnotations;
 }
@@ -218,15 +188,7 @@ async function runComboEvaluators() {
 
   console.log(`[evals] Found ${domainSpans.length} domain-specific spans for combo evaluation`);
 
-  const comboAnnotations: Array<{
-    spanId: string;
-    name: string;
-    label: string;
-    score: number;
-    explanation: string;
-    annotatorKind: "CODE" | "LLM";
-    metadata: Record<string, unknown>;
-  }> = [];
+  const comboAnnotations: SpanAnnotation[] = [];
 
   for (const span of domainSpans) {
     for (const evaluator of COMBO_EVALUATORS) {
@@ -235,12 +197,12 @@ async function runComboEvaluators() {
         if (!result) continue;
 
         comboAnnotations.push({
-          spanId: span.id,
+          span_id: span.id,
           name: result.name,
           label: result.label,
           score: result.score,
           explanation: result.explanation,
-          annotatorKind: "CODE",
+          annotator_kind: "CODE",
           metadata: {
             code_score: result.codeScore,
             llm_score: result.llmScore,
@@ -256,7 +218,7 @@ async function runComboEvaluators() {
 
   if (comboAnnotations.length > 0) {
     console.log(`[evals] Pushing ${comboAnnotations.length} combo annotations...`);
-    await logSpanAnnotations({ client: phoenixClient, spanAnnotations: comboAnnotations, sync: true });
+    await logAnnotations(comboAnnotations);
 
     // Summary by evaluator
     const byName: Record<string, { count: number; avgScore: number; avgCode: number; avgLLM: number }> = {};
@@ -264,9 +226,9 @@ async function runComboEvaluators() {
       const name = a.name;
       if (!byName[name]) byName[name] = { count: 0, avgScore: 0, avgCode: 0, avgLLM: 0 };
       byName[name].count++;
-      byName[name].avgScore += a.score;
-      byName[name].avgCode += Number(a.metadata.code_score ?? 0);
-      byName[name].avgLLM += Number(a.metadata.llm_score ?? 0);
+      byName[name].avgScore += a.score ?? 0;
+      byName[name].avgCode += Number(a.metadata?.code_score ?? 0);
+      byName[name].avgLLM += Number(a.metadata?.llm_score ?? 0);
     }
     for (const [name, stats] of Object.entries(byName)) {
       console.log(

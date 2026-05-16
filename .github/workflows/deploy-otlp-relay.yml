@@ -1,0 +1,74 @@
+name: Deploy Phoenix OTLP Relay to Cloud Run
+
+# Why this exists: Cloudflare black-holes Worker→Phoenix-Cloud OTLP at the
+# edge (see glim-think/OBSERVABILITY.md). This GCP Cloud Run relay forwards
+# the Worker's traces from GCP's network, where Phoenix ingests normally.
+# Keeping it as IaC means a deleted/recreated service is one push away from
+# restored — not a hand-deployed artifact.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'glim-think/otlp-relay/**'
+      - '.github/workflows/deploy-otlp-relay.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Workload Identity Federation
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Secrets Pre-flight
+        run: |
+          for s in GCP_PROJECT_ID GCP_REGION GCP_WORKLOAD_IDENTITY_PROVIDER GCP_SERVICE_ACCOUNT PHOENIX_OTLP_URL PHOENIX_API_KEY PHOENIX_RELAY_TOKEN; do
+            :
+          done
+          if [ -z "${{ secrets.GCP_PROJECT_ID }}" ]; then echo "::error::MISSING SECRET GCP_PROJECT_ID"; exit 1; fi
+          if [ -z "${{ secrets.PHOENIX_OTLP_URL }}" ]; then echo "::error::MISSING SECRET PHOENIX_OTLP_URL"; exit 1; fi
+          if [ -z "${{ secrets.PHOENIX_API_KEY }}" ]; then echo "::error::MISSING SECRET PHOENIX_API_KEY"; exit 1; fi
+          if [ -z "${{ secrets.PHOENIX_RELAY_TOKEN }}" ]; then echo "::error::MISSING SECRET PHOENIX_RELAY_TOKEN"; exit 1; fi
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          source: 'glim-think/otlp-relay'
+          service: 'glim-otlp-relay'
+          region: '${{ secrets.GCP_REGION }}'
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+          flags: '--allow-unauthenticated --memory=128Mi --max-instances=3'
+          # Auth to Phoenix happens via these; the relay's own shared-secret
+          # gate (RELAY_TOKEN) keeps it from being an open proxy.
+          env_vars: |-
+            PHOENIX_OTLP_URL=${{ secrets.PHOENIX_OTLP_URL }}
+            PHOENIX_API_KEY=${{ secrets.PHOENIX_API_KEY }}
+            RELAY_TOKEN=${{ secrets.PHOENIX_RELAY_TOKEN }}
+
+      - name: Smoke test (relay reaches Phoenix origin)
+        run: |
+          url="${{ steps.deploy.outputs.url }}/v1/traces"
+          # No token → must be 401 (gate works). Bad protobuf w/ token → 422
+          # from Phoenix uvicorn (relay reaches the real origin, not edge).
+          noauth=$(curl -s -m 20 -o /dev/null -w "%{http_code}" -X POST -H "content-type: application/x-protobuf" --data-binary $'\x0a\x00' "$url")
+          authed=$(curl -s -m 20 -o /dev/null -w "%{http_code}" -X POST -H "content-type: application/x-protobuf" -H "x-relay-token: ${{ secrets.PHOENIX_RELAY_TOKEN }}" --data-binary $'\x0a\x00' "$url")
+          echo "no-token=$noauth (want 401)  authed=$authed (want 422)"
+          if [ "$noauth" != "401" ]; then echo "::error::relay auth gate broken (got $noauth)"; exit 1; fi
+          if [ "$authed" != "422" ]; then echo "::error::relay not reaching Phoenix origin (got $authed)"; exit 1; fi
+
+      - name: Show URL
+        run: echo "Relay deployed at ${{ steps.deploy.outputs.url }}"

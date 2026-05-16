@@ -26,6 +26,15 @@ jobs:
         run: |
           npm install --prefer-offline --no-audit
 
+      # Guarantee every hourly run has a fresh, evaluable LLM span even in a
+      # quiet hour — makes runs repeatable and the signal non-empty. Best
+      # effort: a flaky selftest must not fail the eval job.
+      - name: Seed a deterministic LLM span
+        continue-on-error: true
+        run: |
+          curl -s -m 40 "https://glim-think-v1.aw-ab5.workers.dev/ops/llm-selftest" -o /dev/null -w "llm-selftest: %{http_code}\n"
+          sleep 20  # allow flush → relay → Phoenix ingest before evaluating
+
       - name: Run Phoenix evals
         working-directory: glim-think/evals
         env:
@@ -34,6 +43,18 @@ jobs:
           PHOENIX_PROJECT_NAME: glim-think
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: npx tsx run-evals.ts
+
+      # Health gate: surfaces projection/export/relay breakage as a CI signal.
+      # Informational (continue-on-error) so a genuinely quiet hour with no
+      # LLM spans doesn't red the run — the metric is the trend, not one tick.
+      - name: Verify OpenInference projection (health signal)
+        continue-on-error: true
+        working-directory: glim-think/evals
+        env:
+          PHOENIX_API_KEY: ${{ secrets.PHOENIX_API_KEY }}
+          PHOENIX_COLLECTOR_ENDPOINT: ${{ secrets.PHOENIX_COLLECTOR_ENDPOINT }}
+          PHOENIX_PROJECT_NAME: glim-think
+        run: npx tsx verify-openinference.ts
 
       - name: Report eval status
         if: always()
