@@ -107,7 +107,9 @@ export class FleetOrchestrator implements DurableObject {
     try {
       const enq = await enqueueTask(this.env, {
         kind: "data_purge",
-        dedup_key: `auto-datapurge:${dateHour}`,
+        // Per-run (not hourly): idempotent + cheap hygiene must run every
+        // fleet cycle, never dedup-blocked.
+        dedup_key: `auto-datapurge:${new Date().toISOString()}`,
         enqueued_at: new Date().toISOString(),
       });
       dataPurge = { status: enq.status, job_id: enq.job_id };
@@ -121,7 +123,7 @@ export class FleetOrchestrator implements DurableObject {
     try {
       const enq = await enqueueTask(this.env, {
         kind: "corpus_audit",
-        dedup_key: `auto-corpusaudit:${dateHour}`,
+        dedup_key: `auto-corpusaudit:${new Date().toISOString()}`,
         enqueued_at: new Date().toISOString(),
       });
       corpusAudit = { status: enq.status, job_id: enq.job_id };
