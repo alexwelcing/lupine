@@ -159,6 +159,9 @@ export interface Env {
   LEDGER: D1Database;
   RESEARCH_QUEUE: Queue<unknown>;
   OPENAI_API_KEY?: string;
+  /** OpenAI model. Default gpt-5.5 (requires max_completion_tokens +
+   * default temperature — handled in OpenAIProvider). */
+  OPENAI_MODEL?: string;
   ANTHROPIC_API_KEY?: string;
   GOOGLE_API_KEY?: string;
   ZAI_API_KEY?: string;

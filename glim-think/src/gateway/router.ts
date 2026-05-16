@@ -101,7 +101,10 @@ export class ModelRouter {
     // experiment_design / code_review) so research synthesis runs on a
     // first-class model instead of falling back to workers-ai.
     if (env.OPENAI_API_KEY) {
-      this.providers.set("openai", new OpenAIProvider(env.OPENAI_API_KEY, "gpt-4.1"));
+      this.providers.set(
+        "openai",
+        new OpenAIProvider(env.OPENAI_API_KEY, env.OPENAI_MODEL?.trim() || "gpt-5.5"),
+      );
     }
 
     // Zhipu AI (ZAI) — strong reasoning, OpenAI-compatible. Direct: not

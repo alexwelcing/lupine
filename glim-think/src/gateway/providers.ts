@@ -91,15 +91,11 @@ export class WorkersAIProvider implements Provider {
   }
 }
 
-/**
- * @deprecated Superseded by `AIGatewayProvider` (src/gateway/ai-gateway.ts),
- * which reaches OpenAI through Cloudflare AI Gateway. Not instantiated by
- * `ModelRouter`. Retained for one release as a manual rollback path.
- */
 // ─── OpenAI ───
+// Primary research provider (registered by ModelRouter from OPENAI_API_KEY).
 export class OpenAIProvider implements Provider {
   name = "openai";
-  constructor(private apiKey: string, private model: string = "gpt-4.1") {}
+  constructor(private apiKey: string, private model: string = "gpt-5.5") {}
 
   async complete(prompt: string, opts?: ModelOpts): Promise<ModelResponse> {
     const tracer = trace.getTracer("glim-think.gateway");
@@ -120,8 +116,10 @@ export class OpenAIProvider implements Provider {
               ...(opts?.systemPrompt ? [{ role: "system", content: opts.systemPrompt }] : []),
               { role: "user", content: prompt },
             ],
-            max_tokens: opts?.maxTokens ?? 2048,
-            temperature: opts?.temperature ?? 0.7,
+            // gpt-5.x requires max_completion_tokens (max_tokens 400s) and
+            // only supports the default temperature (omit it). This shape is
+            // also accepted by gpt-4.x, so it stays forward/backward safe.
+            max_completion_tokens: opts?.maxTokens ?? 2048,
           }),
         });
 
