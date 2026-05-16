@@ -3,6 +3,47 @@
 > Owner: Claude (autonomous weekend effort, starting 2026-05-16).
 > This supersedes the ad-hoc parts of `PHOENIX.md`. Read this first.
 
+## Operations — repeatable runs (read this to operate it)
+
+**The loop, hourly, hands-off:**
+1. `*/...` research crons + `research-orchestrator` (cron `0 * * * *`) drive
+   real agent traffic → spans → exporter (OpenInference projection) → GCP
+   relay → Phoenix `glim-think`.
+2. `Glim Think Phoenix Evals` workflow (cron `0 * * * *`): seeds a
+   deterministic span via `GET /ops/llm-selftest` (so a quiet hour still has
+   signal), runs `evals/run-evals.ts` (REST — combo + LLM evaluators, writes
+   annotations back), then `verify-openinference.ts` as a health signal.
+
+**Infrastructure as code (no hand-deployed artifacts):**
+| Component | Workflow | Trigger |
+|-----------|----------|---------|
+| Worker | `deploy-glim-think.yml` | push `glim-think/**` |
+| OTLP relay (Cloud Run) | `deploy-otlp-relay.yml` | push `glim-think/otlp-relay/**` or manual |
+| Hourly evals | `glim-think-evals.yml` | cron `0 * * * *` |
+
+**Secrets (GitHub repo secrets — all set 2026-05-16):**
+`PHOENIX_API_KEY`, `PHOENIX_COLLECTOR_ENDPOINT`, `PHOENIX_OTLP_URL`,
+`PHOENIX_RELAY_URL`, `PHOENIX_RELAY_TOKEN`, `INTERNAL_TASK_TOKEN`,
+`OPENAI_API_KEY`, `GCP_*`.
+**Worker wrangler secrets (persist across `wrangler deploy`; only lost if the
+Worker is recreated — then re-run `wrangler secret put` for each):**
+`PHOENIX_COLLECTOR_ENDPOINT`, `PHOENIX_API_KEY`, `PHOENIX_RELAY_URL`,
+`PHOENIX_RELAY_TOKEN`, `INTERNAL_TASK_TOKEN`.
+
+**Health checks (manual):**
+- `GET /ops/phoenix-selftest` — secrets resolve? OTLP endpoint reachable?
+- `GET /ops/llm-selftest` — emit one real LLM span on demand.
+- `cd evals && npx tsx verify-openinference.ts [--since=ISO]` — is projection
+  landing as `span_kind=LLM` in Phoenix? (exit 1 = broken / no LLM traffic).
+
+**Recovery:**
+- No spans in Phoenix → `/ops/phoenix-selftest`; if relay 5xx, re-run
+  `deploy-otlp-relay.yml`.
+- Spans in `default` not `glim-think` → projection (resource attr) regressed —
+  see exporter in `src/telemetry/phoenix.ts`.
+- `queueHandler` ERROR → agent stub naming / Access bypass regressed; see the
+  queue-repair commit + `getAgentByName` / `INTERNAL_TASK_TOKEN`.
+
 ## TL;DR of the diagnosis
 
 The first pass failed for **three independent reasons**, all now understood:
