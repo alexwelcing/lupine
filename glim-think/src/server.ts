@@ -77,16 +77,10 @@ import {
   runSlideshowBatch,
   listSlideshowImages,
 } from "./research/slideshow";
-import { checkAccess, isGatedRoute } from "./middleware/access";
-import {
-  bootstrapAgenda,
-  agendaStatus,
-  listAgendaTasks,
-  claimAgendaTasks,
-  completeAgendaTask,
-  updateAgendaTaskStatus,
-  type TaskStatus
-} from "./agenda";
+import { checkAccess, isGatedRoute } from "./middleware/access"
+import { instrument } from "@microlabs/otel-cf-workers";
+import { phoenixConfig } from "./telemetry/phoenix";
+
 
 async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
@@ -151,7 +145,11 @@ export {
   Literaturist,
 };
 
-const handler = {
+// Worker entrypoint wrapped with OpenTelemetry → Phoenix Cloud export.
+// `phoenixConfig` resolves to a localhost no-op exporter when the
+// PHOENIX_* secrets are unset, so this is safe with or without them.
+const baseHandler = {
+
   async fetch(request: Request, env: Env, ctx?: ExecutionContext): Promise<Response> {
     try {
       traceEnv(env);
@@ -3148,7 +3146,8 @@ ${narrative}
   },
 } satisfies ExportedHandler<Env>;
 
-export default instrument(handler, phoenixConfig);
+export default instrument(baseHandler, phoenixConfig);
+
 
 function buildDiaryPrompt(element: string, potential: string, structure: string, records: Array<{ property: string; reference: number; predicted: number; unit: string }>): string {
   let lines = `Experiment: ${potential} on ${element} (${structure} structure)\n\nResults:\n`;
