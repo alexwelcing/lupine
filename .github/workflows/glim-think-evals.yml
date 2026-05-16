@@ -9,6 +9,8 @@ on:
 jobs:
   evaluate:
     runs-on: ubuntu-latest
+    # Hourly job must never wedge — fail fast so the next tick runs clean.
+    timeout-minutes: 12
     permissions:
       contents: 'read'
 

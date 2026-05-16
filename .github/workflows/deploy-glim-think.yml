@@ -11,6 +11,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Without this a hung `npm test`/`npm run lint` sits for GitHub's 6h
+    # default, silently blocking deploys (observed: a 33-min stuck run).
+    # Fail fast and visibly instead.
+    timeout-minutes: 15
     permissions:
       contents: 'read'
 
