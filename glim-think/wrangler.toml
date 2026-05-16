@@ -100,9 +100,15 @@ queue = "glim-research-queue"
 
 [[queues.consumers]]
 queue = "glim-research-queue"
-max_batch_size = 5
-max_batch_timeout = 10
+# Research tasks are heavy + independent: a single `round` self-fetches
+# /run for up to ~27s (Phoenix: queueHandler batches hit 34.7s). Batching
+# 5 of these into one invocation blew past the redelivery window →
+# duplicate processing + the historical "attempts=4 pending" waste. Run
+# ONE task per invocation and recover throughput via concurrency instead.
+max_batch_size = 1
+max_batch_timeout = 5
 max_retries = 3
+max_concurrency = 5
 dead_letter_queue = "glim-research-dlq"
 
 # ─── Secrets (set via `wrangler secret put`) ───

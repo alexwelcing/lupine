@@ -590,6 +590,17 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
     return tracer.startActiveSpan("Causal.runDataPurge", async (span) => {
       try {
         await this.onStart();
+        // Phoenix showed db.query = ~33% of all spans (no index on the
+        // 1221-row records table → full scan per manifold/causal query,
+        // ~92ms p50 × 267/window). Idempotent indexes on the dominant
+        // filter columns. Runs first each fleet (purge step) — one-time cost.
+        for (const ddl of [
+          `CREATE INDEX IF NOT EXISTS idx_records_element ON records(element)`,
+          `CREATE INDEX IF NOT EXISTS idx_records_property ON records(property)`,
+          `CREATE INDEX IF NOT EXISTS idx_records_el_ps ON records(element, pair_style)`,
+        ]) {
+          try { await this.env.LEDGER.prepare(ddl).run(); } catch (e) { console.error("record index ddl:", e); }
+        }
         // Property-aware: absolute backstop (elastic-constant scale) + a
         // SCALE-FREE relative rule (|pred-ref| > 5·|ref| ⇒ >500% error,
         // corrupt at any property/scale — catches subtle unit errors the
