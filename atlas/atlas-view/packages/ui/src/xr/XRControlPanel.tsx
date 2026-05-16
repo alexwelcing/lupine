@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { Text, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { useStore } from '../store';
+import { BG_PRESETS } from '../backgroundPresets';
 import type { ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
 
 function XRButton({ position, width = 0.22, height = 0.08, label, onClick, active = false, color = '#202020', activeColor = '#4a90e2' }: any) {
@@ -95,6 +96,10 @@ export function XRControlPanel() {
   const materialPreset = useStore(s => s.materialPreset);
   const setMaterialPreset = useStore(s => s.setMaterialPreset);
 
+  // Background / Environment
+  const backgroundPreset = useStore(s => s.backgroundPreset);
+  const setBackgroundPreset = useStore(s => s.setBackgroundPreset);
+
   // Animate the panel to gently float and follow camera
   const rootRef = useRef<THREE.Group>(null);
   const targetPos = useMemo(() => new THREE.Vector3(), []);
@@ -143,6 +148,17 @@ export function XRControlPanel() {
     const currentIdx = colorProperty ? availableProperties.indexOf(colorProperty) : -1;
     setColorProperty(availableProperties[(currentIdx + 1) % availableProperties.length]);
   };
+
+  // Background cycling — cycle through image-backed presets first, then gradients
+  const bgKeys = Object.keys(BG_PRESETS);
+  const bgImageKeys = bgKeys.filter(k => BG_PRESETS[k].image);
+  const bgCycleKeys = bgImageKeys.length > 0 ? bgImageKeys : bgKeys;
+  const cycleBg = () => {
+    const idx = bgCycleKeys.indexOf(backgroundPreset);
+    const next = bgCycleKeys[(idx + 1) % bgCycleKeys.length];
+    setBackgroundPreset(next);
+  };
+  const currentBgLabel = BG_PRESETS[backgroundPreset]?.label ?? backgroundPreset;
 
   return (
     <group ref={rootRef}>
@@ -222,8 +238,9 @@ export function XRControlPanel() {
           </group>
 
           <XRButton position={[0, -0.11, 0]} label="Toggle Axes" onClick={toggleAxes} active={showAxes} />
-          
-          <XRButton position={[0, -0.23, 0]} label="Colorblind Mode" onClick={() => setColorblindMode(!colorblindMode)} active={colorblindMode} activeColor="#e29b4a" />
+
+          <XRLabel position={[0, -0.19, 0]} text="Environment" fontSize={0.025} color="#aaaaaa" />
+          <XRButton position={[0, -0.25, 0]} label={`BG: ${currentBgLabel}`} onClick={cycleBg} activeColor="#1edce0" />
         </group>
 
         {/* Subtle separator lines */}

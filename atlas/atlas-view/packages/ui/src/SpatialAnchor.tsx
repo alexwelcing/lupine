@@ -13,18 +13,27 @@ interface SpatialAnchorProps {
 }
 
 // In AR/VR we want the molecule to fit a comfortable handheld volume
-// (~40 cm across) regardless of how big the underlying simulation cell is.
-const TARGET_AR_EXTENT_METERS = 0.4;
+// (~30 cm across) regardless of how big the underlying simulation cell is.
+const TARGET_AR_EXTENT_METERS = 0.3;
+
+// Hard upper bound — even if cameraDistance is tiny, the molecule never
+// exceeds this physical size in meters.  Prevents the "giant model in
+// your face" failure mode the user reported.
+const MAX_SCALE = 0.5;
 
 // Physical resting place when the immersive session begins:
 //   x = 0           (in front of user)
-//   y = 1.0 m       (eye-level for a seated/standing user — refines once placed)
-//   z = -1.2 m      (about an arm's length forward)
-const REST_POSE = { x: 0, y: 1.0, z: -1.2 };
+//   y = 0.85 m      (slightly below eye-level — feels like a desk/table)
+//   z = -1.0 m      (about an arm's length forward)
+const REST_POSE = { x: 0, y: 0.85, z: -1.0 };
 
-// We start the molecule farther away and smaller, then ease it in to its
-// resting pose so the user does not see a giant model snap onto their face.
-const ENTRY_START = { z: -3.0, scaleMultiplier: 0.0 };
+// We start the molecule farther away and at zero scale, then ease it in
+// gently so the user never sees a model snap onto their face.
+const ENTRY_START = { z: -3.5, scaleMultiplier: 0.0 };
+
+// How fast the entry animation converges.  Lower = slower / gentler.
+// A value of 3.0 means ~1.5s to reach 95% of the target.
+const EASE_SPEED = 3.0;
 
 export function SpatialAnchor({ children, cameraDistance = 50 }: SpatialAnchorProps) {
   const anchorRef = useRef<THREE.Group>(null);
@@ -33,20 +42,22 @@ export function SpatialAnchor({ children, cameraDistance = 50 }: SpatialAnchorPr
   const file = useStore(s => s.file);
   const isImmersive = mode === 'immersive-ar' || mode === 'immersive-vr';
 
-  // Pick a final scale that puts the molecule's longest extent at TARGET_AR_EXTENT_METERS.
-  // cameraDistance ≈ diagonal * 1.4 (see App.tsx fit logic), so molecule diagonal in
-  // raw scene units ≈ cameraDistance / 1.4. We divide by that to get the conversion.
+  // Pick a final scale that puts the molecule's longest extent at
+  // TARGET_AR_EXTENT_METERS, clamped to MAX_SCALE so it can never exceed
+  // a comfortable physical size.
   const targetScale = useMemo(() => {
     if (!isImmersive) return 1;
     const sceneDiagonal = Math.max(0.5, cameraDistance / 1.4);
-    return Math.max(0.005, TARGET_AR_EXTENT_METERS / sceneDiagonal);
+    const raw = TARGET_AR_EXTENT_METERS / sceneDiagonal;
+    return Math.min(MAX_SCALE, Math.max(0.005, raw));
   }, [isImmersive, cameraDistance]);
 
   // Animation state lives in refs so re-renders don't reset them.
-  const animatedZ = useRef(REST_POSE.z);
+  const animatedZ = useRef(ENTRY_START.z);
   const animatedY = useRef(REST_POSE.y);
-  const animatedScaleK = useRef(1);
+  const animatedScaleK = useRef(ENTRY_START.scaleMultiplier);
 
+  // Reset animation state when entering/exiting immersive mode.
   useEffect(() => {
     if (isImmersive) {
       animatedZ.current = ENTRY_START.z;
@@ -61,13 +72,17 @@ export function SpatialAnchor({ children, cameraDistance = 50 }: SpatialAnchorPr
 
   useFrame((_state, dt) => {
     if (!anchorRef.current) return;
-    // Critically-damped ease — feels professional, not floaty
-    const lerp = 1 - Math.pow(0.001, dt);
 
     if (isImmersive) {
-      animatedZ.current += (REST_POSE.z - animatedZ.current) * lerp;
-      animatedY.current += (REST_POSE.y - animatedY.current) * lerp;
-      animatedScaleK.current += (1 - animatedScaleK.current) * lerp;
+      // Gentle exponential ease — EASE_SPEED * dt controls convergence rate.
+      // At 60fps (dt≈0.016) with EASE_SPEED=3.0, each frame moves ~4.7%
+      // toward the target → takes about 1.5s to reach 95%.
+      const t = 1 - Math.exp(-EASE_SPEED * dt);
+
+      animatedZ.current += (REST_POSE.z - animatedZ.current) * t;
+      animatedY.current += (REST_POSE.y - animatedY.current) * t;
+      animatedScaleK.current += (1 - animatedScaleK.current) * t;
+
       anchorRef.current.position.set(REST_POSE.x, animatedY.current, animatedZ.current);
       const k = animatedScaleK.current;
       anchorRef.current.scale.set(k, k, k);
@@ -113,9 +128,16 @@ export function SpatialAnchor({ children, cameraDistance = 50 }: SpatialAnchorPr
     <>{children}</>
   );
 
+  // Initial position matches ENTRY_START so there's no one-frame pop
+  // at the rest position before the animation begins.
   return (
-    <group ref={anchorRef} position={[0, isImmersive ? REST_POSE.y : 0, isImmersive ? REST_POSE.z : 0]}>
+    <group
+      ref={anchorRef}
+      position={[0, isImmersive ? REST_POSE.y : 0, isImmersive ? ENTRY_START.z : 0]}
+      scale={isImmersive ? 0 : 1}
+    >
       {innerContent}
     </group>
   );
 }
+

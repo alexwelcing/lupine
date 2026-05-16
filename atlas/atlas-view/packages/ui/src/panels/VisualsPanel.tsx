@@ -87,13 +87,58 @@ const IconClose = () => (
 );
 
 // ─── Background Presets ───────────────────────────────────────────────
-const BG_PRESETS = [
+const BG_GRADIENT_PRESETS = [
   { id: 'dark', label: 'Dark', top: '#1a1a1f', bottom: '#0a0a0c' },
   { id: 'deep', label: 'Deep Field', top: '#080a14', bottom: '#000000' },
   { id: 'void', label: 'Void', top: '#000000', bottom: '#000000' },
   { id: 'white', label: 'White', top: '#ffffff', bottom: '#f0f0f5' },
   { id: 'blueprint', label: 'Blueprint', top: '#0b162c', bottom: '#050a14' },
+  { id: 'midnight', label: 'Midnight', top: '#080c18', bottom: '#141e38' },
+  { id: 'studio', label: 'Studio', top: '#1a1a2e', bottom: '#16213e' },
+  { id: 'warm', label: 'Warm Dark', top: '#1a100c', bottom: '#0d0906' },
+  { id: 'fog', label: 'Fog', top: '#101418', bottom: '#1c2028' },
 ];
+
+const BG_TEXTURE_CATEGORIES = [
+  { label: 'Cosmic', presets: [
+    { id: 'nebula',         label: 'Nebula',        image: '/backgrounds/bg_nebula_indigo.jpg' },
+    { id: 'aurora',         label: 'Aurora',        image: '/backgrounds/bg_aurora_teal.jpg' },
+    { id: 'plasma-smoke',   label: 'Plasma Smoke',  image: '/backgrounds/bg_plasma_smoke.jpg' },
+    { id: 'starfield',      label: 'Starfield',     image: '/backgrounds/bg_deep_starfield.jpg' },
+    { id: 'spacetime',      label: 'Spacetime',     image: '/backgrounds/bg_spacetime.jpg' },
+  ]},
+  { label: 'Material', presets: [
+    { id: 'copper',         label: 'Copper',        image: '/backgrounds/bg_copper_shimmer.jpg' },
+    { id: 'crystal',        label: 'Crystal Ice',   image: '/backgrounds/bg_crystal_ice.jpg' },
+    { id: 'volcanic',       label: 'Volcanic',      image: '/backgrounds/bg_volcanic_ember.jpg' },
+    { id: 'rose-gold',      label: 'Rose Gold',     image: '/backgrounds/bg_rose_gold.jpg' },
+    { id: 'iridescent',     label: 'Iridescent',    image: '/backgrounds/bg_iridescent.jpg' },
+  ]},
+  { label: 'Lab', presets: [
+    { id: 'phosphor',       label: 'Phosphor',      image: '/backgrounds/bg_phosphor_screen.jpg' },
+    { id: 'plasma-arc',     label: 'Plasma Arc',    image: '/backgrounds/bg_plasma_discharge.jpg' },
+    { id: 'circuit',        label: 'Circuit',       image: '/backgrounds/bg_circuit_trace.jpg' },
+    { id: 'hex-lattice',    label: 'Hex Lattice',   image: '/backgrounds/bg_hex_lattice.jpg' },
+  ]},
+  { label: 'Studio', presets: [
+    { id: 'navy-grad',      label: 'Navy',          image: '/backgrounds/bg_navy_gradient.jpg' },
+    { id: 'marble',         label: 'Marble',        image: '/backgrounds/bg_white_marble.jpg' },
+    { id: 'cream',          label: 'Cream',         image: '/backgrounds/bg_warm_cream.jpg' },
+    { id: 'concrete',       label: 'Concrete',      image: '/backgrounds/bg_studio_concrete.jpg' },
+    { id: 'lavender',       label: 'Lavender',      image: '/backgrounds/bg_lavender.jpg' },
+  ]},
+  { label: 'Environment', presets: [
+    { id: 'bioluminescent', label: 'Bioluminescent', image: '/backgrounds/bg_bioluminescent.jpg' },
+    { id: 'cellular',       label: 'Cellular',      image: '/backgrounds/bg_cellular.jpg' },
+    { id: 'arctic',         label: 'Arctic',        image: '/backgrounds/bg_arctic_terrain.jpg' },
+    { id: 'ocean',          label: 'Deep Ocean',    image: '/backgrounds/bg_deep_ocean.jpg' },
+    { id: 'topographic',    label: 'Topographic',   image: '/backgrounds/bg_topographic.jpg' },
+  ]},
+];
+
+// Backwards-compat flat list for the gradient chips
+const BG_PRESETS = BG_GRADIENT_PRESETS;
+
 
 export function VisualsPanel({ availableProperties }: { availableProperties: string[] }) {
   const {
@@ -806,7 +851,7 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
           <QuantumSection label="Environment & Overlays" defaultOpen={false}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 12 }}>
               <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Background Preset</div>
+                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Gradient Presets</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
                   {BG_PRESETS.map(p => (
                     <IsotopeChip key={p.id} label={p.label} selected={backgroundPreset === p.id} onClick={() => setBackgroundPreset(p.id)} />
@@ -817,6 +862,79 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
                   }} />
                 </div>
               </div>
+              {/* ── Texture Backgrounds ── */}
+              {BG_TEXTURE_CATEGORIES.map(cat => (
+                <div key={cat.label}>
+                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 6, marginTop: 4, letterSpacing: '0.05em' }}>
+                    {cat.label} Textures
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+                    {cat.presets.map(p => {
+                      const active = backgroundPreset === p.id;
+                      return (
+                        <button
+                          key={p.id}
+                          onClick={() => setBackgroundPreset(p.id)}
+                          title={p.label}
+                          style={{
+                            position: 'relative',
+                            width: '100%',
+                            aspectRatio: '1',
+                            border: `2px solid ${active ? '#1edce0' : '#1f2937'}`,
+                            borderRadius: 4,
+                            overflow: 'hidden',
+                            cursor: 'pointer',
+                            padding: 0,
+                            background: '#0a0a0c',
+                            transition: 'border-color 150ms, box-shadow 150ms',
+                            boxShadow: active ? '0 0 8px rgba(30, 220, 224, 0.3)' : 'none',
+                          }}
+                          onMouseEnter={e => { if (!active) e.currentTarget.style.borderColor = '#1edce060'; }}
+                          onMouseLeave={e => { if (!active) e.currentTarget.style.borderColor = '#1f2937'; }}
+                        >
+                          <img
+                            src={p.image}
+                            alt={p.label}
+                            loading="lazy"
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              opacity: active ? 1 : 0.7,
+                              transition: 'opacity 200ms',
+                            }}
+                            onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                          />
+                          <div style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            padding: '2px 4px',
+                            background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
+                            fontSize: 8,
+                            fontWeight: 600,
+                            fontFamily: 'Space Grotesk, sans-serif',
+                            color: active ? '#1edce0' : '#94a3b8',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.05em',
+                            textAlign: 'center',
+                            lineHeight: '14px',
+                          }}>
+                            {p.label}
+                          </div>
+                          {active && (
+                            <div style={{
+                              position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+                              background: '#1edce0', boxShadow: '0 0 6px #1edce0',
+                            }} />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
               <div style={{ borderTop: '1px solid #1f2937', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <OrbitalToggle label="Show Spatial Axes" active={showAxes} onClick={toggleAxes} />
                 <OrbitalToggle label="Show Unit Cell Box" active={showCell} onClick={toggleCell} />

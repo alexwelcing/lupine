@@ -16,6 +16,7 @@ import { StateInspector } from './StateInspector';
 import * as THREE from 'three';
 import { XR, createXRStore, useXR } from '@react-three/xr';
 import { USDZExportHelper } from './export/USDZExportPipeline';
+import { XREnvironmentDome } from './xr/XREnvironmentDome';
 
 // XR store — tuned for the Meta Quest browser (Quest 2/3/Pro) while staying
 // graceful on non-Meta runtimes. All advanced features are requested as
@@ -70,6 +71,7 @@ import { SimulationCell } from '@atlas/scene/SimulationCell';
 import { ScaleBar } from '@atlas/scene/ScaleBar';
 import { getBackgroundFromColormap } from '@atlas/scene';
 import { VisualsPanel } from './panels/VisualsPanel';
+import { DockableWindow } from './DockableWindow';
 import { FigureExportPanel } from './panels/FigureExportPanel';
 import { AnalysisPanel } from './panels/AnalysisPanel';
 import { MeasurementPanel } from './panels/MeasurementPanel';
@@ -206,28 +208,25 @@ const IconTelemetry = () => (
 );
 
 // ─── Background presets ───────────────────────────────────────────────
-const BG_PRESETS: Record<string, { top: string; bottom: string; label: string }> = {
-  void:      { top: '#000000', bottom: '#000000', label: 'Void' },
-  deep:      { top: '#080a14', bottom: '#000000', label: 'Deep Field' },
-  dark:      { top: '#1a1a1f', bottom: '#0a0a0c', label: 'Dark' },
-  white:     { top: '#ffffff', bottom: '#f0f0f5', label: 'White' },
-  blueprint: { top: '#0b162c', bottom: '#050a14', label: 'Blueprint' },
-  midnight:  { top: '#080c18', bottom: '#141e38', label: 'Midnight' },
-  studio:    { top: '#1a1a2e', bottom: '#16213e', label: 'Studio' },
-  warm:      { top: '#1a100c', bottom: '#0d0906', label: 'Warm Dark' },
-  fog:       { top: '#101418', bottom: '#1c2028', label: 'Fog' },
-};
+import { BG_PRESETS } from './backgroundPresets';
 
-function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string } {
+
+function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string; image?: string } {
   if (backgroundPreset.startsWith('palette:')) {
     const [, palette] = backgroundPreset.split(':');
     return getBackgroundFromColormap((palette as ColormapName) ?? colormap);
   }
-  return BG_PRESETS[backgroundPreset] ?? BG_PRESETS.void;
+  const preset = BG_PRESETS[backgroundPreset] ?? BG_PRESETS.void;
+  return { top: preset.top, bottom: preset.bottom, image: preset.image };
 }
 
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: string; bottom: string; style?: 'linear' | 'radial' | 'spotlight'; videoUrl?: string | null }) {
+function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl }: {
+  top: string; bottom: string;
+  style?: 'linear' | 'radial' | 'spotlight';
+  videoUrl?: string | null;
+  imageUrl?: string;
+}) {
   const { scene } = useThree();
   
   // Hook must be called unconditionally
@@ -259,6 +258,30 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: str
       
       scene.background = tex;
       scene.fog = null;
+    } else if (imageUrl) {
+      // Load AI-generated background texture
+      const loader = new THREE.TextureLoader();
+      loader.load(imageUrl, (loadedTex) => {
+        loadedTex.mapping = THREE.EquirectangularReflectionMapping;
+        loadedTex.colorSpace = THREE.SRGBColorSpace;
+        loadedTex.minFilter = THREE.LinearFilter;
+        loadedTex.magFilter = THREE.LinearFilter;
+        scene.background = loadedTex;
+        tex = loadedTex;
+      }, undefined, () => {
+        // Fallback to gradient on load failure
+        console.warn(`[bg] Failed to load texture: ${imageUrl}, falling back to gradient`);
+        const canvas = document.createElement('canvas');
+        canvas.width = 1024; canvas.height = 1024;
+        const ctx = canvas.getContext('2d')!;
+        const grad = ctx.createLinearGradient(0, 0, 0, 1024);
+        grad.addColorStop(0, top); grad.addColorStop(1, bottom);
+        ctx.fillStyle = grad; ctx.fillRect(0, 0, 1024, 1024);
+        tex = new THREE.CanvasTexture(canvas);
+        tex.mapping = THREE.EquirectangularReflectionMapping;
+        scene.background = tex;
+      });
+      scene.fog = new THREE.FogExp2(bottom, 0.0008);
     } else {
       const canvas = document.createElement('canvas');
       const size = 1024;
@@ -301,7 +324,7 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl }: { top: str
       scene.background = null;
       scene.fog = null;
     };
-  }, [scene, top, bottom, style, videoUrl, mode]);
+  }, [scene, top, bottom, style, videoUrl, imageUrl, mode]);
 
   return null;
 }
@@ -1111,7 +1134,8 @@ export default function App() {
             <XR store={xrStore}>
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
-            <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} />
+            <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} imageUrl={bg.image} />
+            <XREnvironmentDome imageUrl={bg.image} top={bg.top} bottom={bg.bottom} />
 
             <ambientLight intensity={ambientLightIntensity} />
             {(() => {
@@ -1498,7 +1522,16 @@ export default function App() {
         </div>
 
         {/* ─── Side panel ─── */}
-        {activePanel && file && (
+        {/* Studio (Visuals) lives in a draggable/resizable dockable window —
+            the advanced light rig + material lab as a pro palette, not a
+            scrolling side drawer. Other panels keep the side container. */}
+        {activePanel === 'visuals' && file && (
+          <DockableWindow title="Studio" onClose={() => setActivePanel(null)}>
+            <VisualsPanel availableProperties={availableProperties} />
+          </DockableWindow>
+        )}
+
+        {activePanel && activePanel !== 'visuals' && file && (
           <div style={{
             position: 'absolute',
             top: isMobile ? 'auto' : 0,
@@ -1517,11 +1550,6 @@ export default function App() {
             animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
           }}>
             <ErrorBoundary>
-              {activePanel === 'visuals' && (
-                <VisualsPanel
-                  availableProperties={availableProperties}
-                />
-              )}
               {/* Consolidated Analysis: inner tab strip switches between
                   the analysis modules and the measurement workflow. */}
               {(activePanel === 'analysis' || activePanel === 'measurement') && (
