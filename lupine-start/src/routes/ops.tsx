@@ -88,7 +88,7 @@ function OpsDashboard() {
                       className="border-b border-[var(--outline-variant)]/50 hover:bg-[var(--surface-container-high)]/30 transition-colors"
                     >
                       <td className="py-4 px-4">
-                        <span className="font-mono text-[14px] font-bold text-[var(--on-surface)] uppercase">
+                        <span className="font-mono text-[14px] text-[var(--on-surface)] uppercase">
                           {d.service}
                         </span>
                       </td>

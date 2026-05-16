@@ -293,7 +293,7 @@ function EvolutionPage() {
                 <DataListHeaderCell>Spinoff</DataListHeaderCell>
               </DataListHeader>
               {ideaEvolutionRows.map((r, i) => (
-                <DataListRow key={i}>
+                <DataListRow key={i} gridCols="grid-cols-[1fr_2fr_2fr_1fr_2fr]">
                   <DataListCell label="Round / Date" className="whitespace-nowrap">
                     <span className="mono-label text-[var(--on-surface-variant)] block">
                       {r.round}
@@ -441,7 +441,7 @@ function EvolutionPage() {
                 <DataListHeaderCell>Enabler</DataListHeaderCell>
               </DataListHeader>
               {projectionRows.map((r, i) => (
-                <DataListRow key={i}>
+                <DataListRow key={i} gridCols="grid-cols-[1fr_2fr_2fr_1fr]">
                   <DataListCell label="Axis">
                     <strong className="text-[var(--on-surface)] whitespace-nowrap">{r.axis}</strong>
                   </DataListCell>

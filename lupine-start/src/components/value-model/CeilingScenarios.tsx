@@ -111,7 +111,7 @@ function ScenarioCard({
         {/* Probability + name */}
         <div className="flex items-center gap-3 lg:flex-1 min-w-0">
           <span
-            className="font-mono text-[11px] uppercase tracking-widest font-bold px-2 py-1 rounded flex-shrink-0"
+            className="font-mono text-[11px] uppercase tracking-widest px-2 py-1 rounded flex-shrink-0"
             style={{ background: tint, color: '#0b1220' }}
           >
             P {(scenario.probability * 100).toFixed(0)}%

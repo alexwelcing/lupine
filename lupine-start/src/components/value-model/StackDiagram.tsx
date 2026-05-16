@@ -72,7 +72,7 @@ function Layer({
       {/* "Lupine" tag on the substrate layer */}
       {isLupine && (
         <span
-          className="absolute -left-3 top-1/2 -translate-y-1/2 font-mono text-[9px] uppercase tracking-widest font-bold px-2 py-1 rounded"
+          className="absolute -left-3 top-1/2 -translate-y-1/2 font-mono text-[9px] uppercase tracking-widest px-2 py-1 rounded"
           style={{ background: '#00ffff', color: '#000000' }}
         >
           Lupine

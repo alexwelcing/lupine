@@ -114,14 +114,14 @@ export function HorizonChart({ data }: { data: ValueModelData }) {
                       transition={{ duration: 0.5, delay: 0.2 + i * 0.15 }}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="font-mono text-xs uppercase tracking-widest font-bold drop-shadow-md" style={{ color }}>
+                        <span className="font-mono text-xs uppercase tracking-widest drop-shadow-md" style={{ color }}>
                           Phase {p.phase}
                         </span>
                         <span className="text-base lg:text-lg font-medium text-[var(--on-surface)] tracking-tight drop-shadow-md">
                           {p.name}
                         </span>
                         {isCurrent && (
-                          <span className="ml-2 font-mono text-[9px] uppercase tracking-widest font-bold px-1.5 py-0.5 rounded-sm bg-[#4ecdc4]/10 text-[#4ecdc4] border border-[#4ecdc4]/30 animate-pulse">
+                          <span className="ml-2 font-mono text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded-sm bg-[#4ecdc4]/10 text-[#4ecdc4] border border-[#4ecdc4]/30 animate-pulse">
                             Active
                           </span>
                         )}
@@ -198,7 +198,7 @@ function PhaseCard({
       <div className="flex flex-col gap-1 relative z-10">
         <div className="flex items-center justify-between">
           <span
-            className="font-mono text-xs uppercase tracking-widest font-bold"
+            className="font-mono text-xs uppercase tracking-widest"
             style={{ color }}
           >
             Phase {phase.phase}

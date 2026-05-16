@@ -195,7 +195,7 @@ function AtlasViewerPage() {
             },
           ].map((item) => (
             <Card key={item.step} elevated>
-              <div className="font-mono text-3xl font-bold mb-4" style={{ color: item.accent }}>{item.step}</div>
+              <div className="font-mono text-3xl mb-4" style={{ color: item.accent }}>{item.step}</div>
               <h3 className="text-xl font-semibold text-[var(--on-surface)] mb-3">{item.title}</h3>
               <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{item.desc}</p>
             </Card>
@@ -213,7 +213,7 @@ function AtlasViewerPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {SUPPORTED_FORMATS.map((f) => (
             <Card key={f.ext}>
-              <code className="font-mono text-lg font-bold text-[var(--accent-cyan)] block mb-2">{f.ext}</code>
+              <code className="font-mono text-lg text-[var(--accent-cyan)] block mb-2">{f.ext}</code>
               <div className="text-sm font-semibold text-[var(--on-surface)] mb-1">{f.name}</div>
               <p className="text-xs text-[var(--on-surface-variant)] leading-relaxed">{f.desc}</p>
             </Card>
