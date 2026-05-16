@@ -22,6 +22,7 @@
  * 1-or-2-letter capitalized atomic symbol from the title; falls back
  * to pooled analysis across all elements.
  */
+import { getAgentByName } from "agents";
 import type { Env } from "../types";
 import { promptForEvaluationClaim } from "../agents/image";
 import { narrationTextForClaim } from "../agents/tts";
@@ -251,8 +252,11 @@ async function invokeTheorist(
   try {
     // One DO instance per hypothesis so each one carries its own
     // Think session memory across evaluations. Cheap — DOs are lazy.
-    const id = env.THEORIST_AGENT.idFromName(`auto-eval:${hypothesisId}`);
-    const stub = env.THEORIST_AGENT.get(id);
+    // getAgentByName sets the stub name; raw idFromName/get throws
+    // "Attempting to read .name on Theorist before it was set" when
+    // synthesize() (GlimThinkAgent base) runs from the queue path
+    // (cloudflare/workerd#2240).
+    const stub = await getAgentByName(env.THEORIST_AGENT, `auto-eval:${hypothesisId}`);
     // RPC method exposed on GlimThinkAgent base class.
     const result = (await (stub as unknown as {
       synthesize: (opts: {

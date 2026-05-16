@@ -24,6 +24,7 @@
  */
 
 import { trace, SpanStatusCode } from "@opentelemetry/api";
+import { getAgentByName } from "agents";
 import type { Env } from "../types";
 import { traceEnv } from "../telemetry/storage";
 import { withTaskPipeline } from "../telemetry/pipeline";
@@ -302,7 +303,12 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     const url = "https://glim-think-v1.aw-ab5.workers.dev/run";
     const res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // Authorizes this internal subrequest past the Cloudflare Access
+        // gate (the queue has no Access JWT). See middleware/access.ts.
+        "X-Internal-Token": env.INTERNAL_TASK_TOKEN ?? "",
+      },
       body: JSON.stringify({
         element: task.element,
         analysis_types: task.analysis_types ?? ["manifold", "causal"],
@@ -320,7 +326,10 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     const url = "https://glim-think-v1.aw-ab5.workers.dev/literature/search";
     const res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-Internal-Token": env.INTERNAL_TASK_TOKEN ?? "",
+      },
       body: JSON.stringify({
         query: task.query,
         max: task.max ?? 10,
@@ -355,8 +364,12 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
   if (task.kind === "manifold_analysis") {
     // One DO instance per element so Manifold's session memory is
     // element-scoped. Cheap — DOs are lazy.
-    const id = env.MANIFOLD_AGENT.idFromName(`manifold-${task.element}`);
-    const stub = env.MANIFOLD_AGENT.get(id);
+    // Must use getAgentByName (not idFromName/get): the Agents SDK requires
+    // the stub's name to be set before any method that reads `this.name`,
+    // else "Attempting to read .name on Manifold before it was set"
+    // (cloudflare/workerd#2240). The HTTP path gets this via
+    // routeAgentRequest; the queue path must do it explicitly.
+    const stub = await getAgentByName(env.MANIFOLD_AGENT, `manifold-${task.element}`);
     const result = (await (stub as unknown as {
       runAnalysis: (opts: { element: string; family?: string }) => Promise<{ ok: boolean; error?: string }>;
     }).runAnalysis({ element: task.element, family: task.family }));
@@ -367,8 +380,8 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
   }
 
   if (task.kind === "causal_screen") {
-    const id = env.CAUSAL_AGENT.idFromName("causal-main");
-    const stub = env.CAUSAL_AGENT.get(id);
+    // getAgentByName sets the stub name (see manifold_analysis note above).
+    const stub = await getAgentByName(env.CAUSAL_AGENT, "causal-main");
     const result = (await (stub as unknown as {
       runScreen: (opts: { grouping: "element" | "pair_style" | "potential_label" }) => Promise<{ ok: boolean; error?: string }>;
     }).runScreen({ grouping: task.grouping }));

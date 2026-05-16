@@ -217,6 +217,12 @@ export interface Env {
   PHOENIX_RELAY_URL?: string;
   /** Shared secret authenticating the Worker to the OTLP relay. */
   PHOENIX_RELAY_TOKEN?: string;
+  /**
+   * Shared secret authorizing internal queue→Worker subrequests past the
+   * Cloudflare Access gate (the queue consumer self-fetches gated routes
+   * like POST /run to reuse handler logic). See middleware/access.ts.
+   */
+  INTERNAL_TASK_TOKEN?: string;
   ORCHESTRATOR: DurableObjectNamespace;
   MANIFOLD_AGENT: DurableObjectNamespace;
   CAUSAL_AGENT: DurableObjectNamespace;

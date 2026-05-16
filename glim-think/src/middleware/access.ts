@@ -59,6 +59,14 @@ function decodeJsonSegment<T>(segment: string): T {
   }
 }
 
+/** Constant-time string compare — avoids leaking the secret via timing. */
+function timingSafeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
 function forbidden(reason: string): Response {
   return Response.json(
     { error: "forbidden", reason },
@@ -158,6 +166,17 @@ export async function checkAccess(
   allowedEmails: readonly string[],
 ): Promise<Response | null> {
   if (env.DEV_MODE === "true") return null;
+
+  // Trusted internal bypass. The research queue consumer self-fetches gated
+  // routes (POST /run, /literature/search, …) to reuse handler logic; those
+  // subrequests carry no Cloudflare Access JWT and would 403. A constant-time
+  // match against a shared secret authorizes them. Only honored when the
+  // secret is configured (never an open bypass).
+  const internalToken = env.INTERNAL_TASK_TOKEN?.trim();
+  if (internalToken) {
+    const presented = request.headers.get("X-Internal-Token");
+    if (presented && timingSafeEqual(presented, internalToken)) return null;
+  }
 
   const teamDomain = env.CF_ACCESS_TEAM_DOMAIN;
   const aud = env.CF_ACCESS_AUD;
