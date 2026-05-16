@@ -16,7 +16,9 @@ import type { Env } from "../types";
 import { enqueueTask } from "../research/queue";
 
 const ELEMENTS = ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb", "Fe", "Cr", "Mo", "W", "V", "Nb", "Ta"];
-const GROUPINGS = ["element", "pair_style", "potential_label"] as const;
+// "structure" (bcc/fcc, derived from element) added for the h2_bccfcc
+// causal-shield screen — see Causal.groupKeyExpr.
+const GROUPINGS = ["element", "pair_style", "potential_label", "structure"] as const;
 
 export class FleetOrchestrator implements DurableObject {
   private state: DurableObjectState;

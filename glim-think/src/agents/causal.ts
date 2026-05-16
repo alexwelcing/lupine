@@ -12,7 +12,23 @@ import { z } from "zod";
 import type { ToolSet } from "ai";
 import { trace, SpanStatusCode } from "@opentelemetry/api";
 
-const GROUPINGS = ["element", "pair_style", "potential_label"] as const;
+const GROUPINGS = ["element", "pair_style", "potential_label", "structure"] as const;
+
+// IMMI ground-state crystal structures. Each element is benchmarked in its
+// natural structure, so structure is deterministic from element (no schema
+// change). 7 BCC + 8 FCC. Enables the h2_bccfcc causal-shield screen:
+// whether crystal structure is a Simpson confounder for ref↔pred error.
+const BCC_IMMI = ["Fe", "Cr", "Mo", "W", "V", "Nb", "Ta"];
+
+/** SQL key expression for a grouping. `structure` is synthesised from
+ *  element via CASE; the others are enum-constrained column names. */
+function groupKeyExpr(grouping: string): string {
+  if (grouping === "structure") {
+    const inList = BCC_IMMI.map((e) => `'${e}'`).join(", ");
+    return `CASE WHEN element IN (${inList}) THEN 'bcc' ELSE 'fcc' END`;
+  }
+  return grouping;
+}
 
 export class Causal extends GlimThinkAgent {
   /**
@@ -50,11 +66,11 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
       load_grouped_data: tool({
         description: "Load benchmark records grouped by a specified column from the D1 ledger",
         inputSchema: z.object({
-          grouping: z.enum(["element", "pair_style", "potential_label"]).describe("Column to group by"),
+          grouping: z.enum(["element", "pair_style", "potential_label", "structure"]).describe("Column to group by (structure = bcc/fcc derived from element)"),
         }),
         execute: async ({ grouping }) => {
           const rows = await this.queryLedger<{ key: string; property: string; reference: number; predicted: number }>(
-            `SELECT ${grouping} as key, property, reference, predicted FROM records ORDER BY key`
+            `SELECT ${groupKeyExpr(grouping)} as key, property, reference, predicted FROM records ORDER BY key`
           );
 
           const groups = new Map<string, { key: string; records: { property: string; reference: number; predicted: number }[] }>();
@@ -78,11 +94,11 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
       compute_correlations: tool({
         description: "Compute pooled and within-group Pearson correlations for a grouping variable. Detects Simpson's Paradox.",
         inputSchema: z.object({
-          grouping: z.enum(["element", "pair_style", "potential_label"]),
+          grouping: z.enum(["element", "pair_style", "potential_label", "structure"]),
         }),
         execute: async ({ grouping }) => {
           const rows = await this.queryLedger<{ key: string; reference: number; predicted: number }>(
-            `SELECT ${grouping} as key, reference, predicted FROM records`
+            `SELECT ${groupKeyExpr(grouping)} as key, reference, predicted FROM records`
           );
 
           if (rows.length < 4) {
@@ -184,7 +200,7 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
    * Called by the queue consumer for `causal_screen` task kind.
    */
   async runScreen(opts: {
-    grouping: "element" | "pair_style" | "potential_label";
+    grouping: "element" | "pair_style" | "potential_label" | "structure";
   }): Promise<{
     ok: boolean;
     cached?: boolean;
@@ -232,7 +248,7 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
   }
 
   private async _runScreenInner(opts: {
-    grouping: "element" | "pair_style" | "potential_label";
+    grouping: "element" | "pair_style" | "potential_label" | "structure";
   }): Promise<{
     ok: boolean;
     cached?: boolean;

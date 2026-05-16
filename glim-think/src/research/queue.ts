@@ -117,7 +117,7 @@ export interface ManifoldAnalysisTask extends ResearchTaskBase {
  */
 export interface CausalScreenTask extends ResearchTaskBase {
   kind: "causal_screen";
-  grouping: "element" | "pair_style" | "potential_label";
+  grouping: "element" | "pair_style" | "potential_label" | "structure";
 }
 
 export type ResearchTask =
@@ -383,7 +383,7 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
     // getAgentByName sets the stub name (see manifold_analysis note above).
     const stub = await getNamedAgentStub(env.CAUSAL_AGENT, "causal-main");
     const result = (await (stub as unknown as {
-      runScreen: (opts: { grouping: "element" | "pair_style" | "potential_label" }) => Promise<{ ok: boolean; error?: string }>;
+      runScreen: (opts: { grouping: "element" | "pair_style" | "potential_label" | "structure" }) => Promise<{ ok: boolean; error?: string }>;
     }).runScreen({ grouping: task.grouping }));
     if (!result.ok) {
       throw new Error(`Causal.runScreen failed: ${result.error ?? "unknown"}`);
