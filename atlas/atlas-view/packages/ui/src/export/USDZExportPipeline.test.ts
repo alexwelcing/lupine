@@ -23,6 +23,33 @@ function makeBondLikeMesh(rB: number, rT: number, length: number) {
 }
 
 describe('USDZExportPipeline — radiusBT baking', () => {
+  it('preserves per-instance colors through the baked palette texture', () => {
+    const scene = new THREE.Scene();
+    const geo = new THREE.SphereGeometry(1, 6, 4);
+    const mat = new THREE.MeshStandardMaterial();
+    const mesh = new THREE.InstancedMesh(geo, mat, 2);
+    mesh.setMatrixAt(0, new THREE.Matrix4().makeTranslation(-1, 0, 0));
+    mesh.setMatrixAt(1, new THREE.Matrix4().makeTranslation(1, 0, 0));
+    mesh.setColorAt(0, new THREE.Color(1, 0, 0));
+    mesh.setColorAt(1, new THREE.Color(0, 0, 1));
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    scene.add(mesh);
+
+    const swaps = expandInstancedMeshes(scene);
+    expect(swaps).toHaveLength(1);
+
+    const baked = swaps[0].replacement;
+    const bakedMat = baked.material as THREE.MeshStandardMaterial;
+    const uv = baked.geometry.getAttribute('uv') as THREE.BufferAttribute;
+
+    expect(uv.count).toBeGreaterThan(0);
+    expect(bakedMat.map).toBeTruthy();
+    expect((bakedMat.map?.image as HTMLCanvasElement).width).toBe(2);
+
+    restoreInstancedMeshes(swaps);
+  });
+
   it('scales lateral vertex positions by the per-instance radius', () => {
     const scene = new THREE.Scene();
     const mesh = makeBondLikeMesh(0.12, 0.12, 5);

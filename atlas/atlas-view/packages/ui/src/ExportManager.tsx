@@ -21,6 +21,13 @@ import { useStore } from './store';
 import { getElementSpec } from '@atlas/core';
 import * as THREE from 'three';
 import { sampleFlythrough, getSequenceDuration } from './flythrough';
+import { expandInstancedMeshes, restoreInstancedMeshes } from './export/USDZExportPipeline';
+
+const TARGET_USDZ_EXTENT_METERS = 0.4;
+const SINGLE_TYPE_NORM_VALUE = 0.5;
+const MIN_NUMERIC_RANGE = 1e-6;
+const MIN_USDZ_SCALE = 0.0001;
+const MAX_USDZ_SCALE = 2.0;
 
 // Native MediaRecorder requires no dynamic muxer loads
 // ─── MP4 → GIF converter ─────────────────────────────────────────
@@ -428,7 +435,7 @@ export function ExportManager() {
     if (!req) return;
 
     try {
-      const { TYPE_COLORS, TYPE_RADII, DEFAULT_TYPE_COLOR } = await import('@atlas/scene');
+      const { TYPE_COLORS, TYPE_RADII, DEFAULT_TYPE_COLOR, BOTANICAL_COLORS, COLORMAPS } = await import('@atlas/scene');
 
       const state = useStore.getState();
       const currentFile = state.file;
@@ -449,6 +456,90 @@ export function ExportManager() {
 
       const exportScene = new THREE.Scene();
       exportScene.name = currentFile.name || 'glimPSE-export';
+      const isUsdZ = req.type === 'usdz';
+
+      const mapFn = COLORMAPS[state.colormap] ?? COLORMAPS.viridis;
+      const typeSet = new Set<number>();
+      for (let i = 0; i < currentFrame.natoms; i++) {
+        typeSet.add(currentFrame.types[i]);
+      }
+      const sortedTypes = Array.from(typeSet).sort((a, b) => a - b);
+      const typeToNorm = new Map<number, number>();
+      for (let i = 0; i < sortedTypes.length; i++) {
+        typeToNorm.set(
+          sortedTypes[i],
+          sortedTypes.length > 1 ? i / (sortedTypes.length - 1) : SINGLE_TYPE_NORM_VALUE,
+        );
+      }
+
+      const resolveTypeColor = (typeId: number): [number, number, number] => {
+        if (state.renderStyle === 'botanical' || state.atomColorSource === 'botanical') {
+          return BOTANICAL_COLORS[typeId] ?? [0.3, 0.5, 0.2];
+        }
+        if (state.atomColorSource === 'element') {
+          return TYPE_COLORS[typeId] ?? DEFAULT_TYPE_COLOR;
+        }
+        const t = typeToNorm.get(typeId) ?? SINGLE_TYPE_NORM_VALUE;
+        return mapFn(t);
+      };
+
+      const propertyData = state.colorMode === 'property' && state.colorProperty
+        ? currentFrame.properties?.get(state.colorProperty)
+        : null;
+      let propertyMin = state.propRange[0];
+      let propertyMax = state.propRange[1];
+      if (propertyData && (!Number.isFinite(propertyMin) || !Number.isFinite(propertyMax) || propertyMin >= propertyMax)) {
+        propertyMin = Infinity;
+        propertyMax = -Infinity;
+        for (let i = 0; i < propertyData.length; i++) {
+          const v = propertyData[i];
+          if (v < propertyMin) propertyMin = v;
+          if (v > propertyMax) propertyMax = v;
+        }
+      }
+      const propertyRange = Math.max(propertyMax - propertyMin, MIN_NUMERIC_RANGE);
+
+      const resolveAtomColor = (atomIndex: number, atomType: number): [number, number, number] => {
+        if (state.colorMode === 'property' && propertyData) {
+          const t = Math.max(0, Math.min(1, (propertyData[atomIndex] - propertyMin) / propertyRange));
+          return mapFn(t);
+        }
+        if (state.colorMode === 'uniform') {
+          return mapFn(0.0);
+        }
+        return resolveTypeColor(atomType);
+      };
+
+      let centerX = 0;
+      let centerY = 0;
+      let centerZ = 0;
+      let arScale = 1;
+      if (isUsdZ) {
+        let minX = Infinity, minY = Infinity, minZ = Infinity;
+        let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+        let visibleAtoms = 0;
+        for (let i = 0; i < currentFrame.natoms; i++) {
+          const typeId = currentFrame.types[i];
+          if (state.hiddenAtomTypes.has(typeId)) continue;
+          const x = currentFrame.positions[i * 3];
+          const y = currentFrame.positions[i * 3 + 1];
+          const z = currentFrame.positions[i * 3 + 2];
+          if (x < minX) minX = x;
+          if (x > maxX) maxX = x;
+          if (y < minY) minY = y;
+          if (y > maxY) maxY = y;
+          if (z < minZ) minZ = z;
+          if (z > maxZ) maxZ = z;
+          visibleAtoms++;
+        }
+        if (visibleAtoms > 0) {
+          centerX = (minX + maxX) * 0.5;
+          centerY = (minY + maxY) * 0.5;
+          centerZ = (minZ + maxZ) * 0.5;
+          const extent = Math.max(maxX - minX, maxY - minY, maxZ - minZ, MIN_NUMERIC_RANGE);
+          arScale = Math.max(MIN_USDZ_SCALE, Math.min(MAX_USDZ_SCALE, TARGET_USDZ_EXTENT_METERS / extent));
+        }
+      }
 
       // ── Build atom meshes ──
       // Group atoms by type for instanced rendering efficiency in downstream tools
@@ -463,10 +554,9 @@ export function ExportManager() {
       const sphereGeo = new THREE.SphereGeometry(1, 16, 12);
 
       for (const [typeId, indices] of atomsByType) {
-        const [r, g, b] = TYPE_COLORS[typeId] ?? DEFAULT_TYPE_COLOR;
         const baseRadius = (TYPE_RADII[typeId] ?? 1.0) * (state.atomScale ?? 1.0);
         const typeScale = state.atomTypeScales[typeId] ?? 1.0;
-        const radius = baseRadius * typeScale;
+        const radius = baseRadius * typeScale * arScale;
 
         let matConfig: any = { metalness: 0.1, roughness: 0.5 };
         switch (state.materialPreset) {
@@ -477,7 +567,9 @@ export function ExportManager() {
             matConfig = { metalness: 0.8, roughness: 0.2 };
             break;
           case 'glass':
-            matConfig = { metalness: 0.1, roughness: 0.1, transmission: 0.8, transparent: true, opacity: 0.8, ior: 1.5 };
+            matConfig = isUsdZ
+              ? { metalness: 0.1, roughness: 0.2 }
+              : { metalness: 0.1, roughness: 0.1, transmission: 0.8, transparent: true, opacity: 0.8, ior: 1.5 };
             break;
           case 'plastic':
             matConfig = { metalness: 0.0, roughness: 0.4 };
@@ -487,21 +579,25 @@ export function ExportManager() {
         matConfig.metalness = Math.max(0.0, Math.min(1.0, matConfig.metalness + (state.surfacePolish || 0.0)));
         matConfig.roughness = Math.max(0.0, Math.min(1.0, matConfig.roughness + (state.surfaceRoughness || 0.0)));
 
-        const MaterialClass = state.materialPreset === 'glass' ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
+        const MaterialClass = state.materialPreset === 'glass' && !isUsdZ ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
         const material = new MaterialClass({
-          color: new THREE.Color(r, g, b),
+          color: new THREE.Color(1, 1, 1),
           ...matConfig
         });
 
         const mesh = new THREE.InstancedMesh(sphereGeo, material, indices.length);
         mesh.name = `atoms-type-${typeId}`;
         const matrix = new THREE.Matrix4();
+        const color = new THREE.Color();
 
         for (let j = 0; j < indices.length; j++) {
           const idx = indices[j];
-          const x = currentFrame.positions[idx * 3];
-          const y = currentFrame.positions[idx * 3 + 1];
-          const z = currentFrame.positions[idx * 3 + 2];
+          const x = (currentFrame.positions[idx * 3] - centerX) * arScale;
+          const y = (currentFrame.positions[idx * 3 + 1] - centerY) * arScale;
+          const z = (currentFrame.positions[idx * 3 + 2] - centerZ) * arScale;
+          const [r, g, b] = resolveAtomColor(idx, typeId);
+          color.setRGB(r, g, b);
+          mesh.setColorAt(j, color);
           matrix.compose(
             new THREE.Vector3(x, y, z),
             new THREE.Quaternion(),
@@ -510,6 +606,7 @@ export function ExportManager() {
           mesh.setMatrixAt(j, matrix);
         }
         mesh.instanceMatrix.needsUpdate = true;
+        if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
         exportScene.add(mesh);
       }
 
@@ -556,7 +653,8 @@ export function ExportManager() {
         }
 
         if (bonds.length > 0) {
-          const cylGeo = new THREE.CylinderGeometry(0.12, 0.12, 1, 8, 1);
+          const bondRadius = 0.12 * arScale;
+          const cylGeo = new THREE.CylinderGeometry(bondRadius, bondRadius, 1, 8, 1);
           // Rotate cylinder so it aligns along +Y (default cylinder axis)
           let matConfig: any = { metalness: 0.1, roughness: 0.5 };
           switch (state.materialPreset) {
@@ -567,7 +665,9 @@ export function ExportManager() {
               matConfig = { metalness: 0.8, roughness: 0.2 };
               break;
             case 'glass':
-              matConfig = { metalness: 0.1, roughness: 0.1, transmission: 0.8, transparent: true, opacity: 0.8, ior: 1.5 };
+              matConfig = isUsdZ
+                ? { metalness: 0.1, roughness: 0.2 }
+                : { metalness: 0.1, roughness: 0.1, transmission: 0.8, transparent: true, opacity: 0.8, ior: 1.5 };
               break;
             case 'plastic':
               matConfig = { metalness: 0.0, roughness: 0.4 };
@@ -577,9 +677,9 @@ export function ExportManager() {
           matConfig.metalness = Math.max(0.0, Math.min(1.0, matConfig.metalness + (state.surfacePolish || 0.0)));
           matConfig.roughness = Math.max(0.0, Math.min(1.0, matConfig.roughness + (state.surfaceRoughness || 0.0)));
 
-          const MaterialClass = state.materialPreset === 'glass' ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
+          const MaterialClass = state.materialPreset === 'glass' && !isUsdZ ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
           const bondMat = new MaterialClass({
-            color: new THREE.Color(0.5, 0.5, 0.5),
+            color: new THREE.Color(1, 1, 1),
             ...matConfig
           });
 
@@ -591,15 +691,18 @@ export function ExportManager() {
           const up = new THREE.Vector3(0, 1, 0);
           const quat = new THREE.Quaternion();
           const scale = new THREE.Vector3();
+          const colorA = new THREE.Color();
+          const colorB = new THREE.Color();
+          const colorMid = new THREE.Color();
 
           for (let b = 0; b < bonds.length; b++) {
             const [ai, aj] = bonds[b];
-            const ax = currentFrame.positions[ai * 3];
-            const ay = currentFrame.positions[ai * 3 + 1];
-            const az = currentFrame.positions[ai * 3 + 2];
-            const bx = currentFrame.positions[aj * 3];
-            const by = currentFrame.positions[aj * 3 + 1];
-            const bz = currentFrame.positions[aj * 3 + 2];
+            const ax = (currentFrame.positions[ai * 3] - centerX) * arScale;
+            const ay = (currentFrame.positions[ai * 3 + 1] - centerY) * arScale;
+            const az = (currentFrame.positions[ai * 3 + 2] - centerZ) * arScale;
+            const bx = (currentFrame.positions[aj * 3] - centerX) * arScale;
+            const by = (currentFrame.positions[aj * 3 + 1] - centerY) * arScale;
+            const bz = (currentFrame.positions[aj * 3 + 2] - centerZ) * arScale;
 
             const length = Math.sqrt((bx-ax)**2 + (by-ay)**2 + (bz-az)**2);
             pos.set((ax+bx)/2, (ay+by)/2, (az+bz)/2);
@@ -608,8 +711,17 @@ export function ExportManager() {
             scale.set(1, length, 1);
             mat.compose(pos, quat, scale);
             bondMesh.setMatrixAt(b, mat);
+
+            const [ar, ag, ab] = resolveAtomColor(ai, currentFrame.types[ai]);
+            const [br, bg, bb] = resolveAtomColor(aj, currentFrame.types[aj]);
+            colorA.setRGB(ar, ag, ab);
+            colorB.setRGB(br, bg, bb);
+            // Keep bond color visually tied to both connected atoms.
+            colorMid.copy(colorA).lerp(colorB, 0.5);
+            bondMesh.setColorAt(b, colorMid);
           }
           bondMesh.instanceMatrix.needsUpdate = true;
+          if (bondMesh.instanceColor) bondMesh.instanceColor.needsUpdate = true;
           exportScene.add(bondMesh);
         }
       }
@@ -623,7 +735,13 @@ export function ExportManager() {
         console.log('[ExportManager] FIXED USDZ EXPORT RUNNING');
         const { USDZExporter } = await import('three/addons/exporters/USDZExporter.js');
         const exporter = new USDZExporter();
-        const usdz = (await (exporter as any).parseAsync(exportScene)) as ArrayBuffer;
+        const swaps = expandInstancedMeshes(exportScene);
+        let usdz: ArrayBuffer;
+        try {
+          usdz = (await (exporter as any).parseAsync(exportScene)) as ArrayBuffer;
+        } finally {
+          restoreInstancedMeshes(swaps);
+        }
         blob = new Blob([usdz], { type: 'model/vnd.usdz+zip' });
         filename = `${baseName}-frame${state.frame + 1}.usdz`;
       } else {

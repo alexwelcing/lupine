@@ -13,7 +13,14 @@ export { AtomPicker } from './AtomPicker';
 export { SpatialHash3D } from './SpatialHash';
 
 // Shared constants
-export { TYPE_COLORS, DEFAULT_TYPE_COLOR, TYPE_RADII, getBackgroundFromColormap } from './constants';
+export {
+  TYPE_COLORS,
+  DEFAULT_TYPE_COLOR,
+  TYPE_RADII,
+  BOTANICAL_COLORS,
+  COLORMAPS,
+  getBackgroundFromColormap,
+} from './constants';
 
 // Types
 export type { PickedAtom } from './AtomPicker';
