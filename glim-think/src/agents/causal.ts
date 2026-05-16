@@ -484,7 +484,15 @@ Be rigorous. A paradox claim requires both statistical evidence and a plausible 
     return tracer.startActiveSpan("Causal.runDataPurge", async (span) => {
       try {
         await this.onStart();
-        const CORRUPT = `predicted IS NULL OR ABS(predicted) > 1500 OR predicted <= 0`;
+        // Property-aware: absolute backstop (elastic-constant scale) + a
+        // SCALE-FREE relative rule (|pred-ref| > 5·|ref| ⇒ >500% error,
+        // corrupt at any property/scale — catches subtle unit errors the
+        // 1500 bound missed) + ref/pred ≤ 0 (a0=0 placeholders; corpus has
+        // no negative-convention properties — audit confirmed sign_risk=[]).
+        const CORRUPT =
+          `predicted IS NULL OR reference IS NULL OR ABS(predicted) > 1500 ` +
+          `OR predicted <= 0 OR reference <= 0 ` +
+          `OR ABS(predicted - reference) > 5 * ABS(reference)`;
 
         const before = await this.queryLedger<{ n: number }>(`SELECT COUNT(*) as n FROM records`);
         const totalBefore = Number(before[0]?.n ?? 0);

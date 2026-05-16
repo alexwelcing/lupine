@@ -323,7 +323,8 @@ Be quantitative. Cite specific numbers.`;
     // Defense-in-depth contamination gate: exclude physically-impossible
     // predicted Cij (|pred|>1500 GPa or ≤0) — PR/eigenvalues are extremely
     // sensitive to such outliers (Round B/C false-discovery cause).
-    const CLEAN = `ABS(predicted) <= 1500 AND predicted > 0`;
+    const CLEAN = `predicted IS NOT NULL AND reference IS NOT NULL AND ABS(predicted) <= 1500 ` +
+      `AND predicted > 0 AND reference > 0 AND ABS(predicted - reference) <= 5 * ABS(reference)`;
     const sql = family === "all"
       ? `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE (element = ?1 OR ?1 = 'all') AND ${CLEAN}`
       : `SELECT potential_label, property, reference, predicted, pair_style FROM records WHERE (element = ?1 OR ?1 = 'all') AND pair_style = ?2 AND ${CLEAN}`;

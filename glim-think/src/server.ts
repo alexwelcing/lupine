@@ -858,7 +858,14 @@ ${narrative}
           // GPa and positive (Born stability). Reject at the door so CSV
           // re-seeds can't reintroduce the Round B/C contamination.
           const pred = Number(r.predicted);
-          if (!Number.isFinite(pred) || Math.abs(pred) > 1500 || pred <= 0) {
+          const ref = Number(r.reference);
+          // Property-aware contamination guard: absolute backstop + scale-free
+          // relative rule (>500% error) + positivity. Mirrors Causal.runDataPurge.
+          if (
+            !Number.isFinite(pred) || !Number.isFinite(ref) ||
+            Math.abs(pred) > 1500 || pred <= 0 || ref <= 0 ||
+            Math.abs(pred - ref) > 5 * Math.abs(ref)
+          ) {
             rejected++;
             continue;
           }
