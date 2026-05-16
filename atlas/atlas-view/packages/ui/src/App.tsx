@@ -1527,7 +1527,7 @@ export default function App() {
             scrolling side drawer. Other panels keep the side container. */}
         {activePanel === 'visuals' && file && (
           <DockableWindow title="Studio" onClose={() => setActivePanel(null)}>
-            <VisualsPanel availableProperties={availableProperties} />
+            <VisualsPanel availableProperties={availableProperties} embedded />
           </DockableWindow>
         )}
 

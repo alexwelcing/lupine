@@ -140,7 +140,7 @@ const BG_TEXTURE_CATEGORIES = [
 const BG_PRESETS = BG_GRADIENT_PRESETS;
 
 
-export function VisualsPanel({ availableProperties }: { availableProperties: string[] }) {
+export function VisualsPanel({ availableProperties, embedded = false }: { availableProperties: string[]; embedded?: boolean }) {
   const {
     // General
     setActivePanel,
@@ -155,7 +155,6 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
     showBonds, toggleBonds,
     bondTolerance, setBondTolerance,
     bondColorMode, setBondColorMode,
-    useGpuBonds, setUseGpuBonds,
     propertyEmissionStrength, setPropertyEmissionStrength,
     annotations, addAnnotation, removeAnnotation, clearAnnotations,
     labelStyle, setLabelStyle,
@@ -197,8 +196,6 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
   const lookPreset = useStore(s => s.postprocessPreset);
   const setLookPreset = useStore(s => s.setPostprocessPreset);
 
-  const [presetToken, setPresetToken] = useState('');
-  const [tokenCopied, setTokenCopied] = useState(false);
 
   // Derive system context for recommended settings
   const systemInfo = useMemo(() => {
@@ -244,105 +241,42 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', height: '100%',
-      background: '#0a0a0c', borderLeft: '1px solid #1f2937',
+      background: embedded ? 'transparent' : '#0a0a0c',
+      borderLeft: embedded ? 'none' : '1px solid #1f2937',
     }}>
-      {/* ─── Header ─── */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '12px 16px', borderBottom: '1px solid #1f2937', background: '#121318', flexShrink: 0,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 4, height: 14, background: '#1edce0' }} />
-          <span style={{
-            fontSize: 12, fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif',
-            textTransform: 'uppercase', letterSpacing: '0.15em', color: '#e2e8f0',
-          }}>
-            Visuals & Rendering
-          </span>
+      {/* ─── Header (suppressed when embedded: DockableWindow provides
+            its own title bar + close control) ─── */}
+      {!embedded && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '12px 16px', borderBottom: '1px solid #1f2937', background: '#121318', flexShrink: 0,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ width: 4, height: 14, background: '#1edce0' }} />
+            <span style={{
+              fontSize: 12, fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif',
+              textTransform: 'uppercase', letterSpacing: '0.15em', color: '#e2e8f0',
+            }}>
+              Visuals & Rendering
+            </span>
+          </div>
+          <button
+            onClick={() => setActivePanel(null)}
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: 24, height: 24, background: 'transparent', border: '1px solid #334155',
+              borderRadius: 0, color: '#94a3b8', cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#1edce0'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = '#334155'; }}
+          >
+            <IconClose />
+          </button>
         </div>
-        <button
-          onClick={() => setActivePanel(null)}
-          style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            width: 24, height: 24, background: 'transparent', border: '1px solid #334155',
-            borderRadius: 0, color: '#94a3b8', cursor: 'pointer',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#1edce0'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = '#334155'; }}
-        >
-          <IconClose />
-        </button>
-      </div>
+      )}
 
       <div className="lupine-scroll" style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-
-          {/* Look-Dev Preset System */}
-          <QuantumSection label="Look-Dev Configuration" defaultOpen={false}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 12 }}>
-              <div style={{ fontSize: 10, color: '#94a3b8', lineHeight: 1.4 }}>
-                Export your current visual state as a compact token, or paste a token to restore a Laboratory look.
-              </div>
-              <div style={{ display: 'flex', gap: 6 }}>
-                <input
-                  type="text"
-                  value={presetToken}
-                  onChange={e => setPresetToken(e.target.value)}
-                  placeholder="Paste preset token..."
-                  style={{
-                    flex: 1,
-                    background: '#0d1117',
-                    border: '1px solid #1f2937',
-                    color: '#f8fafc',
-                    padding: '6px 8px',
-                    fontSize: 11,
-                    fontFamily: 'var(--font-mono)',
-                    outline: 'none',
-                  }}
-                />
-                <button
-                  onClick={() => {
-                    if (presetToken) {
-                      useStore.getState().decodeFromURL(presetToken);
-                      setPresetToken('');
-                    }
-                  }}
-                  style={{
-                    background: '#1edce020',
-                    color: '#1edce0',
-                    border: '1px solid #1edce040',
-                    padding: '4px 12px',
-                    fontSize: 10,
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    textTransform: 'uppercase'
-                  }}
-                >
-                  Load
-                </button>
-                <button
-                  onClick={() => {
-                    const token = useStore.getState().encodeToURL();
-                    navigator.clipboard.writeText(token);
-                    setTokenCopied(true);
-                    setTimeout(() => setTokenCopied(false), 2000);
-                  }}
-                  style={{
-                    background: '#334155',
-                    color: '#f8fafc',
-                    border: '1px solid #475569',
-                    padding: '4px 12px',
-                    fontSize: 10,
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    textTransform: 'uppercase'
-                  }}
-                >
-                  {tokenCopied ? 'Copied' : 'Export'}
-                </button>
-              </div>
-            </div>
-          </QuantumSection>
 
           {/* ═══ Look ═══ */}
           <div style={{ background: '#0d1117', border: '1px solid #1f2937', padding: '16px' }}>
@@ -485,7 +419,7 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
                 <div>
                   <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Palette</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                    {['viridis', 'inferno', 'coolwarm', 'plasma', 'magma', 'cividis', 'neon', 'sunset', 'vaporwave', 'ocean', 'fire', 'ice', 'forest', 'cyberpunk', 'autumn', 'grayscale', 'turbo'].map(c => (
+                    {['viridis', 'plasma', 'inferno', 'coolwarm', 'turbo', 'grayscale'].map(c => (
                       <IsotopeChip key={c} label={c.charAt(0).toUpperCase() + c.slice(1)} selected={colormap === c} onClick={() => setColormap(c as any)} />
                     ))}
                   </div>
@@ -534,13 +468,6 @@ export function VisualsPanel({ availableProperties }: { availableProperties: str
                         <IsotopeChip label="Bond Length" selected={bondColorMode === 'length'} onClick={() => setBondColorMode('length')} />
                         <IsotopeChip label="Energy" selected={bondColorMode === 'energy'} onClick={() => setBondColorMode('energy')} />
                         <IsotopeChip label="Screening" selected={bondColorMode === 'screening'} onClick={() => setBondColorMode('screening')} />
-                      </div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 6 }}>Compute Backend</div>
-                      <div style={{ display: 'flex', gap: 4 }}>
-                        <IsotopeChip label="CPU Worker" selected={!useGpuBonds} onClick={() => setUseGpuBonds(false)} />
-                        <IsotopeChip label="WebGPU" selected={useGpuBonds} onClick={() => setUseGpuBonds(true)} />
                       </div>
                     </div>
                   </div>
