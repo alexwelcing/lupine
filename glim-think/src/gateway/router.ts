@@ -126,7 +126,10 @@ export class ModelRouter {
     // Hugging Face Inference API — open models, pay-per-request. Direct:
     // its `inputs` (non-chat) format isn't OpenAI-compatible (gotcha §8.3).
     if (env.HF_API_KEY) {
-      this.providers.set("huggingface", new HFProvider(env.HF_API_KEY, "mistralai/Mistral-7B-Instruct-v0.3"));
+      this.providers.set(
+        "huggingface",
+        new HFProvider(env.HF_API_KEY, env.HF_MODEL?.trim() || "meta-llama/Llama-3.1-8B-Instruct"),
+      );
     }
 
     // Google Gemini — state of the art reasoning. Gateway-routed for trace context

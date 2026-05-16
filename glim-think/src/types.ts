@@ -171,6 +171,10 @@ export interface Env {
    * api.minimaxi.com for the international plan). Default: api.minimax.chat/v1. */
   MINIMAX_BASE_URL?: string;
   HF_API_KEY?: string;
+  /** HF Inference Providers model id (router.huggingface.co). Default:
+   * meta-llama/Llama-3.1-8B-Instruct. The legacy api-inference endpoint is
+   * deprecated. */
+  HF_MODEL?: string;
   /** Cloudflare AI Gateway auth token (`cf-aig` bearer). Set in prod via
    * `wrangler secret put AI_GATEWAY_TOKEN`; the local value lives only in
    * the gitignored `.dev.vars`. When this AND `AI_GATEWAY_ACCOUNT_ID` AND
