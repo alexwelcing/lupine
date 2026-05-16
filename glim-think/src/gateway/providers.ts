@@ -327,7 +327,15 @@ interface GeminiResponse {
 // ─── Zhipu AI (ZAI) ───
 export class ZAIProvider implements Provider {
   name = "zai";
-  constructor(private apiKey: string, private model: string = "glm-5.1") {}
+  // baseURL defaults to the GLM Coding Plan endpoint. The standard
+  // open.bigmodel.cn / api.z.ai /api/paas/v4 endpoints return 429
+  // "no resource package" for token/coding-plan accounts — their tokens
+  // are only reachable via /api/coding/paas/v4 (verified with glm-5.1).
+  constructor(
+    private apiKey: string,
+    private model: string = "glm-5.1",
+    private baseURL: string = "https://api.z.ai/api/coding/paas/v4",
+  ) {}
 
   async complete(prompt: string, opts?: ModelOpts): Promise<ModelResponse> {
     const tracer = trace.getTracer("glim-think.gateway");
@@ -336,7 +344,7 @@ export class ZAIProvider implements Provider {
       span.setAttribute("gen_ai.request.model", this.model);
       const start = Date.now();
       try {
-        const res = await fetch("https://open.bigmodel.cn/api/paas/v4/chat/completions", {
+        const res = await fetch(`${this.baseURL.replace(/\/$/, "")}/chat/completions`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${this.apiKey}`,
@@ -355,13 +363,21 @@ export class ZAIProvider implements Provider {
 
         const raw = await res.text();
         if (!res.ok) throw new Error(`ZAI ${res.status}: ${raw}`);
-        const data = JSON.parse(raw) as OpenAIChatCompletion;
+        const data = JSON.parse(raw) as OpenAIChatCompletion & {
+          choices?: { message?: { content?: string; reasoning_content?: string } }[];
+        };
+        const msg = data.choices?.[0]?.message;
 
         const response: ModelResponse = {
-          text: data.choices?.[0]?.message?.content ?? "",
+          // glm-5.1 is a reasoning model: on tight budgets the answer can
+          // land in reasoning_content with content empty — fall back to it.
+          text: msg?.content || msg?.reasoning_content || "",
           provider: this.name,
           model: this.model,
           latencyMs: Date.now() - start,
+          usage: data.usage
+            ? { promptTokens: data.usage.prompt_tokens, completionTokens: data.usage.completion_tokens }
+            : undefined,
         };
         span.setStatus({ code: SpanStatusCode.OK });
         annotateGatewayLLMSpan(span, {

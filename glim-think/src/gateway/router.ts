@@ -107,7 +107,14 @@ export class ModelRouter {
     // Zhipu AI (ZAI) — strong reasoning, OpenAI-compatible. Direct: not
     // a Gateway-supported provider.
     if (env.ZAI_API_KEY) {
-      this.providers.set("zai", new ZAIProvider(env.ZAI_API_KEY, "glm-5.1"));
+      this.providers.set(
+        "zai",
+        new ZAIProvider(
+          env.ZAI_API_KEY,
+          env.ZAI_MODEL?.trim() || "glm-5.1",
+          env.ZAI_BASE_URL?.trim() || "https://api.z.ai/api/coding/paas/v4",
+        )
+      );
     }
 
     // MiniMax — large MoE model, cost-effective. Direct: not a

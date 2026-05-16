@@ -83,7 +83,7 @@ describe("ModelRouter — tier → route mapping", () => {
     const cap = stubFetch(["a hypothesis"]);
     const res = await new ModelRouter(makeEnv(KEYS)).complete("hypothesis", "why?");
     expect(res.provider).toBe("zai");
-    expect(cap[0].url).toContain("open.bigmodel.cn");
+    expect(cap[0].url).toContain("api.z.ai/api/coding/paas/v4");
     expect(cap[0].url).not.toContain("gateway.ai.cloudflare.com");
     expect(cap[0].body.model).toBe("glm-5.1");
   });

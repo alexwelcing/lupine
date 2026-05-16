@@ -162,6 +162,11 @@ export interface Env {
   ANTHROPIC_API_KEY?: string;
   GOOGLE_API_KEY?: string;
   ZAI_API_KEY?: string;
+  /** Z.ai base URL. Default https://api.z.ai/api/coding/paas/v4 (GLM Coding
+   * Plan — token-plan accounts 429 on the standard paas/v4 endpoints). */
+  ZAI_BASE_URL?: string;
+  /** Z.ai model. Default glm-5.1. */
+  ZAI_MODEL?: string;
   MINIMAX_API_KEY?: string;
   /** Override the MiniMax model used by deep-tier agents. Default: MiniMax-M2.
    * Set via `wrangler secret put MINIMAX_MODEL` to e.g. "MiniMax-M2-Pro"
