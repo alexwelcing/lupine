@@ -24,6 +24,10 @@ import { sampleFlythrough, getSequenceDuration } from './flythrough';
 import { expandInstancedMeshes, restoreInstancedMeshes } from './export/USDZExportPipeline';
 
 const TARGET_USDZ_EXTENT_METERS = 0.4;
+const SINGLE_TYPE_NORM_VALUE = 0.5;
+const MIN_NUMERIC_RANGE = 1e-6;
+const MIN_USDZ_SCALE = 0.0001;
+const MAX_USDZ_SCALE = 2.0;
 
 // Native MediaRecorder requires no dynamic muxer loads
 // ─── MP4 → GIF converter ─────────────────────────────────────────
@@ -462,7 +466,10 @@ export function ExportManager() {
       const sortedTypes = Array.from(typeSet).sort((a, b) => a - b);
       const typeToNorm = new Map<number, number>();
       for (let i = 0; i < sortedTypes.length; i++) {
-        typeToNorm.set(sortedTypes[i], sortedTypes.length > 1 ? i / (sortedTypes.length - 1) : 0.5);
+        typeToNorm.set(
+          sortedTypes[i],
+          sortedTypes.length > 1 ? i / (sortedTypes.length - 1) : SINGLE_TYPE_NORM_VALUE,
+        );
       }
 
       const resolveTypeColor = (typeId: number): [number, number, number] => {
@@ -472,7 +479,7 @@ export function ExportManager() {
         if (state.atomColorSource === 'element') {
           return TYPE_COLORS[typeId] ?? DEFAULT_TYPE_COLOR;
         }
-        const t = typeToNorm.get(typeId) ?? 0.5;
+        const t = typeToNorm.get(typeId) ?? SINGLE_TYPE_NORM_VALUE;
         return mapFn(t);
       };
 
@@ -490,7 +497,7 @@ export function ExportManager() {
           if (v > propertyMax) propertyMax = v;
         }
       }
-      const propertyRange = Math.max(propertyMax - propertyMin, 1e-6);
+      const propertyRange = Math.max(propertyMax - propertyMin, MIN_NUMERIC_RANGE);
 
       const resolveAtomColor = (atomIndex: number, atomType: number): [number, number, number] => {
         if (state.colorMode === 'property' && propertyData) {
@@ -529,8 +536,8 @@ export function ExportManager() {
           centerX = (minX + maxX) * 0.5;
           centerY = (minY + maxY) * 0.5;
           centerZ = (minZ + maxZ) * 0.5;
-          const extent = Math.max(maxX - minX, maxY - minY, maxZ - minZ, 1e-6);
-          arScale = Math.max(0.0001, Math.min(2.0, TARGET_USDZ_EXTENT_METERS / extent));
+          const extent = Math.max(maxX - minX, maxY - minY, maxZ - minZ, MIN_NUMERIC_RANGE);
+          arScale = Math.max(MIN_USDZ_SCALE, Math.min(MAX_USDZ_SCALE, TARGET_USDZ_EXTENT_METERS / extent));
         }
       }
 
