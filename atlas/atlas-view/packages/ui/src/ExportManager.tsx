@@ -716,6 +716,7 @@ export function ExportManager() {
             const [br, bg, bb] = resolveAtomColor(aj, currentFrame.types[aj]);
             colorA.setRGB(ar, ag, ab);
             colorB.setRGB(br, bg, bb);
+            // Keep bond color visually tied to both connected atoms.
             colorMid.copy(colorA).lerp(colorB, 0.5);
             bondMesh.setColorAt(b, colorMid);
           }
