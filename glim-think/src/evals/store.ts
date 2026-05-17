@@ -192,6 +192,78 @@ export async function getModelQualityProvenance(
   }
 }
 
+// ─── Scientific-throughput fitness (the loop's objective function) ───
+// Parallel to getModelQualityTrend, but the unit is the HYPOTHESIS
+// LIFECYCLE: this is what "is the swarm resolving real science faster"
+// reduces to. Written by run-evals Phase 3 as a ScienceThroughput claim;
+// consumed by the Evolver (Phase C) to target the weakest dimension.
+
+type ThroughputData = {
+  generated_at?: string;
+  scorecard?: Record<string, { n: number; pass_rate: number; mean_score: number }>;
+};
+
+/**
+ * Latest ScienceThroughput scorecard as evaluator → { score, n }, where
+ * score is the mean_score (0..1) for that throughput dimension
+ * (falsifiability / discriminative_power / resolution_latency /
+ * refutation_health / information_gain).
+ */
+export async function getScienceThroughputTrend(
+  env: Env,
+): Promise<Record<string, { score: number; n: number }>> {
+  try {
+    const row = await env.LEDGER.prepare(
+      `SELECT claim_data FROM claims WHERE claim_type = 'ScienceThroughput'
+        ORDER BY created_at DESC LIMIT 1`,
+    ).first<{ claim_data: string }>();
+    if (!row?.claim_data) return {};
+    const d = JSON.parse(row.claim_data) as ThroughputData;
+    const out: Record<string, { score: number; n: number }> = {};
+    for (const [name, c] of Object.entries(d.scorecard ?? {})) {
+      out[name] = { score: c.mean_score ?? c.pass_rate ?? 0, n: c.n ?? 0 };
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * The single steerable fitness scalar the loop maximizes: mean
+ * scientific-throughput across dimensions, with the conservative MIN
+ * sample size and a per-dimension breakdown so the Evolver can target
+ * the weakest dimension (e.g. resolution_latency stalled) rather than
+ * tuning blind. fitness=0,n=0 when no ScienceThroughput claim exists yet.
+ */
+export async function getScienceThroughputFitness(
+  env: Env,
+): Promise<{ fitness: number; n: number; weakest: string | null; dims: Record<string, number> }> {
+  const t = await getScienceThroughputTrend(env);
+  const entries = Object.entries(t);
+  if (entries.length === 0) return { fitness: 0, n: 0, weakest: null, dims: {} };
+  const dims: Record<string, number> = {};
+  let sum = 0;
+  let minN = Infinity;
+  let weakest: string | null = null;
+  let weakestScore = Infinity;
+  for (const [k, v] of entries) {
+    dims[k] = v.score;
+    sum += v.score;
+    minN = Math.min(minN, v.n);
+    if (v.score < weakestScore) {
+      weakestScore = v.score;
+      weakest = k;
+    }
+  }
+  return {
+    fitness: sum / entries.length,
+    n: minN === Infinity ? 0 : minN,
+    weakest,
+    dims,
+  };
+}
+
 /** Get recent evaluations for admin dashboard. */
 export async function getRecentEvals(
   env: Env,
