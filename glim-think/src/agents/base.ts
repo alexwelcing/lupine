@@ -19,7 +19,7 @@ import { generateText, type LanguageModel, type ToolSet } from "ai";
 import { trace, SpanStatusCode } from "@opentelemetry/api";
 import type { DurableObjectState } from "@cloudflare/workers-types";
 import type { Env } from "../types";
-import { recordMiniMaxSpend, miniMaxModel, hasMiniMaxBudget } from "./models";
+import { recordMiniMaxSpend, miniMaxModel, hasMiniMaxBudget, selectDeepRoute } from "./models";
 import { PhoenixApi } from "../phoenix/api";
 import { runHeuristics } from "../evals/heuristics";
 import { insertEval, getAgentQualityTrend } from "../evals/store";
@@ -37,6 +37,16 @@ export abstract class GlimThinkAgent extends Think<Env> {
   getModel() {
     return createWorkersAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.5");
   }
+
+  /**
+   * When true, the one-shot `synthesize()` RPC path routes through the
+   * eval-aware multi-provider deep tier (`selectDeepRoute`: MiniMax/GLM
+   * scorecard-balanced, OpenAI gpt-5.5 last decider) instead of the sync
+   * `getModel()`. Deep specialists (Theorist/Causal/Orchestrator) set this
+   * to true. The Think framework's agentic tool-loop still uses `getModel()`
+   * (sync) regardless — only the one-shot synthesis path is eval-steered.
+   */
+  protected deepTier = false;
 
   /**
    * Default system prompt. Overridden by each specialist.
@@ -186,6 +196,15 @@ export abstract class GlimThinkAgent extends Think<Env> {
         // If this agent's recent pass rate is poor, escalate to MiniMax
         // (if budget allows) or boost token budget for deeper reasoning.
         let model: LanguageModel = this.getModel();
+        if (this.deepTier) {
+          // Eval-aware multi-provider deep tier (replaces MiniMax-only
+          // selectModel('deep')). Scorecard-steered; span carries the
+          // resolved provider/model so the model×agent scorecard is real.
+          const route = await selectDeepRoute(this.env);
+          model = route.model;
+          span.setAttribute("llm.provider", route.provider);
+          span.setAttribute("llm.model", route.modelId);
+        }
         let maxOutputTokens = opts.maxOutputTokens ?? 768;
         try {
           const trend = await getAgentQualityTrend(this.env, this.constructor.name, 1);
@@ -216,7 +235,7 @@ export abstract class GlimThinkAgent extends Think<Env> {
           maxOutputTokens,
           experimental_telemetry: {
             isEnabled: true,
-            functionId: "agent.synthesize",
+            functionId: `agent.${this.constructor.name}`,
             metadata: { agent: this.constructor.name },
           },
         });
@@ -284,7 +303,7 @@ export abstract class GlimThinkAgent extends Think<Env> {
                 maxOutputTokens: Math.min(maxOutputTokens * 2, 2048),
                 experimental_telemetry: {
                   isEnabled: true,
-                  functionId: "agent.synthesize.retry",
+                  functionId: `agent.${this.constructor.name}.retry`,
                   metadata: { agent: this.constructor.name, retry_reason: evalResult.explanation },
                 },
               });

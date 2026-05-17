@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@atlas/core": "workspace:*",
+    "@atlas/nist": "workspace:*",
     "@atlas/parsers": "workspace:*",
     "@atlas/scene": "workspace:*",
     "@lupine/ui": "workspace:*",

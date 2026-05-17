@@ -77,6 +77,7 @@ import { AnalysisPanel } from './panels/AnalysisPanel';
 import { MeasurementPanel } from './panels/MeasurementPanel';
 import { FlythroughPanel } from './panels/FlythroughPanel';
 import { TelemetryPanel } from './panels/TelemetryPanel';
+import { PotentialBrowser } from './panels/PotentialBrowser';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
 import { decodeFlythrough } from './flythrough';
 import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
@@ -595,6 +596,8 @@ export default function App() {
   const nextFrame = useStore(s => s.nextFrame);
   const togglePlay = useStore(s => s.togglePlay);
   const setActivePanel = useStore(s => s.setActivePanel);
+  const showPotentialBrowser = useStore(s => s.showPotentialBrowser);
+  const setShowPotentialBrowser = useStore(s => s.setShowPotentialBrowser);
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
   const anomalyTracking = useStore(s => s.anomalyTracking);
@@ -1506,6 +1509,7 @@ export default function App() {
                 <ToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
                 <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => setActivePanel('analysis')} />
                 <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => setActivePanel('export')} />
+                <ToolButton icon={<IconAnalysis />} label="Potentials" active={showPotentialBrowser} onClick={() => setShowPotentialBrowser(true)} />
                 {/* Telemetry is a developer surface — visible only with ?dev=1.
                     Production users see 3 tabs: Visuals · Analysis · Export. */}
                 {(typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('dev')) && (
@@ -1525,6 +1529,10 @@ export default function App() {
         {/* Studio (Visuals) lives in a draggable/resizable dockable window —
             the advanced light rig + material lab as a pro palette, not a
             scrolling side drawer. Other panels keep the side container. */}
+        {/* NIST IPR potential browser — full-screen overlay, manages its own
+            close via setShowPotentialBrowser(false). */}
+        {showPotentialBrowser && <PotentialBrowser />}
+
         {activePanel === 'visuals' && file && (
           <DockableWindow title="Studio" onClose={() => setActivePanel(null)}>
             <VisualsPanel availableProperties={availableProperties} embedded />

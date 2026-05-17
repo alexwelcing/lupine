@@ -17,7 +17,7 @@
  *   GET  /admin/insights   → list recent insights for human review
  */
 import type { Env } from "../types";
-import { selectModel, extractMiniMaxTokens } from "../agents/models";
+import { selectDeepRoute, extractMiniMaxTokens } from "../agents/models";
 import { generateText } from "ai";
 import { searchLiterature } from "../literature";
 import { parseHitlistBlock, persistHits } from "./hits";
@@ -168,7 +168,7 @@ export async function comprehendPaper(
     "for the paper's actual claims.",
   ].join("\n");
 
-  const model = selectModel(env, "deep");
+  const model = (await selectDeepRoute(env)).model;
   let raw = "";
   let tokens_spent = 0;
   try {
@@ -412,7 +412,7 @@ export async function reasonOnHypothesis(
     "  - Be precise about epistemic state — uncertainty is fine if warranted",
   ].join("\n");
 
-  const model = selectModel(env, "deep");
+  const model = (await selectDeepRoute(env)).model;
   let raw = "";
   let tokens_spent = 0;
   try {

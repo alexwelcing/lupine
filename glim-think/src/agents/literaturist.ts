@@ -104,9 +104,9 @@ function extractKeywords(text: string, max = 8): string[] {
 
 export class Literaturist extends GlimThinkAgent {
   /**
-   * Match Theorist tier — Llama 4 Scout 17B for richer summarization.
-   * ModelRouter (Claude/Zhipu fallback) is intentionally NOT wired here;
-   * routing is handled at the worker level for cost-aware paths.
+   * Llama 4 Scout 17B (Workers AI) for richer summarization. Literaturist
+   * stays on the fast tier by design — it is NOT deepTier, so synthesize()
+   * does not escalate it to the eval-aware multi-provider deep route.
    */
   getModel() {
     return createWorkersAI({ binding: this.env.AI })(

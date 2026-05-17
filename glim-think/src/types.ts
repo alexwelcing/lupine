@@ -183,23 +183,6 @@ export interface Env {
    * meta-llama/Llama-3.1-8B-Instruct. The legacy api-inference endpoint is
    * deprecated. */
   HF_MODEL?: string;
-  /** Cloudflare AI Gateway auth token (`cf-aig` bearer). Set in prod via
-   * `wrangler secret put AI_GATEWAY_TOKEN`; the local value lives only in
-   * the gitignored `.dev.vars`. When this AND `AI_GATEWAY_ACCOUNT_ID` AND
-   * `AI_GATEWAY_NAME` are all present, the router sends Gateway-eligible
-   * providers (Workers AI, ZAI, MiniMax) through Cloudflare AI Gateway.
-   * If any is absent the router falls back to direct provider fetches —
-   * this absence IS the one-flag rollback switch (see router.ts). */
-  AI_GATEWAY_TOKEN?: string;
-  /** Cloudflare account id that owns the AI Gateway (URL path segment). */
-  AI_GATEWAY_ACCOUNT_ID?: string;
-  /** AI Gateway name — the `{gateway}` URL path segment. */
-  AI_GATEWAY_NAME?: string;
-  /** Gateway-level auth token for an AUTHENTICATED AI Gateway, sent as
-   * `cf-aig-authorization`. Distinct from `AI_GATEWAY_TOKEN` (the provider
-   * token). Leave unset for unauthenticated gateways (e.g. `glimgate`) —
-   * sending it with a non-gateway token returns 401. */
-  AI_GATEWAY_AUTH_TOKEN?: string;
   /** Cloudflare Access team subdomain (e.g. "lupine" for lupine.cloudflareaccess.com).
    * Used by middleware/access.ts to fetch JWKS and verify Cf-Access-Jwt-Assertion
    * on /admin/*, /ops/* writes, and other gated routes. */
