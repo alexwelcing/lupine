@@ -563,6 +563,24 @@ async function patchClaimData(
  *   - Permanent (4xx, type)     → message.ack() and mark failed
  *   - Unknown                   → throw, queue runtime retries up to 3 then DLQ
  */
+/**
+ * Deterministic failures that will NOT succeed within the 3-retry window —
+ * retrying just wastes compute + floods telemetry. Ack + mark failed (→DLQ)
+ * instead of bubbling to the queue retry policy.
+ */
+function isPermanentTaskError(msg: string): boolean {
+  const m = msg.toLowerCase();
+  return (
+    m.includes("unknown task kind") ||
+    /\b(400|401|403|404)\b/.test(m) ||
+    m.includes("usage limit") || m.includes("quota") ||
+    m.includes("insufficient balance") || m.includes("no resource package") ||
+    m.includes("2056") || m.includes("1113") ||           // MiniMax / ZAI caps
+    m.includes("invalid api key") || m.includes("invalid token") ||
+    m.includes("not found on this server")
+  );
+}
+
 export async function consumeBatch(
   batch: MessageBatch<ResearchTask & { job_id: string }>,
   env: Env,
@@ -591,8 +609,13 @@ export async function consumeBatch(
             console.error(`research queue: job ${jobId} failed:`, msg);
             msgSpan.recordException(e as Error);
             msgSpan.setStatus({ code: SpanStatusCode.ERROR, message: msg });
-            // Heuristic: 4xx or shape error → permanent failure
-            if (msg.includes("400") || msg.includes("Unknown task kind")) {
+            // Permanent (won't succeed within the 3-retry/minutes window):
+            // shape errors, 4xx auth/not-found, and DETERMINISTIC external
+            // quota/rate caps (e.g. MiniMax 2056 "5-hour usage limit",
+            // ZAI 1113 "insufficient balance"). Phoenix showed these were
+            // burning 3 retries + cascading 5× error spans each. Fail fast
+            // to DLQ instead. Transient (network/5xx/timeout) still retries.
+            if (isPermanentTaskError(msg)) {
               await markFinished(env, jobId, "failed", msg);
               message.ack();
             } else {
