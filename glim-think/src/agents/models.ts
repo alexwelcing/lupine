@@ -492,7 +492,23 @@ const MODEL_SCORE_MIN_N = 8;
 
 // Round-robin counter for the un-scored MiniMax/GLM balance (the "get better
 // at the science" intent: spread deep load until the scorecard has signal).
+// Durable via KV (env.CONFIG `rr:deep`) so break-in survives Worker isolate
+// restarts — otherwise an unsampled provider can be starved indefinitely.
+// The in-memory value is a best-effort fallback when KV is unavailable.
 let rrCounter = 0;
+
+async function nextRoundRobin(env: Env, mod: number): Promise<number> {
+  if (mod <= 0) return 0;
+  try {
+    const raw = await env.CONFIG.get("rr:deep");
+    const cur = raw ? parseInt(raw, 10) || 0 : 0;
+    const next = (cur + 1) % 1_000_000;
+    await env.CONFIG.put("rr:deep", String(next));
+    return cur % mod;
+  } catch {
+    return rrCounter++ % mod;
+  }
+}
 
 function zaiModel(env: Env) {
   return createOpenAICompatible({
@@ -536,10 +552,20 @@ function buildDeepRoute(env: Env, p: DeepProvider): DeepRoute {
  * last decider (used when it is the only credentialed provider or when it
  * measurably wins). Always budget-guards MiniMax → Workers AI.
  */
-export async function selectDeepRoute(env: Env): Promise<DeepRoute> {
+export async function selectDeepRoute(
+  env: Env,
+  opts?: { force?: DeepProvider },
+): Promise<DeepRoute> {
   const candidates = availableDeepProviders(env);
   if (candidates.length === 0) {
     return { model: fastModel(env), provider: "workers-ai", modelId: FAST_MODEL };
+  }
+
+  // Forced provider (controlled A/B via /ops/experiment-generate): honor it
+  // when credentialed, bypassing scorecard/budget so experiments can test
+  // any provider deterministically.
+  if (opts?.force && candidates.includes(opts.force)) {
+    return buildDeepRoute(env, opts.force);
   }
 
   // MiniMax budget guard: drop it from candidates when exhausted.
@@ -565,7 +591,7 @@ export async function selectDeepRoute(env: Env): Promise<DeepRoute> {
   // No signal yet: round-robin MiniMax/GLM; OpenAI only if it's all we have.
   const balance = pool.filter((p) => p !== "openai");
   const ring = balance.length > 0 ? balance : pool;
-  const pick = ring[rrCounter++ % ring.length];
+  const pick = ring[await nextRoundRobin(env, ring.length)];
   return buildDeepRoute(env, pick);
 }
 
@@ -577,6 +603,8 @@ export interface ResearchTextOpts {
   tier?: ReasoningTier;
   maxOutputTokens?: number;
   temperature?: number;
+  /** Controlled A/B: pin the deep-tier provider (bypasses scorecard). */
+  forceProvider?: DeepProvider;
 }
 
 /**
@@ -593,7 +621,7 @@ export async function generateResearchText(
   const tier = opts.tier ?? "deep";
   const route: DeepRoute =
     tier === "deep"
-      ? await selectDeepRoute(env)
+      ? await selectDeepRoute(env, { force: opts.forceProvider })
       : { model: fastModel(env), provider: "workers-ai", modelId: FAST_MODEL };
 
   try {

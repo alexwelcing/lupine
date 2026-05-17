@@ -48,3 +48,13 @@ export function getPrompt(agentClass: string): string {
 export function activeVariant(agentClass: string): string {
   return ACTIVE[agentClass] ?? "v1";
 }
+
+/**
+ * Resolve a SPECIFIC variant's prompt (not the active one). Used by the
+ * controlled A/B path (/ops/experiment-generate with promptVariant) so the
+ * oracle can test a candidate variant before it is made active. Falls back
+ * to the active prompt if the variant isn't bundled.
+ */
+export function getPromptVariant(agentClass: string, variant: string): string {
+  return (PROMPTS[`${agentClass}.${variant}`] ?? getPrompt(agentClass)).trim();
+}
