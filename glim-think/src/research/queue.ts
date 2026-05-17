@@ -341,26 +341,31 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
   }
 
   if (task.kind === "round") {
-    // Forward to the existing /run handler logic by calling our own worker.
-    // Keeps the heavy lifting in one place; the queue just decouples timing.
-    const url = "https://glim-think-v1.aw-ab5.workers.dev/run";
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorizes this internal subrequest past the Cloudflare Access
-        // gate (the queue has no Access JWT). See middleware/access.ts.
-        "X-Internal-Token": env.INTERNAL_TASK_TOKEN ?? "",
-      },
-      body: JSON.stringify({
+    // Phoenix proved the old design pathological: this task synchronously
+    // self-fetched POST /run and blocked the queue consumer for the entire
+    // ~40s research pipeline → redelivery-window blowout + contention under
+    // concurrency. Decompose into the SAME short, independent sub-tasks the
+    // FleetOrchestrator already uses (manifold_analysis + causal_screen) and
+    // return in milliseconds. Faithful to analysis_types; the heavy work
+    // runs as the already-optimised sub-tasks, not a blocking self-call.
+    const at = task.analysis_types ?? ["manifold", "causal"];
+    const stamp = new Date().toISOString();
+    if (at.includes("manifold")) {
+      await enqueueTask(env, {
+        kind: "manifold_analysis",
+        dedup_key: `round-manifold:${task.element}:${stamp}`,
+        enqueued_at: stamp,
         element: task.element,
-        analysis_types: task.analysis_types ?? ["manifold", "causal"],
-        exclude_styles: task.exclude_styles ?? [],
-        only_styles: task.only_styles ?? [],
-      }),
-    });
-    if (!res.ok) {
-      throw new Error(`/run returned ${res.status}: ${(await res.text()).slice(0, 300)}`);
+        force: true,
+      });
+    }
+    if (at.includes("causal")) {
+      await enqueueTask(env, {
+        kind: "causal_screen",
+        dedup_key: `round-causal:element:${stamp}`,
+        enqueued_at: stamp,
+        grouping: "element",
+      });
     }
     return;
   }
