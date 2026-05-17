@@ -1,9 +1,12 @@
 name: Glim Think Phoenix Evals
 
 on:
-  schedule:
-    # Run every hour
-    - cron: '0 * * * *'
+  # The hourly cron MIGRATED to a Cloud Run Job + Cloud Scheduler
+  # (.github/workflows/deploy-glim-eval.yml → job `glim-eval`, scheduler
+  # `glim-eval-hourly`). Disabled here so the eval pass does not double-run.
+  # This workflow stays as a manual escape hatch / debugging surface.
+  # schedule:
+  #   - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:

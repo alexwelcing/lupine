@@ -1,0 +1,7 @@
+node_modules
+.dev.vars
+.env
+*.log
+.git
+Dockerfile
+.dockerignore
