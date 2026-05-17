@@ -18,6 +18,15 @@ import {
 } from '@atlas/nist';
 import { getElementSpecBySymbol } from '@atlas/core';
 
+// Base for NIST catalog + demo trajectories. Defaults to the bundled
+// public/nist/ path (catalog JSON is small — fine to ship). Heavy demo
+// trajectories belong in object storage: set VITE_NIST_BASE_URL (e.g.
+// https://storage.googleapis.com/<bucket>/nist) at build/deploy and the
+// app loads them from there with zero code change.
+const NIST_BASE = String(
+  import.meta.env.VITE_NIST_BASE_URL ?? '/nist',
+).replace(/\/$/, '');
+
 // ─── Types ──────────────────────────────────────────────────────────────
 
 interface PotentialCardProps {
@@ -133,7 +142,7 @@ export function PotentialBrowser() {
   // Load catalog on first mount
   useEffect(() => {
     if (catalog) return;
-    loadNistCatalog('/nist/nist_catalog.json')
+    loadNistCatalog(`${NIST_BASE}/nist_catalog.json`)
       .then((data) => {
         setCatalog(data);
         setSummary(summarize(data));
@@ -179,7 +188,7 @@ export function PotentialBrowser() {
       return;
     }
 
-    const demoUrl = `/nist/${entry.demo_path}`;
+    const demoUrl = `${NIST_BASE}/${entry.demo_path}`;
 
     // Clean up any previous streaming session
     if ((window as any).__atlasStreamingCleanup) {
