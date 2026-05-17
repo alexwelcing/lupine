@@ -299,7 +299,14 @@ export async function evaluateHypothesis(
   // + summarizing the records the verdict will rest on. Same hypothesis.id
   // thread as formation/verdict so Phoenix sees one causal lifecycle.
   const summary = await traceHypothesisStage(
-    { hypothesisId, stage: "evidence", attributes: { element } },
+    {
+      hypothesisId,
+      stage: "evidence",
+      // element may be null (pooled analysis); the trace attribute map
+      // is string|number|boolean only — coerce. (This nullability is what
+      // collapsed generic inference → the EvaluationSummary cascade.)
+      attributes: { element: element ?? "pooled" },
+    },
     async (span) => {
       const records = await loadRecords(env, element);
       const s = summarize(hypothesisId, element, records);
