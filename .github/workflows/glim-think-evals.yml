@@ -12,7 +12,9 @@ jobs:
     # Hourly job must never wedge — fail fast so the next tick runs clean.
     timeout-minutes: 12
     permissions:
-      contents: 'read'
+      # write needed only when AUTO_REVERT=1 (regression-gate reverts a bad
+      # evolver:auto commit); harmless otherwise.
+      contents: 'write'
 
     steps:
       - name: Checkout Code
@@ -60,6 +62,20 @@ jobs:
           PHOENIX_COLLECTOR_ENDPOINT: ${{ secrets.PHOENIX_COLLECTOR_ENDPOINT }}
           PHOENIX_PROJECT_NAME: glim-think
         run: npx tsx verify-openinference.ts
+
+      # Rollout iteration 1: warn-only (continue-on-error) so the baseline
+      # can be observed before it blocks. Remove continue-on-error to make it
+      # a hard gate once trusted. AUTO_REVERT comes from a repo variable
+      # (default unset/off); when "1" a regression reverts the latest
+      # registry-only evolver:auto commit.
+      - name: Eval regression gate
+        continue-on-error: true
+        working-directory: glim-think/evals
+        env:
+          WORKER_URL: https://glim-think-v1.aw-ab5.workers.dev
+          EVAL_REGRESSION_THRESHOLD: '0.10'
+          AUTO_REVERT: ${{ vars.EVAL_AUTO_REVERT }}
+        run: npx tsx regression-gate.ts
 
       - name: Report eval status
         if: always()

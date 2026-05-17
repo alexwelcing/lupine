@@ -20,6 +20,7 @@ import { trace, SpanStatusCode } from "@opentelemetry/api";
 import type { DurableObjectState } from "@cloudflare/workers-types";
 import type { Env } from "../types";
 import { recordMiniMaxSpend, miniMaxModel, hasMiniMaxBudget, selectDeepRoute } from "./models";
+import { getPrompt } from "../registry/promptRegistry";
 import { PhoenixApi } from "../phoenix/api";
 import { runHeuristics } from "../evals/heuristics";
 import { insertEval, getAgentQualityTrend } from "../evals/store";
@@ -52,7 +53,7 @@ export abstract class GlimThinkAgent extends Think<Env> {
    * Default system prompt. Overridden by each specialist.
    */
   getSystemPrompt(): string {
-    return "You are a research agent in the GLIM autoresearch swarm. You analyze interatomic potentials, detect statistical anomalies, generate hypotheses, and propose discriminative experiments. Be precise, quantitative, and cite evidence.";
+    return getPrompt(this.constructor.name);
   }
 
   /**

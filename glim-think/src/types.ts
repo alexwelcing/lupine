@@ -183,6 +183,9 @@ export interface Env {
    * meta-llama/Llama-3.1-8B-Instruct. The legacy api-inference endpoint is
    * deprecated. */
   HF_MODEL?: string;
+  /** Hours a window:"experiment" ModelScorecard stays authoritative over
+   * production sampling in getModelQualityTrend. Default 168 (7 days). */
+  EXPERIMENT_FRESH_HOURS?: string;
   /** Cloudflare Access team subdomain (e.g. "lupine" for lupine.cloudflareaccess.com).
    * Used by middleware/access.ts to fetch JWKS and verify Cf-Access-Jwt-Assertion
    * on /admin/*, /ops/* writes, and other gated routes. */

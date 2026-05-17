@@ -93,39 +93,102 @@ export async function getAgentQualityTrend(
   return row ?? { avg_score: 0, count: 0, pass_rate: 0 };
 }
 
+type ScorecardData = {
+  window?: "experiment" | "per_run";
+  generated_at?: string;
+  scorecard?: Record<string, Record<string, { n: number; pass_rate: number }>>;
+};
+
+export type ScorecardProvenance = "experiment" | "per_run" | "none";
+
+const DEFAULT_EXPERIMENT_FRESH_HOURS = 168; // 7 days
+
 /**
- * Per-model quality from the latest ModelScorecard claim (written hourly by
- * the eval harness). Returns model → { score, n } where score is the mean
- * pass-rate across evaluators and n is the MIN evaluator sample size
- * (conservative — a model must be well-sampled on its weakest evaluator
- * before its score is allowed to steer routing). model|agent buckets and
- * the workers-ai floor are excluded.
+ * Pick the authoritative ModelScorecard from recent claims.
+ *
+ * A *controlled experiment* scorecard (window:"experiment", written by
+ * evals/ab-oracle.ts over a frozen golden dataset) outranks production
+ * sampling (window:"per_run") when it is fresh — this fixes the sampling
+ * bias where a provider the router never picks never gets sampled, so it
+ * never gets a score, so it never gets picked. Legacy rows without a
+ * window are treated as per_run.
+ */
+async function selectScorecard(
+  env: Env,
+): Promise<{ data: ScorecardData; provenance: ScorecardProvenance } | null> {
+  const { results } = await env.LEDGER.prepare(
+    `SELECT claim_data FROM claims WHERE claim_type = 'ModelScorecard'
+      ORDER BY created_at DESC LIMIT 10`,
+  ).all<{ claim_data: string }>();
+  const rows = (results ?? [])
+    .map((r) => {
+      try {
+        return JSON.parse(r.claim_data) as ScorecardData;
+      } catch {
+        return null;
+      }
+    })
+    .filter((d): d is ScorecardData => !!d && !!d.scorecard);
+  if (rows.length === 0) return null;
+
+  const freshH =
+    Number(env.EXPERIMENT_FRESH_HOURS) || DEFAULT_EXPERIMENT_FRESH_HOURS;
+  const cutoff = Date.now() - freshH * 3_600_000;
+  const freshExperiment = rows.find(
+    (d) =>
+      d.window === "experiment" &&
+      d.generated_at !== undefined &&
+      new Date(d.generated_at).getTime() >= cutoff,
+  );
+  if (freshExperiment) return { data: freshExperiment, provenance: "experiment" };
+  return { data: rows[0], provenance: "per_run" };
+}
+
+function aggregate(
+  data: ScorecardData,
+): Record<string, { score: number; n: number }> {
+  const out: Record<string, { score: number; n: number }> = {};
+  for (const [bucket, evs] of Object.entries(data.scorecard ?? {})) {
+    if (bucket.includes("|") || bucket === "workers-ai" || bucket === "unknown") continue;
+    const cells = Object.values(evs);
+    if (cells.length === 0) continue;
+    out[bucket] = {
+      score: cells.reduce((s, c) => s + (c.pass_rate ?? 0), 0) / cells.length,
+      n: Math.min(...cells.map((c) => c.n ?? 0)),
+    };
+  }
+  return out;
+}
+
+/**
+ * Per-model quality, provenance-ranked: a fresh controlled-experiment
+ * scorecard outranks production sampling. Returns model → { score, n }
+ * where score is the mean pass-rate across evaluators and n is the MIN
+ * evaluator sample size (conservative). model|agent buckets and the
+ * workers-ai floor are excluded. Return shape is unchanged (callers like
+ * selectDeepRoute consume the flat map) — use getModelQualityProvenance
+ * for the source.
  */
 export async function getModelQualityTrend(
   env: Env,
 ): Promise<Record<string, { score: number; n: number }>> {
   try {
-    const row = await env.LEDGER.prepare(
-      `SELECT claim_data FROM claims WHERE claim_type = 'ModelScorecard'
-        ORDER BY created_at DESC LIMIT 1`,
-    ).first<{ claim_data: string }>();
-    if (!row?.claim_data) return {};
-    const data = JSON.parse(row.claim_data) as {
-      scorecard?: Record<string, Record<string, { n: number; pass_rate: number }>>;
-    };
-    const out: Record<string, { score: number; n: number }> = {};
-    for (const [bucket, evs] of Object.entries(data.scorecard ?? {})) {
-      if (bucket.includes("|") || bucket === "workers-ai" || bucket === "unknown") continue;
-      const cells = Object.values(evs);
-      if (cells.length === 0) continue;
-      out[bucket] = {
-        score: cells.reduce((s, c) => s + (c.pass_rate ?? 0), 0) / cells.length,
-        n: Math.min(...cells.map((c) => c.n ?? 0)),
-      };
-    }
-    return out;
+    const sel = await selectScorecard(env);
+    return sel ? aggregate(sel.data) : {};
   } catch {
     return {};
+  }
+}
+
+/** Which scorecard the routing trend is currently sourced from. */
+export async function getModelQualityProvenance(
+  env: Env,
+): Promise<ScorecardProvenance> {
+  try {
+    const sel = await selectScorecard(env);
+    return sel ? sel.provenance : "none";
+  } catch {
+    return "none";
   }
 }
 

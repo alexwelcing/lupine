@@ -48,6 +48,13 @@ jobs:
         timeout-minutes: 6
         run: npm test
 
+      # Compile src/registry/prompts/*.md → prompts.gen.ts so Evolver-committed
+      # prompt variants land in the Worker bundle (wrangler can't read .md at
+      # runtime). The generated file is also committed, so this is idempotent.
+      - name: Regenerate prompt registry
+        working-directory: glim-think
+        run: node scripts/gen-prompts.mjs
+
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
