@@ -41,6 +41,8 @@ import { FleetOrchestrator as FleetOrchestratorDO } from "./fleet/orchestrator";
 import { DashboardAgent as DashboardAgentDO } from "./dashboard/stream";
 import { ExtensionManager as ExtensionManagerDO } from "./extensions/manager";
 import { generateResearchText } from "./agents/models";
+import type { DeepProvider } from "./agents/models";
+import { getPromptVariant } from "./registry/promptRegistry";
 import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
 import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
@@ -448,6 +450,69 @@ const baseHandler = {
         // Manual trigger — useful for testing without waiting for the cron.
         const result = await runSmoketest(env);
         return Response.json(result, { headers: JSON_CORS_HEADERS });
+      }
+
+      // Controlled generation for the self-improving eval loop. The A/B
+      // oracle and the Evolver call this to produce outputs pinned to a
+      // specific provider (axis=provider) or a specific prompt variant
+      // (axis=prompt) — keeping provider credentials server-side. Gated by
+      // the internal task token (constant-time compare).
+      if (url.pathname === "/ops/experiment-generate" && request.method === "POST") {
+        const provided = request.headers.get("X-Internal-Token") ?? "";
+        const expected = env.INTERNAL_TASK_TOKEN ?? "";
+        const ok =
+          expected.length > 0 &&
+          provided.length === expected.length &&
+          (() => {
+            let diff = 0;
+            for (let i = 0; i < expected.length; i++)
+              diff |= provided.charCodeAt(i) ^ expected.charCodeAt(i);
+            return diff === 0;
+          })();
+        if (!ok) {
+          return Response.json({ error: "unauthorized" }, { status: 401, headers: JSON_CORS_HEADERS });
+        }
+        const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+        const agentClass = typeof body.agentClass === "string" ? body.agentClass : "";
+        const prompt = typeof body.prompt === "string" ? body.prompt : "";
+        if (!agentClass || !prompt) {
+          return Response.json(
+            { error: "agentClass and prompt are required" },
+            { status: 400, headers: JSON_CORS_HEADERS },
+          );
+        }
+        const provider =
+          body.provider === "minimax" || body.provider === "zai" || body.provider === "openai"
+            ? (body.provider as DeepProvider)
+            : undefined;
+        const promptVariant =
+          typeof body.promptVariant === "string" ? body.promptVariant : undefined;
+        const system =
+          promptVariant !== undefined
+            ? getPromptVariant(agentClass, promptVariant)
+            : typeof body.system === "string"
+              ? body.system
+              : undefined;
+        try {
+          // generateResearchText already emits an ai.generateText span
+          // attributed by functionId=agentClass (what the scorecard reads).
+          // experiment.provider is returned in the body for the oracle.
+          const out = await generateResearchText(env, {
+            prompt,
+            system,
+            agentClass,
+            forceProvider: provider,
+          });
+          return Response.json(
+            { ...out, variant: promptVariant ?? "active", dataset: body.dataset ?? null },
+            { headers: JSON_CORS_HEADERS },
+          );
+        } catch (e) {
+          return Response.json(
+            { error: e instanceof Error ? e.message : String(e) },
+            { status: 502, headers: JSON_CORS_HEADERS },
+          );
+        }
       }
 
       // Orchestrator: trigger a research analysis directly via D1
