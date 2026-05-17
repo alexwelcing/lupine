@@ -6,7 +6,7 @@
  */
 
 import { useCallback, useRef, useState, useEffect } from 'react';
-import { parseFile, detectFileType } from '@atlas/parsers';
+import { parseFile, detectFileType, isPotentialFile, guessPairStyle } from '@atlas/parsers';
 import { useStore } from './store';
 import { Gallery } from './Gallery';
 import {
@@ -46,6 +46,7 @@ export function FileDropZone() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const { file, loading, loadProgress, error, setFile, setLoading, setError } = useStore();
+  const setShowPotentialBrowser = useStore((s) => s.setShowPotentialBrowser);
 
   useEffect(() => {
     const handler = (e: CustomEvent) => {
@@ -69,6 +70,21 @@ export function FileDropZone() {
 
     setLoading(true, 0);
     setError(null);
+
+    // Auto-detect a dropped NIST IPR potential parameter file. These aren't
+    // trajectories — parsing them as a dump would fail with a cryptic error.
+    // Route the user to the Potential Browser instead.
+    if (sorted.length === 1 && isPotentialFile(sorted[0].name)) {
+      const style = guessPairStyle(sorted[0].name);
+      setLoading(false);
+      setError(
+        `"${sorted[0].name}" looks like a ${style} interatomic potential, ` +
+          `not a trajectory. Opening the Potential Browser — pick a potential ` +
+          `there to load its demo trajectory.`,
+      );
+      setShowPotentialBrowser(true);
+      return;
+    }
 
     try {
       // Single-dump-file fast path: probe streaming. Multi-file drops

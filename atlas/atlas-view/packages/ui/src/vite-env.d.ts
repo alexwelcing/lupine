@@ -8,6 +8,9 @@ interface ImportMetaEnv {
   readonly MODE: string;
   readonly BASE_URL: string;
   readonly SSR: boolean;
+  /** Base URL for NIST catalog + demo trajectories. Default '/nist'
+   *  (bundled). Point at object storage to offload heavy demos. */
+  readonly VITE_NIST_BASE_URL?: string;
   readonly [key: string]: string | boolean | undefined;
 }
 

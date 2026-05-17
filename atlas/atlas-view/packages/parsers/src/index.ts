@@ -407,6 +407,12 @@ export async function* parseDumpFileStreamingFromFile(
 /** Re-export so callers can decide streaming vs. WASM up-front without
  *  digging into the implementation module. */
 export { canStreamDump } from './dumpStreamParser';
+export {
+  detectPotentialFormat,
+  isPotentialFile,
+  guessPairStyle,
+  type PotentialFormat,
+} from './potentialDetector';
 
 /** Auto-parse a file based on detected type */
 export async function parseFile(file: File): Promise<{
