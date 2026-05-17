@@ -1,0 +1,81 @@
+name: Glim Think Evolver (self-improving eval loop)
+
+# The Evolver is dangerous-by-design: it diagnoses eval failures, synthesizes
+# a minimal prompt patch, A/B-tests it, and AUTO-MERGES the winner.
+#
+# It is DISARMED by default. `EVOLVER_ENABLED` is sourced from a repository
+# variable (Settings → Variables → Actions → `EVOLVER_ENABLED`). Until that
+# variable is set to a truthy value the job runs in plan-only mode (no
+# writes, no commits, no merges) even on the schedule. Flip the variable to
+# arm it ONLY once the safety rails are proven in plan-only runs.
+
+on:
+  workflow_dispatch:
+    inputs:
+      agent:
+        description: "Target agent class (blank = all in active.json)"
+        required: false
+        default: ""
+      dataset:
+        description: "Eval dataset name"
+        required: false
+        default: "glim-research-qa"
+      limit:
+        description: "A/B sample limit"
+        required: false
+        default: "30"
+  # Optional cadence. Harmless while disarmed (plan-only). Comment out to
+  # disable scheduled plan-only runs entirely.
+  schedule:
+    - cron: "0 6 * * 1" # weekly, Monday 06:00 UTC
+
+jobs:
+  evolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install eval dependencies
+        working-directory: glim-think/evals
+        run: npm install --prefer-offline --no-audit
+
+      - name: Self-test path-allowlist guard
+        working-directory: glim-think
+        run: npx tsx evals/evolver.ts --self-test
+
+      - name: Run Evolver
+        working-directory: glim-think
+        env:
+          # KILL SWITCH — default OFF. Sourced from the repo variable; an
+          # unset variable yields "" which the Evolver treats as disarmed
+          # (plan-only). Set the repo variable to `true` to arm.
+          EVOLVER_ENABLED: ${{ vars.EVOLVER_ENABLED }}
+          EVOLVER_MIN_CLUSTER: ${{ vars.EVOLVER_MIN_CLUSTER }}
+          PHOENIX_API_KEY: ${{ secrets.PHOENIX_API_KEY }}
+          PHOENIX_COLLECTOR_ENDPOINT: ${{ secrets.PHOENIX_COLLECTOR_ENDPOINT }}
+          PHOENIX_PROJECT_NAME: glim-think
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          WORKER_URL: https://glim-think-v1.aw-ab5.workers.dev
+          # gh CLI auth for branch push + PR create + auto-merge.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name  "glim-evolver[bot]"
+          git config user.email "glim-evolver@users.noreply.github.com"
+          npx tsx evals/evolver.ts \
+            --agent "${{ github.event.inputs.agent }}" \
+            --dataset "${{ github.event.inputs.dataset || 'glim-research-qa' }}" \
+            --limit "${{ github.event.inputs.limit || '30' }}"
