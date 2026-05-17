@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "eval:run": "tsx run-evals.ts"
+    "eval:run": "tsx run-evals.ts",
+    "eval:ab": "tsx ab-oracle.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.45",
