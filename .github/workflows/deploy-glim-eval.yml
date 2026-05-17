@@ -1,0 +1,117 @@
+name: Deploy Glim Eval Cloud Run Job
+
+# Why this exists: the hourly Phoenix eval pass used to run on a GitHub
+# Actions cron (6h job ceiling, CI flakiness, no heavier eval budget).
+# This migrates it to a Cloud Run Job triggered by Cloud Scheduler.
+# Everything here is committed IaC — a deleted job/scheduler/secret is one
+# push away from restored, not a hand-run gcloud artifact. Mirrors the
+# deploy-otlp-relay.yml pattern (Workload Identity, reproducible).
+#
+# Reconciliation: .github/workflows/glim-think-evals.yml has its `schedule:`
+# disabled in the same PR so the eval pass does not double-run. That
+# workflow stays as a manual (workflow_dispatch) escape hatch.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'glim-think/evals/**'
+      - '.github/workflows/deploy-glim-eval.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Workload Identity Federation
+
+    env:
+      JOB_NAME: glim-eval
+      SCHEDULER_NAME: glim-eval-hourly
+      WORKER_URL: https://glim-think-v1.aw-ab5.workers.dev
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Secrets Pre-flight
+        run: |
+          for s in GCP_PROJECT_ID GCP_REGION GCP_WORKLOAD_IDENTITY_PROVIDER GCP_SERVICE_ACCOUNT PHOENIX_API_KEY PHOENIX_COLLECTOR_ENDPOINT INTERNAL_TASK_TOKEN OPENAI_API_KEY; do :; done
+          miss=0
+          [ -z "${{ secrets.GCP_PROJECT_ID }}" ] && { echo "::error::MISSING SECRET GCP_PROJECT_ID"; miss=1; }
+          [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ] && { echo "::error::MISSING SECRET GCP_WORKLOAD_IDENTITY_PROVIDER"; miss=1; }
+          [ -z "${{ secrets.PHOENIX_API_KEY }}" ] && { echo "::error::MISSING SECRET PHOENIX_API_KEY"; miss=1; }
+          [ -z "${{ secrets.INTERNAL_TASK_TOKEN }}" ] && { echo "::error::MISSING SECRET INTERNAL_TASK_TOKEN"; miss=1; }
+          [ -z "${{ secrets.OPENAI_API_KEY }}" ] && { echo "::error::MISSING SECRET OPENAI_API_KEY"; miss=1; }
+          exit $miss
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Set up gcloud
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: Upsert Secret Manager secrets (from repo secrets — single source)
+        env:
+          PHOENIX_API_KEY: ${{ secrets.PHOENIX_API_KEY }}
+          PHOENIX_COLLECTOR_ENDPOINT: ${{ secrets.PHOENIX_COLLECTOR_ENDPOINT }}
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          SA="$(gcloud projects describe "$PROJECT" --format='value(projectNumber)')-compute@developer.gserviceaccount.com"
+          for name in PHOENIX_API_KEY PHOENIX_COLLECTOR_ENDPOINT INTERNAL_TASK_TOKEN OPENAI_API_KEY; do
+            val="${!name}"
+            if ! gcloud secrets describe "$name" --project="$PROJECT" >/dev/null 2>&1; then
+              gcloud secrets create "$name" --project="$PROJECT" --replication-policy=automatic
+            fi
+            printf '%s' "$val" | gcloud secrets versions add "$name" --project="$PROJECT" --data-file=-
+            gcloud secrets add-iam-policy-binding "$name" --project="$PROJECT" \
+              --member="serviceAccount:${SA}" --role=roles/secretmanager.secretAccessor >/dev/null
+          done
+
+      - name: Deploy Cloud Run Job
+        env:
+          PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+          REGION: ${{ secrets.GCP_REGION }}
+        run: |
+          set -euo pipefail
+          gcloud run jobs deploy "$JOB_NAME" \
+            --source glim-think/evals \
+            --project="$PROJECT" --region="$REGION" \
+            --tasks=1 --max-retries=1 --task-timeout=900 --memory=1Gi \
+            --set-secrets=PHOENIX_API_KEY=PHOENIX_API_KEY:latest,PHOENIX_COLLECTOR_ENDPOINT=PHOENIX_COLLECTOR_ENDPOINT:latest,INTERNAL_TASK_TOKEN=INTERNAL_TASK_TOKEN:latest,OPENAI_API_KEY=OPENAI_API_KEY:latest \
+            --set-env-vars=PHOENIX_PROJECT_NAME=glim-think,WORKER_URL=${WORKER_URL},EVAL_REGRESSION_THRESHOLD=0.10
+
+      - name: Upsert hourly Cloud Scheduler trigger
+        env:
+          PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+          REGION: ${{ secrets.GCP_REGION }}
+          SA: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+        run: |
+          set -euo pipefail
+          gcloud run jobs add-iam-policy-binding "$JOB_NAME" \
+            --project="$PROJECT" --region="$REGION" \
+            --member="serviceAccount:${SA}" --role=roles/run.invoker >/dev/null
+          URI="https://run.googleapis.com/v2/projects/${PROJECT}/locations/${REGION}/jobs/${JOB_NAME}:run"
+          if gcloud scheduler jobs describe "$SCHEDULER_NAME" --project="$PROJECT" --location="$REGION" >/dev/null 2>&1; then
+            gcloud scheduler jobs update http "$SCHEDULER_NAME" --project="$PROJECT" --location="$REGION" \
+              --schedule="0 * * * *" --uri="$URI" --http-method=POST --oauth-service-account-email="$SA"
+          else
+            gcloud scheduler jobs create http "$SCHEDULER_NAME" --project="$PROJECT" --location="$REGION" \
+              --schedule="0 * * * *" --uri="$URI" --http-method=POST --oauth-service-account-email="$SA"
+          fi
+
+      - name: Smoke (execute job once, async)
+        env:
+          PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+          REGION: ${{ secrets.GCP_REGION }}
+        run: |
+          gcloud run jobs execute "$JOB_NAME" --project="$PROJECT" --region="$REGION" --async
+          echo "Execution started; check Cloud Run Job logs for the eval pass."
