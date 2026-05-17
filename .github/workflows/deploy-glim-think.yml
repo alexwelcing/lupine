@@ -7,6 +7,11 @@ on:
     paths:
       - 'glim-think/**'
       - '.github/workflows/deploy-glim-think.yml'
+  # Manual trigger — lets a branch be validated on REAL CI (the gating
+  # `npm test`/typecheck) before it lands on main. Local vitest has shown
+  # false-green here; CI fresh-install is authoritative. Deploy still only
+  # runs if tests pass, so dispatching a fix branch is safe.
+  workflow_dispatch:
 
 jobs:
   deploy:
