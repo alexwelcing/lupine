@@ -132,11 +132,20 @@ async function fetchLLMSpans(limit = 500): Promise<LLMSpan[]> {
     const spanId = s.span_id || s.id;
     if (!input || !output || !spanId) continue;
     const { model } = extractLLMMeta(attrs);
-    // Provider from the gateway.<provider> span name; agent from the
-    // router-stamped gateway.agent_class. These let us attribute every
-    // eval score to the model/provider/agent that produced it.
-    const provider = /^gateway\.([a-z0-9-]+)/i.exec(s.name)?.[1] ?? "unknown";
-    const agent = String(attrs["gateway.agent_class"] ?? attrs["agent.class"] ?? "unknown");
+    // Attribution. The live path is the AI-SDK (`ai.generateText`), which
+    // tags the task via `ai.telemetry.functionId` (e.g. agent.synthesize,
+    // research.comprehend-paper). The legacy gateway path uses
+    // gateway.agent_class. Prefer whichever is present so the model×agent
+    // scorecard populates on the path actually in use.
+    const provider =
+      /^gateway\.([a-z0-9-]+)/i.exec(s.name)?.[1] ??
+      String(attrs["ai.model.provider"] ?? "ai-sdk");
+    const agent = String(
+      attrs["gateway.agent_class"] ??
+      attrs["agent.class"] ??
+      attrs["ai.telemetry.functionId"] ??
+      "unknown",
+    );
     results.push({
       spanId, input, output,
       model: model ?? "unknown",
