@@ -27,6 +27,11 @@ import type { Env } from "../types";
 import { promptForEvaluationClaim } from "../agents/image";
 import { narrationTextForClaim } from "../agents/tts";
 import { enqueueTask } from "./queue";
+import {
+  traceHypothesisStage,
+  annotateHypothesisVerdict,
+  hypothesisLatencyMs,
+} from "../telemetry/hypothesisTrace";
 
 interface EvalRow {
   potential_id: string;
@@ -278,18 +283,31 @@ export async function evaluateHypothesis(
   env: Env,
   hypothesisId: string,
 ): Promise<EvaluationSummary & { narrative?: string; narrative_error?: string }> {
+  // confidence + created_at are needed by the verdict-stage trace
+  // (Δconfidence = information-gain proxy; created_at → resolution latency).
   const hyp = await env.LEDGER
-    .prepare(`SELECT id, title FROM hypotheses WHERE id = ?1`)
+    .prepare(`SELECT id, title, confidence, created_at FROM hypotheses WHERE id = ?1`)
     .bind(hypothesisId)
-    .first<{ id: string; title: string }>();
+    .first<{ id: string; title: string; confidence: number | null; created_at: string }>();
 
   if (!hyp) {
     throw new Error(`Hypothesis ${hypothesisId} not found`);
   }
 
   const element = inferElement(hyp.title);
-  const records = await loadRecords(env, element);
-  const summary = summarize(hypothesisId, element, records);
+  // Layer 1: the evidence stage of the hypothesis lifecycle — gathering
+  // + summarizing the records the verdict will rest on. Same hypothesis.id
+  // thread as formation/verdict so Phoenix sees one causal lifecycle.
+  const summary = await traceHypothesisStage(
+    { hypothesisId, stage: "evidence", attributes: { element } },
+    async (span) => {
+      const records = await loadRecords(env, element);
+      const s = summarize(hypothesisId, element, records);
+      span.setAttribute("hypothesis.evidence_n", records.length);
+      span.setAttribute("hypothesis.evidence_verdict", String(s.verdict));
+      return s;
+    },
+  );
   const confidence = confidenceFromVerdict(summary);
   const status = nextStatusFromVerdict(summary);
   const now = new Date().toISOString();
@@ -312,15 +330,39 @@ export async function evaluateHypothesis(
     }
   }
 
-  // 2. Update hypothesis confidence + status
-  await env.LEDGER
-    .prepare(
-      `UPDATE hypotheses
+  // 2. Update hypothesis confidence + status — Layer 1: close the
+  //    hypothesis lifecycle trace at the verdict. annotateHypothesisVerdict
+  //    stamps exactly the attrs the Layer-2 throughput evaluators read
+  //    (resolution latency, refutation, info-gain via confidence delta).
+  await traceHypothesisStage(
+    { hypothesisId, stage: "verdict", status, confidence },
+    async (span) => {
+      await env.LEDGER
+        .prepare(
+          `UPDATE hypotheses
          SET status = ?1, confidence = ?2, updated_at = ?3
        WHERE id = ?4`,
-    )
-    .bind(status, confidence, now, hypothesisId)
-    .run();
+        )
+        .bind(status, confidence, now, hypothesisId)
+        .run();
+      annotateHypothesisVerdict(span, {
+        hypothesisId,
+        resolved: status === "confirmed" || status === "refuted",
+        outcome:
+          status === "confirmed"
+            ? "confirmed"
+            : status === "refuted"
+              ? "refuted"
+              : "inconclusive",
+        confidenceDelta:
+          typeof hyp.confidence === "number"
+            ? confidence - hyp.confidence
+            : undefined,
+        resolutionLatencyMs: hypothesisLatencyMs(hyp.created_at),
+        discriminativePropertyTested: null,
+      });
+    },
+  );
 
   // 3. Insert a Claim row capturing the evaluation snapshot + narrative
   const claimId = `auto_eval_${hypothesisId.slice(0, 24)}_${Date.now()}`;

@@ -29,6 +29,7 @@
 import { instrument } from "@microlabs/otel-cf-workers";
 import { routeAgentRequest } from "agents";
 import { traceEnv } from "./telemetry/storage";
+import { traceHypothesisStage } from "./telemetry/hypothesisTrace";
 import { withPipelineSpan } from "./telemetry/pipeline";
 import { Orchestrator as OrchestratorDO } from "./agents/orchestrator";
 import { phoenixConfig } from "./telemetry/phoenix";
@@ -1240,10 +1241,23 @@ ${narrative}
           const now = new Date().toISOString();
 
           try {
-            await env.LEDGER.prepare(
-              `INSERT INTO hypotheses (id, title, status, confidence, evidence_ids, agent_id, created_at, updated_at)
+            // Layer 1: open the hypothesis lifecycle trace at formation.
+            // hypothesis.id is the through-line Phoenix groups the whole
+            // lifecycle on (formation→…→verdict).
+            await traceHypothesisStage(
+              {
+                hypothesisId: id,
+                stage: "formation",
+                status: status as HypothesisStatus,
+                confidence,
+                attributes: { title: String(title).slice(0, 200) },
+              },
+              () =>
+                env.LEDGER.prepare(
+                  `INSERT INTO hypotheses (id, title, status, confidence, evidence_ids, agent_id, created_at, updated_at)
                VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)`
-            ).bind(id, title, status, confidence, evidenceIds, agentId, now, now).run();
+                ).bind(id, title, status, confidence, evidenceIds, agentId, now, now).run(),
+            );
           } catch (e) {
             const msg = String(e);
             const isConflict = msg.includes("UNIQUE") || msg.includes("PRIMARY KEY");

@@ -1,0 +1,21 @@
+{
+  "version": "v1",
+  "weights": {
+    "element_valid": 0.2,
+    "structure_matches_element": 0.2,
+    "pair_style_nonempty": 0.15,
+    "discriminative_property_nonempty": 0.15,
+    "discriminative_property_specific": 0.15,
+    "lammps_type_known": 0.15
+  },
+  "discriminative_property_min_length": 5,
+  "discriminative_property_keywords": [
+    "energy",
+    "constant",
+    "fault",
+    "surface",
+    "vacancy",
+    "modulus",
+    "stacking"
+  ]
+}

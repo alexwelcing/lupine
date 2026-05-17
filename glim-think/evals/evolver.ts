@@ -454,10 +454,57 @@ interface Amendment {
   rationale: string;
 }
 
+/**
+ * Close the fitness loop: read the latest ScienceThroughput claim (the
+ * hypothesis-lifecycle objective function, Phase B) via the worker's public
+ * /feed/recent-claims, and return the WEAKEST scientific-throughput
+ * dimension. The Evolver then biases its synthesized patch toward
+ * improving that dimension — so actuation optimizes resolved-science
+ * throughput, not generic pass-rate. Returns null if unavailable (the
+ * Evolver then behaves exactly as before — purely additive).
+ */
+async function fetchWeakestThroughput(): Promise<
+  { dim: string; score: number; fitness: number } | null
+> {
+  const workerUrl = (process.env.WORKER_URL || DEFAULT_WORKER_URL).replace(/\/$/, "");
+  try {
+    const res = await fetch(`${workerUrl}/feed/recent-claims`);
+    if (!res.ok) return null;
+    const body = (await res.json()) as
+      | Array<{ claim_type?: string; claim_data?: string; created_at?: string }>
+      | { claims?: Array<{ claim_type?: string; claim_data?: string; created_at?: string }> };
+    const rows = Array.isArray(body) ? body : body.claims ?? [];
+    const latest = rows
+      .filter((r) => r.claim_type === "ScienceThroughput" && r.claim_data)
+      .sort((a, b) => String(b.created_at ?? "").localeCompare(String(a.created_at ?? "")))[0];
+    if (!latest?.claim_data) return null;
+    const d = JSON.parse(latest.claim_data) as {
+      scorecard?: Record<string, { mean_score?: number; pass_rate?: number }>;
+    };
+    const entries = Object.entries(d.scorecard ?? {});
+    if (entries.length === 0) return null;
+    let weakest = entries[0][0];
+    let weakestScore = Infinity;
+    let sum = 0;
+    for (const [k, v] of entries) {
+      const s = v.mean_score ?? v.pass_rate ?? 0;
+      sum += s;
+      if (s < weakestScore) {
+        weakestScore = s;
+        weakest = k;
+      }
+    }
+    return { dim: weakest, score: weakestScore, fitness: sum / entries.length };
+  } catch {
+    return null;
+  }
+}
+
 async function synthesizeAmendment(
   agent: string,
   currentPrompt: string,
   cluster: Cluster,
+  throughput?: { dim: string; score: number; fitness: number } | null,
 ): Promise<Amendment> {
   const workerUrl = (
     process.env.WORKER_URL || DEFAULT_WORKER_URL
@@ -486,6 +533,17 @@ async function synthesizeAmendment(
     `Evaluator explanations:`,
     exemplars,
     ``,
+    ...(throughput
+      ? [
+          `The swarm's WEAKEST scientific-throughput dimension is ` +
+            `"${throughput.dim}" (score ${throughput.score.toFixed(2)}, ` +
+            `overall fitness ${throughput.fitness.toFixed(2)}). The amendment ` +
+            `should, where the failure mode allows, also push this agent to ` +
+            `improve "${throughput.dim}" — the loop optimizes resolved-science ` +
+            `throughput, not just eval pass-rate.`,
+          ``,
+        ]
+      : []),
     `CURRENT SYSTEM PROMPT:`,
     `"""`,
     currentPrompt.slice(0, 6000),
@@ -728,7 +786,13 @@ async function runForAgent(
     )} (Unit 1 registry may be unmerged) — cannot synthesize`;
     return plan;
   }
-  plan.amendment = await synthesizeAmendment(agent, currentPrompt, top);
+  // Close the loop: target the synthesized patch at the weakest
+  // scientific-throughput dimension (Phase B fitness signal).
+  const weakest = await fetchWeakestThroughput();
+  if (weakest) {
+    plan.reason = `targeting weakest throughput dim "${weakest.dim}" (${weakest.score.toFixed(2)}); `;
+  }
+  plan.amendment = await synthesizeAmendment(agent, currentPrompt, top, weakest);
   const candidateText = buildCandidate(
     currentPrompt,
     plan.amendment.amendment,
