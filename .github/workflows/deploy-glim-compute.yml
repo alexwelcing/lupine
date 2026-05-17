@@ -61,19 +61,13 @@ jobs:
           cp atlas/nist_ipr/index/master_index.json atlas/compute/_vendor/master_index.json
           ls -la atlas/compute/_vendor
 
-      - name: Upsert Secret Manager (INTERNAL_TASK_TOKEN — single source)
-        env:
-          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
-          PROJECT: ${{ secrets.GCP_PROJECT_ID }}
-        run: |
-          set -euo pipefail
-          SA="$(gcloud projects describe "$PROJECT" --format='value(projectNumber)')-compute@developer.gserviceaccount.com"
-          if ! gcloud secrets describe INTERNAL_TASK_TOKEN --project="$PROJECT" >/dev/null 2>&1; then
-            gcloud secrets create INTERNAL_TASK_TOKEN --project="$PROJECT" --replication-policy=automatic
-          fi
-          printf '%s' "$INTERNAL_TASK_TOKEN" | gcloud secrets versions add INTERNAL_TASK_TOKEN --project="$PROJECT" --data-file=-
-          gcloud secrets add-iam-policy-binding INTERNAL_TASK_TOKEN --project="$PROJECT" \
-            --member="serviceAccount:${SA}" --role=roles/secretmanager.secretAccessor >/dev/null
+      # INTERNAL_TASK_TOKEN is shared infra: created + version-managed by
+      # deploy-glim-eval.yml's Secret Manager upsert, and the default
+      # compute runtime SA (same SA glim-compute runs as) is already bound
+      # secretmanager.secretAccessor on it. So we do NOT re-create/version
+      # it here (the WIF deploy SA intentionally lacks secrets.create) —
+      # the job below just references the existing secret. Single source of
+      # truth = deploy-glim-eval; this job is a consumer.
 
       - name: Deploy Cloud Run Job (LAMMPS — heavier than the eval job)
         env:
