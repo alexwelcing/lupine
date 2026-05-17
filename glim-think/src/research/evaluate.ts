@@ -41,7 +41,11 @@ interface EvalRow {
   predicted: number;
 }
 
-const ELEMENT_PATTERN = /\b(Al|Cu|Ni|Ag|Au|Pt|Pd|Pb|Fe|Cr|Mo|W|V|Nb|Ta)\b/;
+// Mg added for the MIIT #18 ultra-stiff Mg-matrix-composite pilot — its
+// absence made the Mg hypothesis evaluate POOLED (all elements) instead of
+// HCP-Mg-specific, mis-attributing the verdict. (HCP coverage; the
+// elastic-recipe returns the cubic subset C11/C12/C44.)
+const ELEMENT_PATTERN = /\b(Al|Cu|Ni|Ag|Au|Pt|Pd|Pb|Fe|Cr|Mo|W|V|Nb|Ta|Mg)\b/;
 
 function inferElement(title: string): string | null {
   const match = title.match(ELEMENT_PATTERN);
