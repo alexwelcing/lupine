@@ -21,6 +21,7 @@ config({ path: "../.env" });
 import { createClassificationEvaluator } from "@arizeai/phoenix-evals";
 import { openai } from "@ai-sdk/openai";
 import { COMBO_EVALUATORS } from "./combo-evaluators.js";
+import { THROUGHPUT_EVALUATORS } from "./throughput-evaluators.js";
 import { fetchSpans } from "./spans.js";
 import { classifySpan, extractIO, extractLLMMeta } from "./openinference.js";
 import { fetchProjectSpans, logAnnotations, type SpanAnnotation } from "./phoenixRest.js";
@@ -352,6 +353,106 @@ async function runComboEvaluators() {
   return { scored: comboAnnotations.length, results: comboAnnotations };
 }
 
+// ─── Phase 3: Scientific-throughput evaluators (the locked keystone) ───
+// Scores the HYPOTHESIS LIFECYCLE (hypothesis.* spans), not per-output
+// rigor — so the scorecard's fitness function becomes resolved-science
+// throughput. Emits a ScienceThroughput claim the loop can steer on.
+async function runThroughputEvaluators() {
+  console.log("[evals] Phase 3: Running scientific-throughput evaluators...");
+
+  let allSpans: Awaited<ReturnType<typeof fetchSpans>>;
+  try {
+    allSpans = await fetchSpans(500);
+  } catch (e) {
+    console.warn(`[evals] Phase 3 span fetch failed (skipping): ${(e as Error).message}`);
+    return { scored: 0 };
+  }
+
+  const lifecycleSpans = allSpans.filter((s) => s.name.startsWith("hypothesis."));
+  console.log(`[evals] Found ${lifecycleSpans.length} hypothesis-lifecycle spans`);
+
+  const annotations: SpanAnnotation[] = [];
+  const agg: Record<string, { n: number; sum: number; pass: number }> = {};
+
+  for (const span of lifecycleSpans) {
+    for (const evaluator of THROUGHPUT_EVALUATORS) {
+      try {
+        const result = await evaluator(span);
+        if (!result) continue;
+        annotations.push({
+          span_id: span.id,
+          name: result.name,
+          label: result.label,
+          score: result.score,
+          explanation: result.explanation,
+          annotator_kind: "CODE",
+          metadata: {
+            code_score: result.codeScore,
+            llm_score: result.llmScore,
+            checks: result.checks,
+            evaluator: evaluator.name,
+          },
+        });
+        const a = (agg[result.name] ??= { n: 0, sum: 0, pass: 0 });
+        a.n++;
+        a.sum += result.score;
+        // "pass" = a healthy throughput signal (score >= 0.6), mirroring
+        // the model scorecard's pass-rate semantics.
+        if (result.score >= 0.6) a.pass++;
+      } catch (e) {
+        console.warn(`[evals] Throughput evaluator ${evaluator.name} failed for span ${span.id}: ${(e as Error).message}`);
+      }
+    }
+  }
+
+  if (annotations.length === 0) {
+    console.log("[evals] Phase 3: no hypothesis-lifecycle spans to score this run.");
+    return { scored: 0 };
+  }
+
+  await logAnnotations(annotations);
+  const scorecard: Record<string, { n: number; pass_rate: number; mean_score: number }> = {};
+  console.log("[evals] ── Scientific-throughput scorecard ──");
+  for (const [name, s] of Object.entries(agg)) {
+    scorecard[name] = {
+      n: s.n,
+      pass_rate: Math.round((s.pass / s.n) * 1000) / 1000,
+      mean_score: Math.round((s.sum / s.n) * 1000) / 1000,
+    };
+    console.log(`  ${name.padEnd(22)} n${s.n}  mean ${(s.sum / s.n).toFixed(2)}  pass ${((s.pass / s.n) * 100).toFixed(0)}%`);
+  }
+
+  const worker = process.env.WORKER_URL || "https://glim-think-v1.aw-ab5.workers.dev";
+  const token = process.env.INTERNAL_TASK_TOKEN?.trim();
+  if (!token) {
+    console.log("[evals] INTERNAL_TASK_TOKEN unset — ScienceThroughput logged only (not persisted).");
+    return { scored: annotations.length };
+  }
+  const now = new Date().toISOString();
+  const claim = {
+    claim_id: `science_throughput_${Date.now()}`,
+    agent_id: "agent_eval_harness",
+    claim_type: "ScienceThroughput",
+    claim_data: JSON.stringify({ window: "per_run", generated_at: now, scorecard }),
+    evidence_ids: "[]",
+    confidence: 0.9,
+    status: "proposed",
+    description: `Scientific-throughput scorecard — ${lifecycleSpans.length} hypothesis-lifecycle spans × ${Object.keys(scorecard).length} evaluators (falsifiability/discriminative_power/resolution_latency/refutation_health/information_gain).`,
+    created_at: now,
+  };
+  try {
+    const r = await fetch(`${worker}/claims/ingest`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Internal-Token": token },
+      body: JSON.stringify({ claims: [claim] }),
+    });
+    console.log(`[evals] ScienceThroughput persisted: HTTP ${r.status}`);
+  } catch (e) {
+    console.warn(`[evals] ScienceThroughput persist failed: ${String(e)}`);
+  }
+  return { scored: annotations.length };
+}
+
 // ─── Main ───
 
 async function main() {
@@ -375,7 +476,13 @@ async function main() {
     await emitModelScorecard();
   }
 
-  console.log(`[evals] All evaluations complete. Combo: ${combo.scored}, Generic LLM: ${spans.length}`);
+  // Phase 3: Scientific-throughput (hypothesis lifecycle — the keystone)
+  const throughput = await runThroughputEvaluators();
+
+  console.log(
+    `[evals] All evaluations complete. Combo: ${combo.scored}, ` +
+      `Generic LLM: ${spans.length}, Throughput: ${throughput.scored}`,
+  );
 }
 
 main().catch((e) => {
