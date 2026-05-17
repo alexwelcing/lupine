@@ -41,8 +41,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import random
 import sys
 import tempfile
+import time
 import traceback
 import urllib.error
 import urllib.request
@@ -85,24 +87,57 @@ def _token() -> str:
 
 # ─── HTTP (stdlib only) ───────────────────────────────────────────────────
 
+# Cloudflare bot-management on the bare *.workers.dev edge intermittently
+# 403s / resets datacenter-IP requests (the documented session-wide
+# pattern). There is no zone to attach a WAF skip rule to, so the client
+# is the resilient layer: a realistic browser UA + bounded retry with
+# exponential backoff + jitter. Transient resets (the "HTTP 0" class) and
+# momentary bot-challenges clear on retry; deterministic 4xx do not, so
+# we don't waste attempts on them.
+_RETRYABLE_STATUS = {403, 408, 425, 429, 500, 502, 503, 504}
+_MAX_ATTEMPTS = 4
+_BACKOFF_BASE_S = 0.8
+# A real browser UA passes Cloudflare bot heuristics; the X-Internal-Token
+# header remains the actual auth/identity for the worker.
+_BROWSER_UA = (
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+)
+
+
 def _request(method: str, url: str, token: str, body: Optional[dict] = None) -> Any:
-    """Issue an authenticated JSON request; return parsed JSON (or None)."""
+    """Authenticated JSON request with WAF-resilient retry; parsed JSON or None."""
     data = None
-    # Browser-like UA: Cloudflare bot-management 403s python-urllib's
-    # default UA from non-residential IPs (the documented session-wide
-    # WAF pattern). The deployed GCP job + this share the same client.
     headers = {
         "X-Internal-Token": token,
         "Accept": "application/json",
-        "User-Agent": "Mozilla/5.0 (compatible; glim-compute/1.0)",
+        "User-Agent": _BROWSER_UA,
     }
     if body is not None:
         data = json.dumps(body).encode("utf-8")
         headers["Content-Type"] = "application/json"
-    req = urllib.request.Request(url, data=data, headers=headers, method=method)
-    with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as resp:  # noqa: S310
-        raw = resp.read().decode("utf-8")
-    return json.loads(raw) if raw.strip() else None
+
+    last_exc: Optional[BaseException] = None
+    for attempt in range(_MAX_ATTEMPTS):
+        if attempt:
+            # exp backoff + full jitter (decorrelated): base*2^a, jittered
+            delay = random.uniform(0, _BACKOFF_BASE_S * (2 ** attempt))  # noqa: S311
+            print(f"[http] retry {attempt}/{_MAX_ATTEMPTS - 1} {method} {url} "
+                  f"after {delay:.1f}s ({type(last_exc).__name__})")
+            time.sleep(delay)
+        req = urllib.request.Request(url, data=data, headers=headers, method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as resp:  # noqa: S310
+                raw = resp.read().decode("utf-8")
+            return json.loads(raw) if raw.strip() else None
+        except urllib.error.HTTPError as exc:
+            last_exc = exc
+            if exc.code not in _RETRYABLE_STATUS:
+                raise  # deterministic (400/401/404/…) — don't retry
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+            last_exc = exc  # reset / "HTTP 0" / timeout — retry
+    assert last_exc is not None
+    raise last_exc
 
 
 def fetch_pending(worker: str, token: str) -> list[dict]:
