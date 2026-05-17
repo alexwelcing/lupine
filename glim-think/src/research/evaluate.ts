@@ -283,18 +283,31 @@ export async function evaluateHypothesis(
   env: Env,
   hypothesisId: string,
 ): Promise<EvaluationSummary & { narrative?: string; narrative_error?: string }> {
+  // confidence + created_at are needed by the verdict-stage trace
+  // (Δconfidence = information-gain proxy; created_at → resolution latency).
   const hyp = await env.LEDGER
-    .prepare(`SELECT id, title FROM hypotheses WHERE id = ?1`)
+    .prepare(`SELECT id, title, confidence, created_at FROM hypotheses WHERE id = ?1`)
     .bind(hypothesisId)
-    .first<{ id: string; title: string }>();
+    .first<{ id: string; title: string; confidence: number | null; created_at: string }>();
 
   if (!hyp) {
     throw new Error(`Hypothesis ${hypothesisId} not found`);
   }
 
   const element = inferElement(hyp.title);
-  const records = await loadRecords(env, element);
-  const summary = summarize(hypothesisId, element, records);
+  // Layer 1: the evidence stage of the hypothesis lifecycle — gathering
+  // + summarizing the records the verdict will rest on. Same hypothesis.id
+  // thread as formation/verdict so Phoenix sees one causal lifecycle.
+  const summary = await traceHypothesisStage(
+    { hypothesisId, stage: "evidence", attributes: { element } },
+    async (span) => {
+      const records = await loadRecords(env, element);
+      const s = summarize(hypothesisId, element, records);
+      span.setAttribute("hypothesis.evidence_n", records.length);
+      span.setAttribute("hypothesis.evidence_verdict", String(s.verdict));
+      return s;
+    },
+  );
   const confidence = confidenceFromVerdict(summary);
   const status = nextStatusFromVerdict(summary);
   const now = new Date().toISOString();

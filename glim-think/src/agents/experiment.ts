@@ -11,6 +11,7 @@ import { tool } from "ai";
 import { z } from "zod";
 import type { ToolSet } from "ai";
 import { trace } from "@opentelemetry/api";
+import { traceHypothesisStage } from "../telemetry/hypothesisTrace";
 
 /** Valid chemical symbols (periodic table, first 103). */
 const VALID_ELEMENTS = new Set([
@@ -171,19 +172,42 @@ Experiment design principles:
             activeSpan.setAttribute("eval.code.experiment.score", validation.score);
           }
 
-          // Insert into D1
-          await this.env.LEDGER.prepare(
-            `INSERT INTO pending_experiments (
+          // Insert into D1. When tied to a hypothesis, this is the
+          // experiment_design stage of its lifecycle — and the ONLY place
+          // hypothesis.discriminative_property gets set (the signal the
+          // discriminative_power throughput evaluator scores).
+          const insertPending = () =>
+            this.env.LEDGER.prepare(
+              `INSERT INTO pending_experiments (
               experiment_id, run_id, element, potential_label, potential_id,
               pair_style, structure, properties, discriminative_property,
               hypothesis_id, spec, status, created_at
             ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, 'pending', datetime('now'))`
-          ).bind(
-            experimentId, runId, element, potentialLabel,
-            "nist-auto", pairStyle, structure, JSON.stringify(["C11", "C12", "C44"]),
-            discriminativeProperty,
-            hypothesisId ?? null, spec
-          ).run();
+            ).bind(
+              experimentId, runId, element, potentialLabel,
+              "nist-auto", pairStyle, structure, JSON.stringify(["C11", "C12", "C44"]),
+              discriminativeProperty,
+              hypothesisId ?? null, spec
+            ).run();
+          if (hypothesisId) {
+            await traceHypothesisStage(
+              {
+                hypothesisId,
+                stage: "experiment_design",
+                attributes: {
+                  discriminative_property: discriminativeProperty,
+                  element,
+                  pair_style: pairStyle,
+                  structure,
+                  lammps_type: lammpsType,
+                  experiment_id: experimentId,
+                },
+              },
+              () => insertPending(),
+            );
+          } else {
+            await insertPending();
+          }
 
           // Also track in local DO storage
           await this.sql`
