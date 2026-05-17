@@ -40,7 +40,7 @@ import { Literaturist as LiteraturistDO } from "./agents/literaturist";
 import { FleetOrchestrator as FleetOrchestratorDO } from "./fleet/orchestrator";
 import { DashboardAgent as DashboardAgentDO } from "./dashboard/stream";
 import { ExtensionManager as ExtensionManagerDO } from "./extensions/manager";
-import { ModelRouter } from "./gateway/router";
+import { generateResearchText } from "./agents/models";
 import { createLabBroadcast, scheduled as scheduledHandler } from "./scheduled";
 import { respondToCritique } from "./critiques/dispatcher";
 import { openApiSpec } from "./openapi";
@@ -618,13 +618,13 @@ const baseHandler = {
         // === AUTO-DIARY: Every analysis produces a research article ===
         if (analysisTypes.length > 0) {
           try {
-            const router = new ModelRouter(env);
             const articlePrompt = buildAnalysisArticlePrompt(results);
-            const aiResult = await router.complete("hypothesis", articlePrompt, {
+            const aiResult = await generateResearchText(env, {
+              prompt: articlePrompt,
               temperature: 0.6,
-              maxTokens: 2048,
+              maxOutputTokens: 2048,
               agentClass: "AutoDiary",
-              systemPrompt: `You are a rigorous materials science research analyst writing entries for a running research diary. You are given statistical analysis results from a corpus of interatomic potential benchmarks (elastic constants C11, C12, C44 measured across many potentials and elements).
+              system: `You are a rigorous materials science research analyst writing entries for a running research diary. You are given statistical analysis results from a corpus of interatomic potential benchmarks (elastic constants C11, C12, C44 measured across many potentials and elements).
 
 Your job:
 1. State what was measured and how many datapoints were involved
@@ -895,15 +895,15 @@ ${narrative}
         const structure = typeof body.structure === "string" ? body.structure : "fcc";
         const records = Array.isArray(body.records) ? body.records as Array<{ property: string; reference: number; predicted: number; unit: string }> : [];
 
-        const router = new ModelRouter(env);
         const prompt = buildDiaryPrompt(element, potential, structure, records);
 
         try {
-          const result = await router.complete("hypothesis", prompt, {
+          const result = await generateResearchText(env, {
+            prompt,
             temperature: 0.7,
-            maxTokens: 1024,
+            maxOutputTokens: 1024,
             agentClass: "DiaryDraft",
-            systemPrompt: `You are a materials science research assistant writing a running lab diary. Interpret LAMMPS benchmark results concisely. Write 2-3 paragraphs of markdown. Focus on physical insight: what do the errors reveal about the potential's strengths and weaknesses? Mention specific properties. Keep it technical but readable.`,
+            system: `You are a materials science research assistant writing a running lab diary. Interpret LAMMPS benchmark results concisely. Write 2-3 paragraphs of markdown. Focus on physical insight: what do the errors reveal about the potential's strengths and weaknesses? Mention specific properties. Keep it technical but readable.`,
           });
           const text = (result.text ?? "").trim();
           if (!text) {

@@ -20,8 +20,10 @@
  */
 import { createWorkersAI } from "workers-ai-provider";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
-import { generateText, wrapLanguageModel, type LanguageModelV2Middleware } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+import { generateText, wrapLanguageModel, type LanguageModel, type LanguageModelV2Middleware } from "ai";
 import type { Env } from "../types";
+import { getModelQualityTrend } from "../evals/store";
 
 export type ReasoningTier = "fast" | "deep";
 
@@ -456,4 +458,179 @@ export async function selectModelChecked(
     return miniMaxModel(env);
   }
   return fastModel(env);
+}
+
+// ---------------------------------------------------------------------------
+// Canonical deep-tier model layer (replaces the deleted src/gateway/ stack).
+//
+// One path for every research LLM call: AI-SDK-native, so each call emits an
+// `ai.generateText` span the OpenInference projector + eval scorecard can see
+// and steer. The legacy hand-rolled gateway (ModelRouter/providers) was 0/300
+// spans in Phoenix — unobservable and unsteerable. This is its replacement.
+//
+//   minimax (MiniMax-M2.7)  — proven default + budget-metered fallback
+//   zai     (glm-5.1)       — eval-aware alternate (GLM Coding Plan endpoint)
+//   openai  (gpt-5.5)       — strength-first "last decider", official provider
+//                             (handles gpt-5 max_completion_tokens / no-temp)
+//
+// Endpoints/models below are the values verified working in the old gateway
+// before deletion; salvaged here so nothing regresses.
+// ---------------------------------------------------------------------------
+
+export type DeepProvider = "minimax" | "zai" | "openai";
+
+/** A resolved deep route: the AI-SDK model plus its identity for spans/scorecard. */
+export interface DeepRoute {
+  model: LanguageModel;
+  provider: DeepProvider | "workers-ai";
+  modelId: string;
+}
+
+// Minimum scorecard sample size before a measured pass-rate is allowed to
+// steer routing (mirrors the conservative gate in evals/store.ts).
+const MODEL_SCORE_MIN_N = 8;
+
+// Round-robin counter for the un-scored MiniMax/GLM balance (the "get better
+// at the science" intent: spread deep load until the scorecard has signal).
+let rrCounter = 0;
+
+function zaiModel(env: Env) {
+  return createOpenAICompatible({
+    baseURL: env.ZAI_BASE_URL?.trim() || "https://api.z.ai/api/coding/paas/v4",
+    apiKey: env.ZAI_API_KEY!,
+    name: "zai",
+  }).chatModel(env.ZAI_MODEL?.trim() || "glm-5.1");
+}
+
+function openaiModel(env: Env) {
+  return createOpenAI({ apiKey: env.OPENAI_API_KEY! })(
+    env.OPENAI_MODEL?.trim() || "gpt-5.5",
+  );
+}
+
+/** Deep providers whose credentials are present, in safe-default order. */
+function availableDeepProviders(env: Env): DeepProvider[] {
+  const out: DeepProvider[] = [];
+  if (env.MINIMAX_API_KEY) out.push("minimax");
+  if (env.ZAI_API_KEY) out.push("zai");
+  if (env.OPENAI_API_KEY) out.push("openai");
+  return out;
+}
+
+function buildDeepRoute(env: Env, p: DeepProvider): DeepRoute {
+  switch (p) {
+    case "zai":
+      return { model: zaiModel(env), provider: "zai", modelId: env.ZAI_MODEL?.trim() || "glm-5.1" };
+    case "openai":
+      return { model: openaiModel(env), provider: "openai", modelId: env.OPENAI_MODEL?.trim() || "gpt-5.5" };
+    default:
+      return { model: miniMaxModel(env), provider: "minimax", modelId: miniMaxConfig(env).model };
+  }
+}
+
+/**
+ * Eval-aware deep-tier selection. Consults the latest ModelScorecard
+ * (written hourly by the eval harness) and routes to the highest-scoring
+ * well-sampled provider. Until the scorecard has signal, balances
+ * MiniMax/GLM round-robin and reserves OpenAI gpt-5.5 as the strength-first
+ * last decider (used when it is the only credentialed provider or when it
+ * measurably wins). Always budget-guards MiniMax → Workers AI.
+ */
+export async function selectDeepRoute(env: Env): Promise<DeepRoute> {
+  const candidates = availableDeepProviders(env);
+  if (candidates.length === 0) {
+    return { model: fastModel(env), provider: "workers-ai", modelId: FAST_MODEL };
+  }
+
+  // MiniMax budget guard: drop it from candidates when exhausted.
+  let pool = candidates;
+  if (pool.includes("minimax") && !(await hasMiniMaxBudget(env))) {
+    pool = pool.filter((p) => p !== "minimax");
+    if (pool.length === 0) {
+      return { model: fastModel(env), provider: "workers-ai", modelId: FAST_MODEL };
+    }
+  }
+
+  // Scorecard-steered: pick the best well-sampled provider in the pool.
+  const trend = await getModelQualityTrend(env);
+  const scored = pool
+    .map((p) => ({ p, s: trend[p] }))
+    .filter((x): x is { p: DeepProvider; s: { score: number; n: number } } =>
+      !!x.s && x.s.n >= MODEL_SCORE_MIN_N)
+    .sort((a, b) => b.s.score - a.s.score);
+  if (scored.length > 0) {
+    return buildDeepRoute(env, scored[0].p);
+  }
+
+  // No signal yet: round-robin MiniMax/GLM; OpenAI only if it's all we have.
+  const balance = pool.filter((p) => p !== "openai");
+  const ring = balance.length > 0 ? balance : pool;
+  const pick = ring[rrCounter++ % ring.length];
+  return buildDeepRoute(env, pick);
+}
+
+export interface ResearchTextOpts {
+  prompt: string;
+  system?: string;
+  /** OpenInference functionId — the model×agent scorecard buckets on this. */
+  agentClass: string;
+  tier?: ReasoningTier;
+  maxOutputTokens?: number;
+  temperature?: number;
+}
+
+/**
+ * The single entry point for research narrative / hypothesis text. Replaces
+ * `new ModelRouter(env).complete(...)`. Returns `{ text, provider, model }`
+ * so existing call sites swap with no shape change, and every call lands as
+ * an `ai.generateText` span attributed to `agentClass` (functionId) — which
+ * is exactly what the OpenInference projector and eval scorecard consume.
+ */
+export async function generateResearchText(
+  env: Env,
+  opts: ResearchTextOpts,
+): Promise<{ text: string; provider: string; model: string }> {
+  const tier = opts.tier ?? "deep";
+  const route: DeepRoute =
+    tier === "deep"
+      ? await selectDeepRoute(env)
+      : { model: fastModel(env), provider: "workers-ai", modelId: FAST_MODEL };
+
+  try {
+    const result = await generateText({
+      model: route.model,
+      system: opts.system,
+      prompt: opts.prompt,
+      maxOutputTokens: opts.maxOutputTokens ?? 2048,
+      // gpt-5.x rejects non-default temperature; omit it for OpenAI.
+      ...(route.provider === "openai" || opts.temperature === undefined
+        ? {}
+        : { temperature: opts.temperature }),
+      experimental_telemetry: { isEnabled: true, functionId: opts.agentClass },
+    });
+    return {
+      text: (result.text ?? "").trim(),
+      provider: route.provider,
+      model: route.modelId,
+    };
+  } catch (e) {
+    // Merciless-but-safe: if a non-MiniMax route fails, fall back to the
+    // proven MiniMax path once before surfacing the error.
+    if (route.provider !== "minimax" && env.MINIMAX_API_KEY) {
+      const fb = await generateText({
+        model: miniMaxModel(env),
+        system: opts.system,
+        prompt: opts.prompt,
+        maxOutputTokens: opts.maxOutputTokens ?? 2048,
+        ...(opts.temperature === undefined ? {} : { temperature: opts.temperature }),
+        experimental_telemetry: { isEnabled: true, functionId: opts.agentClass },
+      });
+      return {
+        text: (fb.text ?? "").trim(),
+        provider: "minimax",
+        model: miniMaxConfig(env).model,
+      };
+    }
+    throw e;
+  }
 }
