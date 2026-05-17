@@ -12,6 +12,10 @@ import { z } from "zod";
 import type { ToolSet } from "ai";
 import { trace } from "@opentelemetry/api";
 import { traceHypothesisStage } from "../telemetry/hypothesisTrace";
+import {
+  getExperimentDesignCriteria,
+  discriminativePropertyPattern,
+} from "../registry/criteriaRegistry";
 
 /** Valid chemical symbols (periodic table, first 103). */
 const VALID_ELEMENTS = new Set([
@@ -42,29 +46,36 @@ function validateExperimentDesign(input: {
   const checks: Record<string, boolean> = {};
   let score = 0;
 
+  // Tunable criteria live in the Evolver-allowlisted registry
+  // (src/registry/criteria/experiment-design.json). Defaults are
+  // behavior-identical to the prior hardcoded values; the self-improving
+  // loop can tune weights/keywords/threshold autonomously, regression-gated.
+  const cr = getExperimentDesignCriteria();
+  const W = cr.weights;
+
   // 1. Element is a valid symbol
   checks.element_valid = VALID_ELEMENTS.has(input.element);
-  if (checks.element_valid) score += 0.2;
+  if (checks.element_valid) score += W.element_valid;
 
   // 2. Structure matches element's natural structure
   const expectedStructure = BCC_ELEMENTS.has(input.element) ? "bcc" : HCP_ELEMENTS.has(input.element) ? "hcp" : "fcc";
   checks.structure_matches_element = input.structure === expectedStructure;
-  if (checks.structure_matches_element) score += 0.2;
+  if (checks.structure_matches_element) score += W.structure_matches_element;
 
   // 3. pair_style is non-empty and looks like a LAMMPS pair style
   checks.pair_style_nonempty = input.pairStyle.length > 0 && /^[a-zA-Z0-9_\/\-]+$/.test(input.pairStyle);
-  if (checks.pair_style_nonempty) score += 0.15;
+  if (checks.pair_style_nonempty) score += W.pair_style_nonempty;
 
   // 4. discriminative_property is non-empty and specific
   const dp = input.discriminativeProperty.trim();
-  checks.discriminative_property_nonempty = dp.length > 5;
-  checks.discriminative_property_specific = /\b(energy|constant|fault|surface|vacancy|modulus|stacking)\b/i.test(dp);
-  if (checks.discriminative_property_nonempty) score += 0.15;
-  if (checks.discriminative_property_specific) score += 0.15;
+  checks.discriminative_property_nonempty = dp.length > cr.discriminative_property_min_length;
+  checks.discriminative_property_specific = discriminativePropertyPattern().test(dp);
+  if (checks.discriminative_property_nonempty) score += W.discriminative_property_nonempty;
+  if (checks.discriminative_property_specific) score += W.discriminative_property_specific;
 
   // 5. lammps_input_type is known
   checks.lammps_type_known = KNOWN_LAMMPS_TYPES.has(input.lammpsType);
-  if (checks.lammps_type_known) score += 0.15;
+  if (checks.lammps_type_known) score += W.lammps_type_known;
 
   score = Math.round(Math.min(1, score) * 100) / 100;
   return { valid: score >= 0.7, score, checks };
