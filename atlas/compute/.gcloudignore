@@ -1,0 +1,8 @@
+# gcloud uses THIS (not .dockerignore) for the Cloud Build upload context.
+# Keep it lean but KEEP _vendor (the Dockerfile COPYs it — staged by the
+# deploy workflow from atlas/scripts + atlas/nist_ipr/index).
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.gitignore

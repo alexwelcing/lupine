@@ -1,0 +1,6 @@
+# Vendored at deploy time by deploy-glim-compute.yml from the canonical
+# sources (atlas/scripts/generate_nist_demos.py, atlas/nist_ipr/index/
+# master_index.json). Not committed — single source of truth, no dup.
+_vendor/
+__pycache__/
+*.pyc
