@@ -5,15 +5,16 @@ FROM node:24-slim
 
 WORKDIR /app
 
-# tsx is a runtime dependency here (not a devDependency), so a plain
-# install brings the executor. No lockfile in this package — use install.
-COPY package.json ./
-RUN npm install --no-audit --no-fund
-
 COPY . .
-# Normalize CRLF → LF (repo is edited on Windows); a \r in the entry
-# script turns `run-evals.ts` into `run-evals.ts\r` → exit 127.
-RUN sed -i 's/\r$//' cloud-run-entry.sh && chmod +x cloud-run-entry.sh
+# Correctness by construction (do NOT rely on .dockerignore — `gcloud run
+# deploy --source` uses .gcloudignore for the upload, so a Windows-built
+# node_modules can ride along and clobber the Linux one → `tsx: Permission
+# denied`). Nuke any copied node_modules and clean-install inside the
+# image. Also strip CRLF from the entry script (`run-evals.ts\r` → 127).
+RUN rm -rf node_modules \
+ && npm install --no-audit --no-fund \
+ && sed -i 's/\r$//' cloud-run-entry.sh \
+ && chmod +x cloud-run-entry.sh
 
 # Cloud Run Jobs treat exit 0 as success. The entrypoint mirrors the GH
 # workflow's continue-on-error posture for informational steps.

@@ -1,0 +1,8 @@
+# gcloud uses THIS (not .dockerignore) to decide the Cloud Build upload.
+# Keep the Windows-built node_modules out of the context; the Dockerfile
+# clean-installs anyway, but a lean upload is faster and unambiguous.
+node_modules
+.dev.vars
+.env
+*.log
+.git
