@@ -1,0 +1,56 @@
+{
+  "updated": "2026-05-17",
+  "cycle": "Self-improving eval loop",
+  "headline": "The eval loop now actuates the codebase, not just observes it.",
+  "summary": "glim-think collapsed onto one observable AI-SDK LLM path, the research swarm became eval-scorecard-aware, and a closed self-improvement loop landed: eval failures → clustered → minimal prompt/criteria patch → A/B-tested on a frozen golden dataset → auto-merged on green, with hard safety rails. This page is data-driven — edit src/data/lab-status.json to update it each cycle.",
+  "shipped": [
+    {
+      "title": "One observable LLM path; dead gateway deleted",
+      "ref": "PR #116",
+      "detail": "Two LLM stacks consolidated to a single AI-SDK-native path so every call is an observable ai.generateText span. The legacy gateway/ModelRouter (0/300 Phoenix spans — unobservable, unsteerable) was removed entirely."
+    },
+    {
+      "title": "Eval-aware research swarm + per-agent attribution",
+      "ref": "73d98d4",
+      "detail": "Theorist/Causal/Orchestrator deep-tier synthesis now routes through the scorecard-balanced multi-provider tier (MiniMax/GLM, OpenAI as last decider); per-agent functionId so the model×agent scorecard separates agents instead of collapsing them."
+    },
+    {
+      "title": "Phoenix Experiments + dataset-read client",
+      "ref": "PR #118",
+      "detail": "The golden datasets (glim-benchmark 382, glim-research-qa 444, glim-experiment-design 37) are now readable and usable for controlled experiments, not just write-only."
+    },
+    {
+      "title": "A/B oracle",
+      "ref": "PR #119",
+      "detail": "Baseline-vs-candidate over a golden-dataset slice, scored by the existing combo + LLM-judge evaluators, emitting an adopt/reject verdict with regression detection."
+    },
+    {
+      "title": "The Evolver (self-improvement spine)",
+      "ref": "PR #120",
+      "detail": "Diagnoses failure clusters, synthesizes one minimal registry patch, A/B-tests it, and auto-merges on green — confined to src/registry/ by a path allowlist, with an EVOLVER_ENABLED kill switch (default OFF), a circuit breaker, and regression-gate auto-revert."
+    },
+    {
+      "title": "Case-study documentation",
+      "ref": "PR #117",
+      "detail": "PHOENIX_EVALS_CASE_STUDY.md rewritten to document the closed loop honestly — proven vs armed-but-gated — with fabricated before/after metrics removed."
+    }
+  ],
+  "inProgress": [
+    { "title": "Prompt/criteria registry substrate", "detail": "Versioned per-agent prompt registry the Evolver writes into; agent worker did not land a PR this cycle." },
+    { "title": "Worker experiment endpoint", "detail": "/ops/experiment-generate provider/variant-pinned generation + durable round-robin; pending." },
+    { "title": "Scorecard provenance", "detail": "Controlled experiment scores outranking biased production samples; pending." },
+    { "title": "Regression gate auto-revert", "detail": "CI gate that auto-reverts a regressing evolver:auto commit; pending." }
+  ],
+  "knownIssues": [
+    {
+      "severity": "high",
+      "title": "Parallel worktree isolation failed — local atlas-view WIP edits lost",
+      "detail": "A parallel agent fan-out operated on the shared repo instead of isolated worktrees; a git reset reverted ~11 tracked atlas-view files (≈230 lines of integration wiring). Untracked new modules (PotentialBrowser, NIST catalog system) survived. Root-cause noted; the fan-out approach is suspended pending an isolation fix. Reported transparently rather than buried."
+    },
+    {
+      "severity": "medium",
+      "title": "Evolver ships gated",
+      "detail": "EVOLVER_ENABLED defaults OFF. Auto-merge-on-green is wired but will not run until the path-allowlist, circuit-breaker, and auto-revert rails are exercised end-to-end."
+    }
+  ]
+}
