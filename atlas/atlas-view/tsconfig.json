@@ -16,6 +16,8 @@
     "paths": {
       "@atlas/core": ["./packages/core/src"],
       "@atlas/core/*": ["./packages/core/src/*"],
+      "@atlas/nist": ["./packages/nist/src"],
+      "@atlas/nist/*": ["./packages/nist/src/*"],
       "@atlas/parsers": ["./packages/parsers/src"],
       "@atlas/parsers/*": ["./packages/parsers/src/*"],
       "@atlas/renderer": ["./packages/renderer/src"],

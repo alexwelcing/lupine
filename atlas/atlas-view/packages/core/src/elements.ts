@@ -155,6 +155,26 @@ export function getElementSpec(type: number): ElementData {
   };
 }
 
+// Reverse index: element symbol ("Al", "Fe", …) → spec. Built once from
+// ELEMENT_DATA. Used by symbol-keyed consumers (e.g. the NIST potential
+// browser, which only knows element symbols, not atomic numbers).
+const ELEMENT_DATA_BY_SYMBOL: Record<string, ElementData> = (() => {
+  const out: Record<string, ElementData> = {};
+  for (const spec of Object.values(ELEMENT_DATA)) {
+    out[spec.symbol] = spec;
+  }
+  return out;
+})();
+
+/**
+ * Look up an element spec by its symbol (case-sensitive, e.g. "Al", "Fe").
+ * Returns `undefined` for unknown symbols — callers should fall back
+ * (the periodic-number `getElementSpec` is the synthesizing variant).
+ */
+export function getElementSpecBySymbol(symbol: string): ElementData | undefined {
+  return ELEMENT_DATA_BY_SYMBOL[symbol];
+}
+
 export function hexToRgb(hex: string): [number, number, number] {
   if (hex.startsWith('hsl')) {
     // very basic fallback: mostly gray for generated ones where rgb is expected

@@ -207,6 +207,12 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5(@types/node@22.19.15)(jsdom@29.1.1(canvas@3.2.3))(vite@6.4.1(@types/node@22.19.15)(terser@5.46.1))
 
+  packages/nist:
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+
   packages/parsers:
     dependencies:
       '@atlas/core':
@@ -272,6 +278,9 @@ importers:
       '@atlas/core':
         specifier: workspace:*
         version: link:../core
+      '@atlas/nist':
+        specifier: workspace:*
+        version: link:../nist
       '@atlas/parsers':
         specifier: workspace:*
         version: link:../parsers

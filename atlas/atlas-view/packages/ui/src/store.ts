@@ -8,6 +8,7 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
+import type { NistCatalogEntry } from '@atlas/nist';
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
 import { MATERIAL_SCENES, getScene, DEFAULT_SCENE_ID } from '@atlas/scene/materials';
@@ -214,6 +215,11 @@ export interface AppState {
   // ─── UI ───
   activePanel: 'visuals' | 'export' | 'analysis' | 'measurement' | 'flythrough' | 'telemetry' | null;
   activeProfile: 'publication' | 'neon' | 'cinematic' | 'raw' | null;
+
+  // ─── NIST IPR potential browser ───
+  nistCatalog: NistCatalogEntry[] | null;
+  activePotentialId: string | null;
+  showPotentialBrowser: boolean;
   showStats: boolean;
   showThermo: boolean;
 
@@ -351,6 +357,9 @@ export interface AppState {
   setFillLightColor: (val: string) => void;
   setRimLightColor: (val: string) => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
+  setNistCatalog: (catalog: NistCatalogEntry[] | null) => void;
+  setActivePotentialId: (id: string | null) => void;
+  setShowPotentialBrowser: (show: boolean) => void;
   clearFile: () => void;
   reset: () => void;
   setSelectedAtoms: (atoms: number[] | ((prev: number[]) => number[])) => void;
@@ -455,6 +464,9 @@ const DEFAULTS = {
   colorblindMode: false,
   activePanel: null,
   activeProfile: null,
+  nistCatalog: null,
+  activePotentialId: null,
+  showPotentialBrowser: false,
   showStats: false,
   showThermo: true,
   selectedAtoms: [] as number[],
@@ -664,6 +676,9 @@ export const useStore = create<AppState>()(
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),
+    setNistCatalog: (nistCatalog) => set({ nistCatalog }),
+    setActivePotentialId: (activePotentialId) => set({ activePotentialId }),
+    setShowPotentialBrowser: (showPotentialBrowser) => set({ showPotentialBrowser }),
 
     clearFile: () => set({
       file: null,

@@ -1,0 +1,404 @@
+{
+  "total_potentials": 675,
+  "single_element": 250,
+  "multi_element": 425,
+  "unique_elements": 63,
+  "unique_pair_styles": 35,
+  "with_doi": 668,
+  "pair_style_counts": [
+    {
+      "pair_style": "meam",
+      "count": 264
+    },
+    {
+      "pair_style": "eam/alloy",
+      "count": 140
+    },
+    {
+      "pair_style": "eam/fs",
+      "count": 112
+    },
+    {
+      "pair_style": "adp",
+      "count": 29
+    },
+    {
+      "pair_style": "tersoff",
+      "count": 21
+    },
+    {
+      "pair_style": "eam",
+      "count": 17
+    },
+    {
+      "pair_style": "hybrid/overlay",
+      "count": 14
+    },
+    {
+      "pair_style": "bop",
+      "count": 11
+    },
+    {
+      "pair_style": "vashishta",
+      "count": 8
+    },
+    {
+      "pair_style": "meam/spline",
+      "count": 6
+    },
+    {
+      "pair_style": "sw",
+      "count": 5
+    },
+    {
+      "pair_style": "tersoff/zbl",
+      "count": 5
+    },
+    {
+      "pair_style": "quip",
+      "count": 5
+    },
+    {
+      "pair_style": "reax/c",
+      "count": 4
+    },
+    {
+      "pair_style": "comb3",
+      "count": 4
+    },
+    {
+      "pair_style": "rann",
+      "count": 4
+    },
+    {
+      "pair_style": "tersoff/mod/c",
+      "count": 3
+    },
+    {
+      "pair_style": "eam/cd",
+      "count": 2
+    },
+    {
+      "pair_style": "agni",
+      "count": 2
+    },
+    {
+      "pair_style": "pinn",
+      "count": 2
+    },
+    {
+      "pair_style": "eam/he",
+      "count": 2
+    },
+    {
+      "pair_style": "pace",
+      "count": 2
+    },
+    {
+      "pair_style": "edip",
+      "count": 1
+    },
+    {
+      "pair_style": "lcbop",
+      "count": 1
+    },
+    {
+      "pair_style": "tersoff/mod",
+      "count": 1
+    },
+    {
+      "pair_style": "eim",
+      "count": 1
+    },
+    {
+      "pair_style": "edip/multi",
+      "count": 1
+    },
+    {
+      "pair_style": "extep",
+      "count": 1
+    },
+    {
+      "pair_style": "polymorphic",
+      "count": 1
+    },
+    {
+      "pair_style": "hybrid",
+      "count": 1
+    },
+    {
+      "pair_style": "table",
+      "count": 1
+    },
+    {
+      "pair_style": "aenet",
+      "count": 1
+    },
+    {
+      "pair_style": "hdnnp",
+      "count": 1
+    },
+    {
+      "pair_style": "ream",
+      "count": 1
+    },
+    {
+      "pair_style": "morse",
+      "count": 1
+    }
+  ],
+  "element_counts": [
+    {
+      "element": "Ni",
+      "count": 132
+    },
+    {
+      "element": "Fe",
+      "count": 124
+    },
+    {
+      "element": "Al",
+      "count": 116
+    },
+    {
+      "element": "Cu",
+      "count": 106
+    },
+    {
+      "element": "Ti",
+      "count": 72
+    },
+    {
+      "element": "Cr",
+      "count": 71
+    },
+    {
+      "element": "Co",
+      "count": 70
+    },
+    {
+      "element": "W",
+      "count": 42
+    },
+    {
+      "element": "Mn",
+      "count": 42
+    },
+    {
+      "element": "Zr",
+      "count": 37
+    },
+    {
+      "element": "C",
+      "count": 36
+    },
+    {
+      "element": "Si",
+      "count": 33
+    },
+    {
+      "element": "Au",
+      "count": 28
+    },
+    {
+      "element": "Ta",
+      "count": 28
+    },
+    {
+      "element": "H",
+      "count": 27
+    },
+    {
+      "element": "Ag",
+      "count": 26
+    },
+    {
+      "element": "Pd",
+      "count": 26
+    },
+    {
+      "element": "Mg",
+      "count": 25
+    },
+    {
+      "element": "Pt",
+      "count": 21
+    },
+    {
+      "element": "Mo",
+      "count": 21
+    },
+    {
+      "element": "Nb",
+      "count": 21
+    },
+    {
+      "element": "O",
+      "count": 19
+    },
+    {
+      "element": "V",
+      "count": 16
+    },
+    {
+      "element": "Pb",
+      "count": 12
+    },
+    {
+      "element": "N",
+      "count": 12
+    },
+    {
+      "element": "Li",
+      "count": 11
+    },
+    {
+      "element": "Ga",
+      "count": 10
+    },
+    {
+      "element": "U",
+      "count": 9
+    },
+    {
+      "element": "Zn",
+      "count": 8
+    },
+    {
+      "element": "In",
+      "count": 7
+    },
+    {
+      "element": "Ge",
+      "count": 6
+    },
+    {
+      "element": "Cd",
+      "count": 6
+    },
+    {
+      "element": "Te",
+      "count": 6
+    },
+    {
+      "element": "P",
+      "count": 6
+    },
+    {
+      "element": "Hf",
+      "count": 6
+    },
+    {
+      "element": "Na",
+      "count": 6
+    },
+    {
+      "element": "He",
+      "count": 6
+    },
+    {
+      "element": "Se",
+      "count": 5
+    },
+    {
+      "element": "Re",
+      "count": 5
+    },
+    {
+      "element": "B",
+      "count": 4
+    },
+    {
+      "element": "K",
+      "count": 4
+    },
+    {
+      "element": "Y",
+      "count": 4
+    },
+    {
+      "element": "As",
+      "count": 3
+    },
+    {
+      "element": "Rb",
+      "count": 3
+    },
+    {
+      "element": "Cs",
+      "count": 3
+    },
+    {
+      "element": "Cl",
+      "count": 3
+    },
+    {
+      "element": "Ce",
+      "count": 3
+    },
+    {
+      "element": "Ca",
+      "count": 3
+    },
+    {
+      "element": "Sn",
+      "count": 3
+    },
+    {
+      "element": "Rh",
+      "count": 3
+    },
+    {
+      "element": "Ba",
+      "count": 3
+    },
+    {
+      "element": "Be",
+      "count": 2
+    },
+    {
+      "element": "Xe",
+      "count": 2
+    },
+    {
+      "element": "S",
+      "count": 2
+    },
+    {
+      "element": "Sm",
+      "count": 2
+    },
+    {
+      "element": "Ru",
+      "count": 1
+    },
+    {
+      "element": "F",
+      "count": 1
+    },
+    {
+      "element": "Br",
+      "count": 1
+    },
+    {
+      "element": "I",
+      "count": 1
+    },
+    {
+      "element": "Hg",
+      "count": 1
+    },
+    {
+      "element": "Nd",
+      "count": 1
+    },
+    {
+      "element": "Tb",
+      "count": 1
+    },
+    {
+      "element": "Bi",
+      "count": 1
+    }
+  ]
+}
