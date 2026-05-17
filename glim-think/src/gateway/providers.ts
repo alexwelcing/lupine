@@ -30,6 +30,10 @@ export interface ModelOpts {
    * derives a tier default (see `ModelRouter.cacheTtlForTier`); an explicit
    * value here overrides that default — including an explicit `0`. */
   cacheTtl?: number;
+  /** Calling agent class (Theorist/Causal/…). Threaded by the router so the
+   * provider span carries gateway.agent_class → the eval model×agent
+   * scorecard can attribute quality per (model, agent). */
+  agentClass?: string;
 }
 
 export type TaskTier = "ingestion" | "screening" | "hypothesis" | "experiment_design" | "code_review";
@@ -74,6 +78,7 @@ export class WorkersAIProvider implements Provider {
           provider: this.name,
           model: this.model,
           systemPrompt: opts?.systemPrompt,
+          agent: opts?.agentClass,
           prompt,
           outputText: response.text,
           usage: response.usage,
@@ -144,6 +149,7 @@ export class OpenAIProvider implements Provider {
           provider: this.name,
           model: this.model,
           systemPrompt: opts?.systemPrompt,
+          agent: opts?.agentClass,
           prompt,
           outputText: response.text,
           usage: response.usage,
@@ -215,6 +221,7 @@ export class AnthropicProvider implements Provider {
           provider: this.name,
           model: this.model,
           systemPrompt: opts?.systemPrompt,
+          agent: opts?.agentClass,
           prompt,
           outputText: response.text,
           usage: response.usage,
@@ -277,6 +284,7 @@ export class GeminiProvider implements Provider {
           provider: this.name,
           model: this.model,
           systemPrompt: opts?.systemPrompt,
+          agent: opts?.agentClass,
           prompt,
           outputText: response.text,
           usage: response.usage,
@@ -382,6 +390,7 @@ export class ZAIProvider implements Provider {
           provider: this.name,
           model: this.model,
           systemPrompt: opts?.systemPrompt,
+          agent: opts?.agentClass,
           prompt,
           outputText: response.text,
           usage: response.usage,
@@ -461,6 +470,7 @@ export class MiniMaxProvider implements Provider {
           provider: this.name,
           model: this.model,
           systemPrompt: opts?.systemPrompt,
+          agent: opts?.agentClass,
           prompt,
           outputText: response.text,
           usage: response.usage,
@@ -528,6 +538,7 @@ export class HFProvider implements Provider {
           provider: this.name,
           model: this.model,
           systemPrompt: opts?.systemPrompt,
+          agent: opts?.agentClass,
           prompt,
           outputText: response.text,
           usage: response.usage,

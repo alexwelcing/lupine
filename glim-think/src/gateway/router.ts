@@ -24,7 +24,7 @@ import {
   GeminiProvider,
 } from "./providers";
 import { AIGatewayProvider } from "./ai-gateway";
-import { getAgentQualityTrend } from "../evals/store";
+import { getAgentQualityTrend, getModelQualityTrend } from "../evals/store";
 import { runHeuristics } from "../evals/heuristics";
 import type { Env } from "../types";
 import { trace } from "@opentelemetry/api";
@@ -60,6 +60,15 @@ export class ModelRouter {
   /** Process-wide round-robin index for balancing MiniMax ↔ GLM. Static so
    * it persists across per-request ModelRouter instances within an isolate. */
   private static rrCounter = 0;
+  /** Cached per-model quality from the latest ModelScorecard claim. Static +
+   * TTL so routing reads it from memory, not D1, on every request. */
+  private static modelScores: Record<string, { score: number; n: number }> = {};
+  private static modelScoresAt = 0;
+  /** A model must have ≥ this many evals (min over evaluators) before its
+   * measured score is allowed to steer ordering — else round-robin. Prevents
+   * overfitting to tiny samples (e.g. the n=1 glm vs n=7 minimax case). */
+  private static readonly MODEL_SCORE_MIN_N = 8;
+  private static readonly MODEL_SCORE_TTL_MS = 300_000;
   private providers: Map<string, Provider> = new Map();
   private env: Env;
 
@@ -257,7 +266,20 @@ export class ModelRouter {
    * Choose the fallback chain. If the agent's recent pass rate is below
    * threshold, use the strength-first chain (best models first).
    */
+  /** Refresh the cached model scorecard (TTL-gated; one D1 row). */
+  private async refreshModelScores(): Promise<void> {
+    if (Date.now() - ModelRouter.modelScoresAt < ModelRouter.MODEL_SCORE_TTL_MS) return;
+    try {
+      ModelRouter.modelScores = await getModelQualityTrend(this.env);
+      ModelRouter.modelScoresAt = Date.now();
+    } catch (e) {
+      console.warn("[gateway] model scorecard lookup failed:", e);
+      ModelRouter.modelScoresAt = Date.now(); // back off on failure too
+    }
+  }
+
   private async resolveChain(tier: TaskTier, agentClass?: string): Promise<string[]> {
+    await this.refreshModelScores();
     if (agentClass) {
       try {
         const trend = await getAgentQualityTrend(this.env, agentClass, 1);
@@ -284,7 +306,28 @@ export class ModelRouter {
     const pair: string[] = [];
     if (this.providers.has("minimax")) pair.push("minimax");
     if (this.providers.has("zai")) pair.push("zai");
-    if (pair.length === 2 && ModelRouter.rrCounter++ % 2 === 1) pair.reverse();
+    if (pair.length < 2) return pair;
+
+    // Eval-aware: if BOTH workhorses are well-sampled in the latest
+    // ModelScorecard, order best-measured-quality first (closing the
+    // eval→routing loop). Map provider→scorecard model id. Otherwise fall
+    // back to round-robin load balancing (no/insufficient data).
+    const sc = ModelRouter.modelScores;
+    const modelOf: Record<string, string> = { minimax: "MiniMax-M2.7", zai: "glm-5.1" };
+    const scored = pair.every((p) => {
+      const e = sc[modelOf[p]];
+      return e && e.n >= ModelRouter.MODEL_SCORE_MIN_N;
+    });
+    if (scored) {
+      const ordered = [...pair].sort(
+        (a, b) => sc[modelOf[b]].score - sc[modelOf[a]].score,
+      );
+      // Tie (equal scores) → keep round-robin fairness.
+      if (sc[modelOf[ordered[0]]].score !== sc[modelOf[ordered[1]]].score) {
+        return ordered;
+      }
+    }
+    if (ModelRouter.rrCounter++ % 2 === 1) pair.reverse();
     return pair;
   }
 

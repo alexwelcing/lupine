@@ -30,11 +30,14 @@ export function annotateGatewayLLMSpan(
     prompt: string;
     outputText: string;
     usage?: { promptTokens: number; completionTokens: number };
+    agent?: string;
   },
 ): void {
   span.setAttribute(SC.OPENINFERENCE_SPAN_KIND, OpenInferenceSpanKind.LLM);
   span.setAttribute(SC.LLM_PROVIDER, args.provider);
   span.setAttribute(SC.LLM_MODEL_NAME, args.model);
+  // Attribution for the eval model×agent scorecard.
+  span.setAttribute("gateway.agent_class", args.agent || "unknown");
 
   const messages: Array<{ role: string; content: string }> = [];
   if (args.systemPrompt) messages.push({ role: "system", content: args.systemPrompt });

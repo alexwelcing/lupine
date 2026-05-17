@@ -93,6 +93,42 @@ export async function getAgentQualityTrend(
   return row ?? { avg_score: 0, count: 0, pass_rate: 0 };
 }
 
+/**
+ * Per-model quality from the latest ModelScorecard claim (written hourly by
+ * the eval harness). Returns model → { score, n } where score is the mean
+ * pass-rate across evaluators and n is the MIN evaluator sample size
+ * (conservative — a model must be well-sampled on its weakest evaluator
+ * before its score is allowed to steer routing). model|agent buckets and
+ * the workers-ai floor are excluded.
+ */
+export async function getModelQualityTrend(
+  env: Env,
+): Promise<Record<string, { score: number; n: number }>> {
+  try {
+    const row = await env.LEDGER.prepare(
+      `SELECT claim_data FROM claims WHERE claim_type = 'ModelScorecard'
+        ORDER BY created_at DESC LIMIT 1`,
+    ).first<{ claim_data: string }>();
+    if (!row?.claim_data) return {};
+    const data = JSON.parse(row.claim_data) as {
+      scorecard?: Record<string, Record<string, { n: number; pass_rate: number }>>;
+    };
+    const out: Record<string, { score: number; n: number }> = {};
+    for (const [bucket, evs] of Object.entries(data.scorecard ?? {})) {
+      if (bucket.includes("|") || bucket === "workers-ai" || bucket === "unknown") continue;
+      const cells = Object.values(evs);
+      if (cells.length === 0) continue;
+      out[bucket] = {
+        score: cells.reduce((s, c) => s + (c.pass_rate ?? 0), 0) / cells.length,
+        n: Math.min(...cells.map((c) => c.n ?? 0)),
+      };
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
 /** Get recent evaluations for admin dashboard. */
 export async function getRecentEvals(
   env: Env,
