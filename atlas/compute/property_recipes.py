@@ -108,9 +108,13 @@ def _header(potential: dict, recipe_name: str) -> list[str]:
 
 
 def _log_path(workdir: str, recipe_name: str) -> str:
-    """Deterministic per-recipe log path (forward-slashed for LAMMPS)."""
+    """LAMMPS log path. MUST match what runner.process_experiment reads
+    (work_dir/'log.lammps') — the in-script `log` command overrides the
+    `-log none` cmdarg so the PROP sentinels land here. One experiment
+    runs one recipe, so a fixed name is correct (no collision)."""
     wd = str(workdir).replace("\\", "/").rstrip("/")
-    return f"{wd}/log.{recipe_name}.lammps"
+    _ = recipe_name  # kept for signature stability / call sites
+    return f"{wd}/log.lammps"
 
 
 def _build_block(
@@ -176,13 +180,25 @@ class Recipe:
         potential_file: str,
         structure: str,
         lattice: float,
-        workdir: str,
+        work_dir: str,
         supercell: int = 4,
+        library_file: str | None = None,
+        spec: dict | None = None,
+        **_ignored: object,
     ) -> str:
-        """Return the full LAMMPS script string for this recipe."""
+        """Return the full LAMMPS script string for this recipe.
+
+        Param name `work_dir` + optional `library_file` match the caller
+        contract (runner.process_experiment). `library_file` is consumed
+        by the pair-coeff helper for MEAM-family potentials; EAM/Tersoff/
+        etc. (and the P0 Cu/eam case) don't need it. Passed positionally
+        to `_build` (which names it `workdir` internally).
+        NOTE: per-recipe `_build_*` MEAM library threading is a documented
+        follow-up; non-MEAM recipes are fully correct here.
+        """
         return self._build(
             potential, potential_file, structure, lattice,
-            workdir, supercell,
+            work_dir, supercell,
         )
 
     def extract(self, log_text: str) -> dict[str, float]:
@@ -354,6 +370,9 @@ def _build_elastic_constants(
         "neigh_modify delay 5 every 1",
         f"variable e equal {eps}",
         "variable tol equal 1.0e-10",
+        # Orthogonal box rejects tilt strains — convert to triclinic
+        # before the xy shear (mirrors LAMMPS examples/ELASTIC).
+        "change_box all triclinic",
         "change_box all xy delta $(v_e*ly) remap units box",
         "minimize ${tol} ${tol} 10000 100000",
         'print "PROP sxy_p = $(-pxy)"',
@@ -370,6 +389,7 @@ def _build_elastic_constants(
         "neigh_modify delay 5 every 1",
         f"variable e equal {eps}",
         "variable tol equal 1.0e-10",
+        "change_box all triclinic",
         "change_box all xy delta $(-v_e*ly) remap units box",
         "minimize ${tol} ${tol} 10000 100000",
         'print "PROP sxy_m = $(-pxy)"',
