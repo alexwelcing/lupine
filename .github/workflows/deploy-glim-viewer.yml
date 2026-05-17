@@ -45,6 +45,10 @@ jobs:
 
       - name: Build Bundle (Research Site + Web Viewer)
         working-directory: atlas
+        env:
+          # NIST catalog + demo trajectories are served from a public GCS
+          # bucket (shed-489901), not bundled. Vite inlines VITE_* at build.
+          VITE_NIST_BASE_URL: https://storage.googleapis.com/shed-489901-nist-demos/nist
         run: |
           pip install markdown
           python -c "import deploy_slim; deploy_slim.build_research(); deploy_slim.build_web()"
