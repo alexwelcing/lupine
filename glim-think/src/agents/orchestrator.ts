@@ -30,7 +30,9 @@ export class Orchestrator extends GlimThinkAgent {
    * (-highspeed variant) but the Max plan's sk-cp- proxy key returns
    * 2061 "current token plan not support model" for any -highspeed
    * sibling. Reverted to base deep until the plan exposes -highspeed.
+   * synthesize() routes through the eval-aware multi-provider deep tier.
    */
+  protected override deepTier = true;
   getModel() {
     return selectModel(this.env, "deep");
   }

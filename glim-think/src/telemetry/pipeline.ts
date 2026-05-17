@@ -19,7 +19,6 @@ const COST_PER_1K: Record<string, number> = {
   "zai": 0.001,
   "minimax": 0.001,
   "huggingface": 0.001,
-  "ai-gateway": 0.001,
 };
 
 /** WeakMap to track accumulated cost/token state per active span. */

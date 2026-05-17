@@ -16,7 +16,9 @@ export class Theorist extends GlimThinkAgent {
   /**
    * Theorist uses the deep tier (MiniMax-M2 when available) for hypothesis
    * generation. Falls back to Workers AI when MINIMAX_API_KEY is unset.
+   * synthesize() routes through the eval-aware multi-provider deep tier.
    */
+  protected override deepTier = true;
   getModel() {
     return selectModel(this.env, "deep");
   }

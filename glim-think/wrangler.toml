@@ -122,17 +122,11 @@ dead_letter_queue = "glim-research-dlq"
 # MINIMAX_API_KEY
 # HF_API_KEY
 #
-# Cloudflare AI Gateway (no new bindings — these are plain secrets):
-#   wrangler secret put AI_GATEWAY_TOKEN        # cf-aig bearer token
-#   wrangler secret put AI_GATEWAY_ACCOUNT_ID   # account id (URL segment)
-#   wrangler secret put AI_GATEWAY_NAME         # gateway name (URL segment)
-#   wrangler secret put AI_GATEWAY_AUTH_TOKEN   # OPTIONAL: only for an
-#       authenticated gateway (sent as cf-aig-authorization). Distinct from
-#       AI_GATEWAY_TOKEN. Leave unset for unauthenticated gateways.
-# When TOKEN+ACCOUNT_ID+NAME are all set the router sends Workers AI through
-# AI Gateway (caching, analytics, rate limits). ZAI/MiniMax/HF stay direct
-# (Gateway compat rejects ZAI/MiniMax). Unset any one to roll back Workers
-# AI to a direct env.AI.run call.
+# Deep tier is eval-aware (src/agents/models.ts selectDeepRoute): the hourly
+# ModelScorecard balances MiniMax/GLM and reserves OpenAI gpt-5.5 as the
+# last decider. Set ZAI_API_KEY + OPENAI_API_KEY (above) so the scorecard
+# has >1 candidate — otherwise the deep tier is MiniMax-only. The legacy
+# Cloudflare AI Gateway path (AI_GATEWAY_*) was deleted in PR #116.
 
 # ─── Cloudflare Access gating (unit 10) ───
 # /admin/*, /ops/* writes, and the write endpoints (POST /run, /fleet/run,

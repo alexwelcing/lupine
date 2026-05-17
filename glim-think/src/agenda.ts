@@ -65,7 +65,7 @@ const TASK_TEMPLATES: AgendaTaskTemplate[] = [
     specialty: "orchestrator",
     title: (element, horizon) => `Tune model/resource route for ${element} ${horizon} work`,
     payload: (element, horizon) => ({ element, horizon, policy: "cheapest_capable_with_escalation" }),
-    resources: ["ai-gateway", "cost-ledger"],
+    resources: ["llm-eval-scorecard", "cost-ledger"],
   },
   {
     domain: "verification",
