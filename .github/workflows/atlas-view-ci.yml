@@ -54,12 +54,43 @@ jobs:
       - name: Test (turbo run test — all packages)
         run: pnpm test
 
-  # ── Informational: catch NIST catalog drift vs. committed source ──
-  # Non-blocking on purpose: demos/manifest.json is gitignored (GCS-hosted),
-  # so the committed catalog's demo_path fields are NOT reproducible from
-  # committed inputs. We surface element/pair-style/structure drift without
-  # failing the merge on the unavoidable demo_path delta.
+  # ── Blocking gate: committed NIST catalog must match its source ──
+  # Now reproducible from committed inputs (master_index.json +
+  # scripts/nist-demo-manifest.json), so a stale catalog fails the build.
   nist-catalog-drift:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: atlas/atlas-view
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: atlas/atlas-view/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install
+      - name: Rebuild catalog and fail on drift
+        run: |
+          npm run nist:build
+          if ! git -C "$GITHUB_WORKSPACE" diff --quiet -- atlas/atlas-view/apps/web/public/nist; then
+            echo "::error::Committed NIST catalog is stale. Run 'npm run nist:build' and commit the result."
+            git -C "$GITHUB_WORKSPACE" diff -- atlas/atlas-view/apps/web/public/nist
+            exit 1
+          fi
+          echo "NIST catalog is in sync with committed source."
+
+  # ── Informational: GCS .glimbin streaming smoke test ──
+  # Non-blocking: hits the public GCS bucket, so a transient network/CDN
+  # blip shouldn't block merges — but it gives signal on the project's
+  # historically most fragile path (WAF / edge black-holing / Range).
+  streaming-smoke:
     runs-on: ubuntu-latest
     continue-on-error: true
     defaults:
@@ -79,15 +110,8 @@ jobs:
           cache-dependency-path: atlas/atlas-view/pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install
-      - name: Rebuild catalog and report drift
-        run: |
-          npm run nist:build
-          echo "::group::git diff (committed catalog vs. regenerated)"
-          git -C "$GITHUB_WORKSPACE" diff --stat -- atlas/atlas-view/apps/web/public/nist || true
-          echo "::endgroup::"
-          if ! git -C "$GITHUB_WORKSPACE" diff --quiet -- atlas/atlas-view/apps/web/public/nist; then
-            echo "::warning::NIST catalog differs from committed (expected for demo_path; investigate element/pair-style changes). Run 'npm run nist:build' and commit."
-          fi
+      - name: Stream a small GCS .glimbin
+        run: npm run verify:streaming
 
   # ── Informational: real-browser gallery/NIST UI smoke test ──
   # Non-blocking: GitHub-hosted runners have no GPU; the app mounts a WebGPU

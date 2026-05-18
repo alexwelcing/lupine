@@ -1,7 +1,7 @@
 {
   "total_potentials": 675,
-  "single_element": 250,
-  "multi_element": 425,
+  "single_element": 252,
+  "multi_element": 423,
   "unique_elements": 63,
   "unique_pair_styles": 35,
   "with_doi": 668,
@@ -166,7 +166,7 @@
     },
     {
       "element": "Ti",
-      "count": 72
+      "count": 74
     },
     {
       "element": "Cr",
@@ -186,7 +186,7 @@
     },
     {
       "element": "Zr",
-      "count": 37
+      "count": 39
     },
     {
       "element": "C",
@@ -194,14 +194,14 @@
     },
     {
       "element": "Si",
-      "count": 33
-    },
-    {
-      "element": "Au",
-      "count": 28
+      "count": 34
     },
     {
       "element": "Ta",
+      "count": 30
+    },
+    {
+      "element": "Au",
       "count": 28
     },
     {
@@ -221,15 +221,15 @@
       "count": 25
     },
     {
+      "element": "Nb",
+      "count": 22
+    },
+    {
       "element": "Pt",
       "count": 21
     },
     {
       "element": "Mo",
-      "count": 21
-    },
-    {
-      "element": "Nb",
       "count": 21
     },
     {
@@ -261,6 +261,10 @@
       "count": 9
     },
     {
+      "element": "Hf",
+      "count": 8
+    },
+    {
       "element": "Zn",
       "count": 8
     },
@@ -282,10 +286,6 @@
     },
     {
       "element": "P",
-      "count": 6
-    },
-    {
-      "element": "Hf",
       "count": 6
     },
     {
@@ -369,6 +369,10 @@
       "count": 2
     },
     {
+      "element": "Bi",
+      "count": 2
+    },
+    {
       "element": "Ru",
       "count": 1
     },
@@ -394,10 +398,6 @@
     },
     {
       "element": "Tb",
-      "count": 1
-    },
-    {
-      "element": "Bi",
       "count": 1
     }
   ]

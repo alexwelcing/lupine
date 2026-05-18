@@ -141,13 +141,16 @@ describe('shipped nist_catalog.json integrity', () => {
     }
   });
 
-  // Known upstream gap: a small number of potentials carry a non-element
-  // potid suffix (e.g. "--water", "--TWIP") so no element symbols can be
-  // parsed. This must stay small — a growth here means a build regression.
-  it('bounds the entries with unparsed elements (regression tripwire)', () => {
+  // build-nist-catalog recovers elements from the potid system suffix when
+  // master_index has none. Only genuinely non-element systems ("water",
+  // "TWIP") remain empty. A growth here means the parser regressed.
+  it('only genuinely non-element systems lack elements (regression tripwire)', () => {
     const cat = JSON.parse(readFileSync(path, 'utf8')) as NistCatalogEntry[];
     const empty = cat.filter((c) => !Array.isArray(c.elements) || c.elements.length === 0);
-    expect(empty.length, `element-less ids: ${empty.map((e) => e.id).join(', ')}`).toBeLessThanOrEqual(10);
+    expect(empty.length, `element-less ids: ${empty.map((e) => e.id).join(', ')}`).toBeLessThanOrEqual(3);
+    for (const e of empty) {
+      expect(/water|twip/i.test(e.potid), `unexpected element-less potid: ${e.potid}`).toBe(true);
+    }
   });
 
   it('summarize runs cleanly on the real catalog', () => {
