@@ -54,6 +54,7 @@ jobs:
             --ignore-file=.gcloudignore-library \
             --substitutions=_AR_PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}",REPO_NAME="${GITHUB_REPOSITORY##*/}",COMMIT_SHA="${GITHUB_SHA}"
 
+
       - name: Report deploy status
         if: always()
         run: |
