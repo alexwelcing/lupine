@@ -22,6 +22,7 @@
     "test:rust": "cd packages/parsers/wasm && cargo test",
     "verify:viewer": "node tools/verify-viewer.mjs",
     "verify:gallery": "node tools/verify-gallery.mjs",
+    "verify:streaming": "npx -y tsx tools/verify-streaming.mjs",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
   },
