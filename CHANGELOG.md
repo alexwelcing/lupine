@@ -16,6 +16,21 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-05-18 — Fix mislabeled home-page preprint banner
+
+- **Why.** The Library home banner promoted the preprint as *"Immigrant Scientist — The
+  Invisible Foundation — a data-driven analysis of immigrant contributions to US science."*
+  The author is not an immigrant and that is not the paper. The copy was a confused
+  misreading of **IMMI** (*Integrating Materials and Manufacturing Innovation*, the target
+  journal) as "immigrant."
+- **What.** Verified `/immi_paper.pdf` is in fact *The Causal Geometry of Prediction Errors
+  in Interatomic Potentials* (Welcing, Lupine Materials Science). Corrected the
+  `home.preprint.*` strings (EN + ZH) in `i18n.js` to the real title/abstract; the link was
+  always correct.
+- **Results.** Banner now reads "IMMI Preprint — The Causal Geometry of Prediction Errors in
+  Interatomic Potentials." No "immigrant" copy remains in the build.
+- **Next.** Audit other recovered hardcoded copy for the same era of stale text.
+
 ## 2026-05-18 — Phase 1b: the deploy was green but the site never changed
 
 - **Why.** After Phase 1 merged, the Cloud Build went green yet `library.lupine.science`
