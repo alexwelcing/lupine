@@ -25,7 +25,6 @@ const SHELL_ASSETS = [
   '/styles.css',
   '/icon.svg',
   '/manifest.webmanifest',
-  '/vendor/force-graph.min.js',
   '/data/library.json',
 ];
 
