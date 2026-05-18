@@ -87,6 +87,8 @@ export interface AppState {
   file: LoadedFile | null;
   loading: boolean;
   loadProgress: number;
+  /** id of the gallery card whose dataset is loaded/loading (UI + E2E tracking). */
+  activeCardId: string | null;
   error: string | null;
   streamingTelemetry: {
     bytesTransferred: number;
@@ -296,6 +298,7 @@ export interface AppState {
   // ─── Actions ───
   setFile: (file: LoadedFile | null) => void;
   setLoading: (loading: boolean, progress?: number) => void;
+  setActiveCardId: (id: string | null) => void;
   setError: (error: string | null) => void;
   setStreamingTelemetry: (stats: AppState['streamingTelemetry']) => void;
   setFrame: (frame: number) => void;
@@ -388,6 +391,7 @@ const DEFAULTS = {
   file: null,
   loading: false,
   loadProgress: 0,
+  activeCardId: null,
   error: null,
   streamingTelemetry: null,
   frame: 0,
@@ -542,6 +546,7 @@ export const useStore = create<AppState>()(
     },
 
     setLoading: (loading, progress) => set((s) => ({ loading, loadProgress: progress ?? s.loadProgress })),
+    setActiveCardId: (id) => set({ activeCardId: id }),
 
     setError: (error) => set({ error, loading: false }),
     setStreamingTelemetry: (stats) => set({ streamingTelemetry: stats }),
@@ -686,6 +691,7 @@ export const useStore = create<AppState>()(
       playing: false,
       loading: false,
       loadProgress: 0,
+      activeCardId: null,
       error: null,
       activePanel: null,
       exportRequest: { type: null },

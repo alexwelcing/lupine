@@ -20,6 +20,8 @@
     "nist:build": "npx -y tsx scripts/build-nist-catalog.ts",
     "test": "turbo run test",
     "test:rust": "cd packages/parsers/wasm && cargo test",
+    "verify:viewer": "node tools/verify-viewer.mjs",
+    "verify:gallery": "node tools/verify-gallery.mjs",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
   },

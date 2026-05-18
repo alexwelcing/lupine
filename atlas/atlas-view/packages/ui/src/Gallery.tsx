@@ -6,7 +6,7 @@
  * into the viewer.
  */
 
-import { useCallback, useRef, useEffect, useState, useMemo } from 'react';
+import { useCallback, useRef, useEffect, useState, useMemo, useDeferredValue } from 'react';
 import { useStore } from './store';
 import galleryData from './gallery-data.json';
 import {
@@ -254,6 +254,66 @@ const sGrid: React.CSSProperties = {
   gap: 16,
 };
 
+// Off-screen but readable by assistive tech (aria-live status region).
+const sVisuallyHidden: React.CSSProperties = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  margin: -1,
+  padding: 0,
+  overflow: 'hidden',
+  clip: 'rect(0 0 0 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
+const sEmpty: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 10,
+  padding: '64px 24px',
+  textAlign: 'center',
+  border: '1px dashed rgba(255,255,255,0.12)',
+  borderRadius: 12,
+  background: 'rgba(255,255,255,0.015)',
+};
+
+const sEmptyTitle: React.CSSProperties = {
+  fontSize: 16,
+  fontWeight: 600,
+  color: '#f1f5f9',
+};
+
+const sEmptySub: React.CSSProperties = {
+  fontSize: 13,
+  color: 'rgba(255,255,255,0.5)',
+  margin: 0,
+  maxWidth: 420,
+};
+
+const sEmptyReset: React.CSSProperties = {
+  marginTop: 6,
+  padding: '7px 16px',
+  fontSize: 12,
+  fontWeight: 600,
+  color: '#e2e8f0',
+  background: 'rgba(255,255,255,0.06)',
+  border: '1px solid rgba(255,255,255,0.14)',
+  borderRadius: 8,
+  cursor: 'pointer',
+};
+
+const sProgressTrack: React.CSSProperties = {
+  width: '70%',
+  height: 4,
+  marginTop: 12,
+  borderRadius: 2,
+  background: 'rgba(255,255,255,0.12)',
+  overflow: 'hidden',
+};
+
 const sPatch = (hovered: boolean, unavailable: boolean, threadColor: string): React.CSSProperties => ({
   position: 'relative',
   display: 'flex',
@@ -417,6 +477,9 @@ export function Gallery() {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Domain | 'All'>('All');
   const [search, setSearch] = useState('');
+  // Keep the input responsive while the (potentially large) filtered grid
+  // re-renders off the deferred value — avoids per-keystroke jank.
+  const deferredSearch = useDeferredValue(search);
 
   // Device cap is computed once at mount — UA / hardwareConcurrency don't
   // change during a session. Used to mark cards as "won't fit on this device"
@@ -426,8 +489,8 @@ export function Gallery() {
   const filteredExamples = useMemo(() => {
     return EXAMPLES.filter(ex => {
       if (filter !== 'All' && ex.domain !== filter) return false;
-      if (search) {
-        const s = search.toLowerCase();
+      if (deferredSearch) {
+        const s = deferredSearch.toLowerCase();
         return (
           ex.title.toLowerCase().includes(s) ||
           ex.subtitle.toLowerCase().includes(s) ||
@@ -436,7 +499,7 @@ export function Gallery() {
       }
       return true;
     });
-  }, [filter, search]);
+  }, [filter, deferredSearch]);
 
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
     if (!example.available) return;
@@ -477,6 +540,7 @@ export function Gallery() {
 
     setLoadingId(example.id);
     useStore.getState().setLoading(true, 0);
+    useStore.getState().setActiveCardId(example.id);
 
     // Clean up any existing streaming loader from a previous load
     if ((window as any).__atlasStreamingCleanup) {
@@ -735,7 +799,14 @@ export function Gallery() {
   }, [handleLoad]);
 
   return (
-    <div style={sQuilt}>
+    <div style={sQuilt} data-testid="gallery">
+      {/* Screen-reader status: result count + active load. */}
+      <div aria-live="polite" role="status" style={sVisuallyHidden}>
+        {loadingId
+          ? `Loading ${EXAMPLES.find((e) => e.id === loadingId)?.title ?? 'simulation'}`
+          : `${filteredExamples.length} simulation${filteredExamples.length === 1 ? '' : 's'} shown`}
+      </div>
+
       {/* ─── Header ─── */}
       <div style={sHeader}>
         <div style={sHeaderTitle}>
@@ -759,14 +830,16 @@ export function Gallery() {
           </div>
         </div>
 
-        <div style={sSearch}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <div style={sSearch} role="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
           <input
-            type="text"
+            type="search"
             placeholder="Search patches..."
+            aria-label="Search simulations by title, description, or domain"
+            data-testid="gallery-search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={sSearchInput}
@@ -775,10 +848,12 @@ export function Gallery() {
       </div>
 
       {/* ─── Filter ribbon ─── */}
-      <div style={sRibbon}>
+      <div style={sRibbon} role="group" aria-label="Filter simulations by domain">
         <button
           style={sRibbonTab(filter === 'All', 'rgba(255,255,255,0.2)')}
           onClick={() => setFilter('All')}
+          aria-pressed={filter === 'All'}
+          data-testid="gallery-filter-all"
         >
           All
           <span style={sRibbonCount}>{EXAMPLES.length}</span>
@@ -790,6 +865,7 @@ export function Gallery() {
               key={domain}
               style={sRibbonTab(filter === domain, DOMAIN_THREAD[domain])}
               onClick={() => setFilter(domain)}
+              aria-pressed={filter === domain}
             >
               <span style={{ ...sRibbonDot, background: DOMAIN_COLORS[domain] }} />
               {domain}
@@ -800,7 +876,23 @@ export function Gallery() {
       </div>
 
       {/* ─── Quilt grid ─── */}
-      {filter === 'All' && !search ? (
+      {filteredExamples.length === 0 ? (
+        <div style={sEmpty} data-testid="gallery-empty">
+          <div style={sEmptyTitle}>No simulations match</div>
+          <p style={sEmptySub}>
+            {deferredSearch
+              ? <>Nothing matches “{deferredSearch}”{filter !== 'All' ? <> in {filter}</> : null}.</>
+              : <>No simulations in {filter}.</>}
+          </p>
+          <button
+            style={sEmptyReset}
+            data-testid="gallery-empty-reset"
+            onClick={() => { setSearch(''); setFilter('All'); }}
+          >
+            Clear filters
+          </button>
+        </div>
+      ) : filter === 'All' && !deferredSearch ? (
         ALL_DOMAINS.map(domain => {
           const domainExamples = filteredExamples.filter(ex => ex.domain === domain);
           if (domainExamples.length === 0) return null;
@@ -892,6 +984,9 @@ function PatchCard({
   const exceedsCap = parseAtomCountLabel(example.atoms) > deviceCap;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imgError, setImgError] = useState(false);
+  // Only the loading card subscribes to progress — others ignore it.
+  const loadProgress = useStore((s) => (loading ? s.loadProgress : 0));
+  const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
   const domainColor = DOMAIN_COLORS[example.domain];
   const threadColor = DOMAIN_THREAD[example.domain];
 
@@ -975,13 +1070,27 @@ function PatchCard({
     }
   }, [example, imgError]);
 
+  const disabledReason = !example.available
+    ? 'coming soon'
+    : exceedsCap
+      ? `${example.atoms} atoms exceeds this device's memory budget — open on desktop`
+      : null;
+
   return (
     <button
       style={sPatch(hovered, !example.available || exceedsCap, threadColor)}
       onClick={onClick}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
+      onFocus={(e) => { onHover(); e.currentTarget.style.outline = `2px solid ${threadColor}`; e.currentTarget.style.outlineOffset = '2px'; }}
+      onBlur={(e) => { onLeave(); e.currentTarget.style.outline = 'none'; }}
       disabled={loading || !example.available}
+      data-testid={`gallery-card-${example.id}`}
+      aria-label={
+        `${example.title} — ${example.domain}, ${example.atoms} atoms` +
+        (disabledReason ? ` (${disabledReason})` : '')
+      }
+      aria-disabled={loading || !example.available}
       title={exceedsCap
         ? `~${example.atoms} atoms exceeds the memory budget for this device`
         : undefined}
@@ -1054,7 +1163,15 @@ function PatchCard({
       </div>
 
       {loading && (
-        <div style={sPatchLoading}>
+        <div
+          style={sPatchLoading}
+          data-testid={`gallery-card-loading-${example.id}`}
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={pct}
+          aria-label={`Loading ${example.title}`}
+        >
           <svg width="32" height="32" viewBox="0 0 32 32">
             <circle
               cx="16" cy="16" r="12"
@@ -1074,7 +1191,17 @@ function PatchCard({
               />
             </circle>
           </svg>
-          <span>Loading...</span>
+          <span>{pct > 0 ? `Loading ${pct}%` : 'Loading…'}</span>
+          <div style={sProgressTrack}>
+            <div
+              style={{
+                width: `${Math.max(pct, 3)}%`,
+                height: '100%',
+                background: threadColor,
+                transition: 'width 0.2s ease-out',
+              }}
+            />
+          </div>
         </div>
       )}
     </button>

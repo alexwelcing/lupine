@@ -78,10 +78,14 @@ describe('SpatialAnchor (Contexts)', () => {
     const xrWrapper = scene.findByProps({ 'data-testid': 'xr-interaction' });
     expect(xrWrapper).toBeDefined();
 
-    // Ensure the inner group has been scaled down for AR (scale ~ 0.028)
+    // At cameraDistance=50: sceneDiagonal = max(0.5, 50/1.4) = 35.71,
+    // raw = 0.3 / 35.71 = 0.0084, clamped to [0.005, 0.5] -> 0.0084.
+    // The molecule must be scaled well down for handheld AR, but never
+    // collapse onto the 0.005 hard floor.
     const scaleGroup = xrWrapper.children[0];
+    expect(scaleGroup.props.scale).toBeCloseTo(0.0084, 3);
     expect(scaleGroup.props.scale).toBeLessThan(1.0);
-    expect(scaleGroup.props.scale).toBeGreaterThan(0.01);
+    expect(scaleGroup.props.scale).toBeGreaterThan(0.005);
 
     // Verify grounding shadows
     const shadow = scene.findByProps({ 'data-testid': 'drei-shadows' });
