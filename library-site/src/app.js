@@ -10,6 +10,7 @@ const STATE = {
   currentId: null,
   settings: loadSettings(),
   progress: loadProgress(), // { [id]: { pct, scrollTop, ts } }
+  statusFilter: null,       // null = all; else a status id from manifest.statuses
 };
 
 const VIEW = document.getElementById('view');
@@ -226,17 +227,45 @@ async function renderHome() {
       VIEW.append(sec);
     }
 
+    // Status filter — browse the corpus by lifecycle stage. Only statuses
+    // actually present in the corpus get a chip, each with a live count.
+    const statuses = m.statuses || {};
+    const presentCounts = {};
+    for (const a of m.articles) if (a.status) presentCounts[a.status] = (presentCounts[a.status] || 0) + 1;
+    const presentStatuses = Object.keys(statuses).filter(s => presentCounts[s]);
+    if (presentStatuses.length) {
+      const bar = el('div', { class: 'status-filter', style: 'display:flex;flex-wrap:wrap;gap:8px;margin:0 16px 20px 16px;' });
+      const chip = (label, color, active, on) => {
+        const c = el('button', {
+          class: 'status-chip' + (active ? ' active' : ''),
+          style: `font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:999px;cursor:pointer;border:1px solid ${color};color:${active ? '#fff' : color};background:${active ? color : `color-mix(in srgb, ${color} 10%, transparent)`};`,
+        }, label);
+        c.addEventListener('click', on);
+        return c;
+      };
+      bar.append(chip(`All · ${m.articles.length}`, '#9ca3af', !STATE.statusFilter, () => { STATE.statusFilter = null; renderHome(); }));
+      for (const s of presentStatuses) {
+        const st = statuses[s];
+        bar.append(chip(`${t(st.label, STATE.settings.lang)} · ${presentCounts[s]}`, st.color, STATE.statusFilter === s, () => { STATE.statusFilter = s; renderHome(); }));
+      }
+      VIEW.append(bar);
+    }
+
     // Shelves
     for (const cat of m.categories) {
-      const arts = m.articles.filter(a => a.category === cat.id);
+      let arts = m.articles.filter(a => a.category === cat.id);
+      if (STATE.statusFilter) arts = arts.filter(a => a.status === STATE.statusFilter);
       if (!arts.length) continue;
       const shelf = el('section', { class: 'shelf' });
       shelf.append(el('h2', {}, t(cat.label, STATE.settings.lang)));
-      if (cat.blurb) shelf.append(el('p', { class: 'blurb' }, t(cat.blurb, STATE.settings.lang)));
+      if (cat.blurb && !STATE.statusFilter) shelf.append(el('p', { class: 'blurb' }, t(cat.blurb, STATE.settings.lang)));
       const cards = el('div', { class: 'cards' });
       for (const a of arts) cards.append(cardFor(a));
       shelf.append(cards);
       VIEW.append(shelf);
+    }
+    if (STATE.statusFilter && !m.articles.some(a => a.status === STATE.statusFilter)) {
+      VIEW.append(el('div', { class: 'empty', style: 'margin:24px 16px;' }, 'No entries with this status.'));
     }
   } catch (e) {
     console.error(e);
