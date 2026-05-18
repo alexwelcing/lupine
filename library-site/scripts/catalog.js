@@ -69,6 +69,15 @@ export const CATALOG = {
       tags: ['meta', 'strategy', 'roadmap'],
     },
     {
+      id: 'phoenix-observability',
+      source: 'docs/phoenix-observability.md',
+      title: 'Phoenix: Making the Research Loop Observable',
+      subtitle: 'Why we wired Phoenix, the Cloudflare edge limit we proved, and how to get more value from it.',
+      category: 'changelog',
+      tags: ['phoenix', 'observability', 'evals', 'featured'],
+      featured: true,
+    },
+    {
       id: 'research-evolution',
       source: 'docs/research_evolution_2026_05_05.md',
       title: 'The Loop That Caught Itself',

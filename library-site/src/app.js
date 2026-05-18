@@ -189,6 +189,19 @@ async function renderHome() {
     paperBanner.append(bannerLink);
     VIEW.append(paperBanner);
 
+    // Featured — catalog entries flagged featured:true, rendered prominently
+    // so the most important current work is the first thing read.
+    const featured = (m.articles || []).filter(a => a.featured);
+    for (const fa of featured) {
+      const card = el('section', { class: 'continue', style: 'background: linear-gradient(135deg, rgba(192,132,252,0.12), rgba(37,99,235,0.10)); border: 1px solid rgba(192,132,252,0.30); padding: 16px; border-radius: 8px; margin: 0 16px 24px 16px;' });
+      const link = el('a', { href: `#/read/${fa.id}`, style: 'text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 4px;' });
+      link.append(el('span', { style: 'font-size: 0.75rem; text-transform: uppercase; color: #c084fc; font-weight: bold; letter-spacing: 0.05em;' }, '★ Featured'));
+      link.append(el('strong', { style: 'font-size: 1.1rem;' }, t(fa.title, STATE.settings.lang)));
+      if (fa.subtitle) link.append(el('span', { style: 'font-size: 0.9rem; color: var(--on-surface-variant, #9ca3af);' }, t(fa.subtitle, STATE.settings.lang)));
+      card.append(link);
+      VIEW.append(card);
+    }
+
     // Continue reading
     const inProgress = Object.entries(STATE.progress)
       .map(([id, v]) => ({ id, ...v }))

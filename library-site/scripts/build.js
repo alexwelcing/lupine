@@ -299,6 +299,7 @@ function build() {
       words: defaultArticle.words,
       readMinutes: defaultArticle.readMinutes,
       languages,
+      featured: !!entry.featured,
     };
     articles.push(meta);
   }
