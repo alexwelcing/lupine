@@ -16,6 +16,21 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-05-18 — Fix mislabeled home-page preprint banner
+
+- **Why.** The Library home banner promoted the preprint as *"Immigrant Scientist — The
+  Invisible Foundation — a data-driven analysis of immigrant contributions to US science."*
+  The author is not an immigrant and that is not the paper. The copy was a confused
+  misreading of **IMMI** (*Integrating Materials and Manufacturing Innovation*, the target
+  journal) as "immigrant."
+- **What.** Verified `/immi_paper.pdf` is in fact *The Causal Geometry of Prediction Errors
+  in Interatomic Potentials* (Welcing, Lupine Materials Science). Corrected the
+  `home.preprint.*` strings (EN + ZH) in `i18n.js` to the real title/abstract; the link was
+  always correct.
+- **Results.** Banner now reads "IMMI Preprint — The Causal Geometry of Prediction Errors in
+  Interatomic Potentials." No "immigrant" copy remains in the build.
+- **Next.** Audit other recovered hardcoded copy for the same era of stale text.
+
 ## 2026-05-18 — Phase 1b: the deploy was green but the site never changed
 
 - **Why.** After Phase 1 merged, the Cloud Build went green yet `library.lupine.science`
@@ -125,6 +140,89 @@ Newest first. Dates are absolute.
 - **Next.** Treat self-correction as a publishable primitive: every refuted claim gets a
   changelog entry and a hypothesis-shelf status of `refuted (by us)`, with the confounder
   named.
+
+---
+
+# Backfill — work since the site went stale (2026-04-27 → 2026-05-16)
+
+The Library froze on the 2026-04-28 build. ~355 commits landed before it was revived.
+These are the arcs that matter, reconstructed so the corpus reflects current reality.
+Not every commit — the ones that changed what we believe or what the system can do.
+
+## 2026-05-17 — Phase D: close the loop with real physics
+
+- **Why.** Every result above is computed from *predicted* properties already in the corpus.
+  To validate recipes and extend the manifold beyond C_ij/a₀ (to E_coh, B₀) we need to run
+  real LAMMPS, not trust the cache.
+- **What.** Shipped the Phase-D compute resolution lane: a WAF-resilient HTTP client
+  (retry + backoff + jitter, browser UA), a committed NIST harness, and a resilient compute
+  deploy. Then ran real LAMMPS through it.
+- **Results.** Running real physics immediately surfaced **3 real recipe/integration bugs**
+  (P0/P1) that the cached pipeline had masked — exactly the point of the lane. Compute path
+  now deploys and survives datacenter WAF blocks.
+- **Next.** Produce E_coh / B₀ from Phase-D recipes and fold them into the joint manifold;
+  re-test hyper-ribbon stability across four property families.
+
+## 2026-05-17 — The self-improving eval loop (Evolver spine)
+
+- **Why.** Phoenix gave us observability; the next step is *actuation* — a loop that reads
+  its own eval results and improves the thing being measured. Without it, evals are a
+  dashboard, not a kernel.
+- **What.** Built the eval-loop units end to end: Phoenix dataset-read + Experiments REST
+  client, an A/B oracle, the Evolver self-improving spine, the registry/provenance/
+  regression-gate trio, and `/ops/experiment-generate` (the Evolver activation prereq).
+  Closed the eval→routing loop so model selection is eval-aware.
+- **Results.** The loop's spine exists and is wired: hypothesis lifecycle traces are the
+  substrate, Phoenix evals are the fitness function, the Evolver is the actuator. Autonomous
+  actuation is deliberately narrow (prompts/rubrics/criteria); structural change stays
+  PR-gated.
+- **Next.** Arm the Evolver on a live hypothesis; keep structural edits human-gated. This is
+  the long-term organizing principle — the hypothesis lifecycle, not the prompt, is the unit
+  of optimization.
+
+## 2026-05-04…05 — Hypothesis closures: the corpus refutes itself, correctly
+
+- **Why.** The hyper-ribbon and the BCC/FCC dichotomy were found in *classical* potentials.
+  Do they transfer to foundation MLIPs? And do our exciting sub-findings survive scrutiny?
+- **What.** Ran the research-round loop: ingested MACE-MP-0, then CHGNet, then Orb-v3 on the
+  IMMI elements; ran matched-n bootstrap tests on the d-band and MEAM anomalies.
+- **Results.**
+  - **Hyper-ribbon transfers:** 14/15 IMMI elements stay on the hyper-ribbon when each
+    foundation MLIP is added. This is the genuinely surprising result — we did *not* expect
+    classical→MLIP transfer.
+  - **Au escapes** the ribbon across MACE and CHGNet (confirmed); **Ag escape refuted**
+    (CHGNet pulls it back); **Fe** is a persistent outlier invariant to LAM addition.
+  - **D-band hypothesis REFUTED** (full-sample ρ=−0.02); the apparent signal was a
+    sample-size confounder (ρ=−0.50 to −0.66), recovering only on the n≥3 subset (ρ=+0.52).
+  - **MEAM "intrinsically 2D" anomaly REFUTED** by matched-n bootstrap (MEAM n=7 median
+    PR=1.36 overlaps Tersoff PR=1.01) — same confounder flavor as d-band.
+- **Next.** These become `refuted (by us)` entries on the Conjectures & Proofs shelf
+  (Phase 2), each with the confounder named. The self-correction *method* is the
+  contribution.
+
+## 2026-05-15…16 — One LLM path, eval-aware routing, AI Gateway
+
+- **Why.** `glim-think` had two LLM paths; the gateway one was dead (0/300 Phoenix spans),
+  so half the telemetry was fiction and routing decisions were blind.
+- **What.** Consolidated to one AI-SDK-native path (eval-aware deep tier), deleted the dead
+  gateway path, routed Workers AI through Cloudflare AI Gateway (hybrid — Zhipu/MiniMax stay
+  direct, Gateway rejects them), and made the per-model scorecard read live-path attribution
+  (`ai.telemetry.functionId`).
+- **Results.** Telemetry is now truthful; the eval→routing loop selects models on real
+  measured performance instead of a path that never executed.
+- **Next.** Let the scorecard drive the Evolver's model-selection actuation.
+
+## 2026-05-06…18 — atlas-view: streaming, render polish, curated gallery
+
+- **Why.** The WebGPU explorer choked on large scenes and shipped 185 uncurated gallery
+  entries; the manifold is only persuasive if it renders fast and looks right.
+- **What.** Progressive chunked GPU upload + within-frame streaming parse + `.glimbin`
+  streaming pipeline + cluster-splat LOD + device-tier atom caps; bond/shader polish (flat
+  2-tone bonds, isotropic atom shader, killed light flicker/shimmer); rebuilt the gallery
+  to a curated 18-entry set; added a pre-merge CI and a Playwright UI harness.
+- **Results.** Huge scenes stream instead of stalling; the gallery is curated and the test
+  suite is green (14/14) with reproducible NIST catalog + streaming smoke tests in CI.
+- **Next.** Visual-regression diffing (screenshots are captured but not yet diffed).
 
 ---
 
