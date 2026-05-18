@@ -56,6 +56,11 @@ export const CATALOG = {
       blurb: { en: 'Coarse-graining, sloppy models, information-theoretic bounds.', zh: '粗粒化、sloppy模型、信息论边界。' },
     },
     {
+      id: 'references',
+      label: { en: 'References & Lineage', zh: '参考文献与谱系' },
+      blurb: { en: 'The external literature we build on — what each work is and why we cite it.', zh: '我们所依据的外部文献 — 每项工作是什么以及我们为何引用它。' },
+    },
+    {
       id: 'ecosystem',
       label: { en: 'Ecosystem & Funding', zh: '生态与资金' },
       blurb: { en: 'The people, labs, and programs behind computational materials.', zh: '计算材料科学背后的研究人员、实验室和项目。' },
@@ -360,12 +365,22 @@ export const CATALOG = {
       category: 'theory',
       tags: ['information-theory'],
     },
+
+    // ── References & Lineage ────────────────────────────────────────
+    {
+      id: 'references',
+      source: 'docs/references.md',
+      title: 'References & Intellectual Lineage',
+      subtitle: 'The 35 external works we build on — each with what it is and why we cite it.',
+      category: 'references',
+      tags: ['references', 'bibliography', 'lineage'],
+    },
     {
       id: 'lit-review-error-structure',
       source: 'lit-review.md',
       title: 'Error Structure in Interatomic Potentials — Literature Review',
       subtitle: 'Sloppy models, Simpson’s paradox, and FCC error manifolds: a 30-reference synthesis.',
-      category: 'theory',
+      category: 'references',
       tags: ['literature-review', 'sloppy', 'simpson', 'fcc'],
     },
 
