@@ -31,6 +31,21 @@ Newest first. Dates are absolute.
   Interatomic Potentials." No "immigrant" copy remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
+## 2026-05-18 — Phase 2b: reader-side status filter
+
+- **Why.** Phase 2 shipped the status *badge* but you still could not *browse* by
+  lifecycle stage — the named gap. A thinking surface should let you ask "show me only
+  what we refuted" in one click.
+- **What.** Added a status filter bar on the home page: an `All · N` chip plus one
+  color-coded chip per status actually present in the corpus, each with a live count.
+  Clicking filters every shelf to that status (spanning shelves, not just Conjectures —
+  e.g. `proven` surfaces the Formal Proof Ledger), hides empty shelves and blurbs, and
+  `All` restores. Pure client state, no manifest change.
+- **Results.** `supported → 3`, `refuted → 2`, `self-corrected → 1`, `proven → 1`,
+  `open → 2`, `All → 46`. The refutations are now one click from the front door.
+- **Next.** Generate the per-hypothesis entries from the live closure records so the
+  ledger updates itself as research lands (the remaining Phase 2 follow-up).
+
 ## 2026-05-18 — Phase 2: the corpus becomes a ledger (Tier 1 + Tier 2)
 
 - **Why.** The Library had the narrative (changelog) and the reports, but the actual
