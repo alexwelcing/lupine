@@ -30,10 +30,6 @@ const STRINGS = {
     'reader.nav.end': 'End of library',
     'reader.error.offline': 'Could not load this article. You may be offline, or the article may have moved.',
 
-    'graph.loading': 'Building entity graph…',
-    'graph.error.manifest': 'Could not load library manifest for the graph.',
-    'graph.error.lib': 'Force-graph library failed to load.',
-
     'search.placeholder': 'Search the library…',
     'search.results.one': '1 result found.',
     'search.results.many': '{count} results found.',
@@ -83,10 +79,6 @@ const STRINGS = {
     'reader.nav.start': '已是第一篇',
     'reader.nav.end': '已是最后一篇',
     'reader.error.offline': '无法加载此文章，您可能处于离线状态或文章已移动。',
-
-    'graph.loading': '正在构建知识图谱…',
-    'graph.error.manifest': '无法加载图书馆清单。',
-    'graph.error.lib': 'Force-graph 库加载失败。',
 
     'search.placeholder': '搜索图书馆…',
     'search.results.one': '找到 1 条结果。',

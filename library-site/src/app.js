@@ -188,12 +188,12 @@ async function renderHome() {
     hero.append(stats);
     VIEW.append(hero);
 
-    // Preprint Banner
-    const paperBanner = el('section', { class: 'continue', style: 'background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.2); padding: 16px; border-radius: 8px; margin: 0 16px 24px 16px; display: block; text-decoration: none;' });
-    const bannerLink = el('a', { href: '/immi_paper.pdf', target: '_blank', style: 'text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 4px;' });
-    bannerLink.append(el('span', { style: 'font-size: 0.75rem; text-transform: uppercase; color: #60a5fa; font-weight: bold; letter-spacing: 0.05em;' }, t('home.preprint.badge', STATE.settings.lang)));
-    bannerLink.append(el('strong', { style: 'font-size: 1.1rem; color: #fff;' }, t('home.preprint.title', STATE.settings.lang)));
-    bannerLink.append(el('span', { style: 'font-size: 0.9rem; color: #9ca3af;' }, t('home.preprint.sub', STATE.settings.lang)));
+    // Preprint Banner — aligned to the 720px content column via .callout.
+    const paperBanner = el('section', { class: 'callout' });
+    const bannerLink = el('a', { class: 'callout-box callout-preprint', href: '/immi_paper.pdf', target: '_blank' });
+    bannerLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--accent);font-weight:700;letter-spacing:0.05em;' }, t('home.preprint.badge', STATE.settings.lang)));
+    bannerLink.append(el('strong', { style: 'font-size:1.1rem;' }, t('home.preprint.title', STATE.settings.lang)));
+    bannerLink.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, t('home.preprint.sub', STATE.settings.lang)));
     paperBanner.append(bannerLink);
     VIEW.append(paperBanner);
 
@@ -201,11 +201,11 @@ async function renderHome() {
     // so the most important current work is the first thing read.
     const featured = (m.articles || []).filter(a => a.featured);
     for (const fa of featured) {
-      const card = el('section', { class: 'continue', style: 'background: linear-gradient(135deg, rgba(192,132,252,0.12), rgba(37,99,235,0.10)); border: 1px solid rgba(192,132,252,0.30); padding: 16px; border-radius: 8px; margin: 0 16px 24px 16px;' });
-      const link = el('a', { href: `#/read/${fa.id}`, style: 'text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 4px;' });
-      link.append(el('span', { style: 'font-size: 0.75rem; text-transform: uppercase; color: #c084fc; font-weight: bold; letter-spacing: 0.05em;' }, '★ Featured'));
-      link.append(el('strong', { style: 'font-size: 1.1rem;' }, t(fa.title, STATE.settings.lang)));
-      if (fa.subtitle) link.append(el('span', { style: 'font-size: 0.9rem; color: var(--on-surface-variant, #9ca3af);' }, t(fa.subtitle, STATE.settings.lang)));
+      const card = el('section', { class: 'callout' });
+      const link = el('a', { class: 'callout-box callout-featured', href: `#/read/${fa.id}` });
+      link.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--lupine-300);font-weight:700;letter-spacing:0.05em;' }, '★ Featured'));
+      link.append(el('strong', { style: 'font-size:1.1rem;' }, t(fa.title, STATE.settings.lang)));
+      if (fa.subtitle) link.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, t(fa.subtitle, STATE.settings.lang)));
       card.append(link);
       VIEW.append(card);
     }
@@ -234,7 +234,7 @@ async function renderHome() {
     for (const a of m.articles) if (a.status) presentCounts[a.status] = (presentCounts[a.status] || 0) + 1;
     const presentStatuses = Object.keys(statuses).filter(s => presentCounts[s]);
     if (presentStatuses.length) {
-      const bar = el('div', { class: 'status-filter', style: 'display:flex;flex-wrap:wrap;gap:8px;margin:0 16px 20px 16px;' });
+      const bar = el('div', { class: 'status-filter' });
       const chip = (label, color, active, on) => {
         const c = el('button', {
           class: 'status-chip' + (active ? ' active' : ''),
@@ -477,154 +477,6 @@ function scoreMatch(a, q) {
   }
   return s;
 }
-
-// ───────────────────────────────────────────────────────────────
-// Entity Graph Dialog
-// ───────────────────────────────────────────────────────────────
-const graphDialog = document.getElementById('graph-dialog');
-const graphContainer = document.getElementById('graph-container');
-document.getElementById('graph-btn').addEventListener('click', openGraph);
-document.getElementById('graph-close').addEventListener('click', () => graphDialog.close());
-graphDialog.addEventListener('click', (e) => { if (e.target === graphDialog) graphDialog.close(); });
-
-let graphInstance = null;
-
-// force-graph is shipped self-hosted under /vendor/ and loaded with `defer`,
-// but if that file is missing (stale service worker, broken deploy) fall back
-// to the CDN so the entity graph still works.
-const FORCE_GRAPH_CDN = 'https://unpkg.com/force-graph';
-let _fgFallbackTried = false;
-
-function injectForceGraphFallback() {
-  if (_fgFallbackTried) return;
-  _fgFallbackTried = true;
-  return new Promise((resolve) => {
-    const s = document.createElement('script');
-    s.src = FORCE_GRAPH_CDN;
-    s.async = true;
-    s.onload = () => resolve(true);
-    s.onerror = () => resolve(false);
-    document.head.appendChild(s);
-  });
-}
-
-async function waitForForceGraph(timeoutMs = 5000) {
-  if (window.ForceGraph) return true;
-  // Wait for the deferred /vendor/ script to finish loading.
-  await new Promise((resolve) => {
-    const start = Date.now();
-    const tick = () => {
-      if (window.ForceGraph) return resolve();
-      if (Date.now() - start > timeoutMs) return resolve();
-      setTimeout(tick, 50);
-    };
-    tick();
-  });
-  if (window.ForceGraph) return true;
-  // Vendor file never set the global — fall back to the CDN.
-  await injectForceGraphFallback();
-  return !!window.ForceGraph;
-}
-
-function buildGraphData(manifest) {
-  const nodes = [];
-  const links = [];
-  const seen = new Map();
-  const add = (id, group, label, val) => {
-    if (seen.has(id)) return seen.get(id);
-    const n = { id, group, name: label, val };
-    nodes.push(n);
-    seen.set(id, n);
-    return n;
-  };
-
-  // Category nodes — anchor the layout into shelves.
-  for (const cat of manifest.categories) {
-    add(`cat:${cat.id}`, 'category', t(cat.label, STATE.settings.lang), 6);
-  }
-
-  // Article nodes link to their category and to each tag (tags become the
-  // shared "entities" that bridge shelves).
-  for (const a of manifest.articles) {
-    add(a.id, 'article', t(a.title, STATE.settings.lang), 3);
-    if (a.category) {
-      links.push({ source: a.id, target: `cat:${a.category}` });
-    }
-    for (const tag of a.tags || []) {
-      const tagId = `tag:${tag}`;
-      add(tagId, 'tag', `#${tag}`, 1.5);
-      links.push({ source: a.id, target: tagId });
-    }
-  }
-  return { nodes, links };
-}
-
-async function openGraph() {
-  if (typeof graphDialog.showModal === 'function') graphDialog.showModal();
-  else graphDialog.setAttribute('open', '');
-
-  graphContainer.innerHTML = `<div class="graph-status">${t('graph.loading', STATE.settings.lang)}</div>`;
-
-  let manifest;
-  try {
-    manifest = await fetchManifest();
-  } catch (err) {
-    console.error('graph: manifest failed', err);
-    graphContainer.innerHTML = `<div class="graph-status err">${t('graph.error.manifest', STATE.settings.lang)}</div>`;
-    return;
-  }
-
-  const ok = await waitForForceGraph();
-  if (!ok || !window.ForceGraph) {
-    graphContainer.innerHTML = `<div class="graph-status err">${t('graph.error.lib', STATE.settings.lang)}</div>`;
-    return;
-  }
-
-  const { nodes, links } = buildGraphData(manifest);
-
-  // Tear down any previous instance — dimensions, theme, or data may have
-  // changed since last open. force-graph wires its own canvas/listeners, so
-  // recreating is the safe way to re-render cleanly inside <dialog>.
-  graphContainer.innerHTML = '';
-  const isDark = document.documentElement.dataset.theme !== 'light';
-  const groupColor = {
-    article: isDark ? '#7dd3fc' : '#0369a1',
-    tag:     isDark ? '#fbbf24' : '#b45309',
-    category:isDark ? '#c084fc' : '#7e22ce',
-  };
-
-  graphInstance = ForceGraph()(graphContainer)
-    .backgroundColor('transparent')
-    .nodeLabel('name')
-    .nodeColor(n => groupColor[n.group] || '#888')
-    .linkColor(() => isDark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.18)')
-    .linkWidth(0.6)
-    .nodeRelSize(4)
-    .cooldownTicks(80)
-    .onNodeClick(node => {
-      if (node.group === 'article') {
-        graphDialog.close();
-        location.hash = `#/read/${node.id}`;
-      }
-    });
-
-  // Dialog dimensions are only valid once the dialog is on-screen and laid
-  // out; rAF gives us that without a magic-number timeout.
-  requestAnimationFrame(() => {
-    const rect = graphContainer.getBoundingClientRect();
-    graphInstance
-      .width(rect.width)
-      .height(rect.height)
-      .graphData({ nodes, links });
-  });
-}
-
-// Re-fit when the dialog is resized (orientation change, browser zoom).
-window.addEventListener('resize', () => {
-  if (!graphInstance || !graphDialog.open) return;
-  const rect = graphContainer.getBoundingClientRect();
-  graphInstance.width(rect.width).height(rect.height);
-});
 
 // ───────────────────────────────────────────────────────────────
 // Settings dialog

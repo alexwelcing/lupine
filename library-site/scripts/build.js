@@ -332,16 +332,6 @@ function build() {
     }
   }
 
-  // Self-host force-graph so the entity graph keeps working offline and is
-  // not held hostage to CDN availability or TLS hiccups at unpkg.
-  const fgSrc = path.join(ROOT, 'node_modules', 'force-graph', 'dist', 'force-graph.min.js');
-  if (fs.existsSync(fgSrc)) {
-    fs.mkdirSync(path.join(DIST, 'vendor'), { recursive: true });
-    fs.copyFileSync(fgSrc, path.join(DIST, 'vendor', 'force-graph.min.js'));
-  } else {
-    console.warn('[warn] force-graph not in node_modules; entity graph will fall back to CDN');
-  }
-
   console.log(`Built ${articles.length} articles. version=${version}`);
   console.log(`Output: ${path.relative(process.cwd(), DIST)}`);
 }

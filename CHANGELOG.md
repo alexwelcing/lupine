@@ -31,6 +31,25 @@ Newest first. Dates are absolute.
   Interatomic Potentials." No "immigrant" copy remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
+## 2026-05-18 — Remove Entity Graph; fix callout/filter alignment
+
+- **Why.** The Entity Graph (force-graph) was unwanted weight, and the status-filter
+  pills and the preprint/featured callouts hugged the left edge while the rest of the
+  page is a centered 720px column — they used hardcoded inline `margin:0 16px` that
+  overrode the column's `margin:0 auto`.
+- **What.** Deleted the Entity Graph end to end: the topbar button and `<dialog>` from
+  `index.html`, the `force-graph` `<script>`, the whole graph section in `app.js`
+  (~150 lines incl. the CDN fallback), the SW precache entry, the `build.js`
+  vendoring step, the graph CSS, and the graph i18n strings. Added real `.status-filter`
+  / `.callout` / `.callout-box` classes that use the same `max-width:720px; margin:0
+  auto; padding:0 20px` container as `.shelf`/`.hero`, and removed the conflicting
+  inline margins; callout text now uses theme variables instead of hardcoded `#fff`.
+- **Results.** No graph code, no `/vendor/`, no force-graph in the build; `app.js`
+  syntax-clean. The filter pills and both callouts now align flush with the shelves in
+  every theme.
+- **Next.** Optionally drop the unused `force-graph` dependency from `package.json`
+  (left in place now to keep `npm ci` lockfile-in-sync; needs a lockfile regen).
+
 ## 2026-05-18 — References & Lineage shelf
 
 - **Why.** The corpus referenced ~35 external works (the IMMI `references.bib`) but a
