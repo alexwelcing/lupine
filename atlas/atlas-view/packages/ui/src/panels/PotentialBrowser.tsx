@@ -179,6 +179,13 @@ export function PotentialBrowser() {
 
   const handleSelect = (id: string) => {
     setActiveId(id);
+    // Auto-load the demo trajectory on selection when one exists, so a
+    // single click on a potential card opens it in the viewer. The
+    // explicit "Load Demo" button remains for re-loading.
+    const entry = catalog?.find((c) => c.id === id);
+    if (entry?.demo_path) {
+      void handleLoadDemo(id);
+    }
   };
 
   const handleLoadDemo = async (id: string) => {
