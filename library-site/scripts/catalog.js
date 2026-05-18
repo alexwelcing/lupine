@@ -14,6 +14,11 @@ export const CATALOG = {
       blurb: { en: 'Start here — orientation, vision, and shared vocabulary.', zh: '从这里开始 — 方向、愿景和共有词汇。' },
     },
     {
+      id: 'decisions',
+      label: { en: 'Decisions', zh: '决策记录' },
+      blurb: { en: 'Architecture decision records — what we chose, the alternatives, and why.', zh: '架构决策记录 — 我们的选择、备选方案以及理由。' },
+    },
+    {
       id: 'uq',
       label: { en: 'Uncertainty & Error', zh: '不确定性与误差' },
       blurb: { en: 'How we measure, predict, and correct potential error at scale.', zh: '我们如何在大规模下测量、预测和纠正势函数误差。' },
@@ -63,6 +68,14 @@ export const CATALOG = {
       category: 'changelog',
       tags: ['meta', 'strategy', 'roadmap'],
     },
+    {
+      id: 'research-evolution',
+      source: 'docs/research_evolution_2026_05_05.md',
+      title: 'The Loop That Caught Itself',
+      subtitle: 'Research evolution report — how the corpus refuted its own exciting findings.',
+      category: 'changelog',
+      tags: ['self-correction', 'research-evolution', 'narrative'],
+    },
 
     // ── Foundations ─────────────────────────────────────────────────
     {
@@ -80,6 +93,14 @@ export const CATALOG = {
       subtitle: 'Quick-search codemap for finding things fast across the workspace.',
       category: 'foundations',
       tags: ['navigation', 'reference'],
+    },
+    {
+      id: 'internal-science-program',
+      source: 'docs/internal-science-program.md',
+      title: 'Internal Science Program',
+      subtitle: 'The research agenda: what we are trying to learn and how the loop pursues it.',
+      category: 'foundations',
+      tags: ['program', 'agenda', 'vision'],
     },
     {
       id: 'glossary',
@@ -244,7 +265,33 @@ export const CATALOG = {
       tags: ['lean', 'hypotheses', 'meta-science'],
     },
 
+    // ── Decisions ───────────────────────────────────────────────────
+    {
+      id: 'adr-0001-storage',
+      source: 'docs/decisions/0001-r2-over-bandwidth-alliance.md',
+      title: 'ADR-0001 — Hybrid GCS + R2 Storage',
+      subtitle: 'Why hybrid object storage, and why we deferred Cloudflare-fronted GCS.',
+      category: 'decisions',
+      tags: ['adr', 'infrastructure', 'storage'],
+    },
+
     // ── Meta ────────────────────────────────────────────────────────
+    {
+      id: 'operating-system',
+      source: 'docs/operating-system.md',
+      title: 'GLIM Operating System',
+      subtitle: 'How the pieces fit: the loop, the corpus, and the surfaces around them.',
+      category: 'meta',
+      tags: ['meta', 'system'],
+    },
+    {
+      id: 'resource-fabric',
+      source: 'docs/resource-fabric.md',
+      title: 'GLIM Resource Fabric',
+      subtitle: 'The infrastructure fabric — compute, storage, and deploy surfaces.',
+      category: 'meta',
+      tags: ['meta', 'infrastructure'],
+    },
     {
       id: 'extraction-complete',
       source: 'docs/EXTRACTION_COMPLETE.md',
