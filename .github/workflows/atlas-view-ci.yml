@@ -1,0 +1,138 @@
+name: atlas-view CI
+
+# Pre-merge gate for the viewer. atlas-view has no other PR-triggered CI —
+# until now the only check was the post-merge deploy-glim-viewer.yml build,
+# which compiles but does not run the test suite. This mirrors that build
+# (same pnpm/node/cache as deploy-glim-viewer) and adds the test suite, so a
+# green PR predicts a green production deploy.
+
+on:
+  pull_request:
+    paths:
+      - 'atlas/atlas-view/**'
+      - 'atlas/nist_ipr/**'
+      - '.github/workflows/atlas-view-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'atlas/atlas-view/**'
+      - '.github/workflows/atlas-view-ci.yml'
+
+# A new push to a PR cancels the in-flight run for that ref.
+concurrency:
+  group: atlas-view-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Required gate: mirrors the deploy build + runs the full test suite ──
+  build-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: atlas/atlas-view
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: atlas/atlas-view/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build (tsc --noEmit per package + vite web bundle)
+        run: pnpm build
+
+      - name: Test (turbo run test — all packages)
+        run: pnpm test
+
+  # ── Informational: catch NIST catalog drift vs. committed source ──
+  # Non-blocking on purpose: demos/manifest.json is gitignored (GCS-hosted),
+  # so the committed catalog's demo_path fields are NOT reproducible from
+  # committed inputs. We surface element/pair-style/structure drift without
+  # failing the merge on the unavoidable demo_path delta.
+  nist-catalog-drift:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: atlas/atlas-view
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: atlas/atlas-view/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install
+      - name: Rebuild catalog and report drift
+        run: |
+          npm run nist:build
+          echo "::group::git diff (committed catalog vs. regenerated)"
+          git -C "$GITHUB_WORKSPACE" diff --stat -- atlas/atlas-view/apps/web/public/nist || true
+          echo "::endgroup::"
+          if ! git -C "$GITHUB_WORKSPACE" diff --quiet -- atlas/atlas-view/apps/web/public/nist; then
+            echo "::warning::NIST catalog differs from committed (expected for demo_path; investigate element/pair-style changes). Run 'npm run nist:build' and commit."
+          fi
+
+  # ── Informational: real-browser gallery/NIST UI smoke test ──
+  # Non-blocking: GitHub-hosted runners have no GPU; the app mounts a WebGPU
+  # canvas and headless WebGPU has historically been unreliable here. The
+  # harness is mostly DOM/store assertions, but we don't gate merges on a
+  # known-fragile path. Screenshots are uploaded for inspection.
+  gallery-e2e:
+    runs-on: ubuntu-latest
+    needs: build-test
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: atlas/atlas-view
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: atlas/atlas-view/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Start dev server
+        run: |
+          nohup pnpm --filter @atlas/web exec vite --port 3000 --strictPort > /tmp/dev.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:3000/ && echo "dev up after ${i}s" && break
+            sleep 2
+          done
+      - name: Run gallery UI harness
+        run: node tools/verify-gallery.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gallery-e2e-screenshots
+          path: atlas/atlas-view/.verify-artifacts/
+          if-no-files-found: ignore
+      - name: Dump dev server log on failure
+        if: failure()
+        run: tail -50 /tmp/dev.log || true
