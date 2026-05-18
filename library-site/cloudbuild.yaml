@@ -40,6 +40,23 @@ steps:
       - '--region=$_DEPLOY_REGION'
       - '--quiet'
 
+  # 6. Force 100% traffic to the just-deployed (latest) revision.
+  # Without this, a service whose traffic was ever pinned to a specific
+  # revision keeps serving that OLD revision — every deploy lands with 0%
+  # traffic and looks "green" while the live site never changes. This is
+  # exactly the failure that hid the revival behind a 13-revision-stale image.
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'services'
+      - 'update-traffic'
+      - '$_SERVICE_NAME'
+      - '--platform=$_PLATFORM'
+      - '--region=$_DEPLOY_REGION'
+      - '--to-latest'
+      - '--quiet'
+
 images:
   - '$_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
 
