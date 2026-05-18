@@ -300,6 +300,8 @@ function build() {
       readMinutes: defaultArticle.readMinutes,
       languages,
       featured: !!entry.featured,
+      status: entry.status || null,
+      group: entry.group || null,
     };
     articles.push(meta);
   }
@@ -309,6 +311,7 @@ function build() {
     version,
     generatedAt: new Date().toISOString(),
     categories: CATALOG.categories,
+    statuses: CATALOG.statuses || {},
     languages: CATALOG.languages || {},
     articles,
   };

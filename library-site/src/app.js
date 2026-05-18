@@ -138,6 +138,13 @@ function cardFor(article, opts = {}) {
     const catLabel = (STATE.manifest.categories.find(c => c.id === article.category) || {}).label;
     if (catLabel) card.append(el('span', { class: 'card-pill-cat' }, t(catLabel, STATE.settings.lang)));
   }
+  if (article.status) {
+    const st = (STATE.manifest.statuses || {})[article.status] || { label: { en: article.status }, color: '#888' };
+    card.append(el('span', {
+      class: 'card-status',
+      style: `display:inline-block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;padding:2px 8px;border-radius:999px;color:${st.color};border:1px solid ${st.color};background:color-mix(in srgb, ${st.color} 12%, transparent);`,
+    }, t(st.label, STATE.settings.lang)));
+  }
   card.append(el('div', { class: 'card-title' }, t(article.title, STATE.settings.lang)));
   if (article.subtitle) card.append(el('div', { class: 'card-sub' }, t(article.subtitle, STATE.settings.lang)));
 

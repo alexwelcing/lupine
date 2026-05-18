@@ -2,11 +2,33 @@
 // Categories drive the "shelves" layout on the home screen.
 
 export const CATALOG = {
+  // Lifecycle status legend — drives the colored badge on cards and the
+  // status facet. A first-class axis so the corpus is browsable by where a
+  // claim stands, not just by topic.
+  statuses: {
+    proposed:        { label: { en: 'Proposed',       zh: '提出' },   color: '#a855f7' },
+    supported:       { label: { en: 'Supported',      zh: '支持' },   color: '#22c55e' },
+    open:            { label: { en: 'Open',           zh: '待定' },   color: '#3b82f6' },
+    refuted:         { label: { en: 'Refuted by us',  zh: '被我们否证' }, color: '#ef4444' },
+    'self-corrected':{ label: { en: 'Self-corrected', zh: '自我纠正' }, color: '#f59e0b' },
+    proven:          { label: { en: 'Proven (Lean)',  zh: '已证明' }, color: '#14b8a6' },
+  },
+
   categories: [
     {
       id: 'changelog',
       label: { en: 'Changelog & Progress', zh: '进展日志' },
       blurb: { en: 'The narrative spine — what changed, why, results, and next steps.', zh: '叙事主线 — 改变了什么、为什么、结果以及下一步。' },
+    },
+    {
+      id: 'conjectures',
+      label: { en: 'Conjectures & Proofs', zh: '猜想与证明' },
+      blurb: { en: 'The hypothesis ledger — every conjecture, where it stands, and the confounder or proof behind it.', zh: '假设台账 — 每个猜想的状态，以及背后的混杂因素或证明。' },
+    },
+    {
+      id: 'partnerships',
+      label: { en: 'Partnerships', zh: '合作' },
+      blurb: { en: 'Pilots and alignment — public thesis and methodology; commercial terms gated.', zh: '试点与对齐 — 公开论点与方法；商业条款受限。' },
     },
     {
       id: 'foundations',
@@ -86,6 +108,107 @@ export const CATALOG = {
       tags: ['self-correction', 'research-evolution', 'narrative'],
     },
 
+    // ── Conjectures & Proofs (the hypothesis ledger) ────────────────
+    {
+      id: 'conjecture-ledger',
+      source: 'docs/conjectures/ledger.md',
+      title: 'The Hypothesis Ledger',
+      subtitle: 'Every claim we have tested, its lifecycle status, and why it moved.',
+      category: 'conjectures',
+      tags: ['ledger', 'index', 'overview'],
+      group: 'hypotheses',
+    },
+    {
+      id: 'hyp-hyper-ribbon-universality',
+      source: 'docs/conjectures/hyper-ribbon-universality.md',
+      title: 'Hyper-Ribbon Universality',
+      subtitle: 'Error vectors occupy a low-dimensional manifold (PR 1.05–1.86). Lean-grounded.',
+      category: 'conjectures',
+      tags: ['hyper-ribbon', 'sloppy-models'],
+      group: 'hypotheses',
+      status: 'supported',
+    },
+    {
+      id: 'hyp-hyper-ribbon-mlip-transfer',
+      source: 'docs/conjectures/hyper-ribbon-mlip-transfer.md',
+      title: 'Hyper-Ribbon Transfers Classical → MLIP',
+      subtitle: '14/15 IMMI elements stay on the ribbon under MACE / CHGNet / Orb-v3.',
+      category: 'conjectures',
+      tags: ['hyper-ribbon', 'mlip', 'de-myopization'],
+      group: 'hypotheses',
+      status: 'supported',
+    },
+    {
+      id: 'hyp-cross-mlip-orthogonal-errors',
+      source: 'docs/conjectures/cross-mlip-orthogonal-errors.md',
+      title: 'Cross-MLIP Orthogonal Error Modes',
+      subtitle: 'MACE and CHGNet fail in orthogonal directions — the precondition for ensembling.',
+      category: 'conjectures',
+      tags: ['mlip', 'ensemble', 'error-geometry'],
+      group: 'hypotheses',
+      status: 'supported',
+    },
+    {
+      id: 'hyp-au-mlip-escape',
+      source: 'docs/conjectures/au-mlip-escape.md',
+      title: 'Au Escapes the Ribbon Under MLIPs',
+      subtitle: 'Confirmed for MACE + CHGNet; Ag escape refuted. Mechanism open.',
+      category: 'conjectures',
+      tags: ['au', 'mlip', 'escape'],
+      group: 'hypotheses',
+      status: 'open',
+    },
+    {
+      id: 'hyp-fe-persistent-outlier',
+      source: 'docs/conjectures/fe-persistent-outlier.md',
+      title: 'Fe Is a Persistent Outlier',
+      subtitle: 'PR > 2 invariant to LAM addition across the trio. Cause (magnetism?) open.',
+      category: 'conjectures',
+      tags: ['fe', 'outlier', 'mlip'],
+      group: 'hypotheses',
+      status: 'open',
+    },
+    {
+      id: 'hyp-dband-correlation',
+      source: 'docs/conjectures/dband-correlation.md',
+      title: 'D-Band Controls Error Correlation',
+      subtitle: 'Refuted — full-sample ρ = −0.02; the signal was a sample-size confounder.',
+      category: 'conjectures',
+      tags: ['d-band', 'confounder', 'matched-n'],
+      group: 'hypotheses',
+      status: 'refuted',
+    },
+    {
+      id: 'hyp-meam-intrinsic-2d',
+      source: 'docs/conjectures/meam-intrinsic-2d.md',
+      title: 'MEAM Is Intrinsically 2-D',
+      subtitle: 'Refuted by matched-n bootstrap; a narrower bounded claim survives.',
+      category: 'conjectures',
+      tags: ['meam', 'confounder', 'matched-n'],
+      group: 'hypotheses',
+      status: 'refuted',
+    },
+    {
+      id: 'hyp-bccfcc-causal-shield',
+      source: 'docs/conjectures/bccfcc-causal-shield.md',
+      title: 'The BCC/FCC "Causal Shield"',
+      subtitle: 'Self-corrected — the dramatic r 0.90 vs 0.04 was 1.5% data contamination.',
+      category: 'conjectures',
+      tags: ['bcc', 'fcc', 'self-correction', 'contamination'],
+      group: 'hypotheses',
+      status: 'self-corrected',
+    },
+
+    // ── Partnerships ────────────────────────────────────────────────
+    {
+      id: 'partnerships',
+      source: 'docs/partnerships.md',
+      title: 'Partnerships',
+      subtitle: 'MIIT-67 pilot mapping and the Lupine thesis — public layer.',
+      category: 'partnerships',
+      tags: ['partnerships', 'miit-67', 'pilots'],
+    },
+
     // ── Foundations ─────────────────────────────────────────────────
     {
       id: 'research-index',
@@ -110,6 +233,22 @@ export const CATALOG = {
       subtitle: 'The research agenda: what we are trying to learn and how the loop pursues it.',
       category: 'foundations',
       tags: ['program', 'agenda', 'vision'],
+    },
+    {
+      id: 'methodology',
+      source: 'docs/methodology.md',
+      title: 'Methodology — How We Know, and How We Catch Ourselves',
+      subtitle: 'Matched-n, contamination gating, ecological-fallacy stratification — the reusable discipline.',
+      category: 'foundations',
+      tags: ['methodology', 'matched-n', 'self-correction'],
+    },
+    {
+      id: 'data-provenance',
+      source: 'docs/data-provenance.md',
+      title: 'Data & Provenance',
+      subtitle: 'Where every number comes from: OpenKIM, NIST IPR, 559 potentials, the integrity gates.',
+      category: 'foundations',
+      tags: ['provenance', 'data', 'trust'],
     },
     {
       id: 'glossary',
@@ -273,6 +412,16 @@ export const CATALOG = {
       category: 'formalization',
       tags: ['lean', 'hypotheses', 'meta-science'],
     },
+    {
+      id: 'formal-proof-ledger',
+      source: 'docs/formal-proof-ledger.md',
+      title: 'Formal Proof Ledger',
+      subtitle: 'Which claims a Lean theorem backs — proven, fabricated, or deliberately not formalized.',
+      category: 'formalization',
+      tags: ['lean', 'proof-ledger', 'audit'],
+      group: 'hypotheses',
+      status: 'proven',
+    },
 
     // ── Decisions ───────────────────────────────────────────────────
     {
@@ -300,6 +449,14 @@ export const CATALOG = {
       subtitle: 'The infrastructure fabric — compute, storage, and deploy surfaces.',
       category: 'meta',
       tags: ['meta', 'infrastructure'],
+    },
+    {
+      id: 'reproduce',
+      source: 'docs/reproduce.md',
+      title: 'Reproduce Our Results',
+      subtitle: 'The atlas-distill + Lean commands that regenerate every ledger claim and verdict.',
+      category: 'meta',
+      tags: ['reproducibility', 'atlas-distill', 'lean'],
     },
     {
       id: 'extraction-complete',

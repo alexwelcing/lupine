@@ -31,6 +31,28 @@ Newest first. Dates are absolute.
   Interatomic Potentials." No "immigrant" copy remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
+## 2026-05-18 — Phase 2: the corpus becomes a ledger (Tier 1 + Tier 2)
+
+- **Why.** The Library had the narrative (changelog) and the reports, but the actual
+  scientific ledger — hypotheses, their status, the proofs and confounders behind them —
+  existed only as prose. A thinking surface needs the science browsable by *where it
+  stands*, not just by topic.
+- **What.** Added `status` and `group` as first-class catalog/manifest/reader axes with a
+  colored lifecycle badge (proposed / supported / open / refuted / self-corrected /
+  proven). Authored **Tier 1**: a Conjectures & Proofs shelf (the hypothesis ledger +
+  8 per-hypothesis entries, each Claim/Evidence/Confounder/Formal-cross-check/Next), a
+  Partnerships shelf (MIIT-67 mapping under the public/gated convention), and a Formal
+  Proof Ledger mapping claims to Lean verdicts. Authored **Tier 2**: Data & Provenance,
+  Methodology (matched-n / contamination-gating / ecological-fallacy), and Reproduce Our
+  Results.
+- **Results.** Library is now 46 articles across 11 shelves. The refutations
+  (d-band, MEAM-2D) and the BCC/FCC self-correction are as visible as the confirmations,
+  each with the confounder named — the self-correction discipline is finally legible as
+  structure, not buried in narrative.
+- **Next.** Reader-side status *filtering* (the badge ships now; faceted filter is the
+  next increment); generate the per-hypothesis entries from the live closure records so
+  the ledger updates as research lands.
+
 ## 2026-05-18 — Phase 1b: the deploy was green but the site never changed
 
 - **Why.** After Phase 1 merged, the Cloud Build went green yet `library.lupine.science`
