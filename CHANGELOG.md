@@ -31,6 +31,21 @@ Newest first. Dates are absolute.
   Interatomic Potentials." No "immigrant" copy remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
+## 2026-05-18 — References & Lineage shelf
+
+- **Why.** The corpus referenced ~35 external works (the IMMI `references.bib`) but a
+  reader had nowhere to see the intellectual lineage — what we build on and why.
+- **What.** Authored `docs/references.md`: an annotated bibliography of all 35 works,
+  organized by thread (sloppy-model theory → potentials → Simpson's/ecological fallacy →
+  meta-analysis → benchmark infra), each with citation, DOI, and a one-line *why we cite
+  it*. Added a **References & Lineage** shelf and moved the existing literature review
+  into it so external papers live in one place.
+- **Results.** 47 articles, 12 shelves. The program's lineage is now legible: each cited
+  work is tied to the load it bears (e.g. Mao et al. → why the ribbon should transfer to
+  MLIPs; Pearl → the Lean Simpson's-paradox proof).
+- **Next.** Keep `references.md` in sync with `paper/references.bib` as the paper's
+  bibliography grows.
+
 ## 2026-05-18 — Phase 2b: reader-side status filter
 
 - **Why.** Phase 2 shipped the status *badge* but you still could not *browse* by
