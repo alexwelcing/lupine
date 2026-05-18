@@ -17,6 +17,7 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "build:wasm": "cd packages/parsers/wasm && wasm-pack build --target web --out-dir ../pkg",
+    "nist:build": "npx -y tsx scripts/build-nist-catalog.ts",
     "test": "turbo run test",
     "test:rust": "cd packages/parsers/wasm && cargo test",
     "lint": "turbo run lint",

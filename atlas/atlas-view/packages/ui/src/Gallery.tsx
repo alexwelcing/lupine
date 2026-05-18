@@ -1,17 +1,14 @@
 /**
- * Gallery — Stitch-designed simulation showcase with real snapshots
- * and interactive GLB hover previews.
+ * Gallery — curated simulation showcase.
  *
- * Each card shows a real rendered snapshot. On hover, the snapshot
- * swaps for an interactive 3D GLB preview controlled by mouse position.
+ * Each card shows a real rendered snapshot, with a procedural canvas
+ * fallback if the snapshot is missing. Clicking loads the trajectory
+ * into the viewer.
  */
 
-import { useCallback, useRef, useEffect, useState, useMemo, Suspense } from 'react';
+import { useCallback, useRef, useEffect, useState, useMemo } from 'react';
 import { useStore } from './store';
 import galleryData from './gallery-data.json';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, OrbitControls } from '@react-three/drei';
-import * as THREE from 'three';
 import {
   getDeviceProfile,
   parseAtomCountLabel,
@@ -85,77 +82,6 @@ const DOMAIN_THREAD: Record<Domain, string> = {
 };
 
 const ALL_DOMAINS = Object.keys(DOMAIN_COLORS) as Domain[];
-
-// ─── GLB Hover Preview ──────────────────────────────────────────────────
-
-function GLBPreview({ url }: { url: string }) {
-  const { scene } = useGLTF(url);
-  const groupRef = useRef<THREE.Group>(null);
-  const targetRot = useRef({ x: 0, y: 0 });
-  const currentRot = useRef({ x: 0, y: 0 });
-
-  useFrame(() => {
-    if (!groupRef.current) return;
-    // Smooth lerp to target rotation
-    currentRot.current.x += (targetRot.current.x - currentRot.current.x) * 0.1;
-    currentRot.current.y += (targetRot.current.y - currentRot.current.y) * 0.1;
-    groupRef.current.rotation.x = currentRot.current.x;
-    groupRef.current.rotation.y = currentRot.current.y;
-  });
-
-  // Auto-rotate slowly when idle
-  useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.2;
-    }
-  });
-
-  // Center and scale the scene
-  const centeredScene = useMemo(() => {
-    const cloned = scene.clone();
-    const box = new THREE.Box3().setFromObject(cloned);
-    const center = box.getCenter(new THREE.Vector3());
-    const size = box.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const scale = maxDim > 0 ? 3 / maxDim : 1;
-    cloned.position.sub(center);
-    cloned.scale.setScalar(scale);
-    return cloned;
-  }, [scene]);
-
-  return (
-    <group ref={groupRef}>
-      <primitive object={centeredScene} />
-    </group>
-  );
-}
-
-function GLBPreviewCanvas({ url, onMouseMove }: { url: string; onMouseMove: (x: number, y: number) => void }) {
-  return (
-    <div
-      style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width - 0.5) * Math.PI * 2;
-        const y = ((e.clientY - rect.top) / rect.height - 0.5) * Math.PI;
-        onMouseMove(x, y);
-      }}
-    >
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }}
-        gl={{ antialias: true, alpha: false }}
-        style={{ background: '#0c0c10' }}
-      >
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[5, 5, 5]} intensity={1.2} />
-        <directionalLight position={[-5, -2, -5]} intensity={0.3} />
-        <Suspense fallback={null}>
-          <GLBPreview url={url} />
-        </Suspense>
-      </Canvas>
-    </div>
-  );
-}
 
 // ─── Shared styles ──────────────────────────────────────────────────────
 
@@ -966,12 +892,10 @@ function PatchCard({
   const exceedsCap = parseAtomCountLabel(example.atoms) > deviceCap;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imgError, setImgError] = useState(false);
-  const [glbRot, setGlbRot] = useState({ x: 0, y: 0 });
   const domainColor = DOMAIN_COLORS[example.domain];
   const threadColor = DOMAIN_THREAD[example.domain];
 
   const snapshotUrl = `/gallery/snapshots/${example.id}.jpg`;
-  const glbUrl = `/gallery/models/${example.id}.glb`;
 
   // Procedural fallback thumbnail
   useEffect(() => {
@@ -1051,8 +975,6 @@ function PatchCard({
     }
   }, [example, imgError]);
 
-  const showGlbPreview = hovered && !imgError && example.available;
-
   return (
     <button
       style={sPatch(hovered, !example.available || exceedsCap, threadColor)}
@@ -1072,11 +994,8 @@ function PatchCard({
           <img
             src={snapshotUrl}
             alt={example.title}
-            style={{
-              ...sPatchImg,
-              opacity: showGlbPreview ? 0 : 1,
-              position: showGlbPreview ? 'absolute' : 'relative',
-            }}
+            loading="lazy"
+            style={sPatchImg}
             onError={() => setImgError(true)}
           />
         )}
@@ -1089,16 +1008,6 @@ function PatchCard({
             height={160}
             style={sPatchCanvas}
           />
-        )}
-
-        {/* Interactive GLB preview on hover */}
-        {showGlbPreview && (
-          <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
-            <GLBPreviewCanvas
-              url={glbUrl}
-              onMouseMove={(x, y) => setGlbRot({ x: y * 0.5, y: x })}
-            />
-          </div>
         )}
       </div>
 
