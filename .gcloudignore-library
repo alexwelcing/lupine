@@ -1,0 +1,34 @@
+# Dedicated upload allowlist for the library-site Cloud Build.
+# Passed via `gcloud builds submit --ignore-file=.gcloudignore-library` so it
+# does NOT disturb the shared root .gcloudignore (tailored for lupine-start).
+#
+# The library build needs exactly two things:
+#   1. library-site/ itself (build scripts, SPA src, Dockerfile, nginx, cloudbuild)
+#   2. the repo markdown corpus that scripts/catalog.js renders
+#
+# Strategy: ignore every top-level entry, then re-include only what is needed.
+# Leading-slash patterns anchor to the repo root so nested files of a
+# re-included directory come along automatically.
+
+# Ignore all top-level entries by default.
+/*
+
+# 1. The build package.
+!/library-site
+/library-site/node_modules
+/library-site/dist
+
+# 2. The markdown corpus (sources referenced by scripts/catalog.js).
+!/docs
+!/README.md
+!/CHANGELOG.md
+!/GLOSSARY.md
+!/lit-review.md
+
+# DESIGN.md lives under lupine-start; pull in that one file, not the whole app.
+!/lupine-start
+/lupine-start/*
+!/lupine-start/DESIGN.md
+
+# Never upload VCS metadata.
+.git/

@@ -47,13 +47,12 @@ jobs:
           fi
 
       - name: Build and Deploy via Cloud Build
-        working-directory: library-site
         run: |
-          gcloud builds submit \
+          gcloud builds submit . \
             --project="${{ secrets.GCP_PROJECT_ID }}" \
-            --config=cloudbuild.yaml \
-            --substitutions=_AR_PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}",REPO_NAME="${GITHUB_REPOSITORY##*/}",COMMIT_SHA="${GITHUB_SHA}" \
-            ..
+            --config=library-site/cloudbuild.yaml \
+            --ignore-file=.gcloudignore-library \
+            --substitutions=_AR_PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}",REPO_NAME="${GITHUB_REPOSITORY##*/}",COMMIT_SHA="${GITHUB_SHA}"
 
       - name: Report deploy status
         if: always()
