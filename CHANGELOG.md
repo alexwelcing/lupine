@@ -16,6 +16,30 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-05-18 — Phase 1b: the deploy was green but the site never changed
+
+- **Why.** After Phase 1 merged, the Cloud Build went green yet `library.lupine.science`
+  still showed no content and a white-square graph. "Green build, stale site" is the most
+  deceptive deploy failure there is.
+- **What.** Traced it past the domain and the direct `run.app` URL — both served the
+  April-28 build. `gcloud run services describe` showed the smoking gun: the `library-site`
+  service had **traffic pinned 100% to revision `library-site-00013-kfj`**. Every deploy
+  since (we were at `00027`) created a healthy new revision that received **0% traffic**.
+  Verified `00027` served the correct build via a temporary `verify` traffic tag, then
+  migrated traffic with `--to-latest` (which also sets `latestRevision: true`, so future
+  deploys auto-route). Hardened `cloudbuild.yaml` with an explicit step 6
+  `gcloud run services update-traffic --to-latest` so a re-pin can never silently hide a
+  deploy again.
+- **Results.** `library.lupine.science` now serves the new build live: 26 articles, 8
+  shelves incl. Changelog & Progress, `changelog.json` 200, force-graph 200, SW
+  `KILL=k1`. The graph code/CSS in the recovered source was never broken — the white
+  square was the same stale revision. Service traffic config is now
+  `{latestRevision: true, percent: 100}`.
+- **Next.** Returning visitors still running the *old* cache-first service worker need one
+  hard reload for the new SW to take over (the old SW predates the `KILL` token, so it
+  can't self-evict — only the new SW can). After that, the network-first + `KILL` design
+  prevents recurrence. Then Phase 2.
+
 ## 2026-05-18 — Phase 1: unbreak the Library deploy path (self-healing SW)
 
 - **Why.** `library.lupine.science` showed "no content ever since the Chinese
