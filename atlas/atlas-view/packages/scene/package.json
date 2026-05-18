@@ -10,7 +10,8 @@
     "./Atoms": "./src/Atoms.tsx",
     "./Bonds": "./src/Bonds.tsx",
     "./SimulationCell": "./src/SimulationCell.tsx",
-    "./AnomalyTracker": "./src/AnomalyTracker.tsx"
+    "./AnomalyTracker": "./src/AnomalyTracker.tsx",
+    "./materials": "./src/materials/index.ts"
   },
   "scripts": {
     "build": "tsc --noEmit",

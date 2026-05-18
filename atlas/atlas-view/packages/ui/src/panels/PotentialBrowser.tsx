@@ -281,7 +281,7 @@ export function PotentialBrowser() {
 
   if (!catalog) {
     return (
-      <div style={sQuilt}>
+      <div style={sQuilt} data-testid="potential-browser-loading">
         <div style={{ color: 'rgba(255,255,255,0.5)', padding: 40, textAlign: 'center' }}>
           Loading NIST Potential Library…
         </div>
@@ -290,7 +290,7 @@ export function PotentialBrowser() {
   }
 
   return (
-    <div style={sQuilt}>
+    <div style={sQuilt} data-testid="potential-browser">
       {/* Header */}
       <div style={sHeader}>
         <div style={sHeaderTitle}>

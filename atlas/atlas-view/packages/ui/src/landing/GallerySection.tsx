@@ -43,14 +43,20 @@ export function GallerySection() {
       }}
     >
       {/* Tab bar */}
-      <div style={sTabBar}>
+      <div style={sTabBar} role="tablist" aria-label="Catalog">
         <button
+          role="tab"
+          aria-selected={tab === 'simulations'}
+          data-testid="tab-simulations"
           style={sTab(tab === 'simulations', '#1edce0')}
           onClick={() => setTab('simulations')}
         >
           Simulations
         </button>
         <button
+          role="tab"
+          aria-selected={tab === 'potentials'}
+          data-testid="tab-potentials"
           style={sTab(tab === 'potentials', '#c084fc')}
           onClick={() => setTab('potentials')}
         >
