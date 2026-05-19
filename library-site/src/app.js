@@ -201,9 +201,13 @@ async function renderHome() {
     // preprint (live hyper-ribbon explorer, KaTeX math, regulator FSM).
     const reportBanner = el('section', { class: 'callout' });
     const reportLink = el('a', { class: 'callout-box callout-featured', href: '/reports/growing-hyper-ribbon.html' });
-    reportLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--lupine-300);font-weight:700;letter-spacing:0.05em;' }, '◆ Interactive report'));
+    reportLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--lupine-300);font-weight:700;letter-spacing:0.05em;' }, '◆ Interactive series · 2 parts'));
     reportLink.append(el('strong', { style: 'font-size:1.1rem;' }, 'Growing the Hyper-Ribbon'));
-    reportLink.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, 'Conditional manifold extension, escape detection & the Lupine regulator — explorable.'));
+    reportLink.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, 'Part 1 — the mathematical framework · Part 2 — validated against real IMMI data (the cross-paradigm gold reframing).'));
+    const reportLinks = el('div', { style: 'display:flex;gap:10px;margin-top:6px;' });
+    reportLinks.append(el('a', { href: '/reports/growing-hyper-ribbon.html', style: 'font-size:0.8rem;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, 'Part 1 →'));
+    reportLinks.append(el('a', { href: '/reports/growing-hyper-ribbon-part-2.html', style: 'font-size:0.8rem;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, 'Part 2 →'));
+    reportLink.append(reportLinks);
     reportBanner.append(reportLink);
     VIEW.append(reportBanner);
 
