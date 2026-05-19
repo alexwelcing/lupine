@@ -31,6 +31,24 @@ Newest first. Dates are absolute.
   Interatomic Potentials." No "immigrant" copy remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
+## 2026-05-18 — Opt-in CI to rebuild the preprint PDF
+
+- **Why.** The broken-PDF fix was a one-time swap; the root cause — a stale/broken
+  local PDF can be the served artifact — remained. But the paper shouldn't rebuild on
+  every push; the author chooses when to upgrade it.
+- **What.** Added `.github/workflows/paper-build.yml`, **`workflow_dispatch` only**
+  (never on push). Run it with `gh workflow run paper-build.yml`. It compiles
+  `paper/immi-paper.tex` with the committed figures (optional `regenerate_figures`
+  input), enforces a **quality gate** that fails the run if the PDF text layer leaks
+  raw LaTeX (`\textbf`, `\noindent`, `$C_{`) or mojibake or is < 5 pages — the exact
+  `immi-paper-local` class of bug — and, when `deploy=true` (default), commits the
+  fresh PDF to `main` so the existing Library deploy publishes it. `deploy=false`
+  builds an inspectable artifact only.
+- **Results.** A broken render can no longer reach the Library: it either passes the
+  gate or the run fails. Upgrading the paper is now one deliberate command.
+- **Next.** Optionally regenerate figures in the same run once the `atlas-distill`
+  JSON inputs are present in CI.
+
 ## 2026-05-18 — Fix the broken preprint PDF
 
 - **Why.** The linked `/immi_paper.pdf` was the stale `immi-paper-local.pdf` build: the

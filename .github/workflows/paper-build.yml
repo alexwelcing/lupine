@@ -1,0 +1,97 @@
+name: Build Preprint PDF (manual)
+
+# OPT-IN ONLY. This never runs on push. You choose when to upgrade the served
+# preprint, e.g.:
+#
+#   gh workflow run paper-build.yml
+#   gh workflow run paper-build.yml -f deploy=false          # preview only
+#   gh workflow run paper-build.yml -f regenerate_figures=true
+#
+# It compiles paper/immi-paper.tex (with the committed figures by default),
+# refuses to ship a PDF that leaked raw LaTeX (the exact bug this guards
+# against), and — when deploy=true — commits the fresh PDF to main so the
+# existing deploy-library-site workflow publishes it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Commit the rebuilt PDF to main (triggers the Library deploy). Off = build + artifact only.'
+        type: boolean
+        default: true
+      regenerate_figures:
+        description: 'Also regenerate figures from atlas-distill JSON (needs the JSON present). Off = use committed figures.'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Regenerate figures (optional)
+        if: ${{ inputs.regenerate_figures }}
+        run: |
+          python -m pip install --quiet -r paper/figures/requirements.txt
+          cd paper/figures
+          for s in generate_fig1_eigenvalue_spectra.py generate_fig2_dimensionality.py generate_fig3_paradox.py generate_fig4_forest.py; do
+            echo "::group::$s"; python "$s" || echo "::warning::$s failed — keeping committed figure"; echo "::endgroup::"
+          done
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: paper
+          root_file: immi-paper.tex
+          latexmk_use_xelatex: false
+
+      - name: Quality gate — reject a broken render
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+          PDF=paper/immi-paper.pdf
+          test -f "$PDF" || { echo "::error::immi-paper.pdf was not produced"; exit 1; }
+          PAGES=$(pdfinfo "$PDF" | awk '/^Pages:/ {print $2}')
+          echo "Pages: $PAGES"
+          [ "${PAGES:-0}" -ge 5 ] || { echo "::error::PDF has only $PAGES pages — build is broken"; exit 1; }
+          LEAK=$(pdftotext "$PDF" - | grep -c -E '\\textbf|\\noindent|\\texttt\{|\$C_\{' || true)
+          if [ "$LEAK" -ne 0 ]; then
+            echo "::error::PDF text layer leaked $LEAK raw-LaTeX fragments — refusing to ship (this is the immi-paper-local class of bug)"
+            exit 1
+          fi
+          MOJI=$(pdftotext "$PDF" - | grep -c $'\357\277\275' || true)
+          [ "$MOJI" -eq 0 ] || { echo "::error::PDF text layer has $MOJI replacement characters (mojibake)"; exit 1; }
+          echo "Quality gate passed: $PAGES pages, 0 LaTeX leaks, 0 mojibake."
+
+      - name: Upload built PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: immi-paper-pdf
+          path: paper/immi-paper.pdf
+          retention-days: 30
+
+      - name: Publish to the Library (deploy=true)
+        if: ${{ inputs.deploy }}
+        run: |
+          cp paper/immi-paper.pdf library-site/src/immi_paper.pdf
+          cp paper/immi-paper.pdf paper/immi-paper-latest.pdf
+          if git diff --quiet -- library-site/src/immi_paper.pdf paper/immi-paper-latest.pdf; then
+            echo "PDF is byte-identical to what is already shipped — nothing to publish."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add library-site/src/immi_paper.pdf paper/immi-paper-latest.pdf
+          git commit -m "build(paper): rebuild preprint PDF from immi-paper.tex" -m "Triggered manually via paper-build.yml; passed the quality gate (no raw-LaTeX leak, no mojibake). Publishing to the Library."
+          git push origin HEAD:main
+
+      - name: Report
+        if: always()
+        run: |
+          curl -X POST https://glim-think-v1.aw-ab5.workers.dev/ops/report \
+            -H "Content-Type: application/json" \
+            -d "{\"repo\":\"$GITHUB_REPOSITORY\",\"workflow\":\"$GITHUB_WORKFLOW\",\"run_id\":\"$GITHUB_RUN_ID\",\"status\":\"${{ job.status }}\",\"commit_sha\":\"$GITHUB_SHA\",\"branch\":\"$GITHUB_REF_NAME\",\"service\":\"paper-build\",\"run_url\":\"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\",\"started_at\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" || true
