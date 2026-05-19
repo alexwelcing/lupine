@@ -13,7 +13,9 @@
 const VERSION = '__VERSION__';
 // Bump KILL to force every client to drop ALL caches on next activate,
 // regardless of VERSION skew. A escape hatch if a bad build ever ships again.
-const KILL = 'k1';
+// k2: purge caches poisoned by stale cache-first /reports/ assets — a fresh
+// report HTML was served against an old cached report.css, blanking the page.
+const KILL = 'k2';
 const SHELL_CACHE = `ll-shell-${KILL}-${VERSION}`;
 const DATA_CACHE = `ll-data-${KILL}-${VERSION}`;
 
@@ -80,7 +82,16 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Static assets — cache-first
+  // /reports/* assets (report.css, the report JS/data, figures) — network-first.
+  // These versionless URLs change content on every deploy; cache-first served a
+  // stale report.css against fresh report HTML and blanked the page. Freshness
+  // wins when online; the cache is still the offline fallback.
+  if (url.pathname.startsWith('/reports/')) {
+    event.respondWith(networkFirst(SHELL_CACHE, req));
+    return;
+  }
+
+  // Static (versioned shell) assets — cache-first
   event.respondWith(cacheFirst(SHELL_CACHE, req));
 });
 
