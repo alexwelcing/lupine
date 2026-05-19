@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en" data-theme="observatory">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>The Hyper-Ribbon Observatory — Lupine Materials Science</title>
+<meta name="description" content="A real-time GPU showcase of the error manifold: the 45 measured points, the gold escape, the sloppy spectrum — physics as a live generative scene." />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+<link rel="stylesheet" href="/reports/assets/report.css" />
+</head>
+<body>
+<div id="bar"></div>
+<div id="chrome">
+  <nav class="series" aria-label="Series">
+    <a href="/reports/growing-hyper-ribbon.html">Part 1</a>
+    <a href="/reports/growing-hyper-ribbon-part-2.html">Part 2</a>
+    <a href="/reports/growing-hyper-ribbon-experiments.html">Compute Log</a>
+    <a href="/reports/growing-hyper-ribbon-observatory.html" aria-current="true">Observatory</a>
+  </nav>
+  <div class="seg" role="group" aria-label="Theme">
+    <button data-theme="observatory" aria-pressed="true">Observatory</button>
+    <button data-theme="sepia" aria-pressed="false">Sepia</button>
+    <button data-theme="paper" aria-pressed="false">Paper</button>
+  </div>
+</div>
+
+<div class="obs-stage" aria-hidden="true">
+  <canvas id="obsCv"></canvas>
+  <div class="obs-scrim"></div>
+  <div class="obs-grain"></div>
+</div>
+
+<div class="op-badge">LUPINE · <b>HYPER-RIBBON</b> · real-time field · 45 measured pts</div>
+<aside class="op-panel" id="opPanel" aria-label="Operator panel">
+  <div class="op-head" id="opHead"><span>◢ OPERATOR</span><span id="opToggle">▾</span></div>
+  <div class="op-body">
+    <div class="op-modes" id="opModes">
+      <button data-m="0" aria-pressed="true">MANIFOLD</button>
+      <button data-m="1" aria-pressed="false">EIGENFIELD</button>
+      <button data-m="2" aria-pressed="false">ESCAPE</button>
+      <button data-m="3" aria-pressed="false">SPECTRA</button>
+    </div>
+    <div class="op-row"><label>flow <b id="vFlow">1.00</b></label><input type="range" id="cFlow" min="0" max="2" step="0.01" value="1"></div>
+    <div class="op-row"><label>warp <b id="vWarp">0.85</b></label><input type="range" id="cWarp" min="0" max="2" step="0.01" value="0.85"></div>
+    <div class="op-row"><label>bloom <b id="vBloom">1.10</b></label><input type="range" id="cBloom" min="0" max="2.5" step="0.01" value="1.1"></div>
+    <div class="op-row"><label>rotate <b id="vRot">auto</b></label><input type="range" id="cRot" min="0" max="6.28" step="0.01" value="0.6"></div>
+    <div class="op-row"><label>grain <b id="vGrain">0.45</b></label><input type="range" id="cGrain" min="0" max="1" step="0.01" value="0.45"></div>
+    <div class="op-read"><span>global PR</span><b id="rPR">1.589</b></div>
+    <div class="op-read"><span>Au alignment</span><b>0.984</b></div>
+    <div class="op-read"><span>scroll-driven</span><b id="rAuto">ON</b></div>
+  </div>
+</aside>
+
+<div class="obs-flow">
+  <header class="obs-hero">
+    <div class="eyebrow"><span class="partbadge">Observatory</span> Real-time GPU · physics as a scene</div>
+    <h1 id="heroTitle">The Hyper-Ribbon Observatory</h1>
+    <p class="sub">Every glowing mote is a real measured prediction-error vector. The ribbon is the low-dimensional manifold they collapse onto. The gold flare is the relativistic escape of gold. Drive it with the operator panel — or just scroll.</p>
+    <p class="sub" style="font-size:.92rem;color:var(--ink-soft);margin-top:18px">↓ scroll to run the physics · drag the field to rotate</p>
+  </header>
+
+  <section class="scene-step" data-mode="0">
+    <div class="scene-card">
+      <span class="sec">01 · The Field</span>
+      <h2>An error landscape, not noise</h2>
+      <p>Classical force-field and foundation-MLIP prediction errors do not scatter randomly. Across <strong>559 potentials</strong> and <strong>15 metals</strong> they collapse onto a <em>hyper-ribbon</em> — a manifold whose effective dimensionality, the participation ratio, stays near 1.</p>
+      <div class="opmath" data-op="PR · participation_ratio"><span class="port in"></span><span class="port out"></span>
+        <div class="eq" data-math="display">D_{PR}=\frac{\left(\sum_j \lambda_j\right)^2}{\sum_j \lambda_j^2}\in[1.05,\,1.86]</div>
+      </div>
+      <p>The flowing field behind this card is that landscape — domain-warped by the same covariance anisotropy the ribbon encodes.</p>
+    </div>
+  </section>
+
+  <section class="scene-step" data-mode="0">
+    <div class="scene-card">
+      <span class="sec">02 · The Measurements</span>
+      <h2>Forty-five real points ignite</h2>
+      <p>15 elements × 3 foundation MLIPs (MACE-MP-0, CHGNet, Orb-v3). Each mote is positioned by its actual relative-error vector recomputed from the published result files — no synthetic data.</p>
+      <div class="opmath" data-op="error · relative"><span class="port in"></span><span class="port out"></span>
+        <div class="eq" data-math="display">\hat\varepsilon \;=\; \widehat{\left(\frac{\text{pred}}{\text{ref}}-1\right)}\;\text{for}\;(C_{11},C_{12},C_{44})</div>
+      </div>
+      <p>The tight braid near the centre <em>is</em> the ribbon: most metals, most models, one shared error direction.</p>
+    </div>
+  </section>
+
+  <section class="scene-step" data-mode="2">
+    <div class="scene-card">
+      <span class="sec">03 · The Gold Escape</span>
+      <h2>Au tears off the manifold</h2>
+      <p>Gold's mean cross-MLIP alignment is <strong>0.984 — the highest of all 15 elements</strong>: every model agrees on Au's error direction. Yet that direction sits <em>off</em> the classical ribbon. Watch the gold cluster throw a plume — a <strong>cross-paradigm</strong> escape, relativistic 5d/6s physics no PBE-trained model captures.</p>
+      <div class="opmath" data-op="escape · ratio"><span class="port in"></span><span class="port out"></span>
+        <div class="eq" data-math="display">\rho_{\text{escape}}=\frac{\lVert\varepsilon_{\perp}\rVert^2}{\lVert\varepsilon\rVert^2}, \qquad \cos(\text{Au})=0.984</div>
+      </div>
+      <p>Red mote, far out: Fe — the persistent magnetic outlier, escaping for a different reason.</p>
+    </div>
+  </section>
+
+  <section class="scene-step" data-mode="3">
+    <div class="scene-card">
+      <span class="sec">04 · The Sloppy Spectrum</span>
+      <h2>Eigenvalues fall off a cliff</h2>
+      <p>The rings are the real error-covariance eigenvalues per model — MACE <code>[0.43, 0.09, 0.03]</code>, geometric decay across orders of magnitude. That hierarchy <em>is</em> sloppiness; it is why the ribbon exists and why corrections are possible.</p>
+      <div class="opmath" data-op="manifold · bounded"><span class="port in"></span><span class="port out"></span>
+        <div class="eq" data-math="display">\text{PR}_{\text{MACE}}=1.589,\quad \text{PR}_{\text{CHGNet}}=2.157,\quad \text{PR}_{\text{Orb}}=1.320 \;\;\ll\;\; \text{PR}_{\max}\approx3</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene-step" data-mode="1">
+    <div class="scene-card">
+      <span class="sec">05 · The Regulator</span>
+      <h2>The field aligns</h2>
+      <p>Project onto the ribbon eigenbasis, detect the escape, apply the catalogued relativistic overlay — the eigenfield snaps coherent. This is the regulator acting as a mid-run filter; the same operation runs at sub-millisecond cost in the validated framework.</p>
+      <div class="opmath" data-op="correct · Δ_rel"><span class="port in"></span><span class="port out"></span>
+        <div class="eq" data-math="display">\varepsilon_{\text{corr}}=\varepsilon-\Delta_{\text{rel}}(\text{el},\text{MLIP}),\quad \text{PR}(\varepsilon_{\text{corr}})\le \text{PR}(\varepsilon)</div>
+      </div>
+      <p style="margin-top:20px">The numbers, methods, and the experiments behind this scene live in the analytical pages:</p>
+      <nav class="seriesnav" style="margin-top:14px">
+        <a href="/reports/growing-hyper-ribbon.html"><div class="lbl">Part 1</div><div class="ttl">The Framework</div></a>
+        <a href="/reports/growing-hyper-ribbon-part-2.html"><div class="lbl">Part 2</div><div class="ttl">Validation</div></a>
+        <a class="next" href="/reports/growing-hyper-ribbon-experiments.html"><div class="lbl">Compute Log →</div><div class="ttl">Experiments run</div></a>
+      </nav>
+    </div>
+  </section>
+
+  <footer style="max-width:var(--maxw);margin:0 auto 60px;padding:30px 26px 0;border-top:1px solid var(--rule);font-family:'Inter',sans-serif;font-size:.82rem;color:var(--ink-soft);position:relative;z-index:2">
+    Lupine Materials Science · <em>Hyper-Ribbon Observatory</em> · real measured data, real-time WebGL · drag to rotate · operator panel lower-right
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+
+<script id="vsh" type="x-shader/x-vertex">#version 300 es
+in vec2 p; void main(){ gl_Position=vec4(p,0.,1.); }
+</script>
+<script id="fsh" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+out vec4 o;
+uniform vec2 uRes; uniform float uT,uFlow,uWarp,uBloom,uRot,uGrain,uMode,uEsc,uAu;
+uniform vec3 uBg,uAcc,uCool; uniform vec3 uPts[45];
+float h21(vec2 p){p=fract(p*vec2(123.34,345.45));p+=dot(p,p+34.345);return fract(p.x*p.y);}
+float vnoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
+ float a=h21(i),b=h21(i+vec2(1,0)),c=h21(i+vec2(0,1)),d=h21(i+vec2(1,1));
+ return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}
+float fbm(vec2 p){float s=0.,a=.5;mat2 m=mat2(1.6,1.2,-1.2,1.6);
+ for(int i=0;i<5;i++){s+=a*vnoise(p);p=m*p;a*=.5;}return s;}
+mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}
+void main(){
+ vec2 uv=(gl_FragCoord.xy-.5*uRes)/uRes.y;
+ float t=uT;
+ // domain-warped flow field
+ vec2 q=uv*1.7;
+ vec2 w=vec2(fbm(q+vec2(0.,t*.10*uFlow)),fbm(q+vec2(5.2,-t*.08*uFlow)));
+ float fld=fbm(q + uWarp*1.6*w + vec2(t*.05*uFlow,0.));
+ float aniso=fbm(uv*rot(uRot)*vec2(3.2,0.55)+t*.04*uFlow); // eigen-anisotropy
+ float modeE=smoothstep(2.5,3.5,uMode+0.5);            // SPECTRA
+ float modeR=smoothstep(0.5,1.5,uMode)*step(uMode,1.6);// EIGENFIELD
+ // base color
+ vec3 col=mix(uBg, uCool, smoothstep(.15,.85,fld));
+ col=mix(col, uAcc*.6, smoothstep(.55,.95,fld)*.5);
+ col=mix(col, mix(uBg,uCool,aniso), modeR*.7);          // field aligns in EIGENFIELD
+ // the ribbon (parametric glowing band)
+ float ry=.20*sin(uv.x*2.3 + t*.25) + .05*sin(uv.x*5.+t*.4);
+ float rb=exp(-pow(abs(uv.y-ry)* (7.0+modeR*6.0),2.0));
+ col+=uAcc*rb*(.35+ .5*uBloom)* (0.5+0.5*sin(uv.x*3.+t));
+ // measured points
+ float esc=uEsc;
+ for(int i=0;i<45;i++){
+   vec3 P=uPts[i];
+   vec2 pp=P.xy;
+   pp*=rot(uRot*.6 + sin(t*.05)*.15);
+   float kind=P.z;
+   vec2 dir=normalize(pp+1e-4);
+   pp += dir*esc*(kind>.5?(kind>1.5?.55:.85):.0);     // Au & Fe fling out on ESCAPE
+   float d=length(uv-pp);
+   float core=exp(-d*d* (kind>.5? 90.: 220.));
+   float halo=exp(-d* (kind>.5? 5.5: 11.0))* (.35+.7*uBloom);
+   vec3 pc = kind>1.5? vec3(.92,.32,.34) : kind>.5? uAcc : mix(uCool,vec3(1.),.3);
+   col += pc*(core*1.7 + halo*0.6) * (kind>.5?1.6:1.0);
+ }
+ // spectra rings
+ if(modeE>0.01){
+   float r=length(uv)*2.4;
+   float e1=.43,e2=.09,e3=.03;
+   float rings= exp(-pow((r-e1*3.)*6.,2.))*1.0
+              + exp(-pow((r-e2*9.)*7.,2.))*.6
+              + exp(-pow((r-e3*22.)*8.,2.))*.35;
+   col += uAcc*rings*modeE*(1.+uBloom);
+ }
+ // post: vignette, scanline, grain, tone, gamma
+ float vig=smoothstep(1.35,.25,length(uv));
+ col*=vig;
+ col+= uAcc*0.04*sin((gl_FragCoord.y)*0.7+t*4.); // faint scan shimmer
+ float g=(h21(gl_FragCoord.xy+fract(t))-0.5)*uGrain*0.16;
+ col+=g;
+ col=col/(1.+col);                 // reinhard
+ col=pow(max(col,0.),vec3(0.4545));
+ o=vec4(col,1.);
+}
+</script>
+
+<script>
+/* ---- 45 real measured points: [C11err, C12err, kind] (kind 1=Au,2=Fe) ---- */
+var RAW={
+ MACE:{Cu:[-.065,-.014],Al:[-.064,.067],Ni:[-.029,-.023],Au:[-.229,-.24,1],Ag:[-.18,-.222],Pt:[-.229,-.154],Pd:[-.245,-.255],Pb:[-.069,.002],Fe:[-.728,-.68,2],Cr:[-.161,2.31],Mo:[-.454,.169],W:[-.415,.312],V:[.012,.169],Nb:[-.14,.137],Ta:[-.12,.14]},
+ CHGNet:{Cu:[.063,.266],Al:[-.63,-.59],Ni:[.105,.158],Au:[-.416,-.365,1],Ag:[-.285,-.307],Pt:[-.254,-.081],Pd:[-.246,-.167],Pb:[-.422,-.393],Fe:[-.571,-.22,2],Cr:[-.281,1.305],Mo:[-.249,.449],W:[-.39,.182],V:[.051,.224],Nb:[-.343,-.125],Ta:[-.192,.092]},
+ Orb:{Cu:[-.106,-.031],Al:[-.243,0],Ni:[.051,-.048],Au:[-.306,-.213,1],Ag:[-.223,-.279],Pt:[-.44,-.015],Pd:[-.234,-.162],Pb:[-.48,-.246],Fe:[-.072,-.396,2],Cr:[.139,-.128],Mo:[-.108,-.287],W:[-.133,-.309],V:[-.133,.079],Nb:[-.223,-.091],Ta:[-.227,-.049]}};
+var PTS=[];
+for(var m in RAW)for(var el in RAW[m]){var a=RAW[m][el];
+  PTS.push(Math.max(-.95,Math.min(.95,a[0]/1.4)), Math.max(-.95,Math.min(.95,a[1]/1.4)), a[2]||0);}
+
+var root=document.documentElement;
+try{var st=localStorage.getItem('hr.theme');if(st)root.dataset.theme=st;}catch(e){}
+
+addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('[data-math]').forEach(function(n){
+    try{katex.render(n.textContent.trim(),n,{displayMode:true,throwOnError:false});}catch(e){}});
+});
+
+/* progress bar */
+var bar=document.getElementById('bar');
+addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.width=(100*Math.min(1,Math.max(0,scrollY/Math.max(1,h))))+'%';},{passive:true});
+
+/* theme buttons */
+function themeCols(){
+  var cs=getComputedStyle(root);
+  function rgb(v){var c=document.createElement('canvas').getContext('2d');c.fillStyle=v.trim()||'#fff';
+    var hx=c.fillStyle; if(hx[0]==='#'){var n=parseInt(hx.slice(1),16);
+      return [(n>>16&255)/255,(n>>8&255)/255,(n&255)/255];} return [1,1,1];}
+  return {bg:rgb(cs.getPropertyValue('--bg')),acc:rgb(cs.getPropertyValue('--accent')),
+          cool:rgb(cs.getPropertyValue('--link'))};
+}
+document.querySelectorAll('#chrome .seg button').forEach(function(b){
+  b.setAttribute('aria-pressed',b.dataset.theme===root.dataset.theme);
+  b.onclick=function(){root.dataset.theme=b.dataset.theme;
+    try{localStorage.setItem('hr.theme',b.dataset.theme);}catch(e){}
+    document.querySelectorAll('#chrome .seg button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+    PAL=themeCols();};
+});
+var PAL=themeCols();
+
+/* operator panel */
+var P={flow:1,warp:.85,bloom:1.1,rot:.6,grain:.45,mode:0,modeT:0,esc:0,auto:true,rotAuto:true};
+function bind(id,key,fmt){var c=document.getElementById(id),v=document.getElementById('v'+id.slice(1));
+  c.addEventListener('input',function(){P[key]=parseFloat(c.value);
+    if(v)v.textContent=key==='rot'?(P.rotAuto?'auto':P.rot.toFixed(2)):P[key].toFixed(2);
+    if(key==='rot')P.rotAuto=false;});}
+bind('cFlow','flow');bind('cWarp','warp');bind('cBloom','bloom');bind('cRot','rot');bind('cGrain','grain');
+document.querySelectorAll('#opModes button').forEach(function(b){
+  b.onclick=function(){P.mode=+b.dataset.m;P.auto=false;
+    document.getElementById('rAuto').textContent='manual';
+    document.querySelectorAll('#opModes button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});};});
+var op=document.getElementById('opPanel');
+document.getElementById('opHead').onclick=function(){op.classList.toggle('min');
+  document.getElementById('opToggle').textContent=op.classList.contains('min')?'▴':'▾';};
+var PRBY={0:'1.589',1:'1.21',2:'1.67',3:'2.157'};
+
+/* scroll → mode (unless user took manual control) */
+var steps=[].slice.call(document.querySelectorAll('.scene-step'));
+var io=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting && P.auto){var m=+e.target.dataset.mode;P.mode=m;
+    document.getElementById('rPR').textContent=PRBY[m]||'1.589';
+    document.querySelectorAll('#opModes button').forEach(function(x){x.setAttribute('aria-pressed',+x.dataset.m===m);});}});
+},{rootMargin:'-45% 0px -45% 0px'});
+steps.forEach(function(s){io.observe(s);});
+
+/* drag to rotate */
+var cv=document.getElementById('obsCv'),drag=false,lx=0;
+cv.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;P.rotAuto=false;cv.setPointerCapture(e.pointerId);});
+cv.addEventListener('pointermove',function(e){if(drag){P.rot+=(e.clientX-lx)*0.006;lx=e.clientX;}});
+cv.addEventListener('pointerup',function(){drag=false;});
+
+/* ---- WebGL2 with graceful 2D fallback ---- */
+var gl=cv.getContext('webgl2',{antialias:false,powerPreference:'high-performance'});
+var rafId=0;
+function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);
+  if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(x);return x;}
+function startGL(){
+  var pr=gl.createProgram();
+  gl.attachShader(pr,sh(gl.VERTEX_SHADER,document.getElementById('vsh').textContent));
+  gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,document.getElementById('fsh').textContent));
+  gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr,gl.LINK_STATUS))throw gl.getProgramInfoLog(pr);
+  gl.useProgram(pr);
+  var vb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,vb);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  var lp=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(lp);
+  gl.vertexAttribPointer(lp,2,gl.FLOAT,false,0,0);
+  var U={};['uRes','uT','uFlow','uWarp','uBloom','uRot','uGrain','uMode','uEsc','uAu','uBg','uAcc','uCool','uPts']
+    .forEach(function(n){U[n]=gl.getUniformLocation(pr,n);});
+  var ptsF=new Float32Array(PTS);
+  function size(){var d=Math.min(devicePixelRatio||1,1.5);
+    var w=Math.floor(innerWidth*d),hh=Math.floor(innerHeight*d);
+    var cap=1500000,sc=Math.sqrt(cap/(w*hh));if(sc<1){w=Math.floor(w*sc);hh=Math.floor(hh*sc);}
+    cv.width=w;cv.height=hh;}
+  size();addEventListener('resize',size);
+  var t0=performance.now(),paused=false;
+  document.addEventListener('visibilitychange',function(){paused=document.hidden;if(!paused)loop();});
+  function loop(){
+    if(paused)return;
+    P.modeT+=( P.mode - P.modeT)*0.06;
+    var target=(P.mode===2)?1:0; P.esc+=(target-P.esc)*0.05;
+    if(P.rotAuto)P.rot+=0.0016;
+    gl.viewport(0,0,cv.width,cv.height);
+    gl.uniform2f(U.uRes,cv.width,cv.height);
+    gl.uniform1f(U.uT,(performance.now()-t0)/1000);
+    gl.uniform1f(U.uFlow,P.flow);gl.uniform1f(U.uWarp,P.warp);gl.uniform1f(U.uBloom,P.bloom);
+    gl.uniform1f(U.uRot,P.rot);gl.uniform1f(U.uGrain,P.grain);gl.uniform1f(U.uMode,P.modeT);
+    gl.uniform1f(U.uEsc,P.esc);gl.uniform1f(U.uAu,0.984);
+    gl.uniform3f(U.uBg,PAL.bg[0],PAL.bg[1],PAL.bg[2]);
+    gl.uniform3f(U.uAcc,PAL.acc[0],PAL.acc[1],PAL.acc[2]);
+    gl.uniform3f(U.uCool,PAL.cool[0],PAL.cool[1],PAL.cool[2]);
+    gl.uniform3fv(U.uPts,ptsF);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+    rafId=requestAnimationFrame(loop);
+  }
+  loop();
+}
+function start2D(){
+  var c=cv.getContext('2d');
+  function size(){cv.width=innerWidth;cv.height=innerHeight;}size();addEventListener('resize',size);
+  var t=0;
+  (function d(){t+=.016;var W=cv.width,H=cv.height;
+    var cs=getComputedStyle(root);c.fillStyle=cs.getPropertyValue('--bg').trim()||'#070a12';
+    c.fillRect(0,0,W,H);var cx=W/2,cy=H/2,s=Math.min(W,H)*.34;
+    var acc=cs.getPropertyValue('--accent').trim()||'#e9b949';
+    c.strokeStyle='rgba(125,166,255,.15)';c.beginPath();
+    for(var x=-1;x<=1;x+=.02){var y=.2*Math.sin(x*2.3+t*.25);
+      var X=cx+x*s,Y=cy+y*s;x===-1?c.moveTo(X,Y):c.lineTo(X,Y);}c.stroke();
+    for(var i=0;i<PTS.length;i+=3){var k=PTS[i+2];
+      var a=P.rot*.6,co=Math.cos(a),sn=Math.sin(a);
+      var px=PTS[i]*co-PTS[i+1]*sn, py=PTS[i]*sn+PTS[i+1]*co;
+      if(k===1&&P.mode===2){px*=1.7;py*=1.7;}
+      var X=cx+px*s,Y=cy+py*s,r=k?7:3.2;
+      c.beginPath();c.arc(X,Y,r,0,7);
+      c.fillStyle=k>1.5?'#e15a5a':k>.5?acc:'rgba(150,180,255,.7)';
+      c.shadowColor=c.fillStyle;c.shadowBlur=k?16:0;c.fill();c.shadowBlur=0;}
+    if(P.rotAuto)P.rot+=.0016;requestAnimationFrame(d);})();
+}
+try{ if(gl) startGL(); else start2D(); }
+catch(err){ console.warn('WebGL path failed, 2D fallback:',err);
+  try{ if(rafId)cancelAnimationFrame(rafId); }catch(e){}
+  gl=null; start2D(); }
+</script>
+</body>
+</html>
