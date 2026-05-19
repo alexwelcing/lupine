@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createPortal } from 'react-dom'
@@ -40,8 +40,29 @@ const NAV_SECTIONS: NavSection[] = [
   },
 ]
 
+const MOBILE_NAV_OVERLAY_Z_INDEX = 55
+const MOBILE_NAV_DRAWER_Z_INDEX = 60
+
 export default function MobileNav() {
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [open])
 
   return (
     <div className="md:hidden">
@@ -58,7 +79,7 @@ export default function MobileNav() {
         </div>
       </button>
 
-      {typeof document !== 'undefined' &&
+      {mounted &&
         createPortal(
           <AnimatePresence>
             {open && (
@@ -68,7 +89,8 @@ export default function MobileNav() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[55]"
+                  className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+                  style={{ zIndex: MOBILE_NAV_OVERLAY_Z_INDEX }}
                   onClick={() => setOpen(false)}
                 />
                 <motion.nav
@@ -76,7 +98,11 @@ export default function MobileNav() {
                   animate={{ x: 0 }}
                   exit={{ x: '100%' }}
                   transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                  className="fixed top-0 right-0 bottom-0 w-[280px] bg-[var(--surface)] border-l border-[var(--outline-variant)] z-[60] flex flex-col pt-24 px-6 gap-1 overflow-y-auto"
+                  className="fixed top-0 right-0 bottom-0 w-[280px] bg-[var(--surface)] border-l border-[var(--outline-variant)] flex flex-col pt-24 px-6 gap-1 overflow-y-auto"
+                  style={{ zIndex: MOBILE_NAV_DRAWER_Z_INDEX }}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Mobile navigation menu"
                 >
                   {NAV_SECTIONS.map((section, si) => (
                     <div key={si}>
