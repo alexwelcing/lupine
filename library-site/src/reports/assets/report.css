@@ -307,3 +307,21 @@ table.dense td,table.dense th{padding:9px 13px;font-size:.8rem}
 .tl-ctrl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-family:"Inter",sans-serif;font-size:.78rem;color:var(--ink-soft)}
 .rawlink{font-family:"Inter",sans-serif;font-size:.74rem;color:var(--ink-soft);text-decoration:none;border-bottom:1px dotted var(--ink-soft)}
 .rawlink:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ===== experiments / compute log ===== */
+.b-pass{background:rgba(120,200,160,.14);color:#9fe0c0;border:1px solid #2f6a52}
+.b-partial{background:rgba(233,185,73,.16);color:var(--gold-soft);border:1px solid var(--gold-deep)}
+.b-surprise{background:rgba(160,140,255,.16);color:#c4b5ff;border:1px solid #5b4ba8}
+.b-blocked{background:rgba(225,90,90,.14);color:#f0a0a0;border:1px solid #7a3030}
+.expcard{border:1px solid var(--rule);border-radius:16px;background:var(--panel-solid);
+  margin:1.8rem 0;overflow:hidden}
+.expcard>header{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:16px 22px;border-bottom:1px solid var(--rule-soft);flex-wrap:wrap}
+.expcard>header h3{margin:0;border:0;padding:0;font-size:1.05rem}
+.expcard .body{padding:6px 22px 18px}
+.expcard .verdict{font-family:"Inter",sans-serif;font-size:.88rem;color:var(--ink-soft);
+  padding:12px 22px;border-top:1px solid var(--rule-soft);background:var(--code-bg)}
+.expcard .verdict b{color:var(--ink)}
+.kpi{display:flex;gap:24px;flex-wrap:wrap;font-family:"Inter",sans-serif;margin:6px 0 2px}
+.kpi div{font-size:.78rem;color:var(--ink-soft)}
+.kpi div b{display:block;font-size:1.3rem;color:var(--accent);font-family:"JetBrains Mono",monospace}

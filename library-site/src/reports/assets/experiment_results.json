@@ -1,0 +1,291 @@
+{
+ "meta": {
+  "classical_potentials": 38,
+  "classical_elements": [
+   "Ag",
+   "Al",
+   "Au",
+   "Cr",
+   "Cu",
+   "Fe",
+   "Mo",
+   "Ni",
+   "V",
+   "W"
+  ],
+  "note": "38-potential / 10-element shipped subset; full 559 is server-side"
+ },
+ "exp1": [
+  {
+   "element": "Cu",
+   "n_classical": 9,
+   "classical_PR": 1.019,
+   "+MACE_PR": 1.018,
+   "+CHGNet_PR": 1.213,
+   "+Orb-v3_PR": 1.022,
+   "+all3_PR": 1.231,
+   "dPR_max": 0.194,
+   "escaped": false
+  },
+  {
+   "element": "Al",
+   "n_classical": 8,
+   "classical_PR": 1.26,
+   "+MACE_PR": 1.361,
+   "+CHGNet_PR": 1.145,
+   "+Orb-v3_PR": 1.099,
+   "+all3_PR": 1.318,
+   "dPR_max": 0.101,
+   "escaped": false
+  },
+  {
+   "element": "Ni",
+   "n_classical": 8,
+   "classical_PR": 1.423,
+   "+MACE_PR": 2.163,
+   "+CHGNet_PR": 1.43,
+   "+Orb-v3_PR": 1.757,
+   "+all3_PR": 2.338,
+   "dPR_max": 0.739,
+   "escaped": true
+  },
+  {
+   "element": "Au",
+   "n_classical": 8,
+   "classical_PR": 1.023,
+   "+MACE_PR": 1.017,
+   "+CHGNet_PR": 1.029,
+   "+Orb-v3_PR": 1.017,
+   "+all3_PR": 1.025,
+   "dPR_max": 0.005,
+   "escaped": false
+  },
+  {
+   "element": "Ag",
+   "n_classical": 5,
+   "classical_PR": 1.058,
+   "+MACE_PR": 1.04,
+   "+CHGNet_PR": 1.036,
+   "+Orb-v3_PR": 1.058,
+   "+all3_PR": 1.043,
+   "dPR_max": 0.0,
+   "escaped": false
+  },
+  {
+   "element": "Pt",
+   "n_classical": 0,
+   "skip": "n<4"
+  },
+  {
+   "element": "Pd",
+   "n_classical": 0,
+   "skip": "n<4"
+  },
+  {
+   "element": "Pb",
+   "n_classical": 0,
+   "skip": "n<4"
+  },
+  {
+   "element": "Fe",
+   "n_classical": 11,
+   "classical_PR": 1.026,
+   "+MACE_PR": 1.451,
+   "+CHGNet_PR": 1.277,
+   "+Orb-v3_PR": 1.125,
+   "+all3_PR": 1.522,
+   "dPR_max": 0.426,
+   "escaped": false
+  },
+  {
+   "element": "Cr",
+   "n_classical": 1,
+   "skip": "n<4"
+  },
+  {
+   "element": "Mo",
+   "n_classical": 2,
+   "skip": "n<4"
+  },
+  {
+   "element": "W",
+   "n_classical": 7,
+   "classical_PR": 1.476,
+   "+MACE_PR": 1.006,
+   "+CHGNet_PR": 1.003,
+   "+Orb-v3_PR": 1.02,
+   "+all3_PR": 1.278,
+   "dPR_max": -0.456,
+   "escaped": false
+  },
+  {
+   "element": "V",
+   "n_classical": 3,
+   "skip": "n<4"
+  },
+  {
+   "element": "Nb",
+   "n_classical": 0,
+   "skip": "n<4"
+  },
+  {
+   "element": "Ta",
+   "n_classical": 0,
+   "skip": "n<4"
+  }
+ ],
+ "exp1_spectra": {
+  "classical-only": {
+   "eig": [
+    0.1039,
+    0.0062,
+    0.004
+   ],
+   "global_PR": 1.199,
+   "n": 56
+  },
+  "+MACE": {
+   "eig": [
+    0.1251,
+    0.0181,
+    0.0089
+   ],
+   "global_PR": 1.44,
+   "n": 63
+  },
+  "+all-3-MLIPs": {
+   "eig": [
+    0.1821,
+    0.0279,
+    0.0107
+   ],
+   "global_PR": 1.431,
+   "n": 77
+  }
+ },
+ "exp3": [
+  {
+   "props": [
+    "C11",
+    "C12",
+    "C44"
+   ],
+   "N": 3,
+   "n_obs": 62,
+   "global_PR": 1.314,
+   "ribbon_dim": 2,
+   "Au_PR": 1.023,
+   "Fe_PR": 1.026
+  },
+  {
+   "props": [
+    "C11",
+    "C12",
+    "C44",
+    "a0"
+   ],
+   "N": 4,
+   "n_obs": 38,
+   "global_PR": 1.174,
+   "ribbon_dim": 1,
+   "Au_PR": 1.023,
+   "Fe_PR": null
+  },
+  {
+   "props": [
+    "C11",
+    "C12",
+    "C44",
+    "a0",
+    "Ecoh"
+   ],
+   "N": 5,
+   "n_obs": 38,
+   "global_PR": 1.226,
+   "ribbon_dim": 1,
+   "Au_PR": 1.036,
+   "Fe_PR": null
+  }
+ ],
+ "exp5": {
+  "mlip_cos": {
+   "Cu": 0.671,
+   "Al": 0.805,
+   "Ni": 0.377,
+   "Au": 0.984,
+   "Ag": 0.95,
+   "Pt": 0.934,
+   "Pd": 0.748,
+   "Pb": 0.56,
+   "Fe": 0.747,
+   "Cr": -0.2,
+   "Mo": 0.346,
+   "W": 0.498,
+   "V": -0.249,
+   "Nb": 0.022,
+   "Ta": 0.969
+  },
+  "classical_cos": {
+   "Ag": 0.9061,
+   "Al": 0.4535,
+   "Au": 0.948,
+   "Cr": 0.9039,
+   "Cu": 0.7963,
+   "Fe": 0.6182,
+   "Mo": 0.7753,
+   "Nb": 0.9757,
+   "Ni": 0.689,
+   "Pb": 0.8853,
+   "Pd": 0.184,
+   "Pt": 0.8532,
+   "Ta": 0.9902,
+   "V": 0.7436,
+   "W": 0.5874
+  },
+  "strong_overlap": [
+   "Ag",
+   "Au",
+   "Pt",
+   "Ta"
+  ],
+  "weak_overlap": [
+   "Ni",
+   "W"
+  ],
+  "classical_strong": [
+   "Ag",
+   "Au",
+   "Cr",
+   "Nb",
+   "Pb",
+   "Pt",
+   "Ta"
+  ],
+  "mlip_strong": [
+   "Ag",
+   "Au",
+   "Pt",
+   "Ta"
+  ]
+ },
+ "exp6": {
+  "mean_update_ms": 0.1914,
+  "median_update_ms": 0.0911,
+  "p99_update_ms": 2.1189,
+  "max_update_ms": 27.2075,
+  "warmup_first_ms": 0.4744,
+  "retained_rank": 5,
+  "rel_error_retained_vs_batch": 0.00175,
+  "n_updates": 10000,
+  "stable": true
+ },
+ "exp2": {
+  "status": "BLOCKED",
+  "reason": "needs Orb-v3 / MACE inference + DFT(SOC); no MLIP runtime or DFT binary on host (RTX A4500 present, software stack not installed)",
+  "data_surrogate": "see analysis of existing Orb-v3 vs MACE vs CHGNet Au error vectors in Part 2"
+ },
+ "exp4": {
+  "status": "BLOCKED",
+  "reason": "needs ASE + MACE(CUDA) geometry opt + DFT single-point; not installed on host"
+ }
+}
