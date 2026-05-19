@@ -325,3 +325,64 @@ table.dense td,table.dense th{padding:9px 13px;font-size:.8rem}
 .kpi{display:flex;gap:24px;flex-wrap:wrap;font-family:"Inter",sans-serif;margin:6px 0 2px}
 .kpi div{font-size:.78rem;color:var(--ink-soft)}
 .kpi div b{display:block;font-size:1.3rem;color:var(--accent);font-family:"JetBrains Mono",monospace}
+
+/* ===== Observatory — TouchDesigner-esque GPU showcase ===== */
+.obs-stage{position:fixed;inset:0;z-index:0}
+#obsCv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.obs-grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.5;
+  background-image:radial-gradient(circle at 50% 50%,transparent 60%,rgba(0,0,0,.4));}
+.obs-scrim{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(7,10,18,.62) 0%,rgba(7,10,18,.15) 30%,rgba(7,10,18,.15) 60%,rgba(7,10,18,.78) 100%)}
+html[data-theme="paper"] .obs-scrim{background:linear-gradient(180deg,rgba(244,241,234,.7),rgba(244,241,234,.2) 40%,rgba(244,241,234,.85))}
+.obs-flow{position:relative;z-index:2}
+.obs-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.obs-hero h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1;font-weight:600;letter-spacing:-.03em;
+  margin:.2em 0;text-wrap:balance;mix-blend-mode:screen}
+html[data-theme="paper"] .obs-hero h1{mix-blend-mode:normal}
+.obs-hero .sub{font-size:1.3rem;color:var(--ink);max-width:54ch;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+.scene-step{max-width:var(--maxw);margin:0 auto;padding:46vh 26px 46vh;min-height:90vh}
+.scene-card{background:color-mix(in oklab,var(--bg) 64%,transparent);
+  border:1px solid var(--rule);border-radius:18px;padding:26px 30px;backdrop-filter:blur(14px) saturate(1.3);
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
+.scene-card h2{margin:.1rem 0 .6rem;border:0;padding:0}
+.scene-card .sec{color:var(--accent);font-family:"Inter",sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+/* operator (control) panel — TD parameter rack */
+.op-panel{position:fixed;right:18px;bottom:18px;z-index:6;width:262px;
+  background:color-mix(in oklab,var(--bg) 78%,transparent);border:1px solid var(--rule);
+  border-radius:14px;backdrop-filter:blur(16px);font-family:"JetBrains Mono",monospace;
+  transition:transform .35s var(--ease);box-shadow:0 20px 50px -20px rgba(0,0,0,.6)}
+.op-panel.min{transform:translateY(calc(100% - 42px))}
+.op-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;
+  border-bottom:1px solid var(--rule-soft);cursor:pointer;font-size:.72rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.op-body{padding:12px 14px;display:flex;flex-direction:column;gap:11px;max-height:62vh;overflow:auto}
+.op-row{display:flex;flex-direction:column;gap:5px}
+.op-row label{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);
+  display:flex;justify-content:space-between}
+.op-row label b{color:var(--accent)}
+.op-row input[type=range]{width:100%;accent-color:var(--accent);height:3px}
+.op-modes{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.op-modes button{all:unset;cursor:pointer;text-align:center;font-size:.64rem;font-weight:700;
+  padding:7px 4px;border-radius:7px;border:1px solid var(--rule);color:var(--ink-soft);letter-spacing:.04em}
+.op-modes button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.op-read{display:flex;justify-content:space-between;font-size:.66rem;color:var(--ink-soft);
+  border-top:1px solid var(--rule-soft);padding-top:9px}
+.op-read b{color:var(--accent)}
+.op-badge{position:fixed;left:18px;bottom:18px;z-index:6;font-family:"JetBrains Mono",monospace;
+  font-size:.62rem;letter-spacing:.1em;color:var(--ink-soft);background:color-mix(in oklab,var(--bg) 70%,transparent);
+  border:1px solid var(--rule);border-radius:999px;padding:7px 13px;backdrop-filter:blur(10px)}
+.op-badge b{color:var(--accent)}
+/* math operator card — node-graph styled equation */
+.opmath{position:relative;margin:1.8rem 0;border:1px solid var(--rule);border-radius:14px;
+  background:linear-gradient(160deg,color-mix(in oklab,var(--accent) 7%,var(--code-bg)),var(--code-bg));
+  padding:22px 26px;overflow:hidden}
+.opmath::before{content:attr(data-op);position:absolute;top:10px;left:16px;font-family:"JetBrains Mono",monospace;
+  font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);opacity:.8}
+.opmath::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,color-mix(in oklab,var(--accent) 6%,transparent) 4px);opacity:.35}
+.opmath .port{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 10px var(--accent);top:calc(50% - 4px)}
+.opmath .port.in{left:-5px}.opmath .port.out{right:-5px}
+.opmath .eq{position:relative;z-index:1;padding-top:8px}
+@media(max-width:680px){.op-panel{width:min(86vw,262px)}.scene-step{padding:30vh 18px}}
