@@ -26,6 +26,7 @@ on:
 
 permissions:
   contents: write
+  actions: write   # to dispatch the Library deploy after pushing
 
 jobs:
   build:
@@ -76,6 +77,8 @@ jobs:
 
       - name: Publish to the Library (deploy=true)
         if: ${{ inputs.deploy }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           cp paper/immi-paper.pdf library-site/src/immi_paper.pdf
           cp paper/immi-paper.pdf paper/immi-paper-latest.pdf
@@ -88,6 +91,11 @@ jobs:
           git add library-site/src/immi_paper.pdf paper/immi-paper-latest.pdf
           git commit -m "build(paper): rebuild preprint PDF from immi-paper.tex" -m "Triggered manually via paper-build.yml; passed the quality gate (no raw-LaTeX leak, no mojibake). Publishing to the Library."
           git push origin HEAD:main
+          # A push made with GITHUB_TOKEN does NOT trigger other workflows
+          # (recursion guard), so deploy-library-site would never fire off
+          # this commit. Dispatch it explicitly so one command ships the paper.
+          gh workflow run deploy-library-site.yml --ref main
+          echo "Dispatched deploy-library-site for the new preprint PDF."
 
       - name: Report
         if: always()
