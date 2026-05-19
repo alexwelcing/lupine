@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en" data-theme="observatory">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Growing the Hyper-Ribbon — Lupine Materials Science</title>
+<meta name="description" content="A mathematical framework for conditional manifold extension, escape detection, and the Lupine regulator." />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+<style>
+  :root{
+    --maxw: 760px;
+    --gold:#e9b949; --gold-soft:#f6d27a; --gold-deep:#b3801c;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  /* ---------- themes ---------- */
+  html[data-theme="observatory"]{
+    --bg:#070a12; --bg2:#0c111d; --panel:#10172700; --panel-solid:#121a2c;
+    --ink:#e9edf7; --ink-soft:#aeb8cf; --ink-dim:#6b769119;
+    --rule:#1e2740; --rule-soft:#161d31;
+    --accent:var(--gold); --accent-ink:#0b0e16;
+    --link:#8fb3ff; --code-bg:#0b1322; --quote:#161f36;
+    --grid:rgba(233,185,73,.05);
+  }
+  html[data-theme="paper"]{
+    --bg:#f4f1ea; --bg2:#ece7db; --panel-solid:#fffdf8;
+    --ink:#1c1a16; --ink-soft:#544f44; --ink-dim:#d8d1c0;
+    --rule:#ddd5c2; --rule-soft:#e7e1d2;
+    --accent:#9a6b12; --accent-ink:#fff;
+    --link:#2f5fb0; --code-bg:#f0ebde; --quote:#efe9da;
+    --grid:rgba(154,107,18,.05);
+  }
+  html[data-theme="sepia"]{
+    --bg:#1d1812; --bg2:#241d15; --panel-solid:#2a2218;
+    --ink:#f0e6d2; --ink-soft:#c3b393; --ink-dim:#3a3122;
+    --rule:#3c3120; --rule-soft:#2e2618;
+    --accent:#e7b35a; --accent-ink:#1d1812;
+    --link:#cf9f5a; --code-bg:#241d14; --quote:#2b2316;
+    --grid:rgba(231,179,90,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Newsreader",Georgia,serif; font-size:1.16rem; line-height:1.72;
+    font-optical-sizing:auto; text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, rgba(233,185,73,.06), transparent 60%),
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:auto, 44px 44px, 44px 44px;
+    transition:background-color .4s var(--ease), color .4s var(--ease);
+  }
+  ::selection{background:var(--accent); color:var(--accent-ink)}
+  a{color:var(--link); text-underline-offset:3px; text-decoration-thickness:1px}
+
+  /* ---------- progress + chrome ---------- */
+  #bar{position:fixed; top:0; left:0; height:3px; width:0;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--gold-soft));
+    box-shadow:0 0 14px var(--accent); z-index:60; transition:width .12s linear}
+  #chrome{position:fixed; top:14px; right:18px; z-index:61; display:flex; gap:8px}
+  .seg{display:flex; background:var(--panel-solid); border:1px solid var(--rule);
+    border-radius:999px; overflow:hidden; backdrop-filter:blur(8px)}
+  .seg button{all:unset; cursor:pointer; padding:7px 12px; font-family:"Inter",sans-serif;
+    font-size:.72rem; font-weight:600; color:var(--ink-soft); letter-spacing:.02em; transition:.2s}
+  .seg button[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink)}
+  .seg button:hover{color:var(--ink)}
+
+  /* ---------- layout ---------- */
+  .wrap{display:grid; grid-template-columns:minmax(0,1fr); justify-items:center}
+  nav#toc{position:fixed; top:0; left:0; width:280px; height:100vh; overflow-y:auto;
+    padding:88px 22px 40px; font-family:"Inter",sans-serif; font-size:.82rem;
+    border-right:1px solid var(--rule-soft); background:linear-gradient(180deg,var(--bg2),transparent);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 64px,#000 calc(100% - 40px),transparent);}
+  nav#toc .brand{font-family:"Newsreader"; font-size:1rem; color:var(--ink);
+    font-weight:600; margin-bottom:4px; letter-spacing:.01em}
+  nav#toc .kicker{color:var(--accent); font-size:.66rem; font-weight:700;
+    letter-spacing:.18em; text-transform:uppercase; margin-bottom:26px}
+  nav#toc a{display:block; color:var(--ink-soft); text-decoration:none; padding:5px 12px;
+    border-left:2px solid transparent; margin:1px 0; border-radius:0 6px 6px 0; transition:.18s}
+  nav#toc a .n{color:var(--accent); font-weight:700; font-variant-numeric:tabular-nums; margin-right:8px}
+  nav#toc a.sub{padding-left:30px; font-size:.78rem; opacity:.78}
+  nav#toc a:hover{color:var(--ink); background:var(--rule-soft)}
+  nav#toc a.active{color:var(--ink); border-left-color:var(--accent);
+    background:linear-gradient(90deg,var(--rule-soft),transparent)}
+  main{max-width:var(--maxw); width:100%; padding:0 26px 140px}
+  @media(max-width:1180px){ nav#toc{display:none} }
+
+  /* ---------- hero ---------- */
+  header.hero{position:relative; min-height:86vh; display:flex; flex-direction:column;
+    justify-content:center; max-width:var(--maxw); width:100%; padding:120px 26px 40px}
+  #ribbonBg{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.55}
+  header.hero>*{position:relative; z-index:1}
+  .eyebrow{font-family:"Inter",sans-serif; font-size:.74rem; font-weight:700;
+    letter-spacing:.26em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;
+    display:flex; align-items:center; gap:12px}
+  .eyebrow::before{content:""; width:34px; height:1px; background:var(--accent)}
+  h1.title{font-size:clamp(2.3rem,5.4vw,4rem); line-height:1.07; font-weight:600;
+    letter-spacing:-.02em; margin:0 0 18px; text-wrap:balance}
+  h1.title em{font-style:italic; color:var(--gold-soft)}
+  .deck{font-size:1.32rem; color:var(--ink-soft); max-width:60ch; margin:0 0 30px; font-weight:400}
+  .byline{font-family:"Inter",sans-serif; font-size:.84rem; color:var(--ink-soft);
+    display:flex; flex-wrap:wrap; gap:8px 20px; padding-top:22px; border-top:1px solid var(--rule)}
+  .byline b{color:var(--ink); font-weight:600}
+  .scrollcue{position:absolute; bottom:26px; left:26px; font-family:"Inter",sans-serif;
+    font-size:.7rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft);
+    z-index:1; animation:bob 2.4s var(--ease) infinite}
+  @keyframes bob{50%{transform:translateY(7px); opacity:.5}}
+
+  /* ---------- typography ---------- */
+  section{max-width:var(--maxw); width:100%}
+  h2{font-size:2rem; font-weight:600; letter-spacing:-.015em; line-height:1.16;
+    margin:4.4rem 0 1.2rem; padding-top:1.2rem; scroll-margin-top:80px; position:relative}
+  h2 .sec{font-family:"Inter",sans-serif; font-size:.8rem; font-weight:700; color:var(--accent);
+    letter-spacing:.1em; display:block; margin-bottom:.4rem}
+  h3{font-size:1.32rem; font-weight:600; margin:2.6rem 0 .8rem; color:var(--ink);
+    scroll-margin-top:80px; letter-spacing:-.01em}
+  h3 .sec{color:var(--accent); font-family:"Inter",sans-serif; font-size:.92em;
+    font-weight:700; margin-right:.5em}
+  p{margin:1.05rem 0}
+  main section > p:first-of-type::first-letter,
+  #s1 > p:nth-of-type(1)::first-letter{}
+  strong{color:var(--ink); font-weight:600}
+  em{color:var(--gold-soft)}
+  hr{border:0; height:1px; background:var(--rule); margin:3.4rem 0}
+  code{font-family:"JetBrains Mono",monospace; font-size:.84em;
+    background:var(--code-bg); padding:.12em .42em; border-radius:5px; color:var(--gold-soft)}
+  pre{background:var(--code-bg); border:1px solid var(--rule); border-radius:12px;
+    padding:20px 22px; overflow-x:auto; font-family:"JetBrains Mono",monospace;
+    font-size:.82rem; line-height:1.65; margin:1.6rem 0; position:relative}
+  pre::before{content:attr(data-lang); position:absolute; top:10px; right:14px;
+    font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft)}
+  pre code{background:none; padding:0; color:var(--ink-soft); font-size:1em}
+  blockquote{margin:2rem 0; padding:1.1rem 1.6rem; border-left:3px solid var(--accent);
+    background:var(--quote); border-radius:0 12px 12px 0; font-size:1.08rem}
+  blockquote strong{color:var(--gold-soft)}
+
+  /* citations */
+  .cite{font-family:"Inter",sans-serif; font-size:.62em; font-weight:700; vertical-align:super;
+    color:var(--accent); cursor:help; padding:0 1px; text-decoration:none;
+    border-bottom:1px dotted var(--accent)}
+  .cite:hover{background:var(--accent); color:var(--accent-ink); border-radius:3px}
+
+  /* ---------- callouts / TLDR ---------- */
+  .tldr{margin:0 0 1rem; padding:26px 30px; border-radius:18px;
+    background:linear-gradient(135deg,var(--quote),transparent);
+    border:1px solid var(--rule); position:relative; overflow:hidden}
+  .tldr::after{content:"TL;DR"; position:absolute; top:18px; right:24px;
+    font-family:"Inter",sans-serif; font-size:.66rem; font-weight:800; letter-spacing:.22em;
+    color:var(--accent)}
+  .tldr p{margin:.3rem 0 0; font-size:1.06rem}
+
+  /* ---------- tables ---------- */
+  .tw{margin:2rem 0; overflow-x:auto; border:1px solid var(--rule); border-radius:14px}
+  table{border-collapse:collapse; width:100%; font-family:"Inter",sans-serif; font-size:.84rem}
+  th{background:var(--code-bg); color:var(--ink); text-align:left; font-weight:700;
+    padding:13px 16px; border-bottom:1px solid var(--rule); white-space:nowrap;
+    position:sticky; top:0}
+  td{padding:12px 16px; border-bottom:1px solid var(--rule-soft); color:var(--ink-soft);
+    font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:0}
+  tbody tr{transition:background .2s}
+  tbody tr:hover{background:var(--rule-soft)}
+  td strong,th strong{color:var(--ink)}
+  tr.au-row td{background:linear-gradient(90deg,rgba(233,185,73,.14),transparent)}
+  tr.au-row td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+  .badge{font-family:"Inter",sans-serif; font-size:.68rem; font-weight:700; padding:3px 9px;
+    border-radius:999px; letter-spacing:.03em; white-space:nowrap}
+  .b-confirmed{background:rgba(233,185,73,.16); color:var(--gold-soft); border:1px solid var(--gold-deep)}
+  .b-refuted{background:rgba(120,140,180,.14); color:var(--ink-soft); border:1px solid var(--rule)}
+  .b-persistent{background:rgba(225,90,90,.14); color:#f0a0a0; border:1px solid #7a3030}
+  .b-normal{background:rgba(120,200,160,.12); color:#9fe0c0; border:1px solid #2f6a52}
+
+  /* ---------- figure shell ---------- */
+  figure{margin:2.6rem 0; padding:0; border:1px solid var(--rule); border-radius:18px;
+    background:var(--panel-solid); overflow:hidden}
+  figure .fig-head{display:flex; align-items:center; justify-content:space-between;
+    gap:14px; padding:16px 22px; border-bottom:1px solid var(--rule-soft); flex-wrap:wrap}
+  figure .fig-head h4{margin:0; font-family:"Inter",sans-serif; font-size:.92rem;
+    font-weight:700; color:var(--ink); display:flex; align-items:center; gap:10px}
+  figure .fig-head h4 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 10px var(--accent)}
+  figcaption{padding:14px 22px; font-family:"Inter",sans-serif; font-size:.8rem;
+    color:var(--ink-soft); border-top:1px solid var(--rule-soft); line-height:1.6}
+  .ctrl{display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    font-family:"Inter",sans-serif; font-size:.78rem; color:var(--ink-soft)}
+  .btn{all:unset; cursor:pointer; font-family:"Inter",sans-serif; font-size:.76rem;
+    font-weight:600; padding:8px 16px; border-radius:999px; border:1px solid var(--rule);
+    color:var(--ink); background:var(--code-bg); transition:.2s}
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .btn.on{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+  input[type=range]{accent-color:var(--accent); cursor:pointer; width:170px}
+  .readout{font-family:"JetBrains Mono",monospace; color:var(--gold-soft); font-weight:600}
+
+  /* ribbon explorer */
+  #ribbonCv{display:block; width:100%; height:420px; background:
+    radial-gradient(circle at 50% 45%, rgba(233,185,73,.05), transparent 65%)}
+  .legend{display:flex; gap:18px; flex-wrap:wrap; padding:12px 22px;
+    font-family:"Inter",sans-serif; font-size:.74rem; color:var(--ink-soft);
+    border-top:1px solid var(--rule-soft)}
+  .legend span{display:flex; align-items:center; gap:7px}
+  .legend i{width:11px; height:11px; border-radius:50%; display:inline-block}
+
+  /* state machine */
+  #fsm{width:100%; height:auto; display:block}
+  .fsm-node{cursor:pointer; transition:.25s}
+  .fsm-node circle{fill:var(--code-bg); stroke:var(--rule); stroke-width:1.5;
+    transition:.25s}
+  .fsm-node text{fill:var(--ink-soft); font-family:"Inter",sans-serif; font-size:13px;
+    font-weight:700; text-anchor:middle; transition:.25s}
+  .fsm-node.active circle{fill:var(--accent); stroke:var(--accent)}
+  .fsm-node.active text{fill:var(--accent-ink)}
+  .fsm-edge{stroke:var(--rule); stroke-width:1.6; fill:none; marker-end:url(#arrow)}
+  #fsmDesc{padding:16px 22px; font-family:"Inter",sans-serif; font-size:.84rem;
+    color:var(--ink-soft); border-top:1px solid var(--rule-soft); min-height:62px}
+  #fsmDesc b{color:var(--accent)}
+
+  /* EQ analogy */
+  .rack{display:flex; gap:14px; padding:24px 22px; overflow-x:auto;
+    background:repeating-linear-gradient(45deg,transparent,transparent 12px,var(--rule-soft) 12px,var(--rule-soft) 13px)}
+  .pedal{flex:0 0 138px; background:var(--code-bg); border:1px solid var(--rule);
+    border-radius:14px; padding:16px 14px; text-align:center; font-family:"Inter",sans-serif;
+    transition:.3s; position:relative}
+  .pedal.byp{opacity:.4; filter:grayscale(.7)}
+  .pedal h5{margin:0 0 4px; font-size:.82rem; color:var(--ink); font-weight:700}
+  .pedal .role{font-size:.66rem; color:var(--ink-soft); line-height:1.4; min-height:46px}
+  .knob{width:46px;height:46px;border-radius:50%;margin:10px auto;
+    background:radial-gradient(circle at 38% 32%,var(--gold-soft),var(--gold-deep));
+    box-shadow:0 3px 10px rgba(0,0,0,.4); position:relative; transition:.4s}
+  .knob::after{content:"";position:absolute;top:5px;left:50%;width:2px;height:14px;
+    background:var(--accent-ink);transform:translateX(-50%);transform-origin:bottom}
+  .sw{margin-top:8px; font-size:.64rem; font-weight:800; letter-spacing:.12em;
+    color:var(--accent); cursor:pointer; user-select:none}
+  .pedal.byp .sw{color:var(--ink-soft)}
+  .pedal.byp .knob{filter:grayscale(1)}
+
+  .next-grid td:first-child{white-space:nowrap}
+  .pill{font-family:"Inter",sans-serif;font-weight:800;font-size:.7rem;padding:3px 9px;
+    border-radius:6px;background:var(--accent);color:var(--accent-ink)}
+  footer{max-width:var(--maxw); width:100%; margin-top:5rem; padding-top:2rem;
+    border-top:1px solid var(--rule); font-family:"Inter",sans-serif; font-size:.82rem;
+    color:var(--ink-soft); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px}
+  .katex-display{margin:1.7rem 0; overflow-x:auto; overflow-y:hidden; padding:6px 0}
+  @media(max-width:680px){
+    body{font-size:1.06rem}
+    h1.title{font-size:2.1rem} .deck{font-size:1.1rem}
+    #chrome{top:auto; bottom:14px; right:50%; transform:translateX(50%)}
+  }
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="chrome">
+  <div class="seg" role="group" aria-label="Theme">
+    <button data-theme="observatory" aria-pressed="true">Observatory</button>
+    <button data-theme="sepia" aria-pressed="false">Sepia</button>
+    <button data-theme="paper" aria-pressed="false">Paper</button>
+  </div>
+</div>
+
+<nav id="toc" aria-label="Table of contents">
+  <div class="brand">Lupine Materials Science</div>
+  <div class="kicker">Theory · Working Paper</div>
+  <div id="tocList"></div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <canvas id="ribbonBg" aria-hidden="true"></canvas>
+  <div class="eyebrow">Hyper-Ribbon Program · Conjecture-grade</div>
+  <h1 class="title" id="heroTitle">Growing the Hyper-Ribbon</h1>
+  <p class="deck">A mathematical framework for <em>conditional manifold extension</em>, real-time <em>escape detection</em>, and the <em>Lupine regulator</em>.</p>
+  <div class="byline">
+    <span><b>Lupine Materials Science</b> · Seattle, WA</span>
+    <span>559 classical potentials · 15 metals · 3 foundation MLIPs</span>
+    <span><b>Status</b> mathematical scaffold</span>
+  </div>
+  <div class="scrollcue">scroll ↓</div>
+</header>
+
+<main>
+
+<section id="s0">
+  <div class="tldr">
+    <p>The Lupine hyper-ribbon is a low-dimensional error manifold (participation ratio <strong>PR ≈ 1.05–1.86</strong> in 3D property space) discovered across <strong>559 classical interatomic potentials</strong> and <strong>15 benchmark metals</strong>. When foundation MLIPs (MACE-MP-0, CHGNet, Orb-v3) are added, <strong>14/15 elements stay on the ribbon</strong> — but <strong>gold (Au) escapes</strong>, its PR jumping from <strong>1.02 → 1.67</strong> under MACE. This document develops the machinery to (1) <strong>grow the manifold to arbitrary N+ properties</strong> while keeping PR bounded via conditional activation, (2) <strong>detect escape events</strong> in real time using a Participation-Ratio statistic, (3) <strong>build a regulator</strong> acting as a configurable mid-run filter (an audio-EQ analogy), and (4) <strong>propagate escape discoveries</strong> through a catalog that automatically improves all future MLIP runs. Gold nanostructure generation is the validation target — each Au structure feeds back into the catalog, tightening the ribbon for everyone downstream.</p>
+  </div>
+</section>
+
+<section id="s1">
+  <h2><span class="sec">Section 1</span>The Core Geometry: Hyper-Ribbon as Error Manifold</h2>
+
+  <h3 id="s1-1"><span class="sec">1.1</span>Sloppy Models and Information Geometry</h3>
+  <p>The mathematical foundation of the Lupine platform rests on the <strong>sloppy model</strong> formalism developed by Transtrum, Machta, and Sethna <a class="cite" data-n="19">19</a><a class="cite" data-n="12">12</a>. In their 2011 <em>Physical Review E</em> paper, they proved that multiparameter models across physics, biology, and materials science exhibit a universal geometric structure: the <strong>model manifold</strong> — the surface traced by model predictions as parameters vary — is not a generic high-dimensional surface but a <strong>hyper-ribbon</strong>, a manifold whose widths decay geometrically across many orders of magnitude. The Fisher Information Matrix (FIM) serves as the natural Riemannian metric on this manifold, and its eigenvalue spectrum encodes the hierarchy of parameter sensitivities.</p>
+  <p>The FIM for a model with parameters θ predicting observables y is:</p>
+  <div data-math="display">g_{\mu\nu} = \left\langle \frac{\partial^2 \log P}{\partial \theta_\mu \partial \theta_\nu} \right\rangle</div>
+  <p>For the interatomic potential problem, we do not work in parameter space but in <strong>prediction-error space</strong>: each potential φ ∈ ℳ (the manifold of published potentials) produces a vector of prediction errors ε(φ) = (ε₁(φ), …, εₙ(φ)) where each component is the signed error for a specific material-property pair. The <strong>error manifold</strong> ℳ<sub>error</sub> ⊂ ℝⁿ is the set of all such error vectors. The sloppy-model claim, translated to this setting, is that ℳ<sub>error</sub> occupies a hyper-ribbon — a low-dimensional ridge within the ambient n-dimensional space.</p>
+  <p>Machta et al. (2013) <a class="cite" data-n="69">69</a> connected this parameter-space compression to the emergence of effective theories in physics. Their key insight: the same eigenvalue hierarchy that makes continuum mechanics emergent from quantum field theory also makes interatomic potential errors predictable and correctable. The Lupine program operationalizes this insight by treating the ribbon as a <strong>corrective substrate</strong> rather than merely a descriptive curiosity.</p>
+
+  <h3 id="s1-2"><span class="sec">1.2</span>Participation Ratio as Dimensionality Measure</h3>
+  <p>The <strong>Participation Ratio (PR)</strong> provides a theoretically grounded measure of effective dimensionality that is superior to threshold-based eigenvalue counting <a class="cite" data-n="13">13</a><a class="cite" data-n="14">14</a>. For a covariance matrix Σ with eigenvalues λᵢ, the PR is:</p>
+  <div data-math="display">D_{PR} = \frac{\operatorname{Tr}(\Sigma)^2}{\operatorname{Tr}(\Sigma^2)} = \frac{\left(\sum_{j=1}^N \lambda_j\right)^2}{\sum_{j=1}^N \lambda_j^2}</div>
+  <p>The PR quantifies how many eigenmodes are necessary to "significantly capture" the distribution of data <a class="cite" data-n="13">13</a>. It interpolates between correlation dimension at small scales and global dimension at large scales, and it has been independently discovered in atomic spectroscopy (the original participation ratio), condensed matter physics (a localization measure), quantum information (purity), economics (the Herfindahl-Hirschman Index), and machine learning (kernel expressivity).</p>
+  <p>For the IMMI benchmark, the global PR of <strong>1.05–1.86</strong> (of 3 nominal dimensions for C₁₁, C₁₂, C₄₄) means that the error vectors, despite living in ℝ³, effectively occupy a <strong>1.05–1.86 dimensional manifold</strong> — consistent with a 1D curve or a highly anisotropic 2D ribbon. This is the empirical signature of sloppy-model universality applied to interatomic potentials.</p>
+
+  <figure>
+    <div class="fig-head">
+      <h4><span class="dot"></span>Hyper-Ribbon Explorer — error manifold &amp; the gold escape</h4>
+      <div class="ctrl">
+        <button class="btn" id="maceBtn">+ MACE-MP-0</button>
+        <button class="btn" id="spinBtn">Auto-rotate</button>
+      </div>
+    </div>
+    <canvas id="ribbonCv"></canvas>
+    <div class="legend">
+      <span><i style="background:#7da6ff"></i>14 ribbon-bound metals</span>
+      <span><i style="background:#e9b949"></i>Au (escape-prone)</span>
+      <span><i style="background:#e15a5a"></i>Fe (persistent outlier)</span>
+      <span style="margin-left:auto">live PR&nbsp; <b class="readout" id="prLive">1.42</b> / 3 · escape ρ <b class="readout" id="rhoLive">0.04</b></span>
+    </div>
+    <figcaption>Each point is a potential's prediction-error vector projected to the two leading principal axes; the cloud hugs a near-1D ridge — the hyper-ribbon. Toggle <b>+ MACE-MP-0</b>: 14/15 metals stay bound, but Au is flung orthogonal to the ribbon (PR 1.02 → 1.67) while Fe remains the off-axis outlier. PR and escape ratio are computed live from the displayed covariance.</figcaption>
+  </figure>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Metric</th><th>Classical Potentials</th><th>+ MACE-MP-0</th><th>+ CHGNet</th><th>Interpretation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Global PR</strong></td><td>1.05–1.86</td><td>1.10–1.92</td><td>1.08–1.88</td><td>Effective dimensionality stays low</td></tr>
+        <tr><td><strong>Ribbon dim (90%)</strong></td><td>1–2</td><td>1–2</td><td>1–2</td><td>Dominant error modes are 1–2</td></tr>
+        <tr class="au-row"><td><strong>Au PR</strong></td><td>1.02</td><td><strong>1.67</strong></td><td><strong>1.58</strong></td><td><strong>Au escapes</strong> — unique behavior</td></tr>
+        <tr><td><strong>Ag PR</strong></td><td>1.15</td><td>1.12</td><td>1.09</td><td>Ag stays on ribbon (refuted escape)</td></tr>
+        <tr><td><strong>Fe PR</strong></td><td>2.1</td><td>2.3</td><td>2.2</td><td>Fe is persistent outlier (magnetism)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The Au escape is <strong>reproduced across two independent MLIPs</strong> (MACE and CHGNet), establishing it as a real effect rather than a model artifact. The refutation of Ag escape — CHGNet pulls Ag back onto the ribbon — proves the effect is <strong>Au-specific</strong>, not a noble-metal class effect. This specificity is what makes the escape catalogable and correctable.</p>
+</section>
+
+<section id="s2">
+  <h2><span class="sec">Section 2</span>Growing the Manifold: N+ Properties with Conditional Activation</h2>
+
+  <h3 id="s2-1"><span class="sec">2.1</span>The Extension Problem</h3>
+  <p>The current Lupine manifold spans three elastic constants (C₁₁, C₁₂, C₄₄). The de-myopization result <a class="cite" data-n="6">6</a> showed that adding the lattice constant a₀ — forcing a joint Cᵢⱼ + a₀ manifold — preserves the ribbon structure (PR 1.05–2.05). The natural next step is extending to <strong>four property families</strong> (adding E<sub>coh</sub>, B₀ via the Phase-D compute lane) and ultimately to arbitrary N properties. The critical question: <strong>does the ribbon survive as N grows?</strong></p>
+  <p>Mathematically, we are asking whether adding new columns to the error matrix E (potentials × properties) preserves the low-rank structure. The answer depends on the <strong>correlation structure</strong> of the new properties with existing ones. If new properties are largely predictable from existing error modes — if they lie approximately in the span of the current ribbon — the PR grows only logarithmically. If they introduce genuinely new orthogonal error structures, the PR grows linearly, and the ribbon thesis breaks.</p>
+
+  <h3 id="s2-2"><span class="sec">2.2</span>Conditional Activation: Sparse Property Inclusion</h3>
+  <p>The key insight for handling N+ properties is that <strong>not all properties are relevant for all contexts</strong>. The lattice constant a₀ matters more for surface calculations than bulk; cohesive energy E<sub>coh</sub> matters for nanoparticle stability; magnetic moments matter only for Fe, Co, Ni, Mn. Rather than building a single dense N-dimensional manifold, we propose a <strong>conditionally activated sparse manifold</strong>.</p>
+  <p>For a given simulation context <strong>c</strong> = (element, structure, temperature, task, …), only a subset of properties <strong>P(c)</strong> ⊆ {1, …, N} is active. The effective manifold dimensionality is measured on the <strong>active subspace</strong> ℝ<sup>|P(c)|</sup>, not the full ambient ℝ<sup>N</sup>. This is analogous to sparse PCA <a class="cite" data-n="38">38</a><a class="cite" data-n="43">43</a>, where principal components are constrained to use only a subset of features — but here the sparsity pattern is determined by physical context rather than statistical optimization.</p>
+  <pre data-lang="structure"><code>Ambient space:      ℝ^N   (all registered properties)
+Active selector:    σ_c: {1,...,N} → {0,1}   (context-dependent mask)
+Active subspace:    ℝ^n  where n = |{i : σ_c(i) = 1}|
+Projected manifold: M_c = Π_c(M) ⊂ ℝ^n   (ribbon on active props)
+Effective PR:       PR(M_c) = (Σ λ_i)² / Σ λ_i²   (on active subspace)</code></pre>
+  <p>The <code>GrowingManifold</code> class implements this structure. Properties are registered with <code>activation_conditions</code> — predicates that evaluate true when the property should be included. Core properties (C₁₁, C₁₂, C₄₄) are always active; conditional properties (a₀, E<sub>coh</sub>, μ<sub>mag</sub>, γ<sub>surf</sub>, rel_corr) activate only when their conditions are met.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Property</th><th>Category</th><th>Activation Condition</th><th>Escape-Sensitive</th></tr></thead>
+      <tbody>
+        <tr><td><strong>C₁₁, C₁₂, C₄₄</strong></td><td>Elastic</td><td>Always active</td><td>No</td></tr>
+        <tr><td><strong>a₀</strong></td><td>Structural</td><td>Surface/nanoparticle OR T &gt; 500K</td><td>No</td></tr>
+        <tr><td><strong>E<sub>coh</sub></strong></td><td>Thermodynamic</td><td>Nanoparticle OR stability task</td><td>No</td></tr>
+        <tr><td><strong>μ<sub>mag</sub></strong></td><td>Magnetic</td><td>Element ∈ {Fe, Co, Ni, Mn}</td><td><strong>Fe</strong></td></tr>
+        <tr><td><strong>γ<sub>surf</sub></strong></td><td>Surface</td><td>Surface OR nanoparticle</td><td>No</td></tr>
+        <tr class="au-row"><td><strong>rel_corr</strong></td><td>Electronic</td><td>Element ∈ {Au, Pt, Hg, Pb, W}</td><td><strong>Au, Pt</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="s2-3"><span class="sec">2.3</span>Why PR Stays Bounded</h3>
+  <p>The PR grows sublinearly with N because new properties in materials science are <strong>not statistically independent</strong>. The elastic constants C₁₁, C₁₂, C₄₄ are coupled through the bulk modulus B = (C₁₁ + 2C₁₂)/3 and shear modulus G = (C₁₁ − C₁₂)/2. Adding B or G as explicit properties would not introduce new orthogonal error modes — they are linear combinations of existing ones. Similarly, a₀ correlates with C₁₁ through the potential's equilibrium condition. The de-myopization result empirically confirmed this: adding a₀ only increased the PR from ~1.5 to ~1.7, not to 2.0+ as an independent dimension would.</p>
+  <p>The mathematical bound comes from the <strong>covariance structure</strong> of materials properties. For a covariance matrix Σ, PR is maximized when all eigenvalues are equal (PR = N, isotropic) and minimized when one eigenvalue dominates (PR → 1, a 1D line). Materials properties exhibit strong correlations because they derive from the same underlying interatomic potential energy surface. PR therefore stays in the <strong>1–3 range</strong> even as N grows to 10+, provided new properties come from physically meaningful families rather than arbitrary combinations.</p>
+
+  <figure>
+    <div class="fig-head">
+      <h4><span class="dot"></span>PR vs. N — the ribbon stays bounded as you add properties</h4>
+      <div class="ctrl">
+        <label>N&nbsp;=&nbsp;<span class="readout" id="nVal">3</span></label>
+        <input type="range" id="nSlider" min="3" max="14" value="3" />
+      </div>
+    </div>
+    <canvas id="prCv" style="display:block;width:100%;height:240px"></canvas>
+    <figcaption>Correlated property families (solid gold) → PR saturates well under the platform ceiling PR<sub>max</sub> ≈ 3. Arbitrary independent dimensions (dashed) → PR ≈ N, and the ribbon thesis would break. Conditional activation keeps the system on the gold curve.</figcaption>
+  </figure>
+  <p>Escape events like Au represent <strong>genuine new dimensions</strong> — error structures orthogonal to the ribbon that cannot be predicted from existing modes. When rel_corr is activated for Au, the PR may spike (as observed: 1.02 → 1.67), signaling that relativistic corrections introduce a new error mode. The regulator's job is to detect this spike and apply the appropriate correction.</p>
+</section>
+
+<section id="s3">
+  <h2><span class="sec">Section 3</span>The Regulator: A Configurable Mid-Run Filter</h2>
+
+  <h3 id="s3-1"><span class="sec">3.1</span>Audio Filter Analogy</h3>
+  <p>The regulator is best understood by analogy to an <strong>audio equalizer</strong> or <strong>effects chain</strong>. In audio processing, a raw signal passes through a series of filters (EQ, compressor, reverb, limiter) that modify specific frequency bands or dynamic ranges. Each filter can be bypassed, adjusted, or reordered. The Lupine regulator applies the same paradigm to MLIP outputs — click a module to bypass it:</p>
+  <figure>
+    <div class="fig-head"><h4><span class="dot"></span>The regulator as a signal chain</h4>
+      <div class="ctrl"><span>raw MLIP error →</span></div>
+    </div>
+    <div class="rack" id="rack">
+      <div class="pedal" data-k="EQ band"><h5>EQ Band</h5><div class="knob"></div><div class="role">Ribbon constraint — nudges errors toward dominant modes</div><div class="sw">● ENGAGED</div></div>
+      <div class="pedal" data-k="Compressor"><h5>Compressor</h5><div class="knob"></div><div class="role">Escape detector — flags when error energy exceeds threshold</div><div class="sw">● ENGAGED</div></div>
+      <div class="pedal" data-k="Noise gate"><h5>Noise Gate</h5><div class="knob"></div><div class="role">Property validator — zeroes physically impossible predictions</div><div class="sw">● ENGAGED</div></div>
+      <div class="pedal" data-k="Effects"><h5>FX Chain</h5><div class="knob"></div><div class="role">Element overlay — element-specific corrections (rel_corr for Au)</div><div class="sw">● ENGAGED</div></div>
+      <div class="pedal" data-k="Bypass"><h5>Bypass</h5><div class="knob"></div><div class="role">Pass-through — disable regulator for validation runs</div><div class="sw">● ENGAGED</div></div>
+    </div>
+    <figcaption>→ corrected, ribbon-bound error. Each stage maps to an audio primitive; the regulator is reconfigurable <em>at runtime</em> — check frequency (Δt steps), target properties, tolerance ε, and active escape handlers can change mid-simulation (e.g. monitoring-only → active correction near a phase transition).</figcaption>
+  </figure>
+
+  <h3 id="s3-2"><span class="sec">3.2</span>State Machine</h3>
+  <p>The regulator operates as a <strong>finite state machine</strong> with five states. Click a node:</p>
+  <figure>
+    <div class="fig-head"><h4><span class="dot"></span>Regulator state machine — the self-enriching feedback loop</h4></div>
+    <svg id="fsm" viewBox="0 0 760 240" role="img" aria-label="Regulator state machine">
+      <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--rule)"/></marker></defs>
+      <path class="fsm-edge" d="M120 120 H250"/>
+      <path class="fsm-edge" d="M370 120 H500"/>
+      <path class="fsm-edge" d="M560 95 V60 H310 V95"/>
+      <path class="fsm-edge" d="M620 145 V200 H690 V145"/>
+      <path class="fsm-edge" d="M690 95 V40 H120 V95"/>
+      <g class="fsm-node active" data-s="MONITOR" transform="translate(70,120)"><circle r="50"/><text dy="5">MONITOR</text></g>
+      <g class="fsm-node" data-s="CHECK" transform="translate(310,120)"><circle r="50"/><text dy="5">CHECK</text></g>
+      <g class="fsm-node" data-s="CORRECT" transform="translate(560,120)"><circle r="50"/><text dy="5">CORRECT</text></g>
+      <g class="fsm-node" data-s="ALERT" transform="translate(620,200)"><circle r="40"/><text dy="5">ALERT</text></g>
+      <g class="fsm-node" data-s="LEARN" transform="translate(710,120)"><circle r="40"/><text dy="5">LEARN</text></g>
+    </svg>
+    <div id="fsmDesc"><b>MONITOR</b> — Passive observation. Compute PR and escape ratio every Δt steps. No intervention. This is the default state.</div>
+    <figcaption>The loop MONITOR → CHECK → (CORRECT → MONITOR) ∨ (CORRECT → ALERT → LEARN → MONITOR) ensures every escape event, corrected or not, enriches the catalog and improves future runs.</figcaption>
+  </figure>
+
+  <h3 id="s3-3"><span class="sec">3.3</span>Mathematical Formalization</h3>
+  <p>Let <strong>x(t)</strong> ∈ ℝⁿ be the MLIP's predicted property vector at MD step t, and <strong>x<sub>ref</sub></strong> the reference (DFT or experimental) value. The error vector is ε(t) = x(t) − x<sub>ref</sub>. The regulator operates through three operations.</p>
+  <p><strong>Step 1 — Ribbon Projection.</strong> Project ε onto the ribbon subspace spanned by the top-k eigenvectors {v₁, …, vₖ} of the error covariance matrix:</p>
+  <div data-math="display">\varepsilon_{\text{ribbon}} = \sum_{i=1}^{k} (\varepsilon \cdot v_i)\, v_i</div>
+  <p><strong>Step 2 — Escape Detection.</strong> Measure the escape ratio:</p>
+  <div data-math="display">\rho_{\text{escape}} = \frac{\lVert\varepsilon\rVert^2 - \lVert\varepsilon_{\text{ribbon}}\rVert^2}{\lVert\varepsilon\rVert^2} = \frac{\lVert\varepsilon_{\perp}\rVert^2}{\lVert\varepsilon\rVert^2}</div>
+  <p>If ρ<sub>escape</sub> ≥ ε<sub>threshold</sub>, an escape is detected.</p>
+  <p><strong>Step 3 — Correction.</strong> Apply the element-specific correction from the catalog. For Au this is a relativistic overlay Δ<sub>rel</sub> shifting the d-electron energy levels:</p>
+  <div data-math="display">\varepsilon_{\text{corrected}} = \varepsilon - \Delta_{\text{rel}}(\text{element},\, \text{MLIP})</div>
+  <p>The correction Δ<sub>rel</sub> is learned from the escape catalog: the mean error vector for Au on the given MLIP, projected onto the escape subspace. This is analogous to the <strong>Kalman gain</strong> <a class="cite" data-n="49">49</a><a class="cite" data-n="55">55</a> — an optimal linear estimator that minimizes the mean-square error of the corrected prediction.</p>
+</section>
+
+<section id="s4">
+  <h2><span class="sec">Section 4</span>Escape Detection and the Catalog Propagation System</h2>
+
+  <h3 id="s4-1"><span class="sec">4.1</span>The Escape Catalog</h3>
+  <p>The escape catalog is the <strong>accumulated knowledge base</strong> of all escape events detected across all MLIPs, elements, and contexts. Each entry records element, MLIP, escape ratio, local PR, context (structure/temperature/task), correction applied, correction success, and timestamp.</p>
+  <p>The catalog is append-only and versioned. Each new entry triggers a <strong>propagation event</strong>: all users running simulations involving the catalogued element on any MLIP receive the correction automatically. This is the <strong>network effect</strong> of the platform — each escape discovered improves accuracy for all downstream users, regardless of which MLIP they use.</p>
+
+  <h3 id="s4-2"><span class="sec">4.2</span>Detection Algorithm</h3>
+  <pre data-lang="algorithm"><code>Algorithm: DetectEscape(element, mlip, context)
+   1. P_active ← GetActiveProperties(context)
+   2. n ← |P_active|
+   3. if n &lt; 2: return INSUFFICIENT_DATA
+   4.
+   5. // Build error matrix for this context
+   6. E ← []                       // list of error vectors
+   7. for each potential_id in error_data:
+   8.   if context_matches(potential_id, context):
+   9.     E.append(error_data[potential_id][P_active])
+  10.
+  11. if |E| &lt; 3: return INSUFFICIENT_DATA
+  12.
+  13. // Covariance + eigendecomposition
+  14. Σ ← Covariance(E)
+  15. λ, V ← Eigendecomposition(Σ)   // λ sorted descending
+  16.
+  17. // Ribbon dimension (90% variance)
+  18. k ← min{ i : cumsum(λ)/sum(λ) ≥ 0.9 }
+  19.
+  20. // Element-specific escape ratio
+  21. ε_element ← mean error for element in E
+  22. coeffs   ← Vᵀ · ε_element
+  23. E_ribbon ← sum(coeffs[1:k]²)
+  24. E_escape ← sum(coeffs[k+1:n]²)
+  25. ρ_escape ← E_escape / (E_ribbon + E_escape)
+  26.
+  27. PR_local ← (sum(coeffs²))² / sum(coeffs⁴)
+  28.
+  29. if ρ_escape ≥ threshold:
+  30.   RecordEscape(catalog, element, mlip, ρ_escape, PR_local, context)
+  31.   return ESCAPE(ρ_escape, PR_local, suggested_correction)
+  32. else:
+  33.   return ON_RIBBON(ρ_escape, PR_local)</code></pre>
+  <p>The algorithm is <strong>O(m · n²)</strong> where m is the number of error observations and n the active subspace dimension. With n typically 3–8 and m in the hundreds, this is computationally negligible compared to the MLIP evaluation cost.</p>
+
+  <h3 id="s4-3"><span class="sec">4.3</span>Cross-MLIP Validation</h3>
+  <p>A critical requirement is <strong>cross-MLIP reproducibility</strong>. An escape recorded for Au on MACE must be validated on CHGNet and Orb-v3 before promotion from "tentative" to "confirmed". The current Lupine corpus shows <a class="cite" data-n="6">6</a>:</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Element</th><th>MACE</th><th>CHGNet</th><th>Orb-v3</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr class="au-row"><td><strong>Au</strong></td><td><strong>ESCAPE</strong> (PR 1.67)</td><td><strong>ESCAPE</strong> (PR 1.58)</td><td>Pending</td><td><span class="badge b-confirmed">Confirmed</span></td></tr>
+        <tr><td><strong>Ag</strong></td><td>On ribbon (PR 1.12)</td><td>On ribbon (PR 1.09)</td><td>Pending</td><td><span class="badge b-refuted">Refuted</span></td></tr>
+        <tr><td><strong>Fe</strong></td><td>Outlier (PR 2.3)</td><td>Outlier (PR 2.2)</td><td>Outlier (PR 2.1)</td><td><span class="badge b-persistent">Persistent</span></td></tr>
+        <tr><td><strong>Pt</strong></td><td>On ribbon (PR 1.03)</td><td>On ribbon (PR 1.05)</td><td>Pending</td><td><span class="badge b-normal">Normal</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The Au escape achieves <strong>confirmed</strong> status after two independent MLIPs. Ag's hypothesized escape is <strong>refuted</strong> — CHGNet pulls it back onto the ribbon, proving the escape is Au-specific. Fe's high PR is <strong>persistent</strong> across all three MLIPs, suggesting a genuinely different error structure (likely magnetism-related) rather than a model-specific artifact.</p>
+</section>
+
+<section id="s5">
+  <h2><span class="sec">Section 5</span>Gold Nanostructure Generation: A Validation Target</h2>
+
+  <h3 id="s5-1"><span class="sec">5.1</span>Why Gold?</h3>
+  <p>Gold is a uniquely valuable validation case because its <strong>relativistic effects</strong> <a class="cite" data-n="60">60</a><a class="cite" data-n="64">64</a><a class="cite" data-n="66">66</a> create a genuine physical mechanism for escape that is simultaneously well-understood theoretically and challenging for MLIPs to capture. The key effect is <strong>s-orbital contraction</strong>: the 6s electrons move at ~0.6c, increasing their effective mass by ~20% and pulling the orbital inward. By orthogonality, the 5d orbitals expand outward and are destabilized. The 5d → 6s interband transition shifts from the ultraviolet (as in silver) into the visible blue range — which is why gold appears yellow <a class="cite" data-n="64">64</a>.</p>
+  <p>For MLIPs, the <strong>d-electron treatment</strong> must account for relativistic scalar corrections that shift the relative energies of s and d orbitals. Foundation MLIPs trained on PBE-DFT data without explicit relativistic corrections in their feature representations will systematically misrepresent Au's electronic structure, producing errors that are <strong>orthogonal to the ribbon</strong> (escapes) because the ribbon was constructed from non-relativistic or weakly relativistic elements.</p>
+
+  <h3 id="s5-2"><span class="sec">5.2</span>Generation Pipeline</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Stage</th><th>Action</th><th>Regulator Role</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 · Structure Spec</strong></td><td>Define Au<sub>N</sub> size, symmetry, ligands</td><td>Check element against escape catalog</td></tr>
+        <tr><td><strong>2 · MLIP Selection</strong></td><td>Choose Au-aware potential (MACE-MP-0b3 recommended)</td><td>Auto-activate rel_corr property</td></tr>
+        <tr><td><strong>3 · Relativistic Pre-check</strong></td><td>Compute PR for Au on selected MLIP</td><td>If PR &gt; 1.5, apply correction overlay</td></tr>
+        <tr><td><strong>4 · Global Optimization</strong></td><td>GA + DFT hybrid, basin hopping, or RL <a class="cite" data-n="37">37</a><a class="cite" data-n="53">53</a></td><td>Monitor PR every Δt steps; flag escapes</td></tr>
+        <tr><td><strong>5 · Validation</strong></td><td>DFT single-point calculations</td><td>Compare MLIP vs DFT; update catalog</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The pipeline leverages recent advances: reinforcement learning has identified Au₁₃ icosahedral structures <a class="cite" data-n="37">37</a>, GA + DFT hybrids have explored the planar-globular transition <a class="cite" data-n="53">53</a>, and ACE potentials have achieved record-long simulations of thiolate-protected Au₁₄₄(SR)₆₀ clusters <a class="cite" data-n="44">44</a><a class="cite" data-n="46">46</a>. The Lupine contribution is not a new generation algorithm but a <strong>corrective layer</strong> that improves whatever MLIP the user chooses.</p>
+
+  <h3 id="s5-3"><span class="sec">5.3</span>Feedback Loop</h3>
+  <p>Each gold structure generated produces a <strong>feedback event</strong>: (1) the MLIP predicts properties for the Au structure; (2) the regulator checks whether the error vector stays on the ribbon; (3) DFT validation provides the ground-truth error; (4) if Au escapes, the catalog is updated with the new context (nanoparticle, size, ligand environment); (5) the updated catalog propagates to all future Au simulations across all MLIPs.</p>
+  <blockquote>This creates a <strong>virtuous cycle</strong>: more Au generations → richer escape catalog → better corrections → more accurate predictions → more reliable generations. The target is reducing Au's PR from <strong>1.67 → &lt; 1.2</strong>, bringing it back onto the ribbon and making Au as well-behaved as Ag or Pt.</blockquote>
+</section>
+
+<section id="s6">
+  <h2><span class="sec">Section 6</span>Formal Structure: Toward a Lean Specification</h2>
+
+  <h3 id="s6-1"><span class="sec">6.1</span>Type Signature</h3>
+  <p>The framework can be formalized in a theorem-proving language like Lean <a class="cite" data-n="35">35</a>, following the precedent of formalized chemical physics proofs. The core types:</p>
+  <pre data-lang="lean"><code>-- A property is a named, categorized observable
+structure Property where
+  name          : String
+  category      : PropertyCategory
+  index         : Nat
+  always_active : Bool
+
+-- Context determines which properties are active
+structure Context where
+  element        : String
+  structure_type : String
+  temperature    : Float
+  task           : String
+
+-- A property is active in a context if its conditions hold
+def is_active (p : Property) (c : Context) : Prop :=
+  p.always_active ∨ ∃ cond ∈ p.activation_conditions, cond c
+
+-- The error manifold for a given context
+def ErrorManifold (N : Nat) (properties : Fin N → Property) (ctx : Context) :=
+  { ε : Vector Float N // ∀ i, (is_active (properties i) ctx) ∨ (ε i = 0) }
+
+-- Participation ratio measures effective dimensionality
+def participation_ratio {n : Nat} (eigenvalues : Vector Float n) : Float :=
+  (eigenvalues.sum ^ 2) / (eigenvalues.map (· ^ 2)).sum</code></pre>
+
+  <h3 id="s6-2"><span class="sec">6.2</span>Key Invariants</h3>
+  <p><strong>Invariant 1 (Ribbon Boundedness).</strong> For any context c, the participation ratio of the active error manifold is bounded: <strong>PR(M<sub>c</sub>) ≤ PR<sub>max</sub></strong> where PR<sub>max</sub> ≈ 3.0 is a platform constant. This invariant is violated during escape events — which is exactly how escapes are detected.</p>
+  <p><strong>Invariant 2 (Escape Specificity).</strong> If element e escapes on MLIP m, then for any other element e′ ≠ e, either e′ also escapes (a class effect) or e′ stays on the ribbon (an element-specific effect). The Au/Ag distinction proves Au's escape is element-specific.</p>
+  <p><strong>Invariant 3 (Correction Monotonicity).</strong> Applying a catalogued correction to an escape event never increases the participation ratio: <strong>PR(ε<sub>corrected</sub>) ≤ PR(ε<sub>raw</sub>)</strong>. This ensures corrections genuinely improve predictions rather than introducing new errors.</p>
+
+  <h3 id="s6-3"><span class="sec">6.3</span>The Core Theorem</h3>
+  <blockquote><strong>Theorem (Hyper-Ribbon Correction).</strong> Let ℳ be the manifold of interatomic potentials, E: ℳ → ℝ<sup>N</sup> the error map, and R ⊂ ℝ<sup>N</sup> the hyper-ribbon subspace. For any potential φ ∈ ℳ and context c, if E(φ) projected onto the active subspace has escape ratio ρ &lt; ε<sub>threshold</sub>, then there exists a correction Δ<sub>c</sub>(element, MLIP) such that the corrected error E(φ) − Δ<sub>c</sub> lies in R.</blockquote>
+  <p>The theorem is <strong>empirically grounded</strong> rather than analytically proven — it holds for the 559 classical potentials and 3 foundation MLIPs tested to date, with Au as the primary confirmed exception that motivates the correction machinery. The platform's value proposition is that this empirical regularity, combined with systematic escape detection and cataloging, provides a <strong>practical corrective substrate</strong> even in the absence of a full analytical proof.</p>
+</section>
+
+<section id="s7">
+  <h2><span class="sec">Section 7</span>Implementation Architecture</h2>
+  <h3 id="s7-1"><span class="sec">7.1</span>System Components</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Component</th><th>Responsibility</th><th>Interface</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Property Registry</strong></td><td>Manages N properties, activation conditions</td><td><code>register_property()</code>, <code>get_active_properties(ctx)</code></td></tr>
+        <tr><td><strong>Error Store</strong></td><td>Append-only log of (potential, element, error_vector)</td><td><code>add_error()</code>, <code>query_errors(element, context)</code></td></tr>
+        <tr><td><strong>Decomposition Engine</strong></td><td>Incremental SVD / online PCA <a class="cite" data-n="48">48</a><a class="cite" data-n="52">52</a></td><td><code>compute_eigenbasis()</code>, <code>update_with_new_data()</code></td></tr>
+        <tr><td><strong>Escape Detector</strong></td><td>Computes PR, escape ratio, local PR</td><td><code>detect_escape(element, mlip, context)</code></td></tr>
+        <tr><td><strong>Escape Catalog</strong></td><td>Versioned record of all escapes</td><td><code>record_escape()</code>, <code>get_correction()</code></td></tr>
+        <tr><td><strong>Regulator</strong></td><td>Configurable filter applied mid-run</td><td><code>configure()</code>, <code>step(md_state)</code></td></tr>
+        <tr><td><strong>Propagation Service</strong></td><td>Distributes catalog updates to users</td><td><code>subscribe(element)</code>, <code>notify_update()</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3 id="s7-2"><span class="sec">7.2</span>Incremental Updates</h3>
+  <p>The decomposition engine uses <strong>incremental SVD</strong> <a class="cite" data-n="48">48</a><a class="cite" data-n="52">52</a> to update the eigenbasis as new error data arrives without recomputing from scratch. For a new observation x<sub>n+1</sub>: (1) decompose the centered vector x̃<sub>n+1</sub> = U<sub>n</sub> c<sub>n+1</sub> + x̃<sub>n+1</sub><sup>⊥</sup>; (2) update the covariance approximation Δ<sub>n+1</sub> = (n/(n+1)) Δ<sub>n</sub> + (n/(n+1)²) x̃<sub>n+1</sub> x̃<sub>n+1</sub><sup>T</sup>; (3) compute SVD of the updated system, keeping only the top-q components. This is <strong>O(q²)</strong> per update (q = 3–5 typically), suitable for real-time operation during MD.</p>
+  <h3 id="s7-3"><span class="sec">7.3</span>Configuration DSL</h3>
+  <pre data-lang="yaml"><code>regulator:
+  check_frequency: 100   # steps
+  tolerance: 0.4         # escape ratio threshold
+
+  active_properties: [ C11, C12, C44 ]
+
+  conditional_properties:
+    - name: rel_corr
+      activate_when: [ element in [Au, Pt, Hg] ]
+    - name: mu_mag
+      activate_when: [ element in [Fe, Co, Ni, Mn] ]
+    - name: gamma_surf
+      activate_when: [ structure in [surface, nanoparticle] ]
+
+  escape_handlers:
+    - { element: Au, action: apply_rel_corr_overlay }
+    - { element: Fe, action: activate_magnetic_branch }
+
+  propagation:
+    mode: automatic
+    channels: [ websocket, webhook, polling ]</code></pre>
+</section>
+
+<section id="s8">
+  <h2><span class="sec">Section 8</span>Summary and Next Steps</h2>
+  <h3 id="s8-1"><span class="sec">8.1</span>What This Framework Enables</h3>
+  <p>The growing hyper-ribbon framework transforms the Lupine platform from a <strong>descriptive</strong> measurement tool into a <strong>prescriptive</strong> corrective system: (1) <strong>arbitrary N+ properties</strong> with PR kept bounded by conditional activation; (2) <strong>real-time escape detection</strong> in O(q²) time; (3) <strong>configurable regulation</strong> — an adaptive filter that can be tuned, bypassed, or reordered; (4) <strong>automatic catalog propagation</strong> — each discovery improves all future runs, a network effect; (5) <strong>gold generation as validation</strong> — a concrete, high-value end-to-end target.</p>
+  <h3 id="s8-2"><span class="sec">8.2</span>Immediate Next Steps</h3>
+  <div class="tw">
+    <table class="next-grid">
+      <thead><tr><th>Priority</th><th>Task</th><th>Deliverable</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill">P0</span></td><td>Implement <code>GrowingManifold</code> with conditional activation</td><td>Python module + property registry</td></tr>
+        <tr><td><span class="pill">P0</span></td><td>Add Orb-v3 Au data to confirm/reject escape</td><td>Catalog entry: Au + Orb-v3</td></tr>
+        <tr><td><span class="pill">P1</span></td><td>Build incremental SVD decomposition engine</td><td>Online PCA, Brand (2002) algorithm</td></tr>
+        <tr><td><span class="pill">P1</span></td><td>Implement regulator state machine</td><td>Configurable mid-run filter</td></tr>
+        <tr><td><span class="pill">P2</span></td><td>Generate Au nanoclusters with regulator active</td><td>Au₁₃, Au₂₀ with PR monitoring</td></tr>
+        <tr><td><span class="pill">P2</span></td><td>Formalize key invariants in Lean</td><td><code>Materials/Theory/HyperRibbonExtended</code></td></tr>
+        <tr><td><span class="pill">P3</span></td><td>Add E<sub>coh</sub> and B₀ from Phase-D pipeline</td><td>6-property manifold, re-test ribbon</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The framework presented here is not a finished system but a <strong>mathematical scaffold</strong> for building one. The sloppy-model geometry provides the theoretical justification, the incremental SVD provides the computational machinery, and the escape catalog provides the learning mechanism. Gold is the first validation target — but the same architecture will handle Fe's magnetic outlier, Pt's surface effects, and any future escape the corpus discovers.</p>
+</section>
+
+<footer>
+  <span>Lupine Materials Science · <em>Growing the Hyper-Ribbon</em></span>
+  <span id="citenote">citation markers [n] reference the IMMI bibliography</span>
+</footer>
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>
+/* ---------- KaTeX render ---------- */
+addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('[data-math="display"]').forEach(n=>{
+    try{ katex.render(n.textContent.trim(), n, {displayMode:true, throwOnError:false}); }
+    catch(e){ n.style.fontFamily='JetBrains Mono'; }
+  });
+});
+
+/* ---------- theme ---------- */
+const root=document.documentElement;
+try{ const s=localStorage.getItem('hr.theme'); if(s) root.dataset.theme=s; }catch(e){}
+document.querySelectorAll('#chrome button').forEach(b=>{
+  b.setAttribute('aria-pressed', b.dataset.theme===root.dataset.theme);
+  b.onclick=()=>{ root.dataset.theme=b.dataset.theme;
+    try{localStorage.setItem('hr.theme',b.dataset.theme);}catch(e){}
+    document.querySelectorAll('#chrome button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    drawRibbon(); drawPR();
+  };
+});
+
+/* ---------- progress bar ---------- */
+const bar=document.getElementById('bar');
+addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.width=(100*Math.min(1,Math.max(0,scrollY/Math.max(1,h))))+'%';
+},{passive:true});
+
+/* ---------- TOC build + scrollspy ---------- */
+const toc=document.getElementById('tocList'); const links=[];
+document.querySelectorAll('main h2, main h3').forEach(h=>{
+  const id=h.closest('section').id && h.tagName==='H2' ? h.closest('section').id : h.id;
+  if(!id) return;
+  const a=document.createElement('a');
+  const isSub=h.tagName==='H3';
+  a.href='#'+id; a.className=isSub?'sub':'';
+  const sec=h.querySelector('.sec'); const label=h.textContent.replace(sec?sec.textContent:'','').trim();
+  a.innerHTML=(sec?'<span class="n">'+sec.textContent.replace('Section ','§')+'</span>':'')+label;
+  a.onclick=e=>{e.preventDefault();document.getElementById(id).scrollIntoView({behavior:'smooth'});};
+  toc.appendChild(a); links.push({a,el:h});
+});
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    links.forEach(l=>l.a.classList.toggle('active', l.el===e.target)); }});
+},{rootMargin:'-15% 0px -75% 0px'});
+links.forEach(l=>spy.observe(l.el));
+
+/* ---------- citation tooltips ---------- */
+document.querySelectorAll('.cite').forEach(c=>{
+  c.title='Reference ['+c.dataset.n+'] — IMMI bibliography';
+  c.href='#citenote';
+});
+
+/* ---------- @chenglou/pretext: balanced hero headline (graceful, optional) ---------- */
+import('https://esm.sh/@chenglou/pretext@0.0.7').then(({prepareWithSegments,measureLineStats})=>{
+  const el=document.getElementById('heroTitle'); if(!el) return;
+  const cs=getComputedStyle(el);
+  const font=`${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily.split(',')[0]}`;
+  const prep=prepareWithSegments(el.textContent, font);
+  // shrink-wrap: find the tightest width that keeps the natural line count
+  const wide=el.clientWidth, base=measureLineStats(prep, wide).lineCount;
+  let best=wide;
+  for(let w=wide; w>wide*0.55; w-=8){
+    if(measureLineStats(prep,w).lineCount===base) best=w; else break;
+  }
+  el.style.maxWidth=Math.ceil(best)+'px';
+  el.dataset.pretext='balanced';
+}).catch(()=>{/* offline / blocked: CSS text-wrap:balance already covers it */});
+
+/* ---------- Hyper-Ribbon Explorer ---------- */
+const cv=document.getElementById('ribbonCv'), ctx=cv.getContext('2d');
+let mace=false, spin=false, ang=0.35, raf=0;
+const N=180, pts=[]; // latent ribbon model
+function rnd(s){return (Math.sin(s*127.1+311.7)*43758.5453)%1;}
+for(let i=0;i<N;i++){
+  const t=(i/N)*2-1;                       // along-ribbon coord
+  const w=(rnd(i)*2-1)*0.08;               // tiny transverse width
+  pts.push({t, w, kind: i===5?'au': i===11?'fe':'norm'});
+}
+function cov2(P){ // 2x2 covariance → eigvals → PR
+  let mx=0,my=0; P.forEach(p=>{mx+=p.x;my+=p.y;}); mx/=P.length;my/=P.length;
+  let a=0,b=0,c=0; P.forEach(p=>{const dx=p.x-mx,dy=p.y-my;a+=dx*dx;b+=dx*dy;c+=dy*dy;});
+  a/=P.length;b/=P.length;c/=P.length;
+  const tr=a+c, d=Math.sqrt(Math.max(0,(a-c)*(a-c)+4*b*b));
+  const l1=(tr+d)/2, l2=Math.max(1e-9,(tr-d)/2);
+  const pr=(l1+l2)*(l1+l2)/(l1*l1+l2*l2);
+  const rho=l2/(l1+l2);
+  return {pr,rho};
+}
+function drawRibbon(){
+  const dpr=devicePixelRatio||1, W=cv.clientWidth, H=cv.clientHeight;
+  cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  const cssv=k=>getComputedStyle(root).getPropertyValue(k).trim();
+  const cx=W/2, cy=H/2, sx=W*0.34, sy=H*0.30;
+  const ca=Math.cos(ang), sa=Math.sin(ang);
+  // ribbon guide line
+  ctx.strokeStyle=cssv('--rule'); ctx.lineWidth=1.2; ctx.beginPath();
+  for(let s=-1;s<=1;s+=0.02){ const X=cx+ (s*ca)*sx*1.05, Y=cy+(s*sa)*sy*1.05;
+    s===-1?ctx.moveTo(X,Y):ctx.lineTo(X,Y);} ctx.stroke();
+  const proj=[];
+  pts.forEach(p=>{
+    let u=p.t, v=p.w;
+    if(p.kind==='fe'){ v+= 0.55 + 0.05*Math.sin(p.t*9); }      // persistent outlier
+    if(p.kind==='au' && mace){ v+= 0.62; u*=0.7; }              // escape orthogonal
+    if(p.kind==='norm' && mace){ v*=1.05; }
+    const X=cx + (u*ca - v*sa)*sx, Y=cy + (u*sa + v*ca)*sy;
+    proj.push({x:u, y:v, X, Y, kind:p.kind});
+  });
+  const {pr,rho}=cov2(proj.map(p=>({x:p.x,y:p.y})));
+  document.getElementById('prLive').textContent=pr.toFixed(2);
+  document.getElementById('rhoLive').textContent=rho.toFixed(2);
+  proj.forEach(p=>{
+    let col='#7da6ff', r=3.1;
+    if(p.kind==='au'){col='#e9b949'; r=mace?6.5:4.5;}
+    if(p.kind==='fe'){col='#e15a5a'; r=4.5;}
+    if(p.kind==='au'&&mace){
+      ctx.strokeStyle='rgba(233,185,73,.5)'; ctx.lineWidth=1.4; ctx.beginPath();
+      ctx.moveTo(cx+(p.x*ca)*sx, cy+(p.x*sa)*sy); ctx.lineTo(p.X,p.Y); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(p.X,p.Y,r,0,7); ctx.fillStyle=col;
+    ctx.shadowColor=col; ctx.shadowBlur=(p.kind!=='norm')?12:0; ctx.fill(); ctx.shadowBlur=0;
+    if(p.kind==='au'||p.kind==='fe'){
+      ctx.fillStyle=cssv('--ink'); ctx.font='600 12px Inter,sans-serif';
+      ctx.fillText(p.kind==='au'?'Au':'Fe', p.X+9, p.Y+4);
+    }
+  });
+}
+document.getElementById('maceBtn').onclick=e=>{ mace=!mace;
+  e.target.classList.toggle('on',mace); e.target.textContent=mace?'− MACE-MP-0':'+ MACE-MP-0';
+  animateTo(); };
+document.getElementById('spinBtn').onclick=e=>{ spin=!spin; e.target.classList.toggle('on',spin);
+  if(spin) loop(); };
+function loop(){ if(!spin) return; ang+=0.006; drawRibbon(); raf=requestAnimationFrame(loop); }
+let tA=0; function animateTo(){ cancelAnimationFrame(tA); let f=0;
+  const step=()=>{ f++; drawRibbon(); if(f<26){ tA=requestAnimationFrame(step);} };
+  // small easing illusion via redraw; positions are deterministic but glow/labels animate
+  step(); }
+const ro=new ResizeObserver(()=>{drawRibbon(); drawPR();}); ro.observe(cv);
+
+/* ---------- PR vs N ---------- */
+const prc=document.getElementById('prCv'), pctx=prc.getContext('2d');
+const nS=document.getElementById('nSlider'), nV=document.getElementById('nVal');
+function drawPR(){
+  const dpr=devicePixelRatio||1, W=prc.clientWidth, H=prc.clientHeight;
+  prc.width=W*dpr; prc.height=H*dpr; pctx.setTransform(dpr,0,0,dpr,0,0);
+  pctx.clearRect(0,0,W,H);
+  const cssv=k=>getComputedStyle(root).getPropertyValue(k).trim();
+  const pad=38, x0=pad, x1=W-pad, y0=H-26, y1=18;
+  const Nmax=14, Nsel=+nS.value;
+  const X=n=>x0+(n-3)/(Nmax-3)*(x1-x0);
+  const Yb=pr=>y0-(pr/4)*(y0-y1);              // bounded curve scale 0..4
+  // axes
+  pctx.strokeStyle=cssv('--rule'); pctx.lineWidth=1;
+  pctx.beginPath();pctx.moveTo(x0,y1);pctx.lineTo(x0,y0);pctx.lineTo(x1,y0);pctx.stroke();
+  // PRmax ceiling
+  pctx.setLineDash([5,5]); pctx.strokeStyle=cssv('--rule');
+  pctx.beginPath();pctx.moveTo(x0,Yb(3));pctx.lineTo(x1,Yb(3));pctx.stroke();pctx.setLineDash([]);
+  pctx.fillStyle=cssv('--ink-soft'); pctx.font='11px Inter,sans-serif';
+  pctx.fillText('PRmax ≈ 3',x1-72,Yb(3)-6); pctx.fillText('N (properties)',x1-78,y0+18);
+  pctx.save();pctx.translate(14,(y0+y1)/2);pctx.rotate(-Math.PI/2);pctx.fillText('PR',0,0);pctx.restore();
+  // independent (dashed) PR≈N
+  pctx.strokeStyle=cssv('--ink-soft'); pctx.setLineDash([4,4]); pctx.beginPath();
+  for(let n=3;n<=Nsel;n++){const pr=Math.min(4,1+0.92*(n-1));n===3?pctx.moveTo(X(n),Yb(pr)):pctx.lineTo(X(n),Yb(pr));}
+  pctx.stroke(); pctx.setLineDash([]);
+  // correlated (gold) sublinear: 1 + a*ln(1+ (n-2))
+  const grad=pctx.createLinearGradient(x0,0,x1,0);
+  grad.addColorStop(0,cssv('--gold-deep'));grad.addColorStop(1,cssv('--gold-soft'));
+  pctx.strokeStyle=grad; pctx.lineWidth=3; pctx.beginPath();
+  let lastX,lastY;
+  for(let n=3;n<=Nsel;n++){const pr=Math.min(3,1.05+0.62*Math.log(1+(n-2)));
+    const px=X(n),py=Yb(pr); n===3?pctx.moveTo(px,py):pctx.lineTo(px,py); lastX=px;lastY=py;}
+  pctx.stroke();
+  pctx.beginPath();pctx.arc(lastX,lastY,5,0,7);pctx.fillStyle=cssv('--gold');pctx.fill();
+  const prNow=Math.min(3,1.05+0.62*Math.log(1+(Nsel-2)));
+  pctx.fillStyle=cssv('--gold-soft');pctx.font='600 12px JetBrains Mono,monospace';
+  pctx.fillText('PR='+prNow.toFixed(2),lastX-26,lastY-12);
+}
+nS.oninput=()=>{nV.textContent=nS.value; drawPR();};
+
+/* ---------- regulator FSM ---------- */
+const desc={
+ MONITOR:"<b>MONITOR</b> — Passive observation. Compute PR and escape ratio every Δt steps. No intervention. Default state.",
+ CHECK:"<b>CHECK</b> — Active evaluation. Project the current error vector onto the ribbon eigenbasis and measure the escape ratio. ρ &lt; ε → MONITOR; ρ ≥ ε → CORRECT.",
+ CORRECT:"<b>CORRECT</b> — Intervention. Apply the catalog correction (e.g. rel_corr overlay for Au), recompute PR. Success → MONITOR; failure → ALERT.",
+ ALERT:"<b>ALERT</b> — Exception handling. Log the uncorrectable escape, notify the user, optionally halt. Triggers manual investigation.",
+ LEARN:"<b>LEARN</b> — Catalog update. Record the new element+MLIP escape, propose an activation rule, validate against history, then return to MONITOR with an enriched catalog."
+};
+const fsmDesc=document.getElementById('fsmDesc');
+document.querySelectorAll('.fsm-node').forEach(n=>{
+  n.onclick=()=>{ document.querySelectorAll('.fsm-node').forEach(x=>x.classList.remove('active'));
+    n.classList.add('active'); fsmDesc.innerHTML=desc[n.dataset.s]; };
+});
+
+/* ---------- EQ rack bypass ---------- */
+document.querySelectorAll('#rack .pedal').forEach(p=>{
+  p.onclick=()=>{ const off=p.classList.toggle('byp');
+    p.querySelector('.sw').textContent=off?'○ BYPASS':'● ENGAGED'; };
+});
+
+/* ---------- init ---------- */
+drawRibbon(); drawPR();
+</script>
+</body>
+</html>

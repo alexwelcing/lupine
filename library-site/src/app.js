@@ -197,6 +197,16 @@ async function renderHome() {
     paperBanner.append(bannerLink);
     VIEW.append(paperBanner);
 
+    // Interactive theory report — a fully typeset, explorable companion to the
+    // preprint (live hyper-ribbon explorer, KaTeX math, regulator FSM).
+    const reportBanner = el('section', { class: 'callout' });
+    const reportLink = el('a', { class: 'callout-box callout-featured', href: '/reports/growing-hyper-ribbon.html' });
+    reportLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--lupine-300);font-weight:700;letter-spacing:0.05em;' }, '◆ Interactive report'));
+    reportLink.append(el('strong', { style: 'font-size:1.1rem;' }, 'Growing the Hyper-Ribbon'));
+    reportLink.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, 'Conditional manifold extension, escape detection & the Lupine regulator — explorable.'));
+    reportBanner.append(reportLink);
+    VIEW.append(reportBanner);
+
     // Featured — catalog entries flagged featured:true, rendered prominently
     // so the most important current work is the first thing read.
     const featured = (m.articles || []).filter(a => a.featured);
