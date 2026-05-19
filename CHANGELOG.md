@@ -31,6 +31,21 @@ Newest first. Dates are absolute.
   Interatomic Potentials." No "immigrant" copy remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
+## 2026-05-19 — paper-build auto-dispatches the Library deploy
+
+- **Why.** First real run of `paper-build.yml` proved a gap: a push made with a
+  workflow's `GITHUB_TOKEN` does not trigger other workflows (GitHub's recursion
+  guard), so the rebuilt PDF landed on `main` but `deploy-library-site` never fired —
+  it needed a manual nudge.
+- **What.** Added `actions: write` permission and an explicit
+  `gh workflow run deploy-library-site.yml --ref main` after the push (skipped on the
+  byte-identical no-op path).
+- **Results.** `gh workflow run paper-build.yml` is now genuinely one command:
+  compile → quality gate → commit → deploy. Verified the first run's PDF live (fresh
+  recompile from the newer `.tex`; abstract now carries the foundation-MLIP transfer
+  result; 0 raw-LaTeX leaks).
+- **Next.** None — the paper pipeline is closed-loop and opt-in.
+
 ## 2026-05-18 — Opt-in CI to rebuild the preprint PDF
 
 - **Why.** The broken-PDF fix was a one-time swap; the root cause — a stale/broken
