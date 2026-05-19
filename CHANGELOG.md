@@ -31,6 +31,23 @@ Newest first. Dates are absolute.
   Interatomic Potentials." No "immigrant" copy remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
+## 2026-05-18 — Fix the broken preprint PDF
+
+- **Why.** The linked `/immi_paper.pdf` was the stale `immi-paper-local.pdf` build: the
+  abstract contained **raw, unrendered LaTeX** (`\noindent\textbf{Purpose:}`, `$C_{11}$`,
+  `\texttt{atlas-distill}`) and mojibake separators — an unreadable artifact.
+- **What.** Diagnosed via `pdftotext`: the served file (1.92 MB, Apr 29) leaked LaTeX
+  markup and replacement characters. `paper/immi-paper-latest.pdf` (1.14 MB, May 5) is
+  the correct render — 0 LaTeX leaks, 0 mojibake, full references [1]–[29], and current
+  science (includes the d-band sample-size-confounder result). No LaTeX engine in this
+  environment to recompile the 1-day-newer `.tex`, so swapped in the clean `-latest`
+  build as `library-site/src/immi_paper.pdf`.
+- **Results.** The preprint now renders as a proper paper, ~785 KB smaller. Verified the
+  built `dist/immi_paper.pdf` has 0 raw-LaTeX leaks.
+- **Next.** Rebuild from `paper/immi-paper.tex` via `make` in a LaTeX environment if the
+  one-day-newer source has changes worth shipping; wire the paper build into CI so a
+  broken local PDF can't be the served one again.
+
 ## 2026-05-18 — Remove Entity Graph; fix callout/filter alignment
 
 - **Why.** The Entity Graph (force-graph) was unwanted weight, and the status-filter
