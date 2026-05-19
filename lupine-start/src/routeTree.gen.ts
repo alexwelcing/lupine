@@ -17,6 +17,7 @@ import { Route as PilotsRouteImport } from './routes/pilots'
 import { Route as OpsRouteImport } from './routes/ops'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as LineageRouteImport } from './routes/lineage'
+import { Route as LabStatusRouteImport } from './routes/lab-status'
 import { Route as InvestorRelationsRouteImport } from './routes/investor-relations'
 import { Route as EvolutionRouteImport } from './routes/evolution'
 import { Route as ConsoleRouteImport } from './routes/console'
@@ -64,6 +65,11 @@ const LineageRoute = LineageRouteImport.update({
   path: '/lineage',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabStatusRoute = LabStatusRouteImport.update({
+  id: '/lab-status',
+  path: '/lab-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InvestorRelationsRoute = InvestorRelationsRouteImport.update({
   id: '/investor-relations',
   path: '/investor-relations',
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
+  '/lab-status': typeof LabStatusRoute
   '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
+  '/lab-status': typeof LabStatusRoute
   '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
+  '/lab-status': typeof LabStatusRoute
   '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
   '/ops': typeof OpsRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/console'
     | '/evolution'
     | '/investor-relations'
+    | '/lab-status'
     | '/lineage'
     | '/live'
     | '/ops'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/console'
     | '/evolution'
     | '/investor-relations'
+    | '/lab-status'
     | '/lineage'
     | '/live'
     | '/ops'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/console'
     | '/evolution'
     | '/investor-relations'
+    | '/lab-status'
     | '/lineage'
     | '/live'
     | '/ops'
@@ -202,6 +214,7 @@ export interface RootRouteChildren {
   ConsoleRoute: typeof ConsoleRoute
   EvolutionRoute: typeof EvolutionRoute
   InvestorRelationsRoute: typeof InvestorRelationsRoute
+  LabStatusRoute: typeof LabStatusRoute
   LineageRoute: typeof LineageRoute
   LiveRoute: typeof LiveRoute
   OpsRoute: typeof OpsRoute
@@ -270,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LineageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lab-status': {
+      id: '/lab-status'
+      path: '/lab-status'
+      fullPath: '/lab-status'
+      preLoaderRoute: typeof LabStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/investor-relations': {
       id: '/investor-relations'
       path: '/investor-relations'
@@ -322,6 +342,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConsoleRoute: ConsoleRoute,
   EvolutionRoute: EvolutionRoute,
   InvestorRelationsRoute: InvestorRelationsRoute,
+  LabStatusRoute: LabStatusRoute,
   LineageRoute: LineageRoute,
   LiveRoute: LiveRoute,
   OpsRoute: OpsRoute,
