@@ -111,7 +111,7 @@ function ScenarioCard({
         {/* Probability + name */}
         <div className="flex items-center gap-3 lg:flex-1 min-w-0">
           <span
-            className="font-mono text-[11px] uppercase tracking-widest px-2 py-1 rounded flex-shrink-0"
+            className="font-mono text-[11px] uppercase tracking-[0.08em] px-2 py-1 rounded flex-shrink-0"
             style={{ background: tint, color: '#0b1220' }}
           >
             P {(scenario.probability * 100).toFixed(0)}%
@@ -149,7 +149,7 @@ function ScenarioCard({
           >
             {formatEv(scenario.implied_ev_usd_b)}
           </div>
-          <div className="text-[10px] uppercase tracking-widest text-[var(--on-surface-variant-mid)] font-mono mt-1">
+          <div className="text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant-mid)] font-mono mt-1">
             implied EV at {scenario.year_horizon}-yr horizon
           </div>
         </div>

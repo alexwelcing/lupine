@@ -220,8 +220,8 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §0 — FRAME
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The cycle, in one sentence</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The cycle, in one sentence</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Every round of work in this project is a loop:{' '}
               <strong className="text-[var(--on-surface)]">organize information</strong> into a typed
               corpus,{' '}
@@ -241,7 +241,7 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §1 — THE THREE STAGES
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">What each stage owns</h2>
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">What each stage owns</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -275,8 +275,8 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §2 — IDEA EVOLUTION
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">How the canonical claims have moved</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">How the canonical claims have moved</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Nine canonical hypotheses, in order of when they entered the testing lifecycle. The
               column on the right names the spinoff that survived — refutations are not dead
               ends; they reliably leave behind a narrower, defensible claim.
@@ -333,10 +333,10 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §3 — THE CONVERGENCE DEMONSTRATION
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
               The same matched-n bootstrap caught two artifacts in two days
             </h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               This is the load-bearing claim about the system. Two independent hypotheses, in
               different domains (electronic-structure vs many-body rank), both turned out to be
               sample-size confounders rather than physical phenomena. The same deterministic
@@ -356,7 +356,7 @@ function EvolutionPage() {
                       <span className="mono-label text-[var(--on-surface-variant)] block mb-1">
                         {r.date}
                       </span>
-                      <h3 className="font-display text-xl text-[var(--on-surface)]">{r.case}</h3>
+                      <h3 className="font-serif text-xl text-[var(--on-surface)]">{r.case}</h3>
                     </div>
                     <span
                       className={`font-mono text-[10px] px-3 py-1.5 border uppercase tracking-wider whitespace-nowrap ${verdictPill('primary')}`}
@@ -421,10 +421,10 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §4 — THE X-SCALE, Y-ITERATION PROJECTION
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
               What this looks like at full corpus + thousands of rounds
             </h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               The point of demonstrating self-correction at small scale is to motivate the cost of
               running it at full scale. If a five-round, ~10⁴-record system already catches its
               own confounders, a ~10⁷-record, thousand-round system should produce a measurable
@@ -466,8 +466,8 @@ function EvolutionPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §5 — GRAND FINALE INFRASTRUCTURE
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">BigQuery + GCP, mapped to the loop</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl mb-8">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">BigQuery + GCP, mapped to the loop</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Cloudflare D1 has carried us through ~10⁴ records and is the right system of record at
               that scale. Beyond ~10⁶ records we will hit D1's storage and query limits, and the
               analytical workloads (SQL aggregations across hypotheses, claim_types, agents,
@@ -481,7 +481,7 @@ function EvolutionPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <span className="mono-label text-[var(--primary)] block mb-2">Organize</span>
-                <h3 className="font-display text-base text-[var(--on-surface)] mb-2">
+                <h3 className="font-serif text-base text-[var(--on-surface)] mb-2">
                   BigQuery + Cloud Storage
                 </h3>
                 <p className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
@@ -493,7 +493,7 @@ function EvolutionPage() {
               </div>
               <div>
                 <span className="mono-label text-[var(--primary)] block mb-2">Harden</span>
-                <h3 className="font-display text-base text-[var(--on-surface)] mb-2">
+                <h3 className="font-serif text-base text-[var(--on-surface)] mb-2">
                   Cloud Run + Vertex AI
                 </h3>
                 <p className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
@@ -505,7 +505,7 @@ function EvolutionPage() {
               </div>
               <div>
                 <span className="mono-label text-[var(--primary)] block mb-2">Evaluate</span>
-                <h3 className="font-display text-base text-[var(--on-surface)] mb-2">
+                <h3 className="font-serif text-base text-[var(--on-surface)] mb-2">
                   Looker + scheduled iterate
                 </h3>
                 <p className="text-xs text-[var(--on-surface-variant)] leading-relaxed">
@@ -537,7 +537,7 @@ function EvolutionPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/hypotheses"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-[0.08em] hover:opacity-90 transition-opacity"
             >
               Hypotheses ledger
             </a>
@@ -545,13 +545,13 @@ function EvolutionPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/claims/research_note_meam_bootstrap_2026_05_05"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-[0.08em] hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors"
             >
               Most recent closure
             </a>
             <a
               href="/process"
-              className="px-6 py-3 border border-[var(--outline)] text-[var(--on-surface)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--surface-container-high)] transition-colors"
+              className="px-6 py-3 border border-[var(--outline)] text-[var(--on-surface)] font-mono text-sm uppercase tracking-[0.08em] hover:bg-[var(--surface-container-high)] transition-colors"
             >
               Operating report
             </a>

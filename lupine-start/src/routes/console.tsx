@@ -164,7 +164,7 @@ function ConsolePage() {
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              className={`font-mono text-[11px] uppercase tracking-widest px-3 py-1.5 border transition-colors ${
+              className={`font-mono text-[11px] uppercase tracking-[0.08em] px-3 py-1.5 border transition-colors ${
                 active
                   ? 'bg-[var(--primary)] border-[var(--primary)] text-[var(--on-primary)]'
                   : 'border-[var(--outline-variant)] text-[var(--on-surface-variant)] hover:text-[var(--on-surface)] hover:border-[var(--primary)]'
@@ -192,7 +192,7 @@ function ConsolePage() {
             <span className="font-mono text-xs text-[var(--on-surface)]">{drillHypothesis}</span>
             <button
               onClick={clearDrill}
-              className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant)] hover:text-[var(--primary)]"
+              className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant)] hover:text-[var(--primary)]"
             >
               clear
             </button>

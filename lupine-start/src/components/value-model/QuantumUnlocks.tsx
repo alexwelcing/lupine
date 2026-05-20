@@ -116,7 +116,7 @@ function UnlockRow({
               {unlock.unlock}
             </h4>
             <span
-              className="font-mono text-[11px] uppercase tracking-widest flex-shrink-0"
+              className="font-mono text-[11px] uppercase tracking-[0.08em] flex-shrink-0"
               style={{ color: ROW_TINT }}
             >
               {unlock.quantum_uplift_x.toFixed(0)}×

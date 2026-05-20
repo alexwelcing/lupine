@@ -142,7 +142,7 @@ function SlideshowPage() {
       {/* header */}
       <header className="px-6 lg:px-12 py-4 border-b border-[var(--outline-variant)] flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-baseline gap-4 flex-wrap">
-          <h1 className="font-mono text-lg uppercase tracking-widest">
+          <h1 className="font-mono text-lg uppercase tracking-[0.08em]">
             Slideshow
           </h1>
           <span className="font-mono text-xs text-[var(--on-surface-variant)]">
@@ -156,7 +156,7 @@ function SlideshowPage() {
             <button
               key={c}
               onClick={() => setActiveCategory(c)}
-              className={`font-mono text-[10px] uppercase tracking-widest px-2 py-1 border transition-colors ${
+              className={`font-mono text-[10px] uppercase tracking-[0.08em] px-2 py-1 border transition-colors ${
                 activeCategory === c
                   ? 'bg-[var(--primary)] border-[var(--primary)] text-[var(--on-primary)]'
                   : 'border-[var(--outline-variant)] text-[var(--on-surface-variant)] hover:border-[var(--primary)]'
@@ -195,7 +195,7 @@ function SlideshowPage() {
             <p className="mono-label text-[var(--on-surface-variant)]">no images in this category</p>
           )}
           {filtered.length > 1 && current && (
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-widest text-[var(--on-surface-variant)] bg-[var(--surface)]/80 backdrop-blur px-3 py-1 rounded">
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.08em] text-[var(--on-surface-variant)] bg-[var(--surface)]/80 backdrop-blur px-3 py-1 rounded">
               {index + 1} / {filtered.length}
             </div>
           )}
@@ -206,13 +206,13 @@ function SlideshowPage() {
           <aside className="w-full lg:w-[380px] border-t lg:border-t-0 lg:border-l border-[var(--outline-variant)] p-6 overflow-y-auto bg-[var(--surface)]">
             <div className="mb-4">
               <span
-                className="font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 border"
+                className="font-mono text-[10px] uppercase tracking-[0.08em] px-2 py-0.5 border"
                 style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}
               >
                 {CATEGORY_LABELS[current.category] ?? current.category}
               </span>
             </div>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">{current.slug}</h2>
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">{current.slug}</h2>
             <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed mb-6">
               {current.prompt}
             </p>
@@ -227,14 +227,14 @@ function SlideshowPage() {
               <button
                 onClick={prev}
                 aria-label="previous"
-                className="font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 border border-[var(--outline-variant)] hover:border-[var(--primary)]"
+                className="font-mono text-[10px] uppercase tracking-[0.08em] px-3 py-1.5 border border-[var(--outline-variant)] hover:border-[var(--primary)]"
               >
                 ◀ prev
               </button>
               <button
                 onClick={() => setPaused(p => !p)}
                 aria-label={paused ? 'play' : 'pause'}
-                className={`font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 border ${
+                className={`font-mono text-[10px] uppercase tracking-[0.08em] px-3 py-1.5 border ${
                   paused
                     ? 'bg-[var(--primary)] border-[var(--primary)] text-[var(--on-primary)]'
                     : 'border-[var(--outline-variant)] hover:border-[var(--primary)]'
@@ -245,7 +245,7 @@ function SlideshowPage() {
               <button
                 onClick={next}
                 aria-label="next"
-                className="font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 border border-[var(--outline-variant)] hover:border-[var(--primary)]"
+                className="font-mono text-[10px] uppercase tracking-[0.08em] px-3 py-1.5 border border-[var(--outline-variant)] hover:border-[var(--primary)]"
               >
                 next ▶
               </button>
@@ -253,7 +253,7 @@ function SlideshowPage() {
                 href={current.r2_url ?? '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 border border-[var(--outline-variant)] hover:border-[var(--primary)] no-underline"
+                className="font-mono text-[10px] uppercase tracking-[0.08em] px-3 py-1.5 border border-[var(--outline-variant)] hover:border-[var(--primary)] no-underline"
               >
                 open ↗
               </a>

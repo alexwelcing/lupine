@@ -98,7 +98,7 @@ function HomePage() {
         aria-label="Section navigation"
         className="fixed bottom-6 left-6 z-30 border border-[var(--outline-variant)] bg-[var(--surface)]/90 backdrop-blur-md rounded-md"
       >
-        <div className="container mx-auto max-w-7xl px-6 lg:px-12 flex gap-1 lg:gap-2 overflow-x-auto py-2 text-[10px] lg:text-[11px] font-mono uppercase tracking-widest">
+        <div className="container mx-auto max-w-7xl px-6 lg:px-12 flex gap-1 lg:gap-2 overflow-x-auto py-2 text-[10px] lg:text-[11px] font-mono uppercase tracking-[0.08em]">
           {SECTIONS.map((s, i) => (
             <a
               key={s.id}
@@ -309,7 +309,7 @@ function HomePage() {
 
         {/* Sub-block A: phase-4 addressable value */}
         <div className="mt-2">
-          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+          <div className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--tertiary)] mb-3">
             A · What's at stake when phase-4 lands
           </div>
           <PlatformValueChart data={data} />
@@ -328,7 +328,7 @@ function HomePage() {
 
         {/* Sub-block B: capture rates from real platform comps */}
         <div className="mt-12">
-          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+          <div className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--tertiary)] mb-3">
             B · What audit-substrate companies actually capture
           </div>
           <PlatformCompsTable data={data} />
@@ -343,7 +343,7 @@ function HomePage() {
 
         {/* Sub-block C: phase-5 quantum unlocks (the multiplier layer) */}
         <div className="mt-12">
-          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+          <div className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--tertiary)] mb-3">
             C · Phase-5 quantum unlocks (the multiplier layer)
           </div>
           <QuantumUnlocks data={data} />
@@ -370,7 +370,7 @@ function HomePage() {
 
         {/* Sub-block D: outcome distribution */}
         <div className="mt-12">
-          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+          <div className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--tertiary)] mb-3">
             D · The conditional outcome distribution
           </div>
           <CeilingScenarios data={data} />
@@ -446,7 +446,7 @@ function HomePage() {
         />
 
         <div className="mt-2">
-          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+          <div className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--tertiary)] mb-3">
             A · Sector unlock + Lupine attribution
           </div>
           <SectorUnlockChart data={data} />
@@ -468,7 +468,7 @@ function HomePage() {
         </div>
 
         <div className="mt-12">
-          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+          <div className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--tertiary)] mb-3">
             B · DCF intrinsic + sensitivity
           </div>
           <DcfScenarioChart data={data} />
@@ -488,7 +488,7 @@ function HomePage() {
         </div>
 
         <div className="mt-12">
-          <div className="font-mono text-xs uppercase tracking-widest text-[var(--tertiary)] mb-3">
+          <div className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--tertiary)] mb-3">
             C · Comp set cross-check + probability-weighted returns
           </div>
           <CompsScatter data={data} />
@@ -618,7 +618,7 @@ function Hero() {
             <span className="w-8 h-px bg-[var(--tertiary)] opacity-50"></span>
             Lupine Materials Science
           </div>
-          <h1 className="text-5xl lg:text-[5.5rem] mb-8 leading-[1.08] max-w-5xl font-display tracking-tight text-[var(--on-surface)]">
+          <h1 className="text-5xl lg:text-[5.5rem] mb-8 leading-[1.08] max-w-5xl font-serif tracking-tight text-[var(--on-surface)]">
             Step 1 of a real-world{' '}
             <em className="italic text-[var(--secondary)]">Replicator</em>.
           </h1>
@@ -672,7 +672,7 @@ function Curve({
     <div
       className="rounded-md border border-[var(--outline-variant)] bg-[var(--surface-container)] p-5 flex flex-col gap-3"
     >
-      <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--secondary)]">
+      <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--secondary)]">
         {label}
       </div>
       <div className="text-sm font-mono text-[var(--on-surface)] leading-snug">
@@ -724,7 +724,7 @@ function PhaseTimeline() {
               <div className="lg:hidden font-mono text-[10px] uppercase tracking-[0.2em] mb-1 transition-colors" style={{ color: phase.status === 'active' ? 'var(--primary)' : 'var(--on-surface-variant-mid)' }}>
                 {phase.years}
               </div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant)] mb-1 group-hover:text-[var(--on-surface)] transition-colors duration-300">
+              <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant)] mb-1 group-hover:text-[var(--on-surface)] transition-colors duration-300">
                 {phase.label}
               </span>
               <span 
@@ -759,7 +759,7 @@ function SectionHeader({
       <div className="font-mono text-xl md:text-2xl uppercase tracking-[0.2em] text-[var(--tertiary)] mb-5">
         {eyebrow}
       </div>
-      <h2 className="text-5xl md:text-6xl font-display tracking-tight text-[var(--on-surface)] mb-5 mt-2">
+      <h2 className="text-5xl md:text-6xl font-serif tracking-tight text-[var(--on-surface)] mb-5 mt-2">
         {title}
       </h2>
       <p className="font-serif italic text-2xl md:text-3xl leading-snug text-[var(--on-surface-variant-mid)] max-w-3xl">

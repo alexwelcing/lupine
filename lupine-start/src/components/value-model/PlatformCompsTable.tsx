@@ -27,7 +27,7 @@ export function PlatformCompsTable({ data }: { data: ValueModelData }) {
       <div className="overflow-x-auto -mx-2 px-2">
         <table className="w-full text-sm border-collapse">
           <thead>
-            <tr className="text-[var(--on-surface-variant-mid)] font-mono uppercase tracking-widest text-[10px]">
+            <tr className="text-[var(--on-surface-variant-mid)] font-mono uppercase tracking-[0.08em] text-[10px]">
               <th className="text-left py-3 px-3 border-b border-[var(--outline-variant)] whitespace-nowrap">
                 Platform
               </th>

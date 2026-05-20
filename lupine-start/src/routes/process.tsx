@@ -200,8 +200,8 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §1 — ARCHITECTURE
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">How a research round flows</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">How a research round flows</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               A round begins as a hypothesis row and ends as either an updated confidence with
               evidence_ids attached, a refutation, or a deferred verdict that the formalization
               gate refused to clear. The pipeline is six components, each owning one job.
@@ -257,8 +257,8 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §2 — DESIGN RATIONALE
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Why this is the correct arrangement</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Why this is the correct arrangement</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               The four principles below are not aesthetic choices. Each one prevents a specific
               failure mode I have already watched another version of this system commit.
             </p>
@@ -289,8 +289,8 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §3 — RUNS TO DATE
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Three rounds, in order, with no edits</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Three rounds, in order, with no edits</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               I am reporting all three rounds, including the one that produced no convergence.
               The point of an operating report is not to highlight wins; it is to show that the
               gate works on real failure modes too.
@@ -308,7 +308,7 @@ function ProcessPage() {
                       <span className="mono-label text-[var(--on-surface-variant)] block mb-1">
                         {r.label} · {r.date}
                       </span>
-                      <h3 className="font-display text-lg text-[var(--on-surface)]">
+                      <h3 className="font-serif text-lg text-[var(--on-surface)]">
                         {r.hypothesis}
                       </h3>
                     </div>
@@ -346,10 +346,10 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §4 — DIRECT EVIDENCE FROM ROUND 3
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
               Two quotes the reasoner pulled from the literature
             </h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Round 3's narrative cited these two papers verbatim. They support the LAM-trio
               hypothesis empirically, even though the full Lean-readiness bar is not yet met.
             </p>
@@ -383,7 +383,7 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §5 — WHAT THE RUNS TAUGHT ME
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Honest read of where this is</h2>
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Honest read of where this is</h2>
           </div>
 
           <Card elevated>
@@ -414,8 +414,8 @@ function ProcessPage() {
             <span className="mono-label text-[var(--secondary)] block mb-3">
               §6 — NEXT INVESTMENTS
             </span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">What I am building next, in priority order</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">What I am building next, in priority order</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Each priority below corresponds to a measurable lift on either convergence rate or
               gate quality. P0 ships in the next two weeks; P1 within the month; P2 once the
               cost ledger is in place to inform tradeoffs.
@@ -467,7 +467,7 @@ function ProcessPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/hypotheses"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
             >
               Hypotheses ledger
             </a>
@@ -475,7 +475,7 @@ function ProcessPage() {
               href="https://glim-think-v1.aw-ab5.workers.dev/admin/lean-status"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-[0.08em] hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
             >
               Lean-readiness snapshot
             </a>
@@ -518,7 +518,7 @@ function Lesson({ title, body }: { title: string; body: string }) {
     <li className="flex items-start gap-4">
       <span className="text-[var(--primary)] mt-1 font-mono text-lg leading-none">▸</span>
       <div>
-        <h3 className="font-display text-lg text-[var(--on-surface)] mb-2">{title}</h3>
+        <h3 className="font-serif text-lg text-[var(--on-surface)] mb-2">{title}</h3>
         <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{body}</p>
       </div>
     </li>

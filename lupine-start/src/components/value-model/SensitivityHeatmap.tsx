@@ -45,6 +45,23 @@ function Inner({
     range: [0, 0.5, 1],
   })
 
+  // Parse an rgb(r,g,b) string and return [R, G, B] or null.
+  const parseRgb = (rgb: string): [number, number, number] | null => {
+    const m = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/)
+    if (!m) return null
+    return [+m[1], +m[2], +m[3]]
+  }
+  const toLinear = (c: number) =>
+    c <= 10 ? c / 255 / 12.92 : Math.pow((c / 255 + 0.055) / 1.055, 2.4)
+  const luminance = (rgb: [number, number, number]) =>
+    0.2126 * toLinear(rgb[0]) + 0.7152 * toLinear(rgb[1]) + 0.0722 * toLinear(rgb[2])
+  // WCAG AA: large text needs 3:1. Threshold 0.25 ≈ 3:1 on #0b1220.
+  const textColor = (fillRgb: string) => {
+    const rgb = parseRgb(fillRgb)
+    if (!rgb) return '#0b1220'
+    return luminance(rgb) > 0.25 ? '#0b1220' : '#e2e8f0'
+  }
+
   const [hover, setHover] = useState<{ i: number; j: number } | null>(null)
 
   return (
@@ -62,9 +79,8 @@ function Inner({
               Math.abs(waccAxis[i] - baseWacc) < 1e-9 && Math.abs(gAxis[j] - baseG) < 1e-9
             const isHover = hover && hover.i === i && hover.j === j
             const t = colorScale(v) ?? 0.5
-            // d3-scale-chromatic interpolators take t in [0,1] and return rgb string
-            // RdYlBu reversed so high = blue, low = red
-            const color = interpolateRdYlBu(1 - t)
+            const fillRgb = interpolateRdYlBu(1 - t)
+            const fillColor = textColor(fillRgb)
             return (
               <g
                 key={`c-${i}-${j}`}
@@ -76,7 +92,7 @@ function Inner({
                   y={i * cellH}
                   width={cellW}
                   height={cellH}
-                  fill={color}
+                  fill={fillRgb}
                   stroke={isCenter ? 'rgba(255,255,255,0.85)' : 'rgba(11,18,32,0.9)'}
                   strokeWidth={isCenter ? 2 : 1}
                   initial={{ opacity: 0, scale: 0.85 }}
@@ -91,7 +107,7 @@ function Inner({
                   y={i * cellH + cellH / 2 + 4}
                   textAnchor="middle"
                   fontSize={Math.min(13, cellW / 5)}
-                  fill={t > 0.5 ? '#0b1220' : '#f1f5f9'}
+                  fill={fillColor}
                   fontWeight={isCenter || isHover ? 700 : 500}
                   style={{ fontFamily: 'var(--font-sans)', pointerEvents: 'none' }}
                 >

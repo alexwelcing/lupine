@@ -72,7 +72,7 @@ function Layer({
       {/* "Lupine" tag on the substrate layer */}
       {isLupine && (
         <span
-          className="absolute -left-3 top-1/2 -translate-y-1/2 font-mono text-[9px] uppercase tracking-widest px-2 py-1 rounded"
+          className="absolute -left-3 top-1/2 -translate-y-1/2 font-mono text-[9px] uppercase tracking-[0.08em] px-2 py-1 rounded"
           style={{ background: '#00ffff', color: '#000000' }}
         >
           Lupine
@@ -82,7 +82,7 @@ function Layer({
       <div className="flex items-baseline justify-between gap-3 flex-wrap">
         <div className="flex items-baseline gap-3">
           <span
-            className="font-mono text-xs uppercase tracking-widest"
+            className="font-mono text-xs uppercase tracking-[0.08em]"
             style={{
               color: isLupine ? '#00ffff' : 'var(--on-surface-variant)',
             }}

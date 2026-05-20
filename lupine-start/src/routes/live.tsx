@@ -223,11 +223,11 @@ function LiveLabComponent() {
                 {latestBroadcast?.created_at ? timeAgo(latestBroadcast.created_at) : 'awaiting first broadcast'}
               </span>
             </div>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-8 leading-[1.05] text-[var(--on-surface)]">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-8 leading-[1.05] text-[var(--on-surface)]">
               {latestBroadcast?.title || 'The hourly lab broadcast is standing by.'}
             </h2>
             <div className="mb-10 pl-6 border-l-2 border-[var(--secondary)] py-1">
-              <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+              <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
                 {latestBroadcast?.summary || 'GLIM-THINK will publish a concise progress signal here after the scheduled worker writes the first broadcast artifact.'}
               </p>
             </div>
@@ -256,7 +256,7 @@ function LiveLabComponent() {
                       <span className="mono-label text-[var(--primary)]">{broadcast.cadence}</span>
                     </div>
                     <p className="line-clamp-2 text-xs leading-relaxed text-[var(--on-surface-variant)]">{broadcast.summary}</p>
-                    <div className="mt-3 font-mono text-[9px] uppercase tracking-widest text-[var(--on-surface-variant-mid)]">
+                    <div className="mt-3 font-mono text-[9px] uppercase tracking-[0.08em] text-[var(--on-surface-variant-mid)]">
                       {timeAgo(broadcast.created_at)}
                     </div>
                   </div>
@@ -285,13 +285,13 @@ function LiveLabComponent() {
                 <Radio size={14} />
                 PRODUCER HEARTBEATS
               </h3>
-              <span className="font-mono text-[9px] text-[var(--on-surface-variant)] uppercase tracking-widest">
+              <span className="font-mono text-[9px] text-[var(--on-surface-variant)] uppercase tracking-[0.08em]">
                 {beats.length}/20
               </span>
             </div>
             <div className="p-4 space-y-2 max-h-96 overflow-y-auto">
               {beats.length === 0 ? (
-                <div className="px-2 py-6 text-center font-mono text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest">
+                <div className="px-2 py-6 text-center font-mono text-[10px] text-[var(--on-surface-variant)] uppercase tracking-[0.08em]">
                   Awaiting first beat
                 </div>
               ) : (
@@ -301,7 +301,7 @@ function LiveLabComponent() {
                     className="border-l-2 border-[var(--primary)] pl-3 py-1.5"
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--primary)]">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--primary)]">
                         {beat.agent}
                       </span>
                       <span className="font-mono text-[9px] text-[var(--on-surface-variant)]">
@@ -328,7 +328,7 @@ function LiveLabComponent() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary)] opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--primary)]"></span>
                 </span>
-                <span className="font-mono text-[9px] text-[var(--primary)] uppercase tracking-widest">LIVE</span>
+                <span className="font-mono text-[9px] text-[var(--primary)] uppercase tracking-[0.08em]">LIVE</span>
               </span>
             </div>
             <div className="p-6 space-y-4">
@@ -641,7 +641,7 @@ function StatCard({ label, value, total, color, icon }: { label: string; value: 
       className="glass-panel p-5 flex flex-col"
     >
       <div className="mb-2 flex items-center justify-between gap-3">
-        <span className="font-mono text-[9px] uppercase tracking-widest text-[var(--on-surface-variant-mid)]">{label}</span>
+        <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-[var(--on-surface-variant-mid)]">{label}</span>
         <span style={{ color }}>{icon}</span>
       </div>
       <div className="flex items-baseline gap-1.5">
@@ -669,7 +669,7 @@ function StatCard({ label, value, total, color, icon }: { label: string; value: 
 function MetricSkeleton({ label }: { label: string }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-widest">{label}</span>
+      <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-[0.08em]">{label}</span>
       <div className="h-4 w-16 bg-[var(--surface-container-high)] rounded animate-pulse"></div>
     </div>
   )
@@ -678,7 +678,7 @@ function MetricSkeleton({ label }: { label: string }) {
 function MetricRow({ label, value, highlight, activeColor }: { label: string; value: string; highlight?: boolean; activeColor: string }) {
   return (
     <div className="flex items-center justify-between py-1">
-      <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-widest">{label}</span>
+      <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-[0.08em]">{label}</span>
       <span
         className="font-mono text-[13px] uppercase"
         style={{ color: highlight ? activeColor : 'var(--on-surface)' }}
@@ -760,7 +760,7 @@ function CanonColumn({ title, subtitle, accent, items, empty }: {
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-[9px] text-[var(--primary)] uppercase tracking-widest">
+                        <span className="font-mono text-[9px] text-[var(--primary)] uppercase tracking-[0.08em]">
                           {timeAgo(e.created_at)}
                         </span>
                         {e.experiment_id && (

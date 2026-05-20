@@ -108,7 +108,7 @@ function AtlasViewerPage() {
             className="max-w-2xl"
           >
             <div className="mono-label text-[var(--accent-cyan)] mb-6 tracking-[0.3em]">ATLAS VIEWER · INSPECTION INTERFACE</div>
-            <h1 className="font-display tracking-tight text-5xl lg:text-7xl mb-8 leading-[1.05] text-[var(--on-surface)]">
+            <h1 className="font-serif tracking-tight text-5xl lg:text-7xl mb-8 leading-[1.05] text-[var(--on-surface)]">
               See your <em className="italic text-[var(--accent-cyan)]">trajectories</em>,<br />and the audit beside them.
             </h1>
             <p className="text-white/70 text-lg lg:text-xl mb-10 max-w-xl leading-relaxed font-light">
@@ -119,7 +119,7 @@ function AtlasViewerPage() {
                 href="https://lupinematerials.science"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-7 py-3.5 bg-[var(--accent-cyan)] text-[#0a1628] font-sans text-sm font-semibold uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+                className="px-7 py-3.5 bg-[var(--accent-cyan)] text-[#0a1628] font-sans text-sm font-semibold uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
               >
                 Launch Viewer →
               </a>
@@ -127,7 +127,7 @@ function AtlasViewerPage() {
                 href="https://github.com/alexwelcing/lupine"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-7 py-3.5 border border-white/40 text-white font-sans text-sm font-semibold uppercase tracking-widest hover:bg-white/10 transition-colors no-underline backdrop-blur-sm"
+                className="px-7 py-3.5 border border-white/40 text-white font-sans text-sm font-semibold uppercase tracking-[0.08em] hover:bg-white/10 transition-colors no-underline backdrop-blur-sm"
               >
                 View Source
               </a>
@@ -143,7 +143,7 @@ function AtlasViewerPage() {
       <Section bg="light">
         <div className="max-w-3xl mx-auto text-center">
           <span className="mono-label text-[var(--primary)] opacity-60 mb-8 block">THE PROBLEM</span>
-          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
+          <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
             Molecular visualization is stuck in 2005.
           </h2>
           <p className="text-[var(--on-surface-variant)] text-lg leading-relaxed mb-12">
@@ -158,7 +158,7 @@ function AtlasViewerPage() {
               { label: 'Scale ceiling', desc: 'Most desktop tools start dropping frames above 500K atoms. Modern simulations routinely exceed 10M.' },
             ].map((item) => (
               <Card key={item.label} className="border-t-2 border-t-[var(--error)]">
-                <div className="font-mono text-xs uppercase tracking-widest text-[var(--error)] mb-3">{item.label}</div>
+                <div className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--error)] mb-3">{item.label}</div>
                 <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{item.desc}</p>
               </Card>
             ))}
@@ -274,7 +274,7 @@ function AtlasViewerPage() {
                 {['Feature', 'OVITO', 'VMD', 'Atlas Viewer'].map((h, i) => (
                   <th
                     key={h}
-                    className="text-left px-5 py-4 font-semibold text-[11px] uppercase tracking-widest border-b"
+                    className="text-left px-5 py-4 font-semibold text-[11px] uppercase tracking-[0.08em] border-b"
                     style={{
                       color: i === 3 ? 'var(--accent-cyan)' : 'var(--on-surface-variant)',
                       background: i === 3 ? 'rgba(78,205,196,0.06)' : undefined,
@@ -372,7 +372,7 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(78,205,196,0.06), transparent 70%)' }} />
         <div className="max-w-xl mx-auto relative z-10">
           <div>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
               Stop installing.<br />Start <em className="italic text-[var(--accent-cyan)]">seeing</em>.
             </h2>
             <p className="text-[var(--on-surface-variant)] text-lg mb-10 leading-relaxed">
@@ -383,7 +383,7 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
                 href="https://lupinematerials.science"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-4 bg-[var(--accent-cyan)] text-[#0a1628] font-sans text-sm font-bold uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+                className="px-8 py-4 bg-[var(--accent-cyan)] text-[#0a1628] font-sans text-sm font-bold uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
               >
                 Open Atlas Viewer
               </a>
@@ -391,7 +391,7 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
                 href="https://github.com/alexwelcing/lupine"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-4 border border-[var(--primary)] text-[var(--primary)] font-sans text-sm font-bold uppercase tracking-widest hover:bg-[var(--primary)] hover:text-white transition-colors no-underline"
+                className="px-8 py-4 border border-[var(--primary)] text-[var(--primary)] font-sans text-sm font-bold uppercase tracking-[0.08em] hover:bg-[var(--primary)] hover:text-white transition-colors no-underline"
               >
                 View Source
               </a>

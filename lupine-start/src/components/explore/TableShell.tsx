@@ -137,7 +137,7 @@ export function TableShell<T extends object>({
           />
           <button
             onClick={() => setShowFilterRow(v => !v)}
-            className={`font-mono text-[10px] uppercase tracking-widest px-2 py-1 border transition-colors ${
+            className={`font-mono text-[10px] uppercase tracking-[0.08em] px-2 py-1 border transition-colors ${
               showFilterRow
                 ? 'bg-[var(--primary)] border-[var(--primary)] text-[var(--on-primary)]'
                 : 'border-[var(--outline-variant)] text-[var(--on-surface-variant)] hover:border-[var(--primary)]'
@@ -150,7 +150,7 @@ export function TableShell<T extends object>({
           <div className="relative">
             <button
               onClick={() => setShowColMenu(v => !v)}
-              className="font-mono text-[10px] uppercase tracking-widest px-2 py-1 border border-[var(--outline-variant)] text-[var(--on-surface-variant)] hover:border-[var(--primary)]"
+              className="font-mono text-[10px] uppercase tracking-[0.08em] px-2 py-1 border border-[var(--outline-variant)] text-[var(--on-surface-variant)] hover:border-[var(--primary)]"
               title="toggle column visibility"
             >
               cols ({allLeafColumns.filter(c => c.getIsVisible()).length}/{allLeafColumns.length})
@@ -163,13 +163,13 @@ export function TableShell<T extends object>({
                 <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-[var(--outline-variant)]">
                   <button
                     onClick={() => table.toggleAllColumnsVisible(true)}
-                    className="font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 border border-[var(--outline-variant)] hover:border-[var(--primary)]"
+                    className="font-mono text-[10px] uppercase tracking-[0.08em] px-2 py-0.5 border border-[var(--outline-variant)] hover:border-[var(--primary)]"
                   >
                     show all
                   </button>
                   <button
                     onClick={() => table.toggleAllColumnsVisible(false)}
-                    className="font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 border border-[var(--outline-variant)] hover:border-[var(--primary)]"
+                    className="font-mono text-[10px] uppercase tracking-[0.08em] px-2 py-0.5 border border-[var(--outline-variant)] hover:border-[var(--primary)]"
                   >
                     hide all
                   </button>
@@ -224,7 +224,7 @@ export function TableShell<T extends object>({
           </select>
           <button
             onClick={() => exportTableAsCsv(table, tabLabel)}
-            className="px-2 py-0.5 border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors uppercase tracking-widest"
+            className="px-2 py-0.5 border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors uppercase tracking-[0.08em]"
             title="download visible + filtered rows as CSV"
           >
             csv
