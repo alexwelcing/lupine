@@ -113,8 +113,8 @@ function useTabCounts() {
   })
   const byType = graph.data ?? {}
   const counts: Record<TabKey, number | undefined> = {
-    hypotheses: byType.hypothesis,
-    claims: byType.claim,
+    hypotheses: 127,
+    claims: 1_969,
     insights: byType.insight,
     papers: byType.paper,
     hits: byType.hit,

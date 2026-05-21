@@ -456,6 +456,72 @@ function ProcessPage() {
           </DataList>
         </section>
 
+        {/* === ROADMAP === */}
+        <section>
+          <div className="mb-8">
+            <span className="mono-label text-[var(--secondary)] block mb-3">
+              §7 — FORWARD ROADMAP
+            </span>
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">
+              Where this goes in the next 90 days
+            </h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
+              Three active workstreams, prioritized by impact on convergence rate and
+              gate quality. Each maps to a measurable outcome — no aspirational bullet points.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card elevated style={{ borderTop: '2px solid var(--primary)' }}>
+              <span className="mono-label text-[var(--primary)] block mb-3">P0 — ACTIVE</span>
+              <h3 className="text-xl mb-3 text-[var(--on-surface)] font-serif">LAM trio benchmarks</h3>
+              <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                MACE-MP, CHGNet, and Orb wired into the IMMI 15-element benchmark suite.
+                Cross-MLIP alignment metrics and per-property PR measured against existing
+                classical potentials. Converts the round-3 open verdict into a measurable one.
+              </p>
+              <p className="text-xs text-[var(--on-surface-variant)] mt-4 italic opacity-70">
+                Target: 2 weeks
+              </p>
+            </Card>
+            <Card elevated style={{ borderTop: '2px solid var(--secondary)' }}>
+              <span className="mono-label text-[var(--secondary)] block mb-3">P1 — QUEUED</span>
+              <h3 className="text-xl mb-3 text-[var(--on-surface)] font-serif">Simpson's validation suite</h3>
+              <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                Systematic Simpson's-paradox detection across all 15 elements × 18 functional-form
+                families. Automated sign-reversal alerts when pooled vs within-group correlations
+                disagree. Ships as a /research/paradox dashboard.
+              </p>
+              <p className="text-xs text-[var(--on-surface-variant)] mt-4 italic opacity-70">
+                Target: 4 weeks
+              </p>
+            </Card>
+            <Card elevated style={{ borderTop: '2px solid var(--outline-variant)' }}>
+              <span className="mono-label text-[var(--on-surface-variant)] block mb-3">P2 — BACKLOG</span>
+              <h3 className="text-xl mb-3 text-[var(--on-surface)] font-serif">Lean 4 formal proofs</h3>
+              <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+                Machine-verified formalization of the hyper-ribbon bound and the PR ≤ angular-rank
+                conjecture. Depends on the Lean-readiness gate clearing with ≥ 3 numerical anchors.
+                No fake proofs — the gate is the bouncer.
+              </p>
+              <p className="text-xs text-[var(--on-surface-variant)] mt-4 italic opacity-70">
+                Target: when gate clears
+              </p>
+            </Card>
+          </div>
+
+          <div className="mt-8 glass-panel p-6 border-l-2 border-[var(--secondary)]">
+            <h4 className="mono-label text-[var(--secondary)] mb-3">Phonon Sentinel — completed</h4>
+            <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+              The Phonon Sentinel displacement sweep is complete. Hessian/force-constant sensitivity
+              with dynamic-stability classification verified for Al, Cu, Ni, Ag. Full results on the{' '}
+              <a href="/research#section-4-5" className="text-[var(--primary)] hover:underline">
+                research page §4.5
+              </a>.
+            </p>
+          </div>
+        </section>
+
         {/* === CTA === */}
         <section className="glass-panel p-8 text-center">
           <h3 className="text-2xl mb-4">Inspect the ledger directly</h3>

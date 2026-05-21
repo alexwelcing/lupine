@@ -7,7 +7,7 @@ export const Route = createFileRoute('/investor-relations')({
   head: () => ({
     meta: [
       { title: 'Investor brief — Lupine' },
-      { name: 'description', content: 'The audit layer for atomistic ML — and the accelerator that compounds out of it. Foundation MLIPs are saturating Matbench Discovery at F1 ≈ 0.93 while still failing silently on production trajectories. We measure where and why across ≈900 published potentials, and the cross-potential geometry doubles as a low-rank retraining target. Infrastructure, not another foundation model.' },
+      { name: 'description', content: 'The audit layer for atomistic ML — and the accelerator that compounds out of it. Foundation MLIPs are saturating Matbench Discovery at F1 ≈ 0.93 while still failing silently on production trajectories. We measure where and why across 953 published potentials, and the cross-potential geometry doubles as a low-rank retraining target. Infrastructure, not another foundation model.' },
     ],
   }),
 })
@@ -64,7 +64,7 @@ function InvestorRelationsPage() {
                   <div className="space-y-5">
                     <div className="flex justify-between items-baseline">
                       <span className="mono-label text-[var(--on-surface-variant)] text-[10px]">POTENTIALS AUDITED</span>
-                      <span className="font-mono text-2xl text-[var(--primary)] glow-primary">≈900</span>
+                      <span className="font-mono text-2xl text-[var(--primary)] glow-primary">953</span>
                     </div>
                     <div className="flex justify-between items-baseline">
                       <span className="mono-label text-[var(--on-surface-variant)] text-[10px]">FUNCTIONAL FAMILIES</span>
@@ -110,7 +110,7 @@ function InvestorRelationsPage() {
             Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026) — <em>There Will Be a Scientific Theory of Deep Learning</em> — make the case that an empirical-laws science of how neural networks train is now emerging, with low-effective-dimensionality structure, simple macroscopic statistics, and universal phenomena across architectures and tasks. Bordelon, Atanasov &amp; Pehlevan (2025) show that targeting the dominant kernel modes improves scaling exponents in deep networks. Saxe, McClelland &amp; Ganguli (2014) show that linear networks acquire those modes in order of magnitude anyway.
           </p>
           <p className="text-lg text-[var(--on-surface-variant)] leading-relaxed mb-6">
-            Translate that into our setting: the cross-potential ribbon Lupine measures across ≈900 published interatomic potentials is the same low-effective-dimensionality structure, applied to a specific physical system. <strong className="text-[var(--on-surface)]">It is simultaneously an error budget (the audit deliverable) and a low-rank retraining target (the accelerator deliverable).</strong> Customer pays for the audit; the data Lupine collects to deliver it sharpens the retraining target; the next customer's audit is cheaper and the next customer's retraining target is tighter.
+            Translate that into our setting: the cross-potential ribbon Lupine measures across 953 published interatomic potentials is the same low-effective-dimensionality structure, applied to a specific physical system. <strong className="text-[var(--on-surface)]">It is simultaneously an error budget (the audit deliverable) and a low-rank retraining target (the accelerator deliverable).</strong> Customer pays for the audit; the data Lupine collects to deliver it sharpens the retraining target; the next customer's audit is cheaper and the next customer's retraining target is tighter.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
@@ -176,7 +176,7 @@ function InvestorRelationsPage() {
 
           <Card elevated className="relative overflow-hidden group">
             <div className="absolute -top-16 -right-16 w-32 h-32 bg-[var(--primary)] opacity-10 blur-[40px] rounded-full group-hover:opacity-20 transition-all"></div>
-            <div className="font-mono text-4xl text-[var(--on-surface)] mb-2">≈900</div>
+            <div className="font-mono text-4xl text-[var(--on-surface)] mb-2">953</div>
             <div className="mono-label text-[var(--on-surface-variant)] mb-6">Potentials in our manifest</div>
             <p className="text-sm text-[var(--on-surface-variant)] font-light">OpenKIM, NIST IPR, ColabFit, plus author-distributed MACE-MP, MatterSim, Orb, CHGNet, GAP — de-duplication rule and snapshot date shipped publicly.</p>
           </Card>

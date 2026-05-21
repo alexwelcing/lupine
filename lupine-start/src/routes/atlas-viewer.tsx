@@ -116,7 +116,7 @@ function AtlasViewerPage() {
             </p>
             <div className="flex gap-4 flex-wrap">
               <a
-                href="https://lupinematerials.science"
+                href="https://atlas.lupine.science"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-7 py-3.5 bg-[var(--accent-cyan)] text-[#0a1628] font-sans text-sm font-semibold uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
@@ -327,7 +327,7 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
             <div>
               <h3 className="text-lg font-semibold text-[var(--on-surface)] mb-3">2. Open the viewer and drag your file</h3>
               <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
-                Navigate to <a href="https://lupinematerials.science" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-cyan)] hover:underline font-medium">lupinematerials.science</a> and
+                Navigate to <a href="https://atlas.lupine.science" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-cyan)] hover:underline font-medium">atlas.lupine.science</a> and
                 drag <code className="bg-[var(--surface-container-high)] px-1.5 py-0.5 rounded text-[var(--accent-cyan)] text-xs">dump.lammpstrj</code> directly
                 onto the canvas. The Rust/WASM parser ingests the file locally — <strong>nothing is uploaded to any server</strong>.
               </p>
@@ -380,7 +380,7 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <a
-                href="https://lupinematerials.science"
+                href="https://atlas.lupine.science"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-[var(--accent-cyan)] text-[#0a1628] font-sans text-sm font-bold uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
