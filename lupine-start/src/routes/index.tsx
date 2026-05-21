@@ -590,39 +590,39 @@ function HomePage() {
           eyebrow="08 / Project Distill"
           title={
             <>
-              Next-generation{' '}
+              Manifold{' '}
               <em className="italic text-[var(--secondary)]">
-                Generative Matter Release
+                Distillation & Error Isolation
               </em>
               .
             </>
           }
           lead={
             <>
-              We have characterized the cross-potential error manifold. The audit
-              substrate is established. The next phase bridges predictive validation
-              with generative synthesis — predicting where foundation force fields
-              fail, and synthesizing new compounds in closed-loop experiments.
+              Evaluating density functional theory residuals across universal MLIPs.
+              By parameterizing the Fisher Information Matrix of any force-field engine,
+              we locate and collapse the hyper-ribbon's stiffest error dimensions—enabling
+              mechanically stable generative synthesis that bypasses functional-form decay.
             </>
           }
         />
         <div className="mt-6 grid md:grid-cols-2 gap-8 items-center">
           <div className="flex flex-col gap-5">
             <h4 className="font-serif text-2xl text-[var(--on-surface)] tracking-tight">
-              Top Secret: Closed-Loop Generative Matter (Q3 2026)
+              Project Distill: Closed-Loop Matter Generation (Q3 2026)
             </h4>
             <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
-              We are preparing a major upgrade to the Lupine platform. By combining the{' '}
-              <code>lupine-distill</code> predictive error filter with a new autonomous{' '}
-              reinforcement learning loop, Project Distill allows researchers to generate{' '}
-              mechanically stable materials that bypass known functional-form failure modes.{' '}
-              The system automatically triggers high-fidelity DFT validation sweeps for candidate{' '}
-              potentials, refining the generative manifold in real-time.
+              Project Distill combines our <code>lupine-distill</code> predictive error filter with a 
+              recursive self-governing Bayesian search loop. By analyzing the high-rank singular values 
+              of multi-component atomic assemblies, the distiller isolates where classical neural 
+              potentials diverge from density functional theory (DFT) reference states. 
+              The system automates high-fidelity VASP and ORCA quantum verification sweeps for candidate 
+              lattices, continuously refining the generative manifold under strict physical bounds.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-2">
               <input
                 type="email"
-                placeholder="Enter email for secure waitlist"
+                placeholder="Enter academic email for embargo clearance"
                 className="bg-[var(--surface-container)] border border-[var(--outline-variant)] rounded px-4 py-2.5 text-sm text-[var(--on-surface)] placeholder-[var(--on-surface-variant-mid)] focus:outline-none focus:border-[var(--secondary)] transition-colors min-w-[240px]"
                 disabled
               />
@@ -630,11 +630,11 @@ function HomePage() {
                 className="bg-[var(--secondary)] hover:bg-[var(--secondary-container)] hover:text-[var(--on-secondary-container)] text-[var(--on-secondary)] font-medium text-sm px-5 py-2.5 rounded transition-all cursor-not-allowed opacity-80 whitespace-nowrap"
                 disabled
               >
-                Request Clearance
+                Request Raw Manifolds
               </button>
             </div>
             <p className="text-[10px] font-mono text-[var(--on-surface-variant-mid)] uppercase tracking-wider">
-              🔒 Encrypted registration will unlock once public embargo lifts.
+              🔒 Embargo status active. Waitlist registration will release raw HDF5 dataset manifolds.
             </p>
           </div>
           <div className="w-full">
@@ -834,8 +834,14 @@ function SectionHeader({
 
 function ComputationalReleaseGraphic() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [loadingText, setLoadingText] = useState('DECRYPTING INTEGRITY METRICS...')
-  const [entropy, setEntropy] = useState('0.8741')
+  const [loadingText, setLoadingText] = useState('CALIBRATING MANIFOLD METRICS...')
+  const [entropy, setEntropy] = useState('0.874139')
+  const [activeOutlier, setActiveOutlier] = useState<string>('Fe Outlier')
+
+  // Dragging state using refs to avoid re-triggering useEffect
+  const isDraggingRef = useRef(false)
+  const previousMousePositionRef = useRef({ x: 0, y: 0 })
+  const rotationAnglesRef = useRef({ x: 0.5, y: 0.5 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -854,126 +860,257 @@ function ComputationalReleaseGraphic() {
     }
     window.addEventListener('resize', handleResize)
 
-    let angleX = 0.5
-    let angleY = 0.5
     let t = 0
+    // Live scrolling loss data
+    const lossHistory: number[] = Array.from({ length: 60 }, () => 0.4 + Math.random() * 0.1)
 
-    // Generate a hyper-ribbon manifold points (a helical ribbon)
+    // Generate hyper-ribbon manifold points (a helical ribbon)
     const points: { x: number; y: number; z: number; color: string }[] = []
     const ribLines: number[][] = []
-    const numPoints = 120
+    const numPoints = 100
     for (let i = 0; i < numPoints; i++) {
       const u = (i / numPoints) * Math.PI * 4 // Spine parameter
-      const spineX = Math.sin(u) * 60
-      const spineY = (u - Math.PI * 2) * 20
-      const spineZ = Math.cos(u) * 60
+      const spineX = Math.sin(u) * 55
+      const spineY = (u - Math.PI * 2) * 18
+      const spineZ = Math.cos(u) * 55
 
-      // Add a width/direction to make it a ribbon
-      const dx = Math.cos(u) * 25
-      const dy = Math.sin(u * 2) * 5
-      const dz = -Math.sin(u) * 25
+      // Ribbon width directions
+      const dx = Math.cos(u) * 20
+      const dy = Math.sin(u * 2) * 4
+      const dz = -Math.sin(u) * 20
 
+      // Add spine nodes
       points.push({
         x: spineX + dx,
         y: spineY + dy,
         z: spineZ + dz,
-        color: `hsla(${200 + (i * 1.5) % 80}, 85%, 65%, 0.7)`
+        color: `hsla(${200 + (i * 1.8) % 70}, 85%, 65%, 0.7)`
       })
       points.push({
         x: spineX - dx,
         y: spineY - dy,
         z: spineZ - dz,
-        color: `hsla(${240 + (i * 1.5) % 80}, 85%, 65%, 0.3)`
+        color: `hsla(${240 + (i * 1.8) % 70}, 85%, 65%, 0.3)`
       })
 
-      ribLines.push([2 * i, 2 * i + 1]) // rib connecting the two sides
+      ribLines.push([2 * i, 2 * i + 1]) // connection line across ribbon
       if (i > 0) {
         ribLines.push([2 * (i - 1), 2 * i]) // side A connection
         ribLines.push([2 * (i - 1) + 1, 2 * i + 1]) // side B connection
       }
     }
 
+    // Add 4 specific scientific outlier nodes with floating coordinates
+    const outliers = [
+      { x: 30, y: -25, z: 45, label: 'Fe Outlier', symbol: 'Fe', color: '#ff6b6b' },
+      { x: -45, y: 10, z: -35, label: 'Cr Outlier', symbol: 'Cr', color: '#ffd23f' },
+      { x: 15, y: 35, z: -50, label: 'Au Outlier', symbol: 'Au', color: '#f7b267' },
+      { x: -20, y: -45, z: 20, label: 'Ni Outlier', symbol: 'Ni', color: '#4cc9f0' }
+    ]
+
     const render = () => {
       ctx.clearRect(0, 0, width, height)
       t += 0.01
 
-      // 3D rotation angles
-      angleY += 0.005
-      angleX = 0.4 + Math.sin(t * 0.3) * 0.15
+      // Auto rotation if not dragging
+      if (!isDraggingRef.current) {
+        rotationAnglesRef.current.y += 0.004
+        rotationAnglesRef.current.x = 0.4 + Math.sin(t * 0.25) * 0.12
+      }
 
-      const cosX = Math.cos(angleX)
-      const sinX = Math.sin(angleX)
-      const cosY = Math.cos(angleY)
-      const sinY = Math.sin(angleY)
+      const cosX = Math.cos(rotationAnglesRef.current.x)
+      const sinX = Math.sin(rotationAnglesRef.current.x)
+      const cosY = Math.cos(rotationAnglesRef.current.y)
+      const sinY = Math.sin(rotationAnglesRef.current.y)
 
-      // Project and draw lines
-      const projected = points.map((p) => {
+      const project = (px: number, py: number, pz: number) => {
         // Rotate Y
-        let x1 = p.x * cosY - p.z * sinY
-        let z1 = p.x * sinY + p.z * cosY
-
+        let x1 = px * cosY - pz * sinY
+        let z1 = px * sinY + pz * cosY
         // Rotate X
-        let y2 = p.y * cosX - z1 * sinX
-        let z2 = p.y * sinX + z1 * cosX
-
-        // Perspective projection
-        const d = 250 // camera distance
+        let y2 = py * cosX - z1 * sinX
+        let z2 = py * sinX + z1 * cosX
+        // Camera perspective
+        const d = 260
         const scale = d / (d + z2)
-        const projX = width / 2 + x1 * scale
-        const projY = height / 2 + y2 * scale
+        return {
+          x: width / 2 + x1 * scale,
+          y: height / 2 + y2 * scale,
+          z: z2
+        }
+      }
 
-        return { x: projX, y: projY, z: z2, color: p.color }
-      })
+      // Draw 3D grid axes in background
+      const axisLength = 80
+      const originProj = project(0, 0, 0)
+      const axisX = project(axisLength, 0, 0)
+      const axisY = project(0, -axisLength, 0) // inverted for visual alignment
+      const axisZ = project(0, 0, axisLength)
 
-      // Draw ribbon lines
-      ctx.lineWidth = 1.2
+      ctx.lineWidth = 0.8
+      // X Axis (Red)
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)'
+      ctx.beginPath()
+      ctx.moveTo(originProj.x, originProj.y)
+      ctx.lineTo(axisX.x, axisX.y)
+      ctx.stroke()
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.6)'
+      ctx.fillText('X (Stiffness)', axisX.x + 4, axisX.y + 2)
+
+      // Y Axis (Green)
+      ctx.strokeStyle = 'rgba(34, 197, 94, 0.4)'
+      ctx.beginPath()
+      ctx.moveTo(originProj.x, originProj.y)
+      ctx.lineTo(axisY.x, axisY.y)
+      ctx.stroke()
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.6)'
+      ctx.fillText('Y (Error Plume)', axisY.x - 24, axisY.y - 4)
+
+      // Z Axis (Blue)
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.4)'
+      ctx.beginPath()
+      ctx.moveTo(originProj.x, originProj.y)
+      ctx.lineTo(axisZ.x, axisZ.y)
+      ctx.stroke()
+      ctx.fillStyle = 'rgba(59, 130, 246, 0.6)'
+      ctx.fillText('Z (Variance)', axisZ.x + 4, axisZ.y + 4)
+
+      // 3D project ribbon points
+      const projected = points.map((p) => project(p.x, p.y, p.z))
+
+      // Render ribbon lines
+      ctx.lineWidth = 1.0
       ribLines.forEach(([iA, iB]) => {
         const pA = projected[iA]
         const pB = projected[iB]
-        if (!pA || !pB) return
+        const origA = points[iA]
+        if (!pA || !pB || !origA) return
 
-        // Compute opacity based on average Z depth
         const avgZ = (pA.z + pB.z) / 2
-        const opacity = Math.max(0.1, Math.min(0.8, 1 - (avgZ + 100) / 200))
-
-        ctx.strokeStyle = pA.color.replace('0.7', opacity.toString()).replace('0.3', (opacity * 0.5).toString())
+        const opacity = Math.max(0.08, Math.min(0.7, 1 - (avgZ + 100) / 220))
+        ctx.strokeStyle = origA.color.replace('0.7', opacity.toString()).replace('0.3', (opacity * 0.4).toString())
         ctx.beginPath()
         ctx.moveTo(pA.x, pA.y)
         ctx.lineTo(pB.x, pB.y)
         ctx.stroke()
       })
 
-      // Draw floating particles/electrons around it
-      ctx.fillStyle = 'rgba(107, 138, 175, 0.4)'
-      for (let i = 0; i < 20; i++) {
-        const theta = t * 1.5 + i * (Math.PI / 10)
-        const r = 80 + Math.sin(t + i) * 15
-        const px = width / 2 + Math.sin(theta) * r * Math.cos(t * 0.2)
-        const py = height / 2 + Math.cos(theta) * r * Math.sin(t * 0.2) + Math.sin(t * 0.5 + i) * 10
+      // Draw Outlier Nodes with 3D Error Plumes
+      outliers.forEach((outlier) => {
+        const pNode = project(outlier.x, outlier.y, outlier.z)
+        const avgZ = pNode.z
+        const opacity = Math.max(0.1, Math.min(0.9, 1 - (avgZ + 100) / 220))
+
+        // Draw node
         ctx.beginPath()
-        ctx.arc(px, py, 1.5, 0, Math.PI * 2)
+        ctx.arc(pNode.x, pNode.y, 4, 0, Math.PI * 2)
+        ctx.fillStyle = outlier.color
+        ctx.fill()
+
+        // Draw outer glowing ring
+        ctx.beginPath()
+        ctx.arc(pNode.x, pNode.y, 8 + Math.sin(t * 5) * 2, 0, Math.PI * 2)
+        ctx.strokeStyle = `${outlier.color}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}`
+        ctx.lineWidth = 0.8
+        ctx.stroke()
+
+        // Draw dotted line (projection to spine / origin)
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'
+        ctx.setLineDash([2, 3])
+        ctx.beginPath()
+        ctx.moveTo(originProj.x, originProj.y)
+        ctx.lineTo(pNode.x, pNode.y)
+        ctx.stroke()
+        ctx.setLineDash([])
+
+        // Draw error vector plume (extending outwards)
+        const plumeLength = 22 + Math.sin(t * 3) * 6
+        const pPlume = project(outlier.x, outlier.y - plumeLength, outlier.z)
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.7)'
+        ctx.lineWidth = 1.2
+        ctx.beginPath()
+        ctx.moveTo(pNode.x, pNode.y)
+        ctx.lineTo(pPlume.x, pPlume.y)
+        ctx.stroke()
+
+        // Draw label text
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+        ctx.fillText(`[${outlier.symbol}]`, pNode.x + 8, pNode.y - 2)
+      })
+
+      // Draw floating background electronic density field
+      ctx.fillStyle = 'rgba(107, 138, 175, 0.35)'
+      for (let i = 0; i < 15; i++) {
+        const theta = t * 1.1 + i * (Math.PI / 7)
+        const r = 70 + Math.sin(t + i) * 12
+        const px = width / 2 + Math.sin(theta) * r * Math.cos(rotationAnglesRef.current.y)
+        const py = height / 2 + Math.cos(theta) * r * Math.sin(rotationAnglesRef.current.x)
+        ctx.beginPath()
+        ctx.arc(px, py, 1.2, 0, Math.PI * 2)
         ctx.fill()
       }
+
+      // Draw mini scrolling loss telemetry chart in bottom right corner
+      const chartWidth = 90
+      const chartHeight = 45
+      const chartX = width - chartWidth - 12
+      const chartY = height - chartHeight - 55
+
+      // Draw chart border & backdrop
+      ctx.fillStyle = 'rgba(20, 24, 33, 0.75)'
+      ctx.fillRect(chartX, chartY, chartWidth, chartHeight)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'
+      ctx.lineWidth = 0.8
+      ctx.strokeRect(chartX, chartY, chartWidth, chartHeight)
+
+      // Scrolling logic
+      if (Math.random() < 0.05) {
+        lossHistory.shift()
+        // exponential convergence with noise
+        const targetVal = 0.08 + Math.random() * 0.04
+        lossHistory.push(targetVal)
+      }
+
+      // Draw graph line
+      ctx.strokeStyle = 'rgba(52, 211, 153, 0.8)' // green
+      ctx.lineWidth = 1.0
+      ctx.beginPath()
+      for (let i = 0; i < lossHistory.length; i++) {
+        const lx = chartX + (i / (lossHistory.length - 1)) * chartWidth
+        const ly = chartY + chartHeight - (lossHistory[i] * chartHeight * 0.85) - 2
+        if (i === 0) ctx.moveTo(lx, ly)
+        else ctx.lineTo(lx, ly)
+      }
+      ctx.stroke()
+
+      // Graph Labels
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'
+      ctx.fillText('DISTILL LOSS', chartX + 4, chartY + 10)
+      ctx.fillStyle = 'rgba(52, 211, 153, 0.9)'
+      ctx.fillText(`ℒ: ${lossHistory[lossHistory.length - 1].toFixed(4)}`, chartX + 4, chartY + chartHeight - 4)
 
       animationId = requestAnimationFrame(render)
     }
 
     render()
 
-    // Random live text tick
+    // Random scientific ticks
     const textInterval = setInterval(() => {
       const texts = [
-        'MANIFOLD HARMONIZATION RUNNING...',
-        'HESSIAN MATRIX POSITIVE-DEFINITE',
-        'PC1 VARIANCE ATTAINMENT: 99.983%',
-        'REPLICATOR FIELD COHERENT',
-        'EIGENVALUE DECAY: GEOMETRIC',
-        'SYNTHESIS VECTOR RESOLVED',
-        'SIMPSON DETECTOR STATUS: SECURE',
+        'MANIFOLD DENSITY HARMONIZATION RUNNING...',
+        'HESSIAN MATRIX DETERMINANT CORRELATED',
+        'PC1 DISPARITY ATTENUATED TO < 0.02%',
+        'WILSONIAN EFFECTIVE CUTOFF RESOLVING...',
+        'DFT REFERENCE TENSOR VALIDATED',
+        'SIMPSON\'S PARADOX CONFOUND DISCHARGED',
+        'ORTHOGONAL FORCE PLUME DECAY: SECURE',
       ]
       setLoadingText(texts[Math.floor(Math.random() * texts.length)])
-      setEntropy((0.87 + Math.random() * 0.01).toFixed(6))
-    }, 1800)
+      setEntropy((0.874139 - Math.random() * 0.005).toFixed(6))
+      // Pick random active outlier for telemetry
+      const oList = ['Fe Outlier', 'Cr Outlier', 'Au Outlier', 'Ni Outlier']
+      setActiveOutlier(oList[Math.floor(Math.random() * oList.length)])
+    }, 2000)
 
     return () => {
       window.removeEventListener('resize', handleResize)
@@ -982,31 +1119,95 @@ function ComputationalReleaseGraphic() {
     }
   }, [])
 
+  // Drag interaction handlers
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    isDraggingRef.current = true
+    previousMousePositionRef.current = {
+      x: e.clientX,
+      y: e.clientY
+    }
+  }
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return
+    const deltaX = e.clientX - previousMousePositionRef.current.x
+    const deltaY = e.clientY - previousMousePositionRef.current.y
+
+    rotationAnglesRef.current.y += deltaX * 0.008
+    rotationAnglesRef.current.x += deltaY * 0.008
+
+    previousMousePositionRef.current = {
+      x: e.clientX,
+      y: e.clientY
+    }
+  }
+
+  const handleMouseUp = () => {
+    isDraggingRef.current = false
+  }
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0]
+    if (!touch) return
+    isDraggingRef.current = true
+    previousMousePositionRef.current = {
+      x: touch.clientX,
+      y: touch.clientY
+    }
+  }
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return
+    const touch = e.touches[0]
+    if (!touch) return
+    const deltaX = touch.clientX - previousMousePositionRef.current.x
+    const deltaY = touch.clientY - previousMousePositionRef.current.y
+
+    rotationAnglesRef.current.y += deltaX * 0.008
+    rotationAnglesRef.current.x += deltaY * 0.008
+
+    previousMousePositionRef.current = {
+      x: touch.clientX,
+      y: touch.clientY
+    }
+  }
+
   return (
-    <div className="relative w-full h-[280px] bg-[var(--surface-container-low)] border border-[var(--outline-variant)] rounded-lg overflow-hidden flex flex-col justify-end p-4 font-mono text-[10px] select-none">
+    <div
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleMouseUp}
+      className="relative w-full h-[320px] bg-[var(--surface-container-low)] border border-[var(--outline-variant)] rounded-lg overflow-hidden flex flex-col justify-end p-4 font-mono text-[10px] select-none cursor-grab active:cursor-grabbing"
+    >
       {/* Decorative lines & labels */}
       <div className="absolute top-3 left-4 right-4 flex justify-between text-[var(--on-surface-variant-mid)] pointer-events-none uppercase tracking-widest">
-        <span>[CLASSIFIED // PROJECT DISTILL v2]</span>
-        <span className="text-[var(--tertiary)] animate-pulse">● EARLY PREVIEW</span>
+        <span>[MANIFOLD OBSERVATION PANEL // DISTILL v2]</span>
+        <span className="text-[var(--tertiary)] animate-pulse">● INTERACTIVE SIM</span>
       </div>
 
-      <div className="absolute top-1/2 left-4 -translate-y-1/2 flex flex-col gap-1 text-[9px] text-[var(--on-surface-variant)] pointer-events-none bg-[var(--surface-container)]/80 p-2 border border-[var(--outline-variant)] rounded backdrop-blur-sm">
+      <div className="absolute top-12 left-4 flex flex-col gap-1 text-[9px] text-[var(--on-surface-variant)] pointer-events-none bg-[var(--surface-container)]/80 p-2.5 border border-[var(--outline-variant)] rounded backdrop-blur-sm">
+        <div className="font-semibold text-[var(--secondary)] pb-1 border-b border-[var(--outline-variant)]/60 mb-1">TELEMETRY DECK</div>
         <div>SYS_ENTROPY: {entropy}</div>
-        <div>HESSIAN_V: POSITIVE</div>
-        <div>STABILITY_G: GATES_PASSED</div>
-        <div>SYS_COORD: [5.21, 12.46, 0.08]</div>
+        <div>STABILITY_G: 1.0000 (SECURE)</div>
+        <div>ACTIVE_NODE: {activeOutlier}</div>
+        <div>FIM_RANK: 18 / 120 AXES</div>
+        <div>CUTOFF: Λ = 1.42 eV/Å</div>
       </div>
 
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
       {/* Control panel bar */}
-      <div className="relative z-10 w-full bg-[var(--surface-container)]/90 backdrop-blur-md border border-[var(--outline-variant)] rounded p-2.5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+      <div className="relative z-10 w-full bg-[var(--surface-container)]/90 backdrop-blur-md border border-[var(--outline-variant)] rounded p-2.5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pointer-events-none">
         <div className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary)] animate-ping" />
           <span className="text-[var(--on-surface)] font-medium text-[9px] tracking-wider">{loadingText}</span>
         </div>
         <div className="text-[var(--on-surface-variant-mid)] font-semibold text-[8px] uppercase tracking-wider bg-[var(--surface)] px-2 py-0.5 rounded border border-[var(--outline-variant)]">
-          SECURE PROTOCOL v2.10.8
+          VASP-DFT CORE v2.10.8
         </div>
       </div>
     </div>
