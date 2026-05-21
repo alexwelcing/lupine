@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -30,6 +31,7 @@ const SECTIONS = [
   { id: 'ceiling', label: 'The ceiling' },
   { id: 'math', label: 'The floor' },
   { id: 'ask', label: 'Ask' },
+  { id: 'coming-soon', label: 'Coming soon' },
 ] as const
 
 export const Route = createFileRoute('/')({
@@ -580,6 +582,67 @@ function HomePage() {
         </Takeaway>
       </ScrollSection>
 
+      {/* ============================================================
+          08 / Coming Soon
+          ============================================================ */}
+      <ScrollSection id="coming-soon" className="bg-[var(--surface-container-low)]">
+        <SectionHeader
+          eyebrow="08 / Project Distill"
+          title={
+            <>
+              Next-generation{' '}
+              <em className="italic text-[var(--secondary)]">
+                Generative Matter Release
+              </em>
+              .
+            </>
+          }
+          lead={
+            <>
+              We have characterized the cross-potential error manifold. The audit
+              substrate is established. The next phase bridges predictive validation
+              with generative synthesis — predicting where foundation force fields
+              fail, and synthesizing new compounds in closed-loop experiments.
+            </>
+          }
+        />
+        <div className="mt-6 grid md:grid-cols-2 gap-8 items-center">
+          <div className="flex flex-col gap-5">
+            <h4 className="font-serif text-2xl text-[var(--on-surface)] tracking-tight">
+              Top Secret: Closed-Loop Generative Matter (Q3 2026)
+            </h4>
+            <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
+              We are preparing a major upgrade to the Lupine platform. By combining the{' '}
+              <code>lupine-distill</code> predictive error filter with a new autonomous{' '}
+              reinforcement learning loop, Project Distill allows researchers to generate{' '}
+              mechanically stable materials that bypass known functional-form failure modes.{' '}
+              The system automatically triggers high-fidelity DFT validation sweeps for candidate{' '}
+              potentials, refining the generative manifold in real-time.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 mt-2">
+              <input
+                type="email"
+                placeholder="Enter email for secure waitlist"
+                className="bg-[var(--surface-container)] border border-[var(--outline-variant)] rounded px-4 py-2.5 text-sm text-[var(--on-surface)] placeholder-[var(--on-surface-variant-mid)] focus:outline-none focus:border-[var(--secondary)] transition-colors min-w-[240px]"
+                disabled
+              />
+              <button 
+                className="bg-[var(--secondary)] hover:bg-[var(--secondary-container)] hover:text-[var(--on-secondary-container)] text-[var(--on-secondary)] font-medium text-sm px-5 py-2.5 rounded transition-all cursor-not-allowed opacity-80 whitespace-nowrap"
+                disabled
+              >
+                Request Clearance
+              </button>
+            </div>
+            <p className="text-[10px] font-mono text-[var(--on-surface-variant-mid)] uppercase tracking-wider">
+              🔒 Encrypted registration will unlock once public embargo lifts.
+            </p>
+          </div>
+          <div className="w-full">
+            <ComputationalReleaseGraphic />
+          </div>
+        </div>
+      </ScrollSection>
+
       <ScrollSection id="footer">
         <div className="h-full flex flex-col justify-end">
           <Footer />
@@ -765,6 +828,187 @@ function SectionHeader({
       <p className="font-serif italic text-2xl md:text-3xl leading-snug text-[var(--on-surface-variant-mid)] max-w-3xl">
         {lead}
       </p>
+    </div>
+  )
+}
+
+function ComputationalReleaseGraphic() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [loadingText, setLoadingText] = useState('DECRYPTING INTEGRITY METRICS...')
+  const [entropy, setEntropy] = useState('0.8741')
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let animationId: number
+    let width = (canvas.width = canvas.offsetWidth || 400)
+    let height = (canvas.height = canvas.offsetHeight || 300)
+
+    const handleResize = () => {
+      if (!canvas) return
+      width = canvas.width = canvas.offsetWidth || 400
+      height = canvas.height = canvas.offsetHeight || 300
+    }
+    window.addEventListener('resize', handleResize)
+
+    let angleX = 0.5
+    let angleY = 0.5
+    let t = 0
+
+    // Generate a hyper-ribbon manifold points (a helical ribbon)
+    const points: { x: number; y: number; z: number; color: string }[] = []
+    const ribLines: number[][] = []
+    const numPoints = 120
+    for (let i = 0; i < numPoints; i++) {
+      const u = (i / numPoints) * Math.PI * 4 // Spine parameter
+      const spineX = Math.sin(u) * 60
+      const spineY = (u - Math.PI * 2) * 20
+      const spineZ = Math.cos(u) * 60
+
+      // Add a width/direction to make it a ribbon
+      const dx = Math.cos(u) * 25
+      const dy = Math.sin(u * 2) * 5
+      const dz = -Math.sin(u) * 25
+
+      points.push({
+        x: spineX + dx,
+        y: spineY + dy,
+        z: spineZ + dz,
+        color: `hsla(${200 + (i * 1.5) % 80}, 85%, 65%, 0.7)`
+      })
+      points.push({
+        x: spineX - dx,
+        y: spineY - dy,
+        z: spineZ - dz,
+        color: `hsla(${240 + (i * 1.5) % 80}, 85%, 65%, 0.3)`
+      })
+
+      ribLines.push([2 * i, 2 * i + 1]) // rib connecting the two sides
+      if (i > 0) {
+        ribLines.push([2 * (i - 1), 2 * i]) // side A connection
+        ribLines.push([2 * (i - 1) + 1, 2 * i + 1]) // side B connection
+      }
+    }
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height)
+      t += 0.01
+
+      // 3D rotation angles
+      angleY += 0.005
+      angleX = 0.4 + Math.sin(t * 0.3) * 0.15
+
+      const cosX = Math.cos(angleX)
+      const sinX = Math.sin(angleX)
+      const cosY = Math.cos(angleY)
+      const sinY = Math.sin(angleY)
+
+      // Project and draw lines
+      const projected = points.map((p) => {
+        // Rotate Y
+        let x1 = p.x * cosY - p.z * sinY
+        let z1 = p.x * sinY + p.z * cosY
+
+        // Rotate X
+        let y2 = p.y * cosX - z1 * sinX
+        let z2 = p.y * sinX + z1 * cosX
+
+        // Perspective projection
+        const d = 250 // camera distance
+        const scale = d / (d + z2)
+        const projX = width / 2 + x1 * scale
+        const projY = height / 2 + y2 * scale
+
+        return { x: projX, y: projY, z: z2, color: p.color }
+      })
+
+      // Draw ribbon lines
+      ctx.lineWidth = 1.2
+      ribLines.forEach(([iA, iB]) => {
+        const pA = projected[iA]
+        const pB = projected[iB]
+        if (!pA || !pB) return
+
+        // Compute opacity based on average Z depth
+        const avgZ = (pA.z + pB.z) / 2
+        const opacity = Math.max(0.1, Math.min(0.8, 1 - (avgZ + 100) / 200))
+
+        ctx.strokeStyle = pA.color.replace('0.7', opacity.toString()).replace('0.3', (opacity * 0.5).toString())
+        ctx.beginPath()
+        ctx.moveTo(pA.x, pA.y)
+        ctx.lineTo(pB.x, pB.y)
+        ctx.stroke()
+      })
+
+      // Draw floating particles/electrons around it
+      ctx.fillStyle = 'rgba(107, 138, 175, 0.4)'
+      for (let i = 0; i < 20; i++) {
+        const theta = t * 1.5 + i * (Math.PI / 10)
+        const r = 80 + Math.sin(t + i) * 15
+        const px = width / 2 + Math.sin(theta) * r * Math.cos(t * 0.2)
+        const py = height / 2 + Math.cos(theta) * r * Math.sin(t * 0.2) + Math.sin(t * 0.5 + i) * 10
+        ctx.beginPath()
+        ctx.arc(px, py, 1.5, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      animationId = requestAnimationFrame(render)
+    }
+
+    render()
+
+    // Random live text tick
+    const textInterval = setInterval(() => {
+      const texts = [
+        'MANIFOLD HARMONIZATION RUNNING...',
+        'HESSIAN MATRIX POSITIVE-DEFINITE',
+        'PC1 VARIANCE ATTAINMENT: 99.983%',
+        'REPLICATOR FIELD COHERENT',
+        'EIGENVALUE DECAY: GEOMETRIC',
+        'SYNTHESIS VECTOR RESOLVED',
+        'SIMPSON DETECTOR STATUS: SECURE',
+      ]
+      setLoadingText(texts[Math.floor(Math.random() * texts.length)])
+      setEntropy((0.87 + Math.random() * 0.01).toFixed(6))
+    }, 1800)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      cancelAnimationFrame(animationId)
+      clearInterval(textInterval)
+    }
+  }, [])
+
+  return (
+    <div className="relative w-full h-[280px] bg-[var(--surface-container-low)] border border-[var(--outline-variant)] rounded-lg overflow-hidden flex flex-col justify-end p-4 font-mono text-[10px] select-none">
+      {/* Decorative lines & labels */}
+      <div className="absolute top-3 left-4 right-4 flex justify-between text-[var(--on-surface-variant-mid)] pointer-events-none uppercase tracking-widest">
+        <span>[CLASSIFIED // PROJECT DISTILL v2]</span>
+        <span className="text-[var(--tertiary)] animate-pulse">● EARLY PREVIEW</span>
+      </div>
+
+      <div className="absolute top-1/2 left-4 -translate-y-1/2 flex flex-col gap-1 text-[9px] text-[var(--on-surface-variant)] pointer-events-none bg-[var(--surface-container)]/80 p-2 border border-[var(--outline-variant)] rounded backdrop-blur-sm">
+        <div>SYS_ENTROPY: {entropy}</div>
+        <div>HESSIAN_V: POSITIVE</div>
+        <div>STABILITY_G: GATES_PASSED</div>
+        <div>SYS_COORD: [5.21, 12.46, 0.08]</div>
+      </div>
+
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+
+      {/* Control panel bar */}
+      <div className="relative z-10 w-full bg-[var(--surface-container)]/90 backdrop-blur-md border border-[var(--outline-variant)] rounded p-2.5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+        <div className="flex items-center gap-2.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary)] animate-ping" />
+          <span className="text-[var(--on-surface)] font-medium text-[9px] tracking-wider">{loadingText}</span>
+        </div>
+        <div className="text-[var(--on-surface-variant-mid)] font-semibold text-[8px] uppercase tracking-wider bg-[var(--surface)] px-2 py-0.5 rounded border border-[var(--outline-variant)]">
+          SECURE PROTOCOL v2.10.8
+        </div>
+      </div>
     </div>
   )
 }
