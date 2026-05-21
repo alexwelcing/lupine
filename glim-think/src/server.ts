@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * GLIM-THINK v2: Cloudflare Workers entry point.
  *

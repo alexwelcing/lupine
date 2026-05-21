@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * Phoenix Cloud (Arize AI) telemetry configuration for Cloudflare Workers.
  *
