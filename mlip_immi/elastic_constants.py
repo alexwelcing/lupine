@@ -25,9 +25,11 @@ from __future__ import annotations
 # Disable torch.compile/dynamo before torch is imported by Orb —
 # torch.compile needs MSVC on Windows which we don't have.
 import os as _os
+
 _os.environ.setdefault("TORCHDYNAMO_DISABLE", "1")
 
 import argparse
+import importlib.metadata
 import json
 import sys
 import time
@@ -37,7 +39,6 @@ from pathlib import Path
 import numpy as np
 from ase.build import bulk
 from ase.units import GPa
-
 
 # ─── Reference data ──────────────────────────────────────────────────────
 
@@ -53,8 +54,8 @@ A0_GUESS = {
 }
 
 CRYSTAL_STRUCTURE = {
-    **{e: "fcc" for e in ["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb"]},
-    **{e: "bcc" for e in ["Fe", "Cr", "Mo", "W", "V", "Nb", "Ta"]},
+    **dict.fromkeys(["Al", "Cu", "Ni", "Ag", "Au", "Pt", "Pd", "Pb"], "fcc"),
+    **dict.fromkeys(["Fe", "Cr", "Mo", "W", "V", "Nb", "Ta"], "bcc"),
 }
 
 # Published / experimental C_ij in GPa (Simmons & Wang 1971; Materials Project)
@@ -88,16 +89,16 @@ def strain_matrix_iso(eps: float) -> np.ndarray:
 
 def strain_matrix_volconst(eps: float) -> np.ndarray:
     """Volume-conserving tetragonal — gives (C11 - C12)."""
-    F = np.diag([1 + eps, 1 + eps, 1 / (1 + eps) ** 2])
-    return F - np.eye(3)
+    fmat = np.diag([1 + eps, 1 + eps, 1 / (1 + eps) ** 2])
+    return fmat - np.eye(3)
 
 
 def strain_matrix_shear(eps: float) -> np.ndarray:
     """Pure shear xy — gives C44."""
-    F = np.eye(3)
-    F[0, 1] = eps
-    F[1, 0] = eps
-    return F - np.eye(3)
+    fmat = np.eye(3)
+    fmat[0, 1] = eps
+    fmat[1, 0] = eps
+    return fmat - np.eye(3)
 
 
 # ─── Calculation core ────────────────────────────────────────────────────
@@ -138,16 +139,16 @@ def find_a0(atoms_template, calc, a0_guess: float) -> tuple[float, float]:
 def compute_modulus(atoms_template, calc, strain_fn, eps_grid) -> tuple[float, float]:
     """Fit E(eps) to a quadratic. Return (curvature, R^2)."""
     energies = []
-    V0 = atoms_template.get_volume()
+    v0 = atoms_template.get_volume()
     for eps in eps_grid:
         atoms = atoms_template.copy()
-        F = np.eye(3) + strain_fn(eps)
-        atoms.set_cell(atoms.cell @ F.T, scale_atoms=True)
+        fmat = np.eye(3) + strain_fn(eps)
+        atoms.set_cell(atoms.cell @ fmat.T, scale_atoms=True)
         atoms.calc = calc
         energies.append(atoms.get_potential_energy())
     energies = np.array(energies)
     coeffs = np.polyfit(eps_grid, energies, 2)
-    curvature = 2 * coeffs[0] / V0  # second derivative of E wrt eps, / V0
+    curvature = 2 * coeffs[0] / v0  # second derivative of E wrt eps, / V0
     fit_e = np.polyval(coeffs, eps_grid)
     r2 = 1 - np.sum((energies - fit_e) ** 2) / np.sum((energies - energies.mean()) ** 2)
     return float(curvature), float(r2)
@@ -171,8 +172,8 @@ def compute_elastic_constants(element: str, calc, eps_max: float = 0.005) -> Ela
     #    Note: we already have this implicitly from the parabola in find_a0;
     #    re-fit for cleanliness.
     eps_iso = np.linspace(-eps_max * 2, eps_max * 2, 9)
-    K_curv, r2_iso = compute_modulus(atoms, calc, strain_matrix_iso, eps_iso)
-    K = K_curv / 9.0 / GPa  # convert to GPa
+    k_curv, r2_iso = compute_modulus(atoms, calc, strain_matrix_iso, eps_iso)
+    bulk_modulus = k_curv / 9.0 / GPa  # convert to GPa
 
     # 3. (C11 - C12) from volume-conserving tetragonal F = diag(1+eps, 1+eps, 1/(1+eps)^2):
     #    Voigt strains ≈ (eps, eps, -2 eps, 0, 0, 0), so
@@ -181,57 +182,133 @@ def compute_elastic_constants(element: str, calc, eps_max: float = 0.005) -> Ela
     #    d^2(E/V0)/d(eps)^2 = 6 (C11 - C12)
     eps_grid = np.linspace(-eps_max, eps_max, 9)
     vc_curv, r2_vc = compute_modulus(atoms, calc, strain_matrix_volconst, eps_grid)
-    C11_minus_C12 = vc_curv / 6.0 / GPa
+    c11_minus_c12 = vc_curv / 6.0 / GPa
 
     # 4. C44 from pure shear F[0,1]=F[1,0]=eps:
     #    engineering shear γ_xy = 2 eps, so E/V0 = (1/2) C44 (2 eps)^2 = 2 C44 eps^2
     #    d^2(E/V0)/d(eps)^2 = 4 C44
     sh_curv, r2_sh = compute_modulus(atoms, calc, strain_matrix_shear, eps_grid)
-    C44 = sh_curv / 4.0 / GPa
+    c44 = sh_curv / 4.0 / GPa
 
     # 5. Decompose: K = (C11 + 2*C12)/3 -> C11 + 2*C12 = 3K
     #    Combined with C11 - C12 -> solve.
-    C11 = (3 * K + 2 * C11_minus_C12) / 3.0
-    C12 = (3 * K - C11_minus_C12) / 3.0
+    c11 = (3 * bulk_modulus + 2 * c11_minus_c12) / 3.0
+    c12 = (3 * bulk_modulus - c11_minus_c12) / 3.0
 
-    if r2_iso < 0.95: failures.append(f"iso R^2={r2_iso:.3f}")
-    if r2_vc < 0.95: failures.append(f"volconst R^2={r2_vc:.3f}")
-    if r2_sh < 0.95: failures.append(f"shear R^2={r2_sh:.3f}")
+    if r2_iso < 0.95:
+        failures.append(f"iso R^2={r2_iso:.3f}")
+    if r2_vc < 0.95:
+        failures.append(f"volconst R^2={r2_vc:.3f}")
+    if r2_sh < 0.95:
+        failures.append(f"shear R^2={r2_sh:.3f}")
 
     return ElasticResult(
         element=element, structure=structure, a0_optimized=a0_opt,
-        C11=C11, C12=C12, C44=C44, bulk_modulus=K,
+        C11=c11, C12=c12, C44=c44, bulk_modulus=bulk_modulus,
         R2_iso=r2_iso, R2_volconst=r2_vc, R2_shear=r2_sh,
         elapsed_s=time.time() - t0, failures=failures,
     )
 
 
-def make_calculator(model: str = "mace-mp-0"):
+def resolve_device(requested: str) -> str:
+    """Return the torch device to use, honoring auto/cuda/cpu."""
+    if requested == "cpu":
+        return "cpu"
+
+    import torch
+
+    if requested == "cuda":
+        if not torch.cuda.is_available():
+            raise RuntimeError("CUDA was requested but torch.cuda.is_available() is false")
+        return "cuda"
+
+    if requested != "auto":
+        raise ValueError(f"unknown device request: {requested}")
+    return "cuda" if torch.cuda.is_available() else "cpu"
+
+
+def runtime_metadata(requested_device: str, resolved_device: str) -> dict[str, object]:
+    """Capture enough runtime context to distinguish CPU and CUDA reruns."""
+    meta: dict[str, object] = {
+        "python_executable": sys.executable,
+        "python_version": sys.version.split()[0],
+        "requested_device": requested_device,
+        "resolved_device": resolved_device,
+    }
+    try:
+        import torch
+
+        meta.update(
+            {
+                "torch_version": torch.__version__,
+                "torch_cuda_version": torch.version.cuda,
+                "torch_cuda_available": bool(torch.cuda.is_available()),
+                "torch_cuda_device_count": int(torch.cuda.device_count()),
+                "torch_cuda_device_name": (
+                    torch.cuda.get_device_name(0) if torch.cuda.is_available() else None
+                ),
+            }
+        )
+    except Exception as exc:
+        meta["torch_probe_error"] = str(exc)
+
+    packages = {}
+    for name in ("ase", "mace-torch", "chgnet", "orb-models", "upet", "torch"):
+        try:
+            packages[name] = importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError:
+            packages[name] = None
+    meta["packages"] = packages
+    return meta
+
+
+def make_calculator(model: str = "mace-mp-0", device: str = "cpu"):
     """Load a foundation MLIP calculator. Currently supports:
        - mace-mp-0 (default; small variant for CPU speed)
+       - mace-mp-medium
+       - mace-mpa-0
        - chgnet (412k-param universal force field)
+       - orb-v2
        - orb-v3 (Orbital Materials orb_v3_conservative_inf_omat)
+       - orb-v3-direct
        - pet-mad (UPET PET-MAD v1.0, PBEsol, 85 elements, ~3.3M params)
        - pet-mad-1.5 (UPET PET-MAD v1.5, r2SCAN, 102 elements — recommended)
     All expose ASE Calculator interface so the strain-energy code is unchanged.
     """
     if model == "mace-mp-0":
         from mace.calculators import mace_mp
-        return mace_mp(model="small", device="cpu", default_dtype="float32")
+        return mace_mp(model="small", device=device, default_dtype="float32")
+    if model == "mace-mp-medium":
+        from mace.calculators import mace_mp
+        return mace_mp(model="medium", device=device, default_dtype="float32")
+    if model == "mace-mpa-0":
+        from mace.calculators import mace_mp
+        return mace_mp(model="medium-mpa-0", device=device, default_dtype="float32")
     if model == "chgnet":
         from chgnet.model.dynamics import CHGNetCalculator
-        return CHGNetCalculator()
+        return CHGNetCalculator(use_device=device)
     if model == "orb-v3":
-        from orb_models.forcefield.pretrained import orb_v3_conservative_inf_omat
         from orb_models.forcefield.inference.calculator import ORBCalculator
-        m, adapter = orb_v3_conservative_inf_omat(device="cpu")
-        return ORBCalculator(m, atoms_adapter=adapter, device="cpu")
+        from orb_models.forcefield.pretrained import orb_v3_conservative_inf_omat
+        m, adapter = orb_v3_conservative_inf_omat(device=device)
+        return ORBCalculator(m, atoms_adapter=adapter, device=device)
+    if model == "orb-v3-direct":
+        from orb_models.forcefield.inference.calculator import ORBCalculator
+        from orb_models.forcefield.pretrained import orb_v3_direct_inf_omat
+        m, adapter = orb_v3_direct_inf_omat(device=device)
+        return ORBCalculator(m, atoms_adapter=adapter, device=device)
+    if model == "orb-v2":
+        from orb_models.forcefield.inference.calculator import ORBCalculator
+        from orb_models.forcefield.pretrained import orb_v2
+        m, adapter = orb_v2(device=device)
+        return ORBCalculator(m, atoms_adapter=adapter, device=device)
     if model in ("pet-mad", "pet-mad-1.5"):
         from upet.calculator import UPETCalculator
         version = "1.5.0" if model == "pet-mad-1.5" else "1.0.2"
-        return UPETCalculator(model="pet-mad-s", version=version, device="cpu")
+        return UPETCalculator(model="pet-mad-s", version=version, device=device)
     raise ValueError(
-        f"unknown model: {model}; supported: mace-mp-0, chgnet, orb-v3, pet-mad, pet-mad-1.5"
+        f"unknown model: {model}; supported: mace-mp-0, mace-mp-medium, mace-mpa-0, "
+        "chgnet, orb-v2, orb-v3, orb-v3-direct, pet-mad, pet-mad-1.5"
     )
 
 
@@ -257,15 +334,32 @@ def main():
     parser.add_argument("--validate", action="store_true", help="compare against published values")
     parser.add_argument("--all", action="store_true", help="run all 15 IMMI elements")
     parser.add_argument("--model", default="mace-mp-0",
-                        choices=["mace-mp-0", "chgnet", "orb-v3", "pet-mad", "pet-mad-1.5"],
+                        choices=[
+                            "mace-mp-0",
+                            "mace-mp-medium",
+                            "mace-mpa-0",
+                            "chgnet",
+                            "orb-v2",
+                            "orb-v3",
+                            "orb-v3-direct",
+                            "pet-mad",
+                            "pet-mad-1.5",
+                        ],
                         help="foundation MLIP to evaluate")
+    parser.add_argument(
+        "--device",
+        default="auto",
+        choices=["auto", "cpu", "cuda"],
+        help="torch device to use; auto prefers cuda when available",
+    )
     parser.add_argument("--output", default=None, help="JSON output path (default: {model}_immi_results.json)")
     args = parser.parse_args()
     if args.output is None:
         args.output = f"{args.model.replace('-','_')}_immi_results.json"
 
-    print(f"Loading {args.model}...")
-    calc = make_calculator(args.model)
+    resolved_device = resolve_device(args.device)
+    print(f"Loading {args.model} on {resolved_device} (requested: {args.device})...")
+    calc = make_calculator(args.model, device=resolved_device)
     print("Calculator ready.\n")
 
     if args.element:
@@ -288,6 +382,7 @@ def main():
     payload = {
         "model": args.model + ("-small" if args.model == "mace-mp-0" else ""),
         "method": "strain-energy, eps_max=0.5%",
+        "runtime": runtime_metadata(args.device, resolved_device),
         "results": [
             {
                 "element": r.element, "structure": r.structure,

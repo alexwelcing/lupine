@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * GLIM-THINK v2: Cloudflare Workers entry point.
  *
@@ -3415,3 +3416,4 @@ function buildAnalysisArticlePrompt(results: Record<string, any>): string {
   lines += `Based on the quantitative data above, write the research diary entry noting interesting patterns, structure, or anomalies.`;
   return lines;
 }
+

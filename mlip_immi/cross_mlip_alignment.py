@@ -21,12 +21,11 @@ from __future__ import annotations
 
 import json
 import math
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Mapping
 
 import numpy as np
-
 
 HERE = Path(__file__).parent
 
