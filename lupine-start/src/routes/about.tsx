@@ -5,7 +5,7 @@ export const Route = createFileRoute('/about')({
   head: () => ({
     meta: [
       { title: 'About — Lupine' },
-      { name: 'description', content: 'Lupine is the audit layer for the MLIP ecosystem. Cross-potential geometric error analysis across ≈900 published interatomic potentials. After Transtrum, Sethna, Tadmor. Apache 2.0.' },
+      { name: 'description', content: 'Lupine is the audit layer for the MLIP ecosystem. Cross-potential geometric error analysis across 953 published interatomic potentials. After Transtrum, Sethna, Tadmor. Apache 2.0.' },
       { property: 'og:title', content: 'About — Lupine' },
       { property: 'og:description', content: 'The audit layer for atomistic ML. Cross-potential geometric error analysis. Apache 2.0.' },
       { property: 'og:url', content: 'https://lupine.science/about' },
@@ -40,7 +40,9 @@ const MILESTONES = [
   { date: 'Q1 2025', title: 'First cross-potential PCA', desc: 'Initial corpus, OpenKIM ingestion, hyper-ribbon classifier patterned on Transtrum, Machta & Sethna (2011).' },
   { date: 'Q2 2025', title: 'IMMI submission', desc: 'Cross-potential PCA error analysis preprint. 559-potential corpus.' },
   { date: 'Q3 2025', title: 'Atlas Viewer v1', desc: 'WebGPU exploration of the error manifold. Drag-and-drop LAMMPS trajectories alongside the audit, in-browser.' },
-  { date: 'Q1 2026', title: 'Corpus expansion', desc: '953 potentials, 18 functional-form families, 7,940 benchmark records. Fingerprint significant at p<0.001 globally; ribbon survives orthogonalization.' },
+  { date: 'Q4 2025', title: 'Corpus expansion', desc: '953 potentials, 18 functional-form families, 7,940 benchmark records. Fingerprint significant at p<0.001 globally; ribbon survives orthogonalization.' },
+  { date: 'Q1 2026', title: 'IMMI Major Revision', desc: 'Submitted major revision to peer-reviewed journal. Expanded corpus to 953 potentials with orthogonalization confound tests.' },
+  { date: 'Q2 2026', title: 'Peer-Reviewed Publication', desc: 'IMMI paper accepted for publication. Hyper-ribbon geometry, Simpson\'s paradox detection, and functional-form fingerprinting validated by peer review.' },
   { date: 'Q2 2026', title: 'Harden stage in production', desc: 'Five-agent harden swarm deployed; caught two of its own statistical artifacts (one survived, one did not). Snapshot + de-dup rule shipped with every release.' },
 ]
 
@@ -73,7 +75,7 @@ function About() {
               </div>
               <div>
                 <p className="mb-6">
-                  Lupine is the audit layer. Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson's-paradox detection across ≈900 published potentials — including the universal ones — interpreted through the sloppy-models geometric framework of Transtrum, Machta &amp; Sethna (2011) and the Bayesian-ensemble lineage of Frederiksen, Jacobsen, Brown &amp; Sethna (2004).
+                  Lupine is the audit layer. Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson's-paradox detection across 953 published potentials — including the universal ones — interpreted through the sloppy-models geometric framework of Transtrum, Machta &amp; Sethna (2011) and the Bayesian-ensemble lineage of Frederiksen, Jacobsen, Brown &amp; Sethna (2004).
                 </p>
                 <p className="mb-6">
                   Read alongside Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026) — <em className="font-serif text-[var(--on-surface)]">There Will Be a Scientific Theory of Deep Learning</em> — the same artifact is also a low-rank retraining target. The cross-potential ribbon is the empirical mark of a learnable system: the small number of error modes that any next fine-tune actually needs to capture.

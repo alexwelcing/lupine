@@ -6,7 +6,7 @@ export const Route = createFileRoute('/proof')({
   head: () => ({
     meta: [
       { title: 'Research defense — cross-potential geometric error analysis' },
-      { name: 'description', content: 'A rigorous response to critique of Welcing (2025). Computational experiment, formal causal identification, reproducible code, and acknowledged lineage from Frederiksen (2004), Transtrum/Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), and Deng et al. (2024).' },
+      { name: 'description', content: 'A rigorous response to critique of Welcing (2026). Computational experiment, formal causal identification, reproducible code, and acknowledged lineage from Frederiksen (2004), Transtrum/Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), and Deng et al. (2024).' },
     ],
   }),
 })
@@ -16,7 +16,7 @@ function ProofPage() {
     <PageShell
       kicker="RESEARCH DEFENSE · LIVE"
       title="Cross-potential geometric error analysis — the defense."
-      subtitle="A rigorous response to critique of Welcing (2025). Every claim below is backed by computational experiment, formal causal identification, or reproducible code, and the lineage is named: Frederiksen, Jacobsen, Brown & Sethna (2004), Transtrum, Machta & Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), Deng et al. (2024). Hyper-ribbon is borrowed terminology, properly cited."
+      subtitle="A rigorous response to critique of Welcing (2026). Every claim below is backed by computational experiment, formal causal identification, or reproducible code, and the lineage is named: Frederiksen, Jacobsen, Brown & Sethna (2004), Transtrum, Machta & Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), Deng et al. (2024). Hyper-ribbon is borrowed terminology, properly cited."
       maxWidth="5xl"
     >
       <div className="space-y-8">
