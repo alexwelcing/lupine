@@ -17,6 +17,8 @@
  * DEV_MODE in production — the secret store does not contain it.
  */
 import type { Env } from "../types";
+import { recordMlipCampaignBeat } from "../research/mlipCampaign";
+import { recordMlipBaselineBeat } from "../research/mlipBaselineGrid";
 
 const BEATS_CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -292,6 +294,17 @@ export async function handleBeatsPost(
       return jsonResponse({ error: "duplicate beat_id", beat_id: beat.beat_id }, 409);
     }
     return jsonResponse({ error: `d1 insert failed: ${msg}` }, 500);
+  }
+
+  try {
+    await recordMlipCampaignBeat(env, beat.metrics);
+  } catch (e) {
+    console.error("mlip campaign beat projection failed:", e);
+  }
+  try {
+    await recordMlipBaselineBeat(env, beat.metrics);
+  } catch (e) {
+    console.error("mlip baseline beat projection failed:", e);
   }
 
   return jsonResponse({ ok: true, beat_id: beat.beat_id });

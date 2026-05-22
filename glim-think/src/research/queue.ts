@@ -23,7 +23,7 @@
  * are acked + logged so they don't loop.
  */
 
-import { trace, SpanStatusCode } from "@opentelemetry/api";
+import { trace, SpanStatusCode, type Span } from "@opentelemetry/api";
 import { getNamedAgentStub } from "../agents/named-stub";
 import type { Env } from "../types";
 import { traceEnv } from "../telemetry/storage";
@@ -33,6 +33,9 @@ import { evaluateHypothesis } from "./evaluate";
 import { generateAndStoreImage } from "../agents/image";
 import { generateAndStoreAudio } from "../agents/tts";
 import { accumulateCost } from "../telemetry/pipeline";
+import { insertEval } from "../evals/store";
+import { traceHypothesisStage } from "../telemetry/hypothesisTrace";
+import { dispatchAtlasJob, type TaskPayload as AtlasTaskPayload } from "./dispatch";
 
 export type ResearchTaskKind =
   | "round"
@@ -48,7 +51,8 @@ export type ResearchTaskKind =
   | "causal_data_integrity"       // Round C4: contamination quarantine + clean re-screen
   | "data_purge"                  // Durable corpus cleanup (delete corrupt records)
   | "corpus_audit"                // Property-aware data-quality audit
-  | "multiproperty_seed";         // De-myopization: recover a0 as a 2nd property
+  | "multiproperty_seed"          // De-myopization: recover a0 as a 2nd property
+  | "model_geometry_distill";     // Hypothesis-bound local/atlas model-geometry evidence
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -157,6 +161,26 @@ export interface MultiPropertySeedTask extends ResearchTaskBase {
   kind: "multiproperty_seed";
 }
 
+export type ModelGeometryMode = "auto" | "reference" | "prediction";
+export type ModelGeometryQualityGate = "none" | "fit" | "physics" | "accuracy";
+
+export interface ModelGeometryDistillTask extends ResearchTaskBase {
+  kind: "model_geometry_distill";
+  hypothesis_id: string;
+  fixture_url: string;
+  campaign_id?: string;
+  cell_id?: string;
+  row_id?: string;
+  mlip_id?: string;
+  variant_id?: string;
+  model_pairs?: string[];
+  mode?: ModelGeometryMode;
+  quality_gate?: ModelGeometryQualityGate;
+  top_k?: number;
+  effective_rank_floor?: number;
+  accuracy_max_pct?: number;
+}
+
 export type ResearchTask =
   | RoundTask
   | LiteratureTask
@@ -171,7 +195,8 @@ export type ResearchTask =
   | CausalDataIntegrityTask
   | DataPurgeTask
   | CorpusAuditTask
-  | MultiPropertySeedTask;
+  | MultiPropertySeedTask
+  | ModelGeometryDistillTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -334,6 +359,81 @@ async function runTask(env: Env, task: ResearchTask & { job_id?: string }): Prom
   });
 }
 
+function workerBeatEmitUrl(env: Env): string {
+  const base =
+    (env as Env & { WORKER_URL?: string }).WORKER_URL?.trim() ||
+    "https://glim-think-v1.aw-ab5.workers.dev";
+  return base.endsWith("/feed/beats")
+    ? base
+    : `${base.replace(/\/+$/, "")}/feed/beats`;
+}
+
+export function buildModelGeometryAtlasPayload(
+  task: ModelGeometryDistillTask,
+  beatEmitUrl: string,
+): AtlasTaskPayload {
+  const mode = task.mode ?? "auto";
+  const qualityGate = task.quality_gate ?? "accuracy";
+  const topK = Math.max(1, Math.trunc(task.top_k ?? 5));
+  const effectiveRankFloor = task.effective_rank_floor ?? 0.01;
+  const accuracyMaxPct = task.accuracy_max_pct ?? 50;
+  const args = [
+    "--hypothesis-id",
+    task.hypothesis_id,
+    "--mode",
+    mode,
+    "--quality-gate",
+    qualityGate,
+    "--top-k",
+    String(topK),
+    "--effective-rank-floor",
+    String(effectiveRankFloor),
+    "--accuracy-max-pct",
+    String(accuracyMaxPct),
+  ];
+  for (const [flag, value] of [
+    ["--campaign-id", task.campaign_id],
+    ["--cell-id", task.cell_id],
+    ["--row-id", task.row_id],
+    ["--mlip-id", task.mlip_id],
+    ["--variant-id", task.variant_id],
+  ] as const) {
+    if (value) args.push(flag, value);
+  }
+  for (const pair of task.model_pairs ?? []) {
+    args.push("--pair", pair);
+  }
+  return {
+    fixture_url: task.fixture_url,
+    command: "model-geometry",
+    args,
+    beat_emit_url: beatEmitUrl,
+  };
+}
+
+async function recordModelGeometryDispatchEval(
+  env: Env,
+  span: Span,
+  task: ModelGeometryDistillTask,
+  label: "pass" | "fail",
+  explanation: string,
+): Promise<void> {
+  const ctx = span.spanContext();
+  await insertEval(env, {
+    trace_id: ctx.traceId,
+    span_id: ctx.spanId,
+    agent_class: "atlas-distill",
+    task_kind: task.kind,
+    evaluator_name: "model_geometry.dispatch_contract",
+    score: label === "pass" ? 1 : 0,
+    label,
+    explanation,
+    action_taken: label === "pass" ? "accepted" : "failed",
+    retry_count: 0,
+    created_at: new Date().toISOString(),
+  });
+}
+
 async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }): Promise<void> {
   if (task.kind === "broadcast") {
     await createLabBroadcast(env, task.source);
@@ -392,6 +492,59 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
 
   if (task.kind === "evaluate") {
     await evaluateHypothesis(env, task.hypothesis_id);
+    return;
+  }
+
+  if (task.kind === "model_geometry_distill") {
+    const beatEmitUrl = workerBeatEmitUrl(env);
+    const payload = buildModelGeometryAtlasPayload(task, beatEmitUrl);
+    await traceHypothesisStage(
+      {
+        hypothesisId: task.hypothesis_id,
+        stage: "compute_dispatch",
+        status: "testing",
+        attributes: {
+          "experiment.kind": task.kind,
+          "experiment.engine": "atlas-distill model-geometry",
+          "experiment.fixture_url": task.fixture_url,
+          "experiment.mode": task.mode ?? "auto",
+          "experiment.quality_gate": task.quality_gate ?? "accuracy",
+          "experiment.top_k": Math.max(1, Math.trunc(task.top_k ?? 5)),
+          "experiment.effective_rank_floor": task.effective_rank_floor ?? 0.01,
+          "experiment.accuracy_max_pct": task.accuracy_max_pct ?? 50,
+          "experiment.model_pair_count": task.model_pairs?.length ?? 0,
+          "experiment.campaign_id": task.campaign_id ?? "",
+          "experiment.cell_id": task.cell_id ?? "",
+          "experiment.row_id": task.row_id ?? "",
+          "experiment.mlip_id": task.mlip_id ?? "",
+          "experiment.variant_id": task.variant_id ?? "",
+        },
+      },
+      async (span) => {
+        try {
+          const result = await dispatchAtlasJob(env, payload);
+          span.setAttribute("compute.dispatch.task_name", result.task_name);
+          span.setAttribute("compute.dispatch.dev_mode", result.dev_mode);
+          span.setAttribute("compute.dispatch.command", payload.command);
+          await recordModelGeometryDispatchEval(
+            env,
+            span,
+            task,
+            "pass",
+            "Accepted by atlas-distill dispatcher; model-geometry evidence beat is expected on completion.",
+          );
+        } catch (e) {
+          await recordModelGeometryDispatchEval(
+            env,
+            span,
+            task,
+            "fail",
+            e instanceof Error ? e.message : String(e),
+          );
+          throw e;
+        }
+      },
+    );
     return;
   }
 

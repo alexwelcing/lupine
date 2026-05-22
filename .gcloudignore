@@ -32,6 +32,21 @@ lupine-ops/
 atlas-view-native/
 atlas-tui/
 axiom/
+everything-claude-code/
+glim/
+glim-sous-chef/
+mix-api/
+mix/
+spectra/
+td-hermes/
+Kimi_Agent_MLIP Universality Theorem/
+Kimi_Agent_MLIP Universality Theorem.zip
+*.zip
+*.pdf
+*.db
+*_changes.patch
+my_changes*.patch
+live_changes.patch
 !lupine-start/
 
 # AI Agent Workspaces

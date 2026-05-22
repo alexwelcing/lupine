@@ -22,7 +22,7 @@ steps:
     args:
       - 'build'
       - '-t'
-      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${COMMIT_SHA}'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${_IMAGE_TAG}'
       - '-t'
       - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:latest'
       - '-f'
@@ -32,7 +32,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${COMMIT_SHA}'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${_IMAGE_TAG}'
 
   # Deploy as Cloud Run Service. SERVICE_URL is populated by gcloud from the
   # service's URL once the revision is up, so OIDC `aud` matches.
@@ -42,11 +42,11 @@ steps:
       - 'run'
       - 'deploy'
       - 'tasks-consumer'
-      - '--image=${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${COMMIT_SHA}'
+      - '--image=${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${_IMAGE_TAG}'
       - '--region=${_REGION}'
       - '--project=${_PROJECT_ID}'
       - '--service-account=tasks-consumer-runner@${_PROJECT_ID}.iam.gserviceaccount.com'
-      - '--set-env-vars=GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill'
+      - '--set-env-vars=GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill,ALLOWED_TARGET_JOBS=atlas-distill|mlip-cell-mace|mlip-cell-chgnet|mlip-cell-m3gnet|mlip-cell-orb|mlip-cell-sevennet'
       - '--no-allow-unauthenticated'
       - '--memory=256Mi'
       - '--cpu=1'
@@ -65,15 +65,16 @@ steps:
           --format='value(status.url)')
         gcloud run services update tasks-consumer \
           --region=${_REGION} --project=${_PROJECT_ID} \
-          --set-env-vars=SERVICE_URL=$$URL,GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill
+          --set-env-vars="SERVICE_URL=$$URL,GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill,ALLOWED_TARGET_JOBS=atlas-distill|mlip-cell-mace|mlip-cell-chgnet|mlip-cell-m3gnet|mlip-cell-orb|mlip-cell-sevennet"
 
 substitutions:
   _PROJECT_ID: shed-489901
   _REGION: us-central1
   _REPOSITORY: cloud-run-source-deploy
+  _IMAGE_TAG: manual
 
 options:
   logging: CLOUD_LOGGING_ONLY
 
 images:
-  - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${COMMIT_SHA}'
+  - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/tasks-consumer:${_IMAGE_TAG}'
