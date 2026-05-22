@@ -33,6 +33,7 @@ export interface TaskPayload {
   command: string;
   args?: string[];
   beat_emit_url: string;
+  target_job?: string;
 }
 
 export interface DispatchEnv {
@@ -160,6 +161,8 @@ function validatePayload(payload: TaskPayload): void {
     throw new Error("beat_emit_url required");
   if (payload.args !== undefined && !Array.isArray(payload.args))
     throw new Error("args must be an array of strings if provided");
+  if (payload.target_job !== undefined && typeof payload.target_job !== "string")
+    throw new Error("target_job must be a string if provided");
 }
 
 /**

@@ -57,6 +57,8 @@ import {
   type TaskPayload as AtlasTaskPayload,
   type BatchDispatchItem as AtlasBatchItem,
 } from "./research/dispatch";
+import { handleResearchWorkflowRoute } from "./research/workflows";
+import { MlipBaselineGridWorkflow as MlipBaselineGridWorkflowBase } from "./research/mlipBaselineCloudflareWorkflow";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
 import { handleBeatsPost, handleBeatsOptions, handleBeatsGet } from "./feed/beats";
@@ -74,6 +76,15 @@ import { buildGraphSnapshot } from "./graph/snapshot";
 import { buildArchSnapshot } from "./graph/arch";
 import { buildAgentsSnapshot } from "./graph/agents";
 import { GRAPH_HTML } from "./graph/page";
+import {
+  agendaStatus,
+  bootstrapAgenda,
+  claimAgendaTasks,
+  completeAgendaTask,
+  listAgendaTasks,
+  updateAgendaTaskStatus,
+  type TaskStatus,
+} from "./agenda";
 import { getRateLimitSnapshot } from "./literature/rate_limit_kv";
 import {
   SLIDESHOW_PROMPTS,
@@ -82,7 +93,6 @@ import {
 } from "./research/slideshow";
 import { checkAccess, isGatedRoute } from "./middleware/access"
 import { __unwrappedFetch, instrumentDO } from "@microlabs/otel-cf-workers";
-import { phoenixConfig } from "./telemetry/phoenix";
 
 
 async function sha256(input: string): Promise<string> {
@@ -152,6 +162,7 @@ export const FleetOrchestrator = instrumentDO(FleetOrchestratorDO, phoenixConfig
 export const DashboardAgent = instrumentDO(DashboardAgentDO, phoenixConfig);
 export const ExtensionManager = instrumentDO(ExtensionManagerDO, phoenixConfig);
 export const Literaturist = instrumentDO(LiteraturistDO, phoenixConfig);
+export class MlipBaselineGridWorkflow extends MlipBaselineGridWorkflowBase {}
 
 // Worker entrypoint wrapped with OpenTelemetry → Phoenix Cloud export.
 // `phoenixConfig` resolves to a localhost no-op exporter when the
@@ -1872,6 +1883,103 @@ ${narrative}
           });
         }
 
+        if (url.pathname === "/research/model-geometry" && request.method === "POST") {
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const hypothesisId =
+            typeof body.hypothesis_id === "string" ? body.hypothesis_id.trim() : "";
+          const fixtureUrl =
+            typeof body.fixture_url === "string" ? body.fixture_url.trim() : "";
+          if (!hypothesisId) return jsonError("Missing 'hypothesis_id'", 400);
+          if (!fixtureUrl) return jsonError("Missing 'fixture_url'", 400);
+
+          const parseEnum = <T extends string>(
+            value: unknown,
+            allowed: readonly T[],
+            field: string,
+          ): T | undefined => {
+            if (value === undefined) return undefined;
+            if (typeof value !== "string" || !allowed.includes(value as T)) {
+              throw new Error(`${field} must be one of: ${allowed.join(", ")}`);
+            }
+            return value as T;
+          };
+          const positiveNumber = (
+            value: unknown,
+            fallback: number,
+            field: string,
+          ): number => {
+            if (value === undefined) return fallback;
+            if (typeof value !== "number" || !Number.isFinite(value) || value <= 0) {
+              throw new Error(`${field} must be a positive number`);
+            }
+            return value;
+          };
+
+          let mode: "auto" | "reference" | "prediction" | undefined;
+          let qualityGate: "none" | "fit" | "physics" | "accuracy" | undefined;
+          let topK: number;
+          let effectiveRankFloor: number;
+          let accuracyMaxPct: number;
+          try {
+            mode = parseEnum(body.mode, ["auto", "reference", "prediction"] as const, "mode");
+            qualityGate = parseEnum(
+              body.quality_gate,
+              ["none", "fit", "physics", "accuracy"] as const,
+              "quality_gate",
+            );
+            topK = Math.trunc(positiveNumber(body.top_k, 5, "top_k"));
+            effectiveRankFloor = positiveNumber(body.effective_rank_floor, 0.01, "effective_rank_floor");
+            accuracyMaxPct = positiveNumber(body.accuracy_max_pct, 50, "accuracy_max_pct");
+          } catch (e) {
+            return jsonError(e instanceof Error ? e.message : String(e), 400);
+          }
+
+          const rawPairs = Array.isArray(body.model_pairs)
+            ? body.model_pairs
+            : Array.isArray(body.pairs)
+              ? body.pairs
+              : [];
+          const modelPairs = rawPairs
+            .filter((pair): pair is string => typeof pair === "string")
+            .map((pair) => pair.trim())
+            .filter(Boolean);
+          if (modelPairs.length !== rawPairs.length || modelPairs.some((pair) => !pair.includes(":"))) {
+            return jsonError("model_pairs must be strings formatted as from_model:to_model", 400);
+          }
+
+          const pairKey = [...modelPairs].sort().join(",");
+          const dedupKey =
+            typeof body.dedup_key === "string"
+              ? body.dedup_key
+              : [
+                  "model-geometry",
+                  hypothesisId,
+                  fixtureUrl,
+                  pairKey,
+                  mode ?? "auto",
+                  qualityGate ?? "accuracy",
+                  topK,
+                  effectiveRankFloor,
+                  accuracyMaxPct,
+                ].join(":");
+          return enqueueResponse({
+            kind: "model_geometry_distill",
+            dedup_key: dedupKey,
+            enqueued_at: nowIso(),
+            hypothesis_id: hypothesisId,
+            fixture_url: fixtureUrl,
+            model_pairs: modelPairs,
+            mode,
+            quality_gate: qualityGate,
+            top_k: topK,
+            effective_rank_floor: effectiveRankFloor,
+            accuracy_max_pct: accuracyMaxPct,
+          });
+        }
+
+        const workflowResponse = await handleResearchWorkflowRoute(env, url, request.method, bodyText);
+        if (workflowResponse) return workflowResponse;
+
         if (url.pathname === "/research/auto" && request.method === "POST") {
           // Manual orchestrator tick — same code path as the hourly cron.
           // Useful to test the auto-research loop without waiting.
@@ -3191,8 +3299,17 @@ ${narrative}
 
       // -- Agenda Routes --
       if (url.pathname === "/admin/agenda/bootstrap" && request.method === "POST") {
-        const body = await request.json() as { reset?: boolean; template_name?: string };
-        const result = await bootstrapAgenda(env, body.reset, body.template_name);
+        const body = JSON.parse(bodyText || "{}") as {
+          targetTaskCount?: number;
+          cycleKind?: string;
+          template_name?: string;
+          summary?: string;
+        };
+        const result = await bootstrapAgenda(env, {
+          targetTaskCount: typeof body.targetTaskCount === "number" ? body.targetTaskCount : undefined,
+          cycleKind: typeof body.cycleKind === "string" ? body.cycleKind : body.template_name,
+          summary: typeof body.summary === "string" ? body.summary : undefined,
+        });
         return Response.json(result);
       }
 
@@ -3202,34 +3319,57 @@ ${narrative}
       }
 
       if (url.pathname === "/admin/agenda/tasks" && request.method === "GET") {
-        const result = await listAgendaTasks(env, {
-          status: url.searchParams.get("status") as TaskStatus | undefined,
-          type: url.searchParams.get("type") || undefined,
-          limit: url.searchParams.has("limit") ? parseInt(url.searchParams.get("limit")!) : undefined,
-          offset: url.searchParams.has("offset") ? parseInt(url.searchParams.get("offset")!) : undefined,
-        });
+        const status = (url.searchParams.get("status") as TaskStatus | null) ?? "queued";
+        const limit = url.searchParams.has("limit") ? parseInt(url.searchParams.get("limit")!) : 50;
+        const result = await listAgendaTasks(env, status, limit);
         return Response.json(result);
       }
 
       if (url.pathname === "/admin/agenda/claim" && request.method === "POST") {
-        const body = await request.json() as { count?: number; worker_id?: string; type_preference?: string };
-        const result = await claimAgendaTasks(env, body.count, body.worker_id, body.type_preference);
+        const body = JSON.parse(bodyText || "{}") as { count?: number; worker_id?: string; type_preference?: string };
+        const result = await claimAgendaTasks(
+          env,
+          body.worker_id ?? "manual",
+          body.count ?? 1,
+          body.type_preference,
+        );
         return Response.json(result);
       }
 
       const completeMatch = url.pathname.match(/^\/admin\/agenda\/tasks\/([^\/]+)\/complete$/);
       if (completeMatch && request.method === "POST") {
         const taskId = completeMatch[1];
-        const body = await request.json() as { output: any };
-        const result = await completeAgendaTask(env, taskId, body.output);
+        const body = JSON.parse(bodyText || "{}") as { output?: unknown; artifact_key?: string };
+        const result = await completeAgendaTask(
+          env,
+          taskId,
+          typeof body.output === "string" ? body.output : JSON.stringify(body.output ?? {}),
+          body.artifact_key,
+        );
         return Response.json(result);
       }
 
       const updateMatch = url.pathname.match(/^\/admin\/agenda\/tasks\/([^\/]+)$/);
       if (updateMatch && request.method === "PATCH") {
         const taskId = updateMatch[1];
-        const body = await request.json() as { status: TaskStatus; result_metadata?: any; attempts?: number };
-        const result = await updateAgendaTaskStatus(env, taskId, body.status, body.result_metadata, body.attempts);
+        const body = JSON.parse(bodyText || "{}") as {
+          status: TaskStatus;
+          result_metadata?: unknown;
+          artifact_key?: string;
+        };
+        const resultText =
+          typeof body.result_metadata === "string"
+            ? body.result_metadata
+            : body.result_metadata === undefined
+              ? undefined
+              : JSON.stringify(body.result_metadata);
+        const result = await updateAgendaTaskStatus(
+          env,
+          taskId,
+          body.status,
+          resultText,
+          body.artifact_key,
+        );
         return Response.json(result);
       }
 

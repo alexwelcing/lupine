@@ -233,6 +233,10 @@ export function isGatedRoute(pathname: string, method: string): boolean {
     if (method === "GET") return false;
     return true;
   }
+  if (pathname.startsWith("/research/workflows")) {
+    if (method === "OPTIONS" || method === "GET") return false;
+    return true;
+  }
   if (method !== "POST") return false;
   return (
     pathname === "/run" ||

@@ -1,0 +1,19 @@
+{
+  "schema": "lupine.mlip.fixture_manifest.v1",
+  "fixture_id": "tiny-local-smoke",
+  "structures": [
+    {
+      "structure_id": "Al-fcc-primitive",
+      "symbols": ["Al"],
+      "positions": [[0.0, 0.0, 0.0]],
+      "cell": [[0.0, 2.025, 2.025], [2.025, 0.0, 2.025], [2.025, 2.025, 0.0]],
+      "pbc": true,
+      "reference": {
+        "energy": -3.74,
+        "forces": [[0.0, 0.0, 0.0]],
+        "stress": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        "elastic_constants": [108.0, 61.0, 61.0, 28.0, 28.0, 28.0]
+      }
+    }
+  ]
+}

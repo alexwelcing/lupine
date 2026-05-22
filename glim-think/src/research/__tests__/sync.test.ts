@@ -23,7 +23,11 @@
  *      are expected to apply at the cron / handler boundary.
  */
 import { describe, it, expect, vi } from "vitest";
-import { enqueueTask, type ResearchTask } from "../queue";
+import {
+  buildModelGeometryAtlasPayload,
+  enqueueTask,
+  type ResearchTask,
+} from "../queue";
 import { buildStubEnv, stubLedger, stubQueue } from "../../testing/envStub";
 
 const NOW = "2026-05-11T12:00:00.000Z";
@@ -145,5 +149,41 @@ describe("enqueueTask — research sync lane", () => {
     expect(second.job_id).toBe("job-round-prev");
     expect(attempts).toBe(1);
     expect(dedupCalls).toBeGreaterThanOrEqual(2);
+  });
+
+  it("builds the atlas-distill model-geometry task payload without duplicating transport args", () => {
+    const payload = buildModelGeometryAtlasPayload(
+      {
+        kind: "model_geometry_distill",
+        dedup_key: "model-geometry:h1:fixture",
+        enqueued_at: NOW,
+        hypothesis_id: "h1",
+        fixture_url: "gs://bucket/model-geometry.csv",
+        campaign_id: "campaign-1",
+        cell_id: "campaign-1:baseline:elastic:mace",
+        row_id: "elastic",
+        mlip_id: "mace",
+        variant_id: "baseline",
+        model_pairs: ["gen0:gen1"],
+        mode: "reference",
+        quality_gate: "accuracy",
+        top_k: 5,
+      },
+      "https://glim.example/feed/beats",
+    );
+
+    expect(payload.command).toBe("model-geometry");
+    expect(payload.fixture_url).toBe("gs://bucket/model-geometry.csv");
+    expect(payload.beat_emit_url).toBe("https://glim.example/feed/beats");
+    expect(payload.args).toContain("--hypothesis-id");
+    expect(payload.args).toContain("h1");
+    expect(payload.args).toContain("--pair");
+    expect(payload.args).toContain("gen0:gen1");
+    expect(payload.args).toContain("--campaign-id");
+    expect(payload.args).toContain("campaign-1");
+    expect(payload.args).toContain("--cell-id");
+    expect(payload.args).toContain("campaign-1:baseline:elastic:mace");
+    expect(payload.args).not.toContain("--fixture-url");
+    expect(payload.args).not.toContain("--beat-emit-url");
   });
 });
