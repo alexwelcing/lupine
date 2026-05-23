@@ -65,6 +65,9 @@ export async function handleResearchWorkflowRoute(
     if (action === "maintain" && method === "POST" && adapter.maintainCampaign) {
       return adapter.maintainCampaign(env, campaignId, bodyText);
     }
+    if (action === "phoenix-sync" && method === "POST" && adapter.syncPhoenix) {
+      return adapter.syncPhoenix(env, campaignId, bodyText);
+    }
     return workflowError("Unsupported workflow campaign action", 405);
   }
 

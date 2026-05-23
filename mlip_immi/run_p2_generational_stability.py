@@ -145,6 +145,8 @@ def compare_bases(a: np.ndarray, b: np.ndarray) -> dict[str, Any]:
 
 
 def verdict(metrics: dict[str, Any]) -> str:
+    if metrics["top_k_used"] < TOP_K_REQUESTED:
+        return "invalid_rank"
     worst = metrics["left_singular_vectors"]["worst_best_match"]
     subspace = metrics["left_singular_vectors"]["min_principal_angle_cosine"]
     if worst < P2_FALSIFICATION:
@@ -215,11 +217,14 @@ def write_summary(run_dir: Path, results: list[dict[str, Any]]) -> Path:
             "n_pass": sum(1 for r in results if r["verdict"] == "pass"),
             "n_falsified": sum(1 for r in results if r["verdict"] == "falsified"),
             "n_inconclusive": sum(1 for r in results if r["verdict"] == "inconclusive"),
+            "n_invalid_rank": sum(1 for r in results if r["verdict"] == "invalid_rank"),
             "verdict": (
                 "falsified"
                 if any(r["verdict"] == "falsified" for r in results)
                 else "pass"
                 if all(r["verdict"] == "pass" for r in results)
+                else "invalid_rank"
+                if all(r["verdict"] == "invalid_rank" for r in results)
                 else "mixed"
             ),
         },
@@ -253,7 +258,7 @@ def write_summary(run_dir: Path, results: list[dict[str, Any]]) -> Path:
         [
             "",
             "Primary P2 decision uses left singular vectors, because the theorem states residual directions over configurations.",
-            "The property-space metric is secondary; with only three elastic features it should be read as a diagnostic, not a replacement for WBM top-5.",
+            "With only three independent cubic elastic constants this fitted-Cij matrix is a diagnostic only, not a valid WBM top-5 substitute.",
             "",
             f"Overall verdict: `{payload['overall']['verdict']}`",
             "",

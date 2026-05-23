@@ -1,0 +1,102 @@
+{
+  "schema": "lupine.mlip.equilibrium_trajectory.v1",
+  "run_id": "equilibrium-solve-fixture",
+  "cell_id": "al-fcc-offset-baseline",
+  "variant_id": "baseline",
+  "mlip_id": "mace",
+  "material_id": "Al-fcc",
+  "reference": {
+    "source": "fixture-dft-literature-shape",
+    "source_url": "https://example.invalid/al-fcc-reference",
+    "lattice_a_angstrom": 4.05,
+    "cell_angstrom": [
+      [4.05, 0.0, 0.0],
+      [0.0, 4.05, 0.0],
+      [0.0, 0.0, 4.05]
+    ],
+    "positions_angstrom": [
+      [0.0, 0.0, 0.0],
+      [2.025, 2.025, 0.0]
+    ],
+    "energy_ev_per_atom": -3.36,
+    "stress_gpa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  },
+  "perturbation": {
+    "kind": "offset_lattice_relaxation",
+    "strain_percent": 3.0,
+    "atomic_displacement_angstrom": 0.08
+  },
+  "convergence": {
+    "force_threshold_ev_per_angstrom": 0.03,
+    "stress_threshold_gpa": 0.5,
+    "max_steps": 400
+  },
+  "frames": [
+    {
+      "step": 0,
+      "time_seconds": 0.0,
+      "force_calls": 0,
+      "lattice_a_angstrom": 4.2,
+      "cell_angstrom": [
+        [4.2, 0.0, 0.0],
+        [0.0, 4.2, 0.0],
+        [0.0, 0.0, 4.2]
+      ],
+      "positions_angstrom": [
+        [0.08, 0.0, 0.0],
+        [2.14, 1.96, 0.0]
+      ],
+      "energy_ev_per_atom": -3.1,
+      "forces_ev_per_angstrom": [
+        [0.2, 0.0, 0.0],
+        [0.0, -0.18, 0.0]
+      ],
+      "stress_gpa": [3.0, 2.0, 1.0, 0.0, 0.0, 0.0],
+      "relaxation_converged": false
+    },
+    {
+      "step": 100,
+      "time_seconds": 1.1,
+      "force_calls": 100,
+      "lattice_a_angstrom": 4.08,
+      "cell_angstrom": [
+        [4.08, 0.0, 0.0],
+        [0.0, 4.08, 0.0],
+        [0.0, 0.0, 4.08]
+      ],
+      "positions_angstrom": [
+        [0.025, 0.0, 0.0],
+        [2.04, 2.01, 0.0]
+      ],
+      "energy_ev_per_atom": -3.31,
+      "forces_ev_per_angstrom": [
+        [0.07, 0.0, 0.0],
+        [0.0, -0.06, 0.0]
+      ],
+      "stress_gpa": [0.8, 0.5, 0.3, 0.0, 0.0, 0.0],
+      "relaxation_converged": false
+    },
+    {
+      "step": 200,
+      "time_seconds": 2.0,
+      "force_calls": 200,
+      "lattice_a_angstrom": 4.052,
+      "cell_angstrom": [
+        [4.052, 0.0, 0.0],
+        [0.0, 4.052, 0.0],
+        [0.0, 0.0, 4.052]
+      ],
+      "positions_angstrom": [
+        [0.002, 0.0, 0.0],
+        [2.026, 2.024, 0.0]
+      ],
+      "energy_ev_per_atom": -3.358,
+      "forces_ev_per_angstrom": [
+        [0.01, 0.0, 0.0],
+        [0.0, -0.01, 0.0]
+      ],
+      "stress_gpa": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0],
+      "relaxation_converged": true
+    }
+  ]
+}

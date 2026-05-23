@@ -206,12 +206,24 @@ export interface Env {
   MLIP_BASELINE_MANIFEST_URL?: string;
   /** Default GCS output prefix used by the MLIP baseline grid Lab runner. */
   MLIP_BASELINE_OUTPUT_PREFIX?: string;
+  /** Default GCS output prefix used by the real MLIP 5x5x3 campaign runner. */
+  MLIP_5X5X3_OUTPUT_PREFIX?: string;
+  /** Default support manifest used by Distill variants in the MLIP 5x5x3 campaign. */
+  MLIP_DISTILL_SUPPORT_MANIFEST_URL?: string;
+  /** Canonical Distill policy engine used by MLIP runner variants. */
+  MLIP_DISTILL_POLICY_ENGINE?: string;
+  /** Optional selected Distill policy-limits artifact used by MLIP runner variants. */
+  MLIP_DISTILL_POLICY_URL?: string;
+  /** Canonical Distill hyperribbon version used by MLIP runner variants. */
+  MLIP_DISTILL_RIBBON_VERSION?: string;
   /** Phoenix Cloud OTLP collector endpoint (e.g. https://app.phoenix.arize.com/v1/traces) */
   PHOENIX_COLLECTOR_ENDPOINT?: string;
   /** Phoenix Cloud API key for trace ingestion. */
   PHOENIX_API_KEY?: string;
   /** Phoenix Cloud project name. Default: "glim-think" */
   PHOENIX_PROJECT_NAME?: string;
+  /** Route-scoped operator token for Phoenix sync workflow POST routes. */
+  PHOENIX_SYNC_TOKEN?: string;
   /**
    * GCP Cloud Run OTLP relay base URL. Cloudflare black-holes Worker→Phoenix
    * Cloud OTLP at the edge (see OBSERVABILITY.md); when set, traces export

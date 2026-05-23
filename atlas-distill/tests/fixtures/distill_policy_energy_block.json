@@ -1,0 +1,18 @@
+{
+  "schema": "lupine.distill.policy_request.v1",
+  "ribbon_version": "hyperribbon-v1",
+  "row_id": "energy_volume",
+  "mlip_id": "chgnet",
+  "prediction": {
+    "structure_id": "mptrj-canary",
+    "energy_ev_per_atom": 1.0
+  },
+  "support": {
+    "correction": {
+      "energy_bias_ev_per_atom": -1.4
+    },
+    "diagnostics": {
+      "energy_correction_gate": "blocked_large_bias"
+    }
+  }
+}

@@ -17,6 +17,7 @@ import {
   type WorkflowAction,
   type WorkflowOpsSnapshot,
 } from "./workflowTypes";
+import { MLIP_PHOENIX_DATASET_NAME, MLIP_PHOENIX_EVALUATOR_SPECS } from "./mlipPhoenix";
 
 const WORKFLOW_ID = "mlip-5x5x3";
 
@@ -39,8 +40,11 @@ export const MLIP_WORKFLOW_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "glim-think/src/research/mlipWorkflow.ts",
       "glim-think/src/research/mlipWorkflowOps.ts",
       "glim-think/src/research/mlipCampaign.ts",
+      "glim-think/src/research/mlipPhoenix.ts",
       "glim-think/src/research/queue.ts",
       "glim-think/src/feed/beats.ts",
+      "gcp/mlip-cell-runner/mlip_cell_runner.py",
+      "lupine-distill/runtime/python/lupine_distill_runtime",
       "atlas-distill/src/commands/model_geometry.rs",
     ],
     checks: [
@@ -57,12 +61,14 @@ export const MLIP_WORKFLOW_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "GET /research/workflows/mlip-5x5x3/campaigns/:campaign_id",
       "GET /research/workflows/mlip-5x5x3/campaigns/:campaign_id/ops",
       "POST /research/workflows/mlip-5x5x3/campaigns/:campaign_id/maintain",
+      "GET /research/workflows/mlip-5x5x3/campaigns/:campaign_id/report?format=phoenix",
+      "POST /research/workflows/mlip-5x5x3/campaigns/:campaign_id/phoenix-sync",
       "GET /research/workflows/mlip-5x5x3/campaigns/:campaign_id/units/next",
       "POST /research/workflows/mlip-5x5x3/campaigns/:campaign_id/units/:unit_id/enqueue",
       "POST /research/workflows/mlip-5x5x3/campaigns/:campaign_id/units/:unit_id/evaluate",
     ],
     bindings: ["LEDGER", "RESEARCH_QUEUE", "ARTIFACTS", "CONFIG"],
-    queue_consumers: ["RESEARCH_QUEUE:model_geometry_distill"],
+    queue_consumers: ["RESEARCH_QUEUE:mlip_cell_run", "RESEARCH_QUEUE:model_geometry_distill"],
   },
   phoenix: {
     lifecycle_spans: [
@@ -73,7 +79,9 @@ export const MLIP_WORKFLOW_DESCRIPTOR: ResearchWorkflowDescriptor = {
     ],
     evaluators: [
       "model_geometry.dispatch_contract",
+      "mlip_cell.dispatch_contract",
       "mlip_triplet.delta_verdict",
+      ...MLIP_PHOENIX_EVALUATOR_SPECS.map((spec) => spec.name),
     ],
     annotations: ["mlip_triplet.delta_verdict"],
   },
@@ -94,6 +102,7 @@ export const MLIP_WORKFLOW_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "accuracy_score",
       "speed_score",
       "trace_id or evaluable local row",
+      `Phoenix dataset ${MLIP_PHOENIX_DATASET_NAME}`,
     ],
   },
 };
@@ -188,6 +197,20 @@ export async function inspectMlipWorkflowCampaign(
   }
 
   if (actions.length === 0) {
+    actions.push({
+      action_id: "phoenix-5x5x3-sync",
+      kind: "sync_phoenix",
+      label: "Sync MLIP 5x5x3 campaign to Phoenix",
+      reason: "Phoenix should hold the stable held-out dataset, three variant experiments, and deterministic evaluator rows for future model upgrades.",
+      priority: 2,
+      route: {
+        method: "POST",
+        path: `/research/workflows/${WORKFLOW_ID}/campaigns/${encodeURIComponent(campaignId)}/phoenix-sync`,
+        body: { reuse_experiments: true },
+      },
+      can_auto_execute: campaign.summary.completed === campaign.summary.cells,
+      surfaces: ["cloudflare", "phoenix", "ledger", "agenda"],
+    });
     actions.push({
       action_id: "summarize-campaign",
       kind: "summarize_campaign",

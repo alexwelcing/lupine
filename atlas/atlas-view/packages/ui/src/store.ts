@@ -82,6 +82,19 @@ export interface LoadedFile {
   sourceUrl?: string;
 }
 
+export interface EquilibriumSolveState {
+  report: Record<string, unknown>;
+  entryId: string;
+  material: string;
+  potential: string;
+  offset: {
+    strainPercent: number;
+    displacementAngstrom: number;
+    steps: number;
+    frames: number;
+  };
+}
+
 export interface AppState {
   // ─── File state ───
   file: LoadedFile | null;
@@ -215,8 +228,9 @@ export interface AppState {
   colorblindMode: boolean;
 
   // ─── UI ───
-  activePanel: 'visuals' | 'export' | 'analysis' | 'measurement' | 'flythrough' | 'telemetry' | null;
+  activePanel: 'visuals' | 'export' | 'analysis' | 'measurement' | 'flythrough' | 'telemetry' | 'equilibrium' | null;
   activeProfile: 'publication' | 'neon' | 'cinematic' | 'raw' | null;
+  equilibriumSolve: EquilibriumSolveState | null;
 
   // ─── NIST IPR potential browser ───
   nistCatalog: NistCatalogEntry[] | null;
@@ -360,6 +374,7 @@ export interface AppState {
   setFillLightColor: (val: string) => void;
   setRimLightColor: (val: string) => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
+  setEquilibriumSolve: (state: EquilibriumSolveState | null) => void;
   setNistCatalog: (catalog: NistCatalogEntry[] | null) => void;
   setActivePotentialId: (id: string | null) => void;
   setShowPotentialBrowser: (show: boolean) => void;
@@ -468,6 +483,7 @@ const DEFAULTS = {
   colorblindMode: false,
   activePanel: null,
   activeProfile: null,
+  equilibriumSolve: null,
   nistCatalog: null,
   activePotentialId: null,
   showPotentialBrowser: false,
@@ -681,6 +697,7 @@ export const useStore = create<AppState>()(
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),
+    setEquilibriumSolve: (equilibriumSolve) => set({ equilibriumSolve }),
     setNistCatalog: (nistCatalog) => set({ nistCatalog }),
     setActivePotentialId: (activePotentialId) => set({ activePotentialId }),
     setShowPotentialBrowser: (showPotentialBrowser) => set({ showPotentialBrowser }),

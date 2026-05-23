@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from "vitest";
-import { isGatedRoute } from "../../middleware/access";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { checkAccess, isGatedRoute } from "../../middleware/access";
 import { handleResearchWorkflowRoute } from "../workflows";
 import {
   buildMlipBaselineGrid,
@@ -12,6 +12,10 @@ import {
 import { buildStubEnv, stubLedger } from "../../testing/envStub";
 import type { Env } from "../../types";
 
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
 function run(overrides: Partial<MlipBaselineRunRecord> = {}): MlipBaselineRunRecord {
   return {
     run_id: "baseline-run",
@@ -20,8 +24,8 @@ function run(overrides: Partial<MlipBaselineRunRecord> = {}): MlipBaselineRunRec
     title: "MLIP baseline",
     status: "awaiting_results",
     profile: "lab-gcp-gpu",
-    fixture_id: "canonical-structures-v1",
-    manifest_url: "gs://inputs/manifest.json",
+    fixture_id: "canonical-structures-v2",
+    manifest_url: "gs://inputs/canonical-structures-v2/manifest.json",
     artifact_prefix: "gs://outputs/baseline-run",
     max_dollars_per_hour: 20,
     requested_max_active_gpu_cells: 10,
@@ -48,7 +52,7 @@ function cell(overrides: Partial<MlipBaselineCellRecord> = {}): MlipBaselineCell
     mlip_id: "mace-mp-0",
     status: "queued",
     target_job: "mlip-cell-mace",
-    manifest_url: "gs://inputs/manifest.json",
+    manifest_url: "gs://inputs/canonical-structures-v2/manifest.json",
     task_name: null,
     operation_name: null,
     accuracy_score: null,
@@ -142,6 +146,250 @@ describe("mlip baseline grid workflow", () => {
     expect(body.cells).toHaveLength(1);
   });
 
+  it("marks V2 row-native cells as baseline release-ready", async () => {
+    const response = await handleResearchWorkflowRoute(
+      envWithBaseline(undefined, {
+        run: run({ status: "completed", finished_at: "2026-05-22T00:01:00.000Z" }),
+        cells: [
+          cell({
+            cell_id: "baseline-run:baseline:forces:chgnet",
+            row_id: "forces",
+            mlip_id: "chgnet",
+            status: "completed",
+            accuracy_score: 0.91,
+            accuracy_unit: "row_native_physical_score",
+            speed_score: 4.2,
+            speed_unit: "structures_per_second",
+            artifact_uri: "gs://outputs/cell_result.json",
+            metrics_json: JSON.stringify({
+              profile: "lab-gcp-gpu",
+              fixture_id: "canonical-structures-v2",
+              manifest_url: "gs://inputs/canonical-structures-v2/manifest.json",
+              n_structures: 5,
+              fixture_contract: {
+                schema: "lupine.mlip.fixture_manifest.v2",
+                release_ready: true,
+                manifest_hash: "sha256:test",
+              },
+              row_metrics: { primary_metric: "force_rmse_ev_per_angstrom" },
+            }),
+          }),
+        ],
+      }),
+      new URL(`https://worker.test/research/workflows/${MLIP_BASELINE_WORKFLOW_ID}/campaigns/baseline-run/report?format=json`),
+      "GET",
+      "",
+    );
+    const body = await response?.json() as {
+      release_gate: { ready: boolean };
+      cells: Array<{ readiness: { score: number; label: string } }>;
+    };
+
+    expect(response?.status).toBe(200);
+    expect(body.release_gate.ready).toBe(true);
+    expect(body.cells[0].readiness).toMatchObject({ score: 1, label: "v2_ready" });
+  });
+
+  it("renders a Phoenix experiment packet for dataset and evaluator setup", async () => {
+    const response = await handleResearchWorkflowRoute(
+      envWithBaseline(undefined, {
+        cells: [
+          cell({
+            status: "completed",
+            accuracy_score: 0.82,
+            accuracy_unit: "reference_relative_error_score",
+            speed_score: 12.5,
+            speed_unit: "structures_per_second",
+            artifact_uri: "gs://outputs/cell_result.json",
+            trace_id: "trace-1",
+            span_id: "span-1",
+            metrics_json: JSON.stringify({
+              n_structures: 1,
+              speed: { duration_ms: 80 },
+              versions: { torch: "2.4.0+cu121", cuda_available: true, cuda_device: "NVIDIA L4" },
+            }),
+          }),
+        ],
+      }),
+      new URL(`https://worker.test/research/workflows/${MLIP_BASELINE_WORKFLOW_ID}/campaigns/baseline-run/report?format=phoenix`),
+      "GET",
+      "",
+    );
+    const body = await response?.json() as {
+      schema: string;
+      phoenix: { project: { name: string }; dataset: { name: string }; evaluator_specs: Array<{ name: string }> };
+      examples: Array<{ example_id: string; metadata: { example_granularity?: string } }>;
+      experiments: Array<{ experiment_name: string; runs: Array<{ evaluations: Array<{ evaluator_name: string }> }> }>;
+      release_gate: { ready_for_research_release: boolean; blockers: string[] };
+    };
+
+    expect(response?.status).toBe(200);
+    expect(body.schema).toBe("lupine.mlip.phoenix_experiment_packet.v1");
+    expect(body.phoenix.project.name).toBe("glim-think");
+    expect(body.phoenix.dataset.name).toBe("mlip-canonical-v2-heldout");
+    expect(body.phoenix.evaluator_specs.some((spec) => spec.name === "mlip.gate.accelerate_accuracy_speed_win")).toBe(true);
+    expect(body.examples).toHaveLength(25);
+    expect(body.examples[0].example_id).toContain("canonical-structures-v2:");
+    expect(body.examples[0].metadata.example_granularity).toBe("row_mlip_cell");
+    expect(body.experiments[0].experiment_name).toBe("baseline/baseline-run");
+    expect(body.experiments[0].runs[0].evaluations.some((evaluation) =>
+      evaluation.evaluator_name === "mlip.contract.v2_fixture_readiness"
+    )).toBe(true);
+    expect(body.release_gate.ready_for_research_release).toBe(false);
+    expect(body.release_gate.blockers[0]).toContain("missing V2 fixture");
+  });
+
+  it("syncs Phoenix dataset examples, experiment runs, and evaluator rows in the configured project", async () => {
+    const requests: Array<{ url: string; method: string; body: unknown }> = [];
+    let uploadBody: Record<string, unknown> | null = null;
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      const method = init?.method ?? "GET";
+      const rawBody = typeof init?.body === "string" ? JSON.parse(init.body) as unknown : init?.body;
+      requests.push({ url, method, body: rawBody });
+      if (url.includes("/v1/datasets/upload")) {
+        uploadBody = rawBody as Record<string, unknown>;
+        return Response.json({ data: { dataset_id: "dataset-1", version_id: "version-1" } });
+      }
+      if (url.includes("/v1/datasets/dataset-1/examples")) {
+        const exampleIds = (uploadBody?.metadata as Array<{ example_id: string }> | undefined)
+          ?.map((metadata) => metadata.example_id) ?? [];
+        return Response.json({
+          data: exampleIds.map((exampleId) => ({
+            id: exampleId,
+            input: {},
+            output: {},
+            metadata: { example_id: exampleId },
+          })),
+          next_cursor: null,
+        });
+      }
+      if (url.includes("/v1/datasets/dataset-1/experiments") && method === "GET") {
+        return Response.json({ data: [] });
+      }
+      if (url.includes("/v1/datasets/dataset-1/experiments") && method === "POST") {
+        return Response.json({
+          data: {
+            id: "experiment-1",
+            dataset_id: "dataset-1",
+            dataset_version_id: "version-1",
+            name: "baseline/baseline-run",
+            project_name: "glim-think",
+          },
+        });
+      }
+      if (url.includes("/v1/experiments/experiment-1/runs")) {
+        return Response.json({ data: { id: `run-${requests.length}` } });
+      }
+      if (url.includes("/v1/experiment_evaluations")) {
+        return Response.json({ data: { id: `eval-${requests.length}` } });
+      }
+      return Response.json({ data: [] });
+    }));
+
+    const response = await handleResearchWorkflowRoute(
+      envWithBaseline(undefined, {
+        cells: [
+          cell({
+            status: "completed",
+            accuracy_score: 0.82,
+            accuracy_unit: "row_native_physical_score",
+            speed_score: 12.5,
+            speed_unit: "structures_per_second",
+            artifact_uri: "gs://outputs/cell_result.json",
+            trace_id: "trace-1",
+            span_id: "span-1",
+            completed_at: "2026-05-22T00:01:00.000Z",
+            metrics_json: JSON.stringify({
+              profile: "lab-gcp-gpu",
+              fixture_id: "canonical-structures-v2",
+              manifest_url: "gs://inputs/canonical-structures-v2/manifest.json",
+              n_structures: 5,
+              fixture_contract: {
+                schema: "lupine.mlip.fixture_manifest.v2",
+                release_ready: true,
+                manifest_hash: "sha256:test",
+              },
+            }),
+          }),
+        ],
+      }, {
+        PHOENIX_COLLECTOR_ENDPOINT: "https://app.phoenix.arize.com/s/alexwelcing/v1/traces",
+        PHOENIX_API_KEY: "test-key",
+        PHOENIX_PROJECT_NAME: "glim-think",
+      }),
+      new URL(`https://worker.test/research/workflows/${MLIP_BASELINE_WORKFLOW_ID}/campaigns/baseline-run/phoenix-sync`),
+      "POST",
+      JSON.stringify({ reuse_experiments: true }),
+    );
+    const body = await response?.json() as {
+      project: { name: string; verified: boolean };
+      dataset: { examples_submitted: number; examples_resolved: number };
+      experiments: Array<{ evaluations_written: number }>;
+    };
+
+    expect(response?.status).toBe(200);
+    expect(body.project).toMatchObject({ name: "glim-think", verified: true });
+    expect(body.dataset.examples_submitted).toBe(25);
+    expect(body.dataset.examples_resolved).toBe(25);
+    expect(body.experiments[0].evaluations_written).toBeGreaterThan(0);
+    expect(uploadBody).not.toBeNull();
+    const uploaded = uploadBody as unknown as Record<string, unknown>;
+    expect((uploaded.metadata as Array<{ example_id?: string }>).map((metadata) => metadata.example_id))
+      .toContain("canonical-structures-v2:elastic_constants:mace-mp-0");
+    expect((uploaded.outputs as Array<{ metric_contract?: unknown }>)[0].metric_contract).toBeTruthy();
+    const createExperimentBody = requests.find((entry) =>
+      entry.url.includes("/v1/datasets/dataset-1/experiments") && entry.method === "POST"
+    )?.body as { metadata?: Record<string, unknown> } | undefined;
+    expect(createExperimentBody?.metadata?.phoenix_project_name).toBe("glim-think");
+  });
+
+  it("renders a public HTML baseline summary with verdict and evidence sections", async () => {
+    const response = await handleResearchWorkflowRoute(
+      envWithBaseline(undefined, {
+        cells: [
+          cell({
+            cell_id: "baseline-run:baseline:elastic_constants:chgnet",
+            mlip_id: "chgnet",
+            status: "completed",
+            target_job: "mlip-cell-chgnet",
+            accuracy_score: 0.82,
+            accuracy_unit: "reference_relative_error_score",
+            speed_score: 12.5,
+            speed_unit: "structures_per_second",
+            artifact_uri: "gs://outputs/cell_result.json",
+            task_name: "projects/shed-489901/locations/us-central1/queues/atlas-distill-jobs/tasks/1",
+            trace_id: "trace-1",
+            span_id: "span-1",
+            metrics_json: JSON.stringify({
+              versions: {
+                python: "3.10.12",
+                torch: "2.4.0+cu121",
+                chgnet: "0.4.2",
+                cuda_available: true,
+                cuda_device: "NVIDIA L4",
+              },
+              n_structures: 1,
+              speed: { duration_ms: 80 },
+            }),
+            completed_at: "2026-05-22T00:01:00.000Z",
+          }),
+        ],
+      }),
+      new URL(`https://worker.test/research/workflows/${MLIP_BASELINE_WORKFLOW_ID}/campaigns/baseline-run/report`),
+      "GET",
+      "",
+    );
+    const html = await response?.text();
+
+    expect(response?.status).toBe(200);
+    expect(html).toContain("Baseline Readout");
+    expect(html).toContain("What This Baseline Proves");
+    expect(html).toContain("Evidence Package");
+    expect(html).toContain("NVIDIA L4");
+    expect(html).toContain("Cloud Task");
+  });
+
   it("dispatches a GCP payload with target job and cell metadata", async () => {
     const logSpy = vi.spyOn(console, "log").mockImplementation(() => undefined);
     const env = envWithBaseline(undefined, {}, { DEV_MODE: "true" });
@@ -171,7 +419,23 @@ describe("mlip baseline grid workflow", () => {
 
   it("gates mutating workflow routes while keeping report reads public", () => {
     expect(isGatedRoute("/research/workflows/mlip-baseline-grid/campaigns", "POST")).toBe(true);
+    expect(isGatedRoute("/research/workflows/mlip-baseline-grid/campaigns/r/phoenix-sync", "POST")).toBe(true);
     expect(isGatedRoute("/research/workflows/mlip-baseline-grid/campaigns/r/report", "GET")).toBe(false);
+  });
+
+  it("allows the route-scoped Phoenix sync token without opening other workflow writes", async () => {
+    const syncRequest = new Request(
+      "https://worker.test/research/workflows/mlip-baseline-grid/campaigns/r/phoenix-sync",
+      { method: "POST", headers: { "X-Phoenix-Sync-Token": "sync-secret" } },
+    );
+    const deniedRequest = new Request(
+      "https://worker.test/research/workflows/mlip-baseline-grid/campaigns/r/enqueue",
+      { method: "POST", headers: { "X-Phoenix-Sync-Token": "sync-secret" } },
+    );
+
+    await expect(checkAccess(syncRequest, buildStubEnv({ PHOENIX_SYNC_TOKEN: "sync-secret" }), [])).resolves.toBeNull();
+    const denial = await checkAccess(deniedRequest, buildStubEnv({ PHOENIX_SYNC_TOKEN: "sync-secret" }), []);
+    expect(denial?.status).toBe(403);
   });
 
   it("projects MLIP cell result beats into the baseline cell table", async () => {

@@ -167,6 +167,18 @@ export async function checkAccess(
 ): Promise<Response | null> {
   if (env.DEV_MODE === "true") return null;
 
+  const pathname = new URL(request.url).pathname;
+  const phoenixSyncToken = env.PHOENIX_SYNC_TOKEN?.trim();
+  if (
+    phoenixSyncToken &&
+    request.method === "POST" &&
+    pathname.startsWith("/research/workflows/") &&
+    pathname.endsWith("/phoenix-sync")
+  ) {
+    const presented = request.headers.get("X-Phoenix-Sync-Token");
+    if (presented && timingSafeEqual(presented, phoenixSyncToken)) return null;
+  }
+
   // Trusted internal bypass. The research queue consumer self-fetches gated
   // routes (POST /run, /literature/search, …) to reuse handler logic; those
   // subrequests carry no Cloudflare Access JWT and would 403. A constant-time

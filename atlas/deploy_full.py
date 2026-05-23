@@ -43,13 +43,13 @@ def build_native_wasm():
     try:
         # Build the Rust project for the wasm32 target
         subprocess.run(
-            ["cargo", "build", "--target", "wasm32-unknown-unknown", "--release"],
-            cwd=NATIVE_DIR, shell=True, check=True
+            ["C:/Program Files/Git/bin/bash.exe", "-c", "cargo build --target wasm32-unknown-unknown --release"],
+            cwd=NATIVE_DIR, check=True
         )
         # Generate the JS bindings using wasm-bindgen
         subprocess.run(
-            ["wasm-bindgen", "--out-dir", "wasm-out", "--target", "web", "target/wasm32-unknown-unknown/release/atlas-view-native.wasm"],
-            cwd=NATIVE_DIR, shell=True, check=True
+            ["C:/Program Files/Git/bin/bash.exe", "-c", "wasm-bindgen --out-dir wasm-out --target web target/wasm32-unknown-unknown/release/atlas-view-native.wasm"],
+            cwd=NATIVE_DIR, check=True
         )
         print("  ✅ WASM build succeeded")
     except Exception as e:
@@ -360,7 +360,7 @@ def build_research_site():
 # ────────────────────────────────────────────────────────────
 def build_web_viewer():
     section("Step 3/5: Building glimPSE")
-    subprocess.run(["pnpm", "build"], cwd=ATLAS_VIEW_DIR, shell=True, check=True)
+    subprocess.run(["C:/Program Files/Git/bin/bash.exe", "-c", "pnpm build"], cwd=ATLAS_VIEW_DIR, check=True)
     
     if os.path.exists(DEPLOY_WEB):
         shutil.rmtree(DEPLOY_WEB)
@@ -387,13 +387,9 @@ def build_web_viewer():
 def deploy():
     section("Step 4/5: Deploying to Cloud Run")
     subprocess.run([
-        "gcloud", "run", "deploy", "glim-viewer",
-        "--source", ".",
-        "--project", "shed-489901",
-        "--region", "us-central1",
-        "--allow-unauthenticated",
-        "--port=8080"
-    ], cwd=DEPLOY_DIR, shell=True, check=True)
+        "C:/Program Files/Git/bin/bash.exe", "-c",
+        "gcloud run deploy glim-viewer --source . --project shed-489901 --region us-central1 --allow-unauthenticated --port=8080"
+    ], cwd=DEPLOY_DIR, check=True)
 
 # ────────────────────────────────────────────────────────────
 # STEP 5: Verify

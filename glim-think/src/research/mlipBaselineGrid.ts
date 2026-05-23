@@ -6,9 +6,16 @@ import { traceHypothesisStage } from "../telemetry/hypothesisTrace";
 import type { Env } from "../types";
 import { dispatchAtlasJob, type TaskPayload } from "./dispatch";
 import { DEFAULT_ACCURACY_ROWS, DEFAULT_MLIP_COLUMNS } from "./mlipCampaign";
+import {
+  classifyMlipFixtureTarget,
+  mlipBaselineReleaseGate,
+  mlipCellReadiness,
+  MLIP_BASELINE_RELEASE_FIXTURE_ID,
+} from "./mlipBaselineReadiness";
+import { annotateMlipBaselineCellForPhoenix, MLIP_PHOENIX_EVALUATOR_SPECS } from "./mlipPhoenix";
 
 export const MLIP_BASELINE_WORKFLOW_ID = "mlip-baseline-grid";
-export const MLIP_BASELINE_FIXTURE_ID = "canonical-structures-v1";
+export const MLIP_BASELINE_FIXTURE_ID = MLIP_BASELINE_RELEASE_FIXTURE_ID;
 
 export type MlipBaselineProfile = "smoke" | "lab-gcp-gpu" | "lab-gcp-cpu";
 export type MlipBaselineRunStatus =
@@ -635,6 +642,8 @@ export async function preflightMlipBaselineRun(
   if (!env.TASKS_CONSUMER_URL?.trim()) missing.push("TASKS_CONSUMER_URL");
   if (!state.run.manifest_url.trim()) missing.push("manifest_url");
   if (!state.run.artifact_prefix.trim()) missing.push("artifact_prefix");
+  const fixtureTarget = classifyMlipFixtureTarget(state.run.profile, state.run.fixture_id, state.run.manifest_url);
+  for (const blocker of fixtureTarget.blockers) missing.push(`fixture:${blocker}`);
   for (const cell of state.cells) {
     if (!cell.target_job) missing.push(`target_job:${cell.mlip_id}`);
   }
@@ -704,7 +713,7 @@ export async function completeSmokeMlipBaselineRun(
 export async function dispatchQueuedMlipBaselineCells(
   env: Env,
   runId: string,
-  opts: { limit?: number; dryRun?: boolean; onlyCellId?: string } = {},
+  opts: { limit?: number; dryRun?: boolean; onlyCellId?: string; allowFailed?: boolean } = {},
 ): Promise<MlipBaselineDispatchResult> {
   const state = await getMlipBaselineRun(env, runId);
   if (!state) throw new Error(`MLIP baseline run '${runId}' not found`);
@@ -720,7 +729,7 @@ export async function dispatchQueuedMlipBaselineCells(
   const requestedLimit = Math.max(1, Math.trunc(opts.limit ?? capacity));
   const limit = Math.min(capacity, requestedLimit);
   const candidates = state.cells
-    .filter((cell) => cell.status === "queued")
+    .filter((cell) => cell.status === "queued" || (opts.allowFailed && cell.status === "failed"))
     .filter((cell) => !opts.onlyCellId || cell.cell_id === opts.onlyCellId)
     .slice(0, limit);
   const skipped: MlipBaselineDispatchRecord[] = [];
@@ -763,6 +772,8 @@ export async function dispatchQueuedMlipBaselineCells(
                  trace_id = ?4,
                  span_id = ?5,
                  retry_count = retry_count + 1,
+                 error = NULL,
+                 completed_at = NULL,
                  enqueued_at = ?6,
                  updated_at = ?6
            WHERE run_id = ?1 AND cell_id = ?2`,
@@ -876,6 +887,12 @@ export async function recordMlipBaselineCellResult(
     },
   });
 
+  try {
+    await annotateMlipBaselineCellForPhoenix(env, input, traceId, spanId, status);
+  } catch (e) {
+    console.warn("Phoenix MLIP cell annotation failed:", e);
+  }
+
   return { updated: input.cell_id, status };
 }
 
@@ -974,26 +991,105 @@ export async function writeMlipBaselineReportArtifacts(
 }
 
 export function publicMlipBaselineReport(state: MlipBaselineState) {
+  const releaseGate = mlipBaselineReleaseGate(state);
   return {
     schema: "lupine.mlip_baseline_grid.report.v1",
     workflow_id: MLIP_BASELINE_WORKFLOW_ID,
     run: state.run,
     summary: state.summary,
+    release_gate: releaseGate,
     rows: DEFAULT_ACCURACY_ROWS,
     mlips: DEFAULT_MLIP_COLUMNS,
     cells: state.cells.map((cell) => ({
       ...cell,
       metrics: parseJsonObject(cell.metrics_json),
+      readiness: mlipCellReadiness(state, cell),
     })),
     caveat:
       state.run.profile === "smoke"
         ? "Smoke profile uses deterministic canonical values to verify control-plane wiring."
-        : "Lab profile dispatches real MLIP inference to GCP Cloud Run Jobs and reports only authenticated result beats.",
+        : releaseGate.ready
+          ? "Lab profile dispatches real MLIP inference over V2 release fixtures and row-native physical metrics."
+          : "Lab profile dispatches real MLIP inference, but release claims remain blocked until every cell has V2 fixture and row-native metric evidence.",
   };
 }
 
 function fmtScore(value: number | null, digits = 3): string {
   return finiteNumber(value) ? value.toFixed(digits) : "pending";
+}
+
+function fmtAccuracy(value: number | null): string {
+  if (!finiteNumber(value)) return "pending";
+  const pct = clamp01(value) * 100;
+  if (pct > 0 && pct < 0.1) return `${pct.toFixed(4)}%`;
+  if (pct >= 99.95) return `${pct.toFixed(2)}%`;
+  return `${pct.toFixed(1)}%`;
+}
+
+function fmtSpeed(value: number | null): string {
+  if (!finiteNumber(value)) return "pending";
+  if (value >= 100) return `${value.toFixed(1)} /s`;
+  if (value >= 1) return `${value.toFixed(2)} /s`;
+  if (value > 0) return `${value.toFixed(3)} /s`;
+  return "0 /s";
+}
+
+function fmtUsd(value: number | null | undefined): string {
+  return finiteNumber(value) ? `$${value.toFixed(2)}` : "pending";
+}
+
+function fmtDate(value: string | null | undefined): string {
+  if (!value) return "not recorded";
+  const parsed = Date.parse(value);
+  if (!Number.isFinite(parsed)) return value;
+  return new Date(parsed).toISOString().replace("T", " ").replace(".000Z", "Z");
+}
+
+function fmtDurationMs(value: number | null): string {
+  if (!finiteNumber(value)) return "not reported";
+  if (value >= 1000) return `${(value / 1000).toFixed(2)}s`;
+  return `${Math.round(value)}ms`;
+}
+
+function fmtCount(value: number): string {
+  return Number.isFinite(value) ? String(Math.trunc(value)) : "0";
+}
+
+function percentWidth(value: number | null): string {
+  return `${(finiteNumber(value) ? clamp01(value) : 0) * 100}%`;
+}
+
+function safeClassToken(value: unknown): string {
+  return String(value ?? "missing").toLowerCase().replace(/[^a-z0-9_-]+/g, "-");
+}
+
+function statusLabel(value: unknown): string {
+  return String(value ?? "missing").replace(/_/g, "-");
+}
+
+function toRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : null;
+}
+
+function recordField(record: Record<string, unknown> | null | undefined, key: string): Record<string, unknown> | null {
+  return toRecord(record?.[key]);
+}
+
+function stringField(record: Record<string, unknown> | null | undefined, key: string): string | null {
+  const value = record?.[key];
+  return typeof value === "string" && value.trim() ? value : null;
+}
+
+function numberField(record: Record<string, unknown> | null | undefined, key: string): number | null {
+  const value = record?.[key];
+  return finiteNumber(value) ? value : null;
+}
+
+function boolField(record: Record<string, unknown> | null | undefined, key: string): boolean | null {
+  const value = record?.[key];
+  return typeof value === "boolean" ? value : null;
 }
 
 function htmlEscape(value: unknown): string {
@@ -1008,92 +1104,519 @@ function cellFor(state: MlipBaselineState, rowId: string, mlipId: string): MlipB
   return state.cells.find((cell) => cell.row_id === rowId && cell.mlip_id === mlipId);
 }
 
+function metricsForCell(cell: MlipBaselineCellRecord | undefined): Record<string, unknown> | null {
+  return cell ? parseJsonObject(cell.metrics_json) : null;
+}
+
+function versionsForCell(cell: MlipBaselineCellRecord | undefined): Record<string, unknown> | null {
+  return recordField(metricsForCell(cell), "versions");
+}
+
+function durationMsForCell(cell: MlipBaselineCellRecord | undefined): number | null {
+  return numberField(recordField(metricsForCell(cell), "speed"), "duration_ms");
+}
+
+function nStructuresForCell(cell: MlipBaselineCellRecord | undefined): number | null {
+  return numberField(metricsForCell(cell), "n_structures");
+}
+
+function versionTextForCell(cell: MlipBaselineCellRecord | undefined): string {
+  const versions = versionsForCell(cell);
+  if (!versions) return "not reported";
+  const keys = ["torch", "mace-torch", "chgnet", "matgl", "orb-models", "sevenn", "ase", "numpy", "python"];
+  const parts = keys
+    .map((key) => {
+      const value = versions[key];
+      return typeof value === "string" && value ? `${key} ${value}` : null;
+    })
+    .filter((value): value is string => Boolean(value));
+  return parts.length ? parts.join("; ") : "not reported";
+}
+
+function cudaTextForCell(cell: MlipBaselineCellRecord | undefined): string {
+  const versions = versionsForCell(cell);
+  if (!versions) return "CUDA not reported";
+  const available = boolField(versions, "cuda_available");
+  const device = stringField(versions, "cuda_device");
+  if (available === true) return device ? `CUDA: ${device}` : "CUDA: available";
+  if (available === false) return "CUDA: no";
+  const error = stringField(versions, "cuda_probe_error");
+  return error ? `CUDA probe error: ${error}` : "CUDA not reported";
+}
+
+function modelTextForCell(cell: MlipBaselineCellRecord | undefined): string {
+  const metrics = metricsForCell(cell);
+  const fields = ["model_id", "model_identifier", "model_name", "checkpoint", "checkpoint_id"];
+  for (const key of fields) {
+    const value = stringField(metrics, key);
+    if (value) return value;
+  }
+  return "not reported";
+}
+
+function imageTextForCell(cell: MlipBaselineCellRecord | undefined): string {
+  const metrics = metricsForCell(cell);
+  const fields = ["image_digest", "container_image_digest", "runner_image_digest", "image"];
+  for (const key of fields) {
+    const value = stringField(metrics, key);
+    if (value) return value;
+  }
+  return "not reported";
+}
+
+function finiteMean(values: Array<number | null>): number | null {
+  const finite = values.filter((value): value is number => finiteNumber(value));
+  return finite.length ? finite.reduce((sum, value) => sum + value, 0) / finite.length : null;
+}
+
+function bestCellBy(cells: MlipBaselineCellRecord[], key: "accuracy_score" | "speed_score"): MlipBaselineCellRecord | null {
+  return cells.reduce<MlipBaselineCellRecord | null>((best, cell) => {
+    const value = cell[key];
+    if (!finiteNumber(value)) return best;
+    if (!best || value > (best[key] ?? Number.NEGATIVE_INFINITY)) return cell;
+    return best;
+  }, null);
+}
+
+function cellsCompleted(cells: MlipBaselineCellRecord[]): MlipBaselineCellRecord[] {
+  return cells.filter((cell) => cell.status === "completed");
+}
+
+function rowLabel(rowId: string): string {
+  return DEFAULT_ACCURACY_ROWS.find((row) => row.id === rowId)?.label ?? rowId;
+}
+
+function mlipLabel(mlipId: string): string {
+  return DEFAULT_MLIP_COLUMNS.find((mlip) => mlip.id === mlipId)?.label ?? mlipId;
+}
+
+function orderedCells(state: MlipBaselineState): MlipBaselineCellRecord[] {
+  const ordered: MlipBaselineCellRecord[] = [];
+  const seen = new Set<string>();
+  for (const row of DEFAULT_ACCURACY_ROWS) {
+    for (const mlip of DEFAULT_MLIP_COLUMNS) {
+      const cell = cellFor(state, row.id, mlip.id);
+      if (cell) {
+        ordered.push(cell);
+        seen.add(cell.cell_id);
+      }
+    }
+  }
+  return [
+    ...ordered,
+    ...state.cells.filter((cell) => !seen.has(cell.cell_id)),
+  ];
+}
+
+function observedCellWindowSeconds(cells: MlipBaselineCellRecord[]): number | null {
+  const starts = cells
+    .map((cell) => Date.parse(cell.enqueued_at ?? cell.created_at))
+    .filter(Number.isFinite);
+  const ends = cells
+    .map((cell) => Date.parse(cell.completed_at ?? ""))
+    .filter(Number.isFinite);
+  if (!starts.length || !ends.length) return null;
+  return Math.max(0, Math.round((Math.max(...ends) - Math.min(...starts)) / 1000));
+}
+
+function fmtSeconds(value: number | null): string {
+  if (!finiteNumber(value)) return "pending";
+  if (value >= 3600) return `${(value / 3600).toFixed(2)}h`;
+  if (value >= 60) return `${(value / 60).toFixed(1)}m`;
+  return `${value}s`;
+}
+
+function scoreTone(value: number | null): string {
+  if (!finiteNumber(value)) return "pending";
+  if (value >= 0.9) return "high";
+  if (value >= 0.6) return "mid";
+  if (value >= 0.25) return "watch";
+  return "low";
+}
+
+function verdictForState(state: MlipBaselineState): { className: string; label: string; headline: string; detail: string } {
+  const summary = state.summary;
+  const releaseGate = mlipBaselineReleaseGate(state);
+  if (state.run.status === "failed_preflight") {
+    return {
+      className: "bad",
+      label: "failed-preflight",
+      headline: "Preflight failed before the baseline could run.",
+      detail: state.run.error ?? "Configuration, quota, or dispatch validation blocked the run before any cell result could be trusted.",
+    };
+  }
+  if (summary.cells_total > 0 && summary.cells_completed === summary.cells_total && summary.cells_failed === 0) {
+    if (!releaseGate.ready) {
+      return {
+        className: "warn",
+        label: releaseGate.label,
+        headline: "Baseline Readout: orchestration complete, release gate blocked.",
+        detail: releaseGate.blockers[0] ?? "The baseline needs V2 fixture and row-native metric evidence before it can anchor research claims.",
+      };
+    }
+    return {
+      className: "ok",
+      label: "release-ready",
+      headline: "Baseline Readout: complete release-grade 5x5 result set.",
+      detail: "All 25 baseline cells returned V2 fixture-backed, row-native physical metrics and are ready for Distill accuracy and accelerate comparison gates.",
+    };
+  }
+  if (summary.cells_failed > 0 && summary.cells_completed > 0) {
+    return {
+      className: "warn",
+      label: "partial",
+      headline: "Baseline Readout: partial evidence set.",
+      detail: `${summary.cells_completed}/${summary.cells_total} cells completed and ${summary.cells_failed} failed. Use ops and maintain to repair before making a research claim.`,
+    };
+  }
+  if (summary.cells_failed > 0) {
+    return {
+      className: "bad",
+      label: "failed-cell",
+      headline: "Baseline Readout: cells failed.",
+      detail: "The run produced failed cells and needs repair before it can anchor the 5x5x3 comparison.",
+    };
+  }
+  return {
+    className: "wait",
+    label: "awaiting-beats",
+    headline: "Baseline Readout: awaiting result beats.",
+    detail: `${summary.cells_completed}/${summary.cells_total} cells are complete; ${summary.cells_running + summary.cells_enqueued + summary.cells_queued} are still queued, running, or awaiting projection.`,
+  };
+}
+
 export function renderMlipBaselineReportHtml(state: MlipBaselineState): string {
+  const cost = parseJsonObject(state.run.cost_estimate_json) as unknown as MlipBaselineCostEstimate | null;
+  const verdict = verdictForState(state);
+  const maxSpeed = Math.max(
+    0,
+    ...state.cells
+      .map((cell) => cell.speed_score)
+      .filter((value): value is number => finiteNumber(value)),
+  );
+  const cellWindow = state.summary.observed_runtime_seconds ?? observedCellWindowSeconds(state.cells);
+  const progress = state.summary.cells_total > 0 ? state.summary.cells_completed / state.summary.cells_total : 0;
+
   const matrixRows = DEFAULT_ACCURACY_ROWS.map((row) => {
     const cells = DEFAULT_MLIP_COLUMNS.map((mlip) => {
       const cell = cellFor(state, row.id, mlip.id);
-      const cls = cell?.status ?? "missing";
-      return `<td class="${cls}">
-        <div class="cell-status">${htmlEscape(cls)}</div>
-        <div class="score">A ${fmtScore(cell?.accuracy_score ?? null)}</div>
-        <div class="score">S ${fmtScore(cell?.speed_score ?? null)}</div>
-        <div class="meta">${htmlEscape(cell?.target_job ?? "smoke")}</div>
+      const status = cell?.status ?? "missing";
+      const accuracy = cell?.accuracy_score ?? null;
+      const speed = cell?.speed_score ?? null;
+      const speedWidth = maxSpeed > 0 && finiteNumber(speed) ? `${clamp01(speed / maxSpeed) * 100}%` : "0%";
+      const statusClass = safeClassToken(status);
+      return `<td class="matrix-cell cell-status-${statusClass} tone-${scoreTone(accuracy)}">
+        <div class="cell-top">
+          <span class="status-pill status-${statusClass}">${htmlEscape(statusLabel(status))}</span>
+          <span>${cell ? `retry ${fmtCount(cell.retry_count)}` : "not created"}</span>
+        </div>
+        <div class="cell-metric"><span>Accuracy</span><strong>${fmtAccuracy(accuracy)}</strong></div>
+        <div class="bar accuracy-bar"><span style="width:${percentWidth(accuracy)}"></span></div>
+        <div class="cell-metric"><span>Speed</span><strong>${fmtSpeed(speed)}</strong></div>
+        <div class="bar speed-bar"><span style="width:${speedWidth}"></span></div>
+        <div class="meta">${htmlEscape(cell?.target_job ?? (state.run.profile === "smoke" ? "smoke fixture" : "missing target job"))}</div>
       </td>`;
     }).join("");
-    return `<tr><th>${htmlEscape(row.label)}</th>${cells}</tr>`;
+    return `<tr><th><span>${htmlEscape(row.label)}</span><small>${htmlEscape(row.id)}</small></th>${cells}</tr>`;
   }).join("\n");
 
-  const cost = parseJsonObject(state.run.cost_estimate_json) as unknown as MlipBaselineCostEstimate | null;
+  const rowSummaryRows = DEFAULT_ACCURACY_ROWS.map((row) => {
+    const cells = state.cells.filter((cell) => cell.row_id === row.id);
+    const completed = cellsCompleted(cells);
+    const meanAccuracy = finiteMean(completed.map((cell) => cell.accuracy_score));
+    const meanSpeed = finiteMean(completed.map((cell) => cell.speed_score));
+    const bestAccuracy = bestCellBy(completed, "accuracy_score");
+    const bestSpeed = bestCellBy(completed, "speed_score");
+    return `<tr>
+      <td><strong>${htmlEscape(row.label)}</strong><span>${htmlEscape(row.id)}</span></td>
+      <td>${completed.length}/${cells.length}</td>
+      <td>${fmtAccuracy(meanAccuracy)} <span class="raw">score ${fmtScore(meanAccuracy, 4)}</span></td>
+      <td>${fmtSpeed(meanSpeed)}</td>
+      <td>${bestAccuracy ? htmlEscape(mlipLabel(bestAccuracy.mlip_id)) : "pending"}</td>
+      <td>${bestSpeed ? htmlEscape(mlipLabel(bestSpeed.mlip_id)) : "pending"}</td>
+    </tr>`;
+  }).join("");
+
+  const mlipSummaryRows = DEFAULT_MLIP_COLUMNS.map((mlip) => {
+    const cells = state.cells.filter((cell) => cell.mlip_id === mlip.id);
+    const completed = cellsCompleted(cells);
+    const meanAccuracy = finiteMean(completed.map((cell) => cell.accuracy_score));
+    const meanSpeed = finiteMean(completed.map((cell) => cell.speed_score));
+    const firstWithVersions = completed.find((cell) => versionsForCell(cell));
+    return `<tr>
+      <td><strong>${htmlEscape(mlip.label)}</strong><span>${htmlEscape(mlip.id)}</span></td>
+      <td>${completed.length}/${cells.length}</td>
+      <td>${fmtAccuracy(meanAccuracy)} <span class="raw">score ${fmtScore(meanAccuracy, 4)}</span></td>
+      <td>${fmtSpeed(meanSpeed)}</td>
+      <td>${htmlEscape(versionTextForCell(firstWithVersions))}</td>
+      <td>${htmlEscape(cudaTextForCell(firstWithVersions))}</td>
+    </tr>`;
+  }).join("");
+
+  const evidenceRows = orderedCells(state).map((cell) => {
+    const duration = durationMsForCell(cell);
+    const nStructures = nStructuresForCell(cell);
+    return `<tr>
+      <td><strong>${htmlEscape(rowLabel(cell.row_id))}</strong><span>${htmlEscape(cell.row_id)}</span></td>
+      <td><strong>${htmlEscape(mlipLabel(cell.mlip_id))}</strong><span>${htmlEscape(cell.mlip_id)}</span></td>
+      <td><span class="status-inline status-${safeClassToken(cell.status)}">${htmlEscape(statusLabel(cell.status))}</span></td>
+      <td>${fmtAccuracy(cell.accuracy_score)}<span class="raw">score ${fmtScore(cell.accuracy_score, 6)}</span></td>
+      <td>${fmtSpeed(cell.speed_score)}<span class="raw">${fmtDurationMs(duration)} for ${nStructures ?? "?"} structure(s)</span></td>
+      <td>${htmlEscape(cell.artifact_uri ?? "not written")}</td>
+      <td>${htmlEscape(cell.task_name ?? "not enqueued")}</td>
+      <td>${htmlEscape(cell.operation_name ?? "not returned")}</td>
+      <td>${htmlEscape(cell.trace_id ?? "not traced")}<span class="raw">span ${htmlEscape(cell.span_id ?? "not recorded")}</span></td>
+      <td>${fmtCount(cell.retry_count)}</td>
+      <td>${htmlEscape(versionTextForCell(cell))}<span class="raw">${htmlEscape(cudaTextForCell(cell))}</span></td>
+      <td>${htmlEscape(modelTextForCell(cell))}</td>
+      <td>${htmlEscape(imageTextForCell(cell))}</td>
+      <td>${htmlEscape(cell.error ?? "")}</td>
+    </tr>`;
+  }).join("");
+
+  const publicReport = publicMlipBaselineReport(state);
+  const caveat = publicReport.caveat;
+  const releaseBlockers = publicReport.release_gate.blockers.length
+    ? publicReport.release_gate.blockers.map((blocker) => `<li>${htmlEscape(blocker)}</li>`).join("")
+    : "<li>Release gate is clear.</li>";
+
   return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${htmlEscape(state.run.title)}</title>
+  <title>${htmlEscape(state.run.title)} - Baseline Readout</title>
   <style>
-    :root { color-scheme: light; --ink:#172026; --muted:#5d6b73; --line:#d8e0e5; --ok:#0f7b58; --bad:#b03030; --wait:#74620c; --bg:#f7fafb; }
-    body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; color:var(--ink); background:var(--bg); }
-    header { padding:32px 40px 22px; background:#ffffff; border-bottom:1px solid var(--line); }
-    main { padding:28px 40px 48px; }
-    h1 { margin:0 0 10px; font-size:30px; line-height:1.1; letter-spacing:0; }
-    h2 { margin:30px 0 12px; font-size:18px; }
-    .lede { color:var(--muted); max-width:920px; line-height:1.5; }
-    .facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin-top:20px; }
-    .fact { background:#fff; border:1px solid var(--line); border-radius:8px; padding:12px; }
-    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
-    .value { margin-top:4px; font-weight:700; overflow-wrap:anywhere; }
-    table { width:100%; border-collapse:separate; border-spacing:0; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
-    th, td { border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:12px; vertical-align:top; }
+    :root {
+      color-scheme: light;
+      --ink:#182026;
+      --muted:#60717a;
+      --soft:#eef3f5;
+      --line:#d7e0e5;
+      --bg:#f6f8f9;
+      --panel:#ffffff;
+      --ok:#0d6b4f;
+      --ok-bg:#e8f5ef;
+      --warn:#8a6413;
+      --warn-bg:#fff4d8;
+      --bad:#a53737;
+      --bad-bg:#faeaea;
+      --blue:#275f91;
+      --blue-bg:#e8f1f8;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      letter-spacing:0;
+    }
+    header { background:var(--panel); border-bottom:1px solid var(--line); }
+    .wrap { width:min(1460px, calc(100vw - 40px)); margin:0 auto; }
+    .hero { padding:34px 0 24px; }
+    .eyebrow { margin:0 0 8px; color:var(--muted); font-size:13px; font-weight:700; letter-spacing:0; text-transform:uppercase; }
+    h1 { margin:0; max-width:980px; font-size:34px; line-height:1.12; letter-spacing:0; }
+    h2 { margin:34px 0 12px; font-size:21px; line-height:1.25; letter-spacing:0; }
+    h3 { margin:0 0 8px; font-size:16px; line-height:1.25; letter-spacing:0; }
+    p { line-height:1.55; }
+    main { padding:28px 0 54px; }
+    .lede { margin:14px 0 0; color:var(--muted); max-width:980px; line-height:1.55; }
+    .verdict { display:flex; align-items:flex-start; gap:16px; margin-top:22px; padding:16px; border:1px solid var(--line); border-radius:8px; background:#fbfdfe; }
+    .verdict.ok { border-color:#b9d9cb; background:var(--ok-bg); }
+    .verdict.warn, .verdict.wait { border-color:#ead18e; background:var(--warn-bg); }
+    .verdict.bad { border-color:#e2b1b1; background:var(--bad-bg); }
+    .verdict-badge { flex:0 0 auto; min-width:116px; padding:8px 10px; border-radius:8px; font-weight:800; text-align:center; color:#fff; background:var(--blue); }
+    .verdict.ok .verdict-badge { background:var(--ok); }
+    .verdict.warn .verdict-badge, .verdict.wait .verdict-badge { background:var(--warn); }
+    .verdict.bad .verdict-badge { background:var(--bad); }
+    .verdict p { margin:0; color:#34444c; }
+    .facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin-top:18px; }
+    .fact { min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px; }
+    .label { color:var(--muted); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0; }
+    .value { margin-top:5px; font-weight:800; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+    .section-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,390px); gap:18px; align-items:start; }
+    .panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; }
+    .panel p { margin:0; color:var(--muted); }
+    .compact-list { margin:0; padding-left:19px; color:#34444c; line-height:1.55; }
+    .compact-list li + li { margin-top:7px; }
+    .progress-track { height:10px; margin-top:12px; overflow:hidden; background:#dfe7eb; border-radius:8px; }
+    .progress-track span { display:block; height:100%; background:var(--ok); }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:8px; background:var(--panel); }
+    table { width:100%; border-collapse:separate; border-spacing:0; background:var(--panel); }
+    th, td { border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:12px; vertical-align:top; text-align:left; }
     tr:last-child th, tr:last-child td { border-bottom:0; }
     th:last-child, td:last-child { border-right:0; }
-    thead th { background:#edf3f6; text-align:left; font-size:13px; }
-    tbody th { width:190px; background:#fbfdfe; text-align:left; font-size:13px; }
-    td { min-width:130px; }
-    .cell-status { font-size:12px; font-weight:700; text-transform:uppercase; }
-    .score { margin-top:6px; font-variant-numeric:tabular-nums; }
-    .meta { margin-top:8px; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
-    .completed .cell-status { color:var(--ok); }
-    .failed .cell-status, .failed_preflight .cell-status { color:var(--bad); }
-    .queued .cell-status, .enqueued .cell-status, .running .cell-status { color:var(--wait); }
-    pre { background:#101820; color:#edf7fa; padding:14px; border-radius:8px; overflow:auto; }
-    .note { color:var(--muted); line-height:1.5; }
+    thead th { position:sticky; top:0; z-index:1; background:#e9f0f3; color:#28343a; font-size:13px; }
+    tbody th { width:210px; min-width:190px; background:#fbfdfe; font-size:13px; }
+    tbody th span, td strong { display:block; }
+    tbody th small, td span { display:block; margin-top:4px; color:var(--muted); font-size:12px; font-weight:500; overflow-wrap:anywhere; }
+    .matrix-cell { min-width:168px; background:#fff; }
+    .cell-top { display:flex; justify-content:space-between; gap:8px; color:var(--muted); font-size:12px; }
+    .status-pill, .status-inline { display:inline-block; margin:0; border-radius:8px; padding:3px 7px; font-size:12px; font-weight:800; background:var(--blue-bg); color:var(--blue); }
+    .status-completed { background:var(--ok-bg); color:var(--ok); }
+    .status-failed, .status-failed_preflight { background:var(--bad-bg); color:var(--bad); }
+    .status-queued, .status-enqueued, .status-running, .status-missing { background:var(--warn-bg); color:var(--warn); }
+    .cell-metric { display:flex; justify-content:space-between; gap:10px; margin-top:10px; font-size:13px; }
+    .cell-metric span { margin:0; color:var(--muted); }
+    .cell-metric strong { font-size:15px; font-variant-numeric:tabular-nums; }
+    .bar { height:7px; margin-top:5px; overflow:hidden; background:#e3eaee; border-radius:8px; }
+    .bar span { display:block; height:100%; min-width:2px; border-radius:8px; }
+    .accuracy-bar span { background:var(--ok); }
+    .speed-bar span { background:var(--blue); }
+    .tone-low .accuracy-bar span { background:var(--bad); }
+    .tone-watch .accuracy-bar span { background:var(--warn); }
+    .tone-mid .accuracy-bar span { background:var(--blue); }
+    .meta { margin-top:10px; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
+    .summary-table td:first-child { min-width:190px; }
+    .evidence-table { min-width:1680px; }
+    .evidence-table td { max-width:280px; overflow-wrap:anywhere; font-size:12px; }
+    .raw { display:block; margin-top:4px; color:var(--muted); font-size:12px; font-weight:500; font-variant-numeric:tabular-nums; }
+    .note { color:var(--muted); line-height:1.55; }
+    .callout { border-left:4px solid var(--blue); padding:12px 14px; background:#f8fbfd; border-radius:8px; }
+    .code-list { margin:0; padding:12px; background:#11191f; color:#edf7fa; border-radius:8px; overflow:auto; font-size:13px; line-height:1.45; }
+    @media (max-width: 860px) {
+      .wrap { width:min(100vw - 24px, 1460px); }
+      .hero { padding:26px 0 20px; }
+      h1 { font-size:27px; }
+      .section-grid { grid-template-columns:1fr; }
+      .verdict { display:block; }
+      .verdict-badge { display:inline-block; margin-bottom:10px; }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>${htmlEscape(state.run.title)}</h1>
-    <div class="lede">Cloudflare owns the research ledger, agenda, Workflow, Phoenix-visible evaluator rows, and public report. GCP Cloud Run Jobs are the governed execution instrument for real MLIP cells.</div>
-    <div class="facts">
-      <div class="fact"><div class="label">Run</div><div class="value">${htmlEscape(state.run.run_id)}</div></div>
-      <div class="fact"><div class="label">Status</div><div class="value">${htmlEscape(state.run.status)}</div></div>
-      <div class="fact"><div class="label">Profile</div><div class="value">${htmlEscape(state.run.profile)}</div></div>
-      <div class="fact"><div class="label">Fixture</div><div class="value">${htmlEscape(state.run.fixture_id)}</div></div>
-      <div class="fact"><div class="label">Progress</div><div class="value">${state.summary.cells_completed}/${state.summary.cells_total}</div></div>
-      <div class="fact"><div class="label">Hourly cap</div><div class="value">$${state.run.max_dollars_per_hour.toFixed(2)}</div></div>
-      <div class="fact"><div class="label">Estimated hourly</div><div class="value">$${(cost?.estimated_hourly_usd ?? 0).toFixed(2)}</div></div>
-      <div class="fact"><div class="label">Max active GPU cells</div><div class="value">${state.run.max_active_gpu_cells}</div></div>
+    <div class="wrap hero">
+      <div class="eyebrow">MLIP baseline grid report</div>
+      <h1>${htmlEscape(verdict.headline)}</h1>
+      <p class="lede">This page is the durable baseline packet for the first 5x5 research grid: five potential-accuracy rows, five MLIP columns, and one governed Lab execution path. Cloudflare remains the control plane and public surface; GCP Cloud Run Jobs are the compute instrument.</p>
+      <div class="verdict ${htmlEscape(verdict.className)}">
+        <div class="verdict-badge">${htmlEscape(verdict.label)}</div>
+        <div>
+          <h3>${htmlEscape(state.run.title)}</h3>
+          <p>${htmlEscape(verdict.detail)}</p>
+          <div class="progress-track" aria-label="Baseline completion"><span style="width:${percentWidth(progress)}"></span></div>
+        </div>
+      </div>
+      <div class="facts">
+        <div class="fact"><div class="label">Run</div><div class="value">${htmlEscape(state.run.run_id)}</div></div>
+        <div class="fact"><div class="label">Result verdict</div><div class="value">${htmlEscape(verdict.label)}</div></div>
+        <div class="fact"><div class="label">Ledger state</div><div class="value">${htmlEscape(statusLabel(state.run.status))}</div></div>
+        <div class="fact"><div class="label">Profile</div><div class="value">${htmlEscape(state.run.profile)}</div></div>
+        <div class="fact"><div class="label">Fixture</div><div class="value">${htmlEscape(state.run.fixture_id)}</div></div>
+        <div class="fact"><div class="label">Progress</div><div class="value">${state.summary.cells_completed}/${state.summary.cells_total}</div></div>
+        <div class="fact"><div class="label">Failed cells</div><div class="value">${state.summary.cells_failed}</div></div>
+        <div class="fact"><div class="label">Mean accuracy</div><div class="value">${fmtAccuracy(state.summary.mean_accuracy)}</div></div>
+        <div class="fact"><div class="label">Mean speed</div><div class="value">${fmtSpeed(state.summary.mean_speed)}</div></div>
+        <div class="fact"><div class="label">Estimated hourly</div><div class="value">${fmtUsd(cost?.estimated_hourly_usd ?? state.summary.estimated_hourly_cost)}</div></div>
+        <div class="fact"><div class="label">Hourly ceiling</div><div class="value">${fmtUsd(state.run.max_dollars_per_hour)}</div></div>
+        <div class="fact"><div class="label">Cell beat window</div><div class="value">${fmtSeconds(cellWindow)}</div></div>
+      </div>
     </div>
   </header>
-  <main>
+  <main class="wrap">
+    <section class="section-grid">
+      <div>
+        <h2>What This Baseline Proves</h2>
+        <div class="panel">
+          <ul class="compact-list">
+            <li>The control plane expanded and tracked a 25-cell baseline grid with one row per potential-accuracy target and one column per MLIP backend.</li>
+            <li>The Lab lane returned accuracy and speed values per cell, plus package versions, CUDA facts, artifacts, task names, retry counts, and trace identifiers.</li>
+            <li>The result set is ready to anchor the next two variants: Lupine Distill accuracy, then Lupine Distill accuracy plus accelerate.</li>
+          </ul>
+        </div>
+      </div>
+      <aside>
+        <h2>Next Research Gate</h2>
+        <div class="panel">
+          <p>Hold this fixture and evidence contract stable, then fill the Distill and Distill+Accelerate grids. The claim is not that every baseline score is strong; the claim is that we now have a reproducible baseline surface where lift and speedup can be measured cell by cell.</p>
+        </div>
+      </aside>
+    </section>
+
     <h2>Baseline Matrix</h2>
-    <table>
-      <thead><tr><th>Potential accuracy row</th>${DEFAULT_MLIP_COLUMNS.map((m) => `<th>${htmlEscape(m.label)}</th>`).join("")}</tr></thead>
-      <tbody>${matrixRows}</tbody>
-    </table>
-    <h2>Run Contract</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Potential accuracy row</th>${DEFAULT_MLIP_COLUMNS.map((m) => `<th>${htmlEscape(m.label)}</th>`).join("")}</tr></thead>
+        <tbody>${matrixRows}</tbody>
+      </table>
+    </div>
+
+    <h2>Row Summary</h2>
+    <div class="table-wrap">
+      <table class="summary-table">
+        <thead><tr><th>Potential accuracy row</th><th>Complete</th><th>Mean accuracy</th><th>Mean speed</th><th>Best accuracy</th><th>Best speed</th></tr></thead>
+        <tbody>${rowSummaryRows}</tbody>
+      </table>
+    </div>
+
+    <h2>MLIP Summary</h2>
+    <div class="table-wrap">
+      <table class="summary-table">
+        <thead><tr><th>MLIP backend</th><th>Complete</th><th>Mean accuracy</th><th>Mean speed</th><th>Package versions</th><th>GPU fact</th></tr></thead>
+        <tbody>${mlipSummaryRows}</tbody>
+      </table>
+    </div>
+
+    <h2>Run Contract And Provenance</h2>
     <div class="facts">
       <div class="fact"><div class="label">Manifest</div><div class="value">${htmlEscape(state.run.manifest_url)}</div></div>
       <div class="fact"><div class="label">Artifacts</div><div class="value">${htmlEscape(state.run.artifact_prefix)}</div></div>
       <div class="fact"><div class="label">Workflow instance</div><div class="value">${htmlEscape(state.run.workflow_instance_id ?? "not started")}</div></div>
-      <div class="fact"><div class="label">Mean accuracy</div><div class="value">${fmtScore(state.summary.mean_accuracy)}</div></div>
-      <div class="fact"><div class="label">Mean speed</div><div class="value">${fmtScore(state.summary.mean_speed)}</div></div>
+      <div class="fact"><div class="label">Hypothesis</div><div class="value">${htmlEscape(state.run.hypothesis_id)}</div></div>
+      <div class="fact"><div class="label">Max active GPU cells</div><div class="value">${state.run.max_active_gpu_cells}</div></div>
+      <div class="fact"><div class="label">Requested GPU cells</div><div class="value">${state.run.requested_max_active_gpu_cells}</div></div>
+      <div class="fact"><div class="label">Cost shape</div><div class="value">${cost ? `${cost.assumptions.region}; ${cost.assumptions.cpu} CPU; ${cost.assumptions.memory_gib} GiB; ${cost.assumptions.gpu_l4} L4` : "not recorded"}</div></div>
+      <div class="fact"><div class="label">Created</div><div class="value">${fmtDate(state.run.created_at)}</div></div>
+      <div class="fact"><div class="label">Updated</div><div class="value">${fmtDate(state.run.updated_at)}</div></div>
+      <div class="fact"><div class="label">Finished</div><div class="value">${fmtDate(state.run.finished_at)}</div></div>
     </div>
-    <h2>Caveat</h2>
-    <p class="note">${htmlEscape(publicMlipBaselineReport(state).caveat)}</p>
-    <h2>Evaluator Names</h2>
-    <pre>mlip_baseline.gcp_dispatch_contract
+
+    <h2>Caveats</h2>
+    <div class="callout">
+      <ul class="compact-list">
+        <li>${htmlEscape(caveat)}</li>
+        <li>This is a baseline-only run. It does not yet show Lupine Distill lift or acceleration lift.</li>
+        <li>Baseline evidence is release-grade only when every square reports V2 fixture validation and a row-native physical metric.</li>
+        <li>Runner image digests and model identifiers are shown when a beat reports them; older cells may say "not reported" until the runner contract emits those fields.</li>
+        ${releaseBlockers}
+      </ul>
+    </div>
+
+    <h2>Phoenix And Evaluators</h2>
+    <div class="callout">
+      <p class="note">Phoenix is the comparison home for model upgrades. The machine-readable dataset, experiment, and evaluator packet for this run is available at <strong>?format=phoenix</strong>.</p>
+    </div>
+    <pre class="code-list">mlip_baseline.gcp_dispatch_contract
 mlip_baseline.cell_accuracy_speed
-mlip_baseline.grid_completeness</pre>
+mlip_baseline.grid_completeness
+${MLIP_PHOENIX_EVALUATOR_SPECS.map((spec) => htmlEscape(spec.name)).join("\n")}</pre>
+
+    <h2>Evidence Package</h2>
+    <div class="table-wrap">
+      <table class="evidence-table">
+        <thead>
+          <tr>
+            <th>Row</th>
+            <th>MLIP</th>
+            <th>Status</th>
+            <th>Accuracy</th>
+            <th>Speed</th>
+            <th>GCS artifact</th>
+            <th>Cloud Task</th>
+            <th>Cloud Run operation</th>
+            <th>Phoenix trace/span</th>
+            <th>Retry</th>
+            <th>Versions and GPU</th>
+            <th>Model</th>
+            <th>Image</th>
+            <th>Error</th>
+          </tr>
+        </thead>
+        <tbody>${evidenceRows}</tbody>
+      </table>
+    </div>
   </main>
 </body>
 </html>`;

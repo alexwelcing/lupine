@@ -1,7 +1,7 @@
 # MLIP Cell Runner
 
-`mlip-cell-runner` is the GCP execution instrument for the
-`mlip-baseline-grid` workflow in `glim-think`.
+`mlip-cell-runner` is the execution instrument for the `mlip-baseline-grid`
+and real `mlip-5x5x3` workflows in `glim-think`.
 
 Cloudflare owns the run ledger and dispatches signed Cloud Tasks to
 `tasks-consumer`. The consumer starts one of the allowlisted Cloud Run Jobs:
@@ -34,6 +34,77 @@ python mlip_cell_runner.py run-cell \
 The smoke requires the selected MLIP package to be installed. Missing backend
 packages intentionally produce a failure beat rather than silently falling back.
 
+## Release Fixture Contract
+
+The Lab baseline lane now fails closed on release input quality. A real baseline
+manifest must use `lupine.mlip.fixture_manifest.v2`, include
+`reference_provenance`, and provide row-native physical cases for all five rows:
+
+- `energy_volume`: multiple volume/EOS points with `energy_ev_per_atom`
+- `forces`: displaced structures with nonzero `forces_ev_per_angstrom`
+- `stress`: strained structures with `stress_gpa`
+- `elastic_constants`: at least six `strain_voigt` cases plus
+  `elastic_constants_gpa`
+- `relaxation_stability`: perturbed starts with relaxation thresholds and
+  reference relaxed targets
+
+The runner reports `fixture_contract`, `row_metrics`, cold load time, warm
+inference time, model id, image digest, package versions, and CUDA facts in
+every completed beat. Legacy `canonical-structures-v1` and tiny smoke manifests
+are useful for wiring checks, but they are not accepted for release baselines.
+
+## Distill Runtime Variants
+
+Baseline remains the default:
+
+```bash
+--variant-id baseline --distill-profile off
+```
+
+The 5x5x3 workflow can run the same sealed evaluation manifest with active
+runtime policies:
+
+```bash
+--variant-id distill_accuracy --distill-profile accuracy \
+  --support-manifest-url fixtures/canonical_distill_support_v1.json
+
+--variant-id distill_accuracy_accelerate --distill-profile accuracy_accelerate \
+  --support-manifest-url fixtures/canonical_distill_support_v1.json
+```
+
+Distill variants write `distill_runtime`, `support_manifest_hash`,
+`interventions`, `refusals`, `theorem_hooks`, and a `distill_events.jsonl`
+artifact. For local iteration without a Worker, use `--local-jsonl beats.jsonl`
+instead of `--beat-emit-url`.
+
+The MLIP runner is intentionally generic: it loads an MLIP backend, computes
+row-native predictions, and delegates Distill decisions to a policy engine.
+Use the Rust canonical ribbon engine when available:
+
+```bash
+--distill-policy-engine rust \
+  --ribbon-version hyperribbon-v1 \
+  --atlas-distill-bin atlas-distill/target/debug/atlas-distill
+```
+
+`--distill-policy-engine auto` uses Rust when the binary is present and records
+`python_fallback` otherwise. Baseline cells never invoke Distill.
+
+For Distill variants, the runner batches all prediction decisions in the cell
+through one `atlas-distill distill-policy --request-jsonl` call. That keeps the
+MLIP adapter generic while avoiding one Rust process spawn per structure. GCP
+runner images bake `/usr/local/bin/atlas-distill` into the image and set
+`ATLAS_DISTILL_BIN`, so `auto` resolves to the canonical Rust ribbon path in
+Lab runs.
+
+The repo-level harness runs local baseline or full 5x5x3 campaigns without
+Docker:
+
+```bash
+python tools/mlip_local_lab.py --mode baseline --mlip chgnet --row forces
+python tools/mlip_local_lab.py --mode campaign --workers 1 --skip-install
+```
+
 ## GCP Build And Canary
 
 Build and create/update all five Cloud Run Jobs:
@@ -51,7 +122,7 @@ gcloud run jobs execute mlip-cell-chgnet \
   --project=shed-489901 \
   --region=us-central1 \
   --wait \
-  --args=run-cell,--run-id,canary,--cell-id,canary:baseline:energy:chgnet,--row-id,energy,--mlip-id,chgnet,--manifest-url,gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v1/manifest.json,--artifact-prefix,gs://shed-489901-atlas-outputs/mlip-baseline-grid/canary/energy/chgnet,--beat-emit-url,https://glim-think-v1.aw-ab5.workers.dev/feed/beats
+  --args=run-cell,--run-id,canary,--cell-id,canary:baseline:forces:chgnet,--row-id,forces,--mlip-id,chgnet,--manifest-url,gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json,--artifact-prefix,gs://shed-489901-atlas-outputs/mlip-baseline-grid/canary/forces/chgnet,--beat-emit-url,https://glim-think-v1.aw-ab5.workers.dev/feed/beats
 ```
 
 The Cloud Build config uses `gcloud run jobs deploy`, so first deployment and

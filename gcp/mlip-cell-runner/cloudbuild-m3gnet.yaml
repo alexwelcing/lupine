@@ -1,0 +1,25 @@
+# Build and deploy only the M3GNet MLIP cell runner.
+
+substitutions:
+  _PROJECT_ID: shed-489901
+  _REGION: us-central1
+  _REPOSITORY: cloud-run-source-deploy
+  _RUNNER_SA: atlas-distill-runner@shed-489901.iam.gserviceaccount.com
+  _IMAGE_TAG: manual
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 7200s
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '-t', '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/mlip-cell-m3gnet:${_IMAGE_TAG}', '--build-arg', 'BACKEND=m3gnet', '-f', 'gcp/mlip-cell-runner/Dockerfile', '.']
+  - name: gcr.io/cloud-builders/docker
+    args: ['push', '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/mlip-cell-m3gnet:${_IMAGE_TAG}']
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args: ['run', 'jobs', 'deploy', 'mlip-cell-m3gnet', '--image=${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/mlip-cell-m3gnet:${_IMAGE_TAG}', '--region=${_REGION}', '--project=${_PROJECT_ID}', '--service-account=${_RUNNER_SA}', '--cpu=4', '--memory=16Gi', '--gpu=1', '--gpu-type=nvidia-l4', '--no-gpu-zonal-redundancy', '--tasks=1', '--max-retries=1', '--task-timeout=3600s']
+
+images:
+  - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/mlip-cell-m3gnet:${_IMAGE_TAG}'

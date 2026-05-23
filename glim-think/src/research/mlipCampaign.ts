@@ -234,8 +234,15 @@ function slug(value: string): string {
   return value
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/[^a-z0-9_]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+function defaultCampaignFixtureUrl(env: Env): string {
+  const configured = env.MLIP_BASELINE_MANIFEST_URL?.trim();
+  if (configured) return configured;
+  const project = env.GCP_PROJECT_ID?.trim() || "shed-489901";
+  return `gs://${project}-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json`;
 }
 
 function validateAxis<T extends MlipAxisItem>(
@@ -480,6 +487,7 @@ export async function createMlipCampaign(
   const qualityGate = input.quality_gate ?? "accuracy";
   const topK = Math.max(1, Math.trunc(input.top_k ?? 5));
   const modelPairs = input.model_pairs ?? [];
+  const fixtureUrlTemplate = input.fixture_url_template ?? defaultCampaignFixtureUrl(env);
 
   await env.LEDGER.prepare(
     `INSERT OR REPLACE INTO mlip_campaigns
@@ -493,14 +501,14 @@ export async function createMlipCampaign(
     JSON.stringify(rows),
     JSON.stringify(mlips),
     JSON.stringify(variants),
-    input.fixture_url_template ?? null,
+    fixtureUrlTemplate,
     JSON.stringify(modelPairs),
     topK,
     qualityGate,
     now,
   ).run();
 
-  const cells = buildMlipCampaignCells(campaignId, rows, mlips, variants, input.fixture_url_template);
+  const cells = buildMlipCampaignCells(campaignId, rows, mlips, variants, fixtureUrlTemplate);
   let inserted = 0;
   for (const cell of cells) {
     await env.LEDGER.prepare(
@@ -889,7 +897,7 @@ export async function recordMlipCampaignBeat(
     accuracy_unit: typeof accuracy?.unit === "string" ? accuracy.unit : undefined,
     speed_score: speedScore,
     speed_unit: typeof speed?.unit === "string" ? speed.unit : undefined,
-    status: "completed",
+    status: metrics.status === "failed" ? "failed" : metrics.status === "running" ? "running" : "completed",
     metrics,
     source: "auto",
   });

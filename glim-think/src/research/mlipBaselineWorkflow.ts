@@ -20,6 +20,7 @@ import {
   maintainMlipBaselineCampaign,
   MLIP_BASELINE_DESCRIPTOR,
 } from "./mlipBaselineWorkflowOps";
+import { buildMlipPhoenixExperimentPacket, phoenixProjectName, syncMlipPhoenixPacket } from "./mlipPhoenix";
 import {
   workflowError,
   workflowJson,
@@ -48,6 +49,12 @@ function unitView(cell: MlipBaselineCellRecord) {
   };
 }
 
+function workflowInstanceIdForRun(runId: string): string {
+  return `${MLIP_BASELINE_WORKFLOW_ID}-${runId}`
+    .replace(/[^A-Za-z0-9_-]/g, "-")
+    .slice(0, 120);
+}
+
 export const mlipBaselineWorkflowAdapter: ResearchWorkflowAdapter = {
   workflow_id: MLIP_BASELINE_WORKFLOW_ID,
   label: "MLIP baseline grid GCP Lab run",
@@ -64,7 +71,7 @@ export const mlipBaselineWorkflowAdapter: ResearchWorkflowAdapter = {
       let workflowInstanceId: string | null = null;
       let workflowStarted = false;
       if (workflow) {
-        const instanceId = `${MLIP_BASELINE_WORKFLOW_ID}:${created.run_id}`;
+        const instanceId = workflowInstanceIdForRun(created.run_id);
         const instance = await workflow.create({
           id: instanceId,
           params: { run_id: created.run_id } satisfies MlipBaselineGridWorkflowParams,
@@ -143,11 +150,12 @@ export const mlipBaselineWorkflowAdapter: ResearchWorkflowAdapter = {
         ? state.cells.find((candidate) => candidate.cell_id === decoded.cellId)
         : state.cells.find((candidate) => candidate.row_id === decoded.rowId && candidate.mlip_id === decoded.mlipId);
       if (!cell) return workflowError(`MLIP baseline unit '${rawUnitId}' not found`, 404);
-      const body = JSON.parse(bodyText || "{}") as { dry_run?: boolean };
+      const body = JSON.parse(bodyText || "{}") as { dry_run?: boolean; retry_failed?: boolean };
       const result = await dispatchQueuedMlipBaselineCells(env, runId, {
         limit: 1,
         dryRun: body.dry_run,
         onlyCellId: cell.cell_id,
+        allowFailed: cell.status === "failed" && (body.retry_failed ?? true),
       });
       return workflowJson({
         workflow_id: MLIP_BASELINE_WORKFLOW_ID,
@@ -219,6 +227,7 @@ export const mlipBaselineWorkflowAdapter: ResearchWorkflowAdapter = {
     if (state instanceof Response) return state;
     const format = url.searchParams.get("format") ?? "html";
     if (format === "json") return workflowJson(publicMlipBaselineReport(state));
+    if (format === "phoenix") return workflowJson(buildMlipPhoenixExperimentPacket(state, phoenixProjectName(env)));
     if (format === "markdown") {
       const report = publicMlipBaselineReport(state);
       return new Response(
@@ -235,5 +244,20 @@ export const mlipBaselineWorkflowAdapter: ResearchWorkflowAdapter = {
     return new Response(renderMlipBaselineReportHtml(state), {
       headers: { "Content-Type": "text/html; charset=utf-8", "Access-Control-Allow-Origin": "*" },
     });
+  },
+
+  async syncPhoenix(env, runId, bodyText) {
+    try {
+      const state = await loadRun(env, runId);
+      if (state instanceof Response) return state;
+      const body = JSON.parse(bodyText || "{}") as { reuse_experiments?: boolean };
+      const packet = buildMlipPhoenixExperimentPacket(state, phoenixProjectName(env));
+      const result = await syncMlipPhoenixPacket(env, packet, {
+        reuse_experiments: body.reuse_experiments ?? true,
+      });
+      return workflowJson({ workflow_id: MLIP_BASELINE_WORKFLOW_ID, run_id: runId, ...result });
+    } catch (e) {
+      return workflowError(e instanceof Error ? e.message : String(e), 502);
+    }
   },
 };

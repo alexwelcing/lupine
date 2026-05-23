@@ -58,6 +58,7 @@ import {
   type BatchDispatchItem as AtlasBatchItem,
 } from "./research/dispatch";
 import { handleResearchWorkflowRoute } from "./research/workflows";
+import { MLIP_PHOENIX_DATASET_NAME } from "./research/mlipPhoenix";
 import { MlipBaselineGridWorkflow as MlipBaselineGridWorkflowBase } from "./research/mlipBaselineCloudflareWorkflow";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
@@ -393,23 +394,57 @@ const baseHandler = {
             return { label, error: String(e) };
           }
         };
-        // Cross-check: same code path (__unwrappedFetch from the Worker) hitting
-        // the REST API with Bearer. If this returns 200 JSON, the Worker's
-        // networking + headers are fine and the OTLP failure is purely an
-        // ingest-auth/endpoint issue (not a Workers fetch bug).
+        // Cross-check the same project/dataset REST path used by workflow
+        // Phoenix sync. Phoenix Cloud uses a space-scoped OTLP endpoint, while
+        // REST surfaces have varied between space-scoped and global bases, so
+        // keep a compact matrix here instead of guessing from one failure.
         let restCheck: Record<string, unknown>;
         try {
-          const rb = base.replace(/\/v1\/traces$/, "");
-          const rr = await __unwrappedFetch(`${rb}/v1/projects`, {
-            method: "GET",
-            headers: { Authorization: `Bearer ${rawKey}`, accept: "application/json" },
-            redirect: "manual",
-          });
+          const phoenix = new PhoenixApi(rawEndpoint, rawKey, projectName);
+          const projectProbe = await phoenix.probe();
+          const targetDatasets = await phoenix.listDatasets({ name: MLIP_PHOENIX_DATASET_NAME, limit: 100 });
+          const spaceBase = base.replace(/\/v1\/traces$/, "");
+          const globalBase = spaceBase.replace(/\/s\/[^/]+$/, "");
+          const readBody = async (response: Response) => {
+            const bytes = await response.arrayBuffer().catch(() => null);
+            if (!bytes) return "";
+            const contentType = response.headers.get("content-type") ?? "";
+            const view = new Uint8Array(bytes);
+            const gzip = contentType.includes("gzip") || (view[0] === 0x1f && view[1] === 0x8b);
+            try {
+              if (gzip && typeof DecompressionStream !== "undefined") {
+                const stream = new Response(bytes).body?.pipeThrough(new DecompressionStream("gzip"));
+                return stream ? await new Response(stream).text() : "";
+              }
+              return new TextDecoder().decode(bytes);
+            } catch {
+              return "";
+            }
+          };
+          const datasetProbe = async (label: string, restBase: string, auth: Record<string, string>) => {
+            const r = await __unwrappedFetch(`${restBase}/v1/datasets?limit=1`, {
+              method: "GET",
+              headers: { accept: "application/json", ...auth },
+              redirect: "manual",
+            });
+            return {
+              label,
+              url: `${restBase}/v1/datasets?limit=1`,
+              status: r.status,
+              contentType: r.headers.get("content-type"),
+              bodySnippet: (await readBody(r)).slice(0, 180),
+            };
+          };
           restCheck = {
-            url: `${rb}/v1/projects`,
-            status: rr.status,
-            contentType: rr.headers.get("content-type"),
-            bodySnippet: (await rr.text().catch(() => "")).slice(0, 120),
+            project: projectProbe,
+            dataset_name: MLIP_PHOENIX_DATASET_NAME,
+            target_dataset_ids: targetDatasets.data.map((dataset) => dataset.id),
+            dataset_probes: [
+              await datasetProbe("space_bearer", spaceBase, { Authorization: `Bearer ${rawKey}` }),
+              await datasetProbe("space_api_key", spaceBase, { api_key: rawKey }),
+              await datasetProbe("global_bearer", globalBase, { Authorization: `Bearer ${rawKey}` }),
+              await datasetProbe("global_api_key", globalBase, { api_key: rawKey }),
+            ],
           };
         } catch (e) {
           restCheck = { error: String(e) };

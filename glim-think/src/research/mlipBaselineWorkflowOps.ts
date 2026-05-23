@@ -5,6 +5,7 @@ import {
   MLIP_BASELINE_WORKFLOW_ID,
   type MlipBaselineCellRecord,
 } from "./mlipBaselineGrid";
+import { classifyMlipFixtureTarget } from "./mlipBaselineReadiness";
 import {
   insertWorkflowAgendaTasks,
   summarizeActionKinds,
@@ -18,6 +19,7 @@ import {
   type WorkflowAction,
   type WorkflowOpsSnapshot,
 } from "./workflowTypes";
+import { MLIP_PHOENIX_DATASET_NAME, MLIP_PHOENIX_EVALUATOR_SPECS } from "./mlipPhoenix";
 
 export const MLIP_BASELINE_DESCRIPTOR: ResearchWorkflowDescriptor = {
   workflow_id: MLIP_BASELINE_WORKFLOW_ID,
@@ -34,12 +36,14 @@ export const MLIP_BASELINE_DESCRIPTOR: ResearchWorkflowDescriptor = {
     ],
     files: [
       "glim-think/src/research/mlipBaselineGrid.ts",
+      "glim-think/src/research/mlipBaselineReadiness.ts",
       "glim-think/src/research/mlipBaselineWorkflow.ts",
       "glim-think/src/research/mlipBaselineWorkflowOps.ts",
       "glim-think/src/research/mlipBaselineCloudflareWorkflow.ts",
       "glim-think/src/feed/beats.ts",
       "gcp/tasks-consumer/src/main.rs",
       "gcp/mlip-cell-runner/mlip_cell_runner.py",
+      "gcp/mlip-cell-runner/fixture_contract.py",
     ],
     checks: [
       "just think-lint",
@@ -52,8 +56,10 @@ export const MLIP_BASELINE_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "POST /research/workflows/mlip-baseline-grid/campaigns",
       "GET /research/workflows/mlip-baseline-grid/campaigns/:run_id",
       "GET /research/workflows/mlip-baseline-grid/campaigns/:run_id/report",
+      "GET /research/workflows/mlip-baseline-grid/campaigns/:run_id/report?format=phoenix",
       "GET /research/workflows/mlip-baseline-grid/campaigns/:run_id/ops",
       "POST /research/workflows/mlip-baseline-grid/campaigns/:run_id/maintain",
+      "POST /research/workflows/mlip-baseline-grid/campaigns/:run_id/phoenix-sync",
       "GET /research/workflows/mlip-baseline-grid/campaigns/:run_id/units/next",
       "POST /research/workflows/mlip-baseline-grid/campaigns/:run_id/units/:cell_id/enqueue",
       "POST /research/workflows/mlip-baseline-grid/campaigns/:run_id/units/:cell_id/result",
@@ -72,8 +78,16 @@ export const MLIP_BASELINE_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "mlip_baseline.gcp_dispatch_contract",
       "mlip_baseline.cell_accuracy_speed",
       "mlip_baseline.grid_completeness",
+      ...MLIP_PHOENIX_EVALUATOR_SPECS.map((spec) => spec.name),
     ],
-    annotations: ["mlip_baseline.cell_accuracy_speed"],
+    annotations: [
+      "mlip_baseline.cell_accuracy_speed",
+      "mlip.accuracy.normalized_score",
+      "mlip.speed.throughput_reported",
+      "mlip.evidence.artifact_present",
+      "mlip.evidence.trace_present",
+      "mlip.contract.v2_fixture_readiness",
+    ],
   },
   extension_contract: {
     adapter_methods: [
@@ -97,6 +111,7 @@ export const MLIP_BASELINE_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "target_job",
       "artifact_uri",
       "trace_id or D1 evaluation row",
+      `Phoenix dataset packet for ${MLIP_PHOENIX_DATASET_NAME}`,
     ],
   },
 };
@@ -134,6 +149,10 @@ export async function inspectMlipBaselineCampaign(
   const missingConfig: string[] = [];
   if (state.run.profile !== "smoke" && !env.TASKS_CONSUMER_URL?.trim()) missingConfig.push("TASKS_CONSUMER_URL");
   if (state.run.profile !== "smoke" && !state.run.manifest_url.trim()) missingConfig.push("manifest_url");
+  if (state.run.profile !== "smoke") {
+    const fixtureTarget = classifyMlipFixtureTarget(state.run.profile, state.run.fixture_id, state.run.manifest_url);
+    for (const blocker of fixtureTarget.blockers) missingConfig.push(`fixture:${blocker}`);
+  }
 
   for (const item of missingConfig) {
     actions.push({
@@ -197,6 +216,20 @@ export async function inspectMlipBaselineCampaign(
   }
 
   if (actions.length === 0) {
+    actions.push({
+      action_id: "phoenix-experiment-packet",
+      kind: "sync_phoenix",
+      label: "Sync Phoenix dataset, experiments, and evaluator rows",
+      reason: "The run is complete; Phoenix should receive stable held-out dataset examples, a baseline experiment, and deterministic evaluator rows before release comparison.",
+      priority: 2,
+      route: {
+        method: "POST",
+        path: `/research/workflows/${MLIP_BASELINE_WORKFLOW_ID}/campaigns/${encodeURIComponent(runId)}/phoenix-sync`,
+        body: { reuse_experiments: true },
+      },
+      can_auto_execute: true,
+      surfaces: ["phoenix", "ledger", "agenda"],
+    });
     actions.push({
       action_id: "summarize-campaign",
       kind: "summarize_campaign",

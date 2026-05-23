@@ -30,6 +30,7 @@ export interface ResearchWorkflowAdapter {
   evaluateUnit(env: Env, campaignId: string, unitId: string, bodyText: string): Promise<Response>;
   inspectCampaign(env: Env, campaignId: string): Promise<WorkflowOpsSnapshot | Response>;
   maintainCampaign?(env: Env, campaignId: string, bodyText: string): Promise<Response>;
+  syncPhoenix?(env: Env, campaignId: string, bodyText: string): Promise<Response>;
   recordUnitResult?(env: Env, campaignId: string, unitId: string, bodyText: string): Promise<Response>;
   reportCampaign?(env: Env, campaignId: string, url: URL): Promise<Response>;
   handleLegacyRoute?(env: Env, url: URL, method: string, bodyText: string): Promise<Response | null>;
@@ -75,6 +76,7 @@ export interface WorkflowAction {
     | "evaluate_unit"
     | "repair_input"
     | "inspect_failure"
+    | "sync_phoenix"
     | "summarize_campaign";
   label: string;
   reason: string;

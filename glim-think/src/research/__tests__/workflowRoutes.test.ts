@@ -97,6 +97,36 @@ describe("research workflow routes", () => {
     expect(body.workflow.git.files).toContain("glim-think/src/research/mlipWorkflowOps.ts");
     expect(body.workflow.cloudflare.routes).toContain("GET /research/workflows/mlip-5x5x3/campaigns/:campaign_id/ops");
     expect(body.workflow.phoenix.evaluators).toContain("mlip_triplet.delta_verdict");
+    expect(body.workflow.phoenix.evaluators).toContain("distill.leakage_guard");
+  });
+
+  it("renders a 5x5x3 Phoenix packet with stable dataset examples", async () => {
+    const response = await handleResearchWorkflowRoute(
+      envWithCampaign(),
+      new URL("https://worker.test/research/workflows/mlip-5x5x3/campaigns/c/report?format=phoenix"),
+      "GET",
+      "",
+    );
+    const body = await response?.json() as {
+      phoenix: { project: { name: string }; dataset: { name: string } };
+      examples: Array<{ example_id: string; metadata: { example_granularity?: string } }>;
+      experiments: Array<{ variant_id: string; runs: Array<{ example_id: string }> }>;
+    };
+
+    expect(response?.status).toBe(200);
+    expect(body.phoenix.project.name).toBe("glim-think");
+    expect(body.phoenix.dataset.name).toBe("mlip-canonical-v2-heldout");
+    expect(body.examples).toHaveLength(1);
+    expect(body.examples[0]).toMatchObject({
+      example_id: "canonical-structures-v2:elastic_constants:mace-mp-0",
+      metadata: { example_granularity: "row_mlip_cell" },
+    });
+    expect(body.experiments.map((experiment) => experiment.variant_id)).toEqual([
+      "baseline",
+      "distill_accuracy",
+      "distill_accuracy_accelerate",
+    ]);
+    expect(body.experiments[0].runs[0].example_id).toBe(body.examples[0].example_id);
   });
 
   it("serves MLIP units through the generic workflow surface", async () => {

@@ -1,8 +1,15 @@
 .git/
+.env
+.agents/
+.github/
+.opencode/
+.pytest_cache/
+.ruff_cache/
 node_modules/
 .venv/
 venv/
 **/node_modules/
+**/target/
 **/dist/
 **/.turbo/
 .idea/
@@ -41,6 +48,8 @@ spectra/
 td-hermes/
 Kimi_Agent_MLIP Universality Theorem/
 Kimi_Agent_MLIP Universality Theorem.zip
+KIMI_MLIP_UNIVERSAL/
+swarm_preprint_review/
 *.zip
 *.pdf
 *.db
@@ -48,6 +57,23 @@ Kimi_Agent_MLIP Universality Theorem.zip
 my_changes*.patch
 live_changes.patch
 !lupine-start/
+lupine-start/.output/
+
+# MLIP runner images need the canonical Rust Distill policy binary and the
+# Python runtime package at Cloud Build time. Keep the rest of the ignored
+# monorepo surface out of upload context.
+atlas-distill/**
+!atlas-distill/
+!atlas-distill/Cargo.toml
+!atlas-distill/Cargo.lock
+!atlas-distill/src/
+!atlas-distill/src/**
+lupine-distill/**
+!lupine-distill/
+!lupine-distill/runtime/
+!lupine-distill/runtime/python/
+!lupine-distill/runtime/python/lupine_distill_runtime/
+!lupine-distill/runtime/python/lupine_distill_runtime/**
 
 # AI Agent Workspaces
 .claude/

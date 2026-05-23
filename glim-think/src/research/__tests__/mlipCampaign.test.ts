@@ -4,14 +4,18 @@ import {
   DEFAULT_CAMPAIGN_VARIANTS,
   DEFAULT_MLIP_COLUMNS,
   buildMlipCampaignCells,
+  createMlipCampaign,
   evaluateMlipTriplet,
   getMlipCampaign,
   groupMlipCampaignTriplets,
   nextMlipCampaignTriplets,
+  recordMlipCampaignBeat,
   renderFixtureUrl,
   summarizeMlipCampaign,
   type MlipCampaignCell,
 } from "../mlipCampaign";
+import { buildMlipCellRunPayload, distillProfileForVariant } from "../queue";
+import { buildMlip5x5x3PhoenixPacket, MLIP_PHOENIX_EVALUATOR_SPECS } from "../mlipPhoenix";
 import { buildStubEnv, stubLedger } from "../../testing/envStub";
 
 function campaignCell(
@@ -63,6 +67,214 @@ describe("mlipCampaign", () => {
       mlip_id: "mace-mp-0",
       fixture_url: "gs://bucket/campaign-a/baseline/elastic_constants/mace-mp-0.csv",
     });
+  });
+
+  it("preserves canonical underscore IDs when creating default campaigns", async () => {
+    const insertedCells: unknown[][] = [];
+    const env = buildStubEnv({
+      LEDGER: stubLedger({
+        onPrepare: (sql, bindings) => {
+          if (sql.includes("INSERT OR IGNORE INTO mlip_campaign_cells")) {
+            insertedCells.push([...bindings]);
+          }
+        },
+      }),
+    });
+
+    await createMlipCampaign(env, {
+      campaign_id: "campaign-a",
+      hypothesis_id: "h",
+    });
+
+    expect(insertedCells).toHaveLength(75);
+    expect(insertedCells.some((bindings) => bindings[0] === "campaign-a:distill_accuracy_accelerate:energy_volume:chgnet")).toBe(true);
+    expect(insertedCells.some((bindings) => bindings[2] === "energy-volume")).toBe(false);
+    expect(insertedCells.some((bindings) => bindings[4] === "distill-accuracy")).toBe(false);
+  });
+
+  it("builds real MLIP runner dispatch payloads for Distill variants", () => {
+    const payload = buildMlipCellRunPayload(
+      buildStubEnv({
+        GCP_PROJECT_ID: "shed-489901",
+        MLIP_5X5X3_OUTPUT_PREFIX: "gs://outputs/mlip-5x5x3",
+        MLIP_DISTILL_POLICY_URL: "gs://inputs/policies/hyperribbon-v2.json",
+      }),
+      {
+        kind: "mlip_cell_run",
+        dedup_key: "d",
+        enqueued_at: "now",
+        hypothesis_id: "h",
+        run_id: "run-a",
+        campaign_id: "run-a",
+        cell_id: "run-a:distill_accuracy:forces:mace-mp-0",
+        row_id: "forces",
+        mlip_id: "mace-mp-0",
+        variant_id: "distill_accuracy",
+        manifest_url: "gs://inputs/eval.json",
+        support_manifest_url: "gs://inputs/support.json",
+      },
+      "https://worker.test/feed/beats",
+    );
+
+    expect(payload.command).toBe("run-cell");
+    expect(payload.target_job).toBe("mlip-cell-mace");
+    expect(payload.args).toContain("--distill-profile");
+    expect(payload.args).toContain("accuracy");
+    expect(payload.args).toContain("--support-manifest-url");
+    expect(payload.args).toContain("--distill-policy-engine");
+    expect(payload.args).toContain("auto");
+    expect(payload.args).toContain("--ribbon-version");
+    expect(payload.args).toContain("hyperribbon-v1");
+    expect(payload.args).toContain("--distill-policy-url");
+    expect(payload.args).toContain("gs://inputs/policies/hyperribbon-v2.json");
+    expect(payload.fixture_url).toBe("gs://inputs/eval.json");
+  });
+
+  it("normalizes legacy hyphenated campaign IDs before runner dispatch", () => {
+    const payload = buildMlipCellRunPayload(
+      buildStubEnv({
+        GCP_PROJECT_ID: "shed-489901",
+        MLIP_5X5X3_OUTPUT_PREFIX: "gs://outputs/mlip-5x5x3",
+      }),
+      {
+        kind: "mlip_cell_run",
+        dedup_key: "d",
+        enqueued_at: "now",
+        hypothesis_id: "h",
+        run_id: "run-a",
+        campaign_id: "run-a",
+        cell_id: "run-a:distill-accuracy:energy-volume:chgnet",
+        row_id: "energy-volume",
+        mlip_id: "chgnet",
+        variant_id: "distill-accuracy" as "distill_accuracy",
+        manifest_url: "gs://inputs/eval.json",
+        support_manifest_url: "gs://inputs/support.json",
+      },
+      "https://worker.test/feed/beats",
+    );
+
+    const args = payload.args ?? [];
+    const rowIdArg = args[args.indexOf("--row-id") + 1];
+    const variantIdArg = args[args.indexOf("--variant-id") + 1];
+    const distillProfileArg = args[args.indexOf("--distill-profile") + 1];
+    const artifactPrefixArg = args[args.indexOf("--artifact-prefix") + 1];
+
+    expect(rowIdArg).toBe("energy_volume");
+    expect(variantIdArg).toBe("distill_accuracy");
+    expect(distillProfileArg).toBe("accuracy");
+    expect(artifactPrefixArg).toContain("/distill_accuracy/energy_volume/");
+    expect(distillProfileForVariant("distill-accuracy-accelerate")).toBe("accuracy_accelerate");
+  });
+
+  it("declares Phoenix evaluators for Distill runtime and theorem hooks", () => {
+    const names = MLIP_PHOENIX_EVALUATOR_SPECS.map((spec) => spec.name);
+
+    expect(names).toContain("distill.leakage_guard");
+    expect(names).toContain("distill.intervention_trace");
+    expect(names).toContain("distill.policy_limits_selected");
+    expect(names).toContain("distill.support_correction_executable");
+    expect(names).toContain("distill.target.v2_promotion_gate");
+    expect(names).toContain("theorem.speedup_bound_observed");
+    expect(names).toContain("theorem.lean_bridge_ready");
+    expect(distillProfileForVariant("distill_accuracy_accelerate")).toBe("accuracy_accelerate");
+  });
+
+  it("builds a Phoenix packet with all three 5x5x3 experiments", () => {
+    const cells = [
+      campaignCell("baseline", { status: "completed", accuracy: 0.7, speed: 10 }),
+      campaignCell("distill_accuracy", { status: "completed", accuracy: 0.82, speed: 9 }),
+      {
+        ...campaignCell("distill_accuracy_accelerate", { status: "completed", accuracy: 0.81, speed: 14 }),
+        metrics_json: JSON.stringify({
+          distill_runtime: {
+            profile: "accuracy_accelerate",
+            support_manifest_hash: "sha256:support",
+            leakage_guard: { passed: true },
+            support_model: {
+              correction: { energy_bias_ev_per_atom: -0.1 },
+              diagnostics: { applicability_gate: "passed" },
+            },
+            distill_policy_hash: "sha256:policy",
+            intervention_count: 2,
+            refusal_count: 0,
+            events_uri: "gs://events/distill.jsonl",
+          },
+          theorem_hooks: { bridge: "outer_loop_proxy", kappa1_hat: 0.2, observed_speedup: 1.4 },
+        }),
+      },
+    ];
+    const packet = buildMlip5x5x3PhoenixPacket({
+      campaign: {
+        campaign_id: "c",
+        hypothesis_id: "h",
+        title: "MLIP 5x5x3",
+        status: "running",
+        rows_json: "[]",
+        mlips_json: "[]",
+        variants_json: "[]",
+        fixture_url_template: null,
+        model_pairs_json: "[]",
+        top_k: 5,
+        quality_gate: "accuracy",
+        created_at: "now",
+        updated_at: "now",
+      },
+      cells,
+      triplets: [],
+      evaluations: [],
+      summary: { cells: 3 },
+    });
+
+    expect(packet.schema).toBe("lupine.mlip.phoenix_5x5x3_packet.v1");
+    expect(packet.experiments.map((experiment) => experiment.variant_id)).toEqual([
+      "baseline",
+      "distill_accuracy",
+      "distill_accuracy_accelerate",
+    ]);
+    expect(packet.examples).toHaveLength(1);
+    expect(packet.experiments[2].runs[0].evaluations.map((evaluation) => evaluation.evaluator_name)).toContain(
+      "theorem.speedup_bound_observed",
+    );
+    expect(packet.experiments[1].runs[0].evaluations.map((evaluation) => evaluation.evaluator_name)).toContain(
+      "mlip.gate.distill_accuracy_win",
+    );
+    expect(packet.experiments[2].runs[0].evaluations.map((evaluation) => evaluation.evaluator_name)).toContain(
+      "distill.target.v2_promotion_gate",
+    );
+    expect(packet.experiments[2].runs[0].metadata).toMatchObject({
+      baseline_accuracy_score: 0.7,
+      distill_accuracy_score: 0.82,
+      accelerate_speed_ratio: 1.4,
+    });
+  });
+
+  it("projects Distill beats onto the correct campaign cell", async () => {
+    const captured: unknown[][] = [];
+    const env = buildStubEnv({
+      LEDGER: stubLedger({
+        queries: [{ match: "FROM mlip_campaigns", first: null }],
+        onPrepare: (sql, bindings) => {
+          if (sql.includes("UPDATE mlip_campaign_cells")) captured.push([...bindings]);
+        },
+      }),
+    });
+
+    await recordMlipCampaignBeat(env, {
+      campaign_id: "c",
+      cell_id: "c:distill_accuracy:forces:chgnet",
+      status: "completed",
+      accuracy: { score: 0.88, unit: "row_native_physical_score" },
+      speed: { score: 12.5, unit: "structures_per_second" },
+      distill_runtime: { profile: "accuracy", intervention_count: 3, refusal_count: 0 },
+    });
+
+    expect(captured).toHaveLength(1);
+    expect(captured[0][0]).toBe("c");
+    expect(captured[0][1]).toBe("c:distill_accuracy:forces:chgnet");
+    expect(captured[0][2]).toBe("completed");
+    expect(captured[0][3]).toBe(0.88);
+    expect(captured[0][5]).toBe(12.5);
+    expect(String(captured[0][7])).toContain("distill_runtime");
   });
 
   it("renders cell fixture templates with stable identifiers", () => {
