@@ -61,6 +61,46 @@ const ELEMENT_COLORS: Record<string, string> = {
   Ti: '#7b8ae0',
 }
 
+const MLIP_IDS = ['CHGNet', 'M3GNet', 'MACE', 'ORB-v3', 'SevenNet'] as const
+
+const MLIP_BASELINE_ROWS = [
+  { row: 'Energy', unit: 'eV/atom MAE', values: [0.1035, 0.4403, 0.4116, 0.4295, 0.3997] },
+  { row: 'Forces', unit: 'eV/A RMSE', values: [0.1649, 0.6262, 0.2644, 0.1240, 0.1957] },
+  { row: 'Stress', unit: 'GPa MAE', values: [0.4311, 1022.3483, 0.5669, 0.2801, 0.3536] },
+  { row: 'Elastic', unit: 'GPa MAE', values: [48.8708, 21634.7398, 35.5238, 16.1451, 38.5337] },
+  { row: 'Relaxation', unit: 'sealed penalty', values: [0.0557, 0.6683, 0.5604, 0.5327, 0.5750] },
+] as const
+
+const DISTILL_TRIPLETS = [
+  {
+    label: 'MACE energy',
+    baseline: 0.4116,
+    accuracy: 0.2038,
+    accelerate: 0.2038,
+    verdict: 'promoted',
+  },
+  {
+    label: 'SevenNet energy',
+    baseline: 0.3997,
+    accuracy: 0.3046,
+    accelerate: 0.2773,
+    verdict: 'promoted',
+  },
+  {
+    label: 'MACE stress',
+    baseline: 0.5669,
+    accuracy: 0.9331,
+    accelerate: 0.7645,
+    verdict: 'blocked',
+  },
+] as const
+
+const MLIP_COVERAGE_ROWS = [
+  { label: 'Baseline', detail: '25/25 complete', win: 25, blocked: 0, pending: 0 },
+  { label: 'Distill Accuracy', detail: '2 wins, 4 blocked/no-op, 19 not run', win: 2, blocked: 4, pending: 19 },
+  { label: 'Accuracy + Accelerate', detail: '2 wins, speed claim pending', win: 2, blocked: 4, pending: 19 },
+] as const
+
 /**
  * Client-side data adapters for release readiness.
  * Shifts all ISO timestamps from the worker to be relative to NOW,
@@ -378,6 +418,8 @@ function LiveLabComponent() {
           </div>
         </div>
       </section>
+
+      <MlipBaselineLivePanel />
 
       {/* Top Stats Bar — counts straight from hypotheses + claims tables */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -729,6 +771,221 @@ function ClaimRow({ c }: { c: RecentClaim }) {
       <p className="font-serif text-[15px] leading-relaxed text-[var(--on-surface-variant)] line-clamp-3">
         {c.description}
       </p>
+    </div>
+  )
+}
+
+function MlipBaselineLivePanel() {
+  return (
+    <section className="mb-8 overflow-hidden border border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+      <div className="grid grid-cols-1 2xl:grid-cols-12">
+        <div className="2xl:col-span-5 border-b 2xl:border-b-0 2xl:border-r border-[var(--outline-variant)] p-6 md:p-8">
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <span className="inline-flex h-9 w-9 items-center justify-center border border-[var(--secondary)]/40 bg-[var(--surface-container)] text-[var(--secondary)]">
+              <Atom size={18} />
+            </span>
+            <span className="mono-label text-[var(--secondary)]">MLIP BASELINE GRID</span>
+            <span className="mono-label text-[var(--on-surface-variant-mid)]">cloud run complete</span>
+          </div>
+          <h2 className="mb-5 font-serif text-3xl md:text-4xl leading-[1.05] tracking-tight text-[var(--on-surface)]">
+            The first real 5x5 baseline is now part of the live lab.
+          </h2>
+          <p className="mb-6 max-w-2xl text-sm md:text-base leading-relaxed text-[var(--on-surface-variant)]">
+            Five MLIP backends ran across energy, forces, stress, elastic, and relaxation. Distill is now measured against that reference plane as an in-run policy layer: two energy cells are promoted, MACE stress is blocked, and the rest of the 5x5x3 surface stays explicitly unclaimed until the row policies earn it.
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <MlipProofMetric label="Baseline" value="25/25" detail="cells complete" color="var(--primary)" />
+            <MlipProofMetric label="Energy wins" value="2" detail="cloud-promoted" color="#5a9e97" />
+            <MlipProofMetric label="Blocked" value="1" detail="MACE stress" color="var(--error)" />
+            <MlipProofMetric label="Speed claim" value="pending" detail="larger warm cells" color="var(--secondary)" />
+          </div>
+          <a
+            href="https://library-site-edbhtpvina-uc.a.run.app/#/read/mlip-cloud-baseline-distill"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-6 inline-flex border border-[var(--primary)] px-4 py-2 mono-label text-[var(--primary)] hover:bg-[var(--primary-container)] transition-colors"
+          >
+            read the full report
+          </a>
+        </div>
+
+        <div className="2xl:col-span-7 p-6 md:p-8">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+            <MlipBaselineHeatmap />
+            <MlipDistillTriplets />
+          </div>
+          <MlipCoverageStrip />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function MlipProofMetric({ label, value, detail, color }: { label: string; value: string; detail: string; color: string }) {
+  return (
+    <div className="border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
+      <div className="mb-2 mono-label text-[var(--on-surface-variant-mid)]">{label}</div>
+      <div className="font-mono text-2xl leading-none" style={{ color, fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+      <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant)]">{detail}</div>
+    </div>
+  )
+}
+
+function rankColor(rank: number) {
+  if (rank === 1) return { bg: '#0f3f2a', border: '#22c55e', text: '#bbf7d0' }
+  if (rank === 2) return { bg: '#2e4a1f', border: '#84cc16', text: '#d9f99d' }
+  if (rank === 3) return { bg: '#5a3b10', border: '#f59e0b', text: '#fde68a' }
+  if (rank === 4) return { bg: '#653018', border: '#f97316', text: '#fed7aa' }
+  return { bg: '#5c1d24', border: '#ef4444', text: '#fecdd3' }
+}
+
+function ranksFor(values: readonly number[]) {
+  const sorted = [...values].sort((a, b) => a - b)
+  return values.map((value) => sorted.indexOf(value) + 1)
+}
+
+function formatMlipValue(value: number) {
+  if (value >= 1000) return value.toExponential(2)
+  if (value >= 10) return value.toFixed(2)
+  return value.toFixed(4)
+}
+
+function MlipBaselineHeatmap() {
+  return (
+    <div className="border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <div>
+          <h3 className="mono-label text-[var(--primary)]">5x5 baseline ranks</h3>
+          <p className="mt-1 text-xs text-[var(--on-surface-variant)]">Lower error ranks better within each row.</p>
+        </div>
+        <span className="mono-label text-[var(--on-surface-variant-mid)]">rank 1-5</span>
+      </div>
+      <div className="overflow-x-auto">
+        <div className="min-w-[620px]">
+          <div className="grid grid-cols-[104px_repeat(5,minmax(82px,1fr))] gap-1.5 mb-1.5">
+            <div />
+            {MLIP_IDS.map((mlip) => (
+              <div key={mlip} className="mono-label text-center text-[var(--on-surface-variant)]">{mlip}</div>
+            ))}
+          </div>
+          <div className="space-y-1.5">
+            {MLIP_BASELINE_ROWS.map((row) => {
+              const ranks = ranksFor(row.values)
+              return (
+                <div key={row.row} className="grid grid-cols-[104px_repeat(5,minmax(82px,1fr))] gap-1.5">
+                  <div className="flex flex-col justify-center border border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-3 py-2">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--on-surface)]">{row.row}</span>
+                    <span className="font-mono text-[9px] text-[var(--on-surface-variant-mid)]">{row.unit}</span>
+                  </div>
+                  {row.values.map((value, index) => {
+                    const rank = ranks[index]
+                    const colors = rankColor(rank)
+                    return (
+                      <div
+                        key={`${row.row}-${MLIP_IDS[index]}`}
+                        className="min-h-[54px] border px-2 py-2 text-center"
+                        style={{ backgroundColor: colors.bg, borderColor: colors.border }}
+                      >
+                        <div className="font-mono text-sm text-[var(--on-surface)]" style={{ fontVariantNumeric: 'tabular-nums' }}>{formatMlipValue(value)}</div>
+                        <div className="mt-1 font-mono text-[9px] uppercase tracking-[0.08em]" style={{ color: colors.text }}>rank {rank}</div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function MlipDistillTriplets() {
+  return (
+    <div className="border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <div>
+          <h3 className="mono-label text-[var(--secondary)]">Distill triplets</h3>
+          <p className="mt-1 text-xs text-[var(--on-surface-variant)]">Ratio to baseline; lower is better.</p>
+        </div>
+        <span className="mono-label text-[var(--on-surface-variant-mid)]">accuracy</span>
+      </div>
+      <div className="space-y-4">
+        {DISTILL_TRIPLETS.map((cell) => {
+          const accuracyRatio = cell.accuracy / cell.baseline
+          const accelerateRatio = cell.accelerate / cell.baseline
+          const blocked = cell.verdict === 'blocked'
+          return (
+            <div key={cell.label} className="border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-3">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--on-surface)]">{cell.label}</span>
+                <span className="mono-label" style={{ color: blocked ? 'var(--error)' : 'var(--primary)' }}>{cell.verdict}</span>
+              </div>
+              <TripletBar label="baseline" ratio={1} color="#64748b" />
+              <TripletBar label="accuracy" ratio={accuracyRatio} color={blocked ? 'var(--error)' : 'var(--primary)'} />
+              <TripletBar label="accelerate" ratio={accelerateRatio} color={blocked ? '#c47a50' : 'var(--secondary)'} />
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function TripletBar({ label, ratio, color }: { label: string; ratio: number; color: string }) {
+  const width = `${Math.min(100, Math.max(4, (ratio / 1.7) * 100))}%`
+  return (
+    <div className="mb-2 grid grid-cols-[86px_1fr_48px] items-center gap-2">
+      <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-[var(--on-surface-variant-mid)]">{label}</span>
+      <div className="h-3 bg-[var(--surface-container-high)]">
+        <div className="h-3" style={{ width, backgroundColor: color }} />
+      </div>
+      <span className="font-mono text-[10px] text-[var(--on-surface-variant)] text-right" style={{ fontVariantNumeric: 'tabular-nums' }}>{ratio.toFixed(2)}x</span>
+    </div>
+  )
+}
+
+function MlipCoverageStrip() {
+  return (
+    <div className="mt-5 border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <div>
+          <h3 className="mono-label text-[var(--primary)]">5x5x3 coverage</h3>
+          <p className="mt-1 text-xs text-[var(--on-surface-variant)]">Baseline is full; Distill planes are early, explicit, and promotion-gated.</p>
+        </div>
+        <span className="mono-label text-[var(--on-surface-variant-mid)]">75 cells</span>
+      </div>
+      <div className="space-y-3">
+        {MLIP_COVERAGE_ROWS.map((row) => {
+          const cells = [
+            ...Array.from({ length: row.win }, () => 'win'),
+            ...Array.from({ length: row.blocked }, () => 'blocked'),
+            ...Array.from({ length: row.pending }, () => 'pending'),
+          ]
+          return (
+            <div key={row.label} className="grid grid-cols-1 md:grid-cols-[170px_1fr] gap-3 md:items-center">
+              <div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--on-surface)]">{row.label}</div>
+                <div className="font-mono text-[9px] text-[var(--on-surface-variant-mid)]">{row.detail}</div>
+              </div>
+              <div className="grid grid-cols-[repeat(25,minmax(8px,1fr))] gap-1">
+                {cells.map((state, index) => (
+                  <span
+                    key={`${row.label}-${index}`}
+                    className="h-4 border"
+                    style={{
+                      backgroundColor: state === 'win' ? '#0f3f2a' : state === 'blocked' ? '#653018' : '#1f2937',
+                      borderColor: state === 'win' ? '#22c55e' : state === 'blocked' ? '#f97316' : '#475569',
+                    }}
+                    aria-label={`${row.label} ${state}`}
+                  />
+                ))}
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
