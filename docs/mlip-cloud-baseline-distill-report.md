@@ -20,6 +20,10 @@ Lower is better in each row. The row metrics are not interchangeable units: ener
 
 The important operational result is that the 25-cell baseline is complete. It gives us a cloud-reproducible reference surface for comparing future Distill versions and future foundation MLIPs.
 
+![Row-rank heatmap for the 25-cell MLIP cloud baseline](/reports/assets/mlip-cloud-baseline-heatmap.svg)
+
+The heatmap makes the baseline useful at a glance: CHGNet is strongest on energy and relaxation, ORB-v3 is strongest on forces, stress, and elastic, and the M3GNet stress/elastic cells are bright warnings rather than numbers to smooth away.
+
 ## Distill Results
 
 The first cloud Distill run tested triplets for MACE and SevenNet. A triplet means the same MLIP and same sealed fixture were scored three ways: baseline, `distill_accuracy`, and `distill_accuracy_accelerate`.
@@ -37,6 +41,10 @@ The energy wins are the current positive result. MACE energy improved by about 5
 
 The stress result is also valuable: it blocked promotion. The local stress improvement did not transfer cleanly into the cloud run, which means the row-specific policy needs stronger calibration before it can be treated as a general Distill capability.
 
+![Distill triplet score ratios for MACE energy, SevenNet energy, and MACE stress](/reports/assets/mlip-distill-triplets.svg)
+
+The normalized triplet chart is the cleanest current claim surface. The two energy cells move below baseline, while MACE stress moves above baseline and should stay blocked.
+
 ## What This Proves
 
 This run proves that the system can now do the real loop:
@@ -53,6 +61,10 @@ That is the right shape for the product. A researcher should be able to run thei
 We are not yet claiming broad 5x5x3 superiority. The complete cloud baseline exists, but Distill has only been validated on a small subset of triplets.
 
 We are also not claiming a speed win yet. On small fixtures, support fitting, runner startup, and artifact I/O can dominate runtime. The first acceleration policy is structurally useful, but the speed claim needs larger cells, warmer runners, and cleaner checkpoint behavior before it becomes publishable.
+
+![5x5x3 evidence surface showing baseline complete and early Distill coverage](/reports/assets/mlip-5x5x3-coverage.svg)
+
+This is the honest state of the campaign: the baseline plane is full, the Distill planes have real promoted cells, and most of the 5x5x3 surface remains intentionally unclaimed until the row policies earn it.
 
 ## Lessons From The Run
 
