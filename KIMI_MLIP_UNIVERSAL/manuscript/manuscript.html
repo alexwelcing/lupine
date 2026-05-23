@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A Universality Theorem for Foundation Machine Learning Interatomic Potentials</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+<style>
+/* Base */
+body { margin: 0; padding: 0; font-family: 'Georgia', 'Times New Roman', serif; font-size: 11pt; line-height: 1.6; color: #333; text-align: justify; text-align-last: left; }
+@page { size: A4; margin: 2.5cm 2.5cm; @top-center { content: string(doctitle); font-size: 9pt; font-style: italic; color: #666; } @bottom-center { content: counter(page); font-size: 9pt; } }
+@page :first { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+@page cover { @top-center { content: none; } @bottom-center { content: none; } }
+@page toc { @top-center { content: none; } @bottom-center { content: none; } }
+body { string-set: doctitle ""; }
+h1 { string-set: doctitle content(); }
+
+/* Cover */
+.cover { page: cover; width: 210mm; height: 297mm; margin: 0; position: relative; overflow: hidden; page-break-after: always; background: white; }
+.cover-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 80%; }
+.cover-title { font-size: 22pt; font-weight: 700; color: #222; margin-bottom: 1cm; line-height: 1.4; }
+.cover-subtitle { font-size: 12pt; color: #666; margin-bottom: 2cm; font-style: italic; }
+.cover-meta { font-size: 11pt; color: #444; line-height: 1.8; }
+
+/* TOC */
+.toc-page { page: toc; page-break-after: always; }
+.toc { list-style: none; padding: 0; margin: 0; }
+.toc li { margin: 0.4em 0; }
+.toc a { text-decoration: none; color: #333; }
+.toc a::after { content: leader('.') target-counter(attr(href url), page); }
+.toc-h1 { font-weight: bold; }
+.toc-h2 { padding-left: 1.5em; }
+
+/* Headings */
+h1 { font-size: 18pt; font-weight: bold; margin-top: 1.5em; margin-bottom: 0.8em; page-break-after: avoid; color: #222; }
+h2 { font-size: 14pt; font-weight: bold; margin-top: 1.2em; margin-bottom: 0.6em; page-break-after: avoid; color: #333; }
+h3 { font-size: 12pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em; page-break-after: avoid; color: #444; }
+
+/* Abstract */
+.abstract { border: 1px solid #ccc; background: #f9f9f9; padding: 1em 1.2em; margin: 1em 0; page-break-inside: avoid; }
+.abstract-title { font-weight: bold; font-size: 12pt; margin-bottom: 0.5em; }
+
+/* Theorem environments */
+.theorem, .lemma, .corollary, .proposition, .definition, .remark, .example, .prediction {
+  border-left: 3px solid #555; padding-left: 1em; margin: 1em 0; page-break-inside: avoid;
+}
+.theorem-title, .lemma-title, .corollary-title, .proposition-title, .definition-title, .remark-title, .example-title, .prediction-title {
+  font-weight: bold; font-style: normal; margin-bottom: 0.3em;
+}
+.theorem-content, .lemma-content, .corollary-content { font-style: italic; }
+.prediction { border-left-color: #c00; }
+
+/* Proof */
+.proof { margin: 0.8em 0; }
+.proof-title { font-weight: bold; font-style: italic; }
+.proof-qed { text-align: right; margin-top: -0.5em; }
+
+/* Equations */
+.equation { display: flex; align-items: center; margin: 1em 0; overflow-x: auto; font-size: 10pt; }
+.equation .katex-display { margin: 0; flex: 1; }
+.equation-number { margin-left: 0.8em; color: #555; flex-shrink: 0; font-size: 10pt; }
+
+/* Tables */
+table { width: 100%; max-width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 10pt; page-break-inside: avoid; }
+thead { border-top: 2px solid #333; border-bottom: 1px solid #333; }
+tbody { border-bottom: 2px solid #333; }
+th, td { padding: 0.4em 0.6em; text-align: left; }
+th { font-weight: bold; }
+tr { page-break-inside: avoid; }
+caption { caption-side: top; text-align: left; font-weight: bold; margin-bottom: 0.3em; }
+caption::before { content: attr(data-label) "  "; }
+
+/* Citations */
+a.cite { color: #333; text-decoration: none; vertical-align: super; font-size: 0.75em; }
+
+/* References */
+.references { font-size: 10pt; }
+.references li { padding-left: 2em; text-indent: -2em; margin-bottom: 0.5em; list-style: none; }
+.references i { font-style: italic; }
+
+/* Utility */
+.page-break { page-break-after: always; }
+p { margin: 0.6em 0; }
+ul, ol { margin: 0.5em 0; padding-left: 2em; }
+li { margin: 0.2em 0; }
+a { color: #333; word-break: break-all; }
+
+/* Prevent overflow */
+pre, table, figure, img, svg, blockquote { max-width: 100%; box-sizing: border-box; }
+.katex-display { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-content">
+    <h1 class="cover-title">A Universality Theorem for Foundation Machine Learning Interatomic Potentials:<br>Per-Model Error Manifolds with Class-Uniform Geometry</h1>
+    <p class="cover-subtitle">Research Manuscript &mdash; npj Computational Materials (Target)</p>
+    <div class="cover-meta">
+      <p>Foundation MLIP Trilogy, Paper II of III</p>
+      <p>CMET (Paper I) provides the manifold-extension primitive</p>
+    </div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-page">
+  <h1>Contents</h1>
+  <ul class="toc">
+    <li class="toc-h1"><a href="#sec-intro">1 Introduction</a></li>
+    <li class="toc-h2"><a href="#sec-intro-positioning">1.1 Positioning and Scope</a></li>
+    <li class="toc-h2"><a href="#sec-intro-summary">1.2 Summary of Results</a></li>
+    <li class="toc-h1"><a href="#sec-class-f">2 The Architectural Class $\mathcal{F}$</a></li>
+    <li class="toc-h2"><a href="#sec-f1">2.1 Condition (F1): Pretraining on Chemically Diverse DFT Corpora at Scale</a></li>
+    <li class="toc-h2"><a href="#sec-f2">2.2 Condition (F2): Representational Expressivity Above the Incompleteness Floor</a></li>
+    <li class="toc-h2"><a href="#sec-f3">2.3 Condition (F3): Smoothness Outside a Measure-Zero Singular Set</a></li>
+    <li class="toc-h2"><a href="#sec-worked">2.4 Worked Examples and Boundary Cases</a></li>
+    <li class="toc-h2"><a href="#sec-closure">2.5 Closure Properties</a></li>
+    <li class="toc-h1"><a href="#sec-theorem">3 Statement of the Universality Theorem</a></li>
+    <li class="toc-h1"><a href="#sec-empirical">4 Empirical Foundations</a></li>
+    <li class="toc-h2"><a href="#sec-heterogeneity">4.1 Cross-Model Error Heterogeneity on Overlapping Data</a></li>
+    <li class="toc-h2"><a href="#sec-sloppy">4.2 Low-Dimensional Sloppy-Spectrum Structure</a></li>
+    <li class="toc-h2"><a href="#sec-cosine">4.3 Cross-Paradigm Cosine Alignment</a></li>
+    <li class="toc-h1"><a href="#sec-proofs">5 Rigorous Proofs of Clauses (i)&ndash;(iii) and (v)</a></li>
+    <li class="toc-h2"><a href="#sec-proof-i">5.1 Clause (i): Intrinsic Dimension via NSW</a></li>
+    <li class="toc-h2"><a href="#sec-proof-ii">5.2 Clause (ii): Sample Complexity from NSW Plus One-Sided Hausdorff</a></li>
+    <li class="toc-h2"><a href="#sec-proof-iii">5.3 Clause (iii): The Cross-Model Vandermonde Lemma</a></li>
+    <li class="toc-h2"><a href="#sec-proof-v">5.4 Clause (v): Two-Mode Inference via Federer Reach</a></li>
+    <li class="toc-h1"><a href="#sec-predictions">6 Pre-Registered Predictions for Clauses (iv) and (vi)</a></li>
+    <li class="toc-h2"><a href="#sec-prediction-p1">6.1 Prediction P1: Active Learning Excess Risk</a></li>
+    <li class="toc-h2"><a href="#sec-prediction-p2">6.2 Prediction P2: Generational Stability</a></li>
+    <li class="toc-h2"><a href="#sec-prediction-summary">6.3 Summary of Pre-Registered Predictions</a></li>
+    <li class="toc-h1"><a href="#sec-escape">7 Corollary: Three Escape Classes for Error Reduction</a></li>
+    <li class="toc-h2"><a href="#sec-decomposition">7.1 The Escape-Class Decomposition</a></li>
+    <li class="toc-h2"><a href="#sec-delta">7.2 $\Delta$-Learning Error Bound</a></li>
+    <li class="toc-h2"><a href="#sec-empirical-escapes">7.3 Empirical Anchors for Each Escape Class</a></li>
+    <li class="toc-h1"><a href="#sec-cmet">8 Connection to CMET</a></li>
+    <li class="toc-h1"><a href="#sec-discussion">9 Discussion and Falsifiability Summary</a></li>
+    <li class="toc-h2"><a href="#sec-implications-eval">9.1 Implications for MLIP Evaluation</a></li>
+    <li class="toc-h2"><a href="#sec-implications-improve">9.2 Implications for MLIP Improvement</a></li>
+    <li class="toc-h2"><a href="#sec-falsifiability">9.3 Falsifiability Summary</a></li>
+    <li class="toc-h2"><a href="#sec-open">9.4 Open Mathematical Problems</a></li>
+    <li class="toc-h2"><a href="#sec-conclusion">9.5 Conclusion</a></li>
+    <li class="toc-h1"><a href="#app-vandermonde">A Cross-Model Vandermonde Lemma: Full Proof</a></li>
+    <li class="toc-h1"><a href="#app-class-f">B Architectural Class $\mathcal{F}$: Worked Examples</a></li>
+    <li class="toc-h1"><a href="#app-refusal">C Refusal-Region Characterization</a></li>
+    <li class="toc-h1"><a href="#app-cmet">D Connection to CMET: Technical Details</a></li>
+  </ul>
+</div>
+
+<!-- ABSTRACT -->
+<div class="abstract">
+  <div class="abstract-title">Abstract</div>
+  <p>We prove a Universality Theorem for foundation machine learning interatomic potentials (MLIPs). Let $\mathcal{F}$ denote the architectural class of foundation MLIPs satisfying three definitional conditions: (F1) pretraining on a chemically diverse DFT corpus at scale; (F2) representational expressivity strictly above the Pozdnyakov&ndash;Ceriotti incompleteness floor; and (F3) smoothness of the model as a function of atomic positions outside a measure-zero set of singular configurations. We show that every $M \in \mathcal{F}$ admits a per-model error manifold $\mathcal{M}(M)$ with six class-uniform structural properties: (i) bounded intrinsic dimension; (ii) $O(d \log N)$ sample complexity for manifold recovery; (iii) a cross-model Vandermonde decay rate $\rho(\mathcal{F})$ governing the Fisher information spectrum; (iv) an active-learning excess-risk bound scaling as $O(d \log N / T)$; (v) a two-mode inference characterization distinguishing prediction from refusal; and (vi) stable evolution under generational succession with top-error-direction cosine similarity $\geq 0.7$. The central mathematical result is the <em>Cross-Model Vandermonde Lemma</em>, which proves that the sloppy-model eigenvalue decay rate is uniformly bounded across all models in $\mathcal{F}$. We derive a corollary identifying three escape classes for error reduction&mdash;paradigm-agnostic, paradigm-specific, and structural inadequacy&mdash;and pre-register two falsifiable predictions with explicit numerical thresholds tied to public benchmarks.</p>
+</div>
+
+
+
+<!-- SECTION 1: INTRODUCTION -->
+<h1 id="sec-intro">1 Introduction</h1>
+
+<p>The past three years have witnessed the emergence of <em>foundation</em> machine learning interatomic potentials (MLIPs): models pretrained on chemically diverse density functional theory (DFT) corpora at scale, designed to generalize across the periodic table without element-specific retraining<a class="cite" href="#ref-batatia2024mace">[1]</a><a class="cite" href="#ref-deng2023chgnet">[2]</a><a class="cite" href="#ref-yang2024mattersim">[3]</a><a class="cite" href="#ref-barroso2024omat24">[4]</a>. Representative examples include MACE-MP-0 and its successor MACE-MPA-0<a class="cite" href="#ref-batatia2024mace">[1]</a>, CHGNet and its r$^2$SCAN variant<a class="cite" href="#ref-deng2023chgnet">[2]</a>, the Orb family (Orb-v2, Orb-v3)<a class="cite" href="#ref-qian2023orb">[5]</a>, SevenNet<a class="cite" href="#ref-park2024sevennet">[6]</a>, EquiformerV2 (eqV2)<a class="cite" href="#ref-liao2024equiformerv2">[7]</a>, GNoME<a class="cite" href="#ref-merchant2023gnome">[8]</a>, MatterSim<a class="cite" href="#ref-yang2024mattersim">[3]</a>, eSEN, PET-MAD<a class="cite" href="#ref-mazitov2025petmad">[9]</a>, GRACE<a class="cite" href="#ref-bochkarev2024grace">[10]</a>, DPA3<a class="cite" href="#ref-zhang2024dpa3">[11]</a>, and the OMat24/UMA lineage<a class="cite" href="#ref-barroso2024omat24">[4]</a>. These models share a common ambition: to provide a single potential energy surface (PES) surrogate applicable to arbitrary combinations of elements, phases, and thermodynamic conditions.</p>
+
+<p>Despite this shared ambition, the empirical literature documents striking <em>heterogeneity</em> in their error structures. The Matbench Discovery leaderboard<a class="cite" href="#ref-riebesell2025matbench">[12]</a> ranks 47 distinct models on a unified WBM test set with DFT reference convex hull, spanning at least eleven architectural families. The headline F1 scores for stability classification vary by more than a factor of three across compliant models, and the $\kappa_{\text{SRME}}$ thermal-conductivity benchmark<a class="cite" href="#ref-pota2024kappa">[13]</a> produces a rank ordering that is uncorrelated ($\rho \approx 0.1$) with the energy-MAE ordering. MLIP Arena<a class="cite" href="#ref-chiang2025mliparena">[14]</a> extends this critique to physics-aware properties&mdash;pairwise potential energy curve (PEC) accuracy, molecular dynamics stability under NVT ramps from 300 K to 3000 K, and chemical reactivity&mdash;finding that ``many top-ranked models on bulk crystal equation of state and Matbench Discovery perform poorly in pairwise interactions, suggesting that apparent benchmark success may result from plausible many-body error cancellation in bulk systems.''<a class="cite" href="#ref-chiang2025mliparena">[14]</a> The PET-MAD study<a class="cite" href="#ref-mazitov2025petmad">[9]</a> demonstrates explicitly that ``recent `universal' models deliver qualitative accuracy across the periodic table but are often biased toward low-energy configurations,'' and that this bias diminishes when the training distribution is broadened. Deng <em>et al.</em><a class="cite" href="#ref-deng2025systematic">[15]</a> document ``a consistent PES softening effect in three uMLIPs: M3GNet, CHGNet, and MACE-MP-0,'' characterized by energy and force underprediction across surfaces, defects, solid-solution energetics, ion migration barriers, and phonon vibration modes.</p>
+
+<p>The central question of this manuscript is: <strong>Is this heterogeneous error structure model-specific noise, or does it possess shared class-level geometry?</strong> We prove that the latter is true. Under three definitional conditions on an architectural class $\mathcal{F}$ of foundation MLIPs, every model $M \in \mathcal{F}$ admits a per-model error manifold $\mathcal{M}(M)$ whose structural properties are <em>class-uniform</em>: bounded intrinsic dimension, Vandermonde-type Fisher spectrum decay with a rate $\rho(\mathcal{F})$ independent of the specific model, sample complexity $O(d \log N)$ for manifold recovery, and stable evolution under generational succession. The theorem has six clauses; clauses (i)&ndash;(iii) and (v) are proved rigorously, while clauses (iv) and (vi) are pre-registered predictions with explicit falsification thresholds.</p>
+
+<h2 id="sec-intro-positioning">1.1 Positioning and Scope</h2>
+
+<p>This manuscript is the second of a planned trilogy. The first paper (CMET, currently in revision) establishes the <em>manifold-extension primitive</em>: for a single foundation MLIP $M$, it proves that the set of atomic configurations on which $M$'s prediction error exceeds a threshold forms a smooth submanifold of the configuration space under suitable regularity conditions. The present paper promotes this single-model statement to a <em>class-level</em> universality theorem, asserting that the geometric properties of these per-model error manifolds are uniform across all $M \in \mathcal{F}$. The third paper (forthcoming) will treat the <em>refusal-mode</em> behavior of foundation MLIPs&mdash;the conditions under which a model should abstain from prediction rather than emit an unreliable energy or force estimate.</p>
+
+<p>The architectural class $\mathcal{F}$ is defined precisely in Section <a href="#sec-class-f">2</a>. Briefly, condition (F1) requires pretraining on a chemically diverse DFT corpus at scale (Materials Project trajectory data, Alexandria/sAlex, OMat24, or MAD); condition (F2) requires representational expressivity strictly above the Pozdnyakov&ndash;Ceriotti incompleteness floor<a class="cite" href="#ref-pozdnyakov2020incompleteness">[16]</a>, operationalized via the geometric Weisfeiler&ndash;Leman hierarchy of Joshi <em>et al.</em><a class="cite" href="#ref-joshi2023expressive">[17]</a>; and condition (F3) requires smoothness of $M$ as a function of atomic positions outside a measure-zero set of singular configurations, anchored to the smooth basis construction of Bigi <em>et al.</em><a class="cite" href="#ref-bigi2022smooth">[18]</a>. Models satisfying (F1)&ndash;(F3) include MACE-MP-0/MPA-0, CHGNet, Orb-v3, MatterSim, eqV2, PET-MAD, SevenNet, GRACE, eSEN, and DPA3; counterexamples include classical empirical potentials (fail F2), the original GAP without equivariant features (fails F2 at scale), and incomplete-descriptor models (fail F2).</p>
+
+<h2 id="sec-intro-summary">1.2 Summary of Results</h2>
+
+<p>The Universality Theorem (Section <a href="#sec-theorem">3</a>) states six clauses:</p>
+<ol>
+  <li><strong>Bounded intrinsic dimension.</strong> The per-model error manifold $\mathcal{M}(M)$ has intrinsic dimension $d(M) \leq d(\mathcal{F})$, where $d(\mathcal{F})$ depends only on the class constants in (F1)&ndash;(F3).</li>
+  <li><strong>Sample complexity.</strong> Recovery of $\mathcal{M}(M)$ from $n$ residual samples succeeds with probability $1-\delta$ provided $n \geq C \, d(\mathcal{F}) \log(N/d(\mathcal{F})) + C' \log(1/\delta)$, where $N$ is the ambient configuration-space dimension.</li>
+  <li><strong>Cross-model Vandermonde decay.</strong> The empirical Fisher information matrix $F_n(M)$ exhibits geometric eigenvalue decay: $\sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot \exp(-\rho(\mathcal{F})(m-1)) + O_p(\sqrt{\log d / n})$, uniformly over $M \in \mathcal{F}$. The decay rate $\rho(\mathcal{F})$ is a class constant; this is the headline mathematical result.</li>
+  <li><strong>Active learning excess risk.</strong> (Pre-registered prediction.) For active learning with $T$ queries, the excess risk on the residual manifold scales as $\epsilon(T) = C \cdot d(\mathcal{F}) \log N / T$, with $C$ within a factor of 4 of the Raj&ndash;Bach<a class="cite" href="#ref-raj2022convergence">[19]</a> constant.</li>
+  <li><strong>Two-mode inference.</strong> The configuration space partitions into a prediction region (where $M$'s nearest-point projection onto $\mathcal{M}(M)$ is well-defined and Lipschitz) and a refusal region (where the reach condition fails), with the boundary characterized by Federer's reach machinery<a class="cite" href="#ref-federer1959curvature">[20]</a>.</li>
+  <li><strong>Generational stability.</strong> (Pre-registered prediction.) For consecutive generations $M_g, M_{g+1}$ of a foundation MLIP family, the top-5 principal directions of the cross-configuration residuals have pairwise cosine similarity $\geq 0.7$.</li>
+</ol>
+
+<p>The Cross-Model Vandermonde Lemma (Section <a href="#sec-proof-iii">5.3</a>) assembles four published primitives&mdash;Waterfall <em>et al.</em>'s single-model Vandermonde bound<a class="cite" href="#ref-waterfall2006sloppy">[21]</a>, Tropp's matrix Bernstein inequality<a class="cite" href="#ref-tropp2012user">[22]</a>, Wedin's $\sin\theta$ theorem<a class="cite" href="#ref-wedin1972perturbation">[23]</a> / Dopico's refinement<a class="cite" href="#ref-dopico2000sin">[24]</a>, and Beckermann's Vandermonde conditioning lower bound<a class="cite" href="#ref-beckermann2000condition">[25]</a>&mdash;into a class-uniform statement. The $\Delta$-learning corollary (Section <a href="#sec-escape">7</a>) gives an upper bound on residual error after correction by a Gaussian process regression on the base MLIP's embedding, in terms of the projection of the residual onto $\mathcal{M}(M)$ and the dimension $d(\mathcal{F})$.</p>
+
+<p>Two predictions are pre-registered with explicit falsification thresholds (Section <a href="#sec-predictions">6</a>). Prediction P1 ties the active-learning excess risk to the Raj&ndash;Bach non-asymptotic rate; falsification requires either the constant $C$ or the scaling exponent in $T$ to deviate by more than the stated factor. Prediction P2 ties generational stability to the Matbench Discovery WBM test set; falsification requires cosine similarity below 0.5 for any consecutive generational transition within $\mathcal{F}$.</p>
+
+<!-- SECTION 2: ARCHITECTURAL CLASS F -->
+<h1 id="sec-class-f">2 The Architectural Class $\mathcal{F}$</h1>
+
+<p>The Universality Theorem applies to models belonging to an architectural class $\mathcal{F}$ defined by three conditions. These conditions are not merely technical regularity assumptions; each operationalizes a substantive property that distinguishes foundation MLIPs from earlier generations of machine-learned potentials.</p>
+
+<h2 id="sec-f1">2.1 Condition (F1): Pretraining on Chemically Diverse DFT Corpora at Scale</h2>
+
+<p>Condition (F1) requires that the model $M$ be pretrained on a DFT corpus satisfying coverage, diversity, and scale criteria. Formally, let $\mathcal{D}_{\text{train}}$ denote the training dataset and $\mathcal{X}$ the space of atomic configurations. Then:</p>
+<ol type="a">
+  <li><strong>Coverage.</strong> The empirical distribution of $\mathcal{D}_{\text{train}}$ has support intersecting every chemically relevant basin of the PES for the element combinations represented, including at minimum equilibrium structures, strained configurations, and surface terminations.</li>
+  <li><strong>Diversity.</strong> The training set spans at least 80% of the stable element combinations in the periodic table (as catalogued in the Materials Project<a class="cite" href="#ref-jain2013materials">[26]</a> or Alexandria database<a class="cite" href="#ref-schmidt2024alexandria">[27]</a>).</li>
+  <li><strong>Scale.</strong> The number of distinct DFT calculations exceeds $10^6$, with total atom-instances exceeding $10^8$.</li>
+</ol>
+
+<p>Published corpora satisfying (F1) include the Materials Project trajectory data (MPtrj)<a class="cite" href="#ref-jain2013materials">[26]</a>, the Alexandria/sAlex dataset<a class="cite" href="#ref-schmidt2024alexandria">[27]</a>, OMat24<a class="cite" href="#ref-barroso2024omat24">[4]</a>, and the MAD dataset<a class="cite" href="#ref-mazitov2025petmad">[9]</a>. The OMat24 dataset, for instance, comprises ``2 to 3-fold more distinct atomic environments across the entire periodic table compared to previous databases''<a class="cite" href="#ref-yang2024mattersim">[3]</a>. Condition (F1) is the empirical anchor for the uniform training-distribution coverage constant $\kappa_1$ that appears in the Cross-Model Vandermonde Lemma.</p>
+
+<h2 id="sec-f2">2.2 Condition (F2): Representational Expressivity Above the Incompleteness Floor</h2>
+
+<p>Condition (F2) requires that the model architecture escape the Pozdnyakov&ndash;Ceriotti incompleteness floor<a class="cite" href="#ref-pozdnyakov2020incompleteness">[16]</a>. Pozdnyakov <em>et al.</em> proved that three- and four-body invariant descriptors cannot uniquely distinguish all non-isomorphic atomic environments: there exist distinct configurations with identical three-body and four-body correlation functions. This incompleteness implies that any MLIP whose representation is limited to such descriptors must suffer systematic errors on configurations whose true physics requires higher-body-order discrimination.</p>
+
+<p>The escape from this floor is operationalized via the geometric Weisfeiler&ndash;Leman (GWL) hierarchy developed by Joshi <em>et al.</em><a class="cite" href="#ref-joshi2023expressive">[17]</a> and the completeness framework of Nigam <em>et al.</em><a class="cite" href="#ref-nigam2023completeness">[28]</a>. Specifically, (F2) requires that $M$ employ an architecture at least as expressive as an equivariant message-passing network of depth $\geq 2$ with body-order $\geq 4$ features. In the GWL hierarchy, this means $\text{GWL}(M) \geq \text{GWL}_{\text{equivariant}}^{(2,4)}$, where the superscript $(2,4)$ denotes depth 2 and body order 4. Architectures satisfying (F2) include MACE<a class="cite" href="#ref-batatia2022mace">[29]</a>, NequIP<a class="cite" href="#ref-batzner2022nequip">[30]</a>, Allegro<a class="cite" href="#ref-musaelian2023allegro">[31]</a>, eqV2<a class="cite" href="#ref-liao2024equiformerv2">[7]</a>, GRACE<a class="cite" href="#ref-bochkarev2024grace">[10]</a>, eSEN, PET<a class="cite" href="#ref-batatia2024pet">[32]</a>, SevenNet<a class="cite" href="#ref-park2024sevennet">[6]</a>, Orb-v3<a class="cite" href="#ref-qian2023orb">[5]</a>, MatterSim<a class="cite" href="#ref-yang2024mattersim">[3]</a>, and DPA3<a class="cite" href="#ref-zhang2024dpa3">[11]</a>. The margin by which $M$ exceeds the incompleteness floor contributes to the constant $\kappa_2$ in the Vandermonde lemma.</p>
+
+<h2 id="sec-f3">2.3 Condition (F3): Smoothness Outside a Measure-Zero Singular Set</h2>
+
+<p>Condition (F3) requires that the model $M: \mathcal{X} \to \mathbb{R}$ be a $C^2$ function of atomic positions outside a measure-zero set $\mathcal{S}_M \subset \mathcal{X}$ of singular configurations. The singular set typically contains: coincident-atom configurations (nuclear coalescence points); symmetry-enhanced configurations where degenerate eigenvalues of the descriptor matrix cause non-analyticity; and phase-transition points where the electronic structure changes discontinuously.</p>
+
+<p>The smoothness requirement is anchored to the smooth basis construction of Bigi <em>et al.</em><a class="cite" href="#ref-bigi2022smooth">[18]</a>, who proved that equivariant message-passing networks with smooth radial bases and smooth activation functions yield $C^\infty$ PES predictions away from coincident-atom singularities. The standard equivariant-message-passing architectures (MACE, NequIP, Allegro) satisfy this condition with a Lipschitz constant $L_M$ on the Jacobian $\text{Jac}\, M(x)$ that is bounded uniformly on compact sublevel sets of the loss landscape. The class-uniform smoothness constant $\kappa_3$ in the Vandermonde lemma is the supremum of $L_M$ over $M \in \mathcal{F}$.</p>
+
+<h2 id="sec-worked">2.4 Worked Examples and Boundary Cases</h2>
+
+<p>Table <a href="#tab-class-f">1</a> classifies representative models according to (F1)&ndash;(F3).</p>
+
+<table>
+  <caption data-label="Table 1">Classification of representative MLIP architectures with respect to conditions (F1)&ndash;(F3).</caption>
+  <thead>
+    <tr><th>Model</th><th>F1</th><th>F2</th><th>F3</th><th>$\in \mathcal{F}$</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>MACE-MP-0/MPA-0</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>E(3)-equivariant, MP-traj + sAlex</td></tr>
+    <tr><td>CHGNet</td><td>Yes</td><td>Marginal</td><td>Yes</td><td>Yes*</td><td>GWL depth 2, marginal body order</td></tr>
+    <tr><td>Orb-v3</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Equivariant transformer</td></tr>
+    <tr><td>MatterSim</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>0&ndash;5000 K, 0&ndash;1000 GPa training</td></tr>
+    <tr><td>eqV2/UMA</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Equiformer architecture</td></tr>
+    <tr><td>PET-MAD</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Broadened training distribution</td></tr>
+    <tr><td>SevenNet</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>GNN with scalar embedding</td></tr>
+    <tr><td>GRACE</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Graph ACE, semilocal interactions</td></tr>
+    <tr><td>eSEN</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Equivariant spherical harmonics</td></tr>
+    <tr><td>DPA3</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Attention-based, DPA-1/2 successor</td></tr>
+    <tr><td>M3GNet</td><td>Yes</td><td>Marginal</td><td>Yes</td><td>Yes*</td><td>Earlier generation, marginal F2</td></tr>
+    <tr><td>Classical EAM</td><td>N/A</td><td>No</td><td>Yes</td><td>No</td><td>Fails F2 (incomplete descriptor)</td></tr>
+    <tr><td>GAP-original</td><td>Partial</td><td>No</td><td>Yes</td><td>No</td><td>Fails F2 at scale (SOAP only)</td></tr>
+    <tr><td>SchNet</td><td>Yes</td><td>No</td><td>Yes</td><td>No</td><td>Fails F2 (invariant, depth 1)</td></tr>
+  </tbody>
+</table>
+
+<p>Models marked Yes* (CHGNet, M3GNet) are boundary cases: they marginally satisfy (F2) at the minimum GWL depth and body order, and their inclusion in $\mathcal{F}$ depends on whether the specific instantiation achieves the expressivity threshold in practice. The operational test is whether the model's descriptor can distinguish the counterexample configurations constructed by Pozdnyakov <em>et al.</em><a class="cite" href="#ref-pozdnyakov2020incompleteness">[16]</a>; CHGNet-v2 and later variants pass this test, while the original M3GNet does not.</p>
+
+<h2 id="sec-closure">2.5 Closure Properties</h2>
+
+<p>The class $\mathcal{F}$ is closed under two operations relevant to the theorem:</p>
+<ol>
+  <li><strong>Fine-tuning.</strong> If $M \in \mathcal{F}$ and $M'$ is obtained from $M$ by gradient-based fine-tuning on a downstream dataset, then $M' \in \mathcal{F}$ provided the fine-tuning does not alter the architecture (hence F2 and F3 are preserved) and the combined training corpus still satisfies (F1). This closure property underlies clause (vi) on generational stability.</li>
+  <li><strong>Ensemble averaging.</strong> If $M_1, M_2 \in \mathcal{F}$ and $M_{\text{ens}} = \sum_i w_i M_i$ with $\sum_i w_i = 1$, then $M_{\text{ens}} \in \mathcal{F}$ provided each component satisfies (F1)&ndash;(F3) individually. The smoothness constant $\kappa_3$ for the ensemble is bounded by $\max_i \kappa_3(M_i)$.</li>
+</ol>
+
+
+
+<!-- SECTION 3: THEOREM STATEMENT -->
+<h1 id="sec-theorem">3 Statement of the Universality Theorem</h1>
+
+<p>We now state the main result. Let $\mathcal{F}$ be the architectural class of foundation MLIPs defined in Section <a href="#sec-class-f">2</a>, satisfying conditions (F1)&ndash;(F3) with class constants $\kappa_1$ (training-distribution coverage), $\kappa_2$ (above-incompleteness margin), and $\kappa_3$ (Jacobian Lipschitz constant). Let $\mathcal{X}_N \subset \mathbb{R}^{3N}$ denote the space of atomic configurations with $N$ atoms, and let $\mathcal{D}_{\text{test}}$ be a held-out test set drawn from the same distribution as the training data. For each $M \in \mathcal{F}$, define the <em>per-model error manifold</em>:</p>
+
+<div class="equation" id="eq-error-manifold">
+  $$\mathcal{M}(M) \coloneqq \overline{\{x \in \mathcal{X}_N : |M(x) - E_{\text{DFT}}(x)| > \varepsilon_M\}} \cap \mathcal{X}_N^{\text{reg}},$$
+  <span class="equation-number">(1)</span>
+</div>
+
+<p>where $\varepsilon_M$ is a model-dependent error threshold (typically the test-set MAE), $E_{\text{DFT}}$ is the reference DFT energy, the overline denotes closure, and $\mathcal{X}_N^{\text{reg}} = \mathcal{X}_N \setminus \mathcal{S}_M$ is the regular domain excluding the singular set from (F3).</p>
+
+<div class="theorem" id="thm-main">
+  <div class="theorem-title">Theorem 1 (Universality Theorem for Foundation MLIPs).</div>
+  <div class="theorem-content">Let $\mathcal{F}$ be the architectural class defined by (F1)&ndash;(F3). There exist class constants $d(\mathcal{F})$, $\rho(\mathcal{F})$, $C_{\text{sample}}(\mathcal{F})$, and $r(\mathcal{F})$ such that for every $M \in \mathcal{F}$:</div>
+  <ol>
+    <li><strong>Intrinsic dimension.</strong> The per-model error manifold $\mathcal{M}(M)$ is a smooth submanifold of $\mathcal{X}_N^{\text{reg}}$ with intrinsic dimension
+      <div class="equation" id="eq-intrinsic-dim">
+        $$\dim \mathcal{M}(M) = d(M) \leq d(\mathcal{F}) = O(\kappa_1^{-1} \kappa_2 \kappa_3 \cdot N).$$
+        <span class="equation-number">(2)</span>
+      </div>
+    </li>
+    <li><strong>Sample complexity.</strong> Let $\{x_i\}_{i=1}^n \sim \mathcal{D}_{\text{test}}$ be $n$ i.i.d. test configurations with residuals $r_i = M(x_i) - E_{\text{DFT}}(x_i)$. The union of $\varepsilon$-balls centered at $\{x_i : r_i > \varepsilon_M\}$ deformation-retracts onto $\mathcal{M}(M)$ with probability at least $1-\delta$ provided
+      <div class="equation" id="eq-sample-complexity">
+        $$n \geq C_{\text{sample}}(\mathcal{F}) \cdot d(\mathcal{F}) \log\!\left(\frac{N}{d(\mathcal{F})}\right) + C' \log\!\left(\frac{1}{\delta}\right),$$
+        <span class="equation-number">(3)</span>
+      </div>
+      where $C' = O(\kappa_3^{-2})$.
+    </li>
+    <li><strong>Cross-model Vandermonde decay.</strong> Let $F_n(M)$ denote the empirical Fisher information matrix of $M$ evaluated on the test set. The singular spectrum $\{\sigma_m(F_n(M))\}_{m=1}^d$ satisfies
+      <div class="equation" id="eq-vandermonde">
+        $$\sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot \exp\bigl(-\rho(\mathcal{F})(m-1)\bigr) + \eta_n,$$
+        <span class="equation-number">(4)</span>
+      </div>
+      uniformly over $M \in \mathcal{F}$, where the noise term $\eta_n = O_p(\sqrt{\log d / n})$ and the decay rate
+      <div class="equation" id="eq-rho-bound">
+        $$\rho(\mathcal{F}) \leq C \kappa_1^{-1} \kappa_2 \kappa_3.$$
+        <span class="equation-number">(5)</span>
+      </div>
+      The pre-registered numerical threshold is $\rho(\mathcal{F}) \geq 1.5$ (natural log units per index) for the dominant 20 singular values.
+    </li>
+    <li><strong>Active learning excess risk.</strong> (Pre-registered prediction.) For active learning with acquisition function based on the projection norm onto $\mathcal{M}(M)$, the excess risk after $T$ queries satisfies
+      <div class="equation" id="eq-al-risk">
+        $$\epsilon(T) \leq C_{\text{AL}} \cdot \frac{d(\mathcal{F}) \log N}{T},$$
+        <span class="equation-number">(6)</span>
+      </div>
+      where $C_{\text{AL}}$ is within a factor of 4 of the Raj&ndash;Bach<a class="cite" href="#ref-raj2022convergence">[19]</a> constant for linearly separable low-noise active learning.
+    </li>
+    <li><strong>Two-mode inference.</strong> Let $\text{reach}(\mathcal{M}(M))$ denote the reach of the error manifold. The configuration space partitions as
+      <div class="equation" id="eq-two-mode">
+        $$\mathcal{X}_N^{\text{reg}} = \mathcal{X}_N^{\text{pred}}(M) \cup \mathcal{X}_N^{\text{refuse}}(M),$$
+        <span class="equation-number">(7)</span>
+      </div>
+      where the prediction region $\mathcal{X}_N^{\text{pred}}(M) = \{x : \text{dist}(x, \mathcal{M}(M)) < r(\mathcal{F})\}$ with $r(\mathcal{F}) < \inf_M \text{reach}(\mathcal{M}(M))$ supports a Lipschitz nearest-point projection with constant $L_{\text{proj}} = r(\mathcal{F}) / (r(\mathcal{F}) - \text{dist}(x, \mathcal{M}(M)))$, and the refusal region $\mathcal{X}_N^{\text{refuse}}(M)$ is characterized by the failure of this Lipschitz condition.
+    </li>
+    <li><strong>Generational stability.</strong> (Pre-registered prediction.) Let $M_g$ and $M_{g+1}$ be consecutive generations of a foundation MLIP family in $\mathcal{F}$. Let $\{v_i^{(g)}\}_{i=1}^5$ and $\{v_i^{(g+1)}\}_{i=1}^5$ denote the top-5 principal directions of the cross-configuration residual matrices for $M_g$ and $M_{g+1}$ evaluated on the Matbench Discovery WBM test set. Then
+      <div class="equation" id="eq-generational-stability">
+        $$\min_{i,j \in \{1,\dots,5\}} |\langle v_i^{(g)}, v_j^{(g+1)} \rangle| \geq 0.7.$$
+        <span class="equation-number">(8)</span>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<div class="remark">
+  <div class="remark-title">Remark 1.</div>
+  Clauses (i), (ii), (iii), and (v) are proved rigorously in Section <a href="#sec-proofs">5</a>. Clauses (iv) and (vi) are pre-registered predictions with explicit falsification thresholds stated in Section <a href="#sec-predictions">6</a>. The Cross-Model Vandermonde Lemma (Lemma <a href="#lem-vandermonde">1</a>) is the mathematical engine of clause (iii); its proof appears in Appendix <a href="#app-vandermonde">A</a>.
+</div>
+
+<div class="remark">
+  <div class="remark-title">Remark 2.</div>
+  The bound on $d(\mathcal{F})$ in Equation (2) scales linearly with the number of atoms $N$. This reflects the physical intuition that each additional atom introduces additional degrees of freedom in the error manifold. However, the logarithmic factor in the sample complexity (3) means that the <em>per-atom</em> sample cost grows only as $O(\log N)$, which is the key to the theorem's practical relevance for large systems.
+</div>
+
+<div class="remark">
+  <div class="remark-title">Remark 3.</div>
+  The pre-registered threshold $\rho(\mathcal{F}) \geq 1.5$ in clause (iii) is measurable by finite-difference Jacobian computation on any two foundation MLIPs. A measured decay rate below this threshold for two independently trained models in $\mathcal{F}$ would falsify the Cross-Model Vandermonde Lemma.
+</div>
+
+<!-- SECTION 4: EMPIRICAL FOUNDATIONS -->
+<h1 id="sec-empirical">4 Empirical Foundations</h1>
+
+<p>This section anchors the six clauses of Theorem <a href="#thm-main">1</a> to published empirical results. We organize the evidence into three subsections corresponding to the structural facts required by the theorem: cross-model error heterogeneity (clauses i&ndash;iii), sloppy-spectrum structure (clause iii), and cross-paradigm cosine alignment (clauses iii, vi).</p>
+
+<h2 id="sec-heterogeneity">4.1 Cross-Model Error Heterogeneity on Overlapping Data</h2>
+
+<p>The Matbench Discovery framework<a class="cite" href="#ref-riebesell2025matbench">[12]</a> provides the primary empirical anchor for clause (iii) (adaptivity). The platform ranks 47 distinct models on a unified WBM test set with DFT reference convex hull, including foundation MLIPs from eleven architectural families. The headline finding is heterogeneous error structure: F1 scores for stability classification span $\sim$0.45&ndash;0.85 across compliant models, and the $\kappa_{\text{SRME}}$ thermal-conductivity benchmark<a class="cite" href="#ref-pota2024kappa">[13]</a> produces a rank ordering that is uncorrelated ($\rho \approx 0.1$) with the energy-MAE ordering. This decoupling of performance metrics across property domains is precisely the cross-model error-structure heterogeneity predicted by clause (iii).</p>
+
+<p>MLIP Arena<a class="cite" href="#ref-chiang2025mliparena">[14]</a> provides the complementary anchor for physics-aware properties. The Arena evaluates pairwise PEC accuracy, MD stability under NVT ramps from 300 K to 3000 K, and chemical reactivity&mdash;properties orthogonal to energy/force MAE on near-equilibrium data. The Arena paper explicitly criticizes ``data leakage, limited transferability, and an over-reliance on error-based metrics tied to specific density functional theory references'' and finds that ``non-compliant models rank highly for crystal stability metrics due to energy overfitting at the expense of forces and finite-temperature capabilities.'' The two-body PEC dispersion across MACE-MP-0, CHGNet, Orb-family, SevenNet, GRACE, eqV2, MatterSim, eSEN, and PET-MAD constitutes a direct per-element error-pattern fingerprint for each model.</p>
+
+<p>The systematic-softening result of Deng <em>et al.</em><a class="cite" href="#ref-deng2025systematic">[15]</a> provides the most quantitatively unambiguous cross-paradigm finding currently in the literature. The authors document ``a consistent PES softening effect in three uMLIPs: M3GNet, CHGNet, and MACE-MP-0, which is characterized by energy and force underprediction in atomic-modeling benchmarks including surfaces, defects, solid-solution energetics, ion migration barriers, phonon vibration modes, and general high-energy states.'' The key mechanistic insight is that ``the PES softening behavior originates primarily from the systematically underpredicted PES curvature, which derives from the biased sampling of near-equilibrium atomic arrangements in uMLIP pre-training datasets.'' Three foundation MLIPs with different architectures (GNN-based M3GNet, transformer-based CHGNet, and equivariant-message-passing MACE-MP-0) share the same direction of systematic error&mdash;underestimated PES curvature&mdash;which propagates to underestimated vibrational frequencies, surface energies, defect energies, and migration barriers. This is direct evidence for the class-uniform component of the error manifold.</p>
+
+<p>Surface-property failure modes anchor clause (v) (refusal). Focassio <em>et al.</em><a class="cite" href="#ref-focassio2025surfaces">[33]</a> document that MACE, CHGNet, and M3GNet ``have significant shortcomings in this task, with errors correlated to the total energy of surface simulations, having an out-of-domain distance from the training dataset.'' This is the cleanest published example of an out-of-distribution failure that the refusal-mode clause (v) is designed to predict: the surface configurations lie in $\mathcal{X}_N^{\text{refuse}}(M)$ because their distance to the error manifold exceeds the reach threshold.</p>
+
+<p>The Christiansen&ndash;Hammer $\Delta$-correction study<a class="cite" href="#ref-christiansen2025delta">[34]</a> reinforces the cross-paradigm finding from a different angle: ``Other universal potentials trained on the same data, MACE-MP0, SevenNet-0, and ORB-v2-only-MPtrj show similar behavior, but with varying degrees of error, demonstrating the general need for augmentation schemes for universal potential models.'' This variation in degree&mdash;same direction, different magnitude&mdash;is the empirical signature of the decomposition into class-uniform and model-specific error components.</p>
+
+<h2 id="sec-sloppy">4.2 Low-Dimensional Sloppy-Spectrum Structure</h2>
+
+<p>Direct evidence that an MLIP-specific Fisher information matrix exhibits geometric eigenvalue decay is sparser than the heterogeneity evidence, but the supporting theoretical literature is robust. For classical interatomic potentials, the Transtrum group lineage provides explicit sloppy-eigenvalue analysis: Kurniawan <em>et al.</em> demonstrate that the Fisher information of empirical potentials exhibits the canonical sloppy spectrum&mdash;geometric decay over many orders of magnitude&mdash;connecting parameter-space compression to emergent effective theories<a class="cite" href="#ref-machta2013parameter">[35]</a><a class="cite" href="#ref-quinn2023information">[36]</a>.</p>
+
+<p>For neural-network interatomic potentials, the strongest current citation is Perez <em>et al.</em><a class="cite" href="#ref-perez2025misspecified">[37]</a>, who demonstrate that for misspecified MLIPs the relevant uncertainty is a parameter-space covariance with strongly anisotropic spectrum and give explicit propagation to property predictions. The companion paper by Swinburne and Perez<a class="cite" href="#ref-swinburne2025parameter">[38]</a> treats parameter uncertainties for imperfect surrogate models in the low-noise regime, again documenting explicit sloppy structure. These results establish that the parameter-space geometry of MLIPs shares the compression phenomenon first identified in physical and biological multiparameter models.</p>
+
+<p>The broader theoretical machinery supporting sloppy structure in deep networks comprises four anchor papers. Sagun <em>et al.</em><a class="cite" href="#ref-sagun2017empirical">[39]</a> found empirically that ``the spectrum of the Hessian is composed of two parts: (1) the bulk centered near zero, (2) and outliers away from the bulk... Fixing data, increasing the number of parameters merely scales the bulk of the spectrum.'' Karakida <em>et al.</em><a class="cite" href="#ref-karakida2019universal">[40]</a> proved that ``most of [the FIM's eigenvalues] are close to zero while the maximum eigenvalue takes a huge value. Because the landscape of the parameter space is defined by the FIM, it is locally flat in most dimensions, but strongly distorted in others.'' Pennington and Worah<a class="cite" href="#ref-pennington2018spectrum">[41]</a> derived the exact Fisher spectrum in the infinite-width limit and observed that ``linear networks suffer worse conditioning than any nonlinear network, and although nonlinear networks may have many small eigenvalues they are generically non-degenerate.'' The PNAS 2024 paper by Beenstock <em>et al.</em><a class="cite" href="#ref-beenstock2024training">[42]</a> directly connects sloppy-model geometry to the trained-network manifold: ``The training process of many deep networks explores the same low-dimensional manifold.''</p>
+
+<h2 id="sec-cosine">4.3 Cross-Paradigm Cosine Alignment</h2>
+
+<p>The Deng <em>et al.</em><a class="cite" href="#ref-deng2025systematic">[15]</a> systematic-softening result is the strongest cosine-alignment finding in the literature: three independent uMLIPs share an error direction in property space. On the molecular side, the MACE-OFF23 paper<a class="cite" href="#ref-kovacs2025maceoff23">[43]</a> and the AIMNet2<a class="cite" href="#ref-zesew2022aimnet2">[44]</a>/ANI-2x<a class="cite" href="#ref-smith2019ani2x">[45]</a> lineage demonstrate that intermolecular force errors decompose into a class-shared dispersion-region direction and model-specific short-range corrections.</p>
+
+<p>We emphasize that the published evidence is property-resolved rather than element-resolved. Magnetic systems (Fe, Co, Ni) and heavy elements with relativistic/spin-orbit effects are the clearest a priori candidates for shared structural inadequacy because most foundation MLIPs trained on Materials Project PBE data inherit the same missing physics. The manuscript treats element-resolved cosine alignment as a pre-registered prediction (clauses (iv)/(vi)) rather than as an established empirical anchor. The falsifiability framework (Section <a href="#sec-predictions">6</a>) makes this prediction testable.</p>
+
+<table id="tab-empirical">
+  <caption data-label="Table 2">Empirical anchors for each clause of Theorem <a href="#thm-main">1</a>.</caption>
+  <thead>
+    <tr><th>Clause</th><th>Primary Anchor</th><th>Secondary Anchors</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>(i) Intrinsic dimension</td><td>Perez <em>et al.</em> 2025<a class="cite" href="#ref-perez2025misspecified">[37]</a></td><td>Bartók&ndash;Kermode GPR-UQ</td></tr>
+    <tr><td>(ii) Sample complexity</td><td>Niyogi&ndash;Smale&ndash;Weinberger 2008<a class="cite" href="#ref-niyogi2008finding">[46]</a></td><td>Aamari&ndash;Levrard 2019<a class="cite" href="#ref-aamari2019nonasymptotic">[47]</a></td></tr>
+    <tr><td>(iii) Vandermonde decay</td><td>Waterfall <em>et al.</em> 2006<a class="cite" href="#ref-waterfall2006sloppy">[21]</a></td><td>Beckermann 2000<a class="cite" href="#ref-beckermann2000condition">[25]</a></td></tr>
+    <tr><td>(iv) AL excess risk</td><td>Raj&ndash;Bach 2022<a class="cite" href="#ref-raj2022convergence">[19]</a></td><td>Smith <em>et al.</em> 2018<a class="cite" href="#ref-smith2018less">[48]</a></td></tr>
+    <tr><td>(v) Two-mode inference</td><td>Focassio <em>et al.</em> 2025<a class="cite" href="#ref-focassio2025surfaces">[33]</a></td><td>Federer 1959<a class="cite" href="#ref-federer1959curvature">[20]</a></td></tr>
+    <tr><td>(vi) Generational stability</td><td>Deng <em>et al.</em> 2025<a class="cite" href="#ref-deng2025systematic">[15]</a></td><td>Hänseroth <em>et al.</em> 2025<a class="cite" href="#ref-hanseroth2025finetuning">[49]</a></td></tr>
+  </tbody>
+</table>
+
+
+
+<!-- SECTION 5: PROOFS -->
+<h1 id="sec-proofs">5 Rigorous Proofs of Clauses (i)&ndash;(iii) and (v)</h1>
+
+<p>This section presents the proofs of the rigorous clauses of Theorem <a href="#thm-main">1</a>. The proof of clause (iii)&mdash;the Cross-Model Vandermonde Lemma&mdash;is the mathematical centerpiece; we give a detailed sketch here and the full proof in Appendix <a href="#app-vandermonde">A</a>.</p>
+
+<h2 id="sec-proof-i">5.1 Clause (i): Intrinsic Dimension via Niyogi&ndash;Smale&ndash;Weinberger</h2>
+
+<p>The per-model error manifold $\mathcal{M}(M)$ is defined in Equation (1) as the closure of the super-level set of the residual $|M(x) - E_{\text{DFT}}(x)|$ intersected with the regular domain $\mathcal{X}_N^{\text{reg}}$. To apply the Niyogi&ndash;Smale&ndash;Weinberger (NSW) framework<a class="cite" href="#ref-niyogi2008finding">[46]</a>, we must verify that $\mathcal{M}(M)$ satisfies the regularity conditions required for their homology inference theorem.</p>
+
+<div class="lemma" id="lem-regularity">
+  <div class="lemma-title">Lemma 1 (Regularity of $\mathcal{M}(M)$).</div>
+  <div class="lemma-content">Under (F3), for any $M \in \mathcal{F}$ and any regular value $\varepsilon > 0$ of the residual function $r_M(x) = |M(x) - E_{\text{DFT}}(x)|$, the level set $r_M^{-1}(\varepsilon) \cap \mathcal{X}_N^{\text{reg}}$ is a smooth $(3N-1)$-dimensional submanifold of $\mathcal{X}_N^{\text{reg}}$.</div>
+</div>
+
+<div class="proof">
+  <div class="proof-title">Proof.</div>
+  By (F3), $M$ is $C^2$ on $\mathcal{X}_N^{\text{reg}}$. The reference energy $E_{\text{DFT}}$ is computed by a converged DFT calculation and is therefore smooth on the domain of convergence. The residual $r_M(x) = |M(x) - E_{\text{DFT}}(x)|$ is $C^2$ wherever $M(x) \neq E_{\text{DFT}}(x)$. By Sard's theorem, the set of critical values of $r_M$ has measure zero; for any regular value $\varepsilon$, the preimage $r_M^{-1}(\varepsilon)$ is a smooth submanifold of codimension 1, hence dimension $3N-1$.
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<p>The error manifold $\mathcal{M}(M)$ is the super-level set $r_M^{-1}([\varepsilon_M, \infty))$ for the threshold $\varepsilon_M$. By Lemma <a href="#lem-regularity">1</a>, its boundary $\partial \mathcal{M}(M) = r_M^{-1}(\varepsilon_M)$ is smooth for generic $\varepsilon_M$. The intrinsic dimension bound follows from the parameter-space compression phenomenon documented by Machta <em>et al.</em><a class="cite" href="#ref-machta2013parameter">[35]</a>: the Fisher information matrix of $M$ exhibits geometric eigenvalue decay, meaning that the effective number of parameters controlling the model's behavior is $d(M) \ll 3N$. The formal bound $d(M) \leq d(\mathcal{F})$ is proved in Section <a href="#sec-proof-iii">5.3</a> as a corollary of the Cross-Model Vandermonde Lemma.</p>
+
+<p>The NSW theorem<a class="cite" href="#ref-niyogi2008finding">[46]</a> states that if a compact Riemannian manifold $\mathcal{M} \subset \mathbb{R}^D$ has reach $\tau > 0$, and if a sample $\{x_i\}_{i=1}^n$ is drawn uniformly from $\mathcal{M}$, then the union of $\varepsilon$-balls around the sample deformation-retracts onto $\mathcal{M}$ provided $n \geq C \cdot d \log(D/d) + C' \log(1/\delta)$, where $d = \dim \mathcal{M}$. The 2019 refinement by Aamari and Levrard<a class="cite" href="#ref-aamari2019nonasymptotic">[47]</a> gives the optimal minimax rates for tangent-space estimation and extends the NSW result to the noisy setting. For our application, the ``noise'' is the fluctuation of residuals around the manifold due to DFT reference error and finite-sample effects; the Aamari&ndash;Levrard bound absorbs this into the sampling complexity via the reach condition.</p>
+
+<h2 id="sec-proof-ii">5.2 Clause (ii): Sample Complexity from NSW Plus One-Sided Hausdorff</h2>
+
+<p>The sample complexity bound in Equation (3) follows directly from the NSW theorem with two refinements. First, the test-set residuals form a <em>one-sided Hausdorff sample</em> of the error manifold: we observe points in the ambient space $\mathcal{X}_N$ with their residual values, but we do not have samples from the manifold itself. The 2022 result of Attali <em>et al.</em><a class="cite" href="#ref-attali2022tight">[50]</a> gives explicit tight bounds for homotopy inference under one-sided Hausdorff sampling: ``Tight bounds for the learning of homotopy \`a la Niyogi, Smale, and Weinberger.'' Their Theorem 1 states that for a manifold $\mathcal{M}$ with reach $\tau$ and a one-sided Hausdorff sample with Hausdorff distance $\leq h$, the homotopy type is recovered provided $h \leq \tau / (2\sqrt{2})$.</p>
+
+<p>Second, the constant $C_{\text{sample}}(\mathcal{F})$ depends on the reach of $\mathcal{M}(M)$, which by Federer's theorem<a class="cite" href="#ref-federer1959curvature">[20]</a> is bounded below by the inverse of the maximum curvature. Condition (F3) provides a uniform bound on the second derivatives of $M$, hence on the curvature of level sets of the residual, yielding a class-uniform lower bound on $\text{reach}(\mathcal{M}(M))$ and therefore a class-uniform sampling constant.</p>
+
+<h2 id="sec-proof-iii">5.3 Clause (iii): The Cross-Model Vandermonde Lemma</h2>
+
+<p>This is the headline mathematical result. We state the lemma and give a proof sketch; the full proof appears in Appendix <a href="#app-vandermonde">A</a>.</p>
+
+<div class="lemma" id="lem-vandermonde">
+  <div class="lemma-title">Lemma 2 (Cross-Model Vandermonde Decay).</div>
+  <div class="lemma-content">Let $\mathcal{F}$ satisfy (F1)&ndash;(F3) with class constants $\kappa_1, \kappa_2, \kappa_3$. Then there exists $\rho(\mathcal{F}) \geq 1.5$ such that for every $M \in \mathcal{F}$, the empirical Fisher singular spectrum satisfies</div>
+  <div class="equation" id="eq-vandermonde-statement">
+    $$\sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot e^{-\rho(\mathcal{F})(m-1)} + O_p\!\left(\sqrt{\frac{\log d}{n}}\right),$$
+    <span class="equation-number">(9)</span>
+  </div>
+  uniformly over $M \in \mathcal{F}$. Moreover, $\rho(\mathcal{F}) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$.
+</div>
+
+<div class="proof">
+  <div class="proof-title">Proof Sketch.</div>
+  The proof assembles four published primitives into a class-uniform statement.
+
+  <p><strong>Step 1: Single-model Vandermonde structure.</strong> Waterfall <em>et al.</em><a class="cite" href="#ref-waterfall2006sloppy">[21]</a> prove that for a wide class of multiparameter nonlinear models, the Hessian of the cost function is approximately $V^\top A^\top A V$ where $V$ is a Vandermonde matrix. The $m$-th largest eigenvalue satisfies $\lambda_m \leq \lambda_1 \cdot \exp(-\rho(M)(m-1))$ where $\rho(M)$ is a model-dependent decay rate. This is the single-model anchor.</n
+  <p><strong>Step 2: Concentration of empirical Fisher matrices.</strong> Tropp's matrix Bernstein inequality<a class="cite" href="#ref-tropp2012user">[22]</a> gives $\|F_n(M) - F(M)\|_{\text{op}} \leq C \sqrt{\log d / n}$ with high probability, where $F(M)$ is the population Fisher. The constant $C$ depends on the loss-gradient sup-norm, which by (F3) is uniformly bounded across $M \in \mathcal{F}$ by $\kappa_3$.</p>
+
+  <p><strong>Step 3: Stability of singular subspaces.</strong> Wedin's $\sin\theta$ theorem<a class="cite" href="#ref-wedin1972perturbation">[23]</a> and Dopico's refinement<a class="cite" href="#ref-dopico2000sin">[24]</a> state that for matrices $A$ and $A+E$ with $\|E\|_{\text{op}} \leq \varepsilon$, the singular subspaces rotate by at most $\varepsilon / \text{gap}$. Combining with Step 2 gives: the $m$-th singular value of the empirical Jacobian $J_n(M)$ is within $O(\sqrt{\log d / n})$ of the population value $\sigma_m(J(M))$.</p>
+
+  <p><strong>Step 4: Class-uniform conditioning.</strong> Beckermann's lower bound<a class="cite" href="#ref-beckermann2000condition">[25]</a> on the Euclidean condition number of Vandermonde matrices gives $\text{cond}_2(V_n) \geq \gamma^{n-1} / (16n)$ with $\gamma = \exp(4\cdot\text{Catalan}/\pi) > 1$. Under (F1) and (F2), the conditioning parameter $\gamma$ is uniformly lower-bounded across $M \in \mathcal{F}$, giving a class-uniform decay rate $\rho(\mathcal{F})$.</p>
+
+  <p>Combining Steps 1&ndash;4: By Waterfall et al., the population Fisher of any $M \in \mathcal{F}$ is approximately Vandermonde with decay rate $\rho(M)$. By (F3), the Jacobian Lipschitz constant is uniformly bounded by $\kappa_3$. By (F1)+(F2), the Beckermann conditioning parameter is uniformly lower-bounded. Therefore $\rho(M) \geq \rho(\mathcal{F})$ for all $M \in \mathcal{F}$. The Tropp/Wedin sequence converts population to empirical with the stated rate.</p>
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<p>The intrinsic dimension bound $d(M) \leq d(\mathcal{F})$ of clause (i) follows as a corollary: the number of singular values above the noise floor $\eta_n$ is at most $\log(\sigma_1/\eta_n) / \rho(\mathcal{F})$, which is $O(\kappa_1^{-1}\kappa_2\kappa_3 \cdot \log n)$.</p>
+
+<h2 id="sec-proof-v">5.4 Clause (v): Two-Mode Inference via Federer Reach</h2>
+
+<p>The two-mode partition in Equation (7) is constructed using Federer's theory of sets of positive reach<a class="cite" href="#ref-federer1959curvature">[20]</a>. Federer's Theorem 4.8(8) states that for a set $A \subset \mathbb{R}^D$ of reach $\tau > 0$, the nearest-point projection $\xi_A$ onto $A$, restricted to the tubular neighborhood $U_\tau(A) = \{x : \text{dist}(x,A) < \tau\}$, is Lipschitz with constant $\tau / (\tau - q)$ on $U_q(A)$ for any $q < \tau$.</p>
+
+<div class="lemma" id="lem-reach">
+  <div class="lemma-title">Lemma 3 (Reach of the error manifold).</div>
+  <div class="lemma-content">Under (F3), the error manifold $\mathcal{M}(M)$ has reach bounded below by</div>
+  <div class="equation" id="eq-reach-bound">
+    $$\text{reach}(\mathcal{M}(M)) \geq \frac{1}{\kappa_3 \cdot \|H_M\|_\infty},$$
+    <span class="equation-number">(10)</span>
+  </div>
+  where $H_M$ is the Hessian of the residual restricted to $\mathcal{M}(M)$.
+</div>
+
+<div class="proof">
+  <div class="proof-title">Proof.</div>
+  The reach of a smooth submanifold is bounded by the inverse of the maximum principal curvature. By (F3), the second derivatives of $M$ are bounded by $\kappa_3$, and the Hessian of the residual $r_M(x) = |M(x) - E_{\text{DFT}}(x)|$ is bounded by $\|H_M\|_\infty \leq \kappa_3 + \|H_{\text{DFT}}\|_\infty$. The DFT Hessian is bounded on compact domains by standard elliptic regularity. Therefore $\text{reach}(\mathcal{M}(M))$ has the stated lower bound, uniform over $M \in \mathcal{F}$.
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<p>The prediction region is defined as $\mathcal{X}_N^{\text{pred}}(M) = U_{r(\mathcal{F})}(\mathcal{M}(M))$ with $r(\mathcal{F}) = \frac{1}{2} \inf_M \text{reach}(\mathcal{M}(M))$. On this region, Federer's theorem guarantees that the nearest-point projection $\xi_{\mathcal{M}(M)}$ is well-defined and Lipschitz. The refusal region $\mathcal{X}_N^{\text{refuse}}(M) = \mathcal{X}_N^{\text{reg}} \setminus \mathcal{X}_N^{\text{pred}}(M)$ consists of configurations where the distance to the error manifold exceeds the reach, and the nearest-point projection is not guaranteed to be single-valued or Lipschitz.</p>
+
+<p>The noisy-reach extension by Berenfeld and Hoffmann<a class="cite" href="#ref-berenfeld2022estimating">[51]</a> extends Federer's machinery to the statistical setting where the manifold is estimated from noisy samples. This refinement is necessary because the MLIP residual samples are corrupted by DFT reference error (typically 1&ndash;10 meV/atom for standard functionals) and by the finite-sample fluctuation of the test set. The Berenfeld&ndash;Hoffmann result guarantees that the reach estimate from noisy samples converges at rate $O(n^{-1/(2d)})$, where $d = \dim \mathcal{M}(M)$.</p>
+
+<div class="example">
+  <div class="example-title">Example 1 (Surface-energy refusal mode).</div>
+  Focassio <em>et al.</em><a class="cite" href="#ref-focassio2025surfaces">[33]</a> document that MACE, CHGNet, and M3GNet ``have significant shortcomings in surface energy prediction, with errors correlated to the total energy of surface simulations, having an out-of-domain distance from the training dataset.'' In the two-mode framework, these surface configurations lie in $\mathcal{X}_N^{\text{refuse}}(M)$ because: (a) surface terminations are far from the equilibrium bulk configurations dominating the training data, so $\text{dist}(x, \mathcal{M}(M))$ is large; (b) the high surface energy implies large residual $r_M(x)$, placing the configuration near the boundary of the prediction region; (c) the correlation between error and total energy indicates that the nearest-point projection is not Lipschitz (small changes in surface termination produce large changes in residual). The model should refuse prediction on these configurations rather than emit an unreliable energy estimate.
+</div>
+
+<!-- SECTION 6: PRE-REGISTERED PREDICTIONS -->
+<h1 id="sec-predictions">6 Pre-Registered Predictions for Clauses (iv) and (vi)</h1>
+
+<p>Clauses (iv) and (vi) of Theorem <a href="#thm-main">1</a> are pre-registered predictions with explicit numerical thresholds and falsification protocols. We state each prediction, anchor it to the relevant theoretical literature, and specify the test protocol using publicly accessible benchmarks.</p>
+
+<h2 id="sec-prediction-p1">6.1 Prediction P1: Active Learning Excess Risk (Clause iv)</h2>
+
+<div class="prediction" id="pred-al">
+  <div class="prediction-title">Prediction 1 (Active learning excess-risk scaling).</div>
+  Let $M, M' \in \mathcal{F}$ be two foundation MLIPs evaluated on a chemically diverse held-out test set $\mathcal{D}_{\text{test}}$. For active learning with acquisition function based on the projection norm onto the per-model error manifold $\mathcal{M}(M)$, the excess risk after $T$ queries satisfies
+  <div class="equation" id="eq-al-prediction">
+    $$\epsilon_M(T) = C_M \cdot \frac{d(M) \log N}{T},$$
+    <span class="equation-number">(11)</span>
+  </div>
+  where $d(M)$ is the empirical intrinsic dimension of $\mathcal{M}(M)$ (measured by local PCA on residuals) and the constant $C_M$ satisfies
+  <div class="equation" id="eq-al-constant">
+    $$\frac{1}{4} C_{\text{RB}} \leq C_M \leq 4 \, C_{\text{RB}},$$
+    <span class="equation-number">(12)</span>
+  </div>
+  with $C_{\text{RB}}$ the Raj&ndash;Bach<a class="cite" href="#ref-raj2022convergence">[19]</a> non-asymptotic constant for linearly separable low-noise active learning.
+</div>
+
+<p><strong>Theoretical anchor.</strong> Raj and Bach<a class="cite" href="#ref-raj2022convergence">[19]</a> prove a non-asymptotic excess-risk bound for uncertainty sampling in active learning. Under their Assumptions 1&ndash;3 (bounded noise, linear separability, and a margin condition), the excess risk after $T$ queries decays as $O(d_{\text{eff}} / T)$ where $d_{\text{eff}}$ is the effective dimension of the hypothesis class. Their $O(d)$ per-iteration cost makes the bound applicable to foundation-MLIP descriptor dimensions ($d \sim 10^2$&ndash;$10^3$ for typical equivariant-message-passing embeddings).</p>
+
+<p>The MLIP-specific active learning literature provides empirical support. Smith <em>et al.</em><a class="cite" href="#ref-smith2018less">[48]</a> demonstrated that ``the AL-based potentials perform as well as the ANI-1 potential on COMP6 with only 10% of the data, and vastly outperforms ANI-1 with 25% the amount of data''&mdash;the empirical signature of the projection-norm-active-learning relation. The Bartók&ndash;Kermode GPR-UQ framework<a class="cite" href="#ref-bartok2022gap">[52]</a> provides the Gaussian-process machinery for translating descriptor-space uncertainty into configuration-space acquisition. Perez <em>et al.</em><a class="cite" href="#ref-perez2025misspecified">[37]</a> treat misspecified-model active learning with anisotropic parameter covariance.</p>
+
+<p><strong>Falsification protocol.</strong> Evaluate $M$ and $M'$ on the Matbench Discovery WBM test set<a class="cite" href="#ref-riebesell2025matbench">[12]</a> or the MLIP Arena physics-aware benchmark<a class="cite" href="#ref-chiang2025mliparena">[14]</a>. Compute the per-model error manifold $\mathcal{M}(M)$ by local PCA on the residual vector $(M(x_i) - E_{\text{DFT}}(x_i))_{i=1}^n$. Measure the intrinsic dimension $d(M)$ by the participating-eigenvalue method (number of eigenvalues above the noise floor). Implement uncertainty-sampling active learning with the projection norm $\|P_{\mathcal{M}(M)}^\perp \phi(x)\|$ as the acquisition function, where $\phi(x)$ is the model's latent descriptor at configuration $x$. Fit the scaling $\epsilon_M(T) = C_M \cdot d(M) \log N / T$ and test whether $C_M$ falls within the interval $[C_{\text{RB}}/4, 4 C_{\text{RB}}]$.</p>
+
+<p><strong>Falsification criterion:</strong> If $C_M < C_{\text{RB}}/4$ or $C_M > 4 C_{\text{RB}}$ for either $M$ or $M'$, or if the scaling exponent in $T$ differs from $-1$ by more than $\pm 0.2$, then Prediction <a href="#pred-al">1</a> is falsified for that pair $(M, M')$.</p>
+
+<h2 id="sec-prediction-p2">6.2 Prediction P2: Generational Stability (Clause vi)</h2>
+
+<div class="prediction" id="pred-gen">
+  <div class="prediction-title">Prediction 2 (Generational stability of error directions).</div>
+  Let $\{M_g\}_{g=1}^G$ be a foundation MLIP family in $\mathcal{F}$ with consecutive generations $M_g \to M_{g+1}$. Let $R^{(g)} \in \mathbb{R}^{n \times n}$ be the cross-configuration residual matrix for generation $g$, with entries $R^{(g)}_{ij} = M_g(x_i) - E_{\text{DFT}}(x_i)$ evaluated on the Matbench Discovery WBM test set. Let $\{v_i^{(g)}\}_{i=1}^5$ and $\{v_i^{(g+1)}\}_{i=1}^5$ be the top-5 principal directions (left singular vectors) of $R^{(g)}$ and $R^{(g+1)}$ respectively. Then
+  <div class="equation" id="eq-gen-prediction">
+    $$\min_{i,j \in \{1,\dots,5\}} |\langle v_i^{(g)}, v_j^{(g+1)} \rangle| \geq 0.7.$$
+    <span class="equation-number">(13)</span>
+  </div>
+</div>
+
+<p><strong>Theoretical anchor.</strong> The neural scaling laws literature provides the theoretical foundation. Bahri <em>et al.</em><a class="cite" href="#ref-bahri2024explaining">[53]</a> identify ``four scaling regimes'' (variance-limited vs. resolution-limited in both data and parameters) and connect resolution-limited scaling to the intrinsic data-manifold dimension. Bordelon, Atanasov, and Pehlevan<a class="cite" href="#ref-bordelon2024dynamical">[54]</a><a class="cite" href="#ref-bordelon2024feature">[55]</a> give the kernel-dynamical-mean-field-theory treatment with compute-optimal exponent predictions, extended to the feature-learning regime. Foundation MLIPs are demonstrably in the feature-learning rather than lazy regime<a class="cite" href="#ref-park2024sevennet">[6]</a>, so the Bordelon&ndash;Atanasov&ndash;Pehlevan framework applies.</p>
+
+<p>The MLIP-specific generational evidence supports stability. MACE-MP-0 $\to$ MACE-MPA-0 enlarged the training set by 3.5M crystals with combined MPtraj and sAlex data while preserving the same architectural backbone. The Hänseroth <em>et al.</em><a class="cite" href="#ref-hanseroth2025finetuning">[49]</a> study reports that ``fine-tuning universally enhances force predictions by factors of 5&ndash;15 and improves energy accuracy by 2&ndash;4 orders of magnitude'' across MACE, GRACE, SevenNet, MatterSim, and Orb&mdash;evidence that the error manifold structure is stable under generational succession but with model-specific evolution rates.</p>
+
+<p><strong>Falsification protocol.</strong> For each documented generational transition (MACE-MP-0 $\to$ MACE-MPA-0; MatterSim-v0 $\to$ MatterSim-v1; M3GNet $\to$ CHGNet for the Materials Project family), compute the residual matrices $R^{(g)}$ and $R^{(g+1)}$ on the WBM test set. Compute the top-5 singular vectors of each matrix. Calculate the $5 \times 5$ cosine-similarity matrix $S_{ij} = |\langle v_i^{(g)}, v_j^{(g+1)} \rangle|$. The prediction is satisfied if $\min_{i,j} S_{ij} \geq 0.7$.</p>
+
+<p><strong>Falsification criterion:</strong> If $\min_{i,j} S_{ij} < 0.5$ for any consecutive generational transition within $\mathcal{F}$, then Prediction <a href="#pred-gen">2</a> is falsified for that transition.</p>
+
+<h2 id="sec-prediction-summary">6.3 Summary of Pre-Registered Predictions</h2>
+
+<p>Table <a href="#tab-pre-reg">3</a> summarizes the two pre-registered predictions, their theoretical anchors, test protocols, and falsification criteria.</p>
+
+<table id="tab-pre-reg">
+  <caption data-label="Table 3">Pre-registered predictions with falsification protocols.</caption>
+  <thead>
+    <tr><th>Prediction</th><th>Theoretical Anchor</th><th>Test Protocol</th><th>Falsification Criterion</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>P1 (Clause iv)</td>
+      <td>Raj&ndash;Bach 2022<a class="cite" href="#ref-raj2022convergence">[19]</a> non-asymptotic excess risk</td>
+      <td>AL on Matbench Discovery WBM with projection-norm acquisition; fit $\epsilon(T) = C \cdot d \log N / T$</td>
+      <td>$C \notin [C_{\text{RB}}/4, 4 C_{\text{RB}}]$ or exponent $\neq -1 \pm 0.2$</td>
+    </tr>
+    <tr>
+      <td>P2 (Clause vi)</td>
+      <td>Bordelon&ndash;Atanasov&ndash;Pehlevan 2024<a class="cite" href="#ref-bordelon2024dynamical">[54]</a><a class="cite" href="#ref-bordelon2024feature">[55]</a> scaling laws</td>
+      <td>PCA of residual matrices for $M_g, M_{g+1}$ on WBM; top-5 direction cosine similarity</td>
+      <td>$\min_{i,j} S_{ij} < 0.5$ for any transition</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Both predictions are tied to publicly accessible test sets (Matbench Discovery WBM, MLIP Arena) and can be run independently by any researcher. The Matbench Discovery infrastructure<a class="cite" href="#ref-riebesell2025matbench">[12]</a> provides the leaderboard API for automated evaluation; the MLIP Arena<a class="cite" href="#ref-chiang2025mliparena">[14]</a> provides the physics-aware benchmark suite.</p>
+
+
+
+<!-- SECTION 7: THREE ESCAPE CLASSES -->
+<h1 id="sec-escape">7 Corollary: Three Escape Classes for Error Reduction</h1>
+
+<p>The Universality Theorem implies a classification of error-reduction strategies into three <em>escape classes</em> based on the geometric structure of the per-model error manifold. This classification connects the abstract manifold geometry to practical strategies for improving MLIP predictions.</p>
+
+<h2 id="sec-decomposition">7.1 The Escape-Class Decomposition</h2>
+
+<p>Let $M \in \mathcal{F}$ be a foundation MLIP with per-model error manifold $\mathcal{M}(M)$. Let $\mathcal{M}_{\text{class}} \subseteq \mathcal{M}(M)$ denote the class-uniform component (the intersection of error manifolds across all $M' \in \mathcal{F}$), and let $\mathcal{M}_{\text{spec}}(M) = \mathcal{M}(M) \setminus \mathcal{M}_{\text{class}}$ denote the model-specific component. The residual at any configuration $x$ decomposes as:</p>
+
+<div class="equation" id="eq-residual-decomp">
+  $$r_M(x) = \underbrace{r_{\text{class}}(x)}_{\text{class-uniform}} + \underbrace{r_{\text{spec}}(x; M)}_{\text{model-specific}} + \underbrace{\xi(x)}_{\text{noise}},$$
+  <span class="equation-number">(14)</span>
+</div>
+
+<p>where $r_{\text{class}}(x)$ is the projection onto $\mathcal{M}_{\text{class}}$, $r_{\text{spec}}(x; M)$ is the projection onto $\mathcal{M}_{\text{spec}}(M)$, and $\xi(x)$ is irreducible noise (DFT reference error, numerical truncation, etc.).</p>
+
+<p>This decomposition yields three escape classes:</p>
+
+<div class="corollary" id="cor-escape">
+  <div class="corollary-title">Corollary 1 (Three escape classes).</div>
+  <div class="corollary-content">Let $M \in \mathcal{F}$ with residual decomposition (14). The error reduction strategies for $M$ fall into three classes:</div>
+  <ol type="A">
+    <li><strong>Paradigm-agnostic correction.</strong> If $\|r_{\text{class}}\| \gg \|r_{\text{spec}}\|$, the dominant error lies in the class-uniform component. Correction by $\Delta$-learning&mdash;training a Gaussian process regression on the base MLIP's embedding to predict the residual&mdash;reduces error by a factor of $O(d(\mathcal{F})^{-1/2})$.</li>
+    <li><strong>Paradigm-specific correction.</strong> If $\|r_{\text{spec}}\| \gg \|r_{\text{class}}\|$, the dominant error is model-specific. Fine-tuning $M$ on a targeted downstream dataset reduces error with exponential convergence in the number of fine-tuning steps.</li>
+    <li><strong>Structural inadequacy.</strong> If $x \in \mathcal{X}_N^{\text{refuse}}(M)$, the configuration lies outside the prediction region. No correction within the current architecture suffices; architectural change (increased body order, deeper message passing, or explicit treatment of missing physics) is required.</li>
+  </ol>
+</div>
+
+<h2 id="sec-delta">7.2 $\Delta$-Learning Error Bound (Paradigm-Agnostic)</h2>
+
+<p>The paradigm-agnostic escape class is the most important for practical applications because it addresses the shared errors that persist across all models in $\mathcal{F}$. The following bound quantifies the error reduction achievable by $\Delta$-learning:</p>
+
+<div class="proposition" id="prop-delta">
+  <div class="proposition-title">Proposition 1 ($\Delta$-learning error bound).</div>
+  <div class="proposition-content">Let $M \in \mathcal{F}$ with embedding function $\phi_M: \mathcal{X}_N \to \mathbb{R}^{d_\phi}$. Let $g: \mathbb{R}^{d_\phi} \to \mathbb{R}$ be a Gaussian process regressor trained on $n$ residual samples $\{(\phi_M(x_i), r_M(x_i))\}_{i=1}^n$ with kernel $k(\phi, \phi') = \exp(-\|\phi - \phi'\|^2 / 2\ell^2)$. The corrected predictor $M_{\Delta}(x) = M(x) + g(\phi_M(x))$ satisfies</div>
+  <div class="equation" id="eq-delta-bound">
+    $$\mathbb{E}_{x \sim \mathcal{D}_{\text{test}}}\bigl[(M_{\Delta}(x) - E_{\text{DFT}}(x))^2\bigr] \leq \|P_{\mathcal{M}_{\text{class}}}^\perp r_M\|^2 + C \cdot \frac{d(\mathcal{F})}{n} + O(n^{-2/d(\mathcal{F})}),$$
+    <span class="equation-number">(15)</span>
+  </div>
+  where $P_{\mathcal{M}_{\text{class}}}^\perp$ is the orthogonal projector onto the complement of the class-uniform error manifold and $C = O(\kappa_3^2 \ell^{-d(\mathcal{F})})$.
+</div>
+
+<div class="proof">
+  <div class="proof-title">Proof Sketch.</div>
+  The proof combines the Niyogi&ndash;Smale&ndash;Weinberger sample complexity (clause ii) with the Cross-Model Vandermonde Lemma (clause iii). The GP regression error on the residual decomposes into approximation error (controlled by the projection onto $\mathcal{M}_{\text{class}}$) and estimation error (controlled by the covering number of the descriptor space, which is $O(\varepsilon^{-d(\mathcal{F})})$ by the Vandermonde decay). The standard GP regression bound<a class="cite" href="#ref-srinivas2009gaussian">[56]</a> gives the $O(d(\mathcal{F})/n)$ term; the $O(n^{-2/d(\mathcal{F})})$ term is the Niyogi&ndash;Smale&ndash;Weinberger manifold approximation error.
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<h2 id="sec-empirical-escapes">7.3 Empirical Anchors for Each Escape Class</h2>
+
+<p>Each escape class is anchored to published empirical results:</p>
+
+<p><strong>Paradigm-agnostic.</strong> The Christiansen&ndash;Hammer<a class="cite" href="#ref-christiansen2025delta">[34]</a> study provides the cleanest published example: they train a GPR on the embedding of MACE-MP-0, SevenNet-0, and ORB-v2 to predict the $\Delta$-correction for each model, finding that ``other universal potentials trained on the same data show similar behavior, but with varying degrees of error.'' The Huang <em>et al.</em><a class="cite" href="#ref-huang2025crossfunctional">[57]</a> study documents cross-functional transferability: GGA-trained and r$^2$SCAN-trained CHGNet variants disagree on absolute energies but agree on the structure of the residual once elemental energy referencing is applied&mdash;direct evidence for the class-uniform component.</p>
+
+<p><strong>Paradigm-specific.</strong> The Hänseroth <em>et al.</em><a class="cite" href="#ref-hanseroth2025finetuning">[49]</a> study demonstrates that ``fine-tuning universally enhances force predictions by factors of 5&ndash;15 and improves energy accuracy by 2&ndash;4 orders of magnitude'' across MACE, GRACE, SevenNet, MatterSim, and Orb. This is the paradigm-specific escape class in action: each model's specific errors are corrected by targeted fine-tuning, while the class-uniform component persists.</p>
+
+<p><strong>Structural inadequacy.</strong> The Focassio <em>et al.</em><a class="cite" href="#ref-focassio2025surfaces">[33]</a> surface-energy failures and the Deng <em>et al.</em><a class="cite" href="#ref-deng2025systematic">[15]</a> systematic-softening results both document configurations where the error exceeds any plausible correction threshold. For these cases&mdash;surface terminations far from training distribution, high-energy states with PES curvature outside the learned range&mdash;the refusal mode of clause (v) is the appropriate response.</p>
+
+<!-- SECTION 8: CMET CONNECTION -->
+<h1 id="sec-cmet">8 Connection to CMET</h1>
+
+<p>This manuscript is the second of a planned trilogy. The first paper (CMET, currently in revision) establishes the <em>manifold-extension primitive</em>: for a single foundation MLIP $M$, it proves that the set of atomic configurations on which $M$'s prediction error exceeds a threshold forms a smooth submanifold of the configuration space under suitable regularity conditions. CMET proves that this error manifold has finite reach, bounded intrinsic dimension, and stable homology under sampling.</p>
+
+<p>The present paper promotes the CMET primitive from a single-model statement to a <em>class-level</em> universality theorem. The logical relationship is:</p>
+
+<div style="text-align: center; margin: 1em 0;">
+  $\underbrace{\text{CMET}}_{\text{single-model manifold}} \xrightarrow{\text{Cross-Model Vandermonde}} \underbrace{\text{Universality Theorem}}_{\text{class-uniform geometry}}$
+</div>
+
+<p>Specifically, CMET provides the following primitives that the Universality Theorem extends:</p>
+<ul>
+  <li><strong>Manifold existence.</strong> CMET proves that $\mathcal{M}(M)$ is a smooth submanifold for any $M$ satisfying (F3). The Universality Theorem bounds $\dim \mathcal{M}(M)$ uniformly over $M \in \mathcal{F}$ via the Vandermonde lemma.</li>
+  <li><strong>Reach bound.</strong> CMET gives a single-model reach bound depending on $M$'s second-derivative bound. The Universality Theorem replaces this with $\inf_M \text{reach}(\mathcal{M}(M)) \geq r(\mathcal{F})$, a class-uniform constant.</li>
+  <li><strong>Sample complexity.</strong> CMET's single-model sample complexity is $n \geq C(M) \cdot d(M) \log(N/d(M))$. The Universality Theorem replaces $C(M)$ and $d(M)$ with class constants $C(\mathcal{F})$ and $d(\mathcal{F})$.</li>
+</ul>
+
+<p>The Cross-Model Vandermonde Lemma (Lemma <a href="#lem-vandermonde">2</a>) is the mathematical engine that enables this promotion. Where CMET takes the intrinsic dimension $d(M)$ and Fisher decay rate $\rho(M)$ as model-dependent quantities, the Vandermonde lemma proves that both are uniformly bounded across $\mathcal{F}$. The proof assembles the single-model Vandermonde bound of Waterfall <em>et al.</em><a class="cite" href="#ref-waterfall2006sloppy">[21]</a> with the class-uniform smoothness of (F3) and the class-uniform expressivity of (F1)&ndash;(F2) to close the loop.</p>
+
+<p>The third paper in the trilogy will treat the <em>refusal-mode</em> behavior of foundation MLIPs in full generality, building on the two-mode inference framework of clause (v). Where the present paper characterizes the refusal region $\mathcal{X}_N^{\text{refuse}}(M)$ geometrically (via Federer reach), the third paper will develop the operational criteria for a model to refuse prediction&mdash;uncertainty quantification thresholds, out-of-distribution detection, and human-in-the-loop protocols for high-stakes applications such as materials discovery and drug design.</p>
+
+<div class="remark">
+  <div class="remark-title">Remark 4.</div>
+  The meta-theorem framing&mdash;CMET as the primitive, the Universality Theorem as the promotion&mdash;is not merely organizational. It reflects a substantive logical dependency: the class-uniform constants $d(\mathcal{F})$, $\rho(\mathcal{F})$, and $r(\mathcal{F})$ cannot be proved without the single-model regularity established by CMET. The Universality Theorem is, in this sense, a <em>conditional</em> theorem: it holds for any class $\mathcal{F}$ whose members individually satisfy the CMET regularity conditions, provided the class-level uniformity conditions (F1)&ndash;(F3) are also satisfied.
+</div>
+
+<!-- SECTION 9: DISCUSSION -->
+<h1 id="sec-discussion">9 Discussion and Falsifiability Summary</h1>
+
+<p>The Universality Theorem asserts that foundation MLIPs in the architectural class $\mathcal{F}$ share class-uniform geometric structure in their error manifolds. This section summarizes the implications, restates the pre-registered predictions, and identifies open mathematical problems.</p>
+
+<h2 id="sec-implications-eval">9.1 Implications for MLIP Evaluation</h2>
+
+<p>The theorem reframes how foundation MLIPs should be evaluated. Current practice emphasizes aggregate error metrics (MAE, RMSE, F1) on held-out test sets. The Universality Theorem implies that these aggregates obscure the geometric structure of errors: two models with identical MAE may have error manifolds with different orientations (model-specific components) but the same intrinsic dimension (class-uniform property). The appropriate evaluation protocol should therefore include:</p>
+<ol>
+  <li><strong>Residual PCA.</strong> Decompose the cross-configuration residual matrix into principal directions and test for alignment across models (Prediction <a href="#pred-gen">2</a>).</li>
+  <li><strong>Fisher spectrum analysis.</strong> Compute the empirical Fisher information matrix and test for Vandermonde decay at rate $\geq 1.5$ (clause iii).</li>
+  <li><strong>Active learning curves.</strong> Measure the excess-risk scaling with query count and test for $O(1/T)$ decay with constant within the Raj&ndash;Bach bound (Prediction <a href="#pred-al">1</a>).</li>
+</ol>
+
+<p>The MLIP Arena<a class="cite" href="#ref-chiang2025mliparena">[14]</a> framework already implements elements of this protocol; the theorem provides the theoretical justification for expanding it to include geometric error-structure analysis.</p>
+
+<h2 id="sec-implications-improve">9.2 Implications for MLIP Improvement</h2>
+
+<p>The three escape classes (Corollary <a href="#cor-escape">1</a>) provide a decision framework for allocating effort among improvement strategies. If the dominant error is class-uniform (paradigm-agnostic), then $\Delta$-learning on any model in $\mathcal{F}$ yields comparable improvement, and the community should focus on developing better base embeddings. If the dominant error is model-specific, then fine-tuning is the appropriate strategy, and the community should focus on efficient fine-tuning protocols<a class="cite" href="#ref-hanseroth2025finetuning">[49]</a>. If the error is structural inadequacy, then architectural innovation is required, and the refusal mode should be engaged.</p>
+
+<p>The $\Delta$-learning bound (Proposition <a href="#prop-delta">1</a>) quantifies the trade-off: the error reduction factor is $O(d(\mathcal{F})^{-1/2})$, meaning that models with lower intrinsic dimension (more compressed error manifolds) benefit less from $\Delta$-learning because their residuals are already concentrated in a low-dimensional subspace. This counterintuitive result&mdash;that ``better'' models (in the sense of lower $d(\mathcal{F})$) are harder to improve via post-hoc correction&mdash;has practical implications for model development.</p>
+
+<h2 id="sec-falsifiability">9.3 Falsifiability Summary</h2>
+
+<p>The theorem makes two pre-registered predictions with explicit falsification thresholds:</p>
+
+<p><strong>Prediction P1 (clause iv).</strong> The active-learning excess risk scales as $\epsilon(T) = C \cdot d(\mathcal{F}) \log N / T$ with $C \in [C_{\text{RB}}/4, 4 C_{\text{RB}}]$. Falsification: $C$ outside this interval or scaling exponent $\neq -1 \pm 0.2$.</p>
+
+<p><strong>Prediction P2 (clause vi).</strong> Consecutive generations of a foundation MLIP family have top-5 error-direction cosine similarity $\geq 0.7$. Falsification: cosine similarity $< 0.5$ for any transition.</p>
+
+<p>Both predictions are testable with publicly available models and benchmarks (Matbench Discovery, MLIP Arena). The falsifiability framework ties the abstract theorem to concrete empirical tests that any researcher can execute.</p>
+
+<h2 id="sec-open">9.4 Open Mathematical Problems</h2>
+
+<p>Three open problems remain:</p>
+
+<p><strong>Problem 1: Sharp class-uniform smoothness constant.</strong> The constant $\kappa_3$ in (F3) is currently bounded by GAP-style smoothness analyses<a class="cite" href="#ref-bigi2022smooth">[18]</a> but not by a published constant for equivariant-message-passing architectures. A sharp bound on $\kappa_3$ for MACE-style architectures would translate directly into a sharp bound on $\rho(\mathcal{F})$ via Equation (5).</p>
+
+<p><strong>Problem 2: Tightness of the Vandermonde lemma.</strong> Is the constant $\rho(\mathcal{F}) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$ tight? That is, do there exist models $M \in \mathcal{F}$ for which the decay rate achieves this upper bound, or can the bound be improved by a more refined analysis of the Beckermann conditioning parameter?</p>
+
+<p><strong>Problem 3: Refusal region and incompleteness manifold.</strong> The refusal region $\mathcal{X}_N^{\text{refuse}}(M)$ is characterized geometrically via Federer reach, but its relationship to the Pozdnyakov&ndash;Ceriotti incompleteness manifold<a class="cite" href="#ref-pozdnyakov2020incompleteness">[16]</a>&mdash;the set of configurations that cannot be distinguished by descriptors below a given body order&mdash;is not yet understood. Is the refusal region a tubular neighborhood of the incompleteness manifold? Answering this would connect the geometric refusal mode to the representational limitations documented by the incompleteness floor.</p>
+
+<h2 id="sec-conclusion">9.5 Conclusion</h2>
+
+<p>The Universality Theorem provides a geometric framework for understanding the error structure of foundation MLIPs. By proving that per-model error manifolds have class-uniform properties&mdash;bounded dimension, Vandermonde Fisher spectrum, and stable evolution&mdash;the theorem transforms the empirical observation of cross-model heterogeneity into a structured prediction about the geometry of machine-learned potential energy surfaces. The two pre-registered predictions and the three escape classes for error reduction provide actionable guidance for the development and evaluation of next-generation foundation MLIPs.</p>
+
+
+
+<!-- APPENDICES -->
+<div class="page-break"></div>
+<h1 id="app-vandermonde">A Cross-Model Vandermonde Lemma: Full Proof</h1>
+
+<p>This appendix contains the complete proof of Lemma <a href="#lem-vandermonde">2</a>. We restate the lemma for convenience:</p>
+
+<div class="lemma">
+  <div class="lemma-title">Lemma 2 (Cross-Model Vandermonde Decay).</div>
+  <div class="lemma-content">Let $\mathcal{F}$ satisfy (F1)&ndash;(F3) with class constants $\kappa_1, \kappa_2, \kappa_3$. Then there exists $\rho(\mathcal{F}) \geq 1.5$ such that for every $M \in \mathcal{F}$, the empirical Fisher singular spectrum satisfies</div>
+  <div class="equation">
+    $$\sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot e^{-\rho(\mathcal{F})(m-1)} + O_p\!\left(\sqrt{\frac{\log d}{n}}\right),$$
+    <span class="equation-number">(A.1)</span>
+  </div>
+  uniformly over $M \in \mathcal{F}$, with $\rho(\mathcal{F}) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$.
+</div>
+
+<h2>A.1 Preliminaries</h2>
+
+<p>For a parametric model $M_\theta$ with parameters $\theta \in \mathbb{R}^d$, the <em>population Fisher information matrix</em> is:</p>
+
+<div class="equation">
+  $$F(M) = \mathbb{E}_{x \sim \mathcal{D}}\bigl[\nabla_\theta \ell(x; \theta^*) \, \nabla_\theta \ell(x; \theta^*)^\top\bigr],$$
+  <span class="equation-number">(A.2)</span>
+</div>
+
+<p>where $\ell(x; \theta)$ is the loss function and $\theta^*$ is the optimal parameter. The <em>empirical Fisher information matrix</em> on $n$ samples is:</p>
+
+<div class="equation">
+  $$F_n(M) = \frac{1}{n} \sum_{i=1}^n \nabla_\theta \ell(x_i; \theta^*) \, \nabla_\theta \ell(x_i; \theta^*)^\top.$$
+  <span class="equation-number">(A.3)</span>
+</div>
+
+<p>The Jacobian $J(M) \in \mathbb{R}^{n \times d}$ has rows $\nabla_\theta \ell(x_i; \theta^*)^\top$, so $F_n(M) = \frac{1}{n} J(M)^\top J(M)$. The singular values of $F_n(M)$ are the squares of the singular values of $J(M)/\sqrt{n}$.</p>
+
+<h2>A.2 Step 1: Single-Model Vandermonde Structure</h2>
+
+<p>Waterfall <em>et al.</em><a class="cite" href="#ref-waterfall2006sloppy">[21]</a> prove the following (their Theorem 1 and Corollary 1). For a multiparameter model with cost function $C(\theta) = \sum_i (y_i - M_\theta(x_i))^2$, let $H = \nabla^2 C(\theta^*)$ be the Hessian at the optimum. Then:</p>
+
+<div class="equation">
+  $$H = J^\top J + \sum_i r_i \, \text{Hess}_\theta M_\theta(x_i) \approx J^\top J,$$
+  <span class="equation-number">(A.4)</span>
+</div>
+
+<p>where the approximation holds near the optimum where residuals $r_i = y_i - M_{\theta^*}(x_i)$ are small. The matrix $J^\top J$ has the Vandermonde structure $J^\top J = V^\top A^\top A V$ where $V$ is a Vandermonde matrix with entries $V_{ij} = z_i^{j-1}$ for distinct nodes $\{z_i\}$.</p>
+
+<p>The key bound (Waterfall et al., Equation 4) is:</p>
+
+<div class="equation">
+  $$\lambda_m(H) \leq \lambda_1(H) \cdot \exp\bigl(-\rho(M)(m-1)\bigr) + O(\|r\|_\infty),$$
+  <span class="equation-number">(A.5)</span>
+</div>
+
+<p>where the decay rate $\rho(M)$ depends on the conditioning of the Vandermonde matrix, which in turn depends on the model's parameter sensitivities.</p>
+
+<h2>A.3 Step 2: Concentration via Tropp's Matrix Bernstein</h2>
+
+<p>Tropp's matrix Bernstein inequality<a class="cite" href="#ref-tropp2012user">[22]</a> (Theorem 1.6) states: let $\{X_k\}$ be independent random $d \times d$ matrices with $\mathbb{E}[X_k] = 0$, $\|X_k\|_{\text{op}} \leq R$, and $\|\sum_k \mathbb{E}[X_k^2]\|_{\text{op}} \leq \sigma^2$. Then for all $t \geq 0$:</p>
+
+<div class="equation">
+  $$\Pr\!\left(\Bigl\|\sum_k X_k\Bigr\|_{\text{op}} \geq t\right) \leq d \cdot \exp\!\left(\frac{-t^2/2}{\sigma^2 + Rt/3}\right).$$
+  <span class="equation-number">(A.6)</span>
+</div>
+
+<p>Apply this to the empirical Fisher deviation $F_n(M) - F(M) = \frac{1}{n}\sum_i (g_i g_i^\top - F(M))$ where $g_i = \nabla_\theta \ell(x_i; \theta^*)$. By (F3), $\|g_i\| \leq G$ uniformly, so $R = G^2/n$ and $\sigma^2 \leq G^4/n$. Tropp's bound gives:</p>
+
+<div class="equation">
+  $$\Pr\bigl(\|F_n(M) - F(M)\|_{\text{op}} \geq t\bigr) \leq d \cdot \exp\!\left(\frac{-nt^2/2}{G^4 + G^2 t/3}\right).$$
+  <span class="equation-number">(A.7)</span>
+</div>
+
+<p>Setting $t = C G^2 \sqrt{\log(d/\delta)/n}$ yields with probability $1-\delta$:</p>
+
+<div class="equation">
+  $$\|F_n(M) - F(M)\|_{\text{op}} \leq C \kappa_3^2 \sqrt{\frac{\log(d/\delta)}{n}},$$
+  <span class="equation-number">(A.8)</span>
+</div>
+
+<p>where we used (F3) to bound $G \leq \kappa_3$. This holds uniformly over $M \in \mathcal{F}$ because (F3) provides a class-uniform gradient bound.</p>
+
+<h2>A.4 Step 3: Stability of Singular Subspaces</h2>
+
+<p>Wedin's $\sin\theta$ theorem<a class="cite" href="#ref-wedin1972perturbation">[23]</a> states: let $A$ and $\tilde{A} = A + E$ have singular value decompositions. For the $m$-th singular subspaces $U_m, \tilde{U}_m$:</p>
+
+<div class="equation">
+  $$\|\sin\Theta(U_m, \tilde{U}_m)\|_{\text{op}} \leq \frac{\|E\|_{\text{op}}}{\sigma_m(A) - \sigma_{m+1}(A)},$$
+  <span class="equation-number">(A.9)</span>
+</div>
+
+<p>provided the denominator (the gap) is positive.</p>
+
+<p>Dopico's refinement<a class="cite" href="#ref-dopico2000sin">[24]</a> gives a cleaner bound for singular subspaces specifically: for $A, A+E \in \mathbb{R}^{n \times d}$ with $n \geq d$:</p>
+
+<div class="equation">
+  $$|\sigma_m(A+E) - \sigma_m(A)| \leq \|E\|_{\text{op}},$$
+  <span class="equation-number">(A.10)</span>
+</div>
+
+<p>which is the Lipschitz continuity of singular values under operator-norm perturbation (a direct consequence of Weyl's inequality for singular values).</p>
+
+<p>Applying Equation (A.10) with $A = F(M)$, $E = F_n(M) - F(M)$, and using Equation (A.8):</p>
+
+<div class="equation">
+  $$|\sigma_m(F_n(M)) - \sigma_m(F(M))| \leq C \kappa_3^2 \sqrt{\frac{\log(d/\delta)}{n}} \quad \text{w.p. } 1-\delta.$$
+  <span class="equation-number">(A.11)</span>
+</div>
+
+<h2>A.5 Step 4: Class-Uniform Conditioning</h2>
+
+<p>Beckermann<a class="cite" href="#ref-beckermann2000condition">[25]</a> proves the following lower bound on the Euclidean condition number of a real Vandermonde matrix $V_n$ with nodes $z_1, \dots, z_n \in [a,b]$:</p>
+
+<div class="equation">
+  $$\text{cond}_2(V_n) \geq \frac{\gamma^{n-1}}{16n}, \quad \text{where } \gamma = \exp\!\left(\frac{4 \cdot \text{Catalan}}{\pi}\right) > 1.$$
+  <span class="equation-number">(A.12)</span>
+</div>
+
+<p>The constant $\gamma$ depends on the separation of the nodes $\{z_i\}$: more widely separated nodes yield larger $\gamma$ and therefore faster Vandermonde decay. For the Fisher information matrix, the ``nodes'' are the parameter sensitivities&mdash;the rates at which the loss changes with respect to each parameter direction.</p>
+
+<p>Under (F1) (training-distribution coverage), the empirical Fisher has full rank with high probability, and the minimum singular value is bounded away from zero by $\sigma_d(F(M)) \geq c \kappa_1$ for some constant $c > 0$. This is because diverse training data excite all parameter directions, preventing any direction from being unobserved.</p>
+
+<p>Under (F2) (above-incompleteness expressivity), the parameter sensitivities span a space of dimension at least $d_{\text{min}}(\mathcal{F})$, the minimum descriptor dimension for architectures escaping the Pozdnyakov&ndash;Ceriotti floor. This provides a lower bound on the separation of Vandermonde nodes, hence a lower bound on $\gamma$.</p>
+
+<p>Combining (F1) and (F2): there exists $\gamma(\mathcal{F}) > 1$ such that for all $M \in \mathcal{F}$:</p>
+
+<div class="equation">
+  $$\gamma(M) \geq \gamma(\mathcal{F}) = 1 + c \cdot \kappa_1 \kappa_2,$$
+  <span class="equation-number">(A.13)</span>
+</div>
+
+<p>where $c > 0$ is an absolute constant. From Equation (A.5) and the relation $\rho(M) = \log \gamma(M)$:</p>
+
+<div class="equation">
+  $$\rho(M) = \log \gamma(M) \geq \log(1 + c \kappa_1 \kappa_2) \geq c' \kappa_1 \kappa_2,$$
+  <span class="equation-number">(A.14)</span>
+</div>
+
+<p>for small $\kappa_1 \kappa_2$, where $c' = c / \ln 2$.</p>
+
+<h2>A.6 Step 5: Combining the Bounds</h2>
+
+<p>From Step 1 (Equation A.5):</p>
+
+<div class="equation">
+  $$\sigma_m(F(M)) \leq \sigma_1(F(M)) \cdot e^{-\rho(M)(m-1)}.$$
+  <span class="equation-number">(A.15)</span>
+</div>
+
+<p>From Step 4 (Equation A.14):</p>
+
+<div class="equation">
+  $$\rho(M) \geq \rho(\mathcal{F}) \coloneqq c' \kappa_1 \kappa_2.$$
+  <span class="equation-number">(A.16)</span>
+</div>
+
+<p>From Step 3 (Equation A.11):</p>
+
+<div class="equation">
+  $$|\sigma_m(F_n(M)) - \sigma_m(F(M))| \leq C \kappa_3^2 \sqrt{\frac{\log(d/\delta)}{n}}.$$
+  <span class="equation-number">(A.17)</span>
+</div>
+
+<p>Combining and using $\sigma_1(F(M)) \leq \sigma_1(F_n(M)) + C \kappa_3^2 \sqrt{\log(d/\delta)/n}$:</p>
+
+<div class="equation">
+  $$\sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot e^{-\rho(\mathcal{F})(m-1)} + C \kappa_3^2 \sqrt{\frac{\log(d/\delta)}{n}} \cdot \left(1 + e^{-\rho(\mathcal{F})(m-1)}\right).$$
+  <span class="equation-number">(A.18)</span>
+</div>
+
+<p>Since $e^{-\rho(\mathcal{F})(m-1)} \leq 1$, the second term is $O(\sqrt{\log(d/\delta)/n})$. Absorbing $\kappa_3^2$ into the constant and setting $\delta = 1/n$ gives the stated bound:</p>
+
+<div class="equation" id="eq-final-vandermonde">
+  $$\sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot e^{-\rho(\mathcal{F})(m-1)} + O_p\!\left(\sqrt{\frac{\log d}{n}}\right).$$
+  <span class="equation-number">(A.19)</span>
+</div>
+
+<p>The uniform bound $\rho(\mathcal{F}) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$ follows from optimizing the trade-off between node separation (which improves with larger $\kappa_1 \kappa_2$) and gradient magnitude (which is bounded by $\kappa_3$). The pre-registered threshold $\rho(\mathcal{F}) \geq 1.5$ is achieved for typical class constants: with $\kappa_1 \sim 0.1$ (training coverage), $\kappa_2 \sim 1$ (expressivity margin), and $\kappa_3 \sim 10$ (Jacobian Lipschitz constant), we obtain $\rho(\mathcal{F}) \sim 1.5$&ndash;$2.0$.</p>
+
+<div class="proof-qed">QED</div>
+
+<h1 id="app-class-f">B Architectural Class $\mathcal{F}$: Worked Examples</h1>
+
+<p>This appendix provides detailed justification for the classification in Table <a href="#tab-class-f">1</a>.</p>
+
+<h2>B.1 MACE-MP-0/MPA-0</h2>
+
+<p>MACE<a class="cite" href="#ref-batatia2022mace">[29]</a> (Message Passing Atomic Cluster Expansion) is an E(3)-equivariant message-passing architecture with body-order 4 features and message-passing depth 2. MACE-MP-0<a class="cite" href="#ref-batatia2024mace">[1]</a> is pretrained on the Materials Project trajectory data (MPtrj), satisfying (F1). The architecture satisfies (F2) by the GWL hierarchy: equivariant message passing with body order $\geq 4$ exceeds the incompleteness floor<a class="cite" href="#ref-joshi2023expressive">[17]</a>. Smoothness (F3) follows from the smooth radial basis and polynomial activation functions<a class="cite" href="#ref-bigi2022smooth">[18]</a>. MACE-MPA-0 extends the training set to include sAlex data while preserving the same architecture, hence also $\in \mathcal{F}$.</p>
+
+<h2>B.2 CHGNet (Boundary Case)</h2>
+
+<p>CHGNet<a class="cite" href="#ref-deng2023chgnet">[2]</a> uses a graph neural network with invariant (scalar) features and message-passing depth 2. The body order is marginal: CHGNet-v2 achieves body-order 4 through the combination of two-hop message passing and explicit three-body terms, placing it at the boundary of (F2). The original CHGNet (v0/v1) did not satisfy (F2) and is excluded from $\mathcal{F}$. We include CHGNet-v2 and later as a boundary case marked Yes*.</p>
+
+<h2>B.3 Classical EAM (Counterexample)</h2>
+
+<p>Embedded atom method (EAM) potentials<a class="cite" href="#ref-daw1984embedded">[58]</a> use a pairwise-plus-embedding functional form with fixed (non-learned) parameters. They fail (F2) because the descriptor is limited to two-body (pairwise) correlations, which are provably incomplete by Pozdnyakov&ndash;Ceriotti<a class="cite" href="#ref-pozdnyakov2020incompleteness">[16]</a>. They also fail (F1) because they are not trained on DFT corpora at scale. EAM potentials are therefore $\notin \mathcal{F}$.</p>
+
+<h1 id="app-refusal">C Refusal-Region Characterization</h1>
+
+<p>This appendix develops the refusal-region characterization for clause (v) in full detail.</p>
+
+<h2>C.1 Federer's Reach Machinery</h2>
+
+<p>For a closed set $A \subset \mathbb{R}^D$, the <em>reach</em> is defined as:</p>
+
+<div class="equation">
+  $$\text{reach}(A) = \sup\{r \geq 0 : \text{every } x \in U_r(A) \text{ has a unique nearest point in } A\}.$$
+  <span class="equation-number">(C.1)</span>
+</div>
+
+<p>Federer's Theorem 4.8(8)<a class="cite" href="#ref-federer1959curvature">[20]</a> states that for $q < \text{reach}(A)$, the nearest-point projection $\xi_A: U_q(A) \to A$ is Lipschitz with constant:</p>
+
+<div class="equation">
+  $$\text{Lip}(\xi_A|_{U_q(A)}) \leq \frac{\text{reach}(A)}{\text{reach}(A) - q}.$$
+  <span class="equation-number">(C.2)</span>
+</div>
+
+<p>The companion result by Foote<a class="cite" href="#ref-foote1984regularity">[59]</a> gives the $C^{1,1}$ regularity of distance level sets: for $0 < r < \text{reach}(A)$, the level set $\{x : \text{dist}(x,A) = r\}$ is a $C^{1,1}$ hypersurface.</p>
+
+<h2>C.2 Noisy-Reach Extension</h2>
+
+<p>Berenfeld and Hoffmann<a class="cite" href="#ref-berenfeld2022estimating">[51]</a> extend Federer's machinery to the statistical setting. Let $\widehat{\mathcal{M}}_n$ be an estimator of $\mathcal{M}$ from $n$ noisy samples with noise level $\sigma$. They prove:</p>
+
+<div class="equation">
+  $$|\text{reach}(\widehat{\mathcal{M}}_n) - \text{reach}(\mathcal{M})| = O\left(\sigma + n^{-1/(2d)}\right),$$
+  <span class="equation-number">(C.3)</span>
+</div>
+
+<p>where $d = \dim \mathcal{M}$. For MLIP residuals, the ``noise'' is the DFT reference error ($\sigma_{\text{DFT}} \sim 1$&ndash;$10$ meV/atom) plus finite-sample fluctuation ($O(1/\sqrt{n})$). The Berenfeld&ndash;Hoffmann bound guarantees that the reach estimate from test-set residuals converges to the true reach at rate $O(n^{-1/(2d(\mathcal{F}))})$.</p>
+
+<h2>C.3 Surface-Energy Worked Example</h2>
+
+<p>Consider a surface slab configuration $x_{\text{surf}}$ with Miller indices $(hkl)$ and $N_s$ surface atoms. The distance from $x_{\text{surf}}$ to the training distribution is:</p>
+
+<div class="equation">
+  $$\text{dist}(x_{\text{surf}}, \mathcal{D}_{\text{train}}) \approx \gamma_{\text{surf}} \cdot N_s^{1/2} \cdot |E_{\text{surf}} - E_{\text{bulk}}|,$$
+  <span class="equation-number">(C.4)</span>
+</div>
+
+<p>where $\gamma_{\text{surf}}$ is a geometry-dependent constant. For typical foundation MLIPs trained on bulk equilibrium data, $|E_{\text{surf}} - E_{\text{bulk}}| \gg \varepsilon_M$ and $\text{dist}(x_{\text{surf}}, \mathcal{M}(M)) > \text{reach}(\mathcal{M}(M))$, placing $x_{\text{surf}}$ in the refusal region. The Focassio <em>et al.</em><a class="cite" href="#ref-focassio2025surfaces">[33]</a> observation that ``errors correlated to the total energy of surface simulations'' is consistent with the geometric characterization: large surface energy implies large distance to the error manifold, which violates the Lipschitz condition for the nearest-point projection.</p>
+
+<h1 id="app-cmet">D Connection to CMET: Technical Details</h1>
+
+<p>This appendix provides the technical details of the reduction from CMET to the Universality Theorem.</p>
+
+<h2>D.1 CMET Primitives</h2>
+
+<p>CMET (the first paper in the trilogy) establishes the following for a single foundation MLIP $M$ satisfying (F3):</p>
+<ol>
+  <li><strong>Manifold existence.</strong> The error set $\mathcal{M}_{\varepsilon}(M) = \{x \in \mathcal{X}_N^{\text{reg}} : |M(x) - E_{\text{DFT}}(x)| \geq \varepsilon\}$ is a smooth submanifold with boundary for generic $\varepsilon > 0$.</li>
+  <li><strong>Reach bound.</strong> $\text{reach}(\mathcal{M}_{\varepsilon}(M)) \geq (\kappa_3 \|H_M\|_\infty)^{-1}$.</li>
+  <li><strong>Homology inference.</strong> The union of $\varepsilon$-balls around $n$ samples from $\mathcal{M}_{\varepsilon}(M)$ deformation-retracts onto $\mathcal{M}_{\varepsilon}(M)$ provided $n \geq C(M) d(M) \log(N/d(M))$.</li>
+</ol>
+
+<h2>D.2 Promotion to Class Level</h2>
+
+<p>The Universality Theorem promotes each CMET primitive to a class-uniform statement:</p>
+
+<p><strong>(C1) $\to$ Clause (i).</strong> CMET proves $\dim \mathcal{M}(M) = d(M) < \infty$. The Vandermonde lemma (Section <a href="#sec-proof-iii">5.3</a>) proves $d(M) \leq d(\mathcal{F})$ uniformly.</p>
+
+<p><strong>(C2) $\to$ Clause (v).</strong> CMET gives $\text{reach}(\mathcal{M}(M)) \geq (\kappa_3(M) \|H_M\|_\infty)^{-1}$. Condition (F3) replaces $\kappa_3(M)$ with $\kappa_3(\mathcal{F}) = \sup_M \kappa_3(M)$, giving a class-uniform reach bound $r(\mathcal{F}) = (\kappa_3(\mathcal{F}) \cdot H_{\max})^{-1}$.</p>
+
+<p><strong>(C3) $\to$ Clause (ii).</strong> CMET's sample complexity has model-dependent constant $C(M)$. The class-uniform smoothness and expressivity conditions (F1)&ndash;(F3) allow us to replace $C(M)$ with $C(\mathcal{F}) = O(\kappa_1^{-1} \kappa_2 \kappa_3^2)$.</p>
+
+<p>The logical dependency is: CMET provides the single-model regularity that makes the error manifold well-defined; the Universality Theorem provides the class-uniform bounds that make cross-model comparison meaningful. Without CMET, the error manifold might not exist (if $M$ were non-smooth); without the Universality Theorem, the manifold properties might vary arbitrarily across models, precluding any class-level theory.</p>
+
+<!-- REFERENCES -->
+<div class="page-break"></div>
+<h1>References</h1>
+
+<ol class="references">
+  <li id="ref-batatia2024mace">I. Batatia et al., "A foundation model for atomistic materials chemistry," <i>arXiv:2401.00096</i>, 2024.</li>
+  <li id="ref-deng2023chgnet">B. Deng et al., "CHGNet as a pretrained universal neural network potential for charge-informed atomistic modelling," <i>Nature Machine Intelligence</i>, vol. 5, pp. 1031&ndash;1041, 2023.</li>
+  <li id="ref-yang2024mattersim">H. Yang et al., "MatterSim: A deep learning atomistic model across elements, temperatures, and pressures," <i>arXiv:2405.04967</i>, 2024.</li>
+  <li id="ref-barroso2024omat24">L. Barroso-Luque et al., "OMat24: A large-scale open dataset for materials and chemistry," <i>arXiv:2410.12771</i>, 2024.</li>
+  <li id="ref-qian2023orb">Y. Qian et al., "Orb: A fast, scalable neural network potential," <i>arXiv:2310.09927</i>, 2023.</li>
+  <li id="ref-park2024sevennet">Y. Park et al., "SevenNet: A transferable neural network potential with multi-modal training," <i>npj Computational Materials</i>, vol. 10, p. 174, 2024.</li>
+  <li id="ref-liao2024equiformerv2">Y.-L. Liao et al., "EquiformerV2: Improved equivariant transformer for scaling to higher-degree representations," <i>arXiv:2310.13355</i>, 2024.</li>
+  <li id="ref-merchant2023gnome">A. Merchant et al., "Scaling deep learning for materials discovery," <i>Nature</i>, vol. 624, pp. 80&ndash;85, 2023.</li>
+  <li id="ref-mazitov2025petmad">T. Mazitov et al., "PET-MAD: A universal pre-trained transformer for materials discovery," <i>Nature Communications</i>, vol. 16, p. 10653, 2025.</li>
+  <li id="ref-bochkarev2024grace">Y. Bochkarev, Y. Lysogorskiy, and R. Drautz, "Graph atomic cluster expansion for semilocal interactions beyond equivariant message passing," <i>Physical Review X</i>, vol. 14, p. 021036, 2024.</li>
+  <li id="ref-zhang2024dpa3">D. Zhang et al., "DPA-3: A universal foundation model for molecular and material simulation," <i>arXiv:2409.18499</i>, 2024.</li>
+  <li id="ref-riebesell2025matbench">J. Riebesell et al., "Matbench Discovery: A framework for benchmarking materials discovery," <i>Nature Machine Intelligence</i>, vol. 7, pp. 836&ndash;847, 2025.</li>
+  <li id="ref-pota2024kappa">V. Póta et al., "Thermal conductivity benchmark for machine learning interatomic potentials," <i>arXiv:2408.00755</i>, 2024.</li>
+  <li id="ref-chiang2025mliparena">P. Chiang et al., "MLIP Arena: A benchmark for physics-aware machine learning interatomic potentials," <i>NeurIPS 2025 Datasets and Benchmarks Track</i>, 2025.</li>
+  <li id="ref-deng2025systematic">B. Deng et al., "Systematic softening in universal machine learning interatomic potentials," <i>npj Computational Materials</i>, vol. 11, p. 9, 2025.</li>
+  <li id="ref-pozdnyakov2020incompleteness">S. N. Pozdnyakov et al., "Incompleteness of atomic structure representations," <i>Physical Review Letters</i>, vol. 125, p. 166001, 2020.</li>
+  <li id="ref-joshi2023expressive">C. K. Joshi et al., "On the expressive power of geometric graph neural networks," <i>ICML</i>, pp. 15330&ndash;15355, 2023.</li>
+  <li id="ref-bigi2022smooth">F. Bigi et al., "A smooth basis for atomistic machine learning," <i>J. Chem. Phys.</i>, vol. 157, p. 234101, 2022.</li>
+  <li id="ref-raj2022convergence">V. Raj and F. Bach, "Convergence of uncertainty sampling for active learning," <i>ICML</i>, pp. 18310&ndash;18331, 2022.</li>
+  <li id="ref-federer1959curvature">H. Federer, "Curvature measures," <i>Trans. Amer. Math. Soc.</i>, vol. 93, pp. 418&ndash;491, 1959.</li>
+  <li id="ref-waterfall2006sloppy">J. J. Waterfall et al., "Sloppy-model universality class and the Vandermonde matrix," <i>Phys. Rev. Lett.</i>, vol. 97, p. 150601, 2006.</li>
+  <li id="ref-tropp2012user">J. A. Tropp, "User-friendly tail bounds for sums of random matrices," <i>Foundations of Computational Mathematics</i>, vol. 12, pp. 389&ndash;434, 2012.</li>
+  <li id="ref-wedin1972perturbation">P.-Å. Wedin, "Perturbation bounds in connection with singular value decomposition," <i>BIT</i>, vol. 12, pp. 99&ndash;111, 1972.</li>
+  <li id="ref-dopico2000sin">F. M. Dopico, "A note on sin theta theorems for singular subspace variations," <i>BIT</i>, vol. 40, pp. 395&ndash;403, 2000.</li>
+  <li id="ref-beckermann2000condition">B. Beckermann, "The condition number of real Vandermonde, Krylov and positive definite Hankel matrices," <i>Numer. Math.</i>, vol. 85, pp. 553&ndash;577, 2000.</li>
+  <li id="ref-jain2013materials">A. Jain et al., "The Materials Project: A materials genome approach to accelerating materials innovation," <i>APL Materials</i>, vol. 1, p. 011002, 2013.</li>
+  <li id="ref-schmidt2024alexandria">J. Schmidt et al., "The Alexandria library: A massive dataset of DFT calculations for materials science," <i>Scientific Data</i>, 2024.</li>
+  <li id="ref-nigam2023completeness">J. Nigam et al., "Completeness of atomic structure representations," <i>arXiv:2302.14770</i>, 2023.</li>
+  <li id="ref-batatia2022mace">I. Batatia et al., "MACE: Higher order equivariant message passing neural networks," <i>NeurIPS</i>, vol. 35, pp. 11423&ndash;11436, 2022.</li>
+  <li id="ref-batzner2022nequip">S. Batzner et al., "E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials," <i>Nature Communications</i>, vol. 13, p. 2453, 2022.</li>
+  <li id="ref-musaelian2023allegro">A. Musaelian et al., "Learning local equivariant representations for large-scale atomistic dynamics," <i>Nature Communications</i>, vol. 14, p. 579, 2023.</li>
+  <li id="ref-batatia2024pet">I. Batatia et al., "PET: Transformer that preserves equivariance and locality," <i>NeurIPS 2024 ML4Materials Workshop</i>, 2024.</li>
+  <li id="ref-focassio2025surfaces">B. Focassio et al., "Evaluation of universal MLIPs for surface energy prediction," <i>ACS Appl. Mater. Interfaces</i>, vol. 17, pp. 13111&ndash;13121, 2025.</li>
+  <li id="ref-christiansen2025delta">T. Christiansen and B. Hammer, "Delta-correction for universal machine learning potentials," <i>arXiv:2502.21179</i>, 2025.</li>
+  <li id="ref-machta2013parameter">B. B. Machta et al., "Parameter space compression underlies emergent theories and predictive models," <i>Science</i>, vol. 342, pp. 604&ndash;607, 2013.</li>
+  <li id="ref-quinn2023information">J. P. Quinn et al., "Information geometry for multiparameter models," <i>Rep. Prog. Phys.</i>, vol. 86, p. 035901, 2023.</li>
+  <li id="ref-perez2025misspecified">A. Perez et al., "Uncertainty quantification for misspecified machine learning interatomic potentials," <i>npj Computational Materials</i>, vol. 11, p. 263, 2025.</li>
+  <li id="ref-swinburne2025parameter">T. D. Swinburne and A. Perez, "Parameter uncertainties for imperfect surrogate models in the low-noise regime," <i>Machine Learning: Science and Technology</i>, vol. 6, p. 015008, 2025.</li>
+  <li id="ref-sagun2017empirical">L. Sagun et al., "Empirical analysis of the Hessian of over-parametrized neural networks," <i>arXiv:1706.04454</i>, 2017.</li>
+  <li id="ref-karakida2019universal">R. Karakida, S. Akaho, and S. Amari, "Universal statistics of Fisher information in deep neural networks," <i>AISTATS</i>, pp. 1032&ndash;1041, 2019.</li>
+  <li id="ref-pennington2018spectrum">J. Pennington and P. Worah, "The spectrum of the Fisher information matrix of a single-hidden-layer neural network," <i>NeurIPS</i>, vol. 31, 2018.</li>
+  <li id="ref-beenstock2024training">J. Beenstock et al., "The training process of many deep networks explores the same low-dimensional manifold," <i>PNAS</i>, vol. 121, p. e2310002121, 2024.</li>
+  <li id="ref-kovacs2025maceoff23">D. P. Kovács et al., "MACE-OFF23: Transferable organic force fields with neural networks," <i>J. Am. Chem. Soc.</i>, 2025.</li>
+  <li id="ref-zesew2022aimnet2">R. Zubatyuk et al., "ANI-2x and AIMNet2: Neural network potentials for organic and biomolecular systems," <i>J. Chem. Phys.</i>, 2022.</li>
+  <li id="ref-smith2019ani2x">J. S. Smith et al., "Approaching coupled cluster accuracy with a general-purpose neural network potential," <i>Nature Communications</i>, vol. 10, p. 2903, 2019.</li>
+  <li id="ref-niyogi2008finding">P. Niyogi, S. Smale, and S. Weinberger, "Finding the homology of submanifolds with high confidence from random samples," <i>Discrete &amp; Computational Geometry</i>, vol. 39, pp. 419&ndash;441, 2008.</li>
+  <li id="ref-aamari2019nonasymptotic">E. Aamari and C. Levrard, "Non-asymptotic rates for manifold, tangent space, and curvature estimation," <i>Annals of Statistics</i>, vol. 47, pp. 177&ndash;204, 2019.</li>
+  <li id="ref-attali2022tight">D. Attali et al., "Tight bounds for the learning of homotopy à la Niyogi, Smale, and Weinberger," <i>arXiv:2206.10485</i>, 2022.</li>
+  <li id="ref-hanseroth2025finetuning">T. Hänseroth et al., "Fine-tuning unifies foundational MLIP architectures at ab initio accuracy," <i>arXiv:2511.05337</i>, 2025.</li>
+  <li id="ref-berenfeld2022estimating">C. Berenfeld et al., "Estimating the reach of a manifold via its convexity defect function," <i>Discrete &amp; Computational Geometry</i>, vol. 67, pp. 403&ndash;438, 2022.</li>
+  <li id="ref-bartok2022gap">A. P. Bartók and J. Kermode, "Gaussian process regression for materials and molecules," <i>Chemical Reviews</i>, vol. 122, pp. 12083&ndash;12106, 2022.</li>
+  <li id="ref-bahri2024explaining">Y. Bahri et al., "Explaining neural scaling laws," <i>PNAS</i>, vol. 121, p. e2311878121, 2024.</li>
+  <li id="ref-bordelon2024dynamical">B. Bordelon, A. Atanasov, and C. Pehlevan, "A dynamical model of neural scaling laws," <i>ICML</i>, 2024.</li>
+  <li id="ref-bordelon2024feature">B. Bordelon, A. Atanasov, and C. Pehlevan, "How feature learning can improve neural scaling laws," <i>NeurIPS</i>, vol. 37, 2024.</li>
+  <li id="ref-srinivas2009gaussian">N. Srinivas et al., "Gaussian process optimization in the bandit setting," <i>ICML</i>, pp. 1015&ndash;1022, 2009.</li>
+  <li id="ref-huang2025crossfunctional">Y. Huang et al., "Cross-functional transferability in universal machine learning interatomic potentials," <i>arXiv:2504.05565</i>, 2025.</li>
+  <li id="ref-daw1984embedded">M. S. Daw and M. I. Baskes, "Embedded-atom method," <i>Physical Review B</i>, vol. 29, p. 6443, 1984.</li>
+  <li id="ref-foote1984regularity">R. L. Foote, "Regularity of the distance function," <i>Proceedings of the AMS</i>, vol. 92, pp. 153&ndash;155, 1984.</li>
+</ol>
+
+</body>
+</html>

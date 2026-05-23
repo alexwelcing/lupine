@@ -1,0 +1,51 @@
+% =============================================================================
+% SECTION 7: COROLLARY -- THREE ESCAPE CLASSES
+% =============================================================================
+\section{Corollary: Three Escape Classes for Error Reduction}\label{sec:escape}
+
+The Universality Theorem implies a classification of error-reduction strategies into three \emph{escape classes} based on the geometric structure of the per-model error manifold. This classification connects the abstract manifold geometry to practical strategies for improving MLIP predictions.
+
+\subsection{The Escape-Class Decomposition}
+
+Let $M \in \cF$ be a foundation MLIP with per-model error manifold $\cM(M)$. Let $\cM_{\text{class}} \subseteq \cM(M)$ denote the class-uniform component (the intersection of error manifolds across all $M' \in \cF$), and let $\cM_{\text{spec}}(M) = \cM(M) \setminus \cM_{\text{class}}$ denote the model-specific component. The residual at any configuration $x$ decomposes as:
+\begin{equation}\label{eq:residual-decomp}
+    r_M(x) = \underbrace{r_{\text{class}}(x)}_{\text{class-uniform}} + \underbrace{r_{\text{spec}}(x; M)}_{\text{model-specific}} + \underbrace{\xi(x)}_{\text{noise}},
+\end{equation}
+where $r_{\text{class}}(x)$ is the projection onto $\cM_{\text{class}}$, $r_{\text{spec}}(x; M)$ is the projection onto $\cM_{\text{spec}}(M)$, and $\xi(x)$ is irreducible noise (DFT reference error, numerical truncation, etc.).
+
+This decomposition yields three escape classes:
+
+\begin{corollary}[Three escape classes]\label{cor:escape}
+Let $M \in \cF$ with residual decomposition~\eqref{eq:residual-decomp}. The error reduction strategies for $M$ fall into three classes:
+\begin{enumerate}[label=(\Alph*)]
+    \item \textbf{Paradigm-agnostic correction.} If $\|r_{\text{class}}\| \gg \|r_{\text{spec}}\|$, the dominant error lies in the class-uniform component. Correction by $\Delta$-learning---training a Gaussian process regression on the base MLIP's embedding to predict the residual---reduces error by a factor of $O(d(\cF)^{-1/2})$.
+    \item \textbf{Paradigm-specific correction.} If $\|r_{\text{spec}}\| \gg \|r_{\text{class}}\|$, the dominant error is model-specific. Fine-tuning $M$ on a targeted downstream dataset reduces error with exponential convergence in the number of fine-tuning steps.
+    \item \textbf{Structural inadequacy.} If $x \in \cX_N^{\text{refuse}}(M)$, the configuration lies outside the prediction region. No correction within the current architecture suffices; architectural change (increased body order, deeper message passing, or explicit treatment of missing physics) is required.
+\end{enumerate}
+\end{corollary}
+
+\subsection{$\Delta$-Learning Error Bound (Paradigm-Agnostic)}
+
+The paradigm-agnostic escape class is the most important for practical applications because it addresses the shared errors that persist across all models in $\cF$. The following bound quantifies the error reduction achievable by $\Delta$-learning:
+
+\begin{proposition}[$\Delta$-learning error bound]\label{prop:delta}
+Let $M \in \cF$ with embedding function $\phi_M: \cX_N \to \R^{d_\phi}$. Let $g: \R^{d_\phi} \to \R$ be a Gaussian process regressor trained on $n$ residual samples $\{(\phi_M(x_i), r_M(x_i))\}_{i=1}^n$ with kernel $k(\phi, \phi') = \exp(-\|\phi - \phi'\|^2 / 2\ell^2)$. The corrected predictor $M_{\Delta}(x) = M(x) + g(\phi_M(x))$ satisfies
+\begin{equation}\label{eq:delta-bound}
+    \E_{x \sim \cD_{\text{test}}}\bigl[(M_{\Delta}(x) - E_{\text{DFT}}(x))^2\bigr] \leq \|P_{\cM_{\text{class}}}^\perp r_M\|^2 + C \cdot \frac{d(\cF)}{n} + O(n^{-2/d(\cF)}),
+\end{equation}
+where $P_{\cM_{\text{class}}}^\perp$ is the orthogonal projector onto the complement of the class-uniform error manifold and $C = O(\kappa_3^2 \ell^{-d(\cF)})$.
+\end{proposition}
+
+\begin{proof}[Proof Sketch]
+The proof combines the Niyogi--Smale--Weinberger sample complexity (clause ii) with the Cross-Model Vandermonde Lemma (clause iii). The GP regression error on the residual decomposes into approximation error (controlled by the projection onto $\cM_{\text{class}}$) and estimation error (controlled by the covering number of the descriptor space, which is $O(\eps^{-d(\cF)})$ by the Vandermonde decay). The standard GP regression bound\cite{srinivas2009gaussian} gives the $O(d(\cF)/n)$ term; the $O(n^{-2/d(\cF)})$ term is the Niyogi--Smale--Weinberger manifold approximation error.
+\end{proof}
+
+\subsection{Empirical Anchors for Each Escape Class}
+
+Each escape class is anchored to published empirical results:
+
+\textbf{Paradigm-agnostic.} The Christiansen--Hammer\cite{christiansen2025delta} study provides the cleanest published example: they train a GPR on the embedding of MACE-MP-0, SevenNet-0, and ORB-v2 to predict the $\Delta$-correction for each model, finding that ``other universal potentials trained on the same data show similar behavior, but with varying degrees of error.'' The Huang \emph{et al.}\cite{huang2025crossfunctional} study documents cross-functional transferability: GGA-trained and r$^2$SCAN-trained CHGNet variants disagree on absolute energies but agree on the structure of the residual once elemental energy referencing is applied---direct evidence for the class-uniform component.
+
+\textbf{Paradigm-specific.} The Hänseroth \emph{et al.}\cite{hanseroth2025finetuning} study demonstrates that ``fine-tuning universally enhances force predictions by factors of 5--15 and improves energy accuracy by 2--4 orders of magnitude'' across MACE, GRACE, SevenNet, MatterSim, and Orb. This is the paradigm-specific escape class in action: each model's specific errors are corrected by targeted fine-tuning, while the class-uniform component persists.
+
+\textbf{Structural inadequacy.} The Focassio \emph{et al.}\cite{focassio2025surfaces} surface-energy failures and the Deng \emph{et al.}\cite{deng2025systematic} systematic-softening results both document configurations where the error exceeds any plausible correction threshold. For these cases---surface terminations far from training distribution, high-energy states with PES curvature outside the learned range---the refusal mode of clause (v) is the appropriate response.

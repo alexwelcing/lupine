@@ -1,0 +1,79 @@
+% =============================================================================
+% SECTION 2: THE ARCHITECTURAL CLASS F
+% =============================================================================
+\section{The Architectural Class $\cF$}\label{sec:class-f}
+
+The Universality Theorem applies to models belonging to an architectural class $\cF$ defined by three conditions. These conditions are not merely technical regularity assumptions; each operationalizes a substantive property that distinguishes foundation MLIPs from earlier generations of machine-learned potentials.
+
+\subsection{Condition (F1): Pretraining on Chemically Diverse DFT Corpora at Scale}
+
+Condition (F1) requires that the model $M$ be pretrained on a DFT corpus satisfying coverage, diversity, and scale criteria. Formally, let $\cD_{\text{train}}$ denote the training dataset and $\cX$ the space of atomic configurations. Then:
+\begin{enumerate}[label=(F1\alph*)]
+    \item \textbf{Coverage.} The empirical distribution of $\cD_{\text{train}}$ has support intersecting every chemically relevant basin of the PES for the element combinations represented, including at minimum equilibrium structures, strained configurations, and surface terminations.
+    \item \textbf{Diversity.} The training set spans at least 80\% of the stable element combinations in the periodic table (as catalogued in the Materials Project\cite{jain2013materials} or Alexandria database\cite{schmidt2024alexandria}).
+    \item \textbf{Scale.} The number of distinct DFT calculations exceeds $10^6$, with total atom-instances exceeding $10^8$.
+\end{enumerate}
+
+Published corpora satisfying (F1) include the Materials Project trajectory data (MPtrj)\cite{jain2013materials}, the Alexandria/sAlex dataset\cite{schmidt2024alexandria}, OMat24\cite{barroso2024omat24}, and the MAD dataset\cite{mazitov2025petmad}. The OMat24 dataset, for instance, comprises ``2 to 3-fold more distinct atomic environments across the entire periodic table compared to previous databases''\cite{yang2024mattersim}. Condition (F1) is the empirical anchor for the uniform training-distribution coverage constant $\kappa_1$ that appears in the Cross-Model Vandermonde Lemma.
+
+\subsection{Condition (F2): Representational Expressivity Above the Incompleteness Floor}
+
+Condition (F2) requires that the model architecture escape the Pozdnyakov--Ceriotti incompleteness floor\cite{pozdnyakov2020incompleteness}. Pozdnyakov \emph{et al.}\ proved that three- and four-body invariant descriptors cannot uniquely distinguish all non-isomorphic atomic environments: there exist distinct configurations with identical three-body and four-body correlation functions. This incompleteness implies that any MLIP whose representation is limited to such descriptors must suffer systematic errors on configurations whose true physics requires higher-body-order discrimination.
+
+The escape from this floor is operationalized via the geometric Weisfeiler--Leman (GWL) hierarchy developed by Joshi \emph{et al.}\cite{joshi2023expressive} and the completeness framework of Nigam \emph{et al.}\cite{nigam2023completeness}. Specifically, (F2) requires that $M$ employ an architecture at least as expressive as an equivariant message-passing network of depth $\geq 2$ with body-order $\geq 4$ features. In the GWL hierarchy, this means:
+\begin{equation}\label{eq:f2-gwl}
+    \text{GWL}(M) \geq \text{GWL}_{\text{equivariant}}^{(2,4)},
+\end{equation}
+where the superscript $(2,4)$ denotes depth 2 and body order 4. Architectures satisfying (F2) include MACE\cite{batatia2022mace}, NequIP\cite{batzner2022nequip}, Allegro\cite{musaelian2023allegro}, eqV2\cite{liao2024equiformerv2}, GRACE\cite{bochkarev2024grace}, eSEN\cite{om枯萎}, PET\cite{batatia2024pet}, SevenNet\cite{park2024sevennet}, Orb-v3\cite{qian2023orb}, MatterSim\cite{yang2024mattersim}, and DPA3\cite{zhang2024dpa3}. The margin by which $M$ exceeds the incompleteness floor contributes to the constant $\kappa_2$ in the Vandermonde lemma.
+
+\subsection{Condition (F3): Smoothness Outside a Measure-Zero Singular Set}
+
+Condition (F3) requires that the model $M: \cX \to \R$ be a $C^2$ function of atomic positions outside a measure-zero set $\cS_M \subset \cX$ of singular configurations. The singular set typically contains:
+\begin{itemize}
+    \item Coincident-atom configurations (nuclear coalescence points);
+    \item Symmetry-enhanced configurations where degenerate eigenvalues of the descriptor matrix cause non-analyticity;
+    \item Phase-transition points where the electronic structure changes discontinuously.
+\end{itemize}
+
+The smoothness requirement is anchored to the smooth basis construction of Bigi \emph{et al.}\cite{bigi2022smooth}, who proved that equivariant message-passing networks with smooth radial bases and smooth activation functions yield $C^\infty$ PES predictions away from coincident-atom singularities. The standard equivariant-message-passing architectures (MACE, NequIP, Allegro) satisfy this condition with a Lipschitz constant $L_M$ on the Jacobian $\Jac M(x)$ that is bounded uniformly on compact sublevel sets of the loss landscape. The class-uniform smoothness constant $\kappa_3$ in the Vandermonde lemma is the supremum of $L_M$ over $M \in \cF$.
+
+\subsection{Worked Examples and Boundary Cases}
+
+Table~\ref{tab:class-f-examples} classifies representative models according to (F1)--(F3).
+
+\begin{table}[htbp]
+\centering
+\caption{Classification of representative MLIP architectures with respect to conditions (F1)--(F3).}
+\label{tab:class-f-examples}
+\begin{tabular}{@{}lccccl@{}}
+\toprule
+\textbf{Model} & \textbf{F1} & \textbf{F2} & \textbf{F3} & $\in \cF$ & \textbf{Notes} \\
+\midrule
+MACE-MP-0/MPA-0 & Yes & Yes & Yes & Yes & E(3)-equivariant, MP-traj + sAlex \\
+CHGNet & Yes & Marginal & Yes & Yes* & GWL depth 2, marginal body order \\
+Orb-v3 & Yes & Yes & Yes & Yes & Equivariant transformer \\
+MatterSim & Yes & Yes & Yes & Yes & 0--5000~K, 0--1000~GPa training \\
+eqV2/UMA & Yes & Yes & Yes & Yes & Equiformer architecture \\
+PET-MAD & Yes & Yes & Yes & Yes & Broadened training distribution \\
+SevenNet & Yes & Yes & Yes & Yes & GNN with scalar embedding \\
+GRACE & Yes & Yes & Yes & Yes & Graph ACE, semilocal interactions \\
+eSEN & Yes & Yes & Yes & Yes & Equivariant spherical harmonics \\
+DPA3 & Yes & Yes & Yes & Yes & Attention-based, DPA-1/2 successor \\
+M3GNet & Yes & Marginal & Yes & Yes* & Earlier generation, marginal F2 \\
+\midrule
+Classical EAM & N/A & No & Yes & No & Fails F2 (incomplete descriptor) \\
+GAP-original & Partial & No & Yes & No & Fails F2 at scale (SOAP only) \\
+SchNet & Yes & No & Yes & No & Fails F2 (invariant, depth 1) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Models marked Yes* (CHGNet, M3GNet) are boundary cases: they marginally satisfy (F2) at the minimum GWL depth and body order, and their inclusion in $\cF$ depends on whether the specific instantiation achieves the expressivity threshold in practice. The operational test is whether the model's descriptor can distinguish the counterexample configurations constructed by Pozdnyakov \emph{et al.}\cite{pozdnyakov2020incompleteness}; CHGNet-v2 and later variants pass this test, while the original M3GNet does not.
+
+\subsection{Closure Properties}
+
+The class $\cF$ is closed under two operations relevant to the theorem:
+\begin{enumerate}
+    \item \textbf{Fine-tuning.} If $M \in \cF$ and $M'$ is obtained from $M$ by gradient-based fine-tuning on a downstream dataset, then $M' \in \cF$ provided the fine-tuning does not alter the architecture (hence F2 and F3 are preserved) and the combined training corpus still satisfies (F1). This closure property underlies clause (vi) on generational stability.
+    \item \textbf{Ensemble averaging.} If $M_1, M_2 \in \cF$ and $M_{\text{ens}} = \sum_i w_i M_i$ with $\sum_i w_i = 1$, then $M_{\text{ens}} \in \cF$ provided each component satisfies (F1)--(F3) individually. The smoothness constant $\kappa_3$ for the ensemble is bounded by $\max_i \kappa_3(M_i)$.
+\end{enumerate}

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Partnership Prospectus: The Global Alliance for Trustworthy Molecular AI</title>
+<style>
+body { margin: 0; padding: 0; font-family: 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.6; color: #333; text-align: justify; text-align-last: left; }
+@page { size: A4; margin: 2.3cm 2cm; @top-center { content: string(doctitle); font-size: 8pt; font-style: italic; color: #999; } @bottom-center { content: counter(page); font-size: 9pt; } }
+@page :first { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+@page cover { @top-center { content: none; } @bottom-center { content: none; } }
+body { string-set: doctitle ""; }
+h1 { string-set: doctitle content(); }
+
+.cover { page: cover; width: 210mm; height: 297mm; margin: 0; position: relative; overflow: hidden; page-break-after: always; background: linear-gradient(145deg, #0f172a 0%, #1e293b 50%, #334155 100%); }
+.cover::before { content: ''; position: absolute; top: 40mm; right: 15mm; width: 90mm; height: 90mm; border: 1px solid rgba(148,163,184,0.1); border-radius: 50%; }
+.cover::after { content: ''; position: absolute; bottom: 30mm; left: 10mm; width: 120mm; height: 120mm; border: 1px solid rgba(148,163,184,0.06); border-radius: 50%; }
+.cover-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 82%; z-index: 1; }
+.cover-tag { display: inline-block; border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.6); padding: 0.2em 0.8em; font-size: 9pt; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.8cm; }
+.cover-title { font-size: 19pt; font-weight: 700; color: #ffffff; margin-bottom: 0.4cm; line-height: 1.3; }
+.cover-subtitle { font-size: 11pt; color: rgba(255,255,255,0.65); margin-bottom: 1.5cm; font-style: italic; line-height: 1.5; }
+.cover-meta { font-size: 9.5pt; color: rgba(255,255,255,0.4); line-height: 1.8; }
+
+h1 { font-size: 14pt; font-weight: bold; margin-top: 1.1em; margin-bottom: 0.5em; page-break-after: avoid; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.2em; }
+h2 { font-size: 11.5pt; font-weight: bold; margin-top: 0.9em; margin-bottom: 0.4em; page-break-after: avoid; color: #334155; }
+
+.partner-card { margin: 0.6em 0; padding: 0.6em 0.8em; page-break-inside: avoid; border-left: 3px solid; background: #fafafa; }
+.partner-name { font-weight: bold; font-size: 10.5pt; margin-bottom: 0.15em; }
+.partner-meta { font-size: 9pt; color: #64748b; margin-bottom: 0.2em; }
+.partner-fit { font-size: 9.5pt; color: #475569; }
+.partner-fit strong { color: #059669; }
+
+.cat-mlip { border-left-color: #0ea5e9; }
+.cat-mlip .partner-name { color: #0369a1; }
+.cat-lab { border-left-color: #8b5cf6; }
+.cat-lab .partner-name { color: #6d28d9; }
+.cat-data { border-left-color: #f59e0b; }
+.cat-data .partner-name { color: #b45309; }
+.cat-formal { border-left-color: #ec4899; }
+.cat-formal .partner-name { color: #be185d; }
+
+.strategy-box { background: #f0f9ff; border: 1px solid #bae6fd; padding: 0.6em 0.8em; margin: 0.5em 0; page-break-inside: avoid; }
+.strategy-title { font-weight: bold; color: #0369a1; font-size: 9.5pt; margin-bottom: 0.2em; }
+
+p { margin: 0.45em 0; }
+ul, ol { margin: 0.4em 0; padding-left: 1.3em; }
+li { margin: 0.15em 0; }
+
+table { width: 100%; border-collapse: collapse; margin: 0.6em 0; font-size: 9pt; page-break-inside: avoid; }
+thead { border-top: 2px solid #333; border-bottom: 1px solid #333; }
+tbody { border-bottom: 2px solid #333; }
+th, td { padding: 0.3em 0.5em; text-align: left; vertical-align: top; }
+th { font-weight: bold; }
+
+.pullquote { margin: 0.7em 0; padding: 0.5em 0.8em; background: #f8fafc; border-left: 3px solid #0ea5e9; font-size: 10.5pt; font-style: italic; color: #475569; }
+</style>
+</head>
+<body>
+
+<!-- ========== COVER ========== -->
+<div class="cover">
+  <div class="cover-content">
+    <div class="cover-tag">Partnership Prospectus</div>
+    <h1 class="cover-title">The Global Alliance for Trustworthy Molecular AI</h1>
+    <p class="cover-subtitle">Twenty-two institutions, four partnership categories,<br>one mission: build the audit layer that makes the Replicator trustworthy</p>
+    <div class="cover-meta">
+      <p>Lupine Materials Intelligence</p>
+      <p>May 2026</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== EXECUTIVE SUMMARY ========== -->
+<h1>Executive Summary</h1>
+
+<p>
+Building the audit substrate for molecular AI is not a solo endeavor. The mathematics is deep, the implementation is complex, and the validation requires access to the world's most advanced simulation and synthesis infrastructure. This prospectus identifies twenty-two institutions across four partnership categories — MLIP architects, self-driving laboratories, data infrastructure providers, and formal verification specialists — whose work is either directly complementary to Lupine's or urgently in need of the trust layer Lupine provides.
+</p>
+
+<p>
+The strategic logic is simple. Lupine does not build MLIPs; we validate them. We do not build robotic laboratories; we verify their outputs. We do not curate materials databases; we certify the predictions made from them. Every group in this prospectus is doing world-class work that would be <em>more valuable</em> with a mathematically guaranteed audit layer, and Lupine's theorems are <em>more impactful</em> when validated against their systems. The partnerships are mutually beneficial by construction.
+</p>
+
+<table>
+  <caption style="font-size:9.5pt; font-weight:bold; margin-bottom:0.3em;">Partnership Categories and Counts</caption>
+  <thead>
+    <tr><th>Category</th><th>Institutions</th><th>What Lupine Brings</th><th>What They Bring</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>MLIP Architects</strong></td><td>7</td><td>Error geometry theorems, refusal mechanism, UQ</td><td>Models, training data, architectural insight</td></tr>
+    <tr><td><strong>Self-Driving Labs</strong></td><td>5</td><td>Validation layer, trust scores, clean training signal</td><td>Robotic synthesis, experimental validation, real-world failure modes</td></tr>
+    <tr><td><strong>Data Infrastructure</strong></td><td>5</td><td>Certified predictions, benchmark methodology</td><td>Datasets, APIs, distribution channels, standards bodies</td></tr>
+    <tr><td><strong>Formal Verification</strong></td><td>5</td><td>Real-world theorem targets, physics formalization</td><td>Proof expertise, tooling, certification credibility</td></tr>
+  </tbody>
+</table>
+
+<!-- ========== CATEGORY 1 ========== -->
+<h1>Category I: MLIP Architects</h1>
+
+<p>
+These groups build the models that Lupine's audit layer validates. Partnerships here take the form of joint benchmark development, co-authored methodology papers, and integration of the refusal mechanism into production model stacks. The Cambridge Lennard-Jones Centre is the highest-priority target — they literally wrote the MACE paper that defines the current state of the art.
+</p>
+
+<div class="partner-card cat-mlip">
+  <div class="partner-name">University of Cambridge / Lennard-Jones Centre</div>
+  <div class="partner-meta">Cambridge, UK | Gábor Csányi, Christoph Schran, Angelos Michaelides, Ilyes Batatia, Cas van der Oord</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> The Lennard-Jones Centre is the global epicenter of MLIP development. Csányi invented the Gaussian Approximation Potential (GAP) and co-created MACE, the most widely used equivariant MLIP. Schran leads the FAST group focused on aqueous systems and interfaces. Van der Oord developed the HAL (hyperactive learning) framework for uncertainty-biased active learning. They are the authors of the MACE-MPA-0 foundation model paper and the "foundation model for atomistic materials chemistry" publication. <strong>Partnership angle:</strong> Joint development of the error-geometry framework as the default validation layer for MACE; co-authored extension of the Universality Theorem to MACE architectural variants; integration of the refusal mechanism into the MACE inference pipeline.</div>
+</div>
+
+<div class="partner-card cat-mlip">
+  <div class="partner-name">Massachusetts Institute of Technology / Tess Smidt</div>
+  <div class="partner-meta">Cambridge, MA | Tess Smidt (Assistant Professor, EECS), Mario Geiger</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Smidt created e3nn — the equivariant neural network library that underlies MACE, Equiformer, and virtually every modern MLIP. Her Atomic Architects group works at the intersection of physics, geometry, and machine learning. The e3nn framework encodes the exact symmetries of physical systems into neural network architectures, which is precisely the mathematical structure that the Universality Theorem characterizes. <strong>Partnership angle:</strong> Joint work on the relationship between equivariant symmetry constraints and error manifold geometry; e3nn integration for the atlas-distill engine; co-authored paper on "Error Geometry of E(3)-Equivariant Networks."</div>
+</div>
+
+<div class="partner-card cat-mlip">
+  <div class="partner-name">EPFL / Laboratory of Computational Science and Modeling (COSMO)</div>
+  <div class="partner-meta">Lausanne, Switzerland | Michele Ceriotti, Federico Grasselli, Filippo Bigi</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Ceriotti has spent a decade building uncertainty quantification tools for atomistic ML. His group developed calibrated committee models, PET-MAD (a lightweight universal potential with built-in UQ), and the AUTOMA COST Action network for UQ in atomistic modeling. His 2025 preprint with Yangshuai Wang on "Flexible Uncertainty Calibration for MLIPs using Conformal Prediction" is essentially convergent with Lupine's Neyman-Pearson calibration approach. <strong>Partnership angle:</strong> Joint development of the uncertainty calibration framework; Ceriotti's conformal prediction methods + Lupine's error-geometry theorems = a unified trust layer; co-authored paper on conformal prediction for MLIP descriptor spaces.</div>
+</div>
+
+<div class="partner-card cat-mlip">
+  <div class="partner-name">University of British Columbia / Christoph Ortner</div>
+  <div class="partner-meta">Vancouver, Canada | Christoph Ortner (Professor of Mathematics)</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Ortner is a mathematician working at the intersection of approximation theory and MLIPs. He co-authored the HAL paper with Csányi and van der Oord, and his 2025 preprint on "Flexible Uncertainty Calibration for MLIPs" develops conformal prediction methods for atomistic simulation. His mathematical perspective on uncertainty is complementary to Lupine's geometric approach — he works in function space, we work in descriptor space. <strong>Partnership angle:</strong> Joint paper bridging function-space and descriptor-space uncertainty; Ortner's conformal prediction expertise applied to the reach-bound framework; graduate student exchange.</div>
+</div>
+
+<div class="partner-card cat-mlip">
+  <div class="partner-name">Meta AI / FAIR Chemistry (OMat24, fairchem)</div>
+  <div class="partner-meta">Menlo Park, CA | Brandon Wood, Nima Taghizadeh, FAIR Chemistry Team</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Meta's FAIR Chemistry group released OMat24 — the largest periodic DFT dataset ever created (100M+ calculations) — and the UMA universal model. Their fairchem codebase is the standard framework for training and evaluating materials ML models. The UMA-1.2 release (March 2026) claims "~50% faster, ~40% more accurate." They have the compute and the data; Lupine has the trust methodology. <strong>Partnership angle:</strong> Integration of Lupine's refusal mechanism into fairchem inference pipeline; joint benchmark on OMat24 using the error-geometry framework; OMat24 as the canonical dataset for training the audit model.</div>
+</div>
+
+<div class="partner-card cat-mlip">
+  <div class="partner-name">Yonsei University / SevenNet Development Team</div>
+  <div class="partner-meta">Seoul, South Korea | Yousung Jung, Seungwu Han groups</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> SevenNet is one of the most stable universal MLIPs (98.75% completion rate on the AMCSD-MD-2.4K benchmark, per ICLR 2025). The ICLR 2025 paper "Evaluating Universal Interatomic Potentials" identified SevenNet as a top performer alongside ORB and MatterSim. Their focus on MD stability makes them an ideal testbed for the refusal mechanism — MD is where silent failures are most costly. <strong>Partnership angle:</strong> Integration of layerwise refusal into SevenNet inference; joint MD benchmark measuring speedup and safety; SevenNet as a validation partner for the Causal Acceleration Theorem.</div>
+</div>
+
+<div class="partner-card cat-mlip">
+  <div class="partner-name">University of Wisconsin-Madison / Dane Morgan</div>
+  <div class="partner-meta">Madison, WI | Dane Morgan (Professor, MSE), Ryan Jacobs</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Morgan co-authored the definitive 2025 "Practical Guide to Machine Learning Interatomic Potentials" with Csányi, Ceder, Kitchin, and 30+ others. His group develops the XYZon methodology and works on open-source MLIP infrastructure. They are connected to the Materials Project, OpenKIM, and the broader materials informatics community. <strong>Partnership angle:</strong> Joint development of best-practice guidelines for MLIP validation; Morgan's infrastructure expertise applied to distributing the audit layer; co-authored follow-up to the practical guide focused on trust and verification.</div>
+</div>
+
+<!-- ========== CATEGORY 2 ========== -->
+<h1>Category II: Self-Driving Laboratories</h1>
+
+<p>
+These groups build the robotic synthesis infrastructure that transforms predictions into physical matter. They are Lupine's customers in Phase 2 and Phase 3 of the Replicator roadmap, but they are also essential validation partners in Phase 1 — their experimental data provides the ground truth against which the audit layer's predictions are tested.
+</p>
+
+<div class="partner-card cat-lab">
+  <div class="partner-name">North Carolina State University / Milad Abolhasani</div>
+  <div class="partner-meta">Raleigh, NC | Milad Abolhasani (ALCOA Professor, ChBE)</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Abolhasani is arguably the world's leading practitioner of self-driving laboratories. His "Artificial Chemist" (2020) and "Rainbow" (2025, <em>Nature Communications</em>) platforms autonomously synthesize quantum dots and perovskite nanocrystals. His 2025 <em>Nature Chemical Engineering</em> paper introduced dynamic flow experiments that collect 10x more data than conventional steady-state approaches. He holds a $2M NSF DMREF grant for SDL networks across NC State, Brown, and Buffalo. <strong>Partnership angle:</strong> Lupine's audit layer validates Abolhasani's generative proposals before synthesis; every synthesis result feeds back into the error-geometry model; joint paper on "Closing the Prediction-Synthesis Loop with Mathematical Guarantees."</div>
+</div>
+
+<div class="partner-card cat-lab">
+  <div class="partner-name">UC Berkeley / A-Lab (Gerbrand Ceder, Kristin Persson)</div>
+  <div class="partner-meta">Berkeley, CA | Gerbrand Ceder, Kristin Persson, Ziheng Lu</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> The A-Lab demonstrated autonomous materials discovery in 2023 — a robotic laboratory that proposes, synthesizes, and characterizes novel inorganic materials without human intervention. Ceder and Persson co-direct the Materials Project, the most widely used materials database in the world (hosting 150,000+ structures). Their 2025 paper on cross-functional transferability in foundation MLIPs directly addresses the transferability problem that Lupine's error geometry solves. <strong>Partnership angle:</strong> Integration of Lupine's trust scores into the A-Lab decision pipeline; Materials Project hosting the error-geometry benchmark; joint work on transferability validation using the Universality Theorem framework.</div>
+</div>
+
+<div class="partner-card cat-lab">
+  <div class="partner-name">University of Sheffield / Nick Warren</div>
+  <div class="partner-meta">Sheffield, UK | Nick Warren (Chair in Sustainable Materials)</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Warren's group operates the first self-driving laboratory for emulsion polymerization — a multi-objective optimization platform that targets reaction conversion, purity, particle size, and uniformity simultaneously. Their 2025 papers in <em>Chemical Engineering Journal</em>, <em>Polymer Chemistry</em>, and <em>Macromolecular Rapid Communications</em> demonstrate closed-loop polymer synthesis with machine learning. Polymers are a high-volume, high-value market where MLIP trust is critical. <strong>Partnership angle:</strong> Lupine validates MLIP predictions of polymer properties before synthesis; joint development of polymer-specific error-geometry models; Warren's CMI collaborations provide ML expertise.</div>
+</div>
+
+<div class="partner-card cat-lab">
+  <div class="partner-name">Carnegie Mellon University / John Kitchin</div>
+  <div class="partner-meta">Pittsburgh, PA | John Kitchin (Professor, Chemical Engineering)</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Kitchin leads CMU's data science and machine learning for catalysis program. He is a co-author of the 2025 "Practical Guide to MLIPs" and works with Meta on the Open Catalyst Project. His group has done high-throughput experimentation on multicomponent catalysts and understands firsthand the gap between ML predictions and experimental reality — he has publicly stated that "complex systems are complex; you cannot always use DFT or ML to force a way through." <strong>Partnership angle:</strong> Joint work on catalysis-specific error geometry; Kitchin's experimental data validates the refusal mechanism; CMU's Open Catalyst collaboration provides a bridge to Meta.</div>
+</div>
+
+<div class="partner-card cat-lab">
+  <div class="partner-name">Karlsruhe Institute of Technology / Self-Driving Lab Consortium</div>
+  <div class="partner-meta">Karlsruhe, Germany | Various groups in polymer and materials synthesis</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> KIT collaborates with Sheffield's Warren group on automated polymer synthesis and has extensive facilities for materials characterization. Germany's Materials Research Center (MFG) at KIT is one of Europe's largest materials science facilities. The German research landscape (BMBF, DFG) is strongly committed to autonomous materials discovery. <strong>Partnership angle:</strong> European validation site for the audit layer; KIT's characterization infrastructure provides ground-truth data; gateway to German federal funding programs.</div>
+</div>
+
+<!-- ========== CATEGORY 3 ========== -->
+<h1>Category III: Data Infrastructure</h1>
+
+<p>
+These groups provide the datasets, APIs, standards, and distribution channels that make the audit layer accessible at scale. A theorem without a dataset to validate it against is just mathematics; a dataset without a trust layer is just noise. These partnerships are about building the plumbing.
+</p>
+
+<div class="partner-card cat-data">
+  <div class="partner-name">NIST / OpenKIM (Ellad Tadmor, Ryan Elliott)</div>
+  <div class="partner-meta">Gaithersburg, MD | Ellad Tadmor (Director), Ryan Elliott (Technical Lead), Ronald Miller (Editor)</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> OpenKIM is the definitive repository for interatomic potentials — 1,526 models, 123,761 tests, 135,220 reference properties, all with DOIs and full provenance. It is integrated with LAMMPS, ASE, GULP, and DLPOLY. The KIM API is the standard interface for atomistic simulation. Tadmor and Elliott have spent 15 years building the infrastructure that the entire community depends on. <strong>Partnership angle:</strong> OpenKIM hosts the error-geometry test suite as a standardized validation protocol; the KIM API integrates Lupine's refusal mechanism; joint development of "KIM-Trust" — a certification layer for model reliability.</div>
+</div>
+
+<div class="partner-card cat-data">
+  <div class="partner-name">Lawrence Berkeley National Lab / Materials Project</div>
+  <div class="partner-meta">Berkeley, CA | Kristin Persson, Gerbrand Ceder, Shyam Dwaraknath</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> The Materials Project is the world's largest open database of computed materials properties (150,000+ structures, billions of property calculations). It is funded by DOE and used by 100,000+ researchers. Persson and Ceder are co-authors of the MACE-MPA-0 foundation model paper. The MP-r2SCAN dataset (2025) is the standard training set for universal MLIPs. <strong>Partnership angle:</strong> Materials Project hosts the error-geometry benchmark as a live dashboard; MP-r2SCAN provides the canonical training data for the audit model; joint DOE proposal for "Trustworthy Materials Discovery."</div>
+</div>
+
+<div class="partner-card cat-data">
+  <div class="partner-name">ColabFit Exchange / KLIFF (Mingjian Wen, Ellad Tadmor)</div>
+  <div class="partner-meta">University of Houston / University of Minnesota | Mingjian Wen, Ellad Tadmor</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> ColabFit is an open-access database for data-driven interatomic potentials, connecting first-principles data with fitting frameworks. KLIFF (KIM-based Learning Integrated Fitting Framework) provides the fitting infrastructure. The January 2026 OpenKIM newsletter highlighted a paper on "information-matching for experimental design and active learning" using KLIFF. <strong>Partnership angle:</strong> ColabFit integrates Lupine's error-geometry metrics as standard metadata for every potential; KLIFF incorporates the refusal mechanism into its fitting workflow; joint development of active-learning protocols with trust-aware data selection.</div>
+</div>
+
+<div class="partner-card cat-data">
+  <div class="partner-name">Argonne National Lab / CNM and Aurora</div>
+  <div class="partner-meta">Lemont, IL | Various groups in nanomaterials and computational science</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Argonne's Center for Nanoscale Materials (CNM) operates user facilities for materials characterization. The Aurora exascale supercomputer (2 exaflops) is hosted at Argonne and is being used for large-scale materials ML training. Argonne is a key node in the CHIPS Act materials qualification ecosystem. <strong>Partnership angle:</strong> Argonne provides compute for large-scale error-geometry calculations; CNM provides experimental validation; joint CHIPS Act proposal for trustworthy materials qualification.</div>
+</div>
+
+<div class="partner-card cat-data">
+  <div class="partner-name">JARVIS / NIST (Kamal Choudhary)</div>
+  <div class="partner-meta">NIST | Kamal Choudhary</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> JARVIS is a comprehensive materials informatics platform with leaderboards for evaluating force fields, property prediction models, and materials design workflows. It includes the JARVIS-DFT, JARVIS-FF, and JARVIS-ML datasets. Choudhary is a co-author of the 2025 "Practical Guide to MLIPs" and maintains one of the most widely used benchmarking platforms in the field. <strong>Partnership angle:</strong> JARVIS hosts a "Trust Leaderboard" ranking MLIPs by their error-geometry properties; joint benchmark development; JARVIS-ML as a training resource for the audit model.</div>
+</div>
+
+<!-- ========== CATEGORY 4 ========== -->
+<h1>Category IV: Formal Verification</h1>
+
+<p>
+These groups specialize in machine-checked proofs, formal methods, and the certification of computational systems. The Lean 4 formalization of the Causal Acceleration Theorem is a proof-of-concept; these partnerships would transform it into a certifiable, industry-standard verification framework.
+</p>
+
+<div class="partner-card cat-formal">
+  <div class="partner-name">Imperial College London / Kevin Buzzard</div>
+  <div class="partner-meta">London, UK | Kevin Buzzard (Professor of Pure Mathematics)</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Buzzard is the world's most prominent advocate for formalizing mathematics in Lean. His Xena Project aims to rewrite all undergraduate mathematics in Lean, and he has stated explicitly that "there is no reason that theoretical physics can't be treated in the same way." He is aware of PhysLib — the nascent effort to formalize physics in Lean — and has the expertise and influence to make formal verification of physical theorems a credible research direction. <strong>Partnership angle:</strong> Buzzard advises on the Lean 4 formalization strategy; Imperial hosts a joint workshop on "Formal Methods for Molecular Simulation"; co-authored paper on the first machine-checked physics theorem at research level.</div>
+</div>
+
+<div class="partner-card cat-formal">
+  <div class="partner-name">Flatiron Institute / Center for Computational Mathematics (CCM)</div>
+  <div class="partner-meta">New York, NY | Soledad Villar, Mark Goldstein, Denny Wu</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> The Flatiron Institute's CCM focuses on "machine learning for physical sciences" with particular emphasis on equivariant machine learning, graph neural networks, and learning theory. Soledad Villar's work on "learning theory, deep learning, equivariant machine learning, and machine learning for science" is directly adjacent to Lupine's error-geometry research. The Flatiron has no teaching obligations and generous funding — ideal for high-risk, high-reward collaborations. <strong>Partnership angle:</strong> Joint work on the learning-theoretic foundations of error geometry; Villar's expertise in equivariant ML theory applied to the Universality Theorem; Flatiron as a neutral venue for workshop hosting.</div>
+</div>
+
+<div class="partner-card cat-formal">
+  <div class="partner-name">Simons Collaboration on Crispr / Soledad Villar (JHU)</div>
+  <div class="partner-meta">Johns Hopkins University | Soledad Villar (Assistant Professor, AMS)</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Villar works on "learning theory, deep learning, equivariant machine learning, graph neural networks, machine learning for science, high dimensional probability, optimization." Her research sits at the exact intersection of the mathematical techniques used in the Universality Theorem (random matrix theory, concentration inequalities, high-dimensional geometry) and the practical concerns of MLIP validation. <strong>Partnership angle:</strong> Joint theoretical work on the concentration bounds underlying the Vandermonde Lemma; Villar's learning theory expertise strengthens the proof architecture; graduate student collaboration.</div>
+</div>
+
+<div class="partner-card cat-formal">
+  <div class="partner-name">University of Cambridge / Computer Laboratory (Lean Community)</div>
+  <div class="partner-meta">Cambridge, UK | Various members of the Lean/mathlib community</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> Cambridge is a hub for both MLIP research (Lennard-Jones Centre) and formal verification (Computer Laboratory). The proximity creates unique opportunities for cross-pollination. The Lean community at Cambridge includes researchers working on Mathlib, the largest formalized mathematics library in existence (210,000+ theorems as of May 2025). <strong>Partnership angle:</strong> Cambridge hosts a joint seminar series bridging MLIP and formal verification; Computer Lab students formalize lemmas from the acceleration theorem as coursework; joint PhD supervision across Engineering and Computer Science.</div>
+</div>
+
+<div class="partner-card cat-formal">
+  <div class="partner-name">Microsoft Research / Lean Development Team (Leonardo de Moura)</div>
+  <div class="partner-meta">Redmond, WA | Leonardo de Moura (Principal Researcher, Lean creator)</div>
+  <div class="partner-fit"><strong>Why they matter:</strong> De Moura created Lean and leads its development at Microsoft Research. Lean 4 is the version used for Lupine's formalization. Microsoft Research also has an AI for Science group that works on molecular simulation. The combination of Lean expertise and scientific ML interest at a single institution is rare and valuable. <strong>Partnership angle:</strong> De Moura advises on Lean 4 proof engineering for physics; Microsoft Research hosts a workshop on "Formal Verification for Scientific Computing"; potential Azure credits for large-scale formalization jobs.</div>
+</div>
+
+<!-- ========== PARTNERSHIP ROADMAP ========== -->
+<h1>Partnership Roadmap</h1>
+
+<p>
+Not all partnerships should be pursued simultaneously. The following phased approach prioritizes the highest-impact, lowest-friction collaborations first, using each successful partnership as a credential for the next.
+</p>
+
+<div class="strategy-box">
+  <div class="strategy-title">Phase 1 (Months 1–6): Anchor Partnerships</div>
+  <strong>Target:</strong> Cambridge Lennard-Jones Centre + EPFL COSMO + NIST OpenKIM.
+  <strong>Goal:</strong> Validate the error-geometry framework against MACE and SevenNet; integrate refusal mechanism into OpenKIM test suite; publish joint paper with Ceriotti on conformal prediction for MLIPs.
+  <strong>Why first:</strong> Cambridge is the natural home for this work (Csányi co-authored the foundation model); EPFL provides the UQ expertise that makes the theorem practical; OpenKIM provides the distribution channel.
+</div>
+
+<div class="strategy-box">
+  <div class="strategy-title">Phase 2 (Months 6–12): Validation Partnerships</div>
+  <strong>Target:</strong> NC State Abolhasani + UC Berkeley A-Lab + Sheffield Warren.
+  <strong>Goal:</strong> Deploy the audit layer on three distinct self-driving lab platforms; collect experimental ground-truth data; publish joint paper on "Closing the Prediction-Synthesis Loop."
+  <strong>Why second:</strong> Experimental validation is the credibility threshold for investor and customer conversations; three independent validations provide robust evidence.
+</div>
+
+<div class="strategy-box">
+  <div class="strategy-title">Phase 3 (Months 12–18): Scale Partnerships</div>
+  <strong>Target:</strong> Meta FAIR-Chem + Materials Project + MIT Smidt.
+  <strong>Goal:</strong> Integrate refusal mechanism into fairchem and Materials Project pipelines; joint work with Smidt on e3nn error geometry; publish "Practical Guide to Trustworthy MLIPs" as follow-up to Morgan et al. 2025.
+  <strong>Why third:</strong> These partnerships require the credibility established by Phases 1 and 2; they provide the scale that makes Lupine the default trust layer.
+</div>
+
+<div class="strategy-box">
+  <div class="strategy-title">Phase 4 (Months 18–24): Formal Verification Partnerships</div>
+  <strong>Target:</strong> Imperial Buzzard + Flatiron Villar + Microsoft Research de Moura.
+  <strong>Goal:</strong> Complete the Lean 4 formalization of all theorems; publish the first machine-checked research-level physics theorem; establish formal verification as a competitive moat.
+  <strong>Why last:</strong> Formal verification is the deepest moat but requires the most specialized expertise; it becomes more valuable once the practical layer is deployed and the theorems are battle-tested.
+</div>
+
+<!-- ========== WHY THEY WILL SAY YES ========== -->
+<h1>Why They Will Say Yes</h1>
+
+<p>
+Every institution in this prospectus has a problem that Lupine solves, and Lupine has a problem that they solve. The value proposition is not charitable — it is transactional and mutually beneficial.
+</p>
+
+<p>
+<strong>For MLIP architects,</strong> the Universality Theorem provides a theoretical justification for why their models fail in predictable ways, and the refusal mechanism gives them a practical tool for handling those failures. Every MLIP paper published today includes a section on "limitations and future work" that essentially says "we don't know when this model will fail." Lupine replaces that with a quantitative framework.
+</p>
+
+<p>
+<strong>For self-driving labs,</strong> the audit layer is the difference between a robotic system that generates data and a robotic system that generates <em>trustworthy</em> data. Abolhasani's Rainbow can run 1,000 experiments per day, but without a validation layer, it cannot distinguish between a failed synthesis due to a bad proposal and a failed synthesis due to a trustworthy proposal that physical reality contradicted. Lupine provides that discrimination.
+</p>
+
+<p>
+<strong>For data infrastructure providers,</strong> the error-geometry benchmark is a new category of metadata that makes their existing datasets more valuable. OpenKIM's 1,526 models gain a trust score; Materials Project's 150,000 structures gain a reliability flag; JARVIS's leaderboards gain a "trustworthiness" column. This is additive value, not competitive displacement.
+</p>
+
+<p>
+<strong>For formal verification specialists,</strong> the Causal Acceleration Theorem is a rare example of a real-world physics theorem with commercial implications that is also formally tractable. Buzzard has said "we need a million lines of physics" in Lean; Lupine provides the first thousand. The collaboration gives formal verification a foothold in a domain (materials science) where it has never been applied.
+</p>
+
+<div class="pullquote">
+"Every group in this prospectus is doing world-class work that would be more valuable with a mathematically guaranteed audit layer, and Lupine's theorems are more impactful when validated against their systems."
+</div>
+
+</body>
+</html>

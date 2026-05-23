@@ -1,0 +1,196 @@
+\documentclass[11pt,a4paper]{article}
+
+% =============================================================================
+% PACKAGES
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.8cm, right=2.8cm}
+
+% Math
+\usepackage{amsmath,amssymb,amsthm,amsfonts,mathtools}
+\usepackage{bm}
+\usepackage{bbm}
+
+% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{prediction}[theorem]{Prediction}
+
+% Tables and figures
+\usepackage{booktabs,array,longtable,multirow}
+\usepackage{graphicx,float}
+
+% Lists
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=0.2em, leftmargin=1.5em}
+\setlist[enumerate]{itemsep=0.2em, leftmargin=1.5em}
+
+% Colors and boxes
+\usepackage{xcolor}
+\definecolor{darkblue}{RGB}{0,51,102}
+\definecolor{darkgray}{RGB}{64,64,64}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+
+% Headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{A Universality Theorem for Foundation MLIPs}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Spacing
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.8em}
+
+% References - natbib with superscript
+\usepackage[numbers,super,sort&compress]{natbib}
+\bibliographystyle{unsrtnat}
+
+% hyperref LAST
+\usepackage[
+    colorlinks=true,
+    linkcolor=darkblue,
+    citecolor=darkgray,
+    urlcolor=darkblue,
+    bookmarks=true,
+    bookmarksnumbered=true,
+    unicode=true,
+    pdftitle={A Universality Theorem for Foundation Machine Learning Interatomic Potentials},
+    pdfauthor={},
+    pdfsubject={Foundation MLIPs, Universality, Error Manifolds},
+    pdfkeywords={MLIP, foundation model, universality, sloppy models, Fisher information, Vandermonde}
+]{hyperref}
+
+% =============================================================================
+% MACROS
+% =============================================================================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\nullsp}{\mathrm{null}}
+\newcommand{\spanop}{\mathrm{span}}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\reach}{\mathrm{reach}}
+\newcommand{\Hess}{\mathrm{Hess}}
+\newcommand{\FIM}{\mathrm{FIM}}
+\newcommand{\Jac}{\mathrm{Jac}}
+\newcommand{\MLIP}{\text{MLIP}}
+\newcommand{\DFT}{\text{DFT}}
+\newcommand{\MSE}{\text{MSE}}
+\newcommand{\MAE}{\text{MAE}}
+\newcommand{\RMSE}{\text{RMSE}}
+\newcommand{\const}{\text{const}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\fro}{\mathrm{F}}
+\newcommand{\KL}{\mathrm{KL}}
+\newcommand{\GP}{\mathcal{GP}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\deq}{\coloneqq}
+\newcommand{\tendsto}{\longrightarrow}
+\newcommand{\given}{\,|\,}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\abs}[1]{|#1|}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\dd}{\mathrm{d}}
+
+% =============================================================================
+% DOCUMENT
+% =============================================================================
+\begin{document}
+
+% ---------------------------------------------------------------------------
+% TITLE
+% ---------------------------------------------------------------------------
+\begin{center}
+\LARGE\bfseries
+A Universality Theorem for Foundation Machine Learning\\[0.3em]
+Interatomic Potentials:\\[0.3em]
+Per-Model Error Manifolds with Class-Uniform Geometry
+\end{center}
+
+\vspace{1em}
+\begin{center}
+\textit{Research Manuscript --- npj Computational Materials (Target)}
+\end{center}
+
+\vspace{1.5em}
+
+% ---------------------------------------------------------------------------
+% ABSTRACT
+% ---------------------------------------------------------------------------
+\begin{tcolorbox}[colback=gray!5,colframe=gray!40,title=\textbf{Abstract},fonttitle=\bfseries,boxrule=0.5pt]
+We prove a Universality Theorem for foundation machine learning interatomic potentials (MLIPs). Let $\cF$ denote the architectural class of foundation MLIPs satisfying three definitional conditions: (F1) pretraining on a chemically diverse \DFT\ corpus at scale; (F2) representational expressivity strictly above the Pozdnyakov--Ceriotti incompleteness floor; and (F3) smoothness of the model as a function of atomic positions outside a measure-zero set of singular configurations. We show that every $M \in \cF$ admits a per-model error manifold $\cM(M)$ with six class-uniform structural properties: (i) bounded intrinsic dimension; (ii) $O(d \log N)$ sample complexity for manifold recovery; (iii) a cross-model Vandermonde decay rate $\rho(\cF)$ governing the Fisher information spectrum; (iv) an active-learning excess-risk bound scaling as $O(d \log N / T)$; (v) a two-mode inference characterization distinguishing prediction from refusal; and (vi) stable evolution under generational succession with top-error-direction cosine similarity $\geq 0.7$. The central mathematical result is the \emph{Cross-Model Vandermonde Lemma}, which proves that the sloppy-model eigenvalue decay rate is uniformly bounded across all models in $\cF$. We derive a corollary identifying three escape classes for error reduction---paradigm-agnostic, paradigm-specific, and structural inadequacy---and pre-register two falsifiable predictions with explicit numerical thresholds tied to public benchmarks.
+\end{tcolorbox}
+
+\vspace{1em}
+
+% ---------------------------------------------------------------------------
+% TABLE OF CONTENTS
+% ---------------------------------------------------------------------------
+\tableofcontents
+\newpage
+
+% ---------------------------------------------------------------------------
+% SECTIONS
+% ---------------------------------------------------------------------------
+\input{sec1_intro}
+\input{sec2_class_f}
+\input{sec3_theorem}
+\input{sec4_empirical}
+\input{sec5_proofs}
+\input{sec6_predictions}
+\input{sec7_escape}
+\input{sec8_cmet}
+\input{sec9_discussion}
+
+% ---------------------------------------------------------------------------
+% APPENDICES
+% ---------------------------------------------------------------------------
+\newpage
+\appendix
+\input{appendix}
+
+% ---------------------------------------------------------------------------
+% BIBLIOGRAPHY
+% ---------------------------------------------------------------------------
+\newpage
+\bibliography{references}
+
+\end{document}

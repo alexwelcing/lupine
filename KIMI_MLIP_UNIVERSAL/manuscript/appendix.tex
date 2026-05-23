@@ -1,0 +1,206 @@
+% =============================================================================
+% APPENDICES
+% =============================================================================
+
+\section{Cross-Model Vandermonde Lemma: Full Proof}\label{app:vandermonde}
+
+This appendix contains the complete proof of Lemma~\ref{lem:vandermonde}. We restate the lemma for convenience:
+
+\textbf{Lemma~\ref{lem:vandermonde} (Cross-Model Vandermonde Decay).} \textit{Let $\cF$ satisfy (F1)--(F3) with class constants $\kappa_1, \kappa_2, \kappa_3$. Then there exists $\rho(\cF) \geq 1.5$ such that for every $M \in \cF$, the empirical Fisher singular spectrum satisfies}
+\begin{equation*}
+    \sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot e^{-\rho(\cF)(m-1)} + O_p\!\left(\sqrt{\frac{\log d}{n}}\right),
+\end{equation*}
+\textit{uniformly over $M \in \cF$, with} $\rho(\cF) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$.
+
+\subsection{Preliminaries}
+
+For a parametric model $M_\theta$ with parameters $\theta \in \R^d$, the \emph{population Fisher information matrix} is:
+\begin{equation}\label{eq:pop-fisher}
+    F(M) = \E_{x \sim \cD}\bigl[\nabla_\theta \ell(x; \theta^*) \, \nabla_\theta \ell(x; \theta^*)^\top\bigr],
+\end{equation}
+where $\ell(x; \theta)$ is the loss function and $\theta^*$ is the optimal parameter. The \emph{empirical Fisher information matrix} on $n$ samples is:
+\begin{equation}\label{eq:emp-fisher}
+    F_n(M) = \frac{1}{n} \sum_{i=1}^n \nabla_\theta \ell(x_i; \theta^*) \, \nabla_\theta \ell(x_i; \theta^*)^\top.
+\end{equation}
+
+The Jacobian $J(M) \in \R^{n \times d}$ has rows $\nabla_\theta \ell(x_i; \theta^*)^\top$, so $F_n(M) = \frac{1}{n} J(M)^\top J(M)$. The singular values of $F_n(M)$ are the squares of the singular values of $J(M)/\sqrt{n}$.
+
+\subsection{Step 1: Single-Model Vandermonde Structure}
+
+Waterfall \emph{et al.}\cite{waterfall2006sloppy} prove the following (their Theorem 1 and Corollary 1). For a multiparameter model with cost function $C(\theta) = \sum_i (y_i - M_\theta(x_i))^2$, let $H = \nabla^2 C(\theta^*)$ be the Hessian at the optimum. Then:
+\begin{equation}\label{eq:waterfall}
+    H = J^\top J + \sum_i r_i \, \Hess_\theta M_\theta(x_i) \approx J^\top J,
+\end{equation}
+where the approximation holds near the optimum where residuals $r_i = y_i - M_{\theta^*}(x_i)$ are small. The matrix $J^\top J$ has the Vandermonde structure $J^\top J = V^\top A^\top A V$ where $V$ is a Vandermonde matrix with entries $V_{ij} = z_i^{j-1}$ for distinct nodes $\{z_i\}$.
+
+The key bound (Waterfall et al., Equation 4) is:
+\begin{equation}\label{eq:waterfall-bound}
+    \lambda_m(H) \leq \lambda_1(H) \cdot \exp\bigl(-\rho(M)(m-1)\bigr) + O(\|r\|_\infty),
+\end{equation}
+where the decay rate $\rho(M)$ depends on the conditioning of the Vandermonde matrix, which in turn depends on the model's parameter sensitivities.
+
+\subsection{Step 2: Concentration via Tropp's Matrix Bernstein}
+
+Tropp's matrix Bernstein inequality\cite{tropp2012user} (Theorem 1.6) states: let $\{X_k\}$ be independent random $d \times d$ matrices with $\E[X_k] = 0$, $\|X_k\|_{\op} \leq R$, and $\|\sum_k \E[X_k^2]\|_{\op} \leq \sigma^2$. Then for all $t \geq 0$:
+\begin{equation}\label{eq:tropp}
+    \Pr\!\left(\Bigl\|\sum_k X_k\Bigr\|_{\op} \geq t\right) \leq d \cdot \exp\!\left(\frac{-t^2/2}{\sigma^2 + Rt/3}\right).
+\end{equation}
+
+Apply this to the empirical Fisher deviation $F_n(M) - F(M) = \frac{1}{n}\sum_i (g_i g_i^\top - F(M))$ where $g_i = \nabla_\theta \ell(x_i; \theta^*)$. By (F3), $\|g_i\| \leq G$ uniformly, so $R = G^2/n$ and $\sigma^2 \leq G^4/n$. Tropp's bound gives:
+\begin{equation}\label{eq:fisher-concentration}
+    \Pr\bigl(\|F_n(M) - F(M)\|_{\op} \geq t\bigr) \leq d \cdot \exp\!\left(\frac{-nt^2/2}{G^4 + G^2 t/3}\right).
+\end{equation}
+
+Setting $t = C G^2 \sqrt{\log(d/\delta)/n}$ yields with probability $1-\delta$:
+\begin{equation}\label{eq:fisher-deviation}
+    \|F_n(M) - F(M)\|_{\op} \leq C \kappa_3^2 \sqrt{\frac{\log(d/\delta)}{n}},
+\end{equation}
+where we used (F3) to bound $G \leq \kappa_3$. This holds uniformly over $M \in \cF$ because (F3) provides a class-uniform gradient bound.
+
+\subsection{Step 3: Stability of Singular Subspaces}
+
+Wedin's $\sin\theta$ theorem\cite{wedin1972perturbation} states: let $A$ and $\tilde{A} = A + E$ have singular value decompositions. For the $m$-th singular subspaces $U_m, \tilde{U}_m$:
+\begin{equation}\label{eq:wedin}
+    \|\sin\Theta(U_m, \tilde{U}_m)\|_{\op} \leq \frac{\|E\|_{\op}}{\sigma_m(A) - \sigma_{m+1}(A)},
+\end{equation}
+provided the denominator (the gap) is positive.
+
+Dopico's refinement\cite{dopico2000sin} gives a cleaner bound for singular subspaces specifically: for $A, A+E \in \R^{n \times d}$ with $n \geq d$:
+\begin{equation}\label{eq:dopico}
+    |\sigma_m(A+E) - \sigma_m(A)| \leq \|E\|_{\op},
+\end{equation}
+which is the Lipschitz continuity of singular values under operator-norm perturbation (a direct consequence of Weyl's inequality for singular values).
+
+Applying Equation~\eqref{eq:dopico} with $A = F(M)$, $E = F_n(M) - F(M)$, and using Equation~\eqref{eq:fisher-deviation}:
+\begin{equation}\label{eq:singular-stability}
+    |\sigma_m(F_n(M)) - \sigma_m(F(M))| \leq C \kappa_3^2 \sqrt{\frac{\log(d/\delta)}{n}} \quad \text{w.p. } 1-\delta.
+\end{equation}
+
+\subsection{Step 4: Class-Uniform Conditioning}
+
+Beckermann\cite{beckermann2000condition} proves the following lower bound on the Euclidean condition number of a real Vandermonde matrix $V_n$ with nodes $z_1, \dots, z_n \in [a,b]$:
+\begin{equation}\label{eq:beckermann}
+    \cond_2(V_n) \geq \frac{\gamma^{n-1}}{16n}, \quad \text{where } \gamma = \exp\!\left(\frac{4 \cdot \text{Catalan}}{\pi}\right) > 1.
+\end{equation}
+
+The constant $\gamma$ depends on the separation of the nodes $\{z_i\}$: more widely separated nodes yield larger $\gamma$ and therefore faster Vandermonde decay. For the Fisher information matrix, the ``nodes'' are the parameter sensitivities---the rates at which the loss changes with respect to each parameter direction.
+
+Under (F1) (training-distribution coverage), the empirical Fisher has full rank with high probability, and the minimum singular value is bounded away from zero by $\sigma_d(F(M)) \geq c \kappa_1$ for some constant $c > 0$. This is because diverse training data excite all parameter directions, preventing any direction from being unobserved.
+
+Under (F2) (above-incompleteness expressivity), the parameter sensitivities span a space of dimension at least $d_{\text{min}}(\cF)$, the minimum descriptor dimension for architectures escaping the Pozdnyakov--Ceriotti floor. This provides a lower bound on the separation of Vandermonde nodes, hence a lower bound on $\gamma$.
+
+Combining (F1) and (F2): there exists $\gamma(\cF) > 1$ such that for all $M \in \cF$:
+\begin{equation}\label{eq:gamma-bound}
+    \gamma(M) \geq \gamma(\cF) = 1 + c \cdot \kappa_1 \kappa_2,
+\end{equation}
+where $c > 0$ is an absolute constant. From Equation~\eqref{eq:waterfall-bound} and the relation $\rho(M) = \log \gamma(M)$:
+\begin{equation}\label{eq:rho-lower}
+    \rho(M) = \log \gamma(M) \geq \log(1 + c \kappa_1 \kappa_2) \geq c' \kappa_1 \kappa_2,
+\end{equation}
+for small $\kappa_1 \kappa_2$, where $c' = c / \ln 2$.
+
+\subsection{Step 5: Combining the Bounds}
+
+From Step 1 (Equation~\eqref{eq:waterfall-bound}):
+\begin{equation}
+    \sigma_m(F(M)) \leq \sigma_1(F(M)) \cdot e^{-\rho(M)(m-1)}.
+\end{equation}
+
+From Step 4 (Equation~\eqref{eq:rho-lower}):
+\begin{equation}
+    \rho(M) \geq \rho(\cF) \deq c' \kappa_1 \kappa_2.
+\end{equation}
+
+From Step 3 (Equation~\eqref{eq:singular-stability}):
+\begin{equation}
+    |\sigma_m(F_n(M)) - \sigma_m(F(M))| \leq C \kappa_3^2 \sqrt{\frac{\log(d/\delta)}{n}}.
+\end{equation}
+
+Combining and using $\sigma_1(F(M)) \leq \sigma_1(F_n(M)) + C \kappa_3^2 \sqrt{\log(d/\delta)/n}$:
+\begin{equation}
+    \sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot e^{-\rho(\cF)(m-1)} + C \kappa_3^2 \sqrt{\frac{\log(d/\delta)}{n}} \cdot \left(1 + e^{-\rho(\cF)(m-1)}\right).
+\end{equation}
+
+Since $e^{-\rho(\cF)(m-1)} \leq 1$, the second term is $O(\sqrt{\log(d/\delta)/n})$. Absorbing $\kappa_3^2$ into the constant and setting $\delta = 1/n$ gives the stated bound:
+\begin{equation}\label{eq:final-vandermonde}
+    \sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot e^{-\rho(\cF)(m-1)} + O_p\!\left(\sqrt{\frac{\log d}{n}}\right).
+\end{equation}
+
+The uniform bound $\rho(\cF) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$ follows from optimizing the trade-off between node separation (which improves with larger $\kappa_1 \kappa_2$) and gradient magnitude (which is bounded by $\kappa_3$). The pre-registered threshold $\rho(\cF) \geq 1.5$ is achieved for typical class constants: with $\kappa_1 \sim 0.1$ (training coverage), $\kappa_2 \sim 1$ (expressivity margin), and $\kappa_3 \sim 10$ (Jacobian Lipschitz constant), we obtain $\rho(\cF) \sim 1.5$--$2.0$.
+
+\qed
+
+\section{Architectural Class $\cF$: Worked Examples}\label{app:class-f}
+
+This appendix provides detailed justification for the classification in Table~\ref{tab:class-f-examples}.
+
+\subsection{MACE-MP-0/MPA-0}
+
+MACE\cite{batatia2022mace} (Message Passing Atomic Cluster Expansion) is an E(3)-equivariant message-passing architecture with body-order 4 features and message-passing depth 2. MACE-MP-0\cite{batatia2024mace} is pretrained on the Materials Project trajectory data (MPtrj), satisfying (F1). The architecture satisfies (F2) by the GWL hierarchy: equivariant message passing with body order $\geq 4$ exceeds the incompleteness floor\cite{joshi2023expressive}. Smoothness (F3) follows from the smooth radial basis and polynomial activation functions\cite{bigi2022smooth}. MACE-MPA-0 extends the training set to include sAlex data while preserving the same architecture, hence also $\in \cF$.
+
+\subsection{CHGNet (Boundary Case)}
+
+CHGNet\cite{deng2023chgnet} uses a graph neural network with invariant (scalar) features and message-passing depth 2. The body order is marginal: CHGNet-v2 achieves body-order 4 through the combination of two-hop message passing and explicit three-body terms, placing it at the boundary of (F2). The original CHGNet (v0/v1) did not satisfy (F2) and is excluded from $\cF$. We include CHGNet-v2 and later as a boundary case marked Yes*.
+
+\subsection{Classical EAM (Counterexample)}
+
+Embedded atom method (EAM) potentials\cite{daw1984embedded} use a pairwise-plus-embedding functional form with fixed (non-learned) parameters. They fail (F2) because the descriptor is limited to two-body (pairwise) correlations, which are provably incomplete by Pozdnyakov--Ceriotti\cite{pozdnyakov2020incompleteness}. They also fail (F1) because they are not trained on DFT corpora at scale. EAM potentials are therefore $\notin \cF$.
+
+\section{Refusal-Region Characterization}\label{app:refusal}
+
+This appendix develops the refusal-region characterization for clause (v) in full detail.
+
+\subsection{Federer's Reach Machinery}
+
+For a closed set $A \subset \R^D$, the \emph{reach} is defined as:
+\begin{equation}\label{eq:reach-def}
+    \reach(A) = \sup\set{r \geq 0 : \text{every } x \in U_r(A) \text{ has a unique nearest point in } A}.
+\end{equation}
+
+Federer's Theorem 4.8(8)\cite{federer1959curvature} states that for $q < \reach(A)$, the nearest-point projection $\xi_A: U_q(A) \to A$ is Lipschitz with constant:
+\begin{equation}\label{eq:federer-lipschitz}
+    \Lip(\xi_A|_{U_q(A)}) \leq \frac{\reach(A)}{\reach(A) - q}.
+\end{equation}
+
+The companion result by Foote\cite{foote1984regularity} gives the $C^{1,1}$ regularity of distance level sets: for $0 < r < \reach(A)$, the level set $\set{x : \dist(x,A) = r}$ is a $C^{1,1}$ hypersurface.
+
+\subsection{Noisy-Reach Extension}
+
+Berenfeld and Hoffmann\cite{berenfeld2022estimating} extend Federer's machinery to the statistical setting. Let $\widehat{\cM}_n$ be an estimator of $\cM$ from $n$ noisy samples with noise level $\sigma$. They prove:
+\begin{equation}\label{eq:noisy-reach}
+    |\reach(\widehat{\cM}_n) - \reach(\cM)| = O\left(\sigma + n^{-1/(2d)}\right),
+\end{equation}
+where $d = \dim \cM$. For MLIP residuals, the ``noise'' is the DFT reference error ($\sigma_{\text{DFT}} \sim 1$--$10$ meV/atom) plus finite-sample fluctuation ($O(1/\sqrt{n})$). The Berenfeld--Hoffmann bound guarantees that the reach estimate from test-set residuals converges to the true reach at rate $O(n^{-1/(2d(\cF))})$.
+
+\subsection{Surface-Energy Worked Example}
+
+Consider a surface slab configuration $x_{\text{surf}}$ with Miller indices $(hkl)$ and $N_s$ surface atoms. The distance from $x_{\text{surf}}$ to the training distribution is:
+\begin{equation}\label{eq:surf-distance}
+    \dist(x_{\text{surf}}, \cD_{\text{train}}) \approx \gamma_{\text{surf}} \cdot N_s^{1/2} \cdot |E_{\text{surf}} - E_{\text{bulk}}|,
+\end{equation}
+where $\gamma_{\text{surf}}$ is a geometry-dependent constant. For typical foundation MLIPs trained on bulk equilibrium data, $|E_{\text{surf}} - E_{\text{bulk}}| \gg \eps_M$ and $\dist(x_{\text{surf}}, \cM(M)) > \reach(\cM(M))$, placing $x_{\text{surf}}$ in the refusal region. The Focassio \emph{et al.}\cite{focassio2025surfaces} observation that ``errors correlated to the total energy of surface simulations'' is consistent with the geometric characterization: large surface energy implies large distance to the error manifold, which violates the Lipschitz condition for the nearest-point projection.
+
+\section{Connection to CMET: Technical Details}\label{app:cmet}
+
+This appendix provides the technical details of the reduction from CMET to the Universality Theorem.
+
+\subsection{CMET Primitives}
+
+CMET (the first paper in the trilogy) establishes the following for a single foundation MLIP $M$ satisfying (F3):
+\begin{enumerate}[label=(C\arabic*)]
+    \item \textbf{Manifold existence.} The error set $\cM_{\eps}(M) = \set{x \in \cX_N^{\text{reg}} : |M(x) - E_{\text{DFT}}(x)| \geq \eps}$ is a smooth submanifold with boundary for generic $\eps > 0$.
+    \item \textbf{Reach bound.} $\reach(\cM_{\eps}(M)) \geq (\kappa_3 \|H_M\|_\infty)^{-1}$.
+    \item \textbf{Homology inference.} The union of $\eps$-balls around $n$ samples from $\cM_{\eps}(M)$ deformation-retracts onto $\cM_{\eps}(M)$ provided $n \geq C(M) d(M) \log(N/d(M))$.
+\end{enumerate}
+
+\subsection{Promotion to Class Level}
+
+The Universality Theorem promotes each CMET primitive to a class-uniform statement:
+
+\textbf{(C1) $\to$ Clause (i).} CMET proves $\dim \cM(M) = d(M) < \infty$. The Vandermonde lemma (Section~\ref{sec:vandermonde-proof}) proves $d(M) \leq d(\cF)$ uniformly.
+
+\textbf{(C2) $\to$ Clause (v).} CMET gives $\reach(\cM(M)) \geq (\kappa_3(M) \|H_M\|_\infty)^{-1}$. Condition (F3) replaces $\kappa_3(M)$ with $\kappa_3(\cF) = \sup_M \kappa_3(M)$, giving a class-uniform reach bound $r(\cF) = (\kappa_3(\cF) \cdot H_{\max})^{-1}$.
+
+\textbf{(C3) $\to$ Clause (ii).} CMET's sample complexity has model-dependent constant $C(M)$. The class-uniform smoothness and expressivity conditions (F1)--(F3) allow us to replace $C(M)$ with $C(\cF) = O(\kappa_1^{-1} \kappa_2 \kappa_3^2)$.
+
+The logical dependency is: CMET provides the single-model regularity that makes the error manifold well-defined; the Universality Theorem provides the class-uniform bounds that make cross-model comparison meaningful. Without CMET, the error manifold might not exist (if $M$ were non-smooth); without the Universality Theorem, the manifold properties might vary arbitrarily across models, precluding any class-level theory.

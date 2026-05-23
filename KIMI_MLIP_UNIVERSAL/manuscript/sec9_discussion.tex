@@ -1,0 +1,47 @@
+% =============================================================================
+% SECTION 9: DISCUSSION AND FALSIFIABILITY
+% =============================================================================
+\section{Discussion and Falsifiability Summary}\label{sec:discussion}
+
+The Universality Theorem asserts that foundation MLIPs in the architectural class $\cF$ share class-uniform geometric structure in their error manifolds. This section summarizes the implications, restates the pre-registered predictions, and identifies open mathematical problems.
+
+\subsection{Implications for MLIP Evaluation}
+
+The theorem reframes how foundation MLIPs should be evaluated. Current practice emphasizes aggregate error metrics (MAE, RMSE, F1) on held-out test sets. The Universality Theorem implies that these aggregates obscure the geometric structure of errors: two models with identical MAE may have error manifolds with different orientations (model-specific components) but the same intrinsic dimension (class-uniform property). The appropriate evaluation protocol should therefore include:
+\begin{enumerate}
+    \item \textbf{Residual PCA.} Decompose the cross-configuration residual matrix into principal directions and test for alignment across models (Prediction P2).
+    \item \textbf{Fisher spectrum analysis.} Compute the empirical Fisher information matrix and test for Vandermonde decay at rate $\geq 1.5$ (clause iii).
+    \item \textbf{Active learning curves.} Measure the excess-risk scaling with query count and test for $O(1/T)$ decay with constant within the Raj--Bach bound (Prediction P1).
+\end{enumerate}
+
+The MLIP Arena\cite{chiang2025mliparena} framework already implements elements of this protocol; the theorem provides the theoretical justification for expanding it to include geometric error-structure analysis.
+
+\subsection{Implications for MLIP Improvement}
+
+The three escape classes (Corollary~\ref{cor:escape}) provide a decision framework for allocating effort among improvement strategies. If the dominant error is class-uniform (paradigm-agnostic), then $\Delta$-learning on any model in $\cF$ yields comparable improvement, and the community should focus on developing better base embeddings. If the dominant error is model-specific, then fine-tuning is the appropriate strategy, and the community should focus on efficient fine-tuning protocols\cite{hanseroth2025finetuning}. If the error is structural inadequacy, then architectural innovation is required, and the refusal mode should be engaged.
+
+The $\Delta$-learning bound (Proposition~\ref{prop:delta}) quantifies the trade-off: the error reduction factor is $O(d(\cF)^{-1/2})$, meaning that models with lower intrinsic dimension (more compressed error manifolds) benefit less from $\Delta$-learning because their residuals are already concentrated in a low-dimensional subspace. This counterintuitive result---that ``better'' models (in the sense of lower $d(\cF)$) are harder to improve via post-hoc correction---has practical implications for model development.
+
+\subsection{Falsifiability Summary}
+
+The theorem makes two pre-registered predictions with explicit falsification thresholds:
+
+\textbf{Prediction P1 (clause iv).} The active-learning excess risk scales as $\epsilon(T) = C \cdot d(\cF) \log N / T$ with $C \in [C_{\text{RB}}/4, 4 C_{\text{RB}}]$. Falsification: $C$ outside this interval or scaling exponent $\neq -1 \pm 0.2$.
+
+\textbf{Prediction P2 (clause vi).} Consecutive generations of a foundation MLIP family have top-5 error-direction cosine similarity $\geq 0.7$. Falsification: cosine similarity $< 0.5$ for any transition.
+
+Both predictions are testable with publicly available models and benchmarks (Matbench Discovery, MLIP Arena). The falsifiability framework ties the abstract theorem to concrete empirical tests that any researcher can execute.
+
+\subsection{Open Mathematical Problems}
+
+Three open problems remain:
+
+\textbf{Problem 1: Sharp class-uniform smoothness constant.} The constant $\kappa_3$ in (F3) is currently bounded by GAP-style smoothness analyses\cite{bigi2022smooth} but not by a published constant for equivariant-message-passing architectures. A sharp bound on $\kappa_3$ for MACE-style architectures would translate directly into a sharp bound on $\rho(\cF)$ via Equation~\eqref{eq:rho-bound}.
+
+\textbf{Problem 2: Tightness of the Vandermonde lemma.} Is the constant $\rho(\cF) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$ tight? That is, do there exist models $M \in \cF$ for which the decay rate achieves this upper bound, or can the bound be improved by a more refined analysis of the Beckermann conditioning parameter?
+
+\textbf{Problem 3: Refusal region and incompleteness manifold.} The refusal region $\cX_N^{\text{refuse}}(M)$ is characterized geometrically via Federer reach, but its relationship to the Pozdnyakov--Ceriotti incompleteness manifold\cite{pozdnyakov2020incompleteness}---the set of configurations that cannot be distinguished by descriptors below a given body order---is not yet understood. Is the refusal region a tubular neighborhood of the incompleteness manifold? Answering this would connect the geometric refusal mode to the representational limitations documented by the incompleteness floor.
+
+\subsection{Conclusion}
+
+The Universality Theorem provides a geometric framework for understanding the error structure of foundation MLIPs. By proving that per-model error manifolds have class-uniform properties---bounded dimension, Vandermonde Fisher spectrum, and stable evolution---the theorem transforms the empirical observation of cross-model heterogeneity into a structured prediction about the geometry of machine-learned potential energy surfaces. The two pre-registered predictions and the three escape classes for error reduction provide actionable guidance for the development and evaluation of next-generation foundation MLIPs.

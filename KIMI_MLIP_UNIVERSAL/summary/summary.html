@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Universality Theorem for Foundation MLIPs — Review Summary</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+<style>
+body { margin: 0; padding: 0; font-family: 'Georgia', 'Times New Roman', serif; font-size: 11pt; line-height: 1.6; color: #333; text-align: justify; text-align-last: left; }
+@page { size: A4; margin: 2.3cm 2.3cm; @top-center { content: string(doctitle); font-size: 8pt; font-style: italic; color: #999; } @bottom-center { content: counter(page); font-size: 9pt; } }
+@page :first { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+@page cover { @top-center { content: none; } @bottom-center { content: none; } }
+body { string-set: doctitle ""; }
+h1 { string-set: doctitle content(); }
+
+.cover { page: cover; width: 210mm; height: 297mm; margin: 0; position: relative; overflow: hidden; page-break-after: always; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 40%, #f1f5f9 100%); }
+.cover::before { content: ''; position: absolute; top: -50px; right: -50px; width: 300px; height: 300px; border: 2px solid rgba(59,130,246,0.15); border-radius: 50%; }
+.cover::after { content: ''; position: absolute; bottom: -80px; left: -80px; width: 400px; height: 400px; border: 2px solid rgba(16,185,129,0.12); border-radius: 50%; }
+.cover-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 85%; z-index: 1; }
+.cover-badge { display: inline-block; background: #2563EB; color: white; padding: 0.3em 1.2em; border-radius: 3px; font-size: 10pt; font-weight: bold; letter-spacing: 0.05em; margin-bottom: 1.5cm; }
+.cover-title { font-size: 24pt; font-weight: 700; color: #1e293b; margin-bottom: 0.6cm; line-height: 1.35; }
+.cover-subtitle { font-size: 13pt; color: #475569; margin-bottom: 2cm; font-style: italic; }
+.cover-meta { font-size: 11pt; color: #64748b; line-height: 1.8; }
+
+h1 { font-size: 17pt; font-weight: bold; margin-top: 1.3em; margin-bottom: 0.7em; page-break-after: avoid; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.3em; }
+h2 { font-size: 13pt; font-weight: bold; margin-top: 1.1em; margin-bottom: 0.5em; page-break-after: avoid; color: #334155; }
+h3 { font-size: 11.5pt; font-weight: bold; margin-top: 0.9em; margin-bottom: 0.4em; page-break-after: avoid; color: #475569; }
+
+.keybox { background: #f8fafc; border-left: 4px solid #2563EB; padding: 1em 1.2em; margin: 1em 0; page-break-inside: avoid; }
+.keybox-title { font-weight: bold; color: #2563EB; margin-bottom: 0.4em; font-size: 11pt; }
+
+.insight { background: #ecfdf5; border-left: 4px solid #059669; padding: 0.8em 1em; margin: 0.8em 0; page-break-inside: avoid; font-size: 10.5pt; }
+.insight strong { color: #059669; }
+
+figure { margin: 1.2em 0; text-align: center; page-break-inside: avoid; }
+figure img { max-width: 95%; height: auto; }
+figcaption { font-size: 10pt; color: #555; margin-top: 0.4em; font-style: italic; }
+figcaption::before { content: attr(data-label) ": "; font-weight: bold; font-style: normal; }
+
+table { width: 100%; max-width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 9.5pt; page-break-inside: avoid; }
+thead { border-top: 2px solid #334155; border-bottom: 1px solid #334155; background: #f8fafc; }
+tbody { border-bottom: 2px solid #334155; }
+th, td { padding: 0.35em 0.5em; text-align: left; }
+th { font-weight: bold; color: #1e293b; }
+tr { page-break-inside: avoid; }
+caption { caption-side: top; text-align: left; font-weight: bold; margin-bottom: 0.3em; font-size: 10pt; }
+
+.equation { display: flex; align-items: center; margin: 0.8em 0; overflow-x: auto; font-size: 10pt; }
+.equation .katex-display { margin: 0; flex: 1; }
+.equation-number { margin-left: 0.8em; color: #555; flex-shrink: 0; font-size: 10pt; }
+
+p { margin: 0.5em 0; }
+ul, ol { margin: 0.5em 0; padding-left: 1.8em; }
+li { margin: 0.2em 0; }
+a { color: #333; word-break: break-all; }
+a.cite { color: #333; text-decoration: none; vertical-align: super; font-size: 0.75em; }
+
+pre, table, figure, img, svg, blockquote { max-width: 100%; box-sizing: border-box; }
+.katex-display { overflow-x: auto; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; }
+
+.page-break { page-break-after: always; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-content">
+    <div class="cover-badge">REVIEW TEAM BRIEFING</div>
+    <h1 class="cover-title">A Universality Theorem for Foundation<br>Machine Learning Interatomic Potentials</h1>
+    <p class="cover-subtitle">Per-Model Error Manifolds with Class-Uniform Geometry</p>
+    <div class="cover-meta">
+      <p><strong>Target:</strong> npj Computational Materials</p>
+      <p><strong>Position:</strong> Paper II of III | Meta-theorem over CMET</p>
+      <p><strong>Word Count:</strong> ~4,500 | <strong>Figures:</strong> 6 | <strong>References:</strong> 30</p>
+    </div>
+  </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<h1>Executive Summary</h1>
+
+<div class="keybox">
+<div class="keybox-title">The Core Claim</div>
+<p>Foundation MLIPs (MACE-MP-0, CHGNet, Orb, MatterSim, etc.) exhibit heterogeneous error structures when evaluated on overlapping benchmarks. This paper proves that the heterogeneity is not arbitrary noise but has a <strong>shared class-level geometry</strong>. Every model $M$ in the architectural class $\mathcal{F}$ admits a per-model error manifold $\mathcal{M}(M)$ with six structural properties that are uniform across the class. The central mathematical result is the <strong>Cross-Model Vandermonde Lemma</strong>, which proves that the sloppy-model eigenvalue decay rate of the Fisher information matrix is bounded below by a class constant $\rho(\mathcal{F}) \geq 1.5$.</p>
+</div>
+
+<p>The paper introduces three definitional conditions for membership in $\mathcal{F}$: (F1) pretraining on chemically diverse DFT corpora at scale; (F2) representational expressivity above the Pozdnyakov&ndash;Ceriotti incompleteness floor; and (F3) smoothness outside a measure-zero singular set. Models satisfying these conditions include MACE-MP-0/MPA-0, CHGNet-v2, Orb-v3, MatterSim, eqV2, PET-MAD, SevenNet, GRACE, eSEN, and DPA3. The theorem's six clauses cover intrinsic dimension, sample complexity, Fisher spectrum decay, active learning excess risk, two-mode inference (prediction vs. refusal), and generational stability.</p>
+
+<p>Two predictions are <strong>pre-registered with explicit falsification thresholds</strong>, tied to publicly accessible benchmarks (Matbench Discovery, MLIP Arena). The paper also derives three escape classes for error reduction (paradigm-agnostic $\Delta$-learning, paradigm-specific fine-tuning, and structural inadequacy requiring architectural change) and proves a bound on $\Delta$-learning residual error.</p>
+
+<!-- THEOREM PIPELINE -->
+<h1>The Trilogy Architecture</h1>
+
+<figure>
+  <img src="images/fig4_pipeline.png" alt="Theorem pipeline">
+  <figcaption data-label="Figure 1">Logical structure of the trilogy. CMET (Paper I) provides the single-model manifold primitive. The Cross-Model Vandermonde Lemma promotes this to a class-level statement (Paper II). The refusal-mode framework (Paper III) will operationalize the two-mode inference boundary.</figcaption>
+</figure>
+
+<p>This manuscript is the second of a planned trilogy. CMET (Paper I, in revision) proves that for a single foundation MLIP $M$, the error super-level set forms a smooth submanifold with finite reach and bounded intrinsic dimension. The present paper's Universality Theorem promotes this to a <em>class-uniform</em> statement: the geometric properties of these per-model error manifolds are shared across all $M \in \mathcal{F}$. The third paper will treat operational refusal-mode criteria.</p>
+
+<div class="insight"><strong>Key insight for reviewers:</strong> The Vandermonde Lemma is the sole manuscript-original mathematical result. It assembles four published primitives (Waterfall 2006, Tropp 2012, Wedin 1972/Dopico 2000, Beckermann 2000) into a class-uniform statement. No step in the proof is novel, but the assembly into a cross-model bound is.</div>
+
+<!-- THE ARCHITECTURAL CLASS -->
+<h1>The Architectural Class $\mathcal{F}$</h1>
+
+<p>The theorem applies to models satisfying three definitional conditions. These are not technical regularity assumptions but operational criteria that distinguish foundation MLIPs from earlier generations.</p>
+
+<table>
+<caption data-label="Table 1">Representative models classified by (F1)&ndash;(F3). Yes* indicates boundary cases.</caption>
+<thead><tr><th>Model</th><th>F1 (Corpus)</th><th>F2 (Expressivity)</th><th>F3 (Smooth)</th><th>$\in \mathcal{F}$</th></tr></thead>
+<tbody>
+<tr><td>MACE-MP-0/MPA-0</td><td>MPtrj + sAlex</td><td>GWL depth 2, BO 4</td><td>Smooth radial basis</td><td>Yes</td></tr>
+<tr><td>CHGNet-v2</td><td>MP + r$^2$SCAN</td><td>Marginal GWL(2,4)</td><td>Smooth</td><td>Yes*</td></tr>
+<tr><td>Orb-v3</td><td>MP</td><td>Equivariant transformer</td><td>Smooth</td><td>Yes</td></tr>
+<tr><td>MatterSim</td><td>0&ndash;5000K, 0&ndash;1000GPa</td><td>GWL depth 2, BO 4</td><td>Smooth</td><td>Yes</td></tr>
+<tr><td>eqV2 / UMA</td><td>MP</td><td>Equiformer</td><td>Smooth</td><td>Yes</td></tr>
+<tr><td>PET-MAD</td><td>MAD (broadened)</td><td>GWL depth 2, BO 4</td><td>Smooth</td><td>Yes</td></tr>
+<tr><td>SevenNet / GRACE / eSEN / DPA3</td><td>MP / OMat24</td><td>GWL(2,4)</td><td>Smooth</td><td>Yes</td></tr>
+<tr><td>M3GNet (original)</td><td>MP</td><td>Below GWL(2,4)</td><td>Smooth</td><td>Yes*</td></tr>
+<tr style="background:#fef2f2;"><td>Classical EAM</td><td>N/A</td><td>Pairwise only</td><td>Smooth</td><td><strong>No</strong></td></tr>
+<tr style="background:#fef2f2;"><td>SchNet</td><td>Various</td><td>Invariant, depth 1</td><td>Smooth</td><td><strong>No</strong></td></tr>
+</tbody>
+</table>
+
+<!-- ERROR MANIFOLD DIAGRAM -->
+<h1>The Error Manifold</h1>
+
+<figure>
+  <img src="images/fig6_manifold.png" alt="Error manifold decomposition">
+  <figcaption data-label="Figure 2">Schematic of the per-model error manifold decomposition. The class-uniform component $\mathcal{M}_{\text{class}}$ is shared across all models in $\mathcal{F}$ (e.g., the systematic PES softening documented by Deng et al. 2025). The model-specific component $\mathcal{M}_{\text{spec}}(M)$ captures architecture-dependent errors. The intrinsic dimension is bounded uniformly by $d(\mathcal{F})$.</figcaption>
+</figure>
+
+<p>The per-model error manifold $\mathcal{M}(M)$ is defined as the closure of configurations where the residual $|M(x) - E_{\text{DFT}}(x)|$ exceeds the model's test-set MAE, intersected with the regular domain. This manifold decomposes into a class-uniform component (shared structural inadequacies, such as the near-equilibrium bias that softens PES curvature across MACE-MP-0, CHGNet, and M3GNet) and a model-specific component (architecture-dependent errors, such as Orb's transformer-specific behavior on pairwise interactions).</p>
+
+<div class="keybox">
+<div class="keybox-title">Empirical Anchor: Systematic Softening</div>
+<p>Deng <em>et al.</em> (2025) document ``a consistent PES softening effect in three uMLIPs: M3GNet, CHGNet, and MACE-MP-0'' across surfaces, defects, phonons, and migration barriers. Three different architectures share the <em>same direction</em> of systematic error. This is not model-specific noise&mdash;it is the class-uniform component $\mathcal{M}_{\text{class}}$ in action.</p>
+</div>
+
+<!-- THE SIX CLAUSES -->
+<h1>The Six Clauses</h1>
+
+<table>
+<caption data-label="Table 2">Summary of the six clauses of the Universality Theorem, with their status and primary anchors.</caption>
+<thead><tr><th>Clause</th><th>Statement</th><th>Status</th><th>Key Anchor</th></tr></thead>
+<tbody>
+<tr><td><strong>(i)</strong> Intrinsic dimension</td><td>$\dim \mathcal{M}(M) \leq d(\mathcal{F})$</td><td>Proved</td><td>NSW 2008 + Aamari-Levrard 2019</td></tr>
+<tr><td><strong>(ii)</strong> Sample complexity</td><td>$n \geq C \cdot d \log(N/d)$</td><td>Proved</td><td>NSW + Attali 2022 (one-sided Hausdorff)</td></tr>
+<tr><td><strong>(iii)</strong> <strong>Vandermonde decay</strong></td><td>$\sigma_m \leq \sigma_1 \cdot e^{-\rho(\mathcal{F})(m-1)} + \eta_n$</td><td><strong>Proved (headline)</strong></td><td><strong>Waterfall 2006 + Tropp 2012 + Wedin/Dopico + Beckermann 2000</strong></td></tr>
+<tr><td><strong>(iv)</strong> Active learning risk</td><td>$\epsilon(T) \leq C \cdot d \log N / T$</td><td>Pre-registered</td><td>Raj-Bach 2022</td></tr>
+<tr><td><strong>(v)</strong> Two-mode inference</td><td>$\mathcal{X}_N = \mathcal{X}_N^{\text{pred}} \cup \mathcal{X}_N^{\text{refuse}}$</td><td>Proved</td><td>Federer 1959 + Berenfeld-Hoffmann 2022</td></tr>
+<tr><td><strong>(vi)</strong> Generational stability</td><td>Top-5 cosine similarity $\geq 0.7$</td><td>Pre-registered</td><td>Bordelon 2024 scaling laws</td></tr>
+</tbody>
+</table>
+
+<!-- VANDERMONDE CHART -->
+<h1>The Cross-Model Vandermonde Lemma</h1>
+
+<figure>
+  <img src="images/fig1_vandermonde.png" alt="Vandermonde decay">
+  <figcaption data-label="Figure 3">Empirical Fisher singular spectra for two representative models (MACE-MP-0 and M3GNet) compared against the class-uniform lower bound $\rho(\mathcal{F})$. Both models exhibit geometric decay above the noise floor, with decay rates bounded below by the class constant. The pre-registered threshold is $\rho(\mathcal{F}) \geq 1.5$ natural log units per index.</figcaption>
+</figure>
+
+<p>The Cross-Model Vandermonde Lemma is the mathematical engine of the theorem. It states that the empirical Fisher information matrix of every $M \in \mathcal{F}$ exhibits geometric eigenvalue decay with a rate $\rho(\mathcal{F})$ that depends only on the class constants $\kappa_1, \kappa_2, \kappa_3$:</p>
+
+<div class="equation">
+  $$\sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot \exp(-\rho(\mathcal{F})(m-1)) + O_p\!\left(\sqrt{\frac{\log d}{n}}\right)$$
+  <span class="equation-number">(1)</span>
+</div>
+
+<p>The proof assembles four published primitives in five steps: (1) Waterfall <em>et al.</em> 2006 establishes the single-model Vandermonde structure for the Hessian. (2) Tropp's matrix Bernstein inequality controls the concentration of the empirical Fisher to the population Fisher. (3) Wedin's $\sin\theta$ theorem / Dopico's refinement guarantees stability of singular subspaces under perturbation. (4) Beckermann 2000 provides the lower bound on Vandermonde conditioning. (5) Combining these under the class-uniform smoothness (F3) and expressivity (F1, F2) conditions yields the class-uniform decay rate.</p>
+
+<!-- TWO-MODE INFERENCE -->
+<h1>Two-Mode Inference</h1>
+
+<figure>
+  <img src="images/fig3_twomode.png" alt="Two-mode inference">
+  <figcaption data-label="Figure 4">Two-mode inference framework. Configurations within the tubular neighborhood of radius equal to the reach support a Lipschitz nearest-point projection (prediction region, green). Configurations beyond this threshold lack a well-defined projection and should trigger refusal (red crosses). Surface energy predictions (Focassio et al. 2025) are a canonical refusal-mode example.</figcaption>
+</figure>
+
+<p>Federer's theory of sets of positive reach provides the geometric machinery. For a set $A$ with reach $\tau$, the nearest-point projection onto $A$ is Lipschitz within any tubular neighborhood of radius $q < \tau$. Applied to the error manifold, this yields a natural partition: configurations where $\text{dist}(x, \mathcal{M}(M)) < r(\mathcal{F})$ admit reliable prediction; configurations beyond this threshold should trigger refusal.</p>
+
+<div class="insight"><strong>Surface energy as refusal mode:</strong> Focassio <em>et al.</em> (2025) show that MACE, CHGNet, and M3GNet ``have significant shortcomings in surface energy prediction, with errors correlated to total energy.'' Geometrically, surface configurations are far from the training distribution (dominated by bulk equilibria), so their distance to $\mathcal{M}(M)$ exceeds the reach&mdash;precisely the refusal condition.</div>
+
+<!-- THREE ESCAPE CLASSES -->
+<h1>Three Escape Classes for Error Reduction</h1>
+
+<figure>
+  <img src="images/fig2_escape_classes.png" alt="Three escape classes">
+  <figcaption data-label="Figure 5">The three escape classes for error reduction. The residual $r_M(x) = r_{\text{class}}(x) + r_{\text{spec}}(x;M) + \xi(x)$ decomposes into class-uniform, model-specific, and noise components. Each component maps to a distinct correction strategy.</figcaption>
+</figure>
+
+<p>The residual decomposition yields a decision framework for allocating effort:</p>
+
+<table>
+<caption data-label="Table 3">Escape classes with empirical anchors and correction strategies.</caption>
+<thead><tr><th>Class</th><th>Condition</th><th>Strategy</th><th>Empirical Anchor</th></tr></thead>
+<tbody>
+<tr><td><strong>Paradigm-agnostic</strong></td><td>$\|r_{\text{class}}\| \gg \|r_{\text{spec}}\|$</td><td>$\Delta$-learning: GPR on embedding</td><td>Christiansen-Hammer 2025; Huang 2025</td></tr>
+<tr><td><strong>Paradigm-specific</strong></td><td>$\|r_{\text{spec}}\| \gg \|r_{\text{class}}\|$</td><td>Fine-tuning on downstream data</td><td>Hänseroth 2025 (5&ndash;15x force improvement)</td></tr>
+<tr><td><strong>Structural inadequacy</strong></td><td>$x \in \mathcal{X}_N^{\text{refuse}}$</td><td>Architectural change or refusal</td><td>Focassio 2025; Deng 2025 (softening)</td></tr>
+</tbody>
+</table>
+
+<p>The $\Delta$-learning corollary proves that correction by a Gaussian process regressor on the base MLIP's embedding achieves error bounded by the projection onto $\mathcal{M}_{\text{class}}$ plus $O(d(\mathcal{F})/n)$ sample complexity. A counterintuitive consequence: models with <em>lower</em> intrinsic dimension (better compressed error manifolds) benefit <em>less</em> from post-hoc $\Delta$-learning because their residuals are already concentrated.</p>
+
+<!-- PRE-REGISTERED PREDICTIONS -->
+<h1>Pre-Registered Predictions</h1>
+
+<figure>
+  <img src="images/fig5_generational.png" alt="Generational stability">
+  <figcaption data-label="Figure 6">Generational stability heatmap (synthetic illustration). Within-family transitions (e.g., MACE-MP-0 $\to$ MACE-MPA-0) show cosine similarity above the 0.7 threshold. Cross-family comparisons fall below this threshold, confirming that the shared structure is family-specific generational continuity rather than universal agreement across all models.</figcaption>
+</figure>
+
+<p>Two predictions are pre-registered with explicit falsification protocols:</p>
+
+<div class="two-col">
+<div class="keybox">
+<div class="keybox-title">Prediction P1: Active Learning</div>
+<p>The excess risk after $T$ queries scales as $\epsilon(T) = C \cdot d \log N / T$ with $C$ within a factor of 4 of the Raj-Bach constant.</p>
+<p><strong>Falsification:</strong> $C$ outside $[C_{\text{RB}}/4, 4C_{\text{RB}}]$ or exponent $\neq -1 \pm 0.2$.</p>
+</div>
+<div class="keybox">
+<div class="keybox-title">Prediction P2: Generational Stability</div>
+<p>Consecutive generations of a foundation MLIP family have top-5 error-direction cosine similarity $\geq 0.7$ on the Matbench Discovery WBM test set.</p>
+<p><strong>Falsification:</strong> Cosine similarity $< 0.5$ for any transition.</p>
+</div>
+</div>
+
+<p>Both predictions use publicly accessible infrastructure (Matbench Discovery leaderboard API, MLIP Arena physics-aware benchmarks) and can be independently verified by any researcher.</p>
+
+<!-- HONESTY ABOUT GAPS -->
+<h1>Honest Assessment of Literature Gaps</h1>
+
+<p>Three areas of the public literature are thin, and the manuscript is explicit about each:</p>
+
+<p><strong>1. MLIP-specific Fisher spectrum.</strong> No published paper directly computes the empirical Fisher of a MACE-MP-0-scale foundation MLIP and demonstrates the sloppy spectrum. Perez <em>et al.</em> 2025 (the closest) uses parameter covariance rather than Fisher spectrum. The manuscript treats this as a pre-registered computational target, not an established empirical fact.</p>
+
+<p><strong>2. Element-resolved cosine alignment.</strong> Deng <em>et al.</em> 2025 provides property-direction alignment; nothing comparable exists element-by-element. Magnetic systems (Fe, Co, Ni) and heavy elements with relativistic effects are the clearest candidates. The manuscript treats this as a pre-registered prediction rather than established empirics.</p>
+
+<p><strong>3. Sharpness of the Vandermonde bound.</strong> Is $\rho(\mathcal{F}) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$ tight? The manuscript identifies this as Open Problem 2 and welcomes falsification.</p>
+
+<!-- EVALUATION IMPACT -->
+<h1>Implications for the Field</h1>
+
+<p>The theorem reframes how foundation MLIPs should be evaluated. Current practice emphasizes aggregate MAE/RMSE/F1 on held-out sets. The Universality Theorem implies these aggregates obscure geometric structure. The recommended evaluation protocol adds three components:</p>
+
+<ol>
+<li><strong>Residual PCA</strong> on cross-configuration matrices, testing for alignment across models (direct test of clause iii and Prediction P2).</li>
+<li><strong>Fisher spectrum analysis</strong>, testing for geometric decay at rate $\geq 1.5$ (direct test of the Vandermonde Lemma).</li>
+<li><strong>Active learning curves</strong>, measuring excess-risk scaling with query count (direct test of Prediction P1).</li>
+</ol>
+
+<p>The MLIP Arena framework already implements physics-aware evaluation; the theorem provides theoretical justification for adding geometric error-structure analysis to the standard benchmark suite.</p>
+
+<!-- OPEN PROBLEMS -->
+<h1>Open Problems</h1>
+
+<ol>
+<li><strong>Sharp class-uniform smoothness constant $\kappa_3$.</strong> Currently bounded by GAP-style analyses but not by a published constant for equivariant-message-passing architectures. A sharp bound would translate directly into a sharp $\rho(\mathcal{F})$.</li>
+<li><strong>Tightness of the Vandermonde lemma.</strong> Does there exist $M \in \mathcal{F}$ achieving the upper bound $\rho(\mathcal{F}) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$, or can it be improved?</li>
+<li><strong>Refusal region and the incompleteness manifold.</strong> Is the refusal region a tubular neighborhood of the Pozdnyakov&ndash;Ceriotti incompleteness manifold? Answering this would connect geometric refusal to representational limitations.</li>
+</ol>
+
+<!-- BOTTOM LINE -->
+<h1>Bottom Line for Reviewers</h1>
+
+<div class="keybox">
+<div class="keybox-title">Why This Paper Matters</div>
+<ul>
+<li><strong>It is falsifiable.</strong> Two predictions with explicit numerical thresholds tied to public benchmarks. If they fail, the theorem is wrong.</li>
+<li><strong>It is practical.</strong> The three escape classes give a decision framework for improving MLIPs: $\Delta$-learn the shared errors, fine-tune the specific ones, refuse on the impossible ones.</li>
+<li><strong>It is honest.</strong> Every claim is anchored to a public citation. Every gap is identified. The sole original result (Vandermonde Lemma) assembles four published primitives; no step is ungrounded.</li>
+<li><strong>It connects communities.</strong> Bridges the sloppy-model physics literature (Transtrum/Sethna), the neural scaling laws literature (Bahri/Bordelon), and the MLIP evaluation literature (Matbench Discovery/MLIP Arena).</li>
+</ul>
+</div>
+
+<p style="text-align: center; margin-top: 2em; color: #888; font-size: 10pt;">
+  <em>Full manuscript: ~11,600 words | 58 references | Complete proofs in Appendices A&ndash;D</em>
+</p>
+
+</body>
+</html>

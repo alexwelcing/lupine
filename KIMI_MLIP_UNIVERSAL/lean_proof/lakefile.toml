@@ -1,0 +1,10 @@
+name = "MLIPAcceleration"
+version = "0.1.0"
+defaultTargets = ["mlipacceleration"]
+
+[[lean_lib]]
+name = "MLIPAcceleration"
+
+[[lean_exe]]
+name = "mlipacceleration"
+root = "Main"

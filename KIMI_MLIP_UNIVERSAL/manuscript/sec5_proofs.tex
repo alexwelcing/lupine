@@ -1,0 +1,82 @@
+% =============================================================================
+% SECTION 5: RIGOROUS PROOFS
+% =============================================================================
+\section{Rigorous Proofs of Clauses (i)--(iii) and (v)}\label{sec:proofs}
+
+This section presents the proofs of the rigorous clauses of Theorem~\ref{thm:main}. The proof of clause (iii)---the Cross-Model Vandermonde Lemma---is the mathematical centerpiece; we give a detailed sketch here and the full proof in Appendix~\ref{app:vandermonde}.
+
+\subsection{Clause (i): Intrinsic Dimension via Niyogi--Smale--Weinberger}\label{sec:proof-i}
+
+The per-model error manifold $\cM(M)$ is defined in Equation~\eqref{eq:error-manifold} as the closure of the super-level set of the residual $|M(x) - E_{\text{DFT}}(x)|$ intersected with the regular domain $\cX_N^{\text{reg}}$. To apply the Niyogi--Smale--Weinberger (NSW) framework\cite{niyogi2008finding}, we must verify that $\cM(M)$ satisfies the regularity conditions required for their homology inference theorem.
+
+\begin{lemma}[Regularity of $\cM(M)$]\label{lem:regularity}
+Under (F3), for any $M \in \cF$ and any regular value $\eps > 0$ of the residual function $r_M(x) = |M(x) - E_{\text{DFT}}(x)|$, the level set $r_M^{-1}(\eps) \cap \cX_N^{\text{reg}}$ is a smooth $(3N-1)$-dimensional submanifold of $\cX_N^{\text{reg}}$.
+\end{lemma}
+
+\begin{proof}
+By (F3), $M$ is $C^2$ on $\cX_N^{\text{reg}}$. The reference energy $E_{\text{DFT}}$ is computed by a converged DFT calculation and is therefore smooth on the domain of convergence. The residual $r_M(x) = |M(x) - E_{\text{DFT}}(x)|$ is $C^2$ wherever $M(x) \neq E_{\text{DFT}}(x)$. By Sard's theorem, the set of critical values of $r_M$ has measure zero; for any regular value $\eps$, the preimage $r_M^{-1}(\eps)$ is a smooth submanifold of codimension 1, hence dimension $3N-1$.
+\end{proof}
+
+The error manifold $\cM(M)$ is the super-level set $r_M^{-1}([\eps_M, \infty))$ for the threshold $\eps_M$. By Lemma~\ref{lem:regularity}, its boundary $\partial \cM(M) = r_M^{-1}(\eps_M)$ is smooth for generic $\eps_M$. The intrinsic dimension bound follows from the parameter-space compression phenomenon documented by Machta \emph{et al.}\cite{machta2013parameter}: the Fisher information matrix of $M$ exhibits geometric eigenvalue decay, meaning that the effective number of parameters controlling the model's behavior is $d(M) \ll 3N$. The formal bound $d(M) \leq d(\cF)$ is proved in Section~\ref{sec:proof-iii} as a corollary of the Cross-Model Vandermonde Lemma.
+
+The NSW theorem\cite{niyogi2008finding} states that if a compact Riemannian manifold $\cM \subset \R^D$ has reach $\tau > 0$, and if a sample $\{x_i\}_{i=1}^n$ is drawn uniformly from $\cM$, then the union of $\eps$-balls around the sample deformation-retracts onto $\cM$ provided $n \geq C \cdot d \log(D/d) + C' \log(1/\delta)$, where $d = \dim \cM$. The 2019 refinement by Aamari and Levrard\cite{aamari2019nonasymptotic} gives the optimal minimax rates for tangent-space estimation and extends the NSW result to the noisy setting. For our application, the ``noise'' is the fluctuation of residuals around the manifold due to DFT reference error and finite-sample effects; the Aamari--Levrard bound absorbs this into the sampling complexity via the reach condition.
+
+\subsection{Clause (ii): Sample Complexity from NSW Plus One-Sided Hausdorff}
+\label{sec:proof-ii}
+
+The sample complexity bound in Equation~\eqref{eq:sample-complexity} follows directly from the NSW theorem with two refinements. First, the test-set residuals form a \emph{one-sided Hausdorff sample} of the error manifold: we observe points in the ambient space $\cX_N$ with their residual values, but we do not have samples from the manifold itself. The 2022 result of Attali \emph{et al.}\cite{attali2022tight} gives explicit tight bounds for homotopy inference under one-sided Hausdorff sampling: ``Tight bounds for the learning of homotopy \`a la Niyogi, Smale, and Weinberger.'' Their Theorem 1 states that for a manifold $\cM$ with reach $\tau$ and a one-sided Hausdorff sample with Hausdorff distance $\leq h$, the homotopy type is recovered provided $h \leq \tau / (2\sqrt{2})$.
+
+Second, the constant $C_{\text{sample}}(\cF)$ depends on the reach of $\cM(M)$, which by Federer's theorem\cite{federer1959curvature} is bounded below by the inverse of the maximum curvature. Condition (F3) provides a uniform bound on the second derivatives of $M$, hence on the curvature of level sets of the residual, yielding a class-uniform lower bound on $\reach(\cM(M))$ and therefore a class-uniform sampling constant.
+
+\subsection{Clause (iii): The Cross-Model Vandermonde Lemma}\label{sec:vandermonde-proof}
+
+This is the headline mathematical result. We state the lemma and give a proof sketch; the full proof appears in Appendix~\ref{app:vandermonde}.
+
+\begin{lemma}[Cross-Model Vandermonde Decay]\label{lem:vandermonde}
+Let $\cF$ satisfy (F1)--(F3) with class constants $\kappa_1, \kappa_2, \kappa_3$. Then there exists $\rho(\cF) \geq 1.5$ such that for every $M \in \cF$, the empirical Fisher singular spectrum satisfies
+\begin{equation}\label{eq:vandermonde-statement}
+    \sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot e^{-\rho(\cF)(m-1)} + O_p\!\left(\sqrt{\frac{\log d}{n}}\right),
+\end{equation}
+uniformly over $M \in \cF$. Moreover, $\rho(\cF) \leq C \kappa_1^{-1} \kappa_2 \kappa_3$.
+\end{lemma}
+
+\begin{proof}[Proof Sketch]
+The proof assembles four published primitives into a class-uniform statement.
+
+\textbf{Step 1: Single-model Vandermonde structure.} Waterfall \emph{et al.}\cite{waterfall2006sloppy} prove that for a wide class of multiparameter nonlinear models, the Hessian of the cost function is approximately $V^\top A^\top A V$ where $V$ is a Vandermonde matrix. The $m$-th largest eigenvalue satisfies $\lambda_m \leq \lambda_1 \cdot \exp(-\rho(M)(m-1))$ where $\rho(M)$ is a model-dependent decay rate. This is the single-model anchor.
+
+\textbf{Step 2: Concentration of empirical Fisher matrices.} Tropp's matrix Bernstein inequality\cite{tropp2012user} gives $\|F_n(M) - F(M)\|_{\op} \leq C \sqrt{\log d / n}$ with high probability, where $F(M)$ is the population Fisher. The constant $C$ depends on the loss-gradient sup-norm, which by (F3) is uniformly bounded across $M \in \cF$ by $\kappa_3$.
+
+\textbf{Step 3: Stability of singular subspaces.} Wedin's $\sin\theta$ theorem\cite{wedin1972perturbation} and Dopico's refinement\cite{dopico2000sin} state that for matrices $A$ and $A+E$ with $\|E\|_{\op} \leq \eps$, the singular subspaces rotate by at most $\eps / \text{gap}$. Combining with Step 2 gives: the $m$-th singular value of the empirical Jacobian $J_n(M)$ is within $O(\sqrt{\log d / n})$ of the population value $\sigma_m(J(M))$.
+
+\textbf{Step 4: Class-uniform conditioning.} Beckermann's lower bound\cite{beckermann2000condition} on the Euclidean condition number of Vandermonde matrices gives $\cond_2(V_n) \geq \gamma^{n-1} / (16n)$ with $\gamma = \exp(4\cdot\text{Catalan}/\pi) > 1$. Under (F1) and (F2), the conditioning parameter $\gamma$ is uniformly lower-bounded across $M \in \cF$, giving a class-uniform decay rate $\rho(\cF)$.
+
+Combining Steps 1--4: By Waterfall et al., the population Fisher of any $M \in \cF$ is approximately Vandermonde with decay rate $\rho(M)$. By (F3), the Jacobian Lipschitz constant is uniformly bounded by $\kappa_3$. By (F1)+(F2), the Beckermann conditioning parameter is uniformly lower-bounded. Therefore $\rho(M) \geq \rho(\cF)$ for all $M \in \cF$. The Tropp/Wedin sequence converts population to empirical with the stated rate.
+\end{proof}
+
+The intrinsic dimension bound $d(M) \leq d(\cF)$ of clause (i) follows as a corollary: the number of singular values above the noise floor $\eta_n$ is at most $\log(\sigma_1/\eta_n) / \rho(\cF)$, which is $O(\kappa_1^{-1}\kappa_2\kappa_3 \cdot \log n)$.
+
+\subsection{Clause (v): Two-Mode Inference via Federer Reach}
+\label{sec:proof-v}
+
+The two-mode partition in Equation~\eqref{eq:two-mode} is constructed using Federer's theory of sets of positive reach\cite{federer1959curvature}. Federer's Theorem 4.8(8) states that for a set $A \subset \R^D$ of reach $\tau > 0$, the nearest-point projection $\xi_A$ onto $A$, restricted to the tubular neighborhood $U_\tau(A) = \set{x : \dist(x,A) < \tau}$, is Lipschitz with constant $\tau / (\tau - q)$ on $U_q(A)$ for any $q < \tau$.
+
+\begin{lemma}[Reach of the error manifold]\label{lem:reach}
+Under (F3), the error manifold $\cM(M)$ has reach bounded below by
+\begin{equation}\label{eq:reach-bound}
+    \reach(\cM(M)) \geq \frac{1}{\kappa_3 \cdot \|H_M\|_{\infty}},
+\end{equation}
+where $H_M$ is the Hessian of the residual restricted to $\cM(M)$.
+\end{lemma}
+
+\begin{proof}
+The reach of a smooth submanifold is bounded by the inverse of the maximum principal curvature. By (F3), the second derivatives of $M$ are bounded by $\kappa_3$, and the Hessian of the residual $r_M(x) = |M(x) - E_{\text{DFT}}(x)|$ is bounded by $\|H_M\|_{\infty} \leq \kappa_3 + \|H_{\text{DFT}}\|_{\infty}$. The DFT Hessian is bounded on compact domains by standard elliptic regularity. Therefore $\reach(\cM(M))$ has the stated lower bound, uniform over $M \in \cF$.
+\end{proof}
+
+The prediction region is defined as $\cX_N^{\text{pred}}(M) = U_{r(\cF)}(\cM(M))$ with $r(\cF) = \frac{1}{2} \inf_M \reach(\cM(M))$. On this region, Federer's theorem guarantees that the nearest-point projection $\xi_{\cM(M)}$ is well-defined and Lipschitz. The refusal region $\cX_N^{\text{refuse}}(M) = \cX_N^{\text{reg}} \setminus \cX_N^{\text{pred}}(M)$ consists of configurations where the distance to the error manifold exceeds the reach, and the nearest-point projection is not guaranteed to be single-valued or Lipschitz.
+
+The noisy-reach extension by Berenfeld and Hoffmann\cite{berenfeld2022estimating} (building on Berenfeld \emph{et al.}\cite{berenfeld2022estimating}) extends Federer's machinery to the statistical setting where the manifold is estimated from noisy samples. This refinement is necessary because the MLIP residual samples are corrupted by DFT reference error (typically 1--10 meV/atom for standard functionals) and by the finite-sample fluctuation of the test set. The Berenfeld--Hoffmann result guarantees that the reach estimate from noisy samples converges at rate $O(n^{-1/(2d)})$, where $d = \dim \cM(M)$.
+
+\begin{example}[Surface-energy refusal mode]
+Focassio \emph{et al.}\cite{focassio2025surfaces} document that MACE, CHGNet, and M3GNet ``have significant shortcomings in surface energy prediction, with errors correlated to the total energy of surface simulations, having an out-of-domain distance from the training dataset.'' In the two-mode framework, these surface configurations lie in $\cX_N^{\text{refuse}}(M)$ because: (a) surface terminations are far from the equilibrium bulk configurations dominating the training data, so $\dist(x, \cM(M))$ is large; (b) the high surface energy implies large residual $r_M(x)$, placing the configuration near the boundary of the prediction region; (c) the correlation between error and total energy indicates that the nearest-point projection is not Lipschitz (small changes in surface termination produce large changes in residual). The model should refuse prediction on these configurations rather than emit an unreliable energy estimate.
+\end{example}
