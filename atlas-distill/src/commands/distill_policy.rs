@@ -22,6 +22,16 @@ pub(crate) struct PolicyLimits {
     pub(crate) max_force_bias_ev_per_angstrom: f64,
     pub(crate) max_force_norm_ev_per_angstrom: f64,
     pub(crate) max_stress_abs_gpa: f64,
+    #[serde(default = "default_correction_scale")]
+    pub(crate) energy_correction_scale: f64,
+    #[serde(default = "default_correction_scale")]
+    pub(crate) stress_correction_scale: f64,
+    #[serde(default = "default_correction_scale")]
+    pub(crate) force_correction_scale: f64,
+    #[serde(default = "default_min_support_lift_fraction")]
+    pub(crate) min_support_lift_fraction: f64,
+    #[serde(default = "default_max_support_eval_distance_proxy")]
+    pub(crate) max_support_eval_distance_proxy: f64,
 }
 
 impl Default for PolicyLimits {
@@ -32,6 +42,11 @@ impl Default for PolicyLimits {
             max_force_bias_ev_per_angstrom: 1.0,
             max_force_norm_ev_per_angstrom: 200.0,
             max_stress_abs_gpa: 5000.0,
+            energy_correction_scale: 1.0,
+            stress_correction_scale: 1.0,
+            force_correction_scale: 1.0,
+            min_support_lift_fraction: 0.02,
+            max_support_eval_distance_proxy: 1.0,
         }
     }
 }
@@ -59,8 +74,39 @@ impl PolicyLimits {
                 bail!("policy limit {field} must be positive and finite");
             }
         }
+        for (field, value) in [
+            ("energy_correction_scale", self.energy_correction_scale),
+            ("stress_correction_scale", self.stress_correction_scale),
+            ("force_correction_scale", self.force_correction_scale),
+        ] {
+            if !value.is_finite() || !(0.0..=2.0).contains(&value) {
+                bail!("policy scale {field} must be finite and between 0 and 2");
+            }
+        }
+        if !self.min_support_lift_fraction.is_finite()
+            || !(0.0..=1.0).contains(&self.min_support_lift_fraction)
+        {
+            bail!("min_support_lift_fraction must be finite and between 0 and 1");
+        }
+        if !self.max_support_eval_distance_proxy.is_finite()
+            || self.max_support_eval_distance_proxy < 0.0
+        {
+            bail!("max_support_eval_distance_proxy must be non-negative and finite");
+        }
         Ok(())
     }
+}
+
+fn default_correction_scale() -> f64 {
+    1.0
+}
+
+fn default_min_support_lift_fraction() -> f64 {
+    0.02
+}
+
+fn default_max_support_eval_distance_proxy() -> f64 {
+    1.0
 }
 
 #[derive(Debug, Clone, Args)]
@@ -106,6 +152,28 @@ pub(crate) struct SupportEvidence {
     pub(crate) correction: Option<Value>,
     #[serde(default)]
     pub(crate) diagnostics: Option<Value>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct RibbonResidualCorrection {
+    #[serde(default)]
+    schema: Option<String>,
+    field: String,
+    feature_names: Vec<String>,
+    feature_mean: Vec<f64>,
+    feature_scale: Vec<f64>,
+    coefficients: Vec<Vec<f64>>,
+    intercept: Vec<f64>,
+    #[serde(default)]
+    support_lift_fraction: Option<f64>,
+    #[serde(default)]
+    support_eval_distance_proxy: Option<f64>,
+    #[serde(default)]
+    matrix_rank: Option<usize>,
+    #[serde(default)]
+    sample_count: Option<usize>,
+    #[serde(default)]
+    participation_ratio: Option<f64>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -362,39 +430,78 @@ fn apply_support_corrections(
         return Ok(());
     };
 
-    if request.row_id == "energy_volume" {
+    let ribbon_fields =
+        apply_ribbon_residual_correction(request, correction, corrected, actions, applied, limits);
+
+    if request.row_id == "energy_volume"
+        && !ribbon_fields
+            .iter()
+            .any(|field| field == "energy_ev_per_atom")
+    {
         if let Some(bias) = number_field(correction, "energy_bias_ev_per_atom") {
-            if bias.abs() <= limits.max_energy_bias_ev_per_atom {
+            let scaled_bias = bias * limits.energy_correction_scale;
+            if let Some(blocked) =
+                support_gate_action(request, "energy_ev_per_atom", json!(scaled_bias), limits)
+            {
+                actions.push(blocked);
+            } else if limits.energy_correction_scale == 0.0 {
+                actions.push(PolicyAction::blocked(
+                    "energy_ev_per_atom",
+                    "blocked_zero_correction_scale",
+                    json!(bias),
+                ));
+            } else if scaled_bias.abs() <= limits.max_energy_bias_ev_per_atom {
                 if let Some(current) = number_field(corrected, "energy_ev_per_atom") {
-                    let value = json!(current + bias);
+                    let value = json!(current + scaled_bias);
                     set_field(corrected, "energy_ev_per_atom", value.clone())?;
-                    applied.insert("energy_bias_ev_per_atom".to_string(), json!(bias));
-                    actions.push(PolicyAction::delta("energy_ev_per_atom", json!(bias)));
+                    applied.insert("energy_bias_ev_per_atom".to_string(), json!(scaled_bias));
+                    actions.push(PolicyAction::delta(
+                        "energy_ev_per_atom",
+                        json!(scaled_bias),
+                    ));
                 }
             } else {
                 actions.push(PolicyAction::blocked(
                     "energy_ev_per_atom",
                     "blocked_large_bias",
-                    json!(bias),
+                    json!(scaled_bias),
                 ));
             }
         }
     }
 
-    if request.row_id == "stress" || request.row_id == "elastic_constants" {
+    if (request.row_id == "stress" || request.row_id == "elastic_constants")
+        && !ribbon_fields.iter().any(|field| field == "stress_gpa")
+    {
         if let Some(bias) = numeric_array_field(correction, "stress_bias_gpa") {
-            let max_abs = bias.iter().map(|value| value.abs()).fold(0.0, f64::max);
+            let scaled_bias: Vec<f64> = bias
+                .iter()
+                .map(|value| value * limits.stress_correction_scale)
+                .collect();
+            let max_abs = scaled_bias
+                .iter()
+                .map(|value| value.abs())
+                .fold(0.0, f64::max);
             if max_abs <= limits.max_stress_bias_gpa {
-                if let Some(stress) = numeric_array_field(corrected, "stress_gpa") {
+                if let Some(blocked) =
+                    support_gate_action(request, "stress_gpa", json!(scaled_bias), limits)
+                {
+                    actions.push(blocked);
+                } else if limits.stress_correction_scale == 0.0 {
+                    actions.push(PolicyAction::blocked(
+                        "stress_gpa",
+                        "blocked_zero_correction_scale",
+                        json!(bias),
+                    ));
+                } else if let Some(stress) = numeric_array_field(corrected, "stress_gpa") {
                     if stress.len() == bias.len() {
-                        if let (Some(current), Some(delta)) = (
-                            corrected.get("stress_gpa").cloned(),
-                            correction.get("stress_bias_gpa").cloned(),
-                        ) {
+                        if let Some(current) = corrected.get("stress_gpa").cloned() {
+                            let delta = same_shape_from_flat(&current, &scaled_bias)
+                                .unwrap_or_else(|| json!(scaled_bias));
                             if let Some(value) = add_same_shape(&current, &delta) {
                                 set_field(corrected, "stress_gpa", value)?;
-                                applied.insert("stress_bias_gpa".to_string(), json!(bias));
-                                actions.push(PolicyAction::delta("stress_gpa", json!(bias)));
+                                applied.insert("stress_bias_gpa".to_string(), json!(scaled_bias));
+                                actions.push(PolicyAction::delta("stress_gpa", json!(scaled_bias)));
                             }
                         }
                     }
@@ -403,29 +510,60 @@ fn apply_support_corrections(
                 actions.push(PolicyAction::blocked(
                     "stress_gpa",
                     "blocked_large_bias",
-                    json!(bias),
+                    json!(scaled_bias),
                 ));
             }
         }
     }
 
-    if request.row_id == "forces" {
+    if request.row_id == "forces"
+        && !ribbon_fields
+            .iter()
+            .any(|field| field == "forces_ev_per_angstrom")
+    {
         if let Some(bias) = numeric_array_field(correction, "force_bias_ev_per_angstrom") {
-            let max_abs = bias.iter().map(|value| value.abs()).fold(0.0, f64::max);
+            let scaled_bias: Vec<f64> = bias
+                .iter()
+                .map(|value| value * limits.force_correction_scale)
+                .collect();
+            let max_abs = scaled_bias
+                .iter()
+                .map(|value| value.abs())
+                .fold(0.0, f64::max);
             if max_abs <= limits.max_force_bias_ev_per_angstrom {
-                if let Some(forces) = numeric_array_field(corrected, "forces_ev_per_angstrom") {
-                    if forces.len() == bias.len() {
-                        if let (Some(current), Some(delta)) = (
-                            corrected.get("forces_ev_per_angstrom").cloned(),
-                            correction.get("force_bias_ev_per_angstrom").cloned(),
-                        ) {
-                            if let Some(value) = add_same_shape(&current, &delta) {
+                if let Some(blocked) = support_gate_action(
+                    request,
+                    "forces_ev_per_angstrom",
+                    json!(scaled_bias),
+                    limits,
+                ) {
+                    actions.push(blocked);
+                } else if limits.force_correction_scale == 0.0 {
+                    actions.push(PolicyAction::blocked(
+                        "forces_ev_per_angstrom",
+                        "blocked_zero_correction_scale",
+                        json!(bias),
+                    ));
+                } else if let Some(forces) =
+                    numeric_array_field(corrected, "forces_ev_per_angstrom")
+                {
+                    if forces.len() == bias.len() || (bias.len() == 3 && forces.len() % 3 == 0) {
+                        if let Some(current) = corrected.get("forces_ev_per_angstrom").cloned() {
+                            let delta = if bias.len() == 3 && forces.len() % 3 == 0 {
+                                json!(scaled_bias)
+                            } else {
+                                same_shape_from_flat(&current, &scaled_bias)
+                                    .unwrap_or_else(|| json!(scaled_bias))
+                            };
+                            if let Some(value) = add_force_bias(&current, &delta) {
                                 set_field(corrected, "forces_ev_per_angstrom", value)?;
-                                applied
-                                    .insert("force_bias_ev_per_angstrom".to_string(), json!(bias));
+                                applied.insert(
+                                    "force_bias_ev_per_angstrom".to_string(),
+                                    json!(scaled_bias),
+                                );
                                 actions.push(PolicyAction::delta(
                                     "forces_ev_per_angstrom",
-                                    json!(bias),
+                                    json!(scaled_bias),
                                 ));
                             }
                         }
@@ -435,12 +573,341 @@ fn apply_support_corrections(
                 actions.push(PolicyAction::blocked(
                     "forces_ev_per_angstrom",
                     "blocked_large_bias",
-                    json!(bias),
+                    json!(scaled_bias),
                 ));
             }
         }
     }
     Ok(())
+}
+
+fn apply_ribbon_residual_correction(
+    request: &PolicyRequest,
+    correction: &Value,
+    corrected: &mut Value,
+    actions: &mut Vec<PolicyAction>,
+    applied: &mut Map<String, Value>,
+    limits: &PolicyLimits,
+) -> Vec<String> {
+    let Some(model_value) = correction.get("ribbon_residual_correction_v1") else {
+        return Vec::new();
+    };
+    let Some(mut blocked) = try_apply_ribbon_residual_correction(
+        request,
+        model_value,
+        corrected,
+        actions,
+        applied,
+        limits,
+    ) else {
+        return Vec::new();
+    };
+    if blocked.reason.is_empty() {
+        return blocked
+            .field
+            .take()
+            .map(|field| vec![field])
+            .unwrap_or_default();
+    }
+    let field = blocked
+        .field
+        .clone()
+        .unwrap_or_else(|| "unknown".to_string());
+    actions.push(blocked);
+    vec![field]
+}
+
+fn try_apply_ribbon_residual_correction(
+    request: &PolicyRequest,
+    model_value: &Value,
+    corrected: &mut Value,
+    actions: &mut Vec<PolicyAction>,
+    applied: &mut Map<String, Value>,
+    limits: &PolicyLimits,
+) -> Option<PolicyAction> {
+    let model: RibbonResidualCorrection = match serde_json::from_value(model_value.clone()) {
+        Ok(model) => model,
+        Err(_) => {
+            return Some(PolicyAction::blocked(
+                "ribbon_residual_correction_v1",
+                "blocked_invalid_ribbon_model",
+                model_value.clone(),
+            ))
+        }
+    };
+    if model
+        .schema
+        .as_deref()
+        .is_some_and(|schema| schema != "lupine.distill.ribbon_residual_correction.v1")
+    {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_unsupported_ribbon_model_schema",
+            model_value.clone(),
+        ));
+    }
+    let Some(current) = corrected.get(&model.field).cloned() else {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_missing_prediction_field",
+            model_value.clone(),
+        ));
+    };
+    let current_values = numeric_values(&current);
+    let force_broadcast = model.field == "forces_ev_per_angstrom"
+        && model.intercept.len() == 3
+        && current_values.len().is_multiple_of(3);
+    if current_values.is_empty()
+        || (!force_broadcast && current_values.len() != model.intercept.len())
+    {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_ribbon_output_shape_mismatch",
+            json!({
+                "field": model.field,
+                "prediction_dim": current_values.len(),
+                "model_dim": model.intercept.len(),
+            }),
+        ));
+    }
+    if model.feature_names.len() != model.feature_mean.len()
+        || model.feature_names.len() != model.feature_scale.len()
+        || model.coefficients.len() != model.intercept.len()
+        || model
+            .coefficients
+            .iter()
+            .any(|row| row.len() != model.feature_names.len())
+    {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_invalid_ribbon_dimensions",
+            model_value.clone(),
+        ));
+    }
+    if let Some(blocked) = ribbon_gate_action(request, &model, limits) {
+        return Some(blocked);
+    }
+    let scale = correction_scale_for_field(&model.field, limits);
+    if scale == 0.0 {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_zero_correction_scale",
+            json!({"field": model.field}),
+        ));
+    }
+
+    let mut features = Vec::with_capacity(model.feature_names.len());
+    for (idx, name) in model.feature_names.iter().enumerate() {
+        let Some(value) = feature_value(name, corrected) else {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_missing_ribbon_feature",
+                json!({"feature": name}),
+            ));
+        };
+        let divisor = if model.feature_scale[idx].abs() < 1e-12 {
+            1.0
+        } else {
+            model.feature_scale[idx]
+        };
+        features.push((value - model.feature_mean[idx]) / divisor);
+    }
+
+    let mut delta = Vec::with_capacity(model.intercept.len());
+    for (row_idx, intercept) in model.intercept.iter().enumerate() {
+        let correction = model.coefficients[row_idx]
+            .iter()
+            .zip(features.iter())
+            .fold(*intercept, |sum, (coef, value)| sum + coef * value)
+            * scale;
+        delta.push(correction);
+    }
+    let max_abs = delta.iter().map(|value| value.abs()).fold(0.0, f64::max);
+    if max_abs > max_correction_for_field(&model.field, limits) {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_large_ribbon_correction",
+            json!(delta),
+        ));
+    }
+    let delta_value = same_shape_from_flat(&current, &delta).unwrap_or_else(|| json!(delta));
+    let next_value = if model.field == "forces_ev_per_angstrom" {
+        add_force_bias(&current, &delta_value)
+    } else {
+        add_same_shape(&current, &delta_value)
+    };
+    let Some(value) = next_value else {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_ribbon_delta_shape_mismatch",
+            json!(delta),
+        ));
+    };
+    if set_field(corrected, &model.field, value).is_err() {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_invalid_prediction_object",
+            json!(delta),
+        ));
+    }
+    applied.insert(
+        "ribbon_residual_correction_v1".to_string(),
+        json!({
+            "field": model.field,
+            "delta": delta,
+            "scale": scale,
+            "matrix_rank": model.matrix_rank,
+            "sample_count": model.sample_count,
+            "participation_ratio": model.participation_ratio,
+        }),
+    );
+    actions.push(PolicyAction::delta(&model.field, json!(delta)));
+    Some(PolicyAction {
+        action: "handled".to_string(),
+        reason: String::new(),
+        field: Some(model.field),
+        value: None,
+    })
+}
+
+fn support_gate_action(
+    request: &PolicyRequest,
+    field: &str,
+    value: Value,
+    limits: &PolicyLimits,
+) -> Option<PolicyAction> {
+    let diagnostics = request
+        .support
+        .as_ref()
+        .and_then(|support| support.diagnostics.as_ref())?;
+    if diagnostics
+        .get("applicability_gate")
+        .and_then(Value::as_str)
+        .is_some_and(|gate| gate.starts_with("blocked"))
+    {
+        return Some(PolicyAction::blocked(
+            field,
+            "blocked_support_applicability_gate",
+            value,
+        ));
+    }
+    if let Some(distance) = diagnostic_number(diagnostics, "support_eval_distance_proxy") {
+        if distance > limits.max_support_eval_distance_proxy {
+            return Some(PolicyAction::blocked(
+                field,
+                "blocked_support_eval_distance",
+                json!(distance),
+            ));
+        }
+    }
+    if let Some(lift) = support_lift_fraction(field, diagnostics) {
+        if lift < limits.min_support_lift_fraction {
+            return Some(PolicyAction::blocked(
+                field,
+                "blocked_insufficient_support_lift",
+                json!(lift),
+            ));
+        }
+    }
+    None
+}
+
+fn ribbon_gate_action(
+    request: &PolicyRequest,
+    model: &RibbonResidualCorrection,
+    limits: &PolicyLimits,
+) -> Option<PolicyAction> {
+    if let Some(diagnostics) = request
+        .support
+        .as_ref()
+        .and_then(|support| support.diagnostics.as_ref())
+    {
+        if diagnostics
+            .get("applicability_gate")
+            .and_then(Value::as_str)
+            .is_some_and(|gate| gate.starts_with("blocked"))
+        {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_support_applicability_gate",
+                json!({"field": model.field}),
+            ));
+        }
+        if let Some(distance) = diagnostic_number(diagnostics, "support_eval_distance_proxy") {
+            if distance > limits.max_support_eval_distance_proxy {
+                return Some(PolicyAction::blocked(
+                    &model.field,
+                    "blocked_support_eval_distance",
+                    json!(distance),
+                ));
+            }
+        }
+    }
+    if let Some(distance) = model.support_eval_distance_proxy {
+        if distance > limits.max_support_eval_distance_proxy {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_support_eval_distance",
+                json!(distance),
+            ));
+        }
+    }
+    if let Some(lift) = model.support_lift_fraction {
+        if lift < limits.min_support_lift_fraction {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_insufficient_support_lift",
+                json!(lift),
+            ));
+        }
+    }
+    None
+}
+
+fn support_lift_fraction(field: &str, diagnostics: &Value) -> Option<f64> {
+    if let Some(value) = diagnostic_number(diagnostics, "support_lift_fraction") {
+        return Some(value);
+    }
+    let (before_key, after_key) = match field {
+        "energy_ev_per_atom" => ("energy_support_mae_before", "energy_support_mae_after"),
+        "stress_gpa" => (
+            "stress_support_mae_before_gpa",
+            "stress_support_mae_after_gpa",
+        ),
+        "forces_ev_per_angstrom" => ("force_support_rmse_before", "force_support_rmse_after"),
+        _ => return None,
+    };
+    let before = diagnostic_number(diagnostics, before_key)?;
+    let after = diagnostic_number(diagnostics, after_key)?;
+    if before <= 1e-12 {
+        return None;
+    }
+    Some(((before - after) / before).max(0.0))
+}
+
+fn diagnostic_number(diagnostics: &Value, key: &str) -> Option<f64> {
+    diagnostics
+        .get(key)
+        .and_then(Value::as_f64)
+        .filter(|value| value.is_finite())
+}
+
+fn correction_scale_for_field(field: &str, limits: &PolicyLimits) -> f64 {
+    match field {
+        "energy_ev_per_atom" | "relaxed_energy_ev_per_atom" => limits.energy_correction_scale,
+        "stress_gpa" | "elastic_constants_gpa" => limits.stress_correction_scale,
+        "forces_ev_per_angstrom" => limits.force_correction_scale,
+        _ => 1.0,
+    }
+}
+
+fn max_correction_for_field(field: &str, limits: &PolicyLimits) -> f64 {
+    match field {
+        "energy_ev_per_atom" | "relaxed_energy_ev_per_atom" => limits.max_energy_bias_ev_per_atom,
+        "stress_gpa" | "elastic_constants_gpa" => limits.max_stress_bias_gpa,
+        "forces_ev_per_angstrom" => limits.max_force_bias_ev_per_angstrom,
+        _ => f64::INFINITY,
+    }
 }
 
 fn guard_prediction(row_id: &str, prediction: &Value, limits: &PolicyLimits) -> Vec<PolicyAction> {
@@ -524,6 +991,89 @@ fn numeric_values(value: &Value) -> Vec<f64> {
     }
 }
 
+fn same_shape_from_flat(template: &Value, flat: &[f64]) -> Option<Value> {
+    let mut idx = 0usize;
+    let value = same_shape_from_flat_inner(template, flat, &mut idx)?;
+    if idx == flat.len() {
+        Some(value)
+    } else {
+        None
+    }
+}
+
+fn same_shape_from_flat_inner(template: &Value, flat: &[f64], idx: &mut usize) -> Option<Value> {
+    match template {
+        Value::Number(_) => {
+            let value = *flat.get(*idx)?;
+            *idx += 1;
+            Some(json!(value))
+        }
+        Value::Array(items) => {
+            let mut out = Vec::with_capacity(items.len());
+            for item in items {
+                out.push(same_shape_from_flat_inner(item, flat, idx)?);
+            }
+            Some(Value::Array(out))
+        }
+        _ => None,
+    }
+}
+
+fn feature_value(name: &str, prediction: &Value) -> Option<f64> {
+    if name == "n_atoms" {
+        return prediction
+            .get("symbols")
+            .and_then(Value::as_array)
+            .map(|items| items.len() as f64)
+            .or_else(|| {
+                prediction
+                    .get("forces_ev_per_angstrom")
+                    .and_then(Value::as_array)
+                    .map(|items| items.len() as f64)
+            });
+    }
+    if let Some(field) = name.strip_prefix("scalar:") {
+        return number_field(prediction, field);
+    }
+    if let Some(rest) = name.strip_prefix("component:") {
+        let (field, index) = rest.rsplit_once(':')?;
+        let index = index.parse::<usize>().ok()?;
+        return numeric_values(prediction.get(field)?).get(index).copied();
+    }
+    if let Some(rest) = name.strip_prefix("force_mean:") {
+        let axis = rest.parse::<usize>().ok()?;
+        if axis >= 3 {
+            return None;
+        }
+        let values = numeric_values(prediction.get("forces_ev_per_angstrom")?);
+        if values.len() < 3 || !values.len().is_multiple_of(3) {
+            return None;
+        }
+        let mut sum = 0.0;
+        let mut count = 0usize;
+        for chunk in values.chunks(3) {
+            sum += chunk[axis];
+            count += 1;
+        }
+        return Some(sum / count as f64);
+    }
+    if name == "force_rms" {
+        let values = numeric_values(prediction.get("forces_ev_per_angstrom")?);
+        if values.is_empty() {
+            return None;
+        }
+        let mean_square =
+            values.iter().map(|value| value * value).sum::<f64>() / values.len() as f64;
+        return Some(mean_square.sqrt());
+    }
+    if name == "force_max_norm" {
+        return vector_norms(prediction.get("forces_ev_per_angstrom")?)
+            .into_iter()
+            .reduce(f64::max);
+    }
+    number_field(prediction, name)
+}
+
 fn vector_norms(value: &Value) -> Vec<f64> {
     match value {
         Value::Array(items) if items.len() == 3 && items.iter().all(Value::is_number) => {
@@ -560,6 +1110,36 @@ fn add_same_shape(value: &Value, delta: &Value) -> Option<Value> {
         }
         _ => None,
     }
+}
+
+fn add_force_bias(value: &Value, delta: &Value) -> Option<Value> {
+    if let Some(corrected) = add_same_shape(value, delta) {
+        return Some(corrected);
+    }
+    let bias = vector3(delta)?;
+    let Value::Array(vectors) = value else {
+        return None;
+    };
+    let mut out = Vec::with_capacity(vectors.len());
+    for vector in vectors {
+        let current = vector3(vector)?;
+        out.push(json!([
+            current[0] + bias[0],
+            current[1] + bias[1],
+            current[2] + bias[2]
+        ]));
+    }
+    Some(Value::Array(out))
+}
+
+fn vector3(value: &Value) -> Option<[f64; 3]> {
+    let Value::Array(items) = value else {
+        return None;
+    };
+    if items.len() != 3 || !items.iter().all(Value::is_number) {
+        return None;
+    }
+    Some([items[0].as_f64()?, items[1].as_f64()?, items[2].as_f64()?])
 }
 
 fn decision_id(
@@ -701,6 +1281,91 @@ mod tests {
             decision.corrected_prediction["forces_ev_per_angstrom"],
             json!([[1.1, 1.9, 3.0]])
         );
+    }
+
+    #[test]
+    fn broadcasts_vector_force_bias_to_all_atoms() {
+        let req = request(
+            "forces",
+            json!({"forces_ev_per_angstrom": [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]}),
+            json!({"force_bias_ev_per_angstrom": [0.1, -0.1, 0.0]}),
+        );
+        let decision = decide(&req, DEFAULT_RIBBON_VERSION).unwrap();
+        assert_eq!(
+            decision.corrected_prediction["forces_ev_per_angstrom"],
+            json!([[1.1, 1.9, 3.0], [4.1, 4.9, 6.0]])
+        );
+        assert!(decision
+            .actions
+            .iter()
+            .any(|action| action.action == "delta_correct"));
+    }
+
+    #[test]
+    fn applies_ribbon_residual_correction_from_feature_model() {
+        let req = request(
+            "stress",
+            json!({"energy_ev_per_atom": 2.0, "stress_gpa": [1.0, 2.0]}),
+            json!({
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "stress_gpa",
+                    "feature_names": ["scalar:energy_ev_per_atom"],
+                    "feature_mean": [1.0],
+                    "feature_scale": [1.0],
+                    "intercept": [0.1, -0.1],
+                    "coefficients": [[0.2], [-0.2]],
+                    "support_lift_fraction": 0.5,
+                    "support_eval_distance_proxy": 0.0,
+                    "matrix_rank": 1,
+                    "sample_count": 4,
+                    "participation_ratio": 1.0
+                }
+            }),
+        );
+
+        let decision = decide(&req, DEFAULT_RIBBON_VERSION).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["stress_gpa"],
+            json!([1.3, 1.7])
+        );
+        assert!(decision
+            .applied_corrections
+            .get("ribbon_residual_correction_v1")
+            .is_some());
+    }
+
+    #[test]
+    fn blocks_ribbon_residual_correction_without_support_lift() {
+        let req = request(
+            "stress",
+            json!({"energy_ev_per_atom": 2.0, "stress_gpa": [1.0, 2.0]}),
+            json!({
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "stress_gpa",
+                    "feature_names": ["scalar:energy_ev_per_atom"],
+                    "feature_mean": [1.0],
+                    "feature_scale": [1.0],
+                    "intercept": [0.1, -0.1],
+                    "coefficients": [[0.2], [-0.2]],
+                    "support_lift_fraction": 0.0,
+                    "support_eval_distance_proxy": 0.0
+                }
+            }),
+        );
+
+        let decision = decide(&req, DEFAULT_RIBBON_VERSION).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["stress_gpa"],
+            json!([1.0, 2.0])
+        );
+        assert!(decision.actions.iter().any(|action| {
+            action.action == "delta_correct_blocked"
+                && action.reason == "blocked_insufficient_support_lift"
+        }));
     }
 
     #[test]

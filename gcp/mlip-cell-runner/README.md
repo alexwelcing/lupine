@@ -17,6 +17,17 @@ loads a manifest, runs one `(row_id, mlip_id)` cell, writes a JSON artifact to
 GCS, and posts a Google-OIDC-authenticated `lupine.mlip.cell_result.v1` beat to
 `glim-think`.
 
+For the broader local/GCP/Hugging Face operating loop, see
+`docs/MLIP_EXECUTION_PLAYBOOK.md`.
+
+Backend ids, target jobs, requirements files, canary rows, and preferred cloud
+flavors are tracked in `backend_catalog.json`. The local harness reads this
+catalog directly:
+
+```bash
+python tools/mlip_local_lab.py --list-backends
+```
+
 ## Local Smoke
 
 ```bash
@@ -104,6 +115,37 @@ Docker:
 python tools/mlip_local_lab.py --mode baseline --mlip chgnet --row forces
 python tools/mlip_local_lab.py --mode campaign --workers 1 --skip-install
 ```
+
+After a local run, build a promotion packet before spending cloud GPU:
+
+```bash
+python tools/mlip_local_promotion.py \
+  --run-dir tmp/mlip-local/<run_id> \
+  --distill-policy-url gs://shed-489901-atlas-inputs/mlip-policies/hyperribbon-v2/policy_limits_accuracy.json
+```
+
+The packet either holds the work in local iteration or emits exact `gcloud run
+jobs execute` canary commands. Cloud promotion should start from that packet,
+not from handwritten local settings.
+
+## Checkpoint And Resume
+
+Every cell writes a raw-prediction checkpoint by default:
+
+```text
+<artifact-prefix>/cell_checkpoint.json
+```
+
+The checkpoint stores the run/cell/row/MLIP/variant context, a manifest hash,
+case hashes, and completed raw predictions. On rerun, matching completed cases
+are loaded before Distill policy is replayed. This lets a cloud timeout or local
+interrupt resume expensive MLIP inference without treating Distill decisions as
+stale.
+
+Use `--checkpoint-mode off` to disable it, `--checkpoint-mode read-only` for
+inspection/replay, or `--checkpoint-mode write-only` to force recomputation
+while preserving the new checkpoint. A custom local or `gs://` path can be
+provided with `--checkpoint-url`.
 
 ## GCP Build And Canary
 

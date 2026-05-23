@@ -71,6 +71,20 @@ class RuntimeSession(Protocol):
         ...
 
 
+class PredictionCheckpoint(Protocol):
+    def get_prediction(self, row_id: str, case_index: int, case: dict[str, Any]) -> dict[str, Any] | None:
+        ...
+
+    def record_prediction(
+        self,
+        row_id: str,
+        case_index: int,
+        case: dict[str, Any],
+        prediction: dict[str, Any],
+    ) -> None:
+        ...
+
+
 def atoms_from_record(record: dict[str, Any]) -> Atoms:
     return Atoms(
         symbols=record["symbols"],
@@ -335,7 +349,7 @@ def _fit_elastic_constants(predictions: list[dict[str, Any]]) -> np.ndarray:
 
 def _elastic_material_groups(predictions: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
     groups: dict[str, list[dict[str, Any]]] = {}
-    for idx, pred in enumerate(predictions):
+    for pred in predictions:
         material = pred.get("material_id") or pred.get("material") or "unknown"
         groups.setdefault(str(material), []).append(pred)
     return groups
@@ -476,18 +490,27 @@ def run_row(
     manifest: dict[str, Any],
     calc: Any,
     runtime_session: RuntimeSession | None = None,
+    checkpoint: PredictionCheckpoint | None = None,
 ) -> dict[str, Any]:
     validation = validate_manifest(manifest)
     selection = select_row(manifest, row_id)
     row_blockers = validation["row_blockers"].get(row_id, [])
     if row_blockers:
         raise ValueError(f"{row_id} fixture is not release-ready: {'; '.join(row_blockers)}")
-    predictions = [
-        relaxation_prediction(case, calc, selection.row_spec)
-        if row_id == "relaxation_stability"
-        else single_point_prediction(case, calc, selection.row_spec)
-        for case in selection.cases
-    ]
+    predictions = []
+    for case_index, case in enumerate(selection.cases):
+        cached = checkpoint.get_prediction(row_id, case_index, case) if checkpoint else None
+        if cached is not None:
+            predictions.append(cached)
+            continue
+        prediction = (
+            relaxation_prediction(case, calc, selection.row_spec)
+            if row_id == "relaxation_stability"
+            else single_point_prediction(case, calc, selection.row_spec)
+        )
+        if checkpoint is not None:
+            checkpoint.record_prediction(row_id, case_index, case, prediction)
+        predictions.append(prediction)
     if runtime_session is not None:
         predictions = runtime_session.apply_row_policy(predictions)
     score, score_unit, metrics = evaluate_row(row_id, predictions, selection.row_spec)

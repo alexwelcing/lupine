@@ -69,6 +69,47 @@ class CellResult:
     metrics: dict[str, Any]
 
 
+def stable_json_bytes(payload: Any) -> bytes:
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
+
+
+def sha256_hex(payload: Any) -> str:
+    return hashlib.sha256(stable_json_bytes(payload)).hexdigest()
+
+
+def case_cache_key(row_id: str, case_index: int, case: dict[str, Any]) -> str:
+    structure_id = str(case.get("structure_id") or case.get("id") or case_index)
+    digest = sha256_hex(case)[:16]
+    return f"{row_id}:{case_index}:{structure_id}:{digest}"
+
+
+def checkpoint_url_from_prefix(prefix: str) -> str:
+    if prefix.startswith("gs://"):
+        return prefix.rstrip("/") + "/cell_checkpoint.json"
+    return str(pathlib.Path(prefix) / "cell_checkpoint.json")
+
+
+def raw_prediction_checkpoint_context(row_id: str, mlip_id: str, manifest_hash: str) -> dict[str, str]:
+    return {
+        "schema": "lupine.mlip.cell_checkpoint.context.v2",
+        "checkpoint_scope": "raw_predictions",
+        "row_id": row_id,
+        "mlip_id": mlip_id,
+        "manifest_hash": manifest_hash,
+    }
+
+
+def normalize_checkpoint_context(context: Any) -> dict[str, str] | None:
+    if not isinstance(context, dict):
+        return None
+    row_id = context.get("row_id")
+    mlip_id = context.get("mlip_id")
+    manifest_hash = context.get("manifest_hash")
+    if not all(isinstance(value, str) and value for value in (row_id, mlip_id, manifest_hash)):
+        return None
+    return raw_prediction_checkpoint_context(row_id, mlip_id, manifest_hash)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="MLIP baseline grid cell runner")
     parser.add_argument("command", nargs="?", default="run-cell")
@@ -101,6 +142,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--operation-name", default=None)
     parser.add_argument("--dev-mode-bypass", action="store_true")
     parser.add_argument("--local-jsonl", default=None)
+    parser.add_argument(
+        "--checkpoint-mode",
+        default="read-write",
+        choices=("off", "read-write", "read-only", "write-only"),
+        help="Per-cell prediction checkpoint behavior. Default stores cell_checkpoint.json under artifact-prefix.",
+    )
+    parser.add_argument(
+        "--checkpoint-url",
+        default=None,
+        help="Optional local or gs:// JSON checkpoint path. Defaults to artifact-prefix/cell_checkpoint.json.",
+    )
     return parser.parse_args()
 
 
@@ -174,6 +226,152 @@ def read_url(url: str) -> bytes:
         response.raise_for_status()
         return response.content
     return pathlib.Path(url).read_bytes()
+
+
+def write_url(url: str, data: bytes, content_type: str = "application/octet-stream") -> str:
+    if url.startswith("gs://"):
+        bucket, key = parse_gs_url(url)
+        token = metadata_access_token()
+        upload_url = f"{GCS_UPLOAD_BASE}/{bucket}/o?uploadType=media&name={urllib.parse.quote(key, safe='')}"
+        response = requests.post(
+            upload_url,
+            headers={"Authorization": f"Bearer {token}", "Content-Type": content_type},
+            data=data,
+            timeout=120,
+        )
+        response.raise_for_status()
+        return url
+    if url.startswith(("http://", "https://")):
+        raise ValueError("checkpoint writes require a local path or gs:// URL")
+    path = pathlib.Path(url)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(data)
+    return str(path)
+
+
+class CellCheckpoint:
+    def __init__(
+        self,
+        url: str,
+        mode: str,
+        *,
+        run_id: str,
+        cell_id: str,
+        row_id: str,
+        mlip_id: str,
+        variant_id: str,
+        distill_profile: str,
+        manifest_hash: str,
+    ) -> None:
+        self.url = url
+        self.mode = mode
+        self.context = raw_prediction_checkpoint_context(row_id, mlip_id, manifest_hash)
+        self.producer_context = {
+            "run_id": run_id,
+            "cell_id": cell_id,
+            "variant_id": variant_id,
+            "distill_profile": distill_profile,
+        }
+        self.loaded_predictions = 0
+        self.written_predictions = 0
+        self.cache_misses = 0
+        self.ignored_reason: str | None = None
+        self.payload = self._empty_payload()
+        if mode in ("read-write", "read-only"):
+            self._load_existing()
+
+    def _empty_payload(self) -> dict[str, Any]:
+        return {
+            "schema": "lupine.mlip.cell_checkpoint.v1",
+            "context": self.context,
+            "producer_context": self.producer_context,
+            "predictions": {},
+            "updated_at_unix": int(time.time()),
+        }
+
+    def _load_existing(self) -> None:
+        try:
+            payload = json.loads(read_url(self.url).decode("utf-8"))
+        except FileNotFoundError:
+            return
+        except requests.HTTPError as exc:
+            if exc.response is not None and exc.response.status_code == 404:
+                return
+            raise
+        except Exception as exc:
+            self.ignored_reason = f"unreadable_checkpoint:{exc.__class__.__name__}"
+            return
+        if not isinstance(payload, dict) or payload.get("schema") != "lupine.mlip.cell_checkpoint.v1":
+            self.ignored_reason = "unsupported_checkpoint_schema"
+            return
+        existing_context = normalize_checkpoint_context(payload.get("context"))
+        if existing_context != self.context:
+            self.ignored_reason = "checkpoint_context_mismatch"
+            return
+        if not isinstance(payload.get("predictions"), dict):
+            self.ignored_reason = "checkpoint_predictions_not_object"
+            return
+        self.payload = payload
+
+    def get_prediction(self, row_id: str, case_index: int, case: dict[str, Any]) -> dict[str, Any] | None:
+        if self.mode == "write-only":
+            self.cache_misses += 1
+            return None
+        key = case_cache_key(row_id, case_index, case)
+        entry = self.payload.get("predictions", {}).get(key)
+        if not isinstance(entry, dict):
+            self.cache_misses += 1
+            return None
+        if entry.get("case_hash") != sha256_hex(case):
+            self.cache_misses += 1
+            return None
+        prediction = entry.get("prediction")
+        if not isinstance(prediction, dict):
+            self.cache_misses += 1
+            return None
+        self.loaded_predictions += 1
+        return prediction
+
+    def record_prediction(
+        self,
+        row_id: str,
+        case_index: int,
+        case: dict[str, Any],
+        prediction: dict[str, Any],
+    ) -> None:
+        if self.mode == "read-only":
+            return
+        key = case_cache_key(row_id, case_index, case)
+        predictions = self.payload.setdefault("predictions", {})
+        predictions[key] = {
+            "case_index": case_index,
+            "case_hash": sha256_hex(case),
+            "structure_id": case.get("structure_id"),
+            "prediction": prediction,
+            "recorded_at_unix": int(time.time()),
+        }
+        self.payload["updated_at_unix"] = int(time.time())
+        self.written_predictions += 1
+        self.flush()
+
+    def flush(self) -> None:
+        write_url(
+            self.url,
+            json.dumps(self.payload, indent=2, sort_keys=True).encode("utf-8"),
+            "application/json",
+        )
+
+    def summary(self) -> dict[str, Any]:
+        return {
+            "schema": "lupine.mlip.cell_checkpoint.summary.v1",
+            "url": self.url,
+            "mode": self.mode,
+            "loaded_predictions": self.loaded_predictions,
+            "written_predictions": self.written_predictions,
+            "cache_misses": self.cache_misses,
+            "ignored_reason": self.ignored_reason,
+            "stored_predictions": len(self.payload.get("predictions", {})),
+        }
 
 
 def materialize_distill_policy_url(policy_url: str | None) -> tuple[str | None, str | None, tempfile.TemporaryDirectory[str] | None]:
@@ -293,11 +491,25 @@ def run_cell(args: argparse.Namespace) -> CellResult:
         raise RuntimeError("lupine_distill_runtime is not importable in this runner image")
     cold_started = time.perf_counter()
     manifest = load_manifest(manifest_url)
+    manifest_hash = "sha256:" + sha256_hex(manifest)
     support_manifest = (
         load_manifest(args.support_manifest_url, require_release=False)
         if args.support_manifest_url and args.distill_profile != "off"
         else None
     )
+    checkpoint = None
+    if args.checkpoint_mode != "off":
+        checkpoint = CellCheckpoint(
+            args.checkpoint_url or checkpoint_url_from_prefix(args.artifact_prefix),
+            args.checkpoint_mode,
+            run_id=args.run_id,
+            cell_id=args.cell_id,
+            row_id=args.row_id,
+            mlip_id=args.mlip_id,
+            variant_id=args.variant_id,
+            distill_profile=args.distill_profile,
+            manifest_hash=manifest_hash,
+        )
     policy_limits_path = None
     policy_limits_hash = None
     policy_limits_tmp = None
@@ -327,7 +539,13 @@ def run_cell(args: argparse.Namespace) -> CellResult:
         if support_manifest is not None:
             distill_session.fit_support(calc, run_row)
         run_calc = distill_session.wrap_calculator(calc)
-    row_result = run_row(args.row_id, manifest, run_calc, runtime_session=distill_session)
+    row_result = run_row(
+        args.row_id,
+        manifest,
+        run_calc,
+        runtime_session=distill_session,
+        checkpoint=checkpoint,
+    )
     warm_duration_s = max(time.perf_counter() - warm_started, 1e-9)
     cold_duration_s = max(time.perf_counter() - cold_started, warm_duration_s)
     predictions = row_result["predictions"]
@@ -371,6 +589,7 @@ def run_cell(args: argparse.Namespace) -> CellResult:
         "variant_id": args.variant_id,
         "distill_profile": args.distill_profile,
         "manifest_url": manifest_url,
+        "manifest_hash": manifest_hash,
         "support_manifest_url": args.support_manifest_url,
         "distill_policy_url": args.distill_policy_url,
         "distill_policy_hash": policy_limits_hash,
@@ -386,6 +605,8 @@ def run_cell(args: argparse.Namespace) -> CellResult:
         "accuracy": {"score": accuracy, "unit": accuracy_unit, **accuracy_metrics},
         "speed": {"score": speed, "unit": "structures_per_second"},
     }
+    if checkpoint is not None:
+        artifact_payload["checkpoint"] = checkpoint.summary()
     if distill_summary is not None:
         artifact_payload["distill_runtime"] = distill_summary
         artifact_payload["support_manifest_hash"] = distill_summary.get("support_manifest_hash")
@@ -408,6 +629,7 @@ def run_cell(args: argparse.Namespace) -> CellResult:
         "profile": args.profile,
         "fixture_id": args.fixture_id,
         "manifest_url": manifest_url,
+        "manifest_hash": manifest_hash,
         "support_manifest_url": args.support_manifest_url,
         "distill_policy_url": args.distill_policy_url,
         "distill_policy_hash": policy_limits_hash,
@@ -430,6 +652,8 @@ def run_cell(args: argparse.Namespace) -> CellResult:
             "model_load_ms": round(model_load_s * 1000),
         },
     }
+    if checkpoint is not None:
+        metrics["checkpoint"] = checkpoint.summary()
     if distill_summary is not None:
         metrics["distill_runtime"] = {
             "profile": distill_summary.get("profile"),
@@ -512,6 +736,10 @@ def failure_metrics(args: argparse.Namespace, exc: BaseException) -> dict[str, A
         "manifest_url": args.manifest_url or args.fixture_url,
         "operation_name": args.operation_name,
         "versions": runtime_versions(),
+        "checkpoint": {
+            "mode": args.checkpoint_mode,
+            "url": args.checkpoint_url or checkpoint_url_from_prefix(args.artifact_prefix),
+        } if args.checkpoint_mode != "off" else {"mode": "off"},
         "error": str(exc),
         "error_class": exc.__class__.__name__,
         "traceback": traceback.format_exc(limit=8),

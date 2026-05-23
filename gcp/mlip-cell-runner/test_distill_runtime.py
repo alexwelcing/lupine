@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import json
 import pathlib
 import sys
-import json
 
 import numpy as np
 import pytest
@@ -12,8 +12,14 @@ from ase.calculators.calculator import Calculator, all_changes
 RUNTIME = pathlib.Path(__file__).resolve().parents[2] / "lupine-distill" / "runtime" / "python"
 sys.path.insert(0, str(RUNTIME))
 
-from lupine_distill_runtime import DistillSession, DistillSupportModel, InstrumentedCalculator, LeakageGuard, RustPolicyEngine
-from lupine_distill_runtime.events import RuntimeEventLog
+from lupine_distill_runtime import (  # noqa: E402
+    DistillSession,
+    DistillSupportModel,
+    InstrumentedCalculator,
+    LeakageGuard,
+    RustPolicyEngine,
+)
+from lupine_distill_runtime.events import RuntimeEventLog  # noqa: E402
 
 
 class MockCalculator(Calculator):
@@ -132,7 +138,7 @@ def test_support_model_applies_energy_delta_without_eval_reference():
     assert interventions == [{"action": "delta_correct", "field": "energy_ev_per_atom"}]
 
 
-def test_support_model_blocks_executable_correction_without_material_overlap():
+def test_support_model_records_global_residual_without_material_overlap():
     model = DistillSupportModel.fit(
         "energy_volume",
         [
@@ -153,9 +159,9 @@ def test_support_model_blocks_executable_correction_without_material_overlap():
 
     model.gate_for_eval_predictions([{"material_id": "mp-123", "energy_ev_per_atom": 1.0}])
 
-    assert model.correction == {}
-    assert model.candidate_correction == {}
-    assert model.diagnostics["applicability_gate"] == "blocked_no_material_overlap"
+    assert model.correction == {"energy_bias_ev_per_atom": pytest.approx(-0.2)}
+    assert model.diagnostics["applicability_gate"] == "passed_global_residual_no_material_overlap"
+    assert model.diagnostics["support_eval_distance_proxy"] == 1.0
 
 
 def test_support_model_allows_overlap_by_chemical_system():
@@ -182,7 +188,38 @@ def test_support_model_allows_overlap_by_chemical_system():
     ])
 
     assert model.diagnostics["applicability_gate"] == "passed"
-    assert model.candidate_correction == {"energy_bias_ev_per_atom": pytest.approx(-0.2)}
+    assert model.candidate_correction["energy_bias_ev_per_atom"] == pytest.approx(-0.2)
+
+
+def test_support_model_emits_rank_aware_residual_ribbon():
+    model = DistillSupportModel.fit(
+        "stress",
+        [
+            {
+                "energy_ev_per_atom": 0.0,
+                "stress_gpa": [1.0, 1.0],
+                "reference": {"stress_gpa": [1.1, 0.9]},
+            },
+            {
+                "energy_ev_per_atom": 1.0,
+                "stress_gpa": [2.0, 2.0],
+                "reference": {"stress_gpa": [2.4, 1.6]},
+            },
+            {
+                "energy_ev_per_atom": 2.0,
+                "stress_gpa": [3.0, 3.0],
+                "reference": {"stress_gpa": [3.9, 2.1]},
+            },
+        ],
+    )
+
+    ribbon = model.candidate_correction["ribbon_residual_correction_v1"]
+
+    assert ribbon["schema"] == "lupine.distill.ribbon_residual_correction.v1"
+    assert ribbon["field"] == "stress_gpa"
+    assert ribbon["sample_count"] == 3
+    assert ribbon["support_lift_fraction"] > 0.0
+    assert model.diagnostics["stress_residual_ribbon_matrix_rank"] >= 1
 
 
 def test_distill_session_can_delegate_policy_to_rust():

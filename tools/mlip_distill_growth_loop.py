@@ -14,10 +14,9 @@ import json
 import os
 import pathlib
 import subprocess
-import sys
+from collections.abc import Iterable
 from datetime import datetime, timezone
-from typing import Any, Iterable
-
+from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DEFAULT_CASES = ROOT / "atlas-distill" / "tests" / "fixtures" / "distill_hill_climb_cases.jsonl"
@@ -44,6 +43,20 @@ def jsonl(path: pathlib.Path) -> Iterable[dict[str, Any]]:
 
 def local_artifact_cases(run_dir: pathlib.Path) -> list[dict[str, Any]]:
     cases: list[dict[str, Any]] = []
+    baseline_predictions: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for artifact_path in sorted((run_dir / "artifacts").glob("baseline_*/*cell_result.json")):
+        artifact = load_json(artifact_path)
+        row_id = str(artifact.get("row_id") or "")
+        mlip_id = str(artifact.get("mlip_id") or "")
+        predictions = artifact.get("predictions")
+        if not row_id or not mlip_id or not isinstance(predictions, list):
+            continue
+        for prediction in predictions:
+            if not isinstance(prediction, dict):
+                continue
+            structure_id = str(prediction.get("structure_id") or "")
+            if structure_id:
+                baseline_predictions[(row_id, mlip_id, structure_id)] = copy.deepcopy(prediction)
     for artifact_path in sorted((run_dir / "artifacts").glob("**/cell_result.json")):
         artifact = load_json(artifact_path)
         distill_runtime = artifact.get("distill_runtime")
@@ -52,8 +65,15 @@ def local_artifact_cases(run_dir: pathlib.Path) -> list[dict[str, Any]]:
         support_model = distill_runtime.get("support_model")
         if not isinstance(support_model, dict):
             continue
+        correction = support_model.get("correction")
+        candidate = support_model.get("candidate_correction")
+        if (
+            isinstance(candidate, dict)
+            and candidate.get("ribbon_residual_correction_v1")
+        ) or not isinstance(correction, dict) or not correction:
+            correction = candidate
         support = {
-            "correction": support_model.get("correction") if isinstance(support_model.get("correction"), dict) else {},
+            "correction": correction if isinstance(correction, dict) else {},
             "diagnostics": support_model.get("diagnostics") if isinstance(support_model.get("diagnostics"), dict) else {},
         }
         predictions = artifact.get("predictions")
@@ -65,8 +85,14 @@ def local_artifact_cases(run_dir: pathlib.Path) -> list[dict[str, Any]]:
             reference = raw_prediction.get("reference")
             if not isinstance(reference, dict):
                 continue
-            prediction = copy.deepcopy(raw_prediction)
+            baseline_key = (
+                str(artifact.get("row_id") or ""),
+                str(artifact.get("mlip_id") or ""),
+                str(raw_prediction.get("structure_id") or ""),
+            )
+            prediction = copy.deepcopy(baseline_predictions.get(baseline_key, raw_prediction))
             prediction.pop("reference", None)
+            prediction.pop("distill", None)
             cases.append({
                 "schema": "lupine.distill.hill_climb_case.v1",
                 "case_id": f"{artifact.get('cell_id', artifact_path.parent.name)}:{idx}",
@@ -168,7 +194,13 @@ def promotion_label(result: dict[str, Any]) -> str:
 
 def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Local Distill hill-climb growth loop")
-    parser.add_argument("--run-dir", type=pathlib.Path, default=None)
+    parser.add_argument(
+        "--run-dir",
+        type=pathlib.Path,
+        action="append",
+        default=[],
+        help="Local run directory to mine for Distill cases. Repeat to combine rows/backends.",
+    )
     parser.add_argument("--cases", type=pathlib.Path, default=None)
     parser.add_argument("--out-dir", type=pathlib.Path, default=None)
     parser.add_argument("--atlas-distill-bin", type=pathlib.Path, default=DEFAULT_BIN)
@@ -186,12 +218,14 @@ def main(argv: Iterable[str] | None = None) -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if args.run_dir:
-        cases = local_artifact_cases(args.run_dir)
+        cases = []
+        for run_dir in args.run_dir:
+            cases.extend(local_artifact_cases(run_dir))
         if not cases:
             raise SystemExit(f"no Distill hill-climb cases found in local run artifacts: {args.run_dir}")
         cases_path = out_dir / "distill_hill_climb_cases.jsonl"
         write_cases(cases_path, cases)
-        case_source = str(args.run_dir)
+        case_source = [str(run_dir) for run_dir in args.run_dir]
     else:
         cases_path = args.cases or DEFAULT_CASES
         case_source = str(cases_path)

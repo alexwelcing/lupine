@@ -14,21 +14,37 @@ import os
 import pathlib
 import shutil
 import subprocess
-import sys
+from collections.abc import Iterable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Iterable
-
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RUNNER_DIR = ROOT / "gcp" / "mlip-cell-runner"
 RUNNER = RUNNER_DIR / "mlip_cell_runner.py"
+BACKEND_CATALOG_PATH = RUNNER_DIR / "backend_catalog.json"
 EVAL_MANIFEST = RUNNER_DIR / "fixtures" / "canonical_structures_v2_mptrj.json"
 SUPPORT_MANIFEST = RUNNER_DIR / "fixtures" / "canonical_distill_support_v1.json"
 LOCAL_ROOT = ROOT / "tmp" / "mlip-local"
 RUNTIME_ROOT = ROOT / "tmp" / "mlip-runtimes"
 ATLAS_DISTILL_BIN = ROOT / "atlas-distill" / "target" / "debug" / ("atlas-distill.exe" if os.name == "nt" else "atlas-distill")
+
+
+def load_backend_catalog() -> list[dict[str, object]]:
+    catalog = json.loads(BACKEND_CATALOG_PATH.read_text(encoding="utf-8"))
+    backends = catalog.get("backends", [])
+    if not isinstance(backends, list) or not backends:
+        raise RuntimeError(f"backend catalog has no backends: {BACKEND_CATALOG_PATH}")
+    for backend in backends:
+        if not isinstance(backend, dict) or not isinstance(backend.get("mlip_id"), str):
+            raise RuntimeError(f"invalid backend catalog entry in {BACKEND_CATALOG_PATH}")
+        if not isinstance(backend.get("requirements"), str):
+            raise RuntimeError(f"backend {backend['mlip_id']} has no requirements file")
+    return backends
+
+
+BACKENDS = load_backend_catalog()
+BACKENDS_BY_ID = {str(backend["mlip_id"]): backend for backend in BACKENDS}
 
 ROWS = [
     "elastic_constants",
@@ -37,15 +53,9 @@ ROWS = [
     "stress",
     "relaxation_stability",
 ]
-MLIPS = ["mace-mp-0", "chgnet", "m3gnet", "orb-v3", "sevennet"]
+MLIPS = list(BACKENDS_BY_ID)
 VARIANTS = ["baseline", "distill_accuracy", "distill_accuracy_accelerate"]
-REQS = {
-    "mace-mp-0": "requirements-mace.txt",
-    "chgnet": "requirements-chgnet.txt",
-    "m3gnet": "requirements-m3gnet.txt",
-    "orb-v3": "requirements-orb.txt",
-    "sevennet": "requirements-sevennet.txt",
-}
+REQS = {mlip_id: str(backend["requirements"]) for mlip_id, backend in BACKENDS_BY_ID.items()}
 
 
 def utc_now() -> datetime:
@@ -145,6 +155,44 @@ def selected_cells(args: argparse.Namespace) -> list[Cell]:
     return [Cell(v, r, m) for v in variants for r in rows for m in mlips]
 
 
+def local_backend_status(mlip_id: str) -> tuple[str, str | None]:
+    if os.name != "nt":
+        return "supported", None
+    metadata = BACKENDS_BY_ID[mlip_id].get("local_windows", {})
+    if not isinstance(metadata, dict):
+        return "supported", None
+    status = metadata.get("status")
+    reason = metadata.get("reason")
+    if not isinstance(status, str):
+        status = "supported"
+    return status, reason if isinstance(reason, str) else None
+
+
+def filter_local_blocked_cells(cells: list[Cell], args: argparse.Namespace) -> tuple[list[Cell], list[dict[str, str]]]:
+    runnable = []
+    skipped = []
+    for cell in cells:
+        status, reason = local_backend_status(cell.mlip_id)
+        if status != "blocked" or args.force_local_backend:
+            runnable.append(cell)
+            continue
+        skipped.append({
+            "cell_id": cell.cell_id,
+            "variant_id": cell.variant_id,
+            "row_id": cell.row_id,
+            "mlip_id": cell.mlip_id,
+            "status": status,
+            "reason": reason or "backend is blocked on this local platform",
+        })
+    if args.mlip and skipped:
+        blocked = skipped[0]
+        raise SystemExit(
+            f"{blocked['mlip_id']} is blocked on this local platform: {blocked['reason']} "
+            "Use --force-local-backend to try anyway, or run it in GCP/HF Linux."
+        )
+    return runnable, skipped
+
+
 def safe_id(value: str) -> str:
     return "".join(ch if ch.isalnum() or ch in "._-" else "_" for ch in value)
 
@@ -189,9 +237,22 @@ def cell_command(run_id: str, cell: Cell, python: pathlib.Path, run_dir: pathlib
         "--local-jsonl",
         str(beat_jsonl),
         "--dev-mode-bypass",
+        "--checkpoint-mode",
+        args.checkpoint_mode,
     ]
+    if args.checkpoint_url_template:
+        cmd.extend([
+            "--checkpoint-url",
+            args.checkpoint_url_template.format(
+                run_id=run_id,
+                variant_id=cell.variant_id,
+                row_id=cell.row_id,
+                mlip_id=cell.mlip_id,
+                cell_id=safe_id(cell.cell_id),
+            ),
+        ])
     if cell.variant_id != "baseline":
-        cmd.extend(["--support-manifest-url", str(SUPPORT_MANIFEST)])
+        cmd.extend(["--support-manifest-url", str(args.support_manifest_url or SUPPORT_MANIFEST)])
         cmd.extend(["--distill-policy-engine", args.distill_policy_engine])
         cmd.extend(["--ribbon-version", args.ribbon_version])
         if args.distill_policy_url:
@@ -249,37 +310,83 @@ def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", choices=["baseline", "campaign"], default="baseline")
     parser.add_argument("--run-id", default=None)
+    parser.add_argument("--list-backends", action="store_true")
     parser.add_argument("--variant", choices=VARIANTS, default=None)
     parser.add_argument("--row", choices=ROWS, default=None)
     parser.add_argument("--mlip", choices=MLIPS, default=None)
     parser.add_argument("--workers", type=int, default=1)
     parser.add_argument("--skip-install", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--force-local-backend",
+        action="store_true",
+        help="Try a backend even when the catalog marks it blocked for this local platform.",
+    )
     parser.add_argument("--sync-url", default=None)
+    parser.add_argument(
+        "--checkpoint-mode",
+        choices=["off", "read-write", "read-only", "write-only"],
+        default="read-write",
+    )
+    parser.add_argument(
+        "--checkpoint-url-template",
+        default=None,
+        help="Optional checkpoint path template with {run_id}, {variant_id}, {row_id}, {mlip_id}, {cell_id}.",
+    )
     parser.add_argument("--distill-policy-engine", choices=["auto", "python", "rust"], default="rust")
     parser.add_argument("--distill-policy-url", default=None)
+    parser.add_argument("--support-manifest-url", default=None)
     parser.add_argument("--ribbon-version", default="hyperribbon-v1")
     parser.add_argument("--atlas-distill-bin", default=str(ATLAS_DISTILL_BIN) if ATLAS_DISTILL_BIN.exists() else None)
     args = parser.parse_args(list(argv) if argv is not None else None)
+    if args.list_backends:
+        print(json.dumps({
+            "schema": "lupine.mlip.local_backend_catalog.v1",
+            "catalog_path": str(BACKEND_CATALOG_PATH),
+            "backends": BACKENDS,
+        }, indent=2, sort_keys=True))
+        return 0
 
     run_id = args.run_id or f"mlip-local-{args.mode}-{utc_now().strftime('%Y%m%d-%H%M%S')}"
     run_dir = LOCAL_ROOT / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
-    cells = selected_cells(args)
+    requested_cells = selected_cells(args)
+    cells, skipped_cells = filter_local_blocked_cells(requested_cells, args)
     plan = {
         "schema": "lupine.mlip.local_lab_plan.v1",
         "run_id": run_id,
         "mode": args.mode,
         "cells": [cell.__dict__ | {"cell_id": cell.cell_id} for cell in cells],
+        "requested_cells": [cell.__dict__ | {"cell_id": cell.cell_id} for cell in requested_cells],
+        "skipped_cells": skipped_cells,
         "eval_manifest": str(EVAL_MANIFEST),
         "support_manifest": str(SUPPORT_MANIFEST),
+        "support_manifest_url": args.support_manifest_url,
+        "backend_catalog": str(BACKEND_CATALOG_PATH),
         "distill_policy_engine": args.distill_policy_engine,
+        "checkpoint_mode": args.checkpoint_mode,
+        "checkpoint_url_template": args.checkpoint_url_template,
         "distill_policy_url": args.distill_policy_url,
         "ribbon_version": args.ribbon_version,
         "atlas_distill_bin": args.atlas_distill_bin,
         "runtime_root": str(RUNTIME_ROOT),
     }
     (run_dir / "plan.json").write_text(json.dumps(plan, indent=2, sort_keys=True), encoding="utf-8")
+    if not cells:
+        summary = {
+            "schema": "lupine.mlip.local_lab_summary.v1",
+            "run_id": run_id,
+            "run_dir": str(run_dir),
+            "cells": 0,
+            "completed": 0,
+            "failed": 0,
+            "skipped": len(skipped_cells),
+            "skipped_cells": skipped_cells,
+            "results": [],
+        }
+        (run_dir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
+        print(json.dumps(summary, indent=2, sort_keys=True))
+        return 1
 
     results = []
     workers = max(1, min(args.workers, len(cells)))
@@ -296,6 +403,8 @@ def main(argv: Iterable[str] | None = None) -> int:
         "cells": len(results),
         "completed": sum(1 for row in results if row.get("returncode") == 0 or row.get("dry_run")),
         "failed": sum(1 for row in results if isinstance(row.get("returncode"), int) and row.get("returncode") != 0),
+        "skipped": len(skipped_cells),
+        "skipped_cells": skipped_cells,
         "results": sorted(results, key=lambda row: str(row.get("cell_id"))),
     }
     beats_path = run_dir / "beats.jsonl"

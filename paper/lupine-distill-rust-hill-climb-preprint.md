@@ -280,11 +280,35 @@ This preprint corresponds to the first Rust implementation:
   - row-aware accuracy scoring
   - refusal, blocked correction, tighten, and intervention penalties
   - versioned `lupine.distill.hill_climb_report.v1` output
+- rank-aware residual ribbons
+  - Python MLIP runners fit support residual evidence from non-overlapping
+    support rows
+  - Rust applies the versioned residual correction model, support-lift gate,
+    transfer-distance gate, correction scale, and maximum correction bound
+  - theorem hooks report residual rank, participation ratio, support lift, and
+    whether the claim is rank-limited
 
 On the included replay fixture, the harness identifies a candidate that opens a
 previously blocked energy correction gate while preserving force and stress
 corrections. The result is not yet a scientific claim. It is proof that the
 inner-loop mechanism can tune a canonical Rust ribbon before real 5x5x3 runs.
+
+The first local same-distribution support run used non-overlapping MPtrj train
+rows as support and held-out canonical MPtrj rows as evaluation. On
+`mace-mp-0` energy prediction, the selected `hyperribbon-mptrj-support-v1`
+policy reduced held-out energy MAE from `0.4116` to `0.2038` eV/atom in an
+actual in-run replay, while blocking oversized corrections. This is the first
+positive local Distill Accuracy result from the Rust policy loop.
+
+The next local probes add two forms of diversity. On SevenNet energy, a
+backend-specific policy reduced held-out energy MAE from `0.3997` to `0.2773`
+eV/atom. On MACE-MP-0 stress, a row-specific policy reduced held-out stress MAE
+from `0.5669` to `0.3481` GPa. These are still local, small-fixture results,
+but they show that the residual ribbon is not only a single MACE energy trick.
+They also expose an important acceleration boundary: the same MACE stress
+policy improves Distill Accuracy but the current accelerate profile worsens the
+stress row, so speed-oriented policy search must remain a separate promotion
+gate.
 
 ## 9. Limitations
 

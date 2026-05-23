@@ -1,7 +1,47 @@
 from __future__ import annotations
 
 import numpy as np
-from fixture_contract import evaluate_row, validate_manifest
+from ase.calculators.calculator import Calculator, all_changes
+from fixture_contract import evaluate_row, run_row, validate_manifest
+
+
+class CountingEnergyCalculator(Calculator):
+    implemented_properties = ["energy", "forces", "stress"]
+
+    def __init__(self, energy: float):
+        super().__init__()
+        self.energy = energy
+        self.calls = 0
+
+    def calculate(self, atoms=None, properties=("energy",), system_changes=all_changes):
+        super().calculate(atoms, properties, system_changes)
+        self.calls += 1
+        n = len(atoms)
+        self.results = {
+            "energy": self.energy * n,
+            "forces": np.zeros((n, 3)),
+            "stress": np.zeros(6),
+        }
+
+
+class MemoryCheckpoint:
+    def __init__(self):
+        self.predictions = {}
+        self.loaded = 0
+        self.written = 0
+
+    def key(self, row_id, case_index, case):
+        return (row_id, case_index, case["structure_id"])
+
+    def get_prediction(self, row_id, case_index, case):
+        prediction = self.predictions.get(self.key(row_id, case_index, case))
+        if prediction is not None:
+            self.loaded += 1
+        return prediction
+
+    def record_prediction(self, row_id, case_index, case, prediction):
+        self.predictions[self.key(row_id, case_index, case)] = prediction
+        self.written += 1
 
 
 def test_validate_manifest_rejects_legacy_smoke_fixture() -> None:
@@ -120,3 +160,38 @@ def test_elastic_fit_is_intercept_aware_for_residual_stress_offsets() -> None:
 
     assert np.isclose(score, 1.0)
     assert metrics["error"] < 1e-9
+
+
+def test_run_row_uses_prediction_checkpoint_for_completed_cases() -> None:
+    manifest = {
+        "schema": "lupine.mlip.fixture_manifest.v2",
+        "fixture_id": "checkpoint-test",
+        "reference_provenance": {"source": "unit-test"},
+        "row_specs": {"energy_volume": {"min_cases": 1, "error_tolerance": 1.0}},
+        "row_fixtures": {
+            "energy_volume": {
+                "structures": [
+                    {
+                        "structure_id": "Al-one",
+                        "symbols": ["Al"],
+                        "positions": [[0.0, 0.0, 0.0]],
+                        "cell": [[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]],
+                        "pbc": True,
+                        "reference": {"energy_ev_per_atom": 2.0},
+                    }
+                ]
+            }
+        },
+    }
+    checkpoint = MemoryCheckpoint()
+    first_calc = CountingEnergyCalculator(2.0)
+    first = run_row("energy_volume", manifest, first_calc, checkpoint=checkpoint)
+
+    second_calc = CountingEnergyCalculator(99.0)
+    second = run_row("energy_volume", manifest, second_calc, checkpoint=checkpoint)
+
+    assert first["score"] == second["score"] == 1.0
+    assert first_calc.calls == 1
+    assert second_calc.calls == 0
+    assert checkpoint.written == 1
+    assert checkpoint.loaded == 1

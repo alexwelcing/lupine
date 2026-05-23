@@ -1,0 +1,95 @@
+{
+  "schema": "lupine.mlip.backend_catalog.v1",
+  "backends": [
+    {
+      "mlip_id": "mace-mp-0",
+      "label": "MACE-MP medium",
+      "target_job": "mlip-cell-mace",
+      "requirements": "requirements-mace.txt",
+      "local_env": "tmp/mlip-runtimes/mace-mp-0",
+      "canary_row": "forces",
+      "local_windows": {
+        "status": "supported",
+        "reason": "Verified on the RTX A4500 Windows local lab with torch 2.4.1+cu121 and mace-torch 0.3.16."
+      },
+      "preferred_cloud": {
+        "gcp_gpu": "nvidia-l4",
+        "hf_flavor": "l4x1"
+      },
+      "checkpoint_scope": "raw_predictions",
+      "notes": "Universal MACE-MP ASE calculator; default model id uses the medium checkpoint."
+    },
+    {
+      "mlip_id": "chgnet",
+      "label": "CHGNet",
+      "target_job": "mlip-cell-chgnet",
+      "requirements": "requirements-chgnet.txt",
+      "local_env": "tmp/mlip-runtimes/chgnet",
+      "canary_row": "forces",
+      "local_windows": {
+        "status": "supported",
+        "reason": "Verified on the RTX A4500 Windows local lab with torch 2.4.1+cu121 and chgnet 0.4.2."
+      },
+      "preferred_cloud": {
+        "gcp_gpu": "nvidia-l4",
+        "hf_flavor": "l4x1"
+      },
+      "checkpoint_scope": "raw_predictions",
+      "notes": "Fastest first canary for dependency and beat-path validation."
+    },
+    {
+      "mlip_id": "m3gnet",
+      "label": "M3GNet",
+      "target_job": "mlip-cell-m3gnet",
+      "requirements": "requirements-m3gnet.txt",
+      "local_env": "tmp/mlip-runtimes/m3gnet",
+      "canary_row": "energy_volume",
+      "local_windows": {
+        "status": "blocked",
+        "reason": "Pinned dgl==2.4.0+cu121 wheel is Linux-only for this stack; route M3GNet to GCP or Hugging Face Linux runners."
+      },
+      "preferred_cloud": {
+        "gcp_gpu": "nvidia-l4",
+        "hf_flavor": "l4x1"
+      },
+      "checkpoint_scope": "raw_predictions",
+      "notes": "MatGL/DGL backend; start with energy-volume if stress support is noisy."
+    },
+    {
+      "mlip_id": "orb-v3",
+      "label": "ORB v3 conservative",
+      "target_job": "mlip-cell-orb",
+      "requirements": "requirements-orb.txt",
+      "local_env": "tmp/mlip-runtimes/orb-v3",
+      "canary_row": "energy_volume",
+      "local_windows": {
+        "status": "heavy",
+        "reason": "Uses a separate cu118 torch stack; run intentionally with disk headroom or prefer Linux cloud canaries."
+      },
+      "preferred_cloud": {
+        "gcp_gpu": "nvidia-l4",
+        "hf_flavor": "a10g-small"
+      },
+      "checkpoint_scope": "raw_predictions",
+      "notes": "Heavier PyTorch stack; use checkpointed single-row canaries before campaign fan-out."
+    },
+    {
+      "mlip_id": "sevennet",
+      "label": "SevenNet 7net-0",
+      "target_job": "mlip-cell-sevennet",
+      "requirements": "requirements-sevennet.txt",
+      "local_env": "tmp/mlip-runtimes/sevennet",
+      "canary_row": "forces",
+      "local_windows": {
+        "status": "supported",
+        "reason": "Verified on the RTX A4500 Windows local lab with torch 2.4.1+cu121 and sevenn 0.12.1."
+      },
+      "preferred_cloud": {
+        "gcp_gpu": "nvidia-l4",
+        "hf_flavor": "l4x1"
+      },
+      "checkpoint_scope": "raw_predictions",
+      "notes": "SevenNet ASE calculator path; validate package import before full relaxation cells."
+    }
+  ]
+}

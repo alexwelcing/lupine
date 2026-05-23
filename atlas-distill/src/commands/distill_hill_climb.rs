@@ -117,6 +117,9 @@ struct SearchConfigReport {
     beam_width: usize,
     report_top_k: usize,
     coordinate_factors: Vec<f64>,
+    scale_values: Vec<f64>,
+    support_lift_values: Vec<f64>,
+    support_distance_values: Vec<f64>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -175,7 +178,10 @@ struct WeightedSums {
     cases: usize,
 }
 
-const FACTORS: [f64; 4] = [0.5, 0.75, 1.25, 1.5];
+const FACTORS: [f64; 6] = [0.125, 0.25, 0.5, 0.75, 1.25, 1.5];
+const SCALE_VALUES: [f64; 6] = [0.0, 0.25, 0.5, 0.75, 1.0, 1.25];
+const SUPPORT_LIFT_VALUES: [f64; 6] = [0.0, 0.01, 0.02, 0.05, 0.10, 0.20];
+const SUPPORT_DISTANCE_VALUES: [f64; 6] = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5];
 
 pub fn run(args: DistillHillClimbArgs) -> Result<()> {
     if args.beam_width == 0 {
@@ -313,6 +319,9 @@ fn hill_climb(cases: &[HillClimbCase], args: &DistillHillClimbArgs) -> Result<Hi
             beam_width: args.beam_width,
             report_top_k: args.report_top_k,
             coordinate_factors: FACTORS.to_vec(),
+            scale_values: SCALE_VALUES.to_vec(),
+            support_lift_values: SUPPORT_LIFT_VALUES.to_vec(),
+            support_distance_values: SUPPORT_DISTANCE_VALUES.to_vec(),
         },
         cases: summarize_cases(cases),
         best_candidate,
@@ -648,6 +657,28 @@ fn neighbors(limits: &PolicyLimits) -> Vec<PolicyLimits> {
             }
             out.push(candidate);
         }
+    }
+    for field in 0..3 {
+        for value in SCALE_VALUES {
+            let mut candidate = limits.clone();
+            match field {
+                0 => candidate.energy_correction_scale = value,
+                1 => candidate.stress_correction_scale = value,
+                2 => candidate.force_correction_scale = value,
+                _ => unreachable!(),
+            }
+            out.push(candidate);
+        }
+    }
+    for value in SUPPORT_LIFT_VALUES {
+        let mut candidate = limits.clone();
+        candidate.min_support_lift_fraction = value;
+        out.push(candidate);
+    }
+    for value in SUPPORT_DISTANCE_VALUES {
+        let mut candidate = limits.clone();
+        candidate.max_support_eval_distance_proxy = value;
+        out.push(candidate);
     }
     out
 }

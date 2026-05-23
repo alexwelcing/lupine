@@ -24,7 +24,11 @@ pub struct EquilibriumSolveArgs {
     #[arg(long, default_value_t = 200)]
     pub continuation_window_steps: usize,
     /// Normalized distance threshold for a solved equilibrium.
-    #[arg(long, default_value_t = 0.15)]
+    ///
+    /// The distance is averaged over normalized lattice/energy/force/stress
+    /// components. A default of 0.5 means the final state is, on average,
+    /// within half of the configured physical tolerances.
+    #[arg(long, default_value_t = 0.5)]
     pub solved_distance_threshold: f64,
 }
 
