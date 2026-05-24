@@ -1,6 +1,7 @@
 import OpenDistillationFactory.Materials.Theory.ContextSpecificProof
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 /-═══════════════════════════════════════════════════════════════
   THE 5×5×3 ACCURACY COMMITMENT

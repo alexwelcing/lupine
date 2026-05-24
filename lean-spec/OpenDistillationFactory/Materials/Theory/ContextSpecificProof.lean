@@ -1,6 +1,7 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 import OpenDistillationFactory.Materials.Theory.HyperRibbon
 
 /-═══════════════════════════════════════════════════════════════
@@ -148,7 +149,7 @@ theorem operativeValue_closed_form (t g κ : ℝ) :
     substrate in-context. The substrate is strictly better off
     carrying the context-specific term. -/
 theorem context_correction_strictly_valuable
-    (t g κ : ℝ) (hδ : 0 < deficit t g) (hκ0 : 0 < κ) (hκ2 : κ < 2 * deficit t g) :
+    (t g κ : ℝ) (hκ0 : 0 < κ) (hκ2 : κ < 2 * deficit t g) :
     operativeValue t g κ > 0 := by
   rw [operativeValue_closed_form]
   have hfac : 0 < 2 * deficit t g - κ := by linarith
@@ -215,7 +216,7 @@ theorem correction_decoupled_from_spectrum (l1 l2 l3 κ : ℝ) :
     and the necessary non-generalizable term coexist precisely
     because the latter lives in the orthogonal complement. -/
 theorem hyper_ribbon_survives_context_correction
-    (l1 l2 l3 κ : ℝ)
+    (l1 l2 l3 _κ : ℝ)
     (hpos1 : 0 < l1) (hpos2 : 0 < l2) (hpos3 : 0 < l3)
     (h_decay2 : l2 ≤ 0.25 * l1) (h_decay3 : l3 ≤ 0.0625 * l1) :
     (l1 + l2 + l3) ^ 2 < 2 * (l1 ^ 2 + l2 ^ 2 + l3 ^ 2) := by
@@ -247,7 +248,7 @@ theorem context_specific_operative_value
   · exact context_correction_necessary t g (ne_of_gt hδ)
   · rw [context_correction_optimal]; exact pow_pos hδ 2
   · exact context_correction_does_not_transfer t g t' hδ hscope
-  · intro l1 l2 l3 κ; rfl
+  · intro l1 l2 l3 _; rfl
 
 -- ───────────────────────────────────────────────────────────────
 -- CONCRETE INSTANCE — a real out-of-scope BCC outlier
