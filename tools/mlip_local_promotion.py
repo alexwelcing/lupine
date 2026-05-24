@@ -12,7 +12,9 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import pathlib
+import sys
 from collections import defaultdict
 from collections.abc import Iterable
 from datetime import datetime, timezone
@@ -319,6 +321,13 @@ def main(argv: Iterable[str] | None = None) -> int:
     parser.add_argument("--max-accelerate-loss", type=float, default=0.02)
     parser.add_argument("--min-speedup", type=float, default=1.10)
     parser.add_argument("--canary-limit", type=int, default=3)
+    parser.add_argument("--phoenix", action="store_true",
+                        help="emit this promotion as an OTLP trace to Phoenix via the relay")
+    parser.add_argument("--phoenix-dry-run", action="store_true",
+                        help="print the Phoenix spans to the console instead of emitting")
+    parser.add_argument("--phoenix-endpoint", default=None, help="relay base or .../v1/traces URL")
+    parser.add_argument("--phoenix-token", default=None, help="x-relay-token shared secret")
+    parser.add_argument("--phoenix-project", default=None, help="Phoenix project name")
     args = parser.parse_args(list(argv) if argv is not None else None)
 
     run_dir = args.run_dir.resolve()
@@ -396,6 +405,20 @@ def main(argv: Iterable[str] | None = None) -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(packet, indent=2, sort_keys=True), encoding="utf-8")
     print(json.dumps(packet, indent=2, sort_keys=True))
+
+    if args.phoenix or args.phoenix_dry_run or os.environ.get("PHOENIX_OTLP_RELAY_URL"):
+        try:
+            from mlip_phoenix_trace import emit_promotion_trace
+            emit_promotion_trace(
+                packet,
+                endpoint=args.phoenix_endpoint,
+                token=args.phoenix_token,
+                project=args.phoenix_project,
+                dry_run=args.phoenix_dry_run,
+            )
+        except Exception as exc:  # telemetry must never break the flywheel
+            print(f"[phoenix-trace] emission failed (non-fatal): {exc}", file=sys.stderr)
+
     return 0 if gate["status"] == "promote_to_gcp_canary" else 1
 
 

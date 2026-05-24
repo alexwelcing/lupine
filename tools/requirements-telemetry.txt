@@ -1,0 +1,5 @@
+# Optional: enables `--phoenix` OTLP emission from the Distill flywheel
+# (tools/mlip_phoenix_trace.py). The flywheel runs fine without these;
+# emission degrades to a logged no-op when they are absent.
+opentelemetry-sdk>=1.20.0
+opentelemetry-exporter-otlp-proto-http>=1.20.0
