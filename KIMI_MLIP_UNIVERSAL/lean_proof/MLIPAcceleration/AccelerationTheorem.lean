@@ -254,8 +254,9 @@ theorem causalAcceleration
                 · linarith
               linarith
             linarith
-        · -- L - k_star ≥ 0
-          sorry -- Need k_star ≤ L, which follows from policy definition
+        · -- L - k_star ≥ 0, from policy.k_star_lt : k_star < L
+          have hk : (k_star : ℝ) < (L : ℝ) := by exact_mod_cast policy.k_star_lt
+          linarith
       · -- x < 1
         sorry -- This follows from kappa1 > 0 and the structure of p_refuse
 
