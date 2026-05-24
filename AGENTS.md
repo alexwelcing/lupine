@@ -36,6 +36,28 @@ just live-build
 Use `just verify` for the future spine. If a broader lint/test target is noisy,
 bucket the failures by file and cause instead of flattening them into "fails."
 
+## MLIP flywheel telemetry
+
+The Distill flywheel (`tools/mlip_local_promotion.py`,
+`tools/mlip_distill_growth_loop.py`) emits per-iteration OTLP traces to Phoenix
+through `glim-otlp-relay`. Telemetry is opt-in and never blocks a run; absent
+deps or config degrade to a logged no-op.
+
+- Validate the pipeline before trusting a cycle's telemetry:
+  `just flywheel-telemetry-check` (dry-run + unit tests). For the live relay, set
+  `PHOENIX_OTLP_RELAY_URL` + `PHOENIX_RELAY_TOKEN` and run
+  `python tools/mlip_phoenix_trace.py --smoke-test`, then confirm the printed
+  marker lands in the `mlip-flywheel` Phoenix project.
+- When a cycle runs a flywheel step, pass `--phoenix` (or set
+  `PHOENIX_OTLP_RELAY_URL`) so the iteration is traced. Metrics-only: spans carry
+  accuracy deltas, speedups, loss, and the recorded verdict — the gate is NOT
+  re-evaluated here (it lives in the flywheel and the Lean AccuracyCommitment).
+- Known gap: agent cycles that dispatch cloud cells (`mlip_cell_runner.py` →
+  `/feed/beats`) do not run these local tools, so cloud-only cycles will not emit
+  these traces until emission is added to that path. Treat that as the next wiring
+  step, not a passing state.
+- Deps: `pip install -r tools/requirements-telemetry.txt`.
+
 ## Shell Execution & Environment Hazards (Windows)
 
 When writing automation scripts, deployment orchestrators, or `justfile` configurations on Windows, you must strictly adhere to the following guardrails to prevent system crashes and zombie processes:

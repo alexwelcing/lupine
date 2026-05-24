@@ -14,6 +14,7 @@ import json
 import os
 import pathlib
 import subprocess
+import sys
 from collections.abc import Iterable
 from datetime import datetime, timezone
 from typing import Any
@@ -208,6 +209,13 @@ def main(argv: Iterable[str] | None = None) -> int:
     parser.add_argument("--rounds", type=int, default=3)
     parser.add_argument("--beam-width", type=int, default=4)
     parser.add_argument("--report-top-k", type=int, default=16)
+    parser.add_argument("--phoenix", action="store_true",
+                        help="emit this growth loop as an OTLP trace to Phoenix via the relay")
+    parser.add_argument("--phoenix-dry-run", action="store_true",
+                        help="print the Phoenix spans to the console instead of emitting")
+    parser.add_argument("--phoenix-endpoint", default=None, help="relay base or .../v1/traces URL")
+    parser.add_argument("--phoenix-token", default=None, help="x-relay-token shared secret")
+    parser.add_argument("--phoenix-project", default=None, help="Phoenix project name")
     args = parser.parse_args(list(argv) if argv is not None else None)
 
     if not args.atlas_distill_bin.exists():
@@ -268,6 +276,20 @@ def main(argv: Iterable[str] | None = None) -> int:
     report_path = out_dir / "growth_report.json"
     report_path.write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
     print(json.dumps(summary, indent=2, sort_keys=True))
+
+    if args.phoenix or args.phoenix_dry_run or os.environ.get("PHOENIX_OTLP_RELAY_URL"):
+        try:
+            from mlip_phoenix_trace import emit_growth_trace
+            emit_growth_trace(
+                summary,
+                endpoint=args.phoenix_endpoint,
+                token=args.phoenix_token,
+                project=args.phoenix_project,
+                dry_run=args.phoenix_dry_run,
+            )
+        except Exception as exc:  # telemetry must never break the flywheel
+            print(f"[phoenix-trace] emission failed (non-fatal): {exc}", file=sys.stderr)
+
     return 0
 
 

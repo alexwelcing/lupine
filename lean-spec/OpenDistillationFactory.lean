@@ -23,6 +23,8 @@ import OpenDistillationFactory.Materials.Theory.MetaScience
 import OpenDistillationFactory.Materials.Theory.HyperRibbon
 import OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
 import OpenDistillationFactory.Materials.Theory.ContextSpecificProof
+import OpenDistillationFactory.Materials.Theory.AccuracyCommitment
+import OpenDistillationFactory.Materials.Theory.UniversalityBridge
 
 -- Validation layer: experiment design, integrity checks, and audit
 import OpenDistillationFactory.Materials.Validation.Experiment

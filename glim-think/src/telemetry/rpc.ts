@@ -13,8 +13,10 @@ interface DOStub {
   fetch(request: Request): Promise<Response>;
 }
 
-interface ChatAgent {
-  chat(prompt: string, opts?: Record<string, unknown>): Promise<unknown>;
+/** Cap span input/output payloads so a long reasoning chain can't bloat the
+ *  OTLP batch (Phoenix/relay reject oversized spans). */
+function clip(value: string, max = 8192): string {
+  return value.length > max ? `${value.slice(0, max)}…[${value.length} chars]` : value;
 }
 
 /**
@@ -53,29 +55,43 @@ export async function traceDOFetch<T extends DOStub>(
 }
 
 /**
- * Trace a `child.chat()` sub-agent call.
+ * Trace a sub-agent reasoning cycle as a first-class OpenInference AGENT span.
+ *
+ * This is the seam that makes hypothesis-generation visible in Phoenix: it
+ * wraps the dispatch of a specialist agent (Manifold/Causal/Theorist/Experiment)
+ * with `openinference.span.kind=AGENT` plus `input.value` (the task prompt) and
+ * `output.value` (the agent's reply), so Phoenix classifies and scores the
+ * cycle — not just the individual LLM calls the Vercel SDK already traces.
+ *
+ * Takes a runner thunk rather than a `chat` signature because glim-think's
+ * agents stream over a relay callback (`chat(prompt, {onEvent,onDone,onError})`),
+ * not a request/response `chat(prompt, opts)`.
  *
  * Example:
- *   const child = await this.subAgent(Manifold, `manifold-${element}`);
- *   const reply = await traceAgentChat(child, prompt, { systemPrompt: "..." }, "Manifold");
+ *   const reply = await traceAgentCycle("theorist", prompt, async () => runIt());
  */
-export async function traceAgentChat<T extends ChatAgent>(
-  child: T,
-  prompt: string,
-  opts: Record<string, unknown> | undefined,
+export async function traceAgentCycle<T>(
   agentClass: string,
-): Promise<unknown> {
+  prompt: string,
+  run: () => Promise<T>,
+  toOutput: (result: T) => string = (r) => (typeof r === "string" ? r : JSON.stringify(r)),
+): Promise<T> {
   const tracer = trace.getTracer(RPC_TRACER_NAME);
-  return tracer.startActiveSpan("agent.rpc", async (span: Span) => {
+  return tracer.startActiveSpan(`agent.cycle.${agentClass}`, async (span: Span) => {
+    // OpenInference conventions — make Phoenix treat this as an AGENT span.
+    span.setAttribute("openinference.span.kind", "AGENT");
+    span.setAttribute("input.value", clip(prompt));
+    span.setAttribute("input.mime_type", "text/plain");
     span.setAttribute("rpc.system", "durable_object");
     span.setAttribute("rpc.method", "chat");
     span.setAttribute("rpc.target", agentClass);
-    span.setAttribute("rpc.chat.prompt_length", prompt.length);
     const start = performance.now();
     try {
-      const response = await child.chat(prompt, opts);
+      const result = await run();
+      span.setAttribute("output.value", clip(toOutput(result)));
+      span.setAttribute("output.mime_type", "text/plain");
       span.setStatus({ code: SpanStatusCode.OK });
-      return response;
+      return result;
     } catch (err) {
       span.recordException(err as Error);
       span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
