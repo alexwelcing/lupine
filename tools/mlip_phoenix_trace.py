@@ -25,11 +25,13 @@ Config (CLI flags override env):
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import math
 import os
 import pathlib
 import sys
+import uuid
 from collections.abc import Iterable
 from typing import Any
 
@@ -37,6 +39,7 @@ DEFAULT_PROJECT = "mlip-flywheel"
 DEFAULT_SERVICE = "mlip-distill-flywheel"
 PromotionRoot = "mlip.flywheel.promotion"
 GrowthRoot = "mlip.flywheel.growth_loop"
+SmokeRoot = "mlip.flywheel.smoke_test"
 
 AttrValue = str | bool | int | float
 Attributes = dict[str, AttrValue]
@@ -256,21 +259,57 @@ def emit_growth_trace(report: dict[str, Any], **kwargs: Any) -> bool:
     )
 
 
+def emit_smoke_test(*, marker: str | None = None, **kwargs: Any) -> tuple[bool, str]:
+    """Emit a canary trace to validate the relay → Phoenix path end to end.
+
+    Returns (exported, marker). Search Phoenix for the marker to confirm the
+    span arrived. Agents/cycles run this before trusting flywheel telemetry."""
+    marker = marker or uuid.uuid4().hex
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+    root = sanitize({
+        "mlip.smoke_test": True,
+        "mlip.marker": marker,
+        "mlip.created_at": now,
+    })
+    child = sanitize({
+        "mlip.triplet.id": f"smoke:{marker[:8]}",
+        "mlip.triplet.accuracy_delta_distill": 0.0,
+        "mlip.triplet.speedup_accelerate_vs_baseline": 1.0,
+    })
+    exported = emit_trace(
+        root_name=SmokeRoot,
+        root_attributes=root,
+        child_name="mlip.triplet",
+        children=[child],
+        **kwargs,
+    )
+    return exported, marker
+
+
 def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Emit a flywheel JSON report to Phoenix as OTLP traces")
     parser.add_argument("--packet", type=pathlib.Path, help="promotion_packet.json to emit")
     parser.add_argument("--growth-report", type=pathlib.Path, help="growth_report.json to emit")
+    parser.add_argument("--smoke-test", action="store_true",
+                        help="emit a canary trace to validate the relay → Phoenix path")
     parser.add_argument("--endpoint", default=None, help="relay base or .../v1/traces URL")
     parser.add_argument("--token", default=None, help="x-relay-token shared secret")
     parser.add_argument("--project", default=None, help="Phoenix project name")
     parser.add_argument("--dry-run", action="store_true", help="print spans to the console instead of the relay")
     args = parser.parse_args(list(argv) if argv is not None else None)
 
-    if not args.packet and not args.growth_report:
-        parser.error("provide --packet and/or --growth-report")
+    if not (args.packet or args.growth_report or args.smoke_test):
+        parser.error("provide --packet, --growth-report, and/or --smoke-test")
 
     ok = True
     common = {"endpoint": args.endpoint, "token": args.token, "project": args.project, "dry_run": args.dry_run}
+    if args.smoke_test:
+        exported, marker = emit_smoke_test(**common)
+        if exported:
+            print(f"[phoenix-trace] smoke test emitted. Find it in Phoenix by marker: {marker}")
+        else:
+            print("[phoenix-trace] smoke test did NOT export (see message above).", file=sys.stderr)
+        ok = exported and ok
     if args.packet:
         packet = json.loads(args.packet.read_text(encoding="utf-8"))
         ok = emit_promotion_trace(packet, **common) and ok

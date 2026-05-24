@@ -125,6 +125,15 @@ mono-check-full:
 smoke-atlas-distill:
     gcloud builds submit --config cloudbuild.atlas-distill-smoke.yaml .
 
+# --- FLYWHEEL TELEMETRY ---
+
+# Validate the Distill→Phoenix OTLP telemetry pipeline (dry-run + unit tests).
+# For the LIVE relay, set PHOENIX_OTLP_RELAY_URL + PHOENIX_RELAY_TOKEN and run
+# `python tools/mlip_phoenix_trace.py --smoke-test` (then find the marker in Phoenix).
+flywheel-telemetry-check:
+    python tools/mlip_phoenix_trace.py --smoke-test --dry-run
+    python tools/test_mlip_phoenix_trace.py
+
 # --- UTILS ---
 
 # Clean temporary files
