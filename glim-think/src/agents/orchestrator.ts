@@ -23,6 +23,7 @@ import { Experiment } from "./experiment";
 import { tool } from "ai";
 import { z } from "zod";
 import type { ToolSet } from "ai";
+import { traceAgentCycle } from "../telemetry/rpc";
 
 export class Orchestrator extends GlimThinkAgent {
   /**
@@ -53,7 +54,7 @@ export class Orchestrator extends GlimThinkAgent {
           const prompt = instruction
             ? `Analyze the error manifold for element: ${element}. ${instruction}`
             : `Analyze the error manifold for element: ${element}. Query the ledger for all potential families, compute eigenvalue spectra, participation ratios, and check for hyper-ribbon geometry. Report your findings with numbers.`;
-          const response = await this.runChildChat(child, prompt);
+          const response = await this.runChildChat(child, prompt, "manifold");
           return { agent: "manifold", element, response };
         },
       }),
@@ -68,7 +69,7 @@ export class Orchestrator extends GlimThinkAgent {
           const prompt = instruction
             ? `Screen for Simpson's Paradox. ${instruction}`
             : `Screen all grouping variables (element, pair_style, potential_label) for Simpson's Paradox. For each, compute pooled and within-group correlations and report any reversals.`;
-          const response = await this.runChildChat(child, prompt);
+          const response = await this.runChildChat(child, prompt, "causal");
           return { agent: "causal", response };
         },
       }),
@@ -84,7 +85,7 @@ export class Orchestrator extends GlimThinkAgent {
           const prompt = instruction
             ? `Generate competing hypotheses for: ${claimsDescription}. ${instruction}`
             : `Generate 2-3 competing, falsifiable physical hypotheses for the following observations: ${claimsDescription}. For each, specify the discriminative property and test strategy.`;
-          const response = await this.runChildChat(child, prompt);
+          const response = await this.runChildChat(child, prompt, "theorist");
           return { agent: "theorist", response };
         },
       }),
@@ -101,7 +102,7 @@ export class Orchestrator extends GlimThinkAgent {
           const prompt = instruction
             ? `Design experiments for: ${hypothesesDescription}. Max ${maxExperiments ?? 3} experiments. ${instruction}`
             : `Design and queue up to ${maxExperiments ?? 3} discriminative LAMMPS experiments to test these hypotheses: ${hypothesesDescription}. Select element-potential combinations that maximize information gain.`;
-          const response = await this.runChildChat(child, prompt);
+          const response = await this.runChildChat(child, prompt, "experiment");
           return { agent: "experiment", response };
         },
       }),
@@ -117,7 +118,8 @@ export class Orchestrator extends GlimThinkAgent {
               try {
                 const child = await this.subAgent(Manifold, `manifold-${element}`);
                 const response = await this.runChildChat(child,
-                  `Analyze the error manifold for ${element}. Report eigenvalues, participation ratio, and hyper-ribbon status.`
+                  `Analyze the error manifold for ${element}. Report eigenvalues, participation ratio, and hyper-ribbon status.`,
+                  "manifold"
                 );
                 return { element, status: "complete", response };
               } catch (e) {
@@ -186,17 +188,21 @@ export class Orchestrator extends GlimThinkAgent {
     }
   }
 
-  private async runChildChat(child: { chat: (prompt: string, relay: { onEvent(json: string): void; onDone(): void; onError?(error: string): void }) => Promise<void> }, prompt: string): Promise<string> {
-    const events: string[] = [];
-    await child.chat(prompt, {
-      onEvent: (json: string) => {
-        events.push(json);
-      },
-      onDone: () => {},
-      onError: (error: string) => {
-        events.push(JSON.stringify({ type: "error", error }));
-      },
+  private async runChildChat(child: { chat: (prompt: string, relay: { onEvent(json: string): void; onDone(): void; onError?(error: string): void }) => Promise<void> }, prompt: string, agentLabel = "subagent"): Promise<string> {
+    // Wrap every sub-agent dispatch in an OpenInference AGENT span so the
+    // hypothesis-generation cycle (not just its LLM calls) is visible in Phoenix.
+    return traceAgentCycle(agentLabel, prompt, async () => {
+      const events: string[] = [];
+      await child.chat(prompt, {
+        onEvent: (json: string) => {
+          events.push(json);
+        },
+        onDone: () => {},
+        onError: (error: string) => {
+          events.push(JSON.stringify({ type: "error", error }));
+        },
+      });
+      return events.slice(-8).join("\n");
     });
-    return events.slice(-8).join("\n");
   }
 }
