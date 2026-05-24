@@ -121,9 +121,9 @@ export default function MobileNav() {
                           <Link
                             to={item.to}
                             onClick={() => setOpen(false)}
-                            className={`block py-3 px-1 font-mono text-sm uppercase tracking-widest no-underline transition-colors ${
+                            className={`py-3 px-1 font-mono text-lg uppercase tracking-[0.08em] no-underline transition-colors flex items-center gap-2 ${
                               item.live
-                                ? 'text-[var(--primary)] flex items-center gap-2'
+                                ? 'text-[var(--primary)]'
                                 : 'text-[var(--on-surface-variant)] hover:text-[var(--on-surface)]'
                             }`}
                           >

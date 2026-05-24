@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
+import { EquilibriumSolveWorkbench } from '../EquilibriumSolveWorkbench';
 import { Gallery } from '../Gallery';
 import { PotentialBrowser } from '../panels/PotentialBrowser';
 
 export function GallerySection() {
   const [visible, setVisible] = useState(false);
-  const [tab, setTab] = useState<'simulations' | 'potentials'>('simulations');
+  const [tab, setTab] = useState<'simulations' | 'potentials' | 'equilibrium'>('simulations');
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Allow deep-linking to the potentials tab
+    // Allow deep-linking to research catalog tabs.
     const params = new URLSearchParams(window.location.search);
-    if (params.get('tab') === 'potentials') {
-      setTab('potentials');
+    const requestedTab = params.get('tab');
+    if (requestedTab === 'potentials' || requestedTab === 'equilibrium') {
+      setTab(requestedTab);
       params.delete('tab');
       const url = new URL(window.location.href);
       url.search = params.toString();
@@ -62,9 +64,20 @@ export function GallerySection() {
         >
           NIST Potentials
         </button>
+        <button
+          role="tab"
+          aria-selected={tab === 'equilibrium'}
+          data-testid="tab-equilibrium"
+          style={sTab(tab === 'equilibrium', '#10b981')}
+          onClick={() => setTab('equilibrium')}
+        >
+          Equilibrium Solve
+        </button>
       </div>
 
-      {tab === 'simulations' ? <Gallery /> : <PotentialBrowser />}
+      {tab === 'simulations' && <Gallery />}
+      {tab === 'potentials' && <PotentialBrowser />}
+      {tab === 'equilibrium' && <EquilibriumSolveWorkbench embedded />}
     </section>
   );
 }
@@ -72,6 +85,7 @@ export function GallerySection() {
 const sTabBar: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'center',
+  flexWrap: 'wrap',
   gap: 8,
   marginBottom: 32,
   padding: '0 24px',

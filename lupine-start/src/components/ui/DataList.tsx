@@ -1,46 +1,68 @@
 import React from 'react'
 
-export function DataList({ children }: { children: React.ReactNode }) {
+// DataListContext carries the total column count so every cell and header-cell
+// can independently compute its share of the table width.
+export const DataListCtx = React.createContext<{ colCount: number }>({ colCount: 0 })
+
+export function DataList({
+  children,
+  colCount = 0,
+}: {
+  children: React.ReactNode
+  /** Number of columns — used to set consistent percentage widths on every cell. */
+  colCount?: number
+}) {
   return (
-    <div className="w-full flex flex-col glass-panel overflow-hidden">
+    <table className="w-full border-collapse glass-panel overflow-hidden">
+      <colgroup>
+        {Array.from({ length: colCount }, (_, i) => (
+          <col key={i} style={{ width: `${100 / colCount}%` }} />
+        ))}
+      </colgroup>
       {children}
-    </div>
+    </table>
   )
 }
 
-export function DataListHeader({ children, gridCols }: { children: React.ReactNode; gridCols: string }) {
+export function DataListHeader({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`hidden md:grid ${gridCols} bg-[var(--surface-container)] border-b-[3px] border-[var(--primary)]`}>
-      {children}
-    </div>
+    <DataListCtx.Provider value={{ colCount: 0 }}>
+      <thead className="bg-[var(--surface-container)] border-b-[3px] border-[var(--primary)]">
+        <tr>{children}</tr>
+      </thead>
+    </DataListCtx.Provider>
   )
 }
 
 export function DataListHeaderCell({ children }: { children: React.ReactNode }) {
+  const { colCount } = React.useContext(DataListCtx)
   return (
-    <div className="px-5 py-3 text-[var(--primary)] font-mono text-[11px] uppercase tracking-widest border-r border-[rgba(255,255,255,0.05)] last:border-r-0 whitespace-nowrap">
+    <th
+      className="px-5 py-3 text-[var(--primary)] font-mono text-[11px] uppercase tracking-[0.08em] border-r border-[rgba(255,255,255,0.05)] last:border-r-0 whitespace-nowrap text-left overflow-hidden text-ellipsis"
+      style={colCount > 0 ? { width: `${100 / colCount}%` } : undefined}
+    >
       {children}
-    </div>
+    </th>
   )
 }
 
-export function DataListRow({ children, gridCols }: { children: React.ReactNode; gridCols: string }) {
-  return (
-    <div className={`flex flex-col md:grid ${gridCols} border-b border-[var(--outline-variant)] hover:bg-[var(--surface-container-high)]/30 transition-colors last:border-b-0`}>
-      {children}
-    </div>
-  )
+export function DataListRow({ children }: { children: React.ReactNode }) {
+  return <tr className="border-b border-[var(--outline-variant)] hover:bg-[var(--surface-container-high)]/30 transition-colors last:border-b-0">{children}</tr>
 }
 
 export function DataListCell({ children, label }: { children: React.ReactNode; label?: string }) {
+  const { colCount } = React.useContext(DataListCtx)
   return (
-    <div className="px-5 py-4 border-b md:border-b-0 border-[rgba(255,255,255,0.05)] md:border-r last:border-b-0 last:border-r-0 flex flex-col justify-start">
+    <td
+      className="px-5 py-4 border-r border-[rgba(255,255,255,0.05)] last:border-r-0 align-top overflow-hidden text-ellipsis"
+      style={colCount > 0 ? { width: `${100 / colCount}%` } : undefined}
+    >
       {label && (
-        <span className="md:hidden text-[var(--primary)] font-mono text-[10px] uppercase tracking-widest mb-1.5 block">
+        <span className="md:hidden text-[var(--primary)] font-mono text-[10px] uppercase tracking-[0.08em] mb-1.5 block">
           {label}
         </span>
       )}
       {children}
-    </div>
+    </td>
   )
 }

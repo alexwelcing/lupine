@@ -1,0 +1,21 @@
+# Minimal source set for GCP lab control-plane builds.
+# Use with:
+#   gcloud builds submit . --ignore-file=gcp/.gcloudignore-lab ...
+
+*
+
+!gcp/
+!gcp/tasks-consumer/
+!gcp/tasks-consumer/Cargo.toml
+!gcp/tasks-consumer/Cargo.lock
+!gcp/tasks-consumer/Dockerfile
+!gcp/tasks-consumer/cloudbuild.yaml
+!gcp/tasks-consumer/src/
+!gcp/tasks-consumer/src/**
+
+!gcp/mlip-cell-runner/
+!gcp/mlip-cell-runner/**
+
+gcp/tasks-consumer/target/
+gcp/tasks-consumer/fixtures/
+gcp/mlip-cell-runner/__pycache__/

@@ -63,7 +63,7 @@ function Card({
   return (
     <div className="rounded-lg border border-[var(--outline)] bg-[var(--surface)] p-5">
       <div className="mb-2 flex items-center justify-between gap-4">
-        <h3 className="font-display text-lg text-[var(--on-surface)]">{title}</h3>
+        <h3 className="font-serif text-lg text-[var(--on-surface)]">{title}</h3>
         {badge && (
           <span
             className="mono-label whitespace-nowrap text-xs tracking-[0.2em]"

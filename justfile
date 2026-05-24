@@ -1,7 +1,8 @@
 # GLIM Project Justfile
 # Accelerating research, benchmarking, and development.
 
-set shell := ["powershell.exe", "-NoProfile", "-Command"]
+set shell := ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
+set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
 
 default:
     @just --list
@@ -86,6 +87,27 @@ mono-changed:
 # Validate monorepo metadata and workspace drift
 mono-doctor:
     python scripts/monorepo.py doctor
+
+# Fast glim-think TypeScript gate for routine Worker edits
+think-lint:
+    npm --prefix glim-think run lint:fast
+
+# Broader glim-think app typecheck with incremental cache
+think-lint-app:
+    npm --prefix glim-think run lint:app
+
+# Profile glim-think lint tiers and write glim-think/target/lint-profile.json
+think-lint-profile:
+    npm --prefix glim-think run lint:profile
+
+# Rust engine regression check used by the current atlas-distill path
+engine-test:
+    cargo test --manifest-path atlas-distill/Cargo.toml --bin atlas-distill
+    cargo clippy --manifest-path atlas-distill/Cargo.toml --bin atlas-distill -- -D warnings
+
+# Build the local live/worker-facing TypeScript surface without a deploy
+live-build:
+    npm --prefix glim-think run lint:fast
 
 # Show checks, workflows, deploys, and observation commands for this diff
 mono-plan:

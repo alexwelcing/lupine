@@ -1,0 +1,66 @@
+% =============================================================================
+% SECTION 6: PRE-REGISTERED PREDICTIONS
+% =============================================================================
+\section{Pre-Registered Predictions for Clauses (iv) and (vi)}\label{sec:predictions}
+
+Clauses (iv) and (vi) of Theorem~\ref{thm:main} are pre-registered predictions with explicit numerical thresholds and falsification protocols. We state each prediction, anchor it to the relevant theoretical literature, and specify the test protocol using publicly accessible benchmarks.
+
+\subsection{Prediction P1: Active Learning Excess Risk (Clause iv)}\label{sec:prediction-p1}
+
+\begin{prediction}[Active learning excess-risk scaling]\label{pred:al}
+Let $M, M' \in \cF$ be two foundation MLIPs evaluated on a chemically diverse held-out test set $\cD_{\text{test}}$. For active learning with acquisition function based on the projection norm onto the per-model error manifold $\cM(M)$, the excess risk after $T$ queries satisfies
+\begin{equation}\label{eq:al-prediction}
+    \epsilon_M(T) = C_M \cdot \frac{d(M) \log N}{T},
+\end{equation}
+where $d(M)$ is the empirical intrinsic dimension of $\cM(M)$ (measured by local PCA on residuals) and the constant $C_M$ satisfies
+\begin{equation}\label{eq:al-constant}
+    \frac{1}{4} C_{\text{RB}} \leq C_M \leq 4 \, C_{\text{RB}},
+\end{equation}
+with $C_{\text{RB}}$ the Raj--Bach\cite{raj2022convergence} non-asymptotic constant for linearly separable low-noise active learning.
+\end{prediction}
+
+\paragraph{Theoretical anchor.} Raj and Bach\cite{raj2022convergence} prove a non-asymptotic excess-risk bound for uncertainty sampling in active learning. Under their Assumptions 1--3 (bounded noise, linear separability, and a margin condition), the excess risk after $T$ queries decays as $O(d_{\text{eff}} / T)$ where $d_{\text{eff}}$ is the effective dimension of the hypothesis class. Their $O(d)$ per-iteration cost makes the bound applicable to foundation-MLIP descriptor dimensions ($d \sim 10^2$--$10^3$ for typical equivariant-message-passing embeddings).
+
+The MLIP-specific active learning literature provides empirical support. Smith \emph{et al.}\cite{smith2018less} demonstrated that ``the AL-based potentials perform as well as the ANI-1 potential on COMP6 with only 10\% of the data, and vastly outperforms ANI-1 with 25\% the amount of data''---the empirical signature of the projection-norm-active-learning relation. The Bartók--Kermode GPR-UQ framework\cite{bartok2022gap} provides the Gaussian-process machinery for translating descriptor-space uncertainty into configuration-space acquisition. Perez \emph{et al.}\cite{perez2025misspecified} treat misspecified-model active learning with anisotropic parameter covariance.
+
+\paragraph{Falsification protocol.} Evaluate $M$ and $M'$ on the Matbench Discovery WBM test set\cite{riebesell2025matbench} or the MLIP Arena physics-aware benchmark\cite{chiang2025mliparena}. Compute the per-model error manifold $\cM(M)$ by local PCA on the residual vector $(M(x_i) - E_{\text{DFT}}(x_i))_{i=1}^n$. Measure the intrinsic dimension $d(M)$ by the participating-eigenvalue method (number of eigenvalues above the noise floor). Implement uncertainty-sampling active learning with the projection norm $\|P_{\cM(M)}^\perp \phi(x)\|$ as the acquisition function, where $\phi(x)$ is the model's latent descriptor at configuration $x$. Fit the scaling $\epsilon_M(T) = C_M \cdot d(M) \log N / T$ and test whether $C_M$ falls within the interval $[C_{\text{RB}}/4, 4 C_{\text{RB}}]$.
+
+\textbf{Falsification criterion:} If $C_M < C_{\text{RB}}/4$ or $C_M > 4 C_{\text{RB}}$ for either $M$ or $M'$, or if the scaling exponent in $T$ differs from $-1$ by more than $\pm 0.2$, then Prediction~\ref{pred:al} is falsified for that pair $(M, M')$.
+
+\subsection{Prediction P2: Generational Stability (Clause vi)}\label{sec:prediction-p2}
+
+\begin{prediction}[Generational stability of error directions]\label{pred:gen}
+Let $\{M_g\}_{g=1}^G$ be a foundation MLIP family in $\cF$ with consecutive generations $M_g \to M_{g+1}$. Let $R^{(g)} \in \R^{n \times n}$ be the cross-configuration residual matrix for generation $g$, with entries $R^{(g)}_{ij} = M_g(x_i) - E_{\text{DFT}}(x_i)$ evaluated on the Matbench Discovery WBM test set. Let $\{v_i^{(g)}\}_{i=1}^5$ and $\{v_i^{(g+1)}\}_{i=1}^5$ be the top-5 principal directions (left singular vectors) of $R^{(g)}$ and $R^{(g+1)}$ respectively. Then
+\begin{equation}\label{eq:gen-prediction}
+    \min_{i,j \in \{1,\dots,5\}} \abs{\inner{v_i^{(g)}}{v_j^{(g+1)}}} \geq 0.7.
+\end{equation}
+\end{prediction}
+
+\paragraph{Theoretical anchor.} The neural scaling laws literature provides the theoretical foundation. Bahri \emph{et al.}\cite{bahri2024explaining} identify ``four scaling regimes'' (variance-limited vs.\ resolution-limited in both data and parameters) and connect resolution-limited scaling to the intrinsic data-manifold dimension. Bordelon, Atanasov, and Pehlevan\cite{bordelon2024dynamical,bordelon2024feature} give the kernel-dynamical-mean-field-theory treatment with compute-optimal exponent predictions, extended to the feature-learning regime. Foundation MLIPs are demonstrably in the feature-learning rather than lazy regime\cite{park2024sevennet}, so the Bordelon--Atanasov--Pehlevan framework applies.
+
+The MLIP-specific generational evidence supports stability. MACE-MP-0 $\to$ MACE-MPA-0 enlarged the training set by 3.5M crystals with combined MPtraj and sAlex data while preserving the same architectural backbone. The Hänseroth \emph{et al.}\cite{hanseroth2025finetuning} study reports that ``fine-tuning universally enhances force predictions by factors of 5--15 and improves energy accuracy by 2--4 orders of magnitude'' across MACE, GRACE, SevenNet, MatterSim, and Orb---evidence that the error manifold structure is stable under generational succession but with model-specific evolution rates.
+
+\paragraph{Falsification protocol.} For each documented generational transition (MACE-MP-0 $\to$ MACE-MPA-0; MatterSim-v0 $\to$ MatterSim-v1; M3GNet $\to$ CHGNet for the Materials Project family), compute the residual matrices $R^{(g)}$ and $R^{(g+1)}$ on the WBM test set. Compute the top-5 singular vectors of each matrix. Calculate the $5 \times 5$ cosine-similarity matrix $S_{ij} = |\inner{v_i^{(g)}}{v_j^{(g+1)}}|$. The prediction is satisfied if $\min_{i,j} S_{ij} \geq 0.7$.
+
+\textbf{Falsification criterion:} If $\min_{i,j} S_{ij} < 0.5$ for any consecutive generational transition within $\cF$, then Prediction~\ref{pred:gen} is falsified for that transition.
+
+\subsection{Summary of Pre-Registered Predictions}
+
+Table~\ref{tab:pre-reg} summarizes the two pre-registered predictions, their theoretical anchors, test protocols, and falsification criteria.
+
+\begin{table}[htbp]
+\centering
+\caption{Pre-registered predictions with falsification protocols.}
+\label{tab:pre-reg}
+\begin{tabular}{@{}p{2.2cm}p{3.8cm}p{4.5cm}p{3.5cm}@{}}
+\toprule
+\textbf{Prediction} & \textbf{Theoretical Anchor} & \textbf{Test Protocol} & \textbf{Falsification Criterion} \\
+\midrule
+P1 (Clause iv) & Raj--Bach 2022\cite{raj2022convergence} non-asymptotic excess risk & AL on Matbench Discovery WBM with projection-norm acquisition; fit $\epsilon(T) = C \cdot d \log N / T$ & $C \notin [C_{\text{RB}}/4, 4 C_{\text{RB}}]$ or exponent $\neq -1 \pm 0.2$ \\
+\addlinespace
+P2 (Clause vi) & Bordelon--Atanasov--Pehlevan 2024\cite{bordelon2024dynamical,bordelon2024feature} scaling laws & PCA of residual matrices for $M_g, M_{g+1}$ on WBM; top-5 direction cosine similarity & $\min_{i,j} S_{ij} < 0.5$ for any transition \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both predictions are tied to publicly accessible test sets (Matbench Discovery WBM, MLIP Arena) and can be run independently by any researcher. The Matbench Discovery infrastructure\cite{riebesell2025matbench} provides the leaderboard API for automated evaluation; the MLIP Arena\cite{chiang2025mliparena} provides the physics-aware benchmark suite.

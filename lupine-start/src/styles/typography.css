@@ -25,7 +25,7 @@
 
 /* ─── Editorial Serif Heading ─── */
 .serif-heading {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1.12;
@@ -33,7 +33,7 @@
 
 /* ─── Serif Pull Quote ─── */
 .serif-quote {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   letter-spacing: -0.005em;

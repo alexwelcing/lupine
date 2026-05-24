@@ -6,7 +6,7 @@ export const Route = createFileRoute('/proof')({
   head: () => ({
     meta: [
       { title: 'Research defense — cross-potential geometric error analysis' },
-      { name: 'description', content: 'A rigorous response to critique of Welcing (2025). Computational experiment, formal causal identification, reproducible code, and acknowledged lineage from Frederiksen (2004), Transtrum/Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), and Deng et al. (2024).' },
+      { name: 'description', content: 'A rigorous response to critique of Welcing (2026). Computational experiment, formal causal identification, reproducible code, and acknowledged lineage from Frederiksen (2004), Transtrum/Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), and Deng et al. (2024).' },
     ],
   }),
 })
@@ -16,7 +16,7 @@ function ProofPage() {
     <PageShell
       kicker="RESEARCH DEFENSE · LIVE"
       title="Cross-potential geometric error analysis — the defense."
-      subtitle="A rigorous response to critique of Welcing (2025). Every claim below is backed by computational experiment, formal causal identification, or reproducible code, and the lineage is named: Frederiksen, Jacobsen, Brown & Sethna (2004), Transtrum, Machta & Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), Deng et al. (2024). Hyper-ribbon is borrowed terminology, properly cited."
+      subtitle="A rigorous response to critique of Welcing (2026). Every claim below is backed by computational experiment, formal causal identification, or reproducible code, and the lineage is named: Frederiksen, Jacobsen, Brown & Sethna (2004), Transtrum, Machta & Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), Deng et al. (2024). Hyper-ribbon is borrowed terminology, properly cited."
       maxWidth="5xl"
     >
       <div className="space-y-8">
@@ -98,7 +98,7 @@ function ProofPage() {
             href="https://github.com/alexwelcing/lupine/tree/main/swarm_preprint_review"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
           >
             Research artifacts
           </a>
@@ -106,7 +106,7 @@ function ProofPage() {
             href="https://glim-think-v1.aw-ab5.workers.dev/feed"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+            className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-[0.08em] hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
           >
             Live system feed
           </a>
@@ -132,7 +132,7 @@ function CritiqueCard({ number, critique, rebuttal, evidence }: {
             {number}
           </span>
           <div>
-            <h3 className="text-[var(--error)] font-mono text-sm uppercase tracking-widest mb-2">
+            <h3 className="text-[var(--error)] font-mono text-sm uppercase tracking-[0.08em] mb-2">
               The Critique
             </h3>
             <p className="text-[var(--on-surface-variant)] leading-relaxed">
@@ -146,10 +146,10 @@ function CritiqueCard({ number, critique, rebuttal, evidence }: {
             ✓
           </span>
           <div>
-            <h3 className="text-[var(--secondary)] font-mono text-sm uppercase tracking-widest mb-2">
+            <h3 className="text-[var(--secondary)] font-mono text-sm uppercase tracking-[0.08em] mb-2">
               The Rebuttal
             </h3>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface)] max-w-3xl">
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               {rebuttal}
             </p>
           </div>

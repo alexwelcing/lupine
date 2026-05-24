@@ -5,7 +5,7 @@ export const Route = createFileRoute('/about')({
   head: () => ({
     meta: [
       { title: 'About — Lupine' },
-      { name: 'description', content: 'Lupine is the audit layer for the MLIP ecosystem. Cross-potential geometric error analysis across ≈900 published interatomic potentials. After Transtrum, Sethna, Tadmor. Apache 2.0.' },
+      { name: 'description', content: 'Lupine is the audit layer for the MLIP ecosystem. Cross-potential geometric error analysis across 953 published interatomic potentials. After Transtrum, Sethna, Tadmor. Apache 2.0.' },
       { property: 'og:title', content: 'About — Lupine' },
       { property: 'og:description', content: 'The audit layer for atomistic ML. Cross-potential geometric error analysis. Apache 2.0.' },
       { property: 'og:url', content: 'https://lupine.science/about' },
@@ -40,7 +40,9 @@ const MILESTONES = [
   { date: 'Q1 2025', title: 'First cross-potential PCA', desc: 'Initial corpus, OpenKIM ingestion, hyper-ribbon classifier patterned on Transtrum, Machta & Sethna (2011).' },
   { date: 'Q2 2025', title: 'IMMI submission', desc: 'Cross-potential PCA error analysis preprint. 559-potential corpus.' },
   { date: 'Q3 2025', title: 'Atlas Viewer v1', desc: 'WebGPU exploration of the error manifold. Drag-and-drop LAMMPS trajectories alongside the audit, in-browser.' },
-  { date: 'Q1 2026', title: 'Corpus expansion', desc: '953 potentials, 18 functional-form families, 7,940 benchmark records. Fingerprint significant at p<0.001 globally; ribbon survives orthogonalization.' },
+  { date: 'Q4 2025', title: 'Corpus expansion', desc: '953 potentials, 18 functional-form families, 7,940 benchmark records. Fingerprint significant at p<0.001 globally; ribbon survives orthogonalization.' },
+  { date: 'Q1 2026', title: 'IMMI Major Revision', desc: 'Submitted major revision to peer-reviewed journal. Expanded corpus to 953 potentials with orthogonalization confound tests.' },
+  { date: 'Q2 2026', title: 'Peer-Reviewed Publication', desc: 'IMMI paper accepted for publication. Hyper-ribbon geometry, Simpson\'s paradox detection, and functional-form fingerprinting validated by peer review.' },
   { date: 'Q2 2026', title: 'Harden stage in production', desc: 'Five-agent harden swarm deployed; caught two of its own statistical artifacts (one survived, one did not). Snapshot + de-dup rule shipped with every release.' },
 ]
 
@@ -57,7 +59,7 @@ function About() {
         <div className="glass-panel p-8 md:p-12 relative overflow-hidden">
           <div className="absolute -top-20 -right-20 w-48 h-48 bg-[var(--primary)] opacity-[0.04] blur-[60px] rounded-full" />
           <div className="relative z-10">
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-12 leading-[1.05] text-[var(--on-surface)]">Why we exist</h2>
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-12 leading-[1.05] text-[var(--on-surface)]">Why we exist</h2>
             
             <div className="mb-12 md:pl-8 border-l-4 border-[var(--primary-container)] py-2">
               <p className="font-serif italic text-2xl md:text-3xl lg:text-4xl text-[var(--on-surface)] leading-snug tracking-tight max-w-3xl">
@@ -68,12 +70,12 @@ function About() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 text-lg text-[var(--on-surface-variant)] leading-relaxed">
               <div>
                 <p className="mb-6">
-                  <span className="font-display text-4xl float-left mr-3 leading-none text-[var(--primary)] mt-1">U</span>niversal MLIPs have plateaued. UMA, MACE-MP, Orb, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery. The leaderboard maintainers themselves note ~97k prototype overlap between sAlex and the WBM test set, and Deng et al. (<em className="font-serif text-[var(--on-surface)]">npj Comput. Mater.</em> 2024) showed that low test MAE does not prevent systematic PES softening at surfaces, defects, and migration barriers.
+                  <span className="font-serif text-4xl float-left mr-3 leading-none text-[var(--primary)] mt-1">U</span>niversal MLIPs have plateaued. UMA, MACE-MP, Orb, and SevenNet-Omni cluster at F1 ≈ 0.93 on Matbench Discovery. The leaderboard maintainers themselves note ~97k prototype overlap between sAlex and the WBM test set, and Deng et al. (<em className="font-serif text-[var(--on-surface)]">npj Comput. Mater.</em> 2024) showed that low test MAE does not prevent systematic PES softening at surfaces, defects, and migration barriers.
                 </p>
               </div>
               <div>
                 <p className="mb-6">
-                  Lupine is the audit layer. Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson's-paradox detection across ≈900 published potentials — including the universal ones — interpreted through the sloppy-models geometric framework of Transtrum, Machta &amp; Sethna (2011) and the Bayesian-ensemble lineage of Frederiksen, Jacobsen, Brown &amp; Sethna (2004).
+                  Lupine is the audit layer. Cross-potential PCA, FIM eigenvalue analysis, bootstrap CIs, and Simpson's-paradox detection across 953 published potentials — including the universal ones — interpreted through the sloppy-models geometric framework of Transtrum, Machta &amp; Sethna (2011) and the Bayesian-ensemble lineage of Frederiksen, Jacobsen, Brown &amp; Sethna (2004).
                 </p>
                 <p className="mb-6">
                   Read alongside Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026) — <em className="font-serif text-[var(--on-surface)]">There Will Be a Scientific Theory of Deep Learning</em> — the same artifact is also a low-rank retraining target. The cross-potential ribbon is the empirical mark of a learnable system: the small number of error modes that any next fine-tune actually needs to capture.
@@ -91,7 +93,7 @@ function About() {
       <section className="mb-16">
         <div className="mb-8">
           <span className="mono-label text-[var(--secondary)] tracking-[0.3em] block mb-3">TECHNICAL FOUNDATION</span>
-          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The stack</h2>
+          <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The stack</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {STACK_ITEMS.map((item, i) => (
@@ -111,7 +113,7 @@ function About() {
       <section className="mb-16">
         <div className="mb-8">
           <span className="mono-label text-[var(--primary)] tracking-[0.3em] block mb-3">RESEARCH TIMELINE</span>
-          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Milestones</h2>
+          <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Milestones</h2>
         </div>
         <div className="relative">
           {/* Vertical line */}
@@ -126,7 +128,7 @@ function About() {
                   <span className="w-2.5 h-2.5 rounded-full bg-[var(--primary)]" />
                 </div>
                 <div className="glass-panel p-6 flex-1">
-                  <span className="mono-label text-[var(--primary)] text-[10px] tracking-widest block mb-1">{m.date}</span>
+                  <span className="mono-label text-[var(--primary)] text-[10px] tracking-[0.08em] block mb-1">{m.date}</span>
                   <h3 className="text-lg font-semibold text-[var(--on-surface)] mb-2 not-italic">{m.title}</h3>
                   <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">{m.desc}</p>
                 </div>
@@ -143,7 +145,7 @@ function About() {
             className="absolute inset-0 -z-[1] pointer-events-none"
             style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(59,130,246,0.06), transparent 70%)' }}
           />
-          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Three paths in.</h2>
+          <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Three paths in.</h2>
           <p className="text-[var(--on-surface-variant)] mb-8 max-w-lg mx-auto">
             Researchers go to the science. Industry teams pilot a wedge — solid-state electrolytes, Ni-base superalloys, catalysis. Investors find us in the footer.
           </p>

@@ -52,6 +52,14 @@ struct Cli {
     #[arg(long, env = "TARGET_JOB", default_value = "atlas-distill")]
     target_job: String,
 
+    /// Comma-separated allowlist of Cloud Run Jobs this service may trigger.
+    #[arg(
+        long,
+        env = "ALLOWED_TARGET_JOBS",
+        default_value = "atlas-distill,mlip-cell-mace,mlip-cell-chgnet,mlip-cell-m3gnet,mlip-cell-orb,mlip-cell-sevennet"
+    )]
+    allowed_target_jobs: String,
+
     /// Skip OIDC verification and use a no-op job runner. For local E2E only.
     #[arg(long, env = "DEV_MODE", default_value_t = false)]
     dev_mode: bool,
@@ -65,6 +73,8 @@ pub struct TaskPayload {
     #[serde(default)]
     pub args: Vec<String>,
     pub beat_emit_url: String,
+    #[serde(default)]
+    pub target_job: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -94,7 +104,11 @@ async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
     let app = build_app(cli.clone()).await?;
     let addr = SocketAddr::from(([0, 0, 0, 0], cli.port));
-    info!(port = cli.port, dev_mode = cli.dev_mode, "tasks-consumer listening");
+    info!(
+        port = cli.port,
+        dev_mode = cli.dev_mode,
+        "tasks-consumer listening"
+    );
     let listener = tokio::net::TcpListener::bind(addr).await?;
     axum::serve(listener, app)
         .with_graceful_shutdown(shutdown_signal())
@@ -147,8 +161,31 @@ async fn handle_run(
         .and_then(|h| h.to_str().ok())
         .unwrap_or("(unknown)");
 
+    let target_job = payload
+        .target_job
+        .as_deref()
+        .filter(|value| !value.trim().is_empty())
+        .unwrap_or(&state.cfg.target_job)
+        .trim()
+        .to_string();
+    let allowed = parse_allowed_jobs(&state.cfg.allowed_target_jobs);
+    if !allowed.iter().any(|job| job == &target_job) {
+        warn!(task = task_name, target_job = %target_job, allowed = ?allowed, "target job rejected");
+        return (
+            StatusCode::BAD_REQUEST,
+            format!("target_job not allowed: {target_job}"),
+        )
+            .into_response();
+    }
+
     if !state.cfg.dev_mode {
-        match verify_oidc(state.verifier.as_ref(), &headers, state.cfg.service_url.as_deref()).await {
+        match verify_oidc(
+            state.verifier.as_ref(),
+            &headers,
+            state.cfg.service_url.as_deref(),
+        )
+        .await
+        {
             Ok(claims) => info!(task = task_name, sub = %claims.sub, "oidc verified"),
             Err(e) => {
                 warn!(task = task_name, error = %e, "oidc verification failed");
@@ -167,7 +204,7 @@ async fn handle_run(
     let req = jobrun::JobRunRequest {
         project_id: state.cfg.project_id.clone(),
         region: state.cfg.region.clone(),
-        job_name: state.cfg.target_job.clone(),
+        job_name: target_job,
         container_args: overrides_args,
     };
 
@@ -194,6 +231,14 @@ async fn handle_run(
     }
 }
 
+fn parse_allowed_jobs(raw: &str) -> Vec<String> {
+    raw.split([',', '|'])
+        .map(str::trim)
+        .filter(|value| !value.is_empty())
+        .map(ToOwned::to_owned)
+        .collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -209,6 +254,9 @@ mod tests {
             project_id: "test-project".into(),
             region: "us-central1".into(),
             target_job: "atlas-distill".into(),
+            allowed_target_jobs:
+                "atlas-distill,mlip-cell-mace,mlip-cell-chgnet,mlip-cell-m3gnet,mlip-cell-orb,mlip-cell-sevennet"
+                    .into(),
             dev_mode: true,
         }
     }
@@ -292,5 +340,51 @@ mod tests {
             .await
             .unwrap();
         assert_eq!(res.status(), StatusCode::BAD_REQUEST);
+    }
+
+    #[tokio::test]
+    async fn rejects_target_job_outside_allowlist() {
+        let app = build_app(dev_cli()).await.unwrap();
+        let body = serde_json::json!({
+            "fixture_url": "gs://bucket/path.dump",
+            "command": "run-cell",
+            "args": [],
+            "beat_emit_url": "https://glim-think.example.workers.dev/beat",
+            "target_job": "not-approved"
+        });
+        let res = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri("/run")
+                    .body(Body::from(body.to_string()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(res.status(), StatusCode::BAD_REQUEST);
+    }
+
+    #[tokio::test]
+    async fn accepts_allowlisted_mlip_target_job() {
+        let app = build_app(dev_cli()).await.unwrap();
+        let body = serde_json::json!({
+            "fixture_url": "gs://bucket/manifest.json",
+            "command": "run-cell",
+            "args": ["--run-id", "r1"],
+            "beat_emit_url": "https://glim-think.example.workers.dev/beat",
+            "target_job": "mlip-cell-chgnet"
+        });
+        let res = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri("/run")
+                    .body(Body::from(body.to_string()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(res.status(), StatusCode::OK);
     }
 }

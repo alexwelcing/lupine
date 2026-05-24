@@ -1,0 +1,18 @@
+{
+  "schema": "lupine.distill.policy_request.v1",
+  "ribbon_version": "hyperribbon-v1",
+  "row_id": "energy_volume",
+  "mlip_id": "mace",
+  "prediction": {
+    "energy_ev_per_atom": 1.0
+  },
+  "support": {
+    "correction": {
+      "energy_bias_ev_per_atom": -0.65
+    },
+    "diagnostics": {
+      "support_eval_distance": 0.08,
+      "leakage_guard": "pass"
+    }
+  }
+}

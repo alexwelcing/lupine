@@ -190,7 +190,7 @@ export function claimColumns(
             <span className="inline-flex flex-col">
               <span className="font-mono text-xs text-[var(--on-surface)]">{p.metricFmt}</span>
               {p.metricLabel && (
-                <span className="font-mono text-[9px] uppercase tracking-widest text-[var(--on-surface-variant)]">
+                <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-[var(--on-surface-variant)]">
                   {p.metricLabel}
                 </span>
               )}

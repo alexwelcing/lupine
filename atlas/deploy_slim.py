@@ -176,7 +176,7 @@ def build_research():
 
 def build_web():
     section("Step 2/3: Building Web Viewer")
-    subprocess.run("pnpm build", cwd=ATLAS_VIEW_DIR, shell=True, check=True)
+    subprocess.run(["C:/Program Files/Git/bin/bash.exe", "-c", "pnpm build"], cwd=ATLAS_VIEW_DIR, check=True)
     if os.path.exists(DEPLOY_WEB): shutil.rmtree(DEPLOY_WEB)
     shutil.copytree(WEB_DIST, DEPLOY_WEB)
     
@@ -196,8 +196,8 @@ def build_web():
 def deploy_and_verify():
     section("Step 3/3: Deploy + Verify")
     project_id = os.environ.get("GCP_PROJECT_ID", "shed-489901")
-    subprocess.run(f"gcloud run deploy atlas-viewer --source . --project {project_id} --region us-central1 --allow-unauthenticated --port=8080 --memory=512Mi",
-        cwd=DEPLOY_DIR, shell=True, check=True)
+    subprocess.run(["C:/Program Files/Git/bin/bash.exe", "-c", f"gcloud run deploy atlas-viewer --source . --project {project_id} --region us-central1 --allow-unauthenticated --port=8080 --memory=512Mi"],
+        cwd=DEPLOY_DIR, check=True)
     time.sleep(5)
     for url in [f"{CLOUD_URL}/", f"{CLOUD_URL}/web/", f"{CLOUD_URL}/research/", f"{CLOUD_URL}/research/style.css",
                 f"{CLOUD_URL}/native/", f"{CLOUD_URL}/trailer.mp4"]:

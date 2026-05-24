@@ -45,7 +45,7 @@ export function PageShell({
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-5xl lg:text-6xl mb-6 font-display tracking-tight leading-[1.1] text-[var(--on-surface)]"
+                className="text-5xl lg:text-6xl mb-6 font-serif tracking-tight leading-[1.1] text-[var(--on-surface)]"
               >
                 {title}
               </motion.h1>

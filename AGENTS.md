@@ -35,3 +35,18 @@ just live-build
 
 Use `just verify` for the future spine. If a broader lint/test target is noisy,
 bucket the failures by file and cause instead of flattening them into "fails."
+
+## Shell Execution & Environment Hazards (Windows)
+
+When writing automation scripts, deployment orchestrators, or `justfile` configurations on Windows, you must strictly adhere to the following guardrails to prevent system crashes and zombie processes:
+
+1. **Avoid PowerShell for Node/Build Tasks:** Windows PowerShell mishandles Node.js process trees (e.g., `pnpm`, `tsc`, `vitest`) and standard I/O streams, preventing them from cleanly exiting. This leads to hanging or zombie tasks. **Never** use PowerShell as the default shell for these tasks.
+2. **Explicit Git Bash Pathing:** To circumvent PowerShell, you must execute complex commands through Git Bash. However, **never** use generic `bash -c` in Python's `subprocess.run` or `justfile` configs. Windows Subsystem for Linux (WSL) installs a stub `bash.exe` in `C:\WINDOWS\system32\` which sits extremely high in the `$PATH`. Calling raw `bash` will inadvertently trigger WSL, which will instantly crash or hang if not fully configured.
+3. **The Standard:** Always wrap shell executions explicitly using the absolute path to Git Bash:
+   ```python
+   subprocess.run(["C:/Program Files/Git/bin/bash.exe", "-c", "pnpm build"], check=True)
+   ```
+   Or in a `justfile`:
+   ```justfile
+   set shell := ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
+   ```

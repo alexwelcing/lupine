@@ -23,6 +23,7 @@ struct Cli {
 }
 
 #[derive(Subcommand)]
+#[allow(clippy::large_enum_variant)]
 enum Commands {
     /// Analyze a LAMMPS thermo log for mathematical relationships
     Thermo {
@@ -129,6 +130,16 @@ enum Commands {
         #[arg(long)]
         beat_emit_url: String,
     },
+    /// Distill model/reference benchmark dumps into residual-geometry evidence.
+    ModelGeometry(commands::model_geometry::ModelGeometryArgs),
+    /// Apply a canonical versioned Lupine Distill ribbon policy request.
+    DistillPolicy(commands::distill_policy::DistillPolicyArgs),
+    /// Search canonical Lupine Distill ribbon settings against sealed cases.
+    DistillHillClimb(commands::distill_hill_climb::DistillHillClimbArgs),
+    /// Score an MLIP offset-lattice relaxation against known equilibrium.
+    EquilibriumSolve(commands::equilibrium_solve::EquilibriumSolveArgs),
+    /// Build viewer-ready NIST equilibrium targets from benchmark rows.
+    NistEquilibriumCatalog(commands::nist_equilibrium_catalog::NistEquilibriumCatalogArgs),
 }
 
 #[derive(Subcommand)]
@@ -209,6 +220,11 @@ fn main() -> Result<()> {
             fixture_url,
             beat_emit_url,
         } => commands::auto_research::run(&hypothesis_id, &fixture_url, &beat_emit_url),
+        Commands::ModelGeometry(args) => commands::model_geometry::run(args),
+        Commands::DistillPolicy(args) => commands::distill_policy::run(args),
+        Commands::DistillHillClimb(args) => commands::distill_hill_climb::run(args),
+        Commands::EquilibriumSolve(args) => commands::equilibrium_solve::run(args),
+        Commands::NistEquilibriumCatalog(args) => commands::nist_equilibrium_catalog::run(args),
     }
 }
 

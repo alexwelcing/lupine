@@ -1,0 +1,66 @@
+% =============================================================================
+% SECTION 3: STATEMENT OF THE UNIVERSALITY THEOREM
+% =============================================================================
+\section{Statement of the Universality Theorem}\label{sec:theorem}
+
+We now state the main result. Let $\cF$ be the architectural class of foundation MLIPs defined in Section~\ref{sec:class-f}, satisfying conditions (F1)--(F3) with class constants $\kappa_1$ (training-distribution coverage), $\kappa_2$ (above-incompleteness margin), and $\kappa_3$ (Jacobian Lipschitz constant). Let $\cX_N \subset \R^{3N}$ denote the space of atomic configurations with $N$ atoms, and let $\cD_{\text{test}}$ be a held-out test set drawn from the same distribution as the training data. For each $M \in \cF$, define the \emph{per-model error manifold}:
+\begin{equation}\label{eq:error-manifold}
+    \cM(M) \deq \overline{\set{x \in \cX_N : \abs{M(x) - E_{\text{DFT}}(x)} > \eps_M}} \cap \cX_N^{\text{reg}},
+\end{equation}
+where $\eps_M$ is a model-dependent error threshold (typically the test-set MAE), $E_{\text{DFT}}$ is the reference DFT energy, the overline denotes closure, and $\cX_N^{\text{reg}} = \cX_N \setminus \cS_M$ is the regular domain excluding the singular set from (F3).
+
+\begin{theorem}[Universality Theorem for Foundation MLIPs]\label{thm:main}
+Let $\cF$ be the architectural class defined by (F1)--(F3). There exist class constants $d(\cF)$, $\rho(\cF)$, $C_{\text{sample}}(\cF)$, and $r(\cF)$ such that for every $M \in \cF$:
+
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Intrinsic dimension.} The per-model error manifold $\cM(M)$ is a smooth submanifold of $\cX_N^{\text{reg}}$ with intrinsic dimension
+    \begin{equation}\label{eq:intrinsic-dim}
+        \dim \cM(M) = d(M) \leq d(\cF) = O(\kappa_1^{-1} \kappa_2 \kappa_3 \cdot N).
+    \end{equation}
+
+    \item \textbf{Sample complexity.} Let $\{x_i\}_{i=1}^n \sim \cD_{\text{test}}$ be $n$ i.i.d.\ test configurations with residuals $r_i = M(x_i) - E_{\text{DFT}}(x_i)$. The union of $\eps$-balls centered at $\{x_i : r_i > \eps_M\}$ deformation-retracts onto $\cM(M)$ with probability at least $1-\delta$ provided
+    \begin{equation}\label{eq:sample-complexity}
+        n \geq C_{\text{sample}}(\cF) \cdot d(\cF) \log\!\left(\frac{N}{d(\cF)}\right) + C' \log\!\left(\frac{1}{\delta}\right),
+    \end{equation}
+    where $C' = O(\kappa_3^{-2})$.
+
+    \item \textbf{Cross-model Vandermonde decay.} Let $F_n(M)$ denote the empirical Fisher information matrix of $M$ evaluated on the test set. The singular spectrum $\{\sigma_m(F_n(M))\}_{m=1}^d$ satisfies
+    \begin{equation}\label{eq:vandermonde}
+        \sigma_m(F_n(M)) \leq \sigma_1(F_n(M)) \cdot \exp\bigl(-\rho(\cF)(m-1)\bigr) + \eta_n,
+    \end{equation}
+    uniformly over $M \in \cF$, where the noise term $\eta_n = O_p(\sqrt{\log d / n})$ and the decay rate
+    \begin{equation}\label{eq:rho-bound}
+        \rho(\cF) \leq C \kappa_1^{-1} \kappa_2 \kappa_3.
+    \end{equation}
+    The pre-registered numerical threshold is $\rho(\cF) \geq 1.5$ (natural log units per index) for the dominant 20 singular values.
+
+    \item \textbf{Active learning excess risk.} (Pre-registered prediction.) For active learning with acquisition function based on the projection norm onto $\cM(M)$, the excess risk after $T$ queries satisfies
+    \begin{equation}\label{eq:al-risk}
+        \epsilon(T) \leq C_{\text{AL}} \cdot \frac{d(\cF) \log N}{T},
+    \end{equation}
+    where $C_{\text{AL}}$ is within a factor of 4 of the Raj--Bach\cite{raj2022convergence} constant for linearly separable low-noise active learning.
+
+    \item \textbf{Two-mode inference.} Let $\reach(\cM(M))$ denote the reach of the error manifold. The configuration space partitions as
+    \begin{equation}\label{eq:two-mode}
+        \cX_N^{\text{reg}} = \cX_N^{\text{pred}}(M) \cup \cX_N^{\text{refuse}}(M),
+    \end{equation}
+    where the prediction region $\cX_N^{\text{pred}}(M) = \set{x : \dist(x, \cM(M)) < r(\cF)}$ with $r(\cF) < \inf_M \reach(\cM(M))$ supports a Lipschitz nearest-point projection with constant $L_{\text{proj}} = r(\cF) / (r(\cF) - \dist(x, \cM(M)))$, and the refusal region $\cX_N^{\text{refuse}}(M)$ is characterized by the failure of this Lipschitz condition.
+
+    \item \textbf{Generational stability.} (Pre-registered prediction.) Let $M_g$ and $M_{g+1}$ be consecutive generations of a foundation MLIP family in $\cF$ (e.g., MACE-MP-$g$ $\to$ MACE-MP-$(g+1)$). Let $\{v_i^{(g)}\}_{i=1}^5$ and $\{v_i^{(g+1)}\}_{i=1}^5$ denote the top-5 principal directions of the cross-configuration residual matrices for $M_g$ and $M_{g+1}$ evaluated on the Matbench Discovery WBM test set. Then
+    \begin{equation}\label{eq:generational-stability}
+        \min_{i,j \in \{1,\dots,5\}} \abs{\inner{v_i^{(g)}}{v_j^{(g+1)}}} \geq 0.7.
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+Clauses (i), (ii), (iii), and (v) are proved rigorously in Section~\ref{sec:proofs}. Clauses (iv) and (vi) are pre-registered predictions with explicit falsification thresholds stated in Section~\ref{sec:predictions}. The Cross-Model Vandermonde Lemma (Lemma~\ref{lem:vandermonde}) is the mathematical engine of clause (iii); its proof appears in Appendix~\ref{app:vandermonde}.
+\end{remark}
+
+\begin{remark}
+The bound on $d(\cF)$ in Equation~\eqref{eq:intrinsic-dim} scales linearly with the number of atoms $N$. This reflects the physical intuition that each additional atom introduces additional degrees of freedom in the error manifold. However, the logarithmic factor in the sample complexity~\eqref{eq:sample-complexity} means that the \emph{per-atom} sample cost grows only as $O(\log N)$, which is the key to the theorem's practical relevance for large systems.
+\end{remark}
+
+\begin{remark}
+The pre-registered threshold $\rho(\cF) \geq 1.5$ in clause (iii) is measurable by finite-difference Jacobian computation on any two foundation MLIPs. A measured decay rate below this threshold for two independently trained models in $\cF$ would falsify the Cross-Model Vandermonde Lemma.
+\end{remark}

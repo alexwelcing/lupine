@@ -339,6 +339,16 @@ export const CATALOG = {
       category: 'validation',
       tags: ['summary', 'phonon'],
     },
+    {
+      id: 'mlip-cloud-baseline-distill',
+      source: 'docs/mlip-cloud-baseline-distill-report.md',
+      title: 'MLIP Cloud Baseline and Distill: First Real 5x5 Results',
+      subtitle: 'Cloud Run completed the 25-cell MLIP baseline and produced the first backend-diverse Distill energy wins.',
+      category: 'validation',
+      tags: ['mlip', 'cloud-run', 'distill', 'baseline', 'featured'],
+      featured: true,
+      status: 'supported',
+    },
 
     // ── Theory ──────────────────────────────────────────────────────
     {

@@ -1,0 +1,7 @@
+{
+  "max_energy_bias_ev_per_atom": 0.5,
+  "max_force_bias_ev_per_angstrom": 1.0,
+  "max_force_norm_ev_per_angstrom": 300.0,
+  "max_stress_abs_gpa": 6250.0,
+  "max_stress_bias_gpa": 3.125
+}

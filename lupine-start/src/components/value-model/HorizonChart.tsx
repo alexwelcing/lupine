@@ -61,7 +61,7 @@ export function HorizonChart({ data }: { data: ValueModelData }) {
             {decades.map((y) => (
               <div
                 key={y}
-                className="absolute bottom-2 text-[10px] font-mono uppercase tracking-widest text-[var(--on-surface-variant-mid)]"
+                className="absolute bottom-2 text-[10px] font-mono uppercase tracking-[0.08em] text-[var(--on-surface-variant-mid)]"
                 style={{ left: `${yearToPct(y)}%`, transform: 'translateX(-50%)' }}
               >
                 <div className="flex flex-col items-center gap-1">
@@ -82,7 +82,7 @@ export function HorizonChart({ data }: { data: ValueModelData }) {
           >
             <div className="w-px h-full bg-gradient-to-b from-[#4ecdc4] via-[#4ecdc4] to-transparent opacity-60 shadow-[0_0_8px_#4ecdc4]"></div>
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-[200px] bg-gradient-to-b from-[#4ecdc4] to-transparent blur-3xl opacity-20"></div>
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 font-mono text-[9px] text-[#4ecdc4] tracking-widest bg-[var(--surface-container)] px-2 py-0.5 border border-[#4ecdc4]/40 rounded shadow-[0_0_10px_rgba(78,205,196,0.2)]">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 font-mono text-[9px] text-[#4ecdc4] tracking-[0.08em] bg-[var(--surface-container)] px-2 py-0.5 border border-[#4ecdc4]/40 rounded shadow-[0_0_10px_rgba(78,205,196,0.2)]">
               TODAY
             </div>
           </motion.div>
@@ -114,14 +114,14 @@ export function HorizonChart({ data }: { data: ValueModelData }) {
                       transition={{ duration: 0.5, delay: 0.2 + i * 0.15 }}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="font-mono text-xs uppercase tracking-widest drop-shadow-md" style={{ color }}>
+                        <span className="font-mono text-xs uppercase tracking-[0.08em] drop-shadow-md" style={{ color }}>
                           Phase {p.phase}
                         </span>
                         <span className="text-base lg:text-lg font-medium text-[var(--on-surface)] tracking-tight drop-shadow-md">
                           {p.name}
                         </span>
                         {isCurrent && (
-                          <span className="ml-2 font-mono text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded-sm bg-[#4ecdc4]/10 text-[#4ecdc4] border border-[#4ecdc4]/30 animate-pulse">
+                          <span className="ml-2 font-mono text-[9px] uppercase tracking-[0.08em] px-1.5 py-0.5 rounded-sm bg-[#4ecdc4]/10 text-[#4ecdc4] border border-[#4ecdc4]/30 animate-pulse">
                             Active
                           </span>
                         )}
@@ -198,12 +198,12 @@ function PhaseCard({
       <div className="flex flex-col gap-1 relative z-10">
         <div className="flex items-center justify-between">
           <span
-            className="font-mono text-xs uppercase tracking-widest"
+            className="font-mono text-xs uppercase tracking-[0.08em]"
             style={{ color }}
           >
             Phase {phase.phase}
           </span>
-          <span className="font-mono text-[10px] tracking-widest text-[var(--on-surface-variant-mid)] border border-[var(--outline-variant)] px-2 py-0.5 rounded-full bg-[var(--background)]">
+          <span className="font-mono text-[10px] tracking-[0.08em] text-[var(--on-surface-variant-mid)] border border-[var(--outline-variant)] px-2 py-0.5 rounded-full bg-[var(--background)]">
             {phase.start_year}–{phase.end_year}
           </span>
         </div>
@@ -220,7 +220,7 @@ function PhaseCard({
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: color }}></div>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant)]">
+            <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant)]">
               Lupine&apos;s role
             </div>
           </div>
@@ -232,7 +232,7 @@ function PhaseCard({
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-[var(--outline-variant)]"></div>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant-mid)]">
+            <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant-mid)]">
               Reference programs
             </div>
           </div>

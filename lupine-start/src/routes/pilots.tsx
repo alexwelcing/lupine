@@ -66,7 +66,7 @@ function PilotsPage() {
       maxWidth="5xl"
     >
       <div className="space-y-12">
-        <p className="text-[12px] font-mono uppercase tracking-widest text-[var(--on-surface-variant)] opacity-70 -mt-4">
+        <p className="text-[12px] font-mono uppercase tracking-[0.08em] text-[var(--on-surface-variant)] opacity-70 -mt-4">
           Illustrative wedges · the metric values describe the order of magnitude a typical pilot surfaces, not a published measurement on a specific customer's MLIP set.
         </p>
         {WEDGES.map((w, i) => (
@@ -77,14 +77,14 @@ function PilotsPage() {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 <div className="lg:col-span-7">
                   <span className="mono-label block mb-3" style={{ color: w.accent }}>{w.eyebrow}</span>
-                  <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">{w.title}</h2>
+                  <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">{w.title}</h2>
                   <div className="space-y-5 text-[var(--on-surface-variant)]">
                     <div>
-                      <span className="mono-label text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest block mb-1">The pain</span>
+                      <span className="mono-label text-[10px] text-[var(--on-surface-variant)] uppercase tracking-[0.08em] block mb-1">The pain</span>
                       <p className="font-serif text-base leading-relaxed">{w.pain}</p>
                     </div>
                     <div>
-                      <span className="mono-label text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest block mb-1">What Lupine delivers</span>
+                      <span className="mono-label text-[10px] text-[var(--on-surface-variant)] uppercase tracking-[0.08em] block mb-1">What Lupine delivers</span>
                       <p className="font-serif text-base leading-relaxed">{w.deliverable}</p>
                     </div>
                   </div>
@@ -97,7 +97,7 @@ function PilotsPage() {
                       border: '1px solid var(--outline-variant)',
                     }}
                   >
-                    <span className="mono-label text-[10px] text-[var(--on-surface-variant)] uppercase tracking-widest block mb-3">{w.metricLabel}</span>
+                    <span className="mono-label text-[10px] text-[var(--on-surface-variant)] uppercase tracking-[0.08em] block mb-3">{w.metricLabel}</span>
                     <div className="font-serif text-3xl lg:text-5xl mb-4" style={{ color: w.accent }}>
                       {w.metricValue}
                     </div>
@@ -115,8 +115,8 @@ function PilotsPage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">WHY THE WEDGES PAY OFF TWICE</span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The same geometry, two deliverables.</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">The same geometry, two deliverables.</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Cross-potential PCA returns a small number of dominant error directions and a much
               larger number of negligible ones. That is the same low-effective-dimensionality
               signature that Simon et al. (2026, <em>There Will Be a Scientific Theory of Deep
@@ -160,8 +160,8 @@ function PilotsPage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">HOW A PILOT RUNS</span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Four weeks. One workflow. No migration.</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Four weeks. One workflow. No migration.</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Pilots are scoped tight on purpose. We do not promise material discoveries; we
               promise a measured error budget on the customer's own MLIP candidates, attached to
               the customer's own production trajectories.
@@ -227,13 +227,13 @@ function PilotsPage() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
               href="mailto:alexwelcing@gmail.com?subject=Lupine%20pilot%20-%20wedge%20discussion"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
             >
               Email founders@lupine
             </a>
             <Link
               to="/research"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-[0.08em] hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
             >
               Read the preprint first
             </Link>

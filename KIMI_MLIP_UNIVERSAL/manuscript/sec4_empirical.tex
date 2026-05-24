@@ -1,0 +1,50 @@
+% =============================================================================
+% SECTION 4: EMPIRICAL FOUNDATIONS
+% =============================================================================
+\section{Empirical Foundations}\label{sec:empirical}
+
+This section anchors the six clauses of Theorem~\ref{thm:main} to published empirical results. We organize the evidence into three subsections corresponding to the structural facts required by the theorem: cross-model error heterogeneity (clauses i--iii), sloppy-spectrum structure (clause iii), and cross-paradigm cosine alignment (clauses iii, vi).
+
+\subsection{Cross-Model Error Heterogeneity on Overlapping Data}\label{sec:heterogeneity}
+
+The Matbench Discovery framework\cite{riebesell2025matbench} provides the primary empirical anchor for clause (iii) (adaptivity). The platform ranks 47 distinct models on a unified WBM test set with DFT reference convex hull, including foundation MLIPs from eleven architectural families. The headline finding is heterogeneous error structure: F1 scores for stability classification span $\sim$0.45--0.85 across compliant models, and the $\kappa_{\text{SRME}}$ thermal-conductivity benchmark\cite{pota2024kappa} produces a rank ordering that is uncorrelated ($\rho \approx 0.1$) with the energy-MAE ordering. This decoupling of performance metrics across property domains is precisely the cross-model error-structure heterogeneity predicted by clause (iii).
+
+MLIP Arena\cite{chiang2025mliparena} provides the complementary anchor for physics-aware properties. The Arena evaluates pairwise PEC accuracy, MD stability under NVT ramps from 300~K to 3000~K, and chemical reactivity---properties orthogonal to energy/force MAE on near-equilibrium data. The Arena paper explicitly criticizes ``data leakage, limited transferability, and an over-reliance on error-based metrics tied to specific density functional theory references'' and finds that ``non-compliant models rank highly for crystal stability metrics due to energy overfitting at the expense of forces and finite-temperature capabilities.'' The two-body PEC dispersion across MACE-MP-0, CHGNet, Orb-family, SevenNet, GRACE, eqV2, MatterSim, eSEN, and PET-MAD constitutes a direct per-element error-pattern fingerprint for each model.
+
+The systematic-softening result of Deng \emph{et al.}\cite{deng2025systematic} provides the most quantitatively unambiguous cross-paradigm finding currently in the literature. The authors document ``a consistent PES softening effect in three uMLIPs: M3GNet, CHGNet, and MACE-MP-0, which is characterized by energy and force underprediction in atomic-modeling benchmarks including surfaces, defects, solid-solution energetics, ion migration barriers, phonon vibration modes, and general high-energy states.'' The key mechanistic insight is that ``the PES softening behavior originates primarily from the systematically underpredicted PES curvature, which derives from the biased sampling of near-equilibrium atomic arrangements in uMLIP pre-training datasets.'' Three foundation MLIPs with different architectures (GNN-based M3GNet, transformer-based CHGNet, and equivariant-message-passing MACE-MP-0) share the same direction of systematic error---underestimated PES curvature---which propagates to underestimated vibrational frequencies, surface energies, defect energies, and migration barriers. This is direct evidence for the class-uniform component of the error manifold.
+
+Surface-property failure modes anchor clause (v) (refusal). Focassio \emph{et al.}\cite{focassio2025surfaces} document that MACE, CHGNet, and M3GNet ``have significant shortcomings in this task, with errors correlated to the total energy of surface simulations, having an out-of-domain distance from the training dataset.'' This is the cleanest published example of an out-of-distribution failure that the refusal-mode clause (v) is designed to predict: the surface configurations lie in $\cX_N^{\text{refuse}}(M)$ because their distance to the error manifold exceeds the reach threshold.
+
+The Christiansen--Hammer $\Delta$-correction study\cite{christiansen2025delta} reinforces the cross-paradigm finding from a different angle: ``Other universal potentials trained on the same data, MACE-MP0, SevenNet-0, and ORB-v2-only-MPtrj show similar behavior, but with varying degrees of error, demonstrating the general need for augmentation schemes for universal potential models.'' This variation in degree---same direction, different magnitude---is the empirical signature of the decomposition into class-uniform and model-specific error components.
+
+\subsection{Low-Dimensional Sloppy-Spectrum Structure}\label{sec:sloppy}
+
+Direct evidence that an MLIP-specific Fisher information matrix exhibits geometric eigenvalue decay is sparser than the heterogeneity evidence, but the supporting theoretical literature is robust. For classical interatomic potentials, the Transtrum group lineage provides explicit sloppy-eigenvalue analysis: Kurniawan \emph{et al.}\ demonstrate that the Fisher information of empirical potentials exhibits the canonical sloppy spectrum---geometric decay over many orders of magnitude---connecting parameter-space compression to emergent effective theories\cite{machta2013parameter, quinn2023information}.
+
+For neural-network interatomic potentials, the strongest current citation is Perez \emph{et al.}\cite{perez2025misspecified}, who demonstrate that for misspecified MLIPs the relevant uncertainty is a parameter-space covariance with strongly anisotropic spectrum and give explicit propagation to property predictions. The companion paper by Swinburne and Perez\cite{swinburne2025parameter} treats parameter uncertainties for imperfect surrogate models in the low-noise regime, again documenting explicit sloppy structure. These results establish that the parameter-space geometry of MLIPs shares the compression phenomenon first identified in physical and biological multiparameter models.
+
+The broader theoretical machinery supporting sloppy structure in deep networks comprises four anchor papers. Sagun \emph{et al.}\cite{sagun2017empirical} found empirically that ``the spectrum of the Hessian is composed of two parts: (1) the bulk centered near zero, (2) and outliers away from the bulk... Fixing data, increasing the number of parameters merely scales the bulk of the spectrum.'' Karakida \emph{et al.}\cite{karakida2019universal} proved that ``most of [the FIM's eigenvalues] are close to zero while the maximum eigenvalue takes a huge value. Because the landscape of the parameter space is defined by the FIM, it is locally flat in most dimensions, but strongly distorted in others.'' Pennington and Worah\cite{pennington2018spectrum} derived the exact Fisher spectrum in the infinite-width limit and observed that ``linear networks suffer worse conditioning than any nonlinear network, and although nonlinear networks may have many small eigenvalues they are generically non-degenerate.'' The PNAS 2024 paper by Beenstock \emph{et al.}\cite{beenstock2024training} directly connects sloppy-model geometry to the trained-network manifold: ``The training process of many deep networks explores the same low-dimensional manifold.''
+
+\subsection{Cross-Paradigm Cosine Alignment}\label{sec:cosine}
+
+The Deng \emph{et al.}\cite{deng2025systematic} systematic-softening result is the strongest cosine-alignment finding in the literature: three independent uMLIPs share an error direction in property space. On the molecular side, the MACE-OFF23 paper\cite{kovacs2025maceoff23} and the AIMNet2\cite{zesew2022aimnet2}/ANI-2x\cite{smith2019ani2x} lineage demonstrate that intermolecular force errors decompose into a class-shared dispersion-region direction and model-specific short-range corrections.
+
+We emphasize that the published evidence is property-resolved rather than element-resolved. Magnetic systems (Fe, Co, Ni) and heavy elements with relativistic/spin-orbit effects are the clearest a priori candidates for shared structural inadequacy because most foundation MLIPs trained on Materials Project PBE data inherit the same missing physics. The manuscript treats element-resolved cosine alignment as a pre-registered prediction (clauses (iv)/(vi)) rather than as an established empirical anchor. The falsifiability framework (Section~\ref{sec:predictions}) makes this prediction testable.
+
+\begin{table}[htbp]
+\centering
+\caption{Empirical anchors for each clause of Theorem~\ref{thm:main}.}
+\label{tab:empirical-anchors}
+\begin{tabular}{@{}cll@{}}
+\toprule
+\textbf{Clause} & \textbf{Primary Anchor} & \textbf{Secondary Anchors} \\
+\midrule
+(i) Intrinsic dimension & Perez \emph{et al.}\ 2025\cite{perez2025misspecified} & Bartók--Kermode GPR-UQ\cite{bartok2022gap} \\
+(ii) Sample complexity & Niyogi--Smale--Weinberger 2008\cite{niyogi2008finding} & Aamari--Levrard 2019\cite{aamari2019nonasymptotic} \\
+(iii) Vandermonde decay & Waterfall \emph{et al.}\ 2006\cite{waterfall2006sloppy} & Beckermann 2000\cite{beckermann2000condition} \\
+(iv) AL excess risk & Raj--Bach 2022\cite{raj2022convergence} & Smith \emph{et al.}\ 2018\cite{smith2018less} \\
+(v) Two-mode inference & Focassio \emph{et al.}\ 2025\cite{focassio2025surfaces} & Federer 1959\cite{federer1959curvature} \\
+(vi) Generational stability & Deng \emph{et al.}\ 2025\cite{deng2025systematic} & Hänseroth \emph{et al.}\ 2025\cite{hanseroth2025finetuning} \\
+\bottomrule
+\end{tabular}
+\end{table}

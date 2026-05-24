@@ -8,12 +8,12 @@
 
 import { OTLPExporter, __unwrappedFetch, type ResolveConfigFn } from "@microlabs/otel-cf-workers";
 import { ProtobufTraceSerializer } from "@opentelemetry/otlp-transformer";
-import type { ReadableSpan } from "@opentelemetry/sdk-trace-base";
+import type { ReadableSpan, SpanExporter } from "@opentelemetry/sdk-trace-base";
 import type { ExportResult } from "@opentelemetry/core";
 import type { Env } from "../types";
 import { makeOpenInferencePostProcessor } from "./openinference";
 
-class PhoenixProtobufExporter {
+class PhoenixProtobufExporter implements SpanExporter {
   private url: string;
   private headers: Record<string, string>;
   private applyProjection: (spans: ReadableSpan[]) => ReadableSpan[];
@@ -199,3 +199,4 @@ export const phoenixConfig: ResolveConfigFn<Env> = (env, _trigger) => {
     service: { name: projectName, version: "1.0.0" },
   };
 };
+

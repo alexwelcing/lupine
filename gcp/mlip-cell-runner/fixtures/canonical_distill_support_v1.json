@@ -1,0 +1,305 @@
+{
+  "schema": "lupine.mlip.fixture_manifest.v2",
+  "fixture_id": "canonical-distill-support-v1",
+  "manifest_hash": "sha256:canonical-distill-support-v1-local",
+  "reference_provenance": {
+    "notes": "Small non-overlapping support fixture for Lupine Distill runtime calibration. It is a support/calibration set, not the sealed release-evaluation fixture.",
+    "elastic_constants": {
+      "source": "literature cubic constants encoded for support-only finite-strain calibration"
+    },
+    "support_policy": {
+      "sealed_eval_exclusion": "No structure_id or structure fingerprint overlaps canonical-structures-v2."
+    }
+  },
+  "row_fixtures": {
+    "elastic_constants": {
+      "structures": [
+        {
+          "structure_id": "support-Ni-elastic-exx-pos",
+          "row_id": "elastic_constants",
+          "material_id": "Ni-support",
+          "symbols": ["Ni"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.5376, 0.0, 0.0], [0.0, 3.52, 0.0], [0.0, 0.0, 3.52]],
+          "pbc": true,
+          "strain_voigt": [0.005, 0.0, 0.0, 0.0, 0.0, 0.0],
+          "reference": {
+            "stress_gpa": [1.2325, 0.7365, 0.7365, 0.0, 0.0, 0.0],
+            "elastic_constants_gpa": {"C11": 246.5, "C12": 147.3, "C44": 124.7}
+          }
+        },
+        {
+          "structure_id": "support-Ni-elastic-exx-neg",
+          "row_id": "elastic_constants",
+          "material_id": "Ni-support",
+          "symbols": ["Ni"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.5024, 0.0, 0.0], [0.0, 3.52, 0.0], [0.0, 0.0, 3.52]],
+          "pbc": true,
+          "strain_voigt": [-0.005, 0.0, 0.0, 0.0, 0.0, 0.0],
+          "reference": {
+            "stress_gpa": [-1.2325, -0.7365, -0.7365, 0.0, 0.0, 0.0],
+            "elastic_constants_gpa": {"C11": 246.5, "C12": 147.3, "C44": 124.7}
+          }
+        },
+        {
+          "structure_id": "support-Ni-elastic-eyy-pos",
+          "row_id": "elastic_constants",
+          "material_id": "Ni-support",
+          "symbols": ["Ni"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.52, 0.0, 0.0], [0.0, 3.5376, 0.0], [0.0, 0.0, 3.52]],
+          "pbc": true,
+          "strain_voigt": [0.0, 0.005, 0.0, 0.0, 0.0, 0.0],
+          "reference": {
+            "stress_gpa": [0.7365, 1.2325, 0.7365, 0.0, 0.0, 0.0],
+            "elastic_constants_gpa": {"C11": 246.5, "C12": 147.3, "C44": 124.7}
+          }
+        },
+        {
+          "structure_id": "support-Ni-elastic-ezz-pos",
+          "row_id": "elastic_constants",
+          "material_id": "Ni-support",
+          "symbols": ["Ni"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.52, 0.0, 0.0], [0.0, 3.52, 0.0], [0.0, 0.0, 3.5376]],
+          "pbc": true,
+          "strain_voigt": [0.0, 0.0, 0.005, 0.0, 0.0, 0.0],
+          "reference": {
+            "stress_gpa": [0.7365, 0.7365, 1.2325, 0.0, 0.0, 0.0],
+            "elastic_constants_gpa": {"C11": 246.5, "C12": 147.3, "C44": 124.7}
+          }
+        },
+        {
+          "structure_id": "support-Ni-elastic-eyz-pos",
+          "row_id": "elastic_constants",
+          "material_id": "Ni-support",
+          "symbols": ["Ni"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.52, 0.0, 0.0], [0.0, 3.52, 0.0176], [0.0, 0.0, 3.52]],
+          "pbc": true,
+          "strain_voigt": [0.0, 0.0, 0.0, 0.005, 0.0, 0.0],
+          "reference": {
+            "stress_gpa": [0.0, 0.0, 0.0, 0.6235, 0.0, 0.0],
+            "elastic_constants_gpa": {"C11": 246.5, "C12": 147.3, "C44": 124.7}
+          }
+        },
+        {
+          "structure_id": "support-Ni-elastic-exy-pos",
+          "row_id": "elastic_constants",
+          "material_id": "Ni-support",
+          "symbols": ["Ni"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.52, 0.0176, 0.0], [0.0, 3.52, 0.0], [0.0, 0.0, 3.52]],
+          "pbc": true,
+          "strain_voigt": [0.0, 0.0, 0.0, 0.0, 0.0, 0.005],
+          "reference": {
+            "stress_gpa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.6235],
+            "elastic_constants_gpa": {"C11": 246.5, "C12": 147.3, "C44": 124.7}
+          }
+        }
+      ]
+    },
+    "energy_volume": {
+      "structures": [
+        {
+          "structure_id": "support-Fe-ev-096",
+          "row_id": "energy_volume",
+          "material_id": "Fe-support",
+          "volume_scale": 0.96,
+          "symbols": ["Fe"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[2.746, 0.0, 0.0], [0.0, 2.746, 0.0], [0.0, 0.0, 2.746]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -8.18, "stress_gpa": [4.0, 4.0, 4.0, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Fe-ev-098",
+          "row_id": "energy_volume",
+          "material_id": "Fe-support",
+          "volume_scale": 0.98,
+          "symbols": ["Fe"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[2.765, 0.0, 0.0], [0.0, 2.765, 0.0], [0.0, 0.0, 2.765]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -8.24, "stress_gpa": [1.8, 1.8, 1.8, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Fe-ev-100",
+          "row_id": "energy_volume",
+          "material_id": "Fe-support",
+          "volume_scale": 1.0,
+          "symbols": ["Fe"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[2.84, 0.0, 0.0], [0.0, 2.84, 0.0], [0.0, 0.0, 2.84]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -8.28, "stress_gpa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Fe-ev-102",
+          "row_id": "energy_volume",
+          "material_id": "Fe-support",
+          "volume_scale": 1.02,
+          "symbols": ["Fe"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[2.859, 0.0, 0.0], [0.0, 2.859, 0.0], [0.0, 0.0, 2.859]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -8.25, "stress_gpa": [-1.6, -1.6, -1.6, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Fe-ev-104",
+          "row_id": "energy_volume",
+          "material_id": "Fe-support",
+          "volume_scale": 1.04,
+          "symbols": ["Fe"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[2.878, 0.0, 0.0], [0.0, 2.878, 0.0], [0.0, 0.0, 2.878]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -8.19, "stress_gpa": [-3.4, -3.4, -3.4, 0.0, 0.0, 0.0]}
+        }
+      ]
+    },
+    "forces": {
+      "structures": [
+        {
+          "structure_id": "support-Al-force-001",
+          "row_id": "forces",
+          "material_id": "Al-support",
+          "symbols": ["Al", "Al"],
+          "positions": [[0.0, 0.0, 0.0], [2.03, 2.03, 2.10]],
+          "cell": [[4.05, 0.0, 0.0], [0.0, 4.05, 0.0], [0.0, 0.0, 4.05]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.70, "forces_ev_per_angstrom": [[0.02, -0.01, 0.04], [-0.02, 0.01, -0.04]], "stress_gpa": [0.1, 0.0, -0.1, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Al-force-002",
+          "row_id": "forces",
+          "material_id": "Al-support",
+          "symbols": ["Al", "Al"],
+          "positions": [[0.0, 0.0, 0.0], [2.10, 2.00, 2.03]],
+          "cell": [[4.05, 0.0, 0.0], [0.0, 4.05, 0.0], [0.0, 0.0, 4.05]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.68, "forces_ev_per_angstrom": [[-0.03, 0.02, 0.01], [0.03, -0.02, -0.01]], "stress_gpa": [0.0, 0.2, 0.0, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Cu-force-001",
+          "row_id": "forces",
+          "material_id": "Cu-support",
+          "symbols": ["Cu", "Cu"],
+          "positions": [[0.0, 0.0, 0.0], [1.82, 1.76, 1.80]],
+          "cell": [[3.61, 0.0, 0.0], [0.0, 3.61, 0.0], [0.0, 0.0, 3.61]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.49, "forces_ev_per_angstrom": [[0.04, 0.01, -0.02], [-0.04, -0.01, 0.02]], "stress_gpa": [0.0, 0.0, 0.2, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Cu-force-002",
+          "row_id": "forces",
+          "material_id": "Cu-support",
+          "symbols": ["Cu", "Cu"],
+          "positions": [[0.0, 0.0, 0.0], [1.75, 1.83, 1.77]],
+          "cell": [[3.61, 0.0, 0.0], [0.0, 3.61, 0.0], [0.0, 0.0, 3.61]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.47, "forces_ev_per_angstrom": [[-0.02, 0.05, 0.01], [0.02, -0.05, -0.01]], "stress_gpa": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Ni-force-001",
+          "row_id": "forces",
+          "material_id": "Ni-support",
+          "symbols": ["Ni", "Ni"],
+          "positions": [[0.0, 0.0, 0.0], [1.78, 1.74, 1.82]],
+          "cell": [[3.52, 0.0, 0.0], [0.0, 3.52, 0.0], [0.0, 0.0, 3.52]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -4.42, "forces_ev_per_angstrom": [[0.03, -0.04, 0.02], [-0.03, 0.04, -0.02]], "stress_gpa": [0.0, 0.1, 0.1, 0.0, 0.0, 0.0]}
+        }
+      ]
+    },
+    "stress": {
+      "structures": [
+        {
+          "structure_id": "support-Cu-stress-001",
+          "row_id": "stress",
+          "material_id": "Cu-support",
+          "symbols": ["Cu"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.628, 0.0, 0.0], [0.0, 3.61, 0.0], [0.0, 0.0, 3.61]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.48, "stress_gpa": [0.85, 0.60, 0.60, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Cu-stress-002",
+          "row_id": "stress",
+          "material_id": "Cu-support",
+          "symbols": ["Cu"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.592, 0.0, 0.0], [0.0, 3.61, 0.0], [0.0, 0.0, 3.61]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.46, "stress_gpa": [-0.85, -0.60, -0.60, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Cu-stress-003",
+          "row_id": "stress",
+          "material_id": "Cu-support",
+          "symbols": ["Cu"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.61, 0.0, 0.0], [0.0, 3.628, 0.0], [0.0, 0.0, 3.61]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.48, "stress_gpa": [0.60, 0.85, 0.60, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Cu-stress-004",
+          "row_id": "stress",
+          "material_id": "Cu-support",
+          "symbols": ["Cu"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.61, 0.018, 0.0], [0.0, 3.61, 0.0], [0.0, 0.0, 3.61]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.47, "stress_gpa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.38]}
+        },
+        {
+          "structure_id": "support-Cu-stress-005",
+          "row_id": "stress",
+          "material_id": "Cu-support",
+          "symbols": ["Cu"],
+          "positions": [[0.0, 0.0, 0.0]],
+          "cell": [[3.61, 0.0, 0.0], [0.0, 3.61, 0.018], [0.0, 0.0, 3.61]],
+          "pbc": true,
+          "reference": {"energy_ev_per_atom": -3.47, "stress_gpa": [0.0, 0.0, 0.0, 0.38, 0.0, 0.0]}
+        }
+      ]
+    },
+    "relaxation_stability": {
+      "structures": [
+        {
+          "structure_id": "support-Al-relax-001",
+          "row_id": "relaxation_stability",
+          "material_id": "Al-support",
+          "symbols": ["Al", "Al"],
+          "positions": [[0.0, 0.0, 0.0], [2.04, 2.02, 2.08]],
+          "cell": [[4.05, 0.0, 0.0], [0.0, 4.05, 0.0], [0.0, 0.0, 4.05]],
+          "pbc": true,
+          "reference": {"relaxation_force_threshold": 0.05, "relaxed_energy_ev_per_atom": -3.74, "energy_ev_per_atom": -3.70, "forces_ev_per_angstrom": [[0.03, 0.0, 0.02], [-0.03, 0.0, -0.02]], "stress_gpa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Cu-relax-001",
+          "row_id": "relaxation_stability",
+          "material_id": "Cu-support",
+          "symbols": ["Cu", "Cu"],
+          "positions": [[0.0, 0.0, 0.0], [1.79, 1.84, 1.76]],
+          "cell": [[3.61, 0.0, 0.0], [0.0, 3.61, 0.0], [0.0, 0.0, 3.61]],
+          "pbc": true,
+          "reference": {"relaxation_force_threshold": 0.05, "relaxed_energy_ev_per_atom": -3.49, "energy_ev_per_atom": -3.45, "forces_ev_per_angstrom": [[0.04, -0.02, 0.01], [-0.04, 0.02, -0.01]], "stress_gpa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}
+        },
+        {
+          "structure_id": "support-Ni-relax-001",
+          "row_id": "relaxation_stability",
+          "material_id": "Ni-support",
+          "symbols": ["Ni", "Ni"],
+          "positions": [[0.0, 0.0, 0.0], [1.77, 1.80, 1.74]],
+          "cell": [[3.52, 0.0, 0.0], [0.0, 3.52, 0.0], [0.0, 0.0, 3.52]],
+          "pbc": true,
+          "reference": {"relaxation_force_threshold": 0.05, "relaxed_energy_ev_per_atom": -4.44, "energy_ev_per_atom": -4.39, "forces_ev_per_angstrom": [[-0.02, 0.03, -0.01], [0.02, -0.03, 0.01]], "stress_gpa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}
+        }
+      ]
+    }
+  }
+}

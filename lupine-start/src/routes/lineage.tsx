@@ -172,8 +172,8 @@ function LineagePage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">§0 — FRAME</span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Borrowed, contributed, refused</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Borrowed, contributed, refused</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Three columns, all on one page, in the same place a reviewer would expect them. The most defensible scientific position is also the most narrow: take the existing geometric framework, point it at the population of published potentials, and report what it says.
             </p>
           </div>
@@ -195,8 +195,8 @@ function LineagePage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">§1 — TIMELINE</span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Twenty-two years, in order</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Twenty-two years, in order</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Each entry below is a specific paper with a specific role. Pinned entries are the two
               load-bearing citations: Transtrum/Machta/Sethna (2011) for the geometric framework,
               and the Lupine 2026 entry for the cross-potential extension that sits on top.
@@ -260,8 +260,8 @@ function LineagePage() {
         <section>
           <div className="mb-8">
             <span className="mono-label text-[var(--secondary)] block mb-3">§2 — IMPLICATION</span>
-            <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Why the lineage matters operationally</h2>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug text-[var(--on-surface-variant)] max-w-3xl">
+            <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Why the lineage matters operationally</h2>
+            <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Three operational consequences of standing on this chain.
             </p>
           </div>
@@ -301,7 +301,7 @@ function LineagePage() {
 
         {/* === CTA === */}
         <section className="glass-panel p-8 text-center">
-          <h3 className="text-2xl mb-4 font-display tracking-tight">Read the preprint that cites this chain</h3>
+          <h3 className="text-2xl mb-4 font-serif tracking-tight">Read the preprint that cites this chain</h3>
           <p className="text-[var(--on-surface-variant)] mb-6 max-w-2xl mx-auto">
             The preprint reproduces the lineage in a full reference list at the end of section 6,
             with the exact venues, page numbers, and arXiv identifiers.
@@ -309,13 +309,13 @@ function LineagePage() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               to="/research"
-              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-widest hover:opacity-90 transition-opacity no-underline"
+              className="px-6 py-3 bg-[var(--primary)] text-[var(--on-primary)] font-mono text-sm uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
             >
               Open the preprint
             </Link>
             <Link
               to="/proof"
-              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-widest hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
+              className="px-6 py-3 border border-[var(--primary)] text-[var(--primary)] font-mono text-sm uppercase tracking-[0.08em] hover:bg-[var(--primary)] hover:text-[var(--on-primary)] transition-colors no-underline"
             >
               Research defense
             </Link>

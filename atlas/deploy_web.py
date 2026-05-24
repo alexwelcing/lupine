@@ -16,7 +16,7 @@ def main():
     print("[1/3] Building Web App (Vite)...")
     try:
         # Run pnpm build
-        subprocess.run(["pnpm", "build"], cwd=atlas_view_dir, shell=True, check=True)
+        subprocess.run(["C:/Program Files/Git/bin/bash.exe", "-c", "pnpm build"], cwd=atlas_view_dir, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Build failed: {e}")
         return
@@ -34,13 +34,9 @@ def main():
     print("\n[3/3] Deploying to Google Cloud Run...")
     try:
         subprocess.run([
-            "gcloud", "run", "deploy", "atlas-viewer",
-            "--source", ".",
-            "--project", "shed-489901",
-            "--region", "us-central1",
-            "--allow-unauthenticated",
-            "--port=8080"
-        ], cwd=deploy_bundle_dir, shell=True, check=True)
+            "C:/Program Files/Git/bin/bash.exe", "-c",
+            "gcloud run deploy atlas-viewer --source . --project shed-489901 --region us-central1 --allow-unauthenticated --port=8080"
+        ], cwd=deploy_bundle_dir, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Deployment failed: {e}")
         return

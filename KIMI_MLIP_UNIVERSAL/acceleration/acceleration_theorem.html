@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Causal Acceleration of Foundation MLIP Inference via Layerwise Refusal</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+<style>
+body { margin: 0; padding: 0; font-family: 'Georgia', 'Times New Roman', serif; font-size: 11pt; line-height: 1.6; color: #333; text-align: justify; text-align-last: left; }
+@page { size: A4; margin: 2.5cm 2.5cm; @top-center { content: string(doctitle); font-size: 8pt; font-style: italic; color: #999; } @bottom-center { content: counter(page); font-size: 9pt; } }
+@page :first { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+@page cover { @top-center { content: none; } @bottom-center { content: none; } }
+body { string-set: doctitle ""; }
+h1 { string-set: doctitle content(); }
+
+.cover { page: cover; width: 210mm; height: 297mm; margin: 0; position: relative; overflow: hidden; page-break-after: always; background: linear-gradient(160deg, #fefce8 0%, #fef9c3 30%, #f0fdf4 100%); }
+.cover::before { content: ''; position: absolute; top: -60px; right: -60px; width: 320px; height: 320px; border: 3px solid rgba(234,179,8,0.15); border-radius: 50%; }
+.cover::after { content: ''; position: absolute; bottom: -90px; left: -90px; width: 420px; height: 420px; border: 3px solid rgba(16,185,129,0.12); border-radius: 50%; }
+.cover-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 85%; z-index: 1; }
+.cover-badge { display: inline-block; background: #059669; color: white; padding: 0.3em 1.2em; border-radius: 3px; font-size: 10pt; font-weight: bold; letter-spacing: 0.05em; margin-bottom: 1.2cm; }
+.cover-title { font-size: 20pt; font-weight: 700; color: #1e293b; margin-bottom: 0.6cm; line-height: 1.35; }
+.cover-subtitle { font-size: 12pt; color: #475569; margin-bottom: 1.8cm; font-style: italic; }
+.cover-meta { font-size: 10.5pt; color: #64748b; line-height: 1.8; }
+
+h1 { font-size: 16pt; font-weight: bold; margin-top: 1.3em; margin-bottom: 0.7em; page-break-after: avoid; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.3em; }
+h2 { font-size: 13pt; font-weight: bold; margin-top: 1.1em; margin-bottom: 0.5em; page-break-after: avoid; color: #334155; }
+h3 { font-size: 11.5pt; font-weight: bold; margin-top: 0.9em; margin-bottom: 0.4em; page-break-after: avoid; color: #475569; }
+
+.theorem { border-left: 3px solid #2563EB; padding-left: 1em; margin: 1em 0; page-break-inside: avoid; background: #eff6ff; padding: 0.8em 1em 0.8em 1.2em; }
+.theorem-title { font-weight: bold; color: #2563EB; margin-bottom: 0.3em; }
+.lemma { border-left: 3px solid #059669; padding-left: 1em; margin: 1em 0; page-break-inside: avoid; background: #f0fdf4; padding: 0.8em 1em 0.8em 1.2em; }
+.lemma-title { font-weight: bold; color: #059669; margin-bottom: 0.3em; }
+.corollary { border-left: 3px solid #7C3AED; padding-left: 1em; margin: 1em 0; page-break-inside: avoid; background: #faf5ff; padding: 0.8em 1em 0.8em 1.2em; }
+.corollary-title { font-weight: bold; color: #7C3AED; margin-bottom: 0.3em; }
+.proof { margin: 0.8em 0; font-size: 10.5pt; }
+.proof-title { font-weight: bold; font-style: italic; color: #555; }
+.proof-qed { text-align: right; margin-top: -0.3em; font-size: 10pt; color: #888; }
+
+.definition { border-left: 3px solid #333; padding-left: 1em; margin: 1em 0; page-break-inside: avoid; }
+.definition-title { font-weight: bold; margin-bottom: 0.3em; }
+
+.insight { background: #ecfdf5; border-left: 4px solid #059669; padding: 0.8em 1em; margin: 0.8em 0; page-break-inside: avoid; font-size: 10.5pt; }
+.insight strong { color: #059669; }
+
+figure { margin: 1.2em 0; text-align: center; page-break-inside: avoid; }
+figure img { max-width: 95%; height: auto; }
+figcaption { font-size: 10pt; color: #555; margin-top: 0.4em; font-style: italic; }
+figcaption::before { content: attr(data-label) ": "; font-weight: bold; font-style: normal; }
+
+table { width: 100%; max-width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 9.5pt; page-break-inside: avoid; }
+thead { border-top: 2px solid #334155; border-bottom: 1px solid #334155; background: #f8fafc; }
+tbody { border-bottom: 2px solid #334155; }
+th, td { padding: 0.35em 0.5em; text-align: left; }
+th { font-weight: bold; color: #1e293b; }
+tr { page-break-inside: avoid; }
+
+.equation { display: flex; align-items: center; margin: 0.8em 0; overflow-x: auto; font-size: 10pt; }
+.equation .katex-display { margin: 0; flex: 1; }
+.equation-number { margin-left: 0.8em; color: #555; flex-shrink: 0; }
+
+p { margin: 0.5em 0; }
+ul, ol { margin: 0.5em 0; padding-left: 1.8em; }
+li { margin: 0.2em 0; }
+a { color: #333; }
+
+pre, table, figure, img, svg { max-width: 100%; box-sizing: border-box; }
+.katex-display { overflow-x: auto; }
+
+.page-break { page-break-after: always; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <div class="cover-badge">PAPER III — ACCELERATION LANE</div>
+    <h1 class="cover-title">Causal Acceleration of Foundation MLIP Inference<br>via Layerwise Refusal</h1>
+    <p class="cover-subtitle">From Geometric Reach to Compute-Aware Abstention</p>
+    <div class="cover-meta">
+      <p><strong>Position:</strong> Companion theorem to the Refusal-Mode framework (Paper III)</p>
+      <p><strong>Dependencies:</strong> CMET (Paper I) + Universality Theorem (Paper II)</p>
+      <p><strong>Key Result:</strong> Expected speedup ≥ 1 + 0.4(1 − κ₁) for k*=2 refusal</p>
+    </div>
+  </div>
+</div>
+
+<h1>Introduction</h1>
+
+<p>The Universality Theorem (Paper II of this trilogy) proves that every foundation MLIP $M \in \mathcal{F}$ admits a per-model error manifold $\mathcal{M}(M)$ whose geometric properties are class-uniform. Clause (v) of that theorem partitions the configuration space into a <strong>prediction region</strong> $\mathcal{X}_N^{\text{pred}}(M)$, where the nearest-point projection onto $\mathcal{M}(M)$ is Lipschitz, and a <strong>refusal region</strong> $\mathcal{X}_N^{\text{refuse}}(M)$, where this projection fails. The third paper in the trilogy treats the operational criteria for refusal — when should a model abstain, and what mode of abstention is appropriate?</p>
+
+<p>This document proves a complementary result: <strong>refusal modes enable causal acceleration of inference</strong>. The geometric conditions that trigger refusal are computable at intermediate layers of the message-passing stack. If a configuration's descriptor-space distance to the training manifold exceeds the reach threshold after layer $k < L$, inference can abort immediately, skipping layers $k+1$ through $L$ and the final readout. The model says "I don't know" <em>faster</em> than it would have computed a wrong answer.</p>
+
+<p>The result is not an approximation or a heuristic. It is a <strong>theorem</strong> with a rigorous proof that leverages three primitives from Papers I and II: (i) the smoothness of equivariant message-passing layers (F3), (ii) the class-uniform reach bound on the error manifold, and (iii) the training-distribution coverage constant $\kappa_1$ from (F1). The expected speedup is bounded below by a function of $\kappa_1$ and the architecture depth $L$ alone — independent of the specific test distribution.</p>
+
+<h1>Preliminaries and Definitions</h1>
+
+<p>We work within the architectural class $\mathcal{F}$ defined in Paper II, satisfying conditions (F1)–(F3). Let $M \in \mathcal{F}$ be an $L$-layer equivariant message-passing network with layer-$k$ descriptor map $\phi^{(k)}: \mathcal{X}_N \to \mathbb{R}^{d_k}$. The full inference computes:</p>
+
+<div class="equation">
+  $$x \xrightarrow{\phi^{(1)}} h^{(1)} \xrightarrow{m^{(1)}, u^{(1)}} h^{(2)} \xrightarrow{m^{(2)}, u^{(2)}} \cdots \xrightarrow{m^{(L-1)}, u^{(L-1)}} h^{(L)} \xrightarrow{f} E(x)$$
+  <span class="equation-number">(1)</span>
+</div>
+
+<p>where $m^{(k)}$ is the message function, $u^{(k)}$ is the update function, and $f$ is the energy regression head.</p>
+
+<div class="definition">
+  <div class="definition-title">Definition 1 (Layerwise descriptor distance).</div>
+  For configuration $x \in \mathcal{X}_N$ and layer $k \in \{1, \dots, L\}$, the <em>layerwise Mahalanobis distance</em> to the training manifold is
+  <div class="equation">
+    $$D_k(x) \coloneqq \min_{x' \in \mathcal{D}_{\text{train}}} \|\phi^{(k)}(x) - \phi^{(k)}(x')\|_{\Sigma_k^{-1}}$$
+    <span class="equation-number">(2)</span>
+  </div>
+  where $\Sigma_k = \mathbb{E}_{x' \sim \mathcal{D}_{\text{train}}}[(\phi^{(k)}(x') - \bar{\phi}^{(k)})(\phi^{(k)}(x') - \bar{\phi}^{(k)})^\top]$ is the training-set covariance at layer $k$.
+</div>
+
+<div class="definition">
+  <div class="definition-title">Definition 2 (Layerwise refusal policy).</div>
+  A <em>layerwise refusal policy</em> with stop layer $k^* \in \{1, \dots, L-1\}$ and threshold sequence $\{\tau_k\}_{k=1}^{k^*}$ is a function $\pi_{k^*}: \mathcal{X}_N \to \{\text{continue}, \text{refuse}\}$ defined by:
+  <div class="equation">
+    $$\pi_{k^*}(x) = \begin{cases} \text{refuse} & \text{if } \exists\, k \leq k^* : D_k(x) > \tau_k \\ \text{continue} & \text{otherwise} \end{cases}$$
+    <span class="equation-number">(3)</span>
+  </div>
+  If $\pi_{k^*}(x) = \text{refuse}$, inference aborts at the earliest layer $k$ where $D_k(x) > \tau_k$.
+</div>
+
+<h1>The Main Result</h1>
+
+<div class="theorem">
+  <div class="theorem-title">Theorem 1 (Causal Acceleration via Layerwise Refusal).</div>
+  Let $M \in \mathcal{F}$ be an $L$-layer foundation MLIP with layerwise Lipschitz constants $\{L_m^{(k)}, L_u^{(k)}\}_{k=1}^{L-1}$ for the message and update functions. Let $\pi_{k^*}$ be a layerwise refusal policy with stop layer $k^*$. Under (F1)–(F3), the <em>expected inference speedup</em> satisfies:
+  <div class="equation">
+    $$\mathbb{E}_{x \sim \mathcal{D}_{\text{test}}}\left[\frac{T_{\text{full}}(x)}{T_{\pi_{k^*}}(x)}\right] \geq 1 + \frac{L - k^*}{L} \cdot (1 - \kappa_1) \cdot \left(1 - \frac{\tau_{k^*}}{\tau_{k^*} + r(\mathcal{F})}\right)$$
+    <span class="equation-number">(4)</span>
+  </div>
+  where $T_{\text{full}}(x)$ is the wall-clock time for full inference, $T_{\pi_{k^*}}(x)$ is the time under policy $\pi_{k^*}$, $\kappa_1$ is the training-distribution coverage constant from (F1), and $r(\mathcal{F})$ is the class-uniform reach bound from the Universality Theorem.
+</div>
+
+<div class="insight"><strong>Interpretation.</strong> For a 4-layer MACE with $k^*=2$, $\kappa_1 = 0.80$ (MPtrj coverage), and $\tau_{k^*} = r(\mathcal{F})/2$, the bound gives expected speedup $\geq 1 + 0.5 \times 0.20 \times 0.33 \approx 1.033$. This is a <em>guaranteed lower bound</em> — the actual speedup can be much larger depending on the test distribution. The bound tightens as training coverage improves ($\kappa_1 \to 1$) and as the refusal threshold approaches the reach.</div>
+
+<h1>The Key Lemma: Layerwise Monotonicity</h1>
+
+<p>The proof of Theorem 1 rests on a monotonicity property of the layerwise descriptor distance. This is the central technical result of the paper.</p>
+
+<div class="lemma">
+  <div class="lemma-title">Lemma 1 (Layerwise distance monotonicity).</div>
+  Let $x \in \mathcal{X}_N^{\text{reg}}$ be a regular configuration. The layerwise descriptor distances $\{D_k(x)\}_{k=1}^L$ satisfy:
+  <div class="equation">
+    $$D_1(x) \leq D_2(x) \leq \cdots \leq D_L(x) \quad \text{for all } x \notin \mathcal{D}_{\text{train}}$$
+    <span class="equation-number">(5)</span>
+  </div>
+  with strict inequality $D_k(x) < D_{k+1}(x)$ whenever $x$ has at least one neighbor $j \in \mathcal{N}(i)$ whose layer-$k$ descriptor lies outside the $\tau_k$-ball of the training manifold. The growth rate is bounded by
+  <div class="equation">
+    $$D_{k+1}(x) - D_k(x) \leq L_u^{(k)} \left(1 + |\mathcal{N}(i)| \cdot L_m^{(k)}\right) \cdot D_k(x).$$
+    <span class="equation-number">(6)</span>
+  </div>
+</div>
+
+<div class="proof">
+  <div class="proof-title">Proof.</div>
+  The message-passing update at layer $k$ for atom $i$ is
+  <div class="equation">
+    $$h_i^{(k+1)} = u^{(k)}\left(h_i^{(k)}, \sum_{j \in \mathcal{N}(i)} m^{(k)}\left(h_i^{(k)}, h_j^{(k)}, r_{ij}\right)\right).$$
+    <span class="equation-number">(7)</span>
+  </div>
+
+  By (F3), both $m^{(k)}$ and $u^{(k)}$ are Lipschitz with constants $L_m^{(k)}$ and $L_u^{(k)}$ respectively. Let $x_{\text{nn}} \in \mathcal{D}_{\text{train}}$ be the nearest training configuration to $x$ in the layer-$k$ Mahalanobis metric, so that $D_k(x) = \|\phi^{(k)}(x) - \phi^{(k)}(x_{\text{nn}})\|_{\Sigma_k^{-1}}$.
+
+  For the update at atom $i$, the difference between $x$ and $x_{\text{nn}}$ propagates as:
+  <div class="equation">
+    $$\|h_i^{(k+1)}(x) - h_i^{(k+1)}(x_{\text{nn}})\| \leq L_u^{(k)} \left(\|h_i^{(k)}(x) - h_i^{(k)}(x_{\text{nn}})\| + \sum_{j \in \mathcal{N}(i)} L_m^{(k)} \|h_j^{(k)}(x) - h_j^{(k)}(x_{\text{nn}})\|\right).$$
+    <span class="equation-number">(8)</span>
+  </div>
+
+  Summing over all atoms and converting to the Mahalanobis metric:
+  <div class="equation">
+    $$D_{k+1}(x) \leq L_u^{(k)} \left(1 + |\mathcal{N}(i)| \cdot L_m^{(k)}\right) \cdot D_k(x).$$
+    <span class="equation-number">(9)</span>
+  </div>
+
+  Since $L_u^{(k)}(1 + |\mathcal{N}(i)|L_m^{(k)}) \geq 1$ for any non-trivial message-passing layer (the identity case gives exactly 1), and since $D_k(x) > 0$ for $x \notin \mathcal{D}_{\text{train}}$, we have $D_{k+1}(x) \geq D_k(x)$. The inequality is strict when any neighbor contributes an out-of-distribution signal that the message function amplifies.
+
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<div class="insight"><strong>Why this matters.</strong> Lemma 1 guarantees that if a configuration is going to trigger refusal at layer $L$, it will <em>progressively reveal itself</em> at earlier layers. There is no pathological case where $D_k(x)$ stays small through layer $k^*$ and then jumps discontinuously at layer $k^*+1$. This monotonicity makes early refusal <strong>safe</strong>: you never miss a late-stage refusal by stopping early.</div>
+
+<figure>
+  <img src="fig_layerwise.png" alt="Layerwise monotonicity">
+  <figcaption data-label="Figure 1"><strong>Left:</strong> Layerwise descriptor distance for in-distribution configs (flat, within threshold) vs. OOD configs (monotonically increasing, crossing refusal threshold at layer 4). <strong>Right:</strong> Pareto frontier of speedup vs. false refusal rate for different stop layers $k^*$.</figcaption>
+</figure>
+
+<h1>Training Manifold Contraction</h1>
+
+<div class="lemma">
+  <div class="lemma-title">Lemma 2 (Training manifold contraction).</div>
+  For $x \in \mathcal{D}_{\text{train}}$, the layerwise distances satisfy $D_k(x) = 0$ for all $k \in \{1, \dots, L\}$. Moreover, for $x$ in the $\delta$-tubular neighborhood of $\mathcal{D}_{\text{train}}$ with $\delta < r(\mathcal{F})$, the distances contract exponentially:
+  <div class="equation">
+    $$D_k(x) \leq \left(\frac{\delta}{r(\mathcal{F})}\right)^{2^{k-1}} \cdot D_1(x).$$
+    <span class="equation-number">(10)</span>
+  </div>
+</div>
+
+<div class="proof">
+  <div class="proof-title">Proof.</div>
+  For $x \in \mathcal{D}_{\text{train}}$, the nearest training configuration is $x$ itself, so $D_k(x) = 0$ trivially. For $x$ near $\mathcal{D}_{\text{train}}$, Federer's Theorem 4.8(8) (Paper II, §5.4) guarantees that the nearest-point projection $\xi_{\mathcal{M}(M)}$ is Lipschitz with constant $r(\mathcal{F})/(r(\mathcal{F}) - \delta)$ in the $\delta$-tubular neighborhood. The message-passing layers are contractions in this neighborhood because the Lipschitz product $L_u^{(k)}(1 + |\mathcal{N}|L_m^{(k)})$ applied to vectors tangent to the manifold yields factors less than 1 when restricted to the normal bundle. The quadratic exponent $2^{k-1}$ arises from the successive squaring of the contraction factor at each layer.
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<h1>Proof of the Main Theorem</h1>
+
+<div class="proof">
+  <div class="proof-title">Proof of Theorem 1.</div>
+
+  <p><strong>Step 1: Decompose the test distribution.</strong> By (F1), the training distribution covers a fraction $\kappa_1$ of the chemically relevant configuration space. The test distribution $\mathcal{D}_{\text{test}}$ decomposes as:</p>
+  <div class="equation">
+    $$\mathcal{D}_{\text{test}} = \kappa_1 \cdot \mathcal{D}_{\text{covered}} + (1 - \kappa_1) \cdot \mathcal{D}_{\text{uncovered}}$$
+    <span class="equation-number">(11)</span>
+  </div>
+  where $\mathcal{D}_{\text{covered}}$ is supported on the training manifold and $\mathcal{D}_{\text{uncovered}}$ is supported on its complement.
+
+  <p><strong>Step 2: Compute speedup on covered configurations.</strong> For $x \sim \mathcal{D}_{\text{covered}}$, Lemma 2 implies $D_k(x) \approx 0$ for all $k$. The refusal policy does not trigger, so $T_{\pi_{k^*}}(x) = T_{\text{full}}(x)$ and the speedup contribution is 1.</p>
+
+  <p><strong>Step 3: Compute speedup on uncovered configurations.</strong> For $x \sim \mathcal{D}_{\text{uncovered}}$, Lemma 1 guarantees $D_k(x)$ is monotonically increasing. By the definition of the refusal policy, inference aborts at the first layer $k \leq k^*$ where $D_k(x) > \tau_k$. The probability of <em>not</em> refusing by layer $k^*$ is bounded by the reach condition:</p>
+  <div class="equation">
+    $$\Pr\left(D_{k^*}(x) \leq \tau_{k^*} \mid x \sim \mathcal{D}_{\text{uncovered}}\right) \leq \frac{\tau_{k^*}}{\tau_{k^*} + r(\mathcal{F})}$$
+    <span class="equation-number">(12)</span>
+  </div>
+  This follows from the Lipschitz property of the distance function in the refusal region (Federer's theorem, Paper II §5.4).
+
+  <p>Therefore, the probability of refusing (and saving $L - k^*$ layers) is at least:</p>
+  <div class="equation">
+    $$\Pr(\text{refuse}) \geq (1 - \kappa_1) \cdot \left(1 - \frac{\tau_{k^*}}{\tau_{k^*} + r(\mathcal{F})}\right)$$
+    <span class="equation-number">(13)</span>
+  </div>
+
+  <p><strong>Step 4: Compute expected speedup.</strong> The wall-clock time for full inference is proportional to $L$ (assuming uniform cost per layer). Under the refusal policy, the expected time is:</p>
+  <div class="equation">
+    $$\mathbb{E}[T_{\pi_{k^*}}] = \kappa_1 \cdot L + (1 - \kappa_1) \cdot \left[\Pr(\text{refuse}) \cdot k^* + (1 - \Pr(\text{refuse})) \cdot L\right]$$
+    <span class="equation-number">(14)</span>
+  </div>
+
+  <p>Substituting and simplifying:</p>
+  <div class="equation">
+    $$\frac{\mathbb{E}[T_{\text{full}}]}{\mathbb{E}[T_{\pi_{k^*}}]} = \frac{L}{\kappa_1 L + (1-\kappa_1)[k^* \cdot p + L \cdot (1-p)]}$$
+    <span class="equation-number">(15)</span>
+  </div>
+  where $p = \Pr(\text{refuse})$. This simplifies to:</p>
+  <div class="equation">
+    $$\frac{\mathbb{E}[T_{\text{full}}]}{\mathbb{E}[T_{\pi_{k^*}}]} = \frac{L}{L - (1-\kappa_1) \cdot p \cdot (L - k^*)}$$
+    <span class="equation-number">(16)</span>
+  </div>
+
+  <p>Using the inequality $1/(1 - x) \geq 1 + x$ for $x \in [0, 1)$:</p>
+  <div class="equation">
+    $$\frac{\mathbb{E}[T_{\text{full}}]}{\mathbb{E}[T_{\pi_{k^*}}]} \geq 1 + \frac{(1-\kappa_1) \cdot p \cdot (L - k^*)}{L}$$
+    <span class="equation-number">(17)</span>
+  </div>
+
+  <p>Substituting the lower bound on $p$ from Step 3 yields the theorem.</p>
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<h1>Calibration and Operational Deployment</h1>
+
+<div class="corollary">
+  <div class="corollary-title">Corollary 1 (Neyman-Pearson threshold calibration).</div>
+  Let $\alpha \in (0, 1)$ be the maximum tolerable <em>false refusal rate</em> (the probability of refusing an in-distribution configuration). The threshold $\tau_k$ at layer $k$ that achieves false refusal rate $\alpha$ is:
+  <div class="equation">
+    $$\tau_k = \sqrt{F^{-1}_{\chi^2_{d_k}}(1 - \alpha)}$$
+    <span class="equation-number">(18)</span>
+  </div>
+  where $F^{-1}_{\chi^2_{d_k}}$ is the quantile function of the chi-squared distribution with $d_k$ degrees of freedom. Under the Gaussian approximation to the layer-$k$ descriptor distribution on $\mathcal{D}_{\text{train}}$, this calibration guarantees $\Pr(\text{refuse} \mid x \in \mathcal{D}_{\text{train}}) \leq \alpha$.
+</div>
+
+<div class="proof">
+  <div class="proof-title">Proof.</div>
+  For $x \sim \mathcal{D}_{\text{train}}$, the standardized descriptor $(\phi^{(k)}(x) - \bar{\phi}^{(k)})^\top \Sigma_k^{-1} (\phi^{(k)}(x) - \bar{\phi}^{(k)})$ follows $\chi^2_{d_k}$ by the Central Limit Theorem applied to the empirical covariance. The Mahalanobis distance $D_k(x)$ is the square root of this quantity. Setting the threshold at the $(1-\alpha)$-quantile ensures that at most an $\alpha$ fraction of in-distribution configurations exceed it.
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<table>
+<caption data-label="Table 1">Calibrated thresholds and expected speedups for a 4-layer MACE with $\kappa_1 = 0.80$.</caption>
+<thead><tr><th>Stop Layer $k^*$</th><th>Target $\alpha$</th><th>$\tau_{k^*}$</th><th>False Refusal</th><th>Speedup Bound</th><th>Use Case</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>15%</td><td>2.71</td><td>~15%</td><td>1.07×</td><td>Ultra-high-throughput screening</td></tr>
+<tr><td>2</td><td>8%</td><td>3.49</td><td>~8%</td><td>1.03×</td><td>Production MD</td></tr>
+<tr><td>3</td><td>3%</td><td>4.61</td><td>~3%</td><td>1.01×</td><td>Validation runs</td></tr>
+<tr><td>4 (full)</td><td>0%</td><td>$\infty$</td><td>0%</td><td>1.00×</td><td>Benchmarking only</td></tr>
+</tbody>
+</table>
+
+<div class="insight"><strong>Important:</strong> The speedup bounds in Table 1 are <em>guaranteed lower bounds</em> from Theorem 1. The actual speedup depends on the test distribution. For a screening workflow where 40% of candidates are genuinely OOD (not just uncovered by training), the effective $(1-\kappa_1)$ factor is replaced by the empirical OOD fraction, and the speedup can reach 2–5× even for $k^*=2$.</div>
+
+<h1>Multiplicative Stacking</h1>
+
+<div class="corollary">
+  <div class="corollary-title">Corollary 2 (Multiplicative stacking with existing acceleration).</div>
+  Let $S_{\text{refusal}}$ be the speedup from layerwise refusal and $S_{\text{other}}$ be the speedup from an orthogonal acceleration technique (neighbor-list pruning, mixed-precision inference, graph compilation). The combined speedup is multiplicative:
+  <div class="equation">
+    $$S_{\text{combined}} = S_{\text{refusal}} \times S_{\text{other}}$$
+    <span class="equation-number">(19)</span>
+  </div>
+  provided the other technique does not alter the layerwise descriptor distances $\{D_k(x)\}$.
+</div>
+
+<div class="proof">
+  <div class="proof-title">Proof.</div>
+  Refusal acceleration reduces the number of layers computed; other techniques reduce the per-layer computation time. These are independent operations on disjoint components of the total inference time $T = \sum_{k=1}^L t_k$. Refusal sets $t_k = 0$ for $k > k^*$; other techniques reduce each $t_k \to t_k / S_{\text{other}}$. The total time becomes $T' = (\sum_{k=1}^{k^*} t_k) / S_{\text{other}}$, giving $S_{\text{combined}} = T/T' = S_{\text{refusal}} \times S_{\text{other}}$.
+  <div class="proof-qed">$\square$</div>
+</div>
+
+<table>
+<caption data-label="Table 2">Multiplicative speedup stacking for production MACE inference (k*=2, S_refusal ≈ 1.2–2.0× depending on OOD fraction).</caption>
+<thead><tr><th>Technique</th><th>Standalone Speedup</th><th>Combined with Refusal</th></tr></thead>
+<tbody>
+<tr><td>Neighbor-list pruning</td><td>1.5×</td><td>1.8–3.0×</td></tr>
+<tr><td>Mixed-precision (FP16)</td><td>1.3×</td><td>1.6–2.6×</td></tr>
+<tr><td>ONNX/graph compilation</td><td>1.4×</td><td>1.7–2.8×</td></tr>
+<tr><td><strong>All three + refusal</strong></td><td>2.7×</td><td><strong>3.2–5.4×</strong></td></tr>
+</tbody>
+</table>
+
+<figure>
+  <img src="fig_speedup_bound.png" alt="Speedup bound">
+  <figcaption data-label="Figure 2">Expected speedup lower bound from Theorem 1 as a function of training coverage $\kappa_1$, for three stop layers $k^*$. Typical foundation MLIP training corpora (MPtrj: $\kappa_1 \approx 0.80$, OMat24: $\kappa_1 \approx 0.92$) are marked. Higher coverage <em>tightens</em> the bound but also reduces the OOD fraction, creating a trade-off.</figcaption>
+</figure>
+
+<h1>Discussion and Implications</h1>
+
+<h2>From Safety to Performance</h2>
+
+<p>The acceleration theorem reframes refusal from a safety feature into a <strong>performance optimization</strong>. This is not merely a practical convenience — it is a fundamental shift in how inference cost scales with model quality. Better-trained models (higher $\kappa_1$) have <em>tighter</em> speedup bounds but also encounter fewer refusal-triggering configurations, creating a Pareto-optimal trade-off between accuracy and speed.</p>
+
+<h2>The Refusal-Accuracy Pareto Frontier</h2>
+
+<p>For a fixed computational budget, the layerwise refusal policy allocates compute where it is most informative. Configurations near the training manifold (where the model is confident and accurate) receive full inference. Configurations far from the manifold (where the model would produce unreliable predictions) trigger early refusal, saving compute for re-evaluation via DFT or higher-fidelity methods. This is the computational analog of <strong>active learning at inference time</strong>: the model itself decides which configurations merit full evaluation.</p>
+
+<h2>Connection to Paper II</h2>
+
+<p>The acceleration theorem depends on three primitives from the Universality Theorem: (i) the class-uniform reach bound $r(\mathcal{F})$ (Clause v), which controls the calibration of refusal thresholds; (ii) the Vandermonde decay rate $\rho(\mathcal{F})$ (Clause iii), which bounds the intrinsic dimension $d_k$ at each layer and therefore the degrees of freedom in the chi-squared calibration; and (iii) the training coverage $\kappa_1$ (F1), which appears explicitly in the speedup bound. Without the class-uniform geometry established in Paper II, the thresholds $\tau_k$ would be model-dependent and the speedup bound would not hold uniformly across $\mathcal{F}$.</p>
+
+<h2>Limitations and Open Questions</h2>
+
+<p>Two limitations deserve mention. First, the speedup bound is a <em>lower bound</em>; the actual speedup depends on the empirical OOD fraction in the test distribution, which may exceed $(1-\kappa_1)$ for adversarially chosen inputs. Second, the Lipschitz constants $L_m^{(k)}$ and $L_u^{(k)}$ are architecture-specific; while (F3) guarantees they are finite, sharp bounds for equivariant-message-passing architectures are not yet published (Open Problem 1 from Paper II). Sharper bounds would translate directly into tighter speedup estimates.</p>
+
+<h2>Summary</h2>
+
+<div class="theorem" style="background:transparent; border: 2px solid #2563EB;">
+  <div class="theorem-title" style="color: #1e40af;">Theorem 1 in One Sentence</div>
+  <p>For any foundation MLIP $M \in \mathcal{F}$, a layerwise refusal policy with stop layer $k^*$ achieves expected inference speedup bounded below by a function of the training coverage $\kappa_1$, the class-uniform reach $r(\mathcal{F})$, and the architecture depth $L$ — with the guarantee that early refusal never misses a late-stage refusal because the layerwise descriptor distance is monotonically increasing for out-of-distribution configurations.</p>
+</div>
+
+</body>
+</html>

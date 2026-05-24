@@ -1,0 +1,26 @@
+% =============================================================================
+% SECTION 8: CONNECTION TO CMET
+% =============================================================================
+\section{Connection to CMET}\label{sec:cmet}
+
+This manuscript is the second of a planned trilogy. The first paper (CMET, currently in revision) establishes the \emph{manifold-extension primitive}: for a single foundation MLIP $M$, the set of configurations on which $M$'s prediction error exceeds a threshold forms a smooth submanifold of the regular configuration space under suitable regularity conditions. CMET proves that this error manifold has finite reach, bounded intrinsic dimension, and stable homology under sampling.
+
+The present paper promotes the CMET primitive from a single-model statement to a \emph{class-level} universality theorem. The logical relationship is:
+\begin{equation}\label{eq:cmet-universality}
+    \underbrace{\text{CMET}}_{\text{single-model manifold}} \xrightarrow{\text{Cross-Model Vandermonde}} \underbrace{\text{Universality Theorem}}_{\text{class-uniform geometry}}.
+\end{equation}
+
+Specifically, CMET provides the following primitives that the Universality Theorem extends:
+\begin{itemize}
+    \item \textbf{Manifold existence.} CMET proves that $\cM(M)$ is a smooth submanifold for any $M$ satisfying (F3). The Universality Theorem bounds $\dim \cM(M)$ uniformly over $M \in \cF$ via the Vandermonde lemma.
+    \item \textbf{Reach bound.} CMET gives a single-model reach bound depending on $M$'s second-derivative bound. The Universality Theorem replaces this with $\inf_M \reach(\cM(M)) \geq r(\cF)$, a class-uniform constant.
+    \item \textbf{Sample complexity.} CMET's single-model sample complexity is $n \geq C(M) \cdot d(M) \log(N/d(M))$. The Universality Theorem replaces $C(M)$ and $d(M)$ with class constants $C(\cF)$ and $d(\cF)$.
+\end{itemize}
+
+The Cross-Model Vandermonde Lemma (Lemma~\ref{lem:vandermonde}) is the mathematical engine that enables this promotion. Where CMET takes the intrinsic dimension $d(M)$ and Fisher decay rate $\rho(M)$ as model-dependent quantities, the Vandermonde lemma proves that both are uniformly bounded across $\cF$. The proof assembles the single-model Vandermonde bound of Waterfall \emph{et al.}\cite{waterfall2006sloppy} with the class-uniform smoothness of (F3) and the class-uniform expressivity of (F1)--(F2) to close the loop.
+
+The third paper in the trilogy will treat the \emph{refusal-mode} behavior of foundation MLIPs in full generality, building on the two-mode inference framework of clause (v). Where the present paper characterizes the refusal region $\cX_N^{\text{refuse}}(M)$ geometrically (via Federer reach), the third paper will develop the operational criteria for a model to refuse prediction---uncertainty quantification thresholds, out-of-distribution detection, and human-in-the-loop protocols for high-stakes applications such as materials discovery and drug design.
+
+\begin{remark}
+The meta-theorem framing---CMET as the primitive, the Universality Theorem as the promotion---is not merely organizational. It reflects a substantive logical dependency: the class-uniform constants $d(\cF)$, $\rho(\cF)$, and $r(\cF)$ cannot be proved without the single-model regularity established by CMET. The Universality Theorem is, in this sense, a \emph{conditional} theorem: it holds for any class $\cF$ whose members individually satisfy the CMET regularity conditions, provided the class-level uniformity conditions (F1)--(F3) are also satisfied.
+\end{remark}

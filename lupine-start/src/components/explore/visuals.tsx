@@ -340,7 +340,7 @@ export function StatStrip({ facts }: { facts: SummaryFact[] }): ReactElement {
           : 'text-[var(--on-surface)]'
         return (
           <span key={i} className="inline-flex items-baseline gap-1.5">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant)]">
+            <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant)]">
               {f.label}
             </span>
             <span className={`font-mono text-sm ${cls}`}>{f.value}</span>

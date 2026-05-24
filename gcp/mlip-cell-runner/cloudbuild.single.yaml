@@ -1,0 +1,57 @@
+# Build and deploy one MLIP baseline Cloud Run Job.
+# This is the retry-friendly path after the first full build proves which
+# backend stack needs attention.
+
+substitutions:
+  _PROJECT_ID: shed-489901
+  _REGION: us-central1
+  _REPOSITORY: cloud-run-source-deploy
+  _RUNNER_SA: atlas-distill-runner@shed-489901.iam.gserviceaccount.com
+  _IMAGE_TAG: manual
+  _BACKEND: chgnet
+  _JOB_NAME: mlip-cell-chgnet
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 7200s
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/${_JOB_NAME}:${_IMAGE_TAG}
+      - --build-arg
+      - BACKEND=${_BACKEND}
+      - -f
+      - gcp/mlip-cell-runner/Dockerfile
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/${_JOB_NAME}:${_IMAGE_TAG}
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - jobs
+      - deploy
+      - ${_JOB_NAME}
+      - --image=${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/${_JOB_NAME}:${_IMAGE_TAG}
+      - --region=${_REGION}
+      - --project=${_PROJECT_ID}
+      - --service-account=${_RUNNER_SA}
+      - --cpu=4
+      - --memory=16Gi
+      - --gpu=1
+      - --gpu-type=nvidia-l4
+      - --no-gpu-zonal-redundancy
+      - --tasks=1
+      - --max-retries=1
+      - --task-timeout=3600s
+
+images:
+  - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/${_JOB_NAME}:${_IMAGE_TAG}

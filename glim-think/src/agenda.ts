@@ -99,6 +99,20 @@ const TASK_TEMPLATES: AgendaTaskTemplate[] = [
     resources: ["cargo-test", "artifact-storage"],
   },
   {
+    domain: "model-geometry-distill",
+    specialty: "manifold",
+    title: (element, horizon) => `Distill ${element} MLIP model-geometry evidence for ${horizon} horizon`,
+    payload: (element, horizon) => ({
+      element,
+      horizon,
+      engine: "atlas-distill model-geometry",
+      inputs: ["benchmark_prediction_dump", "model_version_metadata", "reference_targets"],
+      outputs: ["residual_svd_packet", "effective_rank_guard", "accuracy_gated_alignment"],
+      rule: "model_to_model_geometry_must_be_separated_from_reference_grounded_accuracy",
+    }),
+    resources: ["local-gpu", "artifact-storage", "d1-ledger-write"],
+  },
+  {
     domain: "phonon-sentinel",
     specialty: "experiment",
     title: (element, horizon) => `Design ${element} phonon/curvature sentinel for ${horizon} horizon`,

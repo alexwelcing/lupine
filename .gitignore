@@ -63,6 +63,7 @@ lupine-start/rumelaz-gekinsa-serif-family-classic-elegant-*/
 
 # ML virtual envs & working directories
 mlip_immi/.venv-upet/
+mlip_immi/runs/
 mlip_immi/phonon_wd_*/
 mlip_immi/*_results.json
 mlip_immi/phonon_sentinel_pet_mad_1.5.json

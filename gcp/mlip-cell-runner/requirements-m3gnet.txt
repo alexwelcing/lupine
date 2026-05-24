@@ -1,0 +1,9 @@
+ase==3.28.0
+numpy==1.26.4
+requests==2.32.5
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.4.0+cu121
+--find-links https://data.dgl.ai/wheels/torch-2.4/cu121/repo.html
+torchdata==0.8.0
+dgl==2.4.0+cu121
+matgl==2.0.6

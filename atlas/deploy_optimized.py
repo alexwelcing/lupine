@@ -276,9 +276,8 @@ def precompress():
 
 def deploy_and_verify():
     section("Step 4/4: Deploy + Verify")
-    subprocess.run(["gcloud", "run", "deploy", "atlas-viewer", "--source", ".", "--project", "shed-489901",
-        "--region", "us-central1", "--allow-unauthenticated", "--port=8080", "--memory=512Mi"],
-        cwd=DEPLOY_DIR, shell=True, check=True)
+    subprocess.run(["C:/Program Files/Git/bin/bash.exe", "-c", "gcloud run deploy atlas-viewer --source . --project shed-489901 --region us-central1 --allow-unauthenticated --port=8080 --memory=512Mi"],
+        cwd=DEPLOY_DIR, check=True)
     time.sleep(5)
     
     print("\nVerifying endpoints...")

@@ -147,9 +147,10 @@
   --ring: #475b9c;
   --outline-variant: rgba(44, 42, 40, 0.12);
 
-  /* ─── Violet accents ─── */
+/* ─── Violet accents (light mode — vivid for contrast) ─── */
   --violet-300: #9f8bbd;
-  --violet-500: #725381;
+  --violet-400: #7c3aed;
+  --violet-500: #7c3aed;
   --violet-700: #5a3f69;
 
   /* ─── Slate scale → warm neutrals ─── */

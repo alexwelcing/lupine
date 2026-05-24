@@ -23,7 +23,7 @@
  * are acked + logged so they don't loop.
  */
 
-import { trace, SpanStatusCode } from "@opentelemetry/api";
+import { trace, SpanStatusCode, type Span } from "@opentelemetry/api";
 import { getNamedAgentStub } from "../agents/named-stub";
 import type { Env } from "../types";
 import { traceEnv } from "../telemetry/storage";
@@ -33,6 +33,9 @@ import { evaluateHypothesis } from "./evaluate";
 import { generateAndStoreImage } from "../agents/image";
 import { generateAndStoreAudio } from "../agents/tts";
 import { accumulateCost } from "../telemetry/pipeline";
+import { insertEval } from "../evals/store";
+import { traceHypothesisStage } from "../telemetry/hypothesisTrace";
+import { dispatchAtlasJob, type TaskPayload as AtlasTaskPayload } from "./dispatch";
 
 export type ResearchTaskKind =
   | "round"
@@ -48,7 +51,9 @@ export type ResearchTaskKind =
   | "causal_data_integrity"       // Round C4: contamination quarantine + clean re-screen
   | "data_purge"                  // Durable corpus cleanup (delete corrupt records)
   | "corpus_audit"                // Property-aware data-quality audit
-  | "multiproperty_seed";         // De-myopization: recover a0 as a 2nd property
+  | "multiproperty_seed"          // De-myopization: recover a0 as a 2nd property
+  | "model_geometry_distill"      // Hypothesis-bound local/atlas model-geometry evidence
+  | "mlip_cell_run";              // Real MLIP runner cell for baseline/Distill 5x5x3 campaigns
 
 export interface ResearchTaskBase {
   kind: ResearchTaskKind;
@@ -157,6 +162,47 @@ export interface MultiPropertySeedTask extends ResearchTaskBase {
   kind: "multiproperty_seed";
 }
 
+export type ModelGeometryMode = "auto" | "reference" | "prediction";
+export type ModelGeometryQualityGate = "none" | "fit" | "physics" | "accuracy";
+
+export interface ModelGeometryDistillTask extends ResearchTaskBase {
+  kind: "model_geometry_distill";
+  hypothesis_id: string;
+  fixture_url: string;
+  campaign_id?: string;
+  cell_id?: string;
+  row_id?: string;
+  mlip_id?: string;
+  variant_id?: string;
+  model_pairs?: string[];
+  mode?: ModelGeometryMode;
+  quality_gate?: ModelGeometryQualityGate;
+  top_k?: number;
+  effective_rank_floor?: number;
+  accuracy_max_pct?: number;
+}
+
+export type MlipCellVariant = "baseline" | "distill_accuracy" | "distill_accuracy_accelerate";
+
+export interface MlipCellRunTask extends ResearchTaskBase {
+  kind: "mlip_cell_run";
+  hypothesis_id: string;
+  run_id: string;
+  campaign_id?: string;
+  cell_id: string;
+  row_id: string;
+  mlip_id: string;
+  variant_id: MlipCellVariant;
+  manifest_url: string;
+  support_manifest_url?: string;
+  artifact_prefix?: string;
+  fixture_id?: string;
+  profile?: string;
+  distill_policy_url?: string;
+  distill_policy_engine?: "auto" | "python" | "rust";
+  ribbon_version?: string;
+}
+
 export type ResearchTask =
   | RoundTask
   | LiteratureTask
@@ -171,7 +217,9 @@ export type ResearchTask =
   | CausalDataIntegrityTask
   | DataPurgeTask
   | CorpusAuditTask
-  | MultiPropertySeedTask;
+  | MultiPropertySeedTask
+  | ModelGeometryDistillTask
+  | MlipCellRunTask;
 
 export interface ResearchJobRow {
   job_id: string;
@@ -334,6 +382,211 @@ async function runTask(env: Env, task: ResearchTask & { job_id?: string }): Prom
   });
 }
 
+function workerBeatEmitUrl(env: Env): string {
+  const base =
+    (env as Env & { WORKER_URL?: string }).WORKER_URL?.trim() ||
+    "https://glim-think-v1.aw-ab5.workers.dev";
+  return base.endsWith("/feed/beats")
+    ? base
+    : `${base.replace(/\/+$/, "")}/feed/beats`;
+}
+
+export function buildModelGeometryAtlasPayload(
+  task: ModelGeometryDistillTask,
+  beatEmitUrl: string,
+): AtlasTaskPayload {
+  const mode = task.mode ?? "auto";
+  const qualityGate = task.quality_gate ?? "accuracy";
+  const topK = Math.max(1, Math.trunc(task.top_k ?? 5));
+  const effectiveRankFloor = task.effective_rank_floor ?? 0.01;
+  const accuracyMaxPct = task.accuracy_max_pct ?? 50;
+  const args = [
+    "--hypothesis-id",
+    task.hypothesis_id,
+    "--mode",
+    mode,
+    "--quality-gate",
+    qualityGate,
+    "--top-k",
+    String(topK),
+    "--effective-rank-floor",
+    String(effectiveRankFloor),
+    "--accuracy-max-pct",
+    String(accuracyMaxPct),
+  ];
+  for (const [flag, value] of [
+    ["--campaign-id", task.campaign_id],
+    ["--cell-id", task.cell_id],
+    ["--row-id", task.row_id],
+    ["--mlip-id", task.mlip_id],
+    ["--variant-id", task.variant_id],
+  ] as const) {
+    if (value) args.push(flag, value);
+  }
+  for (const pair of task.model_pairs ?? []) {
+    args.push("--pair", pair);
+  }
+  return {
+    fixture_url: task.fixture_url,
+    command: "model-geometry",
+    args,
+    beat_emit_url: beatEmitUrl,
+  };
+}
+
+const MLIP_CELL_TARGET_JOBS: Record<string, string> = {
+  "mace-mp-0": "mlip-cell-mace",
+  chgnet: "mlip-cell-chgnet",
+  m3gnet: "mlip-cell-m3gnet",
+  "orb-v3": "mlip-cell-orb",
+  sevennet: "mlip-cell-sevennet",
+};
+
+function normalizeMlipRunnerAxisId(value: string): string {
+  return value.trim().toLowerCase().replace(/-/g, "_");
+}
+
+function normalizeMlipRunnerVariantId(value: string): string {
+  const normalized = normalizeMlipRunnerAxisId(value);
+  if (normalized === "distill_accuracy_accelerate") return normalized;
+  if (normalized === "distill_accuracy") return normalized;
+  if (normalized === "baseline") return normalized;
+  return value;
+}
+
+function defaultMlipArtifactPrefix(
+  env: Env,
+  task: MlipCellRunTask,
+  normalized?: { row_id?: string; variant_id?: string },
+): string {
+  const configured = (env as Env & { MLIP_5X5X3_OUTPUT_PREFIX?: string }).MLIP_5X5X3_OUTPUT_PREFIX?.trim();
+  const project = env.GCP_PROJECT_ID?.trim() || "shed-489901";
+  const base = configured || `gs://${project}-atlas-outputs/mlip-5x5x3`;
+  return [
+    base.replace(/\/+$/, ""),
+    task.run_id,
+    normalized?.variant_id ?? task.variant_id,
+    normalized?.row_id ?? task.row_id,
+    task.mlip_id,
+    task.cell_id.replace(/[^a-zA-Z0-9._-]/g, "_"),
+  ].join("/");
+}
+
+export function distillProfileForVariant(variantId: string): "off" | "accuracy" | "accuracy_accelerate" {
+  const normalized = normalizeMlipRunnerVariantId(variantId);
+  if (normalized === "distill_accuracy") return "accuracy";
+  if (normalized === "distill_accuracy_accelerate") return "accuracy_accelerate";
+  return "off";
+}
+
+export function buildMlipCellRunPayload(
+  env: Env,
+  task: MlipCellRunTask,
+  beatEmitUrl: string,
+): AtlasTaskPayload {
+  const targetJob = MLIP_CELL_TARGET_JOBS[task.mlip_id];
+  if (!targetJob) throw new Error(`unsupported MLIP runner target for ${task.mlip_id}`);
+  const rowId = normalizeMlipRunnerAxisId(task.row_id);
+  const variantId = normalizeMlipRunnerVariantId(task.variant_id);
+  const distillProfile = distillProfileForVariant(variantId);
+  const args = [
+    "--run-id",
+    task.run_id,
+    "--cell-id",
+    task.cell_id,
+    "--row-id",
+    rowId,
+    "--mlip-id",
+    task.mlip_id,
+    "--variant-id",
+    variantId,
+    "--distill-profile",
+    distillProfile,
+    "--profile",
+    task.profile ?? "lab-gcp-gpu",
+    "--fixture-id",
+    task.fixture_id ?? "canonical-structures-v2",
+    "--manifest-url",
+    task.manifest_url,
+    "--artifact-prefix",
+    task.artifact_prefix ?? defaultMlipArtifactPrefix(env, task, { row_id: rowId, variant_id: variantId }),
+  ];
+  if (task.campaign_id) args.push("--campaign-id", task.campaign_id);
+  if (distillProfile !== "off" && task.support_manifest_url) {
+    args.push("--support-manifest-url", task.support_manifest_url);
+  }
+  if (distillProfile !== "off") {
+    args.push(
+      "--distill-policy-engine",
+      task.distill_policy_engine ??
+        ((env as Env & { MLIP_DISTILL_POLICY_ENGINE?: string }).MLIP_DISTILL_POLICY_ENGINE as "auto" | "python" | "rust" | undefined) ??
+        "auto",
+    );
+    args.push(
+      "--ribbon-version",
+      task.ribbon_version ??
+        (env as Env & { MLIP_DISTILL_RIBBON_VERSION?: string }).MLIP_DISTILL_RIBBON_VERSION ??
+        "hyperribbon-v1",
+    );
+  }
+  const distillPolicyUrl = task.distill_policy_url ??
+    (env as Env & { MLIP_DISTILL_POLICY_URL?: string }).MLIP_DISTILL_POLICY_URL;
+  if (distillProfile !== "off" && distillPolicyUrl) args.push("--distill-policy-url", distillPolicyUrl);
+  return {
+    fixture_url: task.manifest_url,
+    command: "run-cell",
+    args,
+    beat_emit_url: beatEmitUrl,
+    target_job: targetJob,
+  };
+}
+
+async function recordMlipCellDispatchEval(
+  env: Env,
+  span: Span,
+  task: MlipCellRunTask,
+  label: "pass" | "fail",
+  explanation: string,
+): Promise<void> {
+  const ctx = span.spanContext();
+  await insertEval(env, {
+    trace_id: ctx.traceId,
+    span_id: ctx.spanId,
+    agent_class: "mlip-cell-runner",
+    task_kind: task.kind,
+    evaluator_name: "mlip_cell.dispatch_contract",
+    score: label === "pass" ? 1 : 0,
+    label,
+    explanation: `${explanation} cell=${task.cell_id} variant=${task.variant_id} mlip=${task.mlip_id} row=${task.row_id}`,
+    action_taken: label === "pass" ? "accepted" : "failed",
+    retry_count: 0,
+    created_at: new Date().toISOString(),
+  });
+}
+
+async function recordModelGeometryDispatchEval(
+  env: Env,
+  span: Span,
+  task: ModelGeometryDistillTask,
+  label: "pass" | "fail",
+  explanation: string,
+): Promise<void> {
+  const ctx = span.spanContext();
+  await insertEval(env, {
+    trace_id: ctx.traceId,
+    span_id: ctx.spanId,
+    agent_class: "atlas-distill",
+    task_kind: task.kind,
+    evaluator_name: "model_geometry.dispatch_contract",
+    score: label === "pass" ? 1 : 0,
+    label,
+    explanation,
+    action_taken: label === "pass" ? "accepted" : "failed",
+    retry_count: 0,
+    created_at: new Date().toISOString(),
+  });
+}
+
 async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }): Promise<void> {
   if (task.kind === "broadcast") {
     await createLabBroadcast(env, task.source);
@@ -392,6 +645,111 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
 
   if (task.kind === "evaluate") {
     await evaluateHypothesis(env, task.hypothesis_id);
+    return;
+  }
+
+  if (task.kind === "model_geometry_distill") {
+    const beatEmitUrl = workerBeatEmitUrl(env);
+    const payload = buildModelGeometryAtlasPayload(task, beatEmitUrl);
+    await traceHypothesisStage(
+      {
+        hypothesisId: task.hypothesis_id,
+        stage: "compute_dispatch",
+        status: "testing",
+        attributes: {
+          "experiment.kind": task.kind,
+          "experiment.engine": "atlas-distill model-geometry",
+          "experiment.fixture_url": task.fixture_url,
+          "experiment.mode": task.mode ?? "auto",
+          "experiment.quality_gate": task.quality_gate ?? "accuracy",
+          "experiment.top_k": Math.max(1, Math.trunc(task.top_k ?? 5)),
+          "experiment.effective_rank_floor": task.effective_rank_floor ?? 0.01,
+          "experiment.accuracy_max_pct": task.accuracy_max_pct ?? 50,
+          "experiment.model_pair_count": task.model_pairs?.length ?? 0,
+          "experiment.campaign_id": task.campaign_id ?? "",
+          "experiment.cell_id": task.cell_id ?? "",
+          "experiment.row_id": task.row_id ?? "",
+          "experiment.mlip_id": task.mlip_id ?? "",
+          "experiment.variant_id": task.variant_id ?? "",
+        },
+      },
+      async (span) => {
+        try {
+          const result = await dispatchAtlasJob(env, payload);
+          span.setAttribute("compute.dispatch.task_name", result.task_name);
+          span.setAttribute("compute.dispatch.dev_mode", result.dev_mode);
+          span.setAttribute("compute.dispatch.command", payload.command);
+          await recordModelGeometryDispatchEval(
+            env,
+            span,
+            task,
+            "pass",
+            "Accepted by atlas-distill dispatcher; model-geometry evidence beat is expected on completion.",
+          );
+        } catch (e) {
+          await recordModelGeometryDispatchEval(
+            env,
+            span,
+            task,
+            "fail",
+            e instanceof Error ? e.message : String(e),
+          );
+          throw e;
+        }
+      },
+    );
+    return;
+  }
+
+  if (task.kind === "mlip_cell_run") {
+    const beatEmitUrl = workerBeatEmitUrl(env);
+    const payload = buildMlipCellRunPayload(env, task, beatEmitUrl);
+    await traceHypothesisStage(
+      {
+        hypothesisId: task.hypothesis_id,
+        stage: "compute_dispatch",
+        status: "testing",
+        attributes: {
+          "experiment.kind": task.kind,
+          "experiment.engine": "mlip-cell-runner",
+          "experiment.run_id": task.run_id,
+          "experiment.campaign_id": task.campaign_id ?? "",
+          "experiment.cell_id": task.cell_id,
+          "experiment.row_id": task.row_id,
+          "experiment.mlip_id": task.mlip_id,
+          "experiment.variant_id": task.variant_id,
+          "experiment.distill_profile": distillProfileForVariant(task.variant_id),
+          "experiment.target_job": payload.target_job ?? "",
+          "experiment.manifest_url": task.manifest_url,
+          "experiment.support_manifest_url": task.support_manifest_url ?? "",
+        },
+      },
+      async (span) => {
+        try {
+          const result = await dispatchAtlasJob(env, payload);
+          span.setAttribute("compute.dispatch.task_name", result.task_name);
+          span.setAttribute("compute.dispatch.dev_mode", result.dev_mode);
+          span.setAttribute("compute.dispatch.command", payload.command);
+          span.setAttribute("compute.dispatch.target_job", payload.target_job ?? "");
+          await recordMlipCellDispatchEval(
+            env,
+            span,
+            task,
+            "pass",
+            "Accepted by MLIP cell dispatcher; lupine.mlip.cell_result.v1 beat is expected on completion.",
+          );
+        } catch (e) {
+          await recordMlipCellDispatchEval(
+            env,
+            span,
+            task,
+            "fail",
+            e instanceof Error ? e.message : String(e),
+          );
+          throw e;
+        }
+      },
+    );
     return;
   }
 

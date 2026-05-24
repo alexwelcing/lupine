@@ -78,6 +78,7 @@ import { MeasurementPanel } from './panels/MeasurementPanel';
 import { FlythroughPanel } from './panels/FlythroughPanel';
 import { TelemetryPanel } from './panels/TelemetryPanel';
 import { PotentialBrowser } from './panels/PotentialBrowser';
+import { EquilibriumSolveWorkbench } from './EquilibriumSolveWorkbench';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
 import { decodeFlythrough } from './flythrough';
 import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
@@ -1509,6 +1510,7 @@ export default function App() {
                 <ToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
                 <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => setActivePanel('analysis')} />
                 <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => setActivePanel('export')} />
+                <ToolButton icon={<IconAtoms />} label="Equilibrium" active={activePanel === 'equilibrium'} onClick={() => setActivePanel('equilibrium')} />
                 <ToolButton icon={<IconAnalysis />} label="Potentials" active={showPotentialBrowser} onClick={() => setShowPotentialBrowser(true)} />
                 {/* Telemetry is a developer surface — visible only with ?dev=1.
                     Production users see 3 tabs: Visuals · Analysis · Export. */}
@@ -1546,7 +1548,7 @@ export default function App() {
             right: 0,
             bottom: 0,
             left: isMobile ? 0 : 'auto',
-            width: isMobile ? '100%' : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' ? 360 : 320),
+            width: isMobile ? '100%' : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320),
             height: isMobile ? '55vh' : 'auto',
             borderLeft: isMobile ? 'none' : '1px solid var(--border-subtle)',
             borderTop: isMobile ? '1px solid var(--border-subtle)' : 'none',
@@ -1590,6 +1592,7 @@ export default function App() {
                   totalFrames={totalFrames}
                 />
               )}
+              {activePanel === 'equilibrium' && <EquilibriumSolveWorkbench />}
             </ErrorBoundary>
           </div>
         )}
@@ -1769,5 +1772,4 @@ const kbdStyle: React.CSSProperties = {
   borderRadius: 0,
   marginRight: 4,
 };
-
 

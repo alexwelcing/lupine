@@ -54,8 +54,8 @@ function OpsDashboard() {
     >
       <div className="glass-panel p-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-4 border-b border-[var(--outline-variant)]">
-          <h2 className="font-display tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Recent Deployments</h2>
-          <span className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-widest mt-2 md:mt-0">
+          <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Recent Deployments</h2>
+          <span className="font-mono text-[11px] text-[var(--on-surface-variant)] uppercase tracking-[0.08em] mt-2 md:mt-0">
             {deployments.length} runs tracked
           </span>
         </div>

@@ -34,7 +34,6 @@
   --font-sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   --font-serif: "Rumelaz Gekinsa", "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
   --font-mono: "CS Claire Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --font-display: "Rumelaz Gekinsa", "Playfair Display", Georgia, serif;
   --font-heading: "Rumelaz Gekinsa", "Playfair Display", Georgia, serif;
   --font-ui: "Space Grotesk", Inter, system-ui, sans-serif;
 
@@ -98,10 +97,9 @@
     color: var(--primary-foreground);
   }
 
-  /* Custom fonts only ship Regular (400). Prevent ugly browser-synthesized bold/italic. */
-  .font-display, .font-serif, .font-mono {
-    font-synthesis: none;
-  }
+/* Custom fonts only ship Regular (400). Prevent ugly browser-synthesized bold/italic. */
+.font-serif  { font-family: var(--font-serif); font-synthesis: none; }
+.font-mono   { font-family: var(--font-mono);  font-synthesis: none; }
 
   /* Subtle scrollbars */
   ::-webkit-scrollbar {
