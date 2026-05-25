@@ -7,7 +7,7 @@
 
 import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
-import { OrbitControls, GizmoHelper, GizmoViewport, Environment, ContactShadows } from '@react-three/drei';
+import { OrbitControls, GizmoHelper, GizmoViewport, ContactShadows } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import { ScenePostprocessing } from './postprocess/ScenePostprocessing';
 import { POSTPROCESS_PRESETS } from './postprocess/presets';
@@ -17,6 +17,8 @@ import * as THREE from 'three';
 import { XR, createXRStore, useXR } from '@react-three/xr';
 import { USDZExportHelper } from './export/USDZExportPipeline';
 import { XREnvironmentDome } from './xr/XREnvironmentDome';
+import { XRLightEstimation } from './xr/XRLightEstimation';
+import { SceneLighting } from './SceneLighting';
 
 // XR store — tuned for the Meta Quest browser (Quest 2/3/Pro) while staying
 // graceful on non-Meta runtimes. All advanced features are requested as
@@ -28,14 +30,28 @@ export const xrStore = createXRStore({
   frameRate: 'high',
   // Foveated rendering — Quest GPU loves this; 0 disables, 1 is max.
   foveation: 0.5,
-  // Optional WebXR features. Quest 3 supports all of these; older devices
-  // simply ignore them. Requesting them up-front means we don't have to
-  // re-negotiate later if/when we wire surface-placement, mesh occlusion, etc.
-  handTracking: true,
-  hitTest: true,
-  anchors: true,
-  planeDetection: true,
-  meshDetection: true,
+  // We hand-build the session init (rather than use the named feature options)
+  // so we can request 'light-estimation' alongside the usual Quest 3 features —
+  // @react-three/xr has no first-class option for it, and customSessionInit
+  // takes over feature negotiation entirely (see @pmndrs/xr buildXRSessionInit).
+  // 'light-estimation' lets XRLightEstimation mirror the real surroundings onto
+  // the molecule (campfire reflections in low light). Everything stays optional,
+  // so a session still starts on devices that lack any given feature; this list
+  // mirrors the previous defaults (hand-tracking, layers, hit-test, anchors,
+  // plane/mesh detection, dom-overlay) plus light-estimation.
+  customSessionInit: {
+    requiredFeatures: ['local-floor'],
+    optionalFeatures: [
+      'hand-tracking',
+      'layers',
+      'hit-test',
+      'anchors',
+      'plane-detection',
+      'mesh-detection',
+      'dom-overlay',
+      'light-estimation',
+    ],
+  },
   // Direct manipulation lives in XRMoleculeInteraction (reads joint poses
   // every frame). The short hand ray remains as a fallback for menu / UI.
   hand: {
@@ -499,7 +515,6 @@ export default function App() {
   const playbackSpeed = useStore(s => s.playbackSpeed);
   const colorMode = useStore(s => s.colorMode);
   const colorProperty = useStore(s => s.colorProperty);
-  const environmentPreset = useStore(s => s.environmentPreset);
   const materialPreset = useStore(s => s.materialPreset);
   const materialIntensity = useStore(s => s.materialIntensity);
   const rimLightIntensity = useStore(s => s.rimLightIntensity);
@@ -602,8 +617,6 @@ export default function App() {
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
   const anomalyTracking = useStore(s => s.anomalyTracking);
-  const ambientLightIntensity = useStore(s => s.ambientLightIntensity);
-  const dirLightIntensity = useStore(s => s.dirLightIntensity);
   const atomTexture = useStore(s => s.atomTexture);
   const loadedAtomCount = useStore(s => s.loadedAtomCount);
   // Cluster splats for huge-scene LOD (Phase 4). Built once per frame
@@ -1140,52 +1153,17 @@ export default function App() {
             <ExportManager />
             <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} imageUrl={bg.image} />
             <XREnvironmentDome imageUrl={bg.image} top={bg.top} bottom={bg.bottom} />
+            {/* Real-world light estimation: in AR this takes over scene.environment
+                with a live reflection map so the molecule mirrors the surroundings
+                (e.g. campfire) and adds a directional light tracking the real key
+                light. No-op outside an estimation-capable immersive-ar session. */}
+            <XRLightEstimation />
 
-            <ambientLight intensity={ambientLightIntensity} />
-            {(() => {
-              const r = 11.18;
-              const kaz = keyLightAzimuth * Math.PI / 180;
-              const kel = keyLightElevation * Math.PI / 180;
-              const kx = r * Math.cos(kel) * Math.sin(kaz);
-              const ky = r * Math.sin(kel);
-              const kz = r * Math.cos(kel) * Math.cos(kaz);
-
-              const faz = fillLightAzimuth * Math.PI / 180;
-              const fel = fillLightElevation * Math.PI / 180;
-              const fx = r * Math.cos(fel) * Math.sin(faz);
-              const fy = r * Math.sin(fel);
-              const fz = r * Math.cos(fel) * Math.cos(faz);
-
-              const raz = rimLightAzimuth * Math.PI / 180;
-              const rel = rimLightElevation * Math.PI / 180;
-              const rx = r * Math.cos(rel) * Math.sin(raz);
-              const ry = r * Math.sin(rel);
-              const rz = r * Math.cos(rel) * Math.cos(raz);
-
-              return (
-                <>
-                  <directionalLight position={[kx, ky, kz]} intensity={dirLightIntensity} />
-                  {(!file?.trajectory?.frames?.[0]?.positions?.length || file.trajectory.frames[0].positions.length / 3 <= 50000) && (
-                    <>
-                      <directionalLight position={[fx, fy, fz]} intensity={dirLightIntensity * 0.3} color={fillLightColor} />
-                      <directionalLight position={[rx, ry, rz]} intensity={dirLightIntensity * 0.15} color={rimLightColor} />
-                    </>
-                  )}
-                </>
-              );
-            })()}
-          {/* HDRI environment, coupled to the postprocess preset. Bonds (which
-              use MeshPhysicalMaterial) automatically pick this up via
-              scene.environment for IBL specular — they reflect studio in
-              studio preset, sunset in cinematic, night in editorial, etc.
-              The store-level `environmentPreset` is now a fallback override
-              when explicitly set to anything other than 'studio' (the default). */}
-          {(() => {
-            const drei = POSTPROCESS_PRESETS[postprocessPreset].env.drei;
-            const override = environmentPreset !== 'studio' && environmentPreset !== 'none' ? environmentPreset : null;
-            const final = override ?? drei;
-            return final ? <Environment preset={final as any} /> : null;
-          })()}
+            {/* Authored 3-point rig + HDRI environment, XR-aware: dims itself and
+                yields scene.environment to XRLightEstimation when AR lighting is
+                live. Bonds (MeshPhysicalMaterial) and the atom impostor shader both
+                read scene.environment for IBL reflections. */}
+            <SceneLighting />
 
             <CameraManager fileId={file?.name} center={center} distance={cameraDistance} />
             <PresetLegacyBridge />
