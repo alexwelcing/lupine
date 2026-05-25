@@ -7,7 +7,7 @@
 
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
+import type { Frame, Trajectory, ThermoData, ColormapName, ColorMode, RenderStyle, BondStats } from '@atlas/core/types';
 import type { NistCatalogEntry } from '@atlas/nist';
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
@@ -140,6 +140,21 @@ export interface AppState {
    *  worker's previous hard-coded value. */
   bondTolerance: number;
   bondColorMode: 'type' | 'length' | 'energy' | 'screening';
+  /** Computed bond-length statistics for the current frame (histogram,
+   *  percentiles, per-type-pair breakdown). Null until analysis runs;
+   *  consumed by the Bond Topology analysis panel. */
+  bondStats: BondStats | null;
+  /** How the bond cutoff is chosen: 'manual' uses bondCutoff directly,
+   *  'percentile' derives it from bondPercentileRange via applyPercentileCutoff. */
+  bondThresholdMode: 'manual' | 'percentile';
+  /** [lower, upper] percentile bounds (0–100) for percentile thresholding. */
+  bondPercentileRange: [number, number];
+  /** Snap bondCutoff to the first minimum of the bond-length histogram. */
+  grDrivenCutoff: boolean;
+  /** Render delocalized electron-density filaments instead of discrete bonds. */
+  filamentMode: boolean;
+  /** Fade bonds geometrically screened by a third atom (MEAM-style). */
+  meamScreening: boolean;
   /** Use the WebGPU compute pipeline for bond detection. Falls back to the
    *  CPU spatial-hash worker when WebGPU is unavailable or init fails. */
   useGpuBonds: boolean;
@@ -347,6 +362,13 @@ export interface AppState {
   setBondCutoff: (cutoff: number) => void;
   setBondTolerance: (tolerance: number) => void;
   setBondColorMode: (mode: AppState['bondColorMode']) => void;
+  setBondStats: (stats: BondStats | null) => void;
+  setBondThresholdMode: (mode: AppState['bondThresholdMode']) => void;
+  setBondPercentileRange: (range: [number, number]) => void;
+  applyPercentileCutoff: () => void;
+  toggleGrDrivenCutoff: () => void;
+  toggleFilamentMode: () => void;
+  toggleMeamScreening: () => void;
   setUseGpuBonds: (v: boolean) => void;
   setGpuBondsStatus: (status: AppState['gpuBondsStatus']) => void;
   reportBondsUpdate: (source: AppState['bondSource'], count: number) => void;
@@ -427,6 +449,12 @@ const DEFAULTS = {
   bondCutoff: 3.2,
   bondTolerance: 0.45,
   bondColorMode: 'type' as const,
+  bondStats: null as BondStats | null,
+  bondThresholdMode: 'manual' as const,
+  bondPercentileRange: [0, 95] as [number, number],
+  grDrivenCutoff: false,
+  filamentMode: false,
+  meamScreening: false,
   // Default ON: WebGPU bond detection has graceful CPU-worker fallback when
   // unsupported. Treating it as the primary path simplifies the user's first
   // experience — no toggle hunt for "why are bonds slow on my machine".
@@ -645,6 +673,17 @@ export const useStore = create<AppState>()(
     setBondCutoff: (bondCutoff) => set({ bondCutoff }),
     setBondTolerance: (bondTolerance) => set({ bondTolerance }),
     setBondColorMode: (bondColorMode) => set({ bondColorMode }),
+    setBondStats: (bondStats) => set({ bondStats }),
+    setBondThresholdMode: (bondThresholdMode) => set({ bondThresholdMode }),
+    setBondPercentileRange: (bondPercentileRange) => set({ bondPercentileRange }),
+    applyPercentileCutoff: () => {
+      const { bondStats, bondPercentileRange } = get();
+      const cutoff = bondStats?.percentiles[`p${bondPercentileRange[1]}`];
+      if (cutoff != null) set({ bondCutoff: cutoff, bondThresholdMode: 'percentile' });
+    },
+    toggleGrDrivenCutoff: () => set(s => ({ grDrivenCutoff: !s.grDrivenCutoff })),
+    toggleFilamentMode: () => set(s => ({ filamentMode: !s.filamentMode })),
+    toggleMeamScreening: () => set(s => ({ meamScreening: !s.meamScreening })),
     setUseGpuBonds: (useGpuBonds) => set({ useGpuBonds }),
     setGpuBondsStatus: (gpuBondsStatus) => set({ gpuBondsStatus }),
     reportBondsUpdate: (bondSource, lastBondCount) => set({ bondSource, lastBondCount }),
