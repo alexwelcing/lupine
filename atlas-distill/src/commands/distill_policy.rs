@@ -477,9 +477,12 @@ fn apply_support_corrections(
     {
         if let Some(bias) = number_field(correction, "relaxed_energy_bias_ev_per_atom") {
             let scaled_bias = bias * limits.energy_correction_scale;
-            if let Some(blocked) =
-                support_gate_action(request, "relaxed_energy_ev_per_atom", json!(scaled_bias), limits)
-            {
+            if let Some(blocked) = support_gate_action(
+                request,
+                "relaxed_energy_ev_per_atom",
+                json!(scaled_bias),
+                limits,
+            ) {
                 actions.push(blocked);
             } else if limits.energy_correction_scale == 0.0 {
                 actions.push(PolicyAction::blocked(
@@ -491,7 +494,10 @@ fn apply_support_corrections(
                 if let Some(current) = number_field(corrected, "relaxed_energy_ev_per_atom") {
                     let value = json!(current + scaled_bias);
                     set_field(corrected, "relaxed_energy_ev_per_atom", value.clone())?;
-                    applied.insert("relaxed_energy_bias_ev_per_atom".to_string(), json!(scaled_bias));
+                    applied.insert(
+                        "relaxed_energy_bias_ev_per_atom".to_string(),
+                        json!(scaled_bias),
+                    );
                     actions.push(PolicyAction::delta(
                         "relaxed_energy_ev_per_atom",
                         json!(scaled_bias),
@@ -837,17 +843,17 @@ fn support_gate_action(
             ));
         }
     }
-        if let Some(lift) = support_lift_fraction(field, diagnostics) {
-            if lift <= 0.0 {
-                return Some(PolicyAction::blocked(
-                    field,
-                    "blocked_nonpositive_support_lift",
-                    json!(lift),
-                ));
-            }
-            if lift < limits.min_support_lift_fraction {
-                return Some(PolicyAction::blocked(
-                    field,
+    if let Some(lift) = support_lift_fraction(field, diagnostics) {
+        if lift <= 0.0 {
+            return Some(PolicyAction::blocked(
+                field,
+                "blocked_nonpositive_support_lift",
+                json!(lift),
+            ));
+        }
+        if lift < limits.min_support_lift_fraction {
+            return Some(PolicyAction::blocked(
+                field,
                 "blocked_insufficient_support_lift",
                 json!(lift),
             ));
