@@ -1,0 +1,46 @@
+{
+  "created_at": "2026-05-26T06:16:37.399084Z",
+  "mlip_id": "mace-mp-0",
+  "policy_hash": "sha256:67e2db6e02dbe1c5f257660595ec26b85a521fa78a79483d80dde75c39cba6b5",
+  "rows": [
+    {
+      "baseline_error": 0.4116144147545402,
+      "baseline_speed": 0.3407208525808939,
+      "cuda_device": "NVIDIA L4",
+      "distill_accuracy_error": 0.2037855185975138,
+      "distill_accuracy_speed": 0.3196679619415582,
+      "error_delta_baseline_minus_distill": 0.2078288961570264,
+      "error_unit": "ev_per_atom_mae",
+      "gates": {
+        "applicability_gate": "passed_global_residual_no_material_overlap",
+        "energy_correction_gate": "passed"
+      },
+      "primary_metric": "energy_mae_ev_per_atom",
+      "relative_error_reduction_pct": 50.491160830934916,
+      "ribbon_feature_distance_proxy": 0.5311796967577688,
+      "row_id": "energy_volume",
+      "support_lift": 0.5748663460892526
+    },
+    {
+      "baseline_error": 0.560434933864709,
+      "baseline_speed": 0.20577985697418688,
+      "cuda_device": "NVIDIA L4",
+      "distill_accuracy_error": 0.3865709899806025,
+      "distill_accuracy_speed": 0.171638507469478,
+      "error_delta_baseline_minus_distill": 0.17386394388410648,
+      "error_unit": "relaxation_penalty",
+      "gates": {
+        "applicability_gate": "passed_global_residual_no_material_overlap",
+        "relaxation_energy_correction_gate": "passed"
+      },
+      "primary_metric": "relaxation_stability_penalty",
+      "relative_error_reduction_pct": 31.02303824730488,
+      "ribbon_feature_distance_proxy": 1.4572301989343721,
+      "row_id": "relaxation_stability",
+      "support_lift": 0.9997644568265271
+    }
+  ],
+  "run_id": "mlip-cloud-20260526-060418",
+  "schema": "lupine.library.mlip_cloud_transfer_summary.v1",
+  "support_manifest_hash": "sha256:755d69e522227d5d9cd3566fde697b7c30d395b6b5ff30212b5758bf6708148c"
+}

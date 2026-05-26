@@ -115,6 +115,10 @@ def _feature_map(prediction: dict[str, Any], output_field: str) -> dict[str, flo
         for key in list(features):
             if key.startswith("component:forces_ev_per_angstrom:"):
                 features.pop(key, None)
+    if output_field == "energy_ev_per_atom":
+        for key in list(features):
+            if key.startswith("force_"):
+                features.pop(key, None)
     return features
 
 
@@ -384,6 +388,51 @@ class DistillSupportModel:
                 else:
                     diagnostics["force_correction_gate"] = "blocked_no_support_lift"
 
+        if row_id == "relaxation_stability":
+            residuals = []
+            predictions = []
+            references = []
+            ribbon_samples: list[tuple[dict[str, Any], np.ndarray]] = []
+            for pred in support_predictions:
+                ref = _ref(pred)
+                if isinstance(pred.get("relaxed_energy_ev_per_atom"), (int, float)) and isinstance(
+                    ref.get("relaxed_energy_ev_per_atom"),
+                    (int, float),
+                ):
+                    prediction = float(pred["relaxed_energy_ev_per_atom"])
+                    reference = float(ref["relaxed_energy_ev_per_atom"])
+                    residual = reference - prediction
+                    residuals.append(residual)
+                    predictions.append(prediction)
+                    references.append(reference)
+                    ribbon_samples.append((pred, np.asarray([residual], dtype=float)))
+            if residuals:
+                bias = float(np.mean(residuals))
+                before_mae = float(np.mean(np.abs(np.asarray(predictions) - np.asarray(references))))
+                after_mae = float(
+                    np.mean(np.abs((np.asarray(predictions) + bias) - np.asarray(references)))
+                )
+                diagnostics["relaxation_energy_bias_candidate_ev_per_atom"] = bias
+                diagnostics["relaxation_energy_support_mae_before"] = before_mae
+                diagnostics["relaxation_energy_support_mae_after"] = after_mae
+                candidate_correction["relaxed_energy_bias_ev_per_atom"] = bias
+                ribbon_model, ribbon_diagnostics = _fit_residual_ribbon(
+                    row_id=row_id,
+                    output_field="relaxed_energy_ev_per_atom",
+                    samples=ribbon_samples,
+                    metric="mae",
+                )
+                diagnostics.update({f"relaxation_{key}": value for key, value in ribbon_diagnostics.items()})
+                if ribbon_model is not None:
+                    candidate_correction["ribbon_residual_correction_v1"] = ribbon_model
+                if abs(bias) <= MAX_ENERGY_BIAS_EV_PER_ATOM and after_mae <= before_mae * 0.98:
+                    correction["relaxed_energy_bias_ev_per_atom"] = bias
+                    diagnostics["relaxation_energy_correction_gate"] = "passed"
+                elif abs(bias) > MAX_ENERGY_BIAS_EV_PER_ATOM:
+                    diagnostics["relaxation_energy_correction_gate"] = "blocked_large_bias"
+                else:
+                    diagnostics["relaxation_energy_correction_gate"] = "blocked_no_support_lift"
+
         return cls(
             row_id=row_id,
             correction=correction,
@@ -447,6 +496,11 @@ class DistillSupportModel:
             if forces.shape[-1:] == bias.shape:
                 corrected["forces_ev_per_angstrom"] = (forces + bias).tolist()
                 interventions.append({"action": "delta_correct", "field": "forces_ev_per_angstrom"})
+        if "relaxed_energy_bias_ev_per_atom" in self.correction and "relaxed_energy_ev_per_atom" in corrected:
+            corrected["relaxed_energy_ev_per_atom"] = float(corrected["relaxed_energy_ev_per_atom"]) + float(
+                self.correction["relaxed_energy_bias_ev_per_atom"]
+            )
+            interventions.append({"action": "delta_correct", "field": "relaxed_energy_ev_per_atom"})
         return corrected, interventions
 
     def correction_evidence(self) -> dict[str, Any]:
@@ -497,6 +551,61 @@ class DistillSession:
             cache_enabled=self.policy.accelerate,
             label=f"{self.mlip_id}:{self.row_id}",
         )
+
+    def relaxation_prediction(
+        self,
+        record: dict[str, Any],
+        calc: Any,
+        row_spec: dict[str, Any],
+        default_predict: Callable[[dict[str, Any], Any, dict[str, Any]], dict[str, Any]],
+    ) -> dict[str, Any]:
+        prediction = default_predict(record, calc, row_spec)
+        if not self.enabled or self.profile != "accuracy":
+            return prediction
+        threshold = float(prediction.get("relaxation_force_threshold", row_spec.get("force_threshold", 0.05)))
+        current_force = float(prediction.get("relaxation_max_force_ev_per_angstrom", float("inf")))
+        if prediction.get("relaxation_converged") is True and current_force <= threshold:
+            return prediction
+
+        base_steps = max(1, int(row_spec.get("max_steps", 200)))
+        candidates = [prediction]
+        for factor in (2, 4):
+            retry_spec = dict(row_spec)
+            retry_spec["max_steps"] = base_steps * factor
+            retry = default_predict(record, calc, retry_spec)
+            retry["distill_relaxation_retry"] = {
+                "strategy": "extra_steps",
+                "step_factor": factor,
+                "max_steps": retry_spec["max_steps"],
+            }
+            candidates.append(retry)
+
+        def proxy_score(candidate: dict[str, Any]) -> tuple[int, float, float]:
+            converged = 1 if candidate.get("relaxation_converged") is True else 0
+            max_force = float(candidate.get("relaxation_max_force_ev_per_angstrom", float("inf")))
+            energy = float(candidate.get("relaxed_energy_ev_per_atom", float("inf")))
+            return (converged, -max_force, -abs(energy) if np.isfinite(energy) else float("-inf"))
+
+        best = max(candidates, key=proxy_score)
+        if best is not prediction:
+            retry = best.get("distill_relaxation_retry")
+            record = {
+                "action": "tighten",
+                "field": "relaxation_stability",
+                "reason": "extra_steps_improved_relaxation_proxy",
+                "baseline_max_force_ev_per_angstrom": current_force,
+                "selected_max_force_ev_per_angstrom": best.get("relaxation_max_force_ev_per_angstrom"),
+                "selected_converged": best.get("relaxation_converged"),
+                "retry": retry,
+            }
+            self.interventions.append(record)
+            self.event_log.emit("relaxation.tighten", **record)
+            best.setdefault("distill", {})
+            best["distill"] = {
+                **best["distill"],
+                "relaxation_retry": retry,
+            }
+        return best
 
     def fit_support(self, calc: Any, predict_row: PredictRow) -> None:
         if not self.enabled or self.support_manifest is None:

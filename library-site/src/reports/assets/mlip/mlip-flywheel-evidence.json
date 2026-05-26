@@ -1,0 +1,339 @@
+{
+  "schema": "lupine.library.mlip_flywheel_evidence.v1",
+  "evidence_policy": "Render measured artifacts only. Do not synthesize mock cells, placeholder trajectories, or illustrative metrics.",
+  "title": "MLIP Flywheel Visual Review",
+  "subtitle": "Evidence-backed stage, grid, triplet, evaluator, and relaxation review for the current MLIP flywheel.",
+  "why": {
+    "headline": "Autonomous science needs one surface that separates measured wins, blocked claims, and physical run evidence.",
+    "answer": "The current evidence supports using the 25-cell baseline as the reference, treating MACE energy and relaxation as cloud-reproduced Distill Accuracy anchors, and tightening elastic refusal policy before broader promotion.",
+    "decision": "Advance the flywheel as a research cockpit: promote verified anchors, falsify transfer row by row, and keep speed-up claims parked.",
+    "supporting_points": [
+      {
+        "label": "Baseline is real",
+        "metric": "25 / 25 cells",
+        "detail": "Five MLIPs were scored across five physics rows in the cloud baseline report.",
+        "source_id": "cloud_baseline_report"
+      },
+      {
+        "label": "Distill transfer is reproduced",
+        "metric": "2 cloud wins",
+        "detail": "The rebuilt MACE Cloud Run job reproduced energy and relaxation improvements on an NVIDIA L4 runner.",
+        "source_id": "cloud_mace_transfer_combined_support"
+      },
+      {
+        "label": "Transfer map is measured",
+        "metric": "5 / 5 MACE rows",
+        "detail": "The row-complete support manifest keeps energy won, adds a local relaxation win, blocks force/stress corrections, and exposes elastic policy friction.",
+        "source_id": "local_mace_transfer_combined_support"
+      }
+    ]
+  },
+  "work_guidance": {
+    "headline": "Use the evidence gaps as the work queue.",
+    "principle": "Every next task must name the claim it unlocks and the artifact required before the claim graduates.",
+    "next_moves": [
+      {
+        "priority": "P0",
+        "title": "Promote downstream transfer before acceleration",
+        "why": "MACE energy and relaxation are cloud-reproduced, but elastic still needs a stricter refusal gate.",
+        "claim_unlocked": "Distill Accuracy improves an energy-to-relaxation state path instead of only one scalar energy cell.",
+        "proof_required": "Revise elastic policy so high support lift cannot override large feature-distance warnings, then rerun the MACE row-transfer canary.",
+        "owner": "Rust Distill runtime plus local MLIP lab",
+        "state": "active"
+      },
+      {
+        "priority": "P0",
+        "title": "Make equilibrium solve a first-class run",
+        "why": "The CHGNet Al-fcc relaxation artifact shows the visual and scoring contract can carry real physics.",
+        "claim_unlocked": "The viewer can explain how an offset lattice moves toward a known reference result.",
+        "proof_required": "Add NIST/gallery-backed offset configuration, recorded frames, force-call curve, final-distance score, and failure class.",
+        "owner": "Rust runner contract and Three.js viewer",
+        "state": "active"
+      },
+      {
+        "priority": "P1",
+        "title": "Harden the hyperribbon intervention loop",
+        "why": "Energy improvements should transfer only when the runtime can justify correction, refusal, or backtrack decisions.",
+        "claim_unlocked": "Distill is an in-run accuracy guard rather than a post-hoc evaluator.",
+        "proof_required": "Treat the MACE elastic local regression as a policy test: large feature-distance plus tiny regression should refuse rather than apply.",
+        "owner": "Rust Distill engine",
+        "state": "active"
+      },
+      {
+        "priority": "P1",
+        "title": "Attach Phoenix after artifact truth is stable",
+        "why": "Phoenix should compare runs and evaluators, not own the inner loop.",
+        "claim_unlocked": "Future models can be compared against baseline and Distill variants in the correct project and dataset.",
+        "proof_required": "Verify dataset, experiment names, evaluator packets, trace IDs, and projection back into glim-think.",
+        "owner": "glim-think control plane",
+        "state": "ready after local artifacts"
+      },
+      {
+        "priority": "Hold",
+        "title": "Delay speed-up claims",
+        "why": "The page does not yet contain complete acceleration evidence.",
+        "claim_unlocked": "Accuracy plus speed can be claimed only after accuracy is stable.",
+        "proof_required": "Warm runtime and force-call budget beat Distill Accuracy without degrading normalized score beyond the agreed gate.",
+        "owner": "Cloud run promotion lane",
+        "state": "blocked by accuracy coverage"
+      }
+    ]
+  },
+  "summary": {
+    "baseline_cells_completed": 25,
+    "baseline_cells_total": 25,
+    "numeric_distill_triplets": 6,
+    "promoted_accuracy_cells": 3,
+    "cloud_confirmed_distill_cells": 2,
+    "local_mace_transfer_cells": 5,
+    "local_mace_transfer_wins": 2,
+    "claim_status": "energy and relaxation cloud-reproduced; 5x5x3 not claimed",
+    "worker_url": "https://glim-think-v1.aw-ab5.workers.dev",
+    "worker_version_id": "95a246de-a1b4-4ff2-b42a-da8844be34dd",
+    "visual_relaxation_artifact": "actual local CHGNet Al-fcc 2x2x2 relaxation run"
+  },
+  "sources": [
+    {
+      "id": "cloud_baseline_report",
+      "kind": "library_report",
+      "path": "docs/mlip-cloud-baseline-distill-report.md",
+      "description": "May 23, 2026 cloud baseline report with the completed 25-cell MLIP baseline and numeric Distill triplets."
+    },
+    {
+      "id": "cloud_mace_energy_featurefix_canary",
+      "kind": "cloud_run_artifact",
+      "paths": [
+        "reports/assets/mlip/mace-energy-cloud-featurefix-baseline-cell-result.json",
+        "reports/assets/mlip/mace-energy-cloud-featurefix-distill-cell-result.json",
+        "reports/assets/mlip/mace-energy-cloud-featurefix-distill-events.jsonl"
+      ],
+      "description": "May 26, 2026 MACE energy Cloud Run canary after excluding force-derived features from the energy residual ribbon. Baseline error 0.4116144148 eV/atom; Distill Accuracy error 0.2037854862 eV/atom on NVIDIA L4."
+    },
+    {
+      "id": "cloud_mace_transfer_combined_support",
+      "kind": "cloud_run_artifact",
+      "path": "reports/assets/mlip/mace-transfer-cloud-combined-support-summary.json",
+      "original_path": "tmp/cloud-results/frontend-guided-mace-transfer-combined-support-20260526",
+      "schema": "lupine.library.mlip_cloud_transfer_summary.v1",
+      "description": "May 26, 2026 MACE Cloud Run canary using the row-complete support manifest. Energy improves by 50.49%; relaxation improves by 31.02%; both ran on NVIDIA L4."
+    },
+    {
+      "id": "local_equilibrium_solve_score",
+      "kind": "local_run_artifact",
+      "path": "reports/assets/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json",
+      "original_path": "tmp/mlip-md-local/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json",
+      "schema": "lupine.distill.equilibrium_solve_score.v1",
+      "description": "Measured CHGNet Al-fcc 2x2x2 offset relaxation score and viewer frames."
+    },
+    {
+      "id": "local_mace_transfer_combined_support",
+      "kind": "local_run_artifact",
+      "path": "reports/assets/mlip/mace-transfer-local-combined-support-summary.json",
+      "original_path": "tmp/mlip-local/frontend-guided-mace-transfer-accuracy-combined-support-20260525",
+      "schema": "lupine.library.mlip_transfer_summary.v1",
+      "description": "May 26, 2026 local MACE row-transfer run using the row-complete MPtrj-plus-elastic support manifest. Energy and relaxation improve; forces and stress are gated neutral; elastic is runnable but needs refusal-policy tightening."
+    },
+    {
+      "id": "worker_deploy_verification",
+      "kind": "local_verification",
+      "description": "Worker health, workflow descriptors, gated mutation, and telemetry dry-run checks completed before this library view was added."
+    }
+  ],
+  "baseline": {
+    "source_id": "cloud_baseline_report",
+    "rows": [
+      { "id": "energy", "label": "Energy", "unit": "eV/atom MAE", "scale": "linear" },
+      { "id": "forces", "label": "Forces", "unit": "eV/A RMSE", "scale": "linear" },
+      { "id": "stress", "label": "Stress", "unit": "GPa MAE", "scale": "log10" },
+      { "id": "elastic", "label": "Elastic", "unit": "GPa MAE", "scale": "log10" },
+      { "id": "relaxation", "label": "Relaxation", "unit": "sealed penalty", "scale": "linear" }
+    ],
+    "mlips": [
+      { "id": "chgnet", "label": "CHGNet" },
+      { "id": "m3gnet", "label": "M3GNet" },
+      { "id": "mace", "label": "MACE" },
+      { "id": "orb", "label": "ORB-v3" },
+      { "id": "sevennet", "label": "SevenNet" }
+    ],
+    "cells": [
+      { "mlip_id": "chgnet", "row_id": "energy", "value": 0.1035 },
+      { "mlip_id": "chgnet", "row_id": "forces", "value": 0.1649 },
+      { "mlip_id": "chgnet", "row_id": "stress", "value": 0.4311 },
+      { "mlip_id": "chgnet", "row_id": "elastic", "value": 48.8708 },
+      { "mlip_id": "chgnet", "row_id": "relaxation", "value": 0.0557 },
+      { "mlip_id": "m3gnet", "row_id": "energy", "value": 0.4403 },
+      { "mlip_id": "m3gnet", "row_id": "forces", "value": 0.6262 },
+      { "mlip_id": "m3gnet", "row_id": "stress", "value": 1022.3483 },
+      { "mlip_id": "m3gnet", "row_id": "elastic", "value": 21634.7398 },
+      { "mlip_id": "m3gnet", "row_id": "relaxation", "value": 0.6683 },
+      { "mlip_id": "mace", "row_id": "energy", "value": 0.4116 },
+      { "mlip_id": "mace", "row_id": "forces", "value": 0.2644 },
+      { "mlip_id": "mace", "row_id": "stress", "value": 0.5669 },
+      { "mlip_id": "mace", "row_id": "elastic", "value": 35.5238 },
+      { "mlip_id": "mace", "row_id": "relaxation", "value": 0.5604 },
+      { "mlip_id": "orb", "row_id": "energy", "value": 0.4295 },
+      { "mlip_id": "orb", "row_id": "forces", "value": 0.1240 },
+      { "mlip_id": "orb", "row_id": "stress", "value": 0.2801 },
+      { "mlip_id": "orb", "row_id": "elastic", "value": 16.1451 },
+      { "mlip_id": "orb", "row_id": "relaxation", "value": 0.5327 },
+      { "mlip_id": "sevennet", "row_id": "energy", "value": 0.3997 },
+      { "mlip_id": "sevennet", "row_id": "forces", "value": 0.1957 },
+      { "mlip_id": "sevennet", "row_id": "stress", "value": 0.3536 },
+      { "mlip_id": "sevennet", "row_id": "elastic", "value": 38.5337 },
+      { "mlip_id": "sevennet", "row_id": "relaxation", "value": 0.5750 }
+    ],
+    "read": "CHGNet is strongest on energy and relaxation, ORB-v3 is strongest on forces, stress, and elastic, and M3GNet stress/elastic are fault-line evidence rather than headline claims."
+  },
+  "distill_triplets": [
+    {
+      "label": "MACE energy",
+      "row_id": "energy",
+      "mlip_id": "mace",
+      "baseline": 0.4116144148,
+      "distill_accuracy": 0.2037854862,
+      "distill_accuracy_accelerate": 0.2038,
+      "verdict": "promote_accuracy",
+      "note": "Cloud-reproduced after the energy ribbon excluded backend-sensitive force features."
+    },
+    {
+      "label": "SevenNet energy",
+      "row_id": "energy",
+      "mlip_id": "sevennet",
+      "baseline": 0.3997,
+      "distill_accuracy": 0.3046,
+      "distill_accuracy_accelerate": 0.2773,
+      "verdict": "promote_accuracy",
+      "note": "Backend-diverse accuracy win."
+    },
+    {
+      "label": "MACE relaxation",
+      "row_id": "relaxation",
+      "mlip_id": "mace",
+      "baseline": 0.5604349339,
+      "distill_accuracy": 0.38657099,
+      "distill_accuracy_accelerate": null,
+      "verdict": "promote_accuracy",
+      "note": "Cloud-reproduced transfer win from the row-complete support manifest."
+    },
+    {
+      "label": "MACE forces",
+      "row_id": "forces",
+      "mlip_id": "mace",
+      "baseline": 0.2643868292,
+      "distill_accuracy": 0.2643868081,
+      "distill_accuracy_accelerate": null,
+      "verdict": "neutral_blocked",
+      "note": "Force correction gate blocked for no support lift; no material accuracy claim."
+    },
+    {
+      "label": "MACE stress",
+      "row_id": "stress",
+      "mlip_id": "mace",
+      "baseline": 0.5669407405,
+      "distill_accuracy": 0.5669405228,
+      "distill_accuracy_accelerate": null,
+      "verdict": "neutral_blocked",
+      "note": "Stress correction gate blocked for no support lift; effectively unchanged."
+    },
+    {
+      "label": "MACE elastic",
+      "row_id": "elastic",
+      "mlip_id": "mace",
+      "baseline": 35.5237066988,
+      "distill_accuracy": 35.5237975227,
+      "distill_accuracy_accelerate": null,
+      "verdict": "revise_policy",
+      "note": "Runnable with combined support, but large feature-distance produced a tiny regression; refusal gate should tighten."
+    }
+  ],
+  "relaxation_artifact": {
+    "source_id": "local_equilibrium_solve_score",
+    "url": "/reports/assets/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json"
+  },
+  "stages": [
+    {
+      "id": "runner_contract",
+      "label": "Runner contract",
+      "state": "evidence complete for baseline",
+      "quant": "25 / 25 cloud baseline cells",
+      "qual": "One sealed scoring surface across five MLIPs and five physics rows.",
+      "evidence": ["cloud_baseline_report", "canonical-structures-v2", "distill-b7e84b3bc image tag"]
+    },
+    {
+      "id": "distill_runtime",
+      "label": "Distill runtime",
+      "state": "energy and relaxation cloud-reproduced",
+      "quant": "MACE energy 50.49% lower error on GCP L4; MACE relaxation 31.02% lower cloud penalty",
+      "qual": "The frontend-guided loop exposed and fixed local/cloud feature drift, then turned downstream rows into falsifiers for policy quality.",
+      "evidence": ["cloud_mace_transfer_combined_support", "local_mace_transfer_combined_support", "MACE elastic policy revision"]
+    },
+    {
+      "id": "equilibrium_solve",
+      "label": "Equilibrium solve",
+      "state": "local artifact available",
+      "quant": "CHGNet Al-fcc 2x2x2 improved distance by 0.897381 in 30 force calls",
+      "qual": "The visual trajectory is a measured local relaxation artifact, not an illustrative lattice.",
+      "evidence": ["local_equilibrium_solve_score", "ASE bulk(Al, fcc, a=4.05)", "CHGNet"]
+    },
+    {
+      "id": "phoenix",
+      "label": "Phoenix evaluation",
+      "state": "not verified in this local shell",
+      "quant": "No live Phoenix relay smoke in this verification pass",
+      "qual": "Phoenix remains the evidence and comparison home; Distill remains the intervention policy owner.",
+      "evidence": ["project/dataset alignment still requires live check"]
+    },
+    {
+      "id": "publish_gate",
+      "label": "Publish gate",
+      "state": "not claimed",
+      "quant": "5x5x3 superiority not complete",
+      "qual": "The library should show coverage and blockers without turning planned cells into evidence.",
+      "evidence": ["baseline plane complete", "Distill planes partial", "speed win not claimed"]
+    }
+  ],
+  "evaluators": [
+    {
+      "name": "distill.leakage_guard",
+      "owner": "Rust runtime",
+      "target": "support and eval separation",
+      "kind": "quant",
+      "state": "runtime evidence required"
+    },
+    {
+      "name": "distill.intervention_trace",
+      "owner": "Rust runtime",
+      "target": "actual accept, correct, block, backtrack, or refuse actions",
+      "kind": "qual",
+      "state": "artifact-backed only"
+    },
+    {
+      "name": "distill.accuracy_delta",
+      "owner": "Phoenix evaluator",
+      "target": "sealed score versus baseline",
+      "kind": "quant",
+      "state": "requires correct Phoenix project/dataset verification"
+    },
+    {
+      "name": "distill.speed_delta",
+      "owner": "Phoenix evaluator",
+      "target": "warm runtime and force-call budget",
+      "kind": "quant",
+      "state": "not claimed"
+    },
+    {
+      "name": "physics.relaxation_plausibility",
+      "owner": "Lupine app",
+      "target": "measured trajectory, force curve, and failure class",
+      "kind": "qual",
+      "state": "available for CHGNet Al-fcc local run"
+    },
+    {
+      "name": "theorem.speedup_bound_observed",
+      "owner": "theory bridge",
+      "target": "measured hook versus declared hook",
+      "kind": "quant",
+      "state": "evidence only"
+    }
+  ]
+}

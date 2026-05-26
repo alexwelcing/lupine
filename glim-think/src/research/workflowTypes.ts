@@ -76,6 +76,8 @@ export interface WorkflowAction {
     | "evaluate_unit"
     | "repair_input"
     | "inspect_failure"
+    | "evaluate_hypothesis"
+    | "revise_hypothesis"
     | "sync_phoenix"
     | "summarize_campaign";
   label: string;

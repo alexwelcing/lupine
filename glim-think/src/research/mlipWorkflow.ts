@@ -1,6 +1,7 @@
 import type { Env } from "../types";
 import {
   createMlipCampaign,
+  campaignVariantIds,
   evaluateCampaignTriplet,
   getMlipCampaign,
   markMlipCampaignCellEnqueued,
@@ -55,7 +56,7 @@ function supportManifestUrl(env: Env): string {
   const configured = env.MLIP_DISTILL_SUPPORT_MANIFEST_URL?.trim();
   if (configured) return configured;
   const project = env.GCP_PROJECT_ID?.trim() || "shed-489901";
-  return `gs://${project}-atlas-inputs/mlip-baseline/canonical-distill-support-v1/manifest.json`;
+  return `gs://${project}-atlas-inputs/mlip-baseline/canonical-distill-support-mptrj-train-plus-elastic-v1/manifest.json`;
 }
 
 async function loadCampaign(env: Env, campaignId: string): Promise<MlipCampaignState | Response> {
@@ -138,7 +139,10 @@ async function enqueueTriplet(
     triplet.baseline,
     triplet.distill_accuracy,
     triplet.distill_accuracy_accelerate,
-  ].filter((cell): cell is MlipCampaignCell => Boolean(cell));
+  ].filter((cell): cell is MlipCampaignCell => {
+    if (!cell) return false;
+    return campaignVariantIds(campaign.campaign).includes(cell.variant_id);
+  });
   const stale = tripletCells
     .filter((cell) => cell.status !== "queued")
     .map((cell) => ({ cell_id: cell.cell_id, status: cell.status, reason: "not queued" }));
@@ -197,7 +201,11 @@ export const mlipWorkflowAdapter: ResearchWorkflowAdapter = {
   async nextUnits(env, campaignId, limit) {
     const campaign = await loadCampaign(env, campaignId);
     if (campaign instanceof Response) return campaign;
-    const units = nextMlipCampaignTriplets(campaign.cells, limit).map(withUnitId);
+    const units = nextMlipCampaignTriplets(
+      campaign.cells,
+      limit,
+      campaignVariantIds(campaign.campaign),
+    ).map(withUnitId);
     return workflowJson({
       workflow_id: WORKFLOW_ID,
       campaign_id: campaignId,
@@ -295,6 +303,7 @@ export const mlipWorkflowAdapter: ResearchWorkflowAdapter = {
       workflow_id: WORKFLOW_ID,
       campaign_id: campaignId,
       summary: campaign.summary,
+      state_hypotheses: packet.state_hypotheses,
       phoenix_report_url: `/research/workflows/${WORKFLOW_ID}/campaigns/${encodeURIComponent(campaignId)}/report?format=phoenix`,
       phoenix: {
         project: packet.phoenix.project,

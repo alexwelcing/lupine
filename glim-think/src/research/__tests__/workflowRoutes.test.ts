@@ -98,6 +98,7 @@ describe("research workflow routes", () => {
     expect(body.workflow.cloudflare.routes).toContain("GET /research/workflows/mlip-5x5x3/campaigns/:campaign_id/ops");
     expect(body.workflow.phoenix.evaluators).toContain("mlip_triplet.delta_verdict");
     expect(body.workflow.phoenix.evaluators).toContain("distill.leakage_guard");
+    expect(body.workflow.phoenix.evaluators).toContain("distill.state_coupled_lattice_lift");
   });
 
   it("renders a 5x5x3 Phoenix packet with stable dataset examples", async () => {
@@ -111,6 +112,7 @@ describe("research workflow routes", () => {
       phoenix: { project: { name: string }; dataset: { name: string } };
       examples: Array<{ example_id: string; metadata: { example_granularity?: string } }>;
       experiments: Array<{ variant_id: string; runs: Array<{ example_id: string }> }>;
+      state_hypotheses: Array<{ hypothesis_id: string; verdict: string }>;
     };
 
     expect(response?.status).toBe(200);
@@ -127,6 +129,10 @@ describe("research workflow routes", () => {
       "distill_accuracy_accelerate",
     ]);
     expect(body.experiments[0].runs[0].example_id).toBe(body.examples[0].example_id);
+    expect(body.state_hypotheses[0]).toMatchObject({
+      hypothesis_id: "distill.state_surface_lifts_downstream",
+      verdict: "insufficient_data",
+    });
   });
 
   it("serves MLIP units through the generic workflow surface", async () => {

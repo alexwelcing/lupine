@@ -46,6 +46,22 @@ def filter_rows(rows: list[dict[str, Any]], excluded: set[tuple[str, str, str]])
     return [row for row in rows if row_identity(row) not in excluded]
 
 
+def support_row_from_manifest(manifest_path: Path, row_id: str) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    row_group = ((manifest.get("row_fixtures") or {}).get(row_id) or {}).get("structures") or []
+    if not row_group:
+        raise RuntimeError(f"{manifest_path} has no support structures for {row_id}")
+    row_spec = (manifest.get("row_specs") or {}).get(row_id) or {
+        "min_cases": 6,
+        "error_tolerance": 50.0,
+        "error_unit": "gpa_mae",
+    }
+    provenance = (manifest.get("reference_provenance") or {}).get(row_id) or {
+        "source": f"{manifest_path.name}:{row_id}",
+    }
+    return {"structures": row_group}, row_spec, provenance
+
+
 def build_manifest(args: argparse.Namespace) -> dict[str, Any]:
     canonical.MPTRJ_SPLIT = args.split
     candidates = canonical.fetch_mptrj_candidates(args.max_candidates, args.max_atoms)
@@ -62,6 +78,14 @@ def build_manifest(args: argparse.Namespace) -> dict[str, Any]:
     force_rows = canonical.select_distinct(force_rows, args.per_row, "task_id")
     stress_rows = canonical.select_distinct(stress_rows, args.per_row, "task_id")
     relaxation_rows = canonical.select_distinct(force_rows + candidates, min(3, args.per_row), "mp_id")
+    elastic_group = None
+    elastic_spec = None
+    elastic_provenance = None
+    if args.elastic_support_manifest:
+        elastic_group, elastic_spec, elastic_provenance = support_row_from_manifest(
+            args.elastic_support_manifest,
+            "elastic_constants",
+        )
     manifest = {
         "schema": "lupine.mlip.fixture_manifest.v2",
         "fixture_id": args.fixture_id,
@@ -136,6 +160,10 @@ def build_manifest(args: argparse.Namespace) -> dict[str, Any]:
             },
         },
     }
+    if elastic_group and elastic_spec:
+        manifest["row_specs"]["elastic_constants"] = elastic_spec
+        manifest["row_fixtures"]["elastic_constants"] = elastic_group
+        manifest["reference_provenance"]["elastic_constants"] = elastic_provenance
     canonical_json = json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode("utf-8")
     manifest["manifest_hash"] = "sha256:" + hashlib.sha256(canonical_json).hexdigest()
     return manifest
@@ -143,9 +171,19 @@ def build_manifest(args: argparse.Namespace) -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=Path("gcp/mlip-cell-runner/fixtures/canonical_distill_support_mptrj_train_v1.json"))
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("gcp/mlip-cell-runner/fixtures/canonical_distill_support_mptrj_train_plus_elastic_v1.json"),
+    )
     parser.add_argument("--exclude-manifest", type=Path, default=Path("gcp/mlip-cell-runner/fixtures/canonical_structures_v2_mptrj.json"))
-    parser.add_argument("--fixture-id", default="canonical-distill-support-mptrj-train-v1")
+    parser.add_argument("--fixture-id", default="canonical-distill-support-mptrj-train-plus-elastic-v1")
+    parser.add_argument(
+        "--elastic-support-manifest",
+        type=Path,
+        default=Path("gcp/mlip-cell-runner/fixtures/canonical_distill_support_v1.json"),
+        help="Support-only manifest to borrow non-overlapping elastic_constants rows from.",
+    )
     parser.add_argument("--split", default="train")
     parser.add_argument("--max-candidates", type=int, default=500)
     parser.add_argument("--max-atoms", type=int, default=80)

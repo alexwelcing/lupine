@@ -67,6 +67,15 @@ class RowSelection:
 
 
 class RuntimeSession(Protocol):
+    def relaxation_prediction(
+        self,
+        record: dict[str, Any],
+        calc: Any,
+        row_spec: dict[str, Any],
+        default_predict: Any,
+    ) -> dict[str, Any]:
+        ...
+
     def apply_row_policy(self, predictions: list[dict[str, Any]]) -> list[dict[str, Any]]:
         ...
 
@@ -503,11 +512,18 @@ def run_row(
         if cached is not None:
             predictions.append(cached)
             continue
-        prediction = (
-            relaxation_prediction(case, calc, selection.row_spec)
-            if row_id == "relaxation_stability"
-            else single_point_prediction(case, calc, selection.row_spec)
-        )
+        if row_id == "relaxation_stability":
+            if runtime_session is not None and hasattr(runtime_session, "relaxation_prediction"):
+                prediction = runtime_session.relaxation_prediction(
+                    case,
+                    calc,
+                    selection.row_spec,
+                    relaxation_prediction,
+                )
+            else:
+                prediction = relaxation_prediction(case, calc, selection.row_spec)
+        else:
+            prediction = single_point_prediction(case, calc, selection.row_spec)
         if checkpoint is not None:
             checkpoint.record_prediction(row_id, case_index, case, prediction)
         predictions.append(prediction)

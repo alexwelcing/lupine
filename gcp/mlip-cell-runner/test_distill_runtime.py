@@ -222,6 +222,26 @@ def test_support_model_emits_rank_aware_residual_ribbon():
     assert model.diagnostics["stress_residual_ribbon_matrix_rank"] >= 1
 
 
+def test_energy_residual_ribbon_does_not_select_force_features():
+    model = DistillSupportModel.fit(
+        "energy_volume",
+        [
+            {
+                "energy_ev_per_atom": float(idx),
+                "forces_ev_per_angstrom": [[float(idx), 0.0, 0.0], [float(idx), 0.0, 0.0]],
+                "stress_gpa": [float(idx), float(idx) * 0.5, 0.0],
+                "reference": {"energy_ev_per_atom": float(idx) - 0.1 * idx},
+            }
+            for idx in range(1, 6)
+        ],
+    )
+
+    ribbon = model.candidate_correction["ribbon_residual_correction_v1"]
+
+    assert ribbon["field"] == "energy_ev_per_atom"
+    assert all(not name.startswith("force_") for name in ribbon["feature_names"])
+
+
 def test_distill_session_can_delegate_policy_to_rust():
     atlas_distill = atlas_distill_bin()
     if not atlas_distill.exists():

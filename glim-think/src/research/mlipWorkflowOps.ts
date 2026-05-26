@@ -1,5 +1,6 @@
 import type { Env } from "../types";
 import {
+  campaignVariantIds,
   getMlipCampaign,
   nextMlipCampaignTriplets,
   type MlipCampaignTriplet,
@@ -18,6 +19,7 @@ import {
   type WorkflowOpsSnapshot,
 } from "./workflowTypes";
 import { MLIP_PHOENIX_DATASET_NAME, MLIP_PHOENIX_EVALUATOR_SPECS } from "./mlipPhoenix";
+import { evaluateMlipStateHypotheses } from "./mlipStateHypotheses";
 
 const WORKFLOW_ID = "mlip-5x5x3";
 
@@ -41,6 +43,7 @@ export const MLIP_WORKFLOW_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "glim-think/src/research/mlipWorkflowOps.ts",
       "glim-think/src/research/mlipCampaign.ts",
       "glim-think/src/research/mlipPhoenix.ts",
+      "glim-think/src/research/mlipStateHypotheses.ts",
       "glim-think/src/research/queue.ts",
       "glim-think/src/feed/beats.ts",
       "gcp/mlip-cell-runner/mlip_cell_runner.py",
@@ -129,7 +132,10 @@ export async function inspectMlipWorkflowCampaign(
     (triplet) => triplet.status === "completed" && !triplet.evaluation,
   );
   const failedTriplets = campaign.triplets.filter((triplet) => triplet.status === "failed");
-  const nextQueued = nextMlipCampaignTriplets(campaign.cells, 5);
+  const requiredVariants = campaignVariantIds(campaign.campaign);
+  const nextQueued = nextMlipCampaignTriplets(campaign.cells, 5, requiredVariants);
+  const stateHypotheses = evaluateMlipStateHypotheses(campaign.cells);
+  const campaignStateHypothesis = stateHypotheses.find((evaluation) => evaluation.scope === "campaign");
   const actions: WorkflowAction[] = [];
 
   for (const cell of missingFixtureCells.slice(0, 5)) {
@@ -151,7 +157,9 @@ export async function inspectMlipWorkflowCampaign(
       action_id: `evaluate:${id}`,
       kind: "evaluate_unit",
       label: `Evaluate completed MLIP triplet ${id}`,
-      reason: "All three variant cells are complete but no durable triplet verdict is recorded yet.",
+      reason: requiredVariants.includes("distill_accuracy_accelerate")
+        ? "All three variant cells are complete but no durable triplet verdict is recorded yet."
+        : "Baseline and Distill Accuracy cells are complete but no durable accuracy verdict is recorded yet.",
       priority: 1,
       unit_id: id,
       route: {
@@ -169,7 +177,9 @@ export async function inspectMlipWorkflowCampaign(
       action_id: `enqueue:${id}`,
       kind: "enqueue_unit",
       label: `Dispatch next MLIP triplet ${id}`,
-      reason: "This is the next queued row/MLIP unit for the 5x5x3 cadence.",
+      reason: requiredVariants.includes("distill_accuracy_accelerate")
+        ? "This is the next queued row/MLIP unit for the 5x5x3 cadence."
+        : "This is the next queued row/MLIP unit for the accuracy-only cadence.",
       priority: 2,
       unit_id: id,
       route: {
@@ -222,6 +232,38 @@ export async function inspectMlipWorkflowCampaign(
     });
   }
 
+  if (campaignStateHypothesis?.verdict === "refuted") {
+    actions.push({
+      action_id: "revise-state-hypothesis",
+      kind: "revise_hypothesis",
+      label: "Revise state-coupled Distill hypothesis",
+      reason:
+        "The energy/free-energy anchor did not lift downstream lattice observables; revise support selection, ribbon limits, or row coupling before claiming an accuracy win.",
+      priority: 1,
+      route: {
+        method: "GET",
+        path: `/research/workflows/${WORKFLOW_ID}/campaigns/${encodeURIComponent(campaignId)}/report?format=phoenix`,
+      },
+      can_auto_execute: false,
+      surfaces: ["git", "cloudflare", "phoenix", "ledger", "agenda"],
+    });
+  } else if (campaignStateHypothesis?.verdict === "testing") {
+    actions.push({
+      action_id: "evaluate-state-hypothesis",
+      kind: "evaluate_hypothesis",
+      label: "Evaluate state-coupled lattice lift",
+      reason:
+        "The campaign has partial state-coupled evidence; inspect the Phoenix packet before promoting a new hyperribbon version.",
+      priority: 3,
+      route: {
+        method: "GET",
+        path: `/research/workflows/${WORKFLOW_ID}/campaigns/${encodeURIComponent(campaignId)}/report?format=phoenix`,
+      },
+      can_auto_execute: true,
+      surfaces: ["cloudflare", "phoenix", "ledger", "agenda"],
+    });
+  }
+
   const state: WorkflowOpsSnapshot["state"] =
     failedTriplets.length > 0
       ? "failed"
@@ -238,6 +280,9 @@ export async function inspectMlipWorkflowCampaign(
     cells_completed: campaign.summary.completed,
     triplets_total: campaign.triplets.length,
     evaluations_total: campaign.evaluations.length,
+    state_hypotheses_total: stateHypotheses.length,
+    state_hypotheses_refuted: stateHypotheses.filter((evaluation) => evaluation.verdict === "refuted").length,
+    state_hypotheses_testing: stateHypotheses.filter((evaluation) => evaluation.verdict === "testing").length,
     missing_fixture_cells: missingFixtureCells.length,
     ...Object.fromEntries(
       Object.entries(countBy(campaign.triplets.map((triplet) => triplet.status))).map(([key, value]) => [

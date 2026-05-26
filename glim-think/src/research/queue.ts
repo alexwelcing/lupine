@@ -472,6 +472,39 @@ function defaultMlipArtifactPrefix(
   ].join("/");
 }
 
+function mlipPolicyUrlFromRegistry(
+  env: Env,
+  task: MlipCellRunTask,
+  normalized: { row_id: string; variant_id: string },
+): string | undefined {
+  const raw = (env as Env & { MLIP_DISTILL_POLICY_URLS_JSON?: string }).MLIP_DISTILL_POLICY_URLS_JSON?.trim();
+  if (!raw) return undefined;
+  let registry: Record<string, unknown>;
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    registry = parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? parsed as Record<string, unknown>
+      : {};
+  } catch {
+    throw new Error("MLIP_DISTILL_POLICY_URLS_JSON must be a JSON object");
+  }
+  const candidates = [
+    `${normalized.variant_id}:${normalized.row_id}:${task.mlip_id}`,
+    `${normalized.row_id}:${task.mlip_id}`,
+    `${normalized.variant_id}:${normalized.row_id}`,
+    `${normalized.variant_id}:${task.mlip_id}`,
+    normalized.row_id,
+    task.mlip_id,
+    `default_${distillProfileForVariant(normalized.variant_id)}`,
+    "default",
+  ];
+  for (const key of candidates) {
+    const value = registry[key];
+    if (typeof value === "string" && value.trim()) return value.trim();
+  }
+  return undefined;
+}
+
 export function distillProfileForVariant(variantId: string): "off" | "accuracy" | "accuracy_accelerate" {
   const normalized = normalizeMlipRunnerVariantId(variantId);
   if (normalized === "distill_accuracy") return "accuracy";
@@ -530,6 +563,7 @@ export function buildMlipCellRunPayload(
     );
   }
   const distillPolicyUrl = task.distill_policy_url ??
+    mlipPolicyUrlFromRegistry(env, task, { row_id: rowId, variant_id: variantId }) ??
     (env as Env & { MLIP_DISTILL_POLICY_URL?: string }).MLIP_DISTILL_POLICY_URL;
   if (distillProfile !== "off" && distillPolicyUrl) args.push("--distill-policy-url", distillPolicyUrl);
   return {

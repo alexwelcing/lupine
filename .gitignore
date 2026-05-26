@@ -50,6 +50,7 @@ lupine-site/test-results/
 
 # Scratch & test dumps
 
+tmp/
 *.pb
 *.b64
 *.bak

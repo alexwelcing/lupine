@@ -16,6 +16,7 @@ import {
 } from "../mlipCampaign";
 import { buildMlipCellRunPayload, distillProfileForVariant } from "../queue";
 import { buildMlip5x5x3PhoenixPacket, MLIP_PHOENIX_EVALUATOR_SPECS } from "../mlipPhoenix";
+import { evaluateMlipStateHypotheses } from "../mlipStateHypotheses";
 import { buildStubEnv, stubLedger } from "../../testing/envStub";
 
 function campaignCell(
@@ -92,6 +93,29 @@ describe("mlipCampaign", () => {
     expect(insertedCells.some((bindings) => bindings[4] === "distill-accuracy")).toBe(false);
   });
 
+  it("can create an accuracy-only 25-pair campaign without acceleration cells", async () => {
+    const insertedCells: unknown[][] = [];
+    const env = buildStubEnv({
+      LEDGER: stubLedger({
+        onPrepare: (sql, bindings) => {
+          if (sql.includes("INSERT OR IGNORE INTO mlip_campaign_cells")) {
+            insertedCells.push([...bindings]);
+          }
+        },
+      }),
+    });
+
+    await createMlipCampaign(env, {
+      campaign_id: "campaign-accuracy",
+      hypothesis_id: "h",
+      variant_scope: "accuracy",
+    });
+
+    expect(insertedCells).toHaveLength(50);
+    expect(insertedCells.some((bindings) => String(bindings[0]).includes(":distill_accuracy:"))).toBe(true);
+    expect(insertedCells.some((bindings) => String(bindings[0]).includes(":distill_accuracy_accelerate:"))).toBe(false);
+  });
+
   it("builds real MLIP runner dispatch payloads for Distill variants", () => {
     const payload = buildMlipCellRunPayload(
       buildStubEnv({
@@ -166,6 +190,36 @@ describe("mlipCampaign", () => {
     expect(distillProfileForVariant("distill-accuracy-accelerate")).toBe("accuracy_accelerate");
   });
 
+  it("resolves per-cell Distill policy URLs from an accuracy registry", () => {
+    const payload = buildMlipCellRunPayload(
+      buildStubEnv({
+        GCP_PROJECT_ID: "shed-489901",
+        MLIP_DISTILL_POLICY_URLS_JSON: JSON.stringify({
+          "stress:mace-mp-0": "gs://policies/mace-stress.json",
+          default_accuracy: "gs://policies/default-accuracy.json",
+        }),
+      }),
+      {
+        kind: "mlip_cell_run",
+        dedup_key: "d",
+        enqueued_at: "now",
+        hypothesis_id: "h",
+        run_id: "run-a",
+        campaign_id: "run-a",
+        cell_id: "run-a:distill_accuracy:stress:mace-mp-0",
+        row_id: "stress",
+        mlip_id: "mace-mp-0",
+        variant_id: "distill_accuracy",
+        manifest_url: "gs://inputs/eval.json",
+        support_manifest_url: "gs://inputs/support.json",
+      },
+      "https://worker.test/feed/beats",
+    );
+
+    const args = payload.args ?? [];
+    expect(args[args.indexOf("--distill-policy-url") + 1]).toBe("gs://policies/mace-stress.json");
+  });
+
   it("declares Phoenix evaluators for Distill runtime and theorem hooks", () => {
     const names = MLIP_PHOENIX_EVALUATOR_SPECS.map((spec) => spec.name);
 
@@ -173,10 +227,42 @@ describe("mlipCampaign", () => {
     expect(names).toContain("distill.intervention_trace");
     expect(names).toContain("distill.policy_limits_selected");
     expect(names).toContain("distill.support_correction_executable");
+    expect(names).toContain("distill.state_surface_anchor");
+    expect(names).toContain("distill.downstream_no_harm");
+    expect(names).toContain("distill.state_coupled_lattice_lift");
     expect(names).toContain("distill.target.v2_promotion_gate");
     expect(names).toContain("theorem.speedup_bound_observed");
     expect(names).toContain("theorem.lean_bridge_ready");
     expect(distillProfileForVariant("distill_accuracy_accelerate")).toBe("accuracy_accelerate");
+  });
+
+  it("confirms the state-coupled hypothesis only when the energy anchor lifts downstream rows", () => {
+    const cells = ["energy_volume", "forces", "stress", "elastic_constants", "relaxation_stability"].flatMap((rowId) => [
+      campaignCell("baseline", { rowId, status: "completed", accuracy: 0.7, speed: 10 }),
+      campaignCell("distill_accuracy", { rowId, status: "completed", accuracy: 0.82, speed: 9 }),
+    ]);
+
+    const [campaign, mlip] = evaluateMlipStateHypotheses(cells);
+
+    expect(campaign.verdict).toBe("confirmed");
+    expect(mlip.verdict).toBe("confirmed");
+    expect(mlip.energy_anchor.row_id).toBe("energy_volume");
+    expect(mlip.downstream.every((row) => row.label === "win")).toBe(true);
+  });
+
+  it("refutes the state-coupled hypothesis when a state anchor win causes a downstream regression", () => {
+    const cells = [
+      campaignCell("baseline", { rowId: "energy_volume", status: "completed", accuracy: 0.7 }),
+      campaignCell("distill_accuracy", { rowId: "energy_volume", status: "completed", accuracy: 0.82 }),
+      campaignCell("baseline", { rowId: "stress", status: "completed", accuracy: 0.9 }),
+      campaignCell("distill_accuracy", { rowId: "stress", status: "completed", accuracy: 0.82 }),
+    ];
+
+    const [campaign, mlip] = evaluateMlipStateHypotheses(cells);
+
+    expect(campaign.verdict).toBe("refuted");
+    expect(mlip.verdict).toBe("refuted");
+    expect(mlip.blockers).toContain("downstream_regression_stress");
   });
 
   it("builds a Phoenix packet with all three 5x5x3 experiments", () => {
@@ -226,6 +312,10 @@ describe("mlipCampaign", () => {
     });
 
     expect(packet.schema).toBe("lupine.mlip.phoenix_5x5x3_packet.v1");
+    expect(packet.state_hypotheses[0]).toMatchObject({
+      hypothesis_id: "distill.state_surface_lifts_downstream",
+      scope: "campaign",
+    });
     expect(packet.experiments.map((experiment) => experiment.variant_id)).toEqual([
       "baseline",
       "distill_accuracy",
@@ -237,6 +327,9 @@ describe("mlipCampaign", () => {
     );
     expect(packet.experiments[1].runs[0].evaluations.map((evaluation) => evaluation.evaluator_name)).toContain(
       "mlip.gate.distill_accuracy_win",
+    );
+    expect(packet.experiments[1].runs[0].evaluations.map((evaluation) => evaluation.evaluator_name)).toContain(
+      "distill.downstream_no_harm",
     );
     expect(packet.experiments[2].runs[0].evaluations.map((evaluation) => evaluation.evaluator_name)).toContain(
       "distill.target.v2_promotion_gate",
@@ -378,6 +471,23 @@ describe("mlipCampaign", () => {
     expect(evaluation.score).toBe(1);
     expect(evaluation.distill_accuracy_delta).toBeCloseTo(0.16);
     expect(evaluation.accelerate_speed_ratio).toBeCloseTo(2.4);
+  });
+
+  it("scores an accuracy-only pair without requiring acceleration", () => {
+    const [triplet] = groupMlipCampaignTriplets(
+      [
+        campaignCell("baseline", { status: "completed", accuracy: 0.7, speed: 10 }),
+        campaignCell("distill_accuracy", { status: "completed", accuracy: 0.76, speed: 9 }),
+      ],
+      ["baseline", "distill_accuracy"],
+    );
+
+    const evaluation = evaluateMlipTriplet(triplet, ["baseline", "distill_accuracy"]);
+
+    expect(triplet.status).toBe("completed");
+    expect(evaluation.verdict).toBe("win");
+    expect(evaluation.distill_accuracy_delta).toBeCloseTo(0.06);
+    expect(evaluation.accelerate_speed_ratio).toBeNull();
   });
 
   it("selects the next queued triplets instead of completed work", () => {

@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import numpy as np
 from ase.calculators.calculator import Calculator, all_changes
 from fixture_contract import evaluate_row, run_row, validate_manifest
@@ -63,6 +66,22 @@ def test_validate_manifest_rejects_legacy_smoke_fixture() -> None:
     assert validation["release_ready"] is False
     assert any("fixture_manifest.v2" in blocker for blocker in validation["blockers"])
     assert any("nonzero reference forces" in blocker for blocker in validation["blockers"])
+
+
+def test_combined_support_manifest_is_row_complete() -> None:
+    path = Path(__file__).with_name("fixtures") / "canonical_distill_support_mptrj_train_plus_elastic_v1.json"
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    counts = {
+        row_id: len(group.get("structures") or [])
+        for row_id, group in (manifest.get("row_fixtures") or {}).items()
+    }
+
+    assert manifest["fixture_id"] == "canonical-distill-support-mptrj-train-plus-elastic-v1"
+    assert counts["energy_volume"] >= 20
+    assert counts["forces"] >= 20
+    assert counts["stress"] >= 20
+    assert counts["relaxation_stability"] >= 3
+    assert counts["elastic_constants"] >= 6
 
 
 def test_force_score_uses_absolute_rmse_not_relative_zero_denominator() -> None:

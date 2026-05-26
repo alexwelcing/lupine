@@ -105,6 +105,15 @@ export const CATALOG = {
       featured: true,
     },
     {
+      id: 'mlip-flywheel-readiness',
+      source: 'docs/mlip-flywheel-readiness.md',
+      title: 'MLIP Flywheel Readiness',
+      subtitle: 'Cloudflare is deployed, gated, and ready for scientist review before the next expensive Distill campaign.',
+      category: 'changelog',
+      tags: ['mlip', 'flywheel', 'cloudflare', 'phoenix'],
+      status: 'open',
+    },
+    {
       id: 'research-evolution',
       source: 'docs/research_evolution_2026_05_05.md',
       title: 'The Loop That Caught Itself',

@@ -470,6 +470,43 @@ fn apply_support_corrections(
         }
     }
 
+    if request.row_id == "relaxation_stability"
+        && !ribbon_fields
+            .iter()
+            .any(|field| field == "relaxed_energy_ev_per_atom")
+    {
+        if let Some(bias) = number_field(correction, "relaxed_energy_bias_ev_per_atom") {
+            let scaled_bias = bias * limits.energy_correction_scale;
+            if let Some(blocked) =
+                support_gate_action(request, "relaxed_energy_ev_per_atom", json!(scaled_bias), limits)
+            {
+                actions.push(blocked);
+            } else if limits.energy_correction_scale == 0.0 {
+                actions.push(PolicyAction::blocked(
+                    "relaxed_energy_ev_per_atom",
+                    "blocked_zero_correction_scale",
+                    json!(bias),
+                ));
+            } else if scaled_bias.abs() <= limits.max_energy_bias_ev_per_atom {
+                if let Some(current) = number_field(corrected, "relaxed_energy_ev_per_atom") {
+                    let value = json!(current + scaled_bias);
+                    set_field(corrected, "relaxed_energy_ev_per_atom", value.clone())?;
+                    applied.insert("relaxed_energy_bias_ev_per_atom".to_string(), json!(scaled_bias));
+                    actions.push(PolicyAction::delta(
+                        "relaxed_energy_ev_per_atom",
+                        json!(scaled_bias),
+                    ));
+                }
+            } else {
+                actions.push(PolicyAction::blocked(
+                    "relaxed_energy_ev_per_atom",
+                    "blocked_large_bias",
+                    json!(scaled_bias),
+                ));
+            }
+        }
+    }
+
     if (request.row_id == "stress" || request.row_id == "elastic_constants")
         && !ribbon_fields.iter().any(|field| field == "stress_gpa")
     {
@@ -800,10 +837,17 @@ fn support_gate_action(
             ));
         }
     }
-    if let Some(lift) = support_lift_fraction(field, diagnostics) {
-        if lift < limits.min_support_lift_fraction {
-            return Some(PolicyAction::blocked(
-                field,
+        if let Some(lift) = support_lift_fraction(field, diagnostics) {
+            if lift <= 0.0 {
+                return Some(PolicyAction::blocked(
+                    field,
+                    "blocked_nonpositive_support_lift",
+                    json!(lift),
+                ));
+            }
+            if lift < limits.min_support_lift_fraction {
+                return Some(PolicyAction::blocked(
+                    field,
                 "blocked_insufficient_support_lift",
                 json!(lift),
             ));
@@ -853,6 +897,13 @@ fn ribbon_gate_action(
         }
     }
     if let Some(lift) = model.support_lift_fraction {
+        if lift <= 0.0 {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_nonpositive_support_lift",
+                json!(lift),
+            ));
+        }
         if lift < limits.min_support_lift_fraction {
             return Some(PolicyAction::blocked(
                 &model.field,
@@ -870,6 +921,10 @@ fn support_lift_fraction(field: &str, diagnostics: &Value) -> Option<f64> {
     }
     let (before_key, after_key) = match field {
         "energy_ev_per_atom" => ("energy_support_mae_before", "energy_support_mae_after"),
+        "relaxed_energy_ev_per_atom" => (
+            "relaxation_energy_support_mae_before",
+            "relaxation_energy_support_mae_after",
+        ),
         "stress_gpa" => (
             "stress_support_mae_before_gpa",
             "stress_support_mae_after_gpa",
@@ -1364,7 +1419,41 @@ mod tests {
         );
         assert!(decision.actions.iter().any(|action| {
             action.action == "delta_correct_blocked"
-                && action.reason == "blocked_insufficient_support_lift"
+                && action.reason == "blocked_nonpositive_support_lift"
+        }));
+    }
+
+    #[test]
+    fn blocks_zero_support_lift_even_when_limits_are_open() {
+        let req = request(
+            "stress",
+            json!({"energy_ev_per_atom": 2.0, "stress_gpa": [1.0, 2.0]}),
+            json!({
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "stress_gpa",
+                    "feature_names": ["scalar:energy_ev_per_atom"],
+                    "feature_mean": [1.0],
+                    "feature_scale": [1.0],
+                    "intercept": [0.1, -0.1],
+                    "coefficients": [[0.2], [-0.2]],
+                    "support_lift_fraction": 0.0,
+                    "support_eval_distance_proxy": 0.0
+                }
+            }),
+        );
+        let mut limits = PolicyLimits::default();
+        limits.min_support_lift_fraction = 0.0;
+
+        let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["stress_gpa"],
+            json!([1.0, 2.0])
+        );
+        assert!(decision.actions.iter().any(|action| {
+            action.action == "delta_correct_blocked"
+                && action.reason == "blocked_nonpositive_support_lift"
         }));
     }
 
@@ -1377,5 +1466,23 @@ mod tests {
         );
         let decision = decide(&req, DEFAULT_RIBBON_VERSION).unwrap();
         assert_eq!(decision.decision, "tighten");
+    }
+
+    #[test]
+    fn applies_relaxation_energy_bias() {
+        let req = request(
+            "relaxation_stability",
+            json!({"relaxation_converged": true, "relaxed_energy_ev_per_atom": 1.0}),
+            json!({"relaxed_energy_bias_ev_per_atom": -0.1}),
+        );
+        let decision = decide(&req, DEFAULT_RIBBON_VERSION).unwrap();
+        assert_eq!(
+            decision.corrected_prediction["relaxed_energy_ev_per_atom"],
+            json!(0.9)
+        );
+        assert!(decision
+            .actions
+            .iter()
+            .any(|action| action.action == "delta_correct"));
     }
 }

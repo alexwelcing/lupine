@@ -1,0 +1,9 @@
+{
+  "schema": "lupine.mlip.distill_policy_registry.v1",
+  "description": "Local-first Distill Accuracy policy routing. The registry lets a 25-pair campaign use a conservative default ribbon while allowing row/backend-specific ribbons as evidence improves.",
+  "policies": {
+    "default_accuracy": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-support-v1-accuracy.json",
+    "energy_volume:sevennet": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-sevennet-energy-v1-accuracy.json",
+    "stress:mace-mp-0": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-mace-stress-v1-accuracy.json"
+  }
+}

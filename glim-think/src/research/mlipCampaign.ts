@@ -17,6 +17,8 @@ export interface MlipCampaignVariant extends MlipAxisItem {
   strategy: "baseline" | "distill_accuracy" | "distill_accuracy_accelerate";
 }
 
+export type MlipCampaignVariantScope = "baseline" | "accuracy" | "accuracy_accelerate" | "full";
+
 export interface MlipCampaignCell {
   cell_id: string;
   campaign_id: string;
@@ -58,6 +60,7 @@ export interface CreateMlipCampaignInput {
   rows?: MlipAxisItem[];
   mlips?: MlipAxisItem[];
   variants?: MlipCampaignVariant[];
+  variant_scope?: MlipCampaignVariantScope;
   fixture_url_template?: string;
   model_pairs?: string[];
   top_k?: number;
@@ -160,6 +163,13 @@ export const DEFAULT_CAMPAIGN_VARIANTS: MlipCampaignVariant[] = [
     strategy: "distill_accuracy_accelerate",
   },
 ];
+
+export const CAMPAIGN_VARIANTS_BY_SCOPE: Record<MlipCampaignVariantScope, MlipCampaignVariant[]> = {
+  baseline: DEFAULT_CAMPAIGN_VARIANTS.slice(0, 1),
+  accuracy: DEFAULT_CAMPAIGN_VARIANTS.slice(0, 2),
+  accuracy_accelerate: DEFAULT_CAMPAIGN_VARIANTS,
+  full: DEFAULT_CAMPAIGN_VARIANTS,
+};
 
 const CAMPAIGN_DDL = `
   CREATE TABLE IF NOT EXISTS mlip_campaigns (
@@ -265,6 +275,21 @@ function validateAxis<T extends MlipAxisItem>(
   });
 }
 
+export function campaignVariantIds(campaign: Pick<MlipCampaignRecord, "variants_json">): string[] {
+  try {
+    const parsed = JSON.parse(campaign.variants_json) as unknown;
+    if (Array.isArray(parsed)) {
+      const ids = parsed
+        .map((item) => item && typeof item === "object" && "id" in item ? String((item as { id?: unknown }).id) : "")
+        .filter((id) => id.trim());
+      if (ids.length) return ids;
+    }
+  } catch {
+    // Fall back to the canonical full triplet below.
+  }
+  return DEFAULT_CAMPAIGN_VARIANTS.map((variant) => variant.id);
+}
+
 export function renderFixtureUrl(
   template: string | undefined,
   vars: { campaign_id: string; row_id: string; mlip_id: string; variant_id: string; cell_id: string },
@@ -311,9 +336,14 @@ function tripletId(campaignId: string, rowId: string, mlipId: string): string {
   return [campaignId, rowId, mlipId].join(":");
 }
 
-function tripletStatus(cells: Array<MlipCampaignCell | null>): MlipCampaignTriplet["status"] {
-  const present = cells.filter(Boolean) as MlipCampaignCell[];
-  if (present.length < 3) return "partial";
+function tripletStatus(
+  cells: Array<MlipCampaignCell | null>,
+  requiredVariants: string[] = DEFAULT_CAMPAIGN_VARIANTS.map((variant) => variant.id),
+): MlipCampaignTriplet["status"] {
+  const present = cells.filter(
+    (cell): cell is MlipCampaignCell => Boolean(cell) && requiredVariants.includes(cell!.variant_id),
+  );
+  if (requiredVariants.some((variant) => !present.some((cell) => cell.variant_id === variant))) return "partial";
   if (present.some((cell) => cell.status === "failed")) return "failed";
   if (present.every((cell) => cell.status === "completed")) return "completed";
   if (present.some((cell) => cell.status === "running")) return "running";
@@ -321,7 +351,10 @@ function tripletStatus(cells: Array<MlipCampaignCell | null>): MlipCampaignTripl
   return "queued";
 }
 
-export function groupMlipCampaignTriplets(cells: MlipCampaignCell[]): MlipCampaignTriplet[] {
+export function groupMlipCampaignTriplets(
+  cells: MlipCampaignCell[],
+  requiredVariants: string[] = DEFAULT_CAMPAIGN_VARIANTS.map((variant) => variant.id),
+): MlipCampaignTriplet[] {
   const grouped = new Map<string, MlipCampaignTriplet>();
   for (const cell of cells) {
     const key = `${cell.row_id}:${cell.mlip_id}`;
@@ -345,7 +378,7 @@ export function groupMlipCampaignTriplets(cells: MlipCampaignCell[]): MlipCampai
       existing.baseline,
       existing.distill_accuracy,
       existing.distill_accuracy_accelerate,
-    ]);
+    ], requiredVariants);
     grouped.set(key, existing);
   }
   return [...grouped.values()].sort((a, b) =>
@@ -357,14 +390,17 @@ function finite(value: number | null | undefined): value is number {
   return typeof value === "number" && Number.isFinite(value);
 }
 
-export function evaluateMlipTriplet(triplet: MlipCampaignTriplet): MlipTripletEvaluation {
+export function evaluateMlipTriplet(
+  triplet: MlipCampaignTriplet,
+  requiredVariants: string[] = DEFAULT_CAMPAIGN_VARIANTS.map((variant) => variant.id),
+): MlipTripletEvaluation {
   const baseline = triplet.baseline;
   const distill = triplet.distill_accuracy;
   const accelerate = triplet.distill_accuracy_accelerate;
   const missing = [
-    baseline ? null : "baseline",
-    distill ? null : "distill_accuracy",
-    accelerate ? null : "distill_accuracy_accelerate",
+    requiredVariants.includes("baseline") && !baseline ? "baseline" : null,
+    requiredVariants.includes("distill_accuracy") && !distill ? "distill_accuracy" : null,
+    requiredVariants.includes("distill_accuracy_accelerate") && !accelerate ? "distill_accuracy_accelerate" : null,
   ].filter(Boolean);
   if (missing.length > 0) {
     return {
@@ -391,8 +427,53 @@ export function evaluateMlipTriplet(triplet: MlipCampaignTriplet): MlipTripletEv
   const baselineSpeed = baseline!.speed_score;
   const distillAccuracy = distill!.accuracy_score;
   const distillSpeed = distill!.speed_score;
-  const accelerateAccuracy = accelerate!.accuracy_score;
-  const accelerateSpeed = accelerate!.speed_score;
+  const accelerateAccuracy = accelerate?.accuracy_score ?? null;
+  const accelerateSpeed = accelerate?.speed_score ?? null;
+  if (!requiredVariants.includes("distill_accuracy_accelerate")) {
+    if (!finite(baselineAccuracy) || !finite(distillAccuracy)) {
+      return {
+        triplet_id: triplet.triplet_id,
+        campaign_id: triplet.campaign_id,
+        row_id: triplet.row_id,
+        mlip_id: triplet.mlip_id,
+        verdict: "invalid",
+        score: 0,
+        baseline_accuracy: finite(baselineAccuracy) ? baselineAccuracy : null,
+        baseline_speed: finite(baselineSpeed) ? baselineSpeed : null,
+        distill_accuracy: finite(distillAccuracy) ? distillAccuracy : null,
+        distill_speed: finite(distillSpeed) ? distillSpeed : null,
+        accelerate_accuracy: null,
+        accelerate_speed: null,
+        distill_accuracy_delta: null,
+        accelerate_accuracy_delta: null,
+        accelerate_speed_ratio: null,
+        explanation: "Accuracy pair is missing numeric baseline or Distill accuracy scores",
+      };
+    }
+    const distillAccuracyDelta = distillAccuracy - baselineAccuracy;
+    const verdict: MlipTripletVerdict =
+      distillAccuracyDelta > 0 ? "win" : distillAccuracyDelta < 0 ? "regression" : "mixed";
+    return {
+      triplet_id: triplet.triplet_id,
+      campaign_id: triplet.campaign_id,
+      row_id: triplet.row_id,
+      mlip_id: triplet.mlip_id,
+      verdict,
+      score: verdict === "win" ? 1 : verdict === "mixed" ? 0.5 : 0,
+      baseline_accuracy: baselineAccuracy,
+      baseline_speed: finite(baselineSpeed) ? baselineSpeed : null,
+      distill_accuracy: distillAccuracy,
+      distill_speed: finite(distillSpeed) ? distillSpeed : null,
+      accelerate_accuracy: null,
+      accelerate_speed: null,
+      distill_accuracy_delta: distillAccuracyDelta,
+      accelerate_accuracy_delta: null,
+      accelerate_speed_ratio: null,
+      explanation:
+        `${triplet.mlip_id}/${triplet.row_id}: Distill accuracy delta=${distillAccuracyDelta.toFixed(4)}; ` +
+        `accuracy-only verdict=${verdict}`,
+    };
+  }
   if (
     !finite(baselineAccuracy) ||
     !finite(baselineSpeed) ||
@@ -461,8 +542,9 @@ export function evaluateMlipTriplet(triplet: MlipCampaignTriplet): MlipTripletEv
 export function nextMlipCampaignTriplets(
   cells: MlipCampaignCell[],
   limit = 1,
+  requiredVariants: string[] = DEFAULT_CAMPAIGN_VARIANTS.map((variant) => variant.id),
 ): MlipCampaignTriplet[] {
-  return groupMlipCampaignTriplets(cells)
+  return groupMlipCampaignTriplets(cells, requiredVariants)
     .filter((triplet) => triplet.status === "queued" || triplet.status === "partial")
     .slice(0, Math.max(1, Math.trunc(limit)));
 }
@@ -478,7 +560,8 @@ export async function createMlipCampaign(
   if (!hypothesisId) throw new Error("hypothesis_id is required");
   const rows = validateAxis("rows", input.rows, DEFAULT_ACCURACY_ROWS, 5);
   const mlips = validateAxis("mlips", input.mlips, DEFAULT_MLIP_COLUMNS, 5);
-  const variants = validateAxis("variants", input.variants, DEFAULT_CAMPAIGN_VARIANTS, 3);
+  const defaultVariants = CAMPAIGN_VARIANTS_BY_SCOPE[input.variant_scope ?? "full"];
+  const variants = validateAxis("variants", input.variants, defaultVariants, defaultVariants.length);
   const campaignId =
     input.campaign_id?.trim() ||
     `mlip-5x5x3-${new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14)}`;
@@ -541,7 +624,10 @@ export async function createMlipCampaign(
       variants: variants.map((v) => v.id),
       rows: rows.map((r) => r.id),
       mlips: mlips.map((m) => m.id),
-      objective: "show baseline accuracy, distill accuracy lift, and distill+accelerate accuracy plus speed lift",
+      variant_scope: input.variant_scope ?? "full",
+      objective: variants.some((variant) => variant.id === "distill_accuracy_accelerate")
+        ? "show baseline accuracy, distill accuracy lift, and distill+accelerate accuracy plus speed lift"
+        : "show baseline accuracy and Distill Accuracy lift over all 25 row/backend pairs",
     }),
   ).run();
 
@@ -576,7 +662,8 @@ export async function getMlipCampaign(
   ).bind(campaignId).all<MlipTripletEvaluationRecord>();
   const evaluations = (evalRows.results ?? []) as MlipTripletEvaluationRecord[];
   const evaluationsByTriplet = new Map(evaluations.map((evaluation) => [evaluation.triplet_id, evaluation]));
-  const triplets = groupMlipCampaignTriplets(cells).map((triplet) => ({
+  const requiredVariants = campaignVariantIds(campaign);
+  const triplets = groupMlipCampaignTriplets(cells, requiredVariants).map((triplet) => ({
     ...triplet,
     evaluation: evaluationsByTriplet.get(triplet.triplet_id) ?? null,
   }));
@@ -738,7 +825,8 @@ export async function traceMlipTripletEvaluation(
   triplet: MlipCampaignTriplet,
   source: MlipTripletEvaluationSource = "auto",
 ): Promise<MlipTripletEvaluation> {
-  const evaluation = evaluateMlipTriplet(triplet);
+  const requiredVariants = campaignVariantIds(campaign);
+  const evaluation = evaluateMlipTriplet(triplet, requiredVariants);
   return traceHypothesisStage(
     {
       hypothesisId: campaign.hypothesis_id,
@@ -762,7 +850,9 @@ export async function traceMlipTripletEvaluation(
             "mlip.triplet_status": triplet.status,
             "mlip.baseline_status": triplet.baseline?.status ?? "missing",
             "mlip.distill_status": triplet.distill_accuracy?.status ?? "missing",
-            "mlip.accelerate_status": triplet.distill_accuracy_accelerate?.status ?? "missing",
+            "mlip.accelerate_status": requiredVariants.includes("distill_accuracy_accelerate")
+              ? triplet.distill_accuracy_accelerate?.status ?? "missing"
+              : "not_required",
           },
         },
         async () => undefined,

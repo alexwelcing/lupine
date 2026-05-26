@@ -214,6 +214,8 @@ export interface Env {
   MLIP_DISTILL_POLICY_ENGINE?: string;
   /** Optional selected Distill policy-limits artifact used by MLIP runner variants. */
   MLIP_DISTILL_POLICY_URL?: string;
+  /** Optional JSON map of row/backend-specific Distill policy-limits artifacts. */
+  MLIP_DISTILL_POLICY_URLS_JSON?: string;
   /** Canonical Distill hyperribbon version used by MLIP runner variants. */
   MLIP_DISTILL_RIBBON_VERSION?: string;
   /** Phoenix Cloud OTLP collector endpoint (e.g. https://app.phoenix.arize.com/v1/traces) */

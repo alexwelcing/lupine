@@ -13,6 +13,12 @@ import type {
   MlipBaselineCellResultInput,
   MlipBaselineState,
 } from "./mlipBaselineGrid";
+import {
+  MLIP_STATE_ANCHOR_ROW,
+  MLIP_STATE_DOWNSTREAM_ROWS,
+  evaluateMlipStateHypotheses,
+  type MlipStateHypothesisEvaluation,
+} from "./mlipStateHypotheses";
 
 export const MLIP_PHOENIX_DATASET_NAME = "mlip-canonical-v2-heldout";
 export const MLIP_PHOENIX_EXPERIMENT_GROUP = "mlip-5x5x3";
@@ -151,6 +157,7 @@ export interface Mlip5x5x3PhoenixExperimentPacket {
     runs: MlipPhoenixExperimentRun[];
   }>;
   triplet_evaluations: MlipTripletEvaluationRecord[];
+  state_hypotheses: MlipStateHypothesisEvaluation[];
   summary: Record<string, unknown>;
 }
 
@@ -316,6 +323,48 @@ export const MLIP_PHOENIX_EVALUATOR_SPECS: MlipPhoenixEvaluatorSpec[] = [
       candidate_speed: "output.speed.warm_structures_per_second",
     },
     release_gate: { threshold: 1, label: "accuracy_and_speed_win" },
+  },
+  {
+    name: "distill.state_surface_anchor",
+    kind: "CODE",
+    optimization: "maximize",
+    applies_to: [MLIP_STATE_ANCHOR_ROW],
+    description:
+      "Passes when Distill Accuracy improves the same-MLIP energy/free-energy state anchor before downstream claims are credited.",
+    input_mapping: {
+      baseline: "metadata.baseline_accuracy_score",
+      candidate: "output.accuracy.normalized_score",
+      row_id: "input.row_id",
+    },
+    release_gate: { threshold: 1, label: "state_anchor_win" },
+  },
+  {
+    name: "distill.downstream_no_harm",
+    kind: "CODE",
+    optimization: "maximize",
+    applies_to: [...MLIP_STATE_DOWNSTREAM_ROWS],
+    description:
+      "Requires downstream lattice observables to avoid regression when the Distill state anchor is changed.",
+    input_mapping: {
+      baseline: "metadata.baseline_accuracy_score",
+      candidate: "output.accuracy.normalized_score",
+      row_id: "input.row_id",
+    },
+    release_gate: { threshold: 1, label: "downstream_no_harm" },
+  },
+  {
+    name: "distill.state_coupled_lattice_lift",
+    kind: "CODE",
+    optimization: "maximize",
+    applies_to: [MLIP_STATE_ANCHOR_ROW, ...MLIP_STATE_DOWNSTREAM_ROWS],
+    description:
+      "Campaign-level hypothesis: a valid hyperribbon improves the energy/free-energy state and lifts or preserves downstream forces, stress, elastic, and relaxation observables.",
+    input_mapping: {
+      hypothesis_id: "state_hypotheses.0.hypothesis_id",
+      verdict: "state_hypotheses.0.verdict",
+      score: "state_hypotheses.0.score",
+    },
+    release_gate: { threshold: 1, label: "state_coupled_lift" },
   },
   {
     name: "mlip.contract.v2_fixture_readiness",
@@ -748,6 +797,7 @@ export function buildMlip5x5x3PhoenixPacket(
   projectName = MLIP_PHOENIX_PROJECT_NAME,
 ): Mlip5x5x3PhoenixExperimentPacket {
   const examples = buildMlip5x5x3DatasetExamples(state);
+  const stateHypotheses = evaluateMlipStateHypotheses(state.cells);
   const variants = orderedUnique(
     state.cells.map((cell) => cell.variant_id),
     ["baseline", "distill_accuracy", "distill_accuracy_accelerate"],
@@ -841,7 +891,7 @@ export function buildMlip5x5x3PhoenixPacket(
       experiment_group: MLIP_PHOENIX_EXPERIMENT_GROUP,
       evaluator_specs: MLIP_PHOENIX_EVALUATOR_SPECS,
       server_eval_note:
-        "Register the three variant experiments against one Phoenix dataset. The Worker writes deterministic experiment_evaluations immediately; Phoenix server-side dataset evaluators should mirror these specs for Playground/model-upgrade runs.",
+        "Register the three variant experiments against one Phoenix dataset. The Worker writes deterministic experiment_evaluations and state_hypotheses immediately; Phoenix server-side dataset evaluators should mirror these specs for Playground/model-upgrade runs.",
     },
     campaign: {
       workflow_id: "mlip-5x5x3",
@@ -855,6 +905,7 @@ export function buildMlip5x5x3PhoenixPacket(
     examples,
     experiments,
     triplet_evaluations: state.evaluations,
+    state_hypotheses: stateHypotheses,
     summary: state.summary,
   };
 }
@@ -1131,6 +1182,52 @@ function evaluateDistillTargetEvaluations(
         accuracy_delta: accuracyDelta,
       },
     });
+    if (cell.row_id === MLIP_STATE_ANCHOR_ROW) {
+      out.push({
+        evaluator_name: "distill.state_surface_anchor",
+        score: finiteNumber(accuracyDelta) && accuracyDelta > 0 ? 1 : 0,
+        label: finiteNumber(accuracyDelta) && accuracyDelta > 0
+          ? "state_anchor_win"
+          : finiteNumber(accuracyDelta)
+            ? "state_anchor_hold"
+            : "pending",
+        explanation: finiteNumber(accuracyDelta)
+          ? `Distill changed the energy/free-energy state anchor by ${accuracyDelta.toFixed(4)}.`
+          : "The state anchor cannot be scored until the paired baseline is complete.",
+        metadata: {
+          row_id: cell.row_id,
+          mlip_id: cell.mlip_id,
+          baseline_accuracy_score: baselineAccuracy,
+          distill_accuracy_score: candidateAccuracy,
+          accuracy_delta: accuracyDelta,
+        },
+      });
+    }
+    if ((MLIP_STATE_DOWNSTREAM_ROWS as readonly string[]).includes(cell.row_id)) {
+      const downstreamNoHarm = finiteNumber(accuracyDelta) ? accuracyDelta >= -0.0005 : false;
+      out.push({
+        evaluator_name: "distill.downstream_no_harm",
+        score: downstreamNoHarm ? 1 : 0,
+        label: !finiteNumber(accuracyDelta)
+          ? "pending"
+          : downstreamNoHarm
+            ? accuracyDelta > 0
+              ? "downstream_lift"
+              : "downstream_no_harm"
+            : "downstream_regression",
+        explanation: finiteNumber(accuracyDelta)
+          ? `Downstream row changed by ${accuracyDelta.toFixed(4)} against baseline.`
+          : "Downstream no-harm cannot be scored until the paired baseline is complete.",
+        metadata: {
+          row_id: cell.row_id,
+          mlip_id: cell.mlip_id,
+          baseline_accuracy_score: baselineAccuracy,
+          distill_accuracy_score: candidateAccuracy,
+          accuracy_delta: accuracyDelta,
+          no_harm_tolerance: 0.0005,
+        },
+      });
+    }
   }
   if (variantId === "distill_accuracy_accelerate") {
     const speedLabel = !finiteNumber(speedRatio)

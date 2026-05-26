@@ -2,6 +2,7 @@
 // Single-page app with hash routing. No framework — dependencies are in the DOM.
 
 import { t, detectLang, saveLang, DEFAULT_LANG, SUPPORTED_LANGS } from './i18n.js';
+import { renderMlipFlywheelView } from './mlipFlywheelView.js';
 
 const STATE = {
   manifest: null,          // { categories, articles, version }
@@ -17,6 +18,12 @@ const VIEW = document.getElementById('view');
 const TOPBAR = document.getElementById('topbar');
 const BACK_BTN = document.getElementById('back-btn');
 const PROGRESS_FILL = document.getElementById('progress-fill');
+let activeViewCleanup = null;
+
+function clearActiveView() {
+  if (typeof activeViewCleanup === 'function') activeViewCleanup();
+  activeViewCleanup = null;
+}
 
 // ───────────────────────────────────────────────────────────────
 // Persistence
@@ -166,6 +173,7 @@ function cardFor(article, opts = {}) {
 }
 
 async function renderHome() {
+  clearActiveView();
   STATE.view = 'home';
   document.documentElement.dataset.view = 'home';
   BACK_BTN.hidden = true;
@@ -213,6 +221,16 @@ async function renderHome() {
     reportLink.append(reportLinks);
     reportBanner.append(reportLink);
     VIEW.append(reportBanner);
+
+    // Live Lab visual review: an interactive comprehension surface for the
+    // MLIP flywheel, not just a prose update.
+    const labBanner = el('section', { class: 'callout' });
+    const labLink = el('a', { class: 'callout-box callout-featured callout-live-lab', href: '#/system/mlip-flywheel' });
+    labLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--cyan);font-weight:700;letter-spacing:0.05em;' }, 'Lupine Start Live Lab'));
+    labLink.append(el('strong', { style: 'font-size:1.1rem;' }, 'MLIP Flywheel Visual Review'));
+    labLink.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, 'Stage map, 5x5 baseline surface, Distill triplets, evaluator rubric, and physical relaxation imagery.'));
+    labBanner.append(labLink);
+    VIEW.append(labBanner);
 
     // Featured — catalog entries flagged featured:true, rendered prominently
     // so the most important current work is the first thing read.
@@ -294,6 +312,7 @@ async function renderHome() {
 // Reader
 // ───────────────────────────────────────────────────────────────
 async function renderReader(id) {
+  clearActiveView();
   STATE.view = 'reader';
   document.documentElement.dataset.view = 'reader';
   STATE.currentId = id;
@@ -384,6 +403,17 @@ function linkBlock(article, label, cls) {
     el('span', {}, t(article.title, STATE.settings.lang)));
 }
 
+async function renderMlipFlywheel() {
+  clearActiveView();
+  STATE.view = 'flywheel';
+  document.documentElement.dataset.view = 'flywheel';
+  STATE.currentId = null;
+  BACK_BTN.hidden = false;
+  setProgress(0);
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  activeViewCleanup = renderMlipFlywheelView(VIEW);
+}
+
 // Scroll-tracked progress
 function onScroll() {
   const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
@@ -408,6 +438,8 @@ function route() {
   const [, path, arg] = hash.match(/^#\/?([^/]*)\/?(.*)?$/) || [];
   if (path === 'read' && arg) {
     renderReader(decodeURIComponent(arg));
+  } else if (path === 'system' && arg === 'mlip-flywheel') {
+    renderMlipFlywheel();
   } else {
     renderHome();
   }

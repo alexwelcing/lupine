@@ -23,11 +23,14 @@ const SHELL_ASSETS = [
   '/',
   '/index.html',
   '/app.js',
+  '/mlipFlywheelView.js',
   '/i18n.js',
   '/styles.css',
   '/icon.svg',
   '/manifest.webmanifest',
   '/data/library.json',
+  '/reports/assets/mlip/mlip-flywheel-evidence.json',
+  '/reports/assets/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json',
 ];
 
 self.addEventListener('install', (event) => {

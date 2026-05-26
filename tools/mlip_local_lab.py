@@ -24,7 +24,7 @@ RUNNER_DIR = ROOT / "gcp" / "mlip-cell-runner"
 RUNNER = RUNNER_DIR / "mlip_cell_runner.py"
 BACKEND_CATALOG_PATH = RUNNER_DIR / "backend_catalog.json"
 EVAL_MANIFEST = RUNNER_DIR / "fixtures" / "canonical_structures_v2_mptrj.json"
-SUPPORT_MANIFEST = RUNNER_DIR / "fixtures" / "canonical_distill_support_v1.json"
+SUPPORT_MANIFEST = RUNNER_DIR / "fixtures" / "canonical_distill_support_mptrj_train_plus_elastic_v1.json"
 LOCAL_ROOT = ROOT / "tmp" / "mlip-local"
 RUNTIME_ROOT = ROOT / "tmp" / "mlip-runtimes"
 ATLAS_DISTILL_BIN = ROOT / "atlas-distill" / "target" / "debug" / ("atlas-distill.exe" if os.name == "nt" else "atlas-distill")
@@ -55,6 +55,12 @@ ROWS = [
 ]
 MLIPS = list(BACKENDS_BY_ID)
 VARIANTS = ["baseline", "distill_accuracy", "distill_accuracy_accelerate"]
+VARIANT_SCOPES = {
+    "baseline": ["baseline"],
+    "accuracy": ["baseline", "distill_accuracy"],
+    "accuracy_accelerate": ["baseline", "distill_accuracy", "distill_accuracy_accelerate"],
+    "full": ["baseline", "distill_accuracy", "distill_accuracy_accelerate"],
+}
 REQS = {mlip_id: str(backend["requirements"]) for mlip_id, backend in BACKENDS_BY_ID.items()}
 
 
@@ -149,7 +155,12 @@ def ensure_env(mlip_id: str, skip_install: bool) -> pathlib.Path:
 
 
 def selected_cells(args: argparse.Namespace) -> list[Cell]:
-    variants = [args.variant] if args.variant else (["baseline"] if args.mode == "baseline" else VARIANTS)
+    if args.variant:
+        variants = [args.variant]
+    elif args.mode == "baseline":
+        variants = ["baseline"]
+    else:
+        variants = VARIANT_SCOPES[args.variant_scope]
     rows = [args.row] if args.row else ROWS
     mlips = [args.mlip] if args.mlip else MLIPS
     return [Cell(v, r, m) for v in variants for r in rows for m in mlips]
@@ -205,6 +216,45 @@ def distill_profile(variant_id: str) -> str:
     return "off"
 
 
+def load_policy_registry(path: str | None) -> dict[str, str]:
+    if not path:
+        return {}
+    payload = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise SystemExit(f"distill policy registry must be a JSON object: {path}")
+    registry: dict[str, str] = {}
+    mappings = payload.get("policies", payload)
+    if not isinstance(mappings, dict):
+        raise SystemExit(f"distill policy registry policies must be a JSON object: {path}")
+    for key, value in mappings.items():
+        if isinstance(key, str) and isinstance(value, str) and value.strip():
+            registry[key] = value
+    return registry
+
+
+def policy_url_for_cell(cell: Cell, args: argparse.Namespace) -> str | None:
+    if args.distill_policy_url:
+        return str(args.distill_policy_url)
+    registry = getattr(args, "_distill_policy_registry", {})
+    if not isinstance(registry, dict):
+        return None
+    candidates = [
+        f"{cell.variant_id}:{cell.row_id}:{cell.mlip_id}",
+        f"{cell.row_id}:{cell.mlip_id}",
+        f"{cell.variant_id}:{cell.row_id}",
+        f"{cell.variant_id}:{cell.mlip_id}",
+        cell.row_id,
+        cell.mlip_id,
+        f"default_{distill_profile(cell.variant_id)}",
+        "default",
+    ]
+    for key in candidates:
+        value = registry.get(key)
+        if isinstance(value, str) and value.strip():
+            return value
+    return None
+
+
 def cell_command(run_id: str, cell: Cell, python: pathlib.Path, run_dir: pathlib.Path, args: argparse.Namespace) -> list[str]:
     artifact_prefix = run_dir / "artifacts" / safe_id(cell.cell_id)
     beat_jsonl = run_dir / "beats.jsonl"
@@ -255,8 +305,9 @@ def cell_command(run_id: str, cell: Cell, python: pathlib.Path, run_dir: pathlib
         cmd.extend(["--support-manifest-url", str(args.support_manifest_url or SUPPORT_MANIFEST)])
         cmd.extend(["--distill-policy-engine", args.distill_policy_engine])
         cmd.extend(["--ribbon-version", args.ribbon_version])
-        if args.distill_policy_url:
-            cmd.extend(["--distill-policy-url", str(args.distill_policy_url)])
+        policy_url = policy_url_for_cell(cell, args)
+        if policy_url:
+            cmd.extend(["--distill-policy-url", policy_url])
         if args.atlas_distill_bin:
             cmd.extend(["--atlas-distill-bin", str(args.atlas_distill_bin)])
     return cmd
@@ -312,6 +363,12 @@ def main(argv: Iterable[str] | None = None) -> int:
     parser.add_argument("--run-id", default=None)
     parser.add_argument("--list-backends", action="store_true")
     parser.add_argument("--variant", choices=VARIANTS, default=None)
+    parser.add_argument(
+        "--variant-scope",
+        choices=sorted(VARIANT_SCOPES),
+        default="accuracy",
+        help="Campaign scope when --variant is omitted. Default is baseline + Distill Accuracy; use full for 5x5x3.",
+    )
     parser.add_argument("--row", choices=ROWS, default=None)
     parser.add_argument("--mlip", choices=MLIPS, default=None)
     parser.add_argument("--workers", type=int, default=1)
@@ -335,10 +392,12 @@ def main(argv: Iterable[str] | None = None) -> int:
     )
     parser.add_argument("--distill-policy-engine", choices=["auto", "python", "rust"], default="rust")
     parser.add_argument("--distill-policy-url", default=None)
+    parser.add_argument("--distill-policy-registry", default=None)
     parser.add_argument("--support-manifest-url", default=None)
     parser.add_argument("--ribbon-version", default="hyperribbon-v1")
     parser.add_argument("--atlas-distill-bin", default=str(ATLAS_DISTILL_BIN) if ATLAS_DISTILL_BIN.exists() else None)
     args = parser.parse_args(list(argv) if argv is not None else None)
+    args._distill_policy_registry = load_policy_registry(args.distill_policy_registry)
     if args.list_backends:
         print(json.dumps({
             "schema": "lupine.mlip.local_backend_catalog.v1",
@@ -367,6 +426,8 @@ def main(argv: Iterable[str] | None = None) -> int:
         "checkpoint_mode": args.checkpoint_mode,
         "checkpoint_url_template": args.checkpoint_url_template,
         "distill_policy_url": args.distill_policy_url,
+        "distill_policy_registry": args.distill_policy_registry,
+        "variant_scope": args.variant_scope,
         "ribbon_version": args.ribbon_version,
         "atlas_distill_bin": args.atlas_distill_bin,
         "runtime_root": str(RUNTIME_ROOT),
