@@ -1768,7 +1768,10 @@ mod tests {
 
         let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
 
-        assert_eq!(decision.corrected_prediction["energy_ev_per_atom"], json!(-5.0));
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"],
+            json!(-5.0)
+        );
         assert!(decision.actions.iter().any(|action| {
             action.action == "delta_correct_blocked"
                 && action.reason == "blocked_no_material_root_overlap"
