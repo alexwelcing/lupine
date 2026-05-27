@@ -155,3 +155,28 @@ def test_promotion_gate_allows_completed_zero_regression_lift() -> None:
 
     assert gate["flagship_eligible"] is True
     assert gate["status"] == "promotable_accuracy_candidate"
+
+
+def test_collect_uses_requested_campaign_scope(monkeypatch: pytest.MonkeyPatch) -> None:
+    seen: dict[str, str] = {}
+
+    def fake_expand(_campaign: dict, scope: str = "full") -> list[dict]:
+        seen["scope"] = scope
+        return []
+
+    monkeypatch.setattr(collect.campaign_tools, "load_campaign", lambda _path: {
+        "campaign_id": "c1",
+        "profile": "lab",
+        "artifact_gcs_prefix": "gs://out",
+        "batch_gcs_prefix": "gs://in",
+    })
+    monkeypatch.setattr(collect.campaign_tools, "expand_cells", fake_expand)
+    monkeypatch.setattr(collect.campaign_tools, "evidence_summary", lambda _campaign: {
+        "campaign_hash": "sha256:c",
+        "fixture_hash": "sha256:f",
+    })
+
+    payload = collect.collect(collect.ROOT / "campaign.json", scope="promotion-canary")
+
+    assert payload["scope"] == "promotion-canary"
+    assert seen["scope"] == "promotion-canary"

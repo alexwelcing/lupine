@@ -368,6 +368,16 @@ export const CATALOG = {
       featured: true,
       status: 'live',
     },
+    {
+      id: 'mlip-ni-zero-point-policy-replay',
+      source: 'docs/mlip-ni-zero-point-policy-replay.md',
+      title: 'Ni Zero-Point Policy Replay',
+      subtitle: 'Local Rust replay turns the Ni promotion canary green before a Cloud Run image rebuild.',
+      category: 'validation',
+      tags: ['mlip', 'distill', 'ni', 'hyperribbon', 'live-lab'],
+      featured: true,
+      status: 'supported',
+    },
 
     // ── Theory ──────────────────────────────────────────────────────
     {

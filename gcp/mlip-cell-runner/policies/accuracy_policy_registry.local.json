@@ -1,9 +1,7 @@
 {
   "schema": "lupine.mlip.distill_policy_registry.v1",
-  "description": "Local-first Distill Accuracy policy routing. The registry lets a 25-pair campaign use a conservative default ribbon while allowing row/backend-specific ribbons as evidence improves.",
+  "description": "Local-first Distill Accuracy policy routing. The current Ni evidence campaign uses a material-family support ribbon; older row/backend-specific ribbons stay as files but are not promoted into the Ni canary until they pass paired evidence.",
   "policies": {
-    "default_accuracy": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-support-v1-accuracy.json",
-    "energy_volume:sevennet": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-sevennet-energy-v1-accuracy.json",
-    "stress:mace-mp-0": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-mace-stress-v1-accuracy.json"
+    "default_accuracy": "gcp/mlip-cell-runner/policies/hyperribbon-ni-eam-support-v1-accuracy.json"
   }
 }

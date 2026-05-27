@@ -1,0 +1,7269 @@
+{
+  "created_at": "2026-05-27T00:00:00Z",
+  "description": "Non-overlapping fcc Ni support rows for material-family-aware Lupine Distill canaries. The held-out evaluation fixture remains ni-fcc-eam-home-turf-v1.",
+  "fixture_id": "ni-fcc-eam-distill-support-v1",
+  "manifest_hash": "sha256:d6959679d5d2b7c11464c15692afb1a51f59dfe5d08ac3f2e87fb27a42e97a5e",
+  "metadata": {
+    "excluded_eval_fixture": "ni-fcc-eam-home-turf-v1",
+    "material_id": "Ni-fcc-support",
+    "reference_model_scope": "support-only EAM calibration rows; not a sealed evaluation fixture",
+    "row_counts": {
+      "elastic_constants": 24,
+      "energy_volume": 8,
+      "forces": 5,
+      "relaxation_stability": 4,
+      "stress": 6
+    },
+    "support_split": "ni-material-family-v1",
+    "support_target_material_id": "Ni-fcc"
+  },
+  "reference_provenance": {
+    "eam_reference": {
+      "baseline_id": "ni-mishin-1999-eam-alloy",
+      "calculator": "ase.calculators.eam.EAM",
+      "doi": "10.1103/physrevb.59.3393",
+      "label": "Mishin-1999",
+      "nist_implementation_id": "1999--Mishin-Y--Ni--LAMMPS--ipr1",
+      "pair_style": "eam/alloy",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Mishin-1999/Ni99.eam.alloy",
+      "potential_file_sha256": "fb84d3dc0ed9d68136ee3eaa638e3dd178f3057e7de549fe0029069e749a9876"
+    },
+    "elastic_constants": {
+      "C11_gpa": 246.5,
+      "C12_gpa": 147.3,
+      "C44_gpa": 124.7,
+      "citation_keys": [
+        "nist_ipr",
+        "simmons1971"
+      ],
+      "source": "nist_benchmark.csv / atlas-distill Ni reference table"
+    },
+    "non_overlap": {
+      "eval_fixture": "data/mlip_benchmarks/fixtures/ni_fcc_eam_home_turf_v1.json",
+      "rule": "distinct structure_id plus distinct scale/seed/strain choices from the sealed evaluation fixture"
+    },
+    "source_packet": "data/mlip_benchmarks/manifest_sources.json"
+  },
+  "row_fixtures": {
+    "elastic_constants": {
+      "structures": [
+        {
+          "cell": [
+            [
+              3.536334,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.768167,
+              0.0,
+              1.762
+            ],
+            [
+              1.768167,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.86275,
+              0.5155500000000001,
+              0.5155500000000001,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0035,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode1-0p0035-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.5116660000000004,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.7558330000000002,
+              0.0,
+              1.762
+            ],
+            [
+              1.7558330000000002,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -0.86275,
+              -0.5155500000000001,
+              -0.5155500000000001,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0035,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode1-0p0035-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.536334,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.768167,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.768167,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.5155500000000001,
+              0.86275,
+              0.5155500000000001,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0035,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode2-0p0035-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.5116660000000004,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7558330000000002,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.7558330000000002,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -0.5155500000000001,
+              -0.86275,
+              -0.5155500000000001,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0035,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode2-0p0035-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.536334
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.768167
+            ],
+            [
+              1.762,
+              0.0,
+              1.768167
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.5155500000000001,
+              0.5155500000000001,
+              0.86275,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0035,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode3-0p0035-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.5116660000000004
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.7558330000000002
+            ],
+            [
+              1.762,
+              0.0,
+              1.7558330000000002
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -0.5155500000000001,
+              -0.5155500000000001,
+              -0.86275,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0035,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode3-0p0035-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.006167
+            ],
+            [
+              0.0,
+              0.006167,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7650835,
+              1.7650835
+            ],
+            [
+              1.762,
+              0.0030835,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              0.0030835
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.43645,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0035,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode4-0p0035-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              -0.006167
+            ],
+            [
+              0.0,
+              -0.006167,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7589165,
+              1.7589165
+            ],
+            [
+              1.762,
+              -0.0030835,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              -0.0030835
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              -0.43645,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0035,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode4-0p0035-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.006167
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.006167,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0030835,
+              1.762,
+              1.762
+            ],
+            [
+              1.7650835,
+              0.0,
+              1.7650835
+            ],
+            [
+              1.762,
+              1.762,
+              0.0030835
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.43645,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0035,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode5-0p0035-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              -0.006167
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              -0.006167,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.0030835,
+              1.762,
+              1.762
+            ],
+            [
+              1.7589165,
+              0.0,
+              1.7589165
+            ],
+            [
+              1.762,
+              1.762,
+              -0.0030835
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.43645,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0035,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode5-0p0035-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.006167,
+              0.0
+            ],
+            [
+              0.006167,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0030835,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              0.0030835,
+              1.762
+            ],
+            [
+              1.7650835,
+              1.7650835,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.43645
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0035
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode6-0p0035-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              -0.006167,
+              0.0
+            ],
+            [
+              -0.006167,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.0030835,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              -0.0030835,
+              1.762
+            ],
+            [
+              1.7589165,
+              1.7589165,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.43645
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0035
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode6-0p0035-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.546906,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.773453,
+              0.0,
+              1.762
+            ],
+            [
+              1.773453,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              1.60225,
+              0.95745,
+              0.95745,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0065,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode1-0p0065-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.501094,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.750547,
+              0.0,
+              1.762
+            ],
+            [
+              1.750547,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -1.60225,
+              -0.95745,
+              -0.95745,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0065,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode1-0p0065-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.546906,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.773453,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.773453,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.95745,
+              1.60225,
+              0.95745,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0065,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode2-0p0065-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.501094,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.750547,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.750547,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -0.95745,
+              -1.60225,
+              -0.95745,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0065,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode2-0p0065-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.546906
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.773453
+            ],
+            [
+              1.762,
+              0.0,
+              1.773453
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.95745,
+              0.95745,
+              1.60225,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0065,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode3-0p0065-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.501094
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.750547
+            ],
+            [
+              1.762,
+              0.0,
+              1.750547
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -0.95745,
+              -0.95745,
+              -1.60225,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0065,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode3-0p0065-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.011453
+            ],
+            [
+              0.0,
+              0.011453,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7677265,
+              1.7677265
+            ],
+            [
+              1.762,
+              0.0057265,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              0.0057265
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.81055,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0065,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode4-0p0065-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              -0.011453
+            ],
+            [
+              0.0,
+              -0.011453,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7562735,
+              1.7562735
+            ],
+            [
+              1.762,
+              -0.0057265,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              -0.0057265
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              -0.81055,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0065,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode4-0p0065-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.011453
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.011453,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0057265,
+              1.762,
+              1.762
+            ],
+            [
+              1.7677265,
+              0.0,
+              1.7677265
+            ],
+            [
+              1.762,
+              1.762,
+              0.0057265
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.81055,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0065,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode5-0p0065-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              -0.011453
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              -0.011453,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.0057265,
+              1.762,
+              1.762
+            ],
+            [
+              1.7562735,
+              0.0,
+              1.7562735
+            ],
+            [
+              1.762,
+              1.762,
+              -0.0057265
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.81055,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0065,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode5-0p0065-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.011453,
+              0.0
+            ],
+            [
+              0.011453,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0057265,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              0.0057265,
+              1.762
+            ],
+            [
+              1.7677265,
+              1.7677265,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.81055
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0065
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode6-0p0065-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              -0.011453,
+              0.0
+            ],
+            [
+              -0.011453,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.0057265,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              -0.0057265,
+              1.762
+            ],
+            [
+              1.7562735,
+              1.7562735,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.81055
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0065
+          ],
+          "structure_id": "ni-fcc-support-elastic-mode6-0p0065-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        }
+      ]
+    },
+    "energy_volume": {
+      "structures": [
+        {
+          "cell": [
+            [
+              3.40066,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.40066,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.40066
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "linear_cell_scale": 0.965,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1",
+            "volume_scale": 0.8986321249999999
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.70033,
+              1.70033
+            ],
+            [
+              1.70033,
+              0.0,
+              1.70033
+            ],
+            [
+              1.70033,
+              1.70033,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.3801061500025185,
+            "forces_ev_per_angstrom": [
+              [
+                -1.0408340855860843e-17,
+                7.28583859910259e-17,
+                -1.474514954580286e-17
+              ],
+              [
+                -3.0791341698588326e-16,
+                6.938893903907228e-17,
+                1.6653345369377348e-16
+              ],
+              [
+                2.0122792321330962e-16,
+                -1.249000902703301e-16,
+                1.1102230246251565e-16
+              ],
+              [
+                2.297424403496784e-16,
+                -7.947201924318748e-17,
+                0.0
+              ]
+            ],
+            "stress_gpa": [
+              -23.244884452217423,
+              -23.244884452217427,
+              -23.244884452217434,
+              7.160708689212437e-16,
+              9.43300630862681e-16,
+              7.968262940660979e-16
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-support-energy-volume-scale-0.965",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 0.8986321249999999
+        },
+        {
+          "cell": [
+            [
+              3.4358999999999997,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.4358999999999997,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.4358999999999997
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "linear_cell_scale": 0.975,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1",
+            "volume_scale": 0.9268593749999999
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7179499999999999,
+              1.7179499999999999
+            ],
+            [
+              1.7179499999999999,
+              0.0,
+              1.7179499999999999
+            ],
+            [
+              1.7179499999999999,
+              1.7179499999999999,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.416410931663535,
+            "forces_ev_per_angstrom": [
+              [
+                -2.0816681711721685e-17,
+                1.3877787807814457e-17,
+                3.2959746043559335e-17
+              ],
+              [
+                2.5500435096859064e-16,
+                1.0755285551056204e-16,
+                1.1102230246251565e-16
+              ],
+              [
+                2.7755575615628914e-17,
+                4.5102810375396984e-17,
+                8.326672684688674e-17
+              ],
+              [
+                8.153200337090993e-17,
+                -2.1250362580715887e-17,
+                -5.551115123125783e-17
+              ]
+            ],
+            "stress_gpa": [
+              -14.831509419169159,
+              -14.831509419169162,
+              -14.831509419169159,
+              1.155128170083035e-16,
+              1.7403687899550092e-16,
+              3.139763512928711e-16
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-support-energy-volume-scale-0.975",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 0.9268593749999999
+        },
+        {
+          "cell": [
+            [
+              3.47114,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.47114,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.47114
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "linear_cell_scale": 0.985,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1",
+            "volume_scale": 0.9556716249999999
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.73557,
+              1.73557
+            ],
+            [
+              1.73557,
+              0.0,
+              1.73557
+            ],
+            [
+              1.73557,
+              1.73557,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.438869932470781,
+            "forces_ev_per_angstrom": [
+              [
+                6.938893903907228e-17,
+                4.336808689942018e-17,
+                -1.0408340855860843e-17
+              ],
+              [
+                3.122502256758253e-17,
+                -5.551115123125783e-17,
+                0.0
+              ],
+              [
+                6.245004513516506e-17,
+                5.204170427930421e-17,
+                0.0
+              ],
+              [
+                -1.9081958235744878e-17,
+                4.597017211338539e-17,
+                2.7755575615628914e-17
+              ]
+            ],
+            "stress_gpa": [
+              -8.202480004977161,
+              -8.20248000497716,
+              -8.202480004977158,
+              -4.70075647236453e-17,
+              -9.720413336180013e-17,
+              1.7858195306843976e-16
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-support-energy-volume-scale-0.985",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 0.9556716249999999
+        },
+        {
+          "cell": [
+            [
+              3.50638,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.50638,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.50638
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "linear_cell_scale": 0.995,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1",
+            "volume_scale": 0.985074875
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.75319,
+              1.75319
+            ],
+            [
+              1.75319,
+              0.0,
+              1.75319
+            ],
+            [
+              1.75319,
+              1.75319,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.44916138699235,
+            "forces_ev_per_angstrom": [
+              [
+                -1.734723475976807e-17,
+                -3.2959746043559335e-17,
+                1.0408340855860843e-17
+              ],
+              [
+                -9.71445146547012e-17,
+                -6.938893903907228e-18,
+                2.7755575615628914e-17
+              ],
+              [
+                -1.3877787807814457e-17,
+                -3.122502256758253e-17,
+                0.0
+              ],
+              [
+                -3.469446951953614e-18,
+                -2.2551405187698492e-17,
+                -1.3877787807814457e-17
+              ]
+            ],
+            "stress_gpa": [
+              -2.1515726476418626,
+              -2.151572647641864,
+              -2.151572647641863,
+              9.344493630552092e-17,
+              -6.413069117098975e-18,
+              -7.247517108197325e-17
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-support-energy-volume-scale-0.995",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 0.985074875
+        },
+        {
+          "cell": [
+            [
+              3.5416199999999995,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.5416199999999995,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.5416199999999995
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "linear_cell_scale": 1.005,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1",
+            "volume_scale": 1.0150751249999996
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7708099999999998,
+              1.7708099999999998
+            ],
+            [
+              1.7708099999999998,
+              0.0,
+              1.7708099999999998
+            ],
+            [
+              1.7708099999999998,
+              1.7708099999999998,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.447862866377458,
+            "forces_ev_per_angstrom": [
+              [
+                3.469446951953614e-18,
+                -5.204170427930421e-18,
+                0.0
+              ],
+              [
+                2.0816681711721685e-17,
+                8.326672684688674e-17,
+                7.632783294297951e-17
+              ],
+              [
+                9.71445146547012e-17,
+                -3.469446951953614e-18,
+                9.020562075079397e-17
+              ],
+              [
+                8.673617379884035e-17,
+                9.194034422677078e-17,
+                1.3877787807814457e-17
+              ]
+            ],
+            "stress_gpa": [
+              3.4012999247034577,
+              3.401299924703459,
+              3.4012999247034577,
+              1.5127807518860757e-17,
+              -1.228503408035994e-17,
+              -1.2659722876088077e-16
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-support-energy-volume-scale-1.005",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 1.0150751249999996
+        },
+        {
+          "cell": [
+            [
+              3.5768599999999995,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.5768599999999995,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.5768599999999995
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "linear_cell_scale": 1.015,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1",
+            "volume_scale": 1.0456783749999996
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7884299999999997,
+              1.7884299999999997
+            ],
+            [
+              1.7884299999999997,
+              0.0,
+              1.7884299999999997
+            ],
+            [
+              1.7884299999999997,
+              1.7884299999999997,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.43481358328928,
+            "forces_ev_per_angstrom": [
+              [
+                -2.949029909160572e-17,
+                1.734723475976807e-18,
+                2.0816681711721685e-17
+              ],
+              [
+                2.7755575615628914e-17,
+                -4.85722573273506e-17,
+                1.0061396160665481e-16
+              ],
+              [
+                -4.163336342344337e-17,
+                -2.0816681711721685e-17,
+                1.0581813203458523e-16
+              ],
+              [
+                -5.204170427930421e-17,
+                -5.204170427930421e-18,
+                -4.163336342344337e-17
+              ]
+            ],
+            "stress_gpa": [
+              9.062073772017571,
+              9.06207377201757,
+              9.06207377201756,
+              -1.63741181667579e-16,
+              -1.0002969583584072e-16,
+              -6.908022982683618e-17
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-support-energy-volume-scale-1.015",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 1.0456783749999996
+        },
+        {
+          "cell": [
+            [
+              3.6121,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.6121,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.6121
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "linear_cell_scale": 1.025,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1",
+            "volume_scale": 1.0768906249999997
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.80605,
+              1.80605
+            ],
+            [
+              1.80605,
+              0.0,
+              1.80605
+            ],
+            [
+              1.80605,
+              1.80605,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.409689387676231,
+            "forces_ev_per_angstrom": [
+              [
+                -1.9081958235744878e-17,
+                8.326672684688674e-17,
+                9.71445146547012e-17
+              ],
+              [
+                8.326672684688674e-17,
+                -6.245004513516506e-17,
+                2.7755575615628914e-17
+              ],
+              [
+                -2.7755575615628914e-17,
+                3.469446951953614e-17,
+                -6.938893903907228e-18
+              ],
+              [
+                -4.336808689942018e-17,
+                -6.331740687315346e-17,
+                0.0
+              ]
+            ],
+            "stress_gpa": [
+              14.393281591584849,
+              14.393281591584849,
+              14.393281591584849,
+              6.834947893294134e-17,
+              -8.526511132791905e-17,
+              -4.898369719002497e-19
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-support-energy-volume-scale-1.025",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 1.0768906249999997
+        },
+        {
+          "cell": [
+            [
+              3.64734,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.64734,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.64734
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "linear_cell_scale": 1.035,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1",
+            "volume_scale": 1.1087178749999997
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.82367,
+              1.82367
+            ],
+            [
+              1.82367,
+              0.0,
+              1.82367
+            ],
+            [
+              1.82367,
+              1.82367,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.373329267814768,
+            "forces_ev_per_angstrom": [
+              [
+                2.721347452938616e-17,
+                1.3877787807814457e-17,
+                2.0816681711721685e-17
+              ],
+              [
+                1.1926223897340549e-18,
+                2.7755575615628914e-17,
+                1.3877787807814457e-17
+              ],
+              [
+                2.7755575615628914e-17,
+                -7.28583859910259e-17,
+                -1.3877787807814457e-17
+              ],
+              [
+                -6.505213034913027e-17,
+                5.074066167232161e-17,
+                -4.163336342344337e-17
+              ]
+            ],
+            "stress_gpa": [
+              18.876552517080846,
+              18.876552517080846,
+              18.876552517080842,
+              5.3670826437368403e-17,
+              8.227708245750755e-17,
+              8.988473815091179e-17
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-support-energy-volume-scale-1.035",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 1.1087178749999997
+        }
+      ]
+    },
+    "forces": {
+      "structures": [
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "position_noise_angstrom": 0.018,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 211,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              7.025958510263086,
+              7.047517120788927,
+              7.028604506756882
+            ],
+            [
+              0.006564688232088232,
+              1.772935638243745,
+              1.730721643986105
+            ],
+            [
+              1.7779928801849063,
+              0.019118570015059594,
+              1.7203681128201807
+            ],
+            [
+              1.7595188358552156,
+              1.769030547927241,
+              0.004373452981513791
+            ],
+            [
+              7.044067071361501,
+              7.034605502703343,
+              3.518498442343619
+            ],
+            [
+              7.046089603408382,
+              1.7627661128118852,
+              5.3010594387613414
+            ],
+            [
+              1.7955237519558085,
+              0.011105496652201698,
+              5.3095508305437535
+            ],
+            [
+              1.7863979228514104,
+              1.760484308928455,
+              3.528927541740293
+            ],
+            [
+              7.037563447982739,
+              3.5389517646797377,
+              0.005868057292675088
+            ],
+            [
+              7.045268190531349,
+              5.303681535459529,
+              1.7721289996123362
+            ],
+            [
+              1.7628654753297364,
+              3.5186124269497987,
+              1.7592939730765695
+            ],
+            [
+              1.7399193819294447,
+              5.2807738631584344,
+              7.031781626042025
+            ],
+            [
+              0.007924116114409475,
+              3.5250818735255085,
+              3.50549740491236
+            ],
+            [
+              7.038932224904408,
+              5.2429618488689576,
+              5.298611878538838
+            ],
+            [
+              1.75009934182622,
+              3.5180896071271848,
+              5.279416356121616
+            ],
+            [
+              1.7113226758097924,
+              5.297265255886189,
+              3.5452856468944036
+            ],
+            [
+              3.5149583007463487,
+              7.042926694126861,
+              0.00645376663204572
+            ],
+            [
+              3.511325805740814,
+              1.7810903866080448,
+              1.7202288830274317
+            ],
+            [
+              5.271055517750084,
+              0.011421046517022972,
+              1.7489575041854994
+            ],
+            [
+              5.2866022485271875,
+              1.7509173762155816,
+              7.033865912101836
+            ],
+            [
+              3.5211453188156345,
+              7.035761828329843,
+              3.503711029627401
+            ],
+            [
+              3.5185186677608904,
+              1.7618551710413064,
+              5.24784873233272
+            ],
+            [
+              5.255248211802964,
+              7.034372745500709,
+              5.287172900082111
+            ],
+            [
+              5.236710059698664,
+              1.751262759981577,
+              3.485274667877438
+            ],
+            [
+              3.5274779727125947,
+              3.5168289117981533,
+              0.020154777704581534
+            ],
+            [
+              3.533481960836007,
+              5.288477542819768,
+              1.750293266724221
+            ],
+            [
+              5.264088158886288,
+              3.5073957315953694,
+              1.7546882122016771
+            ],
+            [
+              5.277497378362165,
+              5.3021552179142635,
+              0.009733613706290934
+            ],
+            [
+              3.5055429194607974,
+              3.5514769850107077,
+              3.527697743641031
+            ],
+            [
+              3.4787434254970533,
+              5.286926974771102,
+              5.282849245814898
+            ],
+            [
+              5.295643714169366,
+              3.5690979311470543,
+              5.2526014674180015
+            ],
+            [
+              5.286829628928793,
+              5.293459662601166,
+              3.5660518122685065
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.444885800719771,
+            "forces_ev_per_angstrom": [
+              [
+                0.15976120729537902,
+                -0.048572324772617054,
+                0.06864043548030416
+              ],
+              [
+                -0.0975827615947908,
+                -0.1464472440567457,
+                0.2828648695207337
+              ],
+              [
+                -0.24379100462679884,
+                -0.19699377393677403,
+                0.34890968573722264
+              ],
+              [
+                -0.0255201252361768,
+                0.057843745581973825,
+                -0.2644810522157192
+              ],
+              [
+                -0.022691008324081843,
+                0.3494986560209435,
+                0.11882829338763123
+              ],
+              [
+                -0.10861572580730476,
+                0.014437729667979408,
+                -0.2998975572528104
+              ],
+              [
+                -0.45832865362331643,
+                -0.025026148838319662,
+                -0.20996900828443005
+              ],
+              [
+                -0.2980106685591836,
+                -0.07421606375538092,
+                -0.19057181478924198
+              ],
+              [
+                -0.05331319919834428,
+                -0.1311979517570705,
+                0.034271762180100834
+              ],
+              [
+                -0.09093341946436641,
+                -0.1128625410779279,
+                -0.14405944379763475
+              ],
+              [
+                -0.04969898529608373,
+                0.18539089528293418,
+                0.03719402472166412
+              ],
+              [
+                0.11492197402474333,
+                0.004925299491266415,
+                0.1879116989729998
+              ],
+              [
+                -0.17252095004928267,
+                -0.20028005988525327,
+                0.0054396438030639505
+              ],
+              [
+                0.1303398381254798,
+                0.5713970412026307,
+                -0.0675388680850459
+              ],
+              [
+                0.059297385536732,
+                -0.07456549758954578,
+                0.09455292059311868
+              ],
+              [
+                0.41865546242764173,
+                0.015879249629687377,
+                -0.25963763162326914
+              ],
+              [
+                0.12309669997635272,
+                0.06530858472585663,
+                -0.14906957016271777
+              ],
+              [
+                0.04032230553648398,
+                -0.19864364371239385,
+                0.3800525273514631
+              ],
+              [
+                0.10468718798186799,
+                -0.07249815663934624,
+                0.08657810238860567
+              ],
+              [
+                -0.09846755511203509,
+                0.17043717793407692,
+                -0.09448698059252103
+              ],
+              [
+                -0.13105080969939076,
+                -0.026902985756557744,
+                -0.00587987107712078
+              ],
+              [
+                0.16025672489530132,
+                0.14658179169560895,
+                0.3975877977225512
+              ],
+              [
+                0.14526823915303308,
+                0.12316485763952868,
+                -0.05361252166157654
+              ],
+              [
+                0.4358555263425457,
+                0.12328119727803355,
+                0.2821415396988444
+              ],
+              [
+                -0.03791393231596258,
+                0.17257821784475538,
+                -0.47418514099810677
+              ],
+              [
+                -0.20796566444827858,
+                -0.044887081747757136,
+                0.1743337500430296
+              ],
+              [
+                0.2198181149403135,
+                0.23879865406752707,
+                0.13349104740457313
+              ],
+              [
+                -0.0007358835423441224,
+                -0.16441901675745757,
+                -0.13358999666622506
+              ],
+              [
+                0.04106905764711977,
+                -0.06850101715889417,
+                -0.14666201078371557
+              ],
+              [
+                0.2861564979037291,
+                -0.07468407203946033,
+                0.09639748437492965
+              ],
+              [
+                -0.2975030101268276,
+                -0.6360363240110287,
+                0.3519900507817468
+              ],
+              [
+                -0.04486286476215558,
+                0.057210805429714316,
+                -0.5875441661724532
+              ]
+            ],
+            "stress_gpa": [
+              0.32432361863750175,
+              0.24498491577012932,
+              0.3159259210961527,
+              0.11989307216313082,
+              -0.015082399821630139,
+              -0.05761364093902201
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-support-force-displaced-seed-211",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "position_noise_angstrom": 0.022,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 223,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              7.0462759787059035,
+              7.0317238505794855,
+              7.027851224453625
+            ],
+            [
+              7.038494511583559,
+              1.779172299896455,
+              1.7736891536380546
+            ],
+            [
+              1.7657895787623152,
+              0.0066473649303877705,
+              1.7864567550365547
+            ],
+            [
+              1.7572944183538293,
+              1.764902669243258,
+              7.0271039251790866
+            ],
+            [
+              0.0420576670797488,
+              7.039365892903115,
+              3.485489272781458
+            ],
+            [
+              7.027115014650928,
+              1.745143822455318,
+              5.294686819218211
+            ],
+            [
+              1.7741560178239728,
+              7.024281141092245,
+              5.2561098748872785
+            ],
+            [
+              1.769172242936546,
+              1.749438421587907,
+              3.512404076014578
+            ],
+            [
+              7.0427427679259464,
+              3.455102492280032,
+              7.041801847719844
+            ],
+            [
+              0.03867857838986622,
+              5.331653188050563,
+              1.7487980154679734
+            ],
+            [
+              1.7739942137751687,
+              3.5084258057969833,
+              1.7538423390958948
+            ],
+            [
+              1.7262489399272871,
+              5.2824127699031465,
+              7.008182066867764
+            ],
+            [
+              0.012602816889764532,
+              3.5243354960650484,
+              3.508546304365832
+            ],
+            [
+              7.04362029583186,
+              5.3174702810646925,
+              5.280616040165833
+            ],
+            [
+              1.7579633729190614,
+              3.553828224437941,
+              5.301358309463923
+            ],
+            [
+              1.7807000303798246,
+              5.296271691219796,
+              3.5251327782685813
+            ],
+            [
+              3.505868542944472,
+              7.02648519367214,
+              7.021912401472176
+            ],
+            [
+              3.535159742912221,
+              1.8036974217710857,
+              1.7667510847314052
+            ],
+            [
+              5.295087380781577,
+              7.036426376415848,
+              1.7778515945928244
+            ],
+            [
+              5.24805924688083,
+              1.7432172523863407,
+              0.018587245417681503
+            ],
+            [
+              3.5054431129704464,
+              7.000265435774038,
+              3.5413723637314236
+            ],
+            [
+              3.503267008932619,
+              1.7419365898925345,
+              5.285006096420227
+            ],
+            [
+              5.276091848126044,
+              0.00509531732915136,
+              5.261272987361219
+            ],
+            [
+              5.268531564940894,
+              1.7062524423167054,
+              3.4998207040370475
+            ],
+            [
+              3.469294173233894,
+              3.5112689650553763,
+              0.011146209986064226
+            ],
+            [
+              3.49527259275666,
+              5.267220855466124,
+              1.7845801358424587
+            ],
+            [
+              5.285581825132438,
+              3.533581258989479,
+              1.7566301169826566
+            ],
+            [
+              5.30547314701397,
+              5.277865685620959,
+              7.023410813840389
+            ],
+            [
+              3.512581438684386,
+              3.5137388918957804,
+              3.5334002206137756
+            ],
+            [
+              3.51549251017206,
+              5.274689497753856,
+              5.305787361129637
+            ],
+            [
+              5.25301188655896,
+              3.549975709489841,
+              5.272682305045852
+            ],
+            [
+              5.2902575391485165,
+              5.267731719340455,
+              3.5406838721025498
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.442700345895673,
+            "forces_ev_per_angstrom": [
+              [
+                -0.007080217336746267,
+                0.3975100402586751,
+                0.18571215806345182
+              ],
+              [
+                0.04641358023660284,
+                -0.2936339441081159,
+                -0.16352873420453906
+              ],
+              [
+                0.24373068651348623,
+                0.10662173094074069,
+                -0.5273579210413322
+              ],
+              [
+                -0.006855285627968721,
+                -0.3333468894002942,
+                0.159943065294202
+              ],
+              [
+                -0.4335830327411535,
+                0.12648259943785314,
+                0.45335541366284904
+              ],
+              [
+                0.0659335608075309,
+                0.046483072187995106,
+                -0.30404512439199394
+              ],
+              [
+                -0.23015469108536998,
+                0.2578041561371451,
+                0.24889254510089667
+              ],
+              [
+                -0.04066929411231995,
+                0.18080963412411663,
+                0.2106330231805076
+              ],
+              [
+                -0.11012221357724751,
+                0.632421232173344,
+                0.007715985748610246
+              ],
+              [
+                -0.309403629080908,
+                -0.6542473360818453,
+                -0.025164161389084685
+              ],
+              [
+                -0.3383815724682046,
+                0.1645250383953235,
+                0.0968579028517545
+              ],
+              [
+                0.20307241814559343,
+                0.043576721487845825,
+                0.4633084921621696
+              ],
+              [
+                -0.10006897286700873,
+                0.010668791319567245,
+                0.17391618410764634
+              ],
+              [
+                -0.05435417357622146,
+                -0.3650182124374904,
+                -0.1579642790072722
+              ],
+              [
+                -0.15696072571820993,
+                -0.3894278941371081,
+                -0.34423230796384957
+              ],
+              [
+                -0.28825849650254937,
+                -0.3937453372832347,
+                0.025070809385914272
+              ],
+              [
+                0.0807214219308395,
+                0.08587491652548628,
+                0.38201592263934914
+              ],
+              [
+                -0.16229021006781605,
+                -0.5871667461383171,
+                -0.02286014920692403
+              ],
+              [
+                -0.23249477873507907,
+                -0.1588420735735279,
+                -0.24705952470904885
+              ],
+              [
+                0.16827053834827269,
+                0.06219315978283033,
+                -0.2021213253331707
+              ],
+              [
+                0.28338326450585033,
+                0.39761670992088977,
+                -0.25605666670122235
+              ],
+              [
+                0.14703004654759588,
+                0.17210897954064974,
+                -0.06814713015715541
+              ],
+              [
+                0.040512770865995903,
+                -0.13351310976848307,
+                0.14115449864150936
+              ],
+              [
+                0.11084195994035122,
+                0.5137097443605175,
+                0.2624393610013948
+              ],
+              [
+                0.5404920445314693,
+                0.21534348190440883,
+                -0.1817768356527281
+              ],
+              [
+                0.2735359102508784,
+                0.09769359513872981,
+                -0.40061684100426753
+              ],
+              [
+                0.041110053397409405,
+                0.09272217870650296,
+                0.033178820022224956
+              ],
+              [
+                -0.1913873383735573,
+                -0.006893614143277136,
+                0.2956978200609743
+              ],
+              [
+                0.04772405142961206,
+                0.04540335309808289,
+                0.0057610095210286726
+              ],
+              [
+                0.08790107205942001,
+                -0.0008345824576943792,
+                -0.13024181380576835
+              ],
+              [
+                0.26328977326370734,
+                -0.5141319404212021,
+                0.14373930256899423
+              ],
+              [
+                0.018101479095746463,
+                0.18123254450988738,
+                -0.2582194994451127
+              ]
+            ],
+            "stress_gpa": [
+              0.19340812809119853,
+              0.18604591940466997,
+              0.028358243733357876,
+              -0.14929164333766812,
+              0.11469680350219179,
+              -0.06002672397244645
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-support-force-displaced-seed-223",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "position_noise_angstrom": 0.028,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 227,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.06168142705081993,
+              0.021535302130366592,
+              7.032440744018378
+            ],
+            [
+              0.042196395039461376,
+              1.714020385831933,
+              1.7875433807903218
+            ],
+            [
+              1.7798701800634478,
+              0.03710825436365678,
+              1.762038284057551
+            ],
+            [
+              1.7509203693628728,
+              1.7633381244318147,
+              7.035587947566513
+            ],
+            [
+              0.023145778839514908,
+              0.031124530669355475,
+              3.5011732436880534
+            ],
+            [
+              7.017936796892017,
+              1.803751497235286,
+              5.3134836868873565
+            ],
+            [
+              1.7829424152539126,
+              0.01529618088464444,
+              5.254869464532337
+            ],
+            [
+              1.7245251347050936,
+              1.80021292933877,
+              3.511402462689827
+            ],
+            [
+              0.0037416479579349664,
+              3.5338612171596506,
+              7.036731668560866
+            ],
+            [
+              0.009520728294004466,
+              5.291912594941145,
+              1.7245549654860968
+            ],
+            [
+              1.722749949479175,
+              3.5123992562739685,
+              1.7763358742258055
+            ],
+            [
+              1.7726976822874814,
+              5.316294325201621,
+              7.00727426791685
+            ],
+            [
+              0.02363847081737018,
+              3.5218025730648597,
+              3.528594222392171
+            ],
+            [
+              0.009442609596656477,
+              5.2871506518896885,
+              5.26928359465886
+            ],
+            [
+              1.8064989993582257,
+              3.497054783112258,
+              5.2807006624927855
+            ],
+            [
+              1.757834270937768,
+              5.272595433745387,
+              3.463535540648767
+            ],
+            [
+              3.5267157302272887,
+              0.017655843478510715,
+              7.014567826054252
+            ],
+            [
+              3.5429008527606287,
+              1.7598837746169431,
+              1.7535167402140226
+            ],
+            [
+              5.271026654126762,
+              0.024165849838874084,
+              1.7791119906216053
+            ],
+            [
+              5.291939080771246,
+              1.7472922862996147,
+              7.037725218582933
+            ],
+            [
+              3.5025596413519797,
+              0.015035413217552529,
+              3.5105985479427813
+            ],
+            [
+              3.5273666913353487,
+              1.7454100954001668,
+              5.30083190087776
+            ],
+            [
+              5.274019564969966,
+              0.026892059988536055,
+              5.259647784123489
+            ],
+            [
+              5.283573950001823,
+              1.756990517089294,
+              3.5258275008037656
+            ],
+            [
+              3.492145970731982,
+              3.5450253134887717,
+              7.033359649657814
+            ],
+            [
+              3.4892291600415506,
+              5.277549267126289,
+              1.8528410585502115
+            ],
+            [
+              5.294788015460886,
+              3.5224953520487863,
+              1.7166565441480237
+            ],
+            [
+              5.279206776012523,
+              5.268755544345928,
+              7.037440417767178
+            ],
+            [
+              3.5411711718845327,
+              3.564337727257985,
+              3.511174049785058
+            ],
+            [
+              3.558705045839185,
+              5.343070681632746,
+              5.226719991372182
+            ],
+            [
+              5.310470253110607,
+              3.469517378305846,
+              5.309025594482373
+            ],
+            [
+              5.241661058624918,
+              5.258968098656045,
+              3.4496936204060513
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.436637176874616,
+            "forces_ev_per_angstrom": [
+              [
+                -0.6416399509315744,
+                -0.2622295379038935,
+                -0.022218124496505995
+              ],
+              [
+                -0.6885120918394336,
+                0.645966649023471,
+                -0.5823701753034236
+              ],
+              [
+                0.11793024066968187,
+                -0.3608519980977153,
+                -0.138276877460854
+              ],
+              [
+                0.23047614036734737,
+                0.14622391715957778,
+                0.08841524141865745
+              ],
+              [
+                -0.24664167217068098,
+                -0.5180001735832954,
+                0.38219231951893257
+              ],
+              [
+                0.5424245114609588,
+                -0.5778341234656934,
+                -0.37786881278747886
+              ],
+              [
+                -0.28117415535887724,
+                0.012016796360843855,
+                -0.030695413156597767
+              ],
+              [
+                0.674685348924695,
+                -0.27250299006794654,
+                0.3323854275924303
+              ],
+              [
+                0.18534807584874433,
+                -0.019548319392393706,
+                0.12129528944038212
+              ],
+              [
+                -0.09617672924780621,
+                0.16584937069889624,
+                0.1297219529747228
+              ],
+              [
+                0.37522253420303653,
+                0.05635862783323488,
+                -0.47555899592170087
+              ],
+              [
+                0.14614166715603075,
+                -0.21432672095856029,
+                0.2594380621269887
+              ],
+              [
+                -0.5112158678920388,
+                0.18036169319151474,
+                -0.038607027312570465
+              ],
+              [
+                -0.15798890451208356,
+                0.051063060810495886,
+                -0.12899902586449122
+              ],
+              [
+                -0.304726439946408,
+                0.4236994352709135,
+                -0.10822837223734642
+              ],
+              [
+                -0.3560399228318934,
+                0.20424345334543859,
+                0.8306514131542879
+              ],
+              [
+                -0.004989794064087311,
+                -0.32851997964947144,
+                0.4054183011663041
+              ],
+              [
+                -0.227735388941498,
+                0.27132512700132366,
+                -0.016872229837507195
+              ],
+              [
+                0.16239606805335985,
+                -0.28934515251041787,
+                -0.34892440975067895
+              ],
+              [
+                0.011734353881237116,
+                0.028245778334968382,
+                0.3153397126149576
+              ],
+              [
+                0.09838078360166021,
+                0.22165664345362204,
+                0.023516051332333563
+              ],
+              [
+                -0.009194641636007429,
+                0.2862610743815545,
+                -0.33782444285459756
+              ],
+              [
+                0.3977086903258353,
+                -0.27364100751986925,
+                0.04968738829745119
+              ],
+              [
+                0.048919868277983794,
+                0.2682114195593242,
+                -0.13233143795782615
+              ],
+              [
+                0.2485460404014174,
+                -0.007536354339786019,
+                0.1815396371365545
+              ],
+              [
+                0.17422201367396828,
+                0.27928779966903927,
+                -1.7007676834246883
+              ],
+              [
+                0.04379156231966015,
+                -0.1959738000667154,
+                0.20140366904743454
+              ],
+              [
+                -0.04527526963258545,
+                0.3833996258957946,
+                0.04569712701819431
+              ],
+              [
+                -0.1911780942835478,
+                -0.8870105837586387,
+                0.31608359584031104
+              ],
+              [
+                -0.23283178037056387,
+                -0.5482331885993407,
+                0.3316641001902847
+              ],
+              [
+                -0.5250859366480541,
+                0.7759653929941833,
+                -0.3140052710621137
+              ],
+              [
+                1.0624787411415288,
+                0.35541806492954864,
+                0.7390990105581524
+              ]
+            ],
+            "stress_gpa": [
+              -0.33870633980199993,
+              -0.3018439829151644,
+              -0.22792348596935638,
+              0.28257807972103444,
+              -0.02294120208840035,
+              0.07221094301566068
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-support-force-displaced-seed-227",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "position_noise_angstrom": 0.032,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 229,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.002608769517781626,
+              0.020303789425624278,
+              0.0033205760860210067
+            ],
+            [
+              0.010828474774008312,
+              1.777009506549313,
+              1.819900860514573
+            ],
+            [
+              1.7371532925392803,
+              0.008392504627876812,
+              1.7781887365923728
+            ],
+            [
+              1.7101939268513138,
+              1.7691850695785711,
+              7.024053116758218
+            ],
+            [
+              0.04298736045928237,
+              0.00748137334618125,
+              3.526069370780206
+            ],
+            [
+              0.008176971243071183,
+              1.8392004324483382,
+              5.247472092059487
+            ],
+            [
+              1.7852929162690745,
+              0.01708258517153271,
+              5.304087558583259
+            ],
+            [
+              1.7917141137608674,
+              1.8108375609662166,
+              3.5775552996914204
+            ],
+            [
+              7.004780354162936,
+              3.530901302074815,
+              0.0007543823729218569
+            ],
+            [
+              0.06066370652800102,
+              5.30539278536347,
+              1.7531174116666903
+            ],
+            [
+              1.734077053942795,
+              3.5278560450590812,
+              1.8037642810636407
+            ],
+            [
+              1.7980712740337226,
+              5.256954709371582,
+              7.0249888316317195
+            ],
+            [
+              0.04040720146487441,
+              3.475476773716167,
+              3.5099109759695755
+            ],
+            [
+              0.03447608713938996,
+              5.290633734802621,
+              5.265690756712754
+            ],
+            [
+              1.7428112528633588,
+              3.5373172975360943,
+              5.265967907212345
+            ],
+            [
+              1.7739225031506018,
+              5.207076558879418,
+              3.539030112702365
+            ],
+            [
+              3.480695334287495,
+              7.009462405509382,
+              7.020250766945402
+            ],
+            [
+              3.5216182323851,
+              1.7685348327388684,
+              1.6619498509454307
+            ],
+            [
+              5.242943597110813,
+              0.01603930852068591,
+              1.8069046960540445
+            ],
+            [
+              5.300755231965507,
+              1.779088682146949,
+              0.0023190839451822194
+            ],
+            [
+              3.5516254402802105,
+              7.0479206478206216,
+              3.5948542212905457
+            ],
+            [
+              3.504058565401592,
+              1.8117693869922804,
+              5.392386243935093
+            ],
+            [
+              5.2500862778513175,
+              0.03360891077727955,
+              5.328302710210818
+            ],
+            [
+              5.296727050853181,
+              1.7493116446524766,
+              3.5034186334523874
+            ],
+            [
+              3.5360318398046267,
+              3.4924588562079952,
+              0.010089727909149124
+            ],
+            [
+              3.504692840606822,
+              5.327735204766151,
+              1.8161964751495843
+            ],
+            [
+              5.262072917721955,
+              3.5303446717076117,
+              1.7839319780984553
+            ],
+            [
+              5.349507703522809,
+              5.292967593771216,
+              7.004856778354859
+            ],
+            [
+              3.557963186945007,
+              3.4693832567064966,
+              3.5272793611200712
+            ],
+            [
+              3.563924482525514,
+              5.22907428463997,
+              5.338385107396528
+            ],
+            [
+              5.3245192604425675,
+              3.510679657001237,
+              5.282991478048948
+            ],
+            [
+              5.230481107253092,
+              5.2652375698644,
+              3.5517464981703877
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.431884550796372,
+            "forces_ev_per_angstrom": [
+              [
+                -0.021667134549820048,
+                -0.04070999864427634,
+                -0.02277903870506345
+              ],
+              [
+                -0.07803121203468273,
+                -0.30817917201072287,
+                -0.6413274930171117
+              ],
+              [
+                0.520097860981377,
+                0.13049054686814388,
+                -0.0001326945570809656
+              ],
+              [
+                0.038646616005331695,
+                0.16701776644173982,
+                0.3825539342926857
+              ],
+              [
+                -0.37072022973547747,
+                -0.12030437501567076,
+                0.27705490122255705
+              ],
+              [
+                -0.11655769792600831,
+                -1.0703525071310795,
+                0.4690790894733238
+              ],
+              [
+                -0.26436511038931004,
+                -0.21374227792052589,
+                -0.3095363485951181
+              ],
+              [
+                0.24370754219550428,
+                -0.7468885955881506,
+                -0.46644966620893447
+              ],
+              [
+                0.5595086721680136,
+                -0.017277574594467566,
+                0.25393203121565416
+              ],
+              [
+                -0.6930445790646663,
+                -0.13643594835852518,
+                0.1857474844035521
+              ],
+              [
+                0.562805406272592,
+                -0.20146319855987022,
+                -0.6872461329744568
+              ],
+              [
+                -0.42855546479873147,
+                0.03739028708840972,
+                0.30519828642539926
+              ],
+              [
+                -0.8059869257650033,
+                0.9405151929548559,
+                0.04983497617569323
+              ],
+              [
+                -0.2904187810248698,
+                0.09992650874557514,
+                0.018284273181326707
+              ],
+              [
+                0.32751783436955195,
+                -0.026812931937941986,
+                0.5552867224850425
+              ],
+              [
+                0.2308100758632334,
+                0.8791464532063601,
+                0.08738486448603035
+              ],
+              [
+                0.4465387421857628,
+                0.2680097225613095,
+                0.5028279559871418
+              ],
+              [
+                -0.2780136542109506,
+                -0.38387995680849835,
+                0.9092788635428315
+              ],
+              [
+                0.42649156979758346,
+                -0.2967905004446933,
+                -0.47457558574920494
+              ],
+              [
+                0.2043237530919798,
+                -0.2631736394835631,
+                0.16808849132636938
+              ],
+              [
+                -0.54008179665448,
+                0.2708681176398692,
+                -0.28459528879119755
+              ],
+              [
+                0.2581337007443346,
+                -0.4829822545580127,
+                -0.9339206476808217
+              ],
+              [
+                0.5368087667521819,
+                -0.09230181196165091,
+                -0.33798700678434546
+              ],
+              [
+                -0.26083339438318387,
+                0.060890736650182214,
+                0.3910047664592135
+              ],
+              [
+                -0.06488338418135262,
+                0.8934406981049954,
+                0.27946829563871944
+              ],
+              [
+                0.08115516804870547,
+                -0.3729341786759921,
+                -0.5285734460677922
+              ],
+              [
+                0.32686782736922365,
+                0.1839324789320349,
+                -0.18318366883878542
+              ],
+              [
+                -0.5234019809491419,
+                0.08899969168310029,
+                0.65451716373141
+              ],
+              [
+                -0.1972273172316299,
+                0.2590468618330934,
+                0.06399189994738355
+              ],
+              [
+                -0.3158976502826164,
+                0.18440458717543848,
+                -0.46783576408658073
+              ],
+              [
+                -0.3058677088542496,
+                0.12730747797171174,
+                -0.1304429006396471
+              ],
+              [
+                0.7921404861907941,
+                0.18284179383681815,
+                -0.08494831729820133
+              ]
+            ],
+            "stress_gpa": [
+              -0.36152208897603777,
+              -0.6230353661137933,
+              -0.5060423625415197,
+              -0.081171934613822,
+              0.19869039211948314,
+              -0.02264599346118583
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-support-force-displaced-seed-229",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "position_noise_angstrom": 0.036,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 233,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.05090338683060559,
+              0.0467271035630988,
+              0.051564267864710606
+            ],
+            [
+              0.05015037794428259,
+              1.7486656975995503,
+              1.7983860676131245
+            ],
+            [
+              1.754711216820306,
+              7.047696692804482,
+              1.6887793997166192
+            ],
+            [
+              1.7153814669770215,
+              1.7646750295546187,
+              0.03056166933968059
+            ],
+            [
+              0.03386928289960078,
+              0.043209079568717064,
+              3.542277580716164
+            ],
+            [
+              0.016183028591035542,
+              1.8068073090994332,
+              5.292108747498195
+            ],
+            [
+              1.805049378433921,
+              7.033107679794634,
+              5.332871974009995
+            ],
+            [
+              1.7751418112848596,
+              1.812685952899442,
+              3.508838375203694
+            ],
+            [
+              7.044239883282384,
+              3.448317045235367,
+              7.018283193392396
+            ],
+            [
+              6.989494067705893,
+              5.257581028255559,
+              1.8223687587742394
+            ],
+            [
+              1.7956524523577913,
+              3.536679785595018,
+              1.7464870743278806
+            ],
+            [
+              1.7472695523754087,
+              5.331312097408566,
+              7.034162642344214
+            ],
+            [
+              0.026157938010952512,
+              3.5235315761485935,
+              3.527498475795858
+            ],
+            [
+              7.032917518944365,
+              5.2612909470122124,
+              5.293662497323769
+            ],
+            [
+              1.7265765284018029,
+              3.4776680477772253,
+              5.2785929769809155
+            ],
+            [
+              1.781459112195357,
+              5.269544955398969,
+              3.558151425612444
+            ],
+            [
+              3.53072230687595,
+              6.9633498305929695,
+              0.0044098561809303325
+            ],
+            [
+              3.586110058863854,
+              1.7856862028614788,
+              1.7452887882085673
+            ],
+            [
+              5.191361316170519,
+              7.0279785328776905,
+              1.7959678458937907
+            ],
+            [
+              5.268823265999699,
+              1.807997859697845,
+              7.005235717512001
+            ],
+            [
+              3.499438830462529,
+              7.044252890665851,
+              3.599942516156193
+            ],
+            [
+              3.5930611408994872,
+              1.7654284687079687,
+              5.321049580497913
+            ],
+            [
+              5.279442588484575,
+              0.04594126720560766,
+              5.2740121213061295
+            ],
+            [
+              5.288521436835882,
+              1.7404682577670383,
+              3.5977339727372732
+            ],
+            [
+              3.4943344045999805,
+              3.485260439025981,
+              0.03439337052292871
+            ],
+            [
+              3.5036794060035272,
+              5.270746164001453,
+              1.8213077796963388
+            ],
+            [
+              5.259734356313737,
+              3.495772503079959,
+              1.7718818646006185
+            ],
+            [
+              5.247233673648177,
+              5.302722704213005,
+              7.022239750041116
+            ],
+            [
+              3.5390271604902392,
+              3.4897685308790387,
+              3.494563653797934
+            ],
+            [
+              3.4535554167511777,
+              5.264459343871487,
+              5.219176125805014
+            ],
+            [
+              5.283580950584212,
+              3.4867860528273824,
+              5.33546351307126
+            ],
+            [
+              5.272545799745525,
+              5.230046976377182,
+              3.5005277145283777
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.423694319620145,
+            "forces_ev_per_angstrom": [
+              [
+                -1.280895911750422,
+                -0.5155875237937565,
+                -0.6230838893938271
+              ],
+              [
+                -0.8729809013289161,
+                0.2576286313390458,
+                -0.06747335198619797
+              ],
+              [
+                0.5915059012750431,
+                -0.1330527742729885,
+                1.289499199386778
+              ],
+              [
+                1.0031650395097713,
+                -0.001205608499019543,
+                -0.35043004404386285
+              ],
+              [
+                -0.09312913791330421,
+                -0.48493401906684735,
+                -0.015140724023750888
+              ],
+              [
+                -0.1219437788218472,
+                -0.9343256624467322,
+                -0.2645360473221793
+              ],
+              [
+                -0.6327127555083741,
+                0.6068360654117773,
+                -0.32273011561378134
+              ],
+              [
+                0.26167600303865746,
+                -0.6900145794583374,
+                0.14046248283815826
+              ],
+              [
+                0.014701420946984789,
+                1.1410122837758525,
+                0.822273000186615
+              ],
+              [
+                0.5137294306104753,
+                0.2788888735415586,
+                -0.7140170214835206
+              ],
+              [
+                -0.5179781520779334,
+                0.04015251481451981,
+                0.12046032391404926
+              ],
+              [
+                -0.1692159204983685,
+                -1.0259714708937056,
+                0.19688532967963204
+              ],
+              [
+                -0.36792673706483753,
+                -0.09624197019292632,
+                -0.03529300789073623
+              ],
+              [
+                -0.0040507452332524795,
+                0.298410109561187,
+                -0.02220881651428975
+              ],
+              [
+                0.6751333234951145,
+                0.4940494020929234,
+                0.2897041340124371
+              ],
+              [
+                -0.6935846347980161,
+                0.12741321599268468,
+                -0.549478542441334
+              ],
+              [
+                -0.049920796740788954,
+                0.9080967652659124,
+                -0.09576581615909552
+              ],
+              [
+                -0.7725478989626893,
+                -0.6932496270831466,
+                0.22471560732746543
+              ],
+              [
+                0.9163111731708228,
+                0.20440125475766555,
+                -0.08821233362491904
+              ],
+              [
+                0.46153034270390253,
+                -1.0352977574552003,
+                1.003353472070779
+              ],
+              [
+                -0.00746827564478883,
+                0.301134662610437,
+                -0.8126312942381789
+              ],
+              [
+                -1.3361344913515532,
+                -0.016023028595129506,
+                -0.17234057092357558
+              ],
+              [
+                0.39055346991959694,
+                -0.9088106381514315,
+                0.42124236871538445
+              ],
+              [
+                0.18123335227666149,
+                0.3555958961822779,
+                -0.878201579532981
+              ],
+              [
+                0.04249240756084363,
+                0.7256566777371888,
+                -0.5095196261229249
+              ],
+              [
+                0.02441918373814805,
+                0.07882025887246147,
+                -0.4321233659097034
+              ],
+              [
+                0.5673796976116741,
+                0.17930980218079018,
+                -0.23284552566764619
+              ],
+              [
+                0.46649340298465924,
+                -0.40411164012804973,
+                0.2060859634003535
+              ],
+              [
+                -0.1120812729186253,
+                0.06266406151161108,
+                0.5195283820978639
+              ],
+              [
+                0.9932260203020933,
+                -0.45178951613746077,
+                0.9050865980180081
+              ],
+              [
+                -0.08403717429930631,
+                0.889525556230293,
+                -0.6927908230133928
+              ],
+              [
+                0.013058415768571526,
+                0.4410197842965433,
+                0.7395256342583707
+              ]
+            ],
+            "stress_gpa": [
+              -1.2744955787079697,
+              -1.131147614898549,
+              -1.1577954347807773,
+              0.30186018750835986,
+              -0.3451396119912758,
+              -0.14508759395831639
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-support-force-displaced-seed-233",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        }
+      ]
+    },
+    "relaxation_stability": {
+      "structures": [
+        {
+          "cell": [
+            [
+              6.8717999999999995,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              6.8717999999999995,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              6.8717999999999995
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "equilibrium_solve_case": true,
+            "linear_cell_scale": 0.975,
+            "position_noise_angstrom": 0.015,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM fixed-cell FIRE relaxation via ASE",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 307,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              6.8687352362993535,
+              0.011261181876516606,
+              0.005458127547969733
+            ],
+            [
+              6.868247055687295,
+              1.7026336010883119,
+              1.6991221312592875
+            ],
+            [
+              1.7346782769640594,
+              0.01799274963441516,
+              1.6795941855617835
+            ],
+            [
+              1.7256711946969598,
+              1.6974568092597373,
+              6.861136919731978
+            ],
+            [
+              0.02351471088740926,
+              0.0215041206225749,
+              3.450499350455712
+            ],
+            [
+              6.859664879782167,
+              1.727615472920896,
+              5.174769911781782
+            ],
+            [
+              1.7549215684260542,
+              0.0067538868200684955,
+              5.141649777247626
+            ],
+            [
+              1.7311767384019747,
+              1.7269567722720365,
+              3.442860675120937
+            ],
+            [
+              0.0011764329231098965,
+              3.424572685471732,
+              0.015055254276376197
+            ],
+            [
+              0.02010354018399531,
+              5.136577089183666,
+              1.723778231621094
+            ],
+            [
+              1.7509020920280867,
+              3.4717708315700126,
+              1.7019215387505118
+            ],
+            [
+              1.7247464085908104,
+              5.161781553695211,
+              0.0012880691610964955
+            ],
+            [
+              6.865243316222292,
+              3.4066895137440834,
+              3.4176016853290285
+            ],
+            [
+              6.8583985497408495,
+              5.1606894675242785,
+              5.160908794107919
+            ],
+            [
+              1.7234895831952637,
+              3.4284377805986845,
+              5.140036983934601
+            ],
+            [
+              1.7356303555835502,
+              5.149168539243718,
+              3.4248552262892877
+            ],
+            [
+              3.4386712566895232,
+              0.004667012067974736,
+              6.867254394260883
+            ],
+            [
+              3.4186115686760092,
+              1.710815303714202,
+              1.7168600739089819
+            ],
+            [
+              5.17471708752781,
+              0.03915308388369163,
+              1.7098904343823182
+            ],
+            [
+              5.155888118969698,
+              1.7274715924238562,
+              0.002197487862739133
+            ],
+            [
+              3.454194746322393,
+              0.018013573579584087,
+              3.44912477352042
+            ],
+            [
+              3.4255333282897427,
+              1.7095174324465023,
+              5.143656705231313
+            ],
+            [
+              5.148132599138338,
+              6.866956334574668,
+              5.166420365822182
+            ],
+            [
+              5.157367311880068,
+              1.7043131643685643,
+              3.467409003408953
+            ],
+            [
+              3.411312079767969,
+              3.461865029901751,
+              0.010443471353868163
+            ],
+            [
+              3.448880220003332,
+              5.134329587437921,
+              1.7296873071712386
+            ],
+            [
+              5.145370574922749,
+              3.4469278596124013,
+              1.7016535219334366
+            ],
+            [
+              5.158433172099208,
+              5.155724539956788,
+              6.854176266497328
+            ],
+            [
+              3.4494287584145638,
+              3.4512803298340438,
+              3.38599152498607
+            ],
+            [
+              3.468278879736796,
+              5.122149017473338,
+              5.122647037174057
+            ],
+            [
+              5.168120988852763,
+              3.439780276764838,
+              5.147804206771945
+            ],
+            [
+              5.132178360141285,
+              5.112109291263151,
+              3.4362905988618553
+            ]
+          ],
+          "reference": {
+            "reference_relaxation_converged": true,
+            "reference_relaxation_max_force_ev_per_angstrom": 0.019733665870874013,
+            "reference_relaxed_cell": [
+              [
+                6.8717999999999995,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                6.8717999999999995,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                6.8717999999999995
+              ]
+            ],
+            "reference_relaxed_positions": [
+              [
+                6.877893732139791,
+                0.0005965564349639413,
+                -0.004278468005159583
+              ],
+              [
+                6.8773585721903485,
+                1.7186257910281264,
+                1.714242903348668
+              ],
+              [
+                1.7235609609104352,
+                0.000391932785188989,
+                1.7144846414008137
+              ],
+              [
+                1.7238025799243195,
+                1.7188264495819334,
+                6.868194886969645
+              ],
+              [
+                0.00466768993107214,
+                0.0002919626826804045,
+                3.430676650762043
+              ],
+              [
+                6.877924763141703,
+                1.7191165934859702,
+                5.1486271670471515
+              ],
+              [
+                1.7227413703429755,
+                0.0009824582880537027,
+                5.149938858075961
+              ],
+              [
+                1.7235884831910968,
+                1.7187102255333058,
+                3.4319316874460153
+              ],
+              [
+                0.005623788525389357,
+                3.436668957688153,
+                -0.004543433568022717
+              ],
+              [
+                0.005293351733544617,
+                5.154412714057313,
+                1.7135168312160531
+              ],
+              [
+                1.7235150353671753,
+                3.435716744446462,
+                1.714587171531118
+              ],
+              [
+                1.7238306497815137,
+                5.153631920378414,
+                -0.0030944498034342874
+              ],
+              [
+                6.877889497374082,
+                3.4377237258793736,
+                3.432533414388867
+              ],
+              [
+                6.877622603812962,
+                5.15446674098037,
+                5.150029666205418
+              ],
+              [
+                1.7246052066708615,
+                3.436674100355539,
+                5.15076020892943
+              ],
+              [
+                1.7230623320966225,
+                5.154949601563801,
+                3.432374482011093
+              ],
+              [
+                3.441318216724409,
+                0.0005663260392908182,
+                6.868153004833284
+              ],
+              [
+                3.4423849555578068,
+                1.7189265666922597,
+                1.7142598747616873
+              ],
+              [
+                5.158545728398773,
+                -0.00014704663117099786,
+                1.713235576557607
+              ],
+              [
+                5.160281220900836,
+                1.7183336511308283,
+                -0.004059032738215238
+              ],
+              [
+                3.4408760635786892,
+                0.0006990026891855182,
+                3.431822341055841
+              ],
+              [
+                3.4420872828064386,
+                1.718297319454527,
+                5.150155296642063
+              ],
+              [
+                5.1597306107180705,
+                6.873307797864563,
+                5.149215956733505
+              ],
+              [
+                5.159413553257031,
+                1.7192021338971535,
+                3.4306973104614866
+              ],
+              [
+                3.4430031443406404,
+                3.4355413964064163,
+                -0.0036847894257633746
+              ],
+              [
+                3.4408843738720973,
+                5.153716598621948,
+                1.7142086150002458
+              ],
+              [
+                5.160079510448897,
+                3.4367197864253978,
+                1.7143154661767168
+              ],
+              [
+                5.159270737144976,
+                5.154726223388519,
+                6.867730596204563
+              ],
+              [
+                3.4412724230239027,
+                3.4370907266219133,
+                3.433287710556833
+              ],
+              [
+                3.440893678922449,
+                5.15584121070593,
+                5.151153590733857
+              ],
+              [
+                5.159355450295742,
+                3.437004030111041,
+                5.149529379728482
+              ],
+              [
+                5.15904142392083,
+                5.155323286241764,
+                3.4320409200867226
+              ]
+            ],
+            "relaxation_force_threshold": 0.03,
+            "relaxed_energy_ev_per_atom": -4.416405724812096
+          },
+          "row_id": "relaxation_stability",
+          "structure_id": "ni-fcc-support-equilibrium-solve-compressed-soft",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.083239999999999,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.083239999999999,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.083239999999999
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "equilibrium_solve_case": true,
+            "linear_cell_scale": 1.005,
+            "position_noise_angstrom": 0.03,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM fixed-cell FIRE relaxation via ASE",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 311,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.01276885356697762,
+              0.021639201372948103,
+              0.001844134617028558
+            ],
+            [
+              0.026993637996471795,
+              1.7644648699746261,
+              1.7509050059964386
+            ],
+            [
+              1.8115045160396885,
+              7.05993977513992,
+              1.7885183161131244
+            ],
+            [
+              1.7991237987995206,
+              1.7538857135860977,
+              0.045855762465842324
+            ],
+            [
+              7.0619184778345145,
+              7.057562083902777,
+              3.522921425606742
+            ],
+            [
+              0.009202712443781975,
+              1.7697481283693657,
+              5.262081627797636
+            ],
+            [
+              1.779107073808717,
+              0.015851954608868957,
+              5.280871034254194
+            ],
+            [
+              1.7545785319402685,
+              1.801731459075314,
+              3.5485890427356916
+            ],
+            [
+              0.001241711088472464,
+              3.6055038332281177,
+              7.0731662093890755
+            ],
+            [
+              7.081626383513886,
+              5.282878400289113,
+              1.7929154031881107
+            ],
+            [
+              1.8301206101203,
+              3.5482825591217564,
+              1.7760241722938612
+            ],
+            [
+              1.7599542368048113,
+              5.325291480113792,
+              0.000899860013035275
+            ],
+            [
+              0.030654267707629034,
+              3.5329863438799647,
+              3.5252498827858654
+            ],
+            [
+              7.059882999378428,
+              5.319174803441646,
+              5.293857834716369
+            ],
+            [
+              1.7798383727131413,
+              3.5444677624915015,
+              5.329775181276296
+            ],
+            [
+              1.8083117293335593,
+              5.292164686654705,
+              3.559788368609992
+            ],
+            [
+              3.542729596703553,
+              7.065973406992457,
+              7.0572271574767536
+            ],
+            [
+              3.5141247386048655,
+              1.762240079674947,
+              1.8013695223860329
+            ],
+            [
+              5.330839428268534,
+              0.07123970464842393,
+              1.717710178688697
+            ],
+            [
+              5.386724180209425,
+              1.7839264219819484,
+              7.080450511629818
+            ],
+            [
+              3.548335882133628,
+              7.064280692512366,
+              3.507751763814497
+            ],
+            [
+              3.5182520191357876,
+              1.8178949546642162,
+              5.3101526835794575
+            ],
+            [
+              5.327801948966509,
+              7.030395207102297,
+              5.3231626026141186
+            ],
+            [
+              5.302684960272891,
+              1.7373251721489633,
+              3.5845440450698645
+            ],
+            [
+              3.535937995906999,
+              3.526946972424395,
+              0.021018546543535403
+            ],
+            [
+              3.5332310028536136,
+              5.342717989185333,
+              1.753805601039725
+            ],
+            [
+              5.333134707025318,
+              3.541574232695858,
+              1.7696057547799182
+            ],
+            [
+              5.321871738407823,
+              5.327142267832134,
+              0.018030887219108345
+            ],
+            [
+              3.54065823634819,
+              3.500449662006875,
+              3.557273609659086
+            ],
+            [
+              3.5872093299093364,
+              5.299601588119749,
+              5.310191194989713
+            ],
+            [
+              5.247282200946585,
+              3.5588414810994666,
+              5.345661146633072
+            ],
+            [
+              5.313894442082283,
+              5.367802933032645,
+              3.538334277152878
+            ]
+          ],
+          "reference": {
+            "reference_relaxation_converged": true,
+            "reference_relaxation_max_force_ev_per_angstrom": 0.027166731752576886,
+            "reference_relaxed_cell": [
+              [
+                7.083239999999999,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                7.083239999999999,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                7.083239999999999
+              ]
+            ],
+            "reference_relaxed_positions": [
+              [
+                0.006441111597055359,
+                0.002443904161304498,
+                0.0004723480943734109
+              ],
+              [
+                0.006631229778334862,
+                1.7726557327147048,
+                1.7708141468654515
+              ],
+              [
+                1.7789332181473259,
+                7.086086198123062,
+                1.7716964186337487
+              ],
+              [
+                1.7771696334503406,
+                1.773640523541548,
+                -3.97686798462521e-05
+              ],
+              [
+                7.089839932731175,
+                7.086250886240117,
+                3.5427170255625398
+              ],
+              [
+                0.008656312579276945,
+                1.7731141701243305,
+                5.313222230692591
+              ],
+              [
+                1.7769406868198463,
+                0.001266210510394842,
+                5.3118168147958755
+              ],
+              [
+                1.7797168032997548,
+                1.7748252437285161,
+                3.5413437976688713
+              ],
+              [
+                0.007656495883987307,
+                3.5440847093517664,
+                7.084104102905202
+              ],
+              [
+                7.089881190743391,
+                5.314547886585754,
+                1.7702852576368544
+              ],
+              [
+                1.7777948349827053,
+                3.544673309702367,
+                1.7710270624388689
+              ],
+              [
+                1.7793905480571386,
+                5.314240796836567,
+                -0.00020003588205070097
+              ],
+              [
+                0.007428828436686182,
+                3.544387684660857,
+                3.542520848396899
+              ],
+              [
+                7.09008272195813,
+                5.315431629453792,
+                5.312461689287981
+              ],
+              [
+                1.7789643974851643,
+                3.543391097825402,
+                5.311021356301176
+              ],
+              [
+                1.7782839958947414,
+                5.314360805081007,
+                3.540806789163885
+              ],
+              [
+                3.5482047079238654,
+                7.086477802463243,
+                7.08452956634627
+              ],
+              [
+                3.5479392263531033,
+                1.7730275354036211,
+                1.7689462896318693
+              ],
+              [
+                5.321889419701511,
+                0.002470643690377329,
+                1.7710680891272537
+              ],
+              [
+                5.319445247575305,
+                1.7721744211363146,
+                7.083656764695438
+              ],
+              [
+                3.549825555393879,
+                7.085565962972529,
+                3.5424539852725463
+              ],
+              [
+                3.549736070964813,
+                1.7745199437648855,
+                5.312087815466943
+              ],
+              [
+                5.321066460939412,
+                7.084969016473988,
+                5.312202889519758
+              ],
+              [
+                5.3208051791251165,
+                1.7738934119395964,
+                3.541688259139032
+              ],
+              [
+                3.549237419353586,
+                3.5440708424863057,
+                -0.0011730868743964858
+              ],
+              [
+                3.548942604923396,
+                5.316204971734073,
+                1.7707666166074272
+              ],
+              [
+                5.320391325570991,
+                3.542573630793998,
+                1.7702628750895133
+              ],
+              [
+                5.32076897212341,
+                5.313476276508316,
+                -0.0006332203371786092
+              ],
+              [
+                3.5490871630140655,
+                3.542836926179518,
+                3.5419481760501834
+              ],
+              [
+                3.55135758324791,
+                5.315010539929425,
+                5.314373190270382
+              ],
+              [
+                5.320206906284024,
+                3.5452444517567563,
+                5.311682693059365
+              ],
+              [
+                5.318824536526065,
+                5.31600865549815,
+                3.5416217581887475
+              ]
+            ],
+            "relaxation_force_threshold": 0.03,
+            "relaxed_energy_ev_per_atom": -4.44785133622338
+          },
+          "row_id": "relaxation_stability",
+          "structure_id": "ni-fcc-support-equilibrium-solve-near-eq-medium",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.2242,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.2242,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.2242
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "equilibrium_solve_case": true,
+            "linear_cell_scale": 1.025,
+            "position_noise_angstrom": 0.035,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM fixed-cell FIRE relaxation via ASE",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 313,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              7.220533111174491,
+              0.04202180503862921,
+              7.210709555621983
+            ],
+            [
+              0.010800914084469803,
+              1.7203817815329705,
+              1.7844647679679198
+            ],
+            [
+              1.8486932121516273,
+              7.174828110568379,
+              1.813426318852348
+            ],
+            [
+              1.848271231325333,
+              1.7984937665431975,
+              0.03369344673686787
+            ],
+            [
+              7.202937172797298,
+              7.163519636372903,
+              3.646146435384908
+            ],
+            [
+              0.03578517277160928,
+              1.8284830548921494,
+              5.405432893002743
+            ],
+            [
+              1.7780760180842354,
+              7.194201575623939,
+              5.473264286858278
+            ],
+            [
+              1.7662952804950034,
+              1.8816039752955909,
+              3.655292083650297
+            ],
+            [
+              0.0358794054573706,
+              3.5555387785818486,
+              7.194485841098165
+            ],
+            [
+              0.007293113610053556,
+              5.423561325733497,
+              1.8430477236223393
+            ],
+            [
+              1.7969857934946225,
+              3.5973800316264213,
+              1.8002682172606175
+            ],
+            [
+              1.779604255130567,
+              5.386614989613717,
+              7.211442147729527
+            ],
+            [
+              7.171997051510105,
+              3.576904938756887,
+              3.588830325436226
+            ],
+            [
+              7.213193285946886,
+              5.449654299690651,
+              5.45372128942596
+            ],
+            [
+              1.7987487292734345,
+              3.63089430979139,
+              5.440676534106847
+            ],
+            [
+              1.7476464039406994,
+              5.447279477965435,
+              3.648472396599137
+            ],
+            [
+              3.5956404385606406,
+              7.188528194830991,
+              0.014710798248888943
+            ],
+            [
+              3.6169226144406457,
+              1.7648060213555337,
+              1.791003623324445
+            ],
+            [
+              5.366773564426632,
+              0.03357477079776323,
+              1.8261009020133039
+            ],
+            [
+              5.489943860123283,
+              1.784483764540541,
+              0.06599293229304579
+            ],
+            [
+              3.654796237723241,
+              0.010399008424565374,
+              3.5868223652770452
+            ],
+            [
+              3.5860906429534882,
+              1.8226971839354509,
+              5.4464338383688045
+            ],
+            [
+              5.429474481947538,
+              7.208276081290966,
+              5.408995415996442
+            ],
+            [
+              5.437676292723605,
+              1.8070431205842374,
+              3.5158416388040545
+            ],
+            [
+              3.5740065815188444,
+              3.567238558916412,
+              7.182453931291468
+            ],
+            [
+              3.568374278097976,
+              5.425588016569643,
+              1.7595600493796295
+            ],
+            [
+              5.431074475319116,
+              3.5870151704438453,
+              1.7961571850553801
+            ],
+            [
+              5.393680262001603,
+              5.448113143096191,
+              7.17821285480419
+            ],
+            [
+              3.5925110444530546,
+              3.6124057071521536,
+              3.5971658226931753
+            ],
+            [
+              3.6019485982138897,
+              5.405626628225659,
+              5.417964917895541
+            ],
+            [
+              5.3962708383107705,
+              3.620864050457125,
+              5.372420645393202
+            ],
+            [
+              5.439067556298574,
+              5.415271214965567,
+              3.676255732443028
+            ]
+          ],
+          "reference": {
+            "reference_relaxation_converged": true,
+            "reference_relaxation_max_force_ev_per_angstrom": 0.02958388556788263,
+            "reference_relaxed_cell": [
+              [
+                7.2242,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                7.2242,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                7.2242
+              ]
+            ],
+            "reference_relaxed_positions": [
+              [
+                7.220115715977007,
+                -0.0068519449923248035,
+                7.225504395905817
+              ],
+              [
+                -0.0023377147711723676,
+                1.7961607017953158,
+                1.8078862595938727
+              ],
+              [
+                1.8017709455069106,
+                7.216903220064527,
+                1.8076993443122709
+              ],
+              [
+                1.8020201254831187,
+                1.7977003511778973,
+                0.0014090425624331672
+              ],
+              [
+                7.219464039317363,
+                7.21736291743733,
+                3.6134928733847294
+              ],
+              [
+                -0.005108284349412611,
+                1.7990995561148242,
+                5.418191123967872
+              ],
+              [
+                1.8018469747900112,
+                7.217205783856304,
+                5.419224016988423
+              ],
+              [
+                1.8012153635931334,
+                1.7980933951788833,
+                3.612948380063341
+              ],
+              [
+                -0.004448527471759282,
+                3.6043115250497397,
+                7.22539664053169
+              ],
+              [
+                -0.00583552089423553,
+                5.411854995781646,
+                1.8057819685864167
+              ],
+              [
+                1.80065372525323,
+                3.6048945485006945,
+                1.8072968556999023
+              ],
+              [
+                1.8004221361548225,
+                5.410177205686046,
+                7.224853517937701
+              ],
+              [
+                7.21917897298563,
+                3.6055676482132597,
+                3.6126076946275094
+              ],
+              [
+                7.21907182241906,
+                5.409310313486887,
+                5.420340080767657
+              ],
+              [
+                1.8006956795145395,
+                3.606325929954596,
+                5.41853596673724
+              ],
+              [
+                1.801253322362008,
+                5.409981006683361,
+                3.61427518801177
+              ],
+              [
+                3.607527717120752,
+                7.216892197160175,
+                0.00011367970325195406
+              ],
+              [
+                3.606443707316329,
+                1.7993788791078082,
+                1.8066778199562699
+              ],
+              [
+                5.41314666473349,
+                -0.009229056270484629,
+                1.8069484386012875
+              ],
+              [
+                5.4130196852990515,
+                1.7982787336841966,
+                0.0011664764526843482
+              ],
+              [
+                3.6071084642171902,
+                -0.006916604184897553,
+                3.6140744407301613
+              ],
+              [
+                3.6085952494650217,
+                1.797871705953946,
+                5.418846043828071
+              ],
+              [
+                5.41308377178761,
+                7.219879951604966,
+                5.418886934115718
+              ],
+              [
+                5.413671675637408,
+                1.7984504184863288,
+                3.61194545244218
+              ],
+              [
+                3.608016323592428,
+                3.604675076786921,
+                7.2254299232769235
+              ],
+              [
+                3.60826962684822,
+                5.40902764203931,
+                1.8069860654072032
+              ],
+              [
+                5.4135951689696125,
+                3.6062211611690396,
+                1.8054751306411392
+              ],
+              [
+                5.413734551701724,
+                5.4104287092689125,
+                7.224851035981759
+              ],
+              [
+                3.607400421944306,
+                3.6058941275833862,
+                3.6119974874553695
+              ],
+              [
+                3.606883811895771,
+                5.4108596499420925,
+                5.418379493129577
+              ],
+              [
+                5.413508096241646,
+                3.6030461015996327,
+                5.419123295598438
+              ],
+              [
+                5.4130082057198905,
+                5.410436645293938,
+                3.613121849637128
+              ]
+            ],
+            "relaxation_force_threshold": 0.03,
+            "relaxed_energy_ev_per_atom": -4.40967948660124
+          },
+          "row_id": "relaxation_stability",
+          "structure_id": "ni-fcc-support-equilibrium-solve-expanded-hard",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              6.94228,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              6.94228,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              6.94228
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "equilibrium_solve_case": true,
+            "linear_cell_scale": 0.985,
+            "position_noise_angstrom": 0.045,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM fixed-cell FIRE relaxation via ASE",
+            "sealed_eval_overlap": "forbidden",
+            "seed": 317,
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              6.906091735871477,
+              6.916127403339528,
+              0.06448301199675319
+            ],
+            [
+              0.028849454799587705,
+              1.7539014969700115,
+              1.8012216004367954
+            ],
+            [
+              1.809669841660835,
+              6.884516988917654,
+              1.7407898995641002
+            ],
+            [
+              1.7300710573219602,
+              1.6710937053872896,
+              0.0425315323259025
+            ],
+            [
+              6.907231869134535,
+              0.05402920688973025,
+              3.4481425855936916
+            ],
+            [
+              0.06582480597713054,
+              1.7628127960492441,
+              5.251782363282423
+            ],
+            [
+              1.7505889811047528,
+              6.906524536175326,
+              5.163474525004865
+            ],
+            [
+              1.7535591403371078,
+              1.7750102359269022,
+              3.4460469831603047
+            ],
+            [
+              6.903727182852432,
+              3.51451611902811,
+              6.934565329673274
+            ],
+            [
+              0.05917637180524268,
+              5.2360143044278455,
+              1.723672160108955
+            ],
+            [
+              1.751404755818995,
+              3.405813982532178,
+              1.6915205188213887
+            ],
+            [
+              1.7259343852556759,
+              5.235761573744874,
+              6.896062687361246
+            ],
+            [
+              0.04134239849021135,
+              3.436670219345533,
+              3.461393540723065
+            ],
+            [
+              6.933109717524209,
+              5.228230509665701,
+              5.163186123256084
+            ],
+            [
+              1.7747999943973196,
+              3.472168545521589,
+              5.240600733708057
+            ],
+            [
+              1.7505781593875636,
+              5.114423966620949,
+              3.5174375109304856
+            ],
+            [
+              3.473286122893059,
+              6.910940217308538,
+              0.015558833385095077
+            ],
+            [
+              3.5469030458287776,
+              1.6807947079983163,
+              1.7814833733337856
+            ],
+            [
+              5.29227988205723,
+              6.89092571474378,
+              1.7882158194529743
+            ],
+            [
+              5.208667632176831,
+              1.728578926754346,
+              0.007197937937798194
+            ],
+            [
+              3.535845016289557,
+              6.911352108270974,
+              3.4813844172334627
+            ],
+            [
+              3.4589329492932697,
+              1.6816220099975923,
+              5.213200632884598
+            ],
+            [
+              5.172231343420186,
+              0.024373784246211463,
+              5.098920360026553
+            ],
+            [
+              5.211696402518796,
+              1.7078014797751986,
+              3.584962081806423
+            ],
+            [
+              3.4344032230743595,
+              3.4390470243705384,
+              0.10355056787166934
+            ],
+            [
+              3.4436712671842846,
+              5.196580243352309,
+              1.6611962583850635
+            ],
+            [
+              5.191672379799949,
+              3.499258469963896,
+              1.715734334452768
+            ],
+            [
+              5.214575034270628,
+              5.224675869099403,
+              0.038270048527027485
+            ],
+            [
+              3.4627116777961304,
+              3.493613093005447,
+              3.42732280889786
+            ],
+            [
+              3.4647389792089576,
+              5.232446262574925,
+              5.234870658796988
+            ],
+            [
+              5.153881405256238,
+              3.5453181281141206,
+              5.2137091985370105
+            ],
+            [
+              5.206137938906324,
+              5.280401672462514,
+              3.489589545369941
+            ]
+          ],
+          "reference": {
+            "reference_relaxation_converged": true,
+            "reference_relaxation_max_force_ev_per_angstrom": 0.027038396136317398,
+            "reference_relaxed_cell": [
+              [
+                6.94228,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                6.94228,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                6.94228
+              ]
+            ],
+            "reference_relaxed_positions": [
+              [
+                6.951468393220462,
+                6.938357245774518,
+                0.00841447029287448
+              ],
+              [
+                0.00989731918607696,
+                1.730647913424548,
+                1.742842275855659
+              ],
+              [
+                1.7448983202200754,
+                6.937910856125238,
+                1.7424365948900093
+              ],
+              [
+                1.7449295199175445,
+                1.7315807039889524,
+                0.007221541196501618
+              ],
+              [
+                6.950634202378703,
+                -0.005591075558790675,
+                3.4788612910080916
+              ],
+              [
+                0.009246019405211584,
+                1.729909912821562,
+                5.214099734609487
+              ],
+              [
+                1.745301566139857,
+                6.937353380326538,
+                5.21457841400498
+              ],
+              [
+                1.744346090181213,
+                1.7302514858279021,
+                3.4799563597528267
+              ],
+              [
+                6.9506962773176335,
+                3.466704330367988,
+                6.950310499613079
+              ],
+              [
+                0.008713783259017326,
+                5.202124848523196,
+                1.7431839492374537
+              ],
+              [
+                1.7445355421920488,
+                3.467710565167335,
+                1.7453441658404356
+              ],
+              [
+                1.7446448298570212,
+                5.202464084691567,
+                6.950756238638572
+              ],
+              [
+                0.008830941040772186,
+                3.466744353072329,
+                3.4778985410277836
+              ],
+              [
+                6.95256418235313,
+                5.202398118897906,
+                5.2150094732081795
+              ],
+              [
+                1.7451362671918043,
+                3.4669704829417314,
+                5.213415053384401
+              ],
+              [
+                1.744343093473067,
+                5.203259486938726,
+                3.479350921172574
+              ],
+              [
+                3.4800107754728846,
+                6.9378947524115615,
+                0.007995502317671498
+              ],
+              [
+                3.4790358321706063,
+                1.73145396340397,
+                1.7430582256886507
+              ],
+              [
+                5.215002820973883,
+                6.937226907988004,
+                1.742969999421941
+              ],
+              [
+                5.215540424884544,
+                1.7309132431410623,
+                0.007976795854668572
+              ],
+              [
+                3.478914829201549,
+                6.938561132855574,
+                3.4778277523288916
+              ],
+              [
+                3.480453646492898,
+                1.7308698652112513,
+                5.214871867729555
+              ],
+              [
+                5.214863814598786,
+                -0.005723988768605443,
+                5.215471802478361
+              ],
+              [
+                5.215730644901122,
+                1.7315968514486773,
+                3.4781396738584114
+              ],
+              [
+                3.4805713117259516,
+                3.466466051376217,
+                0.007754473668047009
+              ],
+              [
+                3.481022586070632,
+                5.2022089299136605,
+                1.7446857398278637
+              ],
+              [
+                5.214629121718434,
+                3.466632103807834,
+                1.7429714251275006
+              ],
+              [
+                5.215671687543699,
+                5.201596548469692,
+                0.007249972749177787
+              ],
+              [
+                3.4800610356479393,
+                3.466329671179148,
+                3.4788957855602503
+              ],
+              [
+                3.4795596791942383,
+                5.202926212833744,
+                5.2144292874034655
+              ],
+              [
+                5.216765983039302,
+                3.4662477831196625,
+                5.214039019916155
+              ],
+              [
+                5.2155736107435,
+                5.201348580857873,
+                3.480061135182879
+              ]
+            ],
+            "relaxation_force_threshold": 0.03,
+            "relaxed_energy_ev_per_atom": -4.43886280551809
+          },
+          "row_id": "relaxation_stability",
+          "structure_id": "ni-fcc-support-equilibrium-solve-compressed-hard",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        }
+      ]
+    },
+    "stress": {
+      "structures": [
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.536334,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.768167,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.768167,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.4496712853666756,
+            "forces_ev_per_angstrom": [
+              [
+                4.5102810375396984e-17,
+                6.938893903907228e-18,
+                0.0
+              ],
+              [
+                4.5102810375396984e-17,
+                6.938893903907228e-18,
+                -1.0755285551056204e-16
+              ],
+              [
+                -1.249000902703301e-16,
+                6.938893903907228e-18,
+                -1.3530843112619095e-16
+              ],
+              [
+                -1.231653667943533e-16,
+                0.0,
+                -1.734723475976807e-18
+              ]
+            ],
+            "stress_gpa": [
+              1.1330765794225295,
+              1.5403780898331931,
+              1.1330765794225308,
+              -3.4661982032563367e-17,
+              1.2422263590506256e-17,
+              -3.241415894354084e-17
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            0.0,
+            0.0035,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-stress-yy-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.5116660000000004
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.7558330000000002
+            ],
+            [
+              1.762,
+              0.0,
+              1.7558330000000002
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.44997264918394,
+            "forces_ev_per_angstrom": [
+              [
+                3.122502256758253e-17,
+                -1.3877787807814457e-17,
+                0.0
+              ],
+              [
+                -1.0408340855860843e-17,
+                -1.214306433183765e-16,
+                1.3530843112619095e-16
+              ],
+              [
+                -1.1796119636642288e-16,
+                1.3877787807814457e-17,
+                1.491862189340054e-16
+              ],
+              [
+                -1.3010426069826053e-16,
+                -1.0755285551056204e-16,
+                -1.3877787807814457e-17
+              ]
+            ],
+            "stress_gpa": [
+              0.10194481268326737,
+              0.10194481268326737,
+              -0.23796355743854045,
+              -9.494589895929153e-17,
+              -3.0455770854081173e-17,
+              -3.90903976735065e-17
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            -0.0035,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-stress-zz-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.534572,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.534572,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.767286,
+              1.762
+            ],
+            [
+              1.767286,
+              0.0,
+              1.762
+            ],
+            [
+              1.767286,
+              1.767286,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449424068280421,
+            "forces_ev_per_angstrom": [
+              [
+                3.469446951953614e-18,
+                6.938893903907228e-18,
+                1.3877787807814457e-17
+              ],
+              [
+                2.0816681711721685e-17,
+                9.367506770274758e-17,
+                1.214306433183765e-16
+              ],
+              [
+                9.71445146547012e-17,
+                6.938893903907228e-18,
+                1.0755285551056204e-16
+              ],
+              [
+                9.020562075079397e-17,
+                7.806255641895632e-17,
+                5.204170427930421e-17
+              ]
+            ],
+            "stress_gpa": [
+              1.8437230192510448,
+              1.8437230192510456,
+              1.4973095920104815,
+              4.663238909260901e-17,
+              -3.2279255345354186e-17,
+              -6.107000499012652e-18
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            0.003,
+            0.003,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-stress-biaxial-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.513428,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.513428,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.756714,
+              1.762
+            ],
+            [
+              1.756714,
+              0.0,
+              1.762
+            ],
+            [
+              1.756714,
+              1.756714,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449937683176514,
+            "forces_ev_per_angstrom": [
+              [
+                -3.122502256758253e-17,
+                -6.765421556309548e-17,
+                -6.938893903907228e-18
+              ],
+              [
+                1.734723475976807e-17,
+                -1.3183898417423734e-16,
+                1.249000902703301e-16
+              ],
+              [
+                -1.1102230246251565e-16,
+                -2.7755575615628914e-17,
+                1.1102230246251565e-16
+              ],
+              [
+                -1.7520707107365752e-16,
+                -2.0990154059319366e-16,
+                1.3877787807814457e-17
+              ]
+            ],
+            "stress_gpa": [
+              -0.5730816965146618,
+              -0.5730816965146622,
+              -0.2667907195277509,
+              1.1055410120910597e-16,
+              1.5400360578751462e-16,
+              -1.4281959782066863e-16
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            -0.003,
+            -0.003,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-stress-biaxial-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.007929
+            ],
+            [
+              0.0,
+              0.007929,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7659645,
+              1.7659645
+            ],
+            [
+              1.762,
+              0.0039645,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              0.0039645
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449841698106557,
+            "forces_ev_per_angstrom": [
+              [
+                3.469446951953614e-17,
+                1.734723475976807e-17,
+                -1.0408340855860843e-17
+              ],
+              [
+                -1.0408340855860843e-17,
+                1.730462900252118e-16,
+                1.7694179454963432e-16
+              ],
+              [
+                1.214306433183765e-16,
+                -6.071532165918825e-17,
+                1.3877787807814457e-16
+              ],
+              [
+                8.326672684688674e-17,
+                1.214306433183765e-16,
+                -6.280241084122284e-17
+              ]
+            ],
+            "stress_gpa": [
+              0.6190544563309734,
+              0.619686933054908,
+              0.619686933054908,
+              0.5655180335792044,
+              5.0327348995508735e-17,
+              -3.1833985196051744e-17
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0045,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-stress-yz-shear",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              -0.007929
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              -0.007929,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc-support",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "sealed_eval_overlap": "forbidden",
+            "support_role": "distill_calibration",
+            "support_split": "ni-material-family-v1"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.0039645,
+              1.762,
+              1.762
+            ],
+            [
+              1.7580355,
+              0.0,
+              1.7580355
+            ],
+            [
+              1.762,
+              1.762,
+              -0.0039645
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449841698106557,
+            "forces_ev_per_angstrom": [
+              [
+                1.3877787807814457e-17,
+                -6.938893903907228e-18,
+                -6.938893903907228e-18
+              ],
+              [
+                -6.713379852030243e-16,
+                1.0755285551056204e-16,
+                -6.800116025829084e-16
+              ],
+              [
+                2.0165398078577854e-16,
+                3.8163916471489756e-17,
+                1.9081958235744878e-16
+              ],
+              [
+                -6.418476861114186e-16,
+                9.194034422677078e-17,
+                -7.011942025278439e-16
+              ]
+            ],
+            "stress_gpa": [
+              0.6196869330549165,
+              0.6190544563309782,
+              0.6196869330549162,
+              6.094243485806559e-17,
+              -0.5655180335791979,
+              -1.0717407259451278e-16
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.0045,
+            0.0
+          ],
+          "structure_id": "ni-fcc-support-stress-xz-shear",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        }
+      ]
+    }
+  },
+  "row_specs": {
+    "elastic_constants": {
+      "error_tolerance": 35.0,
+      "error_unit": "gpa_mae_vs_literature_cij",
+      "min_cases": 13
+    },
+    "energy_volume": {
+      "error_tolerance": 0.08,
+      "error_unit": "ev_per_atom_mae_vs_mishin_eam",
+      "min_cases": 5,
+      "reference_mode": "absolute_eam_energy"
+    },
+    "forces": {
+      "error_tolerance": 0.2,
+      "error_unit": "ev_per_angstrom_rmse_vs_mishin_eam",
+      "min_cases": 5
+    },
+    "relaxation_stability": {
+      "error_tolerance": 0.08,
+      "error_unit": "fixed_cell_relaxation_penalty_vs_mishin_eam",
+      "force_threshold": 0.03,
+      "max_steps": 250,
+      "min_cases": 3
+    },
+    "stress": {
+      "error_tolerance": 5.0,
+      "error_unit": "gpa_mae_vs_mishin_eam",
+      "min_cases": 5
+    }
+  },
+  "schema": "lupine.mlip.fixture_manifest.v2",
+  "source_packet_id": "real-material-publication-v1",
+  "title": "FCC Ni EAM Distill Support V1"
+}

@@ -12,9 +12,9 @@ export function renderMlipFlywheelView(mount) {
   );
 
   loadEvidence(controller.signal)
-    .then(({ evidence, relaxation, liveCampaign }) => {
+    .then(({ evidence, relaxation, liveCampaign, policyReplay }) => {
       if (controller.signal.aborted) return;
-      const root = renderEvidence(evidence, relaxation, liveCampaign);
+      const root = renderEvidence(evidence, relaxation, liveCampaign, policyReplay);
       mount.replaceChildren(root);
       initStages(root, evidence.stages || []);
       canvasCleanup = initLatticeCanvas(root, relaxation);
@@ -34,12 +34,13 @@ async function loadEvidence(signal) {
   const evidence = await fetchJson(EVIDENCE_URL, signal);
   const url = evidence?.relaxation_artifact?.url;
   if (!url) throw new Error('Evidence file does not name a relaxation artifact.');
-  const [relaxation, liveCampaign] = await Promise.all([
+  const [relaxation, liveCampaign, policyReplay] = await Promise.all([
     fetchJson(url, signal),
     loadOptionalJson(evidence?.live_campaign_artifact?.url, signal),
+    loadOptionalJson(evidence?.policy_replay_artifact?.url, signal),
   ]);
   assertEvidence(evidence, relaxation);
-  return { evidence, relaxation, liveCampaign };
+  return { evidence, relaxation, liveCampaign, policyReplay };
 }
 
 async function fetchJson(url, signal) {
@@ -73,18 +74,54 @@ function assertEvidence(evidence, relaxation) {
   }
 }
 
-function renderEvidence(evidence, relaxation, liveCampaign) {
+function renderEvidence(evidence, relaxation, liveCampaign, policyReplay) {
   const root = h('section', { class: 'flywheel-lab', 'aria-labelledby': 'flywheel-title' });
   root.append(renderWhy(evidence));
   root.append(renderWorkGuidance(evidence.work_guidance));
   root.append(renderHero(evidence, relaxation));
   root.append(renderLiveCampaign(liveCampaign, evidence.live_campaign_artifact));
+  root.append(renderPolicyReplay(policyReplay, evidence.policy_replay_artifact));
   root.append(renderStageSystem(evidence.stages || []));
   root.append(renderBaselineMatrix(evidence.baseline));
   root.append(renderTriplets(evidence.distill_triplets || []));
   root.append(renderEvaluators(evidence.evaluators || []));
   root.append(renderSources(evidence.sources || []));
   return root;
+}
+
+function renderPolicyReplay(policyReplay, descriptor) {
+  if (!descriptor && !policyReplay) return document.createDocumentFragment();
+  const summary = policyReplay?.summary || {};
+  const pairs = Array.isArray(policyReplay?.pairs) ? policyReplay.pairs : [];
+  const eligible = summary.flagship_eligible === true;
+  const isError = policyReplay?.schema === 'lupine.library.optional_artifact_error.v1';
+  const title = descriptor?.title || 'Local policy replay gate';
+  return h('section', { class: `fly-section fly-policy-replay ${eligible ? 'eligible' : 'blocked'}`, 'aria-labelledby': 'fly-policy-replay-title' },
+    h('div', { class: 'fly-section-head' },
+      h('p', { class: 'fly-kicker' }, isError ? 'Replay unavailable' : eligible ? 'Candidate proof gate' : 'Replay blocked'),
+      h('h2', { id: 'fly-policy-replay-title' }, title),
+      h('p', {}, descriptor?.description || 'Replay runs completed cloud predictions through the local Rust policy before spending on another Cloud Run image.')
+    ),
+    isError
+      ? h('p', { class: 'fly-caption' }, policyReplay.error || 'Replay artifact unavailable.')
+      : [
+        h('div', { class: 'fly-live-run-head' },
+          h('div', {}, h('span', {}, 'Scope'), h('strong', {}, policyReplay?.scope || 'unknown')),
+          h('div', {}, h('span', {}, 'Status'), h('strong', {}, String(summary.status || 'awaiting').replace(/_/g, ' '))),
+          h('div', {}, h('span', {}, 'Mean lift'), h('strong', {}, formatPercent(summary.mean_lift_fraction)))
+        ),
+        h('dl', { class: 'fly-live-run-stats' },
+          stat('Pairs', `${summary.pairs_measured ?? 0} / ${summary.pairs_total ?? 0}`),
+          stat('Improved', `${summary.pairs_improved ?? 0}`),
+          stat('Regressed', `${summary.pairs_regressed ?? 0}`),
+          stat('Unchanged', `${summary.pairs_unchanged ?? 0}`),
+          stat('Cloud claim', 'not yet'),
+          stat('Next', eligible ? 'rebuild canary' : 'revise policy')
+        ),
+        h('div', { class: 'fly-live-pair-grid' }, ...pairs.map(renderReplayPair)),
+        h('p', { class: 'fly-caption' }, summary.next_action || 'Replay is a spend gate, not a final claim.')
+      ]
+  );
 }
 
 function renderEvidenceError(error) {
@@ -341,6 +378,23 @@ function renderLivePair(pair) {
     h('dl', {},
       stat('Baseline', formatMetric(pair.baseline_error)),
       stat('Distill', formatMetric(pair.distill_error)),
+      stat('Lift', Number.isFinite(lift) ? formatPercent(lift) : 'n/a')
+    ),
+    h('small', {}, String(pair.verdict || 'awaiting_pair').replace(/_/g, ' '))
+  );
+}
+
+function renderReplayPair(pair) {
+  const tone = pair.verdict === 'distill_improved' ? 'good' : pair.verdict === 'distill_regressed' ? 'bad' : 'pending';
+  const lift = Number(pair.lift_fraction);
+  return h('article', { class: `fly-live-pair ${tone}` },
+    h('div', { class: 'fly-live-pair-top' },
+      h('span', {}, pair.row_label || pair.row_id),
+      h('strong', {}, pair.mlip_id)
+    ),
+    h('dl', {},
+      stat('Baseline', formatMetric(pair.baseline_error)),
+      stat('Replay', formatMetric(pair.replayed_distill_error)),
       stat('Lift', Number.isFinite(lift) ? formatPercent(lift) : 'n/a')
     ),
     h('small', {}, String(pair.verdict || 'awaiting_pair').replace(/_/g, ' '))

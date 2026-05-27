@@ -1538,6 +1538,21 @@ body {
   border-color: color-mix(in srgb, var(--green) 42%, var(--fly-line));
 }
 
+.fly-policy-replay {
+  border-color: color-mix(in srgb, var(--gold) 34%, var(--fly-line));
+  background:
+    linear-gradient(150deg, color-mix(in srgb, var(--gold) 7%, transparent), transparent 48%),
+    var(--fly-panel);
+}
+
+.fly-policy-replay.eligible {
+  border-color: color-mix(in srgb, var(--green) 42%, var(--fly-line));
+}
+
+.fly-policy-replay.blocked {
+  border-color: color-mix(in srgb, var(--red) 38%, var(--fly-line));
+}
+
 .fly-live-run-head {
   display: grid;
   gap: 10px;

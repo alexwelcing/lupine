@@ -19,6 +19,10 @@ pub(crate) const DEFAULT_RIBBON_VERSION: &str = "hyperribbon-v1";
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub(crate) struct PolicyLimits {
     pub(crate) max_energy_bias_ev_per_atom: f64,
+    #[serde(default)]
+    pub(crate) max_energy_zero_point_shift_ev_per_atom: f64,
+    #[serde(default = "default_min_energy_zero_point_support_lift_fraction")]
+    pub(crate) min_energy_zero_point_support_lift_fraction: f64,
     pub(crate) max_stress_bias_gpa: f64,
     pub(crate) max_force_bias_ev_per_angstrom: f64,
     pub(crate) max_force_norm_ev_per_angstrom: f64,
@@ -45,6 +49,10 @@ pub(crate) struct PolicyLimits {
 pub(crate) struct PolicyLimitOverride {
     #[serde(default)]
     pub(crate) max_energy_bias_ev_per_atom: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_energy_zero_point_shift_ev_per_atom: Option<f64>,
+    #[serde(default)]
+    pub(crate) min_energy_zero_point_support_lift_fraction: Option<f64>,
     #[serde(default)]
     pub(crate) max_stress_bias_gpa: Option<f64>,
     #[serde(default)]
@@ -73,6 +81,9 @@ impl Default for PolicyLimits {
     fn default() -> Self {
         Self {
             max_energy_bias_ev_per_atom: 0.5,
+            max_energy_zero_point_shift_ev_per_atom: 0.0,
+            min_energy_zero_point_support_lift_fraction:
+                default_min_energy_zero_point_support_lift_fraction(),
             max_stress_bias_gpa: 25.0,
             max_force_bias_ev_per_angstrom: 1.0,
             max_force_norm_ev_per_angstrom: 200.0,
@@ -126,6 +137,16 @@ impl PolicyLimits {
         {
             bail!("min_support_lift_fraction must be finite and between 0 and 1");
         }
+        if !self.max_energy_zero_point_shift_ev_per_atom.is_finite()
+            || self.max_energy_zero_point_shift_ev_per_atom < 0.0
+        {
+            bail!("max_energy_zero_point_shift_ev_per_atom must be non-negative and finite");
+        }
+        if !self.min_energy_zero_point_support_lift_fraction.is_finite()
+            || !(0.0..=1.0).contains(&self.min_energy_zero_point_support_lift_fraction)
+        {
+            bail!("min_energy_zero_point_support_lift_fraction must be finite and between 0 and 1");
+        }
         if !self.max_support_eval_distance_proxy.is_finite()
             || self.max_support_eval_distance_proxy < 0.0
         {
@@ -165,6 +186,12 @@ impl PolicyLimits {
     fn apply_override(&mut self, limits_override: &PolicyLimitOverride) {
         if let Some(value) = limits_override.max_energy_bias_ev_per_atom {
             self.max_energy_bias_ev_per_atom = value;
+        }
+        if let Some(value) = limits_override.max_energy_zero_point_shift_ev_per_atom {
+            self.max_energy_zero_point_shift_ev_per_atom = value;
+        }
+        if let Some(value) = limits_override.min_energy_zero_point_support_lift_fraction {
+            self.min_energy_zero_point_support_lift_fraction = value;
         }
         if let Some(value) = limits_override.max_stress_bias_gpa {
             self.max_stress_bias_gpa = value;
@@ -208,6 +235,10 @@ fn default_correction_scale() -> f64 {
 
 fn default_min_support_lift_fraction() -> f64 {
     0.02
+}
+
+fn default_min_energy_zero_point_support_lift_fraction() -> f64 {
+    0.95
 }
 
 fn default_max_support_eval_distance_proxy() -> f64 {
@@ -568,7 +599,9 @@ fn apply_support_corrections(
                     "blocked_zero_correction_scale",
                     json!(bias),
                 ));
-            } else if scaled_bias.abs() <= limits.max_energy_bias_ev_per_atom {
+            } else if scaled_bias.abs()
+                <= max_correction_for_request_field(request, "energy_ev_per_atom", limits)
+            {
                 if let Some(current) = number_field(corrected, "energy_ev_per_atom") {
                     let value = json!(current + scaled_bias);
                     set_field(corrected, "energy_ev_per_atom", value.clone())?;
@@ -608,7 +641,9 @@ fn apply_support_corrections(
                     "blocked_zero_correction_scale",
                     json!(bias),
                 ));
-            } else if scaled_bias.abs() <= limits.max_energy_bias_ev_per_atom {
+            } else if scaled_bias.abs()
+                <= max_correction_for_request_field(request, "relaxed_energy_ev_per_atom", limits)
+            {
                 if let Some(current) = number_field(corrected, "relaxed_energy_ev_per_atom") {
                     let value = json!(current + scaled_bias);
                     set_field(corrected, "relaxed_energy_ev_per_atom", value.clone())?;
@@ -884,7 +919,8 @@ fn try_apply_ribbon_residual_correction(
         delta.push(correction);
     }
     let max_abs = delta.iter().map(|value| value.abs()).fold(0.0, f64::max);
-    if max_abs > max_correction_for_field(&model.field, limits) {
+    let max_allowed = max_ribbon_correction_for_field(request, &model.field, &model, limits);
+    if max_abs > max_allowed {
         return Some(PolicyAction::blocked(
             &model.field,
             "blocked_large_ribbon_correction",
@@ -920,6 +956,12 @@ fn try_apply_ribbon_residual_correction(
             "matrix_rank": model.matrix_rank,
             "sample_count": model.sample_count,
             "participation_ratio": model.participation_ratio,
+            "correction_mode": correction_mode_for_applied_correction(
+                request,
+                &model.field,
+                model.support_lift_fraction,
+                limits
+            ),
         }),
     );
     actions.push(PolicyAction::delta(&model.field, json!(delta)));
@@ -1151,6 +1193,54 @@ fn correction_scale_for_field(field: &str, limits: &PolicyLimits) -> f64 {
     }
 }
 
+fn max_correction_for_request_field(
+    request: &PolicyRequest,
+    field: &str,
+    limits: &PolicyLimits,
+) -> f64 {
+    let base = max_correction_for_field(field, limits);
+    if !is_energy_zero_point_field(field) {
+        return base;
+    }
+    let lift = request
+        .support
+        .as_ref()
+        .and_then(|support| support.diagnostics.as_ref())
+        .and_then(|diagnostics| support_lift_fraction(field, diagnostics));
+    if energy_zero_point_shift_allowed(request, field, lift, limits) {
+        base.max(limits.max_energy_zero_point_shift_ev_per_atom)
+    } else {
+        base
+    }
+}
+
+fn max_ribbon_correction_for_field(
+    request: &PolicyRequest,
+    field: &str,
+    model: &RibbonResidualCorrection,
+    limits: &PolicyLimits,
+) -> f64 {
+    let base = max_correction_for_field(field, limits);
+    if energy_zero_point_shift_allowed(request, field, model.support_lift_fraction, limits) {
+        base.max(limits.max_energy_zero_point_shift_ev_per_atom)
+    } else {
+        base
+    }
+}
+
+fn correction_mode_for_applied_correction(
+    request: &PolicyRequest,
+    field: &str,
+    support_lift: Option<f64>,
+    limits: &PolicyLimits,
+) -> &'static str {
+    if energy_zero_point_shift_allowed(request, field, support_lift, limits) {
+        "material_family_zero_point"
+    } else {
+        "residual_ribbon"
+    }
+}
+
 fn max_correction_for_field(field: &str, limits: &PolicyLimits) -> f64 {
     match field {
         "energy_ev_per_atom" | "relaxed_energy_ev_per_atom" => limits.max_energy_bias_ev_per_atom,
@@ -1158,6 +1248,62 @@ fn max_correction_for_field(field: &str, limits: &PolicyLimits) -> f64 {
         "forces_ev_per_angstrom" => limits.max_force_bias_ev_per_angstrom,
         _ => f64::INFINITY,
     }
+}
+
+fn energy_zero_point_shift_allowed(
+    request: &PolicyRequest,
+    field: &str,
+    support_lift: Option<f64>,
+    limits: &PolicyLimits,
+) -> bool {
+    if !is_energy_zero_point_field(field)
+        || limits.max_energy_zero_point_shift_ev_per_atom <= limits.max_energy_bias_ev_per_atom
+        || !matches!(
+            request.row_id.as_str(),
+            "energy_volume" | "relaxation_stability"
+        )
+    {
+        return false;
+    }
+    let Some(diagnostics) = request
+        .support
+        .as_ref()
+        .and_then(|support| support.diagnostics.as_ref())
+    else {
+        return false;
+    };
+    if diagnostics
+        .get("applicability_gate")
+        .and_then(Value::as_str)
+        .is_some_and(|gate| gate.starts_with("blocked"))
+    {
+        return false;
+    }
+    if let Some(distance) = diagnostic_number(diagnostics, "support_eval_distance_proxy") {
+        if distance > limits.max_support_eval_distance_proxy {
+            return false;
+        }
+    }
+    if material_root_overlap_action(field, diagnostics, limits).is_some() {
+        return false;
+    }
+    if let Some(distance) = request
+        .context
+        .as_ref()
+        .and_then(|context| diagnostic_number(context, "ribbon_feature_distance_proxy"))
+    {
+        if distance > limits.max_ribbon_feature_distance_proxy {
+            return false;
+        }
+    }
+    let lift = support_lift
+        .or_else(|| support_lift_fraction(field, diagnostics))
+        .unwrap_or(0.0);
+    lift >= limits.min_energy_zero_point_support_lift_fraction
+}
+
+fn is_energy_zero_point_field(field: &str) -> bool {
+    matches!(field, "energy_ev_per_atom" | "relaxed_energy_ev_per_atom")
 }
 
 fn guard_prediction(row_id: &str, prediction: &Value, limits: &PolicyLimits) -> Vec<PolicyAction> {
@@ -1441,6 +1587,17 @@ mod tests {
         }
     }
 
+    fn request_with_diagnostics(
+        row_id: &str,
+        prediction: Value,
+        correction: Value,
+        diagnostics: Value,
+    ) -> PolicyRequest {
+        let mut req = request(row_id, prediction, correction);
+        req.support.as_mut().unwrap().diagnostics = Some(diagnostics);
+        req
+    }
+
     #[test]
     fn applies_small_energy_bias() {
         let req = request(
@@ -1505,6 +1662,68 @@ mod tests {
             selected_decision.theorem_hooks["policy_limits_id"],
             json!(policy_limits_id(&limits).unwrap())
         );
+    }
+
+    #[test]
+    fn zero_point_gate_opens_large_energy_bias_only_with_material_support() {
+        let req = request_with_diagnostics(
+            "energy_volume",
+            json!({"energy_ev_per_atom": 1.0}),
+            json!({"energy_bias_ev_per_atom": -1.2}),
+            json!({
+                "applicability_gate": "passed",
+                "support_eval_distance_proxy": 0.0,
+                "eval_material_roots": ["ni-fcc"],
+                "support_material_roots": ["ni-fcc"],
+                "energy_support_mae_before": 1.2,
+                "energy_support_mae_after": 0.01
+            }),
+        );
+        let mut limits = PolicyLimits::default();
+        limits.max_energy_zero_point_shift_ev_per_atom = 1.5;
+        limits.require_material_root_overlap = true;
+
+        let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"],
+            json!(-0.19999999999999996)
+        );
+        assert!(decision
+            .actions
+            .iter()
+            .any(|action| action.action == "delta_correct"));
+    }
+
+    #[test]
+    fn zero_point_gate_still_blocks_cross_material_large_energy_bias() {
+        let req = request_with_diagnostics(
+            "energy_volume",
+            json!({"energy_ev_per_atom": 1.0}),
+            json!({"energy_bias_ev_per_atom": -1.2}),
+            json!({
+                "applicability_gate": "passed",
+                "support_eval_distance_proxy": 0.0,
+                "eval_material_roots": ["ni-fcc"],
+                "support_material_roots": ["al"],
+                "energy_support_mae_before": 1.2,
+                "energy_support_mae_after": 0.01
+            }),
+        );
+        let mut limits = PolicyLimits::default();
+        limits.max_energy_zero_point_shift_ev_per_atom = 1.5;
+        limits.require_material_root_overlap = true;
+
+        let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"],
+            json!(1.0)
+        );
+        assert!(decision.actions.iter().any(|action| {
+            action.action == "delta_correct_blocked"
+                && action.reason == "blocked_no_material_root_overlap"
+        }));
     }
 
     #[test]
@@ -1668,6 +1887,50 @@ mod tests {
         assert_eq!(
             decision.applied_corrections["ribbon_residual_correction_v1"]["scale"],
             json!(-0.5)
+        );
+    }
+
+    #[test]
+    fn zero_point_gate_opens_large_energy_ribbon_with_high_support_lift() {
+        let req = request_with_diagnostics(
+            "energy_volume",
+            json!({"energy_ev_per_atom": 1.0}),
+            json!({
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "energy_ev_per_atom",
+                    "feature_names": ["scalar:energy_ev_per_atom"],
+                    "feature_mean": [1.0],
+                    "feature_scale": [1.0],
+                    "intercept": [-0.96],
+                    "coefficients": [[0.0]],
+                    "support_lift_fraction": 0.99,
+                    "support_eval_distance_proxy": 0.0,
+                    "matrix_rank": 1,
+                    "sample_count": 8,
+                    "participation_ratio": 1.0
+                }
+            }),
+            json!({
+                "applicability_gate": "passed",
+                "support_eval_distance_proxy": 0.0,
+                "eval_material_roots": ["ni-fcc"],
+                "support_material_roots": ["ni-fcc"]
+            }),
+        );
+        let mut limits = PolicyLimits::default();
+        limits.max_energy_zero_point_shift_ev_per_atom = 1.5;
+        limits.require_material_root_overlap = true;
+
+        let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"],
+            json!(0.040000000000000036)
+        );
+        assert_eq!(
+            decision.applied_corrections["ribbon_residual_correction_v1"]["correction_mode"],
+            json!("material_family_zero_point")
         );
     }
 

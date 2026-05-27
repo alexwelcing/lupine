@@ -452,7 +452,7 @@ def gcloud_run_batch_command(campaign: dict[str, Any], batch: dict[str, Any], *,
     return (
         f"gcloud run jobs execute {batch['target_job']} "
         f"--project {campaign['project']} --region {campaign['region']} "
-        f"--args {args} --format json {wait_flag}"
+        f"--args '{args}' --format json {wait_flag}"
     )
 
 
@@ -501,7 +501,7 @@ def gcloud_run_cell_command(campaign: dict[str, Any], cell: dict[str, Any], *, w
     return (
         f"gcloud run jobs execute {cell['target_job']} "
         f"--project {campaign['project']} --region {campaign['region']} "
-        f"--args {','.join(args)} --format json {wait_flag}"
+        f"--args '{','.join(args)}' --format json {wait_flag}"
     )
 
 
@@ -516,7 +516,8 @@ def upload_commands(campaign: dict[str, Any], batch_dir: pathlib.Path, scope: st
         f"gcloud storage cp {pathlib.Path(policy_path).as_posix()} {gs_join(campaign['policy_gcs_prefix'], pathlib.Path(policy_path).name)}"
         for policy_path in policies
     )
-    commands.append(f"gcloud storage cp {batch_dir.as_posix()}/*.json {batch_dest.rstrip('/')}/")
+    batch_paths = [batch_path(batch, batch_dir).as_posix() for batch in expand_batches(campaign, scope=scope)]
+    commands.extend(f"gcloud storage cp {path} {batch_dest.rstrip('/')}/" for path in batch_paths)
     return commands
 
 

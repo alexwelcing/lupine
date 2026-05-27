@@ -111,4 +111,6 @@ def test_command_generation_emits_upload_and_run_batch_commands() -> None:
     assert all("run-batch,--batch-spec-url,gs://" in command for command in run)
     assert len(canary_run) == 3
     assert all("/canary/" in command for command in canary_run)
-    assert any(command.endswith("/batches/canary/") for command in canary_upload)
+    assert len([command for command in canary_upload if "/batches/canary/" in command]) == 3
+    assert all("promotion-canary.json" in command for command in canary_upload if "/batches/canary/" in command)
+    assert not any("paired-accuracy.json" in command for command in canary_upload if "/batches/canary/" in command)

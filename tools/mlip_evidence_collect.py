@@ -27,6 +27,15 @@ import mlip_evidence_campaign as campaign_tools  # noqa: E402
 
 
 DEFAULT_OUTPUT = ROOT / "library-site" / "src" / "reports" / "assets" / "mlip" / "ni-paired-accuracy-live-summary.json"
+DEFAULT_CANARY_OUTPUT = (
+    ROOT
+    / "library-site"
+    / "src"
+    / "reports"
+    / "assets"
+    / "mlip"
+    / "ni-paired-accuracy-promotion-canary-summary.json"
+)
 ROW_LABELS = {
     "energy_volume": "Energy-volume",
     "forces": "Forces",
@@ -275,15 +284,16 @@ def promotion_gate(summary: dict[str, int], pairs: list[dict[str, Any]]) -> dict
     }
 
 
-def collect(campaign_path: pathlib.Path) -> dict[str, Any]:
+def collect(campaign_path: pathlib.Path, scope: str = "full") -> dict[str, Any]:
     campaign = campaign_tools.load_campaign(campaign_path)
-    cells = [collect_cell(cell) for cell in campaign_tools.expand_cells(campaign)]
+    cells = [collect_cell(cell) for cell in campaign_tools.expand_cells(campaign, scope=scope)]
     pairs = compute_pairs(cells)
     summary = summarize(cells, pairs)
     return {
         "schema": "lupine.library.mlip_paired_accuracy_live_summary.v1",
         "generated_at": utc_now(),
         "campaign_id": campaign["campaign_id"],
+        "scope": scope,
         "campaign_hash": campaign_tools.evidence_summary(campaign)["campaign_hash"],
         "profile": campaign["profile"],
         "fixture_hash": campaign_tools.evidence_summary(campaign)["fixture_hash"],
@@ -298,16 +308,18 @@ def collect(campaign_path: pathlib.Path) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--campaign", type=pathlib.Path, default=campaign_tools.DEFAULT_CAMPAIGN)
-    parser.add_argument("--output", type=pathlib.Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--scope", choices=sorted(campaign_tools.VALID_SCOPES), default="full")
+    parser.add_argument("--output", type=pathlib.Path, default=None)
     parser.add_argument("--stdout", action="store_true")
     args = parser.parse_args(argv)
 
-    payload = collect(args.campaign)
+    output = args.output or (DEFAULT_CANARY_OUTPUT if args.scope == "promotion-canary" else DEFAULT_OUTPUT)
+    payload = collect(args.campaign, scope=args.scope)
     text = json.dumps(payload, indent=2, sort_keys=True)
     if args.stdout:
         print(text)
-    write_text_lf(args.output, text + "\n")
-    print(json.dumps({"status": "written", "output": str(args.output), "summary": payload["summary"]}, indent=2, sort_keys=True))
+    write_text_lf(output, text + "\n")
+    print(json.dumps({"status": "written", "output": str(output), "summary": payload["summary"]}, indent=2, sort_keys=True))
     return 0
 
 

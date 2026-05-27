@@ -33,6 +33,19 @@ After the Ni EAM-home-turf paired run, this policy now requires exact
 support/eval material-root overlap before residual correction. The prior global
 MPtrj support lift was not enough to justify applying energy shifts to pure Ni.
 
+`hyperribbon-ni-eam-support-v1-accuracy.json` is the first Lane A
+material-family support ribbon. It is paired with
+`gcp/mlip-cell-runner/fixtures/ni_fcc_eam_distill_support_v1.json`, a generated
+Mishin-1999 EAM support fixture that deliberately avoids the sealed
+`ni-fcc-eam-home-turf-v1` structure ids, scales, seeds, and strain choices.
+This policy requires material-root overlap, sets the support/eval distance gate
+to exact overlap, and adds a bounded ribbon-feature distance gate. It also
+separates ordinary energy bias from material-family zero-point alignment:
+large energy shifts stay blocked unless the support evidence has high lift,
+same-material roots, and the exact support/eval distance gate passes. The
+intended first use is the promotion canary over energy-volume and relaxation
+for MACE-MP-0, CHGNet, and ORB-v3 before any new full 5x5 spend.
+
 `hyperribbon-mptrj-sevennet-energy-v1-accuracy.json` is the SevenNet energy
 variant selected with the same non-overlapping MPtrj support split:
 

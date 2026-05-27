@@ -5,8 +5,8 @@
   "subtitle": "Evidence-backed stage, grid, triplet, evaluator, and relaxation review for the current MLIP flywheel.",
   "why": {
     "headline": "Autonomous science needs one surface that separates measured wins, blocked claims, and physical run evidence.",
-    "answer": "The current evidence supports using the 25-cell baseline as the reference, treating MACE energy and relaxation as cloud-reproduced Distill Accuracy anchors, and tightening elastic refusal policy before broader promotion.",
-    "decision": "Advance the flywheel as a research cockpit: promote verified anchors, falsify transfer row by row, and keep speed-up claims parked.",
+    "answer": "The current evidence supports using the 25-cell baseline as the reference, rejecting the broad transfer ribbon, and promoting the Ni material-family zero-point canary as the next accuracy lane.",
+    "decision": "Advance the flywheel as a research cockpit: promote verified canaries, falsify transfer row by row, and keep acceleration separate until accuracy coverage is locked.",
     "supporting_points": [
       {
         "label": "Baseline is real",
@@ -15,16 +15,16 @@
         "source_id": "cloud_baseline_report"
       },
       {
-        "label": "Distill transfer is reproduced",
-        "metric": "2 cloud wins",
-        "detail": "The rebuilt MACE Cloud Run job reproduced energy and relaxation improvements on an NVIDIA L4 runner.",
-        "source_id": "cloud_mace_transfer_combined_support"
+        "label": "Rejected ribbon taught us",
+        "metric": "10 regressions",
+        "detail": "The full paired Ni run rejected broad transfer and forced a material-family support split.",
+        "source_id": "ni_paired_accuracy_live_summary"
       },
       {
-        "label": "Transfer map is measured",
-        "metric": "5 / 5 MACE rows",
-        "detail": "The row-complete support manifest keeps energy won, adds a local relaxation win, blocks force/stress corrections, and exposes elastic policy friction.",
-        "source_id": "local_mace_transfer_combined_support"
+        "label": "Cloud canary is green",
+        "metric": "6 / 6 improved",
+        "detail": "The rebuilt MACE, CHGNet, and ORB Cloud Run jobs improve every Ni promotion-canary pair with no regressions.",
+        "source_id": "ni_paired_accuracy_promotion_canary"
       }
     ]
   },
@@ -34,10 +34,10 @@
     "next_moves": [
       {
         "priority": "P0",
-        "title": "Promote downstream transfer before acceleration",
-        "why": "MACE energy and relaxation are cloud-reproduced, but elastic still needs a stricter refusal gate.",
-        "claim_unlocked": "Distill Accuracy improves an energy-to-relaxation state path instead of only one scalar energy cell.",
-        "proof_required": "Revise elastic policy so high support lift cannot override large feature-distance warnings, then rerun the MACE row-transfer canary.",
+        "title": "Scale the green Ni canary to the full accuracy grid",
+        "why": "MACE, CHGNet, and ORB now improve energy and relaxation in Cloud Run with no canary regressions.",
+        "claim_unlocked": "Distill Accuracy improves a material-family lane across multiple MLIPs without changing the MLIP.",
+        "proof_required": "Run the full 5x5 paired accuracy grid with the same zero-point guard and preserve zero-regression gates.",
         "owner": "Rust Distill runtime plus local MLIP lab",
         "state": "active"
       },
@@ -53,9 +53,9 @@
       {
         "priority": "P1",
         "title": "Harden the hyperribbon intervention loop",
-        "why": "Energy improvements should transfer only when the runtime can justify correction, refusal, or backtrack decisions.",
+        "why": "Energy improvements should transfer only when the runtime can distinguish ordinary bias from same-material zero-point alignment.",
         "claim_unlocked": "Distill is an in-run accuracy guard rather than a post-hoc evaluator.",
-        "proof_required": "Treat the MACE elastic local regression as a policy test: large feature-distance plus tiny regression should refuse rather than apply.",
+        "proof_required": "Keep zero-point shifts behind same-material roots, exact support/eval distance, high support lift, and replay-to-cloud promotion.",
         "owner": "Rust Distill engine",
         "state": "active"
       },
@@ -84,7 +84,11 @@
     "baseline_cells_total": 25,
     "numeric_distill_triplets": 6,
     "promoted_accuracy_cells": 3,
-    "cloud_confirmed_distill_cells": 2,
+    "policy_replay_improved_pairs": 6,
+    "policy_replay_regressed_pairs": 0,
+    "policy_canary_improved_pairs": 6,
+    "policy_canary_regressed_pairs": 0,
+    "cloud_confirmed_distill_cells": 6,
     "local_mace_transfer_cells": 5,
     "local_mace_transfer_wins": 2,
     "claim_status": "energy and relaxation cloud-reproduced; 5x5x3 not claimed",
@@ -118,11 +122,25 @@
       "description": "May 26, 2026 MACE Cloud Run canary using the row-complete support manifest. Energy improves by 50.49%; relaxation improves by 31.02%; both ran on NVIDIA L4."
     },
     {
+      "id": "ni_paired_accuracy_promotion_canary",
+      "kind": "cloud_run_live_collector",
+      "path": "reports/assets/mlip/ni-paired-accuracy-promotion-canary-summary.json",
+      "schema": "lupine.library.mlip_paired_accuracy_live_summary.v1",
+      "description": "May 27, 2026 promotion canary for the Ni material-family zero-point policy after rebuilding MACE, CHGNet, and ORB Cloud Run jobs with atlas-distill zero-point gates. All six canary pairs improve with no regressions."
+    },
+    {
       "id": "ni_paired_accuracy_live_summary",
       "kind": "cloud_run_live_collector",
       "path": "reports/assets/mlip/ni-paired-accuracy-live-summary.json",
       "schema": "lupine.library.mlip_paired_accuracy_live_summary.v1",
       "description": "May 27, 2026 live collector for the Ni fcc EAM-home-turf paired baseline versus Distill Accuracy campaign. It reads only returned GCS cell artifacts and computes pair deltas only when both artifacts exist."
+    },
+    {
+      "id": "ni_zero_point_policy_replay",
+      "kind": "local_policy_replay",
+      "path": "reports/assets/mlip/ni-paired-accuracy-zero-point-replay-summary.json",
+      "schema": "lupine.library.mlip_policy_replay_summary.v1",
+      "description": "May 27, 2026 local atlas-distill replay of completed Ni canary cloud predictions through the material-family zero-point policy. All six replay pairs improved with no regressions, then the Cloud Run canary confirmed the direction."
     },
     {
       "id": "local_equilibrium_solve_score",
@@ -258,11 +276,17 @@
     "url": "/reports/assets/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json"
   },
   "live_campaign_artifact": {
-    "source_id": "ni_paired_accuracy_live_summary",
+    "source_id": "ni_paired_accuracy_promotion_canary",
     "campaign_id": "ni-fcc-eam-home-turf-paired-accuracy-v1",
-    "title": "Ni paired baseline vs Distill Accuracy run",
-    "description": "A live collector reads returned GCS cell artifacts from the 5x5x2 Ni campaign. Missing cells are rendered as missing, not guessed.",
-    "url": "/reports/assets/mlip/ni-paired-accuracy-live-summary.json"
+    "title": "Ni zero-point promotion canary",
+    "description": "A live collector reads returned GCS cell artifacts from the rebuilt MACE, CHGNet, and ORB canary. Missing cells are rendered as missing, not guessed.",
+    "url": "/reports/assets/mlip/ni-paired-accuracy-promotion-canary-summary.json"
+  },
+  "policy_replay_artifact": {
+    "source_id": "ni_zero_point_policy_replay",
+    "title": "Ni zero-point policy replay gate",
+    "description": "Offline Rust replay against completed promotion-canary cloud artifacts. This was the spend gate that preceded the now-green Cloud Run canary.",
+    "url": "/reports/assets/mlip/ni-paired-accuracy-zero-point-replay-summary.json"
   },
   "stages": [
     {
@@ -276,10 +300,10 @@
     {
       "id": "distill_runtime",
       "label": "Distill runtime",
-      "state": "energy and relaxation cloud-reproduced",
-      "quant": "MACE energy 50.49% lower error on GCP L4; MACE relaxation 31.02% lower cloud penalty",
-      "qual": "The frontend-guided loop exposed and fixed local/cloud feature drift, then turned downstream rows into falsifiers for policy quality.",
-      "evidence": ["cloud_mace_transfer_combined_support", "local_mace_transfer_combined_support", "MACE elastic policy revision"]
+      "state": "zero-point cloud canary passed",
+      "quant": "Ni promotion canary improves 6 / 6 pairs with roughly 75% relative error lift",
+      "qual": "The failed broad transfer run became a policy distinction: ordinary bias stays capped, same-material zero-point alignment gets a stricter promotion path.",
+      "evidence": ["ni_paired_accuracy_promotion_canary", "ni_zero_point_policy_replay", "hyperribbon-ni-eam-support-v1"]
     },
     {
       "id": "equilibrium_solve",

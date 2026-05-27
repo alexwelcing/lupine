@@ -1,0 +1,230 @@
+{
+  "atlas_distill_bin": "C:\\Users\\alexw\\Downloads\\shed\\atlas-distill\\target\\release\\atlas-distill.exe",
+  "campaign_hash": "sha256:4ebbe620ca4e20a4a6ebfaaa0bbc8649a4f337f9ed81651ba017462f30e497c7",
+  "campaign_id": "ni-fcc-eam-home-turf-paired-accuracy-v1",
+  "cells": [
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 5,
+        "delta_correct|support_gate_passed|energy_ev_per_atom": 5
+      },
+      "applied_modes": {
+        "material_family_zero_point": 5
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/energy_volume/mace-mp-0/cell_result.json",
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:mace-mp-0",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/checkpoints/energy_volume/mace-mp-0/raw_predictions.json",
+      "mlip_id": "mace-mp-0",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "C:\\Users\\alexw\\Downloads\\shed\\gcp\\mlip-cell-runner\\policies\\hyperribbon-ni-eam-support-v1-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/mace-mp-0/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "ev_per_atom_mae_vs_mishin_eam",
+      "replayed_native_error": 0.31999288862919056,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 3,
+        "delta_correct|support_gate_passed|relaxed_energy_ev_per_atom": 3
+      },
+      "applied_modes": {
+        "material_family_zero_point": 3
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/relaxation_stability/mace-mp-0/cell_result.json",
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:mace-mp-0",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/checkpoints/relaxation_stability/mace-mp-0/raw_predictions.json",
+      "mlip_id": "mace-mp-0",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "C:\\Users\\alexw\\Downloads\\shed\\gcp\\mlip-cell-runner\\policies\\hyperribbon-ni-eam-support-v1-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/mace-mp-0/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "fixed_cell_relaxation_penalty_vs_mishin_eam",
+      "replayed_native_error": 0.31842806731089546,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 5,
+        "delta_correct|support_gate_passed|energy_ev_per_atom": 5
+      },
+      "applied_modes": {
+        "material_family_zero_point": 5
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/energy_volume/chgnet/cell_result.json",
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:chgnet",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/checkpoints/energy_volume/chgnet/raw_predictions.json",
+      "mlip_id": "chgnet",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "C:\\Users\\alexw\\Downloads\\shed\\gcp\\mlip-cell-runner\\policies\\hyperribbon-ni-eam-support-v1-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/chgnet/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "ev_per_atom_mae_vs_mishin_eam",
+      "replayed_native_error": 0.3235789723912269,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 3,
+        "delta_correct|support_gate_passed|relaxed_energy_ev_per_atom": 3
+      },
+      "applied_modes": {
+        "material_family_zero_point": 3
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/relaxation_stability/chgnet/cell_result.json",
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:chgnet",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/checkpoints/relaxation_stability/chgnet/raw_predictions.json",
+      "mlip_id": "chgnet",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "C:\\Users\\alexw\\Downloads\\shed\\gcp\\mlip-cell-runner\\policies\\hyperribbon-ni-eam-support-v1-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/chgnet/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "fixed_cell_relaxation_penalty_vs_mishin_eam",
+      "replayed_native_error": 0.31957955975914665,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 5,
+        "delta_correct|support_gate_passed|energy_ev_per_atom": 5
+      },
+      "applied_modes": {
+        "material_family_zero_point": 5
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/energy_volume/orb-v3/cell_result.json",
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:orb-v3",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/checkpoints/energy_volume/orb-v3/raw_predictions.json",
+      "mlip_id": "orb-v3",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "C:\\Users\\alexw\\Downloads\\shed\\gcp\\mlip-cell-runner\\policies\\hyperribbon-ni-eam-support-v1-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/orb-v3/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "ev_per_atom_mae_vs_mishin_eam",
+      "replayed_native_error": 0.26083236731896786,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 3,
+        "delta_correct|support_gate_passed|relaxed_energy_ev_per_atom": 3
+      },
+      "applied_modes": {
+        "material_family_zero_point": 3
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/relaxation_stability/orb-v3/cell_result.json",
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:orb-v3",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/checkpoints/relaxation_stability/orb-v3/raw_predictions.json",
+      "mlip_id": "orb-v3",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "C:\\Users\\alexw\\Downloads\\shed\\gcp\\mlip-cell-runner\\policies\\hyperribbon-ni-eam-support-v1-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/orb-v3/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "fixed_cell_relaxation_penalty_vs_mishin_eam",
+      "replayed_native_error": 0.257453490237574,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability"
+    }
+  ],
+  "generated_at": "2026-05-27T15:13:49Z",
+  "pairs": [
+    {
+      "baseline_error": 1.2803089632199804,
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:mace-mp-0",
+      "error_delta": 0.9603160745907899,
+      "lift_fraction": 0.7500658842343745,
+      "mlip_id": "mace-mp-0",
+      "previous_cloud_distill_error": 0.31999288862919056,
+      "replayed_distill_error": 0.31999288862919056,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 1.2798431901460494,
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:mace-mp-0",
+      "error_delta": 0.961415122835154,
+      "lift_fraction": 0.7511975922030276,
+      "mlip_id": "mace-mp-0",
+      "previous_cloud_distill_error": 0.31842806731089546,
+      "replayed_distill_error": 0.31842806731089546,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 1.294303943078379,
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:chgnet",
+      "error_delta": 0.970724970687152,
+      "lift_fraction": 0.7499976924881917,
+      "mlip_id": "chgnet",
+      "previous_cloud_distill_error": 0.3235789723912269,
+      "replayed_distill_error": 0.3235789723912269,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 1.2930027830924198,
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:chgnet",
+      "error_delta": 0.9734232233332731,
+      "lift_fraction": 0.7528392328786626,
+      "mlip_id": "chgnet",
+      "previous_cloud_distill_error": 0.31957955975914665,
+      "replayed_distill_error": 0.31957955975914665,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 1.0437897218869727,
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:orb-v3",
+      "error_delta": 0.7829573545680049,
+      "lift_fraction": 0.7501102359511332,
+      "mlip_id": "orb-v3",
+      "previous_cloud_distill_error": 0.26083236731896786,
+      "replayed_distill_error": 0.26083236731896786,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 1.0426902958080773,
+      "cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:orb-v3",
+      "error_delta": 0.7852368055705032,
+      "lift_fraction": 0.7530872865388571,
+      "mlip_id": "orb-v3",
+      "previous_cloud_distill_error": 0.257453490237574,
+      "replayed_distill_error": 0.257453490237574,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability",
+      "verdict": "distill_improved"
+    }
+  ],
+  "policy_hash": "sha256:31b935a31416470c5099fd255ba4cfac8a720b8fa861a18bde0de4257a17ef13",
+  "policy_path": "C:\\Users\\alexw\\Downloads\\shed\\gcp\\mlip-cell-runner\\policies\\hyperribbon-ni-eam-support-v1-accuracy.json",
+  "schema": "lupine.library.mlip_policy_replay_summary.v1",
+  "scope": "promotion-canary",
+  "summary": {
+    "failed_conditions": [],
+    "flagship_eligible": true,
+    "mean_lift_fraction": 0.7512163207157078,
+    "next_action": "use this replay as the spend gate; after the Cloud Run canary passes, scale to the full paired accuracy grid",
+    "pairs_improved": 6,
+    "pairs_measured": 6,
+    "pairs_regressed": 0,
+    "pairs_total": 6,
+    "pairs_unchanged": 0,
+    "status": "promotable_policy_replay"
+  }
+}
