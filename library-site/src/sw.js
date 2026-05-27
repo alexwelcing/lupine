@@ -33,6 +33,7 @@ const SHELL_ASSETS = [
   '/reports/assets/mlip/ni-paired-accuracy-live-summary.json',
   '/reports/assets/mlip/ni-paired-accuracy-promotion-canary-summary.json',
   '/reports/assets/mlip/ni-paired-accuracy-zero-point-replay-summary.json',
+  '/reports/assets/mlip/mptrj-broad-dft-mace-promotion-canary-summary.json',
   '/reports/assets/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json',
 ];
 

@@ -159,6 +159,15 @@ def artifact_prefix(campaign: dict[str, Any], variant_id: str, row_id: str, mlip
     return gs_join(campaign["artifact_gcs_prefix"], *scope_part(scope), "cells", variant_id, row_id, mlip_id)
 
 
+def fixture_id(campaign: dict[str, Any]) -> str:
+    explicit = campaign.get("fixture_id")
+    if isinstance(explicit, str) and explicit:
+        return explicit
+    fixture = load_json(repo_path(campaign["fixture_path"]))
+    value = fixture.get("fixture_id")
+    return str(value) if isinstance(value, str) and value else "unknown"
+
+
 def batch_artifact_prefix(campaign: dict[str, Any], batch_id: str, scope: str = "full") -> str:
     return gs_join(campaign["artifact_gcs_prefix"], *scope_part(scope), "batches", batch_id)
 
@@ -253,7 +262,7 @@ def expand_batches(campaign: dict[str, Any], scope: str = "full") -> list[dict[s
                 "campaign_id": campaign["campaign_id"],
                 "profile": campaign["profile"],
                 "scope": scope,
-                "fixture_id": "ni-fcc-eam-home-turf-v1",
+                "fixture_id": fixture_id(campaign),
                 "mlip_id": mlip_id,
                 "target_job": backends[mlip_id]["target_job"],
                 "batch_spec_gcs_url": batch_gcs_url,

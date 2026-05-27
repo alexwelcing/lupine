@@ -68,6 +68,24 @@ def test_evidence_batches_group_one_cloud_run_execution_per_mlip() -> None:
         assert batch["batch_spec_gcs_url"].startswith("gs://")
 
 
+def test_non_ni_campaign_preserves_fixture_id_in_batches() -> None:
+    campaign = evidence.load_campaign(
+        evidence.ROOT
+        / "data"
+        / "mlip_benchmarks"
+        / "evidence_campaigns"
+        / "mptrj_lane_b_paired_accuracy_v1.json"
+    )
+
+    assert evidence.validate_campaign(campaign) == []
+    batches = evidence.expand_batches(campaign, scope="promotion-canary")
+
+    assert len(batches) == 1
+    assert batches[0]["fixture_id"] == "canonical-structures-v2"
+    assert batches[0]["mlip_id"] == "mace-mp-0"
+    assert all(cell["campaign_id"] == "mptrj-dft-broad-paired-accuracy-v1" for cell in batches[0]["cells"])
+
+
 def test_write_batches_materializes_runner_compatible_specs(tmp_path: Path) -> None:
     campaign = load_default_campaign()
 

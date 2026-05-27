@@ -1530,6 +1530,11 @@ body {
   border-color: color-mix(in srgb, var(--cyan) 28%, var(--fly-line));
 }
 
+.fly-campaign-stack {
+  display: grid;
+  gap: 18px;
+}
+
 .fly-live-campaign.blocked {
   border-color: color-mix(in srgb, var(--red) 42%, var(--fly-line));
 }

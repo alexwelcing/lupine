@@ -12,9 +12,9 @@ export function renderMlipFlywheelView(mount) {
   );
 
   loadEvidence(controller.signal)
-    .then(({ evidence, relaxation, liveCampaign, policyReplay }) => {
+    .then(({ evidence, relaxation, liveCampaigns, policyReplay }) => {
       if (controller.signal.aborted) return;
-      const root = renderEvidence(evidence, relaxation, liveCampaign, policyReplay);
+      const root = renderEvidence(evidence, relaxation, liveCampaigns, policyReplay);
       mount.replaceChildren(root);
       initStages(root, evidence.stages || []);
       canvasCleanup = initLatticeCanvas(root, relaxation);
@@ -34,13 +34,19 @@ async function loadEvidence(signal) {
   const evidence = await fetchJson(EVIDENCE_URL, signal);
   const url = evidence?.relaxation_artifact?.url;
   if (!url) throw new Error('Evidence file does not name a relaxation artifact.');
-  const [relaxation, liveCampaign, policyReplay] = await Promise.all([
+  const campaignDescriptors = Array.isArray(evidence?.campaign_artifacts) && evidence.campaign_artifacts.length
+    ? evidence.campaign_artifacts
+    : [evidence?.live_campaign_artifact].filter(Boolean);
+  const [relaxation, liveCampaigns, policyReplay] = await Promise.all([
     fetchJson(url, signal),
-    loadOptionalJson(evidence?.live_campaign_artifact?.url, signal),
+    Promise.all(campaignDescriptors.map(async (descriptor) => ({
+      descriptor,
+      payload: await loadOptionalJson(descriptor?.url, signal),
+    }))),
     loadOptionalJson(evidence?.policy_replay_artifact?.url, signal),
   ]);
   assertEvidence(evidence, relaxation);
-  return { evidence, relaxation, liveCampaign, policyReplay };
+  return { evidence, relaxation, liveCampaigns, policyReplay };
 }
 
 async function fetchJson(url, signal) {
@@ -74,12 +80,12 @@ function assertEvidence(evidence, relaxation) {
   }
 }
 
-function renderEvidence(evidence, relaxation, liveCampaign, policyReplay) {
+function renderEvidence(evidence, relaxation, liveCampaigns, policyReplay) {
   const root = h('section', { class: 'flywheel-lab', 'aria-labelledby': 'flywheel-title' });
   root.append(renderWhy(evidence));
   root.append(renderWorkGuidance(evidence.work_guidance));
   root.append(renderHero(evidence, relaxation));
-  root.append(renderLiveCampaign(liveCampaign, evidence.live_campaign_artifact));
+  root.append(renderLiveCampaigns(liveCampaigns));
   root.append(renderPolicyReplay(policyReplay, evidence.policy_replay_artifact));
   root.append(renderStageSystem(evidence.stages || []));
   root.append(renderBaselineMatrix(evidence.baseline));
@@ -87,6 +93,14 @@ function renderEvidence(evidence, relaxation, liveCampaign, policyReplay) {
   root.append(renderEvaluators(evidence.evaluators || []));
   root.append(renderSources(evidence.sources || []));
   return root;
+}
+
+function renderLiveCampaigns(liveCampaigns) {
+  const items = Array.isArray(liveCampaigns) ? liveCampaigns : [];
+  if (!items.length) return document.createDocumentFragment();
+  return h('div', { class: 'fly-campaign-stack' },
+    ...items.map((item) => renderLiveCampaign(item.payload, item.descriptor))
+  );
 }
 
 function renderPolicyReplay(policyReplay, descriptor) {
@@ -315,11 +329,12 @@ function renderLiveCampaign(liveCampaign, descriptor) {
   const headline = liveCampaign?.schema === 'lupine.library.mlip_paired_accuracy_live_summary.v1'
     ? `${summary.cells_completed || 0} / ${summary.cells_total || 0} cloud cells returned`
     : 'Live campaign status artifact not yet available';
+  const titleId = `fly-live-campaign-title-${slug(liveCampaign?.campaign_id || descriptor?.campaign_id || 'pending')}`;
 
-  return h('section', { class: `fly-section fly-live-campaign ${blocked ? 'blocked' : eligible ? 'eligible' : 'pending'}`, 'aria-labelledby': 'fly-live-campaign-title' },
+  return h('section', { class: `fly-section fly-live-campaign ${blocked ? 'blocked' : eligible ? 'eligible' : 'pending'}`, 'aria-labelledby': titleId },
     h('div', { class: 'fly-section-head' },
       h('p', { class: 'fly-kicker' }, gateLabel),
-      h('h2', { id: 'fly-live-campaign-title' }, descriptor?.title || 'Ni paired accuracy campaign'),
+      h('h2', { id: titleId }, descriptor?.title || 'Paired accuracy campaign'),
       h('p', {}, descriptor?.description || 'Live campaign evidence is collected directly from GCS cell artifacts.')
     ),
     h('div', { class: 'fly-live-run-head' },
@@ -803,6 +818,10 @@ function formatPercent(value) {
 function formatForce(value) {
   const n = Number(value);
   return Number.isFinite(n) ? `${n.toFixed(4)} eV/A` : 'n/a';
+}
+
+function slug(value) {
+  return String(value || 'item').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'item';
 }
 
 function h(tag, attrs = {}, ...children) {
