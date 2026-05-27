@@ -1530,6 +1530,14 @@ body {
   border-color: color-mix(in srgb, var(--cyan) 28%, var(--fly-line));
 }
 
+.fly-live-campaign.blocked {
+  border-color: color-mix(in srgb, var(--red) 42%, var(--fly-line));
+}
+
+.fly-live-campaign.eligible {
+  border-color: color-mix(in srgb, var(--green) 42%, var(--fly-line));
+}
+
 .fly-live-run-head {
   display: grid;
   gap: 10px;
@@ -1584,6 +1592,33 @@ body {
   margin-top: 4px;
   font-family: var(--font-serif);
   font-size: 1.25rem;
+}
+
+.fly-live-blocker {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--red) 48%, var(--fly-line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--red) 8%, transparent);
+}
+
+.fly-live-blocker strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+}
+
+.fly-live-blocker p {
+  margin-top: 6px;
+  color: var(--fly-muted);
+}
+
+.fly-live-blocker ul {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+  padding-left: 18px;
+  color: var(--fly-muted);
 }
 
 .fly-live-pair-grid {
@@ -1718,7 +1753,7 @@ body {
   .fly-work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fly-statline { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .fly-live-run-head { grid-template-columns: 1.1fr 1fr 0.9fr; }
-  .fly-live-run-stats { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .fly-live-run-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .fly-live-pair-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fly-stage-layout { grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.3fr); }
   .fly-triplet-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }

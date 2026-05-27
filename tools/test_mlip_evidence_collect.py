@@ -103,4 +103,55 @@ def test_summarize_keeps_missing_artifacts_out_of_claims() -> None:
     assert summary["cells_missing"] == 1
     assert summary["pairs_improved"] == 1
     assert summary["pairs_measured"] == 1
+    assert summary["flagship_eligible"] is False
     assert summary["claim_status"] == "running_or_partial"
+
+
+def test_promotion_gate_blocks_negative_transfer_on_critical_rows() -> None:
+    summary = {
+        "cells_total": 2,
+        "cells_completed": 2,
+        "cells_failed": 0,
+        "cells_missing": 0,
+        "pairs_total": 1,
+        "pairs_measured": 1,
+        "pairs_improved": 0,
+        "pairs_regressed": 1,
+        "pairs_unchanged": 0,
+    }
+    pairs = [
+        {
+            "row_id": "energy_volume",
+            "mlip_id": "orb-v3",
+            "baseline_error": 1.0,
+            "distill_error": 1.2,
+            "lift_fraction": -0.2,
+            "verdict": "distill_regressed",
+        }
+    ]
+
+    gate = collect.promotion_gate(summary, pairs)
+
+    assert gate["flagship_eligible"] is False
+    assert gate["status"] == "blocked_negative_transfer"
+    assert "no paired comparison may regress" in gate["failed_conditions"]
+    assert gate["critical_regressions"][0]["mlip_id"] == "orb-v3"
+
+
+def test_promotion_gate_allows_completed_zero_regression_lift() -> None:
+    summary = {
+        "cells_total": 2,
+        "cells_completed": 2,
+        "cells_failed": 0,
+        "cells_missing": 0,
+        "pairs_total": 1,
+        "pairs_measured": 1,
+        "pairs_improved": 1,
+        "pairs_regressed": 0,
+        "pairs_unchanged": 0,
+    }
+
+    gate = collect.promotion_gate(summary, [{"row_id": "energy_volume", "verdict": "distill_improved"}])
+
+    assert gate["flagship_eligible"] is True
+    assert gate["status"] == "promotable_accuracy_candidate"

@@ -269,15 +269,19 @@ function renderBaselineMatrix(baseline) {
 function renderLiveCampaign(liveCampaign, descriptor) {
   if (!descriptor && !liveCampaign) return document.createDocumentFragment();
   const summary = liveCampaign?.summary || {};
+  const gate = summary.promotion_gate || {};
   const pairs = Array.isArray(liveCampaign?.pairs) ? liveCampaign.pairs : [];
   const measurable = pairs.filter((pair) => ['distill_improved', 'distill_regressed', 'unchanged'].includes(pair.verdict));
+  const blocked = String(gate.status || '').startsWith('blocked');
+  const eligible = gate.flagship_eligible === true;
+  const gateLabel = blocked ? 'Rejected candidate' : eligible ? 'Flagship candidate' : 'Live campaign';
   const headline = liveCampaign?.schema === 'lupine.library.mlip_paired_accuracy_live_summary.v1'
     ? `${summary.cells_completed || 0} / ${summary.cells_total || 0} cloud cells returned`
     : 'Live campaign status artifact not yet available';
 
-  return h('section', { class: 'fly-section fly-live-campaign', 'aria-labelledby': 'fly-live-campaign-title' },
+  return h('section', { class: `fly-section fly-live-campaign ${blocked ? 'blocked' : eligible ? 'eligible' : 'pending'}`, 'aria-labelledby': 'fly-live-campaign-title' },
     h('div', { class: 'fly-section-head' },
-      h('p', { class: 'fly-kicker' }, 'Hot off the press'),
+      h('p', { class: 'fly-kicker' }, gateLabel),
       h('h2', { id: 'fly-live-campaign-title' }, descriptor?.title || 'Ni paired accuracy campaign'),
       h('p', {}, descriptor?.description || 'Live campaign evidence is collected directly from GCS cell artifacts.')
     ),
@@ -291,8 +295,8 @@ function renderLiveCampaign(liveCampaign, descriptor) {
         h('strong', {}, headline)
       ),
       h('div', {},
-        h('span', {}, 'Generated'),
-        h('strong', {}, liveCampaign?.generated_at || 'awaiting collector')
+        h('span', {}, 'Promotion'),
+        h('strong', {}, String(gate.status || summary.campaign_verdict || 'awaiting_gate').replace(/_/g, ' '))
       )
     ),
     h('dl', { class: 'fly-live-run-stats' },
@@ -301,14 +305,28 @@ function renderLiveCampaign(liveCampaign, descriptor) {
       stat('Missing', `${summary.cells_missing ?? summary.cells_total ?? 0}`),
       stat('Measured pairs', `${summary.pairs_measured ?? 0}`),
       stat('Improved pairs', `${summary.pairs_improved ?? 0}`),
-      stat('Regressed pairs', `${summary.pairs_regressed ?? 0}`)
+      stat('Regressed pairs', `${summary.pairs_regressed ?? 0}`),
+      stat('Unchanged pairs', `${summary.pairs_unchanged ?? 0}`),
+      stat('Flagship', eligible ? 'eligible' : 'blocked')
     ),
+    blocked ? renderPromotionBlocker(gate) : null,
     h('div', { class: 'fly-live-pair-grid' },
       ...pairs.slice(0, 25).map(renderLivePair)
     ),
     measurable.length === 0
       ? h('p', { class: 'fly-caption' }, 'No paired accuracy deltas are claimed until both baseline and Distill artifacts exist for the same row and MLIP.')
-      : h('p', { class: 'fly-caption' }, `${measurable.length} paired deltas are now claim-grade because both artifacts are present.`)
+      : h('p', { class: 'fly-caption' }, blocked
+        ? `${measurable.length} paired deltas are measured, but this ribbon is blocked from flagship claims.`
+        : `${measurable.length} paired deltas are now claim-grade because both artifacts are present.`)
+  );
+}
+
+function renderPromotionBlocker(gate) {
+  const failures = Array.isArray(gate.failed_conditions) ? gate.failed_conditions : [];
+  return h('article', { class: 'fly-live-blocker' },
+    h('strong', {}, 'Do not launch this as the accuracy result.'),
+    h('p', {}, gate.next_action || 'Reject this ribbon for flagship claims and rerun a gated canary.'),
+    failures.length ? h('ul', {}, ...failures.map((failure) => h('li', {}, failure))) : null
   );
 }
 

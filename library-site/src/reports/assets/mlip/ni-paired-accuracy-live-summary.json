@@ -1,7 +1,7 @@
 {
   "artifact_gcs_prefix": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1",
   "batch_gcs_prefix": "gs://shed-489901-atlas-inputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/batches",
-  "campaign_hash": "sha256:24b9c815bb4e0fb0d5c4bf515bd47b6d5f54980dc0fb7dfbfb027d5876ec91ae",
+  "campaign_hash": "sha256:9e99930fd77addc449acf3a4bbf99b2a1e3f1fd281af5e9f2bbc7db745535599",
   "campaign_id": "ni-fcc-eam-home-turf-paired-accuracy-v1",
   "cells": [
     {
@@ -1181,7 +1181,7 @@
     }
   ],
   "fixture_hash": "sha256:0a51d5b58f68e169478b290954da4729e33d9d37c2b65a3084e60ad5c1edd16b",
-  "generated_at": "2026-05-27T12:20:08Z",
+  "generated_at": "2026-05-27T12:58:20Z",
   "pairs": [
     {
       "baseline_cell_id": "ni-fcc-eam-home-turf-paired-accuracy-v1:baseline:elastic_constants:chgnet",
@@ -1512,14 +1512,100 @@
   "profile": "lab-gcp-gpu-paired-accuracy",
   "schema": "lupine.library.mlip_paired_accuracy_live_summary.v1",
   "summary": {
+    "campaign_verdict": "blocked_negative_transfer",
     "cells_completed": 50,
     "cells_failed": 0,
     "cells_missing": 0,
     "cells_total": 50,
     "claim_status": "complete",
+    "flagship_eligible": false,
     "pairs_improved": 0,
     "pairs_measured": 25,
     "pairs_regressed": 10,
-    "pairs_total": 25
+    "pairs_total": 25,
+    "pairs_unchanged": 15,
+    "promotion_gate": {
+      "critical_regressions": [
+        {
+          "baseline_error": 1.2943037523435157,
+          "distill_error": 1.3005462096845093,
+          "lift_fraction": -0.004823023443832848,
+          "mlip_id": "chgnet",
+          "row_id": "energy_volume"
+        },
+        {
+          "baseline_error": 1.2876907838986915,
+          "distill_error": 1.4476270570242868,
+          "lift_fraction": -0.12420394331111267,
+          "mlip_id": "m3gnet",
+          "row_id": "energy_volume"
+        },
+        {
+          "baseline_error": 1.2803090585874122,
+          "distill_error": 1.4168230278581426,
+          "lift_fraction": -0.10662579347938751,
+          "mlip_id": "mace-mp-0",
+          "row_id": "energy_volume"
+        },
+        {
+          "baseline_error": 1.0437842859433692,
+          "distill_error": 1.2133140293960252,
+          "lift_fraction": -0.16241837105205645,
+          "mlip_id": "orb-v3",
+          "row_id": "energy_volume"
+        },
+        {
+          "baseline_error": 1.3150764002011817,
+          "distill_error": 1.3695941326590164,
+          "lift_fraction": -0.04145594312961177,
+          "mlip_id": "sevennet",
+          "row_id": "energy_volume"
+        },
+        {
+          "baseline_error": 1.2930026241467003,
+          "distill_error": 1.294270789343903,
+          "lift_fraction": -0.0009807908920830995,
+          "mlip_id": "chgnet",
+          "row_id": "relaxation_stability"
+        },
+        {
+          "baseline_error": 1.286540685924451,
+          "distill_error": 1.3967734840617723,
+          "lift_fraction": -0.08568154846817988,
+          "mlip_id": "m3gnet",
+          "row_id": "relaxation_stability"
+        },
+        {
+          "baseline_error": 1.2798431901460494,
+          "distill_error": 1.4024892817606667,
+          "lift_fraction": -0.09582899886401043,
+          "mlip_id": "mace-mp-0",
+          "row_id": "relaxation_stability"
+        },
+        {
+          "baseline_error": 1.0426887063508834,
+          "distill_error": 1.2327918929222763,
+          "lift_fraction": -0.1823201741934086,
+          "mlip_id": "orb-v3",
+          "row_id": "relaxation_stability"
+        },
+        {
+          "baseline_error": 1.3138299175426964,
+          "distill_error": 1.4339733331903917,
+          "lift_fraction": -0.09144518178761209,
+          "mlip_id": "sevennet",
+          "row_id": "relaxation_stability"
+        }
+      ],
+      "failed_conditions": [
+        "no paired comparison may regress",
+        "at least one paired comparison must improve",
+        "energy-volume and relaxation rows may not regress"
+      ],
+      "flagship_eligible": false,
+      "next_action": "reject this ribbon for flagship claims; fit a material-family-aware canary and require zero regressions before rerun",
+      "schema": "lupine.mlip.flagship_promotion_gate.v1",
+      "status": "blocked_negative_transfer"
+    }
   }
 }

@@ -35,6 +35,8 @@ pub(crate) struct PolicyLimits {
     pub(crate) max_support_eval_distance_proxy: f64,
     #[serde(default = "default_max_ribbon_feature_distance_proxy")]
     pub(crate) max_ribbon_feature_distance_proxy: f64,
+    #[serde(default)]
+    pub(crate) require_material_root_overlap: bool,
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub(crate) row_policy_overrides: BTreeMap<String, PolicyLimitOverride>,
 }
@@ -63,6 +65,8 @@ pub(crate) struct PolicyLimitOverride {
     pub(crate) max_support_eval_distance_proxy: Option<f64>,
     #[serde(default)]
     pub(crate) max_ribbon_feature_distance_proxy: Option<f64>,
+    #[serde(default)]
+    pub(crate) require_material_root_overlap: Option<bool>,
 }
 
 impl Default for PolicyLimits {
@@ -79,6 +83,7 @@ impl Default for PolicyLimits {
             min_support_lift_fraction: 0.02,
             max_support_eval_distance_proxy: 1.0,
             max_ribbon_feature_distance_proxy: 1.0e9,
+            require_material_root_overlap: false,
             row_policy_overrides: BTreeMap::new(),
         }
     }
@@ -190,6 +195,9 @@ impl PolicyLimits {
         }
         if let Some(value) = limits_override.max_ribbon_feature_distance_proxy {
             self.max_ribbon_feature_distance_proxy = value;
+        }
+        if let Some(value) = limits_override.require_material_root_overlap {
+            self.require_material_root_overlap = value;
         }
     }
 }
@@ -953,6 +961,9 @@ fn support_gate_action(
             ));
         }
     }
+    if let Some(action) = material_root_overlap_action(field, diagnostics, limits) {
+        return Some(action);
+    }
     if let Some(lift) = support_lift_fraction(field, diagnostics) {
         if lift <= 0.0 {
             return Some(PolicyAction::blocked(
@@ -1001,6 +1012,9 @@ fn ribbon_gate_action(
                     json!(distance),
                 ));
             }
+        }
+        if let Some(action) = material_root_overlap_action(&model.field, diagnostics, limits) {
+            return Some(action);
         }
     }
     if let Some(distance) = model.support_eval_distance_proxy {
@@ -1067,6 +1081,58 @@ fn support_lift_fraction(field: &str, diagnostics: &Value) -> Option<f64> {
         return None;
     }
     Some(((before - after) / before).max(0.0))
+}
+
+fn material_root_overlap_action(
+    field: &str,
+    diagnostics: &Value,
+    limits: &PolicyLimits,
+) -> Option<PolicyAction> {
+    if !limits.require_material_root_overlap {
+        return None;
+    }
+    let eval_roots = diagnostic_string_array(diagnostics, "eval_material_roots");
+    let support_roots = diagnostic_string_array(diagnostics, "support_material_roots");
+    if eval_roots.is_empty() || support_roots.is_empty() {
+        return Some(PolicyAction::blocked(
+            field,
+            "blocked_missing_material_root_diagnostics",
+            json!({
+                "eval_material_roots": eval_roots,
+                "support_material_roots": support_roots,
+            }),
+        ));
+    }
+    let overlaps = eval_roots
+        .iter()
+        .any(|eval| support_roots.iter().any(|support| support == eval));
+    if overlaps {
+        None
+    } else {
+        Some(PolicyAction::blocked(
+            field,
+            "blocked_no_material_root_overlap",
+            json!({
+                "eval_material_roots": eval_roots,
+                "support_material_roots": support_roots,
+            }),
+        ))
+    }
+}
+
+fn diagnostic_string_array(diagnostics: &Value, key: &str) -> Vec<String> {
+    diagnostics
+        .get(key)
+        .and_then(Value::as_array)
+        .map(|items| {
+            items
+                .iter()
+                .filter_map(Value::as_str)
+                .map(|item| item.trim().to_ascii_lowercase())
+                .filter(|item| !item.is_empty())
+                .collect()
+        })
+        .unwrap_or_default()
 }
 
 fn diagnostic_number(diagnostics: &Value, key: &str) -> Option<f64> {
@@ -1669,6 +1735,43 @@ mod tests {
         assert!(decision.actions.iter().any(|action| {
             action.action == "delta_correct_blocked"
                 && action.reason == "blocked_ribbon_feature_distance"
+        }));
+    }
+
+    #[test]
+    fn blocks_ribbon_residual_correction_without_material_root_overlap_when_required() {
+        let mut req = request(
+            "energy_volume",
+            json!({"energy_ev_per_atom": -5.0}),
+            json!({
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "energy_ev_per_atom",
+                    "feature_names": ["scalar:energy_ev_per_atom"],
+                    "feature_mean": [-5.0],
+                    "feature_scale": [1.0],
+                    "intercept": [-0.1],
+                    "coefficients": [[0.2]],
+                    "support_lift_fraction": 0.5,
+                    "support_eval_distance_proxy": 0.0
+                }
+            }),
+        );
+        req.support.as_mut().unwrap().diagnostics = Some(json!({
+            "eval_material_roots": ["ni", "ni-fcc"],
+            "support_material_roots": ["al-o", "f-li-ni-o"],
+            "energy_support_mae_before": 1.0,
+            "energy_support_mae_after": 0.2
+        }));
+        let mut limits = PolicyLimits::default();
+        limits.require_material_root_overlap = true;
+
+        let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(decision.corrected_prediction["energy_ev_per_atom"], json!(-5.0));
+        assert!(decision.actions.iter().any(|action| {
+            action.action == "delta_correct_blocked"
+                && action.reason == "blocked_no_material_root_overlap"
         }));
     }
 

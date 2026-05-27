@@ -109,7 +109,7 @@ def launch_command(campaign: dict[str, Any], batch: dict[str, Any], wait: bool) 
 
 def launch(args: argparse.Namespace) -> int:
     campaign = campaign_tools.load_campaign(args.campaign)
-    batches = campaign_tools.expand_batches(campaign)
+    batches = campaign_tools.expand_batches(campaign, scope=args.scope)
     if args.mlip:
         batches = [batch for batch in batches if batch["mlip_id"] == args.mlip]
     if args.limit is not None:
@@ -155,6 +155,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--require-image-tag", default=None)
     parser.add_argument("--mlip", default=None)
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--scope", choices=sorted(campaign_tools.VALID_SCOPES), default="full")
     parser.add_argument("--submit-delay-seconds", type=float, default=2.0)
     parser.add_argument("--wait", action="store_true")
     parser.add_argument("--dry-run", action="store_true")

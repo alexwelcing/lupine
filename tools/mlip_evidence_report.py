@@ -21,6 +21,12 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
     return payload
 
 
+def write_text_lf(path: pathlib.Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(text)
+
+
 def metric(value: Any) -> str:
     if not isinstance(value, (int, float)):
         return "n/a"
@@ -38,6 +44,11 @@ def percent(value: Any) -> str:
 
 
 def verdict_text(summary: dict[str, Any]) -> str:
+    gate = summary.get("promotion_gate")
+    if isinstance(gate, dict) and gate.get("status") == "blocked_negative_transfer":
+        return "rejected candidate: negative transfer detected"
+    if isinstance(gate, dict) and gate.get("flagship_eligible") is True:
+        return "flagship-eligible accuracy candidate"
     if summary.get("cells_completed") == summary.get("cells_total") and summary.get("pairs_measured"):
         return "complete enough for paired accuracy interpretation"
     if summary.get("cells_completed", 0) > 0:
@@ -96,6 +107,27 @@ def pair_table(pairs: list[dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
+def promotion_gate_text(summary: dict[str, Any]) -> str:
+    gate = summary.get("promotion_gate")
+    if not isinstance(gate, dict):
+        return "Promotion gate was not computed for this summary."
+    failed = gate.get("failed_conditions") if isinstance(gate.get("failed_conditions"), list) else []
+    if gate.get("flagship_eligible") is True:
+        return (
+            "## Flagship Promotion Gate\n\n"
+            "**Result:** pass. This candidate has no measured regressions and at least one measured improvement. "
+            "Acceleration claims should still remain separate until the accuracy claim is locked.\n"
+        )
+    failed_lines = "\n".join(f"- {condition}" for condition in failed)
+    next_action = gate.get("next_action") or "Reject this candidate for flagship claims."
+    return (
+        "## Flagship Promotion Gate\n\n"
+        "**Result:** blocked. This campaign is evidence for ribbon rejection, not launch promotion.\n\n"
+        f"{failed_lines}\n\n"
+        f"**Required next action:** {next_action}\n"
+    )
+
+
 def render(payload: dict[str, Any]) -> str:
     summary = payload["summary"]
     pairs = payload.get("pairs", [])
@@ -143,6 +175,8 @@ treated as a win.
 
 {interpretation_text(summary, measured)}
 
+{promotion_gate_text(summary)}
+
 ## Pair Table
 
 {pair_table(pairs)}
@@ -172,7 +206,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=pathlib.Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args(argv)
     payload = load_json(args.input)
-    args.output.write_text(render(payload), encoding="utf-8")
+    write_text_lf(args.output, render(payload))
     print(json.dumps({"status": "written", "output": str(args.output)}, indent=2, sort_keys=True))
     return 0
 

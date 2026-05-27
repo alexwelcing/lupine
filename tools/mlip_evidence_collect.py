@@ -58,6 +58,12 @@ def gcloud_cat(url: str) -> dict[str, Any] | None:
     return payload if isinstance(payload, dict) else None
 
 
+def write_text_lf(path: pathlib.Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(text)
+
+
 def artifact_url(cell: dict[str, Any]) -> str:
     return cell["artifact_prefix"].rstrip("/") + "/cell_result.json"
 
@@ -182,6 +188,22 @@ def summarize(cells: list[dict[str, Any]], pairs: list[dict[str, Any]]) -> dict[
     missing = len([cell for cell in cells if cell["status"] == "missing"])
     improved = len([pair for pair in pairs if pair["verdict"] == "distill_improved"])
     regressed = len([pair for pair in pairs if pair["verdict"] == "distill_regressed"])
+    unchanged = len([pair for pair in pairs if pair["verdict"] == "unchanged"])
+    measured = len([pair for pair in pairs if pair["verdict"] in {"distill_improved", "distill_regressed", "unchanged"}])
+    gate = promotion_gate(
+        {
+            "cells_total": total,
+            "cells_completed": completed,
+            "cells_failed": failed,
+            "cells_missing": missing,
+            "pairs_total": len(pairs),
+            "pairs_improved": improved,
+            "pairs_regressed": regressed,
+            "pairs_unchanged": unchanged,
+            "pairs_measured": measured,
+        },
+        pairs,
+    )
     return {
         "cells_total": total,
         "cells_completed": completed,
@@ -190,8 +212,66 @@ def summarize(cells: list[dict[str, Any]], pairs: list[dict[str, Any]]) -> dict[
         "pairs_total": len(pairs),
         "pairs_improved": improved,
         "pairs_regressed": regressed,
-        "pairs_measured": len([pair for pair in pairs if pair["verdict"] in {"distill_improved", "distill_regressed", "unchanged"}]),
+        "pairs_unchanged": unchanged,
+        "pairs_measured": measured,
         "claim_status": "complete" if completed == total else "running_or_partial",
+        "promotion_gate": gate,
+        "flagship_eligible": gate["flagship_eligible"],
+        "campaign_verdict": gate["status"],
+    }
+
+
+def promotion_gate(summary: dict[str, int], pairs: list[dict[str, Any]]) -> dict[str, Any]:
+    failed_conditions: list[str] = []
+    if summary["cells_completed"] != summary["cells_total"]:
+        failed_conditions.append("all cloud cells must complete before flagship promotion")
+    if summary["cells_failed"]:
+        failed_conditions.append("no cloud cell may fail")
+    if summary["cells_missing"]:
+        failed_conditions.append("no cloud cell artifact may be missing")
+    if summary["pairs_measured"] != summary["pairs_total"]:
+        failed_conditions.append("every paired baseline/distill comparison must be measured")
+    if summary["pairs_regressed"]:
+        failed_conditions.append("no paired comparison may regress")
+    if summary["pairs_improved"] == 0:
+        failed_conditions.append("at least one paired comparison must improve")
+
+    critical_regressions = [
+        pair
+        for pair in pairs
+        if pair.get("row_id") in {"energy_volume", "relaxation_stability"}
+        and pair.get("verdict") == "distill_regressed"
+    ]
+    if critical_regressions:
+        failed_conditions.append("energy-volume and relaxation rows may not regress")
+
+    if failed_conditions:
+        status = "blocked_negative_transfer" if summary["pairs_regressed"] else "blocked_incomplete_or_no_lift"
+        next_action = (
+            "reject this ribbon for flagship claims; fit a material-family-aware canary and require zero regressions before rerun"
+            if summary["pairs_regressed"]
+            else "complete the paired canary and require at least one measured improvement before promotion"
+        )
+    else:
+        status = "promotable_accuracy_candidate"
+        next_action = "eligible for flagship review; keep acceleration separate until accuracy is locked"
+
+    return {
+        "schema": "lupine.mlip.flagship_promotion_gate.v1",
+        "status": status,
+        "flagship_eligible": not failed_conditions,
+        "failed_conditions": failed_conditions,
+        "critical_regressions": [
+            {
+                "row_id": pair.get("row_id"),
+                "mlip_id": pair.get("mlip_id"),
+                "baseline_error": pair.get("baseline_error"),
+                "distill_error": pair.get("distill_error"),
+                "lift_fraction": pair.get("lift_fraction"),
+            }
+            for pair in critical_regressions
+        ],
+        "next_action": next_action,
     }
 
 
@@ -226,8 +306,7 @@ def main(argv: list[str] | None = None) -> int:
     text = json.dumps(payload, indent=2, sort_keys=True)
     if args.stdout:
         print(text)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(text + "\n", encoding="utf-8")
+    write_text_lf(args.output, text + "\n")
     print(json.dumps({"status": "written", "output": str(args.output), "summary": payload["summary"]}, indent=2, sort_keys=True))
     return 0
 

@@ -31,6 +31,27 @@
     "max_active_gpu_jobs": 3,
     "l4_lab_hourly_estimate_usd": 1.05
   },
+  "promotion_canary": {
+    "required_before_full_launch": true,
+    "rows": [
+      "energy_volume",
+      "relaxation_stability"
+    ],
+    "mlips": [
+      "mace-mp-0",
+      "chgnet",
+      "orb-v3"
+    ],
+    "gate": {
+      "max_regressed_pairs": 0,
+      "min_improved_pairs": 1,
+      "required_zero_regression_rows": [
+        "energy_volume",
+        "relaxation_stability"
+      ]
+    },
+    "reason": "Energy-volume and relaxation are the first rows that expose harmful energy-surface transfer; do not spend a full 5x5 until this scope passes."
+  },
   "rows": [
     "energy_volume",
     "forces",

@@ -29,6 +29,9 @@ On the local MACE-MP-0 energy row, this policy reduced held-out energy MAE from
 `0.4116` to `0.2038` eV/atom by applying three bounded rank-aware residual
 corrections and blocking two oversized corrections. This is local evidence for
 Distill Accuracy mechanics, not yet a full 5x5x3 publication claim.
+After the Ni EAM-home-turf paired run, this policy now requires exact
+support/eval material-root overlap before residual correction. The prior global
+MPtrj support lift was not enough to justify applying energy shifts to pure Ni.
 
 `hyperribbon-mptrj-sevennet-energy-v1-accuracy.json` is the SevenNet energy
 variant selected with the same non-overlapping MPtrj support split:
@@ -40,7 +43,8 @@ variant selected with the same non-overlapping MPtrj support split:
 
 On the local SevenNet energy row, this policy reduced held-out energy MAE from
 `0.3997` to `0.2773` eV/atom. This gives backend diversity for the residual
-ribbon method, but it is still scoped to the energy row.
+ribbon method, but it is still scoped to the energy row and now uses the same
+material-root overlap guard before transfer.
 
 `hyperribbon-mptrj-mace-stress-v1-accuracy.json` is the first row-diverse
 positive local ribbon. It was selected from:
@@ -53,7 +57,9 @@ positive local ribbon. It was selected from:
 On the local MACE-MP-0 stress row, this policy reduced held-out stress MAE from
 `0.5669` to `0.3481` GPa. The accelerate variant currently degrades this stress
 row, so treat this policy as Distill Accuracy only until an acceleration-safe
-variant is selected and validated.
+variant is selected and validated. The Ni run also pushed this policy behind
+the material-root overlap guard so stress corrections cannot transfer from a
+support family with no exact material-root match.
 
 `hyperribbon-v2-orb-distance-gated-accuracy.json` is the first ORB-specific
 held-out replay lift from the cross-MLIP GCP evidence cache. It adds a

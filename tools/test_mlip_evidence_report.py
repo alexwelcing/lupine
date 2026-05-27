@@ -19,6 +19,11 @@ def test_report_renders_only_measured_pair_claims() -> None:
             "pairs_measured": 1,
             "pairs_improved": 1,
             "pairs_regressed": 0,
+            "promotion_gate": {
+                "status": "promotable_accuracy_candidate",
+                "flagship_eligible": True,
+                "failed_conditions": [],
+            },
         },
         "pairs": [
             {
@@ -34,7 +39,8 @@ def test_report_renders_only_measured_pair_claims() -> None:
 
     rendered = report.render(payload)
 
-    assert "complete enough for paired accuracy interpretation" in rendered
+    assert "flagship-eligible accuracy candidate" in rendered
+    assert "**Result:** pass" in rendered
     assert "| Energy-volume | chgnet | 0.4000 | 0.2000 | 50.0% | distill improved |" in rendered
     assert "No missing cell is" in rendered
 
@@ -55,6 +61,15 @@ def test_report_names_negative_transfer_when_regressions_are_only_finding() -> N
             "pairs_measured": 2,
             "pairs_improved": 0,
             "pairs_regressed": 1,
+            "promotion_gate": {
+                "status": "blocked_negative_transfer",
+                "flagship_eligible": False,
+                "failed_conditions": [
+                    "no paired comparison may regress",
+                    "at least one paired comparison must improve",
+                ],
+                "next_action": "reject this ribbon for flagship claims",
+            },
         },
         "pairs": [
             {
@@ -80,3 +95,5 @@ def test_report_names_negative_transfer_when_regressions_are_only_finding() -> N
 
     assert "negative-transfer finding" in rendered
     assert "should refuse or adapt" in rendered
+    assert "rejected candidate: negative transfer detected" in rendered
+    assert "**Result:** blocked" in rendered

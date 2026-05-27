@@ -29,6 +29,7 @@ import mlip_benchmark_sources  # noqa: E402
 DEFAULT_CAMPAIGN = ROOT / "data" / "mlip_benchmarks" / "evidence_campaigns" / "ni_lane_a_paired_accuracy_v1.json"
 DEFAULT_BATCH_DIR = ROOT / "tmp" / "mlip-evidence" / "ni-fcc-eam-home-turf-paired-accuracy-v1" / "batches"
 ALLOWED_TARGET_RE = re.compile(r"default_value\s*=\s*\"([^\"]*mlip-cell[^\"]*)\"")
+VALID_SCOPES = {"full", "promotion-canary"}
 
 
 def load_json(path: pathlib.Path) -> dict[str, Any]:
@@ -77,6 +78,24 @@ def enabled_mlips(campaign: dict[str, Any]) -> list[str]:
             if isinstance(mlip_id, str) and mlip_id:
                 mlips.append(mlip_id)
     return mlips
+
+
+def scoped_rows(campaign: dict[str, Any], scope: str = "full") -> list[str]:
+    if scope == "full":
+        return list(campaign["rows"])
+    canary = campaign.get("promotion_canary", {})
+    rows = canary.get("rows") if isinstance(canary, dict) else None
+    return [str(row) for row in rows] if isinstance(rows, list) else []
+
+
+def scoped_mlips(campaign: dict[str, Any], scope: str = "full") -> list[str]:
+    if scope == "full":
+        return enabled_mlips(campaign)
+    canary = campaign.get("promotion_canary", {})
+    mlips = canary.get("mlips") if isinstance(canary, dict) else None
+    requested = [str(mlip) for mlip in mlips] if isinstance(mlips, list) else []
+    enabled = set(enabled_mlips(campaign))
+    return [mlip for mlip in requested if mlip in enabled]
 
 
 def variants_by_id(campaign: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -128,27 +147,39 @@ def policy_for(campaign: dict[str, Any], row_id: str, mlip_id: str) -> dict[str,
     }
 
 
-def checkpoint_url(campaign: dict[str, Any], row_id: str, mlip_id: str) -> str:
-    return gs_join(campaign["artifact_gcs_prefix"], "checkpoints", row_id, mlip_id, "raw_predictions.json")
+def scope_part(scope: str) -> list[str]:
+    return [] if scope == "full" else [scope]
 
 
-def artifact_prefix(campaign: dict[str, Any], variant_id: str, row_id: str, mlip_id: str) -> str:
-    return gs_join(campaign["artifact_gcs_prefix"], "cells", variant_id, row_id, mlip_id)
+def checkpoint_url(campaign: dict[str, Any], row_id: str, mlip_id: str, scope: str = "full") -> str:
+    return gs_join(campaign["artifact_gcs_prefix"], *scope_part(scope), "checkpoints", row_id, mlip_id, "raw_predictions.json")
 
 
-def cell_id(campaign: dict[str, Any], variant_id: str, row_id: str, mlip_id: str) -> str:
-    return f"{campaign['campaign_id']}:{variant_id}:{row_id}:{mlip_id}"
+def artifact_prefix(campaign: dict[str, Any], variant_id: str, row_id: str, mlip_id: str, scope: str = "full") -> str:
+    return gs_join(campaign["artifact_gcs_prefix"], *scope_part(scope), "cells", variant_id, row_id, mlip_id)
 
 
-def expand_cells(campaign: dict[str, Any]) -> list[dict[str, Any]]:
+def batch_artifact_prefix(campaign: dict[str, Any], batch_id: str, scope: str = "full") -> str:
+    return gs_join(campaign["artifact_gcs_prefix"], *scope_part(scope), "batches", batch_id)
+
+
+def cell_id(campaign: dict[str, Any], variant_id: str, row_id: str, mlip_id: str, scope: str = "full") -> str:
+    if scope == "full":
+        return f"{campaign['campaign_id']}:{variant_id}:{row_id}:{mlip_id}"
+    return f"{campaign['campaign_id']}:{scope}:{variant_id}:{row_id}:{mlip_id}"
+
+
+def expand_cells(campaign: dict[str, Any], scope: str = "full") -> list[dict[str, Any]]:
+    if scope not in VALID_SCOPES:
+        raise ValueError(f"unknown evidence scope: {scope}")
     variants = variants_by_id(campaign)
     backends = backend_map(campaign)
     cells: list[dict[str, Any]] = []
-    for mlip_id in enabled_mlips(campaign):
+    for mlip_id in scoped_mlips(campaign, scope):
         target_job = backends[mlip_id]["target_job"]
-        for row_id in campaign["rows"]:
-            baseline_id = cell_id(campaign, "baseline", row_id, mlip_id)
-            shared_checkpoint = checkpoint_url(campaign, row_id, mlip_id)
+        for row_id in scoped_rows(campaign, scope):
+            baseline_id = cell_id(campaign, "baseline", row_id, mlip_id, scope=scope)
+            shared_checkpoint = checkpoint_url(campaign, row_id, mlip_id, scope=scope)
             baseline_variant = variants["baseline"]
             cells.append(
                 {
@@ -161,7 +192,7 @@ def expand_cells(campaign: dict[str, Any]) -> list[dict[str, Any]]:
                     "distill_profile": baseline_variant["distill_profile"],
                     "manifest_url": campaign["fixture_gcs_url"],
                     "fixture_url": campaign["fixture_gcs_url"],
-                    "artifact_prefix": artifact_prefix(campaign, "baseline", row_id, mlip_id),
+                    "artifact_prefix": artifact_prefix(campaign, "baseline", row_id, mlip_id, scope=scope),
                     "checkpoint_url": shared_checkpoint,
                     "checkpoint_mode": baseline_variant["checkpoint_mode"],
                     "evidence_role": "baseline_checkpoint_producer",
@@ -171,7 +202,7 @@ def expand_cells(campaign: dict[str, Any]) -> list[dict[str, Any]]:
             policy = policy_for(campaign, row_id, mlip_id)
             cells.append(
                 {
-                    "cell_id": cell_id(campaign, "distill_accuracy", row_id, mlip_id),
+                    "cell_id": cell_id(campaign, "distill_accuracy", row_id, mlip_id, scope=scope),
                     "campaign_id": campaign["campaign_id"],
                     "row_id": row_id,
                     "mlip_id": mlip_id,
@@ -180,7 +211,7 @@ def expand_cells(campaign: dict[str, Any]) -> list[dict[str, Any]]:
                     "distill_profile": distill_variant["distill_profile"],
                     "manifest_url": campaign["fixture_gcs_url"],
                     "fixture_url": campaign["fixture_gcs_url"],
-                    "artifact_prefix": artifact_prefix(campaign, "distill_accuracy", row_id, mlip_id),
+                    "artifact_prefix": artifact_prefix(campaign, "distill_accuracy", row_id, mlip_id, scope=scope),
                     "checkpoint_url": shared_checkpoint,
                     "checkpoint_mode": distill_variant["checkpoint_mode"],
                     "depends_on_cell_id": baseline_id,
@@ -195,21 +226,25 @@ def expand_cells(campaign: dict[str, Any]) -> list[dict[str, Any]]:
     return cells
 
 
-def expand_batches(campaign: dict[str, Any]) -> list[dict[str, Any]]:
-    cells = expand_cells(campaign)
+def expand_batches(campaign: dict[str, Any], scope: str = "full") -> list[dict[str, Any]]:
+    if scope not in VALID_SCOPES:
+        raise ValueError(f"unknown evidence scope: {scope}")
+    cells = expand_cells(campaign, scope=scope)
     backends = backend_map(campaign)
     batches: list[dict[str, Any]] = []
-    for mlip_id in enabled_mlips(campaign):
+    for mlip_id in scoped_mlips(campaign, scope):
         mlip_cells = [cell for cell in cells if cell["mlip_id"] == mlip_id]
         ordered_cells: list[dict[str, Any]] = []
-        for row_id in campaign["rows"]:
+        for row_id in scoped_rows(campaign, scope):
             ordered_cells.extend(
                 cell
                 for cell in mlip_cells
                 if cell["row_id"] == row_id and cell["variant_id"] in {"baseline", "distill_accuracy"}
             )
-        batch_id = sanitize_id(f"{campaign['campaign_id']}-{mlip_id}-paired-accuracy")
-        batch_gcs_url = gs_join(campaign["batch_gcs_prefix"], f"{batch_id}.json")
+        suffix = "paired-accuracy" if scope == "full" else "promotion-canary"
+        batch_id = sanitize_id(f"{campaign['campaign_id']}-{mlip_id}-{suffix}")
+        batch_gcs_prefix = campaign["batch_gcs_prefix"] if scope == "full" else gs_join(campaign["batch_gcs_prefix"], "canary")
+        batch_gcs_url = gs_join(batch_gcs_prefix, f"{batch_id}.json")
         batches.append(
             {
                 "schema": "lupine.mlip.batch_spec.v1",
@@ -217,11 +252,12 @@ def expand_batches(campaign: dict[str, Any]) -> list[dict[str, Any]]:
                 "run_id": campaign["campaign_id"],
                 "campaign_id": campaign["campaign_id"],
                 "profile": campaign["profile"],
+                "scope": scope,
                 "fixture_id": "ni-fcc-eam-home-turf-v1",
                 "mlip_id": mlip_id,
                 "target_job": backends[mlip_id]["target_job"],
                 "batch_spec_gcs_url": batch_gcs_url,
-                "batch_artifact_prefix": gs_join(campaign["artifact_gcs_prefix"], "batches", batch_id),
+                "batch_artifact_prefix": batch_artifact_prefix(campaign, batch_id, scope=scope),
                 "defaults": {
                     "beat_emit_url": campaign["beat_emit_url"],
                     "manifest_url": campaign["fixture_gcs_url"],
@@ -256,6 +292,12 @@ def evidence_summary(campaign: dict[str, Any]) -> dict[str, Any]:
         "fixture_hash": load_json(repo_path(campaign["fixture_path"])).get("manifest_hash"),
         "source_packet_hash": stable_hash(load_json(repo_path(campaign["source_packet_path"]))),
         "campaign_hash": stable_hash({key: value for key, value in campaign.items() if not key.startswith("_")}),
+        "promotion_canary": {
+            "rows": scoped_rows(campaign, "promotion-canary"),
+            "mlips": scoped_mlips(campaign, "promotion-canary"),
+            "cells_total": len(expand_cells(campaign, scope="promotion-canary")),
+            "batches_total": len(expand_batches(campaign, scope="promotion-canary")),
+        },
     }
 
 
@@ -331,6 +373,15 @@ def validate_campaign(campaign: dict[str, Any]) -> list[str]:
     for row_id in rows:
         if row_id not in fixture_contract.ROW_DEFAULTS:
             issues.append(f"unknown row_id: {row_id}")
+    canary = campaign.get("promotion_canary", {})
+    if isinstance(canary, dict):
+        for row_id in canary.get("rows", []):
+            if row_id not in rows:
+                issues.append(f"promotion_canary row is not in full rows: {row_id}")
+        enabled = set(enabled_mlips(campaign))
+        for mlip_id in canary.get("mlips", []):
+            if mlip_id not in enabled:
+                issues.append(f"promotion_canary MLIP is not enabled: {mlip_id}")
     for mlip_id in enabled_mlips(campaign):
         backend = backends.get(mlip_id)
         if not backend:
@@ -372,12 +423,12 @@ def batch_path(batch: dict[str, Any], out_dir: pathlib.Path) -> pathlib.Path:
     return out_dir / f"{batch['batch_id']}.json"
 
 
-def write_batches(campaign: dict[str, Any], out_dir: pathlib.Path) -> list[dict[str, Any]]:
+def write_batches(campaign: dict[str, Any], out_dir: pathlib.Path, scope: str = "full") -> list[dict[str, Any]]:
     issues = validate_campaign(campaign)
     if issues:
         raise SystemExit("campaign validation failed:\n" + "\n".join(f"- {issue}" for issue in issues))
     out_dir.mkdir(parents=True, exist_ok=True)
-    batches = expand_batches(campaign)
+    batches = expand_batches(campaign, scope=scope)
     written: list[dict[str, Any]] = []
     for batch in batches:
         path = batch_path(batch, out_dir)
@@ -454,8 +505,9 @@ def gcloud_run_cell_command(campaign: dict[str, Any], cell: dict[str, Any], *, w
     )
 
 
-def upload_commands(campaign: dict[str, Any], batch_dir: pathlib.Path) -> list[str]:
+def upload_commands(campaign: dict[str, Any], batch_dir: pathlib.Path, scope: str = "full") -> list[str]:
     policies = sorted({policy_for(campaign, row_id, mlip_id)["policy_local_path"] for row_id in campaign["rows"] for mlip_id in enabled_mlips(campaign)})
+    batch_dest = campaign["batch_gcs_prefix"] if scope == "full" else gs_join(campaign["batch_gcs_prefix"], "canary")
     commands = [
         f"gcloud storage cp {campaign['fixture_path']} {campaign['fixture_gcs_url']}",
         f"gcloud storage cp {campaign['support_manifest_path']} {campaign['support_manifest_gcs_url']}",
@@ -464,17 +516,17 @@ def upload_commands(campaign: dict[str, Any], batch_dir: pathlib.Path) -> list[s
         f"gcloud storage cp {pathlib.Path(policy_path).as_posix()} {gs_join(campaign['policy_gcs_prefix'], pathlib.Path(policy_path).name)}"
         for policy_path in policies
     )
-    commands.append(f"gcloud storage cp {batch_dir.as_posix()}/*.json {campaign['batch_gcs_prefix'].rstrip('/')}/")
+    commands.append(f"gcloud storage cp {batch_dir.as_posix()}/*.json {batch_dest.rstrip('/')}/")
     return commands
 
 
-def command_rows(campaign: dict[str, Any], kind: str, limit: int | None, batch_dir: pathlib.Path, wait: bool) -> list[str]:
+def command_rows(campaign: dict[str, Any], kind: str, limit: int | None, batch_dir: pathlib.Path, wait: bool, scope: str = "full") -> list[str]:
     if kind == "upload":
-        commands = upload_commands(campaign, batch_dir)
+        commands = upload_commands(campaign, batch_dir, scope=scope)
     elif kind == "run-batch":
-        commands = [gcloud_run_batch_command(campaign, batch, wait=wait) for batch in expand_batches(campaign)]
+        commands = [gcloud_run_batch_command(campaign, batch, wait=wait) for batch in expand_batches(campaign, scope=scope)]
     elif kind == "run-cell":
-        commands = [gcloud_run_cell_command(campaign, cell, wait=wait) for cell in expand_cells(campaign)]
+        commands = [gcloud_run_cell_command(campaign, cell, wait=wait) for cell in expand_cells(campaign, scope=scope)]
     else:
         raise ValueError(f"unknown command kind: {kind}")
     return commands[:limit] if limit is not None else commands
@@ -497,8 +549,8 @@ def cmd_expand(args: argparse.Namespace) -> int:
         raise SystemExit("campaign validation failed:\n" + "\n".join(f"- {issue}" for issue in issues))
     payload = {
         "summary": evidence_summary(campaign),
-        "cells": expand_cells(campaign),
-        "batches": expand_batches(campaign),
+        "cells": expand_cells(campaign, scope=args.scope),
+        "batches": expand_batches(campaign, scope=args.scope),
     }
     if args.json:
         print(json.dumps(payload, indent=2, sort_keys=True))
@@ -513,7 +565,7 @@ def cmd_expand(args: argparse.Namespace) -> int:
 
 def cmd_write_batches(args: argparse.Namespace) -> int:
     campaign = load_campaign(args.campaign)
-    written = write_batches(campaign, args.output)
+    written = write_batches(campaign, args.output, scope=args.scope)
     print(json.dumps({"status": "written", "batches": written}, indent=2, sort_keys=True))
     return 0
 
@@ -523,7 +575,7 @@ def cmd_commands(args: argparse.Namespace) -> int:
     issues = validate_campaign(campaign)
     if issues:
         raise SystemExit("campaign validation failed:\n" + "\n".join(f"- {issue}" for issue in issues))
-    for command in command_rows(campaign, args.kind, args.limit, args.batch_dir, args.wait):
+    for command in command_rows(campaign, args.kind, args.limit, args.batch_dir, args.wait, scope=args.scope):
         print(command)
     return 0
 
@@ -538,10 +590,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     expand = sub.add_parser("expand")
     expand.add_argument("--json", action="store_true")
+    expand.add_argument("--scope", choices=sorted(VALID_SCOPES), default="full")
     expand.set_defaults(func=cmd_expand)
 
     write_batches_parser = sub.add_parser("write-batches")
     write_batches_parser.add_argument("--output", type=pathlib.Path, default=DEFAULT_BATCH_DIR)
+    write_batches_parser.add_argument("--scope", choices=sorted(VALID_SCOPES), default="full")
     write_batches_parser.set_defaults(func=cmd_write_batches)
 
     commands = sub.add_parser("commands")
@@ -549,6 +603,7 @@ def build_parser() -> argparse.ArgumentParser:
     commands.add_argument("--limit", type=int, default=None)
     commands.add_argument("--batch-dir", type=pathlib.Path, default=DEFAULT_BATCH_DIR)
     commands.add_argument("--wait", action="store_true")
+    commands.add_argument("--scope", choices=sorted(VALID_SCOPES), default="full")
     commands.set_defaults(func=cmd_commands)
 
     return parser

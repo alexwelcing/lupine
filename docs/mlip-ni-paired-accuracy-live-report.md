@@ -1,7 +1,7 @@
 # Ni Paired Accuracy Live Report
 
-**Status:** complete enough for paired accuracy interpretation
-**Generated:** 2026-05-27T12:20:08Z
+**Status:** rejected candidate: negative transfer detected
+**Generated:** 2026-05-27T12:58:20Z
 **Campaign:** `ni-fcc-eam-home-turf-paired-accuracy-v1`
 **Fixture hash:** `sha256:0a51d5b58f68e169478b290954da4729e33d9d37c2b65a3084e60ad5c1edd16b`
 
@@ -38,6 +38,17 @@ remaining rows are awaiting artifacts or explicit failures. No missing cell is
 treated as a win.
 
 The returned evidence is currently a negative-transfer finding: 25 pairs are measured, 10 regress, 15 are unchanged, and none improve. That is still useful because the system has caught a ribbon that should refuse or adapt before it is promoted for this material lane.
+
+## Flagship Promotion Gate
+
+**Result:** blocked. This campaign is evidence for ribbon rejection, not launch promotion.
+
+- no paired comparison may regress
+- at least one paired comparison must improve
+- energy-volume and relaxation rows may not regress
+
+**Required next action:** reject this ribbon for flagship claims; fit a material-family-aware canary and require zero regressions before rerun
+
 
 ## Pair Table
 

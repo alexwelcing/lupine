@@ -37,6 +37,22 @@ def test_evidence_campaign_expands_to_paired_5x5x2_cells() -> None:
         assert distill["distill_policy_hash"].startswith("sha256:")
 
 
+def test_promotion_canary_expands_before_full_5x5() -> None:
+    campaign = load_default_campaign()
+    cells = evidence.expand_cells(campaign, scope="promotion-canary")
+    batches = evidence.expand_batches(campaign, scope="promotion-canary")
+
+    assert len(cells) == 12
+    assert {cell["row_id"] for cell in cells} == {"energy_volume", "relaxation_stability"}
+    assert {cell["mlip_id"] for cell in cells} == {"mace-mp-0", "chgnet", "orb-v3"}
+    assert all(":promotion-canary:" in cell["cell_id"] for cell in cells)
+    assert all("/promotion-canary/" in cell["artifact_prefix"] for cell in cells)
+    assert all("/promotion-canary/checkpoints/" in cell["checkpoint_url"] for cell in cells)
+    assert {batch["scope"] for batch in batches} == {"promotion-canary"}
+    assert all("/canary/" in batch["batch_spec_gcs_url"] for batch in batches)
+    assert all("/promotion-canary/batches/" in batch["batch_artifact_prefix"] for batch in batches)
+
+
 def test_evidence_batches_group_one_cloud_run_execution_per_mlip() -> None:
     campaign = load_default_campaign()
     batches = evidence.expand_batches(campaign)
@@ -70,6 +86,22 @@ def test_command_generation_emits_upload_and_run_batch_commands() -> None:
     campaign = load_default_campaign()
     upload = evidence.command_rows(campaign, "upload", None, evidence.DEFAULT_BATCH_DIR, wait=False)
     run = evidence.command_rows(campaign, "run-batch", 2, evidence.DEFAULT_BATCH_DIR, wait=True)
+    canary_run = evidence.command_rows(
+        campaign,
+        "run-batch",
+        None,
+        evidence.DEFAULT_BATCH_DIR,
+        wait=True,
+        scope="promotion-canary",
+    )
+    canary_upload = evidence.command_rows(
+        campaign,
+        "upload",
+        None,
+        evidence.DEFAULT_BATCH_DIR,
+        wait=False,
+        scope="promotion-canary",
+    )
 
     assert any("ni_fcc_eam_home_turf_v1.json" in command for command in upload)
     assert any("accuracy_policy_registry" not in command and "hyperribbon" in command for command in upload)
@@ -77,3 +109,6 @@ def test_command_generation_emits_upload_and_run_batch_commands() -> None:
     assert all(command.startswith("gcloud run jobs execute mlip-cell-") for command in run)
     assert all("--wait" in command for command in run)
     assert all("run-batch,--batch-spec-url,gs://" in command for command in run)
+    assert len(canary_run) == 3
+    assert all("/canary/" in command for command in canary_run)
+    assert any(command.endswith("/batches/canary/") for command in canary_upload)
