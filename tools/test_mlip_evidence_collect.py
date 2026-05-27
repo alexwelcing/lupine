@@ -1,0 +1,106 @@
+from __future__ import annotations
+
+import mlip_evidence_collect as collect
+import pytest
+
+
+def test_compute_pairs_requires_real_baseline_and_distill_errors() -> None:
+    cells = [
+        {
+            "cell_id": "c:baseline:energy:chgnet",
+            "row_id": "energy_volume",
+            "mlip_id": "chgnet",
+            "variant_id": "baseline",
+            "status": "completed",
+            "native_error": 0.40,
+            "checkpoint_url": "gs://bucket/checkpoint.json",
+        },
+        {
+            "cell_id": "c:distill:energy:chgnet",
+            "row_id": "energy_volume",
+            "mlip_id": "chgnet",
+            "variant_id": "distill_accuracy",
+            "status": "completed",
+            "native_error": 0.25,
+            "checkpoint_url": "gs://bucket/checkpoint.json",
+        },
+    ]
+
+    pairs = collect.compute_pairs(cells)
+
+    assert pairs[0]["verdict"] == "distill_improved"
+    assert pairs[0]["error_delta"] == 0.15000000000000002
+    assert pairs[0]["lift_fraction"] == pytest.approx(0.375)
+    assert pairs[0]["shared_checkpoint_url"] == "gs://bucket/checkpoint.json"
+
+
+def test_compute_pairs_treats_float_dust_as_unchanged() -> None:
+    cells = [
+        {
+            "cell_id": "c:baseline:forces:mace",
+            "row_id": "forces",
+            "mlip_id": "mace",
+            "variant_id": "baseline",
+            "status": "completed",
+            "native_error": 0.0825466227819718,
+        },
+        {
+            "cell_id": "c:distill:forces:mace",
+            "row_id": "forces",
+            "mlip_id": "mace",
+            "variant_id": "distill_accuracy",
+            "status": "completed",
+            "native_error": 0.08254662278197175,
+        },
+    ]
+
+    pairs = collect.compute_pairs(cells)
+
+    assert pairs[0]["verdict"] == "unchanged"
+
+
+def test_collect_cell_counts_schema_artifact_without_status_as_completed(monkeypatch: pytest.MonkeyPatch) -> None:
+    artifact = {
+        "schema": "lupine.mlip.cell_artifact.v1",
+        "accuracy": {"score": 0.8, "error": 0.2, "unit": "score", "error_unit": "ev_per_atom"},
+        "speed": {"score": 3.0, "unit": "structures_per_second"},
+        "checkpoint": {"url": "gs://bucket/checkpoint.json"},
+    }
+    monkeypatch.setattr(collect, "gcloud_cat", lambda _url: artifact)
+
+    cell = collect.collect_cell(
+        {
+            "cell_id": "c:baseline:energy:chgnet",
+            "row_id": "energy_volume",
+            "mlip_id": "chgnet",
+            "variant_id": "baseline",
+            "target_job": "mlip-cell-chgnet",
+            "artifact_prefix": "gs://bucket/cell",
+        }
+    )
+
+    assert cell["status"] == "completed"
+    assert cell["native_error"] == 0.2
+    assert cell["error_unit"] == "ev_per_atom"
+    assert cell["checkpoint_url"] == "gs://bucket/checkpoint.json"
+
+
+def test_summarize_keeps_missing_artifacts_out_of_claims() -> None:
+    cells = [
+        {"status": "completed"},
+        {"status": "failed"},
+        {"status": "missing"},
+    ]
+    pairs = [
+        {"verdict": "distill_improved"},
+        {"verdict": "awaiting_pair"},
+    ]
+
+    summary = collect.summarize(cells, pairs)
+
+    assert summary["cells_completed"] == 1
+    assert summary["cells_failed"] == 1
+    assert summary["cells_missing"] == 1
+    assert summary["pairs_improved"] == 1
+    assert summary["pairs_measured"] == 1
+    assert summary["claim_status"] == "running_or_partial"

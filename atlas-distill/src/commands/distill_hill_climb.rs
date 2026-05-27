@@ -95,6 +95,8 @@ struct HillClimbCase {
     prediction: Value,
     #[serde(default)]
     support: Option<SupportEvidence>,
+    #[serde(default)]
+    context: Option<Value>,
     reference: Value,
     #[serde(default = "default_weight")]
     weight: f64,
@@ -120,6 +122,7 @@ struct SearchConfigReport {
     scale_values: Vec<f64>,
     support_lift_values: Vec<f64>,
     support_distance_values: Vec<f64>,
+    ribbon_feature_distance_values: Vec<f64>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -179,9 +182,12 @@ struct WeightedSums {
 }
 
 const FACTORS: [f64; 6] = [0.125, 0.25, 0.5, 0.75, 1.25, 1.5];
-const SCALE_VALUES: [f64; 6] = [0.0, 0.25, 0.5, 0.75, 1.0, 1.25];
+const SCALE_VALUES: [f64; 13] = [
+    -1.25, -1.0, -0.75, -0.5, -0.25, -0.10, -0.05, 0.0, 0.25, 0.5, 0.75, 1.0, 1.25,
+];
 const SUPPORT_LIFT_VALUES: [f64; 6] = [0.0, 0.01, 0.02, 0.05, 0.10, 0.20];
 const SUPPORT_DISTANCE_VALUES: [f64; 6] = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5];
+const RIBBON_FEATURE_DISTANCE_VALUES: [f64; 9] = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 5.0, 10.0];
 
 pub fn run(args: DistillHillClimbArgs) -> Result<()> {
     if args.beam_width == 0 {
@@ -322,6 +328,7 @@ fn hill_climb(cases: &[HillClimbCase], args: &DistillHillClimbArgs) -> Result<Hi
             scale_values: SCALE_VALUES.to_vec(),
             support_lift_values: SUPPORT_LIFT_VALUES.to_vec(),
             support_distance_values: SUPPORT_DISTANCE_VALUES.to_vec(),
+            ribbon_feature_distance_values: RIBBON_FEATURE_DISTANCE_VALUES.to_vec(),
         },
         cases: summarize_cases(cases),
         best_candidate,
@@ -338,6 +345,14 @@ fn evaluate_candidate(
 ) -> Result<CandidateEvaluation> {
     let mut sums = WeightedSums::default();
     for case in cases {
+        let mut context = case.context.clone().unwrap_or_else(|| json!({}));
+        if let Some(object) = context.as_object_mut() {
+            object.insert(
+                "source".to_string(),
+                json!("atlas-distill distill-hill-climb"),
+            );
+            object.insert("case_id".to_string(), json!(case.case_id));
+        }
         let request = PolicyRequest {
             schema: Some("lupine.distill.policy_request.v1".to_string()),
             ribbon_version: Some(ribbon_version.to_string()),
@@ -345,10 +360,7 @@ fn evaluate_candidate(
             mlip_id: case.mlip_id.clone(),
             prediction: case.prediction.clone(),
             support: case.support.clone(),
-            context: Some(json!({
-                "source": "atlas-distill distill-hill-climb",
-                "case_id": case.case_id,
-            })),
+            context: Some(context),
         };
         let decision = decide_with_limits(&request, ribbon_version, &limits)?;
         let baseline_error = row_error(&case.row_id, &case.prediction, &case.reference)
@@ -680,6 +692,11 @@ fn neighbors(limits: &PolicyLimits) -> Vec<PolicyLimits> {
         candidate.max_support_eval_distance_proxy = value;
         out.push(candidate);
     }
+    for value in RIBBON_FEATURE_DISTANCE_VALUES {
+        let mut candidate = limits.clone();
+        candidate.max_ribbon_feature_distance_proxy = value;
+        out.push(candidate);
+    }
     out
 }
 
@@ -763,6 +780,7 @@ mod tests {
                 correction: Some(json!({"energy_bias_ev_per_atom": -0.65})),
                 diagnostics: Some(json!({"support_eval_distance": 0.08})),
             }),
+            context: None,
             reference: json!({"energy_ev_per_atom": 0.35}),
             weight: 1.0,
         }];
@@ -790,6 +808,7 @@ mod tests {
                 correction: Some(json!({"energy_bias_ev_per_atom": 0.0})),
                 diagnostics: None,
             }),
+            context: None,
             reference: json!({"energy_ev_per_atom": 0.10}),
             weight: 1.0,
         }];
@@ -809,6 +828,7 @@ mod tests {
             mlip_id: None,
             prediction: json!({"energy_ev_per_atom": 0.0}),
             support: None,
+            context: None,
             reference: json!({"energy_ev_per_atom": 0.0}),
             weight: 1.0,
         }];

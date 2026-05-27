@@ -4,6 +4,7 @@
 //! canonical Distill decision surface lives here: a stable ribbon version,
 //! deterministic guard/correction rules, and an auditable decision packet.
 
+use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -32,6 +33,36 @@ pub(crate) struct PolicyLimits {
     pub(crate) min_support_lift_fraction: f64,
     #[serde(default = "default_max_support_eval_distance_proxy")]
     pub(crate) max_support_eval_distance_proxy: f64,
+    #[serde(default = "default_max_ribbon_feature_distance_proxy")]
+    pub(crate) max_ribbon_feature_distance_proxy: f64,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub(crate) row_policy_overrides: BTreeMap<String, PolicyLimitOverride>,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
+pub(crate) struct PolicyLimitOverride {
+    #[serde(default)]
+    pub(crate) max_energy_bias_ev_per_atom: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_stress_bias_gpa: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_force_bias_ev_per_angstrom: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_force_norm_ev_per_angstrom: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_stress_abs_gpa: Option<f64>,
+    #[serde(default)]
+    pub(crate) energy_correction_scale: Option<f64>,
+    #[serde(default)]
+    pub(crate) stress_correction_scale: Option<f64>,
+    #[serde(default)]
+    pub(crate) force_correction_scale: Option<f64>,
+    #[serde(default)]
+    pub(crate) min_support_lift_fraction: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_support_eval_distance_proxy: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_ribbon_feature_distance_proxy: Option<f64>,
 }
 
 impl Default for PolicyLimits {
@@ -47,6 +78,8 @@ impl Default for PolicyLimits {
             force_correction_scale: 1.0,
             min_support_lift_fraction: 0.02,
             max_support_eval_distance_proxy: 1.0,
+            max_ribbon_feature_distance_proxy: 1.0e9,
+            row_policy_overrides: BTreeMap::new(),
         }
     }
 }
@@ -79,8 +112,8 @@ impl PolicyLimits {
             ("stress_correction_scale", self.stress_correction_scale),
             ("force_correction_scale", self.force_correction_scale),
         ] {
-            if !value.is_finite() || !(0.0..=2.0).contains(&value) {
-                bail!("policy scale {field} must be finite and between 0 and 2");
+            if !value.is_finite() || !(-2.0..=2.0).contains(&value) {
+                bail!("policy scale {field} must be finite and between -2 and 2");
             }
         }
         if !self.min_support_lift_fraction.is_finite()
@@ -93,7 +126,71 @@ impl PolicyLimits {
         {
             bail!("max_support_eval_distance_proxy must be non-negative and finite");
         }
+        if !self.max_ribbon_feature_distance_proxy.is_finite()
+            || self.max_ribbon_feature_distance_proxy < 0.0
+        {
+            bail!("max_ribbon_feature_distance_proxy must be non-negative and finite");
+        }
+        for (row_id, limits_override) in &self.row_policy_overrides {
+            if row_id.trim().is_empty() {
+                bail!("row_policy_overrides row ids must be non-empty");
+            }
+            let mut row_limits = self.clone();
+            row_limits.row_policy_overrides.clear();
+            row_limits.apply_override(limits_override);
+            row_limits
+                .validate()
+                .with_context(|| format!("invalid row_policy_overrides[{row_id}]"))?;
+        }
         Ok(())
+    }
+
+    pub(crate) fn for_row(&self, row_id: &str) -> Result<Self> {
+        let mut limits = self.clone();
+        limits.row_policy_overrides.clear();
+        if let Some(limits_override) = self.row_policy_overrides.get(row_id) {
+            limits.apply_override(limits_override);
+            limits
+                .validate()
+                .with_context(|| format!("invalid active policy limits for row {row_id}"))?;
+        }
+        Ok(limits)
+    }
+
+    fn apply_override(&mut self, limits_override: &PolicyLimitOverride) {
+        if let Some(value) = limits_override.max_energy_bias_ev_per_atom {
+            self.max_energy_bias_ev_per_atom = value;
+        }
+        if let Some(value) = limits_override.max_stress_bias_gpa {
+            self.max_stress_bias_gpa = value;
+        }
+        if let Some(value) = limits_override.max_force_bias_ev_per_angstrom {
+            self.max_force_bias_ev_per_angstrom = value;
+        }
+        if let Some(value) = limits_override.max_force_norm_ev_per_angstrom {
+            self.max_force_norm_ev_per_angstrom = value;
+        }
+        if let Some(value) = limits_override.max_stress_abs_gpa {
+            self.max_stress_abs_gpa = value;
+        }
+        if let Some(value) = limits_override.energy_correction_scale {
+            self.energy_correction_scale = value;
+        }
+        if let Some(value) = limits_override.stress_correction_scale {
+            self.stress_correction_scale = value;
+        }
+        if let Some(value) = limits_override.force_correction_scale {
+            self.force_correction_scale = value;
+        }
+        if let Some(value) = limits_override.min_support_lift_fraction {
+            self.min_support_lift_fraction = value;
+        }
+        if let Some(value) = limits_override.max_support_eval_distance_proxy {
+            self.max_support_eval_distance_proxy = value;
+        }
+        if let Some(value) = limits_override.max_ribbon_feature_distance_proxy {
+            self.max_ribbon_feature_distance_proxy = value;
+        }
     }
 }
 
@@ -107,6 +204,10 @@ fn default_min_support_lift_fraction() -> f64 {
 
 fn default_max_support_eval_distance_proxy() -> f64 {
     1.0
+}
+
+fn default_max_ribbon_feature_distance_proxy() -> f64 {
+    1.0e9
 }
 
 #[derive(Debug, Clone, Args)]
@@ -356,9 +457,16 @@ pub(crate) fn decide_with_limits(
     let mut corrected = request.prediction.clone();
     let mut actions = Vec::new();
     let mut applied = Map::new();
+    let row_limits = limits.for_row(&request.row_id)?;
 
-    apply_support_corrections(request, &mut corrected, &mut actions, &mut applied, limits)?;
-    actions.extend(guard_prediction(&request.row_id, &corrected, limits));
+    apply_support_corrections(
+        request,
+        &mut corrected,
+        &mut actions,
+        &mut applied,
+        &row_limits,
+    )?;
+    actions.extend(guard_prediction(&request.row_id, &corrected, &row_limits));
     if !actions.iter().any(|action| action.action == "accept")
         && !actions.iter().any(|action| action.action == "refuse")
         && !actions.iter().any(|action| action.action == "tighten")
@@ -380,12 +488,14 @@ pub(crate) fn decide_with_limits(
     } else {
         "accept"
     };
-    let policy_limits_id = policy_limits_id(limits)?;
+    let base_policy_limits_id = policy_limits_id(limits)?;
+    let active_policy_limits_id = policy_limits_id(&row_limits)?;
     let theorem_hooks = json!({
         "schema": "lupine.distill.theorem_hooks.v1",
         "ribbon_version": ribbon_version,
-        "policy_limits_id": policy_limits_id,
-        "policy_limits": limits,
+        "policy_limits_id": active_policy_limits_id,
+        "base_policy_limits_id": base_policy_limits_id,
+        "policy_limits": row_limits,
         "bridge": "outer_loop_proxy",
         "layerwise_exact": false,
         "support_diagnostics_present": request.support.as_ref().and_then(|s| s.diagnostics.as_ref()).is_some(),
@@ -397,7 +507,7 @@ pub(crate) fn decide_with_limits(
         request.mlip_id.as_deref(),
         &corrected,
         &actions,
-        limits,
+        &row_limits,
     )?;
 
     Ok(PolicyDecision {
@@ -902,6 +1012,19 @@ fn ribbon_gate_action(
             ));
         }
     }
+    if let Some(distance) = request
+        .context
+        .as_ref()
+        .and_then(|context| diagnostic_number(context, "ribbon_feature_distance_proxy"))
+    {
+        if distance > limits.max_ribbon_feature_distance_proxy {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_ribbon_feature_distance",
+                json!(distance),
+            ));
+        }
+    }
     if let Some(lift) = model.support_lift_fraction {
         if lift <= 0.0 {
             return Some(PolicyAction::blocked(
@@ -1319,6 +1442,54 @@ mod tests {
     }
 
     #[test]
+    fn row_policy_overrides_disable_correction_only_for_target_row() {
+        let elastic_req = request(
+            "elastic_constants",
+            json!({"stress_gpa": [1.0, 2.0]}),
+            json!({"stress_bias_gpa": [0.2, -0.2]}),
+        );
+        let stress_req = request(
+            "stress",
+            json!({"stress_gpa": [1.0, 2.0]}),
+            json!({"stress_bias_gpa": [0.2, -0.2]}),
+        );
+        let mut limits = PolicyLimits::default();
+        limits.row_policy_overrides.insert(
+            "elastic_constants".to_string(),
+            PolicyLimitOverride {
+                stress_correction_scale: Some(0.0),
+                ..PolicyLimitOverride::default()
+            },
+        );
+
+        let elastic_decision =
+            decide_with_limits(&elastic_req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+        let stress_decision =
+            decide_with_limits(&stress_req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(
+            elastic_decision.corrected_prediction["stress_gpa"],
+            json!([1.0, 2.0])
+        );
+        assert_eq!(
+            stress_decision.corrected_prediction["stress_gpa"],
+            json!([1.2, 1.8])
+        );
+        assert!(elastic_decision.actions.iter().any(|action| {
+            action.action == "delta_correct_blocked"
+                && action.reason == "blocked_zero_correction_scale"
+        }));
+        assert_eq!(
+            elastic_decision.theorem_hooks["base_policy_limits_id"],
+            json!(policy_limits_id(&limits).unwrap())
+        );
+        assert_ne!(
+            elastic_decision.theorem_hooks["policy_limits_id"],
+            stress_decision.theorem_hooks["policy_limits_id"]
+        );
+    }
+
+    #[test]
     fn refuses_force_explosion() {
         let req = request(
             "forces",
@@ -1398,6 +1569,43 @@ mod tests {
     }
 
     #[test]
+    fn applies_signed_ribbon_orientation_scale() {
+        let req = request(
+            "energy_volume",
+            json!({"energy_ev_per_atom": 2.0}),
+            json!({
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "energy_ev_per_atom",
+                    "feature_names": ["scalar:energy_ev_per_atom"],
+                    "feature_mean": [1.0],
+                    "feature_scale": [1.0],
+                    "intercept": [0.1],
+                    "coefficients": [[0.2]],
+                    "support_lift_fraction": 0.5,
+                    "support_eval_distance_proxy": 0.0,
+                    "matrix_rank": 1,
+                    "sample_count": 4,
+                    "participation_ratio": 1.0
+                }
+            }),
+        );
+        let mut limits = PolicyLimits::default();
+        limits.energy_correction_scale = -0.5;
+
+        let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"],
+            json!(1.85)
+        );
+        assert_eq!(
+            decision.applied_corrections["ribbon_residual_correction_v1"]["scale"],
+            json!(-0.5)
+        );
+    }
+
+    #[test]
     fn blocks_ribbon_residual_correction_without_support_lift() {
         let req = request(
             "stress",
@@ -1426,6 +1634,41 @@ mod tests {
         assert!(decision.actions.iter().any(|action| {
             action.action == "delta_correct_blocked"
                 && action.reason == "blocked_nonpositive_support_lift"
+        }));
+    }
+
+    #[test]
+    fn blocks_ribbon_residual_correction_outside_feature_domain() {
+        let mut req = request(
+            "stress",
+            json!({"energy_ev_per_atom": 2.0, "stress_gpa": [1.0, 2.0]}),
+            json!({
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "stress_gpa",
+                    "feature_names": ["scalar:energy_ev_per_atom"],
+                    "feature_mean": [1.0],
+                    "feature_scale": [1.0],
+                    "intercept": [0.1, -0.1],
+                    "coefficients": [[0.2], [-0.2]],
+                    "support_lift_fraction": 0.5,
+                    "support_eval_distance_proxy": 0.0
+                }
+            }),
+        );
+        req.context = Some(json!({"ribbon_feature_distance_proxy": 1.5}));
+        let mut limits = PolicyLimits::default();
+        limits.max_ribbon_feature_distance_proxy = 1.0;
+
+        let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["stress_gpa"],
+            json!([1.0, 2.0])
+        );
+        assert!(decision.actions.iter().any(|action| {
+            action.action == "delta_correct_blocked"
+                && action.reason == "blocked_ribbon_feature_distance"
         }));
     }
 

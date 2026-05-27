@@ -11,6 +11,7 @@ Cloudflare owns the run ledger and dispatches signed Cloud Tasks to
 - `mlip-cell-m3gnet`
 - `mlip-cell-orb`
 - `mlip-cell-sevennet`
+- `mlip-cell-uma` (cloud-first canary, gated UMA checkpoint access)
 
 Each job uses the same runner contract and a backend-specific image. The runner
 loads a manifest, runs one `(row_id, mlip_id)` cell, writes a JSON artifact to
@@ -149,7 +150,7 @@ provided with `--checkpoint-url`.
 
 ## GCP Build And Canary
 
-Build and create/update all five Cloud Run Jobs:
+Build and create/update the five default Cloud Run Jobs:
 
 ```bash
 gcloud builds submit . \
@@ -169,3 +170,17 @@ gcloud run jobs execute mlip-cell-chgnet \
 
 The Cloud Build config uses `gcloud run jobs deploy`, so first deployment and
 subsequent image updates use the same command path.
+
+UMA is wired as a separate cloud-first backend because `fairchem-core` uses its
+own torch-generation dependency stack. The default catalog id is `uma-s-1p1`,
+which is present in `fairchem-core==2.14.0`; override `UMA_MODEL_NAME` only when
+the runner image exposes the requested checkpoint. The GCP runner image, L4 GPU
+startup, FairChem import, and Secret Manager-backed `HF_TOKEN` path have been
+validated; `facebook/UMA` still returns gated-repo 403 until the Hugging Face
+account is authorized for the model. Build it with the single-job config:
+
+```bash
+gcloud builds submit . \
+  --config gcp/mlip-cell-runner/cloudbuild.single.yaml \
+  --substitutions _PROJECT_ID=shed-489901,_REGION=us-central1,_BACKEND=uma,_JOB_NAME=mlip-cell-uma,_IMAGE_TAG=uma-canary
+```

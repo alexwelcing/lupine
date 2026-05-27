@@ -1,0 +1,5415 @@
+{
+  "created_at": "2026-05-27T00:00:00Z",
+  "description": "Release-ready Lane A fixture for testing MLIPs against a strong Ni classical reference. Single-point energy/force/stress/relaxation labels are generated from NIST Mishin-1999 EAM; elastic constants are anchored to the existing Ni literature/NIST Cij table.",
+  "fixture_id": "ni-fcc-eam-home-turf-v1",
+  "manifest_hash": "sha256:0a51d5b58f68e169478b290954da4729e33d9d37c2b65a3084e60ad5c1edd16b",
+  "metadata": {
+    "hard_lane_status": "pending MS25 or Li solid-ion-conductor label ingest",
+    "material_id": "Ni-fcc",
+    "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+    "reference_model_scope": "EAM-home-turf classical reference for single-point rows; not a DFT hard-lane fixture.",
+    "row_counts": {
+      "elastic_constants": 13,
+      "energy_volume": 5,
+      "forces": 5,
+      "relaxation_stability": 3,
+      "stress": 5
+    },
+    "surface_defect_compression_status": "pending exact reference-value ingest from open Ni benchmark sources"
+  },
+  "reference_provenance": {
+    "eam_reference": {
+      "baseline_id": "ni-mishin-1999-eam-alloy",
+      "calculator": "ase.calculators.eam.EAM",
+      "doi": "10.1103/physrevb.59.3393",
+      "label": "Mishin-1999",
+      "nist_implementation_id": "1999--Mishin-Y--Ni--LAMMPS--ipr1",
+      "pair_style": "eam/alloy",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Mishin-1999/Ni99.eam.alloy",
+      "potential_file_sha256": "fb84d3dc0ed9d68136ee3eaa638e3dd178f3057e7de549fe0029069e749a9876"
+    },
+    "elastic_constants": {
+      "C11_gpa": 246.5,
+      "C12_gpa": 147.3,
+      "C44_gpa": 124.7,
+      "citation_keys": [
+        "nist_ipr",
+        "simmons1971"
+      ],
+      "source": "nist_benchmark.csv / atlas-distill Ni reference table"
+    },
+    "lattice_and_cohesive": {
+      "a0_angstrom": 3.524,
+      "ecoh_ev_per_atom": -4.44,
+      "source": "data/mlip_benchmarks/manifest_sources.json reference anchors"
+    },
+    "source_packet": "data/mlip_benchmarks/manifest_sources.json"
+  },
+  "row_fixtures": {
+    "elastic_constants": {
+      "structures": [
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-zero",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.5416199999999995,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.7708099999999998,
+              0.0,
+              1.762
+            ],
+            [
+              1.7708099999999998,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              1.2325,
+              0.7365,
+              0.7365,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.005,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode1-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.50638,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.75319,
+              0.0,
+              1.762
+            ],
+            [
+              1.75319,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -1.2325,
+              -0.7365,
+              -0.7365,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.005,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode1-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.5416199999999995,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.7708099999999998,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.7708099999999998,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.7365,
+              1.2325,
+              0.7365,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.005,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode2-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.50638,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.75319,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.75319,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -0.7365,
+              -1.2325,
+              -0.7365,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.005,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode2-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.5416199999999995
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.7708099999999998
+            ],
+            [
+              1.762,
+              0.0,
+              1.7708099999999998
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.7365,
+              0.7365,
+              1.2325,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.005,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode3-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.50638
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.75319
+            ],
+            [
+              1.762,
+              0.0,
+              1.75319
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              -0.7365,
+              -0.7365,
+              -1.2325,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.005,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode3-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.00881
+            ],
+            [
+              0.0,
+              0.00881,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.766405,
+              1.766405
+            ],
+            [
+              1.762,
+              0.004405,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              0.004405
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.6235,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.005,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode4-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              -0.00881
+            ],
+            [
+              0.0,
+              -0.00881,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.757595,
+              1.757595
+            ],
+            [
+              1.762,
+              -0.004405,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              -0.004405
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              -0.6235,
+              0.0,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.005,
+            -0.0,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode4-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.00881
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.00881,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.004405,
+              1.762,
+              1.762
+            ],
+            [
+              1.766405,
+              0.0,
+              1.766405
+            ],
+            [
+              1.762,
+              1.762,
+              0.004405
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.6235,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.005,
+            0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode5-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              -0.00881
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              -0.00881,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.004405,
+              1.762,
+              1.762
+            ],
+            [
+              1.757595,
+              0.0,
+              1.757595
+            ],
+            [
+              1.762,
+              1.762,
+              -0.004405
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.6235,
+              0.0
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.005,
+            -0.0
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode5-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.00881,
+              0.0
+            ],
+            [
+              0.00881,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.004405,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              0.004405,
+              1.762
+            ],
+            [
+              1.766405,
+              1.766405,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.6235
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.005
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode6-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              -0.00881,
+              0.0
+            ],
+            [
+              -0.00881,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "elastic_reference_kind": "cubic_small_strain",
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Ni literature/NIST cubic small-strain elastic constants"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              -0.004405,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              -0.004405,
+              1.762
+            ],
+            [
+              1.757595,
+              1.757595,
+              0.0
+            ]
+          ],
+          "reference": {
+            "elastic_constants_gpa": {
+              "C11": 246.5,
+              "C12": 147.3,
+              "C44": 124.7
+            },
+            "stress_gpa": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.6235
+            ]
+          },
+          "row_id": "elastic_constants",
+          "strain_voigt": [
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            -0.005
+          ],
+          "structure_id": "ni-fcc-literature-elastic-mode6-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        }
+      ]
+    },
+    "energy_volume": {
+      "structures": [
+        {
+          "cell": [
+            [
+              3.45352,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.45352,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.45352
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "linear_cell_scale": 0.98,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "volume_scale": 0.9411919999999999
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.72676,
+              1.72676
+            ],
+            [
+              1.72676,
+              0.0,
+              1.72676
+            ],
+            [
+              1.72676,
+              1.72676,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.4292053354958,
+            "forces_ev_per_angstrom": [
+              [
+                9.367506770274758e-17,
+                -6.938893903907228e-18,
+                -6.591949208711867e-17
+              ],
+              [
+                -1.1102230246251565e-16,
+                -2.740863092043355e-16,
+                1.3877787807814457e-16
+              ],
+              [
+                -2.7755575615628914e-16,
+                -3.469446951953614e-18,
+                1.942890293094024e-16
+              ],
+              [
+                -2.5153490401663703e-16,
+                -3.8163916471489756e-16,
+                -2.7755575615628914e-17
+              ]
+            ],
+            "stress_gpa": [
+              -11.381067967619941,
+              -11.381067967619941,
+              -11.381067967619947,
+              1.0480431514056296e-16,
+              2.2045281098954357e-16,
+              5.669415130408635e-16
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-mishin-energy-volume-scale-0.980",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 0.9411919999999999
+        },
+        {
+          "cell": [
+            [
+              3.48876,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.48876,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.48876
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "linear_cell_scale": 0.99,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "volume_scale": 0.970299
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.74438,
+              1.74438
+            ],
+            [
+              1.74438,
+              0.0,
+              1.74438
+            ],
+            [
+              1.74438,
+              1.74438,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.445517532951246,
+            "forces_ev_per_angstrom": [
+              [
+                -1.0408340855860843e-17,
+                -1.214306433183765e-17,
+                -4.5102810375396984e-17
+              ],
+              [
+                1.700029006457271e-16,
+                -8.326672684688674e-17,
+                -9.71445146547012e-17
+              ],
+              [
+                -1.1102230246251565e-16,
+                -1.734723475976807e-17,
+                -8.326672684688674e-17
+              ],
+              [
+                -4.163336342344337e-17,
+                -2.168404344971009e-17,
+                1.3877787807814457e-17
+              ]
+            ],
+            "stress_gpa": [
+              -5.115224023263638,
+              -5.115224023263639,
+              -5.115224023263638,
+              -3.042488172981161e-16,
+              -2.4029468492852654e-16,
+              5.152825094850524e-18
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-mishin-energy-volume-scale-0.990",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 0.970299
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "linear_cell_scale": 1.0,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "volume_scale": 1.0
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              0.0,
+              1.762
+            ],
+            [
+              1.762,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449928113313192,
+            "forces_ev_per_angstrom": [
+              [
+                1.0408340855860843e-17,
+                -1.5612511283791264e-17,
+                1.0408340855860843e-17
+              ],
+              [
+                1.0408340855860843e-17,
+                9.020562075079397e-17,
+                1.1102230246251565e-16
+              ],
+              [
+                9.71445146547012e-17,
+                3.122502256758253e-17,
+                1.1102230246251565e-16
+              ],
+              [
+                1.0061396160665481e-16,
+                1.3357370765021415e-16,
+                -4.163336342344337e-17
+              ]
+            ],
+            "stress_gpa": [
+              0.6195331151503938,
+              0.6195331151503941,
+              0.6195331151503941,
+              1.681730338145761e-17,
+              6.1023758615301246e-18,
+              -7.645888162823644e-17
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-mishin-energy-volume-scale-1.000",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 1.0
+        },
+        {
+          "cell": [
+            [
+              3.55924,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.55924,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.55924
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "linear_cell_scale": 1.01,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "volume_scale": 1.0303010000000001
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.77962,
+              1.77962
+            ],
+            [
+              1.77962,
+              0.0,
+              1.77962
+            ],
+            [
+              1.77962,
+              1.77962,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.442852314675209,
+            "forces_ev_per_angstrom": [
+              [
+                -6.938893903907228e-18,
+                -1.734723475976807e-17,
+                3.469446951953614e-18
+              ],
+              [
+                -1.734723475976807e-17,
+                2.7755575615628914e-17,
+                6.938893903907228e-18
+              ],
+              [
+                1.3877787807814457e-17,
+                -6.938893903907228e-18,
+                4.163336342344337e-17
+              ],
+              [
+                2.42861286636753e-17,
+                3.469446951953614e-18,
+                1.3877787807814457e-17
+              ]
+            ],
+            "stress_gpa": [
+              6.2364351996882315,
+              6.2364351996882315,
+              6.236435199688232,
+              7.289898374810414e-18,
+              -2.2831849983694894e-17,
+              3.2827521691688223e-17
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-mishin-energy-volume-scale-1.010",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 1.0303010000000001
+        },
+        {
+          "cell": [
+            [
+              3.59448,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.59448,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.59448
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "linear_cell_scale": 1.02,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "volume_scale": 1.0612080000000002
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.79724,
+              1.79724
+            ],
+            [
+              1.79724,
+              0.0,
+              1.79724
+            ],
+            [
+              1.79724,
+              1.79724,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.4237362922192895,
+            "forces_ev_per_angstrom": [
+              [
+                -5.724587470723463e-17,
+                -1.734723475976807e-17,
+                1.3877787807814457e-17
+              ],
+              [
+                2.949029909160572e-17,
+                3.469446951953614e-17,
+                1.0061396160665481e-16
+              ],
+              [
+                8.326672684688674e-17,
+                3.469446951953614e-17,
+                3.469446951953614e-17
+              ],
+              [
+                9.8879238130678e-17,
+                3.642919299551295e-17,
+                0.0
+              ]
+            ],
+            "stress_gpa": [
+              11.80467410048538,
+              11.804674100485379,
+              11.804674100485377,
+              2.9189900832814674e-18,
+              -4.3916210331239385e-18,
+              -1.001446264496119e-16
+            ]
+          },
+          "row_id": "energy_volume",
+          "structure_id": "ni-fcc-mishin-energy-volume-scale-1.020",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ],
+          "volume_scale": 1.0612080000000002
+        }
+      ]
+    },
+    "forces": {
+      "structures": [
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "position_noise_angstrom": 0.025,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "seed": 11
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0008548191813296043,
+              0.033993688507749045,
+              0.03061802696464831
+            ],
+            [
+              7.035242323080309,
+              1.7545507622223389,
+              1.7488153951741643
+            ],
+            [
+              1.776243158939299,
+              7.046598389023861,
+              1.7806721404064136
+            ],
+            [
+              1.7158168800256473,
+              1.8011637193674879,
+              7.04558919599611
+            ],
+            [
+              0.017009461331853656,
+              7.04458584165058,
+              3.514522535823129
+            ],
+            [
+              0.01157775396493967,
+              1.7826128381882527,
+              5.280936753232663
+            ],
+            [
+              1.758180345535745,
+              0.01714246527023145,
+              5.26424148395132
+            ],
+            [
+              1.7241404124067152,
+              1.7718745465687384,
+              3.507235854407803
+            ],
+            [
+              6.999991485247049,
+              3.5036486584013655,
+              7.036310061027682
+            ],
+            [
+              7.018169938064194,
+              5.2486884028984235,
+              1.76291594567362
+            ],
+            [
+              1.7844312314181936,
+              3.5181716980509887,
+              1.743410099262279
+            ],
+            [
+              1.7716248452186978,
+              5.303930895179859,
+              7.0404997350377885
+            ],
+            [
+              0.01361669519802232,
+              3.5500718869145738,
+              3.5188260890947918
+            ],
+            [
+              7.027662111450461,
+              5.2946912649628874,
+              5.292188643524071
+            ],
+            [
+              1.78947031921036,
+              3.4918854805298665,
+              5.26945967674111
+            ],
+            [
+              1.7410458259821082,
+              5.242649628844179,
+              3.527160863879925
+            ],
+            [
+              3.5371951053123882,
+              7.0295302492131055,
+              0.03464117686240397
+            ],
+            [
+              3.5445481084165107,
+              1.7776844119708881,
+              1.7720426772860245
+            ],
+            [
+              5.309891739111214,
+              7.014700504011423,
+              1.7773482414562465
+            ],
+            [
+              5.301069420838335,
+              1.7178070355714257,
+              0.008675752551359493
+            ],
+            [
+              3.5177394663322508,
+              0.019538067401542483,
+              3.5130234453090585
+            ],
+            [
+              3.5235439785587723,
+              1.7705712879329414,
+              5.264093457781394
+            ],
+            [
+              5.300964916204509,
+              7.045375920286909,
+              5.298312065591981
+            ],
+            [
+              5.27295406234158,
+              1.7891550385819381,
+              3.539130049460737
+            ],
+            [
+              3.5195493743820165,
+              3.5397989289273397,
+              0.03149387903396563
+            ],
+            [
+              3.56877938783745,
+              5.246660590738994,
+              1.784078295290563
+            ],
+            [
+              5.297626712712834,
+              3.5216534804953414,
+              1.7368333766255732
+            ],
+            [
+              5.317429715336829,
+              5.254456550163885,
+              0.014173636643368721
+            ],
+            [
+              3.5565466999050668,
+              3.4840082677987128,
+              3.5164370539879184
+            ],
+            [
+              3.4912695795620925,
+              5.2921013527008975,
+              5.323859378266866
+            ],
+            [
+              5.336588900729304,
+              3.479547138927912,
+              5.271626274856973
+            ],
+            [
+              5.303588627333271,
+              5.32548431630233,
+              3.5345302661069575
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.441175477248736,
+            "forces_ev_per_angstrom": [
+              [
+                0.1942923497111445,
+                -0.5046009192675865,
+                -0.2766960074766955
+              ],
+              [
+                0.04363685276473319,
+                0.1898259204544665,
+                0.33012728889311815
+              ],
+              [
+                -0.07103463006257424,
+                -0.10312569796843905,
+                -0.15822482367650645
+              ],
+              [
+                0.572103020707757,
+                -0.4258085867775783,
+                0.051831436351668175
+              ],
+              [
+                -0.11291844426483,
+                0.043650353679008644,
+                0.05721479402276153
+              ],
+              [
+                -0.031091174389610475,
+                -0.3737830916906181,
+                -0.08751574502090241
+              ],
+              [
+                0.019255812843238473,
+                -0.044366232614027855,
+                0.21851447221208917
+              ],
+              [
+                0.31830324769512236,
+                -0.008177199560854425,
+                -0.024739856006286646
+              ],
+              [
+                0.6560001312635049,
+                0.1575260738908101,
+                0.07561280588746641
+              ],
+              [
+                0.5162527800180592,
+                0.30458151401138134,
+                -0.08852497744061325
+              ],
+              [
+                -0.29095157268039873,
+                0.10537604433102037,
+                0.1660311203587764
+              ],
+              [
+                -0.3336595753288175,
+                -0.17348376097917648,
+                0.18709611219685596
+              ],
+              [
+                -0.21711560826604095,
+                -0.32928648497048857,
+                -0.0317127178909296
+              ],
+              [
+                0.3603887160825085,
+                -0.06697930017703096,
+                0.07629497341573745
+              ],
+              [
+                -0.25507110363003904,
+                0.3770533423218812,
+                0.19092224696519666
+              ],
+              [
+                0.3816818503903817,
+                0.35506922147245173,
+                -0.032407329773465526
+              ],
+              [
+                -0.11754866463601647,
+                0.2083540115180056,
+                -0.16400793108705064
+              ],
+              [
+                -0.12540255311759843,
+                -0.2521381895593742,
+                -0.20543410757306874
+              ],
+              [
+                -0.22851523106851385,
+                0.3188590335122903,
+                -0.04126689759654488
+              ],
+              [
+                -0.343547923897712,
+                0.3311792431148414,
+                -0.10886091252537759
+              ],
+              [
+                0.03417263024552182,
+                -0.20942184085931176,
+                0.12105102364039162
+              ],
+              [
+                0.0122473519753652,
+                -0.22906519771937014,
+                0.423757472498897
+              ],
+              [
+                -0.17045092892103794,
+                0.07731770936766232,
+                -0.057688992521048796
+              ],
+              [
+                0.4620324670407826,
+                -0.5425629230517167,
+                -0.2784306151354972
+              ],
+              [
+                0.22683419247885084,
+                -0.27866034833096887,
+                -0.47005668452690436
+              ],
+              [
+                -0.3541592157507203,
+                0.34833281234036223,
+                -0.002670157271600842
+              ],
+              [
+                -0.06411025247808878,
+                -0.20464128762507305,
+                0.3879132183857189
+              ],
+              [
+                -0.3557233802054936,
+                0.37333806661679614,
+                -0.31243882440817866
+              ],
+              [
+                -0.25125086584118067,
+                0.5789000012193364,
+                0.12738773068238385
+              ],
+              [
+                0.47887892586397185,
+                -0.12655314703159715,
+                -0.44135379378090994
+              ],
+              [
+                -0.710167324373728,
+                0.5694653198086664,
+                0.18883320441818227
+              ],
+              [
+                -0.24336188016854748,
+                -0.4661744594757578,
+                0.17944247378233996
+              ]
+            ],
+            "stress_gpa": [
+              0.035432172300209605,
+              0.04805158463657641,
+              0.023147254052499868,
+              -0.0765904701961942,
+              -0.0006794216297998967,
+              0.15832379748368092
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-mishin-force-displaced-seed-11",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "position_noise_angstrom": 0.025,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "seed": 17
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.027531561337646178,
+              0.008460781916154445,
+              7.034500712118662
+            ],
+            [
+              7.016493953578689,
+              1.7146344682540187,
+              1.7624659572745822
+            ],
+            [
+              1.74173582251221,
+              7.026196101001638,
+              1.7564507623229026
+            ],
+            [
+              1.7607038492966995,
+              1.7050804296056041,
+              0.023128664764410663
+            ],
+            [
+              6.997328859852249,
+              0.04649060271385867,
+              3.5387642027899964
+            ],
+            [
+              7.036203887046668,
+              1.7955749134345194,
+              5.286519661547936
+            ],
+            [
+              1.7792730241905823,
+              0.002680676986180127,
+              5.313413284503256
+            ],
+            [
+              1.7885355613593956,
+              1.7393166464651735,
+              3.5086877055389096
+            ],
+            [
+              0.008580676302810786,
+              3.5187497462091204,
+              6.990877144586139
+            ],
+            [
+              0.05065293837304441,
+              5.231625565653279,
+              1.709961428656381
+            ],
+            [
+              1.7300971895066766,
+              3.5381212810111586,
+              1.8069003126657568
+            ],
+            [
+              1.7561146236852478,
+              5.276223066236387,
+              0.004347536607194681
+            ],
+            [
+              7.03882850641865,
+              3.5260591306150553,
+              3.495500713515925
+            ],
+            [
+              0.010956435815494152,
+              5.2958144849539,
+              5.225114564591401
+            ],
+            [
+              1.7592443513669043,
+              3.5280728954418956,
+              5.300030619006575
+            ],
+            [
+              1.7415977560890072,
+              5.252799143393437,
+              3.500231647987271
+            ],
+            [
+              3.537701024104773,
+              7.026704112275203,
+              7.028896404711912
+            ],
+            [
+              3.5525941394425113,
+              1.7423460602630223,
+              1.739534184481158
+            ],
+            [
+              5.283719060912166,
+              0.004965262910169332,
+              1.7879407414667812
+            ],
+            [
+              5.264016807970224,
+              1.7227961351391177,
+              7.044937583710861
+            ],
+            [
+              3.5400909203932356,
+              7.0109618364187645,
+              3.5118184246053823
+            ],
+            [
+              3.531654894702583,
+              1.7677756075005533,
+              5.288083974772935
+            ],
+            [
+              5.279577762065561,
+              7.0280163385482135,
+              5.2627965499759695
+            ],
+            [
+              5.314906555856801,
+              1.734069757127863,
+              3.5547000024629387
+            ],
+            [
+              3.491123539103367,
+              3.5965895446743215,
+              7.004547226777916
+            ],
+            [
+              3.564106857486352,
+              5.263573196055244,
+              1.7591096129873327
+            ],
+            [
+              5.284361185727131,
+              3.5076944333730813,
+              1.8177098158705594
+            ],
+            [
+              5.288372883653955,
+              5.252973156425115,
+              0.016164007698782356
+            ],
+            [
+              3.541810043665328,
+              3.495312924041935,
+              3.5373903260493784
+            ],
+            [
+              3.525723894698219,
+              5.306508391506702,
+              5.303804886794864
+            ],
+            [
+              5.285788939835527,
+              3.5137929282993148,
+              5.308759317078665
+            ],
+            [
+              5.29382998010065,
+              5.248768065671679,
+              3.510378270656045
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.437819515510045,
+            "forces_ev_per_angstrom": [
+              [
+                -0.5013995721014689,
+                -0.3325026547600347,
+                -0.052645441528599984
+              ],
+              [
+                0.2780782730494327,
+                0.5473680895409091,
+                -0.15692880784416857
+              ],
+              [
+                0.265320402469322,
+                -0.04523459839510635,
+                0.18635913985414584
+              ],
+              [
+                0.1768329988347033,
+                0.7025182276457109,
+                -0.05418959557313981
+              ],
+              [
+                0.8039664751663275,
+                -0.747370434378351,
+                -0.11629933961942492
+              ],
+              [
+                0.2629948035602997,
+                -0.3963575558053102,
+                -0.009247138674687301
+              ],
+              [
+                -0.15386336419983387,
+                -0.06123908133438528,
+                -0.5048349448867279
+              ],
+              [
+                -0.19092840097041183,
+                0.06826382761331161,
+                0.09443786163986057
+              ],
+              [
+                -0.07853914808875039,
+                -0.13303706675811078,
+                0.6389960455075284
+              ],
+              [
+                -0.8669564304312517,
+                0.6582063647390497,
+                0.43480766804586535
+              ],
+              [
+                0.6202547122602691,
+                -0.7156877176637173,
+                -0.6684287912067617
+              ],
+              [
+                0.03707636109003217,
+                0.21336437535155459,
+                -0.15800993435195002
+              ],
+              [
+                0.08472532269289106,
+                -0.32577561636047264,
+                0.4472314233144996
+              ],
+              [
+                -0.10505572686179225,
+                -0.0566491213247211,
+                0.5003583688401343
+              ],
+              [
+                0.03621276643763113,
+                -0.14802931499629657,
+                -0.4037595393637342
+              ],
+              [
+                0.3041471098932524,
+                0.492642584169532,
+                0.28203777047498063
+              ],
+              [
+                -0.042176418393072235,
+                -0.033718112622402485,
+                0.3126533920141942
+              ],
+              [
+                -0.3070380008385062,
+                0.21325050441576632,
+                0.14262550705955196
+              ],
+              [
+                0.11559859883306514,
+                -0.4111833603897235,
+                -0.33947725286392005
+              ],
+              [
+                0.19231989642723443,
+                0.38116154480171816,
+                -0.027409824455856227
+              ],
+              [
+                -0.20687425246370356,
+                0.1659776293731452,
+                0.0937947400934648
+              ],
+              [
+                -0.10805542587427976,
+                -0.14431601828695628,
+                0.054263966421156114
+              ],
+              [
+                0.06347224906339147,
+                -0.010591005655012496,
+                0.3288567602348284
+              ],
+              [
+                -0.5959212653560461,
+                0.4589127140947615,
+                -0.18636449672005337
+              ],
+              [
+                0.2691179159586994,
+                -0.9641160416929206,
+                0.6171805490094434
+              ],
+              [
+                -0.4360383953714234,
+                0.1093497026828245,
+                0.06431367212167462
+              ],
+              [
+                0.053854102944888266,
+                -0.21282899471578798,
+                -0.797950110088768
+              ],
+              [
+                0.2957290334525319,
+                0.3341266388219093,
+                -0.125835403962794
+              ],
+              [
+                -0.18460579299889335,
+                0.15184579888574284,
+                0.04010863367001739
+              ],
+              [
+                -0.04044087919219754,
+                -0.19168385621714581,
+                -0.47374051132805944
+              ],
+              [
+                -0.06414815013353724,
+                0.1320802018908291,
+                -0.27558891249533624
+              ],
+              [
+                0.022340201141194366,
+                0.3012523473296872,
+                0.11268454666264646
+              ]
+            ],
+            "stress_gpa": [
+              -0.30662390958955327,
+              -0.05593419665521132,
+              -0.1071330112106901,
+              -0.11501341675823851,
+              0.07185698819682357,
+              0.1939333655228237
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-mishin-force-displaced-seed-17",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "position_noise_angstrom": 0.025,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "seed": 23
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.013831514722218467,
+              0.005440015230486848,
+              7.046550250303337
+            ],
+            [
+              6.990026597631961,
+              1.7727873541927213,
+              1.708843005388728
+            ],
+            [
+              1.784748030425566,
+              0.015149139325160342,
+              1.7827514162144604
+            ],
+            [
+              1.7826924585928847,
+              1.7694628617458308,
+              7.034624964656652
+            ],
+            [
+              7.040323442824856,
+              0.037701806789303356,
+              3.5094442655548526
+            ],
+            [
+              7.0422969049037185,
+              1.7438871373895928,
+              5.27306876656273
+            ],
+            [
+              1.7543360529511358,
+              0.006413791146688015,
+              5.278653598624355
+            ],
+            [
+              1.753132288375281,
+              1.746579621186571,
+              3.526239611672652
+            ],
+            [
+              7.0143958499798345,
+              3.5253046224826945,
+              0.03275064330871328
+            ],
+            [
+              7.028827178029155,
+              5.284865206549162,
+              1.832430225412106
+            ],
+            [
+              1.737183139755976,
+              3.483471461894703,
+              1.7513297717105019
+            ],
+            [
+              1.807173449509454,
+              5.336877887794601,
+              7.017600318421737
+            ],
+            [
+              0.014253514711758434,
+              3.5241130357835786,
+              3.5092907311141164
+            ],
+            [
+              6.9993575545661315,
+              5.311614599492678,
+              5.264486542331747
+            ],
+            [
+              1.7694751921043552,
+              3.526047349079264,
+              5.332754531722432
+            ],
+            [
+              1.7913998697353397,
+              5.257116598418477,
+              3.5174401211030597
+            ],
+            [
+              3.549921188818225,
+              7.014674625892967,
+              7.038192791703327
+            ],
+            [
+              3.529689395017551,
+              1.7216043460329407,
+              1.73111354633908
+            ],
+            [
+              5.2433980748970725,
+              0.007174396969653268,
+              1.747962138275505
+            ],
+            [
+              5.309216207191137,
+              1.7648448563391308,
+              0.014300431334412242
+            ],
+            [
+              3.5219081039021267,
+              0.01879809488114158,
+              3.5214170710695867
+            ],
+            [
+              3.4994449612295013,
+              1.7915692095562266,
+              5.310500203691373
+            ],
+            [
+              5.3426673303470285,
+              7.0444449767126995,
+              5.271502492925498
+            ],
+            [
+              5.24982393743177,
+              1.6655180621320882,
+              3.491290041497817
+            ],
+            [
+              3.536170463761275,
+              3.501861721465756,
+              6.983129400022927
+            ],
+            [
+              3.5392064926962203,
+              5.271208562296692,
+              1.7529748976618036
+            ],
+            [
+              5.275214012458631,
+              3.5206325401099074,
+              1.7738611019238988
+            ],
+            [
+              5.242637083722788,
+              5.280322063932008,
+              7.035285272232067
+            ],
+            [
+              3.552418118008335,
+              3.498117566167322,
+              3.5649352861357735
+            ],
+            [
+              3.539200829938058,
+              5.326616084659455,
+              5.268387865622456
+            ],
+            [
+              5.306148802880571,
+              3.533077600004289,
+              5.248558241160522
+            ],
+            [
+              5.279477052569295,
+              5.274682591696413,
+              3.49984615584256
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.437594840597112,
+            "forces_ev_per_angstrom": [
+              [
+                -0.06747311132652788,
+                -0.23017135050683288,
+                0.1690561963962937
+              ],
+              [
+                0.6423303286965117,
+                -0.26536730801416847,
+                0.6684838970145567
+              ],
+              [
+                -0.2908244214920233,
+                -0.1938657581738787,
+                -0.2517725620968077
+              ],
+              [
+                -0.3224216373677078,
+                -0.2558217244182115,
+                0.18870705252238068
+              ],
+              [
+                0.2410691724297611,
+                -0.42563551945191047,
+                -0.14621223843319026
+              ],
+              [
+                0.08889047717831583,
+                0.3667378820291932,
+                0.13144589188160052
+              ],
+              [
+                0.008178615934318362,
+                -0.029240786403750618,
+                -0.10437572061292354
+              ],
+              [
+                0.08299418041281187,
+                0.3101551494059859,
+                -0.06139773392240186
+              ],
+              [
+                0.2970566621209653,
+                0.3828323406092565,
+                -0.4380813227849142
+              ],
+              [
+                0.28749643745526954,
+                0.17150220607011685,
+                -0.8282287987889257
+              ],
+              [
+                0.3858473498822958,
+                0.30812361526748794,
+                -0.06210421458230693
+              ],
+              [
+                -0.5525187140392438,
+                -0.5589253664032567,
+                0.3901906937357295
+              ],
+              [
+                -0.14237871297756588,
+                -0.32305632610263846,
+                0.21827318416121633
+              ],
+              [
+                0.6675317975190921,
+                -0.3647621836040012,
+                0.10513945275906118
+              ],
+              [
+                -0.44010551445333834,
+                0.20865488296254675,
+                -0.4858835681244734
+              ],
+              [
+                -0.14877389320700246,
+                0.16439019540688854,
+                0.10917229227039746
+              ],
+              [
+                -0.16728013341396253,
+                0.5653141999518486,
+                -0.1396096514477349
+              ],
+              [
+                -0.14118224222120515,
+                0.5772099614670517,
+                0.08083864828627857
+              ],
+              [
+                0.4797570887671283,
+                -0.4643993300758659,
+                -0.1215266711704545
+              ],
+              [
+                -0.4673983298804009,
+                -0.0691624337206742,
+                -0.5288838044219767
+              ],
+              [
+                -0.21313867072446624,
+                -0.37510593977340606,
+                0.15218470003998832
+              ],
+              [
+                0.4451317462389653,
+                -0.6845476877127811,
+                -0.34957553619535114
+              ],
+              [
+                -0.7175864978922523,
+                0.15454251682096673,
+                0.19302407216819734
+              ],
+              [
+                0.33234205955814305,
+                1.1837385478507663,
+                0.3302839927852659
+              ],
+              [
+                0.09131917386003302,
+                0.3991945221961538,
+                0.7405601250534196
+              ],
+              [
+                -0.29148459436215873,
+                -0.13549718503442706,
+                0.09579685630945058
+              ],
+              [
+                -0.15534923478346663,
+                -0.06566877865943291,
+                -0.024559861083470635
+              ],
+              [
+                0.5485190407591337,
+                -0.0703527659446464,
+                0.13311545595342852
+              ],
+              [
+                -0.352838917813226,
+                0.02665520407451876,
+                -0.44295457689427764
+              ],
+              [
+                0.005256109812767957,
+                -0.3116227135457469,
+                -0.12360617240949692
+              ],
+              [
+                0.0183697857412078,
+                -0.2513188088537602,
+                0.19760984224356754
+              ],
+              [
+                -0.15133540041216775,
+                0.25547074228661365,
+                0.20489007938786669
+              ]
+            ],
+            "stress_gpa": [
+              -0.29017509077302955,
+              -0.21431175650267523,
+              -0.126636362364947,
+              -0.060295068875116216,
+              -0.1567698166282354,
+              -0.01287169101899572
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-mishin-force-displaced-seed-23",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "position_noise_angstrom": 0.025,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "seed": 31
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              7.038117467785336,
+              0.0065978721253932395,
+              0.015178206719889193
+            ],
+            [
+              7.02369600500682,
+              1.7811916063284972,
+              1.7683764530443584
+            ],
+            [
+              1.7815744967657523,
+              0.006810455851809192,
+              1.7910502031382642
+            ],
+            [
+              1.7385560905308282,
+              1.8064024933454434,
+              0.030059746103382187
+            ],
+            [
+              7.033001053788576,
+              0.016504157826508905,
+              3.535119184612188
+            ],
+            [
+              7.004355910859569,
+              1.7768804061406414,
+              5.271365021977367
+            ],
+            [
+              1.7557496616603716,
+              7.0329403390222245,
+              5.275297899830898
+            ],
+            [
+              1.7637933675440622,
+              1.7644179781014049,
+              3.485021203965193
+            ],
+            [
+              7.041282349158766,
+              3.4903797213148047,
+              7.016230553523523
+            ],
+            [
+              7.039326159981729,
+              5.307382506896922,
+              1.777771412600825
+            ],
+            [
+              1.7468835488146033,
+              3.5062394794000418,
+              1.7413147525729327
+            ],
+            [
+              1.7655685054813914,
+              5.309416250969493,
+              0.00045124642596179116
+            ],
+            [
+              0.017319166741477907,
+              3.5318852263662834,
+              3.5616046416188802
+            ],
+            [
+              6.9978327315860955,
+              5.232724147920159,
+              5.281039010553851
+            ],
+            [
+              1.7779134879692082,
+              3.5137362679560398,
+              5.296644517000126
+            ],
+            [
+              1.732661380073301,
+              5.254515419141604,
+              3.5060856028279113
+            ],
+            [
+              3.5450330679543742,
+              0.01740895924135255,
+              7.030168682196125
+            ],
+            [
+              3.528527984248649,
+              1.7458107291128209,
+              1.7625014952624336
+            ],
+            [
+              5.258142590485231,
+              7.046836141312025,
+              1.743606151625476
+            ],
+            [
+              5.284891012303574,
+              1.745698934849694,
+              7.027456462992902
+            ],
+            [
+              3.5268357821967853,
+              7.039555115979368,
+              3.524541779394567
+            ],
+            [
+              3.5135228704611987,
+              1.7773435724343083,
+              5.265607881173762
+            ],
+            [
+              5.305218776124738,
+              0.03329935773612115,
+              5.279277807337659
+            ],
+            [
+              5.329631076918201,
+              1.812742454921646,
+              3.535076875075387
+            ],
+            [
+              3.4900598712720163,
+              3.4836076512886796,
+              7.043605532895079
+            ],
+            [
+              3.5683982456620553,
+              5.300363746249144,
+              1.7809507729864567
+            ],
+            [
+              5.2797271672552375,
+              3.505396328179973,
+              1.7712980276092447
+            ],
+            [
+              5.25828053209061,
+              5.28107639028356,
+              0.0127788073874339
+            ],
+            [
+              3.5248983538350775,
+              3.5371141057265314,
+              3.51285058511356
+            ],
+            [
+              3.5389544958952217,
+              5.2961162595175235,
+              5.24475734347691
+            ],
+            [
+              5.259943426154732,
+              3.5059130920238615,
+              5.302389657852049
+            ],
+            [
+              5.2935520040364645,
+              5.293074707293639,
+              3.528323310865503
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.4426895094545324,
+            "forces_ev_per_angstrom": [
+              [
+                0.13519647066041993,
+                -0.05507554315772893,
+                -0.1515407783773664
+              ],
+              [
+                0.11926775344775951,
+                -0.22618647203093753,
+                -0.04625425625413775
+              ],
+              [
+                -0.17929804187446,
+                -0.10579045933368666,
+                -0.32770162996890784
+              ],
+              [
+                0.07337811804433259,
+                -0.8457401724200585,
+                -0.3658220891755524
+              ],
+              [
+                0.13045096465651565,
+                -0.1334120075805002,
+                -0.12837597533150683
+              ],
+              [
+                0.73060602288979,
+                -0.1495323321544204,
+                0.19866999694279952
+              ],
+              [
+                -0.12477418415975906,
+                0.1790507109710864,
+                0.060207725595964726
+              ],
+              [
+                -0.09087283646111857,
+                0.05355810406828644,
+                0.3908416407636202
+              ],
+              [
+                -0.11299163415702158,
+                0.47574789459032435,
+                0.33993578239376715
+              ],
+              [
+                -0.04724082367665788,
+                -0.2343055304412156,
+                -0.22744627138545154
+              ],
+              [
+                0.07618401428513091,
+                0.42642710506765363,
+                0.22009359044083715
+              ],
+              [
+                -0.0006709867602930596,
+                -0.1816096558865512,
+                0.030589660032298505
+              ],
+              [
+                -0.1284488097281595,
+                -0.10152616053289669,
+                -0.4156345932394803
+              ],
+              [
+                0.3793990256843909,
+                0.5702632034442581,
+                0.2636112946009226
+              ],
+              [
+                -0.1359147551240248,
+                0.14336333981065189,
+                -0.14672076432948128
+              ],
+              [
+                0.24952887894645165,
+                0.2829770917859149,
+                0.14258773594292842
+              ],
+              [
+                -0.3749491801436076,
+                -0.07531499263284466,
+                -0.03412515486412813
+              ],
+              [
+                0.07554006714980824,
+                0.1398594633374858,
+                0.055058393935456695
+              ],
+              [
+                0.3415640992881309,
+                0.20372135285905377,
+                0.26037759994941295
+              ],
+              [
+                -0.07440933757884749,
+                0.1963588207860853,
+                0.25024669818456846
+              ],
+              [
+                0.06171862802613175,
+                0.20071172627973718,
+                0.07226489123661915
+              ],
+              [
+                -0.025876298195881796,
+                -0.2655574878160748,
+                -0.0005025639421559185
+              ],
+              [
+                -0.2462682106341376,
+                -0.3479320136247582,
+                0.004101909415634902
+              ],
+              [
+                -0.6284416532556536,
+                -0.4671271505993153,
+                -0.22897611844786023
+              ],
+              [
+                0.3644828193575643,
+                0.47646551789522945,
+                0.12747391185659634
+              ],
+              [
+                -0.5543952899078481,
+                -0.24643973457738863,
+                -0.1896630661996811
+              ],
+              [
+                0.06845067043647238,
+                0.23196729352272502,
+                -0.21467209999670725
+              ],
+              [
+                0.18698053035963774,
+                -0.08135273420231207,
+                -0.1823904013565693
+              ],
+              [
+                -0.08485583556418295,
+                -0.1130519602651248,
+                -0.012274388974965397
+              ],
+              [
+                -0.12859503443543263,
+                -0.08933281483898318,
+                0.37718381946670954
+              ],
+              [
+                -0.08630565965160208,
+                0.23023432747388098,
+                -0.05610716970907208
+              ],
+              [
+                0.03156050807615816,
+                -0.09141872979757912,
+                -0.06503732920510873
+              ]
+            ],
+            "stress_gpa": [
+              0.16893388694989336,
+              0.10380026352761025,
+              0.09591264443807647,
+              -0.12158582926749252,
+              -0.04308448967448766,
+              -0.1001975951302615
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-mishin-force-displaced-seed-31",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "position_noise_angstrom": 0.025,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM",
+            "seed": 43
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.006105737666794002,
+              0.016954458001971397,
+              7.033361765466199
+            ],
+            [
+              7.025283171921867,
+              1.712204044721966,
+              1.7862905745496551
+            ],
+            [
+              1.7624164325144012,
+              0.005143283623670704,
+              1.7424101280873596
+            ],
+            [
+              1.7926624507321487,
+              1.7855800144419505,
+              7.044954402962809
+            ],
+            [
+              7.034103413552444,
+              7.0390827153985365,
+              3.5040343614393836
+            ],
+            [
+              0.0006641037310135267,
+              1.7465958070074863,
+              5.300638563013551
+            ],
+            [
+              1.7530132856335314,
+              7.039151073401516,
+              5.324431325105049
+            ],
+            [
+              1.7438570119361987,
+              1.7228021028013631,
+              3.533155379810186
+            ],
+            [
+              6.996053287214766,
+              3.530609465895643,
+              0.024543003547316047
+            ],
+            [
+              0.00175287576885283,
+              5.286231876857404,
+              1.710734766193761
+            ],
+            [
+              1.7758825921389696,
+              3.533907314181165,
+              1.7327000560406376
+            ],
+            [
+              1.809829268681155,
+              5.255399594981494,
+              7.006017740957072
+            ],
+            [
+              7.002723555752234,
+              3.5246492726830265,
+              3.532446781253677
+            ],
+            [
+              0.011024347773366064,
+              5.277566000544612,
+              5.265683124449103
+            ],
+            [
+              1.7830691145502011,
+              3.5015603653359553,
+              5.255753994850504
+            ],
+            [
+              1.7970328916873302,
+              5.29043928770357,
+              3.5357822473847746
+            ],
+            [
+              3.539646017616113,
+              7.033705072275017,
+              7.034678435349963
+            ],
+            [
+              3.540014542076641,
+              1.7465712194030574,
+              1.7704005172861168
+            ],
+            [
+              5.283763511176797,
+              7.018143212103967,
+              1.7861597692233202
+            ],
+            [
+              5.253765951254942,
+              1.7678240861132442,
+              0.0016746169773708517
+            ],
+            [
+              3.5556652804323483,
+              7.0200093694124135,
+              3.510420082460911
+            ],
+            [
+              3.521492336379829,
+              1.766521176587077,
+              5.307711428593444
+            ],
+            [
+              5.293777464492286,
+              0.0006215145552487967,
+              5.3117084447463325
+            ],
+            [
+              5.338401588567782,
+              1.7281118739598542,
+              3.5238563353337677
+            ],
+            [
+              3.5429909973996434,
+              3.5261435663979093,
+              0.03586594417627488
+            ],
+            [
+              3.515645689634705,
+              5.2606499080170135,
+              1.7837627682470578
+            ],
+            [
+              5.216677508500652,
+              3.5121060300702043,
+              1.821151990225291
+            ],
+            [
+              5.286656089726852,
+              5.29494410587781,
+              7.024209848052977
+            ],
+            [
+              3.523420328495488,
+              3.5204450289507947,
+              3.5704584108512383
+            ],
+            [
+              3.498747941434491,
+              5.216955908843365,
+              5.296166278103519
+            ],
+            [
+              5.324750395238553,
+              3.506783361124195,
+              5.240411765150622
+            ],
+            [
+              5.25917945381253,
+              5.296839241008992,
+              3.50994353426622
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.440350803225056,
+            "forces_ev_per_angstrom": [
+              [
+                -0.045276192417110644,
+                -0.19697122008159526,
+                0.2206530686555476
+              ],
+              [
+                0.2533267145991777,
+                0.5596887526499335,
+                -0.4591805122653568
+              ],
+              [
+                0.10016584179049956,
+                -0.19257420065778025,
+                0.0005083117035378677
+              ],
+              [
+                -0.30414232022296994,
+                -0.11167983323399305,
+                0.13127855665483776
+              ],
+              [
+                0.2879842733459174,
+                -0.37609094660180953,
+                0.30587628326848565
+              ],
+              [
+                0.11047134461717287,
+                0.14087736235279774,
+                -0.022843464662684006
+              ],
+              [
+                0.20064697375881746,
+                0.04947629503022597,
+                -0.3983427397605935
+              ],
+              [
+                0.15075194329718392,
+                0.2039959450596027,
+                -0.10545982884183956
+              ],
+              [
+                0.33090747480592636,
+                -0.26225701381973293,
+                -0.17303167370688455
+              ],
+              [
+                0.07223186943093308,
+                -0.029945833035029488,
+                0.4233900983377184
+              ],
+              [
+                -0.27550691398897476,
+                -0.2516421017929841,
+                0.47572518275730485
+              ],
+              [
+                -0.5672643960580784,
+                0.12650011874646935,
+                0.42109096576378197
+              ],
+              [
+                0.708490951854361,
+                0.052036739610084995,
+                -0.4643297228959702
+              ],
+              [
+                -0.000694320389986694,
+                0.03179544437552059,
+                0.1518025734259889
+              ],
+              [
+                -0.5634204485659307,
+                -0.07190900724640602,
+                0.33568161165975713
+              ],
+              [
+                -0.46237340206655697,
+                -0.013261449277504033,
+                -0.16857396986267384
+              ],
+              [
+                -0.11230681428807066,
+                -0.022556805822921622,
+                0.1915763638939866
+              ],
+              [
+                -0.22708792509923037,
+                -0.05515971333221294,
+                0.13866968938286253
+              ],
+              [
+                -0.021921413495574922,
+                0.12464402732528498,
+                -0.5089650910312269
+              ],
+              [
+                0.30428541802387715,
+                -0.08143859328520002,
+                0.12225463765625758
+              ],
+              [
+                -0.38732820536449303,
+                0.3213997382573632,
+                0.3851590876993465
+              ],
+              [
+                0.13890332670656344,
+                -0.1446757691824342,
+                -0.30429746799198637
+              ],
+              [
+                -0.10240014259281108,
+                -0.10103823663729221,
+                -0.31016586532216367
+              ],
+              [
+                -0.6810812992341188,
+                0.0896699240317032,
+                0.21292557639285314
+              ],
+              [
+                0.09455834721523375,
+                -0.10478570987030256,
+                -0.3879760486715841
+              ],
+              [
+                -0.024444347750944465,
+                0.28421583272571327,
+                -0.271583670704076
+              ],
+              [
+                0.6951445385193328,
+                0.05050918709862559,
+                -0.3714447813299668
+              ],
+              [
+                -0.09304018297326012,
+                -0.19744771103488423,
+                0.17992941900841894
+              ],
+              [
+                -0.01456465822661043,
+                -0.36367050905625437,
+                -0.4959186999977084
+              ],
+              [
+                0.5681598474290354,
+                0.6438376633877684,
+                -0.10747993674544562
+              ],
+              [
+                -0.45288068487393773,
+                0.07166754235092451,
+                0.5329520638987095
+              ],
+              [
+                0.3197048022146311,
+                -0.17320991903368332,
+                0.32011998363076244
+              ]
+            ],
+            "stress_gpa": [
+              -0.07178442877310942,
+              0.07790292768205492,
+              -0.013419959312300892,
+              -0.002440714457824061,
+              0.3058979696470548,
+              0.05218494955000052
+            ]
+          },
+          "row_id": "forces",
+          "structure_id": "ni-fcc-mishin-force-displaced-seed-43",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        }
+      ]
+    },
+    "relaxation_stability": {
+      "structures": [
+        {
+          "cell": [
+            [
+              6.97752,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              6.97752,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              6.97752
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "equilibrium_solve_case": true,
+            "linear_cell_scale": 0.99,
+            "position_noise_angstrom": 0.02,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM fixed-cell FIRE relaxation via ASE",
+            "seed": 101
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              6.96171695000074,
+              6.936827490363363,
+              0.012066034938495293
+            ],
+            [
+              0.014885890597598235,
+              1.7381862640026746,
+              1.751726427458911
+            ],
+            [
+              1.778587885829553,
+              0.021215956801316275,
+              1.7585327804161215
+            ],
+            [
+              1.758134987770109,
+              1.727108650924953,
+              0.019280334633471233
+            ],
+            [
+              6.944550743686503,
+              6.9708781637446275,
+              3.4800141231813178
+            ],
+            [
+              6.94294962588308,
+              1.742173222259971,
+              5.2660091015326875
+            ],
+            [
+              1.7375774532474977,
+              6.953367933194814,
+              5.231318925629871
+            ],
+            [
+              1.7614584863300198,
+              1.748244362313008,
+              3.4887066856707367
+            ],
+            [
+              6.9493355548318485,
+              3.4987803148491086,
+              0.009714621735673957
+            ],
+            [
+              0.026825324114345035,
+              5.262921065472419,
+              1.758151659602021
+            ],
+            [
+              1.7115316623762777,
+              3.4600521299556948,
+              1.7224204308991788
+            ],
+            [
+              1.7502784991556526,
+              5.217395077958889,
+              0.026190753221527256
+            ],
+            [
+              0.004877105214841541,
+              3.496055347914012,
+              3.503770162094303
+            ],
+            [
+              0.006804958028558103,
+              5.204928659829614,
+              5.282178583598275
+            ],
+            [
+              1.7736397781132363,
+              3.519222573426415,
+              5.218190347339889
+            ],
+            [
+              1.7074300444849446,
+              5.203007305755591,
+              3.467690735720585
+            ],
+            [
+              3.506402789323367,
+              0.018006388216160036,
+              0.029167858289845323
+            ],
+            [
+              3.531608999119392,
+              1.7547981521728282,
+              1.7514712364972214
+            ],
+            [
+              5.225879953355174,
+              6.970790746103506,
+              1.721224325826721
+            ],
+            [
+              5.243356002535613,
+              1.7507434207990789,
+              6.969416034298971
+            ],
+            [
+              3.4725482896389708,
+              0.009139028567054534,
+              3.5148832012960054
+            ],
+            [
+              3.4903899623924874,
+              1.7500553808798343,
+              5.2221766712239255
+            ],
+            [
+              5.228169483001395,
+              6.971189955422543,
+              5.227438427124967
+            ],
+            [
+              5.22119510442115,
+              1.7523076675630933,
+              3.514754585891697
+            ],
+            [
+              3.4698164896524477,
+              3.5167441346752586,
+              6.969459951144714
+            ],
+            [
+              3.4814182243359557,
+              5.190010682179364,
+              1.6959504859437058
+            ],
+            [
+              5.247850060837903,
+              3.4669383317762765,
+              1.760486166387091
+            ],
+            [
+              5.234152517498605,
+              5.238149462888378,
+              0.02666609530058455
+            ],
+            [
+              3.48731289843787,
+              3.4234378074619847,
+              3.453987492367291
+            ],
+            [
+              3.5082126407872205,
+              5.2730736055147895,
+              5.2312209785750206
+            ],
+            [
+              5.21909602007685,
+              3.46091569431252,
+              5.24406107845566
+            ],
+            [
+              5.197182260179355,
+              5.208223778059022,
+              3.49147866068302
+            ]
+          ],
+          "reference": {
+            "reference_relaxation_converged": true,
+            "reference_relaxation_max_force_ev_per_angstrom": 0.027006022083012993,
+            "reference_relaxed_cell": [
+              [
+                6.97752,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                6.97752,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                6.97752
+              ]
+            ],
+            "reference_relaxed_positions": [
+              [
+                6.9759115563807255,
+                6.97111826043616,
+                0.005350110516610157
+              ],
+              [
+                -0.0019292098292290768,
+                1.736111459141252,
+                1.7491668963467253
+              ],
+              [
+                1.7461786603748226,
+                -0.0019069159281872798,
+                1.7495922232594237
+              ],
+              [
+                1.7436492316467807,
+                1.7381472093959012,
+                0.0025550213682837717
+              ],
+              [
+                6.974872383855523,
+                6.970731766425785,
+                3.494078517446749
+              ],
+              [
+                6.976508825885937,
+                1.7409824232322166,
+                5.239118438966268
+              ],
+              [
+                1.7410183733938474,
+                6.970038648117507,
+                5.2360764204305
+              ],
+              [
+                1.7415686461674957,
+                1.739278512974527,
+                3.4941169266603533
+              ],
+              [
+                6.976850434380086,
+                3.4850819783022935,
+                0.003141108945720225
+              ],
+              [
+                0.0002874004384132516,
+                5.229951695834285,
+                1.7495984577580488
+              ],
+              [
+                1.73974580627685,
+                3.4803475008439873,
+                1.7472767115181496
+              ],
+              [
+                1.7432061586634802,
+                5.229600949697591,
+                0.0062526266977839815
+              ],
+              [
+                -0.0008518246774479798,
+                3.4840911897189737,
+                3.494363425334247
+              ],
+              [
+                -0.0030197729216655178,
+                5.226607007159769,
+                5.238042634174598
+              ],
+              [
+                1.744955089925511,
+                3.487299296073444,
+                5.237398754039497
+              ],
+              [
+                1.7431642109156946,
+                5.2278024422658955,
+                3.4902824739038865
+              ],
+              [
+                3.4882747580253297,
+                -0.004205882569035128,
+                0.004116118563370248
+              ],
+              [
+                3.4900839209078955,
+                1.7418360427667778,
+                1.7476653440169627
+              ],
+              [
+                5.229800092145549,
+                6.972093729256692,
+                1.7491271298016429
+              ],
+              [
+                5.233464520796159,
+                1.7397458364119185,
+                6.979778055806165
+              ],
+              [
+                3.4881199667042027,
+                -0.002847874504184624,
+                3.493000606589419
+              ],
+              [
+                3.4863217837837377,
+                1.737955324706896,
+                5.236276355020887
+              ],
+              [
+                5.233007290222815,
+                6.971590317001483,
+                5.2381220458128155
+              ],
+              [
+                5.233051289422395,
+                1.7400618401041645,
+                3.4956518087262167
+              ],
+              [
+                3.487101620586401,
+                3.48388667794275,
+                6.981397999092796
+              ],
+              [
+                3.4863079960959387,
+                5.2252955094140905,
+                1.7469336793428565
+              ],
+              [
+                5.235628542407468,
+                3.4824651987043196,
+                1.748691969602244
+              ],
+              [
+                5.231411568220081,
+                5.227968156171938,
+                0.006067203730608105
+              ],
+              [
+                3.485969307566366,
+                3.4813000230654723,
+                3.490974400173557
+              ],
+              [
+                3.486885367222908,
+                5.230810899770442,
+                5.236433032574252
+              ],
+              [
+                5.228364586225948,
+                3.4846582082913713,
+                5.237183268440477
+              ],
+              [
+                5.22926806404855,
+                5.226991325131666,
+                3.4919751923183973
+              ]
+            ],
+            "relaxation_force_threshold": 0.03,
+            "relaxed_energy_ev_per_atom": -4.445492668881079
+          },
+          "row_id": "relaxation_stability",
+          "structure_id": "ni-fcc-mishin-equilibrium-solve-compressed-displaced",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.18896,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.18896,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.18896
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "equilibrium_solve_case": true,
+            "linear_cell_scale": 1.02,
+            "position_noise_angstrom": 0.02,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM fixed-cell FIRE relaxation via ASE",
+            "seed": 103
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.022066960583338152,
+              7.1633643175204975,
+              0.01296304892019587
+            ],
+            [
+              7.164968391146132,
+              1.8186760139623117,
+              1.766118569301782
+            ],
+            [
+              1.7830293807393167,
+              7.176826782734505,
+              1.7551335485186375
+            ],
+            [
+              1.8142954746456528,
+              1.7662122678051333,
+              7.1628147757563365
+            ],
+            [
+              7.177666072670341,
+              0.01488474894262522,
+              3.578213055657244
+            ],
+            [
+              0.03977566512075461,
+              1.7967413601083353,
+              5.385938951844103
+            ],
+            [
+              1.8062118546256467,
+              7.186336620612815,
+              5.370565928395747
+            ],
+            [
+              1.7862426120568387,
+              1.8005749572545142,
+              3.626019125785804
+            ],
+            [
+              0.005268917262688494,
+              3.603990837385911,
+              7.144209001105121
+            ],
+            [
+              7.183604801231031,
+              5.391161569509034,
+              1.832434179494424
+            ],
+            [
+              1.8291171296052706,
+              3.5968516086208187,
+              1.8078007575195547
+            ],
+            [
+              1.7958490226082509,
+              5.377108396347608,
+              0.00032040880409765527
+            ],
+            [
+              7.181413395878389,
+              3.600932612032992,
+              3.6081195741402063
+            ],
+            [
+              7.184934475423856,
+              5.414009638435091,
+              5.369096665758281
+            ],
+            [
+              1.7974960701331268,
+              3.5984948640490626,
+              5.354961467712722
+            ],
+            [
+              1.8096994619489695,
+              5.406087891367979,
+              3.6289224937365194
+            ],
+            [
+              3.5935837761488574,
+              0.01219083205986859,
+              0.013086868770952664
+            ],
+            [
+              3.561772532257661,
+              1.8032597219283057,
+              1.7683769212295164
+            ],
+            [
+              5.397515549248959,
+              0.01461805243192559,
+              1.8027540207371862
+            ],
+            [
+              5.350625792639463,
+              1.8265564311553724,
+              0.006121357667182481
+            ],
+            [
+              3.614542576685919,
+              7.1752549127507415,
+              3.5867043643610157
+            ],
+            [
+              3.6362620609027614,
+              1.7933311398896166,
+              5.383150717998985
+            ],
+            [
+              5.384300982740365,
+              0.020081154456141958,
+              5.360230308711201
+            ],
+            [
+              5.385353344619475,
+              1.7794650395144296,
+              3.6446643490819293
+            ],
+            [
+              3.616237217725458,
+              3.596568518209813,
+              0.004712854302443022
+            ],
+            [
+              3.589988232596126,
+              5.382961830401834,
+              1.7939743901603893
+            ],
+            [
+              5.427318798947544,
+              3.5886586471064676,
+              1.7919205113066023
+            ],
+            [
+              5.397981286208099,
+              5.421447643177376,
+              0.00970228530775471
+            ],
+            [
+              3.573246694539982,
+              3.5958088781318422,
+              3.5950104508735374
+            ],
+            [
+              3.5680104323628044,
+              5.376899922865221,
+              5.3987522922912206
+            ],
+            [
+              5.383151998919825,
+              3.628259559422916,
+              5.3988824504293715
+            ],
+            [
+              5.382613251462125,
+              5.390351063883385,
+              3.5763738565840195
+            ]
+          ],
+          "reference": {
+            "reference_relaxation_converged": true,
+            "reference_relaxation_max_force_ev_per_angstrom": 0.026906827314144285,
+            "reference_relaxed_cell": [
+              [
+                7.18896,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                7.18896,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                7.18896
+              ]
+            ],
+            "reference_relaxed_positions": [
+              [
+                0.0023377152302199535,
+                7.190379447502942,
+                -0.0017371187889167474
+              ],
+              [
+                7.190760887530984,
+                1.8024026293297812,
+                1.7903039654375612
+              ],
+              [
+                1.7971588420127549,
+                7.190622442347187,
+                1.7913169055779126
+              ],
+              [
+                1.7996061082508241,
+                1.8000174046273836,
+                7.1845282506676
+              ],
+              [
+                7.18847919286216,
+                0.005181640122006094,
+                3.5896909690131804
+              ],
+              [
+                0.000991079307629171,
+                1.7982293856732576,
+                5.389558755111663
+              ],
+              [
+                1.7990160149332004,
+                7.191225013269896,
+                5.388275874596276
+              ],
+              [
+                1.7970324611704946,
+                1.7985381764941322,
+                3.5922898638359806
+              ],
+              [
+                0.0010705434407032928,
+                3.5992958200532637,
+                7.182333134986115
+              ],
+              [
+                7.18886510045754,
+                5.393157641924644,
+                1.7969567717152524
+              ],
+              [
+                1.7977962584141345,
+                3.5964762144863927,
+                1.7949639258227983
+              ],
+              [
+                1.7969155345843584,
+                5.393322961469632,
+                -0.003380205715470808
+              ],
+              [
+                7.189944732328973,
+                3.59590098533337,
+                3.5944873772151147
+              ],
+              [
+                7.190277009714407,
+                5.397497449167136,
+                5.385316027895909
+              ],
+              [
+                1.798960479670048,
+                3.5973470851284977,
+                5.386135730509198
+              ],
+              [
+                1.7994185425063725,
+                5.394588784529418,
+                3.5914736756396795
+              ],
+              [
+                3.5952066648082717,
+                0.0025159080914220443,
+                -0.0013434722225903208
+              ],
+              [
+                3.5941044602099685,
+                1.8001969470922927,
+                1.7930984148368883
+              ],
+              [
+                5.393441080368283,
+                0.005491499546565698,
+                1.7943151254204646
+              ],
+              [
+                5.391291982951887,
+                1.8009167695647532,
+                -0.0037703430536340865
+              ],
+              [
+                3.5962454549330243,
+                7.191875775068707,
+                3.590804075040282
+              ],
+              [
+                3.5973659500841255,
+                1.799619940160574,
+                5.387386569724046
+              ],
+              [
+                5.391037389526408,
+                0.0024660276831000357,
+                5.387474326880687
+              ],
+              [
+                5.393399169606359,
+                1.8013079805163767,
+                3.592732798824163
+              ],
+              [
+                3.595982256595138,
+                3.5973892444424247,
+                -0.0019516747642679619
+              ],
+              [
+                3.5945448964796434,
+                5.393614304346281,
+                1.7934016757012219
+              ],
+              [
+                5.393983428995591,
+                3.595973495314465,
+                1.7931670709373506
+              ],
+              [
+                5.394710622872221,
+                5.3954239758467795,
+                -7.266237913506354e-06
+              ],
+              [
+                3.594454594005239,
+                3.597360034979239,
+                3.5913017010160253
+              ],
+              [
+                3.595803984690272,
+                5.394294718248368,
+                5.389467953774002
+              ],
+              [
+                5.39234714986701,
+                3.6002809123421273,
+                5.390077004123286
+              ],
+              [
+                5.39159462527679,
+                5.395057219372083,
+                3.5893816887442225
+              ]
+            ],
+            "relaxation_force_threshold": 0.03,
+            "relaxed_energy_ev_per_atom": -4.423718922588381
+          },
+          "row_id": "relaxation_stability",
+          "structure_id": "ni-fcc-mishin-equilibrium-solve-expanded-displaced",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              7.048,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              7.048,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              7.048
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "equilibrium_solve_case": true,
+            "linear_cell_scale": 1.0,
+            "position_noise_angstrom": 0.04,
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM fixed-cell FIRE relaxation via ASE",
+            "seed": 107
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.01518675899542824,
+              6.972496024513192,
+              7.046233680240867
+            ],
+            [
+              0.07116503930954352,
+              1.701862878903715,
+              1.7859702497041514
+            ],
+            [
+              1.7383204219578108,
+              0.0634956475903198,
+              1.7442544427204891
+            ],
+            [
+              1.7377089279933071,
+              1.8302734922853106,
+              0.05274153815002801
+            ],
+            [
+              7.034669961822036,
+              6.968219960418332,
+              3.45751204681226
+            ],
+            [
+              0.019140559673576092,
+              1.7819893774062714,
+              5.228709887953047
+            ],
+            [
+              1.8136314270097187,
+              0.022736193131828737,
+              5.265553984064401
+            ],
+            [
+              1.757268255190318,
+              1.7705245609421039,
+              3.5009765298735234
+            ],
+            [
+              0.029097721459112137,
+              3.517803484612547,
+              7.042313565436268
+            ],
+            [
+              0.038541151825609514,
+              5.3053223959845734,
+              1.7020330852198353
+            ],
+            [
+              1.7629351694033248,
+              3.481280104147049,
+              1.7695955359564202
+            ],
+            [
+              1.7806360367174772,
+              5.230585863726017,
+              0.04044587016677182
+            ],
+            [
+              0.07416650907658733,
+              3.5405338943826825,
+              3.478396211471099
+            ],
+            [
+              7.042127528439015,
+              5.298930113325112,
+              5.306503604124571
+            ],
+            [
+              1.7852688302793969,
+              3.4953392417262084,
+              5.266423893566095
+            ],
+            [
+              1.7929316610815833,
+              5.407704952692952,
+              3.536706615465269
+            ],
+            [
+              3.5249708183888107,
+              0.026646678172772983,
+              0.07092939704022415
+            ],
+            [
+              3.528967044486982,
+              1.6601536411626345,
+              1.7418377050021856
+            ],
+            [
+              5.258552488493357,
+              7.0057943340832365,
+              1.7065371520215005
+            ],
+            [
+              5.247038573562461,
+              1.8649710437243991,
+              0.02965989458970536
+            ],
+            [
+              3.5333064311037052,
+              6.99502662711221,
+              3.506361849233079
+            ],
+            [
+              3.5382877803800654,
+              1.754170563822103,
+              5.277859484459515
+            ],
+            [
+              5.352228846412641,
+              0.05572685525062705,
+              5.307088250416742
+            ],
+            [
+              5.220615809088025,
+              1.7651279405194145,
+              3.4768359568482228
+            ],
+            [
+              3.493196530479012,
+              3.5153512474786313,
+              0.011614680767741527
+            ],
+            [
+              3.5625191070945665,
+              5.187094262476382,
+              1.788671437529241
+            ],
+            [
+              5.259180560359494,
+              3.5198459252280867,
+              1.7222032359092998
+            ],
+            [
+              5.347537150620532,
+              5.283209276385582,
+              0.03148710758352309
+            ],
+            [
+              3.488308064407033,
+              3.562725506519431,
+              3.529729502218621
+            ],
+            [
+              3.4877892515414235,
+              5.2756295659066215,
+              5.258458422530147
+            ],
+            [
+              5.250153210299048,
+              3.5765338964175806,
+              5.294075127008054
+            ],
+            [
+              5.265746473866258,
+              5.218106499183486,
+              3.5614463379501244
+            ]
+          ],
+          "reference": {
+            "reference_relaxation_converged": true,
+            "reference_relaxation_max_force_ev_per_angstrom": 0.02602866251315502,
+            "reference_relaxed_cell": [
+              [
+                7.048,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                7.048,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                7.048
+              ]
+            ],
+            "reference_relaxed_positions": [
+              [
+                0.004898088062338189,
+                7.044809375509018,
+                7.044270299577811
+              ],
+              [
+                0.005673664824088679,
+                1.7591645183745013,
+                1.7580013114845237
+              ],
+              [
+                1.7674799655811684,
+                -0.0033956804144053567,
+                1.7581724334682425
+              ],
+              [
+                1.767630166434819,
+                1.7570639281003817,
+                -0.004258726071158978
+              ],
+              [
+                7.053853967812301,
+                7.045036572838079,
+                3.5200866520047445
+              ],
+              [
+                0.005849785836682465,
+                1.7563873122798912,
+                5.284197317484481
+              ],
+              [
+                1.7671370064686858,
+                -0.00426330598117221,
+                5.282204877062376
+              ],
+              [
+                1.7680111828147655,
+                1.7592626871895185,
+                3.5198788877929656
+              ],
+              [
+                0.005700452697101921,
+                3.519728413958942,
+                7.0442447751688375
+              ],
+              [
+                0.004987053733428321,
+                5.282957699976227,
+                1.7585100850457716
+              ],
+              [
+                1.7679444543008358,
+                3.521800420288619,
+                1.7579885916665643
+              ],
+              [
+                1.76744143548435,
+                5.2834881289296955,
+                -0.004532830634931659
+              ],
+              [
+                0.005177612546573657,
+                3.5203113734990032,
+                3.519874651490263
+              ],
+              [
+                7.053318981781501,
+                5.281406055804743,
+                5.281967914390887
+              ],
+              [
+                1.7678481290583972,
+                3.5200298826006806,
+                5.281221519857473
+              ],
+              [
+                1.7670287676026297,
+                5.2820839832249185,
+                3.519465132778724
+              ],
+              [
+                3.5291559992742827,
+                -0.003527144963603354,
+                -0.0049253491593841325
+              ],
+              [
+                3.530327682562669,
+                1.7589603404137049,
+                1.7578987243426918
+              ],
+              [
+                5.2918339787362285,
+                7.045436277215688,
+                1.7592640338651933
+              ],
+              [
+                5.292491256766023,
+                1.7584840556612207,
+                -0.004021391446299532
+              ],
+              [
+                3.5287611110860544,
+                7.04527087408389,
+                3.519577047926756
+              ],
+              [
+                3.5290699300749804,
+                1.7579277014016876,
+                5.281657700455135
+              ],
+              [
+                5.290587044235112,
+                -0.004794945078964267,
+                5.281599585715365
+              ],
+              [
+                5.292747413233744,
+                1.7577094445752348,
+                3.519732781165361
+              ],
+              [
+                3.5296077812079205,
+                3.520648140322697,
+                -0.005009805207325199
+              ],
+              [
+                3.5286300745879404,
+                5.283661432269695,
+                1.756736588906601
+              ],
+              [
+                5.292094581850813,
+                3.520794623733042,
+                1.757819887660875
+              ],
+              [
+                5.291224032305527,
+                5.2828046459947,
+                -0.004612687569835152
+              ],
+              [
+                3.5300916918091536,
+                3.5197261368650348,
+                3.518386052352038
+              ],
+              [
+                3.529959493455077,
+                5.282242871212301,
+                5.2831509334012905
+              ],
+              [
+                5.2923424803473385,
+                3.520179129690184,
+                5.28144856414679
+              ],
+              [
+                5.292288834244736,
+                5.2838170996562654,
+                3.5191707229101996
+              ]
+            ],
+            "relaxation_force_threshold": 0.03,
+            "relaxed_energy_ev_per_atom": -4.4499216341129
+          },
+          "row_id": "relaxation_stability",
+          "structure_id": "ni-fcc-mishin-equilibrium-solve-noisy-equilibrium",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        }
+      ]
+    },
+    "stress": {
+      "structures": [
+        {
+          "cell": [
+            [
+              3.5416199999999995,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.7708099999999998,
+              0.0,
+              1.762
+            ],
+            [
+              1.7708099999999998,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449492405469254,
+            "forces_ev_per_angstrom": [
+              [
+                -1.3877787807814457e-17,
+                -3.469446951953614e-18,
+                6.938893903907228e-18
+              ],
+              [
+                -2.7755575615628914e-17,
+                1.1102230246251565e-16,
+                -1.457167719820518e-16
+              ],
+              [
+                -9.71445146547012e-17,
+                1.3877787807814457e-17,
+                -8.500145032286355e-17
+              ],
+              [
+                -9.367506770274758e-17,
+                1.1622647289044608e-16,
+                1.214306433183765e-17
+              ]
+            ],
+            "stress_gpa": [
+              1.9541793602464248,
+              1.352402227200882,
+              1.3524022272008793,
+              -1.3524410656376431e-17,
+              -7.437971330592282e-17,
+              -5.159761588033489e-17
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            0.005,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-mishin-stress-xx-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.50638,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.762,
+              1.762
+            ],
+            [
+              1.75319,
+              0.0,
+              1.762
+            ],
+            [
+              1.75319,
+              1.762,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449929965128217,
+            "forces_ev_per_angstrom": [
+              [
+                -6.938893903907228e-18,
+                0.0,
+                1.734723475976807e-17
+              ],
+              [
+                -6.245004513516506e-17,
+                -1.1102230246251565e-16,
+                9.71445146547012e-17
+              ],
+              [
+                1.3877787807814457e-17,
+                3.469446951953614e-17,
+                1.249000902703301e-16
+              ],
+              [
+                1.3877787807814457e-17,
+                -9.8879238130678e-17,
+                0.0
+              ]
+            ],
+            "stress_gpa": [
+              -0.5947706360065972,
+              -0.12518113453566498,
+              -0.12518113453566304,
+              -1.3216651719276214e-16,
+              3.3492467652595795e-18,
+              2.404480409738996e-17
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            -0.005,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-mishin-stress-xx-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.538096,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.538096,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.538096
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.769048,
+              1.769048
+            ],
+            [
+              1.769048,
+              0.0,
+              1.769048
+            ],
+            [
+              1.769048,
+              1.769048,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.4485077965280375,
+            "forces_ev_per_angstrom": [
+              [
+                -6.938893903907228e-18,
+                -2.42861286636753e-17,
+                6.938893903907228e-18
+              ],
+              [
+                -2.0816681711721685e-17,
+                -4.163336342344337e-17,
+                -9.020562075079397e-17
+              ],
+              [
+                -8.326672684688674e-17,
+                6.938893903907228e-18,
+                -9.71445146547012e-17
+              ],
+              [
+                -7.28583859910259e-17,
+                -1.1622647289044608e-16,
+                -1.3877787807814457e-17
+              ]
+            ],
+            "stress_gpa": [
+              2.838933146333788,
+              2.838933146333789,
+              2.8389331463337886,
+              1.6793498004924002e-17,
+              2.9587074029486643e-18,
+              -7.861968835372415e-17
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            0.004,
+            0.004,
+            0.004,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-mishin-stress-hydro-pos",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.509904,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.509904,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.509904
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.754952,
+              1.754952
+            ],
+            [
+              1.754952,
+              0.0,
+              1.754952
+            ],
+            [
+              1.754952,
+              1.754952,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449540514211626,
+            "forces_ev_per_angstrom": [
+              [
+                2.0816681711721685e-17,
+                0.0,
+                3.8163916471489756e-17
+              ],
+              [
+                2.7755575615628914e-17,
+                -1.6653345369377348e-16,
+                -1.942890293094024e-16
+              ],
+              [
+                -1.942890293094024e-16,
+                3.122502256758253e-17,
+                -2.220446049250313e-16
+              ],
+              [
+                -1.8041124150158794e-16,
+                -2.2724877535296173e-16,
+                -2.7755575615628914e-17
+              ]
+            ],
+            "stress_gpa": [
+              -1.5847046172345356,
+              -1.5847046172345358,
+              -1.5847046172345356,
+              -2.886405601700803e-17,
+              -1.2354092972207347e-17,
+              9.048894901965438e-17
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            -0.004,
+            -0.004,
+            -0.004,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_id": "ni-fcc-mishin-stress-hydro-neg",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        },
+        {
+          "cell": [
+            [
+              3.524,
+              0.010572,
+              0.0
+            ],
+            [
+              0.010572,
+              3.524,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.524
+            ]
+          ],
+          "material_id": "Ni-fcc",
+          "metadata": {
+            "publication_lane": "lane-a-fcc-ni-eam-home-turf",
+            "reference_generator": "Mishin-1999 NIST EAM via ASE EAM"
+          },
+          "pbc": [
+            true,
+            true,
+            true
+          ],
+          "positions": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.005286,
+              1.762,
+              1.762
+            ],
+            [
+              1.762,
+              0.005286,
+              1.762
+            ],
+            [
+              1.767286,
+              1.767286,
+              0.0
+            ]
+          ],
+          "reference": {
+            "energy_ev_per_atom": -4.449774113802587,
+            "forces_ev_per_angstrom": [
+              [
+                1.0408340855860843e-17,
+                2.949029909160572e-17,
+                1.3877787807814457e-17
+              ],
+              [
+                2.2551405187698492e-17,
+                -1.2100373871296033e-16,
+                1.0061396160665481e-16
+              ],
+              [
+                -1.1753429176100672e-16,
+                -6.938893903907228e-18,
+                1.0408340855860843e-16
+              ],
+              [
+                -1.3704315460216776e-16,
+                -1.8175294169003875e-16,
+                3.122502256758253e-17
+              ]
+            ],
+            "stress_gpa": [
+              0.6171869124251453,
+              0.617186912425145,
+              0.6186820003270813,
+              4.5435853603281547e-17,
+              4.7467869263325756e-17,
+              0.7577323074591107
+            ]
+          },
+          "row_id": "stress",
+          "strain_voigt": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.006
+          ],
+          "structure_id": "ni-fcc-mishin-stress-xy-shear",
+          "symbols": [
+            "Ni",
+            "Ni",
+            "Ni",
+            "Ni"
+          ]
+        }
+      ]
+    }
+  },
+  "row_specs": {
+    "elastic_constants": {
+      "error_tolerance": 35.0,
+      "error_unit": "gpa_mae_vs_literature_cij",
+      "min_cases": 13
+    },
+    "energy_volume": {
+      "error_tolerance": 0.08,
+      "error_unit": "ev_per_atom_mae_vs_mishin_eam",
+      "min_cases": 5,
+      "reference_mode": "absolute_eam_energy"
+    },
+    "forces": {
+      "error_tolerance": 0.2,
+      "error_unit": "ev_per_angstrom_rmse_vs_mishin_eam",
+      "min_cases": 5
+    },
+    "relaxation_stability": {
+      "error_tolerance": 0.08,
+      "error_unit": "fixed_cell_relaxation_penalty_vs_mishin_eam",
+      "force_threshold": 0.03,
+      "max_steps": 250,
+      "min_cases": 3
+    },
+    "stress": {
+      "error_tolerance": 5.0,
+      "error_unit": "gpa_mae_vs_mishin_eam",
+      "min_cases": 5
+    }
+  },
+  "schema": "lupine.mlip.fixture_manifest.v2",
+  "source_packet_id": "real-material-publication-v1",
+  "title": "FCC Ni EAM-home-turf publication fixture V1"
+}

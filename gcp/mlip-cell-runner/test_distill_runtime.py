@@ -242,6 +242,29 @@ def test_energy_residual_ribbon_does_not_select_force_features():
     assert all(not name.startswith("force_") for name in ribbon["feature_names"])
 
 
+def test_support_model_emits_per_prediction_ribbon_distance():
+    model = DistillSupportModel.fit(
+        "energy_volume",
+        [
+            {
+                "energy_ev_per_atom": float(idx),
+                "stress_gpa": [float(idx), float(idx) * 0.5, 0.0],
+                "reference": {"energy_ev_per_atom": float(idx) - 0.1 * idx},
+            }
+            for idx in range(1, 6)
+        ],
+    )
+
+    model.gate_for_eval_predictions([{"energy_ev_per_atom": 2.0, "stress_gpa": [2.0, 1.0, 0.0]}])
+    distance = model.ribbon_feature_distance_for_prediction(
+        {"energy_ev_per_atom": 2.0, "stress_gpa": [2.0, 1.0, 0.0]}
+    )
+
+    assert distance is not None
+    assert distance >= 0.0
+    assert model.diagnostics["ribbon_feature_distance_proxy"] == pytest.approx(distance)
+
+
 def test_distill_session_can_delegate_policy_to_rust():
     atlas_distill = atlas_distill_bin()
     if not atlas_distill.exists():

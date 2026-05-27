@@ -1,0 +1,236 @@
+#!/usr/bin/env python3
+"""Collect paired MLIP evidence campaign artifacts from GCS.
+
+The collector is intentionally conservative: missing cloud artifacts stay
+missing, failed cells stay failed, and deltas are computed only when both the
+baseline and Distill Accuracy artifacts are present.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import pathlib
+import shutil
+import subprocess
+import sys
+from datetime import datetime, timezone
+from typing import Any
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+TOOLS_DIR = ROOT / "tools"
+if str(TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(TOOLS_DIR))
+
+import mlip_evidence_campaign as campaign_tools  # noqa: E402
+
+
+DEFAULT_OUTPUT = ROOT / "library-site" / "src" / "reports" / "assets" / "mlip" / "ni-paired-accuracy-live-summary.json"
+ROW_LABELS = {
+    "energy_volume": "Energy-volume",
+    "forces": "Forces",
+    "stress": "Stress",
+    "elastic_constants": "Elastic constants",
+    "relaxation_stability": "Relaxation stability",
+}
+GCLOUD = shutil.which("gcloud.cmd") or shutil.which("gcloud") or "C:/gcloud/google-cloud-sdk/bin/gcloud.cmd"
+ERROR_ABS_TOLERANCE = 1e-9
+ERROR_REL_TOLERANCE = 1e-9
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def gcloud_cat(url: str) -> dict[str, Any] | None:
+    proc = subprocess.run(
+        [GCLOUD, "storage", "cat", url],
+        check=False,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if proc.returncode != 0:
+        return None
+    payload = json.loads(proc.stdout)
+    return payload if isinstance(payload, dict) else None
+
+
+def artifact_url(cell: dict[str, Any]) -> str:
+    return cell["artifact_prefix"].rstrip("/") + "/cell_result.json"
+
+
+def safe_get(payload: dict[str, Any] | None, *keys: str) -> Any:
+    value: Any = payload
+    for key in keys:
+        if not isinstance(value, dict):
+            return None
+        value = value.get(key)
+    return value
+
+
+def classify_artifact_status(artifact: dict[str, Any] | None) -> str:
+    if artifact is None:
+        return "missing"
+    explicit = artifact.get("status")
+    if isinstance(explicit, str) and explicit:
+        return explicit
+    if artifact.get("error_class") or artifact.get("error"):
+        return "failed"
+    if artifact.get("schema") == "lupine.mlip.cell_artifact.v1" or isinstance(artifact.get("accuracy"), dict):
+        return "completed"
+    return "completed"
+
+
+def collect_cell(cell: dict[str, Any]) -> dict[str, Any]:
+    url = artifact_url(cell)
+    artifact = gcloud_cat(url)
+    status = classify_artifact_status(artifact)
+    accuracy = safe_get(artifact, "accuracy", "score")
+    speed = safe_get(artifact, "speed", "score")
+    error = safe_get(artifact, "accuracy", "error")
+    checkpoint_url = safe_get(artifact, "checkpoint", "url") or cell.get("checkpoint_url")
+    result = {
+        "cell_id": cell["cell_id"],
+        "row_id": cell["row_id"],
+        "row_label": ROW_LABELS.get(cell["row_id"], cell["row_id"]),
+        "mlip_id": cell["mlip_id"],
+        "target_job": cell["target_job"],
+        "variant_id": cell["variant_id"],
+        "status": status,
+        "artifact_uri": url,
+        "checkpoint_url": checkpoint_url,
+        "accuracy_score": accuracy if isinstance(accuracy, (int, float)) else None,
+        "speed_score": speed if isinstance(speed, (int, float)) else None,
+        "native_error": error if isinstance(error, (int, float)) else None,
+        "operation_name": artifact.get("operation_name") if artifact else None,
+        "distill_policy_hash": artifact.get("distill_policy_hash") if artifact else cell.get("distill_policy_hash"),
+        "support_manifest_hash": artifact.get("support_manifest_hash") if artifact else None,
+        "accuracy_unit": safe_get(artifact, "accuracy", "unit"),
+        "error_unit": safe_get(artifact, "accuracy", "error_unit"),
+        "speed_unit": safe_get(artifact, "speed", "unit"),
+        "events_uri": safe_get(artifact, "distill_runtime", "events_uri"),
+        "error_class": artifact.get("error_class") if artifact else None,
+        "error": artifact.get("error") if artifact else None,
+    }
+    if cell.get("depends_on_cell_id"):
+        result["depends_on_cell_id"] = cell["depends_on_cell_id"]
+    return result
+
+
+def pair_key(cell: dict[str, Any]) -> tuple[str, str]:
+    return (cell["row_id"], cell["mlip_id"])
+
+
+def compute_pairs(cells: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    by_pair: dict[tuple[str, str], dict[str, dict[str, Any]]] = {}
+    for cell in cells:
+        by_pair.setdefault(pair_key(cell), {})[cell["variant_id"]] = cell
+    pairs: list[dict[str, Any]] = []
+    for (row_id, mlip_id), variants in sorted(by_pair.items()):
+        baseline = variants.get("baseline")
+        distill = variants.get("distill_accuracy")
+        baseline_error = baseline.get("native_error") if baseline else None
+        distill_error = distill.get("native_error") if distill else None
+        delta = None
+        lift_fraction = None
+        verdict = "awaiting_pair"
+        if isinstance(baseline_error, (int, float)) and isinstance(distill_error, (int, float)):
+            delta = baseline_error - distill_error
+            lift_fraction = delta / baseline_error if baseline_error else None
+            if math.isclose(
+                baseline_error,
+                distill_error,
+                rel_tol=ERROR_REL_TOLERANCE,
+                abs_tol=ERROR_ABS_TOLERANCE,
+            ):
+                verdict = "unchanged"
+            elif delta > 0:
+                verdict = "distill_improved"
+            else:
+                verdict = "distill_regressed"
+        elif baseline and baseline.get("status") == "completed" and distill and distill.get("status") == "completed":
+            verdict = "completed_without_native_error"
+        elif baseline and baseline.get("status") == "failed":
+            verdict = "baseline_failed"
+        elif distill and distill.get("status") == "failed":
+            verdict = "distill_failed"
+        pairs.append(
+            {
+                "row_id": row_id,
+                "row_label": ROW_LABELS.get(row_id, row_id),
+                "mlip_id": mlip_id,
+                "baseline_cell_id": baseline.get("cell_id") if baseline else None,
+                "distill_cell_id": distill.get("cell_id") if distill else None,
+                "shared_checkpoint_url": baseline.get("checkpoint_url") if baseline else (distill.get("checkpoint_url") if distill else None),
+                "baseline_error": baseline_error,
+                "distill_error": distill_error,
+                "error_delta": delta,
+                "lift_fraction": lift_fraction,
+                "verdict": verdict,
+            }
+        )
+    return pairs
+
+
+def summarize(cells: list[dict[str, Any]], pairs: list[dict[str, Any]]) -> dict[str, Any]:
+    total = len(cells)
+    completed = len([cell for cell in cells if cell["status"] == "completed"])
+    failed = len([cell for cell in cells if cell["status"] == "failed"])
+    missing = len([cell for cell in cells if cell["status"] == "missing"])
+    improved = len([pair for pair in pairs if pair["verdict"] == "distill_improved"])
+    regressed = len([pair for pair in pairs if pair["verdict"] == "distill_regressed"])
+    return {
+        "cells_total": total,
+        "cells_completed": completed,
+        "cells_failed": failed,
+        "cells_missing": missing,
+        "pairs_total": len(pairs),
+        "pairs_improved": improved,
+        "pairs_regressed": regressed,
+        "pairs_measured": len([pair for pair in pairs if pair["verdict"] in {"distill_improved", "distill_regressed", "unchanged"}]),
+        "claim_status": "complete" if completed == total else "running_or_partial",
+    }
+
+
+def collect(campaign_path: pathlib.Path) -> dict[str, Any]:
+    campaign = campaign_tools.load_campaign(campaign_path)
+    cells = [collect_cell(cell) for cell in campaign_tools.expand_cells(campaign)]
+    pairs = compute_pairs(cells)
+    summary = summarize(cells, pairs)
+    return {
+        "schema": "lupine.library.mlip_paired_accuracy_live_summary.v1",
+        "generated_at": utc_now(),
+        "campaign_id": campaign["campaign_id"],
+        "campaign_hash": campaign_tools.evidence_summary(campaign)["campaign_hash"],
+        "profile": campaign["profile"],
+        "fixture_hash": campaign_tools.evidence_summary(campaign)["fixture_hash"],
+        "artifact_gcs_prefix": campaign["artifact_gcs_prefix"],
+        "batch_gcs_prefix": campaign["batch_gcs_prefix"],
+        "summary": summary,
+        "pairs": pairs,
+        "cells": cells,
+    }
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--campaign", type=pathlib.Path, default=campaign_tools.DEFAULT_CAMPAIGN)
+    parser.add_argument("--output", type=pathlib.Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--stdout", action="store_true")
+    args = parser.parse_args(argv)
+
+    payload = collect(args.campaign)
+    text = json.dumps(payload, indent=2, sort_keys=True)
+    if args.stdout:
+        print(text)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(text + "\n", encoding="utf-8")
+    print(json.dumps({"status": "written", "output": str(args.output), "summary": payload["summary"]}, indent=2, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

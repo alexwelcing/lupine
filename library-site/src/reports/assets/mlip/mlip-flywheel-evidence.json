@@ -118,6 +118,13 @@
       "description": "May 26, 2026 MACE Cloud Run canary using the row-complete support manifest. Energy improves by 50.49%; relaxation improves by 31.02%; both ran on NVIDIA L4."
     },
     {
+      "id": "ni_paired_accuracy_live_summary",
+      "kind": "cloud_run_live_collector",
+      "path": "reports/assets/mlip/ni-paired-accuracy-live-summary.json",
+      "schema": "lupine.library.mlip_paired_accuracy_live_summary.v1",
+      "description": "May 27, 2026 live collector for the Ni fcc EAM-home-turf paired baseline versus Distill Accuracy campaign. It reads only returned GCS cell artifacts and computes pair deltas only when both artifacts exist."
+    },
+    {
       "id": "local_equilibrium_solve_score",
       "kind": "local_run_artifact",
       "path": "reports/assets/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json",
@@ -249,6 +256,13 @@
   "relaxation_artifact": {
     "source_id": "local_equilibrium_solve_score",
     "url": "/reports/assets/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json"
+  },
+  "live_campaign_artifact": {
+    "source_id": "ni_paired_accuracy_live_summary",
+    "campaign_id": "ni-fcc-eam-home-turf-paired-accuracy-v1",
+    "title": "Ni paired baseline vs Distill Accuracy run",
+    "description": "A live collector reads returned GCS cell artifacts from the 5x5x2 Ni campaign. Missing cells are rendered as missing, not guessed.",
+    "url": "/reports/assets/mlip/ni-paired-accuracy-live-summary.json"
   },
   "stages": [
     {

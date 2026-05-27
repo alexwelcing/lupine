@@ -358,6 +358,16 @@ export const CATALOG = {
       featured: true,
       status: 'supported',
     },
+    {
+      id: 'mlip-ni-paired-accuracy-live',
+      source: 'docs/mlip-ni-paired-accuracy-live-report.md',
+      title: 'Ni Paired Accuracy Live Report',
+      subtitle: 'Live baseline-versus-Distill Accuracy evidence for the Ni fcc EAM-home-turf campaign.',
+      category: 'validation',
+      tags: ['mlip', 'distill', 'ni', 'cloud-run', 'live-lab'],
+      featured: true,
+      status: 'live',
+    },
 
     // ── Theory ──────────────────────────────────────────────────────
     {

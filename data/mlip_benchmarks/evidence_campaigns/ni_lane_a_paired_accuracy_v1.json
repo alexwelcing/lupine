@@ -1,0 +1,109 @@
+{
+  "schema": "lupine.mlip.evidence_campaign.v1",
+  "campaign_id": "ni-fcc-eam-home-turf-paired-accuracy-v1",
+  "title": "Ni fcc EAM-home-turf paired baseline versus Distill Accuracy",
+  "objective": "Collect sealed, paired evidence for whether Lupine Distill Accuracy improves MLIP accuracy on the Lane A Ni fixture without changing the underlying MLIP.",
+  "profile": "lab-gcp-gpu-paired-accuracy",
+  "project": "shed-489901",
+  "region": "us-central1",
+  "source_packet_path": "data/mlip_benchmarks/manifest_sources.json",
+  "fixture_path": "data/mlip_benchmarks/fixtures/ni_fcc_eam_home_turf_v1.json",
+  "fixture_gcs_url": "gs://shed-489901-atlas-inputs/mlip-benchmarks/ni-fcc-eam-home-turf-v1/manifest.json",
+  "support_manifest_path": "gcp/mlip-cell-runner/fixtures/canonical_distill_support_mptrj_train_plus_elastic_v1.json",
+  "support_manifest_gcs_url": "gs://shed-489901-atlas-inputs/mlip-support/canonical-distill-support-mptrj-train-plus-elastic-v1/manifest.json",
+  "backend_catalog_path": "gcp/mlip-cell-runner/backend_catalog.json",
+  "policy_registry_path": "gcp/mlip-cell-runner/policies/accuracy_policy_registry.local.json",
+  "policy_gcs_prefix": "gs://shed-489901-atlas-inputs/mlip-policies/evidence/ni-fcc-eam-home-turf-paired-accuracy-v1",
+  "batch_gcs_prefix": "gs://shed-489901-atlas-inputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1/batches",
+  "artifact_gcs_prefix": "gs://shed-489901-atlas-outputs/mlip-evidence/ni-fcc-eam-home-turf-paired-accuracy-v1",
+  "worker_url": "https://glim-think-v1.aw-ab5.workers.dev",
+  "beat_emit_url": "https://glim-think-v1.aw-ab5.workers.dev/feed/beats",
+  "distill_policy_engine": "rust",
+  "ribbon_version": "hyperribbon-mptrj-support-v1",
+  "checkpoint_contract": {
+    "scope": "raw_predictions",
+    "baseline_mode": "read-write",
+    "distill_mode": "read-only",
+    "pairing_rule": "baseline and Distill Accuracy for the same row and MLIP must share one checkpoint URL"
+  },
+  "budget": {
+    "max_dollars_per_hour": 20.0,
+    "max_active_gpu_jobs": 3,
+    "l4_lab_hourly_estimate_usd": 1.05
+  },
+  "rows": [
+    "energy_volume",
+    "forces",
+    "stress",
+    "elastic_constants",
+    "relaxation_stability"
+  ],
+  "variants": [
+    {
+      "variant_id": "baseline",
+      "distill_profile": "off",
+      "checkpoint_mode": "read-write"
+    },
+    {
+      "variant_id": "distill_accuracy",
+      "distill_profile": "accuracy",
+      "checkpoint_mode": "read-only"
+    }
+  ],
+  "mlips": [
+    {
+      "mlip_id": "mace-mp-0",
+      "enabled": true
+    },
+    {
+      "mlip_id": "chgnet",
+      "enabled": true
+    },
+    {
+      "mlip_id": "m3gnet",
+      "enabled": true
+    },
+    {
+      "mlip_id": "orb-v3",
+      "enabled": true
+    },
+    {
+      "mlip_id": "sevennet",
+      "enabled": true
+    },
+    {
+      "mlip_id": "uma-s-1p1",
+      "enabled": false,
+      "blocked_reason": "FAIR Chemistry UMA access is gated until the account is authorized for the model repository."
+    }
+  ],
+  "evidence_fields": [
+    "source_packet_hash",
+    "fixture_manifest_hash",
+    "support_manifest_hash",
+    "backend_catalog_hash",
+    "policy_registry_hash",
+    "distill_policy_hash",
+    "shared_checkpoint_url",
+    "baseline_cell_id",
+    "distill_cell_id",
+    "artifact_uri",
+    "cloud_run_operation_name",
+    "phoenix_trace_id"
+  ],
+  "acceptance_gate": {
+    "ready_to_launch": [
+      "source packet validates",
+      "sealed fixture validates",
+      "support manifest is present locally and has a GCS target",
+      "every enabled MLIP maps to an allowlisted Cloud Run target job",
+      "every Distill cell resolves a concrete policy file and GCS policy URL",
+      "all Distill cells depend on the paired baseline checkpoint"
+    ],
+    "ready_to_claim_accuracy_gain": [
+      "all completed Distill cells reference the paired baseline checkpoint URL",
+      "all completed Distill cells include support_manifest_hash, distill_policy_hash, interventions, refusals, and theorem_hooks",
+      "row-level accuracy deltas are computed from sealed fixture scores, not from Phoenix-only annotations"
+    ]
+  }
+}

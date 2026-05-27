@@ -276,6 +276,21 @@ This section indexes the specialized technical reviews and deep research reports
 
 ### Performance Benchmarking & Physical Models
 
+#### `docs/mlip-distill-real-material-publication-plan.md`
+**Title:** MLIP Distill Real-Material Publication Plan
+
+**Topic:** End-to-end benchmark and paper plan for testing Lupine Distill on an EAM-home-turf fcc Ni lane and a harder DFT/MLIP-favored lane, with sealed manifests, versioned hyperribbon policies, paired accuracy evaluation, citation stewardship, and public-report milestones.
+
+#### `docs/mlip-distill-gcp-evolution-architecture.md`
+**Title:** MLIP Distill Evolution Architecture
+
+**Topic:** Medium-term Cloudflare + GCP execution architecture for evolving versioned Distill ribbons affordably and reproducibly, including Cloud Run GPU cells, Batch/Spot escalation, D1/GCS/R2/Phoenix evidence ownership, checkpointing, diagnostics, budget gates, and workflow interfaces.
+
+#### `docs/mlip-ni-paired-accuracy-live-report.md`
+**Title:** Ni Paired Accuracy Live Report
+
+**Topic:** Hot-off-the-press paired baseline versus Distill Accuracy campaign report for the Ni fcc EAM-home-turf fixture, generated from the live GCS collector so missing cells, failed cells, and measured deltas stay visibly separate.
+
 #### `docs/phonon_benchmarking_report.md`
 **Title:** Phonon Frequency Spectrum Benchmarking for Interatomic Potentials: A Technical Review for the GLIM Project  
 **Topic:** Using second-order energy derivatives (phonons) as the "gold standard" for potential validation.  

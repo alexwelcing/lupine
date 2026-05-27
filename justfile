@@ -127,6 +127,29 @@ smoke-atlas-distill:
 
 # --- MLIP FLYWHEEL TELEMETRY ---
 
+# Validate the real-material MLIP benchmark source packet and print Ni evidence.
+mlip-source-check:
+    python tools/mlip_benchmark_sources.py validate
+    python tools/mlip_benchmark_sources.py ni-inventory
+    python tools/mlip_benchmark_sources.py ni-bulk-results
+    python -m pytest tools/test_mlip_benchmark_sources.py
+
+# Build and self-evaluate the fcc Ni EAM-home-turf publication fixture.
+mlip-ni-fixture-check:
+    python tools/build_ni_publication_fixture.py --check-only
+    python tools/build_ni_publication_fixture.py
+    python tools/evaluate_ni_fixture_reference.py
+    python -m pytest tools/test_build_ni_publication_fixture.py tools/test_evaluate_ni_fixture_reference.py
+
+# Validate and materialize the paired baseline/Distill Accuracy evidence campaign.
+mlip-evidence-campaign-check:
+    python tools/mlip_evidence_campaign.py validate
+    python tools/mlip_evidence_campaign.py write-batches
+    python tools/mlip_evidence_campaign.py commands --kind run-batch --limit 2 --wait
+    python tools/mlip_evidence_collect.py
+    python tools/mlip_evidence_report.py
+    python -m pytest tools/test_mlip_evidence_campaign.py tools/test_mlip_evidence_collect.py tools/test_mlip_evidence_report.py tools/test_mlip_evidence_launch.py
+
 # Validate the Distill-to-Phoenix OTLP telemetry pipeline in dry-run mode.
 # For the live relay, set PHOENIX_OTLP_RELAY_URL and PHOENIX_RELAY_TOKEN.
 flywheel-telemetry-check:

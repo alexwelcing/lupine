@@ -55,6 +55,48 @@ On the local MACE-MP-0 stress row, this policy reduced held-out stress MAE from
 row, so treat this policy as Distill Accuracy only until an acceleration-safe
 variant is selected and validated.
 
+`hyperribbon-v2-orb-distance-gated-accuracy.json` is the first ORB-specific
+held-out replay lift from the cross-MLIP GCP evidence cache. It adds a
+per-prediction `ribbon_feature_distance_proxy` gate so the support residual is
+only applied when the current structure is inside the learned ribbon feature
+domain. On the ORB replay set it reduced energy MAE from `0.4295` to `0.3344`
+eV/atom while leaving forces, stress, and relaxation neutral. The first full
+cloud row run showed small red on elastic and relaxation, motivating the
+row-aware v3 policy.
+
+`hyperribbon-v3-orb-row-aware-accuracy.json` keeps the ORB energy/force/stress
+lift but refuses residual correction in rows where the same correction is not
+yet faithful to the downstream scoring contract. It disables stress correction
+for `elastic_constants` and relaxed-energy/force correction for
+`relaxation_stability`, preserving baseline behavior there until a strain-aware
+elastic ribbon and active optimizer ribbon are selected. In the controlled GCP
+accuracy run `mlip-v3-orb-controlled-accuracy-20260527a`, baseline and Distill
+Accuracy shared the same raw-prediction checkpoint per row. ORB energy MAE
+improved from `0.4295` to `0.3344` eV/atom (`+22.14%` relative error lift);
+elastic, forces, stress, and relaxation were neutral to floating-point
+precision.
+
+`hyperribbon-v3-chgnet-signed-orientation-accuracy.json` is the first CHGNet
+policy that turns the current support from red to green. The root cause was
+residual orientation transfer: the support residual fit was predictive, but the
+held-out CHGNet energy row improved only with a small signed scale. On the
+CHGNet replay set this reduced energy MAE from `0.1035` to `0.0971` eV/atom and
+kept forces, stress, and relaxation neutral. The cloud row run then exposed a
+tiny force-row numerical red, so the policy now row-overrides `forces` to block
+force correction until a real force lift is selected.
+
+In the controlled GCP accuracy run
+`mlip-v3-chgnet-controlled-accuracy-20260527a`, baseline and Distill Accuracy
+shared the same raw-prediction checkpoint per row. CHGNet energy MAE improved
+from `0.1035` to `0.0971` eV/atom (`+6.13%` relative error lift) and relaxation
+error improved from `0.05567` to `0.05406` (`+2.89%`). Elastic, forces, and
+stress were neutral to floating-point precision.
+
+Controlled accuracy runs deliberately share raw prediction checkpoints between
+baseline and Distill Accuracy to isolate the ribbon's accuracy effect from
+backend nondeterminism. Do not treat their Distill speed values as acceleration
+evidence; run separate speed/accelerate campaigns for that claim.
+
 Example:
 
 ```powershell

@@ -1,0 +1,564 @@
+#!/usr/bin/env python3
+"""Validate and materialize paired MLIP evidence campaigns.
+
+This tool turns a benchmark campaign spec into concrete evidence work:
+paired baseline/Distill cells, shared raw-prediction checkpoints, batch specs,
+and exact Cloud Run commands. It deliberately performs local validation before
+any cloud launch command is emitted.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import pathlib
+import re
+import sys
+from typing import Any
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+RUNNER_DIR = ROOT / "gcp" / "mlip-cell-runner"
+if str(RUNNER_DIR) not in sys.path:
+    sys.path.insert(0, str(RUNNER_DIR))
+
+import fixture_contract  # noqa: E402
+import mlip_benchmark_sources  # noqa: E402
+
+
+DEFAULT_CAMPAIGN = ROOT / "data" / "mlip_benchmarks" / "evidence_campaigns" / "ni_lane_a_paired_accuracy_v1.json"
+DEFAULT_BATCH_DIR = ROOT / "tmp" / "mlip-evidence" / "ni-fcc-eam-home-turf-paired-accuracy-v1" / "batches"
+ALLOWED_TARGET_RE = re.compile(r"default_value\s*=\s*\"([^\"]*mlip-cell[^\"]*)\"")
+
+
+def load_json(path: pathlib.Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+    if not isinstance(payload, dict):
+        raise ValueError(f"expected JSON object: {path}")
+    return payload
+
+
+def repo_path(value: str | pathlib.Path) -> pathlib.Path:
+    path = pathlib.Path(value)
+    return path if path.is_absolute() else ROOT / path
+
+
+def stable_hash(payload: Any) -> str:
+    data = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
+    return "sha256:" + hashlib.sha256(data).hexdigest()
+
+
+def file_sha256(path: pathlib.Path) -> str:
+    return "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def gs_join(prefix: str, *parts: str) -> str:
+    clean_prefix = prefix.rstrip("/")
+    clean_parts = [str(part).strip("/") for part in parts if str(part).strip("/")]
+    return "/".join([clean_prefix, *clean_parts])
+
+
+def sanitize_id(value: str) -> str:
+    return re.sub(r"[^A-Za-z0-9-]+", "-", value).strip("-").lower()
+
+
+def load_campaign(path: pathlib.Path = DEFAULT_CAMPAIGN) -> dict[str, Any]:
+    campaign = load_json(path)
+    campaign["_campaign_path"] = str(path)
+    return campaign
+
+
+def enabled_mlips(campaign: dict[str, Any]) -> list[str]:
+    mlips = []
+    for entry in campaign.get("mlips", []):
+        if isinstance(entry, dict) and entry.get("enabled", True):
+            mlip_id = entry.get("mlip_id")
+            if isinstance(mlip_id, str) and mlip_id:
+                mlips.append(mlip_id)
+    return mlips
+
+
+def variants_by_id(campaign: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    variants: dict[str, dict[str, Any]] = {}
+    for entry in campaign.get("variants", []):
+        if isinstance(entry, dict) and isinstance(entry.get("variant_id"), str):
+            variants[entry["variant_id"]] = entry
+    return variants
+
+
+def backend_map(campaign: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    catalog = load_json(repo_path(campaign["backend_catalog_path"]))
+    backends: dict[str, dict[str, Any]] = {}
+    for entry in catalog.get("backends", []):
+        if isinstance(entry, dict) and isinstance(entry.get("mlip_id"), str):
+            backends[entry["mlip_id"]] = entry
+    return backends
+
+
+def allowed_target_jobs() -> set[str]:
+    main_rs = ROOT / "gcp" / "tasks-consumer" / "src" / "main.rs"
+    if not main_rs.exists():
+        return set()
+    text = main_rs.read_text(encoding="utf-8")
+    allowed: set[str] = set()
+    for match in ALLOWED_TARGET_RE.finditer(text):
+        allowed.update(item.strip() for item in match.group(1).split(",") if item.strip())
+    return allowed
+
+
+def policy_registry(campaign: dict[str, Any]) -> dict[str, str]:
+    registry = load_json(repo_path(campaign["policy_registry_path"]))
+    policies = registry.get("policies")
+    if not isinstance(policies, dict):
+        raise ValueError("policy registry must contain a policies object")
+    return {str(key): str(value) for key, value in policies.items()}
+
+
+def policy_for(campaign: dict[str, Any], row_id: str, mlip_id: str) -> dict[str, str]:
+    policies = policy_registry(campaign)
+    selected = policies.get(f"{row_id}:{mlip_id}") or policies.get("default_accuracy")
+    if not selected:
+        raise ValueError(f"no Distill policy for {row_id}:{mlip_id}")
+    local_path = repo_path(selected)
+    return {
+        "policy_local_path": local_path.relative_to(ROOT).as_posix(),
+        "policy_gcs_url": gs_join(campaign["policy_gcs_prefix"], local_path.name),
+        "policy_hash": file_sha256(local_path),
+    }
+
+
+def checkpoint_url(campaign: dict[str, Any], row_id: str, mlip_id: str) -> str:
+    return gs_join(campaign["artifact_gcs_prefix"], "checkpoints", row_id, mlip_id, "raw_predictions.json")
+
+
+def artifact_prefix(campaign: dict[str, Any], variant_id: str, row_id: str, mlip_id: str) -> str:
+    return gs_join(campaign["artifact_gcs_prefix"], "cells", variant_id, row_id, mlip_id)
+
+
+def cell_id(campaign: dict[str, Any], variant_id: str, row_id: str, mlip_id: str) -> str:
+    return f"{campaign['campaign_id']}:{variant_id}:{row_id}:{mlip_id}"
+
+
+def expand_cells(campaign: dict[str, Any]) -> list[dict[str, Any]]:
+    variants = variants_by_id(campaign)
+    backends = backend_map(campaign)
+    cells: list[dict[str, Any]] = []
+    for mlip_id in enabled_mlips(campaign):
+        target_job = backends[mlip_id]["target_job"]
+        for row_id in campaign["rows"]:
+            baseline_id = cell_id(campaign, "baseline", row_id, mlip_id)
+            shared_checkpoint = checkpoint_url(campaign, row_id, mlip_id)
+            baseline_variant = variants["baseline"]
+            cells.append(
+                {
+                    "cell_id": baseline_id,
+                    "campaign_id": campaign["campaign_id"],
+                    "row_id": row_id,
+                    "mlip_id": mlip_id,
+                    "target_job": target_job,
+                    "variant_id": "baseline",
+                    "distill_profile": baseline_variant["distill_profile"],
+                    "manifest_url": campaign["fixture_gcs_url"],
+                    "fixture_url": campaign["fixture_gcs_url"],
+                    "artifact_prefix": artifact_prefix(campaign, "baseline", row_id, mlip_id),
+                    "checkpoint_url": shared_checkpoint,
+                    "checkpoint_mode": baseline_variant["checkpoint_mode"],
+                    "evidence_role": "baseline_checkpoint_producer",
+                }
+            )
+            distill_variant = variants["distill_accuracy"]
+            policy = policy_for(campaign, row_id, mlip_id)
+            cells.append(
+                {
+                    "cell_id": cell_id(campaign, "distill_accuracy", row_id, mlip_id),
+                    "campaign_id": campaign["campaign_id"],
+                    "row_id": row_id,
+                    "mlip_id": mlip_id,
+                    "target_job": target_job,
+                    "variant_id": "distill_accuracy",
+                    "distill_profile": distill_variant["distill_profile"],
+                    "manifest_url": campaign["fixture_gcs_url"],
+                    "fixture_url": campaign["fixture_gcs_url"],
+                    "artifact_prefix": artifact_prefix(campaign, "distill_accuracy", row_id, mlip_id),
+                    "checkpoint_url": shared_checkpoint,
+                    "checkpoint_mode": distill_variant["checkpoint_mode"],
+                    "depends_on_cell_id": baseline_id,
+                    "support_manifest_url": campaign["support_manifest_gcs_url"],
+                    "distill_policy_url": policy["policy_gcs_url"],
+                    "distill_policy_hash": policy["policy_hash"],
+                    "distill_policy_engine": campaign["distill_policy_engine"],
+                    "ribbon_version": campaign["ribbon_version"],
+                    "evidence_role": "distill_checkpoint_consumer",
+                }
+            )
+    return cells
+
+
+def expand_batches(campaign: dict[str, Any]) -> list[dict[str, Any]]:
+    cells = expand_cells(campaign)
+    backends = backend_map(campaign)
+    batches: list[dict[str, Any]] = []
+    for mlip_id in enabled_mlips(campaign):
+        mlip_cells = [cell for cell in cells if cell["mlip_id"] == mlip_id]
+        ordered_cells: list[dict[str, Any]] = []
+        for row_id in campaign["rows"]:
+            ordered_cells.extend(
+                cell
+                for cell in mlip_cells
+                if cell["row_id"] == row_id and cell["variant_id"] in {"baseline", "distill_accuracy"}
+            )
+        batch_id = sanitize_id(f"{campaign['campaign_id']}-{mlip_id}-paired-accuracy")
+        batch_gcs_url = gs_join(campaign["batch_gcs_prefix"], f"{batch_id}.json")
+        batches.append(
+            {
+                "schema": "lupine.mlip.batch_spec.v1",
+                "batch_id": batch_id,
+                "run_id": campaign["campaign_id"],
+                "campaign_id": campaign["campaign_id"],
+                "profile": campaign["profile"],
+                "fixture_id": "ni-fcc-eam-home-turf-v1",
+                "mlip_id": mlip_id,
+                "target_job": backends[mlip_id]["target_job"],
+                "batch_spec_gcs_url": batch_gcs_url,
+                "batch_artifact_prefix": gs_join(campaign["artifact_gcs_prefix"], "batches", batch_id),
+                "defaults": {
+                    "beat_emit_url": campaign["beat_emit_url"],
+                    "manifest_url": campaign["fixture_gcs_url"],
+                    "fixture_url": campaign["fixture_gcs_url"],
+                    "checkpoint_mode": "read-write",
+                    "distill_policy_engine": campaign["distill_policy_engine"],
+                    "ribbon_version": campaign["ribbon_version"],
+                },
+                "cells": ordered_cells,
+            }
+        )
+    return batches
+
+
+def evidence_summary(campaign: dict[str, Any]) -> dict[str, Any]:
+    cells = expand_cells(campaign)
+    batches = expand_batches(campaign)
+    variants = sorted({cell["variant_id"] for cell in cells})
+    policies = sorted({cell["distill_policy_url"] for cell in cells if cell["variant_id"] == "distill_accuracy"})
+    return {
+        "campaign_id": campaign["campaign_id"],
+        "profile": campaign["profile"],
+        "rows": list(campaign["rows"]),
+        "mlips": enabled_mlips(campaign),
+        "variants": variants,
+        "cells_total": len(cells),
+        "baseline_cells": len([cell for cell in cells if cell["variant_id"] == "baseline"]),
+        "distill_accuracy_cells": len([cell for cell in cells if cell["variant_id"] == "distill_accuracy"]),
+        "batches_total": len(batches),
+        "target_jobs": sorted({batch["target_job"] for batch in batches}),
+        "policy_urls": policies,
+        "fixture_hash": load_json(repo_path(campaign["fixture_path"])).get("manifest_hash"),
+        "source_packet_hash": stable_hash(load_json(repo_path(campaign["source_packet_path"]))),
+        "campaign_hash": stable_hash({key: value for key, value in campaign.items() if not key.startswith("_")}),
+    }
+
+
+def validate_campaign(campaign: dict[str, Any]) -> list[str]:
+    issues: list[str] = []
+    required = (
+        "schema",
+        "campaign_id",
+        "source_packet_path",
+        "fixture_path",
+        "fixture_gcs_url",
+        "support_manifest_path",
+        "support_manifest_gcs_url",
+        "backend_catalog_path",
+        "policy_registry_path",
+        "policy_gcs_prefix",
+        "batch_gcs_prefix",
+        "artifact_gcs_prefix",
+        "beat_emit_url",
+        "rows",
+        "variants",
+        "mlips",
+    )
+    for field in required:
+        if field not in campaign:
+            issues.append(f"{field} is required")
+    if issues:
+        return issues
+    if campaign.get("schema") != "lupine.mlip.evidence_campaign.v1":
+        issues.append("schema must be lupine.mlip.evidence_campaign.v1")
+
+    paths_to_check = (
+        "source_packet_path",
+        "fixture_path",
+        "support_manifest_path",
+        "backend_catalog_path",
+        "policy_registry_path",
+    )
+    for field in paths_to_check:
+        path = repo_path(campaign[field])
+        if not path.exists():
+            issues.append(f"{field} does not exist: {campaign[field]}")
+
+    if issues:
+        return issues
+
+    source_manifest = load_json(repo_path(campaign["source_packet_path"]))
+    issues.extend(
+        f"source_packet: {issue}"
+        for issue in mlip_benchmark_sources.validate_source_packet(source_manifest, root=ROOT, check_local=True)
+    )
+
+    try:
+        fixture = load_json(repo_path(campaign["fixture_path"]))
+        fixture_contract.validate_manifest(fixture)
+    except Exception as exc:  # noqa: BLE001 - surfaced as validation text.
+        issues.append(f"fixture_manifest: {exc}")
+
+    support = load_json(repo_path(campaign["support_manifest_path"]))
+    if not support.get("manifest_hash"):
+        issues.append("support_manifest_path must contain manifest_hash")
+
+    backends = backend_map(campaign)
+    allowed_jobs = allowed_target_jobs()
+    rows = campaign.get("rows") if isinstance(campaign.get("rows"), list) else []
+    variants = variants_by_id(campaign)
+    if set(variants) != {"baseline", "distill_accuracy"}:
+        issues.append("variants must contain exactly baseline and distill_accuracy for this evidence campaign")
+    for variant_id, expected_mode in (("baseline", "read-write"), ("distill_accuracy", "read-only")):
+        variant = variants.get(variant_id, {})
+        if variant.get("checkpoint_mode") != expected_mode:
+            issues.append(f"{variant_id}.checkpoint_mode must be {expected_mode}")
+    for row_id in rows:
+        if row_id not in fixture_contract.ROW_DEFAULTS:
+            issues.append(f"unknown row_id: {row_id}")
+    for mlip_id in enabled_mlips(campaign):
+        backend = backends.get(mlip_id)
+        if not backend:
+            issues.append(f"enabled MLIP missing from backend catalog: {mlip_id}")
+            continue
+        target_job = backend.get("target_job")
+        if target_job not in allowed_jobs:
+            issues.append(f"target_job is not allowlisted for {mlip_id}: {target_job}")
+        for row_id in rows:
+            try:
+                policy_for(campaign, str(row_id), mlip_id)
+            except Exception as exc:  # noqa: BLE001 - surfaced as validation text.
+                issues.append(str(exc))
+
+    cells = expand_cells(campaign)
+    for cell in cells:
+        if cell["variant_id"] != "distill_accuracy":
+            continue
+        baseline = next(
+            (
+                other
+                for other in cells
+                if other["cell_id"] == cell.get("depends_on_cell_id")
+                and other["variant_id"] == "baseline"
+                and other["row_id"] == cell["row_id"]
+                and other["mlip_id"] == cell["mlip_id"]
+            ),
+            None,
+        )
+        if not baseline:
+            issues.append(f"distill cell missing paired baseline: {cell['cell_id']}")
+            continue
+        if baseline["checkpoint_url"] != cell["checkpoint_url"]:
+            issues.append(f"checkpoint mismatch for {cell['cell_id']}")
+    return issues
+
+
+def batch_path(batch: dict[str, Any], out_dir: pathlib.Path) -> pathlib.Path:
+    return out_dir / f"{batch['batch_id']}.json"
+
+
+def write_batches(campaign: dict[str, Any], out_dir: pathlib.Path) -> list[dict[str, Any]]:
+    issues = validate_campaign(campaign)
+    if issues:
+        raise SystemExit("campaign validation failed:\n" + "\n".join(f"- {issue}" for issue in issues))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    batches = expand_batches(campaign)
+    written: list[dict[str, Any]] = []
+    for batch in batches:
+        path = batch_path(batch, out_dir)
+        materialized = {key: value for key, value in batch.items() if key != "batch_spec_gcs_url"}
+        path.write_text(json.dumps(materialized, indent=2, sort_keys=True), encoding="utf-8")
+        written.append(
+            {
+                "batch_id": batch["batch_id"],
+                "target_job": batch["target_job"],
+                "cells": len(batch["cells"]),
+                "local_path": str(path),
+                "gcs_url": batch["batch_spec_gcs_url"],
+            }
+        )
+    return written
+
+
+def gcloud_run_batch_command(campaign: dict[str, Any], batch: dict[str, Any], *, wait: bool) -> str:
+    args = f"run-batch,--batch-spec-url,{batch['batch_spec_gcs_url']}"
+    wait_flag = "--wait" if wait else "--async"
+    return (
+        f"gcloud run jobs execute {batch['target_job']} "
+        f"--project {campaign['project']} --region {campaign['region']} "
+        f"--args {args} --format json {wait_flag}"
+    )
+
+
+def gcloud_run_cell_command(campaign: dict[str, Any], cell: dict[str, Any], *, wait: bool) -> str:
+    args = [
+        "run-cell",
+        "--run-id",
+        campaign["campaign_id"],
+        "--campaign-id",
+        campaign["campaign_id"],
+        "--cell-id",
+        cell["cell_id"],
+        "--row-id",
+        cell["row_id"],
+        "--mlip-id",
+        cell["mlip_id"],
+        "--variant-id",
+        cell["variant_id"],
+        "--distill-profile",
+        cell["distill_profile"],
+        "--manifest-url",
+        cell["manifest_url"],
+        "--artifact-prefix",
+        cell["artifact_prefix"],
+        "--beat-emit-url",
+        campaign["beat_emit_url"],
+        "--checkpoint-url",
+        cell["checkpoint_url"],
+        "--checkpoint-mode",
+        cell["checkpoint_mode"],
+    ]
+    if cell["variant_id"] == "distill_accuracy":
+        args.extend(
+            [
+                "--support-manifest-url",
+                cell["support_manifest_url"],
+                "--distill-policy-url",
+                cell["distill_policy_url"],
+                "--distill-policy-engine",
+                cell["distill_policy_engine"],
+                "--ribbon-version",
+                cell["ribbon_version"],
+            ]
+        )
+    wait_flag = "--wait" if wait else "--async"
+    return (
+        f"gcloud run jobs execute {cell['target_job']} "
+        f"--project {campaign['project']} --region {campaign['region']} "
+        f"--args {','.join(args)} --format json {wait_flag}"
+    )
+
+
+def upload_commands(campaign: dict[str, Any], batch_dir: pathlib.Path) -> list[str]:
+    policies = sorted({policy_for(campaign, row_id, mlip_id)["policy_local_path"] for row_id in campaign["rows"] for mlip_id in enabled_mlips(campaign)})
+    commands = [
+        f"gcloud storage cp {campaign['fixture_path']} {campaign['fixture_gcs_url']}",
+        f"gcloud storage cp {campaign['support_manifest_path']} {campaign['support_manifest_gcs_url']}",
+    ]
+    commands.extend(
+        f"gcloud storage cp {pathlib.Path(policy_path).as_posix()} {gs_join(campaign['policy_gcs_prefix'], pathlib.Path(policy_path).name)}"
+        for policy_path in policies
+    )
+    commands.append(f"gcloud storage cp {batch_dir.as_posix()}/*.json {campaign['batch_gcs_prefix'].rstrip('/')}/")
+    return commands
+
+
+def command_rows(campaign: dict[str, Any], kind: str, limit: int | None, batch_dir: pathlib.Path, wait: bool) -> list[str]:
+    if kind == "upload":
+        commands = upload_commands(campaign, batch_dir)
+    elif kind == "run-batch":
+        commands = [gcloud_run_batch_command(campaign, batch, wait=wait) for batch in expand_batches(campaign)]
+    elif kind == "run-cell":
+        commands = [gcloud_run_cell_command(campaign, cell, wait=wait) for cell in expand_cells(campaign)]
+    else:
+        raise ValueError(f"unknown command kind: {kind}")
+    return commands[:limit] if limit is not None else commands
+
+
+def cmd_validate(args: argparse.Namespace) -> int:
+    campaign = load_campaign(args.campaign)
+    issues = validate_campaign(campaign)
+    if issues:
+        print(json.dumps({"status": "failed", "issues": issues}, indent=2, sort_keys=True))
+        return 1
+    print(json.dumps({"status": "ready", "summary": evidence_summary(campaign)}, indent=2, sort_keys=True))
+    return 0
+
+
+def cmd_expand(args: argparse.Namespace) -> int:
+    campaign = load_campaign(args.campaign)
+    issues = validate_campaign(campaign)
+    if issues:
+        raise SystemExit("campaign validation failed:\n" + "\n".join(f"- {issue}" for issue in issues))
+    payload = {
+        "summary": evidence_summary(campaign),
+        "cells": expand_cells(campaign),
+        "batches": expand_batches(campaign),
+    }
+    if args.json:
+        print(json.dumps(payload, indent=2, sort_keys=True))
+    else:
+        summary = payload["summary"]
+        print(
+            f"{summary['campaign_id']}: {summary['cells_total']} cells, "
+            f"{summary['batches_total']} batches, {len(summary['policy_urls'])} policy objects"
+        )
+    return 0
+
+
+def cmd_write_batches(args: argparse.Namespace) -> int:
+    campaign = load_campaign(args.campaign)
+    written = write_batches(campaign, args.output)
+    print(json.dumps({"status": "written", "batches": written}, indent=2, sort_keys=True))
+    return 0
+
+
+def cmd_commands(args: argparse.Namespace) -> int:
+    campaign = load_campaign(args.campaign)
+    issues = validate_campaign(campaign)
+    if issues:
+        raise SystemExit("campaign validation failed:\n" + "\n".join(f"- {issue}" for issue in issues))
+    for command in command_rows(campaign, args.kind, args.limit, args.batch_dir, args.wait):
+        print(command)
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--campaign", type=pathlib.Path, default=DEFAULT_CAMPAIGN)
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    validate = sub.add_parser("validate")
+    validate.set_defaults(func=cmd_validate)
+
+    expand = sub.add_parser("expand")
+    expand.add_argument("--json", action="store_true")
+    expand.set_defaults(func=cmd_expand)
+
+    write_batches_parser = sub.add_parser("write-batches")
+    write_batches_parser.add_argument("--output", type=pathlib.Path, default=DEFAULT_BATCH_DIR)
+    write_batches_parser.set_defaults(func=cmd_write_batches)
+
+    commands = sub.add_parser("commands")
+    commands.add_argument("--kind", choices=("upload", "run-batch", "run-cell"), default="run-batch")
+    commands.add_argument("--limit", type=int, default=None)
+    commands.add_argument("--batch-dir", type=pathlib.Path, default=DEFAULT_BATCH_DIR)
+    commands.add_argument("--wait", action="store_true")
+    commands.set_defaults(func=cmd_commands)
+
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    return int(args.func(args))
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import mlip_cell_runner as runner
 from mlip_cell_runner import CellCheckpoint, checkpoint_url_from_prefix
 
 
@@ -72,3 +73,47 @@ def test_cell_checkpoint_reuses_raw_predictions_across_variants(tmp_path) -> Non
 
     assert distill.get_prediction("forces", 0, case) == prediction
     assert distill.summary()["loaded_predictions"] == 1
+
+
+def test_gcs_checkpoint_buffers_rapid_prediction_writes(monkeypatch) -> None:
+    writes = []
+    case = {"structure_id": "Al-1", "symbols": ["Al"], "positions": [[0.0, 0.0, 0.0]]}
+    checkpoint = CellCheckpoint("gs://bucket/cell_checkpoint.json", "write-only", **context())
+
+    def fake_write_url(url, data, content_type="application/octet-stream"):
+        writes.append((url, data, content_type))
+        return url
+
+    monkeypatch.setattr(runner, "write_url", fake_write_url)
+
+    checkpoint.record_prediction("forces", 0, case, {"structure_id": "Al-1"})
+    checkpoint.record_prediction("forces", 1, {**case, "structure_id": "Al-2"}, {"structure_id": "Al-2"})
+
+    assert writes == []
+    assert checkpoint.summary()["pending_flush_predictions"] == 2
+
+    checkpoint.flush(force=True)
+
+    assert len(writes) == 1
+    assert checkpoint.summary()["pending_flush_predictions"] == 0
+    assert checkpoint.summary()["flush_count"] == 1
+
+
+def test_request_with_retry_retries_transient_http(monkeypatch) -> None:
+    calls = []
+
+    class Response:
+        def __init__(self, status_code: int) -> None:
+            self.status_code = status_code
+
+    def fake_request(method, url, **kwargs):
+        calls.append((method, url, kwargs))
+        return Response(429 if len(calls) == 1 else 200)
+
+    monkeypatch.setattr(runner.requests, "request", fake_request)
+    monkeypatch.setattr(runner.time, "sleep", lambda _seconds: None)
+
+    response = runner.request_with_retry("GET", "https://example.test/object", timeout=1)
+
+    assert response.status_code == 200
+    assert len(calls) == 2

@@ -56,7 +56,7 @@ struct Cli {
     #[arg(
         long,
         env = "ALLOWED_TARGET_JOBS",
-        default_value = "atlas-distill,mlip-cell-mace,mlip-cell-chgnet,mlip-cell-m3gnet,mlip-cell-orb,mlip-cell-sevennet"
+        default_value = "atlas-distill,mlip-cell-mace,mlip-cell-chgnet,mlip-cell-m3gnet,mlip-cell-orb,mlip-cell-sevennet,mlip-cell-uma"
     )]
     allowed_target_jobs: String,
 
@@ -255,7 +255,7 @@ mod tests {
             region: "us-central1".into(),
             target_job: "atlas-distill".into(),
             allowed_target_jobs:
-                "atlas-distill,mlip-cell-mace,mlip-cell-chgnet,mlip-cell-m3gnet,mlip-cell-orb,mlip-cell-sevennet"
+                "atlas-distill,mlip-cell-mace,mlip-cell-chgnet,mlip-cell-m3gnet,mlip-cell-orb,mlip-cell-sevennet,mlip-cell-uma"
                     .into(),
             dev_mode: true,
         }

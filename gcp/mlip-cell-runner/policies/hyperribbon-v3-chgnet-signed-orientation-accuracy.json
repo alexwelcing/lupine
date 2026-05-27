@@ -1,0 +1,18 @@
+{
+  "max_energy_bias_ev_per_atom": 0.5,
+  "max_stress_bias_gpa": 3.125,
+  "max_force_bias_ev_per_angstrom": 1.0,
+  "max_force_norm_ev_per_angstrom": 200.0,
+  "max_stress_abs_gpa": 5000.0,
+  "energy_correction_scale": -0.05,
+  "stress_correction_scale": -1.25,
+  "force_correction_scale": 1.0,
+  "min_support_lift_fraction": 0.0,
+  "max_support_eval_distance_proxy": 1.0,
+  "max_ribbon_feature_distance_proxy": 1000000000.0,
+  "row_policy_overrides": {
+    "forces": {
+      "force_correction_scale": 0.0
+    }
+  }
+}

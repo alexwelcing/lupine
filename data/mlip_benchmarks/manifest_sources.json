@@ -1,0 +1,430 @@
+{
+  "schema": "lupine.mlip.benchmark_sources.v1",
+  "packet_id": "real-material-publication-v1",
+  "created_at": "2026-05-27T00:00:00Z",
+  "owner": "lupine-distill",
+  "purpose": "Auditable source packet for the first real-material Lupine Distill Accuracy publication benchmark.",
+  "claim_guardrail": "This packet supports paired, stratified, reproducible comparisons. It must not be used to claim universal superiority, DFT-level accuracy, or acceleration without the matching sealed evidence.",
+  "material_lanes": [
+    {
+      "lane_id": "lane-a-fcc-ni-eam-home-turf",
+      "material_family": "fcc nickel",
+      "role": "fair classical-baseline anchor",
+      "primary_material_ids": [
+        "Ni-fcc"
+      ],
+      "why_this_lane_matters": "Nickel is a serious EAM/MEAM home-turf system with NIST/OpenKIM provenance and recent surface/defect benchmark coverage. Distill must not hide from a strong classical baseline.",
+      "required_tasks": [
+        "bulk_lattice_and_energy_curve",
+        "finite_strain_elastic_constants",
+        "vacancy_formation",
+        "low_index_surfaces",
+        "short_range_compression_or_stacking_fault",
+        "equilibrium_solve_offset_lattice"
+      ],
+      "pass_conditions": [
+        "Classical EAM/MEAM remains competitive on easy fcc Ni bulk mechanics.",
+        "Distill Accuracy improves selected MLIP rows or refuses unsafe corrections.",
+        "No hidden degradation on easy Ni bulk rows is accepted."
+      ],
+      "primary_sources": [
+        "nist-ipr",
+        "nist-ni-system-page",
+        "openkim",
+        "openkim-ni-extended-defects-2025",
+        "jarvis-ff"
+      ]
+    },
+    {
+      "lane_id": "lane-b-hard-dft-mlip-favored",
+      "material_family": "mixed-bonding oxide or solid ion conductor",
+      "role": "hard generalization lane",
+      "primary_material_ids": [
+        "Zr-O-candidate",
+        "Li3YCl6-candidate",
+        "Li6PS5Cl-candidate"
+      ],
+      "why_this_lane_matters": "A hard lane prevents the paper from being only a metallic-potential exercise. It tests whether Distill improves or refuses MLIP predictions in regimes where classical EAM/MEAM assumptions may not be scientifically applicable.",
+      "required_tasks": [
+        "static_energy_and_force_errors",
+        "controlled_perturbation_relaxation",
+        "force_call_and_wall_time_trajectory",
+        "energy_basin_closeness",
+        "stress_force_elastic_consistency_checks"
+      ],
+      "pass_conditions": [
+        "Classical baselines are marked not_applicable when the chemistry makes them invalid.",
+        "Distill interventions remain physically coherent across energy, forces, stress, and relaxation stability.",
+        "Negative cases are recorded as ribbon evidence."
+      ],
+      "primary_sources": [
+        "ms25",
+        "solid-ion-conductors-umlips-2025",
+        "mlip-arena-2025",
+        "umlips-metals-defects-2025"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "nist-ipr",
+      "source_type": "repository",
+      "title": "NIST Interatomic Potentials Repository",
+      "urls": [
+        "https://www.ctcms.nist.gov/potentials/"
+      ],
+      "citation_keys": [
+        "nist_ipr"
+      ],
+      "license": "source-specific; cite repository and original potential papers",
+      "stewardship": "Cite NIST IPR plus every original potential paper and implementation id used.",
+      "use_in_lanes": [
+        "lane-a-fcc-ni-eam-home-turf"
+      ]
+    },
+    {
+      "source_id": "nist-ni-system-page",
+      "source_type": "repository_page",
+      "title": "NIST IPR Nickel System Page",
+      "urls": [
+        "https://www.ctcms.nist.gov/potentials/system/Ni/"
+      ],
+      "citation_keys": [
+        "nist_ipr"
+      ],
+      "license": "source-specific; cite repository and original potential papers",
+      "stewardship": "Use as the auditable index for Ni potential files, implementation ids, DOIs, and notes.",
+      "use_in_lanes": [
+        "lane-a-fcc-ni-eam-home-turf"
+      ]
+    },
+    {
+      "source_id": "openkim",
+      "source_type": "repository",
+      "title": "OpenKIM: The Open Knowledgebase of Interatomic Models",
+      "urls": [
+        "https://openkim.org/"
+      ],
+      "citation_keys": [
+        "openkim"
+      ],
+      "license": "model-specific",
+      "stewardship": "Cite OpenKIM when using model ids, tests, or computed-property records.",
+      "use_in_lanes": [
+        "lane-a-fcc-ni-eam-home-turf"
+      ]
+    },
+    {
+      "source_id": "jarvis-ff",
+      "source_type": "dataset_and_paper",
+      "title": "Evaluation and comparison of classical interatomic potentials through a user-friendly interactive web-interface",
+      "urls": [
+        "https://materialsdata.nist.gov/handle/11256/702",
+        "https://www.nature.com/articles/sdata2016125"
+      ],
+      "citation_keys": [
+        "choudhary2017jarvisff"
+      ],
+      "license": "CC0 for the NIST material data record except where otherwise noted",
+      "stewardship": "Use for classical potential comparison context and cite the Scientific Data descriptor.",
+      "use_in_lanes": [
+        "lane-a-fcc-ni-eam-home-turf"
+      ]
+    },
+    {
+      "source_id": "openkim-ni-extended-defects-2025",
+      "source_type": "benchmark_paper",
+      "title": "Benchmarking 34 OpenKIM Nickel Potentials with an Emphasis on Surfaces and Extended Defects",
+      "urls": [
+        "https://arxiv.org/abs/2510.18033"
+      ],
+      "citation_keys": [
+        "thoms2025openkimnickel"
+      ],
+      "license": "arXiv source license; verify final venue license before reuse",
+      "stewardship": "Use as the current Ni benchmark framing for bulk, surface, defect, migration, and short-range compression tasks.",
+      "use_in_lanes": [
+        "lane-a-fcc-ni-eam-home-turf"
+      ]
+    },
+    {
+      "source_id": "ms25",
+      "source_type": "dataset",
+      "title": "MS25: Materials Science-Focused Benchmark Data Set for Machine Learning Interatomic Potentials",
+      "urls": [
+        "https://acdc.alcf.anl.gov/mdf/detail/74d6b3d9-c33c-47c4-9c9a-c14ca773d3c8-1.0/"
+      ],
+      "citation_keys": [
+        "maxson2025ms25"
+      ],
+      "license": "Creative Commons Attribution 4.0",
+      "stewardship": "Candidate hard-lane source. Before running, choose exact structures, labels, split, and data subset to avoid downloading unnecessary bulk data.",
+      "use_in_lanes": [
+        "lane-b-hard-dft-mlip-favored"
+      ]
+    },
+    {
+      "source_id": "solid-ion-conductors-umlips-2025",
+      "source_type": "benchmark_paper",
+      "title": "Universal Machine Learning Interatomic Potentials are Ready for Solid Ion Conductors",
+      "urls": [
+        "https://arxiv.org/abs/2502.09970"
+      ],
+      "citation_keys": [
+        "du2025solidionconductors"
+      ],
+      "license": "arXiv source license; verify data and code license before reuse",
+      "stewardship": "Candidate Li solid-ion-conductor hard lane. Only use after exact structures, reference labels, and redistribution terms are verified.",
+      "use_in_lanes": [
+        "lane-b-hard-dft-mlip-favored"
+      ]
+    },
+    {
+      "source_id": "mlip-arena-2025",
+      "source_type": "benchmark_paper",
+      "title": "MLIP Arena: Advancing Fairness and Transparency in Machine Learning Interatomic Potentials via an Open, Accessible Benchmark Platform",
+      "urls": [
+        "https://papers.nips.cc/paper_files/paper/2025/hash/bfa45223cc236855dbaa5c468c809896-Abstract-Datasets_and_Benchmarks_Track.html"
+      ],
+      "citation_keys": [
+        "chiang2025mliparena"
+      ],
+      "license": "paper and package licenses must be checked before reuse",
+      "stewardship": "Use for benchmark-design positioning, especially leakage, fairness, physics-aware metrics, and benchmark surfaces beyond static DFT MAE.",
+      "use_in_lanes": [
+        "lane-b-hard-dft-mlip-favored"
+      ]
+    },
+    {
+      "source_id": "umlips-metals-defects-2025",
+      "source_type": "benchmark_paper",
+      "title": "Universal machine learning interatomic potentials poised to supplant DFT in modeling general defects in metals and random alloys",
+      "urls": [
+        "https://arxiv.org/abs/2502.03578"
+      ],
+      "citation_keys": [
+        "shuang2025defectsumlips"
+      ],
+      "license": "arXiv source license; verify data and code license before reuse",
+      "stewardship": "Use for modern defect benchmark context and for positioning complex-defect MLIP claims.",
+      "use_in_lanes": [
+        "lane-a-fcc-ni-eam-home-turf",
+        "lane-b-hard-dft-mlip-favored"
+      ]
+    }
+  ],
+  "reference_values": {
+    "ni_fcc_bulk_elastic_anchor": {
+      "material_id": "Ni-fcc",
+      "crystal_structure": "fcc",
+      "temperature_k": 0,
+      "reference_source": "atlas-distill/benchmarks/nist_scaffold.csv",
+      "citation_keys": [
+        "nist_ipr",
+        "simmons1971"
+      ],
+      "values": {
+        "c11_gpa": 246.5,
+        "c12_gpa": 147.3,
+        "c44_gpa": 124.7
+      },
+      "notes": "Elastic constants are the existing NIST-derived atlas-distill Ni scaffold anchor and are used here for source-packet QA, not as a complete publication reference packet."
+    },
+    "ni_fcc_lattice_anchor": {
+      "material_id": "Ni-fcc",
+      "crystal_structure": "fcc",
+      "temperature_k": 0,
+      "reference_source": "existing atlas-distill Ni LAMMPS trace setup",
+      "citation_keys": [
+        "nist_ipr"
+      ],
+      "values": {
+        "a0_angstrom": 3.524
+      },
+      "notes": "This is the lattice constant currently used by the existing Ni LAMMPS traces. Before paper submission, replace or supplement with the exact experimental/DFT reference and citation used in the final figure."
+    },
+    "ni_fcc_cohesive_anchor": {
+      "material_id": "Ni-fcc",
+      "crystal_structure": "fcc",
+      "temperature_k": 0,
+      "reference_source": "nist_benchmark.csv",
+      "citation_keys": [
+        "nist_ipr"
+      ],
+      "values": {
+        "ecoh_ev_per_atom": -4.44
+      },
+      "notes": "Existing NIST-derived benchmark anchor used by atlas-distill for Ni cohesive energy comparisons."
+    }
+  },
+  "local_ni_classical_inventory": [
+    {
+      "baseline_id": "ni-mishin-1999-eam-alloy",
+      "label": "Mishin-1999",
+      "nist_implementation_id": "1999--Mishin-Y--Ni--LAMMPS--ipr1",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.59.3393",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Mishin-1999",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Mishin-1999/Ni99.eam.alloy",
+      "result_json": "atlas-distill/lammps_runs/Ni_Mishin-1999/result.json",
+      "status": "ready_local_evidence",
+      "publication_use": "primary_candidate"
+    },
+    {
+      "baseline_id": "ni-foiles-1986-eam",
+      "label": "Foiles-1986",
+      "nist_implementation_id": "1986--Foiles-S-M--Ni--LAMMPS--ipr1",
+      "pair_style": "eam",
+      "doi": "10.1103/physrevb.33.7983",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Foiles-1986",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Foiles-1986/Ni_u3.eam",
+      "result_json": "atlas-distill/lammps_runs/Ni_Foiles-1986/result.json",
+      "status": "ready_local_evidence",
+      "publication_use": "primary_candidate"
+    },
+    {
+      "baseline_id": "ni-ackland-1987-eam-fs",
+      "label": "Ackland-1987",
+      "nist_implementation_id": "1987--Ackland-G-J--Ni--LAMMPS--ipr1",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/01418618708204485",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Ackland-1987",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Ackland-1987/Ni.eam.fs",
+      "result_json": "atlas-distill/lammps_runs/Ni_Ackland-1987/result.json",
+      "status": "ready_local_evidence",
+      "publication_use": "primary_candidate"
+    },
+    {
+      "baseline_id": "ni-adams-1989-eam",
+      "label": "Adams-1989",
+      "nist_implementation_id": "1989--Adams-J-B--Ni--LAMMPS--ipr1",
+      "pair_style": "eam",
+      "doi": "10.1557/jmr.1989.0102",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Adams-1989",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Adams-1989/niu6.txt",
+      "result_json": "atlas-distill/lammps_runs/Ni_Adams-1989/result.json",
+      "status": "ready_local_evidence",
+      "publication_use": "secondary_candidate"
+    },
+    {
+      "baseline_id": "ni-mendelev-2012-eam-fs",
+      "label": "Mendelev-2012",
+      "nist_implementation_id": "2012--Mendelev-M-I--Ni--LAMMPS--ipr1",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/14786435.2012.712220",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Mendelev-2012",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Mendelev-2012/Ni1_Mendelev_2012.eam.fs",
+      "result_json": "atlas-distill/lammps_runs/Ni_Mendelev-2012/result.json",
+      "status": "ready_local_evidence",
+      "publication_use": "primary_candidate"
+    },
+    {
+      "baseline_id": "ni-zhou-2004-eam-fs",
+      "label": "Zhou-2004",
+      "nist_implementation_id": "2004--Zhou-X-W--Ni--LAMMPS--ipr1",
+      "pair_style": "eam/fs",
+      "doi": "10.1103/physrevb.69.144113",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Zhou-2004",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Zhou-2004/Ni.set",
+      "result_json": "atlas-distill/lammps_runs/Ni_Zhou-2004/result.json",
+      "status": "ready_local_evidence",
+      "publication_use": "secondary_candidate"
+    },
+    {
+      "baseline_id": "ni-stoller-2016-eam-alloy",
+      "label": "Stoller-2016",
+      "nist_implementation_id": "2016--Stoller-R-E--Ni--LAMMPS--ipr1",
+      "pair_style": "eam/alloy",
+      "doi": "10.1021/acs.jctc.5b01194",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Stoller-2016",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Stoller-2016/Ni_v6_2.0.eam",
+      "result_json": "atlas-distill/lammps_runs/Ni_Stoller-2016/result.json",
+      "status": "ready_local_evidence",
+      "publication_use": "secondary_candidate"
+    },
+    {
+      "baseline_id": "ni-lee-2003-meam",
+      "label": "Lee-2003",
+      "nist_implementation_id": "2003--Lee-B-J--Ni--LAMMPS--ipr1",
+      "pair_style": "meam",
+      "doi": "10.1103/physrevb.68.144112",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Lee-2003",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Lee-2003/library.meam",
+      "result_json": null,
+      "status": "metadata_only_needs_lammps_evidence",
+      "publication_use": "meam_candidate"
+    },
+    {
+      "baseline_id": "ni-asadi-2015-meam",
+      "label": "Asadi-2015",
+      "nist_implementation_id": "2015--Asadi-E--Ni--LAMMPS--ipr1",
+      "pair_style": "meam",
+      "doi": "10.1016/j.actamat.2014.12.010",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Asadi-2015",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Asadi-2015/Ni.meam",
+      "result_json": null,
+      "status": "metadata_only_needs_lammps_evidence",
+      "publication_use": "meam_candidate"
+    },
+    {
+      "baseline_id": "ni-etesami-2018-meam",
+      "label": "Etesami-2018",
+      "nist_implementation_id": "2018--Etesami-S-A--Ni--LAMMPS--ipr1",
+      "pair_style": "meam",
+      "doi": "10.1016/j.jpcs.2017.09.001",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Etesami-2018",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Etesami-2018/Ni.meam",
+      "result_json": null,
+      "status": "metadata_only_needs_lammps_evidence",
+      "publication_use": "meam_candidate"
+    },
+    {
+      "baseline_id": "ni-sharifi-2025-meam",
+      "label": "Sharifi-2025",
+      "nist_implementation_id": "2025--Sharifi-H--Ni--LAMMPS--ipr1",
+      "pair_style": "meam",
+      "doi": "10.1016/j.commatsci.2024.113595",
+      "local_dir": "atlas-distill/lammps_runs/Ni_Sharifi-2025",
+      "potential_file": "atlas-distill/lammps_runs/Ni_Sharifi-2025/library.meam",
+      "result_json": null,
+      "status": "metadata_only_needs_lammps_evidence",
+      "publication_use": "recent_meam_candidate"
+    }
+  ],
+  "acceptance_gates": {
+    "source_packet": [
+      "Every source has at least one URL, at least one citation key, a license note, and stewardship instructions.",
+      "Every local path referenced for ready evidence exists in the repository.",
+      "Every publication candidate has either ready evidence or a status explaining the missing run."
+    ],
+    "ni_local_baseline": [
+      "At least three ready Ni classical baselines are present.",
+      "At least one MEAM candidate is tracked even if local evidence is not yet generated.",
+      "Bulk metrics include C11, C12, C44, a0, and cohesive or relative energy where available."
+    ],
+    "distill_accuracy": [
+      "Accuracy comparisons are paired on shared raw prediction checkpoints or seeded trajectories.",
+      "Distill does not degrade easy Ni bulk rows without explicit refusal/failure accounting.",
+      "Corrections that improve energy while breaking force, stress, or relaxation stability are fault lines, not wins."
+    ]
+  },
+  "next_actions": [
+    {
+      "id": "m0-validate-source-packet",
+      "status": "ready",
+      "command": "python tools/mlip_benchmark_sources.py validate"
+    },
+    {
+      "id": "m1-build-ni-source-table",
+      "status": "ready",
+      "command": "python tools/mlip_benchmark_sources.py ni-inventory"
+    },
+    {
+      "id": "m1-generate-ni-fixtures",
+      "status": "implemented_lane_a_bulk",
+      "command": "just mlip-ni-fixture-check",
+      "artifact": "data/mlip_benchmarks/fixtures/ni_fcc_eam_home_turf_v1.json",
+      "notes": "Sealed release-ready fcc Ni EAM-home-turf fixture covers energy_volume, forces, stress, elastic_constants, and relaxation_stability. Surface, defect, and short-range-compression fixtures still require exact reference-value ingest from open Ni benchmark sources."
+    }
+  ]
+}

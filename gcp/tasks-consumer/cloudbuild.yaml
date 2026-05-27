@@ -46,7 +46,7 @@ steps:
       - '--region=${_REGION}'
       - '--project=${_PROJECT_ID}'
       - '--service-account=tasks-consumer-runner@${_PROJECT_ID}.iam.gserviceaccount.com'
-      - '--set-env-vars=GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill,ALLOWED_TARGET_JOBS=atlas-distill|mlip-cell-mace|mlip-cell-chgnet|mlip-cell-m3gnet|mlip-cell-orb|mlip-cell-sevennet'
+      - '--set-env-vars=GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill,ALLOWED_TARGET_JOBS=atlas-distill|mlip-cell-mace|mlip-cell-chgnet|mlip-cell-m3gnet|mlip-cell-orb|mlip-cell-sevennet|mlip-cell-uma'
       - '--no-allow-unauthenticated'
       - '--memory=256Mi'
       - '--cpu=1'
@@ -65,7 +65,7 @@ steps:
           --format='value(status.url)')
         gcloud run services update tasks-consumer \
           --region=${_REGION} --project=${_PROJECT_ID} \
-          --set-env-vars="SERVICE_URL=$$URL,GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill,ALLOWED_TARGET_JOBS=atlas-distill|mlip-cell-mace|mlip-cell-chgnet|mlip-cell-m3gnet|mlip-cell-orb|mlip-cell-sevennet"
+          --set-env-vars="SERVICE_URL=$$URL,GCP_PROJECT_ID=${_PROJECT_ID},GCP_REGION=${_REGION},TARGET_JOB=atlas-distill,ALLOWED_TARGET_JOBS=atlas-distill|mlip-cell-mace|mlip-cell-chgnet|mlip-cell-m3gnet|mlip-cell-orb|mlip-cell-sevennet|mlip-cell-uma"
 
 substitutions:
   _PROJECT_ID: shed-489901

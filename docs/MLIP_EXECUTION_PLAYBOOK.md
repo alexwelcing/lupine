@@ -8,6 +8,61 @@ the same checkpoint shape.
 
 ## Execution Lanes
 
+## Real-Material Source Packet
+
+Before running the Ni or hard-lane publication benchmark, validate the source
+packet. This is the audit spine for citations, licenses, local evidence, and
+lane acceptance gates:
+
+```powershell
+python tools/mlip_benchmark_sources.py validate
+python tools/mlip_benchmark_sources.py ni-inventory
+python tools/mlip_benchmark_sources.py ni-bulk-results
+```
+
+The source packet lives at:
+
+```text
+data/mlip_benchmarks/manifest_sources.json
+```
+
+Treat the output as the first gate for real-material work. A failed source
+packet means the run is not publication-grade yet, regardless of whether a
+calculator can execute.
+
+For the first fcc Ni EAM-home-turf fixture, build and self-evaluate the sealed
+artifact with:
+
+```powershell
+just mlip-ni-fixture-check
+```
+
+The fixture is:
+
+```text
+data/mlip_benchmarks/fixtures/ni_fcc_eam_home_turf_v1.json
+```
+
+This is a Lane A classical-home-turf fixture. Energy, force, stress, and
+relaxation labels are generated from the NIST Mishin-1999 Ni EAM potential;
+elastic constants are anchored to the Ni literature/NIST Cij table. It is not
+the hard-lane DFT fixture.
+
+For paired baseline versus Distill Accuracy evidence, use the campaign
+conveyor:
+
+```powershell
+just mlip-evidence-campaign-check
+python tools/mlip_evidence_campaign.py commands --kind upload
+python tools/mlip_evidence_launch.py --require-image-tag paired-evidence-20260527a
+python tools/mlip_evidence_collect.py
+python tools/mlip_evidence_report.py
+```
+
+The default campaign expands to five MLIPs, five rows, and two variants. Each
+Distill Accuracy cell is paired to a baseline cell through the same
+raw-prediction checkpoint URL, with baseline writing and Distill reading.
+
 ### Local Lab
 
 Use local first when debugging MLIP dependency friction, Distill policy changes,

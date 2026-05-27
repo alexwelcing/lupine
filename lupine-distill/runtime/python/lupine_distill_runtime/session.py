@@ -447,21 +447,10 @@ class DistillSupportModel:
         ribbon_model = self.candidate_correction.get("ribbon_residual_correction_v1")
         if isinstance(ribbon_model, dict):
             distances = []
-            feature_names = ribbon_model.get("feature_names") or []
-            means = ribbon_model.get("feature_mean") or []
-            scales = ribbon_model.get("feature_scale") or []
-            field = str(ribbon_model.get("field") or "")
-            if len(feature_names) == len(means) == len(scales):
-                for prediction in predictions:
-                    features = _feature_map(prediction, field)
-                    values = []
-                    for name, mean, scale in zip(feature_names, means, scales, strict=True):
-                        if name not in features:
-                            continue
-                        divisor = float(scale) if abs(float(scale)) > 1e-12 else 1.0
-                        values.append(((features[name] - float(mean)) / divisor) ** 2)
-                    if values:
-                        distances.append(float(np.sqrt(np.mean(values))))
+            for prediction in predictions:
+                distance = self.ribbon_feature_distance_for_prediction(prediction)
+                if distance is not None:
+                    distances.append(distance)
             self.diagnostics["ribbon_feature_distance_proxy"] = (
                 float(np.median(distances)) if distances else None
             )
@@ -475,6 +464,27 @@ class DistillSupportModel:
             return
         self.diagnostics["support_eval_distance_proxy"] = 0.0
         self.diagnostics["applicability_gate"] = "passed"
+
+    def ribbon_feature_distance_for_prediction(self, prediction: dict[str, Any]) -> float | None:
+        ribbon_model = self.candidate_correction.get("ribbon_residual_correction_v1")
+        if not isinstance(ribbon_model, dict):
+            return None
+        feature_names = ribbon_model.get("feature_names") or []
+        means = ribbon_model.get("feature_mean") or []
+        scales = ribbon_model.get("feature_scale") or []
+        field = str(ribbon_model.get("field") or "")
+        if len(feature_names) != len(means) or len(feature_names) != len(scales):
+            return None
+        features = _feature_map(prediction, field)
+        values = []
+        for name, mean, scale in zip(feature_names, means, scales, strict=True):
+            if name not in features:
+                continue
+            divisor = float(scale) if abs(float(scale)) > 1e-12 else 1.0
+            values.append(((features[name] - float(mean)) / divisor) ** 2)
+        if not values:
+            return None
+        return float(np.sqrt(np.mean(values)))
 
     def correct_prediction(self, prediction: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
         corrected = copy.deepcopy(prediction)
@@ -641,8 +651,11 @@ class DistillSession:
                 "run_id": self.run_id,
                 "cell_id": self.cell_id,
                 "prediction_index": idx,
+                "ribbon_feature_distance_proxy": self.support_model.ribbon_feature_distance_for_prediction(prediction)
+                if self.support_model is not None
+                else None,
             }
-            for idx, _ in enumerate(predictions)
+            for idx, prediction in enumerate(predictions)
         ]
         decisions = self.policy_engine.decide_many(
             row_id=self.row_id,

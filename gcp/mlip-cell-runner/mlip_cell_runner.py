@@ -9,6 +9,7 @@ instead of fabricating accuracy.
 from __future__ import annotations
 
 import argparse
+import copy
 import contextlib
 import hashlib
 import importlib.metadata
@@ -45,9 +46,10 @@ for runtime_path in runtime_import_paths():
     sys.path.insert(0, str(runtime_path))
 
 try:
-    from lupine_distill_runtime import DistillSession
+    from lupine_distill_runtime import DistillSession, LeakageGuard
 except Exception:  # pragma: no cover - optional for baseline-only images
     DistillSession = None  # type: ignore[assignment]
+    LeakageGuard = None  # type: ignore[assignment]
 
 METADATA_TOKEN_URL = (
     "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
@@ -57,6 +59,10 @@ METADATA_IDENTITY_URL = (
 )
 GCS_DOWNLOAD_BASE = "https://storage.googleapis.com/storage/v1/b"
 GCS_UPLOAD_BASE = "https://storage.googleapis.com/upload/storage/v1/b"
+TRANSIENT_HTTP_STATUS = {429, 500, 502, 503, 504}
+HTTP_RETRY_ATTEMPTS = 5
+CHECKPOINT_GCS_FLUSH_INTERVAL_S = 60.0
+CHECKPOINT_GCS_FLUSH_EVERY_PREDICTIONS = 20
 
 
 @dataclass
@@ -67,6 +73,10 @@ class CellResult:
     speed_unit: str
     artifact_uri: str | None
     metrics: dict[str, Any]
+
+
+class DependencyNotCompleted(RuntimeError):
+    """Raised when a batch cell depends on evidence that was not produced."""
 
 
 def stable_json_bytes(payload: Any) -> bytes:
@@ -110,13 +120,13 @@ def normalize_checkpoint_context(context: Any) -> dict[str, str] | None:
     return raw_prediction_checkpoint_context(row_id, mlip_id, manifest_hash)
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="MLIP baseline grid cell runner")
     parser.add_argument("command", nargs="?", default="run-cell")
-    parser.add_argument("--run-id", required=True)
-    parser.add_argument("--cell-id", required=True)
-    parser.add_argument("--row-id", required=True)
-    parser.add_argument("--mlip-id", required=True)
+    parser.add_argument("--run-id", default=None)
+    parser.add_argument("--cell-id", default=None)
+    parser.add_argument("--row-id", default=None)
+    parser.add_argument("--mlip-id", default=None)
     parser.add_argument("--campaign-id", default=None)
     parser.add_argument("--variant-id", default="baseline")
     parser.add_argument(
@@ -137,7 +147,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--ribbon-version", default=os.environ.get("MLIP_DISTILL_RIBBON_VERSION", "hyperribbon-v1"))
     parser.add_argument("--atlas-distill-bin", default=os.environ.get("ATLAS_DISTILL_BIN"))
-    parser.add_argument("--artifact-prefix", required=True)
+    parser.add_argument("--artifact-prefix", default=None)
+    parser.add_argument(
+        "--batch-spec-url",
+        default=None,
+        help="Local, gs://, or HTTP JSON batch spec for run-batch mode.",
+    )
+    parser.add_argument(
+        "--batch-artifact-prefix",
+        default=None,
+        help="Optional artifact prefix for run-batch summary JSON.",
+    )
     parser.add_argument("--beat-emit-url", default=None)
     parser.add_argument("--operation-name", default=None)
     parser.add_argument("--dev-mode-bypass", action="store_true")
@@ -153,7 +173,7 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Optional local or gs:// JSON checkpoint path. Defaults to artifact-prefix/cell_checkpoint.json.",
     )
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
 def package_version(name: str) -> str | None:
@@ -174,6 +194,9 @@ def runtime_versions() -> dict[str, Any]:
         "matgl": package_version("matgl"),
         "orb-models": package_version("orb-models"),
         "sevenn": package_version("sevenn"),
+        "fairchem-core": package_version("fairchem-core"),
+        "uma_model_name": os.environ.get("UMA_MODEL_NAME"),
+        "uma_task_name": os.environ.get("UMA_TASK_NAME"),
     }
     try:
         import torch
@@ -213,16 +236,35 @@ def parse_gs_url(url: str) -> tuple[str, str]:
     return bucket, key
 
 
+def request_with_retry(method: str, url: str, **kwargs: Any) -> requests.Response:
+    last_exc: BaseException | None = None
+    for attempt in range(HTTP_RETRY_ATTEMPTS):
+        try:
+            response = requests.request(method, url, **kwargs)
+            if response.status_code not in TRANSIENT_HTTP_STATUS:
+                return response
+            last_exc = requests.HTTPError(f"transient HTTP {response.status_code}", response=response)
+        except requests.RequestException as exc:
+            last_exc = exc
+        if attempt < HTTP_RETRY_ATTEMPTS - 1:
+            time.sleep(min(2.0 ** attempt, 16.0))
+    if isinstance(last_exc, requests.HTTPError) and last_exc.response is not None:
+        return last_exc.response
+    if last_exc is not None:
+        raise last_exc
+    raise RuntimeError("HTTP retry loop exited without a response")
+
+
 def read_url(url: str) -> bytes:
     if url.startswith("gs://"):
         bucket, key = parse_gs_url(url)
         token = metadata_access_token()
         object_url = f"{GCS_DOWNLOAD_BASE}/{bucket}/o/{urllib.parse.quote(key, safe='')}?alt=media"
-        response = requests.get(object_url, headers={"Authorization": f"Bearer {token}"}, timeout=120)
+        response = request_with_retry("GET", object_url, headers={"Authorization": f"Bearer {token}"}, timeout=120)
         response.raise_for_status()
         return response.content
     if url.startswith("http://") or url.startswith("https://"):
-        response = requests.get(url, timeout=120)
+        response = request_with_retry("GET", url, timeout=120)
         response.raise_for_status()
         return response.content
     return pathlib.Path(url).read_bytes()
@@ -233,7 +275,8 @@ def write_url(url: str, data: bytes, content_type: str = "application/octet-stre
         bucket, key = parse_gs_url(url)
         token = metadata_access_token()
         upload_url = f"{GCS_UPLOAD_BASE}/{bucket}/o?uploadType=media&name={urllib.parse.quote(key, safe='')}"
-        response = requests.post(
+        response = request_with_retry(
+            "POST",
             upload_url,
             headers={"Authorization": f"Bearer {token}", "Content-Type": content_type},
             data=data,
@@ -275,6 +318,10 @@ class CellCheckpoint:
         self.loaded_predictions = 0
         self.written_predictions = 0
         self.cache_misses = 0
+        self.flushed_predictions = 0
+        self.flush_count = 0
+        self.last_flush_unix = time.time()
+        self.dirty = False
         self.ignored_reason: str | None = None
         self.payload = self._empty_payload()
         if mode in ("read-write", "read-only"):
@@ -352,14 +399,34 @@ class CellCheckpoint:
         }
         self.payload["updated_at_unix"] = int(time.time())
         self.written_predictions += 1
-        self.flush()
+        self.dirty = True
+        self.flush_if_due()
 
-    def flush(self) -> None:
+    def flush_if_due(self) -> None:
+        if not self.dirty:
+            return
+        if not self.url.startswith("gs://"):
+            self.flush(force=True)
+            return
+        pending = self.written_predictions - self.flushed_predictions
+        elapsed = time.time() - self.last_flush_unix
+        if pending >= CHECKPOINT_GCS_FLUSH_EVERY_PREDICTIONS or elapsed >= CHECKPOINT_GCS_FLUSH_INTERVAL_S:
+            self.flush(force=True)
+
+    def flush(self, *, force: bool = False) -> None:
+        if self.mode == "read-only":
+            return
+        if not force and not self.dirty:
+            return
         write_url(
             self.url,
             json.dumps(self.payload, indent=2, sort_keys=True).encode("utf-8"),
             "application/json",
         )
+        self.dirty = False
+        self.flush_count += 1
+        self.flushed_predictions = self.written_predictions
+        self.last_flush_unix = time.time()
 
     def summary(self) -> dict[str, Any]:
         return {
@@ -369,6 +436,8 @@ class CellCheckpoint:
             "loaded_predictions": self.loaded_predictions,
             "written_predictions": self.written_predictions,
             "cache_misses": self.cache_misses,
+            "flush_count": self.flush_count,
+            "pending_flush_predictions": self.written_predictions - self.flushed_predictions,
             "ignored_reason": self.ignored_reason,
             "stored_predictions": len(self.payload.get("predictions", {})),
         }
@@ -392,7 +461,8 @@ def write_artifact_bytes(prefix: str, name: str, data: bytes, content_type: str 
         bucket, key_prefix = parse_gs_url(prefix.rstrip("/") + "/" + name.lstrip("/"))
         token = metadata_access_token()
         upload_url = f"{GCS_UPLOAD_BASE}/{bucket}/o?uploadType=media&name={urllib.parse.quote(key_prefix, safe='')}"
-        response = requests.post(
+        response = request_with_retry(
+            "POST",
             upload_url,
             headers={"Authorization": f"Bearer {token}", "Content-Type": content_type},
             data=data,
@@ -480,10 +550,74 @@ def load_calculator(mlip_id: str):
         from sevenn.sevennet_calculator import SevenNetCalculator
 
         return SevenNetCalculator("7net-0", device=dev)
+    if mlip_id.startswith("uma-"):
+        from fairchem.core import FAIRChemCalculator, pretrained_mlip
+
+        model_name = os.environ.get("UMA_MODEL_NAME", mlip_id)
+        task_name = os.environ.get("UMA_TASK_NAME", "omat")
+        predictor = pretrained_mlip.get_predict_unit(model_name, device=dev)
+        return FAIRChemCalculator(predictor, task_name=task_name)
     raise ValueError(f"unsupported mlip_id: {mlip_id}")
 
 
-def run_cell(args: argparse.Namespace) -> CellResult:
+def require_cell_args(args: argparse.Namespace) -> None:
+    missing = [
+        name
+        for name in ("run_id", "cell_id", "row_id", "mlip_id", "artifact_prefix")
+        if not getattr(args, name, None)
+    ]
+    if missing:
+        raise ValueError("missing required run-cell arguments: " + ", ".join(f"--{name.replace('_', '-')}" for name in missing))
+
+
+def support_manifest_hash(support_manifest: dict[str, Any]) -> str:
+    explicit = support_manifest.get("manifest_hash") or (support_manifest.get("metadata") or {}).get("manifest_hash")
+    if isinstance(explicit, str) and explicit:
+        return explicit
+    return "sha256:" + sha256_hex(support_manifest)
+
+
+def attach_cached_support_model(
+    session: Any,
+    *,
+    eval_manifest: dict[str, Any],
+    support_manifest: dict[str, Any],
+    mlip_id: str,
+    row_id: str,
+    support_cache: dict[tuple[str, str, str], Any] | None,
+    calc: Any,
+) -> None:
+    if support_cache is None:
+        session.fit_support(calc, run_row)
+        return
+    support_hash = support_manifest_hash(support_manifest)
+    cache_key = (mlip_id, row_id, support_hash)
+    cached = support_cache.get(cache_key)
+    if cached is not None:
+        if LeakageGuard is not None:
+            guard = LeakageGuard(support_manifest, eval_manifest)
+            session.leakage_guard = guard.assert_no_overlap()
+        session.support_model = copy.deepcopy(cached)
+        session.event_log.emit(
+            "support.fit_cache_hit",
+            row_id=row_id,
+            mlip_id=mlip_id,
+            support_manifest_hash=support_hash,
+        )
+        return
+    session.fit_support(calc, run_row)
+    if session.support_model is not None:
+        support_cache[cache_key] = copy.deepcopy(session.support_model)
+
+
+def run_cell(
+    args: argparse.Namespace,
+    *,
+    preloaded_calc: Any | None = None,
+    support_cache: dict[tuple[str, str, str], Any] | None = None,
+    preloaded_model_load_s: float | None = None,
+) -> CellResult:
+    require_cell_args(args)
     manifest_url = args.manifest_url or args.fixture_url
     if not manifest_url:
         raise ValueError("--manifest-url or --fixture-url is required")
@@ -515,9 +649,15 @@ def run_cell(args: argparse.Namespace) -> CellResult:
     policy_limits_tmp = None
     if args.distill_profile != "off" and args.distill_policy_url:
         policy_limits_path, policy_limits_hash, policy_limits_tmp = materialize_distill_policy_url(args.distill_policy_url)
-    load_started = time.perf_counter()
-    calc = load_calculator(args.mlip_id)
-    model_load_s = max(time.perf_counter() - load_started, 0.0)
+    if preloaded_calc is None:
+        load_started = time.perf_counter()
+        calc = load_calculator(args.mlip_id)
+        model_load_s = max(time.perf_counter() - load_started, 0.0)
+        model_preloaded = False
+    else:
+        calc = preloaded_calc
+        model_load_s = float(preloaded_model_load_s or 0.0)
+        model_preloaded = True
 
     warm_started = time.perf_counter()
     distill_session = None
@@ -537,7 +677,15 @@ def run_cell(args: argparse.Namespace) -> CellResult:
             policy_limits_path=policy_limits_path,
         )
         if support_manifest is not None:
-            distill_session.fit_support(calc, run_row)
+            attach_cached_support_model(
+                distill_session,
+                eval_manifest=manifest,
+                support_manifest=support_manifest,
+                mlip_id=args.mlip_id,
+                row_id=args.row_id,
+                support_cache=support_cache,
+                calc=calc,
+            )
         run_calc = distill_session.wrap_calculator(calc)
     row_result = run_row(
         args.row_id,
@@ -546,6 +694,8 @@ def run_cell(args: argparse.Namespace) -> CellResult:
         runtime_session=distill_session,
         checkpoint=checkpoint,
     )
+    if checkpoint is not None:
+        checkpoint.flush(force=True)
     warm_duration_s = max(time.perf_counter() - warm_started, 1e-9)
     cold_duration_s = max(time.perf_counter() - cold_started, warm_duration_s)
     predictions = row_result["predictions"]
@@ -561,6 +711,7 @@ def run_cell(args: argparse.Namespace) -> CellResult:
         "cloud_run_job": os.environ.get("CLOUD_RUN_JOB") or os.environ.get("K_SERVICE"),
         "cloud_run_revision": os.environ.get("K_REVISION"),
         "runner_image_digest": os.environ.get("RUNNER_IMAGE_DIGEST"),
+        "model_preloaded": model_preloaded,
     }
     distill_events_uri = None
     distill_summary = None
@@ -685,6 +836,174 @@ def run_cell(args: argparse.Namespace) -> CellResult:
     )
 
 
+def batch_cell_namespace(global_args: argparse.Namespace, spec: dict[str, Any], cell: dict[str, Any]) -> argparse.Namespace:
+    defaults = spec.get("defaults") if isinstance(spec.get("defaults"), dict) else {}
+    merged: dict[str, Any] = {
+        **vars(global_args),
+        "command": "run-cell",
+        "campaign_id": spec.get("campaign_id") or global_args.campaign_id,
+        "run_id": spec.get("run_id") or global_args.run_id,
+        "profile": spec.get("profile") or global_args.profile,
+        "fixture_id": spec.get("fixture_id") or global_args.fixture_id,
+    }
+    for key, value in defaults.items():
+        merged[key.replace("-", "_")] = value
+    for key, value in cell.items():
+        merged[key.replace("-", "_")] = value
+    if not merged.get("manifest_url"):
+        merged["manifest_url"] = merged.get("fixture_url")
+    if not merged.get("fixture_url"):
+        merged["fixture_url"] = merged.get("manifest_url")
+    variant_id = str(merged.get("variant_id") or "baseline")
+    merged["variant_id"] = variant_id
+    if not merged.get("distill_profile"):
+        if variant_id == "distill_accuracy":
+            merged["distill_profile"] = "accuracy"
+        elif variant_id == "distill_accuracy_accelerate":
+            merged["distill_profile"] = "accuracy_accelerate"
+        else:
+            merged["distill_profile"] = "off"
+    if not merged.get("checkpoint_mode"):
+        merged["checkpoint_mode"] = "read-write"
+    return argparse.Namespace(**merged)
+
+
+def load_batch_spec(url: str) -> dict[str, Any]:
+    payload = json.loads(read_url(url).decode("utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("batch spec must be a JSON object")
+    cells = payload.get("cells")
+    if not isinstance(cells, list) or not cells:
+        raise ValueError("batch spec must include a non-empty cells array")
+    return payload
+
+
+def batch_summary_uri(args: argparse.Namespace, spec: dict[str, Any]) -> str | None:
+    prefix = args.batch_artifact_prefix or spec.get("batch_artifact_prefix")
+    if isinstance(prefix, str) and prefix.strip():
+        return prefix.strip()
+    return None
+
+
+def run_batch(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.batch_spec_url:
+        raise ValueError("--batch-spec-url is required for run-batch")
+    spec = load_batch_spec(args.batch_spec_url)
+    raw_cells = spec["cells"]
+    cells = [cell for cell in raw_cells if isinstance(cell, dict)]
+    if len(cells) != len(raw_cells):
+        raise ValueError("every batch cell must be a JSON object")
+    mlip_ids = {str(cell.get("mlip_id") or spec.get("mlip_id") or "") for cell in cells}
+    mlip_ids.discard("")
+    if len(mlip_ids) != 1:
+        raise ValueError(f"run-batch requires exactly one mlip_id; found {sorted(mlip_ids)}")
+    mlip_id = next(iter(mlip_ids))
+    started = time.perf_counter()
+    load_started = time.perf_counter()
+    completed: list[dict[str, Any]] = []
+    failed: list[dict[str, Any]] = []
+    support_cache: dict[tuple[str, str, str], Any] = {}
+    try:
+        calc = load_calculator(mlip_id)
+        model_load_s = max(time.perf_counter() - load_started, 0.0)
+    except Exception as exc:
+        for cell in cells:
+            cell_args = batch_cell_namespace(args, spec, {**cell, "mlip_id": mlip_id})
+            metrics = failure_metrics(cell_args, exc)
+            failed.append({
+                "cell_id": metrics.get("cell_id"),
+                "row_id": metrics.get("row_id"),
+                "variant_id": metrics.get("variant_id"),
+                "error_class": metrics.get("error_class"),
+                "error": metrics.get("error"),
+            })
+            with contextlib.suppress(Exception):
+                emit_beat(
+                    cell_args.beat_emit_url,
+                    metrics,
+                    f"mlip-cell[{mlip_id}/{metrics.get('row_id')}] failed before batch start: {exc}",
+                    cell_args.dev_mode_bypass,
+                    cell_args.local_jsonl,
+                )
+        calc = None
+        model_load_s = max(time.perf_counter() - load_started, 0.0)
+    if calc is not None:
+        completed_cell_ids: set[str] = set()
+        for cell in cells:
+            cell_args = batch_cell_namespace(args, spec, {**cell, "mlip_id": mlip_id})
+            try:
+                depends_on = getattr(cell_args, "depends_on_cell_id", None)
+                if depends_on and depends_on not in completed_cell_ids:
+                    raise DependencyNotCompleted(f"dependency was not completed in this batch: {depends_on}")
+                result = run_cell(
+                    cell_args,
+                    preloaded_calc=calc,
+                    support_cache=support_cache,
+                    preloaded_model_load_s=model_load_s,
+                )
+                emit_beat(
+                    cell_args.beat_emit_url,
+                    result.metrics,
+                    f"mlip-cell[{cell_args.mlip_id}/{cell_args.row_id}] completed",
+                    cell_args.dev_mode_bypass,
+                    cell_args.local_jsonl,
+                )
+                completed.append({
+                    "cell_id": result.metrics.get("cell_id"),
+                    "row_id": result.metrics.get("row_id"),
+                    "variant_id": result.metrics.get("variant_id"),
+                    "accuracy": result.metrics.get("accuracy"),
+                    "speed": result.metrics.get("speed"),
+                    "artifact_uri": result.artifact_uri,
+                })
+                completed_cell_ids.add(str(result.metrics.get("cell_id")))
+            except Exception as exc:
+                metrics = failure_metrics(cell_args, exc)
+                with contextlib.suppress(Exception):
+                    emit_beat(
+                        cell_args.beat_emit_url,
+                        metrics,
+                        f"mlip-cell[{cell_args.mlip_id}/{cell_args.row_id}] failed: {exc}",
+                        cell_args.dev_mode_bypass,
+                        cell_args.local_jsonl,
+                    )
+                failed.append({
+                    "cell_id": metrics.get("cell_id"),
+                    "row_id": metrics.get("row_id"),
+                    "variant_id": metrics.get("variant_id"),
+                    "error_class": metrics.get("error_class"),
+                    "error": metrics.get("error"),
+                })
+    duration_s = max(time.perf_counter() - started, 0.0)
+    summary = {
+        "schema": "lupine.mlip.batch_result.v1",
+        "batch_id": spec.get("batch_id"),
+        "run_id": spec.get("run_id") or args.run_id,
+        "campaign_id": spec.get("campaign_id") or args.campaign_id,
+        "mlip_id": mlip_id,
+        "batch_spec_url": args.batch_spec_url,
+        "status": "completed" if not failed else "partial",
+        "cells_total": len(cells),
+        "cells_completed": len(completed),
+        "cells_failed": len(failed),
+        "completed": completed,
+        "failed": failed,
+        "model_load_seconds": model_load_s,
+        "duration_seconds": duration_s,
+        "support_cache_entries": len(support_cache),
+        "versions": runtime_versions(),
+    }
+    prefix = batch_summary_uri(args, spec)
+    if prefix:
+        summary["artifact_uri"] = write_artifact_bytes(
+            prefix,
+            "batch_result.json",
+            json.dumps(summary, indent=2, sort_keys=True).encode("utf-8"),
+            "application/json",
+        )
+    return summary
+
+
 def emit_beat(
     beat_emit_url: str | None,
     metrics: dict[str, Any],
@@ -719,27 +1038,33 @@ def emit_beat(
 
 
 def failure_metrics(args: argparse.Namespace, exc: BaseException) -> dict[str, Any]:
+    artifact_prefix = getattr(args, "artifact_prefix", None)
+    checkpoint_url = (
+        getattr(args, "checkpoint_url", None)
+        or (checkpoint_url_from_prefix(artifact_prefix) if artifact_prefix else None)
+    )
+    checkpoint_mode = getattr(args, "checkpoint_mode", "off")
     return {
         "schema": "lupine.mlip.cell_result.v1",
         "status": "failed",
-        "run_id": args.run_id,
-        "campaign_id": args.campaign_id,
-        "cell_id": args.cell_id,
-        "row_id": args.row_id,
-        "mlip_id": args.mlip_id,
-        "variant_id": args.variant_id,
-        "distill_profile": args.distill_profile,
-        "distill_policy_engine": args.distill_policy_engine,
-        "ribbon_version": args.ribbon_version,
-        "profile": args.profile,
-        "fixture_id": args.fixture_id,
-        "manifest_url": args.manifest_url or args.fixture_url,
-        "operation_name": args.operation_name,
+        "run_id": getattr(args, "run_id", None),
+        "campaign_id": getattr(args, "campaign_id", None),
+        "cell_id": getattr(args, "cell_id", None),
+        "row_id": getattr(args, "row_id", None),
+        "mlip_id": getattr(args, "mlip_id", None),
+        "variant_id": getattr(args, "variant_id", None),
+        "distill_profile": getattr(args, "distill_profile", None),
+        "distill_policy_engine": getattr(args, "distill_policy_engine", None),
+        "ribbon_version": getattr(args, "ribbon_version", None),
+        "profile": getattr(args, "profile", None),
+        "fixture_id": getattr(args, "fixture_id", None),
+        "manifest_url": getattr(args, "manifest_url", None) or getattr(args, "fixture_url", None),
+        "operation_name": getattr(args, "operation_name", None),
         "versions": runtime_versions(),
         "checkpoint": {
-            "mode": args.checkpoint_mode,
-            "url": args.checkpoint_url or checkpoint_url_from_prefix(args.artifact_prefix),
-        } if args.checkpoint_mode != "off" else {"mode": "off"},
+            "mode": checkpoint_mode,
+            "url": checkpoint_url,
+        } if checkpoint_mode != "off" else {"mode": "off"},
         "error": str(exc),
         "error_class": exc.__class__.__name__,
         "traceback": traceback.format_exc(limit=8),
@@ -750,6 +1075,21 @@ def failure_metrics(args: argparse.Namespace, exc: BaseException) -> dict[str, A
 
 def main() -> int:
     args = parse_args()
+    if args.command == "run-batch":
+        try:
+            summary = run_batch(args)
+            print(json.dumps(summary, indent=2, sort_keys=True))
+            return 0
+        except Exception as exc:
+            print(json.dumps({
+                "schema": "lupine.mlip.batch_result.v1",
+                "status": "failed",
+                "batch_spec_url": args.batch_spec_url,
+                "error": str(exc),
+                "error_class": exc.__class__.__name__,
+                "traceback": traceback.format_exc(limit=8),
+            }, indent=2, sort_keys=True), file=sys.stderr)
+            return 1
     if args.command != "run-cell":
         print(f"unsupported command: {args.command}", file=sys.stderr)
         return 2

@@ -90,6 +90,24 @@
       },
       "checkpoint_scope": "raw_predictions",
       "notes": "SevenNet ASE calculator path; validate package import before full relaxation cells."
+    },
+    {
+      "mlip_id": "uma-s-1p1",
+      "label": "Meta FAIR Chemistry UMA small 1.1",
+      "target_job": "mlip-cell-uma",
+      "requirements": "requirements-uma.txt",
+      "local_env": "tmp/mlip-runtimes/uma-s-1p1",
+      "canary_row": "energy_volume",
+      "local_windows": {
+        "status": "cloud-first",
+        "reason": "fairchem-core 2.14.0 uses a separate torch 2.8-era stack; build/run in an isolated GCP image first."
+      },
+      "preferred_cloud": {
+        "gcp_gpu": "nvidia-l4",
+        "hf_flavor": "l4x1"
+      },
+      "checkpoint_scope": "raw_predictions",
+      "notes": "Uses fairchem.core FAIRChemCalculator with pretrained_mlip.get_predict_unit(model=uma-s-1p1, task_name=omat). FairChem 2.14.0 exposes uma-s-1, uma-s-1p1, and uma-m-1p1. GCP image/import/GPU wiring is verified, and HF_TOKEN is mounted through Secret Manager, but facebook/UMA returned 403 until the account is added to the gated repo authorization list."
     }
   ]
 }

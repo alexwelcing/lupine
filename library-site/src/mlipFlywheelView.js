@@ -12,9 +12,9 @@ export function renderMlipFlywheelView(mount) {
   );
 
   loadEvidence(controller.signal)
-    .then(({ evidence, relaxation }) => {
+    .then(({ evidence, relaxation, liveCampaign }) => {
       if (controller.signal.aborted) return;
-      const root = renderEvidence(evidence, relaxation);
+      const root = renderEvidence(evidence, relaxation, liveCampaign);
       mount.replaceChildren(root);
       initStages(root, evidence.stages || []);
       canvasCleanup = initLatticeCanvas(root, relaxation);
@@ -34,15 +34,31 @@ async function loadEvidence(signal) {
   const evidence = await fetchJson(EVIDENCE_URL, signal);
   const url = evidence?.relaxation_artifact?.url;
   if (!url) throw new Error('Evidence file does not name a relaxation artifact.');
-  const relaxation = await fetchJson(url, signal);
+  const [relaxation, liveCampaign] = await Promise.all([
+    fetchJson(url, signal),
+    loadOptionalJson(evidence?.live_campaign_artifact?.url, signal),
+  ]);
   assertEvidence(evidence, relaxation);
-  return { evidence, relaxation };
+  return { evidence, relaxation, liveCampaign };
 }
 
 async function fetchJson(url, signal) {
   const res = await fetch(url, { cache: 'no-cache', signal });
   if (!res.ok) throw new Error(`Evidence fetch failed: ${url}`);
   return res.json();
+}
+
+async function loadOptionalJson(url, signal) {
+  if (!url) return null;
+  try {
+    return await fetchJson(url, signal);
+  } catch (error) {
+    return {
+      schema: 'lupine.library.optional_artifact_error.v1',
+      url,
+      error: error?.message || 'Optional artifact unavailable',
+    };
+  }
 }
 
 function assertEvidence(evidence, relaxation) {
@@ -57,11 +73,12 @@ function assertEvidence(evidence, relaxation) {
   }
 }
 
-function renderEvidence(evidence, relaxation) {
+function renderEvidence(evidence, relaxation, liveCampaign) {
   const root = h('section', { class: 'flywheel-lab', 'aria-labelledby': 'flywheel-title' });
   root.append(renderWhy(evidence));
   root.append(renderWorkGuidance(evidence.work_guidance));
   root.append(renderHero(evidence, relaxation));
+  root.append(renderLiveCampaign(liveCampaign, evidence.live_campaign_artifact));
   root.append(renderStageSystem(evidence.stages || []));
   root.append(renderBaselineMatrix(evidence.baseline));
   root.append(renderTriplets(evidence.distill_triplets || []));
@@ -246,6 +263,69 @@ function renderBaselineMatrix(baseline) {
     ),
     grid,
     h('p', { class: 'fly-caption' }, baseline?.read || '')
+  );
+}
+
+function renderLiveCampaign(liveCampaign, descriptor) {
+  if (!descriptor && !liveCampaign) return document.createDocumentFragment();
+  const summary = liveCampaign?.summary || {};
+  const pairs = Array.isArray(liveCampaign?.pairs) ? liveCampaign.pairs : [];
+  const measurable = pairs.filter((pair) => ['distill_improved', 'distill_regressed', 'unchanged'].includes(pair.verdict));
+  const headline = liveCampaign?.schema === 'lupine.library.mlip_paired_accuracy_live_summary.v1'
+    ? `${summary.cells_completed || 0} / ${summary.cells_total || 0} cloud cells returned`
+    : 'Live campaign status artifact not yet available';
+
+  return h('section', { class: 'fly-section fly-live-campaign', 'aria-labelledby': 'fly-live-campaign-title' },
+    h('div', { class: 'fly-section-head' },
+      h('p', { class: 'fly-kicker' }, 'Hot off the press'),
+      h('h2', { id: 'fly-live-campaign-title' }, descriptor?.title || 'Ni paired accuracy campaign'),
+      h('p', {}, descriptor?.description || 'Live campaign evidence is collected directly from GCS cell artifacts.')
+    ),
+    h('div', { class: 'fly-live-run-head' },
+      h('div', {},
+        h('span', {}, 'Run'),
+        h('strong', {}, liveCampaign?.campaign_id || descriptor?.campaign_id || 'pending')
+      ),
+      h('div', {},
+        h('span', {}, 'Status'),
+        h('strong', {}, headline)
+      ),
+      h('div', {},
+        h('span', {}, 'Generated'),
+        h('strong', {}, liveCampaign?.generated_at || 'awaiting collector')
+      )
+    ),
+    h('dl', { class: 'fly-live-run-stats' },
+      stat('Completed', `${summary.cells_completed ?? 0}`),
+      stat('Failed', `${summary.cells_failed ?? 0}`),
+      stat('Missing', `${summary.cells_missing ?? summary.cells_total ?? 0}`),
+      stat('Measured pairs', `${summary.pairs_measured ?? 0}`),
+      stat('Improved pairs', `${summary.pairs_improved ?? 0}`),
+      stat('Regressed pairs', `${summary.pairs_regressed ?? 0}`)
+    ),
+    h('div', { class: 'fly-live-pair-grid' },
+      ...pairs.slice(0, 25).map(renderLivePair)
+    ),
+    measurable.length === 0
+      ? h('p', { class: 'fly-caption' }, 'No paired accuracy deltas are claimed until both baseline and Distill artifacts exist for the same row and MLIP.')
+      : h('p', { class: 'fly-caption' }, `${measurable.length} paired deltas are now claim-grade because both artifacts are present.`)
+  );
+}
+
+function renderLivePair(pair) {
+  const tone = pair.verdict === 'distill_improved' ? 'good' : pair.verdict === 'distill_regressed' ? 'bad' : 'pending';
+  const lift = Number(pair.lift_fraction);
+  return h('article', { class: `fly-live-pair ${tone}` },
+    h('div', { class: 'fly-live-pair-top' },
+      h('span', {}, pair.row_label || pair.row_id),
+      h('strong', {}, pair.mlip_id)
+    ),
+    h('dl', {},
+      stat('Baseline', formatMetric(pair.baseline_error)),
+      stat('Distill', formatMetric(pair.distill_error)),
+      stat('Lift', Number.isFinite(lift) ? formatPercent(lift) : 'n/a')
+    ),
+    h('small', {}, String(pair.verdict || 'awaiting_pair').replace(/_/g, ' '))
   );
 }
 
