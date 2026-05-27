@@ -5,8 +5,8 @@
   "subtitle": "Evidence-backed stage, grid, triplet, evaluator, and relaxation review for the current MLIP flywheel.",
   "why": {
     "headline": "Autonomous science needs one surface that separates measured wins, blocked claims, and physical run evidence.",
-    "answer": "The current evidence supports using the 25-cell baseline as the reference, rejecting unsafe transfer, promoting the Ni material-family zero-point canary, and now adding a non-Ni MPtrj/DFT canary showing the same MACE energy and relaxation lift outside nickel.",
-    "decision": "Advance the flywheel as a research cockpit: promote verified canaries, widen material coverage deliberately, falsify transfer row by row, and keep acceleration separate until accuracy coverage is locked.",
+    "answer": "The current evidence supports using the 25-cell baseline as the reference, promoting the Ni material-family zero-point canary, and rejecting unsafe broad transfer when the MPtrj/DFT canary exposes CHGNet regressions.",
+    "decision": "Advance the flywheel as a research cockpit: promote verified canaries, block negative transfer visibly, fit the next ribbon from the failure evidence, and keep acceleration separate until accuracy coverage is locked.",
     "supporting_points": [
       {
         "label": "Baseline is real",
@@ -28,9 +28,9 @@
       },
       {
         "label": "Non-Ni transfer canary",
-        "metric": "2 / 2 improved",
-        "detail": "MACE improved energy-volume and relaxation-stability on the broad MPtrj DFT fixture with zero regressions.",
-        "source_id": "mptrj_broad_dft_mace_promotion_canary"
+        "metric": "6 / 8 improved",
+        "detail": "MACE, ORB, and SevenNet improve on broad MPtrj DFT energy and relaxation; CHGNet regresses and blocks flagship promotion.",
+        "source_id": "mptrj_broad_dft_promotion_canary"
       }
     ]
   },
@@ -49,10 +49,10 @@
       },
       {
         "priority": "P0",
-        "title": "Widen the broad DFT/MPtrj transfer lane",
-        "why": "The MACE canary now improves a non-Ni DFT trajectory fixture, which is the first clean answer to the universality objection.",
-        "claim_unlocked": "Distill Accuracy is not limited to a nickel material-family calibration lane.",
-        "proof_required": "Run the same paired canary for CHGNet, ORB, SevenNet, and then the full 5x5 MPtrj grid with zero-regression gates.",
+        "title": "Diagnose the CHGNet broad-transfer blocker",
+        "why": "The widened MPtrj canary improved MACE, ORB, and SevenNet but regressed CHGNet on both energy-volume and relaxation-stability.",
+        "claim_unlocked": "Distill Accuracy can transfer beyond nickel only after the ribbon knows when not to correct a strong baseline.",
+        "proof_required": "Fit a material-family or backend-aware MPtrj ribbon, replay it against the same shared checkpoints, and rerun the four-MLIP canary with zero regressions.",
         "owner": "Rust Distill runtime plus Cloud Run MLIP runner",
         "state": "active"
       },
@@ -103,15 +103,17 @@
     "policy_replay_regressed_pairs": 0,
     "policy_canary_improved_pairs": 6,
     "policy_canary_regressed_pairs": 0,
-    "cloud_confirmed_distill_cells": 8,
+    "cloud_confirmed_distill_cells": 14,
     "local_mace_transfer_cells": 5,
     "local_mace_transfer_wins": 2,
-    "claim_status": "Ni and broad MPtrj DFT energy/relaxation cloud-reproduced; 5x5x3 not claimed",
+    "claim_status": "Ni canary green; broad MPtrj DFT canary expanded and blocked by CHGNet negative transfer; 5x5x3 not claimed",
     "worker_url": "https://glim-think-v1.aw-ab5.workers.dev",
     "worker_version_id": "95a246de-a1b4-4ff2-b42a-da8844be34dd",
     "visual_relaxation_artifact": "actual local CHGNet Al-fcc 2x2x2 relaxation run",
-    "mptrj_canary_improved_pairs": 2,
-    "mptrj_canary_regressed_pairs": 0
+    "mptrj_canary_improved_pairs": 6,
+    "mptrj_canary_regressed_pairs": 2,
+    "mptrj_canary_cells_completed": 16,
+    "mptrj_canary_flagship_eligible": false
   },
   "sources": [
     {
@@ -146,11 +148,11 @@
       "description": "May 27, 2026 promotion canary for the Ni material-family zero-point policy after rebuilding MACE, CHGNet, and ORB Cloud Run jobs with atlas-distill zero-point gates. All six canary pairs improve with no regressions."
     },
     {
-      "id": "mptrj_broad_dft_mace_promotion_canary",
+      "id": "mptrj_broad_dft_promotion_canary",
       "kind": "cloud_run_live_collector",
-      "path": "reports/assets/mlip/mptrj-broad-dft-mace-promotion-canary-summary.json",
+      "path": "reports/assets/mlip/mptrj-broad-dft-promotion-canary-summary.json",
       "schema": "lupine.library.mlip_paired_accuracy_live_summary.v1",
-      "description": "May 27, 2026 non-Ni broad MPtrj/DFT promotion canary for MACE. Energy-volume improves by 50.49%; relaxation-stability improves by 31.02%; both pairs share raw prediction checkpoints and have zero regressions."
+      "description": "May 27, 2026 non-Ni broad MPtrj/DFT promotion canary for MACE, CHGNet, ORB, and SevenNet. Six of eight pairs improve, but CHGNet regresses on energy-volume and relaxation-stability, so the flagship gate blocks this ribbon."
     },
     {
       "id": "ni_paired_accuracy_live_summary",
@@ -468,14 +470,14 @@
     {
       "id": "distill_runtime",
       "label": "Distill runtime",
-      "state": "Ni and MPtrj canaries passed",
-      "quant": "Ni improves 6 / 6 canary pairs; broad MPtrj MACE improves 2 / 2 canary pairs",
-      "qual": "The failed broad transfer run became a policy distinction, and the new broad DFT/MPtrj canary shows the runtime can improve outside the nickel lane under paired evidence.",
+      "state": "Ni passed; MPtrj blocker found",
+      "quant": "Ni improves 6 / 6 canary pairs; broad MPtrj improves 6 / 8 but CHGNet regresses 2 / 2",
+      "qual": "The failed broad transfer run became a policy distinction, and the widened broad DFT/MPtrj canary shows both real cross-material wins and the exact backend where the current ribbon must refuse or split.",
       "evidence": [
         "ni_paired_accuracy_promotion_canary",
         "ni_zero_point_policy_replay",
         "hyperribbon-ni-eam-support-v1",
-        "mptrj_broad_dft_mace_promotion_canary"
+        "mptrj_broad_dft_promotion_canary"
       ]
     },
     {
@@ -566,11 +568,11 @@
       "url": "/reports/assets/mlip/ni-paired-accuracy-promotion-canary-summary.json"
     },
     {
-      "source_id": "mptrj_broad_dft_mace_promotion_canary",
+      "source_id": "mptrj_broad_dft_promotion_canary",
       "campaign_id": "mptrj-dft-broad-paired-accuracy-v1",
-      "title": "MPtrj broad-DFT MACE promotion canary",
-      "description": "A non-Ni paired canary on broad DFT trajectory structures. It tests whether Distill transfers beyond material-family zero-point alignment before widening to more MLIPs.",
-      "url": "/reports/assets/mlip/mptrj-broad-dft-mace-promotion-canary-summary.json"
+      "title": "MPtrj broad-DFT MLIP promotion canary",
+      "description": "A non-Ni paired canary on broad DFT trajectory structures across MACE, CHGNet, ORB, and SevenNet. It improves six pairs and blocks flagship promotion on CHGNet negative transfer.",
+      "url": "/reports/assets/mlip/mptrj-broad-dft-promotion-canary-summary.json"
     }
   ]
 }

@@ -80,10 +80,14 @@ def test_non_ni_campaign_preserves_fixture_id_in_batches() -> None:
     assert evidence.validate_campaign(campaign) == []
     batches = evidence.expand_batches(campaign, scope="promotion-canary")
 
-    assert len(batches) == 1
-    assert batches[0]["fixture_id"] == "canonical-structures-v2"
-    assert batches[0]["mlip_id"] == "mace-mp-0"
-    assert all(cell["campaign_id"] == "mptrj-dft-broad-paired-accuracy-v1" for cell in batches[0]["cells"])
+    assert len(batches) == 4
+    assert {batch["mlip_id"] for batch in batches} == {"mace-mp-0", "chgnet", "orb-v3", "sevennet"}
+    assert {batch["fixture_id"] for batch in batches} == {"canonical-structures-v2"}
+    assert all(
+        cell["campaign_id"] == "mptrj-dft-broad-paired-accuracy-v1"
+        for batch in batches
+        for cell in batch["cells"]
+    )
 
 
 def test_write_batches_materializes_runner_compatible_specs(tmp_path: Path) -> None:

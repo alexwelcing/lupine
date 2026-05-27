@@ -1,39 +1,51 @@
-# MPtrj Broad-DFT MACE Promotion Canary
+# MPtrj Broad-DFT MLIP Promotion Canary
 
-**Status:** Cloud Run promotion canary passed  
-**Generated:** 2026-05-27  
-**Campaign:** `mptrj-dft-broad-paired-accuracy-v1`  
-**Artifact:** `library-site/src/reports/assets/mlip/mptrj-broad-dft-mace-promotion-canary-summary.json`
+- **Status:** Cloud Run canary completed; promotion blocked by CHGNet negative transfer
+- **Generated:** 2026-05-27
+- **Campaign:** `mptrj-dft-broad-paired-accuracy-v1`
+- **Artifact:** `library-site/src/reports/assets/mlip/mptrj-broad-dft-promotion-canary-summary.json`
 
 ## Why This Matters
 
 Nickel is a controlled first lane, not the limit of the Distill claim. This
 canary asks whether the same paired evidence contract can show improvement on a
-non-Ni, broad DFT trajectory fixture from MPtrj.
+non-Ni, broad DFT trajectory fixture from MPtrj across several MLIP backends.
 
-The answer is yes for this first MACE tranche: energy-volume and
-relaxation-stability both improve, with zero regressions, while sharing the
-same raw prediction checkpoints between baseline and Distill Accuracy.
+The answer is mixed in the useful way. MACE, ORB, and SevenNet improve on both
+energy-volume and relaxation-stability. CHGNet regresses on both rows. The
+promotion gate therefore blocks the ribbon from flagship claims instead of
+averaging the gains into a misleading story.
 
 ## Result
 
-| Row | MLIP | Baseline error | Distill error | Lift |
-| --- | --- | ---: | ---: | ---: |
-| Energy-volume | MACE-MP-0 | 0.4116 eV/atom MAE | 0.2038 eV/atom MAE | 50.49% |
-| Relaxation stability | MACE-MP-0 | 0.5604 penalty | 0.3866 penalty | 31.02% |
+| Row | MLIP | Baseline error | Distill error | Lift | Verdict |
+| --- | --- | ---: | ---: | ---: | --- |
+| Energy-volume | MACE-MP-0 | 0.4116 eV/atom MAE | 0.2038 eV/atom MAE | 50.49% | Improved |
+| Energy-volume | CHGNet | 0.1035 eV/atom MAE | 0.1325 eV/atom MAE | -27.99% | Regressed |
+| Energy-volume | ORB-v3 | 0.4295 eV/atom MAE | 0.4237 eV/atom MAE | 1.35% | Improved |
+| Energy-volume | SevenNet | 0.3997 eV/atom MAE | 0.2795 eV/atom MAE | 30.06% | Improved |
+| Relaxation stability | MACE-MP-0 | 0.5604 penalty | 0.3866 penalty | 31.02% | Improved |
+| Relaxation stability | CHGNet | 0.0557 penalty | 0.0798 penalty | -43.34% | Regressed |
+| Relaxation stability | ORB-v3 | 0.5327 penalty | 0.3365 penalty | 36.83% | Improved |
+| Relaxation stability | SevenNet | 0.5750 penalty | 0.3972 penalty | 30.92% | Improved |
+
+Summary: 16 / 16 cells completed, 8 paired comparisons measured, 6 improved,
+2 regressed, 0 missing. The gate verdict is
+`blocked_negative_transfer`.
 
 ## Interpretation
 
-This is the first clean non-Ni transfer evidence in the current release lane.
-It does not prove universality by itself, but it materially changes the paper
-story: Distill is no longer supported only by the Ni material-family
-zero-point canary. The broad MPtrj lane uses DFT trajectory labels and mixed
-chemistries, so it is a better stress test of the general runtime claim.
+This is stronger science than a clean-looking average. The current MPtrj global
+support ribbon transfers well to three backends, but CHGNet starts from a much
+stronger baseline on this fixture and the residual correction overshoots it.
+That is exactly the fault line the flywheel should expose before we make a
+paper or launch claim.
 
-The campaign remains deliberately conservative. Only MACE is enabled in this
-first canary because it already passed the local and cloud MPtrj support path.
-The next tranche should widen to CHGNet, ORB, SevenNet, and then the full 5x5
-paired grid under the same zero-regression gate.
+The next ribbon should be material-family or backend aware. At minimum, it
+needs to recognize when a backend already sits close to the DFT labels and
+should refuse correction unless support diagnostics show a real lift. The
+rerun should use the same shared raw prediction checkpoints where possible, so
+we test the ribbon decision rather than paying again for ambiguous model drift.
 
 ## Evidence Contract
 
@@ -46,13 +58,16 @@ paired grid under the same zero-regression gate.
 - Policy: `hyperribbon-mptrj-global-support-v1-accuracy`
 - Policy hash:
   `sha256:bb7e8759a7b418636d13a9111e6b9174068f621d2fdaa5ca6a00b01f0481b64c`
-- Cloud Run execution: `mlip-cell-mace-nfxrd`
+- Cloud Run executions:
+  `mlip-cell-mace-nfxrd`, `mlip-cell-chgnet-qz96k`,
+  `mlip-cell-orb-pnq4m`, `mlip-cell-sevennet-qnkt9`
 - Artifact prefix:
   `gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1`
 
 ## Next Gate
 
-Widen this exact campaign to more MLIPs before making a broad publication
-claim. The promotion rule stays strict: all paired cells must complete, every
+Do not launch this as the flagship accuracy result. Fit a backend-aware MPtrj
+ribbon, replay against completed cloud predictions, then rerun the four-MLIP
+canary with the same rule: all paired cells must complete, every
 baseline/Distill pair must share a raw prediction checkpoint, no pair may
 regress, and acceleration remains out of scope until accuracy is locked.

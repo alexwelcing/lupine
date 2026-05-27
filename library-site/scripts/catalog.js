@@ -381,8 +381,8 @@ export const CATALOG = {
     {
       id: 'mlip-mptrj-broad-dft-canary',
       source: 'docs/mlip-mptrj-broad-dft-canary.md',
-      title: 'MPtrj Broad-DFT MACE Canary',
-      subtitle: 'The first non-Ni paired Cloud Run canary: MACE improves energy and relaxation on broad DFT trajectory labels.',
+      title: 'MPtrj Broad-DFT MLIP Canary',
+      subtitle: 'The broadened Cloud Run canary improves MACE, ORB, and SevenNet while CHGNet negative transfer blocks promotion.',
       category: 'validation',
       tags: ['mlip', 'distill', 'mptrj', 'dft', 'cloud-run', 'live-lab'],
       featured: true,

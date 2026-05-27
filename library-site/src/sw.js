@@ -15,7 +15,7 @@ const VERSION = '__VERSION__';
 // regardless of VERSION skew. A escape hatch if a bad build ever ships again.
 // k2: purge caches poisoned by stale cache-first /reports/ assets — a fresh
 // report HTML was served against an old cached report.css, blanking the page.
-const KILL = 'k2';
+const KILL = 'k3';
 const SHELL_CACHE = `ll-shell-${KILL}-${VERSION}`;
 const DATA_CACHE = `ll-data-${KILL}-${VERSION}`;
 
@@ -33,7 +33,7 @@ const SHELL_ASSETS = [
   '/reports/assets/mlip/ni-paired-accuracy-live-summary.json',
   '/reports/assets/mlip/ni-paired-accuracy-promotion-canary-summary.json',
   '/reports/assets/mlip/ni-paired-accuracy-zero-point-replay-summary.json',
-  '/reports/assets/mlip/mptrj-broad-dft-mace-promotion-canary-summary.json',
+  '/reports/assets/mlip/mptrj-broad-dft-promotion-canary-summary.json',
   '/reports/assets/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json',
 ];
 
