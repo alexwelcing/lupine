@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "target_width": 4096,
+    "target_height": 2048,
+    "projection": "equirectangular",
+    "generator": "tools/lupi_publication_backgrounds.py",
+    "intent": "Practical, publication-friendly molecular-view backgrounds with readable centers and context cues at the edges."
+  },
+  "assets": [
+    {
+      "id": "figure-neutral",
+      "viewer_preset_id": "pub-figure-neutral",
+      "label": "Figure Neutral",
+      "file": "bg_pub_figure_neutral.jpg",
+      "style": "figure_plate",
+      "top": "#f5f7fa",
+      "bottom": "#dfe5eb",
+      "badge": "PUB",
+      "intensity": "quiet",
+      "context": "Clean print/export plate for methods figures and journal-safe snapshots.",
+      "palette": ["#f6f8fb", "#dfe5eb", "#b7c1ca", "#6b7884"]
+    },
+    {
+      "id": "cryoem-grid",
+      "viewer_preset_id": "pub-cryoem-grid",
+      "label": "Cryo-EM Grid",
+      "file": "bg_pub_cryoem_grid.jpg",
+      "style": "cryoem_grid",
+      "top": "#111820",
+      "bottom": "#030608",
+      "badge": "PUB",
+      "intensity": "quiet",
+      "context": "Subtle support-film / micrograph context for biomolecular structures.",
+      "palette": ["#061014", "#102633", "#194a58", "#81d7df"]
+    },
+    {
+      "id": "diffraction-plate",
+      "viewer_preset_id": "pub-diffraction-plate",
+      "label": "Diffraction Plate",
+      "file": "bg_pub_diffraction_plate.jpg",
+      "style": "diffraction_plate",
+      "top": "#080a0d",
+      "bottom": "#000000",
+      "badge": "PUB",
+      "intensity": "balanced",
+      "context": "X-ray / neutron diffraction context for crystals, lattices, and unit-cell views.",
+      "palette": ["#020305", "#10161d", "#536a7d", "#cfefff"]
+    },
+    {
+      "id": "density-contours",
+      "viewer_preset_id": "pub-density-contours",
+      "label": "Density Contours",
+      "file": "bg_pub_density_contours.jpg",
+      "style": "density_contours",
+      "top": "#0b121a",
+      "bottom": "#020406",
+      "badge": "PUB",
+      "intensity": "balanced",
+      "context": "Electron-density / potential-map context for fitted molecular geometry.",
+      "palette": ["#02070b", "#0f2732", "#3f7f91", "#b2f0f2"]
+    },
+    {
+      "id": "spectrum-strip",
+      "viewer_preset_id": "pub-spectrum-strip",
+      "label": "Spectrum Strip",
+      "file": "bg_pub_spectrum_strip.jpg",
+      "style": "spectrum_strip",
+      "top": "#0c0f12",
+      "bottom": "#020304",
+      "badge": "PUB",
+      "intensity": "balanced",
+      "context": "Spectroscopy context with quiet Raman/IR-like traces below the molecule.",
+      "palette": ["#030507", "#14202a", "#30c2c9", "#f7d36b"]
+    },
+    {
+      "id": "lab-notebook",
+      "viewer_preset_id": "pub-lab-notebook",
+      "label": "Lab Notebook",
+      "file": "bg_pub_lab_notebook.jpg",
+      "style": "lab_notebook",
+      "top": "#fbfaf5",
+      "bottom": "#ece8db",
+      "badge": "PUB",
+      "intensity": "quiet",
+      "context": "Light methods-note setting for teaching, review figures, and annotated snapshots.",
+      "palette": ["#fbfaf5", "#ece8db", "#c9d8dc", "#ac7b54"]
+    },
+    {
+      "id": "beamline-slate",
+      "viewer_preset_id": "pub-beamline-slate",
+      "label": "Beamline Slate",
+      "file": "bg_pub_beamline_slate.jpg",
+      "style": "beamline_slate",
+      "top": "#141a20",
+      "bottom": "#05070a",
+      "badge": "PUB",
+      "intensity": "balanced",
+      "context": "Synchrotron / instrument context for structure determination and beam studies.",
+      "palette": ["#05070a", "#18232c", "#40505a", "#7ccce0"]
+    },
+    {
+      "id": "phase-map",
+      "viewer_preset_id": "pub-phase-map",
+      "label": "Phase Map",
+      "file": "bg_pub_phase_map.jpg",
+      "style": "phase_map",
+      "top": "#111318",
+      "bottom": "#050609",
+      "badge": "PUB",
+      "intensity": "balanced",
+      "context": "Materials-science phase/thermo map context for composition or defect studies.",
+      "palette": ["#050609", "#1b2530", "#2e8ca3", "#f2b35f"]
+    }
+  ]
+}

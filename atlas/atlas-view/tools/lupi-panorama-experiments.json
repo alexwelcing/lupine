@@ -1,0 +1,115 @@
+{
+  "contract": {
+    "target_width": 4096,
+    "target_height": 2048,
+    "projection": "equirectangular",
+    "viewer_path": "apps/web/public/backgrounds",
+    "candidate_path": "tools/lupi-environment-candidates/<run-id>/<asset-id>",
+    "promotion": "Experimental candidates are concept art until copied into the production prompt ledger and background presets.",
+    "notes": [
+      "These prompts explore more expressive Lupi environment directions.",
+      "Keep the center readable for molecular geometry.",
+      "Avoid literal foreground subjects, text, logos, hard frames, circular masks, repeated tiles, and mirrored quadrants."
+    ]
+  },
+  "global_positive": "wide full-bleed rectangular environment texture, true 2:1 aspect ratio, continuous horizontal wrap, centered calm viewing field, premium scientific visualization background for a molecular dynamics viewer, strange elegant material science atmosphere, cinematic but quiet, high detail at the periphery, low visual noise in the center, physically plausible soft lighting, no foreground subject, no single centered object",
+  "global_negative": "text, letters, watermark, logo, signature, people, face, body, animal, product photo, object in foreground, planet, moon, orb, sphere, ring, bullseye, black hole, repeated tile, mirrored quadrant, duplicate motif, duplicate circles, fisheye circle, oval mask, circular mask, white background, white margin, page, cutout, frame, border, square crop, portrait crop, vertical crop, split image, visible seam, hard left edge, hard right edge, distorted horizon, overexposed center, blurry, low resolution, jpeg artifacts",
+  "assets": [
+    {
+      "id": "ion-cathedral",
+      "file": "bg_exp_ion_cathedral.jpg",
+      "seed": 51024001,
+      "prompt": "vast ion cathedral made of translucent energy ribs and faint lattice arches, cyan violet charged air, cathedral scale without buildings, reverent scientific void"
+    },
+    {
+      "id": "liquid-metal-aurora",
+      "file": "bg_exp_liquid_metal_aurora.jpg",
+      "seed": 51024002,
+      "prompt": "liquid metal aurora flowing across a dark reflective nanofilm, mercury silver waves, teal and magenta spectral glints, soft central negative space"
+    },
+    {
+      "id": "protein-dream",
+      "file": "bg_exp_protein_dream.jpg",
+      "seed": 51024003,
+      "prompt": "dreamlike protein-folding atmosphere, translucent ribbon fields dissolving into fog, soft amber blue molecular haze, abstract biology without literal cells"
+    },
+    {
+      "id": "diffraction-bloom",
+      "file": "bg_exp_diffraction_bloom.jpg",
+      "seed": 51024004,
+      "prompt": "chromatic diffraction bloom, spectral caustics passing through dark glass, rainbow interference filaments at the edges, calm black center"
+    },
+    {
+      "id": "quantum-fog",
+      "file": "bg_exp_quantum_fog.jpg",
+      "seed": 51024005,
+      "prompt": "quantum fog chamber, faint probability wave wisps, tiny luminous measurement traces, dark graphite blue atmosphere, subtle ghostly depth"
+    },
+    {
+      "id": "cryo-orchid",
+      "file": "bg_exp_cryo_orchid.jpg",
+      "seed": 51024006,
+      "prompt": "cryo orchid material field, frost petals abstracted into faceted glass sheets, lavender cyan refractions, biological elegance without flowers"
+    },
+    {
+      "id": "molten-circuit-sea",
+      "file": "bg_exp_molten_circuit_sea.jpg",
+      "seed": 51024007,
+      "prompt": "molten circuit sea, dark silicon terrain with copper lava traces and cyan data rivers, electronics geology, deep cinematic lab horizon"
+    },
+    {
+      "id": "neutrino-rain",
+      "file": "bg_exp_neutrino_rain.jpg",
+      "seed": 51024008,
+      "prompt": "neutrino rain in a black detector volume, vertical silver blue particle streaks, faint Cherenkov glow, enormous invisible chamber, elegant emptiness"
+    },
+    {
+      "id": "ferrofluid-velvet",
+      "file": "bg_exp_ferrofluid_velvet.jpg",
+      "seed": 51024009,
+      "prompt": "ferrofluid velvet horizon, black magnetic liquid folding into soft ridges, cyan pin highlights, plush scientific darkness, broad calm center"
+    },
+    {
+      "id": "superconductor-storm",
+      "file": "bg_exp_superconductor_storm.jpg",
+      "seed": 51024010,
+      "prompt": "superconductor storm, violet blue magnetic flux vortices stretched into distant atmospheric ribbons, subtle frost haze, no single vortex center"
+    },
+    {
+      "id": "xray-lagoon",
+      "file": "bg_exp_xray_lagoon.jpg",
+      "seed": 51024011,
+      "prompt": "x-ray lagoon of translucent mineral layers, glowing cyan fracture lines under smoky graphite water, soft luminous depth, abstract geochemical dream"
+    },
+    {
+      "id": "moire-field",
+      "file": "bg_exp_moire_field.jpg",
+      "seed": 51024012,
+      "prompt": "moire interference field from twisted bilayer graphene, teal amber wavefronts crossing dark space, subtle lattice shimmer, continuous non-repeating bands"
+    },
+    {
+      "id": "darkmatter-glass",
+      "file": "bg_exp_darkmatter_glass.jpg",
+      "seed": 51024013,
+      "prompt": "dark matter glass ocean, invisible mass lensing faint blue filaments through black transparent slabs, luxurious quiet void, deep edge detail"
+    },
+    {
+      "id": "enzyme-aurora",
+      "file": "bg_exp_enzyme_aurora.jpg",
+      "seed": 51024014,
+      "prompt": "enzyme aurora, soft ribbon-like catalytic flows in amber teal mist, organic chemistry atmosphere, no literal cells, no centered molecule"
+    },
+    {
+      "id": "thermal-bloom",
+      "file": "bg_exp_thermal_bloom.jpg",
+      "seed": 51024015,
+      "prompt": "thermal bloom field, infrared heat-map vapor rolling over dark alloy terrain, magenta orange blue gradients, calm center and glowing peripheral turbulence"
+    },
+    {
+      "id": "vacuum-foam",
+      "file": "bg_exp_vacuum_foam.jpg",
+      "seed": 51024016,
+      "prompt": "vacuum foam at cosmic microscale, tiny silver blue bubbles dissolving into blackness, subtle quantum texture, continuous quiet particulate field"
+    }
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "contract": {
+    "target_width": 4096,
+    "target_height": 2048,
+    "projection": "equirectangular",
+    "viewer_path": "apps/web/public/backgrounds",
+    "candidate_path": "tools/lupi-environment-candidates/<run-id>/<asset-id>",
+    "promotion": "Candidates are promoted explicitly with tools/lupi_comfy_panorama.py --promote-run <run-id>.",
+    "media_pack": {
+      "static_poster": {
+        "format": "jpg",
+        "width": 4096,
+        "height": 2048
+      },
+      "motion_loop": {
+        "status": "ready",
+        "manifest": "tools/lupi-motion-loops.json",
+        "preferred_formats": ["mp4", "webm"],
+        "target_widths": [1024, 2048, 3072],
+        "duration_seconds": [8, 15],
+        "fps": 24,
+        "current_generated": [
+          "bg_quantum_fog_loop.mp4",
+          "bg_neutrino_rain_loop.mp4",
+          "bg_enzyme_aurora_loop.mp4",
+          "bg_molten_circuit_sea_loop.mp4",
+          "bg_xray_lagoon_loop.mp4",
+          "bg_vacuum_foam_loop.mp4",
+          "bg_moire_field_loop.mp4",
+          "bg_protein_dream_loop.mp4",
+          "bg_plasma_discharge_loop.mp4",
+          "bg_bioluminescent_loop.mp4",
+          "bg_spacetime_loop.mp4",
+          "bg_topographic_loop.mp4"
+        ]
+      }
+    },
+    "notes": [
+      "All prompts target true 2:1 panoramic backgrounds for THREE.EquirectangularReflectionMapping.",
+      "Keep the center calm enough for molecular geometry and HUD text.",
+      "Avoid text, logos, people, foreground objects, hard vignettes, and visible left/right seams.",
+      "Generated files are candidates until an operator promotes the run into viewer assets.",
+      "Panoramic video variants should use the still image as poster/source master and pass temporal seam and loop QA."
+    ]
+  },
+  "global_positive": "wide full-bleed rectangular background texture, true 2:1 aspect ratio, seamless horizontal wrap, continuous left and right edges, centered horizon line, premium scientific visualization background for a molecular dynamics viewer, elegant material science atmosphere, cinematic but quiet, high frequency detail at the edges, low visual noise behind the central molecule, physically plausible soft lighting, crisp texture, no foreground subject",
+  "global_negative": "text, letters, watermark, logo, signature, people, face, body, animal, object in foreground, planet, moon, orb, sphere, ring, bullseye, black hole, repeated tile, mirrored quadrant, duplicate circles, fisheye circle, oval mask, circular mask, white background, white margin, page, cutout, frame, border, square crop, portrait crop, vertical crop, split image, visible seam, hard left edge, hard right edge, distorted horizon, overexposed center, blurry, low resolution, jpeg artifacts",
+  "assets": [
+    {
+      "id": "nebula",
+      "file": "bg_nebula_indigo.jpg",
+      "seed": 41012001,
+      "prompt": "deep indigo molecular nebula, violet ion clouds, faint atom-like particle trails, subtle parallax layers, dark lower hemisphere"
+    },
+    {
+      "id": "aurora",
+      "file": "bg_aurora_teal.jpg",
+      "seed": 41012002,
+      "prompt": "teal aurora curtains over a dark polar laboratory sky, cyan plasma ribbons, soft black horizon, clean atmospheric gradients"
+    },
+    {
+      "id": "plasma-smoke",
+      "file": "bg_plasma_smoke.jpg",
+      "seed": 41012003,
+      "prompt": "violet plasma smoke suspended in a dark chamber, translucent volumetric wisps, subtle magenta sparks, elegant negative space"
+    },
+    {
+      "id": "copper",
+      "file": "bg_copper_shimmer.jpg",
+      "seed": 41012004,
+      "prompt": "copper nanoscale shimmer, brushed metallic wave patterns, warm amber reflections, dark lab-grade material texture"
+    },
+    {
+      "id": "starfield",
+      "file": "bg_deep_starfield.jpg",
+      "seed": 41013905,
+      "prompt": "full-bleed dark navy starry nebula texture filling the entire rectangular frame, blue-black interstellar dust from edge to edge, sparse blue-white pinpoints, subtle orbital arcs, no white margin, no oval preview",
+      "postprocess": {
+        "crop_fill": [0.11, 0.11, 0.89, 0.89]
+      }
+    },
+    {
+      "id": "navy-grad",
+      "file": "bg_navy_gradient.jpg",
+      "seed": 41012006,
+      "prompt": "quiet navy studio gradient, soft indigo horizon glow, minimal abstract lab atmosphere, polished premium viewer backdrop"
+    },
+    {
+      "id": "crystal",
+      "file": "bg_crystal_ice.jpg",
+      "seed": 41012007,
+      "prompt": "continuous blue crystal field, glacial faceted sheets and frosted translucent lattice sweeping horizontally across the entire frame, calm dark cyan depth, no centered object"
+    },
+    {
+      "id": "bioluminescent",
+      "file": "bg_bioluminescent.jpg",
+      "seed": 41012008,
+      "prompt": "bioluminescent microscopic field, teal organic filaments, dim cellular glow, scientific macro texture in deep blue-black"
+    },
+    {
+      "id": "volcanic",
+      "file": "bg_volcanic_ember.jpg",
+      "seed": 41012009,
+      "prompt": "volcanic ember material field, molten orange fissures in dark basalt, subtle heat haze, controlled dramatic contrast"
+    },
+    {
+      "id": "rose-gold",
+      "file": "bg_rose_gold.jpg",
+      "seed": 41012010,
+      "prompt": "rose gold nanofilm shimmer, soft pink metallic interference, elegant brushed material waves, black studio falloff"
+    },
+    {
+      "id": "phosphor",
+      "file": "bg_phosphor_screen.jpg",
+      "seed": 41012011,
+      "prompt": "green phosphor screen atmosphere, dim oscilloscope glow, tiny scanline texture, black laboratory void"
+    },
+    {
+      "id": "marble",
+      "file": "bg_white_marble.jpg",
+      "seed": 41012012,
+      "prompt": "white marble scientific studio, pale stone veining, soft neutral lighting, clean premium material backdrop"
+    },
+    {
+      "id": "iridescent",
+      "file": "bg_iridescent.jpg",
+      "seed": 41012013,
+      "prompt": "iridescent thin-film interference, dark glass surface colors, cyan violet gold spectral ribbons, premium optical material"
+    },
+    {
+      "id": "arctic",
+      "file": "bg_arctic_terrain.jpg",
+      "seed": 41012014,
+      "prompt": "arctic research terrain panorama, low icy horizon, blue-white crystalline ridges, calm dark sky, no sun disk"
+    },
+    {
+      "id": "plasma-arc",
+      "file": "bg_plasma_discharge.jpg",
+      "seed": 41012015,
+      "prompt": "diffuse plasma discharge environment, violet cyan ion filaments and branching electrical haze around the far edges of a dark chamber, calm empty center, no aperture or circular core"
+    },
+    {
+      "id": "cream",
+      "file": "bg_warm_cream.jpg",
+      "seed": 41012016,
+      "prompt": "warm cream editorial studio, soft ivory material backdrop, subtle paper grain, clean scientific presentation lighting"
+    },
+    {
+      "id": "circuit",
+      "file": "bg_circuit_trace.jpg",
+      "seed": 41012017,
+      "prompt": "dark circuit trace panorama, cyan microchip pathways, subtle gold pads, nanoscale electronics atmosphere, calm center"
+    },
+    {
+      "id": "cellular",
+      "file": "bg_cellular.jpg",
+      "seed": 41012018,
+      "prompt": "cellular microscopy environment, amber organic membranes, soft dark biomaterial patterning, elegant scientific abstraction"
+    },
+    {
+      "id": "concrete",
+      "file": "bg_studio_concrete.jpg",
+      "seed": 41012019,
+      "prompt": "dark studio concrete panorama, fine mineral texture, soft overhead lab lighting, neutral graphite material field"
+    },
+    {
+      "id": "spacetime",
+      "file": "bg_spacetime.jpg",
+      "seed": 41012020,
+      "prompt": "spacetime curvature grid, deep violet scientific field lines, subtle gravitational lensing arcs, quiet black center"
+    },
+    {
+      "id": "ocean",
+      "file": "bg_deep_ocean.jpg",
+      "seed": 41012021,
+      "prompt": "deep ocean pressure environment, dark blue water gradient, faint bioluminescent particulate, calm abyssal horizon"
+    },
+    {
+      "id": "topographic",
+      "file": "bg_topographic.jpg",
+      "seed": 41012022,
+      "prompt": "topographic contour panorama, graphite terrain lines, subtle cyan elevation curves, scientific map texture in dark studio space"
+    },
+    {
+      "id": "lavender",
+      "file": "bg_lavender.jpg",
+      "seed": 41012023,
+      "prompt": "soft lavender studio panorama, pale violet gradient, subtle satin material texture, clean bright scientific backdrop"
+    },
+    {
+      "id": "hex-lattice",
+      "file": "bg_hex_lattice.jpg",
+      "seed": 41012024,
+      "prompt": "hexagonal lattice field, dark graphene-like pattern, cyan edge glow, atom-scale honeycomb material structure"
+    },
+    {
+      "id": "quantum-fog",
+      "file": "bg_quantum_fog.jpg",
+      "seed": 51024005,
+      "prompt": "quantum fog chamber, faint probability wave wisps, tiny luminous measurement traces, dark graphite blue atmosphere, subtle ghostly depth",
+      "motion": {
+        "file": "bg_quantum_fog_loop.mp4",
+        "source": "tools/lupi_motion_loops.py",
+        "width": 2048,
+        "height": 1024,
+        "fps": 24,
+        "duration_seconds": 8
+      }
+    },
+    {
+      "id": "neutrino-rain",
+      "file": "bg_neutrino_rain.jpg",
+      "seed": 51024008,
+      "prompt": "neutrino rain in a black detector volume, vertical silver blue particle streaks, faint Cherenkov glow, enormous invisible chamber, elegant emptiness",
+      "motion": {
+        "file": "bg_neutrino_rain_loop.mp4",
+        "source": "tools/lupi_motion_loops.py",
+        "width": 2048,
+        "height": 1024,
+        "fps": 24,
+        "duration_seconds": 8
+      }
+    },
+    {
+      "id": "protein-dream",
+      "file": "bg_protein_dream.jpg",
+      "seed": 51024003,
+      "prompt": "dreamlike protein-folding atmosphere, translucent ribbon fields dissolving into fog, soft amber blue molecular haze, abstract biology without literal cells"
+    },
+    {
+      "id": "xray-lagoon",
+      "file": "bg_xray_lagoon.jpg",
+      "seed": 51024011,
+      "prompt": "x-ray lagoon of translucent mineral layers, glowing cyan fracture lines under smoky graphite water, soft luminous depth, abstract geochemical dream"
+    },
+    {
+      "id": "enzyme-aurora",
+      "file": "bg_enzyme_aurora.jpg",
+      "seed": 51024014,
+      "prompt": "enzyme aurora, soft ribbon-like catalytic flows in amber teal mist, organic chemistry atmosphere, no literal cells, no centered molecule",
+      "motion": {
+        "file": "bg_enzyme_aurora_loop.mp4",
+        "source": "tools/lupi_motion_loops.py",
+        "width": 2048,
+        "height": 1024,
+        "fps": 24,
+        "duration_seconds": 8
+      }
+    },
+    {
+      "id": "vacuum-foam",
+      "file": "bg_vacuum_foam.jpg",
+      "seed": 51024016,
+      "prompt": "vacuum foam at cosmic microscale, tiny silver blue bubbles dissolving into blackness, subtle quantum texture, continuous quiet particulate field"
+    },
+    {
+      "id": "moire-field",
+      "file": "bg_moire_field.jpg",
+      "seed": 51024012,
+      "prompt": "moire interference field from twisted bilayer graphene, teal amber wavefronts crossing dark space, subtle lattice shimmer, continuous non-repeating bands"
+    },
+    {
+      "id": "molten-circuit-sea",
+      "file": "bg_molten_circuit_sea.jpg",
+      "seed": 51024007,
+      "prompt": "molten circuit sea, dark silicon terrain with copper lava traces and cyan data rivers, electronics geology, deep cinematic lab horizon",
+      "motion": {
+        "file": "bg_molten_circuit_sea_loop.mp4",
+        "source": "tools/lupi_motion_loops.py",
+        "width": 2048,
+        "height": 1024,
+        "fps": 24,
+        "duration_seconds": 8
+      }
+    }
+  ]
+}

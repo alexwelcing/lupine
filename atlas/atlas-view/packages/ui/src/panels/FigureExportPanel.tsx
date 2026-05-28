@@ -1,877 +1,459 @@
 /**
- * FigureExportPanel — Unified Export Controls
- *
- * Three export modes in one panel:
- *   1. Still Figure — Journal presets (Nature, Science, ACS) + custom
- *   2. MP4 Video — 360° orbit via WebCodecs + mp4-muxer (H.264)
- *   3. Animated GIF — Records via WebCodecs MP4, then converts to GIF
- *
- * All video modes support configurable duration, resolution, and orbit.
- * Precision Instrument aesthetic: 0px border-radius, obsidian/cyan palette.
+ * FigureExportPanel - six reliable export actions, no recorder maze.
  */
 
-import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useStore } from '../store';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 import { getElementSpec } from '@atlas/core';
+import { useStore } from '../store';
 
-// ─── Types ────────────────────────────────────────────────────────────
-type ExportMode = 'figure' | 'mp4' | 'gif' | 'glb' | 'usdz';
+type ExportStatus =
+  | { kind: 'idle'; label: string }
+  | { kind: 'working'; label: string }
+  | { kind: 'success'; label: string }
+  | { kind: 'error'; label: string };
 
-interface JournalPreset {
-  id: string;
-  name: string;
-  desc: string;
-  width: number;
-  height: number;
-  dpi: number;
-}
+const DATA_EXPORT_ATOM_LIMIT = 250_000;
 
-const JOURNAL_PRESETS: JournalPreset[] = [
-  { id: 'nature-1col',  name: 'Nature 1-col',    desc: '89 mm, 300 DPI',   width: 1051, height: 1051, dpi: 300 },
-  { id: 'nature-2col',  name: 'Nature 2-col',    desc: '183 mm, 300 DPI',  width: 2163, height: 2163, dpi: 300 },
-  { id: 'science-1col', name: 'Science 1-col',   desc: '58 mm, 300 DPI',   width: 685,  height: 685,  dpi: 300 },
-  { id: 'acs-full',     name: 'ACS Full Page',    desc: '170 mm, 300 DPI',  width: 2008, height: 2008, dpi: 300 },
-  { id: 'slide-16-9',   name: 'Slide 16:9',       desc: '1920×1080',        width: 1920, height: 1080, dpi: 150 },
-  { id: 'social-sq',    name: 'Social Square',    desc: '1080×1080',        width: 1080, height: 1080, dpi: 150 },
+const IMAGE_EXPORTS = [
+  {
+    id: 'figure-png',
+    label: 'Figure PNG',
+    meta: '2160 x 2160',
+    width: 2160,
+    height: 2160,
+    format: 'png' as const,
+    baseName: 'Lupi-figure',
+  },
+  {
+    id: 'slide-png',
+    label: 'Slide PNG',
+    meta: '1920 x 1080',
+    width: 1920,
+    height: 1080,
+    format: 'png' as const,
+    baseName: 'Lupi-slide',
+  },
+  {
+    id: 'web-jpg',
+    label: 'Web JPG',
+    meta: '1600 x 1200',
+    width: 1600,
+    height: 1200,
+    format: 'jpeg' as const,
+    baseName: 'Lupi-web',
+  },
 ];
 
-const VIDEO_RESOLUTIONS = [
-  { label: '720p',  width: 1280, height: 720 },
-  { label: '1080p', width: 1920, height: 1080 },
-  { label: '2K',    width: 2560, height: 1440 },
-  { label: '4K',    width: 3840, height: 2160 },
-];
-
-const DURATION_OPTIONS = [3, 5, 10, 30, 60, 120];
-
-// ─── Icons ────────────────────────────────────────────────────────────
 const IconClose = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
-    <path d="M18 6L6 18M6 6l12 12" />
-  </svg>
-);
-const IconDownload = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-    <polyline points="7 10 12 15 17 10" />
-    <line x1="12" y1="15" x2="12" y2="3" />
-  </svg>
-);
-const IconCheck = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1edce0" strokeWidth="2.5" strokeLinecap="square">
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
-const IconRecord = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="#ef4444" stroke="none">
-    <circle cx="12" cy="12" r="7" />
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
+    <path d="M18 6 6 18M6 6l12 12" />
   </svg>
 );
 
+const IconDownload = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 4v10" />
+    <path d="m7 10 5 5 5-5" />
+    <path d="M5 20h14" />
+  </svg>
+);
+
+const IconData = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 4h9l3 3v13H6z" />
+    <path d="M14 4v4h4" />
+    <path d="M8.5 12h7" />
+    <path d="M8.5 15h7" />
+    <path d="M8.5 18h4" />
+  </svg>
+);
+
+const IconLink = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.1 0l1.4-1.4a5 5 0 0 0-7.1-7.1l-.8.8" />
+    <path d="M14 11a5 5 0 0 0-7.1 0l-1.4 1.4a5 5 0 0 0 7.1 7.1l.8-.8" />
+  </svg>
+);
 
 export function FigureExportPanel() {
-  const { setActivePanel, file, frame, triggerExport } = useStore();
+  const setActivePanel = useStore(s => s.setActivePanel);
+  const file = useStore(s => s.file);
+  const frame = useStore(s => s.frame);
+  const triggerExport = useStore(s => s.triggerExport);
+  const setShowScaleBar = useStore(s => s.setShowScaleBar);
+  const [status, setStatus] = useState<ExportStatus>({ kind: 'idle', label: 'Ready' });
 
-  // ─── Local state ──────────────────────────────────────────────
-  const [mode, setMode] = useState<ExportMode>('figure');
-  const [selectedPreset, setSelectedPreset] = useState(JOURNAL_PRESETS[0]);
-  const [format, setFormat] = useState<'png' | 'jpeg' | 'webp'>('png');
-  const [transparentBg, setTransparentBg] = useState(false);
-  const [videoRes, setVideoRes] = useState(VIDEO_RESOLUTIONS[1]); // 1080p default
-  const [duration, setDuration] = useState(5);
-  const [orbit, setOrbit] = useState(true);
-  const [cinematic, setCinematic] = useState(false);
-  const [exporting, setExporting] = useState(false);
-  const [exportSuccess, setExportSuccess] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [readyBlob, setReadyBlob] = useState<{ blob: Blob, name: string } | null>(null);
-
-  // Auto-clear success
   useEffect(() => {
-    if (exportSuccess && !readyBlob) {
-      const timer = setTimeout(() => setExportSuccess(false), 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [exportSuccess, readyBlob]);
+    if (status.kind !== 'success') return;
+    const timer = window.setTimeout(() => setStatus({ kind: 'idle', label: 'Ready' }), 2400);
+    return () => window.clearTimeout(timer);
+  }, [status.kind, status.label]);
 
-  // Progress simulation during recording
-  useEffect(() => {
-    if (!exporting) { setProgress(0); return; }
-    const interval = setInterval(() => {
-      setProgress(prev => Math.min(prev + (100 / (duration * 10)), 99));
-    }, 100);
-    return () => clearInterval(interval);
-  }, [exporting, duration]);
+  const currentFrame = file?.trajectory.frames[frame] ?? null;
 
-  // System info for context
   const systemInfo = useMemo(() => {
-    if (!file) return null;
-    const f = file.trajectory.frames[frame];
-    if (!f) return null;
+    if (!file || !currentFrame) return null;
     const counts = new Map<number, number>();
-    for (let i = 0; i < f.natoms; i++) {
-      const t = f.types[i];
-      counts.set(t, (counts.get(t) ?? 0) + 1);
+    for (let i = 0; i < currentFrame.natoms; i++) {
+      const type = currentFrame.types[i];
+      counts.set(type, (counts.get(type) ?? 0) + 1);
     }
-    // Build composition string
-    const parts: string[] = [];
-    counts.forEach((count, type) => {
-      const spec = getElementSpec(type);
-      parts.push(`${spec.symbol}${count > 1 ? count : ''}`);
-    });
+    const formula = Array.from(counts.entries())
+      .sort(([a], [b]) => a - b)
+      .map(([type, count]) => `${getElementSpec(type).symbol}${count > 1 ? count : ''}`)
+      .join('');
+
     return {
-      formula: parts.join(''),
-      natoms: f.natoms,
+      formula,
+      natoms: currentFrame.natoms,
       totalFrames: file.trajectory.totalFrames,
+      timestep: currentFrame.timestep,
     };
-  }, [file, frame]);
+  }, [currentFrame, file]);
 
-  const handleComplete = useCallback((success: boolean, blob?: Blob, filename?: string) => {
-    setExporting(false);
-    setProgress(100);
-    setExportSuccess(success !== false);
-    if (success && blob && filename) {
-      setReadyBlob({ blob, name: filename });
-    } else if (!success) {
-      alert("Export failed! Check console for details.");
-    }
-  }, []);
-
-  // ─── Utility ─────────────────────────────────────────────────────
-  const downloadReadyBlob = useCallback(async () => {
-    if (!readyBlob) return;
-    const { blob, name: filename } = readyBlob;
-    
-    // Try Web Share API for mobile devices (especially iOS to save to Photos)
-    if (navigator.share) {
-      const fileObj = new File([blob], filename, { type: blob.type });
-      if (navigator.canShare && navigator.canShare({ files: [fileObj] })) {
-        try {
-          await navigator.share({
-            files: [fileObj],
-            title: filename,
-          });
-          setReadyBlob(null);
-          setExportSuccess(true);
-          setTimeout(() => setExportSuccess(false), 4000);
-          return;
-        } catch (err) {
-          console.warn('Web Share failed or cancelled:', err);
-        }
-      }
-    }
-
-    // Fallback to standard anchor download
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.download = filename;
-    link.href = url;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setTimeout(() => URL.revokeObjectURL(url), 10_000);
-    
-    setReadyBlob(null);
-    setExportSuccess(true);
-    setTimeout(() => setExportSuccess(false), 4000);
-  }, [readyBlob]);
-
-  // ─── Export handlers ──────────────────────────────────────────
-  const handleExportFigure = useCallback(() => {
-    setExporting(true);
-    setExportSuccess(false);
-    useStore.getState().setShowScaleBar(true);
+  const runImageExport = useCallback((preset: typeof IMAGE_EXPORTS[number]) => {
+    if (!file) return;
+    setShowScaleBar(true);
+    setStatus({ kind: 'working', label: `Rendering ${preset.label}` });
     triggerExport({
       type: 'image',
-      resolution: { width: selectedPreset.width, height: selectedPreset.height },
-      format: transparentBg ? 'png' : format,
-      transparent: transparentBg,
-      baseName: `Lupi-${selectedPreset.id}`,
-      onComplete: handleComplete,
+      resolution: { width: preset.width, height: preset.height },
+      format: preset.format,
+      transparent: false,
+      baseName: `${preset.baseName}-${safeName(file.name)}`,
+      onComplete: (success, blob, filename) => {
+        if (success && blob && filename) {
+          handoffDownload(blob, filename, preset.label, setStatus);
+        } else {
+          setStatus({ kind: 'error', label: `${preset.label} failed` });
+        }
+      },
     });
-  }, [selectedPreset, format, transparentBg, triggerExport, handleComplete]);
+  }, [file, setShowScaleBar, triggerExport]);
 
-  const handleExportVideo = useCallback(async () => {
-    let fileStream;
-    // File System Access API streaming for MP4 to prevent memory crashes on large exports
-    if (mode === 'mp4' && 'showSaveFilePicker' in window) {
-      try {
-        const handle = await (window as any).showSaveFilePicker({
-          suggestedName: `Lupi-orbit-${videoRes.label}.mp4`,
-          types: [{
-            description: 'MP4 Video',
-            accept: { 'video/mp4': ['.mp4'] }
-          }],
-        });
-        fileStream = await handle.createWritable();
-      } catch (err: any) {
-        if (err.name !== 'AbortError') console.error("Save file picker failed", err);
-        return; // User cancelled
+  const exportCsv = useCallback(() => {
+    if (!file || !currentFrame) return;
+    if (currentFrame.natoms > DATA_EXPORT_ATOM_LIMIT) {
+      setStatus({ kind: 'error', label: `CSV capped at ${DATA_EXPORT_ATOM_LIMIT.toLocaleString()} atoms` });
+      return;
+    }
+
+    setStatus({ kind: 'working', label: 'Building atom CSV' });
+    window.setTimeout(() => {
+      const propertyNames = Array.from(currentFrame.properties.keys());
+      const rows = [
+        ['index', 'id', 'type', 'symbol', 'x', 'y', 'z', ...propertyNames].map(csvCell).join(','),
+      ];
+
+      for (let i = 0; i < currentFrame.natoms; i++) {
+        const type = currentFrame.types[i];
+        const values = [
+          i,
+          currentFrame.ids[i] ?? i,
+          type,
+          getElementSpec(type).symbol,
+          currentFrame.positions[i * 3].toFixed(6),
+          currentFrame.positions[i * 3 + 1].toFixed(6),
+          currentFrame.positions[i * 3 + 2].toFixed(6),
+          ...propertyNames.map(name => formatNumber(currentFrame.properties.get(name)?.[i])),
+        ];
+        rows.push(values.map(csvCell).join(','));
       }
+
+      const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8' });
+      handoffDownload(blob, `${safeName(file.name)}-frame${frame + 1}-atoms.csv`, 'Atom CSV', setStatus);
+    }, 0);
+  }, [currentFrame, file, frame]);
+
+  const exportXyz = useCallback(() => {
+    if (!file || !currentFrame) return;
+    if (currentFrame.natoms > DATA_EXPORT_ATOM_LIMIT) {
+      setStatus({ kind: 'error', label: `XYZ capped at ${DATA_EXPORT_ATOM_LIMIT.toLocaleString()} atoms` });
+      return;
     }
 
-    setExporting(true);
-    setExportSuccess(false);
+    setStatus({ kind: 'working', label: 'Building XYZ' });
+    window.setTimeout(() => {
+      const rows = [
+        `${currentFrame.natoms}`,
+        `Lupi export | ${file.name} | frame ${frame + 1} | timestep ${currentFrame.timestep}`,
+      ];
 
-    triggerExport({
-      type: 'video',
-      resolution: { width: videoRes.width, height: videoRes.height },
-      format: mode === 'gif' ? 'gif' as any : 'mp4',
-      orbit,
-      cinematic,
-      durationSeconds: duration,
-      baseName: `Lupi-${mode === 'gif' ? 'anim' : 'orbit'}-${videoRes.label}`,
-      fileStream,
-      onComplete: handleComplete,
-    });
-  }, [mode, videoRes, orbit, cinematic, duration, triggerExport, handleComplete]);
+      for (let i = 0; i < currentFrame.natoms; i++) {
+        const symbol = getElementSpec(currentFrame.types[i]).symbol;
+        rows.push([
+          symbol,
+          currentFrame.positions[i * 3].toFixed(6),
+          currentFrame.positions[i * 3 + 1].toFixed(6),
+          currentFrame.positions[i * 3 + 2].toFixed(6),
+        ].join(' '));
+      }
 
-  // Estimate file sizes
-  const estimatedSize = useMemo(() => {
-    if (mode === 'figure') {
-      const pixels = selectedPreset.width * selectedPreset.height;
-      const bpp = format === 'png' ? 2 : 0.3; // bytes per pixel approx
-      const mb = (pixels * bpp) / (1024 * 1024);
-      return `~${mb.toFixed(1)} MB`;
-    }
-    if (mode === 'mp4') {
-      const bitrate = 80; // Mbps (upgraded for ultra quality)
-      return `~${(bitrate * duration / 8).toFixed(0)} MB`;
-    }
-    if (mode === 'gif') {
-      // MP4→GIF conversion samples at 30fps
-      const fps = 30;
-      const frames = fps * duration;
-      const pixelsPerFrame = videoRes.width * videoRes.height;
-      // After 256-color quantize + LZW ~0.12 bytes/pixel for molecular renders
-      const mb = (frames * pixelsPerFrame * 0.12) / (1024 * 1024);
-      return `~${mb.toFixed(0)} MB`;
-    }
-    return '';
-  }, [mode, selectedPreset, format, videoRes, duration]);
+      const blob = new Blob([rows.join('\n')], { type: 'chemical/x-xyz;charset=utf-8' });
+      handoffDownload(blob, `${safeName(file.name)}-frame${frame + 1}.xyz`, 'Frame XYZ', setStatus);
+    }, 0);
+  }, [currentFrame, file, frame]);
 
-  // WebCodecs support check
-  const hasWebCodecs = typeof globalThis.VideoEncoder !== 'undefined';
+  const copyViewLink = useCallback(async () => {
+    if (!file) return;
+    const state = useStore.getState();
+    const url = new URL(window.location.href);
+    url.searchParams.set('s', state.encodeToURL());
+    if (file.sourceUrl) url.searchParams.set('load', file.sourceUrl);
+    const link = url.toString();
+
+    try {
+      await navigator.clipboard.writeText(link);
+      setStatus({ kind: 'success', label: 'View link copied' });
+    } catch {
+      const blob = new Blob([link], { type: 'text/plain;charset=utf-8' });
+      handoffDownload(blob, `${safeName(file.name)}-view-link.txt`, 'View link', setStatus);
+    }
+  }, [file]);
 
   return (
-    <div style={{
-      display: 'flex', flexDirection: 'column', height: '100%',
-      background: '#0a0a0c',
-      borderLeft: '1px solid #1f2937',
-    }}>
-      {/* ─── Header ─── */}
+    <div
+      data-testid="simple-export-panel"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100%',
+        background: '#080b10',
+        color: '#e5edf7',
+      }}
+    >
       <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '12px 16px',
-        borderBottom: '1px solid #1f2937',
-        background: '#121318',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '14px 16px 12px',
+        borderBottom: '1px solid rgba(148, 163, 184, 0.16)',
         flexShrink: 0,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 4, height: 14, background: '#1edce0' }} />
-          <span style={{
-            fontSize: 12, fontWeight: 700,
-            fontFamily: 'Space Grotesk, sans-serif',
+        <div>
+          <div style={{
+            fontSize: 11,
+            fontWeight: 800,
+            letterSpacing: '0.13em',
+            color: '#7dd3fc',
             textTransform: 'uppercase',
-            letterSpacing: '0.15em', color: '#e2e8f0',
-          }}>Export</span>
+          }}>
+            Export
+          </div>
+          {systemInfo && (
+            <div style={{
+              marginTop: 4,
+              color: 'rgba(203, 213, 225, 0.68)',
+              fontSize: 11,
+              fontFamily: 'var(--font-mono), ui-monospace, monospace',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: 290,
+            }}>
+              {systemInfo.formula || file?.name} / {systemInfo.natoms.toLocaleString()} atoms / frame {frame + 1}
+            </div>
+          )}
         </div>
         <button
+          type="button"
+          aria-label="Close export"
           onClick={() => setActivePanel(null)}
           style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            width: 24, height: 24, background: 'transparent',
-            border: '1px solid #334155', borderRadius: 0,
-            color: '#94a3b8', cursor: 'pointer',
+            display: 'grid',
+            placeItems: 'center',
+            width: 28,
+            height: 28,
+            color: 'rgba(226, 232, 240, 0.76)',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(148, 163, 184, 0.18)',
+            borderRadius: 8,
+            cursor: 'pointer',
           }}
         >
           <IconClose />
         </button>
       </div>
 
-      {/* ─── Mode Tabs ─── */}
       <div style={{
-        display: 'flex', borderBottom: '1px solid #1f2937',
-        flexShrink: 0,
+        display: 'grid',
+        gridTemplateColumns: '1fr',
+        gap: 8,
+        padding: 12,
       }}>
-        {([
-          { id: 'figure' as const, label: 'FIGURE' },
-          { id: 'mp4' as const, label: 'MP4' },
-          { id: 'gif' as const, label: 'GIF' },
-          { id: 'glb' as const, label: 'GLB' },
-          { id: 'usdz' as const, label: 'USDZ' },
-        ]).map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setMode(tab.id)}
-            style={{
-              flex: 1, padding: '10px 0',
-              background: mode === tab.id ? 'rgba(30, 220, 224, 0.06)' : 'transparent',
-              border: 'none',
-              borderBottom: mode === tab.id ? '2px solid #1edce0' : '2px solid transparent',
-              cursor: 'pointer',
-              transition: 'all 150ms',
-            }}
-          >
-            <div style={{
-              fontSize: 11, fontWeight: 700,
-              fontFamily: 'var(--font-mono)',
-              letterSpacing: '0.1em',
-              color: mode === tab.id ? '#1edce0' : '#64748b',
-            }}>{tab.label}</div>
-          </button>
+        {IMAGE_EXPORTS.map(preset => (
+          <ExportAction
+            key={preset.id}
+            testId={`export-${preset.id}`}
+            icon={<IconDownload />}
+            label={preset.label}
+            meta={preset.meta}
+            disabled={!file || status.kind === 'working'}
+            onClick={() => runImageExport(preset)}
+          />
         ))}
+        <ExportAction
+          testId="export-atom-csv"
+          icon={<IconData />}
+          label="Atom CSV"
+          meta={`${systemInfo?.natoms?.toLocaleString() ?? '0'} rows`}
+          disabled={!currentFrame || status.kind === 'working'}
+          onClick={exportCsv}
+        />
+        <ExportAction
+          testId="export-frame-xyz"
+          icon={<IconData />}
+          label="Frame XYZ"
+          meta={`frame ${frame + 1}`}
+          disabled={!currentFrame || status.kind === 'working'}
+          onClick={exportXyz}
+        />
+        <ExportAction
+          testId="export-view-link"
+          icon={<IconLink />}
+          label="View Link"
+          meta="copy / txt"
+          disabled={!file || status.kind === 'working'}
+          onClick={copyViewLink}
+        />
       </div>
 
-      {/* ─── Content ─── */}
-      <div className="lupine-scroll" style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-
-          {/* ═══ FIGURE MODE ═══ */}
-          {mode === 'figure' && (
-            <>
-              <Section title="JOURNAL PRESET">
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
-                  {JOURNAL_PRESETS.map(p => (
-                    <button
-                      key={p.id}
-                      onClick={() => setSelectedPreset(p)}
-                      style={{
-                        padding: '10px',
-                        background: selectedPreset.id === p.id ? 'rgba(30, 220, 224, 0.08)' : '#121418',
-                        border: `1px solid ${selectedPreset.id === p.id ? 'rgba(30, 220, 224, 0.3)' : '#334155'}`,
-                        borderRadius: 0,
-                        cursor: 'pointer', textAlign: 'left',
-                        transition: 'border-color 150ms',
-                      }}
-                    >
-                      <div style={{
-                        fontSize: 11, fontWeight: 600,
-                        fontFamily: 'Space Grotesk, sans-serif',
-                        color: selectedPreset.id === p.id ? '#1edce0' : '#e2e8f0',
-                      }}>{p.name}</div>
-                      <div style={{
-                        fontSize: 9, color: '#64748b',
-                        fontFamily: 'var(--font-mono)', marginTop: 3,
-                      }}>{p.width}×{p.height} · {p.desc}</div>
-                    </button>
-                  ))}
-                </div>
-              </Section>
-
-              <Section title="FORMAT">
-                <div style={{ display: 'flex', gap: 6 }}>
-                  {(['png', 'jpeg', 'webp'] as const).map(f => (
-                    <ChipButton
-                      key={f}
-                      label={f.toUpperCase()}
-                      active={format === f}
-                      onClick={() => setFormat(f)}
-                    />
-                  ))}
-                </div>
-              </Section>
-
-              <Section title="OPTIONS">
-                <ToggleRow
-                  label="Transparent Background"
-                  hint="Enable for slides, disable for journals"
-                  active={transparentBg}
-                  onToggle={() => setTransparentBg(!transparentBg)}
-                />
-              </Section>
-
-              {/* Export spec readout */}
-              <InfoBlock>
-                <InfoRow label="Output" value={`${selectedPreset.width}×${selectedPreset.height}px`} />
-                <InfoRow label="DPI" value={`${selectedPreset.dpi}`} />
-                <InfoRow label="Format" value={transparentBg ? 'PNG (alpha)' : format.toUpperCase()} />
-                <InfoRow label="Est. Size" value={estimatedSize} />
-              </InfoBlock>
-
-              {readyBlob ? (
-                <ExportButton
-                  onClick={downloadReadyBlob}
-                  exporting={false}
-                  success={false}
-                  label="Save to Device"
-                />
-              ) : (
-                <ExportButton
-                  onClick={handleExportFigure}
-                  exporting={exporting}
-                  success={exportSuccess}
-                  label="Export Figure"
-                />
-              )}
-            </>
-          )}
-
-          {/* ═══ MP4 MODE ═══ */}
-          {mode === 'mp4' && (
-            <>
-              {!hasWebCodecs && (
-                <div style={{
-                  padding: '10px 12px', background: 'rgba(239, 68, 68, 0.1)',
-                  border: '1px solid rgba(239, 68, 68, 0.3)',
-                  fontSize: 11, color: '#fca5a5',
-                  fontFamily: 'var(--font-mono)', lineHeight: '1.5',
-                }}>
-                  WebCodecs API not available in this browser. MP4 encoding
-                  requires Chrome 94+ or Edge 94+. Firefox/Safari lack support.
-                </div>
-              )}
-
-              <Section title="RESOLUTION">
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {VIDEO_RESOLUTIONS.map(r => (
-                    <ChipButton
-                      key={r.label}
-                      label={`${r.label}`}
-                      sublabel={`${r.width}×${r.height}`}
-                      active={videoRes.label === r.label}
-                      onClick={() => setVideoRes(r)}
-                    />
-                  ))}
-                </div>
-              </Section>
-
-              <Section title="DURATION">
-                <div style={{ display: 'flex', gap: 6 }}>
-                  {DURATION_OPTIONS.map(d => (
-                    <ChipButton
-                      key={d}
-                      label={`${d}s`}
-                      active={duration === d}
-                      onClick={() => setDuration(d)}
-                    />
-                  ))}
-                </div>
-              </Section>
-
-              <Section title="CAMERA & ANIMATION">
-                <ToggleRow
-                  label="360° Orbit"
-                  hint="Spin around structure centroid"
-                  active={orbit}
-                  onToggle={() => setOrbit(!orbit)}
-                />
-                <ToggleRow
-                  label="Cinematic Sequence"
-                  hint="Dynamically animate structure properties"
-                  active={cinematic}
-                  onToggle={() => setCinematic(!cinematic)}
-                />
-              </Section>
-
-              <InfoBlock>
-                <InfoRow label="Codec" value="H.264 High (avc1.640028)" />
-                <InfoRow label="Bitrate" value="80 Mbps (HQ)" />
-                <InfoRow label="FPS" value="60" />
-                <InfoRow label="Frames" value={`${60 * duration}`} />
-                <InfoRow label="Est. Size" value={estimatedSize} />
-              </InfoBlock>
-
-              {readyBlob ? (
-                <ExportButton
-                  onClick={downloadReadyBlob}
-                  exporting={false}
-                  success={false}
-                  label="Save to Device"
-                />
-              ) : (
-                <ExportButton
-                  onClick={handleExportVideo}
-                  exporting={exporting}
-                  success={exportSuccess}
-                  label="Record MP4"
-                  recordMode
-                  progress={progress}
-                />
-              )}
-            </>
-          )}
-
-          {/* ═══ GIF MODE ═══ */}
-          {mode === 'gif' && (
-            <>
-              <Section title="RESOLUTION">
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {VIDEO_RESOLUTIONS.slice(0, 2).map(r => (
-                    <ChipButton
-                      key={r.label}
-                      label={r.label}
-                      sublabel={`${r.width}×${r.height}`}
-                      active={videoRes.label === r.label}
-                      onClick={() => setVideoRes(r)}
-                    />
-                  ))}
-                </div>
-                <div style={{
-                  fontSize: 9, color: '#475569', marginTop: 6,
-                  fontFamily: 'var(--font-mono)',
-                }}>
-                  GIF capped at 1080p to prevent memory exhaustion.
-                  Use MP4 for higher resolutions.
-                </div>
-              </Section>
-
-              <Section title="DURATION">
-                <div style={{ display: 'flex', gap: 6 }}>
-                  {[3, 5, 8].map(d => (
-                    <ChipButton
-                      key={d}
-                      label={`${d}s`}
-                      active={duration === d}
-                      onClick={() => setDuration(d)}
-                    />
-                  ))}
-                </div>
-              </Section>
-
-              <Section title="CAMERA PATH">
-                <ToggleRow
-                  label="360° Orbit"
-                  hint="Spin around structure centroid"
-                  active={orbit}
-                  onToggle={() => setOrbit(!orbit)}
-                />
-                <ToggleRow
-                  label="Cinematic Sequence"
-                  hint="Dynamically animate structure properties"
-                  active={cinematic}
-                  onToggle={() => setCinematic(!cinematic)}
-                />
-              </Section>
-
-              <InfoBlock>
-                <InfoRow label="Pipeline" value="MP4 → GIF" />
-                <InfoRow label="Palette" value="256 colors (adaptive)" />
-                <InfoRow label="FPS" value="30" />
-                <InfoRow label="Frames" value={`${30 * duration}`} />
-                <InfoRow label="Est. Size" value={estimatedSize} />
-              </InfoBlock>
-
-              {readyBlob ? (
-                <ExportButton
-                  onClick={downloadReadyBlob}
-                  exporting={false}
-                  success={false}
-                  label="Save to Device"
-                />
-              ) : (
-                <ExportButton
-                  onClick={handleExportVideo}
-                  exporting={exporting}
-                  success={exportSuccess}
-                  label="Record GIF"
-                  recordMode
-                  progress={progress}
-                />
-              )}
-            </>
-          )}
-
-          {/* ═══ GLB MODE ═══ */}
-          {mode === 'glb' && (
-            <>
-              <Section title="3D MODEL EXPORT">
-                <div style={{
-                  fontSize: 11, color: '#94a3b8', lineHeight: 1.6,
-                  fontFamily: 'Space Grotesk, sans-serif',
-                }}>
-                  Export the current frame as a <strong style={{ color: '#1edce0' }}>GLB</strong> binary
-                  glTF file. Atoms are converted to real sphere meshes grouped by element type.
-                  Bonds (if visible) are exported as cylinder geometry.
-                </div>
-              </Section>
-
-              <InfoBlock>
-                <InfoRow label="Format" value="GLB (binary glTF 2.0)" />
-                <InfoRow label="Atoms" value={`${systemInfo?.natoms?.toLocaleString() ?? '—'} particles`} />
-                <InfoRow label="Geometry" value="Instanced spheres + cylinders" />
-                <InfoRow label="Materials" value="PBR Standard (roughness, metalness)" />
-              </InfoBlock>
-
-              <div style={{
-                background: '#0d1117', border: '1px solid #1f2937',
-                padding: '10px',
-                fontSize: 10, color: '#475569',
-                fontFamily: 'var(--font-mono)', lineHeight: 1.5,
-              }}>
-                Compatible with Blender, Unity, Unreal, Cinema 4D,
-                Three.js, and all major 3D pipelines.
-                Hidden atom types are excluded from the export.
-              </div>
-
-              {readyBlob ? (
-                <ExportButton
-                  onClick={downloadReadyBlob}
-                  exporting={false}
-                  success={false}
-                  label="Save to Device"
-                />
-              ) : (
-                <ExportButton
-                  onClick={() => {
-                    setExporting(true);
-                    setExportSuccess(false);
-                    triggerExport({
-                      type: 'glb',
-                      format: 'glb',
-                      baseName: `Lupi-${systemInfo?.formula ?? 'export'}`,
-                      onComplete: handleComplete,
-                    });
-                  }}
-                  exporting={exporting}
-                  success={exportSuccess}
-                  label="Export GLB Model"
-                />
-              )}
-            </>
-          )}
-
-          {/* ═══ USDZ MODE ═══ */}
-          {mode === 'usdz' && (
-            <>
-              <Section title="AR EXPORT">
-                <div style={{
-                  fontSize: 11, color: '#94a3b8', lineHeight: 1.6,
-                  fontFamily: 'Space Grotesk, sans-serif',
-                }}>
-                  Export the current frame as a <strong style={{ color: '#1edce0' }}>USDZ</strong> file.
-                  Perfect for AR quick look on iOS devices and Snapchat lenses.
-                </div>
-              </Section>
-
-              <InfoBlock>
-                <InfoRow label="Format" value="USDZ (Universal Scene Description)" />
-                <InfoRow label="Atoms" value={`${systemInfo?.natoms?.toLocaleString() ?? '—'} particles`} />
-                <InfoRow label="Compatibility" value="iOS AR, Snapchat Lens Studio" />
-              </InfoBlock>
-
-              {readyBlob ? (
-                <ExportButton
-                  onClick={downloadReadyBlob}
-                  exporting={false}
-                  success={false}
-                  label="Save to Device"
-                />
-              ) : (
-                <ExportButton
-                  onClick={() => {
-                    setExporting(true);
-                    setExportSuccess(false);
-                    triggerExport({
-                      type: 'usdz',
-                      format: 'usdz',
-                      baseName: `Lupi-${systemInfo?.formula ?? 'export'}`,
-                      onComplete: handleComplete,
-                    });
-                  }}
-                  exporting={exporting}
-                  success={exportSuccess}
-                  label="Export USDZ Model"
-                />
-              )}
-            </>
-          )}
-
-          {/* ═══ System Context ═══ */}
-          {systemInfo && (
-            <div style={{
-              background: '#0d1117', border: '1px solid #1f2937',
-              padding: '10px', marginTop: 4,
-            }}>
-              <div style={{
-                fontSize: 9, fontFamily: 'var(--font-mono)',
-                letterSpacing: '0.08em', color: '#64748b',
-                textTransform: 'uppercase', marginBottom: 6,
-              }}>LOADED STRUCTURE</div>
-              <div style={{
-                fontSize: 11, fontFamily: 'var(--font-mono)',
-                display: 'flex', gap: 12,
-              }}>
-                <span>
-                  <span style={{ color: '#64748b' }}>Formula: </span>
-                  <span style={{ color: '#1edce0' }}>{systemInfo.formula}</span>
-                </span>
-                <span>
-                  <span style={{ color: '#64748b' }}>N: </span>
-                  <span style={{ color: '#f8fafc' }}>{systemInfo.natoms.toLocaleString()}</span>
-                </span>
-                <span>
-                  <span style={{ color: '#64748b' }}>Frames: </span>
-                  <span style={{ color: '#f8fafc' }}>{systemInfo.totalFrames}</span>
-                </span>
-              </div>
-            </div>
-          )}
-
-        </div>
+      <div
+        data-testid="export-status"
+        style={{
+          margin: '0 12px 12px',
+          padding: '9px 10px',
+          border: `1px solid ${statusColor(status.kind, 0.36)}`,
+          borderRadius: 8,
+          color: statusColor(status.kind, 1),
+          background: status.kind === 'idle' ? 'rgba(15, 23, 42, 0.42)' : statusColor(status.kind, 0.08),
+          fontSize: 11,
+          fontWeight: 650,
+          letterSpacing: '0.02em',
+        }}
+      >
+        {status.label}
       </div>
     </div>
   );
 }
 
-// ─── Sub-components ──────────────────────────────────────────────────
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div style={{
-      background: '#0d1117', border: '1px solid #1f2937', padding: '12px',
-    }}>
-      <h3 style={{
-        fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: '0.1em',
-        color: '#94a3b8', textTransform: 'uppercase', margin: '0 0 10px 0',
-      }}>{title}</h3>
-      {children}
-    </div>
-  );
-}
-
-function ChipButton({ label, sublabel, active, onClick }: {
-  label: string; sublabel?: string; active: boolean; onClick: () => void;
+function ExportAction({
+  icon,
+  label,
+  meta,
+  disabled,
+  onClick,
+  testId,
+}: {
+  icon: ReactNode;
+  label: string;
+  meta: string;
+  disabled?: boolean;
+  onClick: () => void;
+  testId: string;
 }) {
   return (
     <button
+      type="button"
+      data-testid={testId}
+      disabled={disabled}
       onClick={onClick}
       style={{
-        padding: sublabel ? '8px 12px' : '6px 14px',
-        background: active ? 'rgba(30, 220, 224, 0.1)' : '#121418',
-        border: `1px solid ${active ? 'rgba(30, 220, 224, 0.4)' : '#334155'}`,
-        borderRadius: 0, cursor: 'pointer',
-        transition: 'all 150ms',
+        width: '100%',
+        minHeight: 54,
+        display: 'grid',
+        gridTemplateColumns: '34px 1fr auto',
+        alignItems: 'center',
+        gap: 10,
+        padding: '9px 10px',
+        color: disabled ? 'rgba(148, 163, 184, 0.46)' : '#eaf7ff',
+        background: disabled ? 'rgba(15, 23, 42, 0.34)' : 'rgba(15, 23, 42, 0.72)',
+        border: '1px solid rgba(125, 211, 252, 0.18)',
+        borderRadius: 8,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        textAlign: 'left',
       }}
     >
-      <div style={{
-        fontSize: 11, fontWeight: 600,
-        fontFamily: 'Space Grotesk, sans-serif',
-        color: active ? '#1edce0' : '#94a3b8',
-      }}>{label}</div>
-      {sublabel && (
-        <div style={{
-          fontSize: 9, color: '#475569',
-          fontFamily: 'var(--font-mono)', marginTop: 2,
-        }}>{sublabel}</div>
-      )}
-    </button>
-  );
-}
-
-function ToggleRow({ label, hint, active, onToggle }: {
-  label: string; hint?: string; active: boolean; onToggle: () => void;
-}) {
-  return (
-    <button
-      onClick={onToggle}
-      style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        width: '100%', padding: '8px 10px',
-        background: active ? 'rgba(30, 220, 224, 0.06)' : '#121418',
-        border: `1px solid ${active ? 'rgba(30, 220, 224, 0.25)' : '#334155'}`,
-        borderRadius: 0, cursor: 'pointer',
-        transition: 'all 150ms',
-      }}
-    >
-      <div>
-        <div style={{
-          fontSize: 12, fontWeight: 500,
-          fontFamily: 'Space Grotesk, sans-serif',
-          color: active ? '#e2e8f0' : '#94a3b8',
-        }}>{label}</div>
-        {hint && (
-          <div style={{ fontSize: 9, color: '#475569', marginTop: 2 }}>{hint}</div>
-        )}
-      </div>
-      <div style={{
-        width: 32, height: 16,
-        background: active ? '#1edce0' : '#334155',
-        position: 'relative', transition: 'background 200ms',
+      <span style={{
+        display: 'grid',
+        placeItems: 'center',
+        width: 34,
+        height: 34,
+        color: disabled ? 'rgba(148, 163, 184, 0.42)' : '#7dd3fc',
+        background: 'rgba(125, 211, 252, 0.08)',
+        border: '1px solid rgba(125, 211, 252, 0.16)',
+        borderRadius: 8,
       }}>
-        <div style={{
-          width: 12, height: 12,
-          background: active ? '#0a0a0c' : '#64748b',
-          position: 'absolute', top: 2,
-          left: active ? 18 : 2,
-          transition: 'left 200ms, background 200ms',
-        }} />
-      </div>
-    </button>
-  );
-}
-
-function InfoBlock({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{
-      background: '#0d1117', border: '1px solid #1f2937',
-      padding: '10px',
-      display: 'flex', flexDirection: 'column', gap: 4,
-    }}>
-      {children}
-    </div>
-  );
-}
-
-function InfoRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div style={{
-      display: 'flex', justifyContent: 'space-between',
-      fontSize: 11, fontFamily: 'var(--font-mono)',
-    }}>
-      <span style={{ color: '#64748b' }}>{label}</span>
-      <span style={{ color: '#f8fafc' }}>{value}</span>
-    </div>
-  );
-}
-
-function ExportButton({ onClick, exporting, success, label, recordMode, progress }: {
-  onClick: () => void; exporting: boolean; success: boolean;
-  label: string; recordMode?: boolean; progress?: number;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={exporting}
-      style={{
-        width: '100%', padding: '12px 0',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-        fontSize: 12, fontWeight: 700,
-        fontFamily: 'Space Grotesk, sans-serif',
-        textTransform: 'uppercase',
-        letterSpacing: '0.08em',
-        cursor: exporting ? 'not-allowed' : 'pointer',
-        color: success ? '#1edce0' : (exporting ? '#94a3b8' : '#0a0a0c'),
-        background: success
-          ? 'rgba(30, 220, 224, 0.1)'
-          : (exporting
-            ? '#1f2937'
-            : '#1edce0'),
-        border: `1px solid ${success ? 'rgba(30, 220, 224, 0.3)' : (exporting ? '#334155' : '#1edce0')}`,
-        borderRadius: 0,
-        position: 'relative',
-        overflow: 'hidden',
-        transition: 'all 200ms',
-      }}
-    >
-      {/* Progress bar overlay */}
-      {exporting && recordMode && (
-        <div style={{
-          position: 'absolute', left: 0, top: 0, bottom: 0,
-          width: `${progress || 0}%`,
-          background: 'rgba(30, 220, 224, 0.15)',
-          transition: 'width 100ms linear',
-        }} />
-      )}
-      <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 8 }}>
-        {success ? (
-          <><IconCheck /> Saved</>
-        ) : exporting ? (
-          <><IconRecord /> Recording... {recordMode && progress ? `${Math.round(progress)}%` : ''}</>
-        ) : (
-          <><IconDownload /> {label}</>
-        )}
+        {icon}
       </span>
+      <span style={{ minWidth: 0 }}>
+        <span style={{ display: 'block', fontSize: 13, fontWeight: 760 }}>{label}</span>
+        <span style={{
+          display: 'block',
+          marginTop: 2,
+          color: 'rgba(203, 213, 225, 0.58)',
+          fontSize: 10,
+          fontFamily: 'var(--font-mono), ui-monospace, monospace',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}>
+          {meta}
+        </span>
+      </span>
+      <span style={{ color: 'rgba(125, 211, 252, 0.64)', fontSize: 14, lineHeight: 1 }}>&gt;</span>
     </button>
   );
+}
+
+function statusColor(kind: ExportStatus['kind'], alpha: number) {
+  if (kind === 'success') return `rgba(52, 211, 153, ${alpha})`;
+  if (kind === 'error') return `rgba(248, 113, 113, ${alpha})`;
+  if (kind === 'working') return `rgba(125, 211, 252, ${alpha})`;
+  return `rgba(148, 163, 184, ${alpha})`;
+}
+
+function handoffDownload(
+  blob: Blob,
+  filename: string,
+  label: string,
+  setStatus: (status: ExportStatus) => void,
+) {
+  setStatus({ kind: 'working', label: `Downloading ${label}` });
+  window.setTimeout(() => {
+    downloadBlob(blob, filename);
+    window.requestAnimationFrame(() => {
+      setStatus({ kind: 'success', label: `Downloaded ${label}` });
+    });
+  }, 80);
+}
+
+function downloadBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.setTimeout(() => URL.revokeObjectURL(url), 10_000);
+}
+
+function safeName(value: string) {
+  return value
+    .replace(/\.[^.]+$/, '')
+    .replace(/[^a-z0-9_-]+/gi, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 72) || 'Lupi';
+}
+
+function formatNumber(value: number | undefined) {
+  return typeof value === 'number' && Number.isFinite(value) ? String(value) : '';
+}
+
+function csvCell(value: unknown) {
+  const text = String(value ?? '');
+  return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
 }

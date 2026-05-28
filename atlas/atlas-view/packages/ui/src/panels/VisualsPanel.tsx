@@ -11,6 +11,7 @@ import {
 import { Slider } from '../controls';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { RotaryKnob } from './ProControls';
+import { BG_GRADIENT_PRESETS, BG_TEXTURE_CATEGORIES, BG_VIDEO_PRESETS, getBgBadge, getBgMedia, getBgPoster } from '../backgroundPresets';
 
 // ─── Material Scene Card ──────────────────────────────────────────────
 function MaterialSceneCard({ scene, active, onClick }: { scene: MaterialScene, active: boolean, onClick: () => void }) {
@@ -130,56 +131,17 @@ const IconClose = () => (
   </svg>
 );
 
+const IconShuffle = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 3h5v5" />
+    <path d="M4 20 21 3" />
+    <path d="M21 16v5h-5" />
+    <path d="M15 15l6 6" />
+    <path d="M4 4l5 5" />
+  </svg>
+);
+
 // ─── Background Presets ───────────────────────────────────────────────
-const BG_GRADIENT_PRESETS = [
-  { id: 'dark', label: 'Dark', top: '#1a1a1f', bottom: '#0a0a0c' },
-  { id: 'deep', label: 'Deep Field', top: '#080a14', bottom: '#000000' },
-  { id: 'void', label: 'Void', top: '#000000', bottom: '#000000' },
-  { id: 'white', label: 'White', top: '#ffffff', bottom: '#f0f0f5' },
-  { id: 'blueprint', label: 'Blueprint', top: '#0b162c', bottom: '#050a14' },
-  { id: 'midnight', label: 'Midnight', top: '#080c18', bottom: '#141e38' },
-  { id: 'studio', label: 'Studio', top: '#1a1a2e', bottom: '#16213e' },
-  { id: 'warm', label: 'Warm Dark', top: '#1a100c', bottom: '#0d0906' },
-  { id: 'fog', label: 'Fog', top: '#101418', bottom: '#1c2028' },
-];
-
-const BG_TEXTURE_CATEGORIES = [
-  { label: 'Cosmic', presets: [
-    { id: 'nebula',         label: 'Nebula',        image: '/backgrounds/bg_nebula_indigo.jpg' },
-    { id: 'aurora',         label: 'Aurora',        image: '/backgrounds/bg_aurora_teal.jpg' },
-    { id: 'plasma-smoke',   label: 'Plasma Smoke',  image: '/backgrounds/bg_plasma_smoke.jpg' },
-    { id: 'starfield',      label: 'Starfield',     image: '/backgrounds/bg_deep_starfield.jpg' },
-    { id: 'spacetime',      label: 'Spacetime',     image: '/backgrounds/bg_spacetime.jpg' },
-  ]},
-  { label: 'Material', presets: [
-    { id: 'copper',         label: 'Copper',        image: '/backgrounds/bg_copper_shimmer.jpg' },
-    { id: 'crystal',        label: 'Crystal Ice',   image: '/backgrounds/bg_crystal_ice.jpg' },
-    { id: 'volcanic',       label: 'Volcanic',      image: '/backgrounds/bg_volcanic_ember.jpg' },
-    { id: 'rose-gold',      label: 'Rose Gold',     image: '/backgrounds/bg_rose_gold.jpg' },
-    { id: 'iridescent',     label: 'Iridescent',    image: '/backgrounds/bg_iridescent.jpg' },
-  ]},
-  { label: 'Lab', presets: [
-    { id: 'phosphor',       label: 'Phosphor',      image: '/backgrounds/bg_phosphor_screen.jpg' },
-    { id: 'plasma-arc',     label: 'Plasma Arc',    image: '/backgrounds/bg_plasma_discharge.jpg' },
-    { id: 'circuit',        label: 'Circuit',       image: '/backgrounds/bg_circuit_trace.jpg' },
-    { id: 'hex-lattice',    label: 'Hex Lattice',   image: '/backgrounds/bg_hex_lattice.jpg' },
-  ]},
-  { label: 'Studio', presets: [
-    { id: 'navy-grad',      label: 'Navy',          image: '/backgrounds/bg_navy_gradient.jpg' },
-    { id: 'marble',         label: 'Marble',        image: '/backgrounds/bg_white_marble.jpg' },
-    { id: 'cream',          label: 'Cream',         image: '/backgrounds/bg_warm_cream.jpg' },
-    { id: 'concrete',       label: 'Concrete',      image: '/backgrounds/bg_studio_concrete.jpg' },
-    { id: 'lavender',       label: 'Lavender',      image: '/backgrounds/bg_lavender.jpg' },
-  ]},
-  { label: 'Environment', presets: [
-    { id: 'bioluminescent', label: 'Bioluminescent', image: '/backgrounds/bg_bioluminescent.jpg' },
-    { id: 'cellular',       label: 'Cellular',      image: '/backgrounds/bg_cellular.jpg' },
-    { id: 'arctic',         label: 'Arctic',        image: '/backgrounds/bg_arctic_terrain.jpg' },
-    { id: 'ocean',          label: 'Deep Ocean',    image: '/backgrounds/bg_deep_ocean.jpg' },
-    { id: 'topographic',    label: 'Topographic',   image: '/backgrounds/bg_topographic.jpg' },
-  ]},
-];
-
 // Backwards-compat flat list for the gradient chips
 const BG_PRESETS = BG_GRADIENT_PRESETS;
 
@@ -220,7 +182,6 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     propertyEmissionStrength, setPropertyEmissionStrength,
     annotations, addAnnotation, removeAnnotation, clearAnnotations,
     labelStyle, setLabelStyle,
-    selectedAtoms,
     hiddenAtomTypes, toggleAtomType,
     atomTypeScales, setAtomTypeScale,
     // Materials & Lighting
@@ -237,7 +198,6 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     // destructures are no longer needed by the UI in this file.
     // Context
     backgroundPreset, setBackgroundPreset,
-    backgroundVideo, setBackgroundVideo,
     showAxes, toggleAxes,
     showCell, toggleCell,
   } = useStore();
@@ -293,6 +253,18 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     () => MATERIAL_SCENES.find(s => s.id === materialScene),
     [materialScene],
   );
+
+  const activeMotionPreset = useMemo(
+    () => BG_VIDEO_PRESETS.find(p => p.id === backgroundPreset),
+    [backgroundPreset],
+  );
+
+  const pickRandomMotionPreset = () => {
+    const pool = BG_VIDEO_PRESETS.filter(p => p.id !== backgroundPreset);
+    const choices = pool.length > 0 ? pool : BG_VIDEO_PRESETS;
+    const next = choices[Math.floor(Math.random() * choices.length)];
+    if (next) setBackgroundPreset(next.id);
+  };
 
   const sceneDrifted = Boolean(activeMaterialScene && (
     materialPreset !== activeMaterialScene.materialPreset ||
@@ -790,27 +762,6 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                 </div>
               </div>
 
-              {selectedAtoms.length > 0 && (
-                <button
-                  onClick={() => {
-                    const atomIndex = selectedAtoms[0];
-                    const text = window.prompt('Annotation text', `atom #${atomIndex}`);
-                    if (text && text.trim()) addAnnotation(atomIndex, text.trim());
-                  }}
-                  style={{
-                    background: 'linear-gradient(135deg, #1e3a5f, #2a5080)',
-                    border: '1px solid #3a6bb0',
-                    borderRadius: 6,
-                    color: '#cfe5ff',
-                    padding: '8px 12px',
-                    fontSize: 12,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Annotate atom #{selectedAtoms[0]}
-                </button>
-              )}
-
               {annotations.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
@@ -862,73 +813,127 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                   {BG_PRESETS.map(p => (
                     <IsotopeChip key={p.id} label={p.label} selected={backgroundPreset === p.id} onClick={() => setBackgroundPreset(p.id)} />
                   ))}
-                  <IsotopeChip label="Custom Video" selected={!!backgroundVideo} onClick={() => {
-                    const url = prompt('Enter video URL (mp4/webm):', backgroundVideo || '');
-                    if (url !== null) setBackgroundVideo(url || null);
-                  }} />
                 </div>
               </div>
               {/* ── Texture Backgrounds ── */}
               {BG_TEXTURE_CATEGORIES.map(cat => (
                 <div key={cat.label}>
-                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 6, marginTop: 4, letterSpacing: '0.05em' }}>
-                    {cat.label} Textures
-                  </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+                  {cat.label === 'Motion Loops' ? (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6, marginTop: 4 }}>
+                      <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        {cat.label}
+                      </div>
+                      <button
+                        onClick={pickRandomMotionPreset}
+                        disabled={BG_VIDEO_PRESETS.length === 0}
+                        title={activeMotionPreset ? `Current motion: ${activeMotionPreset.label}` : 'Pick a random motion background'}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: 5,
+                          minHeight: 26,
+                          padding: '5px 8px',
+                          background: activeMotionPreset ? 'rgba(30,220,224,0.13)' : '#121824',
+                          border: `1px solid ${activeMotionPreset ? 'rgba(30,220,224,0.56)' : '#334155'}`,
+                          borderRadius: 5,
+                          color: activeMotionPreset ? '#9ff7ff' : '#cbd5e1',
+                          cursor: BG_VIDEO_PRESETS.length > 0 ? 'pointer' : 'default',
+                          fontSize: 10,
+                          fontWeight: 800,
+                          lineHeight: 1,
+                          textTransform: 'uppercase',
+                        }}
+                        onMouseEnter={e => { if (BG_VIDEO_PRESETS.length > 0) e.currentTarget.style.borderColor = '#1edce0'; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = activeMotionPreset ? 'rgba(30,220,224,0.56)' : '#334155'; }}
+                      >
+                        <IconShuffle />
+                        Random Motion
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 6, marginTop: 4, letterSpacing: '0.05em' }}>
+                      {cat.label}
+                    </div>
+                  )}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 6 }}>
                     {cat.presets.map(p => {
                       const active = backgroundPreset === p.id;
+                      const poster = getBgPoster(p);
+                      const badge = getBgBadge(p);
                       return (
                         <button
                           key={p.id}
                           onClick={() => setBackgroundPreset(p.id)}
-                          title={p.label}
+                          title={p.context ?? p.label}
                           style={{
                             position: 'relative',
                             width: '100%',
-                            aspectRatio: '1',
+                            aspectRatio: '2 / 1',
                             border: `2px solid ${active ? '#1edce0' : '#1f2937'}`,
                             borderRadius: 4,
                             overflow: 'hidden',
                             cursor: 'pointer',
                             padding: 0,
-                            background: '#0a0a0c',
+                            background: p.preview ?? '#0a0a0c',
                             transition: 'border-color 150ms, box-shadow 150ms',
                             boxShadow: active ? '0 0 8px rgba(30, 220, 224, 0.3)' : 'none',
                           }}
                           onMouseEnter={e => { if (!active) e.currentTarget.style.borderColor = '#1edce060'; }}
                           onMouseLeave={e => { if (!active) e.currentTarget.style.borderColor = '#1f2937'; }}
                         >
-                          <img
-                            src={p.image}
-                            alt={p.label}
-                            loading="lazy"
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                              opacity: active ? 1 : 0.7,
-                              transition: 'opacity 200ms',
-                            }}
-                            onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                          />
+                          {poster && (
+                            <img
+                              src={poster}
+                              alt={p.label}
+                              loading="lazy"
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                opacity: active ? 1 : 0.7,
+                                transition: 'opacity 200ms',
+                              }}
+                              onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                            />
+                          )}
                           <div style={{
                             position: 'absolute',
                             bottom: 0,
                             left: 0,
                             right: 0,
-                            padding: '2px 4px',
+                            minHeight: 24,
+                            padding: '8px 5px 3px',
                             background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
-                            fontSize: 8,
-                            fontWeight: 600,
+                            fontSize: 9,
+                            fontWeight: 750,
                             fontFamily: 'Space Grotesk, sans-serif',
                             color: active ? '#1edce0' : '#94a3b8',
                             textTransform: 'uppercase',
                             letterSpacing: '0.05em',
                             textAlign: 'center',
-                            lineHeight: '14px',
+                            lineHeight: '11px',
+                            overflowWrap: 'anywhere',
                           }}>
                             {p.label}
                           </div>
+                          {badge && (
+                            <div style={{
+                              position: 'absolute',
+                              top: 4,
+                              right: 4,
+                              padding: '2px 5px',
+                              borderRadius: 3,
+                              background: 'rgba(0,0,0,0.68)',
+                              border: '1px solid rgba(255,255,255,0.18)',
+                              color: '#c4f1f9',
+                              fontSize: 7,
+                              fontWeight: 700,
+                              lineHeight: '10px',
+                            }}>
+                              {badge}
+                            </div>
+                          )}
                           {active && (
                             <div style={{
                               position: 'absolute', top: 0, left: 0, right: 0, height: 2,

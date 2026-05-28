@@ -103,9 +103,9 @@ export function FileDropZone() {
           if (headerAtoms > profile.maxAtoms) {
             throw new Error(
               `This trajectory has ${formatAtomCount(headerAtoms)} atoms, ` +
-              `over the ${formatAtomCount(profile.maxAtoms)}-atom memory ` +
-              `budget for this device (${profile.reason}). ` +
-              `Open it on a desktop with more graphics memory.`,
+              `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
+              `single-scene ceiling (${profile.reason}). ` +
+              `Try a smaller frame or a chunked trajectory.`,
             );
           }
           // Phase 2b: byte-stream parse via File.stream(). Some browsers
@@ -157,9 +157,9 @@ export function FileDropZone() {
         if (atoms > profile.maxAtoms) {
           throw new Error(
             `This trajectory has ${formatAtomCount(atoms)} atoms, ` +
-            `over the ${formatAtomCount(profile.maxAtoms)}-atom memory ` +
-            `budget for this device (${profile.reason}). ` +
-            `Open it on a desktop with more graphics memory.`,
+            `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
+            `single-scene ceiling (${profile.reason}). ` +
+            `Try a smaller frame or a chunked trajectory.`,
           );
         }
         setFile({

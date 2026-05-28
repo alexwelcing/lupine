@@ -22,6 +22,8 @@ import {
 } from './bondDetectCpu';
 
 interface BondWorkerInput extends BondDetectInput {
+  /** Monotonic caller-owned id used to ignore stale worker results. */
+  requestId?: number;
   /** Pre-computed bonds from simulation output (BYOB passthrough). */
   bonds?: Int32Array | null;
   /** Compute per-bond statistics (mean, histogram, type-pair breakdown). */
@@ -31,13 +33,14 @@ interface BondWorkerInput extends BondDetectInput {
 }
 
 interface BondWorkerOutput extends BondDetectOutput {
+  requestId?: number;
   screeningFactors?: Float32Array;
   stats?: ReturnType<typeof computeBondStats>;
 }
 
 self.onmessage = (e: MessageEvent<BondWorkerInput>) => {
   const input = e.data;
-  const { positions, types, natoms, bonds: precomputedBonds, computeStats = false, meamScreening = false } = input;
+  const { requestId, positions, types, natoms, bonds: precomputedBonds, computeStats = false, meamScreening = false } = input;
 
   let output: BondWorkerOutput;
 
@@ -67,6 +70,7 @@ self.onmessage = (e: MessageEvent<BondWorkerInput>) => {
   if (computeStats) {
     output.stats = computeBondStats(output.distances, output.count, output.bondPairs, types);
   }
+  output.requestId = requestId;
 
   // Zero-copy transfer of the variable-length result buffers. The input
   // buffers (positions, types) are owned by the caller and can't be

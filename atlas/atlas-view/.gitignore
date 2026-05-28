@@ -1,3 +1,8 @@
 # NIST demo trajectories are large glimbin blobs — hosted on GCS in prod
 # (resolved via VITE_NIST_BASE_URL), symlinked locally for dev. Never commit.
 apps/web/public/nist/demos/
+
+# Local environment-pack candidate runs are promoted explicitly before commit.
+tools/lupi-environment-candidates/
+tools/lupi-motion-cache/
+tools/lupi-panorama-runs.jsonl

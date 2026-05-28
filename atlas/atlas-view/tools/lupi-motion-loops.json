@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "runtime_tier": "quality",
+  "defaults": {
+    "duration_seconds": 8,
+    "fps": 24,
+    "format": "mp4",
+    "codec": "libx264",
+    "ffmpeg_preset": "medium",
+    "pixel_format": "yuv420p",
+    "movflags": "+faststart",
+    "reference_width": 2048,
+    "band_color": [122, 206, 230],
+    "band_glow_blend": 0.18,
+    "secondary_phase_offset": 0.72
+  },
+  "tiers": [
+    {
+      "id": "quality",
+      "label": "Quality",
+      "width": 2048,
+      "height": 1024,
+      "file_suffix": "",
+      "crf": 23,
+      "public": true
+    },
+    {
+      "id": "preview",
+      "label": "Preview",
+      "width": 1024,
+      "height": 512,
+      "file_suffix": "_preview",
+      "crf": 26,
+      "public": true
+    }
+  ],
+  "loops": [
+    {
+      "id": "quantum-fog",
+      "viewer_preset_id": "quantum-fog-loop",
+      "label": "Quantum Fog Loop",
+      "source": "bg_quantum_fog.jpg",
+      "poster": "bg_quantum_fog.jpg",
+      "output_base": "bg_quantum_fog_loop",
+      "top": "#08111c",
+      "bottom": "#010307",
+      "intensity": "quiet",
+      "motion": {
+        "drift_px": 26,
+        "layer_drift_px": -52,
+        "layer_opacity": 0.08,
+        "contrast": 1.04,
+        "color": 0.92,
+        "exposure_pulse": 0.018,
+        "band_strength": 0.07
+      }
+    },
+    {
+      "id": "neutrino-rain",
+      "viewer_preset_id": "neutrino-rain-loop",
+      "label": "Neutrino Rain Loop",
+      "source": "bg_neutrino_rain.jpg",
+      "poster": "bg_neutrino_rain.jpg",
+      "output_base": "bg_neutrino_rain_loop",
+      "top": "#06101c",
+      "bottom": "#000000",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 34,
+        "layer_drift_px": 78,
+        "layer_opacity": 0.13,
+        "contrast": 1.08,
+        "color": 0.94,
+        "exposure_pulse": 0.022,
+        "band_strength": 0.05
+      }
+    },
+    {
+      "id": "enzyme-aurora",
+      "viewer_preset_id": "enzyme-aurora-loop",
+      "label": "Enzyme Aurora Loop",
+      "source": "bg_enzyme_aurora.jpg",
+      "poster": "bg_enzyme_aurora.jpg",
+      "output_base": "bg_enzyme_aurora_loop",
+      "top": "#08221f",
+      "bottom": "#010605",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 22,
+        "layer_drift_px": -72,
+        "layer_opacity": 0.16,
+        "contrast": 1.03,
+        "color": 1.04,
+        "exposure_pulse": 0.02,
+        "band_strength": 0.08
+      }
+    },
+    {
+      "id": "molten-circuit-sea",
+      "viewer_preset_id": "molten-circuit-loop",
+      "label": "Molten Circuit Loop",
+      "source": "bg_molten_circuit_sea.jpg",
+      "poster": "bg_molten_circuit_sea.jpg",
+      "output_base": "bg_molten_circuit_sea_loop",
+      "top": "#100806",
+      "bottom": "#000000",
+      "intensity": "active",
+      "motion": {
+        "drift_px": 18,
+        "layer_drift_px": 46,
+        "layer_opacity": 0.11,
+        "contrast": 1.07,
+        "color": 1.02,
+        "exposure_pulse": 0.018,
+        "band_strength": 0.04
+      }
+    },
+    {
+      "id": "xray-lagoon",
+      "viewer_preset_id": "xray-lagoon-loop",
+      "label": "X-Ray Lagoon Loop",
+      "source": "bg_xray_lagoon.jpg",
+      "poster": "bg_xray_lagoon.jpg",
+      "output_base": "bg_xray_lagoon_loop",
+      "top": "#071b1b",
+      "bottom": "#000304",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 28,
+        "layer_drift_px": 64,
+        "layer_opacity": 0.12,
+        "contrast": 1.05,
+        "color": 1.03,
+        "exposure_pulse": 0.021,
+        "band_strength": 0.06
+      }
+    },
+    {
+      "id": "vacuum-foam",
+      "viewer_preset_id": "vacuum-foam-loop",
+      "label": "Vacuum Foam Loop",
+      "source": "bg_vacuum_foam.jpg",
+      "poster": "bg_vacuum_foam.jpg",
+      "output_base": "bg_vacuum_foam_loop",
+      "top": "#050b12",
+      "bottom": "#000000",
+      "intensity": "quiet",
+      "motion": {
+        "drift_px": 20,
+        "layer_drift_px": -88,
+        "layer_opacity": 0.1,
+        "contrast": 1.06,
+        "color": 0.9,
+        "exposure_pulse": 0.016,
+        "band_strength": 0.09
+      }
+    },
+    {
+      "id": "moire-field",
+      "viewer_preset_id": "moire-field-loop",
+      "label": "Moire Field Loop",
+      "source": "bg_moire_field.jpg",
+      "poster": "bg_moire_field.jpg",
+      "output_base": "bg_moire_field_loop",
+      "top": "#06221f",
+      "bottom": "#010604",
+      "intensity": "active",
+      "motion": {
+        "drift_px": 38,
+        "layer_drift_px": -76,
+        "layer_opacity": 0.18,
+        "contrast": 1.08,
+        "color": 0.96,
+        "exposure_pulse": 0.014,
+        "band_strength": 0.05
+      }
+    },
+    {
+      "id": "protein-dream",
+      "viewer_preset_id": "protein-dream-loop",
+      "label": "Protein Dream Loop",
+      "source": "bg_protein_dream.jpg",
+      "poster": "bg_protein_dream.jpg",
+      "output_base": "bg_protein_dream_loop",
+      "top": "#102029",
+      "bottom": "#02060a",
+      "intensity": "quiet",
+      "motion": {
+        "drift_px": 16,
+        "layer_drift_px": 58,
+        "layer_opacity": 0.14,
+        "contrast": 1.02,
+        "color": 1.05,
+        "exposure_pulse": 0.019,
+        "band_strength": 0.07
+      }
+    },
+    {
+      "id": "plasma-arc",
+      "viewer_preset_id": "plasma-arc-loop",
+      "label": "Plasma Arc Loop",
+      "source": "bg_plasma_discharge.jpg",
+      "poster": "bg_plasma_discharge.jpg",
+      "output_base": "bg_plasma_discharge_loop",
+      "top": "#080814",
+      "bottom": "#000000",
+      "intensity": "active",
+      "motion": {
+        "drift_px": 24,
+        "layer_drift_px": -64,
+        "layer_opacity": 0.16,
+        "contrast": 1.1,
+        "color": 0.98,
+        "exposure_pulse": 0.025,
+        "band_strength": 0.1
+      }
+    },
+    {
+      "id": "bioluminescent",
+      "viewer_preset_id": "biolume-loop",
+      "label": "Biolume Loop",
+      "source": "bg_bioluminescent.jpg",
+      "poster": "bg_bioluminescent.jpg",
+      "output_base": "bg_bioluminescent_loop",
+      "top": "#040810",
+      "bottom": "#000000",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 30,
+        "layer_drift_px": 82,
+        "layer_opacity": 0.12,
+        "contrast": 1.06,
+        "color": 1.08,
+        "exposure_pulse": 0.02,
+        "band_strength": 0.08
+      }
+    },
+    {
+      "id": "spacetime",
+      "viewer_preset_id": "spacetime-loop",
+      "label": "Spacetime Loop",
+      "source": "bg_spacetime.jpg",
+      "poster": "bg_spacetime.jpg",
+      "output_base": "bg_spacetime_loop",
+      "top": "#0a0814",
+      "bottom": "#000000",
+      "intensity": "active",
+      "motion": {
+        "drift_px": 36,
+        "layer_drift_px": -96,
+        "layer_opacity": 0.11,
+        "contrast": 1.07,
+        "color": 0.93,
+        "exposure_pulse": 0.018,
+        "band_strength": 0.06
+      }
+    },
+    {
+      "id": "topographic",
+      "viewer_preset_id": "topographic-loop",
+      "label": "Topographic Drift",
+      "source": "bg_topographic.jpg",
+      "poster": "bg_topographic.jpg",
+      "output_base": "bg_topographic_loop",
+      "top": "#0c1018",
+      "bottom": "#060a10",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 22,
+        "layer_drift_px": 54,
+        "layer_opacity": 0.09,
+        "contrast": 1.06,
+        "color": 0.96,
+        "exposure_pulse": 0.012,
+        "band_strength": 0.03
+      }
+    }
+  ]
+}

@@ -166,6 +166,14 @@ const ELEMENT_DATA_BY_SYMBOL: Record<string, ElementData> = (() => {
   return out;
 })();
 
+const ATOMIC_NUMBER_BY_SYMBOL: Record<string, number> = (() => {
+  const out: Record<string, number> = {};
+  for (const [atomicNumber, spec] of Object.entries(ELEMENT_DATA)) {
+    out[spec.symbol] = Number(atomicNumber);
+  }
+  return out;
+})();
+
 /**
  * Look up an element spec by its symbol (case-sensitive, e.g. "Al", "Fe").
  * Returns `undefined` for unknown symbols — callers should fall back
@@ -173,6 +181,10 @@ const ELEMENT_DATA_BY_SYMBOL: Record<string, ElementData> = (() => {
  */
 export function getElementSpecBySymbol(symbol: string): ElementData | undefined {
   return ELEMENT_DATA_BY_SYMBOL[symbol];
+}
+
+export function getAtomicNumberBySymbol(symbol: string): number | undefined {
+  return ATOMIC_NUMBER_BY_SYMBOL[symbol];
 }
 
 export function hexToRgb(hex: string): [number, number, number] {

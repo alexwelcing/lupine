@@ -24,7 +24,7 @@ interface AtomTrailsProps {
    *  trail samples one new point per change of this value. Use the
    *  trajectory frame index, not the timer. */
   frameKey: number;
-  /** Atoms to follow. Typically selectedAtoms ∪ annotation.atomIndices. */
+  /** Atoms to follow. Typically annotation atom indices. */
   atomIndices: number[];
   /** Max history length per atom (samples). Default 60 ≈ 1s at 60fps
    *  playback or longer at slower playback. */

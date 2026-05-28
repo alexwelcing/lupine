@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { Text, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { useStore } from '../store';
-import { BG_PRESETS } from '../backgroundPresets';
+import { BG_PRESETS, isPickerBgPreset } from '../backgroundPresets';
 import type { ColormapName, ColorMode, RenderStyle } from '@atlas/core/types';
 
 function XRButton({ position, width = 0.22, height = 0.08, label, onClick, active = false, color = '#202020', activeColor = '#4a90e2' }: any) {
@@ -151,8 +151,8 @@ export function XRControlPanel() {
 
   // Background cycling — cycle through image-backed presets first, then gradients
   const bgKeys = Object.keys(BG_PRESETS);
-  const bgImageKeys = bgKeys.filter(k => BG_PRESETS[k].image);
-  const bgCycleKeys = bgImageKeys.length > 0 ? bgImageKeys : bgKeys;
+  const bgMediaKeys = bgKeys.filter(k => isPickerBgPreset(BG_PRESETS[k]));
+  const bgCycleKeys = bgMediaKeys.length > 0 ? bgMediaKeys : bgKeys;
   const cycleBg = () => {
     const idx = bgCycleKeys.indexOf(backgroundPreset);
     const next = bgCycleKeys[(idx + 1) % bgCycleKeys.length];
