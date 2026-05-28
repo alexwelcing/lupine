@@ -252,6 +252,7 @@ const IconTelemetry = () => (
 
 // ─── Background presets ───────────────────────────────────────────────
 import { BG_PRESETS } from './backgroundPresets';
+import { configureEquirectTexture, createGradientEquirectTexture } from './equirectTexture';
 
 
 function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string; image?: string } {
@@ -270,8 +271,8 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl }: 
   videoUrl?: string | null;
   imageUrl?: string;
 }) {
-  const { scene } = useThree();
-  
+  const { scene, gl } = useThree();
+
   // Hook must be called unconditionally
   const mode = useXR(state => state.mode);
 
@@ -298,61 +299,53 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl }: 
       tex.minFilter = THREE.LinearFilter;
       tex.magFilter = THREE.LinearFilter;
       tex.colorSpace = THREE.SRGBColorSpace;
-      
+      tex.anisotropy = gl.capabilities.getMaxAnisotropy();
+
       scene.background = tex;
       scene.fog = null;
     } else if (imageUrl) {
       // Load AI-generated background texture
       const loader = new THREE.TextureLoader();
       loader.load(imageUrl, (loadedTex) => {
-        loadedTex.mapping = THREE.EquirectangularReflectionMapping;
-        loadedTex.colorSpace = THREE.SRGBColorSpace;
-        loadedTex.minFilter = THREE.LinearFilter;
-        loadedTex.magFilter = THREE.LinearFilter;
+        configureEquirectTexture(loadedTex, gl);
         scene.background = loadedTex;
         tex = loadedTex;
       }, undefined, () => {
         // Fallback to gradient on load failure
         console.warn(`[bg] Failed to load texture: ${imageUrl}, falling back to gradient`);
-        const canvas = document.createElement('canvas');
-        canvas.width = 1024; canvas.height = 1024;
-        const ctx = canvas.getContext('2d')!;
-        const grad = ctx.createLinearGradient(0, 0, 0, 1024);
-        grad.addColorStop(0, top); grad.addColorStop(1, bottom);
-        ctx.fillStyle = grad; ctx.fillRect(0, 0, 1024, 1024);
-        tex = new THREE.CanvasTexture(canvas);
-        tex.mapping = THREE.EquirectangularReflectionMapping;
+        tex = createGradientEquirectTexture(top, bottom, gl);
         scene.background = tex;
       });
       scene.fog = new THREE.FogExp2(bottom, 0.0008);
     } else {
+      const height = 1024;
+      const width = height * 2; // 2:1 aspect for equirectangular projection
       const canvas = document.createElement('canvas');
-      const size = 1024;
-      canvas.width = size;
-      canvas.height = size;
+      canvas.width = width;
+      canvas.height = height;
       const ctx = canvas.getContext('2d')!;
 
       let grad;
       if (style === 'radial') {
-        grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/1.5);
+        grad = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, height/1.5);
         grad.addColorStop(0, top);
         grad.addColorStop(1, bottom);
       } else if (style === 'spotlight') {
-        grad = ctx.createRadialGradient(size/2, 0, 0, size/2, 0, size/1.2);
+        grad = ctx.createRadialGradient(width/2, 0, 0, width/2, 0, height/1.2);
         grad.addColorStop(0, top);
         grad.addColorStop(1, bottom);
       } else {
-        grad = ctx.createLinearGradient(0, 0, 0, size);
+        grad = ctx.createLinearGradient(0, 0, 0, height);
         grad.addColorStop(0, top);
         grad.addColorStop(1, bottom);
       }
 
       ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, size, size);
+      ctx.fillRect(0, 0, width, height);
 
       tex = new THREE.CanvasTexture(canvas);
-      tex.mapping = THREE.EquirectangularReflectionMapping; 
-      
+      configureEquirectTexture(tex, gl);
+
       scene.background = tex;
       scene.fog = new THREE.FogExp2(bottom, 0.0015);
     }
@@ -367,7 +360,7 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl }: 
       scene.background = null;
       scene.fog = null;
     };
-  }, [scene, top, bottom, style, videoUrl, imageUrl, mode]);
+  }, [scene, gl, top, bottom, style, videoUrl, imageUrl, mode]);
 
   return null;
 }
