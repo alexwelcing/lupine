@@ -357,6 +357,7 @@ async function snapshot(label) {
       drawCalls: three?.gl?.info?.render?.calls ?? null,
       triangles: three?.gl?.info?.render?.triangles ?? null,
       sceneChildren: three?.scene?.children?.length ?? null,
+      sceneDiagnostics: w.__lupi?.inspectScene?.() ?? w.__atlas?.inspectScene?.() ?? null,
       hasWebGPU: !!navigator.gpu,
       // Perf (from DevProbe FPS sampler)
       fps: w.__atlas?.perf?.fps ?? null,

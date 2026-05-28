@@ -4,7 +4,7 @@
     "title": "1M Atom Scale Test",
     "subtitle": "FCC Cu generated scale test.",
     "domain": "Metals & Alloys",
-    "atoms": "1,000,000",
+    "atoms": "953,312",
     "frames": "1",
     "file": "https://storage.googleapis.com/glim-datasets/sims/massive_1m.glimbin",
     "available": true,
@@ -37,7 +37,7 @@
       "method": "Ab Initio Assembly",
       "potential": "Lennard-Jones",
       "temperature": "0 K",
-      "reference": "Lupine Materials Science — lupine.science"
+      "reference": "Lupi Materials Science - lupine.science"
     },
     "featured": true
   },
@@ -59,7 +59,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "9 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupi Materials Science - hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -82,7 +82,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "11 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+      "reference": "Lupi Materials Science - hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -403,5 +403,184 @@
       "reference": "Ramachandran sampling"
     },
     "featured": true
+  },
+  {
+    "id": "aspirin",
+    "title": "Aspirin",
+    "subtitle": "Small-molecule acetylsalicylic acid geometry restored from the popular molecule set.",
+    "domain": "Biomolecules",
+    "atoms": "21",
+    "frames": "1",
+    "file": "gallery/curated/popular/aspirin.xyz",
+    "available": true,
+    "colors": ["#f43f5e", "#f97316", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    },
+    "featured": true
+  },
+  {
+    "id": "caffeine",
+    "title": "Caffeine",
+    "subtitle": "A compact heterocycle for quick parser, color, and label inspection.",
+    "domain": "Biomolecules",
+    "atoms": "24",
+    "frames": "1",
+    "file": "gallery/curated/popular/caffeine.xyz",
+    "available": true,
+    "colors": ["#f8fafc", "#38bdf8", "#f97316"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "cholesterol",
+    "title": "Cholesterol",
+    "subtitle": "Sterol backbone with a richer organic surface for material tuning.",
+    "domain": "Biomolecules",
+    "atoms": "74",
+    "frames": "1",
+    "file": "gallery/curated/popular/cholesterol.xyz",
+    "available": true,
+    "colors": ["#22c55e", "#facc15", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "diamond_crystal",
+    "title": "Diamond Crystal",
+    "subtitle": "512-atom diamond supercell for clean lattice, bond, and lighting checks.",
+    "domain": "Nanomaterials",
+    "atoms": "512",
+    "frames": "1",
+    "file": "gallery/curated/popular/diamond_crystal.xyz",
+    "available": true,
+    "colors": ["#e0f2fe", "#94a3b8", "#f8fafc"],
+    "metadata": {
+      "method": "Procedural crystal builder",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    },
+    "featured": true
+  },
+  {
+    "id": "dopamine",
+    "title": "Dopamine",
+    "subtitle": "Small organic neurotransmitter geometry for fast scene sanity checks.",
+    "domain": "Biomolecules",
+    "atoms": "22",
+    "frames": "1",
+    "file": "gallery/curated/popular/dopamine.xyz",
+    "available": true,
+    "colors": ["#a78bfa", "#f8fafc", "#f59e0b"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "lsd",
+    "title": "Lysergic Acid Diethylamide",
+    "subtitle": "A larger aromatic organic molecule for atom picking and annotation polish.",
+    "domain": "Biomolecules",
+    "atoms": "49",
+    "frames": "1",
+    "file": "gallery/curated/popular/lsd.xyz",
+    "available": true,
+    "colors": ["#7c3aed", "#22d3ee", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "psilocybin",
+    "title": "Psilocybin",
+    "subtitle": "Phosphorylated tryptamine geometry with mixed atom types.",
+    "domain": "Biomolecules",
+    "atoms": "36",
+    "frames": "1",
+    "file": "gallery/curated/popular/psilocybin.xyz",
+    "available": true,
+    "colors": ["#0ea5e9", "#a855f7", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "serotonin",
+    "title": "Serotonin",
+    "subtitle": "Small indole molecule restored as a quick-load gallery card.",
+    "domain": "Biomolecules",
+    "atoms": "25",
+    "frames": "1",
+    "file": "gallery/curated/popular/serotonin.xyz",
+    "available": true,
+    "colors": ["#14b8a6", "#f59e0b", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "thc",
+    "title": "THC",
+    "subtitle": "Terpenoid organic geometry with enough atoms to exercise the viewer quickly.",
+    "domain": "Biomolecules",
+    "atoms": "53",
+    "frames": "1",
+    "file": "gallery/curated/popular/thc.xyz",
+    "available": true,
+    "colors": ["#16a34a", "#f97316", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "brilliant_diamond_macro",
+    "title": "Brilliant Diamond Macro",
+    "subtitle": "A 34k-atom faceted diamond lattice for restored large-atom showcase coverage.",
+    "domain": "Nanomaterials",
+    "atoms": "34,513",
+    "frames": "1",
+    "file": "gallery/curated/popular/brilliant_diamond_macro.xyz",
+    "available": true,
+    "colors": ["#bae6fd", "#e0f2fe", "#f8fafc"],
+    "metadata": {
+      "method": "Procedural faceted lattice",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    },
+    "featured": true
+  },
+  {
+    "id": "rough_octahedron_diamond",
+    "title": "Rough Octahedron Diamond",
+    "subtitle": "A 31k-atom rough diamond cut that makes missing-atoms regressions obvious.",
+    "domain": "Nanomaterials",
+    "atoms": "31,381",
+    "frames": "1",
+    "file": "gallery/curated/popular/rough_octahedron_diamond.xyz",
+    "available": true,
+    "colors": ["#c4b5fd", "#93c5fd", "#f8fafc"],
+    "metadata": {
+      "method": "Procedural faceted lattice",
+      "potential": "XYZ coordinates",
+      "reference": "Restored popular molecule gallery asset"
+    }
   }
 ]

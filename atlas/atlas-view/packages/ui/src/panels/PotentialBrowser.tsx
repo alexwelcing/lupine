@@ -294,7 +294,7 @@ export function PotentialBrowser() {
       {/* Header */}
       <div style={sHeader}>
         <div style={sHeaderTitle}>
-          <div style={sHeaderIcon}>⚛</div>
+          <div style={sHeaderIcon}>IP</div>
           <div>
             <h2 style={sHeading}>NIST Potential Library</h2>
             <p style={sSub}>
@@ -305,7 +305,7 @@ export function PotentialBrowser() {
         </div>
 
         <div style={sSearch}>
-          <span style={{ opacity: 0.5 }}>🔎</span>
+          <span style={{ opacity: 0.5, fontSize: 11, fontWeight: 700 }}>Search</span>
           <input
             ref={searchRef}
             style={sSearchInput}
@@ -315,7 +315,7 @@ export function PotentialBrowser() {
           />
           {query && (
             <button style={sClearBtn} onClick={() => { setQuery(''); searchRef.current?.focus(); }}>
-              ✕
+              Clear
             </button>
           )}
         </div>

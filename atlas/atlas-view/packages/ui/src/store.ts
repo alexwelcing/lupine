@@ -1,5 +1,5 @@
 /**
- * glimPSE — Global State (Zustand)
+ * Lupi - global viewer state (Zustand).
  *
  * URL-serializable: encode/decode full scene state into ?s= parameter
  * for shareable links that recreate the exact visualization.
@@ -80,6 +80,10 @@ export interface LoadedFile {
   trajectory: Trajectory;
   thermo: ThermoData | null;
   sourceUrl?: string;
+  /** Visual playback cadence for files that expand sparse measured frames
+   *  into viewer-only display frames. Scientific frame data remains in the
+   *  artifact; this only controls how quickly the rendered trajectory flows. */
+  playbackFrameRate?: number;
 }
 
 export interface EquilibriumSolveState {
@@ -98,6 +102,9 @@ export interface EquilibriumSolveState {
 export interface AppState {
   // ─── File state ───
   file: LoadedFile | null;
+  /** Optional comparison trajectory rendered as a translucent reference layer.
+   *  This is viewer-only and is cleared whenever a normal dataset is loaded. */
+  ghostFile: LoadedFile | null;
   loading: boolean;
   loadProgress: number;
   /** id of the gallery card whose dataset is loaded/loading (UI + E2E tracking). */
@@ -247,7 +254,7 @@ export interface AppState {
   colorblindMode: boolean;
 
   // ─── UI ───
-  activePanel: 'visuals' | 'export' | 'analysis' | 'measurement' | 'flythrough' | 'telemetry' | 'equilibrium' | null;
+  activePanel: 'visuals' | 'export' | 'analysis' | 'measurement' | 'flythrough' | 'telemetry' | 'equilibrium' | 'mlipLongRun' | null;
   activeProfile: 'publication' | 'neon' | 'cinematic' | 'raw' | null;
   equilibriumSolve: EquilibriumSolveState | null;
 
@@ -330,6 +337,7 @@ export interface AppState {
 
   // ─── Actions ───
   setFile: (file: LoadedFile | null) => void;
+  setGhostFile: (file: LoadedFile | null) => void;
   setLoading: (loading: boolean, progress?: number) => void;
   setActiveCardId: (id: string | null) => void;
   setError: (error: string | null) => void;
@@ -431,6 +439,7 @@ export interface AppState {
 
 const DEFAULTS = {
   file: null,
+  ghostFile: null as LoadedFile | null,
   loading: false,
   loadProgress: 0,
   activeCardId: null,
@@ -566,6 +575,7 @@ export const useStore = create<AppState>()(
 
       set({
         file,
+        ghostFile: null,
         frame: 0,
         playing: false,
         error: null,
@@ -588,6 +598,7 @@ export const useStore = create<AppState>()(
         ssao: sceneDirective.preset === 'studio',
         bloom: sceneDirective.preset === 'studio' || sceneDirective.preset === 'editorial' || sceneDirective.preset === 'cinematic',
         dof: sceneDirective.preset === 'cinematic',
+        autoDepthOfField: sceneDirective.preset === 'cinematic',
         // Default-fill loadedAtomCount to atomCount so non-streaming
         // consumers don't need to special-case this field. The streaming
         // path overrides via setLoadedAtomCount during the load.
@@ -595,6 +606,7 @@ export const useStore = create<AppState>()(
       });
     },
 
+    setGhostFile: (ghostFile) => set({ ghostFile }),
     setLoading: (loading, progress) => set((s) => ({ loading, loadProgress: progress ?? s.loadProgress })),
     setActiveCardId: (id) => set({ activeCardId: id }),
 
@@ -750,6 +762,7 @@ export const useStore = create<AppState>()(
 
     clearFile: () => set({
       file: null,
+      ghostFile: null,
       frame: 0,
       playing: false,
       loading: false,
@@ -1120,13 +1133,13 @@ function pickSceneDirective(atomCount: number): {
   if (atomCount === 0) {
     return { showBonds: false, preset: 'studio', intensity: 1.0 };
   }
-  if (atomCount < 50_000) {
+  if (atomCount < 25_000) {
     return { showBonds: true, preset: 'studio', intensity: 1.0 };
   }
   if (atomCount < 200_000) {
-    // Bonds still on — the GPU pipeline can handle it. Preset drops to paper
-    // for cleaner figure-quality reads at scale; bloom/DOF would clutter.
-    return { showBonds: true, preset: 'paper', intensity: 0.85 };
+    // 30k-class gallery pieces can infer 60k-180k bonds. Start atoms-first
+    // and let the user opt into bonds once oriented.
+    return { showBonds: false, preset: 'paper', intensity: 0.85 };
   }
   // Very-large systems — performance over polish on the first frame. User
   // can flip back into 'studio' if their machine handles it.
@@ -1139,12 +1152,13 @@ if (import.meta.env.DEV && typeof window !== 'undefined') {
   (window as any).__atlas = (window as any).__atlas ?? {};
   (window as any).__atlas.store = useStore;
   (window as any).__atlas.getState = () => useStore.getState();
+  (window as any).__lupi = (window as any).__atlas;
   // Helpful console one-liners — log on first access, not on every read.
   if (!(window as any).__atlas.__intro) {
     (window as any).__atlas.__intro = true;
     // eslint-disable-next-line no-console
     console.log(
-      '%c[atlas dev]%c window.__atlas available — store, getState(), three (after Canvas mount)',
+      '%c[lupi dev]%c window.__lupi/window.__atlas available - store, getState(), three (after Canvas mount)',
       'color:#1edce0;font-weight:bold', 'color:#94a3b8',
     );
   }

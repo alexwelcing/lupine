@@ -77,7 +77,7 @@ export function HeroSection() {
             filter: 'drop-shadow(0 0 40px rgba(15,98,254,0.15))',
           }}
         >
-          glimPSE
+          Lupi
         </h1>
 
         {/* Tagline */}
@@ -93,7 +93,7 @@ export function HeroSection() {
             opacity: 0,
           }}
         >
-          Molecular dynamics, visualized in your browser. Explore millions of atoms in real time — no installation, no waiting.
+          Molecular dynamics, visualized in your browser. Explore millions of atoms in real time, no installation and no waiting.
         </p>
 
         {/* CTA Buttons */}
@@ -158,6 +158,31 @@ export function HeroSection() {
             }}
           >
             Browse Gallery
+          </a>
+          <a
+            href="#/system/mlip-flywheel"
+            style={{
+              padding: '14px 32px',
+              fontSize: 15,
+              fontWeight: 600,
+              color: 'rgba(255,255,255,0.86)',
+              background: 'rgba(14,165,233,0.12)',
+              border: '1px solid rgba(125,211,252,0.34)',
+              borderRadius: 100,
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(14,165,233,0.2)';
+              e.currentTarget.style.borderColor = 'rgba(125,211,252,0.6)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(14,165,233,0.12)';
+              e.currentTarget.style.borderColor = 'rgba(125,211,252,0.34)';
+            }}
+          >
+            Live Lab
           </a>
         </div>
 

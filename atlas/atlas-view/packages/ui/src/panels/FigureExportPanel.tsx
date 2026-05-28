@@ -186,7 +186,7 @@ export function FigureExportPanel() {
       resolution: { width: selectedPreset.width, height: selectedPreset.height },
       format: transparentBg ? 'png' : format,
       transparent: transparentBg,
-      baseName: `glimPSE-${selectedPreset.id}`,
+      baseName: `Lupi-${selectedPreset.id}`,
       onComplete: handleComplete,
     });
   }, [selectedPreset, format, transparentBg, triggerExport, handleComplete]);
@@ -197,7 +197,7 @@ export function FigureExportPanel() {
     if (mode === 'mp4' && 'showSaveFilePicker' in window) {
       try {
         const handle = await (window as any).showSaveFilePicker({
-          suggestedName: `glimPSE-orbit-${videoRes.label}.mp4`,
+          suggestedName: `Lupi-orbit-${videoRes.label}.mp4`,
           types: [{
             description: 'MP4 Video',
             accept: { 'video/mp4': ['.mp4'] }
@@ -220,7 +220,7 @@ export function FigureExportPanel() {
       orbit,
       cinematic,
       durationSeconds: duration,
-      baseName: `glimPSE-${mode === 'gif' ? 'anim' : 'orbit'}-${videoRes.label}`,
+      baseName: `Lupi-${mode === 'gif' ? 'anim' : 'orbit'}-${videoRes.label}`,
       fileStream,
       onComplete: handleComplete,
     });
@@ -295,11 +295,11 @@ export function FigureExportPanel() {
         flexShrink: 0,
       }}>
         {([
-          { id: 'figure' as const, label: 'FIGURE', icon: '📷' },
-          { id: 'mp4' as const, label: 'MP4', icon: '🎬' },
-          { id: 'gif' as const, label: 'GIF', icon: '✨' },
-          { id: 'glb' as const, label: 'GLB', icon: '🧊' },
-          { id: 'usdz' as const, label: 'USDZ', icon: '📱' },
+          { id: 'figure' as const, label: 'FIGURE' },
+          { id: 'mp4' as const, label: 'MP4' },
+          { id: 'gif' as const, label: 'GIF' },
+          { id: 'glb' as const, label: 'GLB' },
+          { id: 'usdz' as const, label: 'USDZ' },
         ]).map(tab => (
           <button
             key={tab.id}
@@ -417,7 +417,7 @@ export function FigureExportPanel() {
                   fontSize: 11, color: '#fca5a5',
                   fontFamily: 'var(--font-mono)', lineHeight: '1.5',
                 }}>
-                  ⚠ WebCodecs API not available in this browser. MP4 encoding
+                  WebCodecs API not available in this browser. MP4 encoding
                   requires Chrome 94+ or Edge 94+. Firefox/Safari lack support.
                 </div>
               )}
@@ -619,7 +619,7 @@ export function FigureExportPanel() {
                     triggerExport({
                       type: 'glb',
                       format: 'glb',
-                      baseName: `glimPSE-${systemInfo?.formula ?? 'export'}`,
+                      baseName: `Lupi-${systemInfo?.formula ?? 'export'}`,
                       onComplete: handleComplete,
                     });
                   }}
@@ -665,7 +665,7 @@ export function FigureExportPanel() {
                     triggerExport({
                       type: 'usdz',
                       format: 'usdz',
-                      baseName: `glimPSE-${systemInfo?.formula ?? 'export'}`,
+                      baseName: `Lupi-${systemInfo?.formula ?? 'export'}`,
                       onComplete: handleComplete,
                     });
                   }}

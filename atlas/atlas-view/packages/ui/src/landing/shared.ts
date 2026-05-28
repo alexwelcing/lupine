@@ -22,12 +22,22 @@ export const ALL_EXAMPLES: GalleryExample[] = galleryData as any[];
 
 export const FEATURED_IDS = [
   'c60_buckyball',
-  'au_nanocluster',
+  'lupine_bluebonnet',
   'cnt_6_6',
   'graphene_ribbon',
-  'water_cluster_64',
+  'diamond_crystal',
+  'aspirin',
+  'brilliant_diamond_macro',
   'cuzr_melt',
 ];
+
+export function publicAssetUrl(path: string): string {
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const base = (import.meta as any).env?.BASE_URL || '/';
+  const cleanBase = base.endsWith('/') ? base : `${base}/`;
+  const cleanPath = path.replace(/^\/+/, '');
+  return `${cleanBase}${cleanPath}`.replace(/([^:]\/)\/+/g, '$1');
+}
 
 /** CSS keyframe animations injected once by LandingPage. */
 export const ANIMATION_CSS = `

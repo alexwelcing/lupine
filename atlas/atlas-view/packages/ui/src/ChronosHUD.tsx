@@ -67,7 +67,7 @@ export function ChronosHUD({ onExit }: { onExit: () => void }) {
           </div>
 
           <div className="p-4 border-l-2 border-[#f2ca50] bg-[#1c1b1b]/60 backdrop-blur-md">
-            <p className="font-mono text-[10px] text-[#f2ca50] uppercase tracking-[0.3em] mb-2 break-words">Lupine Inference Engine</p>
+            <p className="font-mono text-[10px] text-[#f2ca50] uppercase tracking-[0.3em] mb-2 break-words">Lupi Inference Engine</p>
             <h3 className="font-serif text-2xl sm:text-3xl text-[#e5e2e1] font-black uppercase mb-2 break-words">Evaluating Force Field</h3>
             <p className="text-[#d0c5af] text-xs leading-relaxed break-words">Neural Network Force Field (NNFF) successfully applied to simulation shell. Quantum Ledger synchronization active.</p>
           </div>

@@ -25,6 +25,48 @@ interface PerfWindowState {
   frameCount: number;
 }
 
+function inspectSceneGraph(scene: any) {
+  const lights: Record<string, number> = {};
+  const hiddenLights: Record<string, number> = {};
+  let objectCount = 0;
+  let meshCount = 0;
+  scene.traverse?.((object: any) => {
+    objectCount += 1;
+    if (object.isMesh) meshCount += 1;
+    if (object.isLight) {
+      let visible = object.visible !== false;
+      let parent = object.parent;
+      while (visible && parent) {
+        visible = parent.visible !== false;
+        parent = parent.parent;
+      }
+      const bucket = visible ? lights : hiddenLights;
+      bucket[object.type] = (bucket[object.type] ?? 0) + 1;
+    }
+  });
+
+  const state = useStore.getState();
+  return {
+    objectCount,
+    meshCount,
+    lights,
+    hiddenLights,
+    environmentActive: Boolean(scene.environment),
+    materialScene: state.materialScene,
+    materialPreset: state.materialPreset,
+    environmentPreset: state.environmentPreset,
+    postprocessPreset: state.postprocessPreset,
+    lightRig: {
+      ambient: state.ambientLightIntensity,
+      key: state.dirLightIntensity,
+      rim: state.rimLightIntensity,
+      keyAngles: [state.keyLightAzimuth, state.keyLightElevation],
+      fillAngles: [state.fillLightAzimuth, state.fillLightElevation],
+      rimAngles: [state.rimLightAzimuth, state.rimLightElevation],
+    },
+  };
+}
+
 export function DevProbe() {
   const three = useThree();
   const samplesRef = useRef<number[]>([]);   // rolling frame timestamps
@@ -41,8 +83,11 @@ export function DevProbe() {
       controls: three.controls,
       get state() { return three; },
     };
+    w.__atlas.inspectScene = () => inspectSceneGraph(three.scene);
+    w.__lupi = w.__atlas;
+    w.__lupi.inspectScene = w.__atlas.inspectScene;
     // Three.js DevTools picks the scene up via the WebGLRenderer hook
-    // automatically; this is just a convenience handle for the console.
+    // automatically; this is also a Needle/Three console handle.
 
     // Real-file loader for the verifier (and console pokes). Fetches the URL,
     // wraps as a File, runs through the same parseFile() the FileDropZone

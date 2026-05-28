@@ -24,6 +24,10 @@ interface SmoothPlaybackOptions {
   targetFPS?: number;
   /** MD source frame rate (fps) - default 30 */
   mdFrameRate?: number;
+  /** React state sync rate for visual interpolation. Keep this low for huge
+   *  datasets, but raise it for small cinematic trajectories where every
+   *  generated subframe is part of the story. */
+  stateSyncFPS?: number;
   /** Playback mode */
   loopMode?: 'loop' | 'bounce' | 'once';
   /** Called with interpolated frame data */
@@ -65,6 +69,7 @@ export function useSmoothFramePlayback(
     loopMode = 'loop',
     onFrame,
     onStats,
+    stateSyncFPS = 15,
   } = options;
 
   // Playback state — use ref for hot path, state only for UI sync
@@ -86,7 +91,8 @@ export function useSmoothFramePlayback(
   const frameCountRef = useRef(0);
   const lastStatsTimeRef = useRef(0);
   const totalInterpolationTimeRef = useRef(0);
-  // PERF: Throttle React state sync to ~15fps to avoid 120 re-renders/sec
+  // PERF: Throttle React state sync by default; small cinematic artifacts
+  // can opt into 120fps visual sync without changing the global viewer cost.
   const lastUISyncRef = useRef(0);
 
   // Frame timing based on MD data
@@ -139,8 +145,8 @@ export function useSmoothFramePlayback(
       stateRef.current = state;
       onFrame(state);
 
-      // PERF: Only sync React state at ~15fps for UI display (frame counter, etc.)
-      if (time - lastUISyncRef.current > 66) {
+      const stateSyncInterval = 1000 / Math.max(1, stateSyncFPS);
+      if (time - lastUISyncRef.current >= stateSyncInterval) {
         setCurrentState(state);
         lastUISyncRef.current = time;
       }
@@ -163,7 +169,7 @@ export function useSmoothFramePlayback(
     }
 
     rafIdRef.current = requestAnimationFrame(loop);
-  }, [frames.length, speed, targetFPS, loopMode, onFrame, onStats]);
+  }, [frames.length, speed, targetFPS, loopMode, onFrame, onStats, stateSyncFPS, mdFrameTime]);
 
   // Start/stop playback
   useEffect(() => {

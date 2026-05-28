@@ -53,7 +53,7 @@ export function GallerySection() {
           style={sTab(tab === 'simulations', '#1edce0')}
           onClick={() => setTab('simulations')}
         >
-          Simulations
+          Structures
         </button>
         <button
           role="tab"

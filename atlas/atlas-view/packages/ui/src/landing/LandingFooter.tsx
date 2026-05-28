@@ -100,11 +100,11 @@ export function LandingFooter() {
                 <circle cx="8" cy="8" r="2" fill="currentColor" />
               </svg>
               <span style={{ fontFamily: 'var(--font-serif, serif)', fontStyle: 'italic', fontSize: 14, fontWeight: 600, letterSpacing: '-0.02em' }}>
-                Lupine
+                Lupi
               </span>
             </a>
             <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
-              The audit layer for the MLIP ecosystem — and the low-rank retraining target that compounds out of it. Applied learning mechanics for atomistic ML.
+              The audit layer for the MLIP ecosystem and the low-rank retraining target that compounds out of it. Applied learning mechanics for atomistic ML.
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export function LandingFooter() {
               <a href="https://lupine.science/research" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Research</a>
               <a href="https://lupine.science/lineage" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Lineage</a>
               <a href="https://lupine.science/proof" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Research Defense</a>
-              <a href="/" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Atlas Viewer</a>
+              <a href="/" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Lupi Viewer</a>
             </div>
             <div style={columnStyle}>
               <span style={headerStyle}>Engagement</span>
@@ -146,7 +146,7 @@ export function LandingFooter() {
           flexWrap: 'wrap',
         }}>
           <div style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 10, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-            &copy; {new Date().getFullYear()} Lupine. Geometric error analysis for atomistic ML.
+            &copy; {new Date().getFullYear()} Lupi. Geometric error analysis for atomistic ML.
           </div>
           <div style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 10, color: 'rgba(255, 255, 255, 0.4)' }}>
             Apache 2.0 Licensed

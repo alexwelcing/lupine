@@ -76,7 +76,12 @@ export const QuantumSection: React.FC<QuantumSectionProps> = ({
       </div>
       <div
         className="qsection__body"
-        style={{ maxHeight: typeof height === 'number' ? `${height}px` : undefined }}
+        aria-hidden={!open}
+        style={{
+          maxHeight: typeof height === 'number' ? `${height}px` : undefined,
+          visibility: open ? 'visible' : 'hidden',
+          pointerEvents: open ? 'auto' : 'none',
+        }}
       >
         <div className="qsection__content" ref={contentRef}>
           {children}

@@ -24,7 +24,6 @@ export function ScenePostprocessing() {
   const presetId = useStore(s => s.postprocessPreset);
   const intensity = useStore(s => s.postprocessIntensity);
   const playing = useStore(s => s.playing);
-  const autoDof = useStore(s => s.autoDepthOfField);
 
   const mode = useXR(state => state.mode);
   const isImmersive = mode === 'immersive-ar' || mode === 'immersive-vr';
@@ -64,8 +63,9 @@ export function ScenePostprocessing() {
         <AutoFocusDof
           bokehScale={active.dof.bokehScale}
           focalLength={active.dof.focalLength}
-          baseDistance={active.dof.focusDistance}
-          auto={active.dof.auto && autoDof}
+          focusDistance={active.dof.focusDistance}
+          focusRange={active.dof.focusRange}
+          auto={active.dof.auto}
         />
       ) : (<></>) as any}
       {active.toneMapping !== 'none' ? (
@@ -84,41 +84,53 @@ export function ScenePostprocessing() {
   );
 }
 
-/** DOF wrapper that imperatively updates focus distance per-frame when in
- *  auto mode (tracks the orbit-controls target distance), without re-rendering
- *  the composer or stalling the render pass. */
+/** DOF wrapper that lets postprocessing calculate focus in world units.
+ *  The old path wrote a normalized focus distance; postprocessing 6 expects
+ *  world-space distance, so target autofocus is the stable route. */
 function AutoFocusDof({
   bokehScale,
   focalLength,
-  baseDistance,
+  focusDistance,
+  focusRange,
   auto,
 }: {
   bokehScale: number;
   focalLength: number;
-  baseDistance: number;
+  focusDistance: number;
+  focusRange: number;
   auto: boolean;
 }) {
   const { camera, controls } = useThree();
   const ref = useRef<any>(null);
+  const targetRef = useRef(new THREE.Vector3());
 
   useFrame(() => {
-    if (!ref.current) return;
+    const effect = ref.current;
+    if (!effect) return;
+
+    effect.bokehScale = bokehScale;
     if (!auto) {
-      ref.current.focusDistance = baseDistance;
+      effect.focusDistance = focusDistance;
+      if (effect.cocMaterial) effect.cocMaterial.focusRange = focusRange;
       return;
     }
     const target = (controls as any)?.target as THREE.Vector3 | undefined;
-    if (!target) return;
+    if (!target || !effect.target) return;
+    targetRef.current.copy(target);
+    effect.target.copy(targetRef.current);
     const dist = camera.position.distanceTo(target);
-    // The DOF effect's focusDistance is in *normalized* units (camera-space),
-    // not world units — but for our scenes ranging tens to hundreds of Å, a
-    // simple linear map matches what the previous setup did. Tweakable.
-    ref.current.focusDistance = Math.max(0.01, dist / 100);
+    if (effect.cocMaterial) {
+      effect.cocMaterial.focusRange = Math.max(focusRange, Math.min(90, dist * 0.08));
+    }
   });
 
   return (
     <DepthOfField
+      key={auto ? 'target-autofocus' : 'manual-focus'}
       ref={ref}
+      target={auto ? targetRef.current : undefined}
+      focusDistance={focusDistance}
+      focusRange={focusRange}
       focalLength={focalLength}
       bokehScale={bokehScale}
       height={480}

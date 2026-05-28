@@ -146,8 +146,8 @@ export function DockableWindow({
           }}>{title}</span>
         </div>
         <div style={{ display: 'flex', gap: 4 }}>
-          <WinBtn label="–" title="Collapse" onClick={() => setCollapsed(true)} />
-          <WinBtn label="✕" title="Close" onClick={onClose} />
+          <WinBtn label="-" title="Collapse" onClick={() => setCollapsed(true)} />
+          <WinBtn label="X" title="Close" onClick={onClose} />
         </div>
       </div>
 

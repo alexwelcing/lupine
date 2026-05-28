@@ -78,7 +78,9 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
       onClick={onClick}
       title={label}
       style={{
-        display: 'flex', alignItems: 'center', gap: 6,
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+        width: '100%',
+        minWidth: 0,
         padding: '8px 14px',
         borderRadius: 0,
         border: active ? '1px solid #1edce0' : '1px solid rgba(255,255,255,0.1)',
@@ -88,7 +90,7 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
         transition: 'background 100ms ease-out, border-color 100ms ease-out',
         fontSize: 13,
         fontWeight: 600,
-        flexShrink: 0,
+        flexShrink: 1,
         backdropFilter: 'blur(12px)',
       }}
       onMouseEnter={(e) => {
@@ -105,7 +107,7 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
       }}
     >
       <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon}</span>
-      <span>{label}</span>
+      <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
     </button>
   );
 }

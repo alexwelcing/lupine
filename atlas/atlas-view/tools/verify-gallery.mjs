@@ -21,7 +21,7 @@
  */
 
 import { chromium } from 'playwright';
-import { mkdirSync, existsSync } from 'node:fs';
+import { mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,6 +29,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..');
 const ARTIFACTS = resolve(REPO_ROOT, '.verify-artifacts');
 const URL = process.env.VERIFY_URL ?? 'http://localhost:3000/';
+const galleryData = JSON.parse(readFileSync(resolve(REPO_ROOT, 'packages/ui/src/gallery-data.json'), 'utf-8'));
+const expectedCardCount = galleryData.length;
 const args = new Set(process.argv.slice(2));
 const skipShots = args.has('--no-screenshot');
 const timeout = 30000;
@@ -48,6 +50,9 @@ const browser = await chromium.launch({
 });
 const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
 const page = await ctx.newPage();
+await page.addInitScript((count) => {
+  window.__VERIFY_EXPECTED_GALLERY_COUNT = count;
+}, expectedCardCount);
 page.on('pageerror', (err) => console.log(`[PAGE ERROR] ${err.message}`));
 
 const shot = async (label) => {
@@ -72,7 +77,7 @@ try {
   const cardSel = 'button[data-testid^="gallery-card-"]';
   await page.waitForSelector(cardSel, { timeout });
   const cardCount = await page.locator(cardSel).count();
-  check('curated card set renders', cardCount === 18, `${cardCount} cards (expected 18)`);
+  check('curated card set renders', cardCount === expectedCardCount, `${cardCount} cards (expected ${expectedCardCount})`);
   const hasKnown = await page.locator('[data-testid="gallery-card-c60_buckyball"]').count();
   check('known curated card present (c60_buckyball)', hasKnown === 1);
   await shot('grid');
@@ -83,14 +88,14 @@ try {
   await page.waitForFunction(
     () => {
       const n = document.querySelectorAll('button[data-testid^="gallery-card-"]').length;
-      return n > 0 && n < 18;
+      return n > 0 && n < window.__VERIFY_EXPECTED_GALLERY_COUNT;
     },
     null,
     { timeout },
   );
   const searched = await page.locator(cardSel).count();
   const grapheneVisible = await page.locator('[data-testid="gallery-card-graphene_ribbon"]').count();
-  check('search narrows the grid', searched > 0 && searched < 18, `${searched} match "graphene"`);
+  check('search narrows the grid', searched > 0 && searched < expectedCardCount, `${searched} match "graphene"`);
   check('search matches the expected card', grapheneVisible === 1);
   await shot('search');
 
@@ -101,12 +106,12 @@ try {
   await shot('empty');
   await page.locator('[data-testid="gallery-empty-reset"]').click();
   await page.waitForFunction(
-    () => document.querySelectorAll('button[data-testid^="gallery-card-"]').length === 18,
+    () => document.querySelectorAll('button[data-testid^="gallery-card-"]').length === window.__VERIFY_EXPECTED_GALLERY_COUNT,
     null,
     { timeout },
   );
   const afterReset = await page.locator(cardSel).count();
-  check('reset restores the full grid', afterReset === 18, `${afterReset} cards`);
+  check('reset restores the full grid', afterReset === expectedCardCount, `${afterReset} cards`);
 
   // ── 4. Domain filter ──
   const metalsBtn = page.locator('button[aria-pressed]', { hasText: 'Metals & Alloys' }).first();
@@ -114,7 +119,7 @@ try {
   await page.waitForFunction(
     () => {
       const n = document.querySelectorAll('button[data-testid^="gallery-card-"]').length;
-      return n > 0 && n < 18;
+      return n > 0 && n < window.__VERIFY_EXPECTED_GALLERY_COUNT;
     },
     null,
     { timeout },
@@ -125,7 +130,7 @@ try {
   check('active filter exposes aria-pressed', pressed === 'true');
   await page.locator('[data-testid="gallery-filter-all"]').click();
   await page.waitForFunction(
-    () => document.querySelectorAll('button[data-testid^="gallery-card-"]').length === 18,
+    () => document.querySelectorAll('button[data-testid^="gallery-card-"]').length === window.__VERIFY_EXPECTED_GALLERY_COUNT,
     null,
     { timeout },
   );

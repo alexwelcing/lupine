@@ -18,7 +18,7 @@
 import { Environment } from '@react-three/drei';
 import { useXR } from '@react-three/xr';
 import { useStore } from './store';
-import { POSTPROCESS_PRESETS } from './postprocess/presets';
+import { resolveSceneEnvironment } from './sceneEnvironment';
 
 // Lighting rig radius (meters) — matches the legacy inline placement in App.
 const RIG_RADIUS = 11.18;
@@ -58,7 +58,6 @@ export function SceneLighting() {
   const rimLightColor = useStore(s => s.rimLightColor);
   const file = useStore(s => s.file);
   const environmentPreset = useStore(s => s.environmentPreset);
-  const postprocessPreset = useStore(s => s.postprocessPreset);
 
   const ambient = arLit ? ambientLightIntensity * AR_AMBIENT_FACTOR : ambientLightIntensity;
   const key = arLit ? dirLightIntensity * AR_KEY_FACTOR : dirLightIntensity;
@@ -71,13 +70,9 @@ export function SceneLighting() {
   const firstFramePositions = file?.trajectory?.frames?.[0]?.positions?.length;
   const smallSystem = !firstFramePositions || firstFramePositions / 3 <= 50000;
 
-  // Static HDRI environment, coupled to the postprocess preset, with the
-  // store-level environmentPreset as an override. Bonds (MeshPhysicalMaterial)
-  // and the atom impostor shader read scene.environment for IBL. In AR the live
-  // reflection map owns scene.environment, so this is suppressed there.
-  const drei = POSTPROCESS_PRESETS[postprocessPreset].env.drei;
-  const override = environmentPreset !== 'studio' && environmentPreset !== 'none' ? environmentPreset : null;
-  const finalEnv = override ?? drei;
+  // Static HDRI environment is owned by the material scene recipe. Look presets
+  // only affect post-processing, so choosing "Direct Only" truly disables IBL.
+  const finalEnv = resolveSceneEnvironment(environmentPreset);
 
   return (
     <>
