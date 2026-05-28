@@ -15,6 +15,7 @@ import { useRef, useMemo, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useXR } from '@react-three/xr';
+import { configureEquirectTexture, createGradientEquirectTexture } from '../equirectTexture';
 
 // Dome radius in meters — large enough to surround the molecule
 // but small enough to stay inside the near/far clip range.
@@ -40,7 +41,7 @@ export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomePr
   const meshRef = useRef<THREE.Mesh>(null);
   const matRef = useRef<THREE.MeshBasicMaterial>(null);
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
-  const { camera } = useThree();
+  const { camera, gl } = useThree();
 
   // Current animated opacity (ref to avoid re-renders)
   const currentOpacity = useRef(0);
@@ -60,27 +61,13 @@ export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomePr
       imageUrl,
       (loadedTex) => {
         if (cancelled) { loadedTex.dispose(); return; }
-        loadedTex.mapping = THREE.EquirectangularReflectionMapping;
-        loadedTex.colorSpace = THREE.SRGBColorSpace;
-        loadedTex.minFilter = THREE.LinearFilter;
-        loadedTex.magFilter = THREE.LinearFilter;
+        configureEquirectTexture(loadedTex, gl);
         setTexture(loadedTex);
       },
       undefined,
       () => {
         if (cancelled) return;
-        // Generate fallback gradient texture
-        const canvas = document.createElement('canvas');
-        canvas.width = 512; canvas.height = 512;
-        const ctx = canvas.getContext('2d')!;
-        const grad = ctx.createLinearGradient(0, 0, 0, 512);
-        grad.addColorStop(0, top);
-        grad.addColorStop(1, bottom);
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 512, 512);
-        const fallback = new THREE.CanvasTexture(canvas);
-        fallback.mapping = THREE.EquirectangularReflectionMapping;
-        setTexture(fallback);
+        setTexture(createGradientEquirectTexture(top, bottom, gl));
       }
     );
 
@@ -91,27 +78,19 @@ export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomePr
         return null;
       });
     };
-  }, [imageUrl, top, bottom]);
+  }, [imageUrl, top, bottom, gl]);
 
   // Create gradient texture when no image is provided
   const gradientTexture = useMemo(() => {
     if (imageUrl) return null;
-    const canvas = document.createElement('canvas');
-    canvas.width = 512; canvas.height = 512;
-    const ctx = canvas.getContext('2d')!;
-    const grad = ctx.createLinearGradient(0, 0, 0, 512);
-    grad.addColorStop(0, top);
-    grad.addColorStop(1, bottom);
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 512, 512);
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.mapping = THREE.EquirectangularReflectionMapping;
-    return tex;
-  }, [imageUrl, top, bottom]);
+    return createGradientEquirectTexture(top, bottom, gl);
+  }, [imageUrl, top, bottom, gl]);
 
   // Sphere geometry (inverted normals)
   const geometry = useMemo(() => {
-    const geo = new THREE.SphereGeometry(DOME_RADIUS, 64, 32);
+    // 128×64 segments smooths the silhouette enough that mipmap-filtered
+    // texels — not geometry faceting — define the visible quality.
+    const geo = new THREE.SphereGeometry(DOME_RADIUS, 128, 64);
     // Flip normals so we render on the inside
     geo.scale(-1, 1, 1);
     return geo;
