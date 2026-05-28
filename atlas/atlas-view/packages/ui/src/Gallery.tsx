@@ -83,6 +83,39 @@ const DOMAIN_THREAD: Record<Domain, string> = {
 
 const ALL_DOMAINS = Object.keys(DOMAIN_COLORS) as Domain[];
 
+function publicAssetUrl(path: string): string {
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const base = (import.meta as any).env?.BASE_URL || '/';
+  const cleanBase = base.endsWith('/') ? base : `${base}/`;
+  const cleanPath = path.replace(/^\/+/, '');
+  return `${cleanBase}${cleanPath}`.replace(/([^:]\/)\/+/g, '$1');
+}
+
+function gallerySnapshotUrl(id: string): string {
+  return publicAssetUrl(`gallery/snapshots/${id}.jpg`);
+}
+
+function resolveExampleUrl(example: GalleryExample): string {
+  if (example.file.startsWith('http://') || example.file.startsWith('https://')) {
+    return maybeDevStorageProxy(example.file);
+  }
+  const localUrl = publicAssetUrl(example.file);
+  const isDev = (import.meta as any).env?.DEV;
+  return (isDev || !example.sourceUrl) ? localUrl : example.sourceUrl;
+}
+
+function maybeDevStorageProxy(url: string): string {
+  const isDev = (import.meta as any).env?.DEV;
+  if (!isDev) return url;
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname !== 'storage.googleapis.com') return url;
+    return `/__lupi_gcs${parsed.pathname}${parsed.search}`;
+  } catch {
+    return url;
+  }
+}
+
 // ─── Shared styles ──────────────────────────────────────────────────────
 
 const sQuilt: React.CSSProperties = {
@@ -553,20 +586,10 @@ export function Gallery() {
       // 1. Absolute URLs in file field (GCS, CDN) — use directly
       // 2. sourceUrl override (open-data repos) — prefer in production
       // 3. Relative local paths — prepend base URL
-      const isAbsoluteUrl = example.file.startsWith('http://') || example.file.startsWith('https://');
-      const base = (import.meta as any).env?.BASE_URL || '/';
-      const cleanFile = example.file.replace(/^\/+/, '');
-      const cleanBase = base.endsWith('/') ? base : `${base}/`;
-      const localUrl = `${cleanBase}${cleanFile}`;
-      const isDev = (import.meta as any).env?.DEV;
-      // Absolute URLs bypass all local path logic. Otherwise,
-      // prefer sourceUrl in production, local file in dev.
-      const url = isAbsoluteUrl
-        ? example.file
-        : (isDev || !example.sourceUrl) ? localUrl : example.sourceUrl;
+      const url = resolveExampleUrl(example);
 
       if (example.id === 'lupine_brand_asset') {
-        const scientificUrl = `${cleanBase}gallery/curated/lupine_bluebonnet.xyz`.replace(/([^:])\/\/+/g, "$1/");
+        const scientificUrl = publicAssetUrl('gallery/curated/lupine_bluebonnet.xyz');
         const resp = await fetch(scientificUrl);
         const blob = await resp.blob();
         const fileObj = new File([blob], 'lupine_bluebonnet.xyz');
@@ -823,9 +846,9 @@ export function Gallery() {
             </svg>
           </div>
           <div>
-            <h2 style={sHeading}>Simulation Quilt</h2>
+            <h2 style={sHeading}>Lupi Gallery</h2>
             <p style={sSub}>
-              {filteredExamples.length} curated patches — drag, drop, or click to explore
+              {filteredExamples.length} structures ready to inspect
             </p>
           </div>
         </div>
@@ -837,7 +860,7 @@ export function Gallery() {
           </svg>
           <input
             type="search"
-            placeholder="Search patches..."
+            placeholder="Search structures..."
             aria-label="Search simulations by title, description, or domain"
             data-testid="gallery-search"
             value={search}
@@ -896,15 +919,15 @@ export function Gallery() {
         ALL_DOMAINS.map(domain => {
           const domainExamples = filteredExamples.filter(ex => ex.domain === domain);
           if (domainExamples.length === 0) return null;
-          const isTruncated = domainExamples.length > 6;
-          const displayExamples = isTruncated ? domainExamples.slice(0, 6) : domainExamples;
+          const isTruncated = false;
+          const displayExamples = domainExamples;
 
           return (
             <section key={domain} style={sSection}>
               <div style={sSectionHeader}>
                 <div style={sSectionThread(DOMAIN_THREAD[domain])} />
                 <h3 style={sSectionTitle}>{domain}</h3>
-                <span style={sSectionCount}>{domainExamples.length} patches</span>
+                <span style={sSectionCount}>{domainExamples.length} structures</span>
                 {isTruncated && (
                   <button
                     style={sSectionMore}
@@ -990,7 +1013,7 @@ function PatchCard({
   const domainColor = DOMAIN_COLORS[example.domain];
   const threadColor = DOMAIN_THREAD[example.domain];
 
-  const snapshotUrl = `/gallery/snapshots/${example.id}.jpg`;
+  const snapshotUrl = gallerySnapshotUrl(example.id);
 
   // Procedural fallback thumbnail
   useEffect(() => {
@@ -1084,13 +1107,13 @@ function PatchCard({
       onMouseLeave={onLeave}
       onFocus={(e) => { onHover(); e.currentTarget.style.outline = `2px solid ${threadColor}`; e.currentTarget.style.outlineOffset = '2px'; }}
       onBlur={(e) => { onLeave(); e.currentTarget.style.outline = 'none'; }}
-      disabled={loading || !example.available}
+      disabled={loading || !example.available || exceedsCap}
       data-testid={`gallery-card-${example.id}`}
       aria-label={
         `${example.title} — ${example.domain}, ${example.atoms} atoms` +
         (disabledReason ? ` (${disabledReason})` : '')
       }
-      aria-disabled={loading || !example.available}
+      aria-disabled={loading || !example.available || exceedsCap}
       title={exceedsCap
         ? `~${example.atoms} atoms exceeds the memory budget for this device`
         : undefined}

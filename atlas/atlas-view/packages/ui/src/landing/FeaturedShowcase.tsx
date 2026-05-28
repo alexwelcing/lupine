@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
-import { ALL_EXAMPLES, FEATURED_IDS, type GalleryExample } from './shared';
+import { ALL_EXAMPLES, FEATURED_IDS, publicAssetUrl, type GalleryExample } from './shared';
 
 export function FeaturedShowcase() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -112,7 +112,7 @@ export function FeaturedShowcase() {
                 {/* Image */}
                 <div style={{ position: 'relative', width: '100%', height: 200, overflow: 'hidden' }}>
                   <img
-                    src={`/gallery/snapshots/${ex.id}.jpg`}
+                    src={publicAssetUrl(`gallery/snapshots/${ex.id}.jpg`)}
                     alt={ex.title}
                     style={{
                       width: '100%',

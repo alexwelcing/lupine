@@ -1,5 +1,5 @@
 /**
- * glimPSE — Premium Application Shell
+ * Lupi - premium molecular viewer shell.
  *
  * Professional molecular dynamics visualization with
  * glassmorphic UI, side panels, and publication-quality rendering.
@@ -25,6 +25,7 @@ import { SceneLighting } from './SceneLighting';
 // *optional* (XRSessionFeatureRequest = true) so a session still starts on
 // devices that lack them.
 export const xrStore = createXRStore({
+  offerSession: false,
   emulate: false,
   // Quest 3 reliably hits 90 Hz; default of 72 leaves frames on the table.
   frameRate: 'high',
@@ -95,6 +96,9 @@ import { FlythroughPanel } from './panels/FlythroughPanel';
 import { TelemetryPanel } from './panels/TelemetryPanel';
 import { PotentialBrowser } from './panels/PotentialBrowser';
 import { EquilibriumSolveWorkbench } from './EquilibriumSolveWorkbench';
+import { MlipLongRunWorkbench } from './MlipLongRunWorkbench';
+import { MlipFlywheelPage } from './MlipFlywheelPage';
+import { GhostAtoms } from './GhostAtoms';
 import { AtomPicker } from '@atlas/scene/AtomPicker';
 import { decodeFlythrough } from './flythrough';
 import type { SpatialHash3D } from '@atlas/scene/SpatialHash';
@@ -151,6 +155,19 @@ const IconShare = () => (
     <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
   </svg>
 );
+const IconMore = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <circle cx="5" cy="12" r="1.8" />
+    <circle cx="12" cy="12" r="1.8" />
+    <circle cx="19" cy="12" r="1.8" />
+  </svg>
+);
+const IconXR = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
 
 // ─── Friendly Toolbar Icons ───────────────────────────────────────────
 const IconStyle = () => (
@@ -205,6 +222,14 @@ const IconAtoms = () => (
     <line x1="12" y1="7" x2="12" y2="9" />
     <line x1="16.9" y1="14.5" x2="14.6" y2="13.3" />
     <line x1="7.1" y1="14.5" x2="9.4" y2="13.3" />
+  </svg>
+);
+const IconDistillRuns = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 7h10" />
+    <path d="M4 12h16" />
+    <path d="M4 17h10" />
+    <path d="M16 5l4 7-4 7" />
   </svg>
 );
 const IconFlythrough = () => (
@@ -460,11 +485,8 @@ function CameraManager({
   return null;
 }
 
-/** Sync the legacy `dof` boolean to whether the active preset has DOF
- *  enabled. AnomalyTracker reads `dof` to know when to focus on hot atoms;
- *  keeping this synced means the legacy field stays meaningful without
- *  duplicating preset logic in the consumer. Migrate AnomalyTracker to read
- *  the preset directly when convenient and delete this. */
+/** Sync legacy postprocess fields so older surfaces remain coherent while the
+ *  renderer reads the authored preset as the source of truth. */
 function PresetLegacyBridge() {
   const presetId = useStore(s => s.postprocessPreset);
   useEffect(() => {
@@ -474,6 +496,7 @@ function PresetLegacyBridge() {
       ssao: preset.ssao.enabled,
       bloom: preset.bloom.enabled,
       dof: preset.dof.enabled,
+      autoDepthOfField: preset.dof.auto,
       toneMapping: preset.toneMapping,
     });
   }, [presetId]);
@@ -482,13 +505,33 @@ function PresetLegacyBridge() {
 
 import { Testbed } from './Testbed';
 
+function currentHashRoute() {
+  if (typeof window === 'undefined') return '/';
+  const hash = window.location.hash.replace(/^#/, '').trim();
+  return hash.startsWith('/') ? hash : '/';
+}
+
 export default function App() {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('testbed')) {
     return <Testbed />;
   }
 
+  const [hashRoute, setHashRoute] = useState(currentHashRoute);
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
   const [xrCapabilities, setXrCapabilities] = useState({ ar: false, vr: false, ios: false });
+  const [toolMenuOpen, setToolMenuOpen] = useState(false);
+  const [viewMenuOpen, setViewMenuOpen] = useState(false);
+  const isMlipFlywheelRoute = hashRoute === '/system/mlip-flywheel';
+
+  useEffect(() => {
+    const syncRoute = () => setHashRoute(currentHashRoute());
+    window.addEventListener('hashchange', syncRoute);
+    window.addEventListener('popstate', syncRoute);
+    return () => {
+      window.removeEventListener('hashchange', syncRoute);
+      window.removeEventListener('popstate', syncRoute);
+    };
+  }, []);
 
   useEffect(() => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -509,6 +552,7 @@ export default function App() {
     setXrCapabilities(prev => ({ ...prev, ios: isIOS }));
   }, []);
   const file = useStore(s => s.file);
+  const ghostFile = useStore(s => s.ghostFile);
   const loading = useStore(s => s.loading);
   const frame = useStore(s => s.frame);
   const playing = useStore(s => s.playing);
@@ -630,6 +674,49 @@ export default function App() {
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const showDebugHud = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    const params = new URLSearchParams(window.location.search);
+    return params.has('debug') || params.has('devhud') || params.has('dev');
+  }, []);
+  const cameraPresetLabel =
+    cameraPreset === 'top' ? 'XY' :
+    cameraPreset === 'side' ? 'XZ' :
+    cameraPreset === 'front' ? 'YZ' :
+    cameraPreset === 'iso' ? 'ISO' : 'View';
+
+  const handleImmersiveView = useCallback(() => {
+    if (xrCapabilities.ar) {
+      xrStore.enterAR();
+    } else if (xrCapabilities.vr) {
+      xrStore.enterVR();
+    } else if (xrCapabilities.ios) {
+      setIsExportingQuickLook(true);
+    } else {
+      alert("Immersive AR/VR is not supported on this device or browser.\n\nOn iOS: Use Safari for AR Quick Look.\nOn Android: Use Google Chrome.");
+    }
+  }, [xrCapabilities]);
+
+  const handleShareView = useCallback(() => {
+    if (!file?.sourceUrl) return;
+    const s = useStore.getState().encodeToURL();
+    const link = `${window.location.origin}${window.location.pathname}?load=${encodeURIComponent(file.sourceUrl)}&s=${encodeURIComponent(s)}`;
+    navigator.clipboard.writeText(link);
+    alert('View copied to clipboard! Anyone with this link can view the exact state and orientation.');
+  }, [file?.sourceUrl]);
+
+  const openToolPanel = useCallback((panel: 'visuals' | 'analysis' | 'export' | 'equilibrium' | 'mlipLongRun' | 'telemetry') => {
+    setToolMenuOpen(false);
+    setViewMenuOpen(false);
+    setActivePanel(panel as any);
+  }, [setActivePanel]);
+
+  useEffect(() => {
+    if (activePanel || showPotentialBrowser || !file) {
+      setToolMenuOpen(false);
+      setViewMenuOpen(false);
+    }
+  }, [activePanel, showPotentialBrowser, file?.name]);
 
   // Device-capability budget. Computed once at mount — hardware doesn't
   // change during a session. The cap reflects MEMORY ceiling now (not GPU
@@ -639,13 +726,16 @@ export default function App() {
   // phone where the premium shader would freeze the page.
   const deviceMaxAtoms = useMemo(() => getMaxSafeAtomCount(), []);
   const deviceQualityTier = useMemo(() => getDefaultQualityTier(), []);
+  const playbackFrameRate = file?.playbackFrameRate ?? 30;
+  const highFidelityPlayback = Boolean(file?.playbackFrameRate && (file?.trajectory.frames[0]?.natoms ?? 0) <= 5000);
 
   // Playback timer (replaced with smooth 60fps interpolator)
   const { currentState: interpState, setFrame: setSmoothFrame } = useSmoothFramePlayback(playing, {
     frames: file?.trajectory.frames ?? [],
     speed: playbackSpeed,
-    targetFPS: 60,
-    mdFrameRate: 30, // Default typical MD output
+    targetFPS: highFidelityPlayback ? 120 : 60,
+    mdFrameRate: playbackFrameRate,
+    stateSyncFPS: highFidelityPlayback ? 120 : 15,
     onFrame: (state) => {
       // Sync UI timeline without forcing expensive React renders unnecessarily
       // Only sync when playing. When paused, the store (user scrubbing) drives the hook.
@@ -654,6 +744,9 @@ export default function App() {
       }
     }
   });
+  const ghostFrame = ghostFile
+    ? ghostFile.trajectory.frames[Math.min(interpState.frameIndex, Math.max(ghostFile.trajectory.totalFrames - 1, 0))]
+    : null;
 
   // Sync external frame updates (like timeline scrubber manually dragging) back to the hook when NOT playing
   useEffect(() => {
@@ -954,15 +1047,10 @@ export default function App() {
             }}
           >
             <span style={{
-              fontSize: 20, fontWeight: 700, color: 'var(--text-primary)',
-              letterSpacing: '-0.02em'
+              fontSize: 21, fontWeight: 750, color: 'var(--text-primary)',
+              letterSpacing: '0'
             }}>
-              glim
-            </span>
-            <span style={{
-              fontSize: 20, fontWeight: 500, color: 'var(--accent)',
-            }}>
-              PSE
+              Lupi
             </span>
           </button>
 
@@ -984,6 +1072,7 @@ export default function App() {
                   window.history.pushState({}, '', url);
                 }}
                 title="Close"
+                aria-label="Close dataset"
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: 24, height: 24,
@@ -1003,49 +1092,16 @@ export default function App() {
 
         {/* Simple top-right actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 4 : 8 }}>
-          {file && (
-            <div style={{ position: 'relative' }}>
-              <button
-                onClick={() => {
-                  if (xrCapabilities.ar) {
-                    xrStore.enterAR();
-                  } else if (xrCapabilities.vr) {
-                    xrStore.enterVR();
-                  } else if (xrCapabilities.ios) {
-                    setIsExportingQuickLook(true);
-                  } else {
-                    alert("Immersive AR/VR is not supported on this device or browser.\n\nOn iOS: Use Safari for AR Quick Look.\nOn Android: Use Google Chrome.");
-                  }
-                }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 6,
-                  padding: '8px 12px', background: 'var(--accent-soft)',
-                  border: '1px solid var(--accent)', borderRadius: 'var(--radius-sm)',
-                  color: 'var(--accent)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
-                  minHeight: 36, // Ensure it's large enough to tap easily
-                }}
-                title="Immersive Tools"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-                {isMobile ? 'View AR' : 'View XR'}
-              </button>
-            </div>
-          )}
           {file?.sourceUrl && (
             <button
-              onClick={() => {
-                const s = useStore.getState().encodeToURL();
-                const link = `${window.location.origin}${window.location.pathname}?load=${encodeURIComponent(file.sourceUrl!)}&s=${encodeURIComponent(s)}`;
-                navigator.clipboard.writeText(link);
-                alert('View copied to clipboard! Anyone with this link can view the exact state and orientation.');
-              }}
+              onClick={handleShareView}
               title="Copy shareable link"
+              aria-label="Copy shareable link"
               style={{
-                display: 'flex', alignItems: 'center', gap: 6,
-                padding: isMobile ? '8px 8px' : '8px 12px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                width: 36,
+                height: 36,
+                padding: 0,
                 fontSize: 13, fontWeight: 500,
                 color: 'var(--text-primary)',
                 background: 'var(--bg-elevated)',
@@ -1055,14 +1111,49 @@ export default function App() {
               }}
             >
               <IconShare />
-              {!isMobile && 'Share'}
             </button>
+          )}
+          {!file && (
+            <>
+              <a
+                href="#/"
+                style={{
+                  display: 'block',
+                  padding: isMobile ? '7px 9px' : '8px 12px',
+                  fontSize: isMobile ? 12 : 13,
+                  fontWeight: 600,
+                  color: isMlipFlywheelRoute ? 'var(--text-muted)' : 'var(--text-primary)',
+                  background: isMlipFlywheelRoute ? 'transparent' : 'rgba(255,255,255,0.07)',
+                  border: '1px solid var(--border-default)',
+                  borderRadius: 'var(--radius-sm)',
+                  textDecoration: 'none',
+                }}
+              >
+                {isMobile ? 'Atoms' : 'Lupi Gallery'}
+              </a>
+              <a
+                href="#/system/mlip-flywheel"
+                style={{
+                  display: 'block',
+                  padding: isMobile ? '7px 9px' : '8px 12px',
+                  fontSize: isMobile ? 12 : 13,
+                  fontWeight: 600,
+                  color: isMlipFlywheelRoute ? '#e0f2fe' : 'var(--text-muted)',
+                  background: isMlipFlywheelRoute ? 'rgba(14,165,233,0.16)' : 'transparent',
+                  border: isMlipFlywheelRoute ? '1px solid rgba(125,211,252,0.52)' : '1px solid var(--border-default)',
+                  borderRadius: 'var(--radius-sm)',
+                  textDecoration: 'none',
+                }}
+              >
+                {isMobile ? 'Lab' : 'Live Lab'}
+              </a>
+            </>
           )}
           {!file && (
             <button
               onClick={() => {
                 const url = new URL(window.location.href);
-                url.searchParams.set('sim', 'au_nanocluster');
+                url.searchParams.set('sim', 'lupine_bluebonnet');
                 window.history.pushState({}, '', url);
                 window.dispatchEvent(new PopStateEvent('popstate'));
               }}
@@ -1092,7 +1183,7 @@ export default function App() {
               textDecoration: 'none',
             }}
           >
-            Lupine Home
+            Lupi Home
           </a>
           <a
             href="https://github.com/alexwelcing/lupine"
@@ -1144,7 +1235,7 @@ export default function App() {
           >
             {import.meta.env.DEV && (
               <>
-                <Perf position="top-left" logsPerSecond={4} matrixUpdate />
+                {showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
                 <DevProbe />
               </>
             )}
@@ -1195,6 +1286,12 @@ export default function App() {
                   colorProperty={colorProperty}
                   active={anomalyTracking}
                 />
+                {ghostFrame && (
+                  <GhostAtoms
+                    frame={ghostFrame}
+                    scale={atomScale * 0.34}
+                  />
+                )}
                 <AtomsOptimized
                   frame={file!.trajectory.frames[interpState.frameIndex]}
                   nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
@@ -1404,7 +1501,7 @@ export default function App() {
             </XR>
           </Canvas>
 
-          {import.meta.env.DEV && <StateInspector />}
+          {import.meta.env.DEV && showDebugHud && <StateInspector />}
 
           {/* (removed: GPU-unlock overlay, micro-effects layer, header shimmer) */}
 
@@ -1419,7 +1516,7 @@ export default function App() {
           )}
 
           {/* Simple stats overlay */}
-          {file && (
+          {file && totalFrames > 1 && (
             <div style={{
               position: 'absolute', top: 16, left: 16,
               pointerEvents: 'none',
@@ -1438,9 +1535,9 @@ export default function App() {
             </div>
           )}
 
-          <TelemetryHUD />
+          {showDebugHud && <TelemetryHUD />}
 
-          {/* Camera preset buttons */}
+          {/* Camera view selector */}
           {file && (
             <div style={{
               position: 'absolute',
@@ -1451,10 +1548,49 @@ export default function App() {
               gap: 6,
               zIndex: 150,
             }}>
-              <CameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => setCameraPreset('top')} title="Top view (XY plane)" />
-              <CameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => setCameraPreset('side')} title="Side view (XZ plane)" />
-              <CameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => setCameraPreset('front')} title="Front view (YZ plane)" />
-              <CameraPresetButton label="ISO" active={cameraPreset === 'iso'} onClick={() => setCameraPreset('iso')} title="Isometric view" />
+              <button
+                onClick={() => {
+                  setViewMenuOpen(open => !open);
+                  setToolMenuOpen(false);
+                }}
+                title="Camera view"
+                aria-label="Camera view"
+                aria-expanded={viewMenuOpen}
+                style={{
+                  width: 52,
+                  height: 34,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: 0,
+                  color: '#1edce0',
+                  background: 'rgba(0,0,0,0.52)',
+                  border: '1px solid rgba(30, 220, 224, 0.45)',
+                  borderRadius: 0,
+                  cursor: 'pointer',
+                  backdropFilter: 'blur(12px)',
+                }}
+              >
+                {cameraPresetLabel}
+              </button>
+              {viewMenuOpen && (
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 6,
+                  padding: 6,
+                  background: 'rgba(0,0,0,0.62)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  backdropFilter: 'blur(12px)',
+                }}>
+                  <CameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => { setCameraPreset('top'); setViewMenuOpen(false); }} title="Top view (XY plane)" />
+                  <CameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => { setCameraPreset('side'); setViewMenuOpen(false); }} title="Side view (XZ plane)" />
+                  <CameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => { setCameraPreset('front'); setViewMenuOpen(false); }} title="Front view (YZ plane)" />
+                  <CameraPresetButton label="ISO" active={cameraPreset === 'iso'} onClick={() => { setCameraPreset('iso'); setViewMenuOpen(false); }} title="Isometric view" />
+                </div>
+              )}
             </div>
           )}
 
@@ -1462,7 +1598,7 @@ export default function App() {
           {file && !activePanel && (
             <div style={{
               position: 'absolute',
-              bottom: 84, // Push above Timeline
+              bottom: totalFrames > 1 ? 84 : 32,
               left: 0,
               right: 0,
               display: 'flex',
@@ -1473,32 +1609,84 @@ export default function App() {
             }}>
               <div style={{
                 pointerEvents: 'auto',
-                display: 'flex',
-                gap: 8,
+                position: 'relative',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+                gap: 6,
                 padding: 8,
                 background: 'rgba(0,0,0,0.5)',
-                borderRadius: 16,
+                borderRadius: 12,
                 backdropFilter: 'blur(12px)',
-                maxWidth: '100%',
-                overflowX: 'auto',
+                width: 'min(480px, calc(100vw - 32px))',
                 WebkitOverflowScrolling: 'touch',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}>
-                <ToolButton icon={<IconStyle />} label="Visuals" active={activePanel === 'visuals'} onClick={() => setActivePanel('visuals')} />
-                <ToolButton icon={<IconAnalysis />} label="Analysis" active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => setActivePanel('analysis')} />
-                <ToolButton icon={<IconCamera />} label="Export" active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => setActivePanel('export')} />
-                <ToolButton icon={<IconAtoms />} label="Equilibrium" active={activePanel === 'equilibrium'} onClick={() => setActivePanel('equilibrium')} />
-                <ToolButton icon={<IconAnalysis />} label="Potentials" active={showPotentialBrowser} onClick={() => setShowPotentialBrowser(true)} />
+                {toolMenuOpen && (
+                  <div style={{
+                    position: 'absolute',
+                    right: 8,
+                    bottom: 58,
+                    width: 190,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 4,
+                    padding: 6,
+                    background: 'rgba(0,0,0,0.72)',
+                    border: '1px solid rgba(255,255,255,0.14)',
+                    boxShadow: '0 18px 50px rgba(0,0,0,0.45)',
+                    backdropFilter: 'blur(16px)',
+                    zIndex: 200,
+                  }}>
+                    <OverflowMenuButton icon={<IconAtoms />} label="Equilibrium" onClick={() => openToolPanel('equilibrium')} />
+                    <OverflowMenuButton icon={<IconDistillRuns />} label="Distill Runs" onClick={() => openToolPanel('mlipLongRun')} />
+                    <OverflowMenuButton
+                      icon={<IconAnalysis />}
+                      label="Potentials"
+                      active={showPotentialBrowser}
+                      onClick={() => {
+                        setToolMenuOpen(false);
+                        setViewMenuOpen(false);
+                        setActivePanel(null);
+                        setShowPotentialBrowser(true);
+                      }}
+                    />
+                    <OverflowMenuButton
+                      icon={<IconXR />}
+                      label={isMobile ? 'View AR' : 'View XR'}
+                      onClick={() => {
+                        setToolMenuOpen(false);
+                        handleImmersiveView();
+                      }}
+                    />
+                    {(typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('dev')) && (
+                      <OverflowMenuButton icon={<IconTelemetry />} label="Telemetry" onClick={() => openToolPanel('telemetry')} />
+                    )}
+                    <OverflowMenuButton
+                      icon={<IconReset />}
+                      label="Reset View"
+                      danger
+                      onClick={() => {
+                        setToolMenuOpen(false);
+                        useStore.getState().reset();
+                      }}
+                    />
+                  </div>
+                )}
+                <ToolButton icon={<IconStyle />} label={isMobile ? 'Style' : 'Studio'} active={activePanel === 'visuals'} onClick={() => openToolPanel('visuals')} />
+                <ToolButton icon={<IconAnalysis />} label={isMobile ? 'Info' : 'Inspect'} active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => openToolPanel('analysis')} />
+                <ToolButton icon={<IconCamera />} label={isMobile ? 'Save' : 'Export'} active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => openToolPanel('export')} />
+                <ToolButton
+                  icon={<IconMore />}
+                  label="More"
+                  active={toolMenuOpen || showPotentialBrowser || activePanel === 'equilibrium' || activePanel === 'mlipLongRun'}
+                  onClick={() => {
+                    setToolMenuOpen(open => !open);
+                    setViewMenuOpen(false);
+                  }}
+                />
                 {/* Telemetry is a developer surface — visible only with ?dev=1.
                     Production users see 3 tabs: Visuals · Analysis · Export. */}
-                {(typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('dev')) && (
-                  <ToolButton icon={<IconTelemetry />} label="Telemetry" active={activePanel === 'telemetry'} onClick={() => setActivePanel('telemetry')} />
-                )}
-                <div style={{ width: 1, minWidth: 1, background: 'rgba(255,255,255,0.15)', margin: '4px 0' }} />
-                <ToolButton icon={<IconReset />} label="Reset" onClick={() => {
-                  useStore.getState().reset();
-                }} />
               </div>
             </div>
           )}
@@ -1526,7 +1714,7 @@ export default function App() {
             right: 0,
             bottom: 0,
             left: isMobile ? 0 : 'auto',
-            width: isMobile ? '100%' : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320),
+            width: isMobile ? '100%' : (activePanel === 'mlipLongRun' ? 390 : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320)),
             height: isMobile ? '55vh' : 'auto',
             borderLeft: isMobile ? 'none' : '1px solid var(--border-subtle)',
             borderTop: isMobile ? '1px solid var(--border-subtle)' : 'none',
@@ -1571,6 +1759,7 @@ export default function App() {
                 />
               )}
               {activePanel === 'equilibrium' && <EquilibriumSolveWorkbench />}
+              {activePanel === 'mlipLongRun' && <MlipLongRunWorkbench />}
             </ErrorBoundary>
           </div>
         )}
@@ -1578,7 +1767,7 @@ export default function App() {
         {/* Landing page (hero, featured, drop zone, gallery) */}
         {!file && (
           <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
-            <LandingPage />
+            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : <LandingPage />}
           </div>
         )}
       </div>
@@ -1736,6 +1925,44 @@ function SubTabStrip({
   );
 }
 
+function OverflowMenuButton({
+  icon,
+  label,
+  active,
+  danger,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  active?: boolean;
+  danger?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        padding: '10px 12px',
+        border: active ? '1px solid rgba(30,220,224,0.6)' : '1px solid rgba(255,255,255,0.1)',
+        background: active ? 'rgba(30,220,224,0.14)' : 'rgba(9,11,18,0.92)',
+        color: danger ? '#fda4af' : active ? '#1edce0' : 'rgba(255,255,255,0.88)',
+        cursor: 'pointer',
+        fontSize: 12,
+        fontWeight: 650,
+        textAlign: 'left',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20 }}>{icon}</span>
+      <span>{label}</span>
+    </button>
+  );
+}
+
 
 
 
@@ -1750,4 +1977,3 @@ const kbdStyle: React.CSSProperties = {
   borderRadius: 0,
   marginRight: 4,
 };
-

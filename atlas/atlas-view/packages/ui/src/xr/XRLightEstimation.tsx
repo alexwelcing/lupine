@@ -44,7 +44,11 @@ export function XRLightEstimation() {
   // sessionend listeners on gl.xr in the constructor, so it must exist before
   // the AR session begins — which is why this component renders unconditionally
   // inside <XR> rather than waiting for mode === 'immersive-ar'.
-  const xrLight = useMemo(() => new XREstimatedLight(gl, true), [gl]);
+  const xrLight = useMemo(() => {
+    const light = new XREstimatedLight(gl, true);
+    light.visible = false;
+    return light;
+  }, [gl]);
   const pmrem = useMemo(() => new THREE.PMREMGenerator(gl), [gl]);
 
   const activeRef = useRef(false);
@@ -60,10 +64,12 @@ export function XRLightEstimation() {
       prevEnvironmentRef.current = scene.environment;
       lastRefreshRef.current = 0; // force a PMREM pass on the very next frame
       activeRef.current = true;
+      xrLight.visible = true;
       setActive(true);
     };
     const onEnd = () => {
       activeRef.current = false;
+      xrLight.visible = false;
       scene.environment = prevEnvironmentRef.current;
       setActive(false);
     };
@@ -77,6 +83,7 @@ export function XRLightEstimation() {
       if (activeRef.current) {
         scene.environment = prevEnvironmentRef.current;
         activeRef.current = false;
+        xrLight.visible = false;
         setActive(false);
       }
       pmremTargetRef.current?.dispose();

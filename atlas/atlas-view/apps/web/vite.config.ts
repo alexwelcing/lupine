@@ -202,6 +202,13 @@ export default defineConfig({
   server: {
     port: 3000,
     strictPort: false,
+    proxy: {
+      '/__lupi_gcs': {
+        target: 'https://storage.googleapis.com',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/__lupi_gcs/, ''),
+      },
+    },
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp',

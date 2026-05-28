@@ -176,7 +176,7 @@ export function AtomInfoHUD({
                       }}
                       title={`Pin this ${selectedAtoms.length === 2 ? 'distance' : selectedAtoms.length === 3 ? 'angle' : 'dihedral'}`}
                     >
-                      📌 pin
+                      Pin
                     </button>
                   )}
                 </div>

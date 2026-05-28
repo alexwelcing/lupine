@@ -10,15 +10,21 @@ import {
 } from '@lupine/ui';
 import { Slider } from '../controls';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
-import { TrackballPanner, ScrubbableNumber, RotaryKnob, ProColorSwatch } from './ProControls';
+import { RotaryKnob } from './ProControls';
 
 // ─── Material Scene Card ──────────────────────────────────────────────
 function MaterialSceneCard({ scene, active, onClick }: { scene: MaterialScene, active: boolean, onClick: () => void }) {
   const [imgError, setImgError] = useState(false);
   const snapshotUrl = `/gallery/snapshots/scene_${scene.id}.jpg`;
+  const materialLabel = scene.materialPreset === 'default' ? 'Element' : scene.materialPreset;
+  const lightingLabel = scene.rimLightIntensity > 0.6
+    ? 'Rim'
+    : scene.dirLightIntensity >= 1.5
+      ? 'Key'
+      : 'Soft';
 
   return (
-    <div
+    <button
       onClick={onClick}
       onContextMenu={(e) => {
         // Dev utility: right-click to take a snapshot of this preset
@@ -35,20 +41,22 @@ function MaterialSceneCard({ scene, active, onClick }: { scene: MaterialScene, a
       style={{
         position: 'relative',
         flex: '1 1 calc(25% - 6px)',
-        minWidth: 70,
-        height: 64,
+        minWidth: 116,
+        minHeight: 104,
         background: scene.cardGradient,
         borderRadius: 8,
         border: `1px solid ${active ? scene.accentColor : '#334155'}`,
         cursor: 'pointer',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 4,
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+        gap: 8,
         overflow: 'hidden',
         transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
         boxShadow: active ? `0 0 16px ${scene.accentColor}40, inset 0 0 8px ${scene.accentColor}20` : 'none',
+        padding: 10,
+        textAlign: 'left',
       }}
     >
       {!imgError && (
@@ -63,9 +71,45 @@ function MaterialSceneCard({ scene, active, onClick }: { scene: MaterialScene, a
           }}
         />
       )}
-      <div style={{ zIndex: 1, position: 'relative', fontSize: 20, textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>{scene.icon}</div>
-      <div style={{ zIndex: 1, position: 'relative', fontSize: 10, fontWeight: 600, color: active ? '#fff' : '#94a3b8', textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>
-        {scene.label}
+      <div style={{ zIndex: 1, position: 'relative', display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+        <div>
+          <div style={{ fontSize: 12, fontWeight: 750, color: active ? '#fff' : '#e2e8f0', textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>
+            {scene.label}
+          </div>
+          <div style={{ marginTop: 3, fontSize: 9, color: active ? '#dbeafe' : '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            {scene.postprocessPreset}
+          </div>
+        </div>
+        <div style={{
+          height: 22,
+          minWidth: 34,
+          padding: '4px 6px',
+          borderRadius: 4,
+          border: `1px solid ${active ? scene.accentColor : 'rgba(148,163,184,0.35)'}`,
+          background: 'rgba(2,6,23,0.68)',
+          color: active ? scene.accentColor : '#cbd5e1',
+          fontSize: 10,
+          fontWeight: 800,
+          lineHeight: 1,
+          textAlign: 'center',
+        }}>
+          {scene.code}
+        </div>
+      </div>
+      <div style={{
+        zIndex: 1,
+        position: 'relative',
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: 5,
+        fontSize: 9,
+        color: '#cbd5e1',
+        textShadow: '0 1px 3px rgba(0,0,0,0.85)',
+      }}>
+        <span>Material {materialLabel}</span>
+        <span>Light {lightingLabel}</span>
+        <span>Env {scene.environmentPreset}</span>
+        <span>Blend {Math.round(scene.materialIntensity * 100)}%</span>
       </div>
       {active && (
         <div style={{
@@ -75,7 +119,7 @@ function MaterialSceneCard({ scene, active, onClick }: { scene: MaterialScene, a
           zIndex: 2
         }} />
       )}
-    </div>
+    </button>
   );
 }
 
@@ -139,6 +183,24 @@ const BG_TEXTURE_CATEGORIES = [
 // Backwards-compat flat list for the gradient chips
 const BG_PRESETS = BG_GRADIENT_PRESETS;
 
+const ENVIRONMENT_OPTIONS = [
+  { value: 'studio', label: 'Studio' },
+  { value: 'apartment', label: 'Warm Interior' },
+  { value: 'warehouse', label: 'Industrial' },
+  { value: 'city', label: 'City' },
+  { value: 'dawn', label: 'Dawn' },
+  { value: 'night', label: 'Night' },
+  { value: 'forest', label: 'Forest' },
+  { value: 'none', label: 'Direct Only' },
+] as const;
+
+const LOOK_OPTIONS = [
+  { id: 'paper', label: 'Paper', signature: 'SSAO', desc: 'Print-faithful · neutral exposure' },
+  { id: 'studio', label: 'Studio', signature: 'SSAO + bloom', desc: 'Balanced default · clean lighting' },
+  { id: 'editorial', label: 'Editorial', signature: 'Strong bloom', desc: 'Moody · for dark slides' },
+  { id: 'cinematic', label: 'Cinematic', signature: 'Auto focus + bloom', desc: 'Target-tracked depth blur for hero shots' },
+  { id: 'diagram', label: 'Diagram', signature: 'none', desc: 'Pixel-faithful figure mode' },
+] as const;
 
 export function VisualsPanel({ availableProperties, embedded = false }: { availableProperties: string[]; embedded?: boolean }) {
   const {
@@ -162,7 +224,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     hiddenAtomTypes, toggleAtomType,
     atomTypeScales, setAtomTypeScale,
     // Materials & Lighting
-    materialPreset, setMaterialPreset,
+    materialPreset,
     materialScene, applyMaterialScene,
     materialIntensity, setMaterialIntensity,
     surfaceRoughness, setSurfaceRoughness,
@@ -170,17 +232,6 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     surfaceClearcoat, setSurfaceClearcoat,
     atomTexture, setAtomTexture,
     environmentPreset, setEnvironmentPreset,
-    ambientLightIntensity, setAmbientLightIntensity,
-    dirLightIntensity, setDirLightIntensity,
-    rimLightIntensity, setRimLightIntensity,
-    keyLightAzimuth, setKeyLightAzimuth,
-    keyLightElevation, setKeyLightElevation,
-    fillLightAzimuth, setFillLightAzimuth,
-    fillLightElevation, setFillLightElevation,
-    rimLightAzimuth, setRimLightAzimuth,
-    rimLightElevation, setRimLightElevation,
-    fillLightColor, setFillLightColor,
-    rimLightColor, setRimLightColor,
     // Effects
     // Post-process state moved to the Effects ("Look") panel — these
     // destructures are no longer needed by the UI in this file.
@@ -238,6 +289,19 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
 
   // (activeEffectsCount removed — post-process is the Effects panel's job.)
 
+  const activeMaterialScene = useMemo(
+    () => MATERIAL_SCENES.find(s => s.id === materialScene),
+    [materialScene],
+  );
+
+  const sceneDrifted = Boolean(activeMaterialScene && (
+    materialPreset !== activeMaterialScene.materialPreset ||
+    Math.abs(materialIntensity - activeMaterialScene.materialIntensity) > 0.001 ||
+    environmentPreset !== activeMaterialScene.environmentPreset ||
+    lookPreset !== activeMaterialScene.postprocessPreset ||
+    atomTexture !== activeMaterialScene.atomTexture
+  ));
+
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', height: '100%',
@@ -284,12 +348,38 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
               fontSize: 14, fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif',
               letterSpacing: '0.05em', color: '#e2e8f0', textTransform: 'uppercase', margin: '0 0 12px 0',
             }}>Look</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+            <select
+              value={lookPreset}
+              onChange={(e) => setLookPreset(e.target.value as typeof LOOK_OPTIONS[number]['id'])}
+              style={{
+                width: '100%',
+                background: '#121824',
+                color: '#f8fafc',
+                border: '1px solid #334155',
+                borderRadius: 4,
+                padding: '9px 10px',
+                fontSize: 12,
+                fontWeight: 650,
+                outline: 'none',
+              }}
+            >
+              {LOOK_OPTIONS.map(option => (
+                <option key={option.id} value={option.id}>
+                  {option.label} - {option.signature}
+                </option>
+              ))}
+            </select>
+            {LOOK_OPTIONS.filter(option => option.id === lookPreset).map(option => (
+              <div key={option.id} style={{ marginTop: 8, fontSize: 10, color: '#94a3b8', lineHeight: 1.4 }}>
+                {option.desc}
+              </div>
+            ))}
+            <div style={{ display: 'none', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
               {([
                 { id: 'paper',     label: 'Paper',     signature: 'SSAO',          desc: 'Print-faithful · neutral exposure' },
                 { id: 'studio',    label: 'Studio',    signature: 'SSAO + bloom',  desc: 'Balanced default · clean lighting' },
                 { id: 'editorial', label: 'Editorial', signature: 'Strong bloom',  desc: 'Moody · for dark slides' },
-                { id: 'cinematic', label: 'Cinematic', signature: 'DOF + bloom',   desc: 'Hero shot · sunset HDRI' },
+                { id: 'cinematic', label: 'Cinematic', signature: 'Auto focus + bloom', desc: 'Target-tracked depth blur for hero shots' },
                 { id: 'diagram',   label: 'Diagram',   signature: '— none —',      desc: 'Pixel-faithful figure mode' },
               ] as const).map(p => {
                 const active = lookPreset === p.id;
@@ -319,7 +409,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                               form.append('file', blob, `look_${p.id}.jpg`);
                               try {
                                 const res = await fetch('/api/gallery-assets/upload', { method: 'POST', body: form });
-                                if (res.ok) console.log(`✓ Snapshot generated: look_${p.id}.jpg`);
+                                if (res.ok) console.log(`Snapshot generated: look_${p.id}.jpg`);
                               } catch (err) {
                                 console.error('Failed to upload snapshot:', err);
                               }
@@ -370,7 +460,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
           </div>
 
           {/* ═══ Data Representation ═══ */}
-          <QuantumSection label="Data Representation" defaultOpen={true}>
+          <QuantumSection label="Data Representation" defaultOpen={false}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 12 }}>
               {/* Color scheme — directorial choice. Picks atom color source +
                   mode + bond default in one decision. Property selector and
@@ -504,13 +594,14 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
           </QuantumSection>
 
           {/* ═══ Material & Lighting ═══ */}
-          <QuantumSection label="Material Lab" defaultOpen={false}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginTop: 12 }}>
+          <QuantumSection label="Material & Lighting" defaultOpen={true}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20, marginTop: 12 }}>
               
               {/* Material Scenes */}
               <div>
-                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8, display: 'flex', justifyContent: 'space-between' }}>
-                  <span>Material Scene</span>
+                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8, display: 'flex', justifyContent: 'space-between', letterSpacing: '0.05em', fontWeight: 700 }}>
+                  <span>Scene Preset</span>
+                  <span>{activeMaterialScene?.label ?? 'Custom'}</span>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {MATERIAL_SCENES.map(scene => (
@@ -522,9 +613,52 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                     />
                   ))}
                 </div>
-                <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 8, fontStyle: 'italic', lineHeight: 1.4 }}>
-                  {MATERIAL_SCENES.find(s => s.id === materialScene)?.description}
+                <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 10, lineHeight: 1.45 }}>
+                  Scene presets apply a matched material, light rig, environment, background, and look in one action. Refine the sections below after choosing a baseline.
                 </div>
+                <div style={{
+                  marginTop: 10,
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: 6,
+                  fontSize: 10,
+                  color: '#94a3b8',
+                }}>
+                  <div style={{ padding: '8px', background: '#0a0d14', border: '1px solid #1e293b', borderRadius: 6 }}>
+                    Material: <span style={{ color: '#e2e8f0' }}>{materialPreset}</span>
+                  </div>
+                  <div style={{ padding: '8px', background: '#0a0d14', border: '1px solid #1e293b', borderRadius: 6 }}>
+                    Look: <span style={{ color: '#e2e8f0' }}>{lookPreset}</span>
+                  </div>
+                  <div style={{ padding: '8px', background: '#0a0d14', border: '1px solid #1e293b', borderRadius: 6 }}>
+                    Environment: <span style={{ color: '#e2e8f0' }}>{environmentPreset}</span>
+                  </div>
+                  <div style={{ padding: '8px', background: '#0a0d14', border: '1px solid #1e293b', borderRadius: 6 }}>
+                    Texture: <span style={{ color: '#e2e8f0' }}>{atomTexture}</span>
+                  </div>
+                  <button
+                    onClick={() => activeMaterialScene && applyMaterialScene(activeMaterialScene.id)}
+                    disabled={!activeMaterialScene || !sceneDrifted}
+                    style={{
+                      padding: '8px',
+                      background: sceneDrifted ? 'rgba(30,220,224,0.12)' : '#0a0d14',
+                      border: sceneDrifted ? '1px solid rgba(30,220,224,0.55)' : '1px solid #1e293b',
+                      borderRadius: 6,
+                      color: sceneDrifted ? '#9ff7ff' : '#64748b',
+                      cursor: sceneDrifted ? 'pointer' : 'default',
+                      fontSize: 10,
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Reapply Preset
+                  </button>
+                </div>
+                {activeMaterialScene && (
+                  <div style={{ marginTop: 8, fontSize: 10, color: '#64748b', lineHeight: 1.4 }}>
+                    {activeMaterialScene.description}
+                  </div>
+                )}
               </div>
 
               {/* Surface Character */}
@@ -594,91 +728,36 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                       onChange={setSurfaceClearcoat} 
                     />
                   </div>
-                  <div style={{ display: 'flex', gap: 6, marginTop: 12, flexWrap: 'wrap' }}>
-                    <IsotopeChip label="Glass" selected={materialPreset === 'glass'} onClick={() => setMaterialPreset('glass')} />
-                    <IsotopeChip label="Plastic" selected={materialPreset === 'plastic'} onClick={() => setMaterialPreset('plastic')} />
-                    <IsotopeChip label="Default" selected={materialPreset === 'default'} onClick={() => setMaterialPreset('default')} />
+                  <div style={{ fontSize: 10, color: '#64748b', lineHeight: 1.4 }}>
+                    Surface knobs are local refinements layered on top of the selected scene preset. Resetting this block keeps the authored light rig intact.
                   </div>
                 </div>
               </div>
 
-              {/* Light Rig */}
-              <div style={{ padding: '16px', background: '#0a0d14', borderRadius: 8, border: '1px solid #1e293b' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: 14, verticalAlign: 'text-bottom', marginRight: 6 }}>highlight</span>
-                    STUDIO LIGHTING RIG
-                  </div>
-                  <div style={{ fontSize: 9, color: '#475569', textTransform: 'uppercase' }}>3-Point System</div>
+              <div style={{ padding: '12px', background: '#0a0d14', borderRadius: 8, border: '1px solid #1e293b' }}>
+                <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8, letterSpacing: '0.05em', fontWeight: 600 }}>
+                  Scene Environment
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-                  {/* Key Light */}
-                  <div style={{ padding: '12px', background: '#121318', borderRadius: 6, border: '1px solid #1e293b', display: 'flex', flexDirection: 'column', gap: 16 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 600 }}>KEY</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0', background: '#050608', borderRadius: 4, border: '1px inset #222', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5)' }}>
-                      <TrackballPanner azimuth={keyLightAzimuth} elevation={keyLightElevation} size={80} onChange={(az, el) => { setKeyLightAzimuth(az); setKeyLightElevation(el); }} />
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <RotaryKnob label="Intensity" value={dirLightIntensity} min={0.0} max={5.0} step={0.05} fractionDigits={2} size={48} onChange={setDirLightIntensity} />
-                    </div>
-                  </div>
-
-                  {/* Fill Light */}
-                  <div style={{ padding: '12px', background: '#121318', borderRadius: 6, border: '1px solid #1e293b', display: 'flex', flexDirection: 'column', gap: 16 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 600 }}>FILL</span>
-                      <ProColorSwatch color={fillLightColor} onChange={setFillLightColor} />
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0', background: '#050608', borderRadius: 4, border: '1px inset #222', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5)' }}>
-                      <TrackballPanner azimuth={fillLightAzimuth} elevation={fillLightElevation} size={80} onChange={(az, el) => { setFillLightAzimuth(az); setFillLightElevation(el); }} />
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <RotaryKnob label="Intensity" value={ambientLightIntensity} min={0.0} max={5.0} step={0.05} fractionDigits={2} size={48} onChange={setAmbientLightIntensity} />
-                    </div>
-                  </div>
-
-                  {/* Rim Light */}
-                  <div style={{ padding: '12px', background: '#121318', borderRadius: 6, border: '1px solid #1e293b', display: 'flex', flexDirection: 'column', gap: 16 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 600 }}>RIM</span>
-                      <ProColorSwatch color={rimLightColor} onChange={setRimLightColor} />
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0', background: '#050608', borderRadius: 4, border: '1px inset #222', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5)' }}>
-                      <TrackballPanner azimuth={rimLightAzimuth} elevation={rimLightElevation} size={80} onChange={(az, el) => { setRimLightAzimuth(az); setRimLightElevation(el); }} />
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <RotaryKnob label="Intensity" value={rimLightIntensity} min={0.0} max={5.0} step={0.05} fractionDigits={2} size={48} onChange={setRimLightIntensity} />
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ marginTop: 16, borderTop: '1px solid #1e293b', paddingTop: 16 }}>
-                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8, letterSpacing: '0.05em', fontWeight: 600 }}>Environment Map</div>
-                  <select
-                    value={environmentPreset}
-                    onChange={e => setEnvironmentPreset(e.target.value as any)}
-                    style={{
-                      width: '100%',
-                      background: '#121824',
-                      color: '#f8fafc',
-                      border: '1px solid #334155',
-                      borderRadius: 4,
-                      padding: '6px 8px',
-                      fontSize: 11,
-                      outline: 'none'
-                    }}
-                  >
-                    <option value="studio">Studio (Neutral)</option>
-                    <option value="apartment">Apartment (Warm)</option>
-                    <option value="warehouse">Warehouse (Industrial)</option>
-                    <option value="city">City (Cool)</option>
-                    <option value="dawn">Dawn (Soft)</option>
-                    <option value="night">Night (Dark)</option>
-                    <option value="forest">Forest (Organic)</option>
-                    <option value="none">None (Direct Only)</option>
-                  </select>
+                <select
+                  value={environmentPreset}
+                  onChange={e => setEnvironmentPreset(e.target.value as any)}
+                  style={{
+                    width: '100%',
+                    background: '#121824',
+                    color: '#f8fafc',
+                    border: '1px solid #334155',
+                    borderRadius: 4,
+                    padding: '8px 10px',
+                    fontSize: 11,
+                    outline: 'none'
+                  }}
+                >
+                  {ENVIRONMENT_OPTIONS.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                  ))}
+                </select>
+                <div style={{ marginTop: 8, fontSize: 10, color: '#64748b', lineHeight: 1.4 }}>
+                  Environment controls image-based lighting. The Look selector above controls post effects only, so the two systems stay separate.
                 </div>
               </div>
             </div>

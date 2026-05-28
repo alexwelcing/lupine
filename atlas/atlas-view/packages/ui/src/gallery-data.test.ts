@@ -2,9 +2,9 @@
 /**
  * Curation invariants for the shipped gallery.
  *
- * Guards the contract established by the ship/gallery-cleanup rebuild:
- * every gallery entry must be well-formed AND actually loadable (its
- * data file + snapshot must exist, or be GCS/procedural). Also a
+ * Guards the gallery contract: every entry must be well-formed and
+ * actually loadable. Snapshots are preferred, but entries with colors
+ * can use the runtime procedural thumbnail fallback. Also a
  * regression guard that the dropped GLB hover machinery stays dropped.
  *
  * Pure fs/JSON — deliberately does NOT import the Gallery component
@@ -52,9 +52,9 @@ const data = galleryData as Entry[];
 const HEX = /^#[0-9a-fA-F]{6}$/;
 
 describe('gallery-data.json — curated launch set', () => {
-  it('is a non-empty curated set (not the legacy 185)', () => {
+  it('is a non-empty restored curated set', () => {
     expect(data.length).toBeGreaterThan(0);
-    expect(data.length).toBeLessThanOrEqual(40);
+    expect(data.length).toBeLessThanOrEqual(60);
   });
 
   it('has unique ids', () => {
@@ -90,10 +90,13 @@ describe('gallery-data.json — curated launch set', () => {
     }
   });
 
-  it('every entry has a snapshot image on disk', () => {
+  it('every entry has a snapshot image or procedural fallback colors', () => {
     for (const e of data) {
       const snap = `${PUBLIC}gallery/snapshots/${e.id}.jpg`;
-      expect(existsSync(snap), `missing snapshot for ${e.id}`).toBe(true);
+      expect(
+        existsSync(snap) || (Array.isArray(e.colors) && e.colors.length === 3),
+        `missing thumbnail path and fallback colors for ${e.id}`,
+      ).toBe(true);
     }
   });
 

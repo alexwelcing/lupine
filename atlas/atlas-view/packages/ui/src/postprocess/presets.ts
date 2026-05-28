@@ -29,7 +29,14 @@ export interface PostprocessPresetConfig {
 
   ssao: { enabled: boolean; intensity: number; radius: number };
   bloom: { enabled: boolean; intensity: number; threshold: number; smoothing: number };
-  dof: { enabled: boolean; bokehScale: number; focalLength: number; focusDistance: number; auto: boolean };
+  dof: {
+    enabled: boolean;
+    bokehScale: number;
+    focalLength: number;
+    focusDistance: number;
+    focusRange: number;
+    auto: boolean;
+  };
   vignette: { enabled: boolean; offset: number; darkness: number };
   toneMapping: 'aces' | 'reinhard' | 'none';
   /** MSAA samples for the composer when not playing. 0 disables. */
@@ -51,7 +58,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     performanceTier: 'fast',
     ssao: { enabled: true, intensity: 0.4, radius: 0.25 },
     bloom: { enabled: false, intensity: 0, threshold: 0.9, smoothing: 0.3 },
-    dof: { enabled: false, bokehScale: 1, focalLength: 0.02, focusDistance: 0.5, auto: false },
+    dof: { enabled: false, bokehScale: 1, focalLength: 0.02, focusDistance: 3, focusRange: 4, auto: false },
     vignette: { enabled: false, offset: 0.5, darkness: 0.3 },
     toneMapping: 'aces',
     multisampling: 4,
@@ -64,7 +71,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     performanceTier: 'fast',
     ssao: { enabled: true, intensity: 0.55, radius: 0.3 },
     bloom: { enabled: true, intensity: 0.18, threshold: 0.85, smoothing: 0.3 },
-    dof: { enabled: false, bokehScale: 1, focalLength: 0.02, focusDistance: 0.5, auto: false },
+    dof: { enabled: false, bokehScale: 1, focalLength: 0.02, focusDistance: 3, focusRange: 5, auto: false },
     vignette: { enabled: true, offset: 0.4, darkness: 0.4 },
     toneMapping: 'aces',
     multisampling: 4,
@@ -77,7 +84,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     performanceTier: 'balanced',
     ssao: { enabled: true, intensity: 0.85, radius: 0.32 },
     bloom: { enabled: true, intensity: 0.45, threshold: 0.7, smoothing: 0.25 },
-    dof: { enabled: false, bokehScale: 1, focalLength: 0.02, focusDistance: 0.5, auto: false },
+    dof: { enabled: false, bokehScale: 1, focalLength: 0.02, focusDistance: 3, focusRange: 5, auto: false },
     vignette: { enabled: true, offset: 0.35, darkness: 0.65 },
     toneMapping: 'aces',
     multisampling: 4,
@@ -86,11 +93,11 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
   cinematic: {
     id: 'cinematic',
     label: 'Cinematic',
-    tagline: 'Shallow focus, deep bloom. Tells a story.',
+    tagline: 'Target-tracked focus, warm bloom. Tells a story.',
     performanceTier: 'heavy',
     ssao: { enabled: true, intensity: 0.7, radius: 0.32 },
     bloom: { enabled: true, intensity: 0.6, threshold: 0.55, smoothing: 0.2 },
-    dof: { enabled: true, bokehScale: 3, focalLength: 0.025, focusDistance: 0.5, auto: true },
+    dof: { enabled: true, bokehScale: 2.1, focalLength: 0.025, focusDistance: 12, focusRange: 8, auto: true },
     vignette: { enabled: true, offset: 0.3, darkness: 0.7 },
     toneMapping: 'aces',
     multisampling: 4,
@@ -103,7 +110,7 @@ export const POSTPROCESS_PRESETS: Record<PostprocessPresetId, PostprocessPresetC
     performanceTier: 'fast',
     ssao: { enabled: false, intensity: 0, radius: 0.3 },
     bloom: { enabled: false, intensity: 0, threshold: 0.9, smoothing: 0.3 },
-    dof: { enabled: false, bokehScale: 1, focalLength: 0.02, focusDistance: 0.5, auto: false },
+    dof: { enabled: false, bokehScale: 1, focalLength: 0.02, focusDistance: 3, focusRange: 4, auto: false },
     vignette: { enabled: false, offset: 0.5, darkness: 0.3 },
     toneMapping: 'none',
     multisampling: 4,
@@ -168,7 +175,7 @@ export function composerKey(preset: PostprocessPresetConfig): string {
   return [
     preset.ssao.enabled ? 'ao' : '_',
     preset.bloom.enabled ? 'bl' : '_',
-    preset.dof.enabled ? 'dof' : '_',
+    preset.dof.enabled ? (preset.dof.auto ? 'dof-auto' : 'dof') : '_',
     preset.vignette.enabled ? 'vg' : '_',
     preset.toneMapping,
   ].join('|');

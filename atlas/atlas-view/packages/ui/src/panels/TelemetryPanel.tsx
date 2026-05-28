@@ -42,20 +42,20 @@ const SPIKE_COLORS = {
   severe: '#ff4060',
 } as const;
 
-const THERMO_PROPERTY_INFO: Record<string, { label: string; unit: string; icon: string }> = {
-  Temp:   { label: 'Temperature',     unit: 'K',        icon: '🌡' },
-  PotEng: { label: 'Potential Energy', unit: 'eV',       icon: '⚡' },
-  KinEng: { label: 'Kinetic Energy',   unit: 'eV',       icon: '💨' },
-  TotEng: { label: 'Total Energy',     unit: 'eV',       icon: '∑' },
-  Press:  { label: 'Pressure',         unit: 'bar',      icon: '◉' },
-  Volume: { label: 'Volume',           unit: 'Å³',       icon: '⬡' },
-  Lx:     { label: 'Box Lx',           unit: 'Å',        icon: '↔' },
-  Ly:     { label: 'Box Ly',           unit: 'Å',        icon: '↕' },
-  Lz:     { label: 'Box Lz',           unit: 'Å',        icon: '⊡' },
-  Density:{ label: 'Density',          unit: 'g/cm³',    icon: '◆' },
-  Pxx:    { label: 'Pxx',              unit: 'bar',      icon: '⟶' },
-  Pyy:    { label: 'Pyy',              unit: 'bar',      icon: '⟶' },
-  Pzz:    { label: 'Pzz',              unit: 'bar',      icon: '⟶' },
+const THERMO_PROPERTY_INFO: Record<string, { label: string; unit: string; code: string }> = {
+  Temp:   { label: 'Temperature',      unit: 'K',        code: 'T' },
+  PotEng: { label: 'Potential Energy', unit: 'eV',       code: 'PE' },
+  KinEng: { label: 'Kinetic Energy',   unit: 'eV',       code: 'KE' },
+  TotEng: { label: 'Total Energy',     unit: 'eV',       code: 'TE' },
+  Press:  { label: 'Pressure',         unit: 'bar',      code: 'P' },
+  Volume: { label: 'Volume',           unit: 'Å³',       code: 'V' },
+  Lx:     { label: 'Box Lx',           unit: 'Å',        code: 'Lx' },
+  Ly:     { label: 'Box Ly',           unit: 'Å',        code: 'Ly' },
+  Lz:     { label: 'Box Lz',           unit: 'Å',        code: 'Lz' },
+  Density:{ label: 'Density',          unit: 'g/cm³',    code: 'D' },
+  Pxx:    { label: 'Pxx',              unit: 'bar',      code: 'Px' },
+  Pyy:    { label: 'Pyy',              unit: 'bar',      code: 'Py' },
+  Pzz:    { label: 'Pzz',              unit: 'bar',      code: 'Pz' },
 };
 
 // ── Spike Analysis ─────────────────────────────────────────────────────
@@ -849,7 +849,6 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
             padding: 24, textAlign: 'center',
             color: 'var(--text-dim)', fontSize: 12,
           }}>
-            <div style={{ fontSize: 32, marginBottom: 12, opacity: 0.5 }}>📡</div>
             <div style={{ marginBottom: 4, fontWeight: 600 }}>No Thermo Data</div>
             <div style={{ fontSize: 11 }}>
               Load a LAMMPS log or trajectory with thermo output to view property telemetry.
@@ -892,7 +891,7 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
 
                   {/* Icon */}
                   <span style={{ fontSize: 14, width: 20, textAlign: 'center' }}>
-                    {info?.icon ?? '·'}
+                    {info?.code ?? stat.column.slice(0, 2)}
                   </span>
 
                   {/* Label + value */}
@@ -927,7 +926,7 @@ export function TelemetryPanel({ thermo, currentFrame, totalFrames }: TelemetryP
                         color: SPIKE_COLORS.spike,
                         fontFamily: 'var(--font-mono)',
                       }}>
-                        ⚡ {stat.spikeFrames.length}
+                        Spike {stat.spikeFrames.length}
                       </div>
                     )}
                   </div>

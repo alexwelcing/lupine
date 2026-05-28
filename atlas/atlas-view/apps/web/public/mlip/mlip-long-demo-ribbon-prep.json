@@ -1,0 +1,428 @@
+{
+  "schema": "lupine.distill.long_demo_ribbon_prep.v1",
+  "prep_id": "long-demo-ribbon-prep-v1",
+  "generated_at": "2026-05-27T00:00:00Z",
+  "registry_id": "mlip-long-horizon-demo-registry-v1",
+  "registry_path": "data/mlip_benchmarks/mlip_long_demo_registry.json",
+  "purpose": "Prepare demo-specific Distill ribbons for real local runs and viewer-ready measured artifacts without allowing unmeasured claims.",
+  "claim_policy": {
+    "active_correction_requires_reference_lock": true,
+    "shadow_mode_before_reference_lock": true,
+    "mock_or_placeholder_allowed": false,
+    "viewer_may_render_planned_scene": false,
+    "universal_claim_allowed": false
+  },
+  "shared_ribbon_principles": [
+    "Baseline and Distill Accuracy must share the same seeded protocol, reference source, and scoring contract.",
+    "Distill may improve only by acting through measured support evidence and must record every accept, correction, backtrack, tighten, stop, or refusal action.",
+    "Projected corrections are preferred when diagnostics show residual concentration in soft or defect coordinates; stiff-axis drift stays budgeted and visible.",
+    "Energy improvements are not wins if they create force explosions, stress explosions, nonphysical jumps, cell collapse, or wrong-equilibrium failures.",
+    "The viewer renders measured trajectories and scored overlays only; planned scene descriptions are work instructions, not visual evidence."
+  ],
+  "common_failure_classes": [
+    "non_converged",
+    "force_explosion",
+    "cell_collapse",
+    "energy_drift",
+    "stress_explosion",
+    "oscillation",
+    "wrong_equilibrium",
+    "backend_runtime_error",
+    "reference_not_locked",
+    "unsupported_topology"
+  ],
+  "ribbons": [
+    {
+      "demo_id": "ni-vacancy-diffusion-arrhenius-v1",
+      "ribbon_id": "hyperribbon-long-ni-vacancy-v1",
+      "parent_ribbons": [
+        "hyperribbon-ni-eam-support-v1",
+        "hyperribbon-mptrj-spectral-v4"
+      ],
+      "status": "ready_for_local_shadow_run",
+      "material_id": "Ni-fcc-vacancy",
+      "science_contract": {
+        "primary_question": "Can a same-material defect-aware ribbon improve Ni vacancy diffusion and local equilibrium observables without damaging the EAM-home-turf bulk mechanics anchor?",
+        "reference_lock": {
+          "required_before_active_correction": true,
+          "required_sources": [
+            "NIST or OpenKIM Ni EAM model record selected as classical baseline",
+            "published vacancy formation energy reference",
+            "published or accepted migration-barrier or hop-rate reference when claiming diffusion"
+          ],
+          "allowed_until_locked": [
+            "baseline dry run",
+            "Distill shadow decisions",
+            "viewer contract inspection"
+          ],
+          "blocked_until_locked": [
+            "public accuracy claim",
+            "active correction in Cloud Run",
+            "Arrhenius or hop-rate claim"
+          ]
+        },
+        "support_plan": {
+          "support_family": "non-overlapping Ni bulk, surface, vacancy-shell, and near-defect perturbations",
+          "eval_family": "held-out vacancy MD or offset-relaxation trajectories with sealed seeds",
+          "leakage_guard": "hash structure graph, material root, defect site id, seed, and perturbation protocol",
+          "minimum_support_cases": 12
+        },
+        "allowed_correction_coordinates": [
+          "vacancy-shell local energy residual",
+          "first/second-shell local coordination residual",
+          "energy drift slope after thermalization",
+          "soft local displacement complement from spectral diagnostics"
+        ],
+        "stiff_axes_to_preserve": [
+          "bulk fcc lattice volume",
+          "global hydrostatic strain",
+          "nearest-neighbor shell ordering outside the vacancy region"
+        ],
+        "primary_metrics": [
+          "vacancy_formation_energy_error_ev",
+          "migration_barrier_or_hop_proxy_error",
+          "energy_drift_ev_per_atom",
+          "force_explosion_rate",
+          "local_order_recovery",
+          "paired_accuracy_delta"
+        ],
+        "acceptance_gate": {
+          "min_paired_accuracy_lift_fraction": 0.03,
+          "max_stiff_axis_drift_fraction": 0.04,
+          "max_force_norm_ev_per_angstrom": 50.0,
+          "max_energy_drift_ev_per_atom": 0.02,
+          "max_intervention_rate": 0.35,
+          "requires_no_bulk_regression": true
+        },
+        "refusal_triggers": [
+          "reference_not_locked",
+          "support_eval_overlap",
+          "vacancy site annihilates or changes topology outside protocol",
+          "bulk lattice drift exceeds stiff-axis budget",
+          "force explosion or nonfinite energy",
+          "projected support lift is absent"
+        ],
+        "theorem_hooks": [
+          "stiff_axis_preservation",
+          "orthogonal_complement_lift",
+          "defect_locality_tube",
+          "anytime_marginal_gain"
+        ]
+      },
+      "ribbon_policy": {
+        "mode": "shadow_then_guarded_projected_residual",
+        "ribbon_version": "hyperribbon-long-ni-vacancy-v1",
+        "projected_ribbon_enabled": true,
+        "max_energy_bias_ev_per_atom": 0.25,
+        "energy_correction_scale": 0.65,
+        "min_support_lift_fraction": 0.05,
+        "max_support_eval_distance_proxy": 0.8,
+        "max_stiff_axis_drift_fraction": 0.04,
+        "min_complement_residual_fraction": 0.55,
+        "max_projection_distance_proxy": 0.75,
+        "min_projected_support_lift_fraction": 0.03,
+        "require_material_root_overlap": true
+      },
+      "run_plan": {
+        "phase_0_preflight": [
+          "Lock the Ni EAM and vacancy reference source.",
+          "Generate one small local vacancy trajectory with baseline only.",
+          "Run Distill in shadow mode over the same frames and record decisions."
+        ],
+        "phase_1_local_pair": [
+          "Run MACE, ORB, SevenNet, and CHGNet where imports are clean.",
+          "Compare baseline and Distill Accuracy on the same seeded protocol.",
+          "Promote only if no bulk-anchor regression is observed."
+        ],
+        "phase_2_cloud": [
+          "Upload the locked policy and fixture.",
+          "Run a small Cloud Run canary before any expanded campaign.",
+          "Publish paired artifacts and viewer frames after validation."
+        ]
+      },
+      "viewer_contract": {
+        "status": "awaiting_measured_artifacts",
+        "scene_rule": "Render only measured atom positions, measured vacancy site markers, scored local-shell distortion, and real intervention timestamps.",
+        "required_layers": [
+          "baseline trajectory",
+          "distill trajectory",
+          "vacancy site marker",
+          "nearest-neighbor shell distortion",
+          "energy drift curve",
+          "intervention timeline"
+        ],
+        "blocked_layers_until_reference_lock": [
+          "Arrhenius fit",
+          "migration barrier claim",
+          "publication-ready diffusion verdict"
+        ],
+        "artifact_schemas": [
+          "lupine.mlip.md_trajectory.v1",
+          "lupine.distill.md_observable_score.v1"
+        ]
+      }
+    },
+    {
+      "demo_id": "hcp-mg-slip-stacking-fault-v1",
+      "ribbon_id": "hyperribbon-long-hcp-mg-slip-v1",
+      "parent_ribbons": [
+        "hyperribbon-mptrj-row-hybrid-v3",
+        "hyperribbon-mptrj-spectral-v4"
+      ],
+      "status": "ready_for_local_shadow_run",
+      "material_id": "Mg-hcp-slip",
+      "science_contract": {
+        "primary_question": "Can a projected ribbon improve an hcp shear or stacking-fault path while preserving the stiff lattice axes and refusing unstable cells?",
+        "reference_lock": {
+          "required_before_active_correction": true,
+          "required_sources": [
+            "published hcp Mg stacking-fault energy or gamma-surface reference",
+            "OpenKIM or NIST Mg EAM/MEAM model record when used as a classical baseline",
+            "locked elastic constants used only as consistency checks"
+          ],
+          "allowed_until_locked": [
+            "fixture generator preflight",
+            "baseline relaxations",
+            "shadow projected-ribbon decisions"
+          ],
+          "blocked_until_locked": [
+            "active projected correction",
+            "stacking-fault energy claim",
+            "public mechanics benchmark"
+          ]
+        },
+        "support_plan": {
+          "support_family": "non-overlapping hcp Mg finite-strain, basal shear, prismatic shear, and near-fault offset structures",
+          "eval_family": "held-out basal/prismatic path points and offset relaxations",
+          "leakage_guard": "hash species, cell, fractional positions, shear path id, path coordinate, and seed",
+          "minimum_support_cases": 16
+        },
+        "allowed_correction_coordinates": [
+          "basal shear path residual",
+          "prismatic shear path residual",
+          "stacking-fault energy path residual",
+          "soft shear complement basis from subspace diagnostics"
+        ],
+        "stiff_axes_to_preserve": [
+          "hcp c/a ratio outside the applied shear protocol",
+          "hydrostatic volume",
+          "elastic response near zero strain"
+        ],
+        "primary_metrics": [
+          "stacking_fault_energy_curve_error",
+          "stress_path_rmse_gpa",
+          "relaxation_convergence_rate",
+          "stiff_axis_drift_fraction",
+          "projection_tube_refusal_rate",
+          "paired_accuracy_delta"
+        ],
+        "acceptance_gate": {
+          "min_paired_accuracy_lift_fraction": 0.04,
+          "max_stiff_axis_drift_fraction": 0.03,
+          "max_stress_abs_gpa": 150.0,
+          "max_cell_angle_drift_deg": 2.0,
+          "max_intervention_rate": 0.4,
+          "requires_path_shape_no_regression": true
+        },
+        "refusal_triggers": [
+          "reference_not_locked",
+          "support_eval_overlap",
+          "cell collapse or nonphysical c/a drift",
+          "stress explosion",
+          "path coordinate leaves the locked shear protocol",
+          "projection distance exceeds tube"
+        ],
+        "theorem_hooks": [
+          "stiff_axis_preservation",
+          "orthogonal_complement_lift",
+          "projection_tube_refusal",
+          "path_shape_no_regression"
+        ]
+      },
+      "ribbon_policy": {
+        "mode": "projected_residual_shadow",
+        "ribbon_version": "hyperribbon-long-hcp-mg-slip-v1",
+        "projected_ribbon_enabled": true,
+        "max_energy_bias_ev_per_atom": 0.18,
+        "max_stress_bias_gpa": 12.0,
+        "energy_correction_scale": 0.55,
+        "stress_correction_scale": 0.5,
+        "min_support_lift_fraction": 0.04,
+        "max_support_eval_distance_proxy": 0.65,
+        "max_stiff_axis_drift_fraction": 0.03,
+        "min_complement_residual_fraction": 0.6,
+        "max_projection_distance_proxy": 0.55,
+        "min_projected_support_lift_fraction": 0.035,
+        "require_material_root_overlap": true
+      },
+      "run_plan": {
+        "phase_0_preflight": [
+          "Lock one basal and one prismatic path protocol.",
+          "Generate local hcp Mg offset structures and baseline scores.",
+          "Run projected ribbon in shadow mode and verify stiff-axis diagnostics."
+        ],
+        "phase_1_local_pair": [
+          "Run paired baseline and Distill Accuracy path points on top local MLIPs.",
+          "Reject policies that improve endpoint energy while worsening path shape.",
+          "Publish path-wise intervention and refusal traces."
+        ],
+        "phase_2_cloud": [
+          "Canary one shear path and one relaxation path before broad campaign.",
+          "Keep acceleration disabled until accuracy path shape is stable."
+        ]
+      },
+      "viewer_contract": {
+        "status": "awaiting_measured_artifacts",
+        "scene_rule": "Render measured hcp cell motion, applied shear path coordinate, slip-plane guide, force/stress overlays, and intervention events only from scored artifacts.",
+        "required_layers": [
+          "baseline path frames",
+          "distill path frames",
+          "slip plane guide",
+          "cell vector drift",
+          "stacking-fault energy curve",
+          "projection tube/refusal markers"
+        ],
+        "blocked_layers_until_reference_lock": [
+          "reference gamma-surface curve",
+          "publication-ready path-shape verdict"
+        ],
+        "artifact_schemas": [
+          "lupine.mlip.equilibrium_viewer.v1",
+          "lupine.distill.equilibrium_solve_score.v1",
+          "lupine.distill.subspace_diagnostic.v1"
+        ]
+      }
+    },
+    {
+      "demo_id": "lifepo4-li-channel-migration-v1",
+      "ribbon_id": "hyperribbon-long-lifepo4-li-channel-v1",
+      "parent_ribbons": [
+        "hyperribbon-mptrj-row-hybrid-v3",
+        "hyperribbon-mptrj-spectral-v4"
+      ],
+      "status": "reference_required_before_shadow_run",
+      "material_id": "LiFePO4-li-channel",
+      "science_contract": {
+        "primary_question": "Can Distill improve a complex Li-ion migration or site-recovery task while refusing chemically implausible jumps and preserving the host lattice?",
+        "reference_lock": {
+          "required_before_active_correction": true,
+          "required_sources": [
+            "locked LiFePO4 source structure and license",
+            "published DFT Li migration barrier or path-energy reference",
+            "species-aware baseline applicability statement"
+          ],
+          "allowed_until_locked": [
+            "structure ingestion smoke",
+            "backend import preflight",
+            "viewer schema inspection"
+          ],
+          "blocked_until_locked": [
+            "active correction",
+            "shadow run using unlabeled migration coordinate",
+            "migration barrier or occupancy claim"
+          ]
+        },
+        "support_plan": {
+          "support_family": "non-overlapping LiFePO4 site perturbations, short path images, host-lattice finite perturbations, and chemically valid Li moves",
+          "eval_family": "held-out Li-channel migration frames and site occupancy recovery cases",
+          "leakage_guard": "hash species, oxidation-state metadata if present, site labels, path image id, fractional positions, and seed",
+          "minimum_support_cases": 20
+        },
+        "allowed_correction_coordinates": [
+          "Li migration coordinate residual",
+          "site occupancy classification residual",
+          "path energy residual",
+          "soft Li-channel complement basis from subspace diagnostics"
+        ],
+        "stiff_axes_to_preserve": [
+          "FePO4 host framework cell",
+          "P-O tetrahedral geometry",
+          "global charge/species consistency proxy",
+          "non-migrating ion sublattice"
+        ],
+        "primary_metrics": [
+          "migration_barrier_error_ev",
+          "site_occupancy_accuracy",
+          "energy_path_shape_error",
+          "nonphysical_jump_rate",
+          "force_explosion_rate",
+          "paired_accuracy_delta"
+        ],
+        "acceptance_gate": {
+          "min_paired_accuracy_lift_fraction": 0.05,
+          "max_stiff_axis_drift_fraction": 0.025,
+          "max_force_norm_ev_per_angstrom": 40.0,
+          "max_nonphysical_jump_rate": 0.0,
+          "max_intervention_rate": 0.3,
+          "requires_site_occupancy_no_regression": true
+        },
+        "refusal_triggers": [
+          "reference_not_locked",
+          "support_eval_overlap",
+          "Li leaves allowed channel graph",
+          "host framework distortion exceeds stiff-axis budget",
+          "nonphysical jump is detected",
+          "backend lacks species support or returns nonfinite values"
+        ],
+        "theorem_hooks": [
+          "stiff_axis_preservation",
+          "orthogonal_complement_lift",
+          "chemical_channel_tube",
+          "site_occupancy_no_regression"
+        ]
+      },
+      "ribbon_policy": {
+        "mode": "reference_locked_shadow_required",
+        "ribbon_version": "hyperribbon-long-lifepo4-li-channel-v1",
+        "projected_ribbon_enabled": true,
+        "max_energy_bias_ev_per_atom": 0.12,
+        "energy_correction_scale": 0.45,
+        "min_support_lift_fraction": 0.05,
+        "max_support_eval_distance_proxy": 0.5,
+        "max_stiff_axis_drift_fraction": 0.025,
+        "min_complement_residual_fraction": 0.62,
+        "max_projection_distance_proxy": 0.45,
+        "min_projected_support_lift_fraction": 0.04,
+        "require_material_root_overlap": true
+      },
+      "run_plan": {
+        "phase_0_preflight": [
+          "Lock LiFePO4 structure, source license, and migration coordinate.",
+          "Verify each backend supports the required species without fallback.",
+          "Build the channel graph and site labels before running Distill."
+        ],
+        "phase_1_local_pair": [
+          "Run one short baseline path and one shadow Distill pass.",
+          "Promote to active local correction only if no nonphysical jump appears.",
+          "Score site occupancy, path energy, force stability, and host drift."
+        ],
+        "phase_2_cloud": [
+          "Run a tiny Cloud Run canary only after local pair and viewer artifact validation.",
+          "Keep classical baselines marked not_applicable unless a scientifically valid potential is selected."
+        ]
+      },
+      "viewer_contract": {
+        "status": "reference_lock_required",
+        "scene_rule": "Render measured Li positions through a locked channel graph with host-lattice drift and site occupancy overlays only after the structure and path reference are locked.",
+        "required_layers": [
+          "baseline Li path frames",
+          "distill Li path frames",
+          "host framework",
+          "channel graph",
+          "site occupancy states",
+          "nonphysical jump/refusal markers"
+        ],
+        "blocked_layers_until_reference_lock": [
+          "migration barrier plot",
+          "site occupancy verdict",
+          "publication-ready battery transport claim"
+        ],
+        "artifact_schemas": [
+          "lupine.mlip.md_trajectory.v1",
+          "lupine.distill.md_observable_score.v1",
+          "lupine.distill.subspace_diagnostic.v1"
+        ]
+      }
+    }
+  ]
+}

@@ -87,7 +87,7 @@ export function MobileHUD() {
 
         {/* Viewports */}
         <div className="w-full flex flex-col gap-2 relative z-10">
-            <span className="text-[10px] text-[#bcc3ff]/70 tracking-[0.2em] uppercase font-mono break-words">Lupine Inference Targets</span>
+            <span className="text-[10px] text-[#bcc3ff]/70 tracking-[0.2em] uppercase font-mono break-words">Lupi Inference Targets</span>
             <div className="flex gap-2 sm:gap-4 w-full mt-1 flex-wrap sm:flex-nowrap">
                 <button 
                     className="flex-1 w-full sm:w-auto bg-[rgba(212,175,55,0.05)] border border-[rgba(212,175,55,0.2)] text-[#d4af37] font-mono text-[10px] tracking-[0.2em] px-2 sm:px-4 py-3 rounded-lg hover:bg-[rgba(212,175,55,0.15)] hover:border-[rgba(212,175,55,0.5)] transition-all flex items-center justify-center pointer-events-auto shadow-[0_0_10px_rgba(212,175,55,0.05)] group"

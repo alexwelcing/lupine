@@ -152,7 +152,7 @@ export function MlipCampaignMatrix({ embedded = false }: { embedded?: boolean })
     <div style={embedded ? sEmbeddedShell : sPanelShell}>
       <div style={sHeader}>
         <div>
-          <div style={sKicker}>Lupine Distill campaign</div>
+          <div style={sKicker}>Lupi Distill campaign</div>
           <h2 style={sTitle}>MLIP 5x5x3 grid</h2>
         </div>
         <div style={sGenerated}>Generated {formatDate(artifact.generated_at)}</div>

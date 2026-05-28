@@ -254,7 +254,7 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
     // Then, if a preset override is active (uMaterialPreset > 0), blend
     // between per-element and preset based on uMaterialIntensity.
     // This is the key upgrade: Material Scenes can partially preserve
-    // element character (Au still looks gold-ish on 'Forge' at 0.7).
+    // element character (Au still looks gold-ish on a partial Forge blend).
     float metalness, roughness, anisotropy, subsurface;
     vec3 emissionColor = vec3(0.0);
     float emissionIntensity = 0.0;

@@ -18,7 +18,7 @@ export default function App() {
   const pipelineSteps = [
     {
       label: 'Extraction',
-      description: 'Lupine sources rare-earth composites via autonomous drones.',
+      description: 'Lupi sources rare-earth composites via autonomous drones.',
       nodeText: 'RX-1',
       gradientIndex: 1
     },
@@ -190,7 +190,7 @@ export default function App() {
         <div className="lupine-container">
           <SitePipeline 
             label="Methodology"
-            title="The Lupine Process"
+            title="The Lupi Process"
             subtitle="From raw elements to indestructible compounds, visualized."
             steps={pipelineSteps}
           />
@@ -219,7 +219,7 @@ export default function App() {
                 Autonomous <span style={{ fontFamily: 'var(--font-serif)', background: 'linear-gradient(135deg,var(--lupine-400),var(--violet-300))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>discovery.</span>
               </>
             }
-            subtitle="The Lupine Distill engine mines published MD research to extract, validate, and discover mathematical relationships — automating what takes researchers months."
+            subtitle="The Lupi Distill engine mines published MD research to extract, validate, and discover mathematical relationships - automating what takes researchers months."
           />
         </div>
       </section>
@@ -250,7 +250,7 @@ export default function App() {
       {/* Footer */}
       <footer className="lupine-footer">
         <div className="lupine-container">
-          <p>© 2024 Lupine Materials Science. Powered by glimPSE.</p>
+          <p>© 2024 Lupi Materials Science. Powered by Lupi.</p>
         </div>
       </footer>
     </div>

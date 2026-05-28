@@ -258,7 +258,7 @@ export function BatchAssetGenerator() {
     snapshot: 'Rendering snapshot...',
     glb: 'Building GLB model...',
     uploading: 'Uploading assets...',
-    done: 'Complete ✓',
+    done: 'Complete',
     error: 'Error',
   }[phase];
 
@@ -375,7 +375,7 @@ export function BatchAssetGenerator() {
           }}>
             {errors.map((err, i) => (
               <div key={i} style={{ fontSize: 10, color: '#ef4444', lineHeight: 1.5 }}>
-                ✕ {err}
+                Error: {err}
               </div>
             ))}
           </div>

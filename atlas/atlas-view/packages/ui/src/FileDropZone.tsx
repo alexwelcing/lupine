@@ -1,5 +1,5 @@
 /**
- * FileDropZone — Premium entry point to glimPSE
+ * FileDropZone - premium entry point to Lupi.
  *
  * Handles drag-and-drop and click-to-upload for LAMMPS files.
  * Shows parsing progress and error states with refined design.
@@ -330,7 +330,7 @@ export function FileDropZone() {
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
                 marginBottom: 12, letterSpacing: '-0.02em',
               }}>
-                glimPSE
+                Lupi
               </h1>
               <div style={{
                 fontSize: 16, color: 'rgba(255,255,255,0.6)',
