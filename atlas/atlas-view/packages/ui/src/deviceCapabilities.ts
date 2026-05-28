@@ -1,5 +1,5 @@
 /**
- * Device-capability gating for atom-count-heavy scenes.
+ * Device-capability tuning for atom-count-heavy scenes.
  *
  * Background: the 1M-atom scale test was capable of crashing mobile devices
  * outright (page freeze + GPU restart) because the impostor-sphere fragment
@@ -8,11 +8,13 @@
  * CPU-side instance buffers and an equivalent GPU-side allocation, and a
  * mid-range phone is well past its per-tab budget before the first frame.
  *
- * This module is the single source of truth for "how many atoms can this
- * device safely render?" Used by:
- *   - Gallery.tsx — gate clicks before fetching the file
- *   - FileDropZone.tsx — gate parsed trajectories before handing to the store
- *   - App.tsx — pass as `maxAtoms` to AtomsOptimized as defense-in-depth
+ * This module is the single source of truth for quality defaults and the
+ * absolute single-scene atom ceiling. Mobile/low devices use cheaper shader
+ * paths, but they are no longer blocked from opening large molecules just
+ * because the viewport is small. Used by:
+ *   - Gallery.tsx - decline only scenes above the global buffer ceiling
+ *   - FileDropZone.tsx - decline only scenes above the global buffer ceiling
+ *   - App.tsx - pass as `maxAtoms` to AtomsOptimized as defense-in-depth
  *
  * SSR-safe: returns a desktop tier when `navigator` is unavailable.
  */
@@ -23,14 +25,15 @@ export type DeviceTier = 'mobile' | 'low' | 'desktop' | 'high';
  *  See AtomsOptimized.tsx for the per-tier work breakdown. */
 export type QualityTier = 0 | 1 | 2;
 
+export const GLOBAL_BROWSER_ATOM_CEILING = 50_000_000;
+
 interface DeviceProfile {
   tier: DeviceTier;
-  /** Hard cap on rendered atom count. Beyond this, the renderer falls back
-   *  to even more aggressive measures (or, if necessary, declines the load).
-   *  Caps are now MEMORY-driven, not GPU-cost-driven, since the quality-tier
-   *  system makes any tier render any count — they reflect the JS-heap and
-   *  GPU buffer ceiling for impostor representation. ~30 MB of buffers per
-   *  million atoms × CPU + GPU = ~60 MB per million. */
+  /** Soft budget for future warnings/auto-tuning. This is not a load gate. */
+  recommendedAtoms: number;
+  /** Hard cap on rendered atom count. This is global, not device-specific.
+   *  The quality-tier system handles GPU cost; this ceiling only protects the
+   *  single-scene JS heap and GPU buffer footprint. */
   maxAtoms: number;
   /** Quality tier the renderer should default to on this device. */
   qualityTier: QualityTier;
@@ -41,33 +44,35 @@ interface DeviceProfile {
 const PROFILES: Record<DeviceTier, DeviceProfile> = {
   mobile: {
     tier: 'mobile',
-    // ~30 MB CPU + ~30 MB GPU per million atoms in the impostor format.
-    // 2M is conservative for modern phones; raise once we add streaming.
-    maxAtoms: 2_000_000,
+    recommendedAtoms: 2_000_000,
+    maxAtoms: GLOBAL_BROWSER_ATOM_CEILING,
     // Fast fragment path: skips gl_FragDepth (restores early-Z), no IBL,
-    // no Cook-Torrance. 5-10× more fragment throughput on tile-based GPUs.
+    // no Cook-Torrance. 5-10x more fragment throughput on tile-based GPUs.
     qualityTier: 0,
-    reason: 'mobile devices have limited GPU memory and fragment throughput',
+    reason: 'the single-scene browser buffer ceiling would be exceeded',
   },
   low: {
     tier: 'low',
-    maxAtoms: 4_000_000,
+    recommendedAtoms: 4_000_000,
+    maxAtoms: GLOBAL_BROWSER_ATOM_CEILING,
     qualityTier: 1,
-    reason: 'this device has limited graphics memory',
+    reason: 'the single-scene browser buffer ceiling would be exceeded',
   },
   desktop: {
     tier: 'desktop',
-    maxAtoms: 10_000_000,
+    recommendedAtoms: 10_000_000,
+    maxAtoms: GLOBAL_BROWSER_ATOM_CEILING,
     qualityTier: 1,
-    reason: 'this scene exceeds the safe rendering budget for desktop',
+    reason: 'the single-scene browser buffer ceiling would be exceeded',
   },
   high: {
     tier: 'high',
     // Discrete GPU + plenty of RAM. The renderer itself doesn't have an
     // architectural limit beyond instance attribute capacity.
-    maxAtoms: 50_000_000,
+    recommendedAtoms: GLOBAL_BROWSER_ATOM_CEILING,
+    maxAtoms: GLOBAL_BROWSER_ATOM_CEILING,
     qualityTier: 2,
-    reason: 'this scene exceeds the safe rendering budget',
+    reason: 'the single-scene browser buffer ceiling would be exceeded',
   },
 };
 
@@ -117,7 +122,7 @@ export function getDeviceTier(): DeviceTier {
   return 'desktop';
 }
 
-/** Hard cap for safely-renderable atoms on this device. */
+/** Absolute single-scene atom cap. Device tier does not reduce access. */
 export function getMaxSafeAtomCount(): number {
   return PROFILES[getDeviceTier()].maxAtoms;
 }

@@ -37,7 +37,9 @@ atlas/nist_ipr/mirror.log
 .atlas-cache/
 
 # atlas-view verify-viewer screenshot artifacts
+.verify-artifacts/
 atlas/atlas-view/.verify-artifacts/
+atlas/atlas-view/tools/lupi-motion-cache/
 
 # Astro / Playwright build + test outputs (lupine-site)
 lupine-site/.astro/
@@ -85,6 +87,10 @@ tools/hermes-hive/data/
 *.mp4
 *.z64
 *.tar.zst
+
+# Authored Lupi environment-pack videos are deployable app assets, not scratch media.
+!atlas/atlas-view/apps/web/public/backgrounds/*.mp4
+!atlas/atlas-view/apps/web/public/backgrounds/*.webm
 
 # AI Agent workspaces
 .claude/

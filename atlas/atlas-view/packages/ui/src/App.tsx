@@ -12,6 +12,7 @@ import { Perf } from 'r3f-perf';
 import { ScenePostprocessing } from './postprocess/ScenePostprocessing';
 import { POSTPROCESS_PRESETS } from './postprocess/presets';
 import { DevProbe } from './DevProbe';
+import { McpViewerBridge, McpViewerHarness } from './mcpViewerBridge';
 import { StateInspector } from './StateInspector';
 import * as THREE from 'three';
 import { XR, createXRStore, useXR } from '@react-three/xr';
@@ -78,20 +79,15 @@ import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
 import { AnnotationsLayer } from './AnnotationsLayer';
 import { SelectionMarkers } from './SelectionMarkers';
+import { AtomInfoHUD } from './AtomInfoHUD';
 import { CameraFocus } from './CameraFocus';
 import { AtomTrails } from './AtomTrails';
-import { AtomInfoHUD } from './AtomInfoHUD';
-import { MeasurementsLayer } from './MeasurementsLayer';
 import { TYPE_RADII } from '@atlas/scene';
 import { useSmoothFramePlayback, type InterpolatedFrameState } from './hooks/useSmoothFramePlayback';
 import { SimulationCell } from '@atlas/scene/SimulationCell';
 import { ScaleBar } from '@atlas/scene/ScaleBar';
 import { getBackgroundFromColormap } from '@atlas/scene';
-import { VisualsPanel } from './panels/VisualsPanel';
-import { DockableWindow } from './DockableWindow';
 import { FigureExportPanel } from './panels/FigureExportPanel';
-import { AnalysisPanel } from './panels/AnalysisPanel';
-import { MeasurementPanel } from './panels/MeasurementPanel';
 import { FlythroughPanel } from './panels/FlythroughPanel';
 import { TelemetryPanel } from './panels/TelemetryPanel';
 import { PotentialBrowser } from './panels/PotentialBrowser';
@@ -108,6 +104,7 @@ import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
 import { ToolButton, CameraPresetButton, TransportButton } from './controls';
+import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -155,214 +152,188 @@ const IconShare = () => (
     <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
   </svg>
 );
-const IconMore = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <circle cx="5" cy="12" r="1.8" />
-    <circle cx="12" cy="12" r="1.8" />
-    <circle cx="19" cy="12" r="1.8" />
-  </svg>
-);
-const IconXR = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z" />
-    <circle cx="12" cy="12" r="3" />
-  </svg>
-);
 
 // ─── Friendly Toolbar Icons ───────────────────────────────────────────
-const IconStyle = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18.375 2.625a3.875 3.875 0 0 0-5.48 0l-9.27 9.27a3.875 3.875 0 0 0 0 5.48l.27.27a3.875 3.875 0 0 0 5.48 0l9.27-9.27a3.875 3.875 0 0 0 0-5.48l-.27-.27Z" />
-    <path d="M14 6l4 4" />
-    <path d="M8.5 15.5 4 20" />
-  </svg>
-);
-const IconEffects = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-    <path d="M5 3v4" />
-    <path d="M19 17v4" />
-    <path d="M3 5h4" />
-    <path d="M17 19h4" />
-  </svg>
-);
-const IconMeasure = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21.3 15.3 2.7 2.7" />
-    <path d="M15 21.3 2.7 2.7" />
-    <path d="M21.3 9 2.7 2.7" />
-    <path d="M9 21.3 2.7 2.7" />
-  </svg>
-);
-const IconCamera = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-    <circle cx="12" cy="13" r="3" />
-  </svg>
-);
-const IconReset = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-    <path d="M3 3v5h5" />
-  </svg>
-);
-const IconAnalysis = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="20" x2="18" y2="10" />
-    <line x1="12" y1="20" x2="12" y2="4" />
-    <line x1="6" y1="20" x2="6" y2="14" />
-  </svg>
-);
-const IconAtoms = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="3" />
-    <circle cx="12" cy="5" r="2" />
-    <circle cx="19" cy="16" r="2" />
-    <circle cx="5" cy="16" r="2" />
-    <line x1="12" y1="7" x2="12" y2="9" />
-    <line x1="16.9" y1="14.5" x2="14.6" y2="13.3" />
-    <line x1="7.1" y1="14.5" x2="9.4" y2="13.3" />
-  </svg>
-);
-const IconDistillRuns = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 7h10" />
-    <path d="M4 12h16" />
-    <path d="M4 17h10" />
-    <path d="M16 5l4 7-4 7" />
-  </svg>
-);
-const IconFlythrough = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="2" width="20" height="20" rx="2" />
-    <path d="M7 2v20" />
-    <path d="M17 2v20" />
-    <path d="M2 12h20" />
-    <path d="M2 7h5" />
-    <path d="M2 17h5" />
-    <path d="M17 7h5" />
-    <path d="M17 17h5" />
-  </svg>
-);
-const IconTelemetry = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-  </svg>
+// Lupi toolbar glyphs: specimen-frame linework, not emoji or generic app art.
+function LupiGlyph({ children }: { children: React.ReactNode }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.65"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M4.5 7.25V4.5h2.75" opacity="0.46" />
+      <path d="M16.75 4.5h2.75v2.75" opacity="0.46" />
+      <path d="M19.5 16.75v2.75h-2.75" opacity="0.46" />
+      <path d="M7.25 19.5H4.5v-2.75" opacity="0.46" />
+      {children}
+    </svg>
+  );
+}
+
+const IconLook = () => (
+  <LupiGlyph>
+    <path d="M7 12c1.35-2.15 3.02-3.22 5-3.22S15.65 9.85 17 12c-1.35 2.15-3.02 3.22-5 3.22S8.35 14.15 7 12Z" />
+    <circle cx="12" cy="12" r="1.65" />
+    <path d="M8.4 6.75 7.5 5.5" opacity="0.58" />
+    <path d="M15.6 17.25l.9 1.25" opacity="0.58" />
+  </LupiGlyph>
 );
 
+const IconSurface = () => (
+  <LupiGlyph>
+    <path d="M6.7 15.8c2.15-1.35 4.1-1.35 5.85 0 1.4 1.05 3.03 1.05 4.75 0" />
+    <path d="M6.7 11.8c2.15-1.35 4.1-1.35 5.85 0 1.4 1.05 3.03 1.05 4.75 0" opacity="0.72" />
+    <circle cx="8" cy="8" r="0.8" fill="currentColor" stroke="none" opacity="0.72" />
+    <circle cx="12" cy="7" r="0.8" fill="currentColor" stroke="none" opacity="0.72" />
+    <circle cx="16" cy="8" r="0.8" fill="currentColor" stroke="none" opacity="0.72" />
+  </LupiGlyph>
+);
+
+const IconWorld = () => (
+  <LupiGlyph>
+    <path d="M6.5 14.8c1.75 1.05 3.58 1.58 5.5 1.58s3.75-.53 5.5-1.58" />
+    <path d="M6.5 10.2c1.75-1.05 3.58-1.58 5.5-1.58s3.75.53 5.5 1.58" />
+    <path d="M12 6.5v11" opacity="0.7" />
+    <path d="M8.8 7.2c-.82 3.12-.82 6.48 0 9.6" opacity="0.54" />
+    <path d="M15.2 7.2c.82 3.12.82 6.48 0 9.6" opacity="0.54" />
+  </LupiGlyph>
+);
+
+const IconExport = () => (
+  <LupiGlyph>
+    <path d="M7.1 8.3h6.3c1.28 0 2.32 1.04 2.32 2.32v4.58H7.1V8.3Z" />
+    <path d="M9.1 8.3 10.2 6h3.1l1.1 2.3" opacity="0.7" />
+    <circle cx="11.45" cy="12.05" r="1.45" />
+    <path d="M15.4 6.6h2.5v2.5" />
+    <path d="m17.9 6.6-4.2 4.2" />
+  </LupiGlyph>
+);
 // ─── Background presets ───────────────────────────────────────────────
-import { BG_PRESETS } from './backgroundPresets';
-import { configureEquirectTexture, createGradientEquirectTexture } from './equirectTexture';
+import { BG_PRESETS, getBgMedia, type BgMedia, type BgPreset } from './backgroundPresets';
+import { useEquirectMediaTexture } from './hooks/useEquirectMediaTexture';
+import type { BackgroundGradientStyle } from './equirectTexture';
+import { ProceduralBackground, ProceduralMathField } from './ProceduralBackground';
 
 
-function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string; image?: string } {
+function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string; media: BgMedia; procedural?: BgPreset['procedural'] } {
   if (backgroundPreset.startsWith('palette:')) {
     const [, palette] = backgroundPreset.split(':');
-    return getBackgroundFromColormap((palette as ColormapName) ?? colormap);
+    const colors = getBackgroundFromColormap((palette as ColormapName) ?? colormap);
+    return { ...colors, media: { kind: 'gradient', projection: 'equirectangular' } };
   }
   const preset = BG_PRESETS[backgroundPreset] ?? BG_PRESETS.void;
-  return { top: preset.top, bottom: preset.bottom, image: preset.image };
+  return { top: preset.top, bottom: preset.bottom, media: getBgMedia(preset), procedural: preset.procedural };
 }
 
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl }: {
+function SceneBackground({ top, bottom, style = 'linear', media, procedural, center = [0, 0, 0], distance = 1 }: {
   top: string; bottom: string;
-  style?: 'linear' | 'radial' | 'spotlight';
-  videoUrl?: string | null;
-  imageUrl?: string;
+  style?: BackgroundGradientStyle;
+  media: BgMedia;
+  procedural?: BgPreset['procedural'];
+  center?: [number, number, number];
+  distance?: number;
 }) {
-  const { scene, gl } = useThree();
+  const { scene } = useThree();
 
   // Hook must be called unconditionally
   const mode = useXR(state => state.mode);
+  const xrMode = mode as string | null;
+  const isImmersiveAR = xrMode === 'immersive-ar';
+  const isImmersiveVR = xrMode === 'immersive-vr';
+  const texture = useEquirectMediaTexture({
+    media,
+    top,
+    bottom,
+    style,
+    enabled: !isImmersiveAR && !procedural,
+    projection: media.kind === 'video' ? 'dome' : 'scene-background',
+    logPrefix: 'bg',
+  });
 
   useEffect(() => {
-    if (mode === 'immersive-ar') {
+    if (isImmersiveAR || procedural) {
+      scene.background = null;
+      scene.fog = procedural && !isImmersiveAR ? new THREE.FogExp2(bottom, 0.0007) : null;
+      return () => {
+        scene.background = null;
+        scene.fog = null;
+      };
+    }
+
+    if (!texture || media.kind === 'video') {
       scene.background = null;
       scene.fog = null;
       return;
     }
 
-    let video: HTMLVideoElement | null = null;
-    let tex: THREE.Texture | null = null;
-
-    if (videoUrl) {
-      video = document.createElement('video');
-      video.src = videoUrl;
-      video.loop = true;
-      video.muted = true;
-      video.playsInline = true;
-      video.crossOrigin = 'anonymous';
-      video.play().catch(e => console.warn('Video background autoplay prevented:', e));
-
-      tex = new THREE.VideoTexture(video);
-      tex.minFilter = THREE.LinearFilter;
-      tex.magFilter = THREE.LinearFilter;
-      tex.colorSpace = THREE.SRGBColorSpace;
-      tex.anisotropy = gl.capabilities.getMaxAnisotropy();
-
-      scene.background = tex;
-      scene.fog = null;
-    } else if (imageUrl) {
-      // Load AI-generated background texture
-      const loader = new THREE.TextureLoader();
-      loader.load(imageUrl, (loadedTex) => {
-        configureEquirectTexture(loadedTex, gl);
-        scene.background = loadedTex;
-        tex = loadedTex;
-      }, undefined, () => {
-        // Fallback to gradient on load failure
-        console.warn(`[bg] Failed to load texture: ${imageUrl}, falling back to gradient`);
-        tex = createGradientEquirectTexture(top, bottom, gl);
-        scene.background = tex;
-      });
+    scene.background = texture;
+    if (media.kind === 'image') {
       scene.fog = new THREE.FogExp2(bottom, 0.0008);
-    } else {
-      const height = 1024;
-      const width = height * 2; // 2:1 aspect for equirectangular projection
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d')!;
-
-      let grad;
-      if (style === 'radial') {
-        grad = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, height/1.5);
-        grad.addColorStop(0, top);
-        grad.addColorStop(1, bottom);
-      } else if (style === 'spotlight') {
-        grad = ctx.createRadialGradient(width/2, 0, 0, width/2, 0, height/1.2);
-        grad.addColorStop(0, top);
-        grad.addColorStop(1, bottom);
-      } else {
-        grad = ctx.createLinearGradient(0, 0, 0, height);
-        grad.addColorStop(0, top);
-        grad.addColorStop(1, bottom);
-      }
-
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
-
-      tex = new THREE.CanvasTexture(canvas);
-      configureEquirectTexture(tex, gl);
-
-      scene.background = tex;
+    } else if (media.kind === 'gradient') {
       scene.fog = new THREE.FogExp2(bottom, 0.0015);
+    } else {
+      scene.fog = null;
     }
 
     return () => {
-      if (tex) tex.dispose();
-      if (video) {
-        video.pause();
-        video.src = '';
-        video.load();
-      }
-      scene.background = null;
+      if (scene.background === texture) scene.background = null;
       scene.fog = null;
     };
-  }, [scene, gl, top, bottom, style, videoUrl, imageUrl, mode]);
+  }, [bottom, isImmersiveAR, media.kind, procedural, scene, texture]);
+
+  if (procedural) {
+    const visible = !isImmersiveAR;
+    return (
+      <>
+        <ProceduralBackground variant={procedural} top={top} bottom={bottom} visible={visible} />
+        <ProceduralMathField variant={procedural} center={center} radius={distance * 1.46} visible={visible} />
+      </>
+    );
+  }
+
+  if (media.kind === 'video' && texture && !isImmersiveAR && !isImmersiveVR) {
+    return <PanoramaBackgroundDome texture={texture} />;
+  }
 
   return null;
+}
+
+const PANORAMA_DOME_RADIUS = 5000;
+
+function PanoramaBackgroundDome({ texture }: { texture: THREE.Texture }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const { camera } = useThree();
+  const geometry = useMemo(() => {
+    const geo = new THREE.SphereGeometry(PANORAMA_DOME_RADIUS, 128, 64);
+    geo.scale(-1, 1, 1);
+    return geo;
+  }, []);
+
+  useFrame(() => {
+    meshRef.current?.position.copy(camera.position);
+  });
+
+  return (
+    <mesh ref={meshRef} geometry={geometry} frustumCulled={false} renderOrder={-1000}>
+      <meshBasicMaterial
+        map={texture}
+        side={THREE.FrontSide}
+        depthWrite={false}
+        depthTest={false}
+        toneMapped={false}
+        fog={false}
+      />
+    </mesh>
+  );
 }
 
 // Error Boundary for side panels
@@ -511,10 +482,11 @@ export default function App() {
 
   const [hashRoute, setHashRoute] = useState(currentHashRoute);
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
-  const [xrCapabilities, setXrCapabilities] = useState({ ar: false, vr: false, ios: false });
-  const [toolMenuOpen, setToolMenuOpen] = useState(false);
+  const [studioDeck, setStudioDeck] = useState<StudioDeckMode | null>(null);
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
-  const isMlipFlywheelRoute = hashRoute === '/system/mlip-flywheel';
+  const hashPath = hashRoute.split('?')[0] || '/';
+  const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
+  const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
 
   useEffect(() => {
     const syncRoute = () => setHashRoute(currentHashRoute());
@@ -526,24 +498,6 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const xr = (navigator as any).xr;
-    
-    if (xr) {
-      // Check AR support
-      xr.isSessionSupported('immersive-ar').then((supported: boolean) => {
-        setXrCapabilities(prev => ({ ...prev, ar: supported }));
-      }).catch(() => {});
-      
-      // Check VR support
-      xr.isSessionSupported('immersive-vr').then((supported: boolean) => {
-        setXrCapabilities(prev => ({ ...prev, vr: supported }));
-      }).catch(() => {});
-    }
-    
-    setXrCapabilities(prev => ({ ...prev, ios: isIOS }));
-  }, []);
   const file = useStore(s => s.file);
   const ghostFile = useStore(s => s.ghostFile);
   const loading = useStore(s => s.loading);
@@ -572,20 +526,19 @@ export default function App() {
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
   const annotations = useStore(s => s.annotations);
   const labelStyle = useStore(s => s.labelStyle);
-  const selectedAtoms = useStore(s => s.selectedAtoms);
   const hoveredAtom = useStore(s => s.hoveredAtom);
-  const pinnedMeasurements = useStore(s => s.pinnedMeasurements);
+  const selectedAtoms = useStore(s => s.selectedAtoms);
 
-  // Atoms that get worldline trails. Union of currently-selected and
-  // currently-annotated. Lifted to component top so the useMemo's hook
+  // Atoms that get worldline trails. Currently annotation-driven only.
+  // Lifted to component top so the useMemo's hook
   // index is stable across renders — embedding it inside conditional JSX
   // changes the hook count when `currentFrame` flips and crashes React
   // with "Rendered more hooks than during the previous render."
   const trackedAtomIndices = useMemo(() => {
-    const set = new Set<number>(selectedAtoms);
+    const set = new Set<number>();
     for (const ann of annotations) set.add(ann.atomIndex);
     return Array.from(set);
-  }, [selectedAtoms, annotations]);
+  }, [annotations]);
 
   // Etched annotation: when the user picks the 'etched' label style and
   // has at least one annotation, rasterize the most-recent text into a
@@ -638,7 +591,6 @@ export default function App() {
   const activePanel = useStore(s => s.activePanel);
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const backgroundStyle = useStore(s => s.backgroundStyle);
-  const backgroundVideo = useStore(s => s.backgroundVideo);
   const ssaoIntensity = useStore(s => s.ssaoIntensity);
   const showScaleBar = useStore(s => s.showScaleBar);
   const cameraPreset = useStore(s => s.cameraPreset);
@@ -678,18 +630,6 @@ export default function App() {
     cameraPreset === 'front' ? 'YZ' :
     cameraPreset === 'iso' ? 'ISO' : 'View';
 
-  const handleImmersiveView = useCallback(() => {
-    if (xrCapabilities.ar) {
-      xrStore.enterAR();
-    } else if (xrCapabilities.vr) {
-      xrStore.enterVR();
-    } else if (xrCapabilities.ios) {
-      setIsExportingQuickLook(true);
-    } else {
-      alert("Immersive AR/VR is not supported on this device or browser.\n\nOn iOS: Use Safari for AR Quick Look.\nOn Android: Use Google Chrome.");
-    }
-  }, [xrCapabilities]);
-
   const handleShareView = useCallback(() => {
     if (!file?.sourceUrl) return;
     const s = useStore.getState().encodeToURL();
@@ -698,15 +638,23 @@ export default function App() {
     alert('View copied to clipboard! Anyone with this link can view the exact state and orientation.');
   }, [file?.sourceUrl]);
 
-  const openToolPanel = useCallback((panel: 'visuals' | 'analysis' | 'export' | 'equilibrium' | 'mlipLongRun' | 'telemetry') => {
-    setToolMenuOpen(false);
+  const openStudioDeck = useCallback((mode: StudioDeckMode) => {
+    setActivePanel(null);
+    setShowPotentialBrowser(false);
+    setViewMenuOpen(false);
+    setStudioDeck(current => current === mode ? null : mode);
+  }, [setActivePanel, setShowPotentialBrowser]);
+
+  const openToolPanel = useCallback((panel: 'export' | 'flythrough' | 'equilibrium' | 'mlipLongRun' | 'telemetry') => {
+    setStudioDeck(null);
+    setShowPotentialBrowser(false);
     setViewMenuOpen(false);
     setActivePanel(panel as any);
-  }, [setActivePanel]);
+  }, [setActivePanel, setShowPotentialBrowser]);
 
   useEffect(() => {
     if (activePanel || showPotentialBrowser || !file) {
-      setToolMenuOpen(false);
+      setStudioDeck(null);
       setViewMenuOpen(false);
     }
   }, [activePanel, showPotentialBrowser, file?.name]);
@@ -759,13 +707,27 @@ export default function App() {
       if (e.key === ' ' && !isResearch) { e.preventDefault(); togglePlay(); }
       if (e.key === 'ArrowRight') nextFrame();
       if (e.key === 'ArrowLeft') useStore.getState().prevFrame();
-      if (e.key === 'Escape') setActivePanel(null);
-      if (e.key === 'v' && !e.metaKey && !e.ctrlKey) setActivePanel('visuals');
-      if (e.key === 'a' && !e.metaKey && !e.ctrlKey) setActivePanel('analysis');
-      if (e.key === 'x' && !e.metaKey && !e.ctrlKey) setActivePanel('export');
+      if (e.key === 'Escape') {
+        setActivePanel(null);
+        setStudioDeck(null);
+        setShowPotentialBrowser(false);
+      }
+      if (e.key === 'v' && !e.metaKey && !e.ctrlKey) {
+        setActivePanel(null);
+        setShowPotentialBrowser(false);
+        setStudioDeck(current => current === 'look' ? null : 'look');
+      }
+      if (e.key === 'x' && !e.metaKey && !e.ctrlKey) {
+        setStudioDeck(null);
+        setShowPotentialBrowser(false);
+        setActivePanel('export');
+      }
       if (e.key === 'b' && !e.metaKey && !e.ctrlKey) useStore.getState().toggleBonds();
-      if (e.key === 'm' && !e.metaKey && !e.ctrlKey) setActivePanel('measurement');
-      if (e.key === 't' && !e.metaKey && !e.ctrlKey) setActivePanel('telemetry');
+      if (e.key === 't' && !e.metaKey && !e.ctrlKey) {
+        setStudioDeck(null);
+        setShowPotentialBrowser(false);
+        setActivePanel('telemetry');
+      }
     };
     window.addEventListener('keydown', handler);
     // Track Shift for the click-to-annotate flow. AtomPicker's onClick can't
@@ -784,7 +746,7 @@ export default function App() {
       window.removeEventListener('keyup', shiftUp);
       window.removeEventListener('blur', blurReset);
     };
-  }, [togglePlay, nextFrame, setActivePanel]);
+  }, [togglePlay, nextFrame, setActivePanel, setShowPotentialBrowser]);
 
   // URL state restore + auto-load
   useEffect(() => {
@@ -996,12 +958,11 @@ export default function App() {
       ) as [number, number, number]
     : [0, 0, 0] as [number, number, number], [file?.name]);
 
-  const availableProperties = currentFrame
-    ? Array.from(currentFrame.properties?.keys() ?? [])
-    : [];
-
   const bg = resolveBackground(backgroundPreset, colormap);
+  const bgMedia = bg.media;
   const isBatchExport = new URLSearchParams(window.location.search).get('batchExport') === 'true';
+  const toolbarBottom = totalFrames > 1 ? 84 : 32;
+  const studioDeckBottom = toolbarBottom + 64;
 
   return (
     <div style={{
@@ -1140,6 +1101,22 @@ export default function App() {
               >
                 {isMobile ? 'Lab' : 'Live Lab'}
               </a>
+              <a
+                href="#/mcp"
+                style={{
+                  display: 'block',
+                  padding: isMobile ? '7px 9px' : '8px 12px',
+                  fontSize: isMobile ? 12 : 13,
+                  fontWeight: 600,
+                  color: isMcpViewerRoute ? '#e0f2fe' : 'var(--text-muted)',
+                  background: isMcpViewerRoute ? 'rgba(14,165,233,0.16)' : 'transparent',
+                  border: isMcpViewerRoute ? '1px solid rgba(125,211,252,0.52)' : '1px solid var(--border-default)',
+                  borderRadius: 'var(--radius-sm)',
+                  textDecoration: 'none',
+                }}
+              >
+                MCP
+              </a>
             </>
           )}
           {!file && (
@@ -1200,6 +1177,8 @@ export default function App() {
 
       {/* ─── Main content ─── */}
       <div style={{ flex: 1, display: 'flex', position: 'relative' }}>
+        <McpViewerBridge />
+        {isMcpViewerRoute && <McpViewerHarness />}
         {/* 3D viewport */}
         <div style={{ 
           position: file ? 'absolute' : 'fixed', 
@@ -1224,19 +1203,22 @@ export default function App() {
               gl.shadowMap.type = THREE.PCFShadowMap;
             }}
             style={{ background: 'transparent' }}
-            onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
-            {import.meta.env.DEV && (
-              <>
-                {showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
-                <DevProbe />
-              </>
-            )}
+            {import.meta.env.DEV && showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
+            {(import.meta.env.DEV || showDebugHud) && <DevProbe enabled={showDebugHud} />}
             <XR store={xrStore}>
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
-            <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} imageUrl={bg.image} />
-            <XREnvironmentDome imageUrl={bg.image} top={bg.top} bottom={bg.bottom} />
+            <SceneBackground
+              top={bg.top}
+              bottom={bg.bottom}
+              style={backgroundStyle}
+              media={bgMedia}
+              procedural={bg.procedural}
+              center={center}
+              distance={cameraDistance}
+            />
+            <XREnvironmentDome media={bgMedia} top={bg.top} bottom={bg.bottom} style={backgroundStyle} disabled={!!bg.procedural} />
             {/* Real-world light estimation: in AR this takes over scene.environment
                 with a live reflection map so the molecule mirrors the surroundings
                 (e.g. campfire) and adds a directional light tracking the real key
@@ -1402,48 +1384,29 @@ export default function App() {
                   onDismiss={(id) => useStore.getState().removeAnnotation(id)}
                 />
 
-                {/* Visual feedback for selection + hover. Selection ring pulses
-                    subtly via useFrame so the eye is drawn to the picked atom
-                    without it being noisy. Hover marker is a quieter, no-pulse
-                    pale ring. */}
+                {/* Click an atom to inspect it, mark it, and focus the camera.
+                    Shift-click keeps the lightweight annotation workflow. */}
                 <SelectionMarkers
                   frame={currentFrame}
                   selectedAtoms={selectedAtoms}
                   hoveredAtom={hoveredAtom}
                   typeRadii={TYPE_RADII}
                 />
-
-                {/* Inline data card next to each selected atom: element,
-                    index, position, available property values, and (for
-                    multi-selects) distance to the first selected atom. Closes
-                    the click → information loop without forcing the user to
-                    open a side panel. */}
                 <AtomInfoHUD
                   frame={currentFrame}
                   selectedAtoms={selectedAtoms}
                   activeProperty={colorProperty ?? undefined}
-                  onDismissCard={(idx) => useStore.getState().setSelectedAtoms(prev => prev.filter(i => i !== idx))}
-                  onPinMeasurement={(atomIndices) => useStore.getState().pinMeasurement(atomIndices)}
+                  onDismissCard={(atomIndex) => useStore.getState().setSelectedAtoms(
+                    (prev) => prev.filter(idx => idx !== atomIndex),
+                  )}
                 />
-
-                {/* Geometric measurements between selected atoms. 2 → dashed
-                    distance line, 3 → angle arc, 4 → dihedral readout. Lives
-                    in 3D so it persists across camera moves and exports
-                    cleanly with the figure pipeline. Live (warm) + pinned
-                    (cool) variants render together. */}
-                <MeasurementsLayer
+                <CameraFocus
                   frame={currentFrame}
-                  selectedAtoms={selectedAtoms}
-                  pinned={pinnedMeasurements}
+                  enabled={!flythroughPreview}
                 />
 
-                {/* Smoothly dollies camera target toward a single-selection atom.
-                    Never pushes camera out — only re-centers and pulls in if the
-                    user is far. Disabled during flythrough preview which owns
-                    the camera. */}
-                <CameraFocus frame={currentFrame} enabled={!flythroughPreview} />
 
-                {/* Worldline trails for tracked atoms (selected ∪ annotated).
+                {/* Worldline trails for annotated atoms.
                     Scoped to bound memory at 1M-atom scenes; samples one new
                     position per playback frame change so the trail length is
                     in simulation time. Diffusion + dynamics get visual memory. */}
@@ -1453,9 +1416,8 @@ export default function App() {
                   atomIndices={trackedAtomIndices}
                 />
 
-                {/* Click-to-annotate: shift+click any atom prompts for label
-                    text. Plain click selects (existing selectedAtoms slice).
-                    Hover state powers the hover indicator in AtomPicker. */}
+                {/* Click-to-inspect: AtomPicker owns the raycast and sends the
+                    selected atom into the store. */}
                 {spatialHash && (
                   <AtomPicker
                     frame={currentFrame}
@@ -1472,11 +1434,10 @@ export default function App() {
                         if (text && text.trim()) {
                           useStore.getState().addAnnotation(atomIndex, text.trim());
                         }
-                      } else {
-                        useStore.getState().setSelectedAtoms([atomIndex]);
                       }
                     }}
                     onHover={(atomIndex) => useStore.getState().setHoveredAtom(atomIndex)}
+                    onSelect={(indices) => useStore.getState().setSelectedAtoms(indices)}
                   />
                 )}
 
@@ -1544,7 +1505,7 @@ export default function App() {
               <button
                 onClick={() => {
                   setViewMenuOpen(open => !open);
-                  setToolMenuOpen(false);
+                  setStudioDeck(null);
                 }}
                 title="Camera view"
                 aria-label="Camera view"
@@ -1587,11 +1548,19 @@ export default function App() {
             </div>
           )}
 
+          {file && !activePanel && studioDeck && (
+            <StudioControlDeck
+              mode={studioDeck}
+              onClose={() => setStudioDeck(null)}
+              bottomOffset={studioDeckBottom}
+            />
+          )}
+
           {/* Floating toolbar */}
           {file && !activePanel && (
             <div style={{
               position: 'absolute',
-              bottom: totalFrames > 1 ? 84 : 32,
+              bottom: toolbarBottom,
               left: 0,
               right: 0,
               display: 'flex',
@@ -1610,76 +1579,15 @@ export default function App() {
                 background: 'rgba(0,0,0,0.5)',
                 borderRadius: 12,
                 backdropFilter: 'blur(12px)',
-                width: 'min(480px, calc(100vw - 32px))',
+                width: 'min(640px, calc(100vw - 32px))',
                 WebkitOverflowScrolling: 'touch',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}>
-                {toolMenuOpen && (
-                  <div style={{
-                    position: 'absolute',
-                    right: 8,
-                    bottom: 58,
-                    width: 190,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 4,
-                    padding: 6,
-                    background: 'rgba(0,0,0,0.72)',
-                    border: '1px solid rgba(255,255,255,0.14)',
-                    boxShadow: '0 18px 50px rgba(0,0,0,0.45)',
-                    backdropFilter: 'blur(16px)',
-                    zIndex: 200,
-                  }}>
-                    <OverflowMenuButton icon={<IconAtoms />} label="Equilibrium" onClick={() => openToolPanel('equilibrium')} />
-                    <OverflowMenuButton icon={<IconDistillRuns />} label="Distill Runs" onClick={() => openToolPanel('mlipLongRun')} />
-                    <OverflowMenuButton
-                      icon={<IconAnalysis />}
-                      label="Potentials"
-                      active={showPotentialBrowser}
-                      onClick={() => {
-                        setToolMenuOpen(false);
-                        setViewMenuOpen(false);
-                        setActivePanel(null);
-                        setShowPotentialBrowser(true);
-                      }}
-                    />
-                    <OverflowMenuButton
-                      icon={<IconXR />}
-                      label={isMobile ? 'View AR' : 'View XR'}
-                      onClick={() => {
-                        setToolMenuOpen(false);
-                        handleImmersiveView();
-                      }}
-                    />
-                    {(typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('dev')) && (
-                      <OverflowMenuButton icon={<IconTelemetry />} label="Telemetry" onClick={() => openToolPanel('telemetry')} />
-                    )}
-                    <OverflowMenuButton
-                      icon={<IconReset />}
-                      label="Reset View"
-                      danger
-                      onClick={() => {
-                        setToolMenuOpen(false);
-                        useStore.getState().reset();
-                      }}
-                    />
-                  </div>
-                )}
-                <ToolButton icon={<IconStyle />} label={isMobile ? 'Style' : 'Studio'} active={activePanel === 'visuals'} onClick={() => openToolPanel('visuals')} />
-                <ToolButton icon={<IconAnalysis />} label={isMobile ? 'Info' : 'Inspect'} active={activePanel === 'analysis' || activePanel === 'measurement'} onClick={() => openToolPanel('analysis')} />
-                <ToolButton icon={<IconCamera />} label={isMobile ? 'Save' : 'Export'} active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => openToolPanel('export')} />
-                <ToolButton
-                  icon={<IconMore />}
-                  label="More"
-                  active={toolMenuOpen || showPotentialBrowser || activePanel === 'equilibrium' || activePanel === 'mlipLongRun'}
-                  onClick={() => {
-                    setToolMenuOpen(open => !open);
-                    setViewMenuOpen(false);
-                  }}
-                />
-                {/* Telemetry is a developer surface — visible only with ?dev=1.
-                    Production users see 3 tabs: Visuals · Analysis · Export. */}
+                <ToolButton icon={<IconLook />} label="Look" active={studioDeck === 'look'} onClick={() => openStudioDeck('look')} />
+                <ToolButton icon={<IconSurface />} label={isMobile ? 'Surf' : 'Surface'} active={studioDeck === 'surface'} onClick={() => openStudioDeck('surface')} />
+                <ToolButton icon={<IconWorld />} label="World" active={studioDeck === 'world'} onClick={() => openStudioDeck('world')} />
+                <ToolButton icon={<IconExport />} label={isMobile ? 'Save' : 'Export'} active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => openToolPanel('export')} />
               </div>
             </div>
           )}
@@ -1687,20 +1595,11 @@ export default function App() {
         </div>
 
         {/* ─── Side panel ─── */}
-        {/* Studio (Visuals) lives in a draggable/resizable dockable window —
-            the advanced light rig + material lab as a pro palette, not a
-            scrolling side drawer. Other panels keep the side container. */}
         {/* NIST IPR potential browser — full-screen overlay, manages its own
             close via setShowPotentialBrowser(false). */}
         {showPotentialBrowser && <PotentialBrowser />}
 
-        {activePanel === 'visuals' && file && (
-          <DockableWindow title="Studio" onClose={() => setActivePanel(null)}>
-            <VisualsPanel availableProperties={availableProperties} embedded />
-          </DockableWindow>
-        )}
-
-        {activePanel && activePanel !== 'visuals' && file && (
+        {activePanel && file && (
           <div style={{
             position: 'absolute',
             top: isMobile ? 'auto' : 0,
@@ -1719,31 +1618,8 @@ export default function App() {
             animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
           }}>
             <ErrorBoundary>
-              {/* Consolidated Analysis: inner tab strip switches between
-                  the analysis modules and the measurement workflow. */}
-              {(activePanel === 'analysis' || activePanel === 'measurement') && (
-                <SubTabStrip
-                  active={activePanel}
-                  tabs={[
-                    { id: 'analysis', label: 'Modules' },
-                    { id: 'measurement', label: 'Measure' },
-                  ]}
-                >
-                  {activePanel === 'analysis' ? <AnalysisPanel /> : <MeasurementPanel />}
-                </SubTabStrip>
-              )}
-              {/* Consolidated Export: figures + flythrough path authoring. */}
-              {(activePanel === 'export' || activePanel === 'flythrough') && (
-                <SubTabStrip
-                  active={activePanel}
-                  tabs={[
-                    { id: 'export', label: 'Figures' },
-                    { id: 'flythrough', label: 'Path' },
-                  ]}
-                >
-                  {activePanel === 'export' ? <FigureExportPanel /> : <FlythroughPanel />}
-                </SubTabStrip>
-              )}
+              {activePanel === 'export' && <FigureExportPanel />}
+              {activePanel === 'flythrough' && <FlythroughPanel />}
               {activePanel === 'telemetry' && (
                 <TelemetryPanel
                   thermo={file?.thermo ?? null}
@@ -1760,7 +1636,7 @@ export default function App() {
         {/* Landing page (hero, featured, drop zone, gallery) */}
         {!file && (
           <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
-            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : <LandingPage />}
+            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : isMcpViewerRoute ? null : <LandingPage />}
           </div>
         )}
       </div>
@@ -1867,9 +1743,9 @@ export default function App() {
 // ─── Helper components ────────────────────────────────────────────────
 
 /** Inline tab strip rendered at the top of a consolidated drawer. Switches
- *  the active panel without closing the drawer — used to fold Measure
- *  inside Analysis and Path inside Export so the top-level toolbar can
- *  stay at 3 tabs. Each tab id corresponds to a panel id in activePanel. */
+ *  the active panel without closing the drawer; currently used for the
+ *  Export figure/path split. Each tab id corresponds to a panel id in
+ *  activePanel. */
 function SubTabStrip({
   active,
   tabs,
@@ -1917,47 +1793,6 @@ function SubTabStrip({
     </div>
   );
 }
-
-function OverflowMenuButton({
-  icon,
-  label,
-  active,
-  danger,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  danger?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
-        padding: '10px 12px',
-        border: active ? '1px solid rgba(30,220,224,0.6)' : '1px solid rgba(255,255,255,0.1)',
-        background: active ? 'rgba(30,220,224,0.14)' : 'rgba(9,11,18,0.92)',
-        color: danger ? '#fda4af' : active ? '#1edce0' : 'rgba(255,255,255,0.88)',
-        cursor: 'pointer',
-        fontSize: 12,
-        fontWeight: 650,
-        textAlign: 'left',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20 }}>{icon}</span>
-      <span>{label}</span>
-    </button>
-  );
-}
-
-
-
 
 const kbdStyle: React.CSSProperties = {
   display: 'inline-block',

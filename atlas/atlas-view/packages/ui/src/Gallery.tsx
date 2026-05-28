@@ -514,10 +514,9 @@ export function Gallery() {
   // re-renders off the deferred value — avoids per-keystroke jank.
   const deferredSearch = useDeferredValue(search);
 
-  // Device cap is computed once at mount — UA / hardwareConcurrency don't
-  // change during a session. Used to mark cards as "won't fit on this device"
-  // before the user taps and crashes their phone.
-  const deviceCap = useMemo(() => getDeviceProfile().maxAtoms, []);
+  // The ceiling is computed once at mount. It is a global browser-buffer
+  // ceiling now; mobile keeps adaptive quality, not reduced access.
+  const atomCeiling = useMemo(() => getDeviceProfile().maxAtoms, []);
 
   const filteredExamples = useMemo(() => {
     return EXAMPLES.filter(ex => {
@@ -537,21 +536,16 @@ export function Gallery() {
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
     if (!example.available) return;
 
-    // Memory-ceiling gate. The renderer's quality tier scales the GPU
-    // cost down for mobile (no gl_FragDepth, no IBL, no Cook-Torrance —
-    // 1M atoms are renderable on a phone now), but it can't shrink the
-    // 30 MB+ trajectory parse + 60 MB of instance buffers an over-cap
-    // load would allocate. Above the cap we'd OOM the tab before the
-    // first frame, so this stays a hard refusal. Below the cap we let
-    // the renderer adapt via its quality tier.
+    // Global memory-ceiling gate. Device tier now only chooses quality;
+    // it does not block access to larger molecules on small screens.
     const profile = getDeviceProfile();
     const estimatedAtoms = parseAtomCountLabel(example.atoms);
     if (estimatedAtoms > profile.maxAtoms) {
       useStore.getState().setError(
         `"${example.title}" has ~${formatAtomCount(estimatedAtoms)} atoms, ` +
-        `over the ${formatAtomCount(profile.maxAtoms)}-atom memory budget ` +
-        `for this device (${profile.reason}). ` +
-        `Open this scene on a desktop with more graphics memory.`,
+        `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
+        `single-scene ceiling (${profile.reason}). ` +
+        `Try a smaller frame or a chunked trajectory.`,
       );
       // Keep the URL in sync — if we were navigated here via ?sim=, drop
       // it so reloads don't re-trigger the same OOM-prone load.
@@ -725,8 +719,8 @@ export function Gallery() {
           if (headerAtoms > profile.maxAtoms) {
             useStore.getState().setError(
               `"${example.title}" has ${formatAtomCount(headerAtoms)} atoms, ` +
-              `over the ${formatAtomCount(profile.maxAtoms)}-atom limit for this device. ` +
-              `Open this scene on a desktop with a discrete GPU.`,
+              `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
+              `single-scene ceiling. Try a smaller frame or a chunked trajectory.`,
             );
             return;
           }
@@ -781,8 +775,8 @@ export function Gallery() {
           if (actualAtoms > profile.maxAtoms) {
             useStore.getState().setError(
               `"${example.title}" parsed to ${formatAtomCount(actualAtoms)} atoms, ` +
-              `over the ${formatAtomCount(profile.maxAtoms)}-atom limit for this device. ` +
-              `Open this scene on a desktop with a discrete GPU.`,
+              `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
+              `single-scene ceiling. Try a smaller frame or a chunked trajectory.`,
             );
             return;
           }
@@ -952,7 +946,7 @@ export function Gallery() {
                     example={ex}
                     hovered={hoveredId === ex.id}
                     loading={loadingId === ex.id}
-                    deviceCap={deviceCap}
+                    atomCeiling={atomCeiling}
                     onHover={() => setHoveredId(ex.id)}
                     onLeave={() => setHoveredId(null)}
                     onClick={() => handleLoad(ex, false)}
@@ -970,7 +964,7 @@ export function Gallery() {
               example={ex}
               hovered={hoveredId === ex.id}
               loading={loadingId === ex.id}
-              deviceCap={deviceCap}
+              atomCeiling={atomCeiling}
               onHover={() => setHoveredId(ex.id)}
               onLeave={() => setHoveredId(null)}
               onClick={() => handleLoad(ex, false)}
@@ -988,7 +982,7 @@ function PatchCard({
   example,
   hovered,
   loading,
-  deviceCap,
+  atomCeiling,
   onHover,
   onLeave,
   onClick,
@@ -996,15 +990,13 @@ function PatchCard({
   example: GalleryExample;
   hovered: boolean;
   loading: boolean;
-  /** Hard atom-count cap for the visiting device. Cards exceeding this
-   *  render dimmed with a "Too large for this device" badge so the user
-   *  isn't surprised by the error after tapping. */
-  deviceCap: number;
+  /** Global single-scene atom ceiling. Device tier no longer reduces access. */
+  atomCeiling: number;
   onHover: () => void;
   onLeave: () => void;
   onClick: () => void;
 }) {
-  const exceedsCap = parseAtomCountLabel(example.atoms) > deviceCap;
+  const exceedsCap = parseAtomCountLabel(example.atoms) > atomCeiling;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imgError, setImgError] = useState(false);
   // Only the loading card subscribes to progress — others ignore it.
@@ -1096,7 +1088,7 @@ function PatchCard({
   const disabledReason = !example.available
     ? 'coming soon'
     : exceedsCap
-      ? `${example.atoms} atoms exceeds this device's memory budget — open on desktop`
+      ? `${example.atoms} atoms exceeds Lupi's current single-scene ceiling`
       : null;
 
   return (
@@ -1115,7 +1107,7 @@ function PatchCard({
       }
       aria-disabled={loading || !example.available || exceedsCap}
       title={exceedsCap
-        ? `~${example.atoms} atoms exceeds the memory budget for this device`
+        ? `~${example.atoms} atoms exceeds Lupi's current single-scene ceiling`
         : undefined}
     >
       <div style={sPatchBorder(threadColor)} />
@@ -1149,7 +1141,7 @@ function PatchCard({
           {example.domain}
           {!example.available && <span style={sPatchSoon}>Soon</span>}
           {example.available && exceedsCap && (
-            <span style={{ ...sPatchSoon, color: '#f5a05a' }}>Desktop only</span>
+            <span style={{ ...sPatchSoon, color: '#f5a05a' }}>Over cap</span>
           )}
         </div>
 

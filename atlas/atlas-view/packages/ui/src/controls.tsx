@@ -77,17 +77,18 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
     <button
       onClick={onClick}
       title={label}
+      aria-pressed={active}
       style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
         width: '100%',
         minWidth: 0,
-        padding: '8px 14px',
+        padding: '7px 12px',
         borderRadius: 0,
         border: active ? '1px solid #1edce0' : '1px solid rgba(255,255,255,0.1)',
-        background: active ? 'rgba(30, 220, 224, 0.15)' : 'rgba(0,0,0,0.4)',
+        background: active ? 'rgba(30, 220, 224, 0.16)' : 'rgba(0,0,0,0.42)',
         color: active ? '#1edce0' : 'rgba(255,255,255,0.9)',
         cursor: 'pointer',
-        transition: 'background 100ms ease-out, border-color 100ms ease-out',
+        transition: 'background 100ms ease-out, border-color 100ms ease-out, color 100ms ease-out',
         fontSize: 13,
         fontWeight: 600,
         flexShrink: 1,
@@ -106,7 +107,20 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
         }
       }}
     >
-      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon}</span>
+      <span style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 28,
+        height: 24,
+        flex: '0 0 28px',
+        color: active ? '#061316' : '#1edce0',
+        background: active ? '#1edce0' : 'rgba(30, 220, 224, 0.06)',
+        border: active ? '1px solid #1edce0' : '1px solid rgba(30, 220, 224, 0.28)',
+        boxShadow: active ? '0 0 18px rgba(30, 220, 224, 0.24)' : 'inset 0 0 0 1px rgba(255,255,255,0.03)',
+      }}>
+        {icon}
+      </span>
       <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
     </button>
   );

@@ -13,20 +13,6 @@ import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
 import { MATERIAL_SCENES, getScene, DEFAULT_SCENE_ID } from '@atlas/scene/materials';
 
-/** A pinned geometric measurement: distance for 2 atoms, angle for 3,
- *  dihedral for 4. Persists in the store separate from selectedAtoms so
- *  the user can build up a permanent measurement record while still
- *  clicking around to inspect other atoms. The MeasurementsLayer renders
- *  these alongside the live (selection-driven) measurements. */
-export interface PinnedMeasurement {
-  id: string;
-  /** Atom indices in the current frame. Length 2 = distance, 3 = angle, 4 = dihedral. */
-  atomIndices: number[];
-  /** Optional user-supplied label, shown alongside the numeric readout. */
-  label?: string;
-  createdAt: number;
-}
-
 /** A pinned text annotation tied to a specific atom by index in the
  *  current frame. Persists across frame changes; if the atom moves, the
  *  label moves with it (the AnnotationsLayer reads the latest position). */
@@ -181,7 +167,6 @@ export interface AppState {
   atomScale: number;
   backgroundPreset: string;
   backgroundStyle: 'linear' | 'radial' | 'spotlight';
-  backgroundVideo: string | null;
   environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none';
   materialPreset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
   /** Active material scene ID. Scenes coordinate material + lighting + env
@@ -254,7 +239,7 @@ export interface AppState {
   colorblindMode: boolean;
 
   // ─── UI ───
-  activePanel: 'visuals' | 'export' | 'analysis' | 'measurement' | 'flythrough' | 'telemetry' | 'equilibrium' | 'mlipLongRun' | null;
+  activePanel: 'export' | 'flythrough' | 'telemetry' | 'equilibrium' | 'mlipLongRun' | null;
   activeProfile: 'publication' | 'neon' | 'cinematic' | 'raw' | null;
   equilibriumSolve: EquilibriumSolveState | null;
 
@@ -265,11 +250,9 @@ export interface AppState {
   showStats: boolean;
   showThermo: boolean;
 
-  // ─── Selection ───
-  selectedAtoms: number[];
-
   // ─── Hover ───
   hoveredAtom: number | null;
+  selectedAtoms: number[];
 
   // ─── Annotations ───
   // Pinned text labels anchored to specific atom indices. The user can
@@ -282,12 +265,6 @@ export interface AppState {
   removeAnnotation: (id: string) => void;
   clearAnnotations: () => void;
   setLabelStyle: (style: LabelStyle) => void;
-
-  // ─── Pinned measurements ───
-  pinnedMeasurements: PinnedMeasurement[];
-  pinMeasurement: (atomIndices: number[], label?: string) => void;
-  removeMeasurement: (id: string) => void;
-  clearMeasurements: () => void;
 
   // ─── Atom visibility ───
   hiddenAtomTypes: Set<number>;
@@ -386,7 +363,6 @@ export interface AppState {
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
   setBackgroundStyle: (style: AppState['backgroundStyle']) => void;
-  setBackgroundVideo: (videoUrl: string | null) => void;
   setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none') => void;
   setArLightEstimationActive: (active: boolean) => void;
   setMaterialPreset: (preset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic') => void;
@@ -415,8 +391,8 @@ export interface AppState {
   setShowPotentialBrowser: (show: boolean) => void;
   clearFile: () => void;
   reset: () => void;
-  setSelectedAtoms: (atoms: number[] | ((prev: number[]) => number[])) => void;
   setHoveredAtom: (atom: number | null) => void;
+  setSelectedAtoms: (atoms: number[] | ((prev: number[]) => number[])) => void;
   toggleAtomType: (type: number) => void;
   showAllAtomTypes: () => void;
   soloAtomType: (type: number) => void;
@@ -479,7 +455,6 @@ const DEFAULTS = {
   atomScale: 1.0,
   backgroundPreset: 'deep',
   backgroundStyle: 'radial' as const,
-  backgroundVideo: null as string | null,
   environmentPreset: 'studio' as const,
   materialPreset: 'default' as const,
   materialScene: DEFAULT_SCENE_ID,
@@ -532,11 +507,10 @@ const DEFAULTS = {
   showPotentialBrowser: false,
   showStats: false,
   showThermo: true,
-  selectedAtoms: [] as number[],
   hoveredAtom: null as number | null,
+  selectedAtoms: [] as number[],
   annotations: [] as Annotation[],
   labelStyle: 'tag' as LabelStyle,
-  pinnedMeasurements: [] as PinnedMeasurement[],
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
   anomalyTracking: false,
@@ -599,6 +573,8 @@ export const useStore = create<AppState>()(
         bloom: sceneDirective.preset === 'studio' || sceneDirective.preset === 'editorial' || sceneDirective.preset === 'cinematic',
         dof: sceneDirective.preset === 'cinematic',
         autoDepthOfField: sceneDirective.preset === 'cinematic',
+        hoveredAtom: null,
+        selectedAtoms: [],
         // Default-fill loadedAtomCount to atomCount so non-streaming
         // consumers don't need to special-case this field. The streaming
         // path overrides via setLoadedAtomCount during the load.
@@ -711,7 +687,6 @@ export const useStore = create<AppState>()(
     setAtomScale: (atomScale) => set({ atomScale }),
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
     setBackgroundStyle: (backgroundStyle) => set({ backgroundStyle }),
-    setBackgroundVideo: (backgroundVideo) => set({ backgroundVideo }),
     setEnvironmentPreset: (environmentPreset) => set({ environmentPreset }),
     setMaterialPreset: (materialPreset) => set({ materialPreset }),
     setMaterialScene: (materialScene) => set({ materialScene }),
@@ -770,6 +745,8 @@ export const useStore = create<AppState>()(
       activeCardId: null,
       error: null,
       activePanel: null,
+      hoveredAtom: null,
+      selectedAtoms: [],
       exportRequest: { type: null },
       loadedAtomCount: 0,
       streamingProgress: 0,
@@ -820,11 +797,12 @@ export const useStore = create<AppState>()(
 
     reset: () => set(DEFAULTS as any),
 
-    setSelectedAtoms: (updater) => set((s) => ({
-      selectedAtoms: typeof updater === 'function' ? updater(s.selectedAtoms) : updater,
-    })),
-
     setHoveredAtom: (hoveredAtom) => set({ hoveredAtom }),
+    setSelectedAtoms: (nextSelectedAtoms) => set((s) => ({
+      selectedAtoms: typeof nextSelectedAtoms === 'function'
+        ? nextSelectedAtoms(s.selectedAtoms)
+        : nextSelectedAtoms,
+    })),
 
     addAnnotation: (atomIndex, text) => set((s) => ({
       annotations: [
@@ -842,22 +820,6 @@ export const useStore = create<AppState>()(
     })),
     clearAnnotations: () => set({ annotations: [] }),
     setLabelStyle: (labelStyle) => set({ labelStyle }),
-
-    pinMeasurement: (atomIndices, label) => set((s) => ({
-      pinnedMeasurements: [
-        ...s.pinnedMeasurements,
-        {
-          id: `pm_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-          atomIndices: atomIndices.slice(0, 4), // distance/angle/dihedral max
-          label,
-          createdAt: Date.now(),
-        },
-      ],
-    })),
-    removeMeasurement: (id) => set((s) => ({
-      pinnedMeasurements: s.pinnedMeasurements.filter(m => m.id !== id),
-    })),
-    clearMeasurements: () => set({ pinnedMeasurements: [] }),
 
     toggleAtomType: (type) => set((s) => {
       const next = new Set(s.hiddenAtomTypes);
@@ -945,7 +907,7 @@ export const useStore = create<AppState>()(
         case 'publication':
           return {
             activeProfile: 'publication',
-            backgroundPreset: 'white', backgroundVideo: null,
+            backgroundPreset: 'white',
             toneMapping: 'aces', ssao: true, ssaoIntensity: 0.8,
             bloom: false, dof: false, materialPreset: 'matte', atomTexture: 'none',
             environmentPreset: 'studio', ambientLightIntensity: 0.8, dirLightIntensity: 1.0,
@@ -954,7 +916,7 @@ export const useStore = create<AppState>()(
         case 'neon':
           return {
             activeProfile: 'neon',
-            backgroundPreset: 'void', backgroundVideo: null,
+            backgroundPreset: 'void',
             toneMapping: 'aces', ssao: false,
             bloom: true, bloomIntensity: 0.6, dof: false,
             materialPreset: 'metallic', atomTexture: 'none',
@@ -964,7 +926,7 @@ export const useStore = create<AppState>()(
         case 'cinematic':
           return {
             activeProfile: 'cinematic',
-            backgroundPreset: 'deep', backgroundVideo: null,
+            backgroundPreset: 'deep',
             toneMapping: 'aces', ssao: true, ssaoIntensity: 0.7,
             bloom: true, bloomIntensity: 0.3, dof: true, dofFocus: 50, autoDepthOfField: true,
             materialPreset: 'metallic', atomTexture: 'scratched',
@@ -974,7 +936,7 @@ export const useStore = create<AppState>()(
         case 'raw':
           return {
             activeProfile: 'raw',
-            backgroundPreset: 'dark', backgroundVideo: null,
+            backgroundPreset: 'dark',
             toneMapping: 'none', ssao: false,
             bloom: false, dof: false, materialPreset: 'default', atomTexture: 'none',
             environmentPreset: 'studio', ambientLightIntensity: 0.35, dirLightIntensity: 1.2,

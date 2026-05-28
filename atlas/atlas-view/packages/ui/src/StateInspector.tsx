@@ -38,6 +38,7 @@ export function StateInspector() {
   const playing = useStore(s => s.playing);
   const frame = useStore(s => s.frame);
   const file = useStore(s => s.file);
+  const selectedAtoms = useStore(s => s.selectedAtoms);
 
   const natoms = file?.trajectory?.frames?.[frame]?.natoms ?? 0;
   const totalFrames = file?.trajectory?.frames?.length ?? 0;
@@ -73,6 +74,7 @@ export function StateInspector() {
         value={playing ? `▶ ${frame + 1}/${totalFrames}` : `▌ ${frame + 1}/${totalFrames}`}
         valueColor={playing ? '#34d399' : '#94a3b8'} />
       <Row label="ATOMS" value={natoms.toLocaleString()} secondary={colorMode} />
+      <Row label="PICK" value={selectedAtoms[0] == null ? 'none' : `#${selectedAtoms[0]}`} />
 
       <Divider />
 

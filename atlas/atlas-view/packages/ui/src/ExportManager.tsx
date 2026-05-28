@@ -374,13 +374,18 @@ export function ExportManager() {
     const format = req.format || 'png';
 
     const originalAspect = (camera as THREE.PerspectiveCamera).aspect;
+    const originalPixelRatio = gl.getPixelRatio();
+    const originalClearColor = new THREE.Color();
+    gl.getClearColor(originalClearColor);
+    const originalClearAlpha = gl.getClearAlpha();
+
+    gl.setPixelRatio(1);
     gl.setSize(targetWidth, targetHeight, false);
     if (camera instanceof THREE.PerspectiveCamera) {
       camera.aspect = targetWidth / targetHeight;
       camera.updateProjectionMatrix();
     }
 
-    const originalClearAlpha = gl.getClearAlpha();
     if (!req.transparent) {
       gl.setClearColor(new THREE.Color('#10131a'), 1);
     } else {
@@ -390,6 +395,12 @@ export function ExportManager() {
     const originalRenderTarget = gl.getRenderTarget();
     gl.setRenderTarget(null);
     gl.render(scene, camera);
+
+    const captureCanvas = document.createElement('canvas');
+    captureCanvas.width = targetWidth;
+    captureCanvas.height = targetHeight;
+    const captureContext = captureCanvas.getContext('2d')!;
+    captureContext.drawImage(gl.domElement, 0, 0, targetWidth, targetHeight);
 
     const mime = `image/${format}`;
     const quality = format === 'png' ? undefined : 1.0;
@@ -401,7 +412,7 @@ export function ExportManager() {
     // causing missing/wrong file extensions.
     // Note: toBlob captures pixels synchronously per spec — the callback is just for
     // delivering the encoded blob. Safe to restore renderer state immediately after.
-    gl.domElement.toBlob(
+    captureCanvas.toBlob(
       (blob) => {
         if (blob) {
           if (req.onComplete) {
@@ -421,12 +432,13 @@ export function ExportManager() {
 
     // Restore renderer state immediately — pixels already captured above
     gl.setRenderTarget(originalRenderTarget);
+    gl.setPixelRatio(originalPixelRatio);
     gl.setSize(oldWidth, oldHeight, false);
     if (camera instanceof THREE.PerspectiveCamera) {
       camera.aspect = originalAspect;
       camera.updateProjectionMatrix();
     }
-    gl.setClearAlpha(originalClearAlpha);
+    gl.setClearColor(originalClearColor, originalClearAlpha);
   }, [exportRequest, gl, scene, camera, size, clearExportRequest, frame]);
 
   // ─── 3D Model Export (GLB / USDZ) ─────────────────────

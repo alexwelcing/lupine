@@ -152,16 +152,6 @@ describe('Store — Atom Selection', () => {
     expect(getStoreState().hiddenAtomTypes.size).toBe(0);
   });
 
-  it('sets selected atoms', () => {
-    getStoreState().setSelectedAtoms([1, 5, 10]);
-    expect(getStoreState().selectedAtoms).toEqual([1, 5, 10]);
-  });
-
-  it('accepts updater function for selected atoms', () => {
-    getStoreState().setSelectedAtoms([1, 2]);
-    getStoreState().setSelectedAtoms((prev) => [...prev, 3]);
-    expect(getStoreState().selectedAtoms).toEqual([1, 2, 3]);
-  });
 });
 
 describe('Store — File Loading', () => {

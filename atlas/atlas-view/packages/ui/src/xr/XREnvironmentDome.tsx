@@ -11,11 +11,13 @@
  * when exiting, so transitions feel seamless.
  */
 
-import { useRef, useMemo, useEffect, useState } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useXR } from '@react-three/xr';
-import { configureEquirectTexture, createGradientEquirectTexture } from '../equirectTexture';
+import type { BgMedia } from '../backgroundPresets';
+import type { BackgroundGradientStyle } from '../equirectTexture';
+import { useEquirectMediaTexture } from '../hooks/useEquirectMediaTexture';
 
 // Dome radius in meters — large enough to surround the molecule
 // but small enough to stay inside the near/far clip range.
@@ -27,12 +29,14 @@ const AR_DOME_OPACITY = 0.15;
 const VR_DOME_OPACITY = 1.0;
 
 interface XREnvironmentDomeProps {
-  imageUrl?: string;
+  media: BgMedia;
   top: string;
   bottom: string;
+  style?: BackgroundGradientStyle;
+  disabled?: boolean;
 }
 
-export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomeProps) {
+export function XREnvironmentDome({ media, top, bottom, style = 'linear', disabled = false }: XREnvironmentDomeProps) {
   const mode = useXR(state => state.mode);
   const isAR = mode === 'immersive-ar';
   const isVR = mode === 'immersive-vr';
@@ -40,51 +44,20 @@ export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomePr
 
   const meshRef = useRef<THREE.Mesh>(null);
   const matRef = useRef<THREE.MeshBasicMaterial>(null);
-  const [texture, setTexture] = useState<THREE.Texture | null>(null);
-  const { camera, gl } = useThree();
+  const { camera } = useThree();
+  const activeTexture = useEquirectMediaTexture({
+    media,
+    top,
+    bottom,
+    style,
+    enabled: isImmersive,
+    logPrefix: 'xr-bg',
+    projection: 'dome',
+  });
 
   // Current animated opacity (ref to avoid re-renders)
   const currentOpacity = useRef(0);
   const targetOpacity = useRef(0);
-
-  // Load image texture when available
-  useEffect(() => {
-    if (!imageUrl) {
-      setTexture(null);
-      return;
-    }
-
-    const loader = new THREE.TextureLoader();
-    let cancelled = false;
-
-    loader.load(
-      imageUrl,
-      (loadedTex) => {
-        if (cancelled) { loadedTex.dispose(); return; }
-        configureEquirectTexture(loadedTex, gl);
-        setTexture(loadedTex);
-      },
-      undefined,
-      () => {
-        if (cancelled) return;
-        setTexture(createGradientEquirectTexture(top, bottom, gl));
-      }
-    );
-
-    return () => {
-      cancelled = true;
-      setTexture(prev => {
-        prev?.dispose();
-        return null;
-      });
-    };
-  }, [imageUrl, top, bottom, gl]);
-
-  // Create gradient texture when no image is provided
-  const gradientTexture = useMemo(() => {
-    if (imageUrl) return null;
-    return createGradientEquirectTexture(top, bottom, gl);
-  }, [imageUrl, top, bottom, gl]);
 
   // Sphere geometry (inverted normals)
   const geometry = useMemo(() => {
@@ -98,14 +71,16 @@ export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomePr
 
   // Update opacity target based on mode
   useEffect(() => {
-    if (isVR) {
+    if (disabled) {
+      targetOpacity.current = 0;
+    } else if (isVR) {
       targetOpacity.current = VR_DOME_OPACITY;
     } else if (isAR) {
       targetOpacity.current = AR_DOME_OPACITY;
     } else {
       targetOpacity.current = 0;
     }
-  }, [isAR, isVR]);
+  }, [disabled, isAR, isVR]);
 
   // Per-frame: smooth fade + follow camera
   useFrame((_state, dt) => {
@@ -126,8 +101,6 @@ export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomePr
     // Keep the dome centred on camera so it always surrounds the user
     meshRef.current.position.copy(camera.position);
   });
-
-  const activeTexture = texture || gradientTexture;
 
   return (
     <mesh ref={meshRef} geometry={geometry} renderOrder={-1000}>
