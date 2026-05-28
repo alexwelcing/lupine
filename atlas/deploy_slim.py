@@ -1,5 +1,5 @@
 """Slim deployment: research site + web viewer + deploy. No native WASM rebuild."""
-import os, subprocess, shutil, sys, time, urllib.request, re, markdown
+import os, shlex, subprocess, shutil, sys, time, urllib.request, re, markdown
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEPLOY_DIR = os.path.join(BASE_DIR, "atlas", "deploy_bundle")
 DEPLOY_PUBLIC = os.path.join(DEPLOY_DIR, "public")
@@ -10,6 +10,16 @@ WEB_DIST = os.path.join(ATLAS_VIEW_DIR, "apps", "web", "dist")
 CLOUD_URL = os.environ.get("CLOUD_URL", "https://atlas-viewer-placeholder.run.app")
 
 def section(t): print(f"\n{'='*60}\n {t}\n{'='*60}\n")
+
+def run_host_command(args, cwd):
+    """Run commands in CI on Linux, but keep Windows Node tasks on Git Bash."""
+    if os.name == "nt":
+        git_bash = "C:/Program Files/Git/bin/bash.exe"
+        if not os.path.exists(git_bash):
+            raise FileNotFoundError(f"Git Bash not found at {git_bash}")
+        subprocess.run([git_bash, "-c", shlex.join(args)], cwd=cwd, check=True)
+        return
+    subprocess.run(args, cwd=cwd, check=True)
 
 # ── Research docs config ──
 RESEARCH_DOCS = {
@@ -176,7 +186,7 @@ def build_research():
 
 def build_web():
     section("Step 2/3: Building Web Viewer")
-    subprocess.run(["C:/Program Files/Git/bin/bash.exe", "-c", "pnpm build"], cwd=ATLAS_VIEW_DIR, check=True)
+    run_host_command(["pnpm", "build"], cwd=ATLAS_VIEW_DIR)
     if os.path.exists(DEPLOY_WEB): shutil.rmtree(DEPLOY_WEB)
     shutil.copytree(WEB_DIST, DEPLOY_WEB)
     
@@ -196,8 +206,15 @@ def build_web():
 def deploy_and_verify():
     section("Step 3/3: Deploy + Verify")
     project_id = os.environ.get("GCP_PROJECT_ID", "shed-489901")
-    subprocess.run(["C:/Program Files/Git/bin/bash.exe", "-c", f"gcloud run deploy atlas-viewer --source . --project {project_id} --region us-central1 --allow-unauthenticated --port=8080 --memory=512Mi"],
-        cwd=DEPLOY_DIR, check=True)
+    run_host_command([
+        "gcloud", "run", "deploy", "atlas-viewer",
+        "--source", ".",
+        "--project", project_id,
+        "--region", "us-central1",
+        "--allow-unauthenticated",
+        "--port=8080",
+        "--memory=512Mi",
+    ], cwd=DEPLOY_DIR)
     time.sleep(5)
     for url in [f"{CLOUD_URL}/", f"{CLOUD_URL}/web/", f"{CLOUD_URL}/research/", f"{CLOUD_URL}/research/style.css",
                 f"{CLOUD_URL}/native/", f"{CLOUD_URL}/trailer.mp4"]:
