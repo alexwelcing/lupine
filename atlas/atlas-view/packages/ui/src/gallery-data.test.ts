@@ -51,6 +51,28 @@ interface Entry {
 const data = galleryData as Entry[];
 const HEX = /^#[0-9a-fA-F]{6}$/;
 
+function parseFrameLabel(label: string): number {
+  const n = parseInt(label.replace(/[^\d]/g, ''), 10);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function countXyzFrames(text: string): number {
+  const lines = text.split(/\r?\n/);
+  let count = 0;
+  let cursor = 0;
+  while (cursor < lines.length) {
+    if (!lines[cursor].trim()) {
+      cursor += 1;
+      continue;
+    }
+    const natoms = parseInt(lines[cursor].trim(), 10);
+    if (!Number.isFinite(natoms) || natoms <= 0) break;
+    cursor += natoms + 2;
+    count += 1;
+  }
+  return count;
+}
+
 describe('gallery-data.json — curated launch set', () => {
   it('is a non-empty restored curated set', () => {
     expect(data.length).toBeGreaterThan(0);
@@ -86,6 +108,36 @@ describe('gallery-data.json — curated launch set', () => {
       } else {
         const onDisk = PUBLIC + e.file;
         expect(existsSync(onDisk), `missing local data file for ${e.id}: ${e.file}`).toBe(true);
+      }
+    }
+  });
+
+  it('available gallery entries do not depend on browser-blocked GCS links', () => {
+    for (const e of data) {
+      if (!e.available) continue;
+      expect(e.file, e.id).not.toMatch(/^https:\/\/storage\.googleapis\.com\//);
+    }
+  });
+
+  it('entries advertising multiple frames point at playable trajectory assets', () => {
+    for (const e of data) {
+      const advertisedFrames = parseFrameLabel(e.frames);
+      if (!e.available || advertisedFrames <= 1) continue;
+      if (e.file.startsWith('http') || e.file === 'procedural') {
+        throw new Error(`multi-frame gallery entry must be bundled: ${e.id}`);
+      }
+
+      const onDisk = PUBLIC + e.file;
+      if (e.file.endsWith('.xyz')) {
+        expect(countXyzFrames(readFileSync(onDisk, 'utf8')), e.id).toBe(advertisedFrames);
+      } else if (e.file.endsWith('.lammpstrj') || e.file.endsWith('.dump')) {
+        const timesteps = readFileSync(onDisk, 'utf8').match(/^ITEM:\s+TIMESTEP$/gm)?.length ?? 0;
+        expect(timesteps, e.id).toBe(advertisedFrames);
+      } else {
+        expect(
+          e.file.endsWith('.json') || e.file.endsWith('.glimbin'),
+          `unsupported multi-frame gallery asset for ${e.id}: ${e.file}`,
+        ).toBe(true);
       }
     }
   });

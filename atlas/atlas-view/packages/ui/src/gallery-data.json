@@ -6,7 +6,7 @@
     "domain": "Metals & Alloys",
     "atoms": "953,312",
     "frames": "1",
-    "file": "https://storage.googleapis.com/glim-datasets/sims/massive_1m.glimbin",
+    "file": "gallery/trajectories/massive_1m.glimbin",
     "available": true,
     "colors": [
       "#b87333",
@@ -44,11 +44,11 @@
   {
     "id": "research_cu",
     "title": "Cu Potential Benchmark",
-    "subtitle": "NIST evaluation of 9 interatomic potentials. Max error: 83.1%. Color by error to see where potentials fail.",
+    "subtitle": "NIST-style Cu benchmark trajectory with 58 playable structural frames.",
     "domain": "Advanced Theory & Validation",
     "atoms": "864",
     "frames": "58",
-    "file": "gallery/research/research_cu_benchmark.lammpstrj",
+    "file": "gallery/trajectories/research_cu_benchmark.xyz",
     "available": true,
     "colors": [
       "#b87333",
@@ -67,11 +67,11 @@
   {
     "id": "research_fe",
     "title": "Fe Potential Benchmark",
-    "subtitle": "NIST evaluation of 11 interatomic potentials. Max error: 123.8%. Color by error to see where potentials fail.",
+    "subtitle": "NIST-style Fe benchmark trajectory with 55 playable structural frames.",
     "domain": "Advanced Theory & Validation",
     "atoms": "1024",
     "frames": "55",
-    "file": "gallery/research/research_fe_benchmark.lammpstrj",
+    "file": "gallery/trajectories/research_fe_benchmark.xyz",
     "available": true,
     "colors": [
       "#a0522d",
@@ -94,7 +94,7 @@
     "domain": "Advanced Theory & Validation",
     "atoms": "1,000",
     "frames": "30",
-    "file": "https://storage.googleapis.com/glim-datasets/sims/oscillation_timeseries.glimbin",
+    "file": "gallery/trajectories/oscillation_timeseries.glimbin",
     "available": true,
     "colors": [
       "#f542d4",
@@ -238,9 +238,9 @@
     "title": "ZIF-8 Gate-Opening Transition",
     "subtitle": "F.X. Coudert et al. (Science 2023): Mechanical flexibility and gas-induced phase transition in Metal-Organic Frameworks.",
     "domain": "Polymers & Soft Matter",
-    "atoms": "8,500",
+    "atoms": "540",
     "frames": "120",
-    "file": "archive/zif8_gate_opening.lammpstrj",
+    "file": "gallery/trajectories/zif8_gate_opening.xyz",
     "available": true,
     "colors": [
       "#4363d8",

@@ -54,6 +54,28 @@ async function readFileAsText(file: File): Promise<string> {
   return text;
 }
 
+function extractFrameProperties(f: any, transferables: Transferable[]) {
+  const propertyNames =
+    typeof f.propertyNames === 'function'
+      ? f.propertyNames()
+      : Array.isArray(f.propertyNames)
+        ? f.propertyNames
+        : null;
+
+  if (propertyNames && f.getProperty) {
+    return propertyNames.map((name: string) => {
+      const data = f.getProperty(name);
+      if (data && data.buffer) transferables.push(data.buffer);
+      return { name, data };
+    });
+  }
+
+  return f.properties ? f.properties.map(([name, data]: [string, any]) => {
+    if (data && data.buffer) transferables.push(data.buffer);
+    return { name, data };
+  }) : [];
+}
+
 self.onmessage = async (e: MessageEvent) => {
   const { type, payload, id } = e.data;
 
@@ -79,16 +101,7 @@ self.onmessage = async (e: MessageEvent) => {
         const ids = f.ids;
         const types = f.types;
         const bonds = f.bonds;
-        const properties = (f.propertyNames && f.getProperty) ? 
-          f.propertyNames.map((name: string) => {
-            const data = f.getProperty(name);
-            if (data && data.buffer) transferables.push(data.buffer);
-            return { name, data };
-          }) : 
-          (f.properties ? f.properties.map(([name, data]: [string, any]) => {
-            if (data && data.buffer) transferables.push(data.buffer);
-            return { name, data };
-          }) : []);
+        const properties = extractFrameProperties(f, transferables);
 
         if (positions && positions.buffer) transferables.push(positions.buffer);
         if (ids && ids.buffer) transferables.push(ids.buffer);
@@ -122,16 +135,7 @@ self.onmessage = async (e: MessageEvent) => {
       const ids = f.ids;
       const types = f.types;
       const bonds = f.bonds;
-      const properties = (f.propertyNames && f.getProperty) ? 
-        f.propertyNames.map((name: string) => {
-          const data = f.getProperty(name);
-          if (data && data.buffer) transferables.push(data.buffer);
-          return { name, data };
-        }) : 
-        (f.properties ? f.properties.map(([name, data]: [string, any]) => {
-          if (data && data.buffer) transferables.push(data.buffer);
-          return { name, data };
-        }) : []);
+      const properties = extractFrameProperties(f, transferables);
 
       if (positions && positions.buffer) transferables.push(positions.buffer);
       if (ids && ids.buffer) transferables.push(ids.buffer);
@@ -163,16 +167,7 @@ self.onmessage = async (e: MessageEvent) => {
         const ids = f.ids;
         const types = f.types;
         const bonds = f.bonds;
-        const properties = (f.propertyNames && f.getProperty) ? 
-          f.propertyNames.map((name: string) => {
-            const data = f.getProperty(name);
-            if (data && data.buffer) transferables.push(data.buffer);
-            return { name, data };
-          }) : 
-          (f.properties ? f.properties.map(([name, data]: [string, any]) => {
-            if (data && data.buffer) transferables.push(data.buffer);
-            return { name, data };
-          }) : []);
+        const properties = extractFrameProperties(f, transferables);
 
         if (positions && positions.buffer) transferables.push(positions.buffer);
         if (ids && ids.buffer) transferables.push(ids.buffer);
