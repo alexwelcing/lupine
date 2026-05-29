@@ -70,7 +70,7 @@ function translateStaticDOM() {
     if (key) el.setAttribute('placeholder', t(key, lang));
   }
   const titleEl = document.querySelector('title.i18n-title');
-  if (titleEl) titleEl.textContent = `${t('brand.title', lang)} — ${t('meta.description', lang).slice(0, 60)}…`;
+  if (titleEl) titleEl.textContent = t('meta.title', lang);
   const descEl = document.querySelector('meta.i18n-desc');
   if (descEl) descEl.setAttribute('content', t('meta.description', lang));
 }

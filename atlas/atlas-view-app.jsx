@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 /* ═══════════════════════════════════════════════════════════════
-   ATLAS VIEW — LAMMPS Web Visualization Platform Prototype
+   LUPI — LAMMPS Web Visualization Platform Prototype
    WebGPU + React Three Fiber architecture (simulated in 2D canvas)
    ═══════════════════════════════════════════════════════════════ */
 

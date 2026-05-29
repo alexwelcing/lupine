@@ -40,7 +40,7 @@ const child = spawnSync(args[0], args.slice(1), {
   cwd: process.cwd(),
   shell: process.platform === "win32",
   encoding: "utf8",
-  timeout: 60_000,
+  timeout: 180_000,
   stdio: "inherit",
 });
 

@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// Lupi - useStreamingDataset hook.
+// LUPI - useStreamingDataset hook.
 //
 // React hook bridging the StreamingLoader with the Zustand store.
 // Handles the full lifecycle: URL detection → streaming load →

@@ -160,7 +160,7 @@ if not exists:
             "method": "Procedural Botanical Growth Engine",
             "potential": "Golden Ratio (Phyllotaxis)",
             "temperature": "Time-Series Evolution",
-            "reference": "Lupine Materials Science Brand Genesis"
+            "reference": "Lupine Science Brand Genesis"
         },
         "featured": True
     }

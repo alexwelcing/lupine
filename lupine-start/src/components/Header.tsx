@@ -10,7 +10,7 @@ const PRIMARY_NAV: ReadonlyArray<{
 }> = [
   { to: '/', label: 'Home' },
   { to: '/research', label: 'Research' },
-  { to: '/pilots', label: 'Pilots' },
+  { to: '/pilots', label: 'Audits' },
   { to: '/live', label: 'Live Lab', live: true },
   { to: '/about', label: 'About' },
 ]
@@ -18,10 +18,10 @@ const PRIMARY_NAV: ReadonlyArray<{
 const MORE_NAV = [
   { to: '/lineage', label: 'Lineage', desc: 'The 22-year citation chain we extend' },
   { to: '/console', label: 'Research Console', desc: 'Tabular browser for the manifest ledger' },
-  { to: '/atlas-viewer', label: 'Atlas Viewer', desc: 'WebGPU exploration of the error manifold' },
+  { to: '/atlas-viewer', label: 'LUPI', desc: 'WebGPU exploration of the error manifold' },
   { to: '/proof', label: 'Research Defense', desc: 'Response to preprint critique' },
   { to: '/process', label: 'Operating Report', desc: 'Harden stage, run by run' },
-  { to: '/investor-relations', label: 'Investor Brief', desc: 'Manifest, thesis, diligence answers' },
+  { to: '/investor-relations', label: 'Observer Notes', desc: 'Evidence cadence and diligence context' },
   { to: '/slideshow', label: 'Slideshow', desc: 'Visual brief, 100+ stills' },
   { to: '/ops', label: 'Ops Dashboard', desc: 'Deployment telemetry' },
 ] as const
@@ -44,13 +44,11 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-[var(--surface)]/90 backdrop-blur-md border-b border-[var(--outline-variant)]">
       <div className="container mx-auto px-6 lg:px-12 h-16 flex items-center justify-between max-w-7xl">
         <Link to="/" className="flex items-center gap-3 no-underline group">
-          <div className="w-7 h-7 rounded-md bg-[var(--primary)] flex items-center justify-center transition-transform group-hover:scale-105">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="8" cy="8" r="6" stroke="#131313" strokeWidth="1.5" />
-              <circle cx="8" cy="8" r="2" fill="#131313" />
-            </svg>
-          </div>
-          <span className="font-serif italic text-lg text-[var(--on-surface)] tracking-tight">Lupine</span>
+          <img
+            src="/assets/lupine-science-icon.png"
+            alt="Lupine Science"
+            className="h-11 w-11 rounded-md object-contain transition-opacity group-hover:opacity-85"
+          />
         </Link>
         
         <nav className="hidden md:flex items-center gap-8">

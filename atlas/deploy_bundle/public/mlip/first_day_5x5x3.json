@@ -1,0 +1,2489 @@
+{
+  "schema": "lupine.mlip.first_day_5x5x3.v1",
+  "generated_at": "2026-05-23T02:20:34.630721Z",
+  "title": "MLIP 5x5x3 first-day campaign view",
+  "axes": {
+    "rows": [
+      {
+        "id": "elastic_constants",
+        "label": "Elastic constants"
+      },
+      {
+        "id": "energy_volume",
+        "label": "Energy-volume curve"
+      },
+      {
+        "id": "forces",
+        "label": "Force accuracy"
+      },
+      {
+        "id": "stress",
+        "label": "Stress accuracy"
+      },
+      {
+        "id": "relaxation_stability",
+        "label": "Relaxation stability"
+      }
+    ],
+    "mlips": [
+      {
+        "id": "mace-mp-0",
+        "label": "MACE-MP-0"
+      },
+      {
+        "id": "chgnet",
+        "label": "CHGNet"
+      },
+      {
+        "id": "m3gnet",
+        "label": "M3GNet"
+      },
+      {
+        "id": "orb-v3",
+        "label": "ORB-v3"
+      },
+      {
+        "id": "sevennet",
+        "label": "SevenNet"
+      }
+    ],
+    "variants": [
+      {
+        "id": "baseline",
+        "label": "Baseline MLIP"
+      },
+      {
+        "id": "distill_accuracy",
+        "label": "Distill Accuracy"
+      },
+      {
+        "id": "distill_accuracy_accelerate",
+        "label": "Distill Accuracy + Accelerate"
+      }
+    ]
+  },
+  "summary": {
+    "cells_total": 75,
+    "cells_measured": 3,
+    "cells_planned": 72,
+    "triplets_total": 25,
+    "triplets_measured": 1,
+    "local_root": "tmp/mlip-local",
+    "cuda_devices": [
+      "NVIDIA RTX A4500"
+    ],
+    "fixture_manifest_hashes": [
+      "sha256:7dccce9b3aa8a1cf5b85e9bcaba94b54e3c3fbeab4d6d972a62d67fcc1d7bd87"
+    ],
+    "acceptance_thresholds": {
+      "accuracy_accelerate_max_normalized_accuracy_loss": 0.02,
+      "accuracy_accelerate_min_speedup": 1.1
+    }
+  },
+  "day_one_read": [
+    "The end-to-end path is alive for CHGNet energy-volume on the local CUDA machine.",
+    "The Rust Distill ribbon is active and leakage guard passed; the first conservative policy blocked large residual corrections instead of forcing a risky accuracy claim.",
+    "Accuracy is preserved on the current measured triplet, but acceleration has not beaten baseline warm speed yet. That is the next hill-climb target."
+  ],
+  "cells": [
+    {
+      "cell_id": "baseline:elastic_constants:mace-mp-0",
+      "variant_id": "baseline",
+      "row_id": "elastic_constants",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:elastic_constants:chgnet",
+      "variant_id": "baseline",
+      "row_id": "elastic_constants",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:elastic_constants:m3gnet",
+      "variant_id": "baseline",
+      "row_id": "elastic_constants",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:elastic_constants:orb-v3",
+      "variant_id": "baseline",
+      "row_id": "elastic_constants",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:elastic_constants:sevennet",
+      "variant_id": "baseline",
+      "row_id": "elastic_constants",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:energy_volume:mace-mp-0",
+      "variant_id": "baseline",
+      "row_id": "energy_volume",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:energy_volume:chgnet",
+      "variant_id": "baseline",
+      "row_id": "energy_volume",
+      "mlip_id": "chgnet",
+      "status": "measured",
+      "source_kind": "local_cell_result",
+      "source_path": "tmp/mlip-local/mlip-local-baseline-20260522-204012/artifacts/baseline_energy_volume_chgnet/cell_result.json",
+      "run_id": "mlip-local-baseline-20260522-204012",
+      "artifact_uri": "tmp/mlip-local/mlip-local-baseline-20260522-204012/artifacts/baseline_energy_volume_chgnet/cell_result.json",
+      "accuracy": {
+        "error": 0.10348920822143555,
+        "score": 0.0,
+        "unit": "row_native_physical_score",
+        "error_unit": "ev_per_atom_mae",
+        "primary_metric": "energy_mae_ev_per_atom",
+        "score_tolerance": 0.1
+      },
+      "speed": {
+        "score": 6.199158377446671,
+        "unit": "structures_per_second",
+        "warm_inference_seconds": 0.8065611000019999,
+        "cold_total_seconds": 19.865160100001958,
+        "model_load_seconds": 19.05641629999809
+      },
+      "distill": {
+        "enabled": false,
+        "profile": "off",
+        "policy_engine": null,
+        "ribbon_version": null,
+        "support_manifest_hash": null,
+        "leakage_passed": null,
+        "intervention_count": 0,
+        "refusal_count": 0,
+        "intervention_actions": []
+      },
+      "theorem_hooks": {
+        "bridge": null,
+        "kappa1_hat": null,
+        "layerwise_exact": null,
+        "p2_status": null
+      },
+      "fixture_contract": {
+        "fixture_id": "canonical-structures-v2",
+        "manifest_hash": "sha256:7dccce9b3aa8a1cf5b85e9bcaba94b54e3c3fbeab4d6d972a62d67fcc1d7bd87",
+        "release_ready": true,
+        "row_counts": {
+          "elastic_constants": 18,
+          "energy_volume": 5,
+          "forces": 5,
+          "relaxation_stability": 3,
+          "stress": 5
+        }
+      },
+      "versions": {
+        "python": "3.11.11",
+        "torch": "2.4.1+cu121",
+        "cuda_available": true,
+        "cuda_device": "NVIDIA RTX A4500",
+        "chgnet": "0.4.2",
+        "mace_torch": null,
+        "matgl": null,
+        "orb_models": null,
+        "sevenn": null
+      }
+    },
+    {
+      "cell_id": "baseline:energy_volume:m3gnet",
+      "variant_id": "baseline",
+      "row_id": "energy_volume",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:energy_volume:orb-v3",
+      "variant_id": "baseline",
+      "row_id": "energy_volume",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:energy_volume:sevennet",
+      "variant_id": "baseline",
+      "row_id": "energy_volume",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:forces:mace-mp-0",
+      "variant_id": "baseline",
+      "row_id": "forces",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:forces:chgnet",
+      "variant_id": "baseline",
+      "row_id": "forces",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:forces:m3gnet",
+      "variant_id": "baseline",
+      "row_id": "forces",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:forces:orb-v3",
+      "variant_id": "baseline",
+      "row_id": "forces",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:forces:sevennet",
+      "variant_id": "baseline",
+      "row_id": "forces",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:stress:mace-mp-0",
+      "variant_id": "baseline",
+      "row_id": "stress",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:stress:chgnet",
+      "variant_id": "baseline",
+      "row_id": "stress",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:stress:m3gnet",
+      "variant_id": "baseline",
+      "row_id": "stress",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:stress:orb-v3",
+      "variant_id": "baseline",
+      "row_id": "stress",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:stress:sevennet",
+      "variant_id": "baseline",
+      "row_id": "stress",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:relaxation_stability:mace-mp-0",
+      "variant_id": "baseline",
+      "row_id": "relaxation_stability",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:relaxation_stability:chgnet",
+      "variant_id": "baseline",
+      "row_id": "relaxation_stability",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:relaxation_stability:m3gnet",
+      "variant_id": "baseline",
+      "row_id": "relaxation_stability",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:relaxation_stability:orb-v3",
+      "variant_id": "baseline",
+      "row_id": "relaxation_stability",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "baseline:relaxation_stability:sevennet",
+      "variant_id": "baseline",
+      "row_id": "relaxation_stability",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": false,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:elastic_constants:mace-mp-0",
+      "variant_id": "distill_accuracy",
+      "row_id": "elastic_constants",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:elastic_constants:chgnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "elastic_constants",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:elastic_constants:m3gnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "elastic_constants",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:elastic_constants:orb-v3",
+      "variant_id": "distill_accuracy",
+      "row_id": "elastic_constants",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:elastic_constants:sevennet",
+      "variant_id": "distill_accuracy",
+      "row_id": "elastic_constants",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:energy_volume:mace-mp-0",
+      "variant_id": "distill_accuracy",
+      "row_id": "energy_volume",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:energy_volume:chgnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "energy_volume",
+      "mlip_id": "chgnet",
+      "status": "measured",
+      "source_kind": "local_cell_result",
+      "source_path": "tmp/mlip-local/mlip-local-campaign-20260522-222523/artifacts/distill_accuracy_energy_volume_chgnet/cell_result.json",
+      "run_id": "mlip-local-campaign-20260522-222523",
+      "artifact_uri": "tmp/mlip-local/mlip-local-campaign-20260522-222523/artifacts/distill_accuracy_energy_volume_chgnet/cell_result.json",
+      "accuracy": {
+        "error": 0.10348920822143555,
+        "score": 0.0,
+        "unit": "row_native_physical_score",
+        "error_unit": "ev_per_atom_mae",
+        "primary_metric": "energy_mae_ev_per_atom",
+        "score_tolerance": 0.1
+      },
+      "speed": {
+        "score": 3.6826113426491975,
+        "unit": "structures_per_second",
+        "warm_inference_seconds": 1.3577321999999867,
+        "cold_total_seconds": 10.0455422,
+        "model_load_seconds": 8.682893400000012
+      },
+      "distill": {
+        "enabled": true,
+        "profile": "accuracy",
+        "policy_engine": "rust",
+        "ribbon_version": "hyperribbon-v1",
+        "support_manifest_hash": "sha256:canonical-distill-support-v1-local",
+        "leakage_passed": true,
+        "intervention_count": 10,
+        "refusal_count": 0,
+        "intervention_actions": [
+          "accept",
+          "delta_correct_blocked"
+        ]
+      },
+      "theorem_hooks": {
+        "bridge": "outer_loop_proxy",
+        "kappa1_hat": 0.4,
+        "layerwise_exact": false,
+        "p2_status": "not_computed_in_cell_runner"
+      },
+      "fixture_contract": {
+        "fixture_id": "canonical-structures-v2",
+        "manifest_hash": "sha256:7dccce9b3aa8a1cf5b85e9bcaba94b54e3c3fbeab4d6d972a62d67fcc1d7bd87",
+        "release_ready": true,
+        "row_counts": {
+          "elastic_constants": 18,
+          "energy_volume": 5,
+          "forces": 5,
+          "relaxation_stability": 3,
+          "stress": 5
+        }
+      },
+      "versions": {
+        "python": "3.11.11",
+        "torch": "2.4.1+cu121",
+        "cuda_available": true,
+        "cuda_device": "NVIDIA RTX A4500",
+        "chgnet": "0.4.2",
+        "mace_torch": null,
+        "matgl": null,
+        "orb_models": null,
+        "sevenn": null
+      }
+    },
+    {
+      "cell_id": "distill_accuracy:energy_volume:m3gnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "energy_volume",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:energy_volume:orb-v3",
+      "variant_id": "distill_accuracy",
+      "row_id": "energy_volume",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:energy_volume:sevennet",
+      "variant_id": "distill_accuracy",
+      "row_id": "energy_volume",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:forces:mace-mp-0",
+      "variant_id": "distill_accuracy",
+      "row_id": "forces",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:forces:chgnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "forces",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:forces:m3gnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "forces",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:forces:orb-v3",
+      "variant_id": "distill_accuracy",
+      "row_id": "forces",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:forces:sevennet",
+      "variant_id": "distill_accuracy",
+      "row_id": "forces",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:stress:mace-mp-0",
+      "variant_id": "distill_accuracy",
+      "row_id": "stress",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:stress:chgnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "stress",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:stress:m3gnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "stress",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:stress:orb-v3",
+      "variant_id": "distill_accuracy",
+      "row_id": "stress",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:stress:sevennet",
+      "variant_id": "distill_accuracy",
+      "row_id": "stress",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:relaxation_stability:mace-mp-0",
+      "variant_id": "distill_accuracy",
+      "row_id": "relaxation_stability",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:relaxation_stability:chgnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "relaxation_stability",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:relaxation_stability:m3gnet",
+      "variant_id": "distill_accuracy",
+      "row_id": "relaxation_stability",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:relaxation_stability:orb-v3",
+      "variant_id": "distill_accuracy",
+      "row_id": "relaxation_stability",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy:relaxation_stability:sevennet",
+      "variant_id": "distill_accuracy",
+      "row_id": "relaxation_stability",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:elastic_constants:mace-mp-0",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "elastic_constants",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:elastic_constants:chgnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "elastic_constants",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:elastic_constants:m3gnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "elastic_constants",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:elastic_constants:orb-v3",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "elastic_constants",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:elastic_constants:sevennet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "elastic_constants",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:energy_volume:mace-mp-0",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "energy_volume",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:energy_volume:chgnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "energy_volume",
+      "mlip_id": "chgnet",
+      "status": "measured",
+      "source_kind": "local_cell_result",
+      "source_path": "tmp/mlip-local/mlip-local-campaign-20260522-204721/artifacts/distill_accuracy_accelerate_energy_volume_chgnet/cell_result.json",
+      "run_id": "mlip-local-campaign-20260522-204721",
+      "artifact_uri": "tmp/mlip-local/mlip-local-campaign-20260522-204721/artifacts/distill_accuracy_accelerate_energy_volume_chgnet/cell_result.json",
+      "accuracy": {
+        "error": 0.10348930358886718,
+        "score": 0.0,
+        "unit": "row_native_physical_score",
+        "error_unit": "ev_per_atom_mae",
+        "primary_metric": "energy_mae_ev_per_atom",
+        "score_tolerance": 0.1
+      },
+      "speed": {
+        "score": 5.246316115510557,
+        "unit": "structures_per_second",
+        "warm_inference_seconds": 0.9530497000014293,
+        "cold_total_seconds": 6.960752800001501,
+        "model_load_seconds": 6.005109699999593
+      },
+      "distill": {
+        "enabled": true,
+        "profile": "accuracy_accelerate",
+        "policy_engine": null,
+        "ribbon_version": null,
+        "support_manifest_hash": "sha256:canonical-distill-support-v1-local",
+        "leakage_passed": true,
+        "intervention_count": 5,
+        "refusal_count": 0,
+        "intervention_actions": [
+          "accept"
+        ]
+      },
+      "theorem_hooks": {
+        "bridge": "outer_loop_proxy",
+        "kappa1_hat": 0.4,
+        "layerwise_exact": false,
+        "p2_status": "not_computed_in_cell_runner"
+      },
+      "fixture_contract": {
+        "fixture_id": "canonical-structures-v2",
+        "manifest_hash": "sha256:7dccce9b3aa8a1cf5b85e9bcaba94b54e3c3fbeab4d6d972a62d67fcc1d7bd87",
+        "release_ready": true,
+        "row_counts": {
+          "elastic_constants": 18,
+          "energy_volume": 5,
+          "forces": 5,
+          "relaxation_stability": 3,
+          "stress": 5
+        }
+      },
+      "versions": {
+        "python": "3.11.11",
+        "torch": "2.4.1+cu121",
+        "cuda_available": true,
+        "cuda_device": "NVIDIA RTX A4500",
+        "chgnet": "0.4.2",
+        "mace_torch": null,
+        "matgl": null,
+        "orb_models": null,
+        "sevenn": null
+      }
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:energy_volume:m3gnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "energy_volume",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:energy_volume:orb-v3",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "energy_volume",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:energy_volume:sevennet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "energy_volume",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:forces:mace-mp-0",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "forces",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:forces:chgnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "forces",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:forces:m3gnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "forces",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:forces:orb-v3",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "forces",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:forces:sevennet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "forces",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:stress:mace-mp-0",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "stress",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:stress:chgnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "stress",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:stress:m3gnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "stress",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:stress:orb-v3",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "stress",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:stress:sevennet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "stress",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:relaxation_stability:mace-mp-0",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "relaxation_stability",
+      "mlip_id": "mace-mp-0",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:relaxation_stability:chgnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "relaxation_stability",
+      "mlip_id": "chgnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:relaxation_stability:m3gnet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "relaxation_stability",
+      "mlip_id": "m3gnet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:relaxation_stability:orb-v3",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "relaxation_stability",
+      "mlip_id": "orb-v3",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    },
+    {
+      "cell_id": "distill_accuracy_accelerate:relaxation_stability:sevennet",
+      "variant_id": "distill_accuracy_accelerate",
+      "row_id": "relaxation_stability",
+      "mlip_id": "sevennet",
+      "status": "planned",
+      "source_kind": "not_run_yet",
+      "accuracy": {
+        "error": null,
+        "score": null,
+        "unit": null,
+        "error_unit": null,
+        "primary_metric": null
+      },
+      "speed": {
+        "score": null,
+        "unit": null,
+        "warm_inference_seconds": null
+      },
+      "distill": {
+        "enabled": true,
+        "intervention_count": null,
+        "refusal_count": null
+      },
+      "theorem_hooks": {},
+      "versions": {}
+    }
+  ],
+  "triplets": [
+    {
+      "triplet_id": "elastic_constants:mace-mp-0",
+      "row_id": "elastic_constants",
+      "mlip_id": "mace-mp-0",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "elastic_constants:chgnet",
+      "row_id": "elastic_constants",
+      "mlip_id": "chgnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "elastic_constants:m3gnet",
+      "row_id": "elastic_constants",
+      "mlip_id": "m3gnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "elastic_constants:orb-v3",
+      "row_id": "elastic_constants",
+      "mlip_id": "orb-v3",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "elastic_constants:sevennet",
+      "row_id": "elastic_constants",
+      "mlip_id": "sevennet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "energy_volume:mace-mp-0",
+      "row_id": "energy_volume",
+      "mlip_id": "mace-mp-0",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "energy_volume:chgnet",
+      "row_id": "energy_volume",
+      "mlip_id": "chgnet",
+      "verdict": "needs_hill_climb",
+      "explanation": "Distill preserved accuracy but did not improve speed on this first local cell.",
+      "accuracy_delta_distill": 0.0,
+      "accuracy_delta_accelerate": -9.536743163229833e-08,
+      "speed_ratio_accelerate": 0.8462948994168829
+    },
+    {
+      "triplet_id": "energy_volume:m3gnet",
+      "row_id": "energy_volume",
+      "mlip_id": "m3gnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "energy_volume:orb-v3",
+      "row_id": "energy_volume",
+      "mlip_id": "orb-v3",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "energy_volume:sevennet",
+      "row_id": "energy_volume",
+      "mlip_id": "sevennet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "forces:mace-mp-0",
+      "row_id": "forces",
+      "mlip_id": "mace-mp-0",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "forces:chgnet",
+      "row_id": "forces",
+      "mlip_id": "chgnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "forces:m3gnet",
+      "row_id": "forces",
+      "mlip_id": "m3gnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "forces:orb-v3",
+      "row_id": "forces",
+      "mlip_id": "orb-v3",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "forces:sevennet",
+      "row_id": "forces",
+      "mlip_id": "sevennet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "stress:mace-mp-0",
+      "row_id": "stress",
+      "mlip_id": "mace-mp-0",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "stress:chgnet",
+      "row_id": "stress",
+      "mlip_id": "chgnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "stress:m3gnet",
+      "row_id": "stress",
+      "mlip_id": "m3gnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "stress:orb-v3",
+      "row_id": "stress",
+      "mlip_id": "orb-v3",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "stress:sevennet",
+      "row_id": "stress",
+      "mlip_id": "sevennet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "relaxation_stability:mace-mp-0",
+      "row_id": "relaxation_stability",
+      "mlip_id": "mace-mp-0",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "relaxation_stability:chgnet",
+      "row_id": "relaxation_stability",
+      "mlip_id": "chgnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "relaxation_stability:m3gnet",
+      "row_id": "relaxation_stability",
+      "mlip_id": "m3gnet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "relaxation_stability:orb-v3",
+      "row_id": "relaxation_stability",
+      "mlip_id": "orb-v3",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    },
+    {
+      "triplet_id": "relaxation_stability:sevennet",
+      "row_id": "relaxation_stability",
+      "mlip_id": "sevennet",
+      "verdict": "pending",
+      "explanation": "Need all three variant cells before scoring the triplet.",
+      "accuracy_delta_distill": null,
+      "accuracy_delta_accelerate": null,
+      "speed_ratio_accelerate": null
+    }
+  ]
+}

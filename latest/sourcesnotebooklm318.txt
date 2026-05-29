@@ -89,7 +89,7 @@ High-Performance Computing & Visualization
 	
 Computational complexity of QM methods; CPU-to-GPU bottlenecks; desktop-bound visualization software with high memory overhead.
 	
-Implement GPU-native simulators (GPUMD, Isaac Lab) and WebGPU-powered visualization (ATLAS View). Optimize software-hardware co-design for E-class systems.
+Implement GPU-native simulators (GPUMD, Isaac Lab) and WebGPU-powered visualization (LUPI). Optimize software-hardware co-design for E-class systems.
 	
 Fit execution time on supercomputers with <20% error using performance models (DP-perf); render 10M+ atoms at 60fps in web browsers.
 	

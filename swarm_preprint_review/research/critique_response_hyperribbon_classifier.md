@@ -1,7 +1,7 @@
 # Response to Reviewer: Hyper-Ribbon Classifier Null-Model Concern
 
 **Manuscript**: *The Causal Geometry of Prediction Errors in Interatomic Potentials*
-**Author**: A. Welcing (Lupine Materials Science)
+**Author**: A. Welcing (Lupine Science)
 **Journal**: Integrating Materials and Manufacturing Innovation (IMMI)
 **Re**: Reviewer comment in `critique11.md`, Section "New quantitative checks on the public artifacts"
 

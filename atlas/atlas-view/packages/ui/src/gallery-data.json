@@ -37,7 +37,7 @@
       "method": "Ab Initio Assembly",
       "potential": "Lennard-Jones",
       "temperature": "0 K",
-      "reference": "Lupi Materials Science - lupine.science"
+      "reference": "Lupine Science - lupine.science"
     },
     "featured": true
   },
@@ -60,7 +60,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "9 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupi Materials Science - hyper-ribbon manifold analysis",
+      "reference": "Lupine Science - hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true
@@ -84,7 +84,7 @@
       "method": "NIST Interatomic Potential Evaluation",
       "potential": "11 potentials compared",
       "temperature": "0 K (static evaluation)",
-      "reference": "Lupi Materials Science - hyper-ribbon manifold analysis",
+      "reference": "Lupine Science - hyper-ribbon manifold analysis",
       "doi": "NIST IPR Database"
     },
     "featured": true

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://lupine.science/schemas/lupine-brand.v1.json",
+  "updated": "2026-05-29",
+  "organization": {
+    "name": "Lupine Science",
+    "legalName": "Lupine Science",
+    "url": "https://lupine.science",
+    "description": "Lupine Science studies where interatomic potentials fail, why those failures have structure, and how that structure can guide correction.",
+    "oneLine": "Lupine Science is a public research program for the error geometry of interatomic potentials.",
+    "mark": "bluebonnet field evidence",
+    "canonicalColor": "#0a1628"
+  },
+  "surfaces": [
+    {
+      "id": "lupine-science",
+      "name": "Lupine Science",
+      "url": "https://lupine.science",
+      "role": "research program and public start page",
+      "description": "Lab-facing orientation to the scientific question, evidence status, LUPI routes, Library, live lab, and ways to extend the work."
+    },
+    {
+      "id": "lupi",
+      "name": "LUPI",
+      "url": "https://lupi.live",
+      "role": "browser-native scientific viewer",
+      "description": "WebGPU viewer for atomistic evidence, molecular trajectories, gallery datasets, and publication-quality inspection."
+    },
+    {
+      "id": "lupine-library",
+      "name": "Lupine Library",
+      "url": "https://library.lupine.science",
+      "role": "human knowledge surface",
+      "description": "Mobile-first research reader for reports, notes, evidence, status labels, and the public changelog."
+    },
+    {
+      "id": "glim-think",
+      "name": "glim-think",
+      "url": "https://glim-think-v1.aw-ab5.workers.dev",
+      "role": "agentic research control plane",
+      "description": "Durable agent loop for hypotheses, evidence, claims, broadcasts, and research-ledger operations."
+    }
+  ],
+  "narrative": {
+    "problem": "Interatomic potentials are necessary and wrong in structured ways.",
+    "discovery": "Across many potentials and materials, prediction errors form low-dimensional geometry rather than random scatter.",
+    "system": "Lupine Science measures that geometry, tests it, publishes corrections, and keeps the claim lifecycle visible.",
+    "viewer": "LUPI lets humans and agents inspect the evidence in the browser.",
+    "library": "The Lupine Library turns the work into durable, searchable human knowledge.",
+    "agents": "glim-think keeps hypotheses, evidence, refutations, corrections, and broadcasts attached to a ledger.",
+    "observerPosture": "Investors and other observers should watch the public evidence trail rather than expect a pitch-first front door."
+  },
+  "marketStrategy": {
+    "category": "error geometry for interatomic potentials",
+    "positioning": "Lupine Science is a lab-facing research corpus and evidence system for atomistic model trust.",
+    "winningThesis": "Own the trust question for interatomic potentials: what does this model get wrong, is the wrongness structured, can the evidence be inspected, and what correction target follows?",
+    "primaryWedges": [
+      "MLIP Failure Geometry Audit",
+      "Evidence Pack for a paper, dataset, or benchmark",
+      "Potential Trust Report for a material family",
+      "Ledger-backed research loop for model evaluation"
+    ],
+    "executionTemplates": [
+      "docs/templates/proof-pack.md",
+      "docs/templates/mlip-failure-geometry-audit.md"
+    ],
+    "strategyDoc": "docs/plans/market-winning-strategy.md",
+    "structuredStrategy": "docs/brand/market-strategy.json"
+  },
+  "scienceSpine": {
+    "document": "docs/science/SCIENCE_SPINE.md",
+    "structuredMap": "docs/science/science-map.json",
+    "layers": [
+      "error geometry",
+      "sloppy-model structure",
+      "cross-MLIP transfer",
+      "causal and statistical validity",
+      "claim lifecycle",
+      "formal specification",
+      "agentic research loop"
+    ]
+  },
+  "preferredPhrases": [
+    "Lupine Science",
+    "LUPI",
+    "Lupine Library",
+    "bluebonnet field evidence",
+    "error geometry of interatomic potentials",
+    "lab-facing research corpus",
+    "inspectable evidence",
+    "MLIP Failure Geometry Audit",
+    "agentic research control plane",
+    "human knowledge surface"
+  ],
+  "retiredLanguage": [
+    "retired materials-science organization labels",
+    "legacy Atlas-family viewer labels",
+    "retired viewer domains"
+  ],
+  "canonicalLinks": {
+    "organization": "https://lupine.science",
+    "viewer": "https://lupi.live",
+    "library": "https://library.lupine.science",
+    "github": "https://github.com/alexwelcing/lupine",
+    "agentGuide": "https://lupine.science/llms.txt",
+    "agentGuideFull": "https://lupine.science/llms-full.txt",
+    "brandMetadata": "https://lupine.science/brand.json"
+  },
+  "citation": {
+    "preferredOrganization": "Lupine Science",
+    "preferredViewer": "LUPI",
+    "preferredLibrary": "Lupine Library",
+    "preferredSentence": "Lupine Science studies the error geometry of interatomic potentials; LUPI is the browser-native viewer for inspectable evidence, and Lupine Library is the public research corpus."
+  }
+}

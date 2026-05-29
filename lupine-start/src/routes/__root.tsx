@@ -10,6 +10,36 @@ import katexCss from 'katex/dist/katex.min.css?url'
 const queryClient = new QueryClient()
 
 const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`
+const BRAND_JSON_LD = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://lupine.science/#organization',
+      name: 'Lupine Science',
+      url: 'https://lupine.science',
+      description: 'Lupine Science studies where interatomic potentials fail, why those failures have structure, and how that structure can guide correction.',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://lupine.science/#website',
+      name: 'Lupine Science',
+      url: 'https://lupine.science',
+      publisher: { '@id': 'https://lupine.science/#organization' },
+      description: 'The public research-program entry point for Lupine Science.',
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': 'https://lupi.live/#software',
+      name: 'LUPI',
+      url: 'https://lupi.live',
+      applicationCategory: 'Scientific visualization',
+      operatingSystem: 'Web',
+      publisher: { '@id': 'https://lupine.science/#organization' },
+      description: 'Browser-native WebGPU viewer for atomistic evidence from Lupine Science.',
+    },
+  ],
+})
 
 function NotFoundComponent() {
   return (
@@ -44,13 +74,22 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'Lupine — applied learning mechanics for atomistic ML' },
-      { name: 'description', content: 'The audit layer for the MLIP ecosystem — and the accelerator that compounds out of it. Cross-potential geometric error analysis across 953 published interatomic potentials and 7,940 benchmark records. After Transtrum, Sethna, Tadmor on the materials side; after Simon et al. 2026 on the deep-learning side. Apache 2.0, Rust.' },
-      { property: 'og:site_name', content: 'Lupine' },
+      { title: 'Lupine Science - error geometry for interatomic potentials' },
+      { name: 'description', content: 'Lupine Science is a public research program studying where interatomic potentials fail, why those failures have structure, and how that structure can guide correction.' },
+      { name: 'application-name', content: 'Lupine Science' },
+      { name: 'apple-mobile-web-app-title', content: 'Lupine Science' },
+      { name: 'theme-color', content: '#0a1628' },
+      { property: 'og:site_name', content: 'Lupine Science' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:image', content: 'https://lupine.science/logo512.png' },
+      { property: 'og:title', content: 'Lupine Science' },
+      { property: 'og:description', content: 'A lab-facing research corpus for atomistic model trust: error geometry, claim lifecycle, LUPI evidence views, and agent-readable knowledge.' },
+      { property: 'og:url', content: 'https://lupine.science/' },
+      { property: 'og:image', content: 'https://lupine.science/og-lupine-science.png' },
+      { property: 'og:image:alt', content: 'Lupine Science bluebonnet mark and wordmark.' },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:image', content: 'https://lupine.science/logo512.png' },
+      { name: 'twitter:title', content: 'Lupine Science' },
+      { name: 'twitter:description', content: 'Error geometry, inspectable evidence, and claim lifecycle for interatomic potentials.' },
+      { name: 'twitter:image', content: 'https://lupine.science/og-lupine-science.png' },
     ],
     links: [
       {
@@ -60,6 +99,43 @@ export const Route = createRootRoute({
       {
         rel: 'stylesheet',
         href: katexCss,
+      },
+      {
+        rel: 'icon',
+        href: '/favicon.ico',
+        sizes: 'any',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon-32x32.png',
+      },
+      {
+        rel: 'apple-touch-icon',
+        href: '/apple-touch-icon.png',
+      },
+      {
+        rel: 'manifest',
+        href: '/manifest.json',
+      },
+      {
+        rel: 'alternate',
+        type: 'text/plain',
+        title: 'Agent guide for Lupine Science',
+        href: '/llms.txt',
+      },
+      {
+        rel: 'alternate',
+        type: 'text/plain',
+        title: 'Full agent guide for Lupine Science',
+        href: '/llms-full.txt',
+      },
+      {
+        rel: 'alternate',
+        type: 'application/json',
+        title: 'Lupine Science brand metadata',
+        href: '/brand.json',
       },
       {
         rel: 'preconnect',
@@ -112,6 +188,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: BRAND_JSON_LD }} />
         <HeadContent />
       </head>
       <body className="bg-[var(--surface)] text-[var(--on-surface-variant)] font-sans antialiased [overflow-wrap:anywhere] min-h-screen flex flex-col">

@@ -138,7 +138,7 @@ frame_0019.png
 
 ## 🎯 Next Steps
 
-1. **Record footage** from the actual ATLAS Viewer
+1. **Record footage** from the actual LUPI
 2. **Add background music** to `public/audio/hype-track.mp3`
 3. **Render and share!**
 

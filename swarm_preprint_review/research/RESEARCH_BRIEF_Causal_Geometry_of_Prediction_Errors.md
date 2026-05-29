@@ -3,7 +3,7 @@
 
 **Date**: 2026-04-26
 **Research Team**: Parallel deep-research swarm (12 agents, 200+ searches, 3 computational experiments)
-**Source Preprint**: Welcing, A. "The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection." Lupine Materials Science.
+**Source Preprint**: Welcing, A. "The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection." Lupine Science.
 
 ---
 

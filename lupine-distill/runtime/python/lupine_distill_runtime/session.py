@@ -136,17 +136,175 @@ def _participation_ratio(matrix: np.ndarray) -> tuple[float | None, list[float]]
     return pr, sorted(eigvals.tolist(), reverse=True)
 
 
+def _orthonormal_rows(rows: np.ndarray) -> list[list[float]]:
+    if rows.ndim != 2 or rows.size == 0:
+        return []
+    out: list[list[float]] = []
+    for row in rows:
+        norm = float(np.linalg.norm(row))
+        if norm > 1e-12 and np.isfinite(norm):
+            out.append((row / norm).astype(float).tolist())
+    return out
+
+
+def _basis_projection_matrix(basis: list[list[float]], dim: int) -> np.ndarray:
+    if not basis:
+        return np.zeros((dim, dim), dtype=float)
+    matrix = np.asarray(basis, dtype=float)
+    if matrix.ndim != 2 or matrix.shape[1] != dim:
+        return np.zeros((dim, dim), dtype=float)
+    return matrix.T @ matrix
+
+
+def _fit_projected_residual_ribbon(
+    *,
+    row_id: str,
+    output_field: str,
+    feature_names: list[str],
+    mean: np.ndarray,
+    scale: np.ndarray,
+    xz: np.ndarray,
+    y: np.ndarray,
+    intercept: np.ndarray,
+    coef: np.ndarray,
+    metric: str,
+    before: float,
+) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    diagnostics: dict[str, Any] = {
+        "subspace_schema": "lupine.distill.subspace_diagnostic.v1",
+        "subspace_basis_space": "feature",
+        "subspace_output_field": output_field,
+    }
+    feature_dim = int(xz.shape[1]) if xz.ndim == 2 else 0
+    if xz.ndim != 2 or y.ndim != 2 or feature_dim < 2 or xz.shape[0] < 2:
+        diagnostics["subspace_status"] = "blocked_insufficient_feature_rank"
+        return None, diagnostics
+
+    centered_x = xz - np.mean(xz, axis=0, keepdims=True)
+    try:
+        _, singular_values, vt = np.linalg.svd(centered_x, full_matrices=True)
+    except np.linalg.LinAlgError:
+        diagnostics["subspace_status"] = "blocked_svd_failed"
+        return None, diagnostics
+
+    if vt.size == 0:
+        diagnostics["subspace_status"] = "blocked_empty_basis"
+        return None, diagnostics
+
+    stiff_basis = _orthonormal_rows(vt[:1])
+    complement_basis = _orthonormal_rows(vt[1:])
+    if not stiff_basis or not complement_basis:
+        diagnostics["subspace_status"] = "blocked_empty_complement"
+        return None, diagnostics
+
+    p_stiff = _basis_projection_matrix(stiff_basis, feature_dim)
+    p_complement = _basis_projection_matrix(complement_basis, feature_dim)
+    coef_norm_sq = float(np.sum(coef**2))
+    if coef_norm_sq <= 1e-18:
+        diagnostics["subspace_status"] = "blocked_zero_correction_signal"
+        return None, diagnostics
+
+    stiff_response = coef @ p_stiff
+    complement_response = coef @ p_complement
+    stiff_signal_fraction = float(np.sum(stiff_response**2) / coef_norm_sq)
+    complement_signal_fraction = float(np.sum(complement_response**2) / coef_norm_sq)
+    xz_projected = xz @ p_complement
+    fitted_projected = intercept + xz_projected @ coef.T
+    if metric == "mae":
+        after_projected = float(np.mean(np.abs(y - fitted_projected)))
+    else:
+        after_projected = float(np.sqrt(np.mean((y - fitted_projected) ** 2)))
+    projected_lift = float(max(0.0, (before - after_projected) / max(before, 1e-12)))
+    stiff_component = centered_x @ p_stiff
+    projection_distance = float(
+        np.median(
+            np.linalg.norm(stiff_component, axis=1)
+            / np.maximum(np.linalg.norm(centered_x, axis=1), 1e-12)
+        )
+    )
+    eigvals = (singular_values**2 / max(xz.shape[0] - 1, 1)).astype(float)
+    eigvals = eigvals[eigvals > 1e-12]
+    total = float(np.sum(eigvals))
+    pr = float((total * total) / max(float(np.sum(eigvals**2)), 1e-12)) if eigvals.size else None
+
+    diagnostics.update(
+        {
+            "subspace_status": "fit",
+            "stiff_axis_basis": stiff_basis,
+            "complement_basis": complement_basis,
+            "singular_values": singular_values.astype(float).tolist(),
+            "participation_ratio": pr,
+            "stiff_axis_residual_fraction": stiff_signal_fraction,
+            "complement_residual_fraction": complement_signal_fraction,
+            "stiff_axis_drift_fraction": stiff_signal_fraction,
+            "projection_distance_proxy": projection_distance,
+            "projected_support_error_after": after_projected,
+            "projected_support_lift_fraction": projected_lift,
+            "theorem_development_lanes": [
+                {
+                    "lane": "stiff_axis_preservation",
+                    "runtime_proxy": "stiff_axis_drift_fraction",
+                    "status": "measured",
+                },
+                {
+                    "lane": "orthogonal_complement_lift",
+                    "runtime_proxy": "complement_residual_fraction",
+                    "status": "measured",
+                },
+                {
+                    "lane": "projection_tube_refusal",
+                    "runtime_proxy": "projection_distance_proxy",
+                    "status": "measured",
+                },
+                {
+                    "lane": "vandermonde_decay",
+                    "runtime_proxy": "singular_values",
+                    "status": "measured",
+                },
+            ],
+        }
+    )
+    model = {
+        "schema": "lupine.distill.ribbon_projected_residual_correction.v1",
+        "row_id": row_id,
+        "field": output_field,
+        "basis_space": "feature",
+        "feature_names": feature_names,
+        "feature_mean": mean.tolist(),
+        "feature_scale": scale.tolist(),
+        "intercept": intercept.tolist(),
+        "coefficients": coef.tolist(),
+        "stiff_axis_basis": stiff_basis,
+        "complement_basis": complement_basis,
+        "support_lift_fraction": projected_lift,
+        "projected_support_lift_fraction": projected_lift,
+        "support_error_before": before,
+        "support_error_after": after_projected,
+        "complement_residual_fraction": complement_signal_fraction,
+        "stiff_axis_residual_fraction": stiff_signal_fraction,
+        "stiff_axis_drift_fraction": stiff_signal_fraction,
+        "projection_distance_proxy": projection_distance,
+        "sample_count": int(xz.shape[0]),
+        "observable_dim": int(y.shape[1]),
+        "matrix_rank": int(np.linalg.matrix_rank(y - np.mean(y, axis=0, keepdims=True))),
+        "participation_ratio": pr,
+        "singular_values": singular_values.astype(float).tolist(),
+        "metric": metric,
+    }
+    return model, diagnostics
+
+
 def _fit_residual_ribbon(
     *,
     row_id: str,
     output_field: str,
     samples: list[tuple[dict[str, Any], np.ndarray]],
     metric: str,
-) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+) -> tuple[dict[str, Any] | None, dict[str, Any] | None, dict[str, Any]]:
     diagnostics: dict[str, Any] = {}
     if len(samples) < 2:
         diagnostics["residual_ribbon_status"] = "blocked_insufficient_support"
-        return None, diagnostics
+        return None, None, diagnostics
     y = np.vstack([residual.reshape(-1) for _, residual in samples]).astype(float)
     output_dim = int(y.shape[1])
     feature_maps = [_feature_map(prediction, output_field) for prediction, _ in samples]
@@ -158,7 +316,7 @@ def _fit_residual_ribbon(
     ]
     if not common:
         diagnostics["residual_ribbon_status"] = "blocked_no_common_features"
-        return None, diagnostics
+        return None, None, diagnostics
     x_all = np.asarray([[features[name] for name in common] for features in feature_maps], dtype=float)
     feature_scale = np.std(x_all, axis=0)
     variable = feature_scale > 1e-12
@@ -167,7 +325,7 @@ def _fit_residual_ribbon(
     feature_scale = feature_scale[variable]
     if x_all.shape[1] == 0:
         diagnostics["residual_ribbon_status"] = "blocked_no_variable_features"
-        return None, diagnostics
+        return None, None, diagnostics
 
     residual_norm = np.linalg.norm(y, axis=1)
     feature_scores = []
@@ -240,7 +398,21 @@ def _fit_residual_ribbon(
         "eigenvalues": eigvals,
         "metric": metric,
     }
-    return model, diagnostics
+    projected_model, projected_diagnostics = _fit_projected_residual_ribbon(
+        row_id=row_id,
+        output_field=output_field,
+        feature_names=feature_names,
+        mean=mean,
+        scale=scale,
+        xz=xz,
+        y=y,
+        intercept=intercept,
+        coef=coef,
+        metric=metric,
+        before=before,
+    )
+    diagnostics.update(projected_diagnostics)
+    return model, projected_model, diagnostics
 
 
 @dataclass
@@ -285,7 +457,7 @@ class DistillSupportModel:
                 diagnostics["energy_support_mae_before"] = before_mae
                 diagnostics["energy_support_mae_after"] = after_mae
                 candidate_correction["energy_bias_ev_per_atom"] = bias
-                ribbon_model, ribbon_diagnostics = _fit_residual_ribbon(
+                ribbon_model, projected_model, ribbon_diagnostics = _fit_residual_ribbon(
                     row_id=row_id,
                     output_field="energy_ev_per_atom",
                     samples=ribbon_samples,
@@ -294,6 +466,8 @@ class DistillSupportModel:
                 diagnostics.update({f"energy_{key}": value for key, value in ribbon_diagnostics.items()})
                 if ribbon_model is not None:
                     candidate_correction["ribbon_residual_correction_v1"] = ribbon_model
+                if projected_model is not None:
+                    candidate_correction["ribbon_projected_residual_correction_v1"] = projected_model
                 if abs(bias) <= MAX_ENERGY_BIAS_EV_PER_ATOM and after_mae <= before_mae * 0.98:
                     correction["energy_bias_ev_per_atom"] = bias
                     diagnostics["energy_correction_gate"] = "passed"
@@ -321,7 +495,7 @@ class DistillSupportModel:
                 diagnostics["stress_support_mae_before_gpa"] = before_mae
                 diagnostics["stress_support_mae_after_gpa"] = after_mae
                 candidate_correction["stress_bias_gpa"] = bias.tolist()
-                ribbon_model, ribbon_diagnostics = _fit_residual_ribbon(
+                ribbon_model, projected_model, ribbon_diagnostics = _fit_residual_ribbon(
                     row_id=row_id,
                     output_field="stress_gpa",
                     samples=ribbon_samples,
@@ -330,6 +504,8 @@ class DistillSupportModel:
                 diagnostics.update({f"stress_{key}": value for key, value in ribbon_diagnostics.items()})
                 if row_id in {"stress", "elastic_constants"} and ribbon_model is not None:
                     candidate_correction["ribbon_residual_correction_v1"] = ribbon_model
+                if row_id in {"stress", "elastic_constants"} and projected_model is not None:
+                    candidate_correction["ribbon_projected_residual_correction_v1"] = projected_model
                 if row_id == "elastic_constants":
                     diagnostics["stress_correction_gate"] = (
                         "passed_strain_aware_ribbon_candidate"
@@ -370,7 +546,7 @@ class DistillSupportModel:
                 diagnostics["force_support_rmse_after"] = after_rmse
                 diagnostics["force_bias_candidate_ev_per_angstrom"] = bias.tolist()
                 candidate_correction["force_bias_ev_per_angstrom"] = bias.tolist()
-                ribbon_model, ribbon_diagnostics = _fit_residual_ribbon(
+                ribbon_model, projected_model, ribbon_diagnostics = _fit_residual_ribbon(
                     row_id=row_id,
                     output_field="forces_ev_per_angstrom",
                     samples=ribbon_samples,
@@ -379,6 +555,8 @@ class DistillSupportModel:
                 diagnostics.update({f"force_{key}": value for key, value in ribbon_diagnostics.items()})
                 if ribbon_model is not None:
                     candidate_correction["ribbon_residual_correction_v1"] = ribbon_model
+                if projected_model is not None:
+                    candidate_correction["ribbon_projected_residual_correction_v1"] = projected_model
                 max_bias = float(np.max(np.linalg.norm(bias.reshape(-1, bias.shape[-1]), axis=-1)))
                 if after_rmse <= before_rmse * 0.98 and max_bias <= MAX_FORCE_BIAS_EV_PER_ANGSTROM:
                     correction["force_bias_ev_per_angstrom"] = bias.tolist()
@@ -416,7 +594,7 @@ class DistillSupportModel:
                 diagnostics["relaxation_energy_support_mae_before"] = before_mae
                 diagnostics["relaxation_energy_support_mae_after"] = after_mae
                 candidate_correction["relaxed_energy_bias_ev_per_atom"] = bias
-                ribbon_model, ribbon_diagnostics = _fit_residual_ribbon(
+                ribbon_model, projected_model, ribbon_diagnostics = _fit_residual_ribbon(
                     row_id=row_id,
                     output_field="relaxed_energy_ev_per_atom",
                     samples=ribbon_samples,
@@ -425,6 +603,8 @@ class DistillSupportModel:
                 diagnostics.update({f"relaxation_{key}": value for key, value in ribbon_diagnostics.items()})
                 if ribbon_model is not None:
                     candidate_correction["ribbon_residual_correction_v1"] = ribbon_model
+                if projected_model is not None:
+                    candidate_correction["ribbon_projected_residual_correction_v1"] = projected_model
                 if abs(bias) <= MAX_ENERGY_BIAS_EV_PER_ATOM and after_mae <= before_mae * 0.98:
                     correction["relaxed_energy_bias_ev_per_atom"] = bias
                     diagnostics["relaxation_energy_correction_gate"] = "passed"
@@ -452,6 +632,16 @@ class DistillSupportModel:
                 if distance is not None:
                     distances.append(distance)
             self.diagnostics["ribbon_feature_distance_proxy"] = (
+                float(np.median(distances)) if distances else None
+            )
+        projected_model = self.candidate_correction.get("ribbon_projected_residual_correction_v1")
+        if isinstance(projected_model, dict):
+            distances = []
+            for prediction in predictions:
+                distance = self.projection_distance_for_prediction(prediction)
+                if distance is not None:
+                    distances.append(distance)
+            self.diagnostics["projection_distance_proxy"] = (
                 float(np.median(distances)) if distances else None
             )
         if not self.correction and not self.candidate_correction:
@@ -485,6 +675,38 @@ class DistillSupportModel:
         if not values:
             return None
         return float(np.sqrt(np.mean(values)))
+
+    def projection_distance_for_prediction(self, prediction: dict[str, Any]) -> float | None:
+        projected_model = self.candidate_correction.get("ribbon_projected_residual_correction_v1")
+        if not isinstance(projected_model, dict):
+            return None
+        feature_names = projected_model.get("feature_names") or []
+        means = projected_model.get("feature_mean") or []
+        scales = projected_model.get("feature_scale") or []
+        stiff_basis = projected_model.get("stiff_axis_basis") or []
+        field = str(projected_model.get("field") or "")
+        if len(feature_names) != len(means) or len(feature_names) != len(scales):
+            return None
+        features = _feature_map(prediction, field)
+        values = []
+        for name, mean, scale in zip(feature_names, means, scales, strict=True):
+            if name not in features:
+                continue
+            divisor = float(scale) if abs(float(scale)) > 1e-12 else 1.0
+            values.append((features[name] - float(mean)) / divisor)
+        if len(values) != len(feature_names) or not values:
+            return None
+        vector = np.asarray(values, dtype=float)
+        basis = np.asarray(stiff_basis, dtype=float)
+        if basis.ndim != 2 or basis.shape[1] != vector.shape[0] or basis.size == 0:
+            return None
+        norms = np.linalg.norm(basis, axis=1)
+        valid = norms > 1e-12
+        if not np.any(valid):
+            return None
+        basis = basis[valid] / norms[valid, None]
+        stiff = basis.T @ (basis @ vector)
+        return float(np.linalg.norm(stiff) / max(float(np.linalg.norm(vector)), 1e-12))
 
     def correct_prediction(self, prediction: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
         corrected = copy.deepcopy(prediction)

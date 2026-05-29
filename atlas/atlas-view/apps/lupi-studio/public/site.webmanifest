@@ -1,0 +1,14 @@
+{
+  "name": "LUPI Studio",
+  "short_name": "LUPI Studio",
+  "description": "Agent-ready molecular generation and viewing from Lupine Science.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080a12",
+  "theme_color": "#080a12",
+  "icons": [
+    { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/brand/lupine-science-icon.png", "sizes": "470x470", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

@@ -1,4 +1,4 @@
-# ATLAS View Alpha Presentation
+# LUPI Alpha Presentation
 
 > **Date:** March 18, 2026  
 > **Status:** Ready for Alpha Demo  
@@ -9,7 +9,7 @@
 ## 🎬 Demo Script (5 Minutes)
 
 ### Opening (30 sec)
-"ATLAS View is a WebGPU-powered molecular dynamics visualizer. Today we're showing our alpha with two curated datasets covering 2D materials and grain boundary structures."
+"LUPI is a WebGPU-powered molecular dynamics visualizer. Today we're showing our alpha with two curated datasets covering 2D materials and grain boundary structures."
 
 ### Demo 1: Graphene/CNT Stacking (2 min)
 ```bash
@@ -184,7 +184,7 @@ latest/library/
 
 ## 📋 Pre-Presentation Checklist
 
-- [ ] Open browser with ATLAS View
+- [ ] Open browser with LUPI
 - [ ] Test load `Gr10x12` structure (fast)
 - [ ] Test load `Gr100x20` structure (scale demo)
 - [ ] Verify WebGPU enabled (chrome://flags)

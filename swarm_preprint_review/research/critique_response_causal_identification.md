@@ -1,6 +1,6 @@
 # Response to Reviewer: On the Causal Framing of "The Causal Geometry of Prediction Errors in Interatomic Potentials"
 
-**Author:** Alex Welcing, Lupine Materials Science
+**Author:** Alex Welcing, Lupine Science
 **Manuscript:** *The Causal Geometry of Prediction Errors in Interatomic Potentials* (IMMI submission)
 **Reviewer concern addressed:** "The causal and paradox language is also stronger than the evidence warrants. ... The paper cites Pearl and names element identity as a confounder, but it does not present a causal graph, intervention logic, or an identification argument."
 

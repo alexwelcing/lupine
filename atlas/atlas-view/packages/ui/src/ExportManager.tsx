@@ -249,7 +249,7 @@ function VideoCaptureLoop({
             // Memory target: Pull the array buffer and spawn a client-side download
             const finalBuffer = muxerRef.current!.target.buffer;
             const finalBlob = new Blob([finalBuffer], { type: 'video/mp4' });
-            const baseName = req.baseName || 'Lupi';
+            const baseName = req.baseName || 'LUPI';
             const userFormat = outputFormat.current;
 
             if (userFormat === 'mp4') {
@@ -405,7 +405,7 @@ export function ExportManager() {
     const mime = `image/${format}`;
     const quality = format === 'png' ? undefined : 1.0;
     const ext = format === 'jpeg' ? 'jpg' : format;
-    const filename = `${req.baseName || 'Lupi-export'}-frame${frame + 1}.${ext}`;
+    const filename = `${req.baseName || 'LUPI-export'}-frame${frame + 1}.${ext}`;
 
     // Use toBlob for reliable downloads with correct file extensions.
     // toDataURL + link.click() fails in modern Chrome when the <a> isn't in the DOM,
@@ -467,7 +467,7 @@ export function ExportManager() {
       }
 
       const exportScene = new THREE.Scene();
-      exportScene.name = currentFile.name || 'Lupi-export';
+      exportScene.name = currentFile.name || 'LUPI-export';
       const isUsdZ = req.type === 'usdz';
 
       const mapFn = COLORMAPS[state.colormap] ?? COLORMAPS.viridis;
@@ -741,7 +741,7 @@ export function ExportManager() {
       // ── Export via chosen format ──
       let blob: Blob;
       let filename: string;
-      const baseName = req.baseName || 'Lupi';
+      const baseName = req.baseName || 'LUPI';
 
       if (req.type === 'usdz') {
         console.log('[ExportManager] FIXED USDZ EXPORT RUNNING');

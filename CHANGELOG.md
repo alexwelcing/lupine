@@ -24,7 +24,7 @@ Newest first. Dates are absolute.
   misreading of **IMMI** (*Integrating Materials and Manufacturing Innovation*, the target
   journal) as "immigrant."
 - **What.** Verified `/immi_paper.pdf` is in fact *The Causal Geometry of Prediction Errors
-  in Interatomic Potentials* (Welcing, Lupine Materials Science). Corrected the
+  in Interatomic Potentials* (Welcing, Lupine Science). Corrected the
   `home.preprint.*` strings (EN + ZH) in `i18n.js` to the real title/abstract; the link was
   always correct.
 - **Results.** Banner now reads "IMMI Preprint — The Causal Geometry of Prediction Errors in

@@ -1,6 +1,6 @@
 # 🎬 ATLAS Hype Trailer
 
-A cinematic trailer showcasing **ATLAS Viewer** and **ATLAS Distiller** — built with [Remotion](https://remotion.dev).
+A cinematic trailer showcasing **LUPI** and **ATLAS Distiller** — built with [Remotion](https://remotion.dev).
 
 ## 🚀 Quick Start
 
@@ -25,7 +25,7 @@ pnpm dev        # Opens Remotion Studio at http://localhost:3000
 
 ```
 0:00-0:04   🔥 EPIC LOGO REVEAL
-            ATLAS VIEW with animated grid background
+            LUPI with animated grid background
             
 0:04-0:10   🏆 ACHIEVEMENT UNLOCK SEQUENCE
             6 major milestones with game-style unlock animation:
@@ -64,7 +64,7 @@ pnpm dev        # Opens Remotion Studio at http://localhost:3000
 
 ## 🎨 Features Showcase
 
-### ATLAS VIEW (The Viewer)
+### LUPI (The Viewer)
 - **4x MSAA Rendering** — Pixel-perfect spheres with zero jaggies
 - **Spatial Hash Hover** — O(1) atom lookup at 60fps
 - **Measurement Tools** — Distance, angle, dihedral calculations
@@ -173,7 +173,7 @@ const scenes = {
 
 1. **Record in 60fps** — The trailer renders at 60fps for buttery smooth motion
 2. **Use OBS** — Set output to "Indistinguishable Quality" 
-3. **Dark backgrounds** — ATLAS Viewer looks best with dark theme
+3. **Dark backgrounds** — LUPI looks best with dark theme
 4. **Test early** — Use placeholder colors first, replace with recordings later
 5. **Add music** — The trailer has sync points every ~5 seconds
 
@@ -200,7 +200,7 @@ npx remotion render --concurrency=1
 
 ## 📄 License
 
-Apache 2.0 — Same as ATLAS View
+Apache 2.0 — Same as LUPI
 
 ---
 

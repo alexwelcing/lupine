@@ -1,4 +1,4 @@
-# Testing Guide — Atlas View
+# Testing Guide — LUPI
 
 A junior-dev-friendly testing framework for the monorepo. If you can write React, you can write these tests.
 

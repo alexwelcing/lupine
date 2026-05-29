@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// @atlas/nist — NIST Interatomic Potentials Repository for Atlas View
+// @atlas/nist — NIST Interatomic Potentials Repository for LUPI
 // ═══════════════════════════════════════════════════════════════════
 
 export * from './types';

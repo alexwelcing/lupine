@@ -1,7 +1,7 @@
 # Response to Critique 11: Simpson's Paradox vs. Ecological Fallacy in the Pair-Style Analysis
 
 **Manuscript:** *The Causal Geometry of Prediction Errors in Interatomic Potentials*
-**Author:** A. Welcing (Lupine Materials Science)
+**Author:** A. Welcing (Lupine Science)
 **Venue:** Integrating Materials and Manufacturing Innovation (IMMI)
 **Critique under response:** Critique 11, paragraph beginning *"The preprint itself defines Simpson's paradox as a sign reversal between pooled and within-group correlations..."*
 

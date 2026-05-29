@@ -1,5 +1,5 @@
 /**
- * Lupi - global viewer state (Zustand).
+ * LUPI - global viewer state (Zustand).
  *
  * URL-serializable: encode/decode full scene state into ?s= parameter
  * for shareable links that recreate the exact visualization.

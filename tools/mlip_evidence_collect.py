@@ -46,6 +46,8 @@ ROW_LABELS = {
 GCLOUD = shutil.which("gcloud.cmd") or shutil.which("gcloud") or "C:/gcloud/google-cloud-sdk/bin/gcloud.cmd"
 ERROR_ABS_TOLERANCE = 1e-9
 ERROR_REL_TOLERANCE = 1e-9
+ACCELERATE_ACCURACY_REL_TOLERANCE = 0.02
+ACCELERATE_MIN_SPEEDUP = 1.10
 
 
 def utc_now() -> str:
@@ -190,7 +192,99 @@ def compute_pairs(cells: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return pairs
 
 
-def summarize(cells: list[dict[str, Any]], pairs: list[dict[str, Any]]) -> dict[str, Any]:
+def compute_triplets(cells: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    by_triplet: dict[tuple[str, str], dict[str, dict[str, Any]]] = {}
+    for cell in cells:
+        by_triplet.setdefault(pair_key(cell), {})[cell["variant_id"]] = cell
+    triplets: list[dict[str, Any]] = []
+    for (row_id, mlip_id), variants in sorted(by_triplet.items()):
+        baseline = variants.get("baseline")
+        accuracy = variants.get("distill_accuracy")
+        accelerate = variants.get("distill_accuracy_accelerate")
+        baseline_error = baseline.get("native_error") if baseline else None
+        accuracy_error = accuracy.get("native_error") if accuracy else None
+        accelerate_error = accelerate.get("native_error") if accelerate else None
+        baseline_speed = baseline.get("speed_score") if baseline else None
+        accuracy_speed = accuracy.get("speed_score") if accuracy else None
+        accelerate_speed = accelerate.get("speed_score") if accelerate else None
+        accuracy_delta = None
+        accelerate_delta = None
+        accuracy_lift_fraction = None
+        accelerate_lift_fraction = None
+        speedup_accelerate_vs_accuracy = None
+        speedup_accelerate_vs_baseline = None
+        verdict = "awaiting_triplet"
+
+        if isinstance(accelerate_speed, (int, float)) and isinstance(accuracy_speed, (int, float)) and accuracy_speed > 0:
+            speedup_accelerate_vs_accuracy = accelerate_speed / accuracy_speed
+        if isinstance(accelerate_speed, (int, float)) and isinstance(baseline_speed, (int, float)) and baseline_speed > 0:
+            speedup_accelerate_vs_baseline = accelerate_speed / baseline_speed
+
+        if (
+            isinstance(baseline_error, (int, float))
+            and isinstance(accuracy_error, (int, float))
+            and isinstance(accelerate_error, (int, float))
+        ):
+            accuracy_delta = baseline_error - accuracy_error
+            accelerate_delta = baseline_error - accelerate_error
+            accuracy_lift_fraction = accuracy_delta / baseline_error if baseline_error else None
+            accelerate_lift_fraction = accelerate_delta / baseline_error if baseline_error else None
+            accuracy_improved = accuracy_delta > max(ERROR_ABS_TOLERANCE, abs(baseline_error) * ERROR_REL_TOLERANCE)
+            accuracy_regressed = accuracy_delta < -max(ERROR_ABS_TOLERANCE, abs(baseline_error) * ERROR_REL_TOLERANCE)
+            accelerate_regressed_vs_accuracy = accelerate_error > accuracy_error * (1.0 + ACCELERATE_ACCURACY_REL_TOLERANCE)
+            speed_won = (
+                isinstance(speedup_accelerate_vs_accuracy, (int, float))
+                and speedup_accelerate_vs_accuracy >= ACCELERATE_MIN_SPEEDUP
+            )
+            if accuracy_regressed:
+                verdict = "accuracy_regressed"
+            elif accelerate_regressed_vs_accuracy:
+                verdict = "accelerate_accuracy_regressed"
+            elif accuracy_improved and speed_won:
+                verdict = "kart_win"
+            elif accuracy_improved and speedup_accelerate_vs_accuracy is None:
+                verdict = "accuracy_win_speed_unmeasured"
+            elif accuracy_improved:
+                verdict = "accuracy_win_speed_pending"
+            else:
+                verdict = "accuracy_unchanged"
+        elif baseline and baseline.get("status") == "failed":
+            verdict = "baseline_failed"
+        elif accuracy and accuracy.get("status") == "failed":
+            verdict = "distill_accuracy_failed"
+        elif accelerate and accelerate.get("status") == "failed":
+            verdict = "distill_accuracy_accelerate_failed"
+
+        triplets.append(
+            {
+                "row_id": row_id,
+                "row_label": ROW_LABELS.get(row_id, row_id),
+                "mlip_id": mlip_id,
+                "baseline_cell_id": baseline.get("cell_id") if baseline else None,
+                "distill_accuracy_cell_id": accuracy.get("cell_id") if accuracy else None,
+                "distill_accuracy_accelerate_cell_id": accelerate.get("cell_id") if accelerate else None,
+                "shared_checkpoint_url": baseline.get("checkpoint_url")
+                if baseline
+                else (accuracy.get("checkpoint_url") if accuracy else (accelerate.get("checkpoint_url") if accelerate else None)),
+                "baseline_error": baseline_error,
+                "distill_accuracy_error": accuracy_error,
+                "distill_accuracy_accelerate_error": accelerate_error,
+                "accuracy_error_delta": accuracy_delta,
+                "accelerate_error_delta": accelerate_delta,
+                "accuracy_lift_fraction": accuracy_lift_fraction,
+                "accelerate_lift_fraction": accelerate_lift_fraction,
+                "baseline_speed_score": baseline_speed,
+                "distill_accuracy_speed_score": accuracy_speed,
+                "distill_accuracy_accelerate_speed_score": accelerate_speed,
+                "speedup_accelerate_vs_accuracy": speedup_accelerate_vs_accuracy,
+                "speedup_accelerate_vs_baseline": speedup_accelerate_vs_baseline,
+                "verdict": verdict,
+            }
+        )
+    return triplets
+
+
+def summarize(cells: list[dict[str, Any]], pairs: list[dict[str, Any]], triplets: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     total = len(cells)
     completed = len([cell for cell in cells if cell["status"] == "completed"])
     failed = len([cell for cell in cells if cell["status"] == "failed"])
@@ -213,7 +307,7 @@ def summarize(cells: list[dict[str, Any]], pairs: list[dict[str, Any]]) -> dict[
         },
         pairs,
     )
-    return {
+    payload = {
         "cells_total": total,
         "cells_completed": completed,
         "cells_failed": failed,
@@ -228,6 +322,26 @@ def summarize(cells: list[dict[str, Any]], pairs: list[dict[str, Any]]) -> dict[
         "flagship_eligible": gate["flagship_eligible"],
         "campaign_verdict": gate["status"],
     }
+    if triplets is not None:
+        payload.update(
+            {
+                "triplets_total": len(triplets),
+                "triplets_kart_wins": len([triplet for triplet in triplets if triplet["verdict"] == "kart_win"]),
+                "triplets_accuracy_wins": len(
+                    [
+                        triplet
+                        for triplet in triplets
+                        if triplet["verdict"]
+                        in {"kart_win", "accuracy_win_speed_pending", "accuracy_win_speed_unmeasured"}
+                    ]
+                ),
+                "triplets_accelerate_accuracy_regressed": len(
+                    [triplet for triplet in triplets if triplet["verdict"] == "accelerate_accuracy_regressed"]
+                ),
+                "triplets_awaiting": len([triplet for triplet in triplets if triplet["verdict"] == "awaiting_triplet"]),
+            }
+        )
+    return payload
 
 
 def promotion_gate(summary: dict[str, int], pairs: list[dict[str, Any]]) -> dict[str, Any]:
@@ -288,9 +402,13 @@ def collect(campaign_path: pathlib.Path, scope: str = "full") -> dict[str, Any]:
     campaign = campaign_tools.load_campaign(campaign_path)
     cells = [collect_cell(cell) for cell in campaign_tools.expand_cells(campaign, scope=scope)]
     pairs = compute_pairs(cells)
-    summary = summarize(cells, pairs)
+    has_accelerate = any(cell["variant_id"] == "distill_accuracy_accelerate" for cell in cells)
+    triplets = compute_triplets(cells) if has_accelerate else None
+    summary = summarize(cells, pairs, triplets)
     return {
-        "schema": "lupine.library.mlip_paired_accuracy_live_summary.v1",
+        "schema": "lupine.library.mlip_kart_race_live_summary.v1"
+        if has_accelerate
+        else "lupine.library.mlip_paired_accuracy_live_summary.v1",
         "generated_at": utc_now(),
         "campaign_id": campaign["campaign_id"],
         "scope": scope,
@@ -301,6 +419,7 @@ def collect(campaign_path: pathlib.Path, scope: str = "full") -> dict[str, Any]:
         "batch_gcs_prefix": campaign["batch_gcs_prefix"],
         "summary": summary,
         "pairs": pairs,
+        "triplets": triplets or [],
         "cells": cells,
     }
 

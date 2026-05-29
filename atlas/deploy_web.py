@@ -4,7 +4,7 @@ import shutil
 
 def main():
     print("==================================================")
-    print(" ATLAS Viewer Deployment Orchestrator ")
+    print(" LUPI Deployment Orchestrator ")
     print("==================================================")
     
     base_dir = r"c:\Users\alexw\Downloads\shed\glim\atlas"

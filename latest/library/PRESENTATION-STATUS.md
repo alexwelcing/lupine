@@ -1,4 +1,4 @@
-# ATLAS View Alpha Presentation - Status Report
+# LUPI Alpha Presentation - Status Report
 
 **Date:** 2026-03-18  
 **Time:** 22:45 PST  

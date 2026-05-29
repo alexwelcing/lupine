@@ -94,14 +94,12 @@ export function LandingFooter() {
         }}>
           {/* Brand */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 300 }}>
-            <a href="https://lupine.science" style={{ display: 'flex', alignItems: 'center', gap: 12, opacity: 0.7, textDecoration: 'none', color: '#fff' }}>
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" />
-                <circle cx="8" cy="8" r="2" fill="currentColor" />
-              </svg>
-              <span style={{ fontFamily: 'var(--font-serif, serif)', fontStyle: 'italic', fontSize: 14, fontWeight: 600, letterSpacing: '-0.02em' }}>
-                Lupi
-              </span>
+            <a href="https://lupine.science" style={{ display: 'flex', alignItems: 'center', opacity: 0.92, textDecoration: 'none', color: '#fff' }}>
+              <img
+                src="/brand/lupine-science-icon.png"
+                alt="Lupine Science"
+                style={{ width: 88, height: 88, borderRadius: 12, objectFit: 'contain', display: 'block' }}
+              />
             </a>
             <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
               The audit layer for the MLIP ecosystem and the low-rank retraining target that compounds out of it. Applied learning mechanics for atomistic ML.
@@ -115,7 +113,7 @@ export function LandingFooter() {
               <a href="https://lupine.science/research" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Research</a>
               <a href="https://lupine.science/lineage" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Lineage</a>
               <a href="https://lupine.science/proof" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Research Defense</a>
-              <a href="/" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Lupi Viewer</a>
+              <a href="/" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>LUPI</a>
             </div>
             <div style={columnStyle}>
               <span style={headerStyle}>Engagement</span>
@@ -129,6 +127,7 @@ export function LandingFooter() {
               <a href="https://github.com/alexwelcing/lupine" target="_blank" rel="noopener noreferrer" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>GitHub</a>
               <a href="https://lupine.science/live" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Live Lab</a>
               <a href="https://lupine.science/console" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Console</a>
+              <a href="/llms.txt" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Agents</a>
               <a href="mailto:alexwelcing@gmail.com" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Contact</a>
             </div>
           </div>
@@ -146,7 +145,7 @@ export function LandingFooter() {
           flexWrap: 'wrap',
         }}>
           <div style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 10, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-            &copy; {new Date().getFullYear()} Lupi. Geometric error analysis for atomistic ML.
+            &copy; {new Date().getFullYear()} LUPI by Lupine Science. Geometric error analysis for atomistic ML.
           </div>
           <div style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 10, color: 'rgba(255, 255, 255, 0.4)' }}>
             Apache 2.0 Licensed

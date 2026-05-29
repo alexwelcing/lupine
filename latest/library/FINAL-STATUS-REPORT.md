@@ -1,6 +1,6 @@
 # GLIM Library - Final Status Report
 
-> **Project:** ATLAS View Molecular Dynamics Library  
+> **Project:** LUPI Molecular Dynamics Library  
 > **Date:** March 17-18, 2026  
 > **Status:** ✅ ALPHA PRESENTATION READY  
 > **Phase:** Initial Population Complete
@@ -207,7 +207,7 @@ If Ti download doesn't complete:
 
 ### Immediate (This Week)
 1. ⏳ Complete Ti GB download and extraction
-2. ⏳ Test both datasets with actual ATLAS View
+2. ⏳ Test both datasets with actual LUPI
 3. ⏳ Collect feedback from alpha presentation
 
 ### Short-term (Next 2 Weeks)

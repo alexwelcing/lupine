@@ -2,6 +2,8 @@
   "schema": "lupine.mlip.distill_policy_registry.v1",
   "description": "Cross-material MPtrj/DFT Distill Accuracy policy routing. This registry is intentionally separate from the Ni material-family zero-point registry so broad transfer can be tested and rejected or promoted independently.",
   "policies": {
-    "default_accuracy": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-global-support-v1-accuracy.json"
+    "default_accuracy": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-support-floor-v2-accuracy.json",
+    "candidate_row_hybrid_v3": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-row-hybrid-v3-accuracy.json",
+    "candidate_spectral_v4": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-spectral-v4-accuracy.json"
   }
 }

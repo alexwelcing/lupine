@@ -7,13 +7,13 @@ export const Route = createFileRoute('/process')({
   component: ProcessPage,
   head: () => ({
     meta: [
-      { title: 'Operating report — the harden stage of the audit layer' },
+      { title: 'Operating report — Lupine Science harden stage' },
       {
         name: 'description',
         content:
           "First-person operating report on the harden stage that sits behind Lupine's cross-potential audit: how the distill-to-worker pipeline is architected, why the arrangement is correct, what the runs to date have produced, and where the system is going next. Every claim maps to a row in a public D1 ledger.",
       },
-      { property: 'og:title', content: 'Operating report — the harden stage' },
+      { property: 'og:title', content: 'Operating report — Lupine Science harden stage' },
       {
         property: 'og:description',
         content:

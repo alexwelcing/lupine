@@ -1,6 +1,6 @@
 # lupine-ops
 
-Operational tooling for the Lupine materials science fleet — manifest,
+Operational tooling for the Lupine Science fleet — manifest,
 ledger, MLIP deployment shape, plus a periodic Cloud Run health/cost
 reporter binary.
 

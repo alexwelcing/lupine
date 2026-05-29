@@ -6,9 +6,9 @@ export const Route = createFileRoute('/lineage')({
   component: LineagePage,
   head: () => ({
     meta: [
-      { title: 'Lineage — sloppy-models materials science meets learning mechanics' },
+      { title: 'Lineage — Lupine Science' },
       { name: 'description', content: 'The 22-year sloppy-models lineage (Frederiksen 2004 → Transtrum/Sethna 2011 → Wen et al. 2017 → Kurniawan 2022 → Deng 2024) intersected with the emerging learning-mechanics program (Simon et al. 2026, Bordelon/Atanasov/Pehlevan 2025, Saxe et al. 2014). The narrow novelty Lupine contributes sits at the intersection.' },
-      { property: 'og:title', content: 'Lineage — sloppy-models materials science meets learning mechanics' },
+      { property: 'og:title', content: 'Lineage — Lupine Science' },
       { property: 'og:description', content: 'The lineage we cite is the lineage we extend. Two parallel programs, one applied wedge.' },
       { property: 'og:url', content: 'https://lupine.science/lineage' },
     ],

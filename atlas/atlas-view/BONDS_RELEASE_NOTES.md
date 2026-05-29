@@ -1,5 +1,5 @@
 # Release Notes — Bond Visualization System
-## Atlas View v0.3.0
+## LUPI v0.3.0
 
 **Status:** Production build ready | **Tests:** 57/57 passing | **Build:** Clean
 

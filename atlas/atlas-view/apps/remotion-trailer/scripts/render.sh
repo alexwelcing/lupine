@@ -3,7 +3,7 @@
 
 cd "$(dirname "$0")/.."
 
-echo "Rendering ATLAS View Trailer..."
+echo "Rendering LUPI Trailer..."
 echo "================================"
 
 # Check if recordings exist

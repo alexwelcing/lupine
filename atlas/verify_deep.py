@@ -6,7 +6,7 @@ import sys
 BASE = "https://atlas-viewer-350452481649.us-central1.run.app"
 
 print("=" * 60)
-print("ATLAS Viewer Deep Verification")
+print("LUPI Deep Verification")
 print("=" * 60)
 
 # 1. Check that JS bundle contains correct WASM worker references

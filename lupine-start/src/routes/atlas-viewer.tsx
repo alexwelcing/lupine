@@ -6,11 +6,16 @@ export const Route = createFileRoute('/atlas-viewer')({
   component: AtlasViewerPage,
   head: () => ({
     meta: [
-      { title: 'Atlas Viewer — WebGPU exploration of the audit layer' },
-      { name: 'description', content: 'The browser-native interface for inspecting Lupine\'s cross-potential error manifold and your own MD trajectories side-by-side. WebGPU rendering of up to 10M atoms at 60fps. No install, no license. Drag a LAMMPS dump, XYZ, or PDB.' },
-      { property: 'og:title', content: 'Atlas Viewer — WebGPU exploration of the audit layer' },
+      { title: 'LUPI — WebGPU molecular viewer by Lupine Science' },
+      { name: 'description', content: 'LUPI is the browser-native molecular viewer from Lupine Science: inspect cross-potential evidence and your own MD trajectories side-by-side at lupi.live. WebGPU rendering, no install, no license.' },
+      { property: 'og:title', content: 'LUPI — WebGPU molecular viewer by Lupine Science' },
       { property: 'og:description', content: 'See the audit results and your own MD trajectories together, in the browser. WebGPU. No install. Apache 2.0.' },
       { property: 'og:url', content: 'https://lupine.science/atlas-viewer' },
+      { property: 'og:image', content: 'https://lupi.live/og-lupi.png' },
+      { property: 'og:image:alt', content: 'LUPI bluebonnet mark and WebGPU molecular viewer title card.' },
+      { name: 'twitter:title', content: 'LUPI — WebGPU molecular viewer by Lupine Science' },
+      { name: 'twitter:description', content: 'WebGPU molecular viewing from Lupine Science at lupi.live.' },
+      { name: 'twitter:image', content: 'https://lupi.live/og-lupi.png' },
     ],
   }),
 })
@@ -107,7 +112,7 @@ function AtlasViewerPage() {
           <div
             className="max-w-2xl"
           >
-            <div className="mono-label text-[var(--accent-cyan)] mb-6 tracking-[0.3em]">ATLAS VIEWER · INSPECTION INTERFACE</div>
+            <div className="mono-label text-[var(--accent-cyan)] mb-6 tracking-[0.3em]">LUPI · INSPECTION INTERFACE</div>
             <h1 className="font-serif tracking-tight text-5xl lg:text-7xl mb-8 leading-[1.05] text-[var(--on-surface)]">
               See your <em className="italic text-[var(--accent-cyan)]">trajectories</em>,<br />and the audit beside them.
             </h1>
@@ -116,12 +121,12 @@ function AtlasViewerPage() {
             </p>
             <div className="flex gap-4 flex-wrap">
               <a
-                href="https://atlas.lupine.science"
+                href="https://lupi.live"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-7 py-3.5 bg-[var(--accent-cyan)] text-[#0a1628] font-sans text-sm font-semibold uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
               >
-                Launch Viewer →
+                Launch LUPI →
               </a>
               <a
                 href="https://github.com/alexwelcing/lupine"
@@ -171,14 +176,14 @@ function AtlasViewerPage() {
         <SectionHeader
           label="How It Works"
           title="Three steps. Zero dependencies."
-          description="Atlas Viewer is built on WebGPU and Rust/WASM. Your browser becomes a GPU-accelerated molecular workstation."
+          description="LUPI is built on WebGPU and Rust/WASM. Your browser becomes a GPU-accelerated molecular workstation."
         />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
               step: '01',
               title: 'Drag & drop your file',
-              desc: 'LAMMPS trajectories, XYZ coordinates, PDB structures, CIF crystals — Atlas parses them all with Rust/WASM parsers that run 10× faster than JavaScript.',
+              desc: 'LAMMPS trajectories, XYZ coordinates, PDB structures, CIF crystals — LUPI parses them all with Rust/WASM parsers that run 10x faster than JavaScript.',
               accent: 'var(--accent-cyan)',
             },
             {
@@ -208,7 +213,7 @@ function AtlasViewerPage() {
         <SectionHeader
           label="File Formats"
           title="Bring your own data."
-          description="Atlas Viewer reads the formats researchers already produce. No conversion step, no intermediate scripts."
+          description="LUPI reads the formats researchers already produce. No conversion step, no intermediate scripts."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {SUPPORTED_FORMATS.map((f) => (
@@ -231,7 +236,7 @@ function AtlasViewerPage() {
         <SectionHeader
           label="Use Cases"
           title="Built for researchers, not render farms."
-          description="Atlas Viewer solves different problems for different scientific communities — but the core value is the same: see your data faster."
+          description="LUPI solves different problems for different scientific communities — but the core value is the same: see your data faster."
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {USE_CASES.map((uc) => (
@@ -263,7 +268,7 @@ function AtlasViewerPage() {
       <Section bg="light">
         <SectionHeader
           label="Comparison"
-          title="Atlas vs. the incumbents."
+          title="LUPI vs. the incumbents."
           description="Side-by-side with the tools most researchers currently use."
           centered
         />
@@ -271,7 +276,7 @@ function AtlasViewerPage() {
           <table className="w-full text-[13px] max-w-4xl mx-auto" style={{ borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: 'var(--surface-container-high)' }}>
-                {['Feature', 'OVITO', 'VMD', 'Atlas Viewer'].map((h, i) => (
+                {['Feature', 'OVITO', 'VMD', 'LUPI'].map((h, i) => (
                   <th
                     key={h}
                     className="text-left px-5 py-4 font-semibold text-[11px] uppercase tracking-[0.08em] border-b"
@@ -311,15 +316,15 @@ function AtlasViewerPage() {
             <div>
               <h3 className="text-lg font-semibold text-[var(--on-surface)] mb-3">1. Generate a compatible dump from LAMMPS</h3>
               <p className="text-sm text-[var(--on-surface-variant)] mb-4 leading-relaxed">
-                Add a custom dump command to your LAMMPS input script. Atlas needs atom IDs, types, and Cartesian coordinates at minimum:
+                Add a custom dump command to your LAMMPS input script. LUPI needs atom IDs, types, and Cartesian coordinates at minimum:
               </p>
               <Card className="font-mono text-sm !p-5 overflow-x-auto">
                 <pre className="text-[var(--accent-cyan)]">
 {`# In your LAMMPS input script:
-dump  atlas all custom 1000 dump.lammpstrj id type x y z
+dump  lupi all custom 1000 dump.lammpstrj id type x y z
 
 # Optional: include velocities for kinetic energy coloring
-dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
+dump  lupi all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
                 </pre>
               </Card>
             </div>
@@ -327,7 +332,7 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
             <div>
               <h3 className="text-lg font-semibold text-[var(--on-surface)] mb-3">2. Open the viewer and drag your file</h3>
               <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed">
-                Navigate to <a href="https://atlas.lupine.science" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-cyan)] hover:underline font-medium">atlas.lupine.science</a> and
+                Navigate to <a href="https://lupi.live" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-cyan)] hover:underline font-medium">lupi.live</a> and
                 drag <code className="bg-[var(--surface-container-high)] px-1.5 py-0.5 rounded text-[var(--accent-cyan)] text-xs">dump.lammpstrj</code> directly
                 onto the canvas. The Rust/WASM parser ingests the file locally — <strong>nothing is uploaded to any server</strong>.
               </p>
@@ -348,7 +353,7 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
       <Section bg="light">
         <SectionHeader
           label="Under the Hood"
-          title="How Atlas achieves 10M atoms at 60fps."
+          title="How LUPI achieves 10M atoms at 60fps."
           centered
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -376,16 +381,16 @@ dump  atlas all custom 1000 dump.lammpstrj id type x y z vx vy vz`}
               Stop installing.<br />Start <em className="italic text-[var(--accent-cyan)]">seeing</em>.
             </h2>
             <p className="text-[var(--on-surface-variant)] text-lg mb-10 leading-relaxed">
-              Atlas Viewer is free, open-source, and runs entirely in your browser. Your data never leaves your machine.
+              LUPI is free, open-source, and runs entirely in your browser. Your data never leaves your machine.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <a
-                href="https://atlas.lupine.science"
+                href="https://lupi.live"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-[var(--accent-cyan)] text-[#0a1628] font-sans text-sm font-bold uppercase tracking-[0.08em] hover:opacity-90 transition-opacity no-underline"
               >
-                Open Atlas Viewer
+                Open LUPI
               </a>
               <a
                 href="https://github.com/alexwelcing/lupine"

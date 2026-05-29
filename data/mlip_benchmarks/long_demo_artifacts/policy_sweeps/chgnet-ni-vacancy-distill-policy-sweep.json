@@ -1,0 +1,452 @@
+{
+  "best": {
+    "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+    "candidate_index": 10,
+    "distill_final_reference_position_rmse_angstrom": 0.03479217,
+    "distill_intervention_count": 10,
+    "final_rmse_lift_fraction": 0.7588061628911452,
+    "force_guard_ok": true,
+    "mean_rmse_lift_fraction": 0.6408853839182039,
+    "objective": 0.8228947012829656,
+    "policy_overrides": {
+      "distill_correction_scale": 0.3,
+      "distill_max_step_correction_angstrom": 0.035,
+      "distill_velocity_damping": 0.98
+    },
+    "summary": {
+      "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-10\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+      "score": {
+        "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+        "baseline_max_force_norm_ev_per_angstrom": 2.8975664,
+        "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+        "distill_final_reference_position_rmse_angstrom": 0.03479217,
+        "distill_intervention_count": 10,
+        "distill_max_force_norm_ev_per_angstrom": 0.54405913,
+        "distill_mean_reference_position_rmse_angstrom": 0.0325263,
+        "final_rmse_lift_fraction": 0.7588061628911452,
+        "force_guard_ok": true,
+        "mean_rmse_lift_fraction": 0.6408853839182039,
+        "primary_metric": "final_reference_position_rmse_angstrom",
+        "verdict": "distill_accuracy_win"
+      },
+      "variant_id": "paired_score"
+    },
+    "verdict": "distill_accuracy_win"
+  },
+  "candidate_count": 12,
+  "demo": "ni-vacancy",
+  "generated_at": "2026-05-28T03:11:16.375899Z",
+  "mlip_id": "chgnet",
+  "ranked_candidates": [
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 10,
+      "distill_final_reference_position_rmse_angstrom": 0.03479217,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.7588061628911452,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.6408853839182039,
+      "objective": 0.8228947012829656,
+      "policy_overrides": {
+        "distill_correction_scale": 0.3,
+        "distill_max_step_correction_angstrom": 0.035,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-10\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.8975664,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.03479217,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.54405913,
+          "distill_mean_reference_position_rmse_angstrom": 0.0325263,
+          "final_rmse_lift_fraction": 0.7588061628911452,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.6408853839182039,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 11,
+      "distill_final_reference_position_rmse_angstrom": 0.03479217,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.7588061628911452,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.6408853839182039,
+      "objective": 0.8228947012829656,
+      "policy_overrides": {
+        "distill_correction_scale": 0.3,
+        "distill_max_step_correction_angstrom": 0.045,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-11\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756706,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.03479217,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.54405955,
+          "distill_mean_reference_position_rmse_angstrom": 0.0325263,
+          "final_rmse_lift_fraction": 0.7588061628911452,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.6408853839182039,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 12,
+      "distill_final_reference_position_rmse_angstrom": 0.03479217,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.7588061628911452,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.6408853839182039,
+      "objective": 0.8228947012829656,
+      "policy_overrides": {
+        "distill_correction_scale": 0.3,
+        "distill_max_step_correction_angstrom": 0.055,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-12\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756565,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.03479217,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.54405937,
+          "distill_mean_reference_position_rmse_angstrom": 0.0325263,
+          "final_rmse_lift_fraction": 0.7588061628911452,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.6408853839182039,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 7,
+      "distill_final_reference_position_rmse_angstrom": 0.04072491,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.7176779341785012,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.5952083824876545,
+      "objective": 0.7771987724272666,
+      "policy_overrides": {
+        "distill_correction_scale": 0.26,
+        "distill_max_step_correction_angstrom": 0.035,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-07\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756397,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.04072491,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.64207506,
+          "distill_mean_reference_position_rmse_angstrom": 0.03666343,
+          "final_rmse_lift_fraction": 0.7176779341785012,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.5952083824876545,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 8,
+      "distill_final_reference_position_rmse_angstrom": 0.04072491,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.7176779341785012,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.5952083824876545,
+      "objective": 0.7771987724272666,
+      "policy_overrides": {
+        "distill_correction_scale": 0.26,
+        "distill_max_step_correction_angstrom": 0.045,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-08\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756461,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.04072491,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.64207533,
+          "distill_mean_reference_position_rmse_angstrom": 0.03666343,
+          "final_rmse_lift_fraction": 0.7176779341785012,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.5952083824876545,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 9,
+      "distill_final_reference_position_rmse_angstrom": 0.04072491,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.7176779341785012,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.5952083824876545,
+      "objective": 0.7771987724272666,
+      "policy_overrides": {
+        "distill_correction_scale": 0.26,
+        "distill_max_step_correction_angstrom": 0.055,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-09\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756402,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.04072491,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.64207578,
+          "distill_mean_reference_position_rmse_angstrom": 0.03666343,
+          "final_rmse_lift_fraction": 0.7176779341785012,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.5952083824876545,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 4,
+      "distill_final_reference_position_rmse_angstrom": 0.04794692,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.6676119479655539,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.5425092457967051,
+      "objective": 0.7218628725452244,
+      "policy_overrides": {
+        "distill_correction_scale": 0.22,
+        "distill_max_step_correction_angstrom": 0.035,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-04\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756465,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.04794692,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.7614337,
+          "distill_mean_reference_position_rmse_angstrom": 0.04143658,
+          "final_rmse_lift_fraction": 0.6676119479655539,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.5425092457967051,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 5,
+      "distill_final_reference_position_rmse_angstrom": 0.04794692,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.6676119479655539,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.5425092457967051,
+      "objective": 0.7218628725452244,
+      "policy_overrides": {
+        "distill_correction_scale": 0.22,
+        "distill_max_step_correction_angstrom": 0.045,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-05\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756398,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.04794692,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.76143355,
+          "distill_mean_reference_position_rmse_angstrom": 0.04143658,
+          "final_rmse_lift_fraction": 0.6676119479655539,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.5425092457967051,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 6,
+      "distill_final_reference_position_rmse_angstrom": 0.04794692,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.6676119479655539,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.5425092457967051,
+      "objective": 0.7218628725452244,
+      "policy_overrides": {
+        "distill_correction_scale": 0.22,
+        "distill_max_step_correction_angstrom": 0.055,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-06\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756013,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.04794692,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.76143345,
+          "distill_mean_reference_position_rmse_angstrom": 0.04143658,
+          "final_rmse_lift_fraction": 0.6676119479655539,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.5425092457967051,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 1,
+      "distill_final_reference_position_rmse_angstrom": 0.05683293,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.6060104195616729,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.48133225148743686,
+      "objective": 0.6541436447104165,
+      "policy_overrides": {
+        "distill_correction_scale": 0.18,
+        "distill_max_step_correction_angstrom": 0.035,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-01\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756389,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.05683293,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.91188798,
+          "distill_mean_reference_position_rmse_angstrom": 0.0469776,
+          "final_rmse_lift_fraction": 0.6060104195616729,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.48133225148743686,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 2,
+      "distill_final_reference_position_rmse_angstrom": 0.05683293,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.6060104195616729,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.48133225148743686,
+      "objective": 0.6541436447104165,
+      "policy_overrides": {
+        "distill_correction_scale": 0.18,
+        "distill_max_step_correction_angstrom": 0.045,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-02\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756581,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.05683293,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.91188789,
+          "distill_mean_reference_position_rmse_angstrom": 0.0469776,
+          "final_rmse_lift_fraction": 0.6060104195616729,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.48133225148743686,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    },
+    {
+      "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+      "candidate_index": 3,
+      "distill_final_reference_position_rmse_angstrom": 0.05683293,
+      "distill_intervention_count": 10,
+      "final_rmse_lift_fraction": 0.6060104195616729,
+      "force_guard_ok": true,
+      "mean_rmse_lift_fraction": 0.48133225148743686,
+      "objective": 0.6541436447104165,
+      "policy_overrides": {
+        "distill_correction_scale": 0.18,
+        "distill_max_step_correction_angstrom": 0.055,
+        "distill_velocity_damping": 0.98
+      },
+      "summary": {
+        "artifact": "C:\\Users\\alexw\\Downloads\\shed\\data\\mlip_benchmarks\\long_demo_artifacts\\policy_sweeps\\ni-vacancy-candidate-03\\chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+        "score": {
+          "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+          "baseline_max_force_norm_ev_per_angstrom": 2.89756282,
+          "baseline_mean_reference_position_rmse_angstrom": 0.09057359,
+          "distill_final_reference_position_rmse_angstrom": 0.05683293,
+          "distill_intervention_count": 10,
+          "distill_max_force_norm_ev_per_angstrom": 0.91188732,
+          "distill_mean_reference_position_rmse_angstrom": 0.0469776,
+          "final_rmse_lift_fraction": 0.6060104195616729,
+          "force_guard_ok": true,
+          "mean_rmse_lift_fraction": 0.48133225148743686,
+          "primary_metric": "final_reference_position_rmse_angstrom",
+          "verdict": "distill_accuracy_win"
+        },
+        "variant_id": "paired_score"
+      },
+      "verdict": "distill_accuracy_win"
+    }
+  ],
+  "schema": "lupine.distill.long_demo_policy_sweep.v1",
+  "seed": 17
+}

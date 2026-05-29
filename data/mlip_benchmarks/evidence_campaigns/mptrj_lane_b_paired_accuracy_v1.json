@@ -20,7 +20,7 @@
   "worker_url": "https://glim-think-v1.aw-ab5.workers.dev",
   "beat_emit_url": "https://glim-think-v1.aw-ab5.workers.dev/feed/beats",
   "distill_policy_engine": "rust",
-  "ribbon_version": "hyperribbon-mptrj-global-support-v1",
+  "ribbon_version": "hyperribbon-mptrj-support-floor-v2",
   "checkpoint_contract": {
     "scope": "raw_predictions",
     "baseline_mode": "read-write",

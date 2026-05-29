@@ -1,4 +1,4 @@
-# ATLAS View Trailer — Advanced Features Guide
+# LUPI Trailer — Advanced Features Guide
 
 ## 🎬 Three Trailer Versions
 
@@ -75,7 +75,7 @@ import { WordHighlightSubtitles } from './components/VoiceoverSync';
 
 <WordHighlightSubtitles 
   script={[
-    { time: 0, duration: 2, text: "Introducing ATLAS View" },
+    { time: 0, duration: 2, text: "Introducing LUPI" },
     { time: 2, duration: 3, text: "Next generation visualization" },
   ]} 
 />
@@ -100,7 +100,7 @@ import { VoiceoverSync } from './components/VoiceoverSync';
 
 **Standard (30s):**
 ```
-[0.0s]  Introducing ATLAS View.
+[0.0s]  Introducing LUPI.
 [2.0s]  Next-generation molecular dynamics visualization.
 [5.0s]  Powered by WebGPU.
 [7.0s]  Render one hundred thousand atoms at sixty frames per second.
@@ -113,7 +113,7 @@ import { VoiceoverSync } from './components/VoiceoverSync';
 
 **Short (15s):**
 ```
-[0.0s] ATLAS View.
+[0.0s] LUPI.
 [1.5s] WebGPU-powered MD visualization.
 [4.0s] One hundred K atoms. Sixty FPS.
 [7.0s] Free on GitHub.

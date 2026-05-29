@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 $projectDir = "$PSScriptRoot/.."
 $outDir = "$projectDir/out"
 
-Write-Host "ATLAS View Trailer Renderer" -ForegroundColor Cyan
+Write-Host "LUPI Trailer Renderer" -ForegroundColor Cyan
 Write-Host "==========================" -ForegroundColor Cyan
 Write-Host ""
 

@@ -8,7 +8,7 @@ $audioDir = "$PSScriptRoot/../public/audio"
 New-Item -ItemType Directory -Force -Path $recordingsDir | Out-Null
 New-Item -ItemType Directory -Force -Path $audioDir | Out-Null
 
-Write-Host "ATLAS View Trailer - Placeholder Setup" -ForegroundColor Cyan
+Write-Host "LUPI Trailer - Placeholder Setup" -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""
 

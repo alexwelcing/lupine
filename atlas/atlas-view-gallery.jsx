@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 
 /* ═══════════════════════════════════════════════════════════
-   ATLAS View — Example Gallery
+   LUPI — Example Gallery
    12 curated LAMMPS simulations for the launch website
    ═══════════════════════════════════════════════════════════ */
 

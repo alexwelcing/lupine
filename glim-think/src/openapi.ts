@@ -18,8 +18,8 @@ export const openApiSpec = {
     title: "glim-think",
     version: "2.1.0",
     description:
-      "Autoresearch swarm for Lupine Materials Science. Think-enhanced Durable Object agents (Orchestrator, Manifold, Causal, Theorist, Experiment) reasoning over a D1 ledger of interatomic-potential benchmark records, with R2 artifact storage and a multi-provider AI router.",
-    contact: { name: "Lupine Materials Science" },
+      "Autoresearch swarm for Lupine Science. Think-enhanced Durable Object agents (Orchestrator, Manifold, Causal, Theorist, Experiment) reasoning over a D1 ledger of interatomic-potential benchmark records, with R2 artifact storage and a multi-provider AI router.",
+    contact: { name: "Lupine Science" },
     license: { name: "MIT" },
   },
   servers: [

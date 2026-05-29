@@ -32,7 +32,7 @@ export const Route = createFileRoute('/slideshow')({
   component: SlideshowPage,
   head: () => ({
     meta: [
-      { title: 'Slideshow — Lupine Materials Science' },
+      { title: 'Slideshow — Lupine Science' },
       {
         name: 'description',
         content:

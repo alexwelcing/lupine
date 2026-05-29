@@ -242,6 +242,31 @@ def test_energy_residual_ribbon_does_not_select_force_features():
     assert all(not name.startswith("force_") for name in ribbon["feature_names"])
 
 
+def test_support_model_emits_projected_subspace_diagnostic():
+    model = DistillSupportModel.fit(
+        "energy_volume",
+        [
+            {
+                "energy_ev_per_atom": float(idx),
+                "stress_gpa": [float(idx), float(idx % 2), float(idx) * 0.25],
+                "reference": {"energy_ev_per_atom": float(idx) + (0.3 if idx % 2 else -0.1)},
+            }
+            for idx in range(1, 7)
+        ],
+    )
+
+    projected = model.candidate_correction["ribbon_projected_residual_correction_v1"]
+
+    assert projected["schema"] == "lupine.distill.ribbon_projected_residual_correction.v1"
+    assert projected["basis_space"] == "feature"
+    assert model.diagnostics["energy_subspace_schema"] == "lupine.distill.subspace_diagnostic.v1"
+    assert model.diagnostics["energy_subspace_status"] == "fit"
+    assert model.diagnostics["energy_complement_residual_fraction"] >= 0.0
+    assert model.diagnostics["energy_stiff_axis_residual_fraction"] >= 0.0
+    assert model.diagnostics["energy_projection_distance_proxy"] >= 0.0
+    assert model.diagnostics["energy_theorem_development_lanes"]
+
+
 def test_support_model_emits_per_prediction_ribbon_distance():
     model = DistillSupportModel.fit(
         "energy_volume",

@@ -1,0 +1,14 @@
+{
+  "name": "LUPI",
+  "short_name": "LUPI",
+  "description": "WebGPU molecular viewing from Lupine Science.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06080d",
+  "theme_color": "#06080d",
+  "icons": [
+    { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/brand/lupine-science-icon.png", "sizes": "470x470", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

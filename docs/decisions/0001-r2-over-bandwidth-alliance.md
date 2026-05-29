@@ -26,7 +26,7 @@ Two distinct object stores, each chosen for the workload it serves:
 
 GCS objects are served from `https://storage.googleapis.com/shed-489901-atlas-artifacts/...`
 directly to browsers, with `Cache-Control: public, max-age=31536000, immutable` and a CORS
-policy locked to `glim.lupine.dev`, `atlas.lupine.dev`, and localhost dev ports.
+policy locked to `glim.lupine.dev`, `lupi.live`, and localhost dev ports.
 
 The `.glimbin` streaming pipeline (`atlas/atlas-view/packages/parsers/src/StreamingLoader.ts`)
 uses HTTP Range Requests to fetch only the header + observed-frame slices — a 2 GB file

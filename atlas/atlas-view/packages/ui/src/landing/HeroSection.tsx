@@ -32,35 +32,6 @@ export function HeroSection() {
 
       {/* Content */}
       <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 24px' }}>
-        {/* Logo mark */}
-        <div
-          style={{
-            animation: 'heroFadeIn 1s ease-out forwards',
-            opacity: 0,
-          }}
-        >
-          <div
-            style={{
-              width: 80, height: 80,
-              borderRadius: 24,
-              background: 'linear-gradient(135deg, #0f62fe, #d04ed6)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              margin: '0 auto 28px',
-              boxShadow: '0 16px 40px rgba(15,98,254,0.3), 0 0 60px rgba(15,98,254,0.1)',
-              animation: 'float 6s ease-in-out infinite',
-            }}
-          >
-            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" stroke="white" strokeWidth="1.5">
-              <circle cx="24" cy="16" r="6" />
-              <circle cx="14" cy="32" r="6" />
-              <circle cx="34" cy="32" r="6" />
-              <line x1="21" y1="21" x2="17" y2="27" strokeLinecap="round" />
-              <line x1="27" y1="21" x2="31" y2="27" strokeLinecap="round" />
-              <line x1="20" y1="32" x2="28" y2="32" strokeLinecap="round" />
-            </svg>
-          </div>
-        </div>
-
         {/* Title */}
         <h1
           style={{
@@ -77,7 +48,7 @@ export function HeroSection() {
             filter: 'drop-shadow(0 0 40px rgba(15,98,254,0.15))',
           }}
         >
-          Lupi
+          LUPI
         </h1>
 
         {/* Tagline */}

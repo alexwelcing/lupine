@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 /* ═══════════════════════════════════════════════════════════════
-   ATLAS VIEW ENHANCED — Atom Inspector + Measurements + Timeline
+   LUPI ENHANCED — Atom Inspector + Measurements + Timeline
    ═══════════════════════════════════════════════════════════════ */
 
 // ═══════════════════════════════════════════════════════════════

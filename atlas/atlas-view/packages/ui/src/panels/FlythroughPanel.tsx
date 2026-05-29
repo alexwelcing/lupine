@@ -200,7 +200,7 @@ export function FlythroughPanel() {
     if ('showSaveFilePicker' in window) {
       try {
         const handle = await (window as any).showSaveFilePicker({
-          suggestedName: 'Lupi-flythrough.mp4',
+          suggestedName: 'LUPI-flythrough.mp4',
           types: [{
             description: 'MP4 Video',
             accept: { 'video/mp4': ['.mp4'] }
@@ -223,7 +223,7 @@ export function FlythroughPanel() {
       format: 'mp4',
       durationSeconds: Math.ceil(duration),
       flythrough,
-      baseName: 'Lupi-flythrough',
+      baseName: 'LUPI-flythrough',
       fileStream,
       onComplete: (success) => {
         setExporting(false);

@@ -1,0 +1,296 @@
+{
+  "atlas_distill_bin": "C:\\Users\\alexw\\Downloads\\shed\\atlas-distill\\target\\release\\atlas-distill.exe",
+  "campaign_hash": "sha256:65c275cae9851738c7e72841b724ba871b319947cf4179822ca7b630a8dbc462",
+  "campaign_id": "mptrj-dft-broad-paired-accuracy-v1",
+  "cells": [
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 5,
+        "delta_correct_blocked|blocked_large_ribbon_correction|energy_ev_per_atom": 2,
+        "delta_correct|support_gate_passed|energy_ev_per_atom": 3
+      },
+      "applied_modes": {
+        "residual_ribbon": 3
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/energy_volume/mace-mp-0/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:mace-mp-0",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/checkpoints/energy_volume/mace-mp-0/raw_predictions.json",
+      "mlip_id": "mace-mp-0",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/mace-mp-0/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "ev_per_atom_mae",
+      "replayed_native_error": 0.2037855576680135,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 3,
+        "delta_correct|support_gate_passed|relaxed_energy_ev_per_atom": 3
+      },
+      "applied_modes": {
+        "residual_ribbon": 3
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/relaxation_stability/mace-mp-0/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:mace-mp-0",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/checkpoints/relaxation_stability/mace-mp-0/raw_predictions.json",
+      "mlip_id": "mace-mp-0",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/mace-mp-0/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "relaxation_penalty",
+      "replayed_native_error": 0.38657112262105225,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 5,
+        "delta_correct_blocked|blocked_ribbon_support_error_floor|energy_ev_per_atom": 5
+      },
+      "applied_modes": {},
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/energy_volume/chgnet/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:chgnet",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/checkpoints/energy_volume/chgnet/raw_predictions.json",
+      "mlip_id": "chgnet",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/chgnet/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "ev_per_atom_mae",
+      "replayed_native_error": 0.10348930358886718,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 3,
+        "delta_correct_blocked|blocked_ribbon_support_error_floor|relaxed_energy_ev_per_atom": 3
+      },
+      "applied_modes": {},
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/relaxation_stability/chgnet/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:chgnet",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/checkpoints/relaxation_stability/chgnet/raw_predictions.json",
+      "mlip_id": "chgnet",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/chgnet/cell_result.json",
+      "replayed_accuracy_score": 0.4432973861694336,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "relaxation_penalty",
+      "replayed_native_error": 0.05567026138305664,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 5,
+        "delta_correct|support_gate_passed|energy_ev_per_atom": 5
+      },
+      "applied_modes": {
+        "residual_ribbon": 5
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/energy_volume/orb-v3/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:orb-v3",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/checkpoints/energy_volume/orb-v3/raw_predictions.json",
+      "mlip_id": "orb-v3",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/orb-v3/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "ev_per_atom_mae",
+      "replayed_native_error": 0.4236561979403991,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 3,
+        "delta_correct|support_gate_passed|relaxed_energy_ev_per_atom": 3
+      },
+      "applied_modes": {
+        "residual_ribbon": 3
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/relaxation_stability/orb-v3/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:orb-v3",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/checkpoints/relaxation_stability/orb-v3/raw_predictions.json",
+      "mlip_id": "orb-v3",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/orb-v3/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "relaxation_penalty",
+      "replayed_native_error": 0.3365429248283866,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 5,
+        "delta_correct_blocked|blocked_large_ribbon_correction|energy_ev_per_atom": 1,
+        "delta_correct|support_gate_passed|energy_ev_per_atom": 4
+      },
+      "applied_modes": {
+        "residual_ribbon": 4
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/energy_volume/sevennet/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:sevennet",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/checkpoints/energy_volume/sevennet/raw_predictions.json",
+      "mlip_id": "sevennet",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/sevennet/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "ev_per_atom_mae",
+      "replayed_native_error": 0.2795409219560748,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume"
+    },
+    {
+      "action_counts": {
+        "accept|runtime_guards_passed|": 3,
+        "delta_correct|support_gate_passed|relaxed_energy_ev_per_atom": 3
+      },
+      "applied_modes": {
+        "residual_ribbon": 3
+      },
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/distill_accuracy/relaxation_stability/sevennet/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:sevennet",
+      "checkpoint_url": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/checkpoints/relaxation_stability/sevennet/raw_predictions.json",
+      "mlip_id": "sevennet",
+      "policy_engine": "atlas-distill-local-replay",
+      "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+      "raw_artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/sevennet/cell_result.json",
+      "replayed_accuracy_score": 0.0,
+      "replayed_accuracy_unit": "row_native_physical_score",
+      "replayed_error_unit": "relaxation_penalty",
+      "replayed_native_error": 0.39723269251359056,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability"
+    }
+  ],
+  "generated_at": "2026-05-27T17:29:38Z",
+  "pairs": [
+    {
+      "baseline_error": 0.4116144147545402,
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:mace-mp-0",
+      "error_delta": 0.20782885708652668,
+      "lift_fraction": 0.5049115133892047,
+      "mlip_id": "mace-mp-0",
+      "previous_cloud_distill_error": 0.2037855576680135,
+      "replayed_distill_error": 0.2037855576680135,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 0.560434933864709,
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:mace-mp-0",
+      "error_delta": 0.17386381124365674,
+      "lift_fraction": 0.31023014579891994,
+      "mlip_id": "mace-mp-0",
+      "previous_cloud_distill_error": 0.38657112262105225,
+      "replayed_distill_error": 0.38657112262105225,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 0.10348930358886718,
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:chgnet",
+      "error_delta": 0.0,
+      "lift_fraction": 0.0,
+      "mlip_id": "chgnet",
+      "previous_cloud_distill_error": 0.13245542604116042,
+      "replayed_distill_error": 0.10348930358886718,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume",
+      "verdict": "unchanged"
+    },
+    {
+      "baseline_error": 0.05567026138305664,
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:chgnet",
+      "error_delta": 0.0,
+      "lift_fraction": 0.0,
+      "mlip_id": "chgnet",
+      "previous_cloud_distill_error": 0.07979686500444168,
+      "replayed_distill_error": 0.05567026138305664,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability",
+      "verdict": "unchanged"
+    },
+    {
+      "baseline_error": 0.42947508994979094,
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:orb-v3",
+      "error_delta": 0.005818892009391841,
+      "lift_fraction": 0.013548846360500478,
+      "mlip_id": "orb-v3",
+      "previous_cloud_distill_error": 0.4236561979403991,
+      "replayed_distill_error": 0.4236561979403991,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 0.5327308394692162,
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:orb-v3",
+      "error_delta": 0.19618791464082957,
+      "lift_fraction": 0.3682683638820318,
+      "mlip_id": "orb-v3",
+      "previous_cloud_distill_error": 0.3365429248283866,
+      "replayed_distill_error": 0.3365429248283866,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 0.3996912037242543,
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:energy_volume:sevennet",
+      "error_delta": 0.12015028176817955,
+      "lift_fraction": 0.30060777082067297,
+      "mlip_id": "sevennet",
+      "previous_cloud_distill_error": 0.2795409219560748,
+      "replayed_distill_error": 0.2795409219560748,
+      "row_id": "energy_volume",
+      "row_label": "Energy-volume",
+      "verdict": "distill_improved"
+    },
+    {
+      "baseline_error": 0.5750323353391705,
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:distill_accuracy:relaxation_stability:sevennet",
+      "error_delta": 0.17779964282557997,
+      "lift_fraction": 0.3091993821890184,
+      "mlip_id": "sevennet",
+      "previous_cloud_distill_error": 0.39723269251359056,
+      "replayed_distill_error": 0.39723269251359056,
+      "row_id": "relaxation_stability",
+      "row_label": "Relaxation stability",
+      "verdict": "distill_improved"
+    }
+  ],
+  "policy_hash": "sha256:518a5ea4d0ff2a7def99833ef03a426bb574a85cc2fb5a44dac97524ca532f1e",
+  "policy_path": "gcp\\mlip-cell-runner\\policies\\hyperribbon-mptrj-support-floor-v2-accuracy.json",
+  "schema": "lupine.library.mlip_policy_replay_summary.v1",
+  "scope": "promotion-canary",
+  "summary": {
+    "failed_conditions": [],
+    "flagship_eligible": true,
+    "mean_lift_fraction": 0.22584575280504354,
+    "next_action": "use this replay as the spend gate; after the Cloud Run canary passes, scale to the full paired accuracy grid",
+    "pairs_improved": 6,
+    "pairs_measured": 8,
+    "pairs_regressed": 0,
+    "pairs_total": 8,
+    "pairs_unchanged": 2,
+    "status": "promotable_policy_replay"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Lupine Science",
+  "short_name": "Lupine",
+  "description": "Bluebonnet field evidence for computational materials and atomistic ML.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f1ed",
+  "theme_color": "#0a1628",
+  "icons": [
+    { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/brand/lupine-science-icon.png", "sizes": "470x470", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

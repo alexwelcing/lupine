@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the `apps/web` package within **ATLAS View**, a WebGPU-powered LAMMPS molecular dynamics visualization platform. The web app provides a browser-based viewer where users drag-and-drop dump files for publication-quality 3D rendering of atomic simulations.
+This is the `apps/web` package within **LUPI**, a WebGPU-powered LAMMPS molecular dynamics visualization platform. The web app provides a browser-based viewer where users drag-and-drop dump files for publication-quality 3D rendering of atomic simulations.
 
 ## Commands
 

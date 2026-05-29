@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 /*  ════════════════════════════════════════════════════════════════
-    ATLAS View — Working Preview
+    LUPI — Working Preview
     
     This is a real LAMMPS dump file viewer. Drag any .lammpstrj 
     or dump file onto it and it will parse + render the atoms.

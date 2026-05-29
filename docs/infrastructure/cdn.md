@@ -37,7 +37,7 @@ the Cloudflare edge cache stays warm.
       `wrangler whoami` returns the expected account.
 - [ ] The GCS bucket CORS policy
       ([`atlas/atlas-view/infra/gcs-cors.json`](../../atlas/atlas-view/infra/gcs-cors.json))
-      already allows `https://glim.lupine.dev` and `https://atlas.lupine.dev`.
+      already allows `https://glim.lupine.dev` and `https://lupi.live`.
       No change needed for the CDN cutover.
 
 ## 3. Deploy

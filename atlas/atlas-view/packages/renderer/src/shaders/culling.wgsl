@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// ATLAS View — GPU Culling & Color Mapping Compute Shader
+// LUPI — GPU Culling & Color Mapping Compute Shader
 //
 // Runs as a compute pass BEFORE the render pass to:
 //   1. Frustum-cull atoms against the camera (reject invisible atoms)

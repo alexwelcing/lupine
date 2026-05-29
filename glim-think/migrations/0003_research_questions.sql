@@ -1,6 +1,6 @@
 -- 0003_research_questions.sql
 -- Lab-notebook style Q/A queue for ad-hoc research questions raised
--- during the Lupine Materials Science / IMMI peer-review prep work.
+-- during the Lupine Science / IMMI peer-review prep work.
 --
 -- Distinct from formal peer-review critiques (unit 2's table): this is
 -- the running list of "things we're curious about" that an agent or

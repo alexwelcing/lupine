@@ -7,18 +7,58 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Lupine Library" />
-  <title class="i18n-title">Lupine Library — Research On The Go</title>
-  <meta name="description" class="i18n-desc" content="Mobile-first reader for Lupine Materials Science research: UQ, benchmarking, MLIPs, and computational materials theory." />
+  <title class="i18n-title">Lupine Library — Lupine Science Research</title>
+  <meta name="description" class="i18n-desc" content="Mobile-first reader for Lupine Science research: UQ, benchmarking, MLIPs, and computational materials theory." />
+  <meta name="application-name" content="Lupine Library" />
+  <meta property="og:site_name" content="Lupine Science" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Lupine Library" />
+  <meta property="og:description" content="Research notes, evidence, and MLIP field reports from Lupine Science." />
+  <meta property="og:url" content="https://library.lupine.science/" />
+  <meta property="og:image" content="https://library.lupine.science/og-lupine-library.png" />
+  <meta property="og:image:alt" content="Lupine Library bluebonnet mark and research title card." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lupine Library" />
+  <meta name="twitter:description" content="Research notes, evidence, and MLIP field reports from Lupine Science." />
+  <meta name="twitter:image" content="https://library.lupine.science/og-lupine-library.png" />
 
   <link rel="manifest" href="/manifest.webmanifest?v=__VERSION__" />
-  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <link rel="canonical" href="https://library.lupine.science/" />
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="Agent guide for Lupine Science" />
+  <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full agent guide for Lupine Science" />
+  <link rel="alternate" type="application/json" href="/brand.json" title="Lupine Science brand metadata" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" href="/lupine-science-icon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css?v=__VERSION__" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://lupine.science/#organization",
+        "name": "Lupine Science",
+        "url": "https://lupine.science",
+        "description": "Lupine Science studies the error geometry of interatomic potentials."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://library.lupine.science/#website",
+        "name": "Lupine Library",
+        "url": "https://library.lupine.science",
+        "publisher": { "@id": "https://lupine.science/#organization" },
+        "description": "The public research corpus and human knowledge surface for Lupine Science."
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="bg-fx" aria-hidden="true">
@@ -34,15 +74,15 @@
     </button>
     <a href="#/" class="brand" id="brand">
       <span class="brand-mark" aria-hidden="true">
-        <span class="nucleus"></span>
-        <span class="orbit"></span>
+        <img src="/lupine-science-icon.png" alt="" class="brand-icon" />
       </span>
       <span class="brand-text">
         <span class="brand-title">Lupine Library</span>
-        <span class="brand-sub">research.on.the.go</span>
+        <span class="brand-sub">Lupine Science</span>
       </span>
     </a>
     <div class="topbar-actions">
+      <a class="agent-link" href="/llms.txt">Agents</a>
       <button class="icon-btn" id="search-btn" aria-label="Search" data-i18n-aria="aria.search">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>

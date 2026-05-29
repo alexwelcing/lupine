@@ -1,6 +1,18 @@
-# Lupine — applied learning mechanics for atomistic ML
+# Lupine Science Start Page
 
-**The audit layer for the MLIP ecosystem — and the low-rank retraining target that compounds out of it.** Cross-potential geometric error analysis across ≈900 published interatomic potentials. Built on the sloppy-models lineage of Frederiksen, Jacobsen, Brown & Sethna (2004), Transtrum, Machta & Sethna (2011), Wen et al. (2017), and Kurniawan et al. (2022); read alongside Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026), it is one applied case of the emerging mechanics of learning.
+The TanStack Start app is the public research-program entry point for Lupine
+Science. Its front door should read as a serious orientation for materials
+labs, MLIP builders, university groups, national-lab teams, and research
+software collaborators.
+
+The page should make the science easy to understand before it asks for any
+commercial interpretation:
+
+- where interatomic potentials fail
+- why those failures have structure
+- how LUPI makes evidence inspectable
+- how the Lupine Library preserves the claim lifecycle
+- how observers can watch the evidence trail without a pitch-first surface
 
 ## Quick start
 
@@ -9,7 +21,7 @@ pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000).
 
 ## Architecture
 
@@ -17,36 +29,37 @@ Open [http://localhost:3000](http://localhost:3000)
 |-------|-----------|---------|
 | Frontend | TanStack Start, React 19, TypeScript | SSR, file-based routing, server functions |
 | Styling | Tailwind CSS v4, custom tokens | Theme-aware tokens, dark + light modes |
-| Animation | Framer Motion | Bespoke SVG visuals for the audit/accelerator/compounding cards, reduced-motion-aware |
-| Data | TanStack Query, Cloudflare Workers | Public manifest ledger, harden-stage telemetry |
-| Inspection | WebGPU (Atlas Viewer) | Browser-native exploration of the cross-potential error manifold |
+| Animation | Framer Motion | Reduced-motion-aware transitions and visual polish |
+| Data | TanStack Query, Cloudflare Workers | Public manifest ledger, live-lab telemetry |
+| Inspection | WebGPU (LUPI) | Browser-native exploration of atomistic evidence |
 | Engine | Rust + WASM (`atlas-distill`) | Single static binary, deterministic build, air-gap-compatible |
 
 ## Routes
 
 | Route | Description |
 |-------|-------------|
-| `/` | Hero + audit/accelerator/compounding cards with bespoke animated SVGs |
-| `/research` | IMMI preprint — cross-potential geometric error analysis with the full citation chain |
-| `/lineage` | Two parallel programs: sloppy-models materials science + learning mechanics |
-| `/pilots` | Three named wedges: solid-state electrolytes, Ni-base superalloys, electrocatalysis |
-| `/atlas-viewer` | WebGPU exploration of the manifold and customer trajectories |
-| `/investor-relations` | Audit-compounds-into-shortcut thesis, manifest, diligence answers |
-| `/about` | Mission, stack, milestones |
+| `/` | Lab-facing orientation: science question, science spine, evidence routes, observer signals |
+| `/research` | IMMI preprint and cross-potential geometric error analysis |
+| `/lineage` | Sloppy-models lineage, materials-science context, and learning-mechanics links |
+| `/pilots` | MLIP failure-geometry audit examples and bounded workflow scopes |
+| `/atlas-viewer` | LUPI route for browser-native evidence inspection |
+| `/investor-relations` | Secondary observer notes and diligence context |
+| `/about` | Mission, stack, and milestones |
 | `/proof` | Response to preprint critique |
-| `/process` | Operating report on the harden stage that sits behind the audit |
-| `/evolution` | Round-by-round trail of the harden stage |
+| `/process` | Operating report on the harden stage behind the evidence trail |
+| `/evolution` | Round-by-round research loop history |
 | `/console` | Tabular browser for the manifest ledger |
-| `/live` | Harden-stage telemetry feed |
-| `/ops` | Deployment telemetry (GitHub Actions) |
+| `/live` | Live lab telemetry and broadcasts |
+| `/ops` | Deployment telemetry |
 
-## Design system
+## Copy Guardrails
 
-Two visual modes, both anchored on the same tokens:
-- **Dark** — slate-950 surfaces, Lupine Blue (#3b82f6) primary.
-- **Light** — warm paper (#fef8f5) surfaces, Texas Bluebonnet (#475b9c) primary.
-
-Tokens in `src/styles/tokens.css`; component styles in `src/styles/components.css`. The bespoke visuals on `/` use theme-aware `var(--surface-container-low)` / `var(--on-surface-variant)` / `color-mix(...)` so they look right in both modes, and the flywheel respects `prefers-reduced-motion`.
+- Prefer lab-facing scientific orientation over generic pitch language.
+- Keep LUPI framed as an evidence inspection surface, not the whole product.
+- Keep the Lupine Library framed as the durable human knowledge surface.
+- Keep investor/observer context secondary to public evidence.
+- Use `Lupine Science`, `LUPI`, `Lupine Library`, and `https://lupi.live`.
+- Avoid retired organization names, legacy viewer labels, and retired domains.
 
 ## Build
 

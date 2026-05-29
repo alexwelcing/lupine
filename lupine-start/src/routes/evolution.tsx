@@ -7,13 +7,13 @@ export const Route = createFileRoute('/evolution')({
   component: EvolutionPage,
   head: () => ({
     meta: [
-      { title: 'The loop that caught itself — Lupine evolution report' },
+      { title: 'The loop that caught itself — Lupine Science evolution report' },
       {
         name: 'description',
         content:
           'How the harden stage of the Lupine audit layer organizes the manifest, hardens logic against statistical artifacts, and evaluates cross-potential claims — and how it has demonstrated self-correction by refuting two of its own hypotheses (one survived, one did not) using the same matched-n bootstrap method.',
       },
-      { property: 'og:title', content: 'The loop that caught itself — Lupine evolution report' },
+      { property: 'og:title', content: 'The loop that caught itself — Lupine Science evolution report' },
       {
         property: 'og:description',
         content:

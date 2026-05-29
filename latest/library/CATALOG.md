@@ -2,7 +2,7 @@
 
 > **Unified repository for LAMMPS molecular dynamics research data**
 > Integrating Chinese first-party sources with Western benchmark datasets
-> Optimized for ATLAS View WebGL visualization + Distiller AI research
+> Optimized for LUPI WebGL visualization + Distiller AI research
 
 ---
 

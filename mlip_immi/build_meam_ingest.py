@@ -11,7 +11,7 @@ NOTE_CLAIM_ID = "research_note_meam_bootstrap_2026_05_05"
 
 NOTE_MD = """# MEAM rank-3 anomaly is a sample-size confounder; the standalone "MEAM is sloppy in 2D" claim survives at full n
 
-**Lupine Materials Science · Research note · 2026-05-05**
+**Lupine Science · Research note · 2026-05-05**
 **Author:** A. Welcing (engine: glim-think v1, agent: alex-welcing+claude-opus-4-7)
 
 ---

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 /* ═══════════════════════════════════════════════════════════
-   ATLAS View — Real Data Viewer
+   LUPI — Real Data Viewer
    
    Rendering 120 atoms from dump.crack2d.lammpstrj
    2D crack propagation in an EAM copper crystal
