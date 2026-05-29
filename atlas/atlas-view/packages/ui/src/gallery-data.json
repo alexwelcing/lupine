@@ -6,7 +6,7 @@
     "domain": "Metals & Alloys",
     "atoms": "953,312",
     "frames": "1",
-    "file": "https://storage.googleapis.com/glim-datasets/sims/massive_1m.glimbin",
+    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/massive_1m.glimbin",
     "available": true,
     "colors": [
       "#b87333",
@@ -49,6 +49,7 @@
     "atoms": "864",
     "frames": "58",
     "file": "gallery/research/research_cu_benchmark.lammpstrj",
+    "colorBy": "error",
     "available": true,
     "colors": [
       "#b87333",
@@ -72,6 +73,7 @@
     "atoms": "1024",
     "frames": "55",
     "file": "gallery/research/research_fe_benchmark.lammpstrj",
+    "colorBy": "error",
     "available": true,
     "colors": [
       "#a0522d",
@@ -94,7 +96,7 @@
     "domain": "Advanced Theory & Validation",
     "atoms": "1,000",
     "frames": "30",
-    "file": "https://storage.googleapis.com/glim-datasets/sims/oscillation_timeseries.glimbin",
+    "file": "gallery/trajectories/oscillation_timeseries.glimbin",
     "available": true,
     "colors": [
       "#f542d4",
@@ -107,6 +109,81 @@
       "temperature": "Oscillating",
       "ensemble": "N/A",
       "reference": "Used to validate playback extrapolation logic."
+    },
+    "featured": true
+  },
+  {
+    "id": "mlip_ni_vacancy_playthrough",
+    "title": "Ni Vacancy Diffusion Playthrough",
+    "subtitle": "CHGNet Langevin MD of a Ni vacancy — 11 measured frames, interpolated on playback for smooth motion.",
+    "domain": "Defects & Mechanics",
+    "atoms": "107",
+    "frames": "11",
+    "isTrajectory": true,
+    "autoPlay": true,
+    "file": "mlip/chgnet-ni-fcc-vacancy-md-local-v1.json",
+    "available": true,
+    "colors": [
+      "#94a3b8",
+      "#f59e0b",
+      "#38bdf8"
+    ],
+    "metadata": {
+      "method": "CHGNet Langevin MD",
+      "potential": "CHGNet",
+      "temperature": "300 K",
+      "ensemble": "Langevin",
+      "reference": "Recovered MLIP long-run viewer artifact; 11 CHGNet-measured frames."
+    },
+    "featured": true
+  },
+  {
+    "id": "mlip_mg_slip_playthrough",
+    "title": "Mg HCP Slip Playthrough",
+    "subtitle": "CHGNet MD of HCP Mg slip — 13 measured frames, interpolated on playback for smooth motion.",
+    "domain": "Metals & Alloys",
+    "atoms": "96",
+    "frames": "13",
+    "isTrajectory": true,
+    "autoPlay": true,
+    "file": "mlip/chgnet-mg-hcp-slip-md-local-v1.json",
+    "available": true,
+    "colors": [
+      "#8aff00",
+      "#22d3ee",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "CHGNet MD",
+      "potential": "CHGNet",
+      "temperature": "300 K",
+      "ensemble": "Molecular dynamics",
+      "reference": "Recovered MLIP long-run viewer artifact; 13 CHGNet-measured frames."
+    },
+    "featured": true
+  },
+  {
+    "id": "mlip_lifepo4_li_channel",
+    "title": "LiFePO4 Ion Channel Playthrough",
+    "subtitle": "CHGNet MD of Li-channel motion in LiFePO4 — 9 measured frames, interpolated on playback for smooth motion.",
+    "domain": "Energy Materials",
+    "atoms": "28",
+    "frames": "9",
+    "isTrajectory": true,
+    "autoPlay": true,
+    "file": "mlip/chgnet-lifepo4-li-channel-md-local-v1.json",
+    "available": true,
+    "colors": [
+      "#cc80ff",
+      "#ff8a00",
+      "#ff3355"
+    ],
+    "metadata": {
+      "method": "CHGNet MD",
+      "potential": "CHGNet",
+      "temperature": "300 K",
+      "ensemble": "Molecular dynamics",
+      "reference": "Recovered MLIP long-run viewer artifact; 9 CHGNet-measured frames."
     },
     "featured": true
   },
@@ -163,9 +240,9 @@
     "title": "ZIF-8 Gate-Opening Transition",
     "subtitle": "F.X. Coudert et al. (Science 2023): Mechanical flexibility and gas-induced phase transition in Metal-Organic Frameworks.",
     "domain": "Polymers & Soft Matter",
-    "atoms": "8,500",
+    "atoms": "540",
     "frames": "120",
-    "file": "archive/zif8_gate_opening.lammpstrj",
+    "file": "gallery/trajectories/zif8_gate_opening.xyz",
     "available": true,
     "colors": [
       "#4363d8",

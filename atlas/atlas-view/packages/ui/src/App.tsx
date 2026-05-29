@@ -961,22 +961,35 @@ export default function App() {
   const bg = resolveBackground(backgroundPreset, colormap);
   const bgMedia = bg.media;
   const isBatchExport = new URLSearchParams(window.location.search).get('batchExport') === 'true';
+  const panelWidth = activePanel === 'mlipLongRun'
+    ? 390
+    : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320);
+  const mobilePanelHeight = 'clamp(232px, 32dvh, 300px)';
+  const mobileStudioDeckHeight = 'clamp(220px, 31dvh, 288px)';
+  const desktopStudioDeckHeight = 'min(38vh, 330px)';
+  const sceneRightInset = file && activePanel && !isMobile ? panelWidth : 0;
+  const sceneBottomInset = file && activePanel && isMobile ? mobilePanelHeight : 0;
   const toolbarBottom = totalFrames > 1 ? 84 : 32;
   const studioDeckBottom = toolbarBottom + 64;
+  const studioDeckCanvasReserve = file && !activePanel && studioDeck
+    ? `calc(${isMobile ? mobileStudioDeckHeight : desktopStudioDeckHeight} + ${studioDeckBottom + 16}px)`
+    : '0px';
 
   return (
     <div style={{
       width: '100%', minHeight: '100vh',
-      height: file ? '100vh' : 'auto',
+      height: file ? '100dvh' : 'auto',
       overflow: file ? 'hidden' : 'visible',
       background: `linear-gradient(180deg, ${bg.top}, ${bg.bottom})`,
       display: 'flex', flexDirection: 'column',
     }}>
       {/* ─── Desktop Header ─── */}
       <header style={{
-        height: 56, flexShrink: 0,
+        height: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
+        minHeight: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
+        flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 20px',
+        padding: isMobile ? 'env(safe-area-inset-top) 12px 0' : '0 20px',
         borderBottom: '1px solid var(--border-subtle)',
         background: 'var(--bg-glass)',
         backdropFilter: 'blur(12px)',
@@ -1176,15 +1189,18 @@ export default function App() {
       </header>
 
       {/* ─── Main content ─── */}
-      <div style={{ flex: 1, display: 'flex', position: 'relative' }}>
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', position: 'relative' }}>
         <McpViewerBridge />
         {isMcpViewerRoute && <McpViewerHarness />}
         {/* 3D viewport */}
         <div style={{ 
           position: file ? 'absolute' : 'fixed', 
-          inset: 0, 
           top: file ? 0 : 56, // below header when fixed
-          zIndex: 0 
+          right: sceneRightInset,
+          bottom: sceneBottomInset,
+          left: 0,
+          zIndex: 0,
+          transition: 'right 180ms ease, bottom 180ms ease',
         }}>
           <Canvas
             camera={{
@@ -1202,7 +1218,14 @@ export default function App() {
               // r182 deprecates PCFSoftShadowMap; PCFShadowMap is now soft.
               gl.shadowMap.type = THREE.PCFShadowMap;
             }}
-            style={{ background: 'transparent' }}
+            style={{
+              background: 'transparent',
+              display: 'block',
+              width: '100%',
+              height: studioDeckCanvasReserve === '0px' ? '100%' : `calc(100% - ${studioDeckCanvasReserve})`,
+              minHeight: studioDeckCanvasReserve === '0px' ? undefined : 180,
+              transition: 'height 180ms ease',
+            }}
           >
             {import.meta.env.DEV && showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
             {(import.meta.env.DEV || showDebugHud) && <DevProbe enabled={showDebugHud} />}
@@ -1606,14 +1629,22 @@ export default function App() {
             right: 0,
             bottom: 0,
             left: isMobile ? 0 : 'auto',
-            width: isMobile ? '100%' : (activePanel === 'mlipLongRun' ? 390 : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320)),
-            height: isMobile ? '55vh' : 'auto',
+            width: isMobile ? '100%' : panelWidth,
+            height: isMobile ? mobilePanelHeight : 'auto',
+            maxHeight: isMobile ? mobilePanelHeight : 'none',
+            boxSizing: 'border-box',
             borderLeft: isMobile ? 'none' : '1px solid var(--border-subtle)',
             borderTop: isMobile ? '1px solid var(--border-subtle)' : 'none',
+            borderTopLeftRadius: isMobile ? 8 : 0,
+            borderTopRightRadius: isMobile ? 8 : 0,
             background: isMobile ? 'var(--bg-glass)' : 'var(--bg-surface)',
             backdropFilter: isMobile ? 'blur(16px)' : 'none',
             WebkitBackdropFilter: isMobile ? 'blur(16px)' : 'none',
-            overflowY: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            overflowY: activePanel === 'export' ? 'hidden' : 'auto',
+            paddingBottom: isMobile ? 'env(safe-area-inset-bottom)' : 0,
+            boxShadow: isMobile ? '0 -18px 48px rgba(0,0,0,0.45)' : 'none',
             zIndex: 100,
             animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
           }}>

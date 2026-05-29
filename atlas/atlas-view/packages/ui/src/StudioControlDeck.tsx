@@ -174,9 +174,12 @@ export function StudioControlDeck({
         .lupi-rive-flash {
           animation: lupi-rive-flash 150ms ease-out forwards;
         }
+        .lupi-studio-deck {
+          --lupi-studio-deck-max-height: min(38vh, 330px);
+        }
         @media (max-width: 768px) {
           .lupi-studio-deck {
-            max-height: min(43vh, 330px);
+            --lupi-studio-deck-max-height: clamp(220px, 31dvh, 288px);
           }
           .lupi-studio-knobs {
             grid-template-columns: repeat(3, minmax(82px, 1fr));
@@ -188,7 +191,7 @@ export function StudioControlDeck({
         style={{
           pointerEvents: 'auto',
           width: 'min(940px, calc(100vw - 24px))',
-          maxHeight: 'min(48vh, 380px)',
+          maxHeight: 'var(--lupi-studio-deck-max-height)',
           overflowY: 'auto',
           scrollbarWidth: 'none',
           border: '1px solid rgba(255,255,255,0.12)',

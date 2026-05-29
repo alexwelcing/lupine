@@ -7,7 +7,7 @@
  * or `clicked` transition state. The decorative GPU-unlock overlay and
  * micro-effects layer were removed entirely.
  */
-import type { ReactNode, InputHTMLAttributes, ChangeEvent } from 'react';
+import { useEffect, useState, type ReactNode, type InputHTMLAttributes, type ChangeEvent } from 'react';
 
 // ─── Slider ────────────────────────────────────────────────────────────
 interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -72,27 +72,48 @@ interface ToolButtonProps {
   onClick: () => void;
 }
 
+function useCompactControls() {
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 768px)');
+    const update = () => setCompact(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  return compact;
+}
+
 export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
+  const compact = useCompactControls();
   return (
     <button
       onClick={onClick}
       title={label}
+      aria-label={label}
       aria-pressed={active}
       style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+        display: 'flex',
+        flexDirection: compact ? 'column' : 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: compact ? 3 : 8,
         width: '100%',
+        minHeight: compact ? 56 : 40,
         minWidth: 0,
-        padding: '7px 12px',
+        padding: compact ? '6px 4px' : '7px 12px',
         borderRadius: 0,
         border: active ? '1px solid #1edce0' : '1px solid rgba(255,255,255,0.1)',
         background: active ? 'rgba(30, 220, 224, 0.16)' : 'rgba(0,0,0,0.42)',
         color: active ? '#1edce0' : 'rgba(255,255,255,0.9)',
         cursor: 'pointer',
         transition: 'background 100ms ease-out, border-color 100ms ease-out, color 100ms ease-out',
-        fontSize: 13,
+        fontSize: compact ? 10 : 13,
         fontWeight: 600,
+        lineHeight: compact ? 1.05 : 1.2,
         flexShrink: 1,
         backdropFilter: 'blur(12px)',
+        touchAction: 'manipulation',
       }}
       onMouseEnter={(e) => {
         if (!active) {
@@ -111,9 +132,9 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 28,
-        height: 24,
-        flex: '0 0 28px',
+        width: compact ? 24 : 28,
+        height: compact ? 22 : 24,
+        flex: compact ? '0 0 22px' : '0 0 28px',
         color: active ? '#061316' : '#1edce0',
         background: active ? '#1edce0' : 'rgba(30, 220, 224, 0.06)',
         border: active ? '1px solid #1edce0' : '1px solid rgba(30, 220, 224, 0.28)',
@@ -121,7 +142,15 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
       }}>
         {icon}
       </span>
-      <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+      <span style={{
+        minWidth: 0,
+        maxWidth: '100%',
+        overflow: 'hidden',
+        textOverflow: compact ? 'clip' : 'ellipsis',
+        whiteSpace: compact ? 'normal' : 'nowrap',
+        textAlign: 'center',
+        overflowWrap: 'anywhere',
+      }}>{label}</span>
     </button>
   );
 }

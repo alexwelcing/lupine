@@ -426,8 +426,13 @@ export async function parseFile(file: File): Promise<{
     return { trajectory };
   }
 
-  if (type === 'dump' || type === 'unknown') {
-    // Try dump first, fall back to log, then xyz
+  if (type === 'dump') {
+    const trajectory = await parseDumpFile(file);
+    return { trajectory };
+  }
+
+  if (type === 'unknown') {
+    // Unknown extensions can still be dumps, logs, or xyz files.
     try {
       const trajectory = await parseDumpFile(file);
       return { trajectory };

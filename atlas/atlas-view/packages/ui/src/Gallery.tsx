@@ -1,9 +1,8 @@
 /**
  * Gallery — curated simulation showcase.
  *
- * Each card shows a real rendered snapshot, with a procedural canvas
- * fallback if the snapshot is missing. Clicking loads the trajectory
- * into the viewer.
+ * Fast scene browser for curated structures and trajectories. The list stays
+ * light; only the focused scene renders a large preview.
  */
 
 import { useCallback, useRef, useEffect, useState, useMemo, useDeferredValue } from 'react';
@@ -37,6 +36,14 @@ interface GalleryExample {
   atoms: string;
   frames: string;
   isTrajectory?: boolean;
+  autoPlay?: boolean;
+  /**
+   * Per-atom property this scene is curated to be read through (e.g. 'error'
+   * for the NIST potential benchmarks). Element identity is the global
+   * first-read default; this opts a curated scene into its intended view so
+   * the subtitle's "color by error" promise is what you actually see.
+   */
+  colorBy?: string;
   file: string;
   sourceUrl?: string;
   available: boolean;
@@ -83,6 +90,10 @@ const DOMAIN_THREAD: Record<Domain, string> = {
 
 const ALL_DOMAINS = Object.keys(DOMAIN_COLORS) as Domain[];
 
+type SourceFilter = 'All Sources' | 'Featured' | 'Trajectories' | 'Snapshots' | 'Open Data';
+
+const SOURCE_FILTERS: SourceFilter[] = ['All Sources', 'Featured', 'Trajectories', 'Snapshots', 'Open Data'];
+
 function publicAssetUrl(path: string): string {
   if (path.startsWith('http://') || path.startsWith('https://')) return path;
   const base = (import.meta as any).env?.BASE_URL || '/';
@@ -93,6 +104,14 @@ function publicAssetUrl(path: string): string {
 
 function gallerySnapshotUrl(id: string): string {
   return publicAssetUrl(`gallery/snapshots/${id}.jpg`);
+}
+
+function parseFrameCountLabel(label: string | undefined): number {
+  if (!label) return 0;
+  const digits = label.replace(/[^\d]/g, '');
+  if (!digits) return 0;
+  const n = parseInt(digits, 10);
+  return Number.isFinite(n) ? n : 0;
 }
 
 function resolveExampleUrl(example: GalleryExample): string {
@@ -116,176 +135,1232 @@ function maybeDevStorageProxy(url: string): string {
   }
 }
 
-// ─── Shared styles ──────────────────────────────────────────────────────
+function isOpenDataExample(example: GalleryExample): boolean {
+  return Boolean(
+    example.sourceUrl
+    || example.file.startsWith('http://')
+    || example.metadata?.doi
+    || /NIST|Nature|OpenKIM|Materials Project|Zenodo|GCS|benchmark/i.test(
+      [
+        example.metadata?.method,
+        example.metadata?.potential,
+        example.metadata?.reference,
+        example.subtitle,
+      ].filter(Boolean).join(' '),
+    ),
+  );
+}
 
-const sQuilt: React.CSSProperties = {
-  width: '100%',
-  maxWidth: 1400,
-  margin: '0 auto',
-  padding: '0 24px 40px',
+function matchesSourceFilter(example: GalleryExample, sourceFilter: SourceFilter): boolean {
+  if (sourceFilter === 'All Sources') return true;
+  if (sourceFilter === 'Featured') return Boolean(example.featured);
+  if (sourceFilter === 'Trajectories') return parseFrameCountLabel(example.frames) > 1;
+  if (sourceFilter === 'Snapshots') return parseFrameCountLabel(example.frames) <= 1;
+  return isOpenDataExample(example);
+}
+
+type PreviewAtom = {
+  element: string;
+  x: number;
+  y: number;
+  z: number;
 };
 
-const sHeader: React.CSSProperties = {
-  display: 'flex',
-  flexWrap: 'wrap' as const,
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: 16,
-  marginBottom: 24,
-  padding: '20px 0',
-  borderBottom: '2px dashed rgba(255,255,255,0.08)',
+type ProjectedAtom = PreviewAtom & {
+  color: string;
+  radius: number;
+  screenX: number;
+  screenY: number;
+  depth: number;
 };
 
-const sHeaderTitle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 14,
+const LIVE_PREVIEW_ATOM_LIMIT = 1200;
+const LIVE_PREVIEW_BOND_LIMIT = 260;
+
+const CPK_COLORS: Record<string, string> = {
+  H: '#f8fafc',
+  C: '#9ca3af',
+  N: '#3050f8',
+  O: '#ff3355',
+  F: '#90e050',
+  P: '#ff8a00',
+  S: '#ffd92e',
+  Cl: '#1ff01f',
+  Li: '#cc80ff',
+  Na: '#ab5cf2',
+  Mg: '#8aff00',
+  Al: '#b8b8b8',
+  Si: '#f0c8a0',
+  K: '#8f40d4',
+  Ca: '#3dff00',
+  Ti: '#bfc2c7',
+  Fe: '#e06633',
+  Cu: '#c78033',
+  Zn: '#7d80b0',
+  Zr: '#94e0e0',
 };
 
-const sHeaderIcon: React.CSSProperties = {
-  width: 40,
-  height: 40,
-  borderRadius: 10,
-  background: 'rgba(255,255,255,0.04)',
-  border: '1.5px dashed rgba(255,255,255,0.15)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'rgba(255,255,255,0.7)',
-  flexShrink: 0,
+const PREVIEW_RADII: Record<string, number> = {
+  H: 0.42,
+  C: 0.72,
+  N: 0.68,
+  O: 0.66,
+  F: 0.64,
+  P: 0.86,
+  S: 0.82,
+  Cl: 0.80,
+  Si: 0.88,
+  Al: 0.92,
+  Fe: 0.88,
+  Cu: 0.86,
+  Zn: 0.86,
+  Zr: 0.98,
 };
 
-const sHeading: React.CSSProperties = {
-  margin: 0,
-  fontSize: 20,
-  fontWeight: 600,
-  color: '#f8fafc',
-  letterSpacing: '-0.02em',
-};
+function canUseLivePreview(example: GalleryExample): boolean {
+  return (
+    example.available
+    && /\.xyz$/i.test(example.file)
+    && parseAtomCountLabel(example.atoms) <= LIVE_PREVIEW_ATOM_LIMIT
+  );
+}
 
-const sSub: React.CSSProperties = {
-  margin: '2px 0 0',
-  fontSize: 13,
-  color: 'rgba(255,255,255,0.4)',
-};
+function parsePreviewXyz(text: string, atomLimit = LIVE_PREVIEW_ATOM_LIMIT): PreviewAtom[] {
+  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  if (lines.length < 3) return [];
 
-const sSearch: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 10,
-  padding: '8px 14px',
-  borderRadius: 8,
-  background: 'rgba(255,255,255,0.03)',
-  border: '1.5px dashed rgba(255,255,255,0.1)',
-  color: 'rgba(255,255,255,0.5)',
-  minWidth: 240,
-  transition: 'border-color 0.2s, background 0.2s',
-};
+  const declaredCount = Number.parseInt(lines[0], 10);
+  const atomLines = Number.isFinite(declaredCount) && declaredCount > 0
+    ? lines.slice(2, 2 + Math.min(declaredCount, atomLimit))
+    : lines.slice(0, atomLimit);
 
-const sSearchInput: React.CSSProperties = {
-  background: 'transparent',
-  border: 'none',
-  outline: 'none',
-  color: '#f8fafc',
-  fontSize: 14,
-  flex: 1,
-  fontFamily: 'inherit',
-};
+  const atoms: PreviewAtom[] = [];
+  for (const line of atomLines) {
+    const parts = line.split(/\s+/);
+    if (parts.length < 4) continue;
+    const x = Number.parseFloat(parts[1]);
+    const y = Number.parseFloat(parts[2]);
+    const z = Number.parseFloat(parts[3]);
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) continue;
+    atoms.push({ element: normalizeElement(parts[0]), x, y, z });
+  }
+  return atoms;
+}
 
-const sRibbon: React.CSSProperties = {
-  display: 'flex',
-  flexWrap: 'wrap' as const,
-  gap: 6,
-  marginBottom: 28,
-  padding: '12px 16px',
-  background: 'rgba(255,255,255,0.015)',
-  borderRadius: 10,
-  border: '1.5px dashed rgba(255,255,255,0.06)',
-};
+function normalizeElement(element: string): string {
+  if (!element) return 'C';
+  const clean = element.replace(/[^a-z]/gi, '');
+  if (!clean) return 'C';
+  return clean.length === 1
+    ? clean.toUpperCase()
+    : `${clean[0].toUpperCase()}${clean.slice(1, 2).toLowerCase()}`;
+}
 
-const sRibbonTab = (active: boolean, threadColor: string): React.CSSProperties => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 6,
-  padding: '6px 12px',
-  borderRadius: 6,
-  fontSize: 12,
-  fontWeight: active ? 600 : 500,
-  color: active ? '#f8fafc' : 'rgba(255,255,255,0.45)',
-  background: active ? 'rgba(255,255,255,0.06)' : 'transparent',
-  border: active ? `1.5px dashed ${threadColor}` : '1.5px dashed transparent',
-  cursor: 'pointer',
-  transition: 'all 0.2s ease',
-  userSelect: 'none',
-});
+function normalizePreviewAtoms(atoms: PreviewAtom[]): PreviewAtom[] {
+  if (!atoms.length) return atoms;
+  const bounds = atoms.reduce(
+    (acc, atom) => ({
+      minX: Math.min(acc.minX, atom.x),
+      maxX: Math.max(acc.maxX, atom.x),
+      minY: Math.min(acc.minY, atom.y),
+      maxY: Math.max(acc.maxY, atom.y),
+      minZ: Math.min(acc.minZ, atom.z),
+      maxZ: Math.max(acc.maxZ, atom.z),
+    }),
+    {
+      minX: Infinity,
+      maxX: -Infinity,
+      minY: Infinity,
+      maxY: -Infinity,
+      minZ: Infinity,
+      maxZ: -Infinity,
+    },
+  );
+  const cx = (bounds.minX + bounds.maxX) / 2;
+  const cy = (bounds.minY + bounds.maxY) / 2;
+  const cz = (bounds.minZ + bounds.maxZ) / 2;
+  const span = Math.max(
+    bounds.maxX - bounds.minX,
+    bounds.maxY - bounds.minY,
+    bounds.maxZ - bounds.minZ,
+    1,
+  );
+  return atoms.map((atom) => ({
+    ...atom,
+    x: (atom.x - cx) / span,
+    y: (atom.y - cy) / span,
+    z: (atom.z - cz) / span,
+  }));
+}
 
-const sRibbonDot: React.CSSProperties = {
-  width: 7,
-  height: 7,
-  borderRadius: '50%',
-  flexShrink: 0,
-};
+function detectPreviewBonds(atoms: PreviewAtom[]): [number, number][] {
+  if (atoms.length > 220) return [];
+  const bonds: [number, number][] = [];
+  for (let i = 0; i < atoms.length; i++) {
+    for (let j = i + 1; j < atoms.length; j++) {
+      const dx = atoms[i].x - atoms[j].x;
+      const dy = atoms[i].y - atoms[j].y;
+      const dz = atoms[i].z - atoms[j].z;
+      const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      const ri = PREVIEW_RADII[atoms[i].element] ?? 0.76;
+      const rj = PREVIEW_RADII[atoms[j].element] ?? 0.76;
+      const threshold = Math.max(1.15, Math.min(2.15, (ri + rj) * 1.24));
+      if (distance <= threshold) {
+        bonds.push([i, j]);
+        if (bonds.length >= LIVE_PREVIEW_BOND_LIMIT) return bonds;
+      }
+    }
+  }
+  return bonds;
+}
 
-const sRibbonCount: React.CSSProperties = {
-  fontSize: 10,
-  padding: '1px 5px',
-  borderRadius: 4,
-  background: 'rgba(255,255,255,0.06)',
-  color: 'rgba(255,255,255,0.4)',
-  fontWeight: 500,
-};
+function seededOffset(id: string): number {
+  return id.split('').reduce((sum, char, index) => sum + char.charCodeAt(0) * (index + 1), 0) % 997;
+}
 
-const sSection: React.CSSProperties = {
-  marginBottom: 32,
-};
+const GALLERY_STUDIO_CSS = `
+  .lupi-gallery {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+    color: #f8fafc;
+  }
+  .lupi-gallery-hero {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    text-align: center;
+    padding: 26px 0 34px;
+  }
+  .lupi-gallery-eyebrow {
+    color: rgba(125, 211, 252, 0.82);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-title {
+    margin: 0;
+    font-size: clamp(34px, 5vw, 58px);
+    font-weight: 300;
+    line-height: 0.96;
+    letter-spacing: 0;
+  }
+  .lupi-gallery-copy {
+    max-width: 680px;
+    margin: 0;
+    color: rgba(226, 232, 240, 0.62);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .lupi-gallery-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .lupi-gallery-stat {
+    min-width: 118px;
+    padding: 0 14px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .lupi-gallery-stat:last-child {
+    border-right: 0;
+  }
+  .lupi-gallery-stat-value {
+    display: block;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 560;
+    line-height: 1.1;
+  }
+  .lupi-gallery-stat-label {
+    display: block;
+    margin-top: 4px;
+    color: rgba(203, 213, 225, 0.52);
+    font-size: 12px;
+  }
+  .lupi-gallery-controls {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: 0 -24px 30px;
+    padding: 14px 24px;
+    background: rgba(8, 11, 18, 0.93);
+    border-block: 1px solid rgba(255,255,255,0.07);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .lupi-gallery-controls-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+  }
+  .lupi-gallery-search {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .lupi-gallery-search svg {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(226,232,240,0.34);
+    pointer-events: none;
+  }
+  .lupi-gallery-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 44px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.045);
+    color: #f8fafc;
+    font: inherit;
+    font-size: 15px;
+    outline: none;
+  }
+  .lupi-gallery-search input:focus {
+    border-color: rgba(30, 220, 224, 0.62);
+    box-shadow: 0 0 0 1px rgba(30, 220, 224, 0.22);
+  }
+  .lupi-gallery-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(226,232,240,0.74);
+    cursor: pointer;
+  }
+  .lupi-gallery-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+  }
+  .lupi-gallery-chips {
+    display: flex;
+    gap: 8px;
+    min-width: 0;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .lupi-gallery-chips::-webkit-scrollbar {
+    display: none;
+  }
+  .lupi-gallery-chip {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.035);
+    color: rgba(226,232,240,0.66);
+    font-size: 12px;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .lupi-gallery-chip[data-active="true"] {
+    color: #fff;
+    border-color: var(--chip-color, rgba(30,220,224,0.55));
+    background: color-mix(in srgb, var(--chip-color, #1edce0) 16%, transparent);
+  }
+  .lupi-gallery-chip-count {
+    color: rgba(226,232,240,0.42);
+    font-size: 10px;
+  }
+  .lupi-gallery-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+  .lupi-gallery-select {
+    min-width: 142px;
+    padding: 8px 11px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.045);
+    color: rgba(226,232,240,0.78);
+    font: inherit;
+    font-size: 12px;
+    outline: none;
+  }
+  .lupi-gallery-view-toggle {
+    display: inline-flex;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.035);
+  }
+  .lupi-gallery-view-toggle button {
+    display: grid;
+    place-items: center;
+    width: 35px;
+    height: 34px;
+    border: 0;
+    background: transparent;
+    color: rgba(226,232,240,0.44);
+    cursor: pointer;
+  }
+  .lupi-gallery-view-toggle button[data-active="true"] {
+    background: #1edce0;
+    color: #061316;
+  }
+  .lupi-gallery-section-title {
+    margin: 0 0 18px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 380;
+    letter-spacing: 0;
+  }
+  .lupi-gallery-domain-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 44px;
+  }
+  .lupi-gallery-domain-card {
+    min-height: 148px;
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.032);
+    color: #f8fafc;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  }
+  .lupi-gallery-domain-card:hover,
+  .lupi-gallery-domain-card[data-active="true"] {
+    border-color: color-mix(in srgb, var(--domain-color, #1edce0) 58%, transparent);
+    background: color-mix(in srgb, var(--domain-color, #1edce0) 10%, rgba(255,255,255,0.035));
+    box-shadow: 0 14px 34px rgba(0,0,0,0.22);
+  }
+  .lupi-gallery-domain-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .lupi-gallery-domain-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    color: var(--domain-color, #1edce0);
+    background: color-mix(in srgb, var(--domain-color, #1edce0) 13%, transparent);
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .lupi-gallery-domain-count {
+    color: rgba(226,232,240,0.42);
+    font-size: 12px;
+  }
+  .lupi-gallery-domain-card h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 620;
+  }
+  .lupi-gallery-domain-card p {
+    margin: 0;
+    color: rgba(203,213,225,0.58);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .lupi-gallery-results-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 18px;
+  }
+  .lupi-gallery-results-head p {
+    margin: 4px 0 0;
+    color: rgba(203,213,225,0.52);
+    font-size: 13px;
+  }
+  .lupi-gallery-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .lupi-gallery-results-list {
+    display: grid;
+    gap: 12px;
+  }
+  .lupi-gallery-card {
+    --thread-color: #1edce0;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.035);
+    color: #f8fafc;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  }
+  .lupi-gallery-card:hover,
+  .lupi-gallery-card[data-hovered="true"] {
+    border-color: color-mix(in srgb, var(--thread-color) 58%, transparent);
+    background: rgba(255,255,255,0.052);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--thread-color) 22%, transparent), 0 14px 32px rgba(0,0,0,0.28);
+  }
+  .lupi-gallery-card:disabled {
+    opacity: 0.46;
+    cursor: not-allowed;
+  }
+  .lupi-gallery-card-list {
+    display: grid;
+    grid-template-columns: 148px minmax(0, 1fr) auto;
+    align-items: stretch;
+    min-height: 134px;
+  }
+  .lupi-gallery-thumb {
+    position: relative;
+    height: 168px;
+    overflow: hidden;
+    background: #050508;
+  }
+  .lupi-gallery-card-list .lupi-gallery-thumb {
+    height: auto;
+    min-height: 134px;
+  }
+  .lupi-gallery-thumb img,
+  .lupi-gallery-thumb canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lupi-gallery-thumb img {
+    z-index: 1;
+    filter: saturate(0.92) contrast(1.04);
+    transition: opacity 180ms ease, transform 220ms ease, filter 220ms ease;
+  }
+  .lupi-gallery-card:hover .lupi-gallery-thumb img,
+  .lupi-gallery-card[data-hovered="true"] .lupi-gallery-thumb img {
+    transform: scale(1.018);
+    filter: saturate(1.05) contrast(1.08);
+  }
+  .lupi-gallery-live-preview {
+    z-index: 3;
+    background: #050508;
+  }
+  .lupi-gallery-fallback-preview {
+    z-index: 2;
+  }
+  .lupi-gallery-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 36%, transparent 0 45%, rgba(0,0,0,0.18) 78%),
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.20));
+  }
+  .lupi-gallery-card-body {
+    padding: 16px;
+    display: grid;
+    gap: 8px;
+  }
+  .lupi-gallery-card-list .lupi-gallery-card-body {
+    align-content: center;
+  }
+  .lupi-gallery-card-kicker {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(226,232,240,0.52);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-card-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--domain-color, #1edce0);
+  }
+  .lupi-gallery-card h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 610;
+    line-height: 1.25;
+  }
+  .lupi-gallery-card p {
+    margin: 0;
+    color: rgba(203,213,225,0.56);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .lupi-gallery-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .lupi-gallery-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 22px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.055);
+    color: rgba(226,232,240,0.62);
+    font-size: 11px;
+    font-weight: 620;
+  }
+  .lupi-gallery-tag-live {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.09);
+  }
+  .lupi-gallery-meta {
+    display: grid;
+    gap: 2px;
+    color: rgba(203,213,225,0.42);
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .lupi-gallery-card-action {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    color: rgba(226,232,240,0.32);
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+  .lupi-gallery-card-list .lupi-gallery-card-action {
+    display: flex;
+  }
+  .lupi-gallery-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: rgba(3,5,10,0.86);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    color: rgba(226,232,240,0.78);
+    font-size: 12px;
+    font-weight: 650;
+  }
+  .lupi-gallery-progress {
+    width: min(220px, 72%);
+    height: 4px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.12);
+  }
+  .lupi-gallery-progress > span {
+    display: block;
+    height: 100%;
+    background: var(--thread-color, #1edce0);
+    transition: width 180ms ease;
+  }
+  .lupi-gallery-empty {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding: 72px 24px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.028);
+  }
+  .lupi-gallery-empty-title {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 620;
+  }
+  .lupi-gallery-empty p {
+    margin: 0;
+    max-width: 420px;
+    color: rgba(203,213,225,0.58);
+    font-size: 13px;
+  }
+  .lupi-gallery-empty button {
+    margin-top: 8px;
+    padding: 9px 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    color: #f8fafc;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  @media (max-width: 980px) {
+    .lupi-gallery-domain-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 720px) {
+    .lupi-gallery {
+      padding: 0 16px 34px;
+    }
+    .lupi-gallery-hero {
+      padding-top: 18px;
+      text-align: left;
+      justify-items: stretch;
+    }
+    .lupi-gallery-stats {
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    .lupi-gallery-stat {
+      min-width: calc(50% - 4px);
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.028);
+    }
+    .lupi-gallery-controls {
+      margin-inline: -16px;
+      padding-inline: 16px;
+    }
+    .lupi-gallery-filter-row {
+      align-items: stretch;
+      flex-direction: column;
+    }
+    .lupi-gallery-actions {
+      justify-content: space-between;
+    }
+    .lupi-gallery-select {
+      flex: 1;
+      min-width: 0;
+    }
+    .lupi-gallery-domain-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+    .lupi-gallery-domain-card {
+      min-height: 116px;
+    }
+    .lupi-gallery-results-head {
+      align-items: start;
+      flex-direction: column;
+    }
+    .lupi-gallery-results-grid {
+      grid-template-columns: 1fr;
+    }
+    .lupi-gallery-card-list {
+      grid-template-columns: 112px minmax(0, 1fr);
+    }
+    .lupi-gallery-card-list .lupi-gallery-card-action {
+      display: none;
+    }
+    .lupi-gallery-card-list .lupi-gallery-thumb {
+      min-height: 126px;
+    }
+    .lupi-gallery-card h4 {
+      font-size: 15px;
+    }
+  }
 
-const sSectionHeader: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 10,
-  marginBottom: 16,
-  paddingBottom: 10,
-  borderBottom: '1px solid rgba(255,255,255,0.04)',
-};
-
-const sSectionThread = (color: string): React.CSSProperties => ({
-  width: 3,
-  height: 20,
-  borderRadius: 2,
-  background: color,
-  flexShrink: 0,
-});
-
-const sSectionTitle: React.CSSProperties = {
-  margin: 0,
-  fontSize: 14,
-  fontWeight: 600,
-  color: '#f8fafc',
-};
-
-const sSectionCount: React.CSSProperties = {
-  marginLeft: 'auto',
-  fontSize: 12,
-  color: 'rgba(255,255,255,0.35)',
-};
-
-const sSectionMore: React.CSSProperties = {
-  marginLeft: 8,
-  fontSize: 12,
-  color: 'rgba(255,255,255,0.45)',
-  cursor: 'pointer',
-  background: 'none',
-  border: 'none',
-  padding: '2px 8px',
-  borderRadius: 4,
-  transition: 'color 0.2s, background 0.2s',
-};
-
-const sGrid: React.CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-  gap: 16,
-};
+  .lupi-gallery-fast {
+    max-width: 1760px;
+    padding: 16px clamp(12px, 2.2vw, 28px) 42px;
+  }
+  .lupi-gallery-workbench {
+    display: grid;
+    grid-template-columns: minmax(230px, 280px) minmax(380px, 1fr) minmax(300px, 390px);
+    gap: 14px;
+    align-items: start;
+  }
+  .lupi-gallery-rail,
+  .lupi-gallery-index,
+  .lupi-gallery-spotlight {
+    min-width: 0;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    background: rgba(7, 9, 14, 0.72);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.20);
+  }
+  .lupi-gallery-rail {
+    position: sticky;
+    top: 12px;
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+  }
+  .lupi-gallery-rail-head h2 {
+    margin: 5px 0 5px;
+    font-size: 24px;
+    font-weight: 540;
+    line-height: 1.05;
+  }
+  .lupi-gallery-rail-head p {
+    margin: 0;
+    color: rgba(203,213,225,0.58);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .lupi-gallery-fast-search input {
+    padding-block: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .lupi-gallery-source-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .lupi-gallery-source-tabs button {
+    min-height: 34px;
+    padding: 6px 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.032);
+    color: rgba(226,232,240,0.62);
+    font-size: 11px;
+    font-weight: 680;
+    cursor: pointer;
+  }
+  .lupi-gallery-source-tabs button[data-active="true"] {
+    border-color: rgba(30,220,224,0.56);
+    background: rgba(30,220,224,0.12);
+    color: #eaffff;
+  }
+  .lupi-gallery-domain-menu {
+    display: grid;
+    gap: 5px;
+  }
+  .lupi-gallery-domain-row {
+    display: grid;
+    grid-template-columns: 12px minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 7px 8px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(226,232,240,0.66);
+    text-align: left;
+    cursor: pointer;
+  }
+  .lupi-gallery-domain-row[data-active="true"],
+  .lupi-gallery-domain-row:hover {
+    border-color: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.045);
+    color: #fff;
+  }
+  .lupi-gallery-domain-mark {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .lupi-gallery-domain-row span:nth-child(2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 620;
+  }
+  .lupi-gallery-domain-row em,
+  .lupi-gallery-domain-row strong {
+    color: rgba(203,213,225,0.42);
+    font-size: 11px;
+    font-style: normal;
+  }
+  .lupi-gallery-index {
+    padding: 16px;
+  }
+  .lupi-gallery-index-head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .lupi-gallery-index-head h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 520;
+  }
+  .lupi-gallery-index-head p {
+    margin: 4px 0 0;
+    color: rgba(203,213,225,0.54);
+    font-size: 12px;
+  }
+  .lupi-gallery-fast-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .lupi-gallery-fast-stats span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.045);
+    color: rgba(226,232,240,0.55);
+    font-size: 11px;
+    font-weight: 620;
+  }
+  .lupi-gallery-fast-stats strong {
+    color: #fff;
+    font-size: 13px;
+  }
+  .lupi-gallery-playlist {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    margin-bottom: 12px;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+  .lupi-gallery-playlist button {
+    flex: 0 0 168px;
+    display: grid;
+    gap: 4px;
+    min-height: 58px;
+    padding: 9px 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.032);
+    color: rgba(226,232,240,0.7);
+    text-align: left;
+    cursor: pointer;
+  }
+  .lupi-gallery-playlist button[data-active="true"],
+  .lupi-gallery-playlist button:hover {
+    border-color: rgba(52,211,153,0.55);
+    background: rgba(52,211,153,0.095);
+    color: #f8fffb;
+  }
+  .lupi-gallery-playlist span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 650;
+  }
+  .lupi-gallery-playlist strong {
+    color: #34d399;
+    font-size: 11px;
+  }
+  .lupi-gallery-result-table {
+    display: grid;
+    gap: 6px;
+  }
+  .lupi-gallery-scene-row {
+    --thread-color: #1edce0;
+    position: relative;
+    display: grid;
+    grid-template-columns: 36px minmax(180px, 1.2fr) minmax(130px, 0.5fr) minmax(190px, 0.8fr) 70px;
+    align-items: center;
+    gap: 12px;
+    min-height: 68px;
+    padding: 9px 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.065);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.026);
+    color: #f8fafc;
+    text-align: left;
+    cursor: pointer;
+    content-visibility: auto;
+    contain-intrinsic-size: 68px;
+  }
+  .lupi-gallery-scene-row:hover,
+  .lupi-gallery-scene-row:focus-visible,
+  .lupi-gallery-scene-row[data-selected="true"] {
+    border-color: color-mix(in srgb, var(--thread-color) 48%, rgba(255,255,255,0.08));
+    background: color-mix(in srgb, var(--thread-color) 8%, rgba(255,255,255,0.035));
+    outline: none;
+  }
+  .lupi-gallery-scene-row:disabled {
+    opacity: 0.46;
+    cursor: not-allowed;
+  }
+  .lupi-gallery-row-swatch {
+    display: grid;
+    gap: 3px;
+  }
+  .lupi-gallery-row-swatch i {
+    display: block;
+    height: 7px;
+    border-radius: 99px;
+  }
+  .lupi-gallery-row-main {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+  .lupi-gallery-row-main strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 650;
+  }
+  .lupi-gallery-row-main span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(203,213,225,0.50);
+    font-size: 12px;
+  }
+  .lupi-gallery-row-domain {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(226,232,240,0.58);
+    font-size: 12px;
+    font-weight: 620;
+  }
+  .lupi-gallery-row-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .lupi-gallery-row-facts em {
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.055);
+    color: rgba(226,232,240,0.62);
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 650;
+  }
+  .lupi-gallery-row-facts em.is-playable {
+    color: #34d399;
+    background: rgba(52,211,153,0.09);
+  }
+  .lupi-gallery-row-open {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    min-height: 30px;
+    padding: 0 10px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(226,232,240,0.72);
+    font-size: 11px;
+    font-weight: 760;
+  }
+  .lupi-gallery-scene-row:hover .lupi-gallery-row-open,
+  .lupi-gallery-scene-row:focus-visible .lupi-gallery-row-open {
+    background: var(--thread-color);
+    color: #041112;
+  }
+  .lupi-gallery-row-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--thread-color);
+  }
+  .lupi-gallery-spotlight {
+    position: sticky;
+    top: 12px;
+    overflow: hidden;
+  }
+  .lupi-gallery-spotlight-preview {
+    position: relative;
+    aspect-ratio: 1.16;
+    overflow: hidden;
+    background: #05070b;
+  }
+  .lupi-gallery-spotlight-preview img,
+  .lupi-gallery-spotlight-fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .lupi-gallery-spotlight-preview canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lupi-gallery-spotlight-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 54%, rgba(0,0,0,0.66));
+  }
+  .lupi-gallery-spotlight-badge {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 2;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(4,7,11,0.72);
+    color: #f8fafc;
+    font-size: 11px;
+    font-weight: 760;
+  }
+  .lupi-gallery-spotlight-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    place-content: center;
+    gap: 10px;
+    background: rgba(3,5,10,0.78);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 720;
+  }
+  .lupi-gallery-spotlight-loading i {
+    display: block;
+    width: 180px;
+    height: 4px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.14);
+  }
+  .lupi-gallery-spotlight-loading b {
+    display: block;
+    height: 100%;
+    background: var(--thread-color, #1edce0);
+  }
+  .lupi-gallery-spotlight-body {
+    display: grid;
+    gap: 10px;
+    padding: 15px;
+  }
+  .lupi-gallery-spotlight-kicker {
+    color: color-mix(in srgb, var(--thread-color, #1edce0) 76%, white);
+    font-size: 11px;
+    font-weight: 780;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-spotlight h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 560;
+    line-height: 1.12;
+  }
+  .lupi-gallery-spotlight p {
+    margin: 0;
+    color: rgba(203,213,225,0.62);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .lupi-gallery-spotlight-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .lupi-gallery-spotlight-facts span {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.055);
+    color: rgba(226,232,240,0.65);
+    font-size: 11px;
+    font-weight: 650;
+  }
+  .lupi-gallery-spotlight-open {
+    min-height: 38px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--thread-color, #1edce0);
+    color: #031012;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .lupi-gallery-spotlight-open:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+  .lupi-gallery-spotlight-empty {
+    min-height: 360px;
+    display: grid;
+    place-items: center;
+    color: rgba(226,232,240,0.46);
+    font-size: 13px;
+  }
+  @media (max-width: 1180px) {
+    .lupi-gallery-workbench {
+      grid-template-columns: 230px minmax(0, 1fr);
+    }
+    .lupi-gallery-spotlight {
+      grid-column: 1 / -1;
+      position: static;
+      display: grid;
+      grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 820px) {
+    .lupi-gallery-fast {
+      padding: 10px 10px 28px;
+    }
+    .lupi-gallery-workbench {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .lupi-gallery-rail {
+      position: static;
+    }
+    .lupi-gallery-domain-menu {
+      max-height: 190px;
+      overflow: auto;
+    }
+    .lupi-gallery-index-head {
+      display: grid;
+    }
+    .lupi-gallery-fast-stats {
+      justify-content: flex-start;
+    }
+    .lupi-gallery-scene-row {
+      grid-template-columns: 28px minmax(0, 1fr) auto;
+      min-height: 74px;
+    }
+    .lupi-gallery-row-domain,
+    .lupi-gallery-row-facts {
+      display: none;
+    }
+    .lupi-gallery-row-open {
+      min-width: 48px;
+    }
+    .lupi-gallery-spotlight {
+      grid-template-columns: 1fr;
+    }
+  }
+`;
 
 // Off-screen but readable by assistive tech (aria-live status region).
 const sVisuallyHidden: React.CSSProperties = {
@@ -300,216 +1375,17 @@ const sVisuallyHidden: React.CSSProperties = {
   border: 0,
 };
 
-const sEmpty: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 10,
-  padding: '64px 24px',
-  textAlign: 'center',
-  border: '1px dashed rgba(255,255,255,0.12)',
-  borderRadius: 12,
-  background: 'rgba(255,255,255,0.015)',
-};
-
-const sEmptyTitle: React.CSSProperties = {
-  fontSize: 16,
-  fontWeight: 600,
-  color: '#f1f5f9',
-};
-
-const sEmptySub: React.CSSProperties = {
-  fontSize: 13,
-  color: 'rgba(255,255,255,0.5)',
-  margin: 0,
-  maxWidth: 420,
-};
-
-const sEmptyReset: React.CSSProperties = {
-  marginTop: 6,
-  padding: '7px 16px',
-  fontSize: 12,
-  fontWeight: 600,
-  color: '#e2e8f0',
-  background: 'rgba(255,255,255,0.06)',
-  border: '1px solid rgba(255,255,255,0.14)',
-  borderRadius: 8,
-  cursor: 'pointer',
-};
-
-const sProgressTrack: React.CSSProperties = {
-  width: '70%',
-  height: 4,
-  marginTop: 12,
-  borderRadius: 2,
-  background: 'rgba(255,255,255,0.12)',
-  overflow: 'hidden',
-};
-
-const sPatch = (hovered: boolean, unavailable: boolean, threadColor: string): React.CSSProperties => ({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column' as const,
-  textAlign: 'left' as const,
-  background: 'rgba(255,255,255,0.02)',
-  borderRadius: 12,
-  overflow: 'hidden',
-  cursor: unavailable ? 'not-allowed' : 'pointer',
-  opacity: unavailable ? 0.4 : 1,
-  transition: 'transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s ease',
-  transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-  boxShadow: hovered
-    ? `0 8px 32px rgba(0,0,0,0.35), 0 0 0 1px ${threadColor}30, inset 0 1px 0 ${threadColor}15`
-    : '0 2px 8px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.04)',
-  border: 'none',
-  padding: 0,
-  width: '100%',
-});
-
-const sPatchBorder = (threadColor: string): React.CSSProperties => ({
-  position: 'absolute' as const,
-  inset: 3,
-  borderRadius: 9,
-  border: `1.5px dashed ${threadColor}25`,
-  pointerEvents: 'none',
-  zIndex: 2,
-});
-
-const sPatchThumb: React.CSSProperties = {
-  position: 'relative',
-  width: '100%',
-  height: 160,
-  overflow: 'hidden',
-  background: '#0c0c10',
-};
-
-const sPatchImg: React.CSSProperties = {
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover' as const,
-  transition: 'opacity 0.3s ease',
-};
-
-const sPatchCanvas: React.CSSProperties = {
-  position: 'absolute' as const,
-  inset: 0,
-  width: '100%',
-  height: '100%',
-};
-
-const sPatchBody: React.CSSProperties = {
-  padding: '14px 16px',
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: 6,
-  flex: 1,
-};
-
-const sPatchBadge: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 6,
-  fontSize: 11,
-  color: 'rgba(255,255,255,0.4)',
-  textTransform: 'uppercase' as const,
-  letterSpacing: '0.06em',
-  fontWeight: 500,
-};
-
-const sPatchDot: React.CSSProperties = {
-  width: 6,
-  height: 6,
-  borderRadius: '50%',
-  flexShrink: 0,
-};
-
-const sPatchSoon: React.CSSProperties = {
-  marginLeft: 'auto',
-  fontSize: 9,
-  padding: '2px 6px',
-  borderRadius: 4,
-  background: 'rgba(255,255,255,0.06)',
-  color: 'rgba(255,255,255,0.35)',
-  textTransform: 'uppercase' as const,
-  letterSpacing: '0.06em',
-};
-
-const sPatchTitle: React.CSSProperties = {
-  margin: 0,
-  fontSize: 14,
-  fontWeight: 600,
-  color: '#f8fafc',
-  lineHeight: 1.3,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap' as const,
-};
-
-const sPatchSubtitle: React.CSSProperties = {
-  margin: 0,
-  fontSize: 12,
-  color: 'rgba(255,255,255,0.35)',
-  lineHeight: 1.4,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  display: '-webkit-box',
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: 'vertical' as const,
-};
-
-const sPatchTags: React.CSSProperties = {
-  display: 'flex',
-  flexWrap: 'wrap' as const,
-  gap: 5,
-  marginTop: 4,
-};
-
-const sPatchTag: React.CSSProperties = {
-  fontSize: 10,
-  padding: '3px 8px',
-  borderRadius: 4,
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px dashed rgba(255,255,255,0.08)',
-  color: 'rgba(255,255,255,0.4)',
-  fontWeight: 500,
-};
-
-const sPatchMeta: React.CSSProperties = {
-  marginTop: 6,
-  paddingTop: 8,
-  borderTop: '1px dashed rgba(255,255,255,0.06)',
-  fontSize: 10,
-  color: 'rgba(255,255,255,0.3)',
-  lineHeight: 1.6,
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: 2,
-};
-
-const sPatchLoading: React.CSSProperties = {
-  position: 'absolute' as const,
-  inset: 0,
-  display: 'flex',
-  flexDirection: 'column' as const,
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 10,
-  background: 'rgba(12,12,16,0.85)',
-  backdropFilter: 'blur(4px)',
-  zIndex: 10,
-  color: 'rgba(255,255,255,0.7)',
-  fontSize: 12,
-  fontWeight: 500,
-};
-
 // ─── Gallery ────────────────────────────────────────────────────────────
 
 export function Gallery() {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Domain | 'All'>('All');
+  const [sourceFilter, setSourceFilter] = useState<SourceFilter>('All Sources');
   const [search, setSearch] = useState('');
+  const [selectedId, setSelectedId] = useState<string>(() => {
+    const firstPlayable = EXAMPLES.find((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1);
+    return firstPlayable?.id ?? EXAMPLES[0]?.id ?? '';
+  });
   // Keep the input responsive while the (potentially large) filtered grid
   // re-renders off the deferred value — avoids per-keystroke jank.
   const deferredSearch = useDeferredValue(search);
@@ -521,17 +1397,69 @@ export function Gallery() {
   const filteredExamples = useMemo(() => {
     return EXAMPLES.filter(ex => {
       if (filter !== 'All' && ex.domain !== filter) return false;
+      if (!matchesSourceFilter(ex, sourceFilter)) return false;
       if (deferredSearch) {
         const s = deferredSearch.toLowerCase();
         return (
           ex.title.toLowerCase().includes(s) ||
           ex.subtitle.toLowerCase().includes(s) ||
-          ex.domain.toLowerCase().includes(s)
+          ex.domain.toLowerCase().includes(s) ||
+          (ex.metadata?.method ?? '').toLowerCase().includes(s) ||
+          (ex.metadata?.potential ?? '').toLowerCase().includes(s)
         );
       }
       return true;
     });
-  }, [filter, deferredSearch]);
+  }, [filter, sourceFilter, deferredSearch]);
+
+  const galleryStats = useMemo(() => {
+    const available = EXAMPLES.filter(ex => ex.available).length;
+    const trajectories = EXAMPLES.filter(ex => parseFrameCountLabel(ex.frames) > 1).length;
+    return {
+      domains: ALL_DOMAINS.filter(domain => EXAMPLES.some(ex => ex.domain === domain)).length,
+      available,
+      trajectories,
+      featured: EXAMPLES.filter(ex => ex.featured).length,
+    };
+  }, []);
+
+  const domainSummaries = useMemo(() => {
+    return ALL_DOMAINS
+      .map(domain => {
+        const examples = EXAMPLES.filter(ex => ex.domain === domain);
+        return {
+          domain,
+          count: examples.length,
+          trajectories: examples.filter(ex => parseFrameCountLabel(ex.frames) > 1).length,
+          atoms: examples.reduce((total, ex) => total + parseAtomCountLabel(ex.atoms), 0),
+        };
+      })
+      .filter(summary => summary.count > 0);
+  }, []);
+
+  const selectedExample = useMemo(() => {
+    return filteredExamples.find((ex) => ex.id === selectedId)
+      ?? filteredExamples[0]
+      ?? null;
+  }, [filteredExamples, selectedId]);
+
+  const playableExamples = useMemo(() => {
+    return EXAMPLES
+      .filter((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1)
+      .slice(0, 8);
+  }, []);
+
+  useEffect(() => {
+    if (selectedExample && selectedExample.id !== selectedId) {
+      setSelectedId(selectedExample.id);
+    }
+  }, [selectedExample, selectedId]);
+
+  const clearFilters = useCallback(() => {
+    setSearch('');
+    setFilter('All');
+    setSourceFilter('All Sources');
+  }, []);
 
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
     if (!example.available) return;
@@ -581,6 +1509,31 @@ export function Gallery() {
       // 2. sourceUrl override (open-data repos) — prefer in production
       // 3. Relative local paths — prepend base URL
       const url = resolveExampleUrl(example);
+
+      if (/\.json(?:$|\?)/i.test(url) || /\.json$/i.test(example.file)) {
+        const resp = await fetch(url, { cache: 'reload' });
+        if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
+        const payload = await resp.json();
+        const { artifactToLoadedFile } = await import('./MlipLongRunWorkbench');
+        const loaded = artifactToLoadedFile(payload, url);
+        const store = useStore.getState();
+        store.setFile({
+          ...loaded,
+          name: example.title,
+        });
+        store.setFrame(0);
+        store.setColorScheme('element');
+        store.setColorProperty(null);
+        store.setCameraPreset('iso');
+        store.setPlaybackSpeed(1);
+        useStore.setState({
+          atomScale: 1.35,
+          showBonds: false,
+          playing: Boolean(example.autoPlay),
+        });
+        setLoadingId(null);
+        return;
+      }
 
       if (example.id === 'lupine_brand_asset') {
         const scientificUrl = publicAssetUrl('gallery/curated/lupine_bluebonnet.xyz');
@@ -780,13 +1733,21 @@ export function Gallery() {
             );
             return;
           }
-          useStore.getState().setFile({
+          const store = useStore.getState();
+          store.setFile({
             name: example.title,
             size: blob.size,
             trajectory: result.trajectory,
             thermo: result.thermo ?? null,
             sourceUrl: url,
           });
+          // setFile defaults curated scenes to element identity. Scenes whose
+          // whole point is a per-atom field (the NIST benchmarks' error column)
+          // declare `colorBy` and open in that read instead.
+          if (example.colorBy && result.trajectory.frames[0]?.properties?.has(example.colorBy)) {
+            store.setColorScheme('property');
+            store.setColorProperty(example.colorBy);
+          }
         }
       }
     } catch (err: any) {
@@ -816,409 +1777,517 @@ export function Gallery() {
   }, [handleLoad]);
 
   return (
-    <div style={sQuilt} data-testid="gallery">
-      {/* Screen-reader status: result count + active load. */}
+    <div className="lupi-gallery lupi-gallery-fast" data-testid="gallery">
+      <style>{GALLERY_STUDIO_CSS}</style>
       <div aria-live="polite" role="status" style={sVisuallyHidden}>
         {loadingId
           ? `Loading ${EXAMPLES.find((e) => e.id === loadingId)?.title ?? 'simulation'}`
           : `${filteredExamples.length} simulation${filteredExamples.length === 1 ? '' : 's'} shown`}
       </div>
 
-      {/* ─── Header ─── */}
-      <div style={sHeader}>
-        <div style={sHeaderTitle}>
-          <div style={sHeaderIcon}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-              <circle cx="6" cy="6" r="3" />
-              <circle cx="18" cy="6" r="3" />
-              <circle cx="6" cy="18" r="3" />
-              <circle cx="18" cy="18" r="3" />
-              <line x1="9" y1="6" x2="15" y2="6" strokeDasharray="2 2" />
-              <line x1="9" y1="18" x2="15" y2="18" strokeDasharray="2 2" />
-              <line x1="6" y1="9" x2="6" y2="15" strokeDasharray="2 2" />
-              <line x1="18" y1="9" x2="18" y2="15" strokeDasharray="2 2" />
+      <section className="lupi-gallery-workbench" aria-labelledby="lupi-gallery-title">
+        <aside className="lupi-gallery-rail" aria-label="Gallery controls">
+          <div className="lupi-gallery-rail-head">
+            <div className="lupi-gallery-eyebrow">Lupi structure library</div>
+            <h2 id="lupi-gallery-title">Scene Browser</h2>
+            <p>Fast index, one preview, direct load into the viewer.</p>
+          </div>
+
+          <div className="lupi-gallery-search lupi-gallery-fast-search" role="search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-          </div>
-          <div>
-            <h2 style={sHeading}>Lupi Gallery</h2>
-            <p style={sSub}>
-              {filteredExamples.length} structures ready to inspect
-            </p>
-          </div>
-        </div>
-
-        <div style={sSearch} role="search">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-          <input
-            type="search"
-            placeholder="Search structures..."
-            aria-label="Search simulations by title, description, or domain"
-            data-testid="gallery-search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={sSearchInput}
-          />
-        </div>
-      </div>
-
-      {/* ─── Filter ribbon ─── */}
-      <div style={sRibbon} role="group" aria-label="Filter simulations by domain">
-        <button
-          style={sRibbonTab(filter === 'All', 'rgba(255,255,255,0.2)')}
-          onClick={() => setFilter('All')}
-          aria-pressed={filter === 'All'}
-          data-testid="gallery-filter-all"
-        >
-          All
-          <span style={sRibbonCount}>{EXAMPLES.length}</span>
-        </button>
-        {ALL_DOMAINS.map(domain => {
-          const count = EXAMPLES.filter(e => e.domain === domain).length;
-          return (
-            <button
-              key={domain}
-              style={sRibbonTab(filter === domain, DOMAIN_THREAD[domain])}
-              onClick={() => setFilter(domain)}
-              aria-pressed={filter === domain}
-            >
-              <span style={{ ...sRibbonDot, background: DOMAIN_COLORS[domain] }} />
-              {domain}
-              <span style={sRibbonCount}>{count}</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* ─── Quilt grid ─── */}
-      {filteredExamples.length === 0 ? (
-        <div style={sEmpty} data-testid="gallery-empty">
-          <div style={sEmptyTitle}>No simulations match</div>
-          <p style={sEmptySub}>
-            {deferredSearch
-              ? <>Nothing matches “{deferredSearch}”{filter !== 'All' ? <> in {filter}</> : null}.</>
-              : <>No simulations in {filter}.</>}
-          </p>
-          <button
-            style={sEmptyReset}
-            data-testid="gallery-empty-reset"
-            onClick={() => { setSearch(''); setFilter('All'); }}
-          >
-            Clear filters
-          </button>
-        </div>
-      ) : filter === 'All' && !deferredSearch ? (
-        ALL_DOMAINS.map(domain => {
-          const domainExamples = filteredExamples.filter(ex => ex.domain === domain);
-          if (domainExamples.length === 0) return null;
-          const isTruncated = false;
-          const displayExamples = domainExamples;
-
-          return (
-            <section key={domain} style={sSection}>
-              <div style={sSectionHeader}>
-                <div style={sSectionThread(DOMAIN_THREAD[domain])} />
-                <h3 style={sSectionTitle}>{domain}</h3>
-                <span style={sSectionCount}>{domainExamples.length} structures</span>
-                {isTruncated && (
-                  <button
-                    style={sSectionMore}
-                    onClick={() => setFilter(domain)}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#f8fafc';
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = 'rgba(255,255,255,0.45)';
-                      e.currentTarget.style.background = 'none';
-                    }}
-                  >
-                    View all →
-                  </button>
-                )}
-              </div>
-              <div style={sGrid}>
-                {displayExamples.map((ex) => (
-                  <PatchCard
-                    key={ex.id}
-                    example={ex}
-                    hovered={hoveredId === ex.id}
-                    loading={loadingId === ex.id}
-                    atomCeiling={atomCeiling}
-                    onHover={() => setHoveredId(ex.id)}
-                    onLeave={() => setHoveredId(null)}
-                    onClick={() => handleLoad(ex, false)}
-                  />
-                ))}
-              </div>
-            </section>
-          );
-        })
-      ) : (
-        <div style={sGrid}>
-          {filteredExamples.map((ex) => (
-            <PatchCard
-              key={ex.id}
-              example={ex}
-              hovered={hoveredId === ex.id}
-              loading={loadingId === ex.id}
-              atomCeiling={atomCeiling}
-              onHover={() => setHoveredId(ex.id)}
-              onLeave={() => setHoveredId(null)}
-              onClick={() => handleLoad(ex, false)}
+            <input
+              type="search"
+              placeholder="Search molecules, methods, domains..."
+              aria-label="Search simulations by title, description, method, potential, or domain"
+              data-testid="gallery-search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-          ))}
-        </div>
-      )}
+            {search && (
+              <button
+                type="button"
+                className="lupi-gallery-clear"
+                aria-label="Clear search"
+                onClick={() => setSearch('')}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          <div className="lupi-gallery-source-tabs" role="group" aria-label="Filter by source type">
+            {SOURCE_FILTERS.map(option => (
+              <button
+                key={option}
+                type="button"
+                data-active={sourceFilter === option}
+                aria-pressed={sourceFilter === option}
+                onClick={() => setSourceFilter(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+
+          <div className="lupi-gallery-domain-menu" role="group" aria-label="Filter simulations by domain">
+            <button
+              type="button"
+              className="lupi-gallery-domain-row"
+              data-active={filter === 'All'}
+              onClick={() => setFilter('All')}
+              aria-pressed={filter === 'All'}
+              data-testid="gallery-filter-all"
+            >
+              <span className="lupi-gallery-domain-mark" style={{ background: 'rgba(255,255,255,0.58)' }} />
+              <span>All domains</span>
+              <strong>{EXAMPLES.length}</strong>
+            </button>
+            {domainSummaries.map(({ domain, count, trajectories }) => (
+              <button
+                key={domain}
+                type="button"
+                className="lupi-gallery-domain-row"
+                data-active={filter === domain}
+                onClick={() => setFilter(domain)}
+                aria-pressed={filter === domain}
+              >
+                <span className="lupi-gallery-domain-mark" style={{ background: DOMAIN_COLORS[domain] }} />
+                <span>{domain}</span>
+                <em>{trajectories}</em>
+                <strong>{count}</strong>
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        <main className="lupi-gallery-index" aria-labelledby="lupi-gallery-results-title">
+          <div className="lupi-gallery-index-head">
+            <div>
+              <h3 id="lupi-gallery-results-title">Gallery Index</h3>
+              <p>
+                {filteredExamples.length} result{filteredExamples.length === 1 ? '' : 's'}
+                {filter !== 'All' ? ` in ${filter}` : ''}
+                {sourceFilter !== 'All Sources' ? ` / ${sourceFilter}` : ''}
+              </p>
+            </div>
+            <div className="lupi-gallery-fast-stats" aria-label="Gallery summary">
+              <span><strong>{galleryStats.available}</strong> loadable</span>
+              <span><strong>{galleryStats.trajectories}</strong> playable</span>
+              <span><strong>{galleryStats.domains}</strong> domains</span>
+            </div>
+          </div>
+
+          <div className="lupi-gallery-playlist" aria-label="Playable trajectory shortcuts">
+            {playableExamples.map((ex) => (
+              <button
+                key={ex.id}
+                type="button"
+                data-active={selectedExample?.id === ex.id}
+                onClick={() => setSelectedId(ex.id)}
+                onDoubleClick={() => handleLoad(ex, false)}
+              >
+                <span>{ex.title}</span>
+                <strong>{ex.frames}</strong>
+              </button>
+            ))}
+          </div>
+
+          {filteredExamples.length === 0 ? (
+            <div className="lupi-gallery-empty" data-testid="gallery-empty">
+              <div className="lupi-gallery-empty-title">No molecules found</div>
+              <p>
+                {deferredSearch
+                  ? <>Nothing matches "{deferredSearch}"{filter !== 'All' ? <> in {filter}</> : null}.</>
+                  : <>No simulations match the active filters.</>}
+              </p>
+              <button
+                type="button"
+                data-testid="gallery-empty-reset"
+                onClick={clearFilters}
+              >
+                Clear Filters
+              </button>
+            </div>
+          ) : (
+            <div className="lupi-gallery-result-table" role="list">
+            {filteredExamples.map((ex) => (
+              <GallerySceneRow
+                key={ex.id}
+                example={ex}
+                selected={selectedExample?.id === ex.id}
+                loading={loadingId === ex.id}
+                atomCeiling={atomCeiling}
+                onPreview={() => setSelectedId(ex.id)}
+                onOpen={() => handleLoad(ex, false)}
+              />
+            ))}
+            </div>
+          )}
+        </main>
+
+        <GallerySpotlight
+          example={selectedExample}
+          loading={selectedExample ? loadingId === selectedExample.id : false}
+          onOpen={() => selectedExample && handleLoad(selectedExample, false)}
+        />
+      </section>
     </div>
   );
 }
 
-// ─── Patch Card ─────────────────────────────────────────────────────────
-
-function PatchCard({
+function GallerySceneRow({
   example,
-  hovered,
+  selected,
   loading,
   atomCeiling,
-  onHover,
-  onLeave,
-  onClick,
+  onPreview,
+  onOpen,
 }: {
   example: GalleryExample;
-  hovered: boolean;
+  selected: boolean;
   loading: boolean;
-  /** Global single-scene atom ceiling. Device tier no longer reduces access. */
   atomCeiling: number;
-  onHover: () => void;
-  onLeave: () => void;
-  onClick: () => void;
+  onPreview: () => void;
+  onOpen: () => void;
 }) {
-  const exceedsCap = parseAtomCountLabel(example.atoms) > atomCeiling;
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [imgError, setImgError] = useState(false);
-  // Only the loading card subscribes to progress — others ignore it.
   const loadProgress = useStore((s) => (loading ? s.loadProgress : 0));
+  const frameCount = parseFrameCountLabel(example.frames);
+  const exceedsCap = parseAtomCountLabel(example.atoms) > atomCeiling;
+  const disabled = loading || !example.available || exceedsCap;
   const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
-  const domainColor = DOMAIN_COLORS[example.domain];
   const threadColor = DOMAIN_THREAD[example.domain];
-
-  const snapshotUrl = gallerySnapshotUrl(example.id);
-
-  // Procedural fallback thumbnail
-  useEffect(() => {
-    if (!imgError) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const w = canvas.width;
-    const h = canvas.height;
-    const c1 = example.colors[0] || '#444';
-    const c2 = example.colors[1] || c1;
-    const c3 = example.colors[2] || c1;
-
-    ctx.fillStyle = '#0c0c10';
-    ctx.fillRect(0, 0, w, h);
-
-    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
-    ctx.lineWidth = 0.5;
-    for (let x = 0; x < w; x += 4) {
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, h);
-      ctx.stroke();
-    }
-    for (let y = 0; y < h; y += 4) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(w, y);
-      ctx.stroke();
-    }
-
-    const seed = example.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const rng = (i: number) => {
-      const x = Math.sin(seed * 9301 + i * 49297) * 49297;
-      return x - Math.floor(x);
-    };
-
-    const nParticles = 40 + Math.floor(rng(0) * 30);
-    for (let i = 0; i < nParticles; i++) {
-      const px = rng(i * 3 + 1) * w;
-      const py = rng(i * 3 + 2) * h;
-      const r = 2 + rng(i * 3 + 3) * 4;
-      const colors = [c1, c2, c3];
-      const col = colors[Math.floor(rng(i * 7) * 3)];
-
-      const glow = ctx.createRadialGradient(px, py, 0, px, py, r * 3);
-      glow.addColorStop(0, col + '35');
-      glow.addColorStop(1, col + '00');
-      ctx.fillStyle = glow;
-      ctx.fillRect(px - r * 3, py - r * 3, r * 6, r * 6);
-
-      ctx.beginPath();
-      ctx.arc(px, py, r, 0, Math.PI * 2);
-      ctx.fillStyle = col;
-      ctx.fill();
-    }
-
-    ctx.strokeStyle = c1 + '18';
-    ctx.lineWidth = 1;
-    const pts: [number, number][] = [];
-    for (let i = 0; i < Math.min(nParticles, 24); i++) {
-      pts.push([rng(i * 3 + 1) * w, rng(i * 3 + 2) * h]);
-    }
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        const dx = pts[i][0] - pts[j][0];
-        const dy = pts[i][1] - pts[j][1];
-        if (dx * dx + dy * dy < 2500) {
-          ctx.beginPath();
-          ctx.moveTo(pts[i][0], pts[i][1]);
-          ctx.lineTo(pts[j][0], pts[j][1]);
-          ctx.stroke();
-        }
-      }
-    }
-  }, [example, imgError]);
-
-  const disabledReason = !example.available
-    ? 'coming soon'
-    : exceedsCap
-      ? `${example.atoms} atoms exceeds Lupi's current single-scene ceiling`
-      : null;
 
   return (
     <button
-      style={sPatch(hovered, !example.available || exceedsCap, threadColor)}
-      onClick={onClick}
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      onFocus={(e) => { onHover(); e.currentTarget.style.outline = `2px solid ${threadColor}`; e.currentTarget.style.outlineOffset = '2px'; }}
-      onBlur={(e) => { onLeave(); e.currentTarget.style.outline = 'none'; }}
-      disabled={loading || !example.available || exceedsCap}
+      type="button"
+      className="lupi-gallery-scene-row"
+      data-selected={selected}
+      data-playable={frameCount > 1}
       data-testid={`gallery-card-${example.id}`}
-      aria-label={
-        `${example.title} — ${example.domain}, ${example.atoms} atoms` +
-        (disabledReason ? ` (${disabledReason})` : '')
-      }
-      aria-disabled={loading || !example.available || exceedsCap}
-      title={exceedsCap
-        ? `~${example.atoms} atoms exceeds Lupi's current single-scene ceiling`
-        : undefined}
+      disabled={disabled}
+      onMouseEnter={onPreview}
+      onFocus={onPreview}
+      onClick={onOpen}
+      style={{ '--thread-color': threadColor, '--domain-color': DOMAIN_COLORS[example.domain] } as React.CSSProperties}
+      aria-label={`${example.title} - ${example.domain}, ${example.atoms} atoms, ${frameCount > 1 ? `${example.frames} frames` : 'snapshot'}`}
     >
-      <div style={sPatchBorder(threadColor)} />
+      <span className="lupi-gallery-row-swatch" aria-hidden="true">
+        {example.colors.map((color) => <i key={color} style={{ background: color }} />)}
+      </span>
+      <span className="lupi-gallery-row-main">
+        <strong>{example.title}</strong>
+        <span>{example.subtitle}</span>
+      </span>
+      <span className="lupi-gallery-row-domain">{example.domain}</span>
+      <span className="lupi-gallery-row-facts">
+        <em>{example.atoms}</em>
+        <em className={frameCount > 1 ? 'is-playable' : ''}>{frameCount > 1 ? `${example.frames} frames` : 'snapshot'}</em>
+        {example.featured && <em>featured</em>}
+      </span>
+      <span className="lupi-gallery-row-open">
+        {loading ? `${pct}%` : exceedsCap ? 'Over cap' : 'Open'}
+      </span>
+      {loading && <span className="lupi-gallery-row-progress" style={{ width: `${pct}%` }} />}
+    </button>
+  );
+}
 
-      <div style={sPatchThumb}>
-        {/* Snapshot image (default) */}
-        {!imgError && (
+function GallerySpotlight({
+  example,
+  loading,
+  onOpen,
+}: {
+  example: GalleryExample | null;
+  loading: boolean;
+  onOpen: () => void;
+}) {
+  const [imgError, setImgError] = useState(false);
+  const loadProgress = useStore((s) => (loading ? s.loadProgress : 0));
+
+  useEffect(() => {
+    setImgError(false);
+  }, [example?.id]);
+
+  if (!example) {
+    return (
+      <aside className="lupi-gallery-spotlight" aria-label="Selected scene">
+        <div className="lupi-gallery-spotlight-empty">Select a scene</div>
+      </aside>
+    );
+  }
+
+  const frameCount = parseFrameCountLabel(example.frames);
+  const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
+  const method = example.metadata?.method ?? example.metadata?.potential ?? example.domain;
+
+  return (
+    <aside
+      className="lupi-gallery-spotlight"
+      aria-label={`Selected scene: ${example.title}`}
+      style={{ '--thread-color': DOMAIN_THREAD[example.domain] } as React.CSSProperties}
+    >
+      <div className="lupi-gallery-spotlight-preview">
+        {!imgError ? (
           <img
-            src={snapshotUrl}
+            src={gallerySnapshotUrl(example.id)}
             alt={example.title}
-            loading="lazy"
-            style={sPatchImg}
+            loading="eager"
             onError={() => setImgError(true)}
           />
-        )}
-
-        {/* Procedural canvas fallback */}
-        {(imgError || !example.available) && (
-          <canvas
-            ref={canvasRef}
-            width={320}
-            height={160}
-            style={sPatchCanvas}
-          />
-        )}
-      </div>
-
-      <div style={sPatchBody}>
-        <div style={sPatchBadge}>
-          <span style={{ ...sPatchDot, background: domainColor }} />
-          {example.domain}
-          {!example.available && <span style={sPatchSoon}>Soon</span>}
-          {example.available && exceedsCap && (
-            <span style={{ ...sPatchSoon, color: '#f5a05a' }}>Over cap</span>
-          )}
-        </div>
-
-        <h4 style={sPatchTitle}>{example.title}</h4>
-        <p style={sPatchSubtitle}>{example.subtitle}</p>
-
-        <div style={sPatchTags}>
-          <span style={sPatchTag}>{example.atoms} atoms</span>
-          <span style={sPatchTag}>
-            {parseInt(example.frames) > 1 ? (
-              <>
-                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 4px #34d399' }} />
-                {example.frames} frames
-              </>
-            ) : (
-              'Snapshot'
-            )}
-          </span>
-        </div>
-
-        {hovered && example.metadata && (
-          <div style={sPatchMeta}>
-            {example.metadata.potential && (
-              <div>Potential: {example.metadata.potential}</div>
-            )}
-            {example.metadata.temperature && (
-              <div>Temp: {example.metadata.temperature}</div>
-            )}
-            {example.metadata.method && (
-              <div>Method: {example.metadata.method}</div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {loading && (
-        <div
-          style={sPatchLoading}
-          data-testid={`gallery-card-loading-${example.id}`}
-          role="progressbar"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={pct}
-          aria-label={`Loading ${example.title}`}
-        >
-          <svg width="32" height="32" viewBox="0 0 32 32">
-            <circle
-              cx="16" cy="16" r="12"
-              fill="none"
-              stroke={threadColor}
-              strokeWidth="2"
-              strokeDasharray="60 20"
-              strokeLinecap="round"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0 16 16"
-                to="360 16 16"
-                dur="1s"
-                repeatCount="indefinite"
-              />
-            </circle>
-          </svg>
-          <span>{pct > 0 ? `Loading ${pct}%` : 'Loading…'}</span>
-          <div style={sProgressTrack}>
+        ) : (
+          // No snapshot: paint the domain gradient as a base, then overlay a
+          // live atom render for scenes that qualify. This is the "focused
+          // scene renders a large preview" promise — only the one selected
+          // scene mounts a canvas, so it stays cheap.
+          <>
             <div
+              className="lupi-gallery-spotlight-fallback"
               style={{
-                width: `${Math.max(pct, 3)}%`,
-                height: '100%',
-                background: threadColor,
-                transition: 'width 0.2s ease-out',
+                background:
+                  `radial-gradient(circle at 24% 18%, ${example.colors[0]}55, transparent 32%), ` +
+                  `radial-gradient(circle at 76% 28%, ${example.colors[1]}45, transparent 34%), ` +
+                  `linear-gradient(135deg, #070a10, ${example.colors[2]}28)`,
               }}
             />
-          </div>
+            {canUseLivePreview(example) && (
+              <GalleryLivePreview example={example} active />
+            )}
+          </>
+        )}
+        <div className="lupi-gallery-spotlight-badge">
+          {frameCount > 1 ? `${example.frames} frames` : 'snapshot'}
         </div>
-      )}
-    </button>
+        {loading && (
+          <div className="lupi-gallery-spotlight-loading" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct}>
+            <span>Loading {pct}%</span>
+            <i><b style={{ width: `${pct}%` }} /></i>
+          </div>
+        )}
+      </div>
+      <div className="lupi-gallery-spotlight-body">
+        <div className="lupi-gallery-spotlight-kicker">{example.domain}</div>
+        <h3>{example.title}</h3>
+        <p>{example.subtitle}</p>
+        <div className="lupi-gallery-spotlight-facts">
+          <span>{example.atoms} atoms</span>
+          <span>{method}</span>
+          {isOpenDataExample(example) && <span>open data</span>}
+        </div>
+        <button
+          type="button"
+          className="lupi-gallery-spotlight-open"
+          onClick={onOpen}
+          disabled={loading || !example.available}
+        >
+          {loading ? 'Loading' : 'Open in viewer'}
+        </button>
+      </div>
+    </aside>
+  );
+}
+
+// ─── Live preview (spotlight fallback) ──────────────────────────────────
+
+function GalleryLivePreview({
+  example,
+  active,
+}: {
+  example: GalleryExample;
+  active: boolean;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [atoms, setAtoms] = useState<PreviewAtom[] | null>(null);
+  const [failed, setFailed] = useState(false);
+  const seed = useMemo(() => seededOffset(example.id), [example.id]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setFailed(false);
+    setAtoms(null);
+
+    if (!canUseLivePreview(example)) return () => { cancelled = true; };
+
+    fetch(resolveExampleUrl(example))
+      .then((response) => {
+        if (!response.ok) throw new Error(`Preview fetch failed: ${response.status}`);
+        return response.text();
+      })
+      .then((text) => {
+        if (cancelled) return;
+        const parsed = parsePreviewXyz(text);
+        if (parsed.length < 2) {
+          setFailed(true);
+          return;
+        }
+        setAtoms(parsed);
+      })
+      .catch(() => {
+        if (!cancelled) setFailed(true);
+      });
+
+    return () => { cancelled = true; };
+  }, [example]);
+
+  const normalizedAtoms = useMemo(
+    () => (atoms ? normalizePreviewAtoms(atoms) : []),
+    [atoms],
+  );
+  const bonds = useMemo(
+    () => (atoms ? detectPreviewBonds(atoms) : []),
+    [atoms],
+  );
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || failed || normalizedAtoms.length < 2) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let frame = 0;
+    let lastDraw = 0;
+    const reducedMotion = typeof window !== 'undefined'
+      && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const colors = example.colors.length ? example.colors : ['#1edce0', '#7dd3fc', '#f8fafc'];
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const width = Math.max(1, Math.floor(rect.width * dpr));
+      const height = Math.max(1, Math.floor(rect.height * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { width: rect.width, height: rect.height };
+    };
+
+    const draw = (now: number) => {
+      const { width, height } = resize();
+      ctx.clearRect(0, 0, width, height);
+
+      const bg = ctx.createRadialGradient(
+        width * 0.48,
+        height * 0.40,
+        0,
+        width * 0.52,
+        height * 0.52,
+        Math.max(width, height) * 0.72,
+      );
+      bg.addColorStop(0, `${colors[0]}26`);
+      bg.addColorStop(0.42, '#080a10');
+      bg.addColorStop(1, '#020307');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, width, height);
+
+      const angleY = seed * 0.01 + now * (active ? 0.00048 : 0.00022);
+      const angleX = 0.36 + Math.sin(seed + now * 0.00018) * 0.12;
+      const cosY = Math.cos(angleY);
+      const sinY = Math.sin(angleY);
+      const cosX = Math.cos(angleX);
+      const sinX = Math.sin(angleX);
+      const scale = Math.min(width, height) * 0.72;
+
+      const projected: ProjectedAtom[] = normalizedAtoms.map((atom, index) => {
+        const yRotX = atom.x * cosY + atom.z * sinY;
+        const yRotZ = -atom.x * sinY + atom.z * cosY;
+        const xRotY = atom.y * cosX - yRotZ * sinX;
+        const xRotZ = atom.y * sinX + yRotZ * cosX;
+        const depthBoost = 0.78 + (xRotZ + 0.5) * 0.36;
+        const color = CPK_COLORS[atom.element] || colors[index % colors.length] || '#cbd5e1';
+        return {
+          ...atom,
+          color,
+          radius: PREVIEW_RADII[atom.element] ?? 0.72,
+          screenX: width / 2 + yRotX * scale,
+          screenY: height / 2 + xRotY * scale,
+          depth: xRotZ * depthBoost,
+        };
+      });
+
+      ctx.lineCap = 'round';
+      for (const [i, j] of bonds) {
+        const a = projected[i];
+        const b = projected[j];
+        if (!a || !b) continue;
+        const depth = Math.max(0.25, Math.min(1.1, (a.depth + b.depth + 1.2) / 2));
+        ctx.beginPath();
+        ctx.moveTo(a.screenX, a.screenY);
+        ctx.lineTo(b.screenX, b.screenY);
+        ctx.strokeStyle = `rgba(226,232,240,${0.10 + depth * 0.18})`;
+        ctx.lineWidth = Math.max(0.65, 1.25 * depth);
+        ctx.stroke();
+      }
+
+      projected
+        .sort((a, b) => a.depth - b.depth)
+        .forEach((atom) => {
+          const depth = Math.max(0.35, Math.min(1.35, atom.depth + 0.88));
+          const radius = Math.max(2.3, atom.radius * 5.8 * depth);
+          const glow = ctx.createRadialGradient(
+            atom.screenX,
+            atom.screenY,
+            0,
+            atom.screenX,
+            atom.screenY,
+            radius * 3.1,
+          );
+          glow.addColorStop(0, `${atom.color}40`);
+          glow.addColorStop(1, `${atom.color}00`);
+          ctx.fillStyle = glow;
+          ctx.fillRect(atom.screenX - radius * 3.1, atom.screenY - radius * 3.1, radius * 6.2, radius * 6.2);
+
+          const atomFill = ctx.createRadialGradient(
+            atom.screenX - radius * 0.32,
+            atom.screenY - radius * 0.42,
+            radius * 0.2,
+            atom.screenX,
+            atom.screenY,
+            radius,
+          );
+          atomFill.addColorStop(0, '#ffffff');
+          atomFill.addColorStop(0.24, atom.color);
+          atomFill.addColorStop(1, '#10131a');
+          ctx.beginPath();
+          ctx.arc(atom.screenX, atom.screenY, radius, 0, Math.PI * 2);
+          ctx.fillStyle = atomFill;
+          ctx.fill();
+          ctx.strokeStyle = `rgba(255,255,255,${0.10 + depth * 0.08})`;
+          ctx.lineWidth = 0.65;
+          ctx.stroke();
+        });
+    };
+
+    const loop = (now: number) => {
+      const targetInterval = active ? 16 : 44;
+      if (!lastDraw || now - lastDraw >= targetInterval) {
+        draw(now);
+        lastDraw = now;
+      }
+      if (!reducedMotion) frame = window.requestAnimationFrame(loop);
+    };
+
+    if (reducedMotion) {
+      draw(seed);
+      return undefined;
+    }
+
+    frame = window.requestAnimationFrame(loop);
+    return () => window.cancelAnimationFrame(frame);
+  }, [active, bonds, example.colors, failed, normalizedAtoms, seed]);
+
+  if (failed || normalizedAtoms.length < 2) return null;
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="lupi-gallery-live-preview"
+      aria-hidden="true"
+    />
   );
 }

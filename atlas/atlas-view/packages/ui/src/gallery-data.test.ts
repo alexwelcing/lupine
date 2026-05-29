@@ -42,6 +42,7 @@ interface Entry {
   atoms: string;
   frames: string;
   file: string;
+  colorBy?: string;
   available: boolean;
   colors: string[];
   metadata?: Record<string, unknown>;
@@ -50,6 +51,28 @@ interface Entry {
 
 const data = galleryData as Entry[];
 const HEX = /^#[0-9a-fA-F]{6}$/;
+
+function parseFrameLabel(label: string): number {
+  const n = parseInt(label.replace(/[^\d]/g, ''), 10);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function countXyzFrames(text: string): number {
+  const lines = text.split(/\r?\n/);
+  let count = 0;
+  let cursor = 0;
+  while (cursor < lines.length) {
+    if (!lines[cursor].trim()) {
+      cursor += 1;
+      continue;
+    }
+    const natoms = parseInt(lines[cursor].trim(), 10);
+    if (!Number.isFinite(natoms) || natoms <= 0) break;
+    cursor += natoms + 2;
+    count += 1;
+  }
+  return count;
+}
 
 describe('gallery-data.json — curated launch set', () => {
   it('is a non-empty restored curated set', () => {
@@ -90,6 +113,46 @@ describe('gallery-data.json — curated launch set', () => {
     }
   });
 
+  it('available gallery entries do not stream from a CORS-blocked GCS bucket', () => {
+    // The glim-datasets bucket serves no access-control-allow-origin header, so
+    // a browser fetch from the viewer's origin is blocked (curl works — CORS is
+    // not server-enforced — which is what made this a silent "dead link"). The
+    // shed-489901-nist-demos bucket sets `access-control-allow-origin: *`, so
+    // streaming large .glimbin from there is fine and stays out of git.
+    for (const e of data) {
+      if (!e.available) continue;
+      expect(e.file, `${e.id} streams from the CORS-blocked glim-datasets bucket`)
+        .not.toMatch(/storage\.googleapis\.com\/glim-datasets\//);
+    }
+  });
+
+  it('entries advertising multiple frames point at playable trajectory assets', () => {
+    for (const e of data) {
+      const advertisedFrames = parseFrameLabel(e.frames);
+      if (!e.available || advertisedFrames <= 1) continue;
+      if (e.file.startsWith('http') || e.file === 'procedural') {
+        throw new Error(`multi-frame gallery entry must be bundled: ${e.id}`);
+      }
+
+      const onDisk = PUBLIC + e.file;
+      if (e.file.endsWith('.xyz')) {
+        expect(countXyzFrames(readFileSync(onDisk, 'utf8')), e.id).toBe(advertisedFrames);
+      } else if (e.file.endsWith('.lammpstrj') || e.file.endsWith('.dump')) {
+        const timesteps = readFileSync(onDisk, 'utf8').match(/^ITEM:\s+TIMESTEP$/gm)?.length ?? 0;
+        expect(timesteps, e.id).toBe(advertisedFrames);
+      } else if (e.file.endsWith('.json') || e.file.endsWith('.glimbin')) {
+        // Binary (.glimbin) and densified MLIP (.json) assets carry their
+        // frame count in the payload, not in a line-countable text format —
+        // so we can't recompute it here. We can still guarantee the bundled
+        // file the entry promises actually ships, which is the failure mode
+        // that turns a curated card into a dead link at runtime.
+        expect(existsSync(onDisk), `missing bundled asset for ${e.id}: ${e.file}`).toBe(true);
+      } else {
+        throw new Error(`unsupported multi-frame gallery asset for ${e.id}: ${e.file}`);
+      }
+    }
+  });
+
   it('every entry has a snapshot image or procedural fallback colors', () => {
     for (const e of data) {
       const snap = `${PUBLIC}gallery/snapshots/${e.id}.jpg`;
@@ -97,6 +160,41 @@ describe('gallery-data.json — curated launch set', () => {
         existsSync(snap) || (Array.isArray(e.colors) && e.colors.length === 3),
         `missing thumbnail path and fallback colors for ${e.id}`,
       ).toBe(true);
+    }
+  });
+
+  it('MLIP .json entries advertise their measured frame count, not an interpolated one', () => {
+    // The viewer smooths sparse MD frames at render time; it must not pad the
+    // trajectory (and the advertised count) with fabricated in-between frames.
+    // Advertised frames === measured frames in the payload.
+    const jsonEntries = data.filter((e) => e.available && e.file.endsWith('.json'));
+    for (const e of jsonEntries) {
+      const payload = JSON.parse(readFileSync(PUBLIC + e.file, 'utf8'));
+      if (payload.schema !== 'lupine.mlip.md_trajectory.v1') continue;
+      const measured = Array.isArray(payload.frames) ? payload.frames.length : 0;
+      expect(parseFrameLabel(e.frames), `${e.id}: advertised frames must equal measured frames`).toBe(measured);
+    }
+  });
+
+  it('colorBy scenes ship a property-carrying dump with that column present', () => {
+    // The NIST benchmarks exist to be read through their per-atom `error`
+    // field ("color by error to see where potentials fail"). Plain .xyz drops
+    // named columns, so a colorBy scene MUST be a LAMMPS dump whose ATOMS
+    // header actually declares the column. Guards against silently swapping
+    // these back to a column-less format and gutting the science.
+    const colorByEntries = data.filter((e) => e.colorBy);
+    expect(colorByEntries.length, 'expected at least one curated color-by scene').toBeGreaterThan(0);
+    for (const e of colorByEntries) {
+      expect(
+        /\.(lammpstrj|dump)$/.test(e.file),
+        `colorBy scene ${e.id} must use a dump format that carries named columns`,
+      ).toBe(true);
+      const head = readFileSync(PUBLIC + e.file, 'utf8').slice(0, 4096);
+      const atomsHeader = head.match(/^ITEM:\s*ATOMS\s+(.*)$/m)?.[1] ?? '';
+      expect(
+        atomsHeader.split(/\s+/),
+        `colorBy column "${e.colorBy}" missing from ${e.id} ATOMS header`,
+      ).toContain(e.colorBy);
     }
   });
 
@@ -117,5 +215,23 @@ describe('GLB hover machinery stays removed (regression guard)', () => {
     expect(src).not.toMatch(/@react-three/);
     expect(src).not.toMatch(/useGLTF/);
     expect(src).not.toMatch(/gallery\/models\//);
+  });
+});
+
+describe('pre-redesign card grid stays removed (regression guard)', () => {
+  const src = readFileSync(GALLERY_TSX, 'utf8');
+
+  // The scene-browser redesign (rail + index + spotlight) supplanted the
+  // card-grid layout. Its components and inline style objects were deleted;
+  // keep them gone so the file does not regrow two parallel layouts.
+  it('does not redefine the dropped grid components', () => {
+    expect(src).not.toMatch(/function PatchCard\b/);
+    expect(src).not.toMatch(/function DomainCard\b/);
+  });
+
+  it('does not reintroduce the dropped inline style objects', () => {
+    expect(src).not.toMatch(/\bsQuilt\b/);
+    expect(src).not.toMatch(/\bsPatch\w*\b/);
+    expect(src).not.toMatch(/\bsRibbon\w*\b/);
   });
 });

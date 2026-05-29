@@ -1,10 +1,11 @@
 /**
- * FigureExportPanel - six reliable export actions, no recorder maze.
+ * FigureExportPanel - focused export actions.
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { getElementSpec } from '@atlas/core';
+import { createKeyframe, type FlythroughSequence } from '../flythrough';
 import { useStore } from '../store';
 
 type ExportStatus =
@@ -13,37 +14,33 @@ type ExportStatus =
   | { kind: 'success'; label: string }
   | { kind: 'error'; label: string };
 
-const DATA_EXPORT_ATOM_LIMIT = 250_000;
-
 const IMAGE_EXPORTS = [
   {
-    id: 'figure-png',
-    label: 'Figure PNG',
+    id: 'png',
+    label: 'PNG',
     meta: '2160 x 2160',
     width: 2160,
     height: 2160,
     format: 'png' as const,
-    baseName: 'Lupi-figure',
+    baseName: 'Lupi-png',
   },
   {
-    id: 'slide-png',
-    label: 'Slide PNG',
+    id: 'jpg',
+    label: 'JPG',
     meta: '1920 x 1080',
     width: 1920,
     height: 1080,
-    format: 'png' as const,
-    baseName: 'Lupi-slide',
-  },
-  {
-    id: 'web-jpg',
-    label: 'Web JPG',
-    meta: '1600 x 1200',
-    width: 1600,
-    height: 1200,
     format: 'jpeg' as const,
-    baseName: 'Lupi-web',
+    baseName: 'Lupi-jpg',
   },
 ];
+
+const VIDEO_EXPORT = {
+  width: 1920,
+  height: 1080,
+  durationSeconds: 5,
+  meta: '1080p / 5s',
+};
 
 const IconClose = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
@@ -59,22 +56,95 @@ const IconDownload = () => (
   </svg>
 );
 
-const IconData = () => (
+const IconCube = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M6 4h9l3 3v13H6z" />
-    <path d="M14 4v4h4" />
-    <path d="M8.5 12h7" />
-    <path d="M8.5 15h7" />
-    <path d="M8.5 18h4" />
+    <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+    <path d="M12 12 4 7.5" />
+    <path d="m12 12 8-4.5" />
+    <path d="M12 12v9" />
   </svg>
 );
 
-const IconLink = () => (
+const IconVideo = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M10 13a5 5 0 0 0 7.1 0l1.4-1.4a5 5 0 0 0-7.1-7.1l-.8.8" />
-    <path d="M14 11a5 5 0 0 0-7.1 0l-1.4 1.4a5 5 0 0 0 7.1 7.1l.8-.8" />
+    <rect x="3" y="5" width="14" height="14" rx="2" />
+    <path d="m17 9 4-2.5v11L17 15" />
   </svg>
 );
+
+function useCompactExportPanel() {
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 768px)');
+    const update = () => setCompact(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+
+  return compact;
+}
+
+function createAutoFlythrough(
+  file: ReturnType<typeof useStore.getState>['file'],
+  cameraPosition: [number, number, number],
+  cameraTarget: [number, number, number],
+): FlythroughSequence {
+  if (!file) {
+    return {
+      loop: false,
+      keyframes: [
+        createKeyframe(cameraPosition, cameraTarget, null, 'Start'),
+        createKeyframe(
+          [cameraTarget[0] - (cameraPosition[2] - cameraTarget[2]), cameraPosition[1], cameraTarget[2] + (cameraPosition[0] - cameraTarget[0])],
+          cameraTarget,
+          null,
+          'End',
+        ),
+      ],
+    };
+  }
+
+  const { min, max } = file.trajectory.globalBounds;
+  const center: [number, number, number] = [
+    (min[0] + max[0]) / 2,
+    (min[1] + max[1]) / 2,
+    (min[2] + max[2]) / 2,
+  ];
+  const span = Math.max(max[0] - min[0], max[1] - min[1], max[2] - min[2], 1);
+  const currentRadius = Math.hypot(
+    cameraPosition[0] - center[0],
+    cameraPosition[1] - center[1],
+    cameraPosition[2] - center[2],
+  );
+  const radius = Math.max(currentRadius, span * 2.2);
+  const lift = Math.max((max[1] - min[1]) * 0.35, span * 0.22);
+  const startAngle = Math.atan2(cameraPosition[2] - center[2], cameraPosition[0] - center[0]);
+  const makePosition = (turns: number, yOffset: number, scale = 1): [number, number, number] => {
+    const angle = startAngle + turns * Math.PI * 2;
+    return [
+      center[0] + Math.cos(angle) * radius * scale,
+      center[1] + yOffset,
+      center[2] + Math.sin(angle) * radius * scale,
+    ];
+  };
+
+  const keyframes = [
+    createKeyframe(cameraPosition, center, null, 'Opening View'),
+    createKeyframe(makePosition(0.24, lift, 0.92), center, null, 'Side Glide'),
+    createKeyframe(makePosition(0.52, -lift * 0.28, 0.78), center, null, 'Close Pass'),
+    createKeyframe(makePosition(0.82, lift * 0.18, 1.02), center, null, 'Final Orbit'),
+  ];
+
+  keyframes.forEach((kf, index) => {
+    kf.transitionDuration = index === 0 ? 2.2 : 1.8;
+    kf.holdDuration = index === 0 ? 0.35 : 0.15;
+    kf.easing = 'ease-in-out';
+  });
+
+  return { loop: false, keyframes };
+}
 
 export function FigureExportPanel() {
   const setActivePanel = useStore(s => s.setActivePanel);
@@ -82,7 +152,11 @@ export function FigureExportPanel() {
   const frame = useStore(s => s.frame);
   const triggerExport = useStore(s => s.triggerExport);
   const setShowScaleBar = useStore(s => s.setShowScaleBar);
+  const cameraPosition = useStore(s => s.cameraPosition);
+  const cameraTarget = useStore(s => s.cameraTarget);
   const [status, setStatus] = useState<ExportStatus>({ kind: 'idle', label: 'Ready' });
+  const hasWebCodecs = typeof globalThis.VideoEncoder !== 'undefined';
+  const compact = useCompactExportPanel();
 
   useEffect(() => {
     if (status.kind !== 'success') return;
@@ -108,7 +182,6 @@ export function FigureExportPanel() {
       formula,
       natoms: currentFrame.natoms,
       totalFrames: file.trajectory.totalFrames,
-      timestep: currentFrame.timestep,
     };
   }, [currentFrame, file]);
 
@@ -132,85 +205,48 @@ export function FigureExportPanel() {
     });
   }, [file, setShowScaleBar, triggerExport]);
 
-  const exportCsv = useCallback(() => {
-    if (!file || !currentFrame) return;
-    if (currentFrame.natoms > DATA_EXPORT_ATOM_LIMIT) {
-      setStatus({ kind: 'error', label: `CSV capped at ${DATA_EXPORT_ATOM_LIMIT.toLocaleString()} atoms` });
-      return;
-    }
-
-    setStatus({ kind: 'working', label: 'Building atom CSV' });
-    window.setTimeout(() => {
-      const propertyNames = Array.from(currentFrame.properties.keys());
-      const rows = [
-        ['index', 'id', 'type', 'symbol', 'x', 'y', 'z', ...propertyNames].map(csvCell).join(','),
-      ];
-
-      for (let i = 0; i < currentFrame.natoms; i++) {
-        const type = currentFrame.types[i];
-        const values = [
-          i,
-          currentFrame.ids[i] ?? i,
-          type,
-          getElementSpec(type).symbol,
-          currentFrame.positions[i * 3].toFixed(6),
-          currentFrame.positions[i * 3 + 1].toFixed(6),
-          currentFrame.positions[i * 3 + 2].toFixed(6),
-          ...propertyNames.map(name => formatNumber(currentFrame.properties.get(name)?.[i])),
-        ];
-        rows.push(values.map(csvCell).join(','));
-      }
-
-      const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8' });
-      handoffDownload(blob, `${safeName(file.name)}-frame${frame + 1}-atoms.csv`, 'Atom CSV', setStatus);
-    }, 0);
-  }, [currentFrame, file, frame]);
-
-  const exportXyz = useCallback(() => {
-    if (!file || !currentFrame) return;
-    if (currentFrame.natoms > DATA_EXPORT_ATOM_LIMIT) {
-      setStatus({ kind: 'error', label: `XYZ capped at ${DATA_EXPORT_ATOM_LIMIT.toLocaleString()} atoms` });
-      return;
-    }
-
-    setStatus({ kind: 'working', label: 'Building XYZ' });
-    window.setTimeout(() => {
-      const rows = [
-        `${currentFrame.natoms}`,
-        `Lupi export | ${file.name} | frame ${frame + 1} | timestep ${currentFrame.timestep}`,
-      ];
-
-      for (let i = 0; i < currentFrame.natoms; i++) {
-        const symbol = getElementSpec(currentFrame.types[i]).symbol;
-        rows.push([
-          symbol,
-          currentFrame.positions[i * 3].toFixed(6),
-          currentFrame.positions[i * 3 + 1].toFixed(6),
-          currentFrame.positions[i * 3 + 2].toFixed(6),
-        ].join(' '));
-      }
-
-      const blob = new Blob([rows.join('\n')], { type: 'chemical/x-xyz;charset=utf-8' });
-      handoffDownload(blob, `${safeName(file.name)}-frame${frame + 1}.xyz`, 'Frame XYZ', setStatus);
-    }, 0);
-  }, [currentFrame, file, frame]);
-
-  const copyViewLink = useCallback(async () => {
+  const runUsdExport = useCallback(() => {
     if (!file) return;
-    const state = useStore.getState();
-    const url = new URL(window.location.href);
-    url.searchParams.set('s', state.encodeToURL());
-    if (file.sourceUrl) url.searchParams.set('load', file.sourceUrl);
-    const link = url.toString();
+    setStatus({ kind: 'working', label: 'Building USDZ' });
+    triggerExport({
+      type: 'usdz',
+      format: 'usdz',
+      baseName: `Lupi-usdz-${safeName(file.name)}`,
+      onComplete: (success, blob, filename) => {
+        if (success && blob && filename) {
+          handoffDownload(blob, filename, 'USDZ', setStatus);
+        } else {
+          setStatus({ kind: 'error', label: 'USDZ failed' });
+        }
+      },
+    });
+  }, [file, triggerExport]);
 
-    try {
-      await navigator.clipboard.writeText(link);
-      setStatus({ kind: 'success', label: 'View link copied' });
-    } catch {
-      const blob = new Blob([link], { type: 'text/plain;charset=utf-8' });
-      handoffDownload(blob, `${safeName(file.name)}-view-link.txt`, 'View link', setStatus);
-    }
-  }, [file]);
+  const runVideoExport = useCallback((motion: 'rotate' | 'flythrough') => {
+    if (!file || !hasWebCodecs) return;
+    const label = motion === 'rotate' ? 'MP4 rotate' : 'MP4 auto flythrough';
+    setStatus({ kind: 'working', label: `Recording ${label}` });
+    triggerExport({
+      type: 'video',
+      resolution: { width: VIDEO_EXPORT.width, height: VIDEO_EXPORT.height },
+      format: 'mp4',
+      orbit: motion === 'rotate',
+      cinematic: false,
+      flythrough: motion === 'flythrough' ? createAutoFlythrough(file, cameraPosition, cameraTarget) : undefined,
+      durationSeconds: VIDEO_EXPORT.durationSeconds,
+      baseName: `Lupi-${motion === 'rotate' ? 'mp4-rotate' : 'mp4-auto-flythrough'}-${safeName(file.name)}`,
+      onComplete: (success, blob, filename) => {
+        if (success && blob && filename) {
+          handoffDownload(blob, filename, label, setStatus);
+        } else {
+          setStatus({ kind: success ? 'success' : 'error', label: success ? `Recorded ${label}` : `${label} failed` });
+        }
+      },
+    });
+  }, [cameraPosition, cameraTarget, file, hasWebCodecs, triggerExport]);
+
+  const busy = status.kind === 'working';
+  const videoMeta = hasWebCodecs ? VIDEO_EXPORT.meta : 'Chrome/Edge required';
 
   return (
     <div
@@ -218,7 +254,10 @@ export function FigureExportPanel() {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '100%',
+        height: '100%',
+        minHeight: 0,
+        boxSizing: 'border-box',
+        overflowY: 'auto',
         background: '#080b10',
         color: '#e5edf7',
       }}
@@ -227,13 +266,14 @@ export function FigureExportPanel() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '14px 16px 12px',
+        gap: 10,
+        padding: compact ? '8px 10px 7px' : '14px 16px 12px',
         borderBottom: '1px solid rgba(148, 163, 184, 0.16)',
         flexShrink: 0,
       }}>
-        <div>
+        <div style={{ minWidth: 0 }}>
           <div style={{
-            fontSize: 11,
+            fontSize: compact ? 10 : 11,
             fontWeight: 800,
             letterSpacing: '0.13em',
             color: '#7dd3fc',
@@ -245,14 +285,16 @@ export function FigureExportPanel() {
             <div style={{
               marginTop: 4,
               color: 'rgba(203, 213, 225, 0.68)',
-              fontSize: 11,
+              fontSize: compact ? 10 : 11,
               fontFamily: 'var(--font-mono), ui-monospace, monospace',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              maxWidth: 290,
+              maxWidth: compact ? 'calc(100vw - 76px)' : 290,
             }}>
-              {systemInfo.formula || file?.name} / {systemInfo.natoms.toLocaleString()} atoms / frame {frame + 1}
+              {compact
+                ? `${systemInfo.natoms.toLocaleString()} atoms / frame ${frame + 1}`
+                : `${systemInfo.formula || file?.name} / ${systemInfo.natoms.toLocaleString()} atoms / frame ${frame + 1}`}
             </div>
           )}
         </div>
@@ -263,13 +305,14 @@ export function FigureExportPanel() {
           style={{
             display: 'grid',
             placeItems: 'center',
-            width: 28,
-            height: 28,
+            width: compact ? 26 : 28,
+            height: compact ? 26 : 28,
             color: 'rgba(226, 232, 240, 0.76)',
             background: 'rgba(255,255,255,0.04)',
             border: '1px solid rgba(148, 163, 184, 0.18)',
             borderRadius: 8,
             cursor: 'pointer',
+            flexShrink: 0,
           }}
         >
           <IconClose />
@@ -278,9 +321,9 @@ export function FigureExportPanel() {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '1fr',
-        gap: 8,
-        padding: 12,
+        gridTemplateColumns: compact ? 'repeat(2, minmax(0, 1fr))' : '1fr',
+        gap: compact ? 6 : 8,
+        padding: compact ? 8 : 12,
       }}>
         {IMAGE_EXPORTS.map(preset => (
           <ExportAction
@@ -289,46 +332,50 @@ export function FigureExportPanel() {
             icon={<IconDownload />}
             label={preset.label}
             meta={preset.meta}
-            disabled={!file || status.kind === 'working'}
+            disabled={!file || busy}
             onClick={() => runImageExport(preset)}
+            compact={compact}
           />
         ))}
         <ExportAction
-          testId="export-atom-csv"
-          icon={<IconData />}
-          label="Atom CSV"
-          meta={`${systemInfo?.natoms?.toLocaleString() ?? '0'} rows`}
-          disabled={!currentFrame || status.kind === 'working'}
-          onClick={exportCsv}
+          testId="export-usdz"
+          icon={<IconCube />}
+          label="USDZ"
+          meta={systemInfo ? `${systemInfo.natoms.toLocaleString()} atoms` : 'AR model'}
+          disabled={!file || busy}
+          onClick={runUsdExport}
+          compact={compact}
         />
         <ExportAction
-          testId="export-frame-xyz"
-          icon={<IconData />}
-          label="Frame XYZ"
-          meta={`frame ${frame + 1}`}
-          disabled={!currentFrame || status.kind === 'working'}
-          onClick={exportXyz}
+          testId="export-mp4-rotate"
+          icon={<IconVideo />}
+          label="MP4 rotate"
+          meta={videoMeta}
+          disabled={!file || busy || !hasWebCodecs}
+          onClick={() => runVideoExport('rotate')}
+          compact={compact}
         />
         <ExportAction
-          testId="export-view-link"
-          icon={<IconLink />}
-          label="View Link"
-          meta="copy / txt"
-          disabled={!file || status.kind === 'working'}
-          onClick={copyViewLink}
+          testId="export-mp4-auto-flythrough"
+          icon={<IconVideo />}
+          label="MP4 auto flythrough"
+          meta={videoMeta}
+          disabled={!file || busy || !hasWebCodecs}
+          onClick={() => runVideoExport('flythrough')}
+          compact={compact}
         />
       </div>
 
       <div
         data-testid="export-status"
         style={{
-          margin: '0 12px 12px',
-          padding: '9px 10px',
+          margin: compact ? '0 8px 8px' : '0 12px 12px',
+          padding: compact ? '7px 8px' : '9px 10px',
           border: `1px solid ${statusColor(status.kind, 0.36)}`,
           borderRadius: 8,
           color: statusColor(status.kind, 1),
           background: status.kind === 'idle' ? 'rgba(15, 23, 42, 0.42)' : statusColor(status.kind, 0.08),
-          fontSize: 11,
+          fontSize: compact ? 10 : 11,
           fontWeight: 650,
           letterSpacing: '0.02em',
         }}
@@ -346,6 +393,7 @@ function ExportAction({
   disabled,
   onClick,
   testId,
+  compact,
 }: {
   icon: ReactNode;
   label: string;
@@ -353,6 +401,7 @@ function ExportAction({
   disabled?: boolean;
   onClick: () => void;
   testId: string;
+  compact?: boolean;
 }) {
   return (
     <button
@@ -362,12 +411,12 @@ function ExportAction({
       onClick={onClick}
       style={{
         width: '100%',
-        minHeight: 54,
+        minHeight: compact ? 44 : 54,
         display: 'grid',
-        gridTemplateColumns: '34px 1fr auto',
+        gridTemplateColumns: compact ? '24px minmax(0, 1fr)' : '34px minmax(0, 1fr) auto',
         alignItems: 'center',
-        gap: 10,
-        padding: '9px 10px',
+        gap: compact ? 7 : 10,
+        padding: compact ? '7px 8px' : '9px 10px',
         color: disabled ? 'rgba(148, 163, 184, 0.46)' : '#eaf7ff',
         background: disabled ? 'rgba(15, 23, 42, 0.34)' : 'rgba(15, 23, 42, 0.72)',
         border: '1px solid rgba(125, 211, 252, 0.18)',
@@ -379,22 +428,29 @@ function ExportAction({
       <span style={{
         display: 'grid',
         placeItems: 'center',
-        width: 34,
-        height: 34,
+        width: compact ? 24 : 34,
+        height: compact ? 24 : 34,
         color: disabled ? 'rgba(148, 163, 184, 0.42)' : '#7dd3fc',
         background: 'rgba(125, 211, 252, 0.08)',
         border: '1px solid rgba(125, 211, 252, 0.16)',
-        borderRadius: 8,
+        borderRadius: compact ? 6 : 8,
       }}>
         {icon}
       </span>
       <span style={{ minWidth: 0 }}>
-        <span style={{ display: 'block', fontSize: 13, fontWeight: 760 }}>{label}</span>
         <span style={{
           display: 'block',
-          marginTop: 2,
+          fontSize: compact ? 11 : 13,
+          fontWeight: 760,
+          lineHeight: 1.12,
+          whiteSpace: compact ? 'normal' : 'nowrap',
+          overflowWrap: 'anywhere',
+        }}>{label}</span>
+        <span style={{
+          display: 'block',
+          marginTop: compact ? 1 : 2,
           color: 'rgba(203, 213, 225, 0.58)',
-          fontSize: 10,
+          fontSize: compact ? 9 : 10,
           fontFamily: 'var(--font-mono), ui-monospace, monospace',
           whiteSpace: 'nowrap',
           overflow: 'hidden',
@@ -403,7 +459,9 @@ function ExportAction({
           {meta}
         </span>
       </span>
-      <span style={{ color: 'rgba(125, 211, 252, 0.64)', fontSize: 14, lineHeight: 1 }}>&gt;</span>
+      {!compact && (
+        <span style={{ color: 'rgba(125, 211, 252, 0.64)', fontSize: 14, lineHeight: 1 }}>&gt;</span>
+      )}
     </button>
   );
 }
@@ -447,13 +505,4 @@ function safeName(value: string) {
     .replace(/[^a-z0-9_-]+/gi, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 72) || 'Lupi';
-}
-
-function formatNumber(value: number | undefined) {
-  return typeof value === 'number' && Number.isFinite(value) ? String(value) : '';
-}
-
-function csvCell(value: unknown) {
-  const text = String(value ?? '');
-  return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
 }

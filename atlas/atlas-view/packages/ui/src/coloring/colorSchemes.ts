@@ -96,19 +96,16 @@ export const COLOR_SCHEMES: Record<ColorSchemeId, SchemeProfile> = {
 export const SCHEME_ORDER: ColorSchemeId[] = ['element', 'property', 'family', 'botanical', 'uniform'];
 
 /**
- * Pick a scheme automatically given what's known about a freshly-loaded file.
- * Used by the store's `setFile` action so the first frame the user sees is
- * already colored coherently with the data.
+ * Pick the default scheme for a freshly-loaded file. Property data is often
+ * diagnostic, but the viewer's first read should be molecular identity.
+ * Users can still switch to Property explicitly from Molecule Color.
  *
- *   - Property data present → 'property' (the data wants to be shown).
- *   - Multiple distinct element types → 'element' (chemistry reads).
- *   - Single type → 'family' (no chemistry to convey, abstract is fine).
+ *   - Element is the default for all molecular loads.
+ *   - Property, Family, Botanical, and Uniform are opt-in looks.
  */
-export function pickInitialScheme(opts: {
+export function pickInitialScheme(_opts: {
   hasProperty: boolean;
   uniqueTypes: number;
 }): ColorSchemeId {
-  if (opts.hasProperty) return 'property';
-  if (opts.uniqueTypes > 1) return 'element';
-  return 'family';
+  return 'element';
 }
