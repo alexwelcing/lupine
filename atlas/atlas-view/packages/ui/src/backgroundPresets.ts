@@ -241,6 +241,7 @@ export const BG_PRESETS: Record<string, BgPreset> = {
   dark:      { top: '#1a1a1f', bottom: '#0a0a0c', label: 'Dark', category: 'gradient' },
   white:     { top: '#ffffff', bottom: '#f0f0f5', label: 'White', category: 'gradient' },
   blueprint: { top: '#0b162c', bottom: '#050a14', label: 'Blueprint', category: 'gradient' },
+  slate:     { top: '#111827', bottom: '#020617', label: 'Slate', category: 'gradient' },
   midnight:  { top: '#080c18', bottom: '#141e38', label: 'Midnight', category: 'gradient' },
   studio:    { top: '#1a1a2e', bottom: '#16213e', label: 'Studio', category: 'gradient' },
   warm:      { top: '#1a100c', bottom: '#0d0906', label: 'Warm Dark', category: 'gradient' },
