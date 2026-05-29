@@ -188,6 +188,165 @@ function matchesSourceFilter(example: GalleryExample, sourceFilter: SourceFilter
   return isOpenDataExample(example);
 }
 
+type PreviewAtom = {
+  element: string;
+  x: number;
+  y: number;
+  z: number;
+};
+
+type ProjectedAtom = PreviewAtom & {
+  color: string;
+  radius: number;
+  screenX: number;
+  screenY: number;
+  depth: number;
+};
+
+const LIVE_PREVIEW_ATOM_LIMIT = 1200;
+const LIVE_PREVIEW_BOND_LIMIT = 260;
+
+const CPK_COLORS: Record<string, string> = {
+  H: '#f8fafc',
+  C: '#9ca3af',
+  N: '#3050f8',
+  O: '#ff3355',
+  F: '#90e050',
+  P: '#ff8a00',
+  S: '#ffd92e',
+  Cl: '#1ff01f',
+  Li: '#cc80ff',
+  Na: '#ab5cf2',
+  Mg: '#8aff00',
+  Al: '#b8b8b8',
+  Si: '#f0c8a0',
+  K: '#8f40d4',
+  Ca: '#3dff00',
+  Ti: '#bfc2c7',
+  Fe: '#e06633',
+  Cu: '#c78033',
+  Zn: '#7d80b0',
+  Zr: '#94e0e0',
+};
+
+const PREVIEW_RADII: Record<string, number> = {
+  H: 0.42,
+  C: 0.72,
+  N: 0.68,
+  O: 0.66,
+  F: 0.64,
+  P: 0.86,
+  S: 0.82,
+  Cl: 0.80,
+  Si: 0.88,
+  Al: 0.92,
+  Fe: 0.88,
+  Cu: 0.86,
+  Zn: 0.86,
+  Zr: 0.98,
+};
+
+function canUseLivePreview(example: GalleryExample): boolean {
+  return (
+    example.available
+    && /\.xyz$/i.test(example.file)
+    && parseAtomCountLabel(example.atoms) <= LIVE_PREVIEW_ATOM_LIMIT
+  );
+}
+
+function parsePreviewXyz(text: string, atomLimit = LIVE_PREVIEW_ATOM_LIMIT): PreviewAtom[] {
+  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  if (lines.length < 3) return [];
+
+  const declaredCount = Number.parseInt(lines[0], 10);
+  const atomLines = Number.isFinite(declaredCount) && declaredCount > 0
+    ? lines.slice(2, 2 + Math.min(declaredCount, atomLimit))
+    : lines.slice(0, atomLimit);
+
+  const atoms: PreviewAtom[] = [];
+  for (const line of atomLines) {
+    const parts = line.split(/\s+/);
+    if (parts.length < 4) continue;
+    const x = Number.parseFloat(parts[1]);
+    const y = Number.parseFloat(parts[2]);
+    const z = Number.parseFloat(parts[3]);
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) continue;
+    atoms.push({ element: normalizeElement(parts[0]), x, y, z });
+  }
+  return atoms;
+}
+
+function normalizeElement(element: string): string {
+  if (!element) return 'C';
+  const clean = element.replace(/[^a-z]/gi, '');
+  if (!clean) return 'C';
+  return clean.length === 1
+    ? clean.toUpperCase()
+    : `${clean[0].toUpperCase()}${clean.slice(1, 2).toLowerCase()}`;
+}
+
+function normalizePreviewAtoms(atoms: PreviewAtom[]): PreviewAtom[] {
+  if (!atoms.length) return atoms;
+  const bounds = atoms.reduce(
+    (acc, atom) => ({
+      minX: Math.min(acc.minX, atom.x),
+      maxX: Math.max(acc.maxX, atom.x),
+      minY: Math.min(acc.minY, atom.y),
+      maxY: Math.max(acc.maxY, atom.y),
+      minZ: Math.min(acc.minZ, atom.z),
+      maxZ: Math.max(acc.maxZ, atom.z),
+    }),
+    {
+      minX: Infinity,
+      maxX: -Infinity,
+      minY: Infinity,
+      maxY: -Infinity,
+      minZ: Infinity,
+      maxZ: -Infinity,
+    },
+  );
+  const cx = (bounds.minX + bounds.maxX) / 2;
+  const cy = (bounds.minY + bounds.maxY) / 2;
+  const cz = (bounds.minZ + bounds.maxZ) / 2;
+  const span = Math.max(
+    bounds.maxX - bounds.minX,
+    bounds.maxY - bounds.minY,
+    bounds.maxZ - bounds.minZ,
+    1,
+  );
+  return atoms.map((atom) => ({
+    ...atom,
+    x: (atom.x - cx) / span,
+    y: (atom.y - cy) / span,
+    z: (atom.z - cz) / span,
+  }));
+}
+
+function detectPreviewBonds(atoms: PreviewAtom[]): [number, number][] {
+  if (atoms.length > 220) return [];
+  const bonds: [number, number][] = [];
+  for (let i = 0; i < atoms.length; i++) {
+    for (let j = i + 1; j < atoms.length; j++) {
+      const dx = atoms[i].x - atoms[j].x;
+      const dy = atoms[i].y - atoms[j].y;
+      const dz = atoms[i].z - atoms[j].z;
+      const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      const ri = PREVIEW_RADII[atoms[i].element] ?? 0.76;
+      const rj = PREVIEW_RADII[atoms[j].element] ?? 0.76;
+      const threshold = Math.max(1.15, Math.min(2.15, (ri + rj) * 1.24));
+      if (distance <= threshold) {
+        bonds.push([i, j]);
+        if (bonds.length >= LIVE_PREVIEW_BOND_LIMIT) return bonds;
+      }
+    }
+  }
+  return bonds;
+}
+
+function seededOffset(id: string): number {
+  return id.split('').reduce((sum, char, index) => sum + char.charCodeAt(0) * (index + 1), 0) % 997;
+}
+
 const GALLERY_STUDIO_CSS = `
   .lupi-gallery {
     width: 100%;
@@ -415,13 +574,13 @@ const GALLERY_STUDIO_CSS = `
     color: #f8fafc;
     text-align: left;
     cursor: pointer;
-    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
   }
   .lupi-gallery-domain-card:hover,
   .lupi-gallery-domain-card[data-active="true"] {
-    transform: translateY(-3px);
     border-color: color-mix(in srgb, var(--domain-color, #1edce0) 58%, transparent);
     background: color-mix(in srgb, var(--domain-color, #1edce0) 10%, rgba(255,255,255,0.035));
+    box-shadow: 0 14px 34px rgba(0,0,0,0.22);
   }
   .lupi-gallery-domain-top {
     display: flex;
@@ -489,13 +648,13 @@ const GALLERY_STUDIO_CSS = `
     color: #f8fafc;
     text-align: left;
     cursor: pointer;
-    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
   }
   .lupi-gallery-card:hover,
   .lupi-gallery-card[data-hovered="true"] {
-    transform: translateY(-4px);
     border-color: color-mix(in srgb, var(--thread-color) 58%, transparent);
-    box-shadow: 0 18px 44px rgba(0,0,0,0.36), 0 0 24px color-mix(in srgb, var(--thread-color) 16%, transparent);
+    background: rgba(255,255,255,0.052);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--thread-color) 22%, transparent), 0 14px 32px rgba(0,0,0,0.28);
   }
   .lupi-gallery-card:disabled {
     opacity: 0.46;
@@ -524,6 +683,33 @@ const GALLERY_STUDIO_CSS = `
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  .lupi-gallery-thumb img {
+    z-index: 1;
+    filter: saturate(0.92) contrast(1.04);
+    transition: opacity 180ms ease, transform 220ms ease, filter 220ms ease;
+  }
+  .lupi-gallery-card:hover .lupi-gallery-thumb img,
+  .lupi-gallery-card[data-hovered="true"] .lupi-gallery-thumb img {
+    transform: scale(1.018);
+    filter: saturate(1.05) contrast(1.08);
+  }
+  .lupi-gallery-live-preview {
+    z-index: 3;
+    background: #050508;
+  }
+  .lupi-gallery-fallback-preview {
+    z-index: 2;
+  }
+  .lupi-gallery-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 36%, transparent 0 45%, rgba(0,0,0,0.18) 78%),
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.20));
   }
   .lupi-gallery-card-body {
     padding: 16px;
@@ -1706,6 +1892,205 @@ function DomainCard({
 
 // ─── Patch Card ─────────────────────────────────────────────────────────
 
+function GalleryLivePreview({
+  example,
+  active,
+}: {
+  example: GalleryExample;
+  active: boolean;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [atoms, setAtoms] = useState<PreviewAtom[] | null>(null);
+  const [failed, setFailed] = useState(false);
+  const seed = useMemo(() => seededOffset(example.id), [example.id]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setFailed(false);
+    setAtoms(null);
+
+    if (!canUseLivePreview(example)) return () => { cancelled = true; };
+
+    fetch(resolveExampleUrl(example))
+      .then((response) => {
+        if (!response.ok) throw new Error(`Preview fetch failed: ${response.status}`);
+        return response.text();
+      })
+      .then((text) => {
+        if (cancelled) return;
+        const parsed = parsePreviewXyz(text);
+        if (parsed.length < 2) {
+          setFailed(true);
+          return;
+        }
+        setAtoms(parsed);
+      })
+      .catch(() => {
+        if (!cancelled) setFailed(true);
+      });
+
+    return () => { cancelled = true; };
+  }, [example]);
+
+  const normalizedAtoms = useMemo(
+    () => (atoms ? normalizePreviewAtoms(atoms) : []),
+    [atoms],
+  );
+  const bonds = useMemo(
+    () => (atoms ? detectPreviewBonds(atoms) : []),
+    [atoms],
+  );
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || failed || normalizedAtoms.length < 2) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let frame = 0;
+    let lastDraw = 0;
+    const reducedMotion = typeof window !== 'undefined'
+      && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const colors = example.colors.length ? example.colors : ['#1edce0', '#7dd3fc', '#f8fafc'];
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const width = Math.max(1, Math.floor(rect.width * dpr));
+      const height = Math.max(1, Math.floor(rect.height * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { width: rect.width, height: rect.height };
+    };
+
+    const draw = (now: number) => {
+      const { width, height } = resize();
+      ctx.clearRect(0, 0, width, height);
+
+      const bg = ctx.createRadialGradient(
+        width * 0.48,
+        height * 0.40,
+        0,
+        width * 0.52,
+        height * 0.52,
+        Math.max(width, height) * 0.72,
+      );
+      bg.addColorStop(0, `${colors[0]}26`);
+      bg.addColorStop(0.42, '#080a10');
+      bg.addColorStop(1, '#020307');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, width, height);
+
+      const angleY = seed * 0.01 + now * (active ? 0.00048 : 0.00022);
+      const angleX = 0.36 + Math.sin(seed + now * 0.00018) * 0.12;
+      const cosY = Math.cos(angleY);
+      const sinY = Math.sin(angleY);
+      const cosX = Math.cos(angleX);
+      const sinX = Math.sin(angleX);
+      const scale = Math.min(width, height) * 0.72;
+
+      const projected: ProjectedAtom[] = normalizedAtoms.map((atom, index) => {
+        const yRotX = atom.x * cosY + atom.z * sinY;
+        const yRotZ = -atom.x * sinY + atom.z * cosY;
+        const xRotY = atom.y * cosX - yRotZ * sinX;
+        const xRotZ = atom.y * sinX + yRotZ * cosX;
+        const depthBoost = 0.78 + (xRotZ + 0.5) * 0.36;
+        const color = CPK_COLORS[atom.element] || colors[index % colors.length] || '#cbd5e1';
+        return {
+          ...atom,
+          color,
+          radius: PREVIEW_RADII[atom.element] ?? 0.72,
+          screenX: width / 2 + yRotX * scale,
+          screenY: height / 2 + xRotY * scale,
+          depth: xRotZ * depthBoost,
+        };
+      });
+
+      ctx.lineCap = 'round';
+      for (const [i, j] of bonds) {
+        const a = projected[i];
+        const b = projected[j];
+        if (!a || !b) continue;
+        const depth = Math.max(0.25, Math.min(1.1, (a.depth + b.depth + 1.2) / 2));
+        ctx.beginPath();
+        ctx.moveTo(a.screenX, a.screenY);
+        ctx.lineTo(b.screenX, b.screenY);
+        ctx.strokeStyle = `rgba(226,232,240,${0.10 + depth * 0.18})`;
+        ctx.lineWidth = Math.max(0.65, 1.25 * depth);
+        ctx.stroke();
+      }
+
+      projected
+        .sort((a, b) => a.depth - b.depth)
+        .forEach((atom) => {
+          const depth = Math.max(0.35, Math.min(1.35, atom.depth + 0.88));
+          const radius = Math.max(2.3, atom.radius * 5.8 * depth);
+          const glow = ctx.createRadialGradient(
+            atom.screenX,
+            atom.screenY,
+            0,
+            atom.screenX,
+            atom.screenY,
+            radius * 3.1,
+          );
+          glow.addColorStop(0, `${atom.color}40`);
+          glow.addColorStop(1, `${atom.color}00`);
+          ctx.fillStyle = glow;
+          ctx.fillRect(atom.screenX - radius * 3.1, atom.screenY - radius * 3.1, radius * 6.2, radius * 6.2);
+
+          const atomFill = ctx.createRadialGradient(
+            atom.screenX - radius * 0.32,
+            atom.screenY - radius * 0.42,
+            radius * 0.2,
+            atom.screenX,
+            atom.screenY,
+            radius,
+          );
+          atomFill.addColorStop(0, '#ffffff');
+          atomFill.addColorStop(0.24, atom.color);
+          atomFill.addColorStop(1, '#10131a');
+          ctx.beginPath();
+          ctx.arc(atom.screenX, atom.screenY, radius, 0, Math.PI * 2);
+          ctx.fillStyle = atomFill;
+          ctx.fill();
+          ctx.strokeStyle = `rgba(255,255,255,${0.10 + depth * 0.08})`;
+          ctx.lineWidth = 0.65;
+          ctx.stroke();
+        });
+    };
+
+    const loop = (now: number) => {
+      const targetInterval = active ? 16 : 44;
+      if (!lastDraw || now - lastDraw >= targetInterval) {
+        draw(now);
+        lastDraw = now;
+      }
+      if (!reducedMotion) frame = window.requestAnimationFrame(loop);
+    };
+
+    if (reducedMotion) {
+      draw(seed);
+      return undefined;
+    }
+
+    frame = window.requestAnimationFrame(loop);
+    return () => window.cancelAnimationFrame(frame);
+  }, [active, bonds, example.colors, failed, normalizedAtoms, seed]);
+
+  if (failed || normalizedAtoms.length < 2) return null;
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="lupi-gallery-live-preview"
+      aria-hidden="true"
+    />
+  );
+}
+
 function PatchCard({
   example,
   hovered,
@@ -1853,9 +2238,12 @@ function PatchCard({
           />
         )}
 
+        <GalleryLivePreview example={example} active={hovered} />
+
         {(imgError || !example.available) && (
           <canvas
             ref={canvasRef}
+            className="lupi-gallery-fallback-preview"
             width={320}
             height={160}
           />
@@ -1891,7 +2279,7 @@ function PatchCard({
           {isOpenDataExample(example) && <span className="lupi-gallery-tag">Open data</span>}
         </div>
 
-        {(viewMode === 'list' || hovered) && example.metadata && (
+        {viewMode === 'list' && example.metadata && (
           <div className="lupi-gallery-meta">
             {example.metadata.potential && (
               <div>Potential: {example.metadata.potential}</div>
