@@ -37,6 +37,7 @@ interface GalleryExample {
   atoms: string;
   frames: string;
   isTrajectory?: boolean;
+  autoPlay?: boolean;
   file: string;
   sourceUrl?: string;
   available: boolean;
@@ -1418,6 +1419,31 @@ export function Gallery() {
       // 2. sourceUrl override (open-data repos) — prefer in production
       // 3. Relative local paths — prepend base URL
       const url = resolveExampleUrl(example);
+
+      if (/\.json(?:$|\?)/i.test(url) || /\.json$/i.test(example.file)) {
+        const resp = await fetch(url, { cache: 'reload' });
+        if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
+        const payload = await resp.json();
+        const { artifactToLoadedFile } = await import('./MlipLongRunWorkbench');
+        const loaded = artifactToLoadedFile(payload, url);
+        const store = useStore.getState();
+        store.setFile({
+          ...loaded,
+          name: example.title,
+        });
+        store.setFrame(0);
+        store.setColorScheme('element');
+        store.setColorProperty(null);
+        store.setCameraPreset('iso');
+        store.setPlaybackSpeed(1);
+        useStore.setState({
+          atomScale: 1.35,
+          showBonds: false,
+          playing: Boolean(example.autoPlay),
+        });
+        setLoadingId(null);
+        return;
+      }
 
       if (example.id === 'lupine_brand_asset') {
         const scientificUrl = publicAssetUrl('gallery/curated/lupine_bluebonnet.xyz');

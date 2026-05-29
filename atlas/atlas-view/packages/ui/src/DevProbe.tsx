@@ -149,6 +149,9 @@ export function DevProbe({ enabled = false }: DevProbeProps) {
         } : null,
         store: {
           frame: state.frame,
+          totalFrames: state.file?.trajectory.frames.length ?? 0,
+          playing: state.playing,
+          playbackSpeed: state.playbackSpeed,
           loadedAtomCount: state.loadedAtomCount,
           renderStyle: state.renderStyle,
           colorMode: state.colorMode,

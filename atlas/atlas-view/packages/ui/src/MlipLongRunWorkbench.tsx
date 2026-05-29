@@ -571,7 +571,7 @@ function pairedBaselineArtifactFor(artifact: MeasuredArtifact, artifacts: Measur
   ) ?? artifacts.find((candidate) => candidate.variant_id === 'baseline') ?? null;
 }
 
-function artifactToLoadedFile(payload: EquilibriumScoreArtifact | MdTrajectoryArtifact, sourceUrl: string): LoadedFile {
+export function artifactToLoadedFile(payload: EquilibriumScoreArtifact | MdTrajectoryArtifact, sourceUrl: string): LoadedFile {
   if (payload.schema === 'lupine.distill.equilibrium_solve_score.v1') {
     return equilibriumScoreToLoadedFile(payload, sourceUrl);
   }
