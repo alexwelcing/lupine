@@ -1,9 +1,8 @@
 /**
  * Gallery — curated simulation showcase.
  *
- * Each card shows a real rendered snapshot, with a procedural canvas
- * fallback if the snapshot is missing. Clicking loads the trajectory
- * into the viewer.
+ * Fast scene browser for curated structures and trajectories. The list stays
+ * light; only the focused scene renders a large preview.
  */
 
 import { useCallback, useRef, useEffect, useState, useMemo, useDeferredValue } from 'react';
@@ -144,6 +143,14 @@ function gallerySnapshotUrl(id: string): string {
   return publicAssetUrl(`gallery/snapshots/${id}.jpg`);
 }
 
+function parseFrameCountLabel(label: string | undefined): number {
+  if (!label) return 0;
+  const digits = label.replace(/[^\d]/g, '');
+  if (!digits) return 0;
+  const n = parseInt(digits, 10);
+  return Number.isFinite(n) ? n : 0;
+}
+
 function resolveExampleUrl(example: GalleryExample): string {
   if (example.file.startsWith('http://') || example.file.startsWith('https://')) {
     return maybeDevStorageProxy(example.file);
@@ -184,8 +191,8 @@ function isOpenDataExample(example: GalleryExample): boolean {
 function matchesSourceFilter(example: GalleryExample, sourceFilter: SourceFilter): boolean {
   if (sourceFilter === 'All Sources') return true;
   if (sourceFilter === 'Featured') return Boolean(example.featured);
-  if (sourceFilter === 'Trajectories') return parseInt(example.frames, 10) > 1;
-  if (sourceFilter === 'Snapshots') return parseInt(example.frames, 10) <= 1;
+  if (sourceFilter === 'Trajectories') return parseFrameCountLabel(example.frames) > 1;
+  if (sourceFilter === 'Snapshots') return parseFrameCountLabel(example.frames) <= 1;
   return isOpenDataExample(example);
 }
 
@@ -916,6 +923,473 @@ const GALLERY_STUDIO_CSS = `
       font-size: 15px;
     }
   }
+
+  .lupi-gallery-fast {
+    max-width: 1760px;
+    padding: 16px clamp(12px, 2.2vw, 28px) 42px;
+  }
+  .lupi-gallery-workbench {
+    display: grid;
+    grid-template-columns: minmax(230px, 280px) minmax(380px, 1fr) minmax(300px, 390px);
+    gap: 14px;
+    align-items: start;
+  }
+  .lupi-gallery-rail,
+  .lupi-gallery-index,
+  .lupi-gallery-spotlight {
+    min-width: 0;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    background: rgba(7, 9, 14, 0.72);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.20);
+  }
+  .lupi-gallery-rail {
+    position: sticky;
+    top: 12px;
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+  }
+  .lupi-gallery-rail-head h2 {
+    margin: 5px 0 5px;
+    font-size: 24px;
+    font-weight: 540;
+    line-height: 1.05;
+  }
+  .lupi-gallery-rail-head p {
+    margin: 0;
+    color: rgba(203,213,225,0.58);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .lupi-gallery-fast-search input {
+    padding-block: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .lupi-gallery-source-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .lupi-gallery-source-tabs button {
+    min-height: 34px;
+    padding: 6px 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.032);
+    color: rgba(226,232,240,0.62);
+    font-size: 11px;
+    font-weight: 680;
+    cursor: pointer;
+  }
+  .lupi-gallery-source-tabs button[data-active="true"] {
+    border-color: rgba(30,220,224,0.56);
+    background: rgba(30,220,224,0.12);
+    color: #eaffff;
+  }
+  .lupi-gallery-domain-menu {
+    display: grid;
+    gap: 5px;
+  }
+  .lupi-gallery-domain-row {
+    display: grid;
+    grid-template-columns: 12px minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 7px 8px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(226,232,240,0.66);
+    text-align: left;
+    cursor: pointer;
+  }
+  .lupi-gallery-domain-row[data-active="true"],
+  .lupi-gallery-domain-row:hover {
+    border-color: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.045);
+    color: #fff;
+  }
+  .lupi-gallery-domain-mark {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .lupi-gallery-domain-row span:nth-child(2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 620;
+  }
+  .lupi-gallery-domain-row em,
+  .lupi-gallery-domain-row strong {
+    color: rgba(203,213,225,0.42);
+    font-size: 11px;
+    font-style: normal;
+  }
+  .lupi-gallery-index {
+    padding: 16px;
+  }
+  .lupi-gallery-index-head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .lupi-gallery-index-head h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 520;
+  }
+  .lupi-gallery-index-head p {
+    margin: 4px 0 0;
+    color: rgba(203,213,225,0.54);
+    font-size: 12px;
+  }
+  .lupi-gallery-fast-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .lupi-gallery-fast-stats span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.045);
+    color: rgba(226,232,240,0.55);
+    font-size: 11px;
+    font-weight: 620;
+  }
+  .lupi-gallery-fast-stats strong {
+    color: #fff;
+    font-size: 13px;
+  }
+  .lupi-gallery-playlist {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    margin-bottom: 12px;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+  .lupi-gallery-playlist button {
+    flex: 0 0 168px;
+    display: grid;
+    gap: 4px;
+    min-height: 58px;
+    padding: 9px 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.032);
+    color: rgba(226,232,240,0.7);
+    text-align: left;
+    cursor: pointer;
+  }
+  .lupi-gallery-playlist button[data-active="true"],
+  .lupi-gallery-playlist button:hover {
+    border-color: rgba(52,211,153,0.55);
+    background: rgba(52,211,153,0.095);
+    color: #f8fffb;
+  }
+  .lupi-gallery-playlist span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 650;
+  }
+  .lupi-gallery-playlist strong {
+    color: #34d399;
+    font-size: 11px;
+  }
+  .lupi-gallery-result-table {
+    display: grid;
+    gap: 6px;
+  }
+  .lupi-gallery-scene-row {
+    --thread-color: #1edce0;
+    position: relative;
+    display: grid;
+    grid-template-columns: 36px minmax(180px, 1.2fr) minmax(130px, 0.5fr) minmax(190px, 0.8fr) 70px;
+    align-items: center;
+    gap: 12px;
+    min-height: 68px;
+    padding: 9px 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.065);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.026);
+    color: #f8fafc;
+    text-align: left;
+    cursor: pointer;
+    content-visibility: auto;
+    contain-intrinsic-size: 68px;
+  }
+  .lupi-gallery-scene-row:hover,
+  .lupi-gallery-scene-row:focus-visible,
+  .lupi-gallery-scene-row[data-selected="true"] {
+    border-color: color-mix(in srgb, var(--thread-color) 48%, rgba(255,255,255,0.08));
+    background: color-mix(in srgb, var(--thread-color) 8%, rgba(255,255,255,0.035));
+    outline: none;
+  }
+  .lupi-gallery-scene-row:disabled {
+    opacity: 0.46;
+    cursor: not-allowed;
+  }
+  .lupi-gallery-row-swatch {
+    display: grid;
+    gap: 3px;
+  }
+  .lupi-gallery-row-swatch i {
+    display: block;
+    height: 7px;
+    border-radius: 99px;
+  }
+  .lupi-gallery-row-main {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+  .lupi-gallery-row-main strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 650;
+  }
+  .lupi-gallery-row-main span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(203,213,225,0.50);
+    font-size: 12px;
+  }
+  .lupi-gallery-row-domain {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(226,232,240,0.58);
+    font-size: 12px;
+    font-weight: 620;
+  }
+  .lupi-gallery-row-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .lupi-gallery-row-facts em {
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.055);
+    color: rgba(226,232,240,0.62);
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 650;
+  }
+  .lupi-gallery-row-facts em.is-playable {
+    color: #34d399;
+    background: rgba(52,211,153,0.09);
+  }
+  .lupi-gallery-row-open {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    min-height: 30px;
+    padding: 0 10px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(226,232,240,0.72);
+    font-size: 11px;
+    font-weight: 760;
+  }
+  .lupi-gallery-scene-row:hover .lupi-gallery-row-open,
+  .lupi-gallery-scene-row:focus-visible .lupi-gallery-row-open {
+    background: var(--thread-color);
+    color: #041112;
+  }
+  .lupi-gallery-row-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--thread-color);
+  }
+  .lupi-gallery-spotlight {
+    position: sticky;
+    top: 12px;
+    overflow: hidden;
+  }
+  .lupi-gallery-spotlight-preview {
+    position: relative;
+    aspect-ratio: 1.16;
+    overflow: hidden;
+    background: #05070b;
+  }
+  .lupi-gallery-spotlight-preview img,
+  .lupi-gallery-spotlight-fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .lupi-gallery-spotlight-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 54%, rgba(0,0,0,0.66));
+  }
+  .lupi-gallery-spotlight-badge {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 2;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(4,7,11,0.72);
+    color: #f8fafc;
+    font-size: 11px;
+    font-weight: 760;
+  }
+  .lupi-gallery-spotlight-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    place-content: center;
+    gap: 10px;
+    background: rgba(3,5,10,0.78);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 720;
+  }
+  .lupi-gallery-spotlight-loading i {
+    display: block;
+    width: 180px;
+    height: 4px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.14);
+  }
+  .lupi-gallery-spotlight-loading b {
+    display: block;
+    height: 100%;
+    background: var(--thread-color, #1edce0);
+  }
+  .lupi-gallery-spotlight-body {
+    display: grid;
+    gap: 10px;
+    padding: 15px;
+  }
+  .lupi-gallery-spotlight-kicker {
+    color: color-mix(in srgb, var(--thread-color, #1edce0) 76%, white);
+    font-size: 11px;
+    font-weight: 780;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-spotlight h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 560;
+    line-height: 1.12;
+  }
+  .lupi-gallery-spotlight p {
+    margin: 0;
+    color: rgba(203,213,225,0.62);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .lupi-gallery-spotlight-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .lupi-gallery-spotlight-facts span {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.055);
+    color: rgba(226,232,240,0.65);
+    font-size: 11px;
+    font-weight: 650;
+  }
+  .lupi-gallery-spotlight-open {
+    min-height: 38px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--thread-color, #1edce0);
+    color: #031012;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .lupi-gallery-spotlight-open:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+  .lupi-gallery-spotlight-empty {
+    min-height: 360px;
+    display: grid;
+    place-items: center;
+    color: rgba(226,232,240,0.46);
+    font-size: 13px;
+  }
+  @media (max-width: 1180px) {
+    .lupi-gallery-workbench {
+      grid-template-columns: 230px minmax(0, 1fr);
+    }
+    .lupi-gallery-spotlight {
+      grid-column: 1 / -1;
+      position: static;
+      display: grid;
+      grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 820px) {
+    .lupi-gallery-fast {
+      padding: 10px 10px 28px;
+    }
+    .lupi-gallery-workbench {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .lupi-gallery-rail {
+      position: static;
+    }
+    .lupi-gallery-domain-menu {
+      max-height: 190px;
+      overflow: auto;
+    }
+    .lupi-gallery-index-head {
+      display: grid;
+    }
+    .lupi-gallery-fast-stats {
+      justify-content: flex-start;
+    }
+    .lupi-gallery-scene-row {
+      grid-template-columns: 28px minmax(0, 1fr) auto;
+      min-height: 74px;
+    }
+    .lupi-gallery-row-domain,
+    .lupi-gallery-row-facts {
+      display: none;
+    }
+    .lupi-gallery-row-open {
+      min-width: 48px;
+    }
+    .lupi-gallery-spotlight {
+      grid-template-columns: 1fr;
+    }
+  }
 `;
 
 // ─── Shared styles ──────────────────────────────────────────────────────
@@ -1308,12 +1782,14 @@ const sPatchLoading: React.CSSProperties = {
 // ─── Gallery ────────────────────────────────────────────────────────────
 
 export function Gallery() {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Domain | 'All'>('All');
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>('All Sources');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [search, setSearch] = useState('');
+  const [selectedId, setSelectedId] = useState<string>(() => {
+    const firstPlayable = EXAMPLES.find((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1);
+    return firstPlayable?.id ?? EXAMPLES[0]?.id ?? '';
+  });
   // Keep the input responsive while the (potentially large) filtered grid
   // re-renders off the deferred value — avoids per-keystroke jank.
   const deferredSearch = useDeferredValue(search);
@@ -1342,7 +1818,7 @@ export function Gallery() {
 
   const galleryStats = useMemo(() => {
     const available = EXAMPLES.filter(ex => ex.available).length;
-    const trajectories = EXAMPLES.filter(ex => parseInt(ex.frames, 10) > 1).length;
+    const trajectories = EXAMPLES.filter(ex => parseFrameCountLabel(ex.frames) > 1).length;
     return {
       domains: ALL_DOMAINS.filter(domain => EXAMPLES.some(ex => ex.domain === domain)).length,
       available,
@@ -1358,12 +1834,30 @@ export function Gallery() {
         return {
           domain,
           count: examples.length,
-          trajectories: examples.filter(ex => parseInt(ex.frames, 10) > 1).length,
+          trajectories: examples.filter(ex => parseFrameCountLabel(ex.frames) > 1).length,
           atoms: examples.reduce((total, ex) => total + parseAtomCountLabel(ex.atoms), 0),
         };
       })
       .filter(summary => summary.count > 0);
   }, []);
+
+  const selectedExample = useMemo(() => {
+    return filteredExamples.find((ex) => ex.id === selectedId)
+      ?? filteredExamples[0]
+      ?? null;
+  }, [filteredExamples, selectedId]);
+
+  const playableExamples = useMemo(() => {
+    return EXAMPLES
+      .filter((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1)
+      .slice(0, 8);
+  }, []);
+
+  useEffect(() => {
+    if (selectedExample && selectedExample.id !== selectedId) {
+      setSelectedId(selectedExample.id);
+    }
+  }, [selectedExample, selectedId]);
 
   const clearFilters = useCallback(() => {
     setSearch('');
@@ -1679,7 +2173,7 @@ export function Gallery() {
   }, [handleLoad]);
 
   return (
-    <div className="lupi-gallery" data-testid="gallery">
+    <div className="lupi-gallery lupi-gallery-fast" data-testid="gallery">
       <style>{GALLERY_STUDIO_CSS}</style>
       <div aria-live="polite" role="status" style={sVisuallyHidden}>
         {loadingId
@@ -1687,45 +2181,22 @@ export function Gallery() {
           : `${filteredExamples.length} simulation${filteredExamples.length === 1 ? '' : 's'} shown`}
       </div>
 
-      <section className="lupi-gallery-hero" aria-labelledby="lupi-gallery-title">
-        <div>
-          <div className="lupi-gallery-eyebrow">Lupi structure library</div>
-          <h2 id="lupi-gallery-title" className="lupi-gallery-title">Molecule Gallery</h2>
-        </div>
-        <p className="lupi-gallery-copy">
-          Explore curated molecular structures and simulation domains, from simple reference
-          systems to research-grade trajectories, all loading into the real viewer.
-        </p>
-        <div className="lupi-gallery-stats" aria-label="Gallery summary">
-          <div className="lupi-gallery-stat">
-            <span className="lupi-gallery-stat-value">{galleryStats.domains}</span>
-            <span className="lupi-gallery-stat-label">Domains</span>
+      <section className="lupi-gallery-workbench" aria-labelledby="lupi-gallery-title">
+        <aside className="lupi-gallery-rail" aria-label="Gallery controls">
+          <div className="lupi-gallery-rail-head">
+            <div className="lupi-gallery-eyebrow">Lupi structure library</div>
+            <h2 id="lupi-gallery-title">Scene Browser</h2>
+            <p>Fast index, one preview, direct load into the viewer.</p>
           </div>
-          <div className="lupi-gallery-stat">
-            <span className="lupi-gallery-stat-value">{galleryStats.available}</span>
-            <span className="lupi-gallery-stat-label">Loadable scenes</span>
-          </div>
-          <div className="lupi-gallery-stat">
-            <span className="lupi-gallery-stat-value">{galleryStats.trajectories}</span>
-            <span className="lupi-gallery-stat-label">Trajectories</span>
-          </div>
-          <div className="lupi-gallery-stat">
-            <span className="lupi-gallery-stat-value">{galleryStats.featured}</span>
-            <span className="lupi-gallery-stat-label">Featured</span>
-          </div>
-        </div>
-      </section>
 
-      <section className="lupi-gallery-controls" aria-label="Search and filter gallery">
-        <div className="lupi-gallery-controls-inner">
-          <div className="lupi-gallery-search" role="search">
+          <div className="lupi-gallery-search lupi-gallery-fast-search" role="search">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
             <input
               type="search"
-              placeholder="Search by structure, domain, method, or potential..."
+              placeholder="Search molecules, methods, domains..."
               aria-label="Search simulations by title, description, method, potential, or domain"
               data-testid="gallery-search"
               value={search}
@@ -1745,141 +2216,265 @@ export function Gallery() {
             )}
           </div>
 
-          <div className="lupi-gallery-filter-row">
-            <div className="lupi-gallery-chips" role="group" aria-label="Filter simulations by domain">
+          <div className="lupi-gallery-source-tabs" role="group" aria-label="Filter by source type">
+            {SOURCE_FILTERS.map(option => (
               <button
+                key={option}
                 type="button"
-                className="lupi-gallery-chip"
-                data-active={filter === 'All'}
-                style={{ '--chip-color': 'rgba(255,255,255,0.55)' } as React.CSSProperties}
-                onClick={() => setFilter('All')}
-                aria-pressed={filter === 'All'}
-                data-testid="gallery-filter-all"
+                data-active={sourceFilter === option}
+                aria-pressed={sourceFilter === option}
+                onClick={() => setSourceFilter(option)}
               >
-                All <span className="lupi-gallery-chip-count">{EXAMPLES.length}</span>
+                {option}
               </button>
-              {domainSummaries.map(({ domain, count }) => (
-                <button
-                  key={domain}
-                  type="button"
-                  className="lupi-gallery-chip"
-                  data-active={filter === domain}
-                  style={{ '--chip-color': DOMAIN_THREAD[domain] } as React.CSSProperties}
-                  onClick={() => setFilter(domain)}
-                  aria-pressed={filter === domain}
-                >
-                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: DOMAIN_COLORS[domain], flexShrink: 0 }} />
-                  {domain}
-                  <span className="lupi-gallery-chip-count">{count}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="lupi-gallery-actions">
-              <select
-                className="lupi-gallery-select"
-                value={sourceFilter}
-                onChange={(event) => setSourceFilter(event.target.value as SourceFilter)}
-                aria-label="Filter by source type"
-              >
-                {SOURCE_FILTERS.map(option => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-              <div className="lupi-gallery-view-toggle" role="group" aria-label="Switch gallery view">
-                <button
-                  type="button"
-                  data-active={viewMode === 'grid'}
-                  aria-pressed={viewMode === 'grid'}
-                  aria-label="Grid view"
-                  onClick={() => setViewMode('grid')}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <rect x="4" y="4" width="6" height="6" rx="1" />
-                    <rect x="14" y="4" width="6" height="6" rx="1" />
-                    <rect x="4" y="14" width="6" height="6" rx="1" />
-                    <rect x="14" y="14" width="6" height="6" rx="1" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  data-active={viewMode === 'list'}
-                  aria-pressed={viewMode === 'list'}
-                  aria-label="List view"
-                  onClick={() => setViewMode('list')}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-                    <path d="M8 6h12M8 12h12M8 18h12" />
-                    <path d="M4 6h.01M4 12h.01M4 18h.01" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="simulation-domains">
-        <h3 id="simulation-domains" className="lupi-gallery-section-title">Simulation Domains</h3>
-        <div className="lupi-gallery-domain-grid">
-          {domainSummaries.map(summary => (
-            <DomainCard
-              key={summary.domain}
-              summary={summary}
-              active={filter === summary.domain}
-              onClick={() => setFilter(summary.domain)}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section aria-labelledby="popular-structures">
-        <div className="lupi-gallery-results-head">
-          <div>
-            <h3 id="popular-structures" className="lupi-gallery-section-title" style={{ marginBottom: 0 }}>Popular Structures</h3>
-            <p>
-              {filteredExamples.length} result{filteredExamples.length === 1 ? '' : 's'}
-              {filter !== 'All' ? ` in ${filter}` : ''}
-              {sourceFilter !== 'All Sources' ? ` / ${sourceFilter}` : ''}
-            </p>
-          </div>
-        </div>
-
-        {filteredExamples.length === 0 ? (
-          <div className="lupi-gallery-empty" data-testid="gallery-empty">
-            <div className="lupi-gallery-empty-title">No molecules found</div>
-            <p>
-              {deferredSearch
-                ? <>Nothing matches "{deferredSearch}"{filter !== 'All' ? <> in {filter}</> : null}.</>
-                : <>No simulations match the active filters.</>}
-            </p>
-            <button
-              type="button"
-              data-testid="gallery-empty-reset"
-              onClick={clearFilters}
-            >
-              Clear Filters
-            </button>
-          </div>
-        ) : (
-          <div className={viewMode === 'grid' ? 'lupi-gallery-results-grid' : 'lupi-gallery-results-list'}>
-            {filteredExamples.map((ex) => (
-              <PatchCard
-                key={ex.id}
-                example={ex}
-                hovered={hoveredId === ex.id}
-                loading={loadingId === ex.id}
-                atomCeiling={atomCeiling}
-                viewMode={viewMode}
-                onHover={() => setHoveredId(ex.id)}
-                onLeave={() => setHoveredId(null)}
-                onClick={() => handleLoad(ex, false)}
-              />
             ))}
           </div>
-        )}
+
+          <div className="lupi-gallery-domain-menu" role="group" aria-label="Filter simulations by domain">
+            <button
+              type="button"
+              className="lupi-gallery-domain-row"
+              data-active={filter === 'All'}
+              onClick={() => setFilter('All')}
+              aria-pressed={filter === 'All'}
+              data-testid="gallery-filter-all"
+            >
+              <span className="lupi-gallery-domain-mark" style={{ background: 'rgba(255,255,255,0.58)' }} />
+              <span>All domains</span>
+              <strong>{EXAMPLES.length}</strong>
+            </button>
+            {domainSummaries.map(({ domain, count, trajectories }) => (
+              <button
+                key={domain}
+                type="button"
+                className="lupi-gallery-domain-row"
+                data-active={filter === domain}
+                onClick={() => setFilter(domain)}
+                aria-pressed={filter === domain}
+              >
+                <span className="lupi-gallery-domain-mark" style={{ background: DOMAIN_COLORS[domain] }} />
+                <span>{domain}</span>
+                <em>{trajectories}</em>
+                <strong>{count}</strong>
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        <main className="lupi-gallery-index" aria-labelledby="lupi-gallery-results-title">
+          <div className="lupi-gallery-index-head">
+            <div>
+              <h3 id="lupi-gallery-results-title">Gallery Index</h3>
+              <p>
+                {filteredExamples.length} result{filteredExamples.length === 1 ? '' : 's'}
+                {filter !== 'All' ? ` in ${filter}` : ''}
+                {sourceFilter !== 'All Sources' ? ` / ${sourceFilter}` : ''}
+              </p>
+            </div>
+            <div className="lupi-gallery-fast-stats" aria-label="Gallery summary">
+              <span><strong>{galleryStats.available}</strong> loadable</span>
+              <span><strong>{galleryStats.trajectories}</strong> playable</span>
+              <span><strong>{galleryStats.domains}</strong> domains</span>
+            </div>
+          </div>
+
+          <div className="lupi-gallery-playlist" aria-label="Playable trajectory shortcuts">
+            {playableExamples.map((ex) => (
+              <button
+                key={ex.id}
+                type="button"
+                data-active={selectedExample?.id === ex.id}
+                onClick={() => setSelectedId(ex.id)}
+                onDoubleClick={() => handleLoad(ex, false)}
+              >
+                <span>{ex.title}</span>
+                <strong>{ex.frames}</strong>
+              </button>
+            ))}
+          </div>
+
+          {filteredExamples.length === 0 ? (
+            <div className="lupi-gallery-empty" data-testid="gallery-empty">
+              <div className="lupi-gallery-empty-title">No molecules found</div>
+              <p>
+                {deferredSearch
+                  ? <>Nothing matches "{deferredSearch}"{filter !== 'All' ? <> in {filter}</> : null}.</>
+                  : <>No simulations match the active filters.</>}
+              </p>
+              <button
+                type="button"
+                data-testid="gallery-empty-reset"
+                onClick={clearFilters}
+              >
+                Clear Filters
+              </button>
+            </div>
+          ) : (
+            <div className="lupi-gallery-result-table" role="list">
+            {filteredExamples.map((ex) => (
+              <GallerySceneRow
+                key={ex.id}
+                example={ex}
+                selected={selectedExample?.id === ex.id}
+                loading={loadingId === ex.id}
+                atomCeiling={atomCeiling}
+                onPreview={() => setSelectedId(ex.id)}
+                onOpen={() => handleLoad(ex, false)}
+              />
+            ))}
+            </div>
+          )}
+        </main>
+
+        <GallerySpotlight
+          example={selectedExample}
+          loading={selectedExample ? loadingId === selectedExample.id : false}
+          onOpen={() => selectedExample && handleLoad(selectedExample, false)}
+        />
       </section>
     </div>
+  );
+}
+
+function GallerySceneRow({
+  example,
+  selected,
+  loading,
+  atomCeiling,
+  onPreview,
+  onOpen,
+}: {
+  example: GalleryExample;
+  selected: boolean;
+  loading: boolean;
+  atomCeiling: number;
+  onPreview: () => void;
+  onOpen: () => void;
+}) {
+  const loadProgress = useStore((s) => (loading ? s.loadProgress : 0));
+  const frameCount = parseFrameCountLabel(example.frames);
+  const exceedsCap = parseAtomCountLabel(example.atoms) > atomCeiling;
+  const disabled = loading || !example.available || exceedsCap;
+  const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
+  const threadColor = DOMAIN_THREAD[example.domain];
+
+  return (
+    <button
+      type="button"
+      className="lupi-gallery-scene-row"
+      data-selected={selected}
+      data-playable={frameCount > 1}
+      data-testid={`gallery-card-${example.id}`}
+      disabled={disabled}
+      onMouseEnter={onPreview}
+      onFocus={onPreview}
+      onClick={onOpen}
+      style={{ '--thread-color': threadColor, '--domain-color': DOMAIN_COLORS[example.domain] } as React.CSSProperties}
+      aria-label={`${example.title} - ${example.domain}, ${example.atoms} atoms, ${frameCount > 1 ? `${example.frames} frames` : 'snapshot'}`}
+    >
+      <span className="lupi-gallery-row-swatch" aria-hidden="true">
+        {example.colors.map((color) => <i key={color} style={{ background: color }} />)}
+      </span>
+      <span className="lupi-gallery-row-main">
+        <strong>{example.title}</strong>
+        <span>{example.subtitle}</span>
+      </span>
+      <span className="lupi-gallery-row-domain">{example.domain}</span>
+      <span className="lupi-gallery-row-facts">
+        <em>{example.atoms}</em>
+        <em className={frameCount > 1 ? 'is-playable' : ''}>{frameCount > 1 ? `${example.frames} frames` : 'snapshot'}</em>
+        {example.featured && <em>featured</em>}
+      </span>
+      <span className="lupi-gallery-row-open">
+        {loading ? `${pct}%` : exceedsCap ? 'Over cap' : 'Open'}
+      </span>
+      {loading && <span className="lupi-gallery-row-progress" style={{ width: `${pct}%` }} />}
+    </button>
+  );
+}
+
+function GallerySpotlight({
+  example,
+  loading,
+  onOpen,
+}: {
+  example: GalleryExample | null;
+  loading: boolean;
+  onOpen: () => void;
+}) {
+  const [imgError, setImgError] = useState(false);
+  const loadProgress = useStore((s) => (loading ? s.loadProgress : 0));
+
+  useEffect(() => {
+    setImgError(false);
+  }, [example?.id]);
+
+  if (!example) {
+    return (
+      <aside className="lupi-gallery-spotlight" aria-label="Selected scene">
+        <div className="lupi-gallery-spotlight-empty">Select a scene</div>
+      </aside>
+    );
+  }
+
+  const frameCount = parseFrameCountLabel(example.frames);
+  const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
+  const method = example.metadata?.method ?? example.metadata?.potential ?? example.domain;
+
+  return (
+    <aside
+      className="lupi-gallery-spotlight"
+      aria-label={`Selected scene: ${example.title}`}
+      style={{ '--thread-color': DOMAIN_THREAD[example.domain] } as React.CSSProperties}
+    >
+      <div className="lupi-gallery-spotlight-preview">
+        {!imgError ? (
+          <img
+            src={gallerySnapshotUrl(example.id)}
+            alt={example.title}
+            loading="eager"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div
+            className="lupi-gallery-spotlight-fallback"
+            style={{
+              background:
+                `radial-gradient(circle at 24% 18%, ${example.colors[0]}55, transparent 32%), ` +
+                `radial-gradient(circle at 76% 28%, ${example.colors[1]}45, transparent 34%), ` +
+                `linear-gradient(135deg, #070a10, ${example.colors[2]}28)`,
+            }}
+          />
+        )}
+        <div className="lupi-gallery-spotlight-badge">
+          {frameCount > 1 ? `${example.frames} frames` : 'snapshot'}
+        </div>
+        {loading && (
+          <div className="lupi-gallery-spotlight-loading" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct}>
+            <span>Loading {pct}%</span>
+            <i><b style={{ width: `${pct}%` }} /></i>
+          </div>
+        )}
+      </div>
+      <div className="lupi-gallery-spotlight-body">
+        <div className="lupi-gallery-spotlight-kicker">{example.domain}</div>
+        <h3>{example.title}</h3>
+        <p>{example.subtitle}</p>
+        <div className="lupi-gallery-spotlight-facts">
+          <span>{example.atoms} atoms</span>
+          <span>{method}</span>
+          {isOpenDataExample(example) && <span>open data</span>}
+        </div>
+        <button
+          type="button"
+          className="lupi-gallery-spotlight-open"
+          onClick={onOpen}
+          disabled={loading || !example.available}
+        >
+          {loading ? 'Loading' : 'Open in viewer'}
+        </button>
+      </div>
+    </aside>
   );
 }
 
