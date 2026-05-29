@@ -2112,8 +2112,10 @@ function PatchCard({
   onClick: () => void;
 }) {
   const exceedsCap = parseAtomCountLabel(example.atoms) > atomCeiling;
+  const cardRef = useRef<HTMLButtonElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imgError, setImgError] = useState(false);
+  const [previewInView, setPreviewInView] = useState(false);
   // Only the loading card subscribes to progress — others ignore it.
   const loadProgress = useStore((s) => (loading ? s.loadProgress : 0));
   const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
@@ -2200,14 +2202,38 @@ function PatchCard({
     }
   }, [example, imgError]);
 
+  useEffect(() => {
+    if (!canUseLivePreview(example)) {
+      setPreviewInView(false);
+      return undefined;
+    }
+
+    const node = cardRef.current;
+    if (!node) return undefined;
+
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      setPreviewInView(hovered);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setPreviewInView(entry.isIntersecting),
+      { rootMargin: '420px 0px', threshold: 0.01 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [example, hovered]);
+
   const disabledReason = !example.available
     ? 'coming soon'
     : exceedsCap
       ? `${example.atoms} atoms exceeds Lupi's current single-scene ceiling`
       : null;
+  const showLivePreview = (previewInView || hovered) && canUseLivePreview(example);
 
   return (
     <button
+      ref={cardRef}
       type="button"
       className={`lupi-gallery-card ${viewMode === 'list' ? 'lupi-gallery-card-list' : ''}`}
       data-hovered={hovered}
@@ -2238,7 +2264,7 @@ function PatchCard({
           />
         )}
 
-        <GalleryLivePreview example={example} active={hovered} />
+        {showLivePreview && <GalleryLivePreview example={example} active={hovered} />}
 
         {(imgError || !example.available) && (
           <canvas
