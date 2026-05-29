@@ -42,6 +42,7 @@ interface Entry {
   atoms: string;
   frames: string;
   file: string;
+  colorBy?: string;
   available: boolean;
   colors: string[];
   metadata?: Record<string, unknown>;
@@ -153,6 +154,28 @@ describe('gallery-data.json — curated launch set', () => {
         existsSync(snap) || (Array.isArray(e.colors) && e.colors.length === 3),
         `missing thumbnail path and fallback colors for ${e.id}`,
       ).toBe(true);
+    }
+  });
+
+  it('colorBy scenes ship a property-carrying dump with that column present', () => {
+    // The NIST benchmarks exist to be read through their per-atom `error`
+    // field ("color by error to see where potentials fail"). Plain .xyz drops
+    // named columns, so a colorBy scene MUST be a LAMMPS dump whose ATOMS
+    // header actually declares the column. Guards against silently swapping
+    // these back to a column-less format and gutting the science.
+    const colorByEntries = data.filter((e) => e.colorBy);
+    expect(colorByEntries.length, 'expected at least one curated color-by scene').toBeGreaterThan(0);
+    for (const e of colorByEntries) {
+      expect(
+        /\.(lammpstrj|dump)$/.test(e.file),
+        `colorBy scene ${e.id} must use a dump format that carries named columns`,
+      ).toBe(true);
+      const head = readFileSync(PUBLIC + e.file, 'utf8').slice(0, 4096);
+      const atomsHeader = head.match(/^ITEM:\s*ATOMS\s+(.*)$/m)?.[1] ?? '';
+      expect(
+        atomsHeader.split(/\s+/),
+        `colorBy column "${e.colorBy}" missing from ${e.id} ATOMS header`,
+      ).toContain(e.colorBy);
     }
   });
 

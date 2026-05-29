@@ -37,6 +37,13 @@ interface GalleryExample {
   frames: string;
   isTrajectory?: boolean;
   autoPlay?: boolean;
+  /**
+   * Per-atom property this scene is curated to be read through (e.g. 'error'
+   * for the NIST potential benchmarks). Element identity is the global
+   * first-read default; this opts a curated scene into its intended view so
+   * the subtitle's "color by error" promise is what you actually see.
+   */
+  colorBy?: string;
   file: string;
   sourceUrl?: string;
   available: boolean;
@@ -1726,13 +1733,21 @@ export function Gallery() {
             );
             return;
           }
-          useStore.getState().setFile({
+          const store = useStore.getState();
+          store.setFile({
             name: example.title,
             size: blob.size,
             trajectory: result.trajectory,
             thermo: result.thermo ?? null,
             sourceUrl: url,
           });
+          // setFile defaults curated scenes to element identity. Scenes whose
+          // whole point is a per-atom field (the NIST benchmarks' error column)
+          // declare `colorBy` and open in that read instead.
+          if (example.colorBy && result.trajectory.frames[0]?.properties?.has(example.colorBy)) {
+            store.setColorScheme('property');
+            store.setColorProperty(example.colorBy);
+          }
         }
       }
     } catch (err: any) {

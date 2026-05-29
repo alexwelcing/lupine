@@ -44,11 +44,12 @@
   {
     "id": "research_cu",
     "title": "Cu Potential Benchmark",
-    "subtitle": "NIST-style Cu benchmark trajectory with 58 playable structural frames.",
+    "subtitle": "NIST evaluation of 9 interatomic potentials. Max error: 83.1%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "864",
     "frames": "58",
-    "file": "gallery/trajectories/research_cu_benchmark.xyz",
+    "file": "gallery/research/research_cu_benchmark.lammpstrj",
+    "colorBy": "error",
     "available": true,
     "colors": [
       "#b87333",
@@ -67,11 +68,12 @@
   {
     "id": "research_fe",
     "title": "Fe Potential Benchmark",
-    "subtitle": "NIST-style Fe benchmark trajectory with 55 playable structural frames.",
+    "subtitle": "NIST evaluation of 11 interatomic potentials. Max error: 123.8%. Color by error to see where potentials fail.",
     "domain": "Advanced Theory & Validation",
     "atoms": "1024",
     "frames": "55",
-    "file": "gallery/trajectories/research_fe_benchmark.xyz",
+    "file": "gallery/research/research_fe_benchmark.lammpstrj",
+    "colorBy": "error",
     "available": true,
     "colors": [
       "#a0522d",
