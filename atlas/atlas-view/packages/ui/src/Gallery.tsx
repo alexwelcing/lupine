@@ -83,6 +83,54 @@ const DOMAIN_THREAD: Record<Domain, string> = {
 
 const ALL_DOMAINS = Object.keys(DOMAIN_COLORS) as Domain[];
 
+type ViewMode = 'grid' | 'list';
+type SourceFilter = 'All Sources' | 'Featured' | 'Trajectories' | 'Snapshots' | 'Open Data';
+
+const SOURCE_FILTERS: SourceFilter[] = ['All Sources', 'Featured', 'Trajectories', 'Snapshots', 'Open Data'];
+
+const DOMAIN_DETAILS: Record<Domain, { description: string; icon: string }> = {
+  'Metals & Alloys': {
+    description: 'Crystals, high-entropy alloys, dislocations, and deformation scenes.',
+    icon: 'M',
+  },
+  'Ceramics & Oxides': {
+    description: 'Ionic lattices, perovskites, oxide defects, and phase stability examples.',
+    icon: 'O',
+  },
+  'Polymers & Soft Matter': {
+    description: 'Chains, networks, amorphous matter, and mesoscale morphology.',
+    icon: 'P',
+  },
+  Nanomaterials: {
+    description: 'Low-dimensional systems, molecular assemblies, and nanoscale surfaces.',
+    icon: 'N',
+  },
+  Biomolecules: {
+    description: 'Organic and biological structures with atomistic inspection hooks.',
+    icon: 'B',
+  },
+  'Energy Materials': {
+    description: 'Battery, catalyst, transport, and conversion material examples.',
+    icon: 'E',
+  },
+  'Defects & Mechanics': {
+    description: 'Stress, slip, fracture, voids, and local neighborhood changes.',
+    icon: 'D',
+  },
+  Methods: {
+    description: 'Benchmarks, synthetic tests, and renderer/parser validation scenes.',
+    icon: 'T',
+  },
+  'Fluids & Solvents': {
+    description: 'Liquids, interfaces, and finite-temperature molecular motion.',
+    icon: 'F',
+  },
+  'Advanced Theory & Validation': {
+    description: 'Potential comparisons, error fields, and research-grade proof scenes.',
+    icon: 'A',
+  },
+};
+
 function publicAssetUrl(path: string): string {
   if (path.startsWith('http://') || path.startsWith('https://')) return path;
   const base = (import.meta as any).env?.BASE_URL || '/';
@@ -115,6 +163,573 @@ function maybeDevStorageProxy(url: string): string {
     return url;
   }
 }
+
+function isOpenDataExample(example: GalleryExample): boolean {
+  return Boolean(
+    example.sourceUrl
+    || example.file.startsWith('http://')
+    || example.metadata?.doi
+    || /NIST|Nature|OpenKIM|Materials Project|Zenodo|GCS|benchmark/i.test(
+      [
+        example.metadata?.method,
+        example.metadata?.potential,
+        example.metadata?.reference,
+        example.subtitle,
+      ].filter(Boolean).join(' '),
+    ),
+  );
+}
+
+function matchesSourceFilter(example: GalleryExample, sourceFilter: SourceFilter): boolean {
+  if (sourceFilter === 'All Sources') return true;
+  if (sourceFilter === 'Featured') return Boolean(example.featured);
+  if (sourceFilter === 'Trajectories') return parseInt(example.frames, 10) > 1;
+  if (sourceFilter === 'Snapshots') return parseInt(example.frames, 10) <= 1;
+  return isOpenDataExample(example);
+}
+
+const GALLERY_STUDIO_CSS = `
+  .lupi-gallery {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+    color: #f8fafc;
+  }
+  .lupi-gallery-hero {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    text-align: center;
+    padding: 26px 0 34px;
+  }
+  .lupi-gallery-eyebrow {
+    color: rgba(125, 211, 252, 0.82);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-title {
+    margin: 0;
+    font-size: clamp(34px, 5vw, 58px);
+    font-weight: 300;
+    line-height: 0.96;
+    letter-spacing: 0;
+  }
+  .lupi-gallery-copy {
+    max-width: 680px;
+    margin: 0;
+    color: rgba(226, 232, 240, 0.62);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .lupi-gallery-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .lupi-gallery-stat {
+    min-width: 118px;
+    padding: 0 14px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .lupi-gallery-stat:last-child {
+    border-right: 0;
+  }
+  .lupi-gallery-stat-value {
+    display: block;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 560;
+    line-height: 1.1;
+  }
+  .lupi-gallery-stat-label {
+    display: block;
+    margin-top: 4px;
+    color: rgba(203, 213, 225, 0.52);
+    font-size: 12px;
+  }
+  .lupi-gallery-controls {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: 0 -24px 30px;
+    padding: 14px 24px;
+    background: rgba(8, 11, 18, 0.93);
+    border-block: 1px solid rgba(255,255,255,0.07);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .lupi-gallery-controls-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+  }
+  .lupi-gallery-search {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .lupi-gallery-search svg {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(226,232,240,0.34);
+    pointer-events: none;
+  }
+  .lupi-gallery-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 44px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.045);
+    color: #f8fafc;
+    font: inherit;
+    font-size: 15px;
+    outline: none;
+  }
+  .lupi-gallery-search input:focus {
+    border-color: rgba(30, 220, 224, 0.62);
+    box-shadow: 0 0 0 1px rgba(30, 220, 224, 0.22);
+  }
+  .lupi-gallery-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(226,232,240,0.74);
+    cursor: pointer;
+  }
+  .lupi-gallery-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+  }
+  .lupi-gallery-chips {
+    display: flex;
+    gap: 8px;
+    min-width: 0;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .lupi-gallery-chips::-webkit-scrollbar {
+    display: none;
+  }
+  .lupi-gallery-chip {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.035);
+    color: rgba(226,232,240,0.66);
+    font-size: 12px;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .lupi-gallery-chip[data-active="true"] {
+    color: #fff;
+    border-color: var(--chip-color, rgba(30,220,224,0.55));
+    background: color-mix(in srgb, var(--chip-color, #1edce0) 16%, transparent);
+  }
+  .lupi-gallery-chip-count {
+    color: rgba(226,232,240,0.42);
+    font-size: 10px;
+  }
+  .lupi-gallery-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+  .lupi-gallery-select {
+    min-width: 142px;
+    padding: 8px 11px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.045);
+    color: rgba(226,232,240,0.78);
+    font: inherit;
+    font-size: 12px;
+    outline: none;
+  }
+  .lupi-gallery-view-toggle {
+    display: inline-flex;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.035);
+  }
+  .lupi-gallery-view-toggle button {
+    display: grid;
+    place-items: center;
+    width: 35px;
+    height: 34px;
+    border: 0;
+    background: transparent;
+    color: rgba(226,232,240,0.44);
+    cursor: pointer;
+  }
+  .lupi-gallery-view-toggle button[data-active="true"] {
+    background: #1edce0;
+    color: #061316;
+  }
+  .lupi-gallery-section-title {
+    margin: 0 0 18px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 380;
+    letter-spacing: 0;
+  }
+  .lupi-gallery-domain-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 44px;
+  }
+  .lupi-gallery-domain-card {
+    min-height: 148px;
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.032);
+    color: #f8fafc;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  }
+  .lupi-gallery-domain-card:hover,
+  .lupi-gallery-domain-card[data-active="true"] {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--domain-color, #1edce0) 58%, transparent);
+    background: color-mix(in srgb, var(--domain-color, #1edce0) 10%, rgba(255,255,255,0.035));
+  }
+  .lupi-gallery-domain-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .lupi-gallery-domain-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    color: var(--domain-color, #1edce0);
+    background: color-mix(in srgb, var(--domain-color, #1edce0) 13%, transparent);
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .lupi-gallery-domain-count {
+    color: rgba(226,232,240,0.42);
+    font-size: 12px;
+  }
+  .lupi-gallery-domain-card h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 620;
+  }
+  .lupi-gallery-domain-card p {
+    margin: 0;
+    color: rgba(203,213,225,0.58);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .lupi-gallery-results-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 18px;
+  }
+  .lupi-gallery-results-head p {
+    margin: 4px 0 0;
+    color: rgba(203,213,225,0.52);
+    font-size: 13px;
+  }
+  .lupi-gallery-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .lupi-gallery-results-list {
+    display: grid;
+    gap: 12px;
+  }
+  .lupi-gallery-card {
+    --thread-color: #1edce0;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.035);
+    color: #f8fafc;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  }
+  .lupi-gallery-card:hover,
+  .lupi-gallery-card[data-hovered="true"] {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--thread-color) 58%, transparent);
+    box-shadow: 0 18px 44px rgba(0,0,0,0.36), 0 0 24px color-mix(in srgb, var(--thread-color) 16%, transparent);
+  }
+  .lupi-gallery-card:disabled {
+    opacity: 0.46;
+    cursor: not-allowed;
+  }
+  .lupi-gallery-card-list {
+    display: grid;
+    grid-template-columns: 148px minmax(0, 1fr) auto;
+    align-items: stretch;
+    min-height: 134px;
+  }
+  .lupi-gallery-thumb {
+    position: relative;
+    height: 168px;
+    overflow: hidden;
+    background: #050508;
+  }
+  .lupi-gallery-card-list .lupi-gallery-thumb {
+    height: auto;
+    min-height: 134px;
+  }
+  .lupi-gallery-thumb img,
+  .lupi-gallery-thumb canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lupi-gallery-card-body {
+    padding: 16px;
+    display: grid;
+    gap: 8px;
+  }
+  .lupi-gallery-card-list .lupi-gallery-card-body {
+    align-content: center;
+  }
+  .lupi-gallery-card-kicker {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(226,232,240,0.52);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-card-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--domain-color, #1edce0);
+  }
+  .lupi-gallery-card h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 610;
+    line-height: 1.25;
+  }
+  .lupi-gallery-card p {
+    margin: 0;
+    color: rgba(203,213,225,0.56);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .lupi-gallery-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .lupi-gallery-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 22px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.055);
+    color: rgba(226,232,240,0.62);
+    font-size: 11px;
+    font-weight: 620;
+  }
+  .lupi-gallery-tag-live {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.09);
+  }
+  .lupi-gallery-meta {
+    display: grid;
+    gap: 2px;
+    color: rgba(203,213,225,0.42);
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .lupi-gallery-card-action {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    color: rgba(226,232,240,0.32);
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+  .lupi-gallery-card-list .lupi-gallery-card-action {
+    display: flex;
+  }
+  .lupi-gallery-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: rgba(3,5,10,0.86);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    color: rgba(226,232,240,0.78);
+    font-size: 12px;
+    font-weight: 650;
+  }
+  .lupi-gallery-progress {
+    width: min(220px, 72%);
+    height: 4px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.12);
+  }
+  .lupi-gallery-progress > span {
+    display: block;
+    height: 100%;
+    background: var(--thread-color, #1edce0);
+    transition: width 180ms ease;
+  }
+  .lupi-gallery-empty {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding: 72px 24px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.028);
+  }
+  .lupi-gallery-empty-title {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 620;
+  }
+  .lupi-gallery-empty p {
+    margin: 0;
+    max-width: 420px;
+    color: rgba(203,213,225,0.58);
+    font-size: 13px;
+  }
+  .lupi-gallery-empty button {
+    margin-top: 8px;
+    padding: 9px 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    color: #f8fafc;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  @media (max-width: 980px) {
+    .lupi-gallery-domain-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 720px) {
+    .lupi-gallery {
+      padding: 0 16px 34px;
+    }
+    .lupi-gallery-hero {
+      padding-top: 18px;
+      text-align: left;
+      justify-items: stretch;
+    }
+    .lupi-gallery-stats {
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    .lupi-gallery-stat {
+      min-width: calc(50% - 4px);
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.028);
+    }
+    .lupi-gallery-controls {
+      margin-inline: -16px;
+      padding-inline: 16px;
+    }
+    .lupi-gallery-filter-row {
+      align-items: stretch;
+      flex-direction: column;
+    }
+    .lupi-gallery-actions {
+      justify-content: space-between;
+    }
+    .lupi-gallery-select {
+      flex: 1;
+      min-width: 0;
+    }
+    .lupi-gallery-domain-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+    .lupi-gallery-domain-card {
+      min-height: 116px;
+    }
+    .lupi-gallery-results-head {
+      align-items: start;
+      flex-direction: column;
+    }
+    .lupi-gallery-results-grid {
+      grid-template-columns: 1fr;
+    }
+    .lupi-gallery-card-list {
+      grid-template-columns: 112px minmax(0, 1fr);
+    }
+    .lupi-gallery-card-list .lupi-gallery-card-action {
+      display: none;
+    }
+    .lupi-gallery-card-list .lupi-gallery-thumb {
+      min-height: 126px;
+    }
+    .lupi-gallery-card h4 {
+      font-size: 15px;
+    }
+  }
+`;
 
 // ─── Shared styles ──────────────────────────────────────────────────────
 
@@ -509,6 +1124,8 @@ export function Gallery() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Domain | 'All'>('All');
+  const [sourceFilter, setSourceFilter] = useState<SourceFilter>('All Sources');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [search, setSearch] = useState('');
   // Keep the input responsive while the (potentially large) filtered grid
   // re-renders off the deferred value — avoids per-keystroke jank.
@@ -521,17 +1138,51 @@ export function Gallery() {
   const filteredExamples = useMemo(() => {
     return EXAMPLES.filter(ex => {
       if (filter !== 'All' && ex.domain !== filter) return false;
+      if (!matchesSourceFilter(ex, sourceFilter)) return false;
       if (deferredSearch) {
         const s = deferredSearch.toLowerCase();
         return (
           ex.title.toLowerCase().includes(s) ||
           ex.subtitle.toLowerCase().includes(s) ||
-          ex.domain.toLowerCase().includes(s)
+          ex.domain.toLowerCase().includes(s) ||
+          (ex.metadata?.method ?? '').toLowerCase().includes(s) ||
+          (ex.metadata?.potential ?? '').toLowerCase().includes(s)
         );
       }
       return true;
     });
-  }, [filter, deferredSearch]);
+  }, [filter, sourceFilter, deferredSearch]);
+
+  const galleryStats = useMemo(() => {
+    const available = EXAMPLES.filter(ex => ex.available).length;
+    const trajectories = EXAMPLES.filter(ex => parseInt(ex.frames, 10) > 1).length;
+    return {
+      domains: ALL_DOMAINS.filter(domain => EXAMPLES.some(ex => ex.domain === domain)).length,
+      available,
+      trajectories,
+      featured: EXAMPLES.filter(ex => ex.featured).length,
+    };
+  }, []);
+
+  const domainSummaries = useMemo(() => {
+    return ALL_DOMAINS
+      .map(domain => {
+        const examples = EXAMPLES.filter(ex => ex.domain === domain);
+        return {
+          domain,
+          count: examples.length,
+          trajectories: examples.filter(ex => parseInt(ex.frames, 10) > 1).length,
+          atoms: examples.reduce((total, ex) => total + parseAtomCountLabel(ex.atoms), 0),
+        };
+      })
+      .filter(summary => summary.count > 0);
+  }, []);
+
+  const clearFilters = useCallback(() => {
+    setSearch('');
+    setFilter('All');
+    setSourceFilter('All Sources');
+  }, []);
 
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
     if (!example.available) return;
@@ -816,163 +1467,240 @@ export function Gallery() {
   }, [handleLoad]);
 
   return (
-    <div style={sQuilt} data-testid="gallery">
-      {/* Screen-reader status: result count + active load. */}
+    <div className="lupi-gallery" data-testid="gallery">
+      <style>{GALLERY_STUDIO_CSS}</style>
       <div aria-live="polite" role="status" style={sVisuallyHidden}>
         {loadingId
           ? `Loading ${EXAMPLES.find((e) => e.id === loadingId)?.title ?? 'simulation'}`
           : `${filteredExamples.length} simulation${filteredExamples.length === 1 ? '' : 's'} shown`}
       </div>
 
-      {/* ─── Header ─── */}
-      <div style={sHeader}>
-        <div style={sHeaderTitle}>
-          <div style={sHeaderIcon}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-              <circle cx="6" cy="6" r="3" />
-              <circle cx="18" cy="6" r="3" />
-              <circle cx="6" cy="18" r="3" />
-              <circle cx="18" cy="18" r="3" />
-              <line x1="9" y1="6" x2="15" y2="6" strokeDasharray="2 2" />
-              <line x1="9" y1="18" x2="15" y2="18" strokeDasharray="2 2" />
-              <line x1="6" y1="9" x2="6" y2="15" strokeDasharray="2 2" />
-              <line x1="18" y1="9" x2="18" y2="15" strokeDasharray="2 2" />
-            </svg>
+      <section className="lupi-gallery-hero" aria-labelledby="lupi-gallery-title">
+        <div>
+          <div className="lupi-gallery-eyebrow">Lupi structure library</div>
+          <h2 id="lupi-gallery-title" className="lupi-gallery-title">Molecule Gallery</h2>
+        </div>
+        <p className="lupi-gallery-copy">
+          Explore curated molecular structures and simulation domains, from simple reference
+          systems to research-grade trajectories, all loading into the real viewer.
+        </p>
+        <div className="lupi-gallery-stats" aria-label="Gallery summary">
+          <div className="lupi-gallery-stat">
+            <span className="lupi-gallery-stat-value">{galleryStats.domains}</span>
+            <span className="lupi-gallery-stat-label">Domains</span>
           </div>
+          <div className="lupi-gallery-stat">
+            <span className="lupi-gallery-stat-value">{galleryStats.available}</span>
+            <span className="lupi-gallery-stat-label">Loadable scenes</span>
+          </div>
+          <div className="lupi-gallery-stat">
+            <span className="lupi-gallery-stat-value">{galleryStats.trajectories}</span>
+            <span className="lupi-gallery-stat-label">Trajectories</span>
+          </div>
+          <div className="lupi-gallery-stat">
+            <span className="lupi-gallery-stat-value">{galleryStats.featured}</span>
+            <span className="lupi-gallery-stat-label">Featured</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="lupi-gallery-controls" aria-label="Search and filter gallery">
+        <div className="lupi-gallery-controls-inner">
+          <div className="lupi-gallery-search" role="search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="search"
+              placeholder="Search by structure, domain, method, or potential..."
+              aria-label="Search simulations by title, description, method, potential, or domain"
+              data-testid="gallery-search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {search && (
+              <button
+                type="button"
+                className="lupi-gallery-clear"
+                aria-label="Clear search"
+                onClick={() => setSearch('')}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          <div className="lupi-gallery-filter-row">
+            <div className="lupi-gallery-chips" role="group" aria-label="Filter simulations by domain">
+              <button
+                type="button"
+                className="lupi-gallery-chip"
+                data-active={filter === 'All'}
+                style={{ '--chip-color': 'rgba(255,255,255,0.55)' } as React.CSSProperties}
+                onClick={() => setFilter('All')}
+                aria-pressed={filter === 'All'}
+                data-testid="gallery-filter-all"
+              >
+                All <span className="lupi-gallery-chip-count">{EXAMPLES.length}</span>
+              </button>
+              {domainSummaries.map(({ domain, count }) => (
+                <button
+                  key={domain}
+                  type="button"
+                  className="lupi-gallery-chip"
+                  data-active={filter === domain}
+                  style={{ '--chip-color': DOMAIN_THREAD[domain] } as React.CSSProperties}
+                  onClick={() => setFilter(domain)}
+                  aria-pressed={filter === domain}
+                >
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: DOMAIN_COLORS[domain], flexShrink: 0 }} />
+                  {domain}
+                  <span className="lupi-gallery-chip-count">{count}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="lupi-gallery-actions">
+              <select
+                className="lupi-gallery-select"
+                value={sourceFilter}
+                onChange={(event) => setSourceFilter(event.target.value as SourceFilter)}
+                aria-label="Filter by source type"
+              >
+                {SOURCE_FILTERS.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+              <div className="lupi-gallery-view-toggle" role="group" aria-label="Switch gallery view">
+                <button
+                  type="button"
+                  data-active={viewMode === 'grid'}
+                  aria-pressed={viewMode === 'grid'}
+                  aria-label="Grid view"
+                  onClick={() => setViewMode('grid')}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="4" y="4" width="6" height="6" rx="1" />
+                    <rect x="14" y="4" width="6" height="6" rx="1" />
+                    <rect x="4" y="14" width="6" height="6" rx="1" />
+                    <rect x="14" y="14" width="6" height="6" rx="1" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  data-active={viewMode === 'list'}
+                  aria-pressed={viewMode === 'list'}
+                  aria-label="List view"
+                  onClick={() => setViewMode('list')}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                    <path d="M8 6h12M8 12h12M8 18h12" />
+                    <path d="M4 6h.01M4 12h.01M4 18h.01" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="simulation-domains">
+        <h3 id="simulation-domains" className="lupi-gallery-section-title">Simulation Domains</h3>
+        <div className="lupi-gallery-domain-grid">
+          {domainSummaries.map(summary => (
+            <DomainCard
+              key={summary.domain}
+              summary={summary}
+              active={filter === summary.domain}
+              onClick={() => setFilter(summary.domain)}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="popular-structures">
+        <div className="lupi-gallery-results-head">
           <div>
-            <h2 style={sHeading}>Lupi Gallery</h2>
-            <p style={sSub}>
-              {filteredExamples.length} structures ready to inspect
+            <h3 id="popular-structures" className="lupi-gallery-section-title" style={{ marginBottom: 0 }}>Popular Structures</h3>
+            <p>
+              {filteredExamples.length} result{filteredExamples.length === 1 ? '' : 's'}
+              {filter !== 'All' ? ` in ${filter}` : ''}
+              {sourceFilter !== 'All Sources' ? ` / ${sourceFilter}` : ''}
             </p>
           </div>
         </div>
 
-        <div style={sSearch} role="search">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-          <input
-            type="search"
-            placeholder="Search structures..."
-            aria-label="Search simulations by title, description, or domain"
-            data-testid="gallery-search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={sSearchInput}
-          />
-        </div>
-      </div>
-
-      {/* ─── Filter ribbon ─── */}
-      <div style={sRibbon} role="group" aria-label="Filter simulations by domain">
-        <button
-          style={sRibbonTab(filter === 'All', 'rgba(255,255,255,0.2)')}
-          onClick={() => setFilter('All')}
-          aria-pressed={filter === 'All'}
-          data-testid="gallery-filter-all"
-        >
-          All
-          <span style={sRibbonCount}>{EXAMPLES.length}</span>
-        </button>
-        {ALL_DOMAINS.map(domain => {
-          const count = EXAMPLES.filter(e => e.domain === domain).length;
-          return (
+        {filteredExamples.length === 0 ? (
+          <div className="lupi-gallery-empty" data-testid="gallery-empty">
+            <div className="lupi-gallery-empty-title">No molecules found</div>
+            <p>
+              {deferredSearch
+                ? <>Nothing matches "{deferredSearch}"{filter !== 'All' ? <> in {filter}</> : null}.</>
+                : <>No simulations match the active filters.</>}
+            </p>
             <button
-              key={domain}
-              style={sRibbonTab(filter === domain, DOMAIN_THREAD[domain])}
-              onClick={() => setFilter(domain)}
-              aria-pressed={filter === domain}
+              type="button"
+              data-testid="gallery-empty-reset"
+              onClick={clearFilters}
             >
-              <span style={{ ...sRibbonDot, background: DOMAIN_COLORS[domain] }} />
-              {domain}
-              <span style={sRibbonCount}>{count}</span>
+              Clear Filters
             </button>
-          );
-        })}
-      </div>
-
-      {/* ─── Quilt grid ─── */}
-      {filteredExamples.length === 0 ? (
-        <div style={sEmpty} data-testid="gallery-empty">
-          <div style={sEmptyTitle}>No simulations match</div>
-          <p style={sEmptySub}>
-            {deferredSearch
-              ? <>Nothing matches “{deferredSearch}”{filter !== 'All' ? <> in {filter}</> : null}.</>
-              : <>No simulations in {filter}.</>}
-          </p>
-          <button
-            style={sEmptyReset}
-            data-testid="gallery-empty-reset"
-            onClick={() => { setSearch(''); setFilter('All'); }}
-          >
-            Clear filters
-          </button>
-        </div>
-      ) : filter === 'All' && !deferredSearch ? (
-        ALL_DOMAINS.map(domain => {
-          const domainExamples = filteredExamples.filter(ex => ex.domain === domain);
-          if (domainExamples.length === 0) return null;
-          const isTruncated = false;
-          const displayExamples = domainExamples;
-
-          return (
-            <section key={domain} style={sSection}>
-              <div style={sSectionHeader}>
-                <div style={sSectionThread(DOMAIN_THREAD[domain])} />
-                <h3 style={sSectionTitle}>{domain}</h3>
-                <span style={sSectionCount}>{domainExamples.length} structures</span>
-                {isTruncated && (
-                  <button
-                    style={sSectionMore}
-                    onClick={() => setFilter(domain)}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#f8fafc';
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = 'rgba(255,255,255,0.45)';
-                      e.currentTarget.style.background = 'none';
-                    }}
-                  >
-                    View all →
-                  </button>
-                )}
-              </div>
-              <div style={sGrid}>
-                {displayExamples.map((ex) => (
-                  <PatchCard
-                    key={ex.id}
-                    example={ex}
-                    hovered={hoveredId === ex.id}
-                    loading={loadingId === ex.id}
-                    atomCeiling={atomCeiling}
-                    onHover={() => setHoveredId(ex.id)}
-                    onLeave={() => setHoveredId(null)}
-                    onClick={() => handleLoad(ex, false)}
-                  />
-                ))}
-              </div>
-            </section>
-          );
-        })
-      ) : (
-        <div style={sGrid}>
-          {filteredExamples.map((ex) => (
-            <PatchCard
-              key={ex.id}
-              example={ex}
-              hovered={hoveredId === ex.id}
-              loading={loadingId === ex.id}
-              atomCeiling={atomCeiling}
-              onHover={() => setHoveredId(ex.id)}
-              onLeave={() => setHoveredId(null)}
-              onClick={() => handleLoad(ex, false)}
-            />
-          ))}
-        </div>
-      )}
+          </div>
+        ) : (
+          <div className={viewMode === 'grid' ? 'lupi-gallery-results-grid' : 'lupi-gallery-results-list'}>
+            {filteredExamples.map((ex) => (
+              <PatchCard
+                key={ex.id}
+                example={ex}
+                hovered={hoveredId === ex.id}
+                loading={loadingId === ex.id}
+                atomCeiling={atomCeiling}
+                viewMode={viewMode}
+                onHover={() => setHoveredId(ex.id)}
+                onLeave={() => setHoveredId(null)}
+                onClick={() => handleLoad(ex, false)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
     </div>
+  );
+}
+
+function DomainCard({
+  summary,
+  active,
+  onClick,
+}: {
+  summary: { domain: Domain; count: number; trajectories: number; atoms: number };
+  active: boolean;
+  onClick: () => void;
+}) {
+  const details = DOMAIN_DETAILS[summary.domain];
+  return (
+    <button
+      type="button"
+      className="lupi-gallery-domain-card"
+      data-active={active}
+      style={{ '--domain-color': DOMAIN_THREAD[summary.domain] } as React.CSSProperties}
+      onClick={onClick}
+      aria-pressed={active}
+    >
+      <div className="lupi-gallery-domain-top">
+        <div className="lupi-gallery-domain-icon">{details.icon}</div>
+        <span className="lupi-gallery-domain-count">{summary.count} structures</span>
+      </div>
+      <h3>{summary.domain}</h3>
+      <p>{details.description}</p>
+      <div className="lupi-gallery-tags" style={{ marginTop: 12 }}>
+        <span className="lupi-gallery-tag">{summary.trajectories} trajectories</span>
+        <span className="lupi-gallery-tag">{formatAtomCount(summary.atoms)} atoms</span>
+      </div>
+    </button>
   );
 }
 
@@ -983,6 +1711,7 @@ function PatchCard({
   hovered,
   loading,
   atomCeiling,
+  viewMode,
   onHover,
   onLeave,
   onClick,
@@ -992,6 +1721,7 @@ function PatchCard({
   loading: boolean;
   /** Global single-scene atom ceiling. Device tier no longer reduces access. */
   atomCeiling: number;
+  viewMode: ViewMode;
   onHover: () => void;
   onLeave: () => void;
   onClick: () => void;
@@ -1093,7 +1823,10 @@ function PatchCard({
 
   return (
     <button
-      style={sPatch(hovered, !example.available || exceedsCap, threadColor)}
+      type="button"
+      className={`lupi-gallery-card ${viewMode === 'list' ? 'lupi-gallery-card-list' : ''}`}
+      data-hovered={hovered}
+      style={{ '--thread-color': threadColor, '--domain-color': domainColor } as React.CSSProperties}
       onClick={onClick}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
@@ -1110,60 +1843,56 @@ function PatchCard({
         ? `~${example.atoms} atoms exceeds Lupi's current single-scene ceiling`
         : undefined}
     >
-      <div style={sPatchBorder(threadColor)} />
-
-      <div style={sPatchThumb}>
-        {/* Snapshot image (default) */}
+      <div className="lupi-gallery-thumb">
         {!imgError && (
           <img
             src={snapshotUrl}
             alt={example.title}
             loading="lazy"
-            style={sPatchImg}
             onError={() => setImgError(true)}
           />
         )}
 
-        {/* Procedural canvas fallback */}
         {(imgError || !example.available) && (
           <canvas
             ref={canvasRef}
             width={320}
             height={160}
-            style={sPatchCanvas}
           />
         )}
       </div>
 
-      <div style={sPatchBody}>
-        <div style={sPatchBadge}>
-          <span style={{ ...sPatchDot, background: domainColor }} />
+      <div className="lupi-gallery-card-body">
+        <div className="lupi-gallery-card-kicker">
+          <span className="lupi-gallery-card-dot" />
           {example.domain}
-          {!example.available && <span style={sPatchSoon}>Soon</span>}
+          {!example.available && <span className="lupi-gallery-tag">Soon</span>}
           {example.available && exceedsCap && (
-            <span style={{ ...sPatchSoon, color: '#f5a05a' }}>Over cap</span>
+            <span className="lupi-gallery-tag">Over cap</span>
           )}
         </div>
 
-        <h4 style={sPatchTitle}>{example.title}</h4>
-        <p style={sPatchSubtitle}>{example.subtitle}</p>
+        <h4>{example.title}</h4>
+        <p>{example.subtitle}</p>
 
-        <div style={sPatchTags}>
-          <span style={sPatchTag}>{example.atoms} atoms</span>
-          <span style={sPatchTag}>
+        <div className="lupi-gallery-tags">
+          <span className="lupi-gallery-tag">{example.atoms} atoms</span>
+          <span className={`lupi-gallery-tag ${parseInt(example.frames, 10) > 1 ? 'lupi-gallery-tag-live' : ''}`}>
             {parseInt(example.frames) > 1 ? (
               <>
-                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 4px #34d399' }} />
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 4px #34d399' }} />
                 {example.frames} frames
               </>
             ) : (
               'Snapshot'
             )}
           </span>
+          {example.featured && <span className="lupi-gallery-tag">Featured</span>}
+          {isOpenDataExample(example) && <span className="lupi-gallery-tag">Open data</span>}
         </div>
 
-        {hovered && example.metadata && (
-          <div style={sPatchMeta}>
+        {(viewMode === 'list' || hovered) && example.metadata && (
+          <div className="lupi-gallery-meta">
             {example.metadata.potential && (
               <div>Potential: {example.metadata.potential}</div>
             )}
@@ -1177,9 +1906,16 @@ function PatchCard({
         )}
       </div>
 
+      <span className="lupi-gallery-card-action" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M7 17 17 7" />
+          <path d="M9 7h8v8" />
+        </svg>
+      </span>
+
       {loading && (
         <div
-          style={sPatchLoading}
+          className="lupi-gallery-loading"
           data-testid={`gallery-card-loading-${example.id}`}
           role="progressbar"
           aria-valuemin={0}
@@ -1206,16 +1942,9 @@ function PatchCard({
               />
             </circle>
           </svg>
-          <span>{pct > 0 ? `Loading ${pct}%` : 'Loading…'}</span>
-          <div style={sProgressTrack}>
-            <div
-              style={{
-                width: `${Math.max(pct, 3)}%`,
-                height: '100%',
-                background: threadColor,
-                transition: 'width 0.2s ease-out',
-              }}
-            />
+          <span>{pct > 0 ? `Loading ${pct}%` : 'Loading...'}</span>
+          <div className="lupi-gallery-progress">
+            <span style={{ width: `${Math.max(pct, 3)}%` }} />
           </div>
         </div>
       )}
