@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Bluebonnet logo hit reel storyboard</title>
+  <desc id="desc">Five-frame storyboard for a luminous bluebonnet logo reveal.</desc>
+  <defs>
+    <radialGradient id="void" cx="50%" cy="44%" r="70%">
+      <stop offset="0" stop-color="#20145a"/>
+      <stop offset="0.48" stop-color="#081b35"/>
+      <stop offset="1" stop-color="#03060d"/>
+    </radialGradient>
+    <linearGradient id="glowPetal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7967ff"/>
+      <stop offset="0.42" stop-color="#e45de0"/>
+      <stop offset="0.78" stop-color="#ff8c45"/>
+      <stop offset="1" stop-color="#fff0a8"/>
+    </linearGradient>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.54  0 1 0 0 0.16  0 0 1 0 0.78  0 0 0 0.9 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#void)"/>
+  <g font-family="CS Claire Mono, IBM Plex Mono, Consolas, monospace" font-size="18" fill="#f5f0df" letter-spacing="3">
+    <text x="80" y="82">LUPI / LUPINE SCIENCE LOGO HIT REEL</text>
+    <text x="80" y="116" opacity="0.62">no atom marks. bluebonnet raceme as source geometry.</text>
+  </g>
+  <g transform="translate(130 190)">
+    <rect width="240" height="520" rx="16" fill="#06182a" opacity="0.72"/>
+    <text x="28" y="48" font-family="Consolas, monospace" font-size="14" fill="#8ea8c8" letter-spacing="2">01 SEED</text>
+    <g transform="translate(120 250)" fill="#f5f0df" opacity="0.92">
+      <circle cy="-105" r="15"/>
+      <circle cy="-62" r="17"/>
+      <circle cy="-15" r="24"/>
+      <circle cy="44" r="34"/>
+      <circle cy="112" r="23"/>
+    </g>
+  </g>
+  <g transform="translate(410 190)">
+    <rect width="240" height="520" rx="16" fill="#06182a" opacity="0.72"/>
+    <text x="28" y="48" font-family="Consolas, monospace" font-size="14" fill="#8ea8c8" letter-spacing="2">02 ARC</text>
+    <g transform="translate(120 250)" fill="none" stroke="#6b8aaf" stroke-linecap="round" opacity="0.28">
+      <path d="M-76 -80 C-34 -120 34 -120 76 -80" stroke-width="22"/>
+      <path d="M-92 -18 C-42 -72 42 -72 92 -18" stroke-width="26"/>
+      <path d="M-82 50 C-40 10 40 10 82 50" stroke-width="24"/>
+    </g>
+    <g transform="translate(120 250)" fill="#f5f0df">
+      <circle cy="-105" r="15"/>
+      <circle cy="-62" r="17"/>
+      <circle cy="-15" r="24"/>
+      <circle cy="44" r="34"/>
+      <circle cy="112" r="23"/>
+    </g>
+  </g>
+  <g transform="translate(690 190)">
+    <rect width="240" height="520" rx="16" fill="#06182a" opacity="0.72"/>
+    <text x="28" y="48" font-family="Consolas, monospace" font-size="14" fill="#8ea8c8" letter-spacing="2">03 BLOOM</text>
+    <g transform="translate(120 250)" fill="url(#glowPetal)" filter="url(#glow)">
+      <circle cy="-112" r="19"/>
+      <circle cx="-28" cy="-68" r="21"/>
+      <circle cx="28" cy="-68" r="21"/>
+      <circle cy="-18" r="31"/>
+      <circle cx="-42" cy="42" r="30"/>
+      <circle cx="42" cy="42" r="30"/>
+      <circle cy="104" r="27"/>
+    </g>
+  </g>
+  <g transform="translate(970 190)">
+    <rect width="240" height="520" rx="16" fill="#06182a" opacity="0.72"/>
+    <text x="28" y="48" font-family="Consolas, monospace" font-size="14" fill="#8ea8c8" letter-spacing="2">04 GLASS</text>
+    <g transform="translate(120 250)" fill="url(#glowPetal)" filter="url(#glow)" stroke="#fff7dc" stroke-width="2" opacity="0.98">
+      <ellipse cy="-112" rx="19" ry="25"/>
+      <ellipse cx="-35" cy="-64" rx="26" ry="30"/>
+      <ellipse cx="35" cy="-64" rx="26" ry="30"/>
+      <ellipse cy="-12" rx="34" ry="38"/>
+      <ellipse cx="-48" cy="48" rx="32" ry="36"/>
+      <ellipse cx="48" cy="48" rx="32" ry="36"/>
+      <ellipse cy="112" rx="26" ry="32"/>
+    </g>
+  </g>
+  <g transform="translate(1250 190)">
+    <rect width="240" height="520" rx="16" fill="#06182a" opacity="0.72"/>
+    <text x="28" y="48" font-family="Consolas, monospace" font-size="14" fill="#8ea8c8" letter-spacing="2">05 LOCKUP</text>
+    <g transform="translate(120 210) scale(0.55)" filter="url(#glow)">
+      <path d="M256 94 C256 158 256 226 258 292 C260 344 256 394 252 430" fill="none" stroke="#fff0a8" stroke-width="18" stroke-linecap="round"/>
+      <g fill="url(#glowPetal)" stroke="#fff7dc" stroke-width="5">
+        <circle cx="256" cy="91" r="25"/>
+        <circle cx="256" cy="144" r="27"/>
+        <circle cx="256" cy="202" r="33"/>
+        <circle cx="211" cy="224" r="27"/>
+        <circle cx="301" cy="224" r="27"/>
+        <circle cx="256" cy="273" r="47"/>
+        <circle cx="205" cy="326" r="34"/>
+        <circle cx="307" cy="326" r="34"/>
+        <circle cx="256" cy="390" r="30"/>
+      </g>
+    </g>
+    <text x="54" y="440" font-family="Inter, Avenir Next, Arial, sans-serif" font-size="48" fill="#f5f0df">LUPI</text>
+    <text x="55" y="474" font-family="Consolas, monospace" font-size="12" fill="#8ea8c8" letter-spacing="3">BLUEBONNET VIEWER</text>
+  </g>
+</svg>

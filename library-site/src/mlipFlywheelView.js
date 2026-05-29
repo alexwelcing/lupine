@@ -12,9 +12,9 @@ export function renderMlipFlywheelView(mount) {
   );
 
   loadEvidence(controller.signal)
-    .then(({ evidence, relaxation, liveCampaigns, policyReplay }) => {
+    .then(({ evidence, relaxation, liveCampaigns, policyReplays, diagnostics, longDemos, ribbonPrep }) => {
       if (controller.signal.aborted) return;
-      const root = renderEvidence(evidence, relaxation, liveCampaigns, policyReplay);
+      const root = renderEvidence(evidence, relaxation, liveCampaigns, policyReplays, diagnostics, longDemos, ribbonPrep);
       mount.replaceChildren(root);
       initStages(root, evidence.stages || []);
       canvasCleanup = initLatticeCanvas(root, relaxation);
@@ -37,16 +37,39 @@ async function loadEvidence(signal) {
   const campaignDescriptors = Array.isArray(evidence?.campaign_artifacts) && evidence.campaign_artifacts.length
     ? evidence.campaign_artifacts
     : [evidence?.live_campaign_artifact].filter(Boolean);
-  const [relaxation, liveCampaigns, policyReplay] = await Promise.all([
+  const replayDescriptors = Array.isArray(evidence?.policy_replay_artifacts) && evidence.policy_replay_artifacts.length
+    ? evidence.policy_replay_artifacts
+    : [evidence?.policy_replay_artifact].filter(Boolean);
+  const diagnosticDescriptors = Array.isArray(evidence?.diagnostic_artifacts) ? evidence.diagnostic_artifacts : [];
+  const longDemoDescriptors = Array.isArray(evidence?.long_demo_artifacts) ? evidence.long_demo_artifacts : [];
+  const ribbonPrepDescriptors = Array.isArray(evidence?.long_demo_ribbon_prep_artifacts)
+    ? evidence.long_demo_ribbon_prep_artifacts
+    : [];
+  const [relaxation, liveCampaigns, policyReplays, diagnostics, longDemos, ribbonPrep] = await Promise.all([
     fetchJson(url, signal),
     Promise.all(campaignDescriptors.map(async (descriptor) => ({
       descriptor,
       payload: await loadOptionalJson(descriptor?.url, signal),
     }))),
-    loadOptionalJson(evidence?.policy_replay_artifact?.url, signal),
+    Promise.all(replayDescriptors.map(async (descriptor) => ({
+      descriptor,
+      payload: await loadOptionalJson(descriptor?.url, signal),
+    }))),
+    Promise.all(diagnosticDescriptors.map(async (descriptor) => ({
+      descriptor,
+      payload: await loadOptionalJson(descriptor?.url, signal),
+    }))),
+    Promise.all(longDemoDescriptors.map(async (descriptor) => ({
+      descriptor,
+      payload: await loadOptionalJson(descriptor?.url, signal),
+    }))),
+    Promise.all(ribbonPrepDescriptors.map(async (descriptor) => ({
+      descriptor,
+      payload: await loadOptionalJson(descriptor?.url, signal),
+    }))),
   ]);
   assertEvidence(evidence, relaxation);
-  return { evidence, relaxation, liveCampaigns, policyReplay };
+  return { evidence, relaxation, liveCampaigns, policyReplays, diagnostics, longDemos, ribbonPrep };
 }
 
 async function fetchJson(url, signal) {
@@ -80,19 +103,259 @@ function assertEvidence(evidence, relaxation) {
   }
 }
 
-function renderEvidence(evidence, relaxation, liveCampaigns, policyReplay) {
+function renderEvidence(evidence, relaxation, liveCampaigns, policyReplays, diagnostics, longDemos, ribbonPrep) {
   const root = h('section', { class: 'flywheel-lab', 'aria-labelledby': 'flywheel-title' });
   root.append(renderWhy(evidence));
   root.append(renderWorkGuidance(evidence.work_guidance));
   root.append(renderHero(evidence, relaxation));
+  root.append(renderSubspaceDiagnostics(diagnostics));
+  root.append(renderLongDemos(longDemos));
+  root.append(renderRibbonPrep(ribbonPrep));
   root.append(renderLiveCampaigns(liveCampaigns));
-  root.append(renderPolicyReplay(policyReplay, evidence.policy_replay_artifact));
+  root.append(renderPolicyReplays(policyReplays));
   root.append(renderStageSystem(evidence.stages || []));
   root.append(renderBaselineMatrix(evidence.baseline));
   root.append(renderTriplets(evidence.distill_triplets || []));
   root.append(renderEvaluators(evidence.evaluators || []));
   root.append(renderSources(evidence.sources || []));
   return root;
+}
+
+function renderSubspaceDiagnostics(diagnostics) {
+  const items = Array.isArray(diagnostics) ? diagnostics : [];
+  if (!items.length) return document.createDocumentFragment();
+  return h('div', { class: 'fly-campaign-stack' },
+    ...items.map((item) => renderSubspaceDiagnostic(item.payload, item.descriptor))
+  );
+}
+
+function renderLongDemos(longDemos) {
+  const items = Array.isArray(longDemos) ? longDemos : [];
+  if (!items.length) return document.createDocumentFragment();
+  return h('div', { class: 'fly-campaign-stack' },
+    ...items.map((item) => renderLongDemoRegistry(item.payload, item.descriptor))
+  );
+}
+
+function renderLongDemoRegistry(registry, descriptor) {
+  const isError = registry?.schema === 'lupine.library.optional_artifact_error.v1';
+  const demos = Array.isArray(registry?.demos) ? registry.demos : [];
+  const claimPolicy = registry?.claim_policy || {};
+  const measuredCount = demos.filter((demo) => {
+    const science = Array.isArray(demo?.scientific_distill?.measured_artifacts)
+      ? demo.scientific_distill.measured_artifacts.length
+      : 0;
+    const viewer = Array.isArray(demo?.viewer?.measured_artifacts) ? demo.viewer.measured_artifacts.length : 0;
+    return science > 0 || viewer > 0;
+  }).length;
+  return h('section', { class: 'fly-section fly-long-demos', 'aria-labelledby': 'fly-long-demo-title' },
+    h('div', { class: 'fly-section-head' },
+      h('p', { class: 'fly-kicker' }, isError ? 'Demo registry unavailable' : 'Long-horizon demos'),
+      h('h2', { id: 'fly-long-demo-title' }, descriptor?.title || 'Distill science and viewer evidence move together.'),
+      h('p', {}, descriptor?.description || 'Each demo has a measured scientific lane and a measured viewer lane; planned work is rendered as awaiting evidence, never as a result.')
+    ),
+    isError
+      ? h('p', { class: 'fly-caption' }, registry.error || 'Long-demo artifact unavailable.')
+      : [
+        h('div', { class: 'fly-live-run-head' },
+          h('div', {}, h('span', {}, 'Registry'), h('strong', {}, registry?.registry_id || 'unknown')),
+          h('div', {}, h('span', {}, 'Measured demos'), h('strong', {}, `${measuredCount} / ${demos.length}`)),
+          h('div', {}, h('span', {}, 'Claim policy'), h('strong', {}, claimPolicy.mock_or_placeholder_allowed === false ? 'no mock artifacts' : 'review required'))
+        ),
+        renderLongDemoStreams(registry?.workstream_contract),
+        h('div', { class: 'fly-long-demo-grid' }, ...demos.map(renderLongDemoCard)),
+        h('p', { class: 'fly-caption' }, 'This section is intentionally a work queue until measured artifacts arrive. The viewer will not draw synthetic trajectories or fake reference curves.')
+      ]
+  );
+}
+
+function renderLongDemoStreams(contract) {
+  const science = contract?.scientific_distill || {};
+  const viewer = contract?.viewer || {};
+  return h('div', { class: 'fly-long-streams' },
+    renderLongStream('Scientific Distill', science),
+    renderLongStream('Viewer', viewer)
+  );
+}
+
+function renderLongStream(label, stream) {
+  const mustEmit = Array.isArray(stream?.must_emit) ? stream.must_emit : [];
+  return h('article', { class: 'fly-long-stream' },
+    h('span', {}, label),
+    h('strong', {}, stream?.owner || 'owner pending'),
+    h('p', {}, stream?.responsibility || 'Responsibility is not defined in the registry.'),
+    mustEmit.length
+      ? h('ul', {}, ...mustEmit.slice(0, 6).map((item) => h('li', {}, item)))
+      : null
+  );
+}
+
+function renderLongDemoCard(demo) {
+  const science = demo?.scientific_distill || {};
+  const viewer = demo?.viewer || {};
+  const gate = demo?.claim_gate || {};
+  const scienceArtifacts = Array.isArray(science.measured_artifacts) ? science.measured_artifacts.length : 0;
+  const viewerArtifacts = Array.isArray(viewer.measured_artifacts) ? viewer.measured_artifacts.length : 0;
+  const measured = scienceArtifacts > 0 && viewerArtifacts > 0;
+  const metrics = Array.isArray(science.primary_metrics) ? science.primary_metrics.slice(0, 5) : [];
+  return h('article', { class: `fly-long-demo ${measured ? 'measured' : 'awaiting'}` },
+    h('div', { class: 'fly-live-pair-top' },
+      h('span', {}, demo?.demo_class || 'demo'),
+      h('strong', {}, demo?.primary_material_id || 'material pending')
+    ),
+    h('h3', {}, demo?.title || 'Untitled demo'),
+    h('p', { class: 'fly-long-why' }, demo?.why_we_care || ''),
+    h('dl', { class: 'fly-long-status' },
+      stat('Distill science', science.status || 'awaiting'),
+      stat('Viewer', viewer.status || 'awaiting'),
+      stat('Science artifacts', String(scienceArtifacts)),
+      stat('Viewer artifacts', String(viewerArtifacts)),
+      stat('Claim', gate.scientific_claim_allowed || gate.viewer_claim_allowed ? 'review' : 'not yet'),
+      stat('Next evidence', gate.next_evidence_step || 'lock measured artifact')
+    ),
+    metrics.length
+      ? h('div', { class: 'fly-long-metrics' },
+        h('span', {}, 'Primary metrics'),
+        h('ul', {}, ...metrics.map((metric) => h('li', {}, metric)))
+      )
+      : null
+  );
+}
+
+function renderRibbonPrep(ribbonPrep) {
+  const items = Array.isArray(ribbonPrep) ? ribbonPrep : [];
+  if (!items.length) return document.createDocumentFragment();
+  return h('div', { class: 'fly-campaign-stack' },
+    ...items.map((item) => renderRibbonPrepArtifact(item.payload, item.descriptor))
+  );
+}
+
+function renderRibbonPrepArtifact(prep, descriptor) {
+  const isError = prep?.schema === 'lupine.library.optional_artifact_error.v1';
+  const ribbons = Array.isArray(prep?.ribbons) ? prep.ribbons : [];
+  const shadowReady = ribbons.filter((ribbon) => String(ribbon.status || '').includes('ready_for_local_shadow_run')).length;
+  const referenceBlocked = ribbons.filter((ribbon) => String(ribbon.status || '').includes('reference_required')).length;
+  return h('section', { class: 'fly-section fly-ribbon-prep', 'aria-labelledby': 'fly-ribbon-prep-title' },
+    h('div', { class: 'fly-section-head' },
+      h('p', { class: 'fly-kicker' }, isError ? 'Ribbon prep unavailable' : 'Ribbon prep'),
+      h('h2', { id: 'fly-ribbon-prep-title' }, descriptor?.title || 'Prep the ribbons before the run.'),
+      h('p', {}, descriptor?.description || 'Each long demo declares what Distill may correct, what it must refuse, and what the viewer may show.')
+    ),
+    isError
+      ? h('p', { class: 'fly-caption' }, prep.error || 'Ribbon prep artifact unavailable.')
+      : [
+        h('div', { class: 'fly-live-run-head' },
+          h('div', {}, h('span', {}, 'Prep'), h('strong', {}, prep?.prep_id || 'unknown')),
+          h('div', {}, h('span', {}, 'Shadow-ready'), h('strong', {}, `${shadowReady} / ${ribbons.length}`)),
+          h('div', {}, h('span', {}, 'Reference blocked'), h('strong', {}, `${referenceBlocked}`))
+        ),
+        h('div', { class: 'fly-ribbon-principles' },
+          ...(Array.isArray(prep?.shared_ribbon_principles) ? prep.shared_ribbon_principles.slice(0, 5).map((item) => h('p', {}, item)) : [])
+        ),
+        h('div', { class: 'fly-ribbon-prep-grid' }, ...ribbons.map(renderRibbonPrepCard)),
+        h('p', { class: 'fly-caption' }, 'These are run gates, not measured results. Active correction stays blocked until the listed references and support/eval splits are locked.')
+      ]
+  );
+}
+
+function renderRibbonPrepCard(ribbon) {
+  const science = ribbon?.science_contract || {};
+  const policy = ribbon?.ribbon_policy || {};
+  const viewer = ribbon?.viewer_contract || {};
+  const acceptance = science.acceptance_gate || {};
+  const refusal = Array.isArray(science.refusal_triggers) ? science.refusal_triggers.slice(0, 5) : [];
+  const layers = Array.isArray(viewer.required_layers) ? viewer.required_layers.slice(0, 5) : [];
+  return h('article', { class: `fly-ribbon-card ${String(ribbon?.status || '').includes('reference_required') ? 'blocked' : 'ready'}` },
+    h('div', { class: 'fly-live-pair-top' },
+      h('span', {}, ribbon?.status || 'prep'),
+      h('strong', {}, ribbon?.material_id || 'material')
+    ),
+    h('h3', {}, ribbon?.ribbon_id || 'ribbon pending'),
+    h('p', { class: 'fly-long-why' }, science.primary_question || ''),
+    h('dl', { class: 'fly-ribbon-limits' },
+      stat('Mode', policy.mode || 'n/a'),
+      stat('Accuracy gate', formatPercent(acceptance.min_paired_accuracy_lift_fraction)),
+      stat('Stiff drift max', formatPercent(acceptance.max_stiff_axis_drift_fraction)),
+      stat('Intervention max', formatPercent(acceptance.max_intervention_rate)),
+      stat('Projection max', formatMetric(policy.max_projection_distance_proxy)),
+      stat('Reference lock', science.reference_lock?.required_before_active_correction ? 'required' : 'review')
+    ),
+    h('div', { class: 'fly-ribbon-two-col' },
+      h('div', {},
+        h('span', {}, 'Refuse if'),
+        refusal.length ? h('ul', {}, ...refusal.map((item) => h('li', {}, item))) : h('p', {}, 'No refusal triggers listed.')
+      ),
+      h('div', {},
+        h('span', {}, 'Viewer layers'),
+        layers.length ? h('ul', {}, ...layers.map((item) => h('li', {}, item))) : h('p', {}, 'No viewer layers listed.')
+      )
+    )
+  );
+}
+
+function renderSubspaceDiagnostic(diagnostic, descriptor) {
+  const isError = diagnostic?.schema === 'lupine.library.optional_artifact_error.v1';
+  const summary = diagnostic?.summary || {};
+  const cells = Array.isArray(diagnostic?.cells) ? diagnostic.cells : [];
+  const energyCells = cells.filter((cell) => cell.row_id === 'energy_volume');
+  const titleId = `fly-subspace-title-${slug(descriptor?.source_id || diagnostic?.campaign_id || 'diagnostic')}`;
+  return h('section', { class: 'fly-section fly-subspace-diagnostic', 'aria-labelledby': titleId },
+    h('div', { class: 'fly-section-head' },
+      h('p', { class: 'fly-kicker' }, isError ? 'Diagnostic unavailable' : 'Spectral v4 diagnostic'),
+      h('h2', { id: titleId }, descriptor?.title || 'Residual concentration in the orthogonal complement'),
+      h('p', {}, descriptor?.description || 'Offline replay diagnostic over completed artifacts; it measures whether the correction signal is concentrated away from the stiff feature axis.')
+    ),
+    isError
+      ? h('p', { class: 'fly-caption' }, diagnostic.error || 'Diagnostic artifact unavailable.')
+      : [
+        h('div', { class: 'fly-live-run-head' },
+          h('div', {}, h('span', {}, 'Verdict'), h('strong', {}, String(summary.verdict || 'awaiting').replace(/_/g, ' '))),
+          h('div', {}, h('span', {}, 'Mean complement'), h('strong', {}, formatPercent(summary.mean_complement_residual_fraction))),
+          h('div', {}, h('span', {}, 'Mean stiff axis'), h('strong', {}, formatPercent(summary.mean_stiff_axis_residual_fraction)))
+        ),
+        h('dl', { class: 'fly-live-run-stats' },
+          stat('Measured cells', `${summary.cells_measured ?? 0} / ${summary.cells_total ?? 0}`),
+          stat('Complement supported', `${summary.cells_complement_supported ?? 0}`),
+          stat('Stiff dominated', `${summary.cells_stiff_dominated ?? 0}`),
+          stat('Basis', diagnostic?.basis_space || 'feature')
+        ),
+        h('div', { class: 'fly-subspace-breakthrough' },
+          h('strong', {}, 'Breakthrough signal'),
+          h('p', {}, energyCells.length
+            ? `Energy-volume is ${energyCells.map((cell) => `${cell.mlip_id} ${formatPercent(cell.complement_residual_fraction)}`).join(', ')} complement-heavy across the measured MLIP canary.`
+            : 'Energy-volume complement concentration has not been measured in this artifact.')
+        ),
+        h('div', { class: 'fly-subspace-grid' }, ...cells.map(renderSubspaceCell)),
+        h('p', { class: 'fly-caption' }, 'This is a replay diagnostic over completed baseline artifacts, not a new cloud claim. It is the spend gate for projected-ribbon v4.')
+      ]
+  );
+}
+
+function renderSubspaceCell(cell) {
+  const complement = Number(cell.complement_residual_fraction);
+  const stiff = Number(cell.stiff_axis_residual_fraction);
+  const complementHeavy = Number.isFinite(complement) && complement >= 0.5;
+  return h('article', { class: `fly-subspace-cell ${complementHeavy ? 'complement' : 'stiff'}` },
+    h('div', { class: 'fly-live-pair-top' },
+      h('span', {}, cell.row_id || 'row'),
+      h('strong', {}, cell.mlip_id || 'mlip')
+    ),
+    h('dl', {},
+      stat('Complement', formatPercent(complement)),
+      stat('Stiff axis', formatPercent(stiff)),
+      stat('Projected lift', formatPercent(cell.projected_support_lift_fraction)),
+      stat('Projection distance', formatMetric(cell.projection_distance_proxy))
+    ),
+    h('small', {}, String(cell.status || 'unknown').replace(/_/g, ' '))
+  );
+}
+
+function renderPolicyReplays(policyReplays) {
+  const items = Array.isArray(policyReplays) ? policyReplays : [];
+  if (!items.length) return document.createDocumentFragment();
+  return h('div', { class: 'fly-campaign-stack' },
+    ...items.map((item) => renderPolicyReplay(item.payload, item.descriptor))
+  );
 }
 
 function renderLiveCampaigns(liveCampaigns) {

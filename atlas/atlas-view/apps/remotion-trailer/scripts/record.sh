@@ -2,7 +2,7 @@
 # Recording helper script
 # Requires: ffmpeg, obs-cli (optional)
 
-echo "ATLAS View Trailer Recording Helper"
+echo "LUPI Trailer Recording Helper"
 echo "===================================="
 echo ""
 

@@ -1,4 +1,4 @@
-# ATLAS View Remotion Trailer — Complete Feature Summary
+# LUPI Remotion Trailer — Complete Feature Summary
 
 ## ✅ All 4 Deliverables Complete
 
@@ -77,7 +77,7 @@ export const currentTheme = themes.cyberpunk; // Change this
 
 **Fast-paced cuts, optimized for mobile:**
 ```
-0:00-0:03  Logo + "ATLAS View"
+0:00-0:03  Logo + "LUPI"
 0:03-0:06  "100K ATOMS / 60 FPS"
 0:06-0:09  "MEASURE / Distance Angle Dihedral"
 0:09-0:12  Demo montage

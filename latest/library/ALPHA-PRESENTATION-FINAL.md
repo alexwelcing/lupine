@@ -1,14 +1,14 @@
-# ATLAS View Alpha Presentation
+# LUPI Alpha Presentation
 
 > **Presenter:** [Your Name]  
 > **Duration:** 5 minutes  
-> **Materials:** ATLAS View WebGPU app + 2 demo datasets
+> **Materials:** LUPI WebGPU app + 2 demo datasets
 
 ---
 
 ## 🎯 Opening Hook (30 sec)
 
-> "Molecular dynamics generates terabytes of atomistic data. We built ATLAS View to visualize millions of atoms in real-time — in the browser, using WebGPU."
+> "Molecular dynamics generates terabytes of atomistic data. We built LUPI to visualize millions of atoms in real-time — in the browser, using WebGPU."
 
 **Action:** Open atlas-view in browser, show loading screen
 
@@ -135,7 +135,7 @@ Coverage: Graphene, CNT, GaN, SiC, Ti, Cu, SiGe
 ## 🚀 Closing & Next Steps (30 sec)
 
 ### Summary
-> "ATLAS View + Chinese-Western dataset library = molecular visualization without barriers. WebGPU-powered, browser-native, research-ready."
+> "LUPI + Chinese-Western dataset library = molecular visualization without barriers. WebGPU-powered, browser-native, research-ready."
 
 ### Call to Action
 ```

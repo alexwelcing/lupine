@@ -33,6 +33,35 @@ After the Ni EAM-home-turf paired run, this policy now requires exact
 support/eval material-root overlap before residual correction. The prior global
 MPtrj support lift was not enough to justify applying energy shifts to pure Ni.
 
+`hyperribbon-mptrj-support-floor-v2-accuracy.json` is the first broad MPtrj
+negative-transfer repair. The widened Cloud Run canary showed that MACE, ORB,
+and SevenNet benefit from the global MPtrj residual ribbon, but CHGNet regresses
+on energy-volume and relaxation-stability because its support residual is
+already small before correction. The v2 policy keeps the global support lane
+open but adds `min_ribbon_support_error_before = 0.05`, so the Rust policy
+engine blocks residual ribbons whose support set is already below the physical
+error floor. This is a general "do not over-correct a strong backend" guard, not
+a CHGNet-only exception.
+
+`hyperribbon-mptrj-row-hybrid-v3-accuracy.json` is a local replay candidate,
+not the default cloud policy yet. It keeps v2's support-floor energy behavior,
+then adds a `relaxation_stability` row override selected from the group-aware
+local theory lane. Against the completed MPtrj promotion-canary checkpoints it
+keeps the same 6 improved / 2 unchanged / 0 regressed pair verdict, while
+increasing mean pair lift from the v2 replay's ~22.6% to ~25.6%. Promote it to
+default only after a fresh Cloud Run canary confirms the replay.
+
+`hyperribbon-mptrj-spectral-v4-accuracy.json` is a local science-gate
+candidate for the projected hyper-ribbon lane. It is not the default cloud
+policy. The paired MPtrj promotion-canary baseline artifacts now emit
+`lupine.distill.subspace_diagnostic.v1`; on the completed canary,
+energy-volume is complement-heavy across MACE, CHGNet, ORB, and SevenNet
+(`0.9869`, `0.9999`, `0.9936`, `0.9986` complement residual fraction). The v4
+policy enables projected residual correction only for spectral ribbon versions
+and blocks correction when the complement fraction is low, projection distance
+is high, or stiff-axis signal exceeds the drift budget. This is the next replay
+gate before any Cloud Run spend.
+
 `hyperribbon-ni-eam-support-v1-accuracy.json` is the first Lane A
 material-family support ribbon. It is paired with
 `gcp/mlip-cell-runner/fixtures/ni_fcc_eam_distill_support_v1.json`, a generated

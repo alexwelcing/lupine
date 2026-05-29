@@ -1,0 +1,72 @@
+{
+  "$schema": "https://lupine.science/schemas/lupine-market-strategy.v1.json",
+  "updated": "2026-05-29",
+  "category": "error geometry for interatomic potentials",
+  "positioning": "Lupine Science is a lab-facing research corpus and evidence system for atomistic model trust.",
+  "publicPosture": "The front door should orient materials labs and research leaders. Investors and other observers should watch the evidence trail rather than receive a direct surface pitch.",
+  "winningThesis": "Own the trust question for interatomic potentials: what does this model get wrong, is the wrongness structured, can the evidence be inspected, and what correction target follows?",
+  "surfaces": {
+    "Lupine Science": "Research program and public start page.",
+    "LUPI": "Inspectable browser-native evidence surface.",
+    "Lupine Library": "Durable human knowledge surface.",
+    "glim-think": "Agentic research control plane and ledger."
+  },
+  "firstMarkets": [
+    {
+      "name": "MLIP builders",
+      "need": "Diagnostics beyond MAE/RMSE.",
+      "wedge": "MLIP Failure Geometry Audit"
+    },
+    {
+      "name": "Computational materials labs",
+      "need": "Publishable, inspectable evidence.",
+      "wedge": "Evidence Pack for a paper, dataset, or benchmark"
+    },
+    {
+      "name": "Materials R&D teams",
+      "need": "Risk reduction before trusting potentials in expensive decisions.",
+      "wedge": "Potential Trust Report for a material family"
+    },
+    {
+      "name": "Agentic research infrastructure teams",
+      "need": "Claim ledgers, evidence lifecycle, and human-readable research outputs.",
+      "wedge": "Ledger-backed research loop for model evaluation"
+    }
+  ],
+  "productLadder": [
+    "Public Library and LUPI gallery",
+    "Shareable LUPI evidence links and publication templates",
+    "MLIP Failure Geometry Audit",
+    "Private evidence packs and correction-target reports",
+    "Private glim-think ledger plus LUPI evidence workspace"
+  ],
+  "executionTemplates": [
+    "docs/templates/proof-pack.md",
+    "docs/templates/mlip-failure-geometry-audit.md"
+  ],
+  "narrativePlays": [
+    "Failure Map",
+    "Refutation as Trust",
+    "Inspectable Evidence",
+    "Agentic Search Capture",
+    "Proof-Pack Adoption"
+  ],
+  "metrics": [
+    "Library report reads",
+    "LUPI evidence opens",
+    "llms.txt and brand.json requests",
+    "branded search impressions",
+    "GitHub referrals",
+    "research collaboration inquiries",
+    "claim updates per month",
+    "refutations published"
+  ],
+  "nonGoals": [
+    "generic simulation SaaS",
+    "pitch-first public surfaces",
+    "marketing claims without inspectable evidence",
+    "viewer-only positioning for LUPI",
+    "uncanonical names or retired domains in agentic search",
+    "hiding refutations"
+  ]
+}

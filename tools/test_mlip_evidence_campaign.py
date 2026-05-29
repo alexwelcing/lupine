@@ -90,6 +90,40 @@ def test_non_ni_campaign_preserves_fixture_id_in_batches() -> None:
     )
 
 
+def test_kart_race_campaign_expands_to_three_lanes() -> None:
+    campaign = evidence.load_campaign(
+        evidence.ROOT
+        / "data"
+        / "mlip_benchmarks"
+        / "evidence_campaigns"
+        / "mptrj_lane_b_kart_race_v1.json"
+    )
+
+    assert evidence.validate_campaign(campaign) == []
+    cells = evidence.expand_cells(campaign)
+    batches = evidence.expand_batches(campaign)
+    canary_cells = evidence.expand_cells(campaign, scope="promotion-canary")
+
+    assert len(cells) == 60
+    assert len(canary_cells) == 24
+    assert evidence.evidence_summary(campaign)["distill_accuracy_accelerate_cells"] == 20
+    assert {batch["mlip_id"] for batch in batches} == {"mace-mp-0", "chgnet", "orb-v3", "sevennet"}
+    assert all(len(batch["cells"]) == 15 for batch in batches)
+    for row_id in campaign["rows"]:
+        for mlip_id in {"mace-mp-0", "chgnet", "orb-v3", "sevennet"}:
+            lane_order = [
+                cell["variant_id"]
+                for cell in cells
+                if cell["row_id"] == row_id and cell["mlip_id"] == mlip_id
+            ]
+            assert lane_order == ["baseline", "distill_accuracy", "distill_accuracy_accelerate"]
+    for distill in [cell for cell in cells if cell["variant_id"] != "baseline"]:
+        baseline = next(cell for cell in cells if cell["cell_id"] == distill["depends_on_cell_id"])
+        assert baseline["variant_id"] == "baseline"
+        assert baseline["checkpoint_url"] == distill["checkpoint_url"]
+        assert distill["checkpoint_mode"] == "read-only"
+
+
 def test_write_batches_materializes_runner_compatible_specs(tmp_path: Path) -> None:
     campaign = load_default_campaign()
 

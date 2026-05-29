@@ -20,7 +20,7 @@ const NAV_SECTIONS: NavSection[] = [
     items: [
       { to: '/', label: 'Home' },
       { to: '/research', label: 'Research' },
-      { to: '/pilots', label: 'Pilots' },
+      { to: '/pilots', label: 'Audits' },
       { to: '/live', label: 'Live Lab', live: true },
       { to: '/about', label: 'About' },
     ],
@@ -30,10 +30,10 @@ const NAV_SECTIONS: NavSection[] = [
     items: [
       { to: '/lineage', label: 'Lineage' },
       { to: '/console', label: 'Research Console' },
-      { to: '/atlas-viewer', label: 'Atlas Viewer' },
+      { to: '/atlas-viewer', label: 'LUPI' },
       { to: '/proof', label: 'Research Defense' },
       { to: '/process', label: 'Operating Report' },
-      { to: '/investor-relations', label: 'Investor Brief' },
+      { to: '/investor-relations', label: 'Observer Notes' },
       { to: '/slideshow', label: 'Slideshow' },
       { to: '/ops', label: 'Ops Dashboard' },
     ],

@@ -107,7 +107,7 @@ export function MlipFlywheelPage() {
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
             <div>
               <div style={{ color: '#8dd3ff', fontSize: 12, fontWeight: 760, letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 18 }}>
-                Lupi Live Lab
+                LUPI Live Lab
               </div>
               <h1 style={{ margin: 0, fontSize: 58, lineHeight: 0.94, letterSpacing: 0, fontWeight: 860, maxWidth: 620 }}>
                 MLIP three-lane benchmark

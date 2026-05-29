@@ -63,7 +63,7 @@ for idx, item in enumerate(featured_items):
     
     # We construct the link path to invoke the molecular viewer
     # During dev this could be localhost, but we'll use a relative path that assumes the viewer is hosted
-    viewer_base = "https://view.lupinematerials.science/?load=/"
+    viewer_base = "https://lupi.live/?load=/"
     link = f"{viewer_base}{item['file']}"
     
     # Extract extension

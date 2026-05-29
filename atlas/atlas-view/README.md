@@ -1,4 +1,4 @@
-# ATLAS View — Developer Getting Started
+# LUPI — Developer Getting Started
 
 > WebGPU-powered LAMMPS molecular dynamics visualization.
 > Drag a dump file into your browser. Publication quality in 2 seconds.

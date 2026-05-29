@@ -5,7 +5,7 @@ Follow this script to capture perfect footage for the trailer.
 ## Setup
 
 1. **Close all other apps** — Maximize performance
-2. **Set ATLAS View to fullscreen** — F11 or maximize window
+2. **Set LUPI to fullscreen** — F11 or maximize window
 3. **Resolution**: 1920×1080 minimum (2560×1440 preferred)
 4. **Recording tool**: OBS Studio recommended
 
@@ -56,11 +56,11 @@ Follow this script to capture perfect footage for the trailer.
 **Scene**: DemoScene left panel
 
 ### Steps:
-1. Start with empty ATLAS View (no file loaded)
+1. Start with empty LUPI (no file loaded)
 2. Position file explorer window partially visible
 3. Start recording
 4. Drag .lammpstrj file from explorer
-5. Drop onto ATLAS View
+5. Drop onto LUPI
 6. Watch loading animation
 7. Show atoms appearing
 8. Stop recording

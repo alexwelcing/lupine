@@ -7,7 +7,7 @@ export const Route = createFileRoute('/lab-status')({
   component: LabStatusPage,
   head: () => ({
     meta: [
-      { title: 'Lab Status — latest work dispatch' },
+      { title: 'Lab Status — Lupine Science work dispatch' },
       {
         name: 'description',
         content:

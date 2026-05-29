@@ -1,0 +1,449 @@
+{
+  "basis_space": "feature",
+  "campaign_hash": "sha256:65c275cae9851738c7e72841b724ba871b319947cf4179822ca7b630a8dbc462",
+  "campaign_id": "mptrj-dft-broad-paired-accuracy-v1",
+  "cells": [
+    {
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/mace-mp-0/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:baseline:energy_volume:mace-mp-0",
+      "complement_residual_fraction": 0.9869584089387414,
+      "feature_names": [
+        "component:stress_gpa:1",
+        "component:stress_gpa:2",
+        "component:stress_gpa:5",
+        "scalar:energy_ev_per_atom"
+      ],
+      "mlip_id": "mace-mp-0",
+      "participation_ratio": 1.688783908793674,
+      "prediction_count": 5,
+      "projected_support_lift_fraction": 0.6159037244484806,
+      "projection_distance_proxy": 0.47859920784503235,
+      "row_id": "energy_volume",
+      "singular_values": [
+        3.86058233260796,
+        1.891679292479833,
+        1.1740736621589856,
+        0.37283313074732916
+      ],
+      "status": "fit",
+      "stiff_axis_drift_fraction": 0.013041591061259067,
+      "stiff_axis_residual_fraction": 0.013041591061259067,
+      "theorem_development_lanes": [
+        {
+          "lane": "stiff_axis_preservation",
+          "runtime_proxy": "stiff_axis_drift_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "orthogonal_complement_lift",
+          "runtime_proxy": "complement_residual_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "projection_tube_refusal",
+          "runtime_proxy": "projection_distance_proxy",
+          "status": "measured"
+        },
+        {
+          "lane": "vandermonde_decay",
+          "runtime_proxy": "singular_values",
+          "status": "measured"
+        }
+      ],
+      "variant_id": "baseline"
+    },
+    {
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/mace-mp-0/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:baseline:relaxation_stability:mace-mp-0",
+      "complement_residual_fraction": 0.0013829424833107628,
+      "feature_names": [
+        "n_atoms",
+        "scalar:relaxed_energy_ev_per_atom"
+      ],
+      "mlip_id": "mace-mp-0",
+      "participation_ratio": 1.9997382323479993,
+      "prediction_count": 3,
+      "projected_support_lift_fraction": 0.41462877037904583,
+      "projection_distance_proxy": 0.5258032574314833,
+      "row_id": "relaxation_stability",
+      "singular_values": [
+        1.741930993773938,
+        1.7221139372671428
+      ],
+      "status": "fit",
+      "stiff_axis_drift_fraction": 0.9986170575166896,
+      "stiff_axis_residual_fraction": 0.9986170575166896,
+      "theorem_development_lanes": [
+        {
+          "lane": "stiff_axis_preservation",
+          "runtime_proxy": "stiff_axis_drift_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "orthogonal_complement_lift",
+          "runtime_proxy": "complement_residual_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "projection_tube_refusal",
+          "runtime_proxy": "projection_distance_proxy",
+          "status": "measured"
+        },
+        {
+          "lane": "vandermonde_decay",
+          "runtime_proxy": "singular_values",
+          "status": "measured"
+        }
+      ],
+      "variant_id": "baseline"
+    },
+    {
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/chgnet/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:baseline:energy_volume:chgnet",
+      "complement_residual_fraction": 0.9999834801286642,
+      "feature_names": [
+        "component:stress_gpa:0",
+        "component:stress_gpa:4",
+        "component:stress_gpa:5",
+        "n_atoms"
+      ],
+      "mlip_id": "chgnet",
+      "participation_ratio": 2.33342038817164,
+      "prediction_count": 5,
+      "projected_support_lift_fraction": 0.37226366696288504,
+      "projection_distance_proxy": 0.58751865072789,
+      "row_id": "energy_volume",
+      "singular_values": [
+        3.325638366341584,
+        2.5705412288807303,
+        1.5272116538767804,
+        0.008474149170410965
+      ],
+      "status": "fit",
+      "stiff_axis_drift_fraction": 1.6519871335779705e-05,
+      "stiff_axis_residual_fraction": 1.6519871335779705e-05,
+      "theorem_development_lanes": [
+        {
+          "lane": "stiff_axis_preservation",
+          "runtime_proxy": "stiff_axis_drift_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "orthogonal_complement_lift",
+          "runtime_proxy": "complement_residual_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "projection_tube_refusal",
+          "runtime_proxy": "projection_distance_proxy",
+          "status": "measured"
+        },
+        {
+          "lane": "vandermonde_decay",
+          "runtime_proxy": "singular_values",
+          "status": "measured"
+        }
+      ],
+      "variant_id": "baseline"
+    },
+    {
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/chgnet/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:baseline:relaxation_stability:chgnet",
+      "complement_residual_fraction": 0.8164888816884098,
+      "feature_names": [
+        "n_atoms",
+        "scalar:relaxed_energy_ev_per_atom"
+      ],
+      "mlip_id": "chgnet",
+      "participation_ratio": 1.917769545895608,
+      "prediction_count": 3,
+      "projected_support_lift_fraction": 0.4845054400100409,
+      "projection_distance_proxy": 0.6819386862099158,
+      "row_id": "relaxation_stability",
+      "singular_values": [
+        1.902948071179089,
+        1.5423322075337027
+      ],
+      "status": "fit",
+      "stiff_axis_drift_fraction": 0.18351111831159034,
+      "stiff_axis_residual_fraction": 0.18351111831159034,
+      "theorem_development_lanes": [
+        {
+          "lane": "stiff_axis_preservation",
+          "runtime_proxy": "stiff_axis_drift_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "orthogonal_complement_lift",
+          "runtime_proxy": "complement_residual_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "projection_tube_refusal",
+          "runtime_proxy": "projection_distance_proxy",
+          "status": "measured"
+        },
+        {
+          "lane": "vandermonde_decay",
+          "runtime_proxy": "singular_values",
+          "status": "measured"
+        }
+      ],
+      "variant_id": "baseline"
+    },
+    {
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/orb-v3/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:baseline:energy_volume:orb-v3",
+      "complement_residual_fraction": 0.9935789283089936,
+      "feature_names": [
+        "component:stress_gpa:0",
+        "component:stress_gpa:3",
+        "component:stress_gpa:5",
+        "scalar:energy_ev_per_atom"
+      ],
+      "mlip_id": "orb-v3",
+      "participation_ratio": 1.391884151869637,
+      "prediction_count": 5,
+      "projected_support_lift_fraction": 0.39630043062122283,
+      "projection_distance_proxy": 0.7652401606381699,
+      "row_id": "energy_volume",
+      "singular_values": [
+        4.091725831425206,
+        1.6061391350896987,
+        0.806348157857334,
+        0.16703127701449952
+      ],
+      "status": "fit",
+      "stiff_axis_drift_fraction": 0.006421071691005739,
+      "stiff_axis_residual_fraction": 0.006421071691005739,
+      "theorem_development_lanes": [
+        {
+          "lane": "stiff_axis_preservation",
+          "runtime_proxy": "stiff_axis_drift_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "orthogonal_complement_lift",
+          "runtime_proxy": "complement_residual_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "projection_tube_refusal",
+          "runtime_proxy": "projection_distance_proxy",
+          "status": "measured"
+        },
+        {
+          "lane": "vandermonde_decay",
+          "runtime_proxy": "singular_values",
+          "status": "measured"
+        }
+      ],
+      "variant_id": "baseline"
+    },
+    {
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/orb-v3/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:baseline:relaxation_stability:orb-v3",
+      "complement_residual_fraction": 0.991804779024324,
+      "feature_names": [
+        "n_atoms",
+        "scalar:relaxed_energy_ev_per_atom"
+      ],
+      "mlip_id": "orb-v3",
+      "participation_ratio": 1.998259997325723,
+      "prediction_count": 3,
+      "projected_support_lift_fraction": 0.9456603142645237,
+      "projection_distance_proxy": 0.870132509606336,
+      "row_id": "relaxation_stability",
+      "singular_values": [
+        1.7574202321628618,
+        1.7063042306648113
+      ],
+      "status": "fit",
+      "stiff_axis_drift_fraction": 0.008195220975675809,
+      "stiff_axis_residual_fraction": 0.008195220975675809,
+      "theorem_development_lanes": [
+        {
+          "lane": "stiff_axis_preservation",
+          "runtime_proxy": "stiff_axis_drift_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "orthogonal_complement_lift",
+          "runtime_proxy": "complement_residual_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "projection_tube_refusal",
+          "runtime_proxy": "projection_distance_proxy",
+          "status": "measured"
+        },
+        {
+          "lane": "vandermonde_decay",
+          "runtime_proxy": "singular_values",
+          "status": "measured"
+        }
+      ],
+      "variant_id": "baseline"
+    },
+    {
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/energy_volume/sevennet/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:baseline:energy_volume:sevennet",
+      "complement_residual_fraction": 0.9985869321954927,
+      "feature_names": [
+        "component:stress_gpa:0",
+        "component:stress_gpa:1",
+        "component:stress_gpa:2",
+        "scalar:energy_ev_per_atom"
+      ],
+      "mlip_id": "sevennet",
+      "participation_ratio": 1.9858691775776491,
+      "prediction_count": 5,
+      "projected_support_lift_fraction": 0.602907892509435,
+      "projection_distance_proxy": 0.782532551137172,
+      "row_id": "energy_volume",
+      "singular_values": [
+        3.6174771404744104,
+        2.2867853517769765,
+        1.296969183913682,
+        0.048402779069230996
+      ],
+      "status": "fit",
+      "stiff_axis_drift_fraction": 0.0014130678045076303,
+      "stiff_axis_residual_fraction": 0.0014130678045076303,
+      "theorem_development_lanes": [
+        {
+          "lane": "stiff_axis_preservation",
+          "runtime_proxy": "stiff_axis_drift_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "orthogonal_complement_lift",
+          "runtime_proxy": "complement_residual_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "projection_tube_refusal",
+          "runtime_proxy": "projection_distance_proxy",
+          "status": "measured"
+        },
+        {
+          "lane": "vandermonde_decay",
+          "runtime_proxy": "singular_values",
+          "status": "measured"
+        }
+      ],
+      "variant_id": "baseline"
+    },
+    {
+      "artifact_uri": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-paired-accuracy-v1/promotion-canary/cells/baseline/relaxation_stability/sevennet/cell_result.json",
+      "cell_id": "mptrj-dft-broad-paired-accuracy-v1:promotion-canary:baseline:relaxation_stability:sevennet",
+      "complement_residual_fraction": 0.013736851582418866,
+      "feature_names": [
+        "n_atoms",
+        "scalar:relaxed_energy_ev_per_atom"
+      ],
+      "mlip_id": "sevennet",
+      "participation_ratio": 1.9977937041376943,
+      "prediction_count": 3,
+      "projected_support_lift_fraction": 0.45715260268036156,
+      "projection_distance_proxy": 0.5434267131146616,
+      "row_id": "relaxation_stability",
+      "singular_values": [
+        1.760595358804349,
+        1.7030278866056732
+      ],
+      "status": "fit",
+      "stiff_axis_drift_fraction": 0.986263148417581,
+      "stiff_axis_residual_fraction": 0.986263148417581,
+      "theorem_development_lanes": [
+        {
+          "lane": "stiff_axis_preservation",
+          "runtime_proxy": "stiff_axis_drift_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "orthogonal_complement_lift",
+          "runtime_proxy": "complement_residual_fraction",
+          "status": "measured"
+        },
+        {
+          "lane": "projection_tube_refusal",
+          "runtime_proxy": "projection_distance_proxy",
+          "status": "measured"
+        },
+        {
+          "lane": "vandermonde_decay",
+          "runtime_proxy": "singular_values",
+          "status": "measured"
+        }
+      ],
+      "variant_id": "baseline"
+    }
+  ],
+  "diagnostic_scope": "completed_cloud_artifact_replay_no_training_claim",
+  "generated_at": "2026-05-27T21:25:17Z",
+  "ribbon_version": "hyperribbon-mptrj-spectral-v4",
+  "schema": "lupine.distill.subspace_diagnostic.v1",
+  "scope": "promotion-canary",
+  "summary": {
+    "by_row": {
+      "energy_volume": {
+        "cells_complement_supported": 4,
+        "cells_measured": 4,
+        "interpretation": "projected_ribbon_candidate",
+        "mean_complement_residual_fraction": 0.994776937392973,
+        "mean_projected_support_lift_fraction": 0.49684392863550586,
+        "mean_stiff_axis_residual_fraction": 0.005223062607027054,
+        "min_complement_residual_fraction": 0.9869584089387414
+      },
+      "relaxation_stability": {
+        "cells_complement_supported": 2,
+        "cells_measured": 4,
+        "interpretation": "mixed_or_stiff_axis_dominated",
+        "mean_complement_residual_fraction": 0.4558533636946159,
+        "mean_projected_support_lift_fraction": 0.575486781833493,
+        "mean_stiff_axis_residual_fraction": 0.5441466363053842,
+        "min_complement_residual_fraction": 0.0013829424833107628
+      }
+    },
+    "cells_complement_supported": 6,
+    "cells_measured": 8,
+    "cells_stiff_dominated": 2,
+    "cells_total": 8,
+    "claim_language": "energy-volume complement concentration is measured in this canary; universal manifold claims are explicitly out of scope",
+    "claim_scope": "promotion_canary_subspace_diagnostic",
+    "cloud_canary_allowed": false,
+    "coverage": {
+      "calculation_type_count": 2,
+      "calculation_types": [
+        "energy_volume",
+        "relaxation_stability"
+      ],
+      "mlip_count": 4,
+      "mlips": [
+        "chgnet",
+        "mace-mp-0",
+        "orb-v3",
+        "sevennet"
+      ],
+      "surface_area": "4 mlips x 2 calculation types"
+    },
+    "failed_conditions": [],
+    "foundation_gate_status": "locked",
+    "mean_complement_residual_fraction": 0.7253151505437945,
+    "mean_stiff_axis_residual_fraction": 0.27468484945620564,
+    "min_complement_residual_fraction": 0.5,
+    "next_action": "freeze this diagnostic contract, then run projected-ribbon replay before any Cloud Run canary",
+    "policy_claim_allowed": false,
+    "universal_manifold_claim_allowed": false,
+    "universality_gate_status": "blocked_by_surface_area",
+    "verdict": "complement_signal_visible"
+  },
+  "validation": {
+    "errors": [],
+    "report_hash": "sha256:ce052d34fc7641018e460f4a5efca002a3eac7d72cd95dde7c36ff7acfb8deb2",
+    "schema": "lupine.distill.subspace_diagnostic.validation.v1",
+    "status": "passed"
+  },
+  "variant_id": "baseline"
+}

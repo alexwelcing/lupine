@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 /* ══════════════════════════════════════════════════════════════
-   ATLAS View — Mobile
+   LUPI — Mobile
    Full-bleed immersive molecular visualization
    The atoms ARE the interface. Everything else whispers.
    ══════════════════════════════════════════════════════════════ */

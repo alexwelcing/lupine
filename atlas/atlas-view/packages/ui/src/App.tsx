@@ -1,5 +1,5 @@
 /**
- * Lupi - premium molecular viewer shell.
+ * LUPI - premium molecular viewer shell.
  *
  * Professional molecular dynamics visualization with
  * glassmorphic UI, side panels, and publication-quality rendering.
@@ -92,7 +92,6 @@ import { DockableWindow } from './DockableWindow';
 import { FigureExportPanel } from './panels/FigureExportPanel';
 import { AnalysisPanel } from './panels/AnalysisPanel';
 import { MeasurementPanel } from './panels/MeasurementPanel';
-import { FlythroughPanel } from './panels/FlythroughPanel';
 import { TelemetryPanel } from './panels/TelemetryPanel';
 import { PotentialBrowser } from './panels/PotentialBrowser';
 import { EquilibriumSolveWorkbench } from './EquilibriumSolveWorkbench';
@@ -108,6 +107,7 @@ import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
 import { ToolButton, CameraPresetButton, TransportButton } from './controls';
+import { McpViewerBridge, McpViewerHarness } from './mcpViewerBridge';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -251,24 +251,28 @@ const IconTelemetry = () => (
 );
 
 // ─── Background presets ───────────────────────────────────────────────
-import { BG_PRESETS } from './backgroundPresets';
+import { BG_PRESETS, type BgPreset } from './backgroundPresets';
+import { ProceduralBackground, ProceduralMathField } from './ProceduralBackground';
 
 
-function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string; image?: string } {
+function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string; image?: string; procedural?: BgPreset['procedural'] } {
   if (backgroundPreset.startsWith('palette:')) {
     const [, palette] = backgroundPreset.split(':');
     return getBackgroundFromColormap((palette as ColormapName) ?? colormap);
   }
   const preset = BG_PRESETS[backgroundPreset] ?? BG_PRESETS.void;
-  return { top: preset.top, bottom: preset.bottom, image: preset.image };
+  return { top: preset.top, bottom: preset.bottom, image: preset.image, procedural: preset.procedural };
 }
 
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl }: {
+function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl, procedural, center, distance }: {
   top: string; bottom: string;
   style?: 'linear' | 'radial' | 'spotlight';
   videoUrl?: string | null;
   imageUrl?: string;
+  procedural?: BgPreset['procedural'];
+  center: [number, number, number];
+  distance: number;
 }) {
   const { scene } = useThree();
   
@@ -301,6 +305,9 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl }: 
       
       scene.background = tex;
       scene.fog = null;
+    } else if (procedural) {
+      scene.background = null;
+      scene.fog = new THREE.FogExp2(bottom, 0.0007);
     } else if (imageUrl) {
       // Load AI-generated background texture
       const loader = new THREE.TextureLoader();
@@ -367,7 +374,26 @@ function SceneBackground({ top, bottom, style = 'linear', videoUrl, imageUrl }: 
       scene.background = null;
       scene.fog = null;
     };
-  }, [scene, top, bottom, style, videoUrl, imageUrl, mode]);
+  }, [scene, top, bottom, style, videoUrl, imageUrl, procedural, mode]);
+
+  if (procedural && !videoUrl) {
+    return (
+      <>
+        <ProceduralBackground
+          variant={procedural}
+          top={top}
+          bottom={bottom}
+          visible={mode !== 'immersive-ar'}
+        />
+        <ProceduralMathField
+          variant={procedural}
+          center={center}
+          radius={distance * 1.46}
+          visible={mode !== 'immersive-ar'}
+        />
+      </>
+    );
+  }
 
   return null;
 }
@@ -521,7 +547,9 @@ export default function App() {
   const [xrCapabilities, setXrCapabilities] = useState({ ar: false, vr: false, ios: false });
   const [toolMenuOpen, setToolMenuOpen] = useState(false);
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
-  const isMlipFlywheelRoute = hashRoute === '/system/mlip-flywheel';
+  const hashPath = hashRoute.split('?')[0] || '/';
+  const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
+  const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
 
   useEffect(() => {
     const syncRoute = () => setHashRoute(currentHashRoute());
@@ -805,7 +833,7 @@ export default function App() {
       const seq = decodeFlythrough(flyParam);
       if (seq) {
         useStore.getState().setFlythrough(seq);
-        useStore.getState().setActivePanel('flythrough');
+        useStore.getState().setActivePanel('export');
       }
     }
 
@@ -1050,7 +1078,7 @@ export default function App() {
               fontSize: 21, fontWeight: 750, color: 'var(--text-primary)',
               letterSpacing: '0'
             }}>
-              Lupi
+              LUPI
             </span>
           </button>
 
@@ -1129,7 +1157,7 @@ export default function App() {
                   textDecoration: 'none',
                 }}
               >
-                {isMobile ? 'Atoms' : 'Lupi Gallery'}
+                {isMobile ? 'Atoms' : 'LUPI Gallery'}
               </a>
               <a
                 href="#/system/mlip-flywheel"
@@ -1146,6 +1174,22 @@ export default function App() {
                 }}
               >
                 {isMobile ? 'Lab' : 'Live Lab'}
+              </a>
+              <a
+                href="#/mcp"
+                style={{
+                  display: 'block',
+                  padding: isMobile ? '7px 9px' : '8px 12px',
+                  fontSize: isMobile ? 12 : 13,
+                  fontWeight: 600,
+                  color: isMcpViewerRoute ? '#e0f2fe' : 'var(--text-muted)',
+                  background: isMcpViewerRoute ? 'rgba(14,165,233,0.16)' : 'transparent',
+                  border: isMcpViewerRoute ? '1px solid rgba(125,211,252,0.52)' : '1px solid var(--border-default)',
+                  borderRadius: 'var(--radius-sm)',
+                  textDecoration: 'none',
+                }}
+              >
+                MCP
               </a>
             </>
           )}
@@ -1183,7 +1227,7 @@ export default function App() {
               textDecoration: 'none',
             }}
           >
-            Lupi Home
+            LUPI Home
           </a>
           <a
             href="https://github.com/alexwelcing/lupine"
@@ -1207,6 +1251,9 @@ export default function App() {
 
       {/* ─── Main content ─── */}
       <div style={{ flex: 1, display: 'flex', position: 'relative' }}>
+        <McpViewerBridge />
+        {isMcpViewerRoute && <McpViewerHarness />}
+
         {/* 3D viewport */}
         <div style={{ 
           position: file ? 'absolute' : 'fixed', 
@@ -1233,17 +1280,22 @@ export default function App() {
             style={{ background: 'transparent' }}
             onPointerMissed={() => useStore.getState().setSelectedAtoms([])}
           >
-            {import.meta.env.DEV && (
-              <>
-                {showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
-                <DevProbe />
-              </>
-            )}
+            {import.meta.env.DEV && showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
+            {(import.meta.env.DEV || showDebugHud) && <DevProbe enabled={showDebugHud} />}
             <XR store={xrStore}>
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
-            <SceneBackground top={bg.top} bottom={bg.bottom} style={backgroundStyle} videoUrl={backgroundVideo} imageUrl={bg.image} />
-            <XREnvironmentDome imageUrl={bg.image} top={bg.top} bottom={bg.bottom} />
+            <SceneBackground
+              top={bg.top}
+              bottom={bg.bottom}
+              style={backgroundStyle}
+              videoUrl={backgroundVideo}
+              imageUrl={bg.image}
+              procedural={bg.procedural}
+              center={center}
+              distance={cameraDistance}
+            />
+            <XREnvironmentDome imageUrl={bg.image} top={bg.top} bottom={bg.bottom} disabled={!!bg.procedural && !backgroundVideo} />
             {/* Real-world light estimation: in AR this takes over scene.environment
                 with a live reflection map so the molecule mirrors the surroundings
                 (e.g. campfire) and adds a directional light tracking the real key
@@ -1715,13 +1767,20 @@ export default function App() {
             bottom: 0,
             left: isMobile ? 0 : 'auto',
             width: isMobile ? '100%' : (activePanel === 'mlipLongRun' ? 390 : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320)),
-            height: isMobile ? '55vh' : 'auto',
+            height: isMobile ? 'min(74dvh, calc(100dvh - 88px))' : 'auto',
+            maxHeight: isMobile ? 'calc(100dvh - 88px)' : 'none',
             borderLeft: isMobile ? 'none' : '1px solid var(--border-subtle)',
             borderTop: isMobile ? '1px solid var(--border-subtle)' : 'none',
+            borderTopLeftRadius: isMobile ? 8 : 0,
+            borderTopRightRadius: isMobile ? 8 : 0,
             background: isMobile ? 'var(--bg-glass)' : 'var(--bg-surface)',
             backdropFilter: isMobile ? 'blur(16px)' : 'none',
             WebkitBackdropFilter: isMobile ? 'blur(16px)' : 'none',
-            overflowY: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            paddingBottom: isMobile ? 'env(safe-area-inset-bottom)' : 0,
+            boxShadow: isMobile ? '0 -18px 48px rgba(0,0,0,0.45)' : 'none',
             zIndex: 100,
             animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
           }}>
@@ -1739,18 +1798,7 @@ export default function App() {
                   {activePanel === 'analysis' ? <AnalysisPanel /> : <MeasurementPanel />}
                 </SubTabStrip>
               )}
-              {/* Consolidated Export: figures + flythrough path authoring. */}
-              {(activePanel === 'export' || activePanel === 'flythrough') && (
-                <SubTabStrip
-                  active={activePanel}
-                  tabs={[
-                    { id: 'export', label: 'Figures' },
-                    { id: 'flythrough', label: 'Path' },
-                  ]}
-                >
-                  {activePanel === 'export' ? <FigureExportPanel /> : <FlythroughPanel />}
-                </SubTabStrip>
-              )}
+              {(activePanel === 'export' || activePanel === 'flythrough') && <FigureExportPanel />}
               {activePanel === 'telemetry' && (
                 <TelemetryPanel
                   thermo={file?.thermo ?? null}
@@ -1767,7 +1815,7 @@ export default function App() {
         {/* Landing page (hero, featured, drop zone, gallery) */}
         {!file && (
           <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
-            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : <LandingPage />}
+            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : isMcpViewerRoute ? null : <LandingPage />}
           </div>
         )}
       </div>
@@ -1874,9 +1922,9 @@ export default function App() {
 // ─── Helper components ────────────────────────────────────────────────
 
 /** Inline tab strip rendered at the top of a consolidated drawer. Switches
- *  the active panel without closing the drawer — used to fold Measure
- *  inside Analysis and Path inside Export so the top-level toolbar can
- *  stay at 3 tabs. Each tab id corresponds to a panel id in activePanel. */
+ *  the active panel without closing the drawer. Used to fold Measure
+ *  inside Analysis so the top-level toolbar can stay compact. Each tab id
+ *  corresponds to a panel id in activePanel. */
 function SubTabStrip({
   active,
   tabs,
@@ -1888,7 +1936,7 @@ function SubTabStrip({
 }) {
   const setActivePanel = useStore(s => s.setActivePanel);
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
       <div style={{
         display: 'flex',
         gap: 4,
@@ -1920,7 +1968,7 @@ function SubTabStrip({
           );
         })}
       </div>
-      <div style={{ flex: 1, overflowY: 'auto' }}>{children}</div>
+      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>{children}</div>
     </div>
   );
 }

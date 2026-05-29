@@ -1,4 +1,4 @@
-# Quick Start — ATLAS View Trailer
+# Quick Start — LUPI Trailer
 
 ## 5-Minute Setup
 

@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// ATLAS View — Impostor Sphere Shader (WGSL)
+// LUPI — Impostor Sphere Shader (WGSL)
 //
 // Renders millions of atoms as screen-aligned quads with per-fragment
 // sphere raycasting. Each atom is a single quad (2 triangles) expanded

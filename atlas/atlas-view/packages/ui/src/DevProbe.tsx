@@ -9,7 +9,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
-import { parseFile, detectFileType } from '@atlas/parsers';
+import * as THREE from 'three';
 import { useStore } from './store';
 
 interface PerfWindowState {
@@ -67,13 +67,61 @@ function inspectSceneGraph(scene: any) {
   };
 }
 
-export function DevProbe() {
+function inspectInstancedMeshes(scene: any) {
+  const meshes: Array<Record<string, unknown>> = [];
+  scene.traverse?.((object: any) => {
+    if (!object.isInstancedMesh) return;
+    const geometry = object.geometry as THREE.BufferGeometry | undefined;
+    const attrs = geometry?.attributes ?? {};
+    meshes.push({
+      name: object.name || object.type,
+      type: object.type,
+      visible: object.visible,
+      count: object.count,
+      frustumCulled: object.frustumCulled,
+      geometry: geometry?.type,
+      material: object.material?.type,
+      capacity: object.instanceMatrix?.count ?? null,
+      attributes: Object.fromEntries(
+        Object.entries(attrs).map(([key, attr]) => [
+          key,
+          {
+            itemSize: (attr as THREE.BufferAttribute).itemSize,
+            count: (attr as THREE.BufferAttribute).count,
+            usage: (attr as THREE.BufferAttribute).usage,
+          },
+        ]),
+      ),
+    });
+  });
+  return meshes;
+}
+
+interface DevProbeProps {
+  enabled?: boolean;
+}
+
+function writeDiagnosticsPayload(payload: unknown) {
+  if (typeof document === 'undefined') return;
+  let el = document.getElementById('lupi-scene-diagnostics') as HTMLScriptElement | null;
+  if (!el) {
+    el = document.createElement('script');
+    el.id = 'lupi-scene-diagnostics';
+    el.type = 'application/json';
+    el.setAttribute('data-lupi-diagnostics', 'scene');
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(payload);
+}
+
+export function DevProbe({ enabled = false }: DevProbeProps) {
   const three = useThree();
   const samplesRef = useRef<number[]>([]);   // rolling frame timestamps
   const frameCountRef = useRef(0);
+  const active = enabled || import.meta.env.DEV;
 
   useEffect(() => {
-    if (!import.meta.env.DEV || typeof window === 'undefined') return;
+    if (!active || typeof window === 'undefined') return;
     const w = window as any;
     w.__atlas = w.__atlas ?? {};
     w.__atlas.three = {
@@ -84,8 +132,65 @@ export function DevProbe() {
       get state() { return three; },
     };
     w.__atlas.inspectScene = () => inspectSceneGraph(three.scene);
+    w.__atlas.snapshot = () => {
+      const state = useStore.getState();
+      const renderer = three.gl as THREE.WebGLRenderer;
+      const size = new THREE.Vector2();
+      renderer.getSize(size);
+      return {
+        timestamp: new Date().toISOString(),
+        url: window.location.href,
+        file: state.file ? {
+          name: state.file.name,
+          size: state.file.size,
+          frames: state.file.trajectory.frames.length,
+          natoms: state.file.trajectory.frames[state.frame]?.natoms ?? state.file.trajectory.frames[0]?.natoms ?? 0,
+          atomTypes: state.file.trajectory.atomTypes,
+        } : null,
+        store: {
+          frame: state.frame,
+          loadedAtomCount: state.loadedAtomCount,
+          renderStyle: state.renderStyle,
+          colorMode: state.colorMode,
+          colorProperty: state.colorProperty,
+          colormap: state.colormap,
+          atomColorSource: state.atomColorSource,
+          showBonds: state.showBonds,
+          bondTolerance: state.bondTolerance,
+          bondColorMode: state.bondColorMode,
+          useGpuBonds: state.useGpuBonds,
+          gpuBondsStatus: state.gpuBondsStatus,
+          bondSource: state.bondSource,
+          lastBondCount: state.lastBondCount,
+          backgroundPreset: state.backgroundPreset,
+          backgroundVideo: state.backgroundVideo,
+          materialScene: state.materialScene,
+          materialPreset: state.materialPreset,
+          postprocessPreset: state.postprocessPreset,
+        },
+        renderer: {
+          pixelRatio: renderer.getPixelRatio(),
+          size: [size.x, size.y],
+          canvas: {
+            width: renderer.domElement.width,
+            height: renderer.domElement.height,
+            clientWidth: renderer.domElement.clientWidth,
+            clientHeight: renderer.domElement.clientHeight,
+          },
+          memory: { ...renderer.info.memory },
+          render: { ...renderer.info.render },
+          programs: renderer.info.programs?.length ?? 0,
+        },
+        scene: inspectSceneGraph(three.scene),
+        instancedMeshes: inspectInstancedMeshes(three.scene),
+        perf: w.__atlas.perf ?? null,
+      };
+    };
+    w.__atlas.resetRendererInfo = () => three.gl.info.reset();
     w.__lupi = w.__atlas;
     w.__lupi.inspectScene = w.__atlas.inspectScene;
+    w.__lupi.snapshot = w.__atlas.snapshot;
+    writeDiagnosticsPayload(w.__atlas.snapshot());
     // Three.js DevTools picks the scene up via the WebGLRenderer hook
     // automatically; this is also a Needle/Three console handle.
 
@@ -94,6 +199,7 @@ export function DevProbe() {
     // uses — so this validates the WHOLE pipeline (WASM parser + frame
     // construction + setFile + smart defaults + render).
     w.__atlas.loadFromURL = async (url: string) => {
+      const { parseFile, detectFileType } = await import('@atlas/parsers');
       const response = await fetch(url, { headers: { Accept: 'text/plain, */*' } });
       if (!response.ok) throw new Error(`Failed to fetch ${url}: HTTP ${response.status}`);
       const ct = response.headers.get('content-type') ?? '';
@@ -119,13 +225,13 @@ export function DevProbe() {
         atomTypes: result.trajectory.atomTypes,
       };
     };
-  }, [three]);
+  }, [active, three]);
 
   // FPS sampler. Stamps every render with performance.now(), keeps the last
   // 5 seconds of samples, and exposes derived stats on window.__atlas.perf.
   // Costs negligible per frame (a push + a binary-search-ish trim).
   useFrame(() => {
-    if (!import.meta.env.DEV || typeof window === 'undefined') return;
+    if (!active || typeof window === 'undefined') return;
     const now = performance.now();
     samplesRef.current.push(now);
     frameCountRef.current += 1;
@@ -159,6 +265,9 @@ export function DevProbe() {
     };
     (window as any).__atlas = (window as any).__atlas ?? {};
     (window as any).__atlas.perf = stats;
+    if (frameCountRef.current % 30 === 0 && (window as any).__atlas.snapshot) {
+      writeDiagnosticsPayload((window as any).__atlas.snapshot());
+    }
   });
 
   return null;

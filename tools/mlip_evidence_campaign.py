@@ -30,6 +30,11 @@ DEFAULT_CAMPAIGN = ROOT / "data" / "mlip_benchmarks" / "evidence_campaigns" / "n
 DEFAULT_BATCH_DIR = ROOT / "tmp" / "mlip-evidence" / "ni-fcc-eam-home-turf-paired-accuracy-v1" / "batches"
 ALLOWED_TARGET_RE = re.compile(r"default_value\s*=\s*\"([^\"]*mlip-cell[^\"]*)\"")
 VALID_SCOPES = {"full", "promotion-canary"}
+SUPPORTED_VARIANT_PROFILES = {
+    "baseline": "off",
+    "distill_accuracy": "accuracy",
+    "distill_accuracy_accelerate": "accuracy_accelerate",
+}
 
 
 def load_json(path: pathlib.Path) -> dict[str, Any]:
@@ -104,6 +109,18 @@ def variants_by_id(campaign: dict[str, Any]) -> dict[str, dict[str, Any]]:
         if isinstance(entry, dict) and isinstance(entry.get("variant_id"), str):
             variants[entry["variant_id"]] = entry
     return variants
+
+
+def variant_order(campaign: dict[str, Any]) -> list[str]:
+    ordered: list[str] = []
+    for entry in campaign.get("variants", []):
+        if isinstance(entry, dict) and isinstance(entry.get("variant_id"), str):
+            ordered.append(entry["variant_id"])
+    return ordered
+
+
+def distill_variant_ids(campaign: dict[str, Any]) -> list[str]:
+    return [variant_id for variant_id in variant_order(campaign) if variant_id != "baseline"]
 
 
 def backend_map(campaign: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -182,6 +199,7 @@ def expand_cells(campaign: dict[str, Any], scope: str = "full") -> list[dict[str
     if scope not in VALID_SCOPES:
         raise ValueError(f"unknown evidence scope: {scope}")
     variants = variants_by_id(campaign)
+    ordered_variants = variant_order(campaign)
     backends = backend_map(campaign)
     cells: list[dict[str, Any]] = []
     for mlip_id in scoped_mlips(campaign, scope):
@@ -207,31 +225,36 @@ def expand_cells(campaign: dict[str, Any], scope: str = "full") -> list[dict[str
                     "evidence_role": "baseline_checkpoint_producer",
                 }
             )
-            distill_variant = variants["distill_accuracy"]
             policy = policy_for(campaign, row_id, mlip_id)
-            cells.append(
-                {
-                    "cell_id": cell_id(campaign, "distill_accuracy", row_id, mlip_id, scope=scope),
-                    "campaign_id": campaign["campaign_id"],
-                    "row_id": row_id,
-                    "mlip_id": mlip_id,
-                    "target_job": target_job,
-                    "variant_id": "distill_accuracy",
-                    "distill_profile": distill_variant["distill_profile"],
-                    "manifest_url": campaign["fixture_gcs_url"],
-                    "fixture_url": campaign["fixture_gcs_url"],
-                    "artifact_prefix": artifact_prefix(campaign, "distill_accuracy", row_id, mlip_id, scope=scope),
-                    "checkpoint_url": shared_checkpoint,
-                    "checkpoint_mode": distill_variant["checkpoint_mode"],
-                    "depends_on_cell_id": baseline_id,
-                    "support_manifest_url": campaign["support_manifest_gcs_url"],
-                    "distill_policy_url": policy["policy_gcs_url"],
-                    "distill_policy_hash": policy["policy_hash"],
-                    "distill_policy_engine": campaign["distill_policy_engine"],
-                    "ribbon_version": campaign["ribbon_version"],
-                    "evidence_role": "distill_checkpoint_consumer",
-                }
-            )
+            for variant_id in ordered_variants:
+                if variant_id == "baseline":
+                    continue
+                distill_variant = variants[variant_id]
+                cells.append(
+                    {
+                        "cell_id": cell_id(campaign, variant_id, row_id, mlip_id, scope=scope),
+                        "campaign_id": campaign["campaign_id"],
+                        "row_id": row_id,
+                        "mlip_id": mlip_id,
+                        "target_job": target_job,
+                        "variant_id": variant_id,
+                        "distill_profile": distill_variant["distill_profile"],
+                        "manifest_url": campaign["fixture_gcs_url"],
+                        "fixture_url": campaign["fixture_gcs_url"],
+                        "artifact_prefix": artifact_prefix(campaign, variant_id, row_id, mlip_id, scope=scope),
+                        "checkpoint_url": shared_checkpoint,
+                        "checkpoint_mode": distill_variant["checkpoint_mode"],
+                        "depends_on_cell_id": baseline_id,
+                        "support_manifest_url": campaign["support_manifest_gcs_url"],
+                        "distill_policy_url": policy["policy_gcs_url"],
+                        "distill_policy_hash": policy["policy_hash"],
+                        "distill_policy_engine": campaign["distill_policy_engine"],
+                        "ribbon_version": campaign["ribbon_version"],
+                        "evidence_role": "distill_checkpoint_consumer"
+                        if variant_id == "distill_accuracy"
+                        else "distill_accelerate_checkpoint_consumer",
+                    }
+                )
     return cells
 
 
@@ -240,6 +263,7 @@ def expand_batches(campaign: dict[str, Any], scope: str = "full") -> list[dict[s
         raise ValueError(f"unknown evidence scope: {scope}")
     cells = expand_cells(campaign, scope=scope)
     backends = backend_map(campaign)
+    ordered_variants = variant_order(campaign)
     batches: list[dict[str, Any]] = []
     for mlip_id in scoped_mlips(campaign, scope):
         mlip_cells = [cell for cell in cells if cell["mlip_id"] == mlip_id]
@@ -248,7 +272,7 @@ def expand_batches(campaign: dict[str, Any], scope: str = "full") -> list[dict[s
             ordered_cells.extend(
                 cell
                 for cell in mlip_cells
-                if cell["row_id"] == row_id and cell["variant_id"] in {"baseline", "distill_accuracy"}
+                if cell["row_id"] == row_id and cell["variant_id"] in set(ordered_variants)
             )
         suffix = "paired-accuracy" if scope == "full" else "promotion-canary"
         batch_id = sanitize_id(f"{campaign['campaign_id']}-{mlip_id}-{suffix}")
@@ -284,17 +308,23 @@ def expand_batches(campaign: dict[str, Any], scope: str = "full") -> list[dict[s
 def evidence_summary(campaign: dict[str, Any]) -> dict[str, Any]:
     cells = expand_cells(campaign)
     batches = expand_batches(campaign)
-    variants = sorted({cell["variant_id"] for cell in cells})
-    policies = sorted({cell["distill_policy_url"] for cell in cells if cell["variant_id"] == "distill_accuracy"})
+    variants = variant_order(campaign)
+    policies = sorted({cell["distill_policy_url"] for cell in cells if cell["variant_id"] != "baseline"})
+    variant_counts = {
+        variant_id: len([cell for cell in cells if cell["variant_id"] == variant_id])
+        for variant_id in variants
+    }
     return {
         "campaign_id": campaign["campaign_id"],
         "profile": campaign["profile"],
         "rows": list(campaign["rows"]),
         "mlips": enabled_mlips(campaign),
         "variants": variants,
+        "variant_counts": variant_counts,
         "cells_total": len(cells),
-        "baseline_cells": len([cell for cell in cells if cell["variant_id"] == "baseline"]),
-        "distill_accuracy_cells": len([cell for cell in cells if cell["variant_id"] == "distill_accuracy"]),
+        "baseline_cells": variant_counts.get("baseline", 0),
+        "distill_accuracy_cells": variant_counts.get("distill_accuracy", 0),
+        "distill_accuracy_accelerate_cells": variant_counts.get("distill_accuracy_accelerate", 0),
         "batches_total": len(batches),
         "target_jobs": sorted({batch["target_job"] for batch in batches}),
         "policy_urls": policies,
@@ -373,9 +403,17 @@ def validate_campaign(campaign: dict[str, Any]) -> list[str]:
     allowed_jobs = allowed_target_jobs()
     rows = campaign.get("rows") if isinstance(campaign.get("rows"), list) else []
     variants = variants_by_id(campaign)
-    if set(variants) != {"baseline", "distill_accuracy"}:
-        issues.append("variants must contain exactly baseline and distill_accuracy for this evidence campaign")
-    for variant_id, expected_mode in (("baseline", "read-write"), ("distill_accuracy", "read-only")):
+    variant_ids = set(variants)
+    if "baseline" not in variants or "distill_accuracy" not in variants:
+        issues.append("variants must contain at least baseline and distill_accuracy")
+    unsupported_variants = variant_ids - set(SUPPORTED_VARIANT_PROFILES)
+    if unsupported_variants:
+        issues.append(f"unsupported variant ids: {sorted(unsupported_variants)}")
+    for variant_id, variant in variants.items():
+        expected_profile = SUPPORTED_VARIANT_PROFILES.get(variant_id)
+        if expected_profile and variant.get("distill_profile") != expected_profile:
+            issues.append(f"{variant_id}.distill_profile must be {expected_profile}")
+    for variant_id, expected_mode in [("baseline", "read-write"), *[(variant_id, "read-only") for variant_id in distill_variant_ids(campaign)]]:
         variant = variants.get(variant_id, {})
         if variant.get("checkpoint_mode") != expected_mode:
             issues.append(f"{variant_id}.checkpoint_mode must be {expected_mode}")
@@ -407,7 +445,7 @@ def validate_campaign(campaign: dict[str, Any]) -> list[str]:
 
     cells = expand_cells(campaign)
     for cell in cells:
-        if cell["variant_id"] != "distill_accuracy":
+        if cell["variant_id"] == "baseline":
             continue
         baseline = next(
             (
@@ -493,7 +531,7 @@ def gcloud_run_cell_command(campaign: dict[str, Any], cell: dict[str, Any], *, w
         "--checkpoint-mode",
         cell["checkpoint_mode"],
     ]
-    if cell["variant_id"] == "distill_accuracy":
+    if cell["variant_id"] != "baseline":
         args.extend(
             [
                 "--support-manifest-url",

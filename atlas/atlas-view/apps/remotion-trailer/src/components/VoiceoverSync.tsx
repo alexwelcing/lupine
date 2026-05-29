@@ -27,7 +27,7 @@ interface VoiceoverSyncProps {
 // Predefined scripts for the trailer
 export const voiceoverScripts = {
   standard: [
-    { time: 0.5, text: "Introducing ATLAS View." },
+    { time: 0.5, text: "Introducing LUPI." },
     { time: 2.0, text: "Next-generation molecular dynamics visualization." },
     { time: 5.0, text: "Powered by WebGPU." },
     { time: 7.0, text: "Render one hundred thousand atoms at sixty frames per second." },
@@ -39,14 +39,14 @@ export const voiceoverScripts = {
   ],
   
   short: [
-    { time: 0.5, text: "ATLAS View." },
+    { time: 0.5, text: "LUPI." },
     { time: 1.5, text: "WebGPU-powered MD visualization." },
     { time: 4.0, text: "One hundred K atoms. Sixty FPS." },
     { time: 7.0, text: "Free on GitHub." },
   ],
   
   technical: [
-    { time: 0.5, text: "ATLAS View." },
+    { time: 0.5, text: "LUPI." },
     { time: 2.0, text: "GPU-accelerated molecular dynamics visualization." },
     { time: 6.0, text: "Spatial hashing for O of one atom picking." },
     { time: 10.0, text: "Direct buffer manipulation for ten X performance." },

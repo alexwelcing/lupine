@@ -1,0 +1,148 @@
+{
+  "schema": "lupine.mlip.evidence_campaign.v1",
+  "campaign_id": "mptrj-dft-broad-kart-race-v1",
+  "title": "MPtrj broad-DFT MLIP kart race: baseline vs Distill Accuracy vs Distill Accuracy + Accelerate",
+  "objective": "Collect sealed evidence across multiple MLIPs showing the baseline function, the active Distill Accuracy lane, and the guarded Accuracy + Accelerate lane on the same fixture, checkpoint, and row scoring contract.",
+  "profile": "lab-gcp-gpu-kart-race",
+  "project": "shed-489901",
+  "region": "us-central1",
+  "source_packet_path": "data/mlip_benchmarks/manifest_sources.json",
+  "fixture_id": "canonical-structures-v2",
+  "fixture_path": "gcp/mlip-cell-runner/fixtures/canonical_structures_v2_mptrj.json",
+  "fixture_gcs_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json",
+  "support_manifest_path": "gcp/mlip-cell-runner/fixtures/canonical_distill_support_mptrj_train_plus_elastic_v1.json",
+  "support_manifest_gcs_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-distill-support-mptrj-train-plus-elastic-v1/manifest.json",
+  "backend_catalog_path": "gcp/mlip-cell-runner/backend_catalog.json",
+  "policy_registry_path": "gcp/mlip-cell-runner/policies/accuracy_policy_registry.mptrj.json",
+  "policy_gcs_prefix": "gs://shed-489901-atlas-inputs/mlip-policies/evidence/mptrj-dft-broad-kart-race-v1",
+  "batch_gcs_prefix": "gs://shed-489901-atlas-inputs/mlip-evidence/mptrj-dft-broad-kart-race-v1/batches",
+  "artifact_gcs_prefix": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-dft-broad-kart-race-v1",
+  "worker_url": "https://glim-think-v1.aw-ab5.workers.dev",
+  "beat_emit_url": "https://glim-think-v1.aw-ab5.workers.dev/feed/beats",
+  "distill_policy_engine": "rust",
+  "ribbon_version": "hyperribbon-mptrj-support-floor-v2",
+  "checkpoint_contract": {
+    "scope": "raw_predictions",
+    "baseline_mode": "read-write",
+    "distill_accuracy_mode": "read-only",
+    "distill_accuracy_accelerate_mode": "read-only",
+    "pairing_rule": "baseline, Distill Accuracy, and Distill Accuracy + Accelerate for the same row and MLIP must share one checkpoint URL"
+  },
+  "budget": {
+    "max_dollars_per_hour": 20.0,
+    "max_active_gpu_jobs": 4,
+    "l4_lab_hourly_estimate_usd": 1.05
+  },
+  "promotion_canary": {
+    "required_before_full_launch": true,
+    "rows": [
+      "energy_volume",
+      "relaxation_stability"
+    ],
+    "mlips": [
+      "mace-mp-0",
+      "chgnet",
+      "orb-v3",
+      "sevennet"
+    ],
+    "gate": {
+      "max_regressed_pairs": 0,
+      "min_improved_pairs": 1,
+      "required_zero_regression_rows": [
+        "energy_volume",
+        "relaxation_stability"
+      ],
+      "min_accelerate_speedup_vs_accuracy": 1.1,
+      "max_accelerate_accuracy_regression_fraction": 0.02
+    },
+    "reason": "The canary is the kart race start line: two sensitive rows across the reliable cloud MLIPs, with all three lanes sharing checkpoints before the full grid fans out."
+  },
+  "rows": [
+    "energy_volume",
+    "forces",
+    "stress",
+    "elastic_constants",
+    "relaxation_stability"
+  ],
+  "variants": [
+    {
+      "variant_id": "baseline",
+      "distill_profile": "off",
+      "checkpoint_mode": "read-write"
+    },
+    {
+      "variant_id": "distill_accuracy",
+      "distill_profile": "accuracy",
+      "checkpoint_mode": "read-only"
+    },
+    {
+      "variant_id": "distill_accuracy_accelerate",
+      "distill_profile": "accuracy_accelerate",
+      "checkpoint_mode": "read-only"
+    }
+  ],
+  "mlips": [
+    {
+      "mlip_id": "mace-mp-0",
+      "enabled": true
+    },
+    {
+      "mlip_id": "chgnet",
+      "enabled": true
+    },
+    {
+      "mlip_id": "m3gnet",
+      "enabled": false,
+      "blocked_reason": "Hold until the GCP MatGL/DGL image passes a fresh import canary on this runner tag."
+    },
+    {
+      "mlip_id": "orb-v3",
+      "enabled": true
+    },
+    {
+      "mlip_id": "sevennet",
+      "enabled": true
+    },
+    {
+      "mlip_id": "uma-s-1p1",
+      "enabled": false,
+      "blocked_reason": "FAIR Chemistry UMA access is gated until the account is authorized for the model repository."
+    }
+  ],
+  "evidence_fields": [
+    "source_packet_hash",
+    "fixture_manifest_hash",
+    "support_manifest_hash",
+    "backend_catalog_hash",
+    "policy_registry_hash",
+    "distill_policy_hash",
+    "shared_checkpoint_url",
+    "baseline_cell_id",
+    "distill_accuracy_cell_id",
+    "distill_accuracy_accelerate_cell_id",
+    "artifact_uri",
+    "cloud_run_operation_name",
+    "phoenix_trace_id",
+    "speedup_accelerate_vs_accuracy"
+  ],
+  "acceptance_gate": {
+    "ready_to_launch": [
+      "source packet validates",
+      "sealed fixture validates",
+      "support manifest is present locally and has a GCS target",
+      "every enabled MLIP maps to an allowlisted Cloud Run target job",
+      "every Distill lane resolves a concrete policy file and GCS policy URL",
+      "all Distill cells depend on the paired baseline checkpoint"
+    ],
+    "ready_to_claim_accuracy_gain": [
+      "all completed Distill cells reference the paired baseline checkpoint URL",
+      "all completed Distill cells include support_manifest_hash, distill_policy_hash, interventions, refusals, and theorem_hooks",
+      "row-level accuracy deltas are computed from sealed fixture scores, not from Phoenix-only annotations"
+    ],
+    "ready_to_claim_kart_win": [
+      "Distill Accuracy improves the sealed score",
+      "Distill Accuracy + Accelerate preserves accuracy within 0.02 relative error of Distill Accuracy",
+      "Distill Accuracy + Accelerate improves speed by at least 1.10x against Distill Accuracy"
+    ]
+  }
+}

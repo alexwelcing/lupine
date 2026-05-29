@@ -846,7 +846,7 @@ export function Gallery() {
             </svg>
           </div>
           <div>
-            <h2 style={sHeading}>Lupi Gallery</h2>
+            <h2 style={sHeading}>LUPI Gallery</h2>
             <p style={sSub}>
               {filteredExamples.length} structures ready to inspect
             </p>

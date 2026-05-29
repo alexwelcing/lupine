@@ -2,7 +2,7 @@
 
 > **Date:** March 18, 2026  
 > **Time:** Presentation Day  
-> **Goal:** Flawless ATLAS View demo
+> **Goal:** Flawless LUPI demo
 
 ---
 
@@ -37,7 +37,7 @@ atlas-view west-mc-004/CNT_PBD_2tubes/CNT_PBD_2tubes/CNTx2T_PBD_0a7_x20/Gr100x20
 
 ### 1. Opening (30 seconds)
 **Script:**
-> "ATLAS View is a WebGPU-powered molecular dynamics visualizer. Today we're showing our alpha with two production datasets: graphene/CNT stacking structures and titanium grain boundaries. Both are peer-reviewed research datasets from 2023-2024."
+> "LUPI is a WebGPU-powered molecular dynamics visualizer. Today we're showing our alpha with two production datasets: graphene/CNT stacking structures and titanium grain boundaries. Both are peer-reviewed research datasets from 2023-2024."
 
 **Action:** Show library folder structure
 

@@ -19,7 +19,7 @@ NOTE_CLAIM_ID = "research_note_cross_mlip_alignment_2026_05_05"
 
 NOTE_MD = """# Cross-MLIP cosine alignment refutes the element-intrinsic dichotomy: a noble-vs-refractory split emerges instead
 
-**Lupine Materials Science · Research note · 2026-05-05**
+**Lupine Science · Research note · 2026-05-05**
 **Author:** A. Welcing (engine: glim-think v1, agent: alex-welcing+claude-opus-4-7)
 
 ---

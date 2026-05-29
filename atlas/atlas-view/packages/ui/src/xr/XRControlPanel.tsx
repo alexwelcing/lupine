@@ -149,9 +149,9 @@ export function XRControlPanel() {
     setColorProperty(availableProperties[(currentIdx + 1) % availableProperties.length]);
   };
 
-  // Background cycling — cycle through image-backed presets first, then gradients
+  // Background cycling — cycle through image-backed and procedural presets first, then gradients
   const bgKeys = Object.keys(BG_PRESETS);
-  const bgImageKeys = bgKeys.filter(k => BG_PRESETS[k].image);
+  const bgImageKeys = bgKeys.filter(k => BG_PRESETS[k].image || BG_PRESETS[k].procedural);
   const bgCycleKeys = bgImageKeys.length > 0 ? bgImageKeys : bgKeys;
   const cycleBg = () => {
     const idx = bgCycleKeys.indexOf(backgroundPreset);

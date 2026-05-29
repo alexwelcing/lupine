@@ -1,6 +1,6 @@
 # Handoff Runbook — Operating the Lupine Flywheel
 
-Operational manual for the Lupine Materials Science autonomous research stack. The five handoff documents under `../handoff/` describe what the system **is**; this runbook describes how to **run** it.
+Operational manual for the Lupine Science autonomous research stack. The five handoff documents under `../handoff/` describe what the system **is**; this runbook describes how to **run** it.
 
 Read time: 5 minutes.
 

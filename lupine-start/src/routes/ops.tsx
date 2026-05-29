@@ -6,7 +6,7 @@ export const Route = createFileRoute('/ops')({
   component: OpsDashboard,
   head: () => ({
     meta: [
-      { title: 'Ops — deployment telemetry' },
+      { title: 'Ops — Lupine Science deployment telemetry' },
       { name: 'description', content: 'Real-time observability into GitHub Actions deploy pipelines for the Lupine audit layer.' },
     ],
   }),

@@ -44,6 +44,8 @@ import BondWorkerCtor from './bondWorker.ts?worker';
  *  the spatial-hash + neighbor scan entirely. Tuned conservatively so even
  *  fast-equilibrating MD won't drop a real bond change. */
 const BOND_RECOMPUTE_DISP_THRESHOLD = 0.05;
+const EMPTY_BOND_PAIRS = new Int32Array(0);
+const EMPTY_BOND_DISTANCES = new Float32Array(0);
 
 /** Returns the max |Δposition| between `curr` and `prev`, sampled at most
  *  1000 atoms to keep the check sub-millisecond on million-atom scenes.
@@ -160,7 +162,8 @@ export function Bonds({
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const workerRef = useRef<Worker | null>(null);
   const workerBusyRef = useRef<boolean>(false);
-  const pendingMsgRef = useRef<{ msg: any, transferList: ArrayBuffer[] } | null>(null);
+  const pendingMsgRef = useRef<{ msg: Record<string, any>, transferList: ArrayBuffer[], requestId: number } | null>(null);
+  const cpuDispatchGenRef = useRef(0);
 
   // Auto-force GPU for big systems regardless of the user's toggle: at
   // hundreds of thousands of atoms the CPU worker is unusable (60+ seconds
@@ -192,10 +195,15 @@ export function Bonds({
   }, [useGpu, gpuReady, gpuUnsupported, onGpuStatusChange]);
 
   // Bond pair data from the worker
-  const [bondPairs, setBondPairs] = useState<Int32Array>(new Int32Array(0));
-  const [bondDistances, setBondDistances] = useState<Float32Array>(new Float32Array(0));
+  const [bondPairs, setBondPairs] = useState<Int32Array>(EMPTY_BOND_PAIRS);
+  const [bondDistances, setBondDistances] = useState<Float32Array>(EMPTY_BOND_DISTANCES);
   const bondCount = bondPairs.length / 2;
   const halfCount = bondCount * 2; // Each bond → 2 half-cylinders
+
+  const clearBondState = useCallback(() => {
+    setBondPairs(prev => prev.length === 0 ? prev : EMPTY_BOND_PAIRS);
+    setBondDistances(prev => prev.length === 0 ? prev : EMPTY_BOND_DISTANCES);
+  }, []);
 
   // (tubeGeo moved below — depends on `capacity`, which is computed by
   //  the ratchet block.)
@@ -206,13 +214,21 @@ export function Bonds({
     workerRef.current = worker;
 
     worker.onmessage = (e: MessageEvent) => {
-      const { bondPairs: pairs, count, distances } = e.data;
-      // pairs is Int32Array [a0,b0, a1,b1, ...]
-      setBondPairs(pairs instanceof Int32Array ? pairs : new Int32Array(pairs));
-      if (distances) {
-        setBondDistances(distances instanceof Float32Array ? distances : new Float32Array(distances));
+      const { requestId, bondPairs: pairs, count, distances } = e.data;
+      const isFresh = typeof requestId === 'number' && requestId === cpuDispatchGenRef.current;
+      if (isFresh) {
+        // pairs is Int32Array [a0,b0, a1,b1, ...]
+        const nextPairs = pairs instanceof Int32Array ? pairs : pairs ? new Int32Array(pairs) : EMPTY_BOND_PAIRS;
+        setBondPairs(nextPairs);
+        setBondDistances(
+          distances instanceof Float32Array
+            ? distances
+            : distances
+              ? new Float32Array(distances)
+              : EMPTY_BOND_DISTANCES
+        );
+        onBondsUpdate?.({ source: 'cpu', count: count ?? nextPairs.length / 2 });
       }
-      onBondsUpdate?.({ source: 'cpu', count: count ?? pairs.length / 2 });
 
       workerBusyRef.current = false;
       if (pendingMsgRef.current) {
@@ -226,6 +242,8 @@ export function Bonds({
     return () => {
       worker.terminate();
       workerRef.current = null;
+      workerBusyRef.current = false;
+      pendingMsgRef.current = null;
     };
   }, []);
 
@@ -249,12 +267,21 @@ export function Bonds({
   const lastDispatchMaxBondLengthRef = useRef<number>(NaN);
 
   useEffect(() => {
-    if (gpuActive) return; // GPU effect below owns dispatch in this mode.
+    if (gpuActive) {
+      cpuDispatchGenRef.current += 1;
+      pendingMsgRef.current = null;
+      return; // GPU effect below owns dispatch in this mode.
+    }
     // Skip CPU dispatch when bonds are hidden — running spatial-hash + neighbor
     // scan on a 1M-atom system produces tens of MB of bond pairs that are
     // never rendered. The user explicitly toggled bonds off; respect it.
     if (!visible) {
-      setBondPairs(new Int32Array(0));
+      cpuDispatchGenRef.current += 1;
+      pendingMsgRef.current = null;
+      clearBondState();
+      lastDispatchPositionsRef.current = null;
+      lastDispatchToleranceRef.current = NaN;
+      lastDispatchMaxBondLengthRef.current = NaN;
       prevFrameRef.current = frame;
       return;
     }
@@ -262,12 +289,22 @@ export function Bonds({
       // Forced-GPU but GPU unavailable. Don't blow up the worker on a
       // huge system; just leave bonds empty until the user lowers the cutoff
       // or the system. (Telemetry: gpuStatus already reads 'unsupported'.)
-      setBondPairs(new Int32Array(0));
+      cpuDispatchGenRef.current += 1;
+      pendingMsgRef.current = null;
+      clearBondState();
+      lastDispatchPositionsRef.current = null;
+      lastDispatchToleranceRef.current = NaN;
+      lastDispatchMaxBondLengthRef.current = NaN;
       prevFrameRef.current = frame;
       return;
     }
     if (!workerRef.current || !frame || frame.natoms < 2) {
-      setBondPairs(new Int32Array(0));
+      cpuDispatchGenRef.current += 1;
+      pendingMsgRef.current = null;
+      clearBondState();
+      lastDispatchPositionsRef.current = null;
+      lastDispatchToleranceRef.current = NaN;
+      lastDispatchMaxBondLengthRef.current = NaN;
       prevFrameRef.current = frame;
       return;
     }
@@ -310,6 +347,8 @@ export function Bonds({
     // Debounce cutoff changes — 150ms delay so slider doesn't spam
     // Frame changes (playback) should dispatch instantly (0ms) to prevent flickering
     const delay = isFrameChange ? 0 : 150;
+    const requestId = cpuDispatchGenRef.current + 1;
+    cpuDispatchGenRef.current = requestId;
 
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
@@ -335,6 +374,7 @@ export function Bonds({
 
       const transferList: ArrayBuffer[] = [posCopy.buffer, typesCopy.buffer];
       const msg: Record<string, any> = {
+        requestId,
         positions: posCopy,
         types: typesCopy,
         natoms: frame.natoms,
@@ -353,7 +393,7 @@ export function Bonds({
       lastDispatchMaxBondLengthRef.current = maxBondLength;
 
       if (workerBusyRef.current) {
-        pendingMsgRef.current = { msg, transferList };
+        pendingMsgRef.current = { msg, transferList, requestId };
       } else {
         workerBusyRef.current = true;
         worker.postMessage(msg, transferList);
@@ -361,9 +401,12 @@ export function Bonds({
     }, delay);
 
     return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
     };
-  }, [frame, maxBondLength, tolerance, gpuActive, visible, skipDetection]);
+  }, [frame, maxBondLength, tolerance, gpuActive, visible, skipDetection, clearBondState]);
 
   // ─── GPU dispatch ──────────────────────────────────────────────────
   // Runs only when gpuActive is true. Mirrors the worker effect's contract:
@@ -376,17 +419,26 @@ export function Bonds({
   const gpuDispatchGenRef = useRef(0);
 
   useEffect(() => {
-    if (!gpuActive) return;
+    if (!gpuActive) {
+      gpuDispatchGenRef.current += 1;
+      return;
+    }
     // Same visibility-respect as the worker effect — no point computing
     // millions of bonds the user hid.
     if (!visible) {
-      setBondPairs(new Int32Array(0));
-      setBondDistances(new Float32Array(0));
+      gpuDispatchGenRef.current += 1;
+      clearBondState();
+      lastDispatchPositionsRef.current = null;
+      lastDispatchToleranceRef.current = NaN;
+      lastDispatchMaxBondLengthRef.current = NaN;
       return;
     }
     if (!frame || frame.natoms < 2) {
-      setBondPairs(new Int32Array(0));
-      setBondDistances(new Float32Array(0));
+      gpuDispatchGenRef.current += 1;
+      clearBondState();
+      lastDispatchPositionsRef.current = null;
+      lastDispatchToleranceRef.current = NaN;
+      lastDispatchMaxBondLengthRef.current = NaN;
       return;
     }
 
@@ -477,7 +529,7 @@ export function Bonds({
 
     // No cleanup needed — staleness is tracked via gpuDispatchGenRef, not a
     // boolean that races with React's synchronous effect teardown.
-  }, [gpuActive, frame, maxBondLength, tolerance, gpuCompute, onBondsUpdate, visible]);
+  }, [gpuActive, frame, maxBondLength, tolerance, gpuCompute, onBondsUpdate, visible, clearBondState]);
 
   // ─── Capacity management ───────────────────────────────────────────
   // Grow on demand (with headroom), shrink when sustainably under-utilized.
@@ -646,6 +698,11 @@ export function Bonds({
 
       shader.uniforms.uSurfaceRoughness = uniformsRef.current.uSurfaceRoughness;
       shader.uniforms.uSurfacePolish = uniformsRef.current.uSurfacePolish;
+      shader.uniforms.uFillLightColor = uniformsRef.current.uFillLightColor;
+      shader.uniforms.uRimLightColor = uniformsRef.current.uRimLightColor;
+      shader.uniforms.uFillLightDir = uniformsRef.current.uFillLightDir;
+      shader.uniforms.uRimLightDir = uniformsRef.current.uRimLightDir;
+      shader.uniforms.uRimLight = uniformsRef.current.uRimLight;
 
       shader.vertexShader = `
         attribute vec2 radiusBT;
@@ -758,7 +815,7 @@ export function Bonds({
       );
     };
     return mat;
-  }, [renderStyle, opacity, botanicalMode, materialPreset]);
+  }, [renderStyle, opacity, botanicalMode, materialPreset, surfaceClearcoat]);
 
   // Cleanup
   useEffect(() => {
@@ -934,10 +991,25 @@ export function Bonds({
   // frame. The check is a content-equality walk; for 27k bonds it's ~0.3ms,
   // a fraction of the work it skips.
   const lastAttrBondPairsRef = useRef<Int32Array | null>(null);
+  const lastAttrMeshRef = useRef<THREE.InstancedMesh | null>(null);
+  const lastAttrTypesRef = useRef<Int32Array | null>(null);
+  const lastAttrKeyRef = useRef<string>('');
 
   const uploadBondAttributes = useCallback(() => {
     const mesh = meshRef.current;
     if (!mesh || halfCount === 0) return;
+    const attrCacheKey = [
+      colormap,
+      colorMode,
+      colorProperty ?? '',
+      propRange?.[0] ?? '',
+      propRange?.[1] ?? '',
+      radius,
+      atomColorSource,
+      botanicalMode ? 1 : 0,
+      bondColorMode,
+      capacity,
+    ].join('|');
 
     // In any of these modes, color depends on per-frame data and we must
     // recompute every call regardless of bondPairs stability.
@@ -949,6 +1021,9 @@ export function Bonds({
 
     if (
       !isFrameDepColors &&
+      lastAttrMeshRef.current === mesh &&
+      lastAttrTypesRef.current === frame.types &&
+      lastAttrKeyRef.current === attrCacheKey &&
       lastAttrBondPairsRef.current !== null &&
       bondPairsContentEqual(bondPairs, lastAttrBondPairsRef.current)
     ) {
@@ -1102,6 +1177,9 @@ export function Bonds({
 
     // Cache the bondPairs we just uploaded for the next stability check.
     lastAttrBondPairsRef.current = bondPairs;
+    lastAttrMeshRef.current = mesh;
+    lastAttrTypesRef.current = frame.types;
+    lastAttrKeyRef.current = attrCacheKey;
     // Deps: NO frame.positions / nextFrame / interpolationFactor / periodic —
     // those drive matrices, not attributes. In property mode `propData` (a
     // per-frame Float32Array) IS in deps, so attribute updates do fire per
@@ -1170,12 +1248,24 @@ export function Bonds({
   const onMeshRef = useCallback((mesh: THREE.InstancedMesh | null) => {
     if (mesh) {
       (meshRef as any).current = mesh;
+      lastAttrMeshRef.current = null;
+      lastAttrTypesRef.current = null;
+      lastAttrKeyRef.current = '';
       setTimeout(() => {
         uploadBondMatrices();
         uploadBondAttributes();
       }, 0);
     }
   }, [uploadBondMatrices, uploadBondAttributes]);
+
+  const meshArgs = useMemo(
+    () => [tubeGeo, material, capacity] as [THREE.BufferGeometry, THREE.Material, number],
+    [tubeGeo, material, capacity],
+  );
+  const instanceColorArgs = useMemo(
+    () => [new Float32Array(capacity * 3), 3] as [Float32Array, number],
+    [capacity],
+  );
 
   return (
     // `key={capacity}` forces R3F to fully remount the InstancedMesh when
@@ -1186,11 +1276,11 @@ export function Bonds({
     <instancedMesh
       key={capacity}
       ref={onMeshRef}
-      args={[tubeGeo, material, capacity]}
+      args={meshArgs}
       frustumCulled={false}
       visible={visible && halfCount > 0}
     >
-      <instancedBufferAttribute attach="instanceColor" args={[new Float32Array(capacity * 3), 3]} />
+      <instancedBufferAttribute attach="instanceColor" args={instanceColorArgs} />
     </instancedMesh>
   );
 }

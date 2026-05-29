@@ -1,0 +1,88 @@
+{
+  "$schema": "https://lupine.science/schemas/lupine-science-map.v1.json",
+  "updated": "2026-05-29",
+  "program": "Lupine Science",
+  "firstPrinciple": "Interatomic potentials are necessary and wrong in structured ways; Lupine Science studies that structure as evidence.",
+  "intendedReaders": [
+    "materials-science faculty and lab directors",
+    "national-lab and super-lab research leads",
+    "MLIP builders and evaluation teams",
+    "computational materials groups",
+    "research software collaborators",
+    "reviewers who need claim status and provenance"
+  ],
+  "observerPosture": "Investors and other observers should watch the public evidence trail rather than receive a pitch-first front door.",
+  "layers": [
+    {
+      "id": "error-geometry",
+      "name": "Error geometry",
+      "question": "Do prediction errors form stable low-dimensional structure across potentials, elements, properties, and structure families?",
+      "evidenceSurfaces": [
+        "IMMI analysis",
+        "hyper-ribbon reports",
+        "LUPI evidence views"
+      ]
+    },
+    {
+      "id": "sloppy-model-structure",
+      "name": "Sloppy-model structure",
+      "question": "Which stiff and sloppy directions explain model failure?",
+      "evidenceSurfaces": [
+        "docs/sloppy_models_report.md",
+        "Distill policy",
+        "participation-ratio analysis"
+      ]
+    },
+    {
+      "id": "cross-mlip-transfer",
+      "name": "Cross-MLIP transfer",
+      "question": "Do foundation MLIPs inherit, rotate, or escape the classical error geometry?",
+      "evidenceSurfaces": [
+        "mlip_immi/",
+        "cross-MLIP alignment payloads",
+        "docs/conjectures/ledger.md"
+      ]
+    },
+    {
+      "id": "causal-statistical-validity",
+      "name": "Causal and statistical validity",
+      "question": "Which trends survive matched samples, bootstrap controls, stratification, and contamination checks?",
+      "evidenceSurfaces": [
+        "refutation notes",
+        "Simpson checks",
+        "CHANGELOG.md",
+        "critique responses"
+      ]
+    },
+    {
+      "id": "claim-lifecycle",
+      "name": "Claim lifecycle",
+      "question": "Which hypotheses are proposed, supported, refuted, corrected, or open?",
+      "evidenceSurfaces": [
+        "Lupine Library",
+        "CHANGELOG.md",
+        "docs/conjectures/ledger.md"
+      ]
+    },
+    {
+      "id": "formal-specification",
+      "name": "Formal specification",
+      "question": "Which claims can become proof obligations or theorem-shaped validation?",
+      "evidenceSurfaces": [
+        "lean-spec/",
+        "formal proof ledger",
+        "publication templates"
+      ]
+    },
+    {
+      "id": "agentic-research-loop",
+      "name": "Agentic research loop",
+      "question": "Can agents propose, test, broadcast, and correct claims without losing provenance?",
+      "evidenceSurfaces": [
+        "glim-think/",
+        "Phoenix traces",
+        "evidence campaigns"
+      ]
+    }
+  ]
+}

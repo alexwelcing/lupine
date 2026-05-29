@@ -8,12 +8,12 @@ export const Route = createFileRoute('/research')({
   component: ResearchPage,
   head: () => ({
     meta: [
-      { title: 'Cross-potential geometric error analysis — Lupine Research' },
+      { title: 'Cross-potential geometric error analysis — Lupine Science Research' },
       { name: 'description', content: 'After Transtrum, Machta & Sethna (2011) and Frederiksen, Jacobsen, Brown & Sethna (2004): cross-potential PCA error analysis across 953 published interatomic potentials, 18 functional-form families, 7,940 benchmark records. The empirical signature of a hyper-ribbon, contributed in the cross-potential setting.' },
-      { property: 'og:title', content: 'Cross-potential geometric error analysis — Lupine Research' },
+      { property: 'og:title', content: 'Cross-potential geometric error analysis — Lupine Science Research' },
       { property: 'og:description', content: 'Sloppy-models geometry applied to ≈900 published interatomic potentials. After Transtrum, Sethna, Tadmor.' },
       { property: 'og:url', content: 'https://lupine.science/research' },
-      { name: 'twitter:title', content: 'Cross-potential geometric error analysis — Lupine Research' },
+      { name: 'twitter:title', content: 'Cross-potential geometric error analysis — Lupine Science Research' },
       { name: 'twitter:description', content: 'Cross-potential PCA across ≈900 published interatomic potentials, with Simpson\'s-paradox detection and meta-analysis.' },
     ],
   })

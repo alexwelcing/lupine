@@ -5,7 +5,7 @@ export const Route = createFileRoute('/proof')({
   component: ProofPage,
   head: () => ({
     meta: [
-      { title: 'Research defense — cross-potential geometric error analysis' },
+      { title: 'Research defense — Lupine Science' },
       { name: 'description', content: 'A rigorous response to critique of Welcing (2026). Computational experiment, formal causal identification, reproducible code, and acknowledged lineage from Frederiksen (2004), Transtrum/Sethna (2011), Wen et al. (2017), Kurniawan et al. (2022), and Deng et al. (2024).' },
     ],
   }),

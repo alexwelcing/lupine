@@ -1,38 +1,32 @@
 /**
- * FigureExportPanel — Unified Export Controls
+ * FigureExportPanel - focused export controls.
  *
- * Three export modes in one panel:
- *   1. Still Figure — Journal presets (Nature, Science, ACS) + custom
- *   2. MP4 Video — 360° orbit via WebCodecs + mp4-muxer (H.264)
- *   3. Animated GIF — Records via WebCodecs MP4, then converts to GIF
- *
- * All video modes support configurable duration, resolution, and orbit.
- * Precision Instrument aesthetic: 0px border-radius, obsidian/cyan palette.
+ * User-facing export choices: PNG, JPG, USDZ, MP4 rotate, and MP4 auto
+ * flythrough. MP4 export uses WebCodecs + mp4-muxer (H.264).
  */
 
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useStore } from '../store';
 import { getElementSpec } from '@atlas/core';
+import { createKeyframe, type FlythroughSequence } from '../flythrough';
 
 // ─── Types ────────────────────────────────────────────────────────────
-type ExportMode = 'figure' | 'mp4' | 'gif' | 'glb' | 'usdz';
+type ExportMode = 'png' | 'jpg' | 'usdz' | 'mp4-rotate' | 'mp4-flythrough';
 
-interface JournalPreset {
+interface ImagePreset {
   id: string;
   name: string;
   desc: string;
   width: number;
   height: number;
-  dpi: number;
 }
 
-const JOURNAL_PRESETS: JournalPreset[] = [
-  { id: 'nature-1col',  name: 'Nature 1-col',    desc: '89 mm, 300 DPI',   width: 1051, height: 1051, dpi: 300 },
-  { id: 'nature-2col',  name: 'Nature 2-col',    desc: '183 mm, 300 DPI',  width: 2163, height: 2163, dpi: 300 },
-  { id: 'science-1col', name: 'Science 1-col',   desc: '58 mm, 300 DPI',   width: 685,  height: 685,  dpi: 300 },
-  { id: 'acs-full',     name: 'ACS Full Page',    desc: '170 mm, 300 DPI',  width: 2008, height: 2008, dpi: 300 },
-  { id: 'slide-16-9',   name: 'Slide 16:9',       desc: '1920×1080',        width: 1920, height: 1080, dpi: 150 },
-  { id: 'social-sq',    name: 'Social Square',    desc: '1080×1080',        width: 1080, height: 1080, dpi: 150 },
+const IMAGE_PRESETS: ImagePreset[] = [
+  { id: 'wide-hd', name: 'Wide HD', desc: '1920x1080', width: 1920, height: 1080 },
+  { id: 'square', name: 'Square', desc: '1080x1080', width: 1080, height: 1080 },
+  { id: 'portrait', name: 'Portrait', desc: '1080x1350', width: 1080, height: 1350 },
+  { id: 'poster', name: 'Poster', desc: '2160x2160', width: 2160, height: 2160 },
+  { id: '4k-wide', name: '4K Wide', desc: '3840x2160', width: 3840, height: 2160 },
 ];
 
 const VIDEO_RESOLUTIONS = [
@@ -68,23 +62,83 @@ const IconRecord = () => (
   </svg>
 );
 
+function createAutoFlythrough(
+  file: ReturnType<typeof useStore.getState>['file'],
+  cameraPosition: [number, number, number],
+  cameraTarget: [number, number, number],
+): FlythroughSequence {
+  if (!file) {
+    return {
+      loop: false,
+      keyframes: [
+        createKeyframe(cameraPosition, cameraTarget, null, 'Start'),
+        createKeyframe(
+          [cameraTarget[0] - (cameraPosition[2] - cameraTarget[2]), cameraPosition[1], cameraTarget[2] + (cameraPosition[0] - cameraTarget[0])],
+          cameraTarget,
+          null,
+          'End',
+        ),
+      ],
+    };
+  }
+
+  const { min, max } = file.trajectory.globalBounds;
+  const center: [number, number, number] = [
+    (min[0] + max[0]) / 2,
+    (min[1] + max[1]) / 2,
+    (min[2] + max[2]) / 2,
+  ];
+  const span = Math.max(max[0] - min[0], max[1] - min[1], max[2] - min[2], 1);
+  const currentRadius = Math.hypot(
+    cameraPosition[0] - center[0],
+    cameraPosition[1] - center[1],
+    cameraPosition[2] - center[2],
+  );
+  const radius = Math.max(currentRadius, span * 2.2);
+  const lift = Math.max((max[1] - min[1]) * 0.35, span * 0.22);
+  const startAngle = Math.atan2(cameraPosition[2] - center[2], cameraPosition[0] - center[0]);
+  const makePosition = (turns: number, yOffset: number, scale = 1): [number, number, number] => {
+    const angle = startAngle + turns * Math.PI * 2;
+    return [
+      center[0] + Math.cos(angle) * radius * scale,
+      center[1] + yOffset,
+      center[2] + Math.sin(angle) * radius * scale,
+    ];
+  };
+
+  const keyframes = [
+    createKeyframe(cameraPosition, center, null, 'Opening View'),
+    createKeyframe(makePosition(0.24, lift, 0.92), center, null, 'Side Glide'),
+    createKeyframe(makePosition(0.52, -lift * 0.28, 0.78), center, null, 'Close Pass'),
+    createKeyframe(makePosition(0.82, lift * 0.18, 1.02), center, null, 'Final Orbit'),
+  ];
+
+  keyframes.forEach((kf, index) => {
+    kf.transitionDuration = index === 0 ? 2.2 : 1.8;
+    kf.holdDuration = index === 0 ? 0.35 : 0.15;
+    kf.easing = 'ease-in-out';
+  });
+
+  return { loop: false, keyframes };
+}
+
 
 export function FigureExportPanel() {
-  const { setActivePanel, file, frame, triggerExport } = useStore();
+  const { setActivePanel, file, frame, triggerExport, cameraPosition, cameraTarget } = useStore();
 
   // ─── Local state ──────────────────────────────────────────────
-  const [mode, setMode] = useState<ExportMode>('figure');
-  const [selectedPreset, setSelectedPreset] = useState(JOURNAL_PRESETS[0]);
-  const [format, setFormat] = useState<'png' | 'jpeg' | 'webp'>('png');
+  const [mode, setMode] = useState<ExportMode>('png');
+  const [selectedPreset, setSelectedPreset] = useState(IMAGE_PRESETS[0]);
   const [transparentBg, setTransparentBg] = useState(false);
   const [videoRes, setVideoRes] = useState(VIDEO_RESOLUTIONS[1]); // 1080p default
   const [duration, setDuration] = useState(5);
-  const [orbit, setOrbit] = useState(true);
-  const [cinematic, setCinematic] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [progress, setProgress] = useState(0);
   const [readyBlob, setReadyBlob] = useState<{ blob: Blob, name: string } | null>(null);
+  const imageFormat = mode === 'jpg' ? 'jpeg' : 'png';
+  const isImageMode = mode === 'png' || mode === 'jpg';
+  const isVideoMode = mode === 'mp4-rotate' || mode === 'mp4-flythrough';
 
   // Auto-clear success
   useEffect(() => {
@@ -93,6 +147,12 @@ export function FigureExportPanel() {
       return () => clearTimeout(timer);
     }
   }, [exportSuccess, readyBlob]);
+
+  useEffect(() => {
+    setReadyBlob(null);
+    setExportSuccess(false);
+    setExporting(false);
+  }, [mode]);
 
   // Progress simulation during recording
   useEffect(() => {
@@ -184,20 +244,24 @@ export function FigureExportPanel() {
     triggerExport({
       type: 'image',
       resolution: { width: selectedPreset.width, height: selectedPreset.height },
-      format: transparentBg ? 'png' : format,
-      transparent: transparentBg,
-      baseName: `Lupi-${selectedPreset.id}`,
+      format: imageFormat,
+      transparent: mode === 'png' && transparentBg,
+      baseName: `LUPI-${mode}-${selectedPreset.id}`,
       onComplete: handleComplete,
     });
-  }, [selectedPreset, format, transparentBg, triggerExport, handleComplete]);
+  }, [selectedPreset, imageFormat, mode, transparentBg, triggerExport, handleComplete]);
 
   const handleExportVideo = useCallback(async () => {
+    if (!isVideoMode) return;
+    const autoFlythrough = mode === 'mp4-flythrough'
+      ? createAutoFlythrough(file, cameraPosition, cameraTarget)
+      : undefined;
     let fileStream;
     // File System Access API streaming for MP4 to prevent memory crashes on large exports
-    if (mode === 'mp4' && 'showSaveFilePicker' in window) {
+    if ('showSaveFilePicker' in window) {
       try {
         const handle = await (window as any).showSaveFilePicker({
-          suggestedName: `Lupi-orbit-${videoRes.label}.mp4`,
+          suggestedName: `LUPI-${mode === 'mp4-flythrough' ? 'auto-flythrough' : 'rotate'}-${videoRes.label}.mp4`,
           types: [{
             description: 'MP4 Video',
             accept: { 'video/mp4': ['.mp4'] }
@@ -216,39 +280,31 @@ export function FigureExportPanel() {
     triggerExport({
       type: 'video',
       resolution: { width: videoRes.width, height: videoRes.height },
-      format: mode === 'gif' ? 'gif' as any : 'mp4',
-      orbit,
-      cinematic,
+      format: 'mp4',
+      orbit: mode === 'mp4-rotate',
+      cinematic: false,
+      flythrough: autoFlythrough,
       durationSeconds: duration,
-      baseName: `Lupi-${mode === 'gif' ? 'anim' : 'orbit'}-${videoRes.label}`,
+      baseName: `LUPI-${mode === 'mp4-flythrough' ? 'auto-flythrough' : 'rotate'}-${videoRes.label}`,
       fileStream,
       onComplete: handleComplete,
     });
-  }, [mode, videoRes, orbit, cinematic, duration, triggerExport, handleComplete]);
+  }, [isVideoMode, mode, file, cameraPosition, cameraTarget, videoRes, duration, triggerExport, handleComplete]);
 
   // Estimate file sizes
   const estimatedSize = useMemo(() => {
-    if (mode === 'figure') {
+    if (isImageMode) {
       const pixels = selectedPreset.width * selectedPreset.height;
-      const bpp = format === 'png' ? 2 : 0.3; // bytes per pixel approx
+      const bpp = imageFormat === 'png' ? 2 : 0.3; // bytes per pixel approx
       const mb = (pixels * bpp) / (1024 * 1024);
       return `~${mb.toFixed(1)} MB`;
     }
-    if (mode === 'mp4') {
+    if (isVideoMode) {
       const bitrate = 80; // Mbps (upgraded for ultra quality)
       return `~${(bitrate * duration / 8).toFixed(0)} MB`;
     }
-    if (mode === 'gif') {
-      // MP4→GIF conversion samples at 30fps
-      const fps = 30;
-      const frames = fps * duration;
-      const pixelsPerFrame = videoRes.width * videoRes.height;
-      // After 256-color quantize + LZW ~0.12 bytes/pixel for molecular renders
-      const mb = (frames * pixelsPerFrame * 0.12) / (1024 * 1024);
-      return `~${mb.toFixed(0)} MB`;
-    }
     return '';
-  }, [mode, selectedPreset, format, videoRes, duration]);
+  }, [mode, isImageMode, isVideoMode, selectedPreset, imageFormat, videoRes, duration]);
 
   // WebCodecs support check
   const hasWebCodecs = typeof globalThis.VideoEncoder !== 'undefined';
@@ -291,24 +347,28 @@ export function FigureExportPanel() {
 
       {/* ─── Mode Tabs ─── */}
       <div style={{
-        display: 'flex', borderBottom: '1px solid #1f2937',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+        gap: 6,
+        padding: '8px 10px',
+        borderBottom: '1px solid #1f2937',
         flexShrink: 0,
       }}>
         {([
-          { id: 'figure' as const, label: 'FIGURE' },
-          { id: 'mp4' as const, label: 'MP4' },
-          { id: 'gif' as const, label: 'GIF' },
-          { id: 'glb' as const, label: 'GLB' },
+          { id: 'png' as const, label: 'PNG' },
+          { id: 'jpg' as const, label: 'JPG' },
           { id: 'usdz' as const, label: 'USDZ' },
+          { id: 'mp4-rotate' as const, label: 'MP4', sublabel: 'Rotate' },
+          { id: 'mp4-flythrough' as const, label: 'MP4', sublabel: 'Auto Flythrough' },
         ]).map(tab => (
           <button
             key={tab.id}
             onClick={() => setMode(tab.id)}
             style={{
-              flex: 1, padding: '10px 0',
-              background: mode === tab.id ? 'rgba(30, 220, 224, 0.06)' : 'transparent',
-              border: 'none',
-              borderBottom: mode === tab.id ? '2px solid #1edce0' : '2px solid transparent',
+              minHeight: 48,
+              padding: '8px 6px',
+              background: mode === tab.id ? 'rgba(30, 220, 224, 0.08)' : '#0d1117',
+              border: `1px solid ${mode === tab.id ? 'rgba(30, 220, 224, 0.42)' : '#1f2937'}`,
               cursor: 'pointer',
               transition: 'all 150ms',
             }}
@@ -319,6 +379,18 @@ export function FigureExportPanel() {
               letterSpacing: '0.1em',
               color: mode === tab.id ? '#1edce0' : '#64748b',
             }}>{tab.label}</div>
+            {'sublabel' in tab && tab.sublabel && (
+              <div style={{
+                fontSize: 9,
+                marginTop: 3,
+                fontFamily: 'var(--font-mono)',
+                lineHeight: 1.15,
+                letterSpacing: 0,
+                color: mode === tab.id ? '#bae6fd' : '#475569',
+                whiteSpace: 'normal',
+                overflowWrap: 'anywhere',
+              }}>{tab.sublabel}</div>
+            )}
           </button>
         ))}
       </div>
@@ -327,12 +399,12 @@ export function FigureExportPanel() {
       <div className="lupine-scroll" style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 
-          {/* ═══ FIGURE MODE ═══ */}
-          {mode === 'figure' && (
+          {/* Image export */}
+          {isImageMode && (
             <>
-              <Section title="JOURNAL PRESET">
+              <Section title="IMAGE SIZE">
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
-                  {JOURNAL_PRESETS.map(p => (
+                  {IMAGE_PRESETS.map(p => (
                     <button
                       key={p.id}
                       onClick={() => setSelectedPreset(p)}
@@ -353,39 +425,27 @@ export function FigureExportPanel() {
                       <div style={{
                         fontSize: 9, color: '#64748b',
                         fontFamily: 'var(--font-mono)', marginTop: 3,
-                      }}>{p.width}×{p.height} · {p.desc}</div>
+                      }}>{p.desc}</div>
                     </button>
                   ))}
                 </div>
               </Section>
 
-              <Section title="FORMAT">
-                <div style={{ display: 'flex', gap: 6 }}>
-                  {(['png', 'jpeg', 'webp'] as const).map(f => (
-                    <ChipButton
-                      key={f}
-                      label={f.toUpperCase()}
-                      active={format === f}
-                      onClick={() => setFormat(f)}
-                    />
-                  ))}
-                </div>
-              </Section>
-
-              <Section title="OPTIONS">
-                <ToggleRow
-                  label="Transparent Background"
-                  hint="Enable for slides, disable for journals"
-                  active={transparentBg}
-                  onToggle={() => setTransparentBg(!transparentBg)}
-                />
-              </Section>
+              {mode === 'png' && (
+                <Section title="OPTIONS">
+                  <ToggleRow
+                    label="Transparent Background"
+                    hint="Use alpha for compositing"
+                    active={transparentBg}
+                    onToggle={() => setTransparentBg(!transparentBg)}
+                  />
+                </Section>
+              )}
 
               {/* Export spec readout */}
               <InfoBlock>
-                <InfoRow label="Output" value={`${selectedPreset.width}×${selectedPreset.height}px`} />
-                <InfoRow label="DPI" value={`${selectedPreset.dpi}`} />
-                <InfoRow label="Format" value={transparentBg ? 'PNG (alpha)' : format.toUpperCase()} />
+                <InfoRow label="Output" value={`${selectedPreset.width}x${selectedPreset.height}px`} />
+                <InfoRow label="Format" value={mode === 'png' && transparentBg ? 'PNG (alpha)' : mode.toUpperCase()} />
                 <InfoRow label="Est. Size" value={estimatedSize} />
               </InfoBlock>
 
@@ -401,14 +461,14 @@ export function FigureExportPanel() {
                   onClick={handleExportFigure}
                   exporting={exporting}
                   success={exportSuccess}
-                  label="Export Figure"
+                  label={`Export ${mode.toUpperCase()}`}
                 />
               )}
             </>
           )}
 
-          {/* ═══ MP4 MODE ═══ */}
-          {mode === 'mp4' && (
+          {/* MP4 export */}
+          {isVideoMode && (
             <>
               {!hasWebCodecs && (
                 <div style={{
@@ -422,13 +482,13 @@ export function FigureExportPanel() {
                 </div>
               )}
 
-              <Section title="RESOLUTION">
+              <Section title="VIDEO SIZE">
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {VIDEO_RESOLUTIONS.map(r => (
                     <ChipButton
                       key={r.label}
                       label={`${r.label}`}
-                      sublabel={`${r.width}×${r.height}`}
+                      sublabel={`${r.width}x${r.height}`}
                       active={videoRes.label === r.label}
                       onClick={() => setVideoRes(r)}
                     />
@@ -436,7 +496,7 @@ export function FigureExportPanel() {
                 </div>
               </Section>
 
-              <Section title="DURATION">
+              <Section title="LENGTH">
                 <div style={{ display: 'flex', gap: 6 }}>
                   {DURATION_OPTIONS.map(d => (
                     <ChipButton
@@ -449,24 +509,23 @@ export function FigureExportPanel() {
                 </div>
               </Section>
 
-              <Section title="CAMERA & ANIMATION">
-                <ToggleRow
-                  label="360° Orbit"
-                  hint="Spin around structure centroid"
-                  active={orbit}
-                  onToggle={() => setOrbit(!orbit)}
-                />
-                <ToggleRow
-                  label="Cinematic Sequence"
-                  hint="Dynamically animate structure properties"
-                  active={cinematic}
-                  onToggle={() => setCinematic(!cinematic)}
-                />
+              <Section title="MOTION">
+                <div style={{
+                  fontSize: 11,
+                  color: '#94a3b8',
+                  lineHeight: 1.6,
+                  fontFamily: 'Space Grotesk, sans-serif',
+                }}>
+                  {mode === 'mp4-rotate'
+                    ? '360 degree rotation around the loaded structure.'
+                    : 'MP4 auto flythrough generated from the current view and structure bounds.'}
+                </div>
               </Section>
 
               <InfoBlock>
-                <InfoRow label="Codec" value="H.264 High (avc1.640028)" />
-                <InfoRow label="Bitrate" value="80 Mbps (HQ)" />
+                <InfoRow label="Motion" value={mode === 'mp4-rotate' ? 'MP4 rotate' : 'MP4 auto flythrough'} />
+                <InfoRow label="Size" value={`${videoRes.width}x${videoRes.height}`} />
+                <InfoRow label="Codec" value="H.264 MP4" />
                 <InfoRow label="FPS" value="60" />
                 <InfoRow label="Frames" value={`${60 * duration}`} />
                 <InfoRow label="Est. Size" value={estimatedSize} />
@@ -484,7 +543,7 @@ export function FigureExportPanel() {
                   onClick={handleExportVideo}
                   exporting={exporting}
                   success={exportSuccess}
-                  label="Record MP4"
+                  label={mode === 'mp4-rotate' ? 'Record MP4 Rotate' : 'Record MP4 Flythrough'}
                   recordMode
                   progress={progress}
                 />
@@ -492,146 +551,7 @@ export function FigureExportPanel() {
             </>
           )}
 
-          {/* ═══ GIF MODE ═══ */}
-          {mode === 'gif' && (
-            <>
-              <Section title="RESOLUTION">
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {VIDEO_RESOLUTIONS.slice(0, 2).map(r => (
-                    <ChipButton
-                      key={r.label}
-                      label={r.label}
-                      sublabel={`${r.width}×${r.height}`}
-                      active={videoRes.label === r.label}
-                      onClick={() => setVideoRes(r)}
-                    />
-                  ))}
-                </div>
-                <div style={{
-                  fontSize: 9, color: '#475569', marginTop: 6,
-                  fontFamily: 'var(--font-mono)',
-                }}>
-                  GIF capped at 1080p to prevent memory exhaustion.
-                  Use MP4 for higher resolutions.
-                </div>
-              </Section>
-
-              <Section title="DURATION">
-                <div style={{ display: 'flex', gap: 6 }}>
-                  {[3, 5, 8].map(d => (
-                    <ChipButton
-                      key={d}
-                      label={`${d}s`}
-                      active={duration === d}
-                      onClick={() => setDuration(d)}
-                    />
-                  ))}
-                </div>
-              </Section>
-
-              <Section title="CAMERA PATH">
-                <ToggleRow
-                  label="360° Orbit"
-                  hint="Spin around structure centroid"
-                  active={orbit}
-                  onToggle={() => setOrbit(!orbit)}
-                />
-                <ToggleRow
-                  label="Cinematic Sequence"
-                  hint="Dynamically animate structure properties"
-                  active={cinematic}
-                  onToggle={() => setCinematic(!cinematic)}
-                />
-              </Section>
-
-              <InfoBlock>
-                <InfoRow label="Pipeline" value="MP4 → GIF" />
-                <InfoRow label="Palette" value="256 colors (adaptive)" />
-                <InfoRow label="FPS" value="30" />
-                <InfoRow label="Frames" value={`${30 * duration}`} />
-                <InfoRow label="Est. Size" value={estimatedSize} />
-              </InfoBlock>
-
-              {readyBlob ? (
-                <ExportButton
-                  onClick={downloadReadyBlob}
-                  exporting={false}
-                  success={false}
-                  label="Save to Device"
-                />
-              ) : (
-                <ExportButton
-                  onClick={handleExportVideo}
-                  exporting={exporting}
-                  success={exportSuccess}
-                  label="Record GIF"
-                  recordMode
-                  progress={progress}
-                />
-              )}
-            </>
-          )}
-
-          {/* ═══ GLB MODE ═══ */}
-          {mode === 'glb' && (
-            <>
-              <Section title="3D MODEL EXPORT">
-                <div style={{
-                  fontSize: 11, color: '#94a3b8', lineHeight: 1.6,
-                  fontFamily: 'Space Grotesk, sans-serif',
-                }}>
-                  Export the current frame as a <strong style={{ color: '#1edce0' }}>GLB</strong> binary
-                  glTF file. Atoms are converted to real sphere meshes grouped by element type.
-                  Bonds (if visible) are exported as cylinder geometry.
-                </div>
-              </Section>
-
-              <InfoBlock>
-                <InfoRow label="Format" value="GLB (binary glTF 2.0)" />
-                <InfoRow label="Atoms" value={`${systemInfo?.natoms?.toLocaleString() ?? '—'} particles`} />
-                <InfoRow label="Geometry" value="Instanced spheres + cylinders" />
-                <InfoRow label="Materials" value="PBR Standard (roughness, metalness)" />
-              </InfoBlock>
-
-              <div style={{
-                background: '#0d1117', border: '1px solid #1f2937',
-                padding: '10px',
-                fontSize: 10, color: '#475569',
-                fontFamily: 'var(--font-mono)', lineHeight: 1.5,
-              }}>
-                Compatible with Blender, Unity, Unreal, Cinema 4D,
-                Three.js, and all major 3D pipelines.
-                Hidden atom types are excluded from the export.
-              </div>
-
-              {readyBlob ? (
-                <ExportButton
-                  onClick={downloadReadyBlob}
-                  exporting={false}
-                  success={false}
-                  label="Save to Device"
-                />
-              ) : (
-                <ExportButton
-                  onClick={() => {
-                    setExporting(true);
-                    setExportSuccess(false);
-                    triggerExport({
-                      type: 'glb',
-                      format: 'glb',
-                      baseName: `Lupi-${systemInfo?.formula ?? 'export'}`,
-                      onComplete: handleComplete,
-                    });
-                  }}
-                  exporting={exporting}
-                  success={exportSuccess}
-                  label="Export GLB Model"
-                />
-              )}
-            </>
-          )}
-
-          {/* ═══ USDZ MODE ═══ */}
+          {/* USDZ export */}
           {mode === 'usdz' && (
             <>
               <Section title="AR EXPORT">
@@ -640,14 +560,14 @@ export function FigureExportPanel() {
                   fontFamily: 'Space Grotesk, sans-serif',
                 }}>
                   Export the current frame as a <strong style={{ color: '#1edce0' }}>USDZ</strong> file.
-                  Perfect for AR quick look on iOS devices and Snapchat lenses.
+                  Built for iOS AR Quick Look and mobile sharing.
                 </div>
               </Section>
 
               <InfoBlock>
                 <InfoRow label="Format" value="USDZ (Universal Scene Description)" />
                 <InfoRow label="Atoms" value={`${systemInfo?.natoms?.toLocaleString() ?? '—'} particles`} />
-                <InfoRow label="Compatibility" value="iOS AR, Snapchat Lens Studio" />
+                <InfoRow label="Compatibility" value="iOS AR Quick Look" />
               </InfoBlock>
 
               {readyBlob ? (
@@ -665,7 +585,7 @@ export function FigureExportPanel() {
                     triggerExport({
                       type: 'usdz',
                       format: 'usdz',
-                      baseName: `Lupi-${systemInfo?.formula ?? 'export'}`,
+                      baseName: `LUPI-${systemInfo?.formula ?? 'export'}`,
                       onComplete: handleComplete,
                     });
                   }}

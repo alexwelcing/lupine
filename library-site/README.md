@@ -1,6 +1,6 @@
 # Lupine Library (`library-site/`)
 
-Mobile-first reader for Lupine research. Deploys to **library.lupine.science** on Cloud Run.
+Mobile-first reader for Lupine Science research. Deploys to **library.lupine.science** on Cloud Run.
 
 The build script walks a curated catalog of markdown files in the repo, renders
 each to HTML, and emits a static site (`dist/`) served by nginx. The frontend is
@@ -21,7 +21,9 @@ library-site/
 │   ├── styles.css         # design-tokens from DESIGN_GUIDE.md
 │   ├── sw.js              # offline service worker
 │   ├── manifest.webmanifest
-│   └── icon.svg
+│   ├── favicon.ico
+│   ├── apple-touch-icon.png
+│   └── lupine-science-icon.png
 ├── Dockerfile             # nginx:alpine + dist
 ├── nginx.conf             # caching + SPA fallback + /health
 ├── cloudbuild.yaml        # Cloud Run deploy pipeline

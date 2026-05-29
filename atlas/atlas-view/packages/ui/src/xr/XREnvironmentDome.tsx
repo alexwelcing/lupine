@@ -29,13 +29,13 @@ interface XREnvironmentDomeProps {
   imageUrl?: string;
   top: string;
   bottom: string;
+  disabled?: boolean;
 }
 
-export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomeProps) {
+export function XREnvironmentDome({ imageUrl, top, bottom, disabled = false }: XREnvironmentDomeProps) {
   const mode = useXR(state => state.mode);
   const isAR = mode === 'immersive-ar';
   const isVR = mode === 'immersive-vr';
-  const isImmersive = isAR || isVR;
 
   const meshRef = useRef<THREE.Mesh>(null);
   const matRef = useRef<THREE.MeshBasicMaterial>(null);
@@ -119,14 +119,16 @@ export function XREnvironmentDome({ imageUrl, top, bottom }: XREnvironmentDomePr
 
   // Update opacity target based on mode
   useEffect(() => {
-    if (isVR) {
+    if (disabled) {
+      targetOpacity.current = 0;
+    } else if (isVR) {
       targetOpacity.current = VR_DOME_OPACITY;
     } else if (isAR) {
       targetOpacity.current = AR_DOME_OPACITY;
     } else {
       targetOpacity.current = 0;
     }
-  }, [isAR, isVR]);
+  }, [disabled, isAR, isVR]);
 
   // Per-frame: smooth fade + follow camera
   useFrame((_state, dt) => {

@@ -6,7 +6,7 @@ export const Route = createFileRoute('/investor-relations')({
   component: InvestorRelationsPage,
   head: () => ({
     meta: [
-      { title: 'Investor brief — Lupine' },
+      { title: 'Investor brief — Lupine Science' },
       { name: 'description', content: 'The audit layer for atomistic ML — and the accelerator that compounds out of it. Foundation MLIPs are saturating Matbench Discovery at F1 ≈ 0.93 while still failing silently on production trajectories. We measure where and why across 953 published potentials, and the cross-potential geometry doubles as a low-rank retraining target. Infrastructure, not another foundation model.' },
     ],
   }),

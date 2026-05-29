@@ -1,7 +1,7 @@
 # Response to Reviewer: MLIP Manifold Equivalence is a Hypothesis, Not a Demonstrated Result
 
 **Manuscript:** *The Causal Geometry of Prediction Errors in Interatomic Potentials*
-**Author:** Welcing (Lupine Materials Science)
+**Author:** Welcing (Lupine Science)
 **Journal:** Integrating Materials and Manufacturing Innovation (IMMI)
 **Reviewer concern addressed:** Whether foundation MLIPs (MACE-MP, CHGNet, M3GNet) share the same low-dimensional elastic-error geometry as classical interatomic potentials.
 

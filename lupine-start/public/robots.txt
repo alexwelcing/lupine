@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /brand.json
 Disallow: /ops
 
 Sitemap: https://lupine.science/sitemap.xml

@@ -15,7 +15,7 @@
 //     uploads, but we re-assert in case an older object lacks the
 //     header, so the Cloudflare edge cache stays sticky.
 //   - CORS headers permit the production sites (glim.lupine.dev,
-//     atlas.lupine.dev) and the localhost dev ports already in the
+//     lupi.live) and the localhost dev ports already in the
 //     GCS bucket's cors.json.
 // ═══════════════════════════════════════════════════════════════════
 
@@ -28,7 +28,7 @@ interface Env {
 
 const ALLOWED_ORIGINS = new Set<string>([
   'https://glim.lupine.dev',
-  'https://atlas.lupine.dev',
+  'https://lupi.live',
   'https://lupine.dev',
   'http://localhost:3000',
   'http://localhost:5173',

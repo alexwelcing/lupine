@@ -11,6 +11,7 @@ import {
 import { Slider } from '../controls';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { RotaryKnob } from './ProControls';
+import { BG_PRESETS as SHARED_BG_PRESETS, MATH_BACKGROUND_IDS, type BgPreset } from '../backgroundPresets';
 
 // ─── Material Scene Card ──────────────────────────────────────────────
 function MaterialSceneCard({ scene, active, onClick }: { scene: MaterialScene, active: boolean, onClick: () => void }) {
@@ -131,53 +132,45 @@ const IconClose = () => (
 );
 
 // ─── Background Presets ───────────────────────────────────────────────
-const BG_GRADIENT_PRESETS = [
-  { id: 'dark', label: 'Dark', top: '#1a1a1f', bottom: '#0a0a0c' },
-  { id: 'deep', label: 'Deep Field', top: '#080a14', bottom: '#000000' },
-  { id: 'void', label: 'Void', top: '#000000', bottom: '#000000' },
-  { id: 'white', label: 'White', top: '#ffffff', bottom: '#f0f0f5' },
-  { id: 'blueprint', label: 'Blueprint', top: '#0b162c', bottom: '#050a14' },
-  { id: 'midnight', label: 'Midnight', top: '#080c18', bottom: '#141e38' },
-  { id: 'studio', label: 'Studio', top: '#1a1a2e', bottom: '#16213e' },
-  { id: 'warm', label: 'Warm Dark', top: '#1a100c', bottom: '#0d0906' },
-  { id: 'fog', label: 'Fog', top: '#101418', bottom: '#1c2028' },
-];
+type BackgroundPanelPreset = {
+  id: string;
+  label: string;
+  image?: string;
+  preview?: string;
+  procedural?: BgPreset['procedural'];
+};
 
-const BG_TEXTURE_CATEGORIES = [
-  { label: 'Cosmic', presets: [
-    { id: 'nebula',         label: 'Nebula',        image: '/backgrounds/bg_nebula_indigo.jpg' },
-    { id: 'aurora',         label: 'Aurora',        image: '/backgrounds/bg_aurora_teal.jpg' },
-    { id: 'plasma-smoke',   label: 'Plasma Smoke',  image: '/backgrounds/bg_plasma_smoke.jpg' },
-    { id: 'starfield',      label: 'Starfield',     image: '/backgrounds/bg_deep_starfield.jpg' },
-    { id: 'spacetime',      label: 'Spacetime',     image: '/backgrounds/bg_spacetime.jpg' },
-  ]},
-  { label: 'Material', presets: [
-    { id: 'copper',         label: 'Copper',        image: '/backgrounds/bg_copper_shimmer.jpg' },
-    { id: 'crystal',        label: 'Crystal Ice',   image: '/backgrounds/bg_crystal_ice.jpg' },
-    { id: 'volcanic',       label: 'Volcanic',      image: '/backgrounds/bg_volcanic_ember.jpg' },
-    { id: 'rose-gold',      label: 'Rose Gold',     image: '/backgrounds/bg_rose_gold.jpg' },
-    { id: 'iridescent',     label: 'Iridescent',    image: '/backgrounds/bg_iridescent.jpg' },
-  ]},
-  { label: 'Lab', presets: [
-    { id: 'phosphor',       label: 'Phosphor',      image: '/backgrounds/bg_phosphor_screen.jpg' },
-    { id: 'plasma-arc',     label: 'Plasma Arc',    image: '/backgrounds/bg_plasma_discharge.jpg' },
-    { id: 'circuit',        label: 'Circuit',       image: '/backgrounds/bg_circuit_trace.jpg' },
-    { id: 'hex-lattice',    label: 'Hex Lattice',   image: '/backgrounds/bg_hex_lattice.jpg' },
-  ]},
-  { label: 'Studio', presets: [
-    { id: 'navy-grad',      label: 'Navy',          image: '/backgrounds/bg_navy_gradient.jpg' },
-    { id: 'marble',         label: 'Marble',        image: '/backgrounds/bg_white_marble.jpg' },
-    { id: 'cream',          label: 'Cream',         image: '/backgrounds/bg_warm_cream.jpg' },
-    { id: 'concrete',       label: 'Concrete',      image: '/backgrounds/bg_studio_concrete.jpg' },
-    { id: 'lavender',       label: 'Lavender',      image: '/backgrounds/bg_lavender.jpg' },
-  ]},
-  { label: 'Environment', presets: [
-    { id: 'bioluminescent', label: 'Bioluminescent', image: '/backgrounds/bg_bioluminescent.jpg' },
-    { id: 'cellular',       label: 'Cellular',      image: '/backgrounds/bg_cellular.jpg' },
-    { id: 'arctic',         label: 'Arctic',        image: '/backgrounds/bg_arctic_terrain.jpg' },
-    { id: 'ocean',          label: 'Deep Ocean',    image: '/backgrounds/bg_deep_ocean.jpg' },
-    { id: 'topographic',    label: 'Topographic',   image: '/backgrounds/bg_topographic.jpg' },
-  ]},
+function backgroundPanelPreset(id: string): BackgroundPanelPreset {
+  const preset = SHARED_BG_PRESETS[id];
+  return {
+    id,
+    label: preset?.label ?? id,
+    image: preset?.image,
+    preview: preset?.preview,
+    procedural: preset?.procedural,
+  };
+}
+
+const BG_GRADIENT_PRESETS = [
+  'dark',
+  'deep',
+  'void',
+  'white',
+  'blueprint',
+  'midnight',
+  'studio',
+  'slate',
+  'warm',
+  'fog',
+].map(backgroundPanelPreset);
+
+const BG_TEXTURE_CATEGORIES: Array<{ label: string; presets: BackgroundPanelPreset[] }> = [
+  { label: 'Mathematical', presets: MATH_BACKGROUND_IDS.map(backgroundPanelPreset) },
+  { label: 'Cosmic', presets: ['nebula', 'aurora', 'plasma-smoke', 'starfield', 'spacetime'].map(backgroundPanelPreset) },
+  { label: 'Material', presets: ['copper', 'crystal', 'volcanic', 'rose-gold', 'iridescent'].map(backgroundPanelPreset) },
+  { label: 'Lab', presets: ['phosphor', 'plasma-arc', 'circuit', 'hex-lattice'].map(backgroundPanelPreset) },
+  { label: 'Studio', presets: ['navy-grad', 'marble', 'cream', 'concrete', 'lavender'].map(backgroundPanelPreset) },
+  { label: 'Environment', presets: ['bioluminescent', 'cellular', 'arctic', 'ocean', 'topographic'].map(backgroundPanelPreset) },
 ];
 
 // Backwards-compat flat list for the gradient chips
@@ -872,7 +865,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
               {BG_TEXTURE_CATEGORIES.map(cat => (
                 <div key={cat.label}>
                   <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 6, marginTop: 4, letterSpacing: '0.05em' }}>
-                    {cat.label} Textures
+                    {cat.label} {cat.label === 'Mathematical' ? 'Fields' : 'Textures'}
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
                     {cat.presets.map(p => {
@@ -898,19 +891,44 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                           onMouseEnter={e => { if (!active) e.currentTarget.style.borderColor = '#1edce060'; }}
                           onMouseLeave={e => { if (!active) e.currentTarget.style.borderColor = '#1f2937'; }}
                         >
-                          <img
-                            src={p.image}
-                            alt={p.label}
-                            loading="lazy"
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                              opacity: active ? 1 : 0.7,
-                              transition: 'opacity 200ms',
-                            }}
-                            onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                          />
+                          {p.image ? (
+                            <img
+                              src={p.image}
+                              alt={p.label}
+                              loading="lazy"
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                opacity: active ? 1 : 0.7,
+                                transition: 'opacity 200ms',
+                              }}
+                              onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                            />
+                          ) : (
+                            <div style={{
+                              position: 'absolute',
+                              inset: 0,
+                              background: p.preview ?? 'radial-gradient(circle at 50% 50%, #1edce0, #050914 58%, #000 100%)',
+                              opacity: active ? 1 : 0.76,
+                            }}>
+                              <div style={{
+                                position: 'absolute',
+                                inset: '18%',
+                                border: '1px solid rgba(182,244,255,0.55)',
+                                borderRadius: '50%',
+                                transform: 'rotate(18deg)',
+                                boxShadow: '0 0 18px rgba(30,220,224,0.35), inset 0 0 18px rgba(108,76,255,0.28)',
+                              }} />
+                              <div style={{
+                                position: 'absolute',
+                                inset: '30% 14%',
+                                borderTop: '1px solid rgba(255,179,90,0.55)',
+                                borderBottom: '1px solid rgba(30,220,224,0.42)',
+                                transform: 'skewY(-18deg)',
+                              }} />
+                            </div>
+                          )}
                           <div style={{
                             position: 'absolute',
                             bottom: 0,
@@ -926,6 +944,9 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                             letterSpacing: '0.05em',
                             textAlign: 'center',
                             lineHeight: '14px',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
                           }}>
                             {p.label}
                           </div>

@@ -59,6 +59,84 @@ def test_compute_pairs_treats_float_dust_as_unchanged() -> None:
     assert pairs[0]["verdict"] == "unchanged"
 
 
+def test_compute_triplets_marks_kart_win_when_accuracy_and_speed_improve() -> None:
+    cells = [
+        {
+            "cell_id": "c:baseline:energy:chgnet",
+            "row_id": "energy_volume",
+            "mlip_id": "chgnet",
+            "variant_id": "baseline",
+            "status": "completed",
+            "native_error": 0.40,
+            "speed_score": 1.0,
+            "checkpoint_url": "gs://bucket/checkpoint.json",
+        },
+        {
+            "cell_id": "c:accuracy:energy:chgnet",
+            "row_id": "energy_volume",
+            "mlip_id": "chgnet",
+            "variant_id": "distill_accuracy",
+            "status": "completed",
+            "native_error": 0.30,
+            "speed_score": 0.80,
+            "checkpoint_url": "gs://bucket/checkpoint.json",
+        },
+        {
+            "cell_id": "c:accelerate:energy:chgnet",
+            "row_id": "energy_volume",
+            "mlip_id": "chgnet",
+            "variant_id": "distill_accuracy_accelerate",
+            "status": "completed",
+            "native_error": 0.305,
+            "speed_score": 1.0,
+            "checkpoint_url": "gs://bucket/checkpoint.json",
+        },
+    ]
+
+    triplet = collect.compute_triplets(cells)[0]
+
+    assert triplet["verdict"] == "kart_win"
+    assert triplet["accuracy_lift_fraction"] == pytest.approx(0.25)
+    assert triplet["accelerate_lift_fraction"] == pytest.approx(0.2375)
+    assert triplet["speedup_accelerate_vs_accuracy"] == pytest.approx(1.25)
+
+
+def test_compute_triplets_blocks_accelerate_accuracy_regression() -> None:
+    cells = [
+        {
+            "cell_id": "c:baseline:stress:orb",
+            "row_id": "stress",
+            "mlip_id": "orb-v3",
+            "variant_id": "baseline",
+            "status": "completed",
+            "native_error": 1.0,
+            "speed_score": 1.0,
+        },
+        {
+            "cell_id": "c:accuracy:stress:orb",
+            "row_id": "stress",
+            "mlip_id": "orb-v3",
+            "variant_id": "distill_accuracy",
+            "status": "completed",
+            "native_error": 0.50,
+            "speed_score": 0.7,
+        },
+        {
+            "cell_id": "c:accelerate:stress:orb",
+            "row_id": "stress",
+            "mlip_id": "orb-v3",
+            "variant_id": "distill_accuracy_accelerate",
+            "status": "completed",
+            "native_error": 0.53,
+            "speed_score": 1.1,
+        },
+    ]
+
+    triplet = collect.compute_triplets(cells)[0]
+
+    assert triplet["verdict"] == "accelerate_accuracy_regressed"
+
+
 def test_collect_cell_counts_schema_artifact_without_status_as_completed(monkeypatch: pytest.MonkeyPatch) -> None:
     artifact = {
         "schema": "lupine.mlip.cell_artifact.v1",

@@ -10,7 +10,7 @@ export const Route = createFileRoute('/live')({
   component: LiveLabComponent,
   head: () => ({
     meta: [
-      { title: 'Live Lab — harden-stage telemetry' },
+      { title: 'Live Lab — Lupine Science telemetry' },
       { name: 'description', content: 'Real-time telemetry of the harden stage behind Lupine\'s audit layer: hypotheses being tested, manifest entries being added, refutations being recorded. Public D1 ledger, no curation.' },
     ],
   }),

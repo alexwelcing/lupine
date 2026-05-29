@@ -153,7 +153,7 @@ Corners: 6px radius maximum. Typography: serif for headlines, mono for labels.
 - **Card value**: `font-mono text-sm` or `font-sans text-base`.
 - **Interaction**: Swipe-to-reveal actions (not buttons) with `surface-container-high` background.
 
-#### C. Mobile Bottom-Sheet HUD (for Atlas Viewer)
+#### C. Mobile Bottom-Sheet HUD (for LUPI)
 - **Device**: MOBILE
 - **Layout**: Bottom sheet (30% of viewport height) with drag handle.
 - **Background**: `surface` at 90% opacity + `backdrop-blur-md`.

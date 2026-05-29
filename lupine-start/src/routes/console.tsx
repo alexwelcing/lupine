@@ -66,7 +66,7 @@ export const Route = createFileRoute('/console')({
   }),
   head: () => ({
     meta: [
-      { title: 'Research console — manifest ledger explorer' },
+      { title: 'Research console — Lupine Science ledger explorer' },
       {
         name: 'description',
         content:

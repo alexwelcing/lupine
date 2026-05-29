@@ -4,10 +4,10 @@ export const Route = createFileRoute('/about')({
   component: About,
   head: () => ({
     meta: [
-      { title: 'About — Lupine' },
-      { name: 'description', content: 'Lupine is the audit layer for the MLIP ecosystem. Cross-potential geometric error analysis across 953 published interatomic potentials. After Transtrum, Sethna, Tadmor. Apache 2.0.' },
-      { property: 'og:title', content: 'About — Lupine' },
-      { property: 'og:description', content: 'The audit layer for atomistic ML. Cross-potential geometric error analysis. Apache 2.0.' },
+      { title: 'About — Lupine Science' },
+      { name: 'description', content: 'Lupine Science is a public research program for atomistic model trust: error geometry, claim lifecycle, LUPI evidence views, and agent-readable knowledge.' },
+      { property: 'og:title', content: 'About — Lupine Science' },
+      { property: 'og:description', content: 'Where interatomic potentials fail, why those failures have structure, and how that structure can guide correction.' },
       { property: 'og:url', content: 'https://lupine.science/about' },
     ],
   }),
@@ -26,7 +26,7 @@ const STACK_ITEMS = [
   },
   {
     label: 'TanStack Start',
-    desc: 'Type-safe SSR, file-based routing. The marketing site, the manifest browser, and the research console share a single codebase.',
+    desc: 'Type-safe SSR, file-based routing. The public research site, the manifest browser, and the research console share a single codebase.',
     accent: 'var(--violet-500)',
   },
   {
@@ -39,7 +39,7 @@ const STACK_ITEMS = [
 const MILESTONES = [
   { date: 'Q1 2025', title: 'First cross-potential PCA', desc: 'Initial corpus, OpenKIM ingestion, hyper-ribbon classifier patterned on Transtrum, Machta & Sethna (2011).' },
   { date: 'Q2 2025', title: 'IMMI submission', desc: 'Cross-potential PCA error analysis preprint. 559-potential corpus.' },
-  { date: 'Q3 2025', title: 'Atlas Viewer v1', desc: 'WebGPU exploration of the error manifold. Drag-and-drop LAMMPS trajectories alongside the audit, in-browser.' },
+  { date: 'Q3 2025', title: 'LUPI v1', desc: 'WebGPU exploration of the error manifold. Drag-and-drop LAMMPS trajectories alongside the audit, in-browser.' },
   { date: 'Q4 2025', title: 'Corpus expansion', desc: '953 potentials, 18 functional-form families, 7,940 benchmark records. Fingerprint significant at p<0.001 globally; ribbon survives orthogonalization.' },
   { date: 'Q1 2026', title: 'IMMI Major Revision', desc: 'Submitted major revision to peer-reviewed journal. Expanded corpus to 953 potentials with orthogonalization confound tests.' },
   { date: 'Q2 2026', title: 'Peer-Reviewed Publication', desc: 'IMMI paper accepted for publication. Hyper-ribbon geometry, Simpson\'s paradox detection, and functional-form fingerprinting validated by peer review.' },
@@ -50,8 +50,8 @@ function About() {
   return (
     <PageShell
       kicker="ABOUT LUPINE"
-      title="Applied learning mechanics for atomistic ML."
-      subtitle="Lupine measures where machine-learned interatomic potentials fail, and why, across the population of published potentials — and the cross-potential geometry that names the failure doubles as a low-rank retraining target. We do not train another foundation MLIP. We sit beside the integrators (LAMMPS, ASE, KIM) the customer already trusts, write a citable error budget, and hand the model team the modes that matter."
+      title="A public research program for atomistic model trust."
+      subtitle="Lupine Science studies where interatomic potentials fail, why those failures have structure, and how that structure can guide correction. The public surface is written for materials labs, MLIP builders, research software teams, and lab leaders who need inspectable evidence."
       maxWidth="5xl"
     >
       {/* Mission Statement */}
@@ -81,7 +81,7 @@ function About() {
                   Read alongside Simon, Kunin, Atanasov et al. (arXiv:2604.21691, 2026) — <em className="font-serif text-[var(--on-surface)]">There Will Be a Scientific Theory of Deep Learning</em> — the same artifact is also a low-rank retraining target. The cross-potential ribbon is the empirical mark of a learnable system: the small number of error modes that any next fine-tune actually needs to capture.
                 </p>
                 <p>
-                  We do not replace DFT, LAMMPS, or any MLIP. We measure where each MLIP is unsafe to extrapolate, write that out as a citable error budget, and hand the customer's model team the modes that matter. We are building the trust layer in the open, under Apache 2.0.
+                  We do not replace DFT, LAMMPS, or any MLIP. We measure where each MLIP is unsafe to extrapolate, write that out as a citable error budget, and hand the model team the modes that matter. We are building the trust layer in the open, under Apache 2.0.
                 </p>
               </div>
             </div>
@@ -147,7 +147,7 @@ function About() {
           />
           <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Three paths in.</h2>
           <p className="text-[var(--on-surface-variant)] mb-8 max-w-lg mx-auto">
-            Researchers go to the science. Industry teams pilot a wedge — solid-state electrolytes, Ni-base superalloys, catalysis. Investors find us in the footer.
+            Researchers go to the science. Model teams inspect evidence. Observers watch the Library, LUPI routes, claim status changes, and live lab cadence.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a

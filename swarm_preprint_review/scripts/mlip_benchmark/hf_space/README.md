@@ -16,7 +16,7 @@ short_description: MLIP elastic predictions on ZeroGPU
 
 Foundation-MLIP elastic-constant predictions on a ZeroGPU A100 — the
 companion compute substrate for the
-[Lupine Materials Science](https://github.com/alexwelcing/lupine) research
+[Lupine Science](https://github.com/alexwelcing/lupine) research
 pipeline.
 
 ## Why this exists

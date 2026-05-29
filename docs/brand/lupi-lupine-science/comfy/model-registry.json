@@ -1,0 +1,146 @@
+{
+  "project": "lupi-lupine-science",
+  "last_verified_local": "2026-05-29",
+  "comfy_server": "http://127.0.0.1:8199",
+  "lanes": [
+    {
+      "id": "logo-vector-seed",
+      "role": "Clean source identity marks and PNG seeds for image/video refinement.",
+      "status": "ready",
+      "artifacts": [
+        "docs/brand/lupi-lupine-science/lupi-mark.svg",
+        "docs/brand/lupi-lupine-science/lupine-science-mark.svg",
+        "docs/brand/lupi-lupine-science/renders/lupi-mark-1024.png"
+      ],
+      "constraints": [
+        "bluebonnet raceme silhouette",
+        "no atom/orbit/molecule marks",
+        "no wolf/mascot read"
+      ]
+    },
+    {
+      "id": "zimage-fast-logo-glow",
+      "role": "Fast local glow concepts and img2img logo polishing.",
+      "status": "ready",
+      "workflow_files": [
+        "docs/brand/lupi-lupine-science/comfy/lupi_bluebonnet_glow_t2i_api.json",
+        "docs/brand/lupi-lupine-science/comfy/lupi_bluebonnet_minimal_glow_t2i_api.json",
+        "docs/brand/lupi-lupine-science/comfy/lupi_bluebonnet_refine_img2img_api.json"
+      ],
+      "models": [
+        {
+          "name": "z_image_turbo-Q8_0.gguf",
+          "type": "unet_gguf",
+          "local_visibility": "UnetLoaderGGUF"
+        },
+        {
+          "name": "qwen_3_4b.safetensors",
+          "type": "text_encoder",
+          "local_visibility": "CLIPLoader"
+        },
+        {
+          "name": "ae.safetensors",
+          "type": "vae",
+          "local_visibility": "VAELoader"
+        }
+      ]
+    },
+    {
+      "id": "anima-scientific-drawing",
+      "role": "Premium anime/scientific drawing stills for botanical logo plates.",
+      "status": "ready",
+      "workflow_files": [
+        "docs/brand/lupi-lupine-science/comfy/lupi_anima_scientific_plate_t2i_api.json"
+      ],
+      "source": "https://huggingface.co/circlestone-labs/Anima",
+      "models": [
+        {
+          "name": "anima-base-v1.0.safetensors",
+          "local_path": "D:/ComfyUI_LTX23_Models/unet/anima-base-v1.0.safetensors",
+          "size_bytes": 4182218328,
+          "local_visibility": "UNETLoader"
+        },
+        {
+          "name": "qwen_3_06b_base.safetensors",
+          "local_path": "D:/ComfyUI_LTX23_Models/text_encoders/qwen_3_06b_base.safetensors",
+          "size_bytes": 1192135096,
+          "local_visibility": "CLIPLoader"
+        },
+        {
+          "name": "qwen_image_vae.safetensors",
+          "local_path": "D:/ComfyUI_LTX23_Models/vae/qwen_image_vae.safetensors",
+          "size_bytes": 253806246,
+          "local_visibility": "VAELoader"
+        }
+      ],
+      "notes": [
+        "Use for elegant botanical plate, cyanotype, ink-and-gouache, and anime-polished drawing references.",
+        "Keep final logo source in SVG; use raster outputs as inspiration/refinement layers."
+      ]
+    },
+    {
+      "id": "wan22-5b-logo-ident",
+      "role": "Lightweight local image-to-video logo hit-reel smoke path.",
+      "status": "ready",
+      "workflow_files": [
+        "docs/brand/lupi-lupine-science/comfy/lupi_wan22_5b_logo_hit_reel_i2v_api.json"
+      ],
+      "source": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged",
+      "reference_workflow": "https://www.comfy.org/es/workflows/video_wan2_2_5B_ti2v/",
+      "models": [
+        {
+          "name": "wan2.2_ti2v_5B_fp16.safetensors",
+          "local_path": "D:/ComfyUI_LTX23_Models/unet/wan2.2_ti2v_5B_fp16.safetensors",
+          "size_bytes": 9999658848,
+          "local_visibility": "UNETLoader"
+        },
+        {
+          "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "local_path": "D:/ComfyUI_LTX23_Models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "size_bytes": 6735906897,
+          "local_visibility": "CLIPLoader"
+        },
+        {
+          "name": "wan2.2_vae.safetensors",
+          "local_path": "D:/ComfyUI_LTX23_Models/vae/wan2.2_vae.safetensors",
+          "size_bytes": 1409400960,
+          "local_visibility": "VAELoader"
+        }
+      ],
+      "baseline_settings": {
+        "width": 640,
+        "height": 640,
+        "frames": 33,
+        "fps": 16,
+        "steps": 14,
+        "cfg": 5,
+        "sampler": "uni_pc",
+        "scheduler": "simple",
+        "shift": 8
+      },
+      "deferred": [
+        "Qwen-Image GGUF was not downloaded because the extra 9.7-13.1GB would crowd the D: model volume.",
+        "Wan 14B high/low noise plus LightX2V LoRAs remain an upgrade lane when disk permits."
+      ]
+    },
+    {
+      "id": "ltx23-distilled-context",
+      "role": "Existing distilled video assets discovered locally; useful fallback or later speed lane.",
+      "status": "installed-not-wired",
+      "models": [
+        {
+          "name": "ltx-2.3-22b-distilled-Q3_K_M.gguf",
+          "local_path": "D:/ComfyUI_LTX23_Models/unet/ltx-2.3-22b-distilled-Q3_K_M.gguf",
+          "size_bytes": 10770199584,
+          "local_visibility": "UnetLoaderGGUF"
+        },
+        {
+          "name": "ltx-2.3-22b-distilled-lora-384-1.1.safetensors",
+          "local_path": "D:/ComfyUI_LTX23_Models/loras/ltxv/ltx2/ltx-2.3-22b-distilled-lora-384-1.1.safetensors",
+          "size_bytes": 7605507256,
+          "local_visibility": "LTXVQ8LoraModelLoader"
+        }
+      ]
+    }
+  ]
+}

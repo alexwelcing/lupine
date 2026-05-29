@@ -1,6 +1,6 @@
 # GLIM Molecular Dynamics Library
 
-> **Production-ready LAMMPS datasets for ATLAS View**  
+> **Production-ready LAMMPS datasets for LUPI**  
 > **Status:** 🟢 Alpha Presentation Ready | **Size:** ~1 GB | **Datasets:** 2 Operational
 
 [![Graphene/CNT](https://img.shields.io/badge/Graphene_CNT-575_MB-00d4aa)](#dataset-1-graphene-cnt)
@@ -262,7 +262,7 @@ If you use these datasets:
   title={GLIM Molecular Dynamics Library},
   author={GLIM Project},
   year={2026},
-  note={Integrated repository of LAMMPS datasets for ATLAS View},
+  note={Integrated repository of LAMMPS datasets for LUPI},
   datasets={
     graphene={Ding2023, DOI:10.1021/acs.jpcc.3c06132},
     titanium={Chen2024, DOI:10.1038/s41467-024-51330-9}
@@ -272,5 +272,5 @@ If you use these datasets:
 
 ---
 
-*Built for ATLAS View alpha presentation*  
+*Built for LUPI alpha presentation*  
 *Optimized for WebGPU molecular visualization*

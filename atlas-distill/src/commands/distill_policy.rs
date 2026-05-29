@@ -40,6 +40,16 @@ pub(crate) struct PolicyLimits {
     #[serde(default = "default_max_ribbon_feature_distance_proxy")]
     pub(crate) max_ribbon_feature_distance_proxy: f64,
     #[serde(default)]
+    pub(crate) min_ribbon_support_error_before: f64,
+    #[serde(default = "default_max_stiff_axis_drift_fraction")]
+    pub(crate) max_stiff_axis_drift_fraction: f64,
+    #[serde(default)]
+    pub(crate) min_complement_residual_fraction: f64,
+    #[serde(default = "default_max_projection_distance_proxy")]
+    pub(crate) max_projection_distance_proxy: f64,
+    #[serde(default = "default_min_projected_support_lift_fraction")]
+    pub(crate) min_projected_support_lift_fraction: f64,
+    #[serde(default)]
     pub(crate) require_material_root_overlap: bool,
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub(crate) row_policy_overrides: BTreeMap<String, PolicyLimitOverride>,
@@ -74,6 +84,16 @@ pub(crate) struct PolicyLimitOverride {
     #[serde(default)]
     pub(crate) max_ribbon_feature_distance_proxy: Option<f64>,
     #[serde(default)]
+    pub(crate) min_ribbon_support_error_before: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_stiff_axis_drift_fraction: Option<f64>,
+    #[serde(default)]
+    pub(crate) min_complement_residual_fraction: Option<f64>,
+    #[serde(default)]
+    pub(crate) max_projection_distance_proxy: Option<f64>,
+    #[serde(default)]
+    pub(crate) min_projected_support_lift_fraction: Option<f64>,
+    #[serde(default)]
     pub(crate) require_material_root_overlap: Option<bool>,
 }
 
@@ -94,6 +114,11 @@ impl Default for PolicyLimits {
             min_support_lift_fraction: 0.02,
             max_support_eval_distance_proxy: 1.0,
             max_ribbon_feature_distance_proxy: 1.0e9,
+            min_ribbon_support_error_before: 0.0,
+            max_stiff_axis_drift_fraction: default_max_stiff_axis_drift_fraction(),
+            min_complement_residual_fraction: 0.0,
+            max_projection_distance_proxy: default_max_projection_distance_proxy(),
+            min_projected_support_lift_fraction: default_min_projected_support_lift_fraction(),
             require_material_root_overlap: false,
             row_policy_overrides: BTreeMap::new(),
         }
@@ -156,6 +181,31 @@ impl PolicyLimits {
             || self.max_ribbon_feature_distance_proxy < 0.0
         {
             bail!("max_ribbon_feature_distance_proxy must be non-negative and finite");
+        }
+        if !self.min_ribbon_support_error_before.is_finite()
+            || self.min_ribbon_support_error_before < 0.0
+        {
+            bail!("min_ribbon_support_error_before must be non-negative and finite");
+        }
+        if !self.max_stiff_axis_drift_fraction.is_finite()
+            || !(0.0..=1.0).contains(&self.max_stiff_axis_drift_fraction)
+        {
+            bail!("max_stiff_axis_drift_fraction must be finite and between 0 and 1");
+        }
+        if !self.min_complement_residual_fraction.is_finite()
+            || !(0.0..=1.0).contains(&self.min_complement_residual_fraction)
+        {
+            bail!("min_complement_residual_fraction must be finite and between 0 and 1");
+        }
+        if !self.max_projection_distance_proxy.is_finite()
+            || self.max_projection_distance_proxy < 0.0
+        {
+            bail!("max_projection_distance_proxy must be non-negative and finite");
+        }
+        if !self.min_projected_support_lift_fraction.is_finite()
+            || !(0.0..=1.0).contains(&self.min_projected_support_lift_fraction)
+        {
+            bail!("min_projected_support_lift_fraction must be finite and between 0 and 1");
         }
         for (row_id, limits_override) in &self.row_policy_overrides {
             if row_id.trim().is_empty() {
@@ -223,6 +273,21 @@ impl PolicyLimits {
         if let Some(value) = limits_override.max_ribbon_feature_distance_proxy {
             self.max_ribbon_feature_distance_proxy = value;
         }
+        if let Some(value) = limits_override.min_ribbon_support_error_before {
+            self.min_ribbon_support_error_before = value;
+        }
+        if let Some(value) = limits_override.max_stiff_axis_drift_fraction {
+            self.max_stiff_axis_drift_fraction = value;
+        }
+        if let Some(value) = limits_override.min_complement_residual_fraction {
+            self.min_complement_residual_fraction = value;
+        }
+        if let Some(value) = limits_override.max_projection_distance_proxy {
+            self.max_projection_distance_proxy = value;
+        }
+        if let Some(value) = limits_override.min_projected_support_lift_fraction {
+            self.min_projected_support_lift_fraction = value;
+        }
         if let Some(value) = limits_override.require_material_root_overlap {
             self.require_material_root_overlap = value;
         }
@@ -247,6 +312,18 @@ fn default_max_support_eval_distance_proxy() -> f64 {
 
 fn default_max_ribbon_feature_distance_proxy() -> f64 {
     1.0e9
+}
+
+fn default_max_stiff_axis_drift_fraction() -> f64 {
+    0.05
+}
+
+fn default_max_projection_distance_proxy() -> f64 {
+    1.0e9
+}
+
+fn default_min_projected_support_lift_fraction() -> f64 {
+    0.02
 }
 
 #[derive(Debug, Clone, Args)]
@@ -307,6 +384,8 @@ struct RibbonResidualCorrection {
     #[serde(default)]
     support_lift_fraction: Option<f64>,
     #[serde(default)]
+    support_error_before: Option<f64>,
+    #[serde(default)]
     support_eval_distance_proxy: Option<f64>,
     #[serde(default)]
     matrix_rank: Option<usize>,
@@ -314,6 +393,44 @@ struct RibbonResidualCorrection {
     sample_count: Option<usize>,
     #[serde(default)]
     participation_ratio: Option<f64>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct RibbonProjectedResidualCorrection {
+    #[serde(default)]
+    schema: Option<String>,
+    field: String,
+    feature_names: Vec<String>,
+    feature_mean: Vec<f64>,
+    feature_scale: Vec<f64>,
+    coefficients: Vec<Vec<f64>>,
+    intercept: Vec<f64>,
+    #[serde(default)]
+    stiff_axis_basis: Vec<Vec<f64>>,
+    #[serde(default)]
+    complement_basis: Vec<Vec<f64>>,
+    #[serde(default)]
+    support_lift_fraction: Option<f64>,
+    #[serde(default)]
+    projected_support_lift_fraction: Option<f64>,
+    #[serde(default)]
+    complement_residual_fraction: Option<f64>,
+    #[serde(default)]
+    stiff_axis_drift_fraction: Option<f64>,
+    #[serde(default)]
+    projection_distance_proxy: Option<f64>,
+    #[serde(default)]
+    support_error_before: Option<f64>,
+    #[serde(default)]
+    support_eval_distance_proxy: Option<f64>,
+    #[serde(default)]
+    matrix_rank: Option<usize>,
+    #[serde(default)]
+    sample_count: Option<usize>,
+    #[serde(default)]
+    participation_ratio: Option<f64>,
+    #[serde(default)]
+    singular_values: Vec<f64>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -539,6 +656,28 @@ pub(crate) fn decide_with_limits(
         "layerwise_exact": false,
         "support_diagnostics_present": request.support.as_ref().and_then(|s| s.diagnostics.as_ref()).is_some(),
         "policy_engine": "atlas-distill",
+        "theorem_development_lanes": [
+            {
+                "lane": "stiff_axis_preservation",
+                "status": if applied.contains_key("ribbon_projected_residual_correction_v1") { "measured" } else { "not_applied" },
+                "runtime_proxy": "feature_space_projection"
+            },
+            {
+                "lane": "orthogonal_complement_lift",
+                "status": if applied.contains_key("ribbon_projected_residual_correction_v1") { "measured" } else { "not_applied" },
+                "runtime_proxy": "projected_support_lift_fraction"
+            },
+            {
+                "lane": "projection_tube_refusal",
+                "status": "policy_gate",
+                "runtime_proxy": "projection_distance_proxy"
+            },
+            {
+                "lane": "vandermonde_decay",
+                "status": "diagnostic",
+                "runtime_proxy": "singular_values_and_participation_ratio"
+            }
+        ],
     });
     let decision_id = decision_id(
         &ribbon_version,
@@ -785,6 +924,33 @@ fn apply_ribbon_residual_correction(
     applied: &mut Map<String, Value>,
     limits: &PolicyLimits,
 ) -> Vec<String> {
+    if projected_ribbon_enabled(request) {
+        if let Some(model_value) = correction.get("ribbon_projected_residual_correction_v1") {
+            let Some(mut blocked) = try_apply_projected_ribbon_residual_correction(
+                request,
+                model_value,
+                corrected,
+                actions,
+                applied,
+                limits,
+            ) else {
+                return Vec::new();
+            };
+            if blocked.reason.is_empty() {
+                return blocked
+                    .field
+                    .take()
+                    .map(|field| vec![field])
+                    .unwrap_or_default();
+            }
+            let field = blocked
+                .field
+                .clone()
+                .unwrap_or_else(|| "unknown".to_string());
+            actions.push(blocked);
+            return vec![field];
+        }
+    }
     let Some(model_value) = correction.get("ribbon_residual_correction_v1") else {
         return Vec::new();
     };
@@ -811,6 +977,227 @@ fn apply_ribbon_residual_correction(
         .unwrap_or_else(|| "unknown".to_string());
     actions.push(blocked);
     vec![field]
+}
+
+fn projected_ribbon_enabled(request: &PolicyRequest) -> bool {
+    request
+        .ribbon_version
+        .as_deref()
+        .is_some_and(|version| version.contains("spectral"))
+        || request
+            .context
+            .as_ref()
+            .and_then(|context| context.get("projected_ribbon_enabled"))
+            .and_then(Value::as_bool)
+            .unwrap_or(false)
+}
+
+fn try_apply_projected_ribbon_residual_correction(
+    request: &PolicyRequest,
+    model_value: &Value,
+    corrected: &mut Value,
+    actions: &mut Vec<PolicyAction>,
+    applied: &mut Map<String, Value>,
+    limits: &PolicyLimits,
+) -> Option<PolicyAction> {
+    let model: RibbonProjectedResidualCorrection = match serde_json::from_value(model_value.clone())
+    {
+        Ok(model) => model,
+        Err(_) => {
+            return Some(PolicyAction::blocked(
+                "ribbon_projected_residual_correction_v1",
+                "blocked_invalid_projected_ribbon_model",
+                model_value.clone(),
+            ))
+        }
+    };
+    if model
+        .schema
+        .as_deref()
+        .is_some_and(|schema| schema != "lupine.distill.ribbon_projected_residual_correction.v1")
+    {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_unsupported_projected_ribbon_schema",
+            model_value.clone(),
+        ));
+    }
+    let Some(current) = corrected.get(&model.field).cloned() else {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_missing_prediction_field",
+            model_value.clone(),
+        ));
+    };
+    let current_values = numeric_values(&current);
+    let force_broadcast = model.field == "forces_ev_per_angstrom"
+        && model.intercept.len() == 3
+        && current_values.len().is_multiple_of(3);
+    if current_values.is_empty()
+        || (!force_broadcast && current_values.len() != model.intercept.len())
+    {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_projected_ribbon_output_shape_mismatch",
+            json!({
+                "field": model.field,
+                "prediction_dim": current_values.len(),
+                "model_dim": model.intercept.len(),
+            }),
+        ));
+    }
+    if model.feature_names.len() != model.feature_mean.len()
+        || model.feature_names.len() != model.feature_scale.len()
+        || model.coefficients.len() != model.intercept.len()
+        || model
+            .coefficients
+            .iter()
+            .any(|row| row.len() != model.feature_names.len())
+    {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_invalid_projected_ribbon_dimensions",
+            model_value.clone(),
+        ));
+    }
+    if normalized_basis(&model.complement_basis, model.feature_names.len()).is_empty() {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_missing_complement_basis",
+            model_value.clone(),
+        ));
+    }
+    if let Some(blocked) = projected_ribbon_gate_action(request, &model, limits) {
+        return Some(blocked);
+    }
+    let scale = correction_scale_for_field(&model.field, limits);
+    if scale == 0.0 {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_zero_correction_scale",
+            json!({"field": model.field}),
+        ));
+    }
+
+    let mut features = Vec::with_capacity(model.feature_names.len());
+    for (idx, name) in model.feature_names.iter().enumerate() {
+        let Some(value) = feature_value(name, corrected) else {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_missing_projected_ribbon_feature",
+                json!({"feature": name}),
+            ));
+        };
+        let divisor = if model.feature_scale[idx].abs() < 1e-12 {
+            1.0
+        } else {
+            model.feature_scale[idx]
+        };
+        features.push((value - model.feature_mean[idx]) / divisor);
+    }
+
+    let complement_features = project_onto_basis(&features, &model.complement_basis)?;
+    let stiff_features = project_onto_basis(&features, &model.stiff_axis_basis)
+        .unwrap_or_else(|| vec![0.0; features.len()]);
+    let full_response = matrix_vector(&model.coefficients, &features);
+    let stiff_response = matrix_vector(&model.coefficients, &stiff_features);
+    let stiff_axis_signal_fraction =
+        vector_norm(&stiff_response) / vector_norm(&full_response).max(1e-12);
+    if stiff_axis_signal_fraction > limits.max_stiff_axis_drift_fraction {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_stiff_axis_signal",
+            json!({
+                "stiff_axis_signal_fraction": stiff_axis_signal_fraction,
+                "max_stiff_axis_drift_fraction": limits.max_stiff_axis_drift_fraction,
+            }),
+        ));
+    }
+
+    let mut delta = Vec::with_capacity(model.intercept.len());
+    for (row_idx, intercept) in model.intercept.iter().enumerate() {
+        let correction = model.coefficients[row_idx]
+            .iter()
+            .zip(complement_features.iter())
+            .fold(*intercept, |sum, (coef, value)| sum + coef * value)
+            * scale;
+        delta.push(correction);
+    }
+    let projected_stiff = project_onto_basis(&delta, &model.stiff_axis_basis).unwrap_or_default();
+    let stiff_axis_drift_fraction = vector_norm(&projected_stiff) / vector_norm(&delta).max(1e-12);
+    if stiff_axis_drift_fraction > limits.max_stiff_axis_drift_fraction {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_stiff_axis_drift",
+            json!({
+                "stiff_axis_drift_fraction": stiff_axis_drift_fraction,
+                "max_stiff_axis_drift_fraction": limits.max_stiff_axis_drift_fraction,
+            }),
+        ));
+    }
+
+    let max_abs = delta.iter().map(|value| value.abs()).fold(0.0, f64::max);
+    let max_allowed = max_ribbon_correction_for_field(
+        request,
+        &model.field,
+        model
+            .projected_support_lift_fraction
+            .or(model.support_lift_fraction),
+        limits,
+    );
+    if max_abs > max_allowed {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_large_projected_ribbon_correction",
+            json!(delta),
+        ));
+    }
+    let delta_value = same_shape_from_flat(&current, &delta).unwrap_or_else(|| json!(delta));
+    let next_value = if model.field == "forces_ev_per_angstrom" {
+        add_force_bias(&current, &delta_value)
+    } else {
+        add_same_shape(&current, &delta_value)
+    };
+    let Some(value) = next_value else {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_projected_ribbon_delta_shape_mismatch",
+            json!(delta),
+        ));
+    };
+    if set_field(corrected, &model.field, value).is_err() {
+        return Some(PolicyAction::blocked(
+            &model.field,
+            "blocked_invalid_prediction_object",
+            json!(delta),
+        ));
+    }
+    applied.insert(
+        "ribbon_projected_residual_correction_v1".to_string(),
+        json!({
+            "field": model.field,
+            "delta": delta,
+            "scale": scale,
+            "basis_space": "feature",
+            "stiff_axis_signal_fraction": stiff_axis_signal_fraction,
+            "stiff_axis_drift_fraction": stiff_axis_drift_fraction,
+            "complement_residual_fraction": model.complement_residual_fraction,
+            "projected_support_lift_fraction": model.projected_support_lift_fraction,
+            "projection_distance_proxy": model.projection_distance_proxy,
+            "matrix_rank": model.matrix_rank,
+            "sample_count": model.sample_count,
+            "participation_ratio": model.participation_ratio,
+            "singular_values": model.singular_values,
+            "correction_mode": "orthogonal_complement_projected_ribbon",
+        }),
+    );
+    actions.push(PolicyAction::delta(&model.field, json!(delta)));
+    Some(PolicyAction {
+        action: "handled".to_string(),
+        reason: String::new(),
+        field: Some(model.field),
+        value: None,
+    })
 }
 
 fn try_apply_ribbon_residual_correction(
@@ -919,7 +1306,8 @@ fn try_apply_ribbon_residual_correction(
         delta.push(correction);
     }
     let max_abs = delta.iter().map(|value| value.abs()).fold(0.0, f64::max);
-    let max_allowed = max_ribbon_correction_for_field(request, &model.field, &model, limits);
+    let max_allowed =
+        max_ribbon_correction_for_field(request, &model.field, model.support_lift_fraction, limits);
     if max_abs > max_allowed {
         return Some(PolicyAction::blocked(
             &model.field,
@@ -1081,6 +1469,18 @@ fn ribbon_gate_action(
             ));
         }
     }
+    if let Some(before) = model.support_error_before {
+        if before < limits.min_ribbon_support_error_before {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_ribbon_support_error_floor",
+                json!({
+                    "support_error_before": before,
+                    "min_ribbon_support_error_before": limits.min_ribbon_support_error_before,
+                }),
+            ));
+        }
+    }
     if let Some(lift) = model.support_lift_fraction {
         if lift <= 0.0 {
             return Some(PolicyAction::blocked(
@@ -1094,6 +1494,127 @@ fn ribbon_gate_action(
                 &model.field,
                 "blocked_insufficient_support_lift",
                 json!(lift),
+            ));
+        }
+    }
+    None
+}
+
+fn projected_ribbon_gate_action(
+    request: &PolicyRequest,
+    model: &RibbonProjectedResidualCorrection,
+    limits: &PolicyLimits,
+) -> Option<PolicyAction> {
+    if let Some(diagnostics) = request
+        .support
+        .as_ref()
+        .and_then(|support| support.diagnostics.as_ref())
+    {
+        if diagnostics
+            .get("applicability_gate")
+            .and_then(Value::as_str)
+            .is_some_and(|gate| gate.starts_with("blocked"))
+        {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_support_applicability_gate",
+                json!({"field": model.field}),
+            ));
+        }
+        if let Some(distance) = diagnostic_number(diagnostics, "support_eval_distance_proxy") {
+            if distance > limits.max_support_eval_distance_proxy {
+                return Some(PolicyAction::blocked(
+                    &model.field,
+                    "blocked_support_eval_distance",
+                    json!(distance),
+                ));
+            }
+        }
+        if let Some(action) = material_root_overlap_action(&model.field, diagnostics, limits) {
+            return Some(action);
+        }
+    }
+    if let Some(distance) = model.support_eval_distance_proxy {
+        if distance > limits.max_support_eval_distance_proxy {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_support_eval_distance",
+                json!(distance),
+            ));
+        }
+    }
+    let projection_distance = request
+        .context
+        .as_ref()
+        .and_then(|context| diagnostic_number(context, "projection_distance_proxy"))
+        .or(model.projection_distance_proxy);
+    if let Some(distance) = projection_distance {
+        if distance > limits.max_projection_distance_proxy {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_projection_distance",
+                json!({
+                    "projection_distance_proxy": distance,
+                    "max_projection_distance_proxy": limits.max_projection_distance_proxy,
+                }),
+            ));
+        }
+    }
+    if let Some(before) = model.support_error_before {
+        if before < limits.min_ribbon_support_error_before {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_ribbon_support_error_floor",
+                json!({
+                    "support_error_before": before,
+                    "min_ribbon_support_error_before": limits.min_ribbon_support_error_before,
+                }),
+            ));
+        }
+    }
+    if let Some(fraction) = model.complement_residual_fraction {
+        if fraction < limits.min_complement_residual_fraction {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_insufficient_complement_residual_fraction",
+                json!({
+                    "complement_residual_fraction": fraction,
+                    "min_complement_residual_fraction": limits.min_complement_residual_fraction,
+                }),
+            ));
+        }
+    }
+    if let Some(fraction) = model.stiff_axis_drift_fraction {
+        if fraction > limits.max_stiff_axis_drift_fraction {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_stiff_axis_drift",
+                json!({
+                    "stiff_axis_drift_fraction": fraction,
+                    "max_stiff_axis_drift_fraction": limits.max_stiff_axis_drift_fraction,
+                }),
+            ));
+        }
+    }
+    let lift = model
+        .projected_support_lift_fraction
+        .or(model.support_lift_fraction);
+    if let Some(lift) = lift {
+        if lift <= 0.0 {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_nonpositive_projected_support_lift",
+                json!(lift),
+            ));
+        }
+        if lift < limits.min_projected_support_lift_fraction {
+            return Some(PolicyAction::blocked(
+                &model.field,
+                "blocked_insufficient_projected_support_lift",
+                json!({
+                    "projected_support_lift_fraction": lift,
+                    "min_projected_support_lift_fraction": limits.min_projected_support_lift_fraction,
+                }),
             ));
         }
     }
@@ -1217,11 +1738,11 @@ fn max_correction_for_request_field(
 fn max_ribbon_correction_for_field(
     request: &PolicyRequest,
     field: &str,
-    model: &RibbonResidualCorrection,
+    support_lift: Option<f64>,
     limits: &PolicyLimits,
 ) -> f64 {
     let base = max_correction_for_field(field, limits);
-    if energy_zero_point_shift_allowed(request, field, model.support_lift_fraction, limits) {
+    if energy_zero_point_shift_allowed(request, field, support_lift, limits) {
         base.max(limits.max_energy_zero_point_shift_ev_per_atom)
     } else {
         base
@@ -1385,6 +1906,56 @@ fn numeric_values(value: &Value) -> Vec<f64> {
         Value::Array(items) => items.iter().flat_map(numeric_values).collect(),
         _ => Vec::new(),
     }
+}
+
+fn vector_norm(values: &[f64]) -> f64 {
+    values.iter().map(|value| value * value).sum::<f64>().sqrt()
+}
+
+fn matrix_vector(matrix: &[Vec<f64>], vector: &[f64]) -> Vec<f64> {
+    matrix
+        .iter()
+        .map(|row| {
+            row.iter()
+                .zip(vector.iter())
+                .map(|(coef, value)| coef * value)
+                .sum()
+        })
+        .collect()
+}
+
+fn normalized_basis(basis: &[Vec<f64>], dim: usize) -> Vec<Vec<f64>> {
+    basis
+        .iter()
+        .filter(|axis| axis.len() == dim)
+        .filter_map(|axis| {
+            let norm = vector_norm(axis);
+            if norm <= 1e-12 || !norm.is_finite() {
+                None
+            } else {
+                Some(axis.iter().map(|value| value / norm).collect())
+            }
+        })
+        .collect()
+}
+
+fn project_onto_basis(vector: &[f64], basis: &[Vec<f64>]) -> Option<Vec<f64>> {
+    let axes = normalized_basis(basis, vector.len());
+    if axes.is_empty() {
+        return None;
+    }
+    let mut out = vec![0.0; vector.len()];
+    for axis in axes {
+        let dot = vector
+            .iter()
+            .zip(axis.iter())
+            .map(|(value, axis_value)| value * axis_value)
+            .sum::<f64>();
+        for (idx, axis_value) in axis.iter().enumerate() {
+            out[idx] += dot * axis_value;
+        }
+    }
+    Some(out)
 }
 
 fn same_shape_from_flat(template: &Value, flat: &[f64]) -> Option<Value> {
@@ -1854,6 +2425,131 @@ mod tests {
     }
 
     #[test]
+    fn applies_projected_ribbon_from_orthogonal_complement_when_spectral() {
+        let mut req = request(
+            "energy_volume",
+            json!({"energy_ev_per_atom": 1.0, "x": 10.0, "y": 2.0}),
+            json!({
+                "ribbon_projected_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_projected_residual_correction.v1",
+                    "field": "energy_ev_per_atom",
+                    "feature_names": ["x", "y"],
+                    "feature_mean": [0.0, 0.0],
+                    "feature_scale": [1.0, 1.0],
+                    "intercept": [0.0],
+                    "coefficients": [[0.0, 0.2]],
+                    "stiff_axis_basis": [[1.0, 0.0]],
+                    "complement_basis": [[0.0, 1.0]],
+                    "projected_support_lift_fraction": 0.5,
+                    "complement_residual_fraction": 1.0,
+                    "stiff_axis_drift_fraction": 0.0,
+                    "projection_distance_proxy": 0.0
+                }
+            }),
+        );
+        req.ribbon_version = Some("hyperribbon-mptrj-spectral-v4".to_string());
+
+        let decision = decide(&req, "fallback").unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"]
+                .as_f64()
+                .unwrap(),
+            1.4
+        );
+        assert!(decision
+            .applied_corrections
+            .contains_key("ribbon_projected_residual_correction_v1"));
+        assert_eq!(decision.actions[0].action, "delta_correct");
+    }
+
+    #[test]
+    fn projected_ribbon_blocks_when_stiff_axis_signal_dominates() {
+        let mut req = request(
+            "energy_volume",
+            json!({"energy_ev_per_atom": 1.0, "x": 10.0, "y": 2.0}),
+            json!({
+                "ribbon_projected_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_projected_residual_correction.v1",
+                    "field": "energy_ev_per_atom",
+                    "feature_names": ["x", "y"],
+                    "feature_mean": [0.0, 0.0],
+                    "feature_scale": [1.0, 1.0],
+                    "intercept": [0.0],
+                    "coefficients": [[0.2, 0.01]],
+                    "stiff_axis_basis": [[1.0, 0.0]],
+                    "complement_basis": [[0.0, 1.0]],
+                    "projected_support_lift_fraction": 0.5,
+                    "complement_residual_fraction": 1.0,
+                    "stiff_axis_drift_fraction": 0.0,
+                    "projection_distance_proxy": 0.0
+                }
+            }),
+        );
+        req.ribbon_version = Some("hyperribbon-mptrj-spectral-v4".to_string());
+
+        let decision = decide(&req, "fallback").unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"]
+                .as_f64()
+                .unwrap(),
+            1.0
+        );
+        assert!(decision.actions.iter().any(|action| {
+            action.action == "delta_correct_blocked" && action.reason == "blocked_stiff_axis_signal"
+        }));
+    }
+
+    #[test]
+    fn projected_ribbon_is_ignored_for_legacy_ribbon_versions() {
+        let req = request(
+            "energy_volume",
+            json!({"energy_ev_per_atom": 1.0, "x": 10.0, "y": 2.0}),
+            json!({
+                "ribbon_projected_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_projected_residual_correction.v1",
+                    "field": "energy_ev_per_atom",
+                    "feature_names": ["x", "y"],
+                    "feature_mean": [0.0, 0.0],
+                    "feature_scale": [1.0, 1.0],
+                    "intercept": [0.0],
+                    "coefficients": [[0.0, 0.2]],
+                    "stiff_axis_basis": [[1.0, 0.0]],
+                    "complement_basis": [[0.0, 1.0]],
+                    "projected_support_lift_fraction": 0.5,
+                    "complement_residual_fraction": 1.0
+                },
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "energy_ev_per_atom",
+                    "feature_names": ["x"],
+                    "feature_mean": [0.0],
+                    "feature_scale": [1.0],
+                    "intercept": [0.0],
+                    "coefficients": [[0.01]],
+                    "support_lift_fraction": 0.5
+                }
+            }),
+        );
+
+        let decision = decide(&req, "fallback").unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"]
+                .as_f64()
+                .unwrap(),
+            1.1
+        );
+        assert!(decision
+            .applied_corrections
+            .contains_key("ribbon_residual_correction_v1"));
+        assert!(!decision
+            .applied_corrections
+            .contains_key("ribbon_projected_residual_correction_v1"));
+    }
+
+    #[test]
     fn applies_signed_ribbon_orientation_scale() {
         let req = request(
             "energy_volume",
@@ -1998,6 +2694,41 @@ mod tests {
         assert!(decision.actions.iter().any(|action| {
             action.action == "delta_correct_blocked"
                 && action.reason == "blocked_ribbon_feature_distance"
+        }));
+    }
+
+    #[test]
+    fn blocks_ribbon_residual_correction_below_support_error_floor() {
+        let req = request(
+            "energy_volume",
+            json!({"energy_ev_per_atom": -5.0}),
+            json!({
+                "ribbon_residual_correction_v1": {
+                    "schema": "lupine.distill.ribbon_residual_correction.v1",
+                    "field": "energy_ev_per_atom",
+                    "feature_names": ["scalar:energy_ev_per_atom"],
+                    "feature_mean": [-5.0],
+                    "feature_scale": [1.0],
+                    "intercept": [0.02],
+                    "coefficients": [[0.01]],
+                    "support_lift_fraction": 0.99,
+                    "support_error_before": 0.017,
+                    "support_eval_distance_proxy": 0.0
+                }
+            }),
+        );
+        let mut limits = PolicyLimits::default();
+        limits.min_ribbon_support_error_before = 0.05;
+
+        let decision = decide_with_limits(&req, DEFAULT_RIBBON_VERSION, &limits).unwrap();
+
+        assert_eq!(
+            decision.corrected_prediction["energy_ev_per_atom"],
+            json!(-5.0)
+        );
+        assert!(decision.actions.iter().any(|action| {
+            action.action == "delta_correct_blocked"
+                && action.reason == "blocked_ribbon_support_error_floor"
         }));
     }
 

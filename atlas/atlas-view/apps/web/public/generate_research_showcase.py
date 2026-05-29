@@ -238,7 +238,7 @@ def generate_research_showcase():
                 "method": "NIST Interatomic Potential Evaluation",
                 "potential": f"{len(pot_names)} potentials compared",
                 "temperature": "0 K (static evaluation)",
-                "reference": "Lupine Materials Science — hyper-ribbon manifold analysis",
+                "reference": "Lupine Science — hyper-ribbon manifold analysis",
                 "doi": "NIST IPR Database"
             },
             "featured": True,

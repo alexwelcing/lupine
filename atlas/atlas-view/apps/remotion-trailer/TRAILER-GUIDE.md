@@ -1,12 +1,12 @@
-# ATLAS View Hype Trailer — Complete Guide
+# LUPI Hype Trailer — Complete Guide
 
 ## 🎬 What You're Getting
 
-A **30-second cinematic trailer** showcasing ATLAS View's features:
+A **30-second cinematic trailer** showcasing LUPI's features:
 
 | Scene | Duration | Visual |
 |-------|----------|--------|
-| Logo Reveal | 5s | Animated ATLAS VIEW with grid background |
+| Logo Reveal | 5s | Animated LUPI with grid background |
 | WebGPU Feature | 5s | Screen recording + "100,000 atoms at 60fps" |
 | Measurement Feature | 5s | Screen recording + "Distance • Angle • Dihedral" |
 | Demo Montage | 10s | 3-panel split screen showing all features |
@@ -59,7 +59,7 @@ Place 5 screen recordings in `public/recordings/`:
 |------|----------------|--------|
 | `webgpu-demo.mp4` | Large simulation rotating smoothly | 5s |
 | `measurement-demo.mp4` | Clicking atoms, measurements appearing | 5s |
-| `drag-drop.mp4` | Drag file into ATLAS View | 5s |
+| `drag-drop.mp4` | Drag file into LUPI | 5s |
 | `main-viewer.mp4` | Full viewport showcase | 10s |
 | `measure-tool.mp4` | Measurement panel UI | 10s |
 
@@ -123,7 +123,7 @@ Hotkeys:
 ```
 
 ### Best Practices
-1. **Close other apps** — Free up GPU for ATLAS View
+1. **Close other apps** — Free up GPU for LUPI
 2. **Fullscreen ATLAS** — F11 for clean capture
 3. **Disable cursor** — OBS → Settings → Video → Hide cursor
 4. **Test first** — Record 5s test, check quality
@@ -226,7 +226,7 @@ Once rendered:
 - **Website**: Use as hero background (compressed)
 
 ```markdown
-[![ATLAS View Trailer](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://youtu.be/VIDEO_ID)
+[![LUPI Trailer](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://youtu.be/VIDEO_ID)
 ```
 
 ## 🎓 Learning Remotion

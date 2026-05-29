@@ -4,11 +4,27 @@
  * circular dependencies between App.tsx ↔ xr/*.tsx.
  */
 
+export const MATH_BACKGROUND_IDS = [
+  'manifold-field',
+  'hopf-current',
+  'harmonic-bloom',
+  'reaction-lattice',
+  'moire-crystal',
+] as const;
+
+export type ProceduralBackgroundVariant = typeof MATH_BACKGROUND_IDS[number];
+
 export type BgPreset = {
   top: string;
   bottom: string;
   label: string;
   image?: string;
+  /**
+   * Runtime-generated mathematical field. These backgrounds render as a shader
+   * in the scene, so they stay crisp at export scale and do not need video.
+   */
+  procedural?: ProceduralBackgroundVariant;
+  preview?: string;
   category?: string;
 };
 
@@ -21,8 +37,50 @@ export const BG_PRESETS: Record<string, BgPreset> = {
   blueprint: { top: '#0b162c', bottom: '#050a14', label: 'Blueprint', category: 'gradient' },
   midnight:  { top: '#080c18', bottom: '#141e38', label: 'Midnight', category: 'gradient' },
   studio:    { top: '#1a1a2e', bottom: '#16213e', label: 'Studio', category: 'gradient' },
+  slate:     { top: '#111827', bottom: '#020617', label: 'Slate', category: 'gradient' },
   warm:      { top: '#1a100c', bottom: '#0d0906', label: 'Warm Dark', category: 'gradient' },
   fog:       { top: '#101418', bottom: '#1c2028', label: 'Fog', category: 'gradient' },
+  // ── Procedural mathematical fields ──
+  'manifold-field': {
+    top: '#081525',
+    bottom: '#01030a',
+    label: 'Manifold Field',
+    procedural: 'manifold-field',
+    preview: 'radial-gradient(circle at 32% 26%, #b6f4ff 0 2%, transparent 12%), radial-gradient(circle at 68% 64%, #ffb35a 0 2%, transparent 14%), conic-gradient(from 215deg at 52% 52%, #05070f, #123a56, #1ddce0, #6c4cff, #ff9f45, #05070f)',
+    category: 'math',
+  },
+  'hopf-current': {
+    top: '#071d25',
+    bottom: '#010408',
+    label: 'Hopf Current',
+    procedural: 'hopf-current',
+    preview: 'radial-gradient(ellipse at 50% 48%, transparent 0 34%, #72f7ff 35% 38%, transparent 42%), radial-gradient(ellipse at 42% 52%, transparent 0 26%, #ffcf66 27% 30%, transparent 34%), conic-gradient(from 145deg at 50% 50%, #02060b, #063649, #18d7df, #7f5cff, #f5a449, #02060b)',
+    category: 'math',
+  },
+  'harmonic-bloom': {
+    top: '#18112b',
+    bottom: '#02030b',
+    label: 'Harmonic Bloom',
+    procedural: 'harmonic-bloom',
+    preview: 'radial-gradient(circle at 50% 50%, #f8d47a 0 5%, transparent 18%), repeating-conic-gradient(from 12deg at 50% 50%, #070712 0 9deg, #402b80 12deg, #1edce0 16deg, #070712 23deg)',
+    category: 'math',
+  },
+  'reaction-lattice': {
+    top: '#061a15',
+    bottom: '#010504',
+    label: 'Reaction Lattice',
+    procedural: 'reaction-lattice',
+    preview: 'radial-gradient(circle at 28% 36%, #b8ffee 0 5%, transparent 14%), radial-gradient(circle at 68% 58%, #6dff9f 0 4%, transparent 16%), repeating-radial-gradient(circle at 52% 50%, #03100c 0 7%, #0b4033 10%, #1edce0 11%, #03100c 15%)',
+    category: 'math',
+  },
+  'moire-crystal': {
+    top: '#111728',
+    bottom: '#03040a',
+    label: 'Moire Crystal',
+    procedural: 'moire-crystal',
+    preview: 'linear-gradient(60deg, transparent 0 46%, #f7d36d 47% 49%, transparent 50%), linear-gradient(120deg, transparent 0 45%, #7af8ff 46% 48%, transparent 50%), repeating-conic-gradient(from 30deg at 50% 50%, #050714 0 8deg, #182d54 10deg, #6f57ff 13deg, #050714 21deg)',
+    category: 'math',
+  },
   // ── Image textures (AI-generated) ──
   nebula:          { top: '#080a14', bottom: '#000000', label: 'Nebula',           image: '/backgrounds/bg_nebula_indigo.jpg',    category: 'cosmic' },
   aurora:          { top: '#061210', bottom: '#000000', label: 'Aurora',           image: '/backgrounds/bg_aurora_teal.jpg',      category: 'cosmic' },

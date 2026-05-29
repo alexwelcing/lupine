@@ -1,5 +1,5 @@
 /**
- * Lupi - global viewer state (Zustand).
+ * LUPI - global viewer state (Zustand).
  *
  * URL-serializable: encode/decode full scene state into ?s= parameter
  * for shareable links that recreate the exact visualization.
@@ -709,7 +709,7 @@ export const useStore = create<AppState>()(
 
     setRenderStyle: (renderStyle) => set({ renderStyle }),
     setAtomScale: (atomScale) => set({ atomScale }),
-    setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
+    setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset, backgroundVideo: null }),
     setBackgroundStyle: (backgroundStyle) => set({ backgroundStyle }),
     setBackgroundVideo: (backgroundVideo) => set({ backgroundVideo }),
     setEnvironmentPreset: (environmentPreset) => set({ environmentPreset }),

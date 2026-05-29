@@ -425,7 +425,7 @@ export function MlipLongRunWorkbench({ embedded = false }: { embedded?: boolean 
     <section style={embedded ? sEmbeddedShell : sPanelShell}>
       <div style={sHeader}>
         <div>
-          <div style={sKicker}>Lupi Distill viewer</div>
+          <div style={sKicker}>LUPI Distill viewer</div>
           <h2 style={sTitle}>Long-run ribbon cockpit</h2>
         </div>
         <button

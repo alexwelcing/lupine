@@ -125,3 +125,56 @@ def test_local_artifact_cases_replay_raw_baseline_prediction_when_available(tmp_
         "structure_id": "case-1",
         "energy_ev_per_atom": 1.0,
     }
+    assert case["group_id"] == "energy_volume:chgnet"
+
+
+def test_cloud_campaign_cases_mine_completed_artifacts(monkeypatch) -> None:
+    campaign = {"campaign_id": "cmp"}
+    baseline_cell = {
+        "cell_id": "cmp:baseline:energy_volume:mace",
+        "variant_id": "baseline",
+        "row_id": "energy_volume",
+        "mlip_id": "mace",
+    }
+    distill_cell = {
+        "cell_id": "cmp:distill_accuracy:energy_volume:mace",
+        "variant_id": "distill_accuracy",
+        "row_id": "energy_volume",
+        "mlip_id": "mace",
+        "depends_on_cell_id": baseline_cell["cell_id"],
+    }
+
+    monkeypatch.setattr(growth.campaign_tools, "load_campaign", lambda _path: campaign)
+    monkeypatch.setattr(growth.campaign_tools, "expand_cells", lambda _campaign, scope: [baseline_cell, distill_cell])
+    monkeypatch.setattr(growth.evidence_collect, "artifact_url", lambda cell: f"gs://bucket/{cell['cell_id']}.json")
+
+    def fake_load(url: str):
+        if "baseline" in url:
+            return {
+                "predictions": [
+                    {
+                        "structure_id": "s1",
+                        "energy_ev_per_atom": 1.0,
+                        "reference": {"energy_ev_per_atom": 0.25},
+                    }
+                ]
+            }
+        return {
+            "distill_runtime": {
+                "support_model": {
+                    "correction": {},
+                    "candidate_correction": {"energy_bias_ev_per_atom": -0.5},
+                    "diagnostics": {"support_lift_fraction": 0.4},
+                }
+            }
+        }
+
+    monkeypatch.setattr(growth, "load_gcs_json", fake_load)
+
+    [case] = growth.cloud_campaign_cases(Path("campaign.json"), "promotion-canary", "baseline-error")
+
+    assert case["case_id"] == "cmp:distill_accuracy:energy_volume:mace:0"
+    assert case["group_id"] == "energy_volume:mace"
+    assert case["prediction"] == {"structure_id": "s1", "energy_ev_per_atom": 1.0}
+    assert case["support"]["correction"] == {"energy_bias_ev_per_atom": -0.5}
+    assert case["weight"] > 1.0

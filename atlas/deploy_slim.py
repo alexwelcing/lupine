@@ -31,18 +31,18 @@ RESEARCH_DOCS = {
         {"file": "chinese-md-sources.md", "title": "Chinese MD Research Sources", "desc": "Landscape of molecular dynamics research from Chinese institutions and collaboration networks"},
     ],
     "Platform Vision": [
-        {"file": os.path.join("atlas", "ATLAS-project-plan.md"), "title": "ATLAS Platform Architecture", "desc": "Three-pillar vision -- Quantum DFT Engine, Molecular Dynamics Engine, and ML Potential Pipeline -- unified for seamless materials discovery"},
+        {"file": os.path.join("atlas", "ATLAS-project-plan.md"), "title": "Lupine Science Platform Architecture", "desc": "Three-pillar vision -- Quantum DFT Engine, Molecular Dynamics Engine, and ML Potential Pipeline -- unified for seamless materials discovery"},
         {"file": os.path.join("atlas", "openDFT-project-plan.md"), "title": "OpenDFT: VASP-Compatible DFT Engine", "desc": "Technical plan for an open-source plane-wave PAW DFT engine with VASP I/O compatibility and Delta Codes verification"},
     ],
     "Product Strategy": [
-        {"file": os.path.join("atlas", "atlas-view-web-product-plan.md"), "title": "ATLAS View -- Web Product Plan", "desc": "Active strategy -- WebGPU-powered web visualization vs Python library, OVITO paid wall analysis, and zero-install deployment"},
-        {"file": os.path.join("atlas", "atlas-view-product-plan.md"), "title": "ATLAS View -- Original Python Plan", "desc": "Earlier product strategy proposing atlas-view as a pip-installable library -- superseded by the web approach but valuable for competitive context"},
+        {"file": os.path.join("atlas", "atlas-view-web-product-plan.md"), "title": "LUPI -- Web Product Plan", "desc": "Active strategy -- WebGPU-powered web visualization vs Python library, OVITO paid wall analysis, and zero-install deployment"},
+        {"file": os.path.join("atlas", "atlas-view-product-plan.md"), "title": "LUPI -- Original Python Plan", "desc": "Earlier product strategy proposing atlas-view as a pip-installable library -- superseded by the web approach but valuable for competitive context"},
         {"file": os.path.join("atlas", "atlas-view-example-gallery.md"), "title": "Example Gallery Specification", "desc": "12 curated LAMMPS simulations for website launch -- crack propagation, nanoindentation, LJ melt, granular pour, CNT tensile pull, and more"},
     ],
     "Strategic Documents": [
         {"file": "STATUS.md", "title": "Project Status", "desc": "Current implementation status and near-term development roadmap"},
         {"file": "RESEARCH-CHAIN.md", "title": "Research Chain", "desc": "Linked evidence chain connecting ecosystem analysis to product decisions to implementation priorities"},
-        {"file": "GLOSSARY.md", "title": "Glossary", "desc": "Key terms, acronyms, and concepts used throughout the ATLAS research and planning documents"},
+        {"file": "GLOSSARY.md", "title": "Glossary", "desc": "Key terms, acronyms, and concepts used throughout the Lupine Science research and planning documents"},
     ],
 }
 
@@ -145,13 +145,16 @@ def build_research():
             
             page = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{doc['title']} -- ATLAS Research</title><meta name="description" content="{doc['desc']}">
+<title>{doc['title']} -- Lupine Science Research</title><meta name="description" content="{doc['desc']}"><meta name="theme-color" content="#06080d">
+<meta property="og:site_name" content="Lupine Science"><meta property="og:type" content="article"><meta property="og:title" content="{doc['title']} -- Lupine Science Research"><meta property="og:description" content="{doc['desc']}"><meta property="og:image" content="https://lupi.live/og-lupi.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{doc['title']} -- Lupine Science Research"><meta name="twitter:description" content="{doc['desc']}"><meta name="twitter:image" content="https://lupi.live/og-lupi.png">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css"></head><body>
-<nav class="top-bar"><a href="/" class="logo">ATLAS<span>research</span></a><div class="links"><a href="/research/">Index</a><a href="/web/">Viewer</a><a href="/">Manifesto</a></div></nav>
+<nav class="top-bar"><a href="/" class="logo">LUPINE<span>science</span></a><div class="links"><a href="/research/">Index</a><a href="/web/">LUPI</a><a href="/">Manifesto</a></div></nav>
 <div class="article"><a href="/research/" class="back">&larr; Research Index</a><h1>{doc['title']}</h1>{html_body}</div>
-<footer><p>ATLAS -- Computational Materials Science Platform -- 2026</p></footer></body></html>"""
+<footer><p>Lupine Science -- Computational Materials Platform -- 2026</p></footer></body></html>"""
             
             with open(os.path.join(DEPLOY_RESEARCH, f"{slug}.html"), "w", encoding="utf-8") as f:
                 f.write(page)
@@ -171,14 +174,17 @@ def build_research():
     
     idx = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ATLAS Research Library</title><meta name="description" content="Complete research library for the ATLAS Computational Materials Science Platform.">
+<title>Lupine Science Research Library</title><meta name="description" content="Complete research library for the Lupine Science computational materials platform."><meta name="theme-color" content="#06080d">
+<meta property="og:site_name" content="Lupine Science"><meta property="og:type" content="website"><meta property="og:title" content="Lupine Science Research Library"><meta property="og:description" content="Complete research library for the Lupine Science computational materials platform."><meta property="og:image" content="https://lupi.live/og-lupi.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Lupine Science Research Library"><meta name="twitter:description" content="Complete research library for the Lupine Science computational materials platform."><meta name="twitter:image" content="https://lupi.live/og-lupi.png">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css"></head><body>
-<nav class="top-bar"><a href="/" class="logo">ATLAS<span>research</span></a><div class="links"><a href="/web/">Viewer</a><a href="/">Manifesto</a></div></nav>
-<div class="hero"><h1>Research Library</h1><p class="sub">Complete ecosystem analysis, product strategy, and technical architecture for the ATLAS Computational Materials Science Platform.</p><span class="badge">{len(converted)} documents</span></div>
+<nav class="top-bar"><a href="/" class="logo">LUPINE<span>science</span></a><div class="links"><a href="/web/">LUPI</a><a href="/">Manifesto</a></div></nav>
+<div class="hero"><h1>Research Library</h1><p class="sub">Complete ecosystem analysis, product strategy, and technical architecture for the Lupine Science computational materials platform.</p><span class="badge">{len(converted)} documents</span></div>
 <div class="container">{cards}</div>
-<footer><p>ATLAS -- Computational Materials Science Platform -- 2026</p></footer></body></html>"""
+<footer><p>Lupine Science -- Computational Materials Platform -- 2026</p></footer></body></html>"""
     
     with open(os.path.join(DEPLOY_RESEARCH, "index.html"), "w", encoding="utf-8") as f:
         f.write(idx)
@@ -216,8 +222,14 @@ def deploy_and_verify():
         "--memory=512Mi",
     ], cwd=DEPLOY_DIR)
     time.sleep(5)
-    for url in [f"{CLOUD_URL}/", f"{CLOUD_URL}/web/", f"{CLOUD_URL}/research/", f"{CLOUD_URL}/research/style.css",
-                f"{CLOUD_URL}/native/", f"{CLOUD_URL}/trailer.mp4"]:
+    smoke_urls = [
+        f"{CLOUD_URL}/",
+        f"{CLOUD_URL}/web/",
+        f"{CLOUD_URL}/research/",
+        f"{CLOUD_URL}/research/style.css",
+        f"{CLOUD_URL}/native/",
+    ]
+    for url in smoke_urls:
         try:
             r = urllib.request.urlopen(urllib.request.Request(url, method="HEAD"), timeout=10)
             print(f"  OK [{r.status}] {url.replace(CLOUD_URL, '')}")

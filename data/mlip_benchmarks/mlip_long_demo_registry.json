@@ -1,0 +1,1284 @@
+{
+  "claim_policy": {
+    "mock_or_placeholder_allowed": false,
+    "promotion_gate": "baseline_and_distill_must_share_the_same_material_offset_protocol_and_reference_contract",
+    "scientific_claim_allowed_without_measured_artifacts": false,
+    "universal_manifold_claim_allowed": false,
+    "viewer_claim_allowed_without_measured_artifacts": false
+  },
+  "demos": [
+    {
+      "claim_gate": {
+        "local_claim_scope": "CHGNet Distill Accuracy improves the sealed local Ni vacancy offset-recovery canary.",
+        "local_paired_claim_allowed": true,
+        "next_evidence_step": "Promote this paired local win into a locked cloud canary with external reference values.",
+        "scientific_claim_allowed": false,
+        "viewer_claim_allowed": true
+      },
+      "demo_class": "defect_transport",
+      "id": "ni-vacancy-diffusion-arrhenius-v1",
+      "material_family": "fcc transition metal",
+      "primary_material_id": "Ni-fcc",
+      "reference_plan": {
+        "preferred_sources": [
+          "NIST Interatomic Potentials Repository Ni EAM records",
+          "OpenKIM Ni defect and diffusion test records",
+          "published DFT or experimental vacancy formation and migration references selected before the run"
+        ],
+        "reference_lock_required_before_claim": true,
+        "reference_values_locked": false
+      },
+      "scientific_distill": {
+        "baseline_methods": [
+          "EAM reference lane where available",
+          "MACE",
+          "ORB",
+          "SevenNet",
+          "CHGNet or UMA candidate if the backend imports cleanly"
+        ],
+        "distill_objective": "Reduce deviation from reference vacancy formation or migration observables while preserving stable MD and bounded intervention rates.",
+        "hyperribbon_questions": [
+          "Does Distill reduce long-horizon drift without over-correcting stiff lattice modes?",
+          "Do intervention traces concentrate in complement-like defect coordinates rather than bulk compression axes?",
+          "Does extra time buy meaningful closeness or only marginal improvement?"
+        ],
+        "initial_protocol": "Create a Ni-fcc supercell, remove one atom, apply controlled thermal/position offsets, run paired baseline and Distill Accuracy MD, then estimate hop rate, diffusion trend, energy drift, and local-force stability.",
+        "measured_artifacts": [
+          {
+            "artifact_role": "measured_baseline_trajectory",
+            "label": "CHGNet baseline vacancy MD",
+            "mlip_id": "chgnet",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "uri": "/mlip/chgnet-ni-fcc-vacancy-md-local-v1.json",
+            "variant_id": "baseline"
+          },
+          {
+            "artifact_role": "measured_distill_accuracy_trajectory",
+            "label": "CHGNET Distill Accuracy Ni-fcc-vacancy MD",
+            "mlip_id": "chgnet",
+            "paired_score_uri": "/mlip/chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "score_summary": {
+              "anytime_curve": [
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.0,
+                  "baseline_force_max_norm_ev_per_angstrom": 0.49350046672715836,
+                  "baseline_reference_position_rmse_angstrom": 0.0307655183624804,
+                  "distill_energy_drift_ev_per_atom": 0.0,
+                  "distill_force_max_norm_ev_per_angstrom": 0.4935002576347903,
+                  "distill_intervention_count": 0,
+                  "distill_reference_position_rmse_angstrom": 0.0307655183624804,
+                  "frame_index": 0,
+                  "rmse_lift_fraction": 0.0,
+                  "step": 0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.0013594627380371094,
+                  "baseline_force_max_norm_ev_per_angstrom": 0.5173660832905285,
+                  "baseline_reference_position_rmse_angstrom": 0.037100156290311104,
+                  "distill_energy_drift_ev_per_atom": -0.0008521080017089844,
+                  "distill_force_max_norm_ev_per_angstrom": 0.35408969000428303,
+                  "distill_intervention_count": 1,
+                  "distill_reference_position_rmse_angstrom": 0.025970109427843384,
+                  "frame_index": 1,
+                  "rmse_lift_fraction": 0.29999999933623966,
+                  "step": 4.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.004945278167724609,
+                  "baseline_force_max_norm_ev_per_angstrom": 0.8170128531519557,
+                  "baseline_reference_position_rmse_angstrom": 0.0501326896774221,
+                  "distill_energy_drift_ev_per_atom": -0.0006012916564941406,
+                  "distill_force_max_norm_ev_per_angstrom": 0.385677544858651,
+                  "distill_intervention_count": 2,
+                  "distill_reference_position_rmse_angstrom": 0.0277077613758892,
+                  "frame_index": 2,
+                  "rmse_lift_fraction": 0.4473114936746004,
+                  "step": 8.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.010819435119628906,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.2863604373028965,
+                  "baseline_reference_position_rmse_angstrom": 0.06512655589645877,
+                  "distill_energy_drift_ev_per_atom": -7.009506225585938e-05,
+                  "distill_force_max_norm_ev_per_angstrom": 0.45413550307829553,
+                  "distill_intervention_count": 3,
+                  "distill_reference_position_rmse_angstrom": 0.03063292068515936,
+                  "frame_index": 3,
+                  "rmse_lift_fraction": 0.5296400943746972,
+                  "step": 12.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.018785953521728516,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.767430967605573,
+                  "baseline_reference_position_rmse_angstrom": 0.08045174903729246,
+                  "distill_energy_drift_ev_per_atom": 0.0004134178161621094,
+                  "distill_force_max_norm_ev_per_angstrom": 0.4743029671155853,
+                  "distill_intervention_count": 4,
+                  "distill_reference_position_rmse_angstrom": 0.03308698682289846,
+                  "frame_index": 4,
+                  "rmse_lift_fraction": 0.5887350216890701,
+                  "step": 16.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.028187274932861328,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.2484705614491745,
+                  "baseline_reference_position_rmse_angstrom": 0.09496910180804148,
+                  "distill_energy_drift_ev_per_atom": 0.0006918907165527344,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5238350376782207,
+                  "distill_intervention_count": 5,
+                  "distill_reference_position_rmse_angstrom": 0.034532924171884125,
+                  "frame_index": 5,
+                  "rmse_lift_fraction": 0.6363772688754643,
+                  "step": 20.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.03792238235473633,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.50933141652957,
+                  "baseline_reference_position_rmse_angstrom": 0.10788882334391783,
+                  "distill_energy_drift_ev_per_atom": 0.0007710456848144531,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5440587429597407,
+                  "distill_intervention_count": 6,
+                  "distill_reference_position_rmse_angstrom": 0.03504288852862284,
+                  "frame_index": 6,
+                  "rmse_lift_fraction": 0.6751944507086113,
+                  "step": 24.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.0471196174621582,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.7143982382185015,
+                  "baseline_reference_position_rmse_angstrom": 0.11916473037128693,
+                  "distill_energy_drift_ev_per_atom": 0.0007519721984863281,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5414609431402881,
+                  "distill_intervention_count": 7,
+                  "distill_reference_position_rmse_angstrom": 0.03512255997379996,
+                  "frame_index": 7,
+                  "rmse_lift_fraction": 0.7052604418743111,
+                  "step": 28.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.05528593063354492,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.691898061217817,
+                  "baseline_reference_position_rmse_angstrom": 0.1290001165660979,
+                  "distill_energy_drift_ev_per_atom": 0.0007281303405761719,
+                  "distill_force_max_norm_ev_per_angstrom": 0.512131879215057,
+                  "distill_intervention_count": 8,
+                  "distill_reference_position_rmse_angstrom": 0.03510241422497992,
+                  "frame_index": 8,
+                  "rmse_lift_fraction": 0.727888507705387,
+                  "step": 32.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.06169319152832031,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.677278083453138,
+                  "baseline_reference_position_rmse_angstrom": 0.13746023403854396,
+                  "distill_energy_drift_ev_per_atom": 0.0006804466247558594,
+                  "distill_force_max_norm_ev_per_angstrom": 0.49191058358092826,
+                  "distill_intervention_count": 9,
+                  "distill_reference_position_rmse_angstrom": 0.03503308890177832,
+                  "frame_index": 9,
+                  "rmse_lift_fraction": 0.7451401916575013,
+                  "step": 36.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.06557559967041016,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.8975633819582796,
+                  "baseline_reference_position_rmse_angstrom": 0.14424983181746776,
+                  "distill_energy_drift_ev_per_atom": 0.0005726814270019531,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5063057172039829,
+                  "distill_intervention_count": 10,
+                  "distill_reference_position_rmse_angstrom": 0.03479216694475949,
+                  "frame_index": 10,
+                  "rmse_lift_fraction": 0.758806187110255,
+                  "step": 40.0
+                }
+              ],
+              "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+              "distill_final_reference_position_rmse_angstrom": 0.03479217,
+              "distill_intervention_count": 10,
+              "final_rmse_lift_fraction": 0.7588061628911452,
+              "intervention_curve": [
+                {
+                  "correction_norm_max_angstrom": 0.023811854116954405,
+                  "correction_norm_mean_angstrom": 0.010081433527358557,
+                  "force_max_norm_ev_per_angstrom_before": 0.5173675875043912,
+                  "iteration": 1,
+                  "local_rmse_lift_fraction": 0.2999999999999997,
+                  "reference_rmse_after_angstrom": 0.025970109427843384,
+                  "reference_rmse_before_angstrom": 0.03710015632549053,
+                  "step": 4.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.022305460352958977,
+                  "correction_norm_mean_angstrom": 0.01088743730571646,
+                  "force_max_norm_ev_per_angstrom_before": 0.6036722812974471,
+                  "iteration": 2,
+                  "local_rmse_lift_fraction": 0.29999999999999954,
+                  "reference_rmse_after_angstrom": 0.0277077613758892,
+                  "reference_rmse_before_angstrom": 0.03958251625127026,
+                  "step": 8.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.02686758091115817,
+                  "correction_norm_mean_angstrom": 0.011976429162128531,
+                  "force_max_norm_ev_per_angstrom_before": 0.7348062247147942,
+                  "iteration": 3,
+                  "local_rmse_lift_fraction": 0.2999999999999983,
+                  "reference_rmse_after_angstrom": 0.03063292068515936,
+                  "reference_rmse_before_angstrom": 0.04376131526451327,
+                  "step": 12.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.028710420010863595,
+                  "correction_norm_mean_angstrom": 0.012922138394677313,
+                  "force_max_norm_ev_per_angstrom_before": 0.7790768491165555,
+                  "iteration": 4,
+                  "local_rmse_lift_fraction": 0.29999999999999855,
+                  "reference_rmse_after_angstrom": 0.03308698682289846,
+                  "reference_rmse_before_angstrom": 0.047267124032711993,
+                  "step": 16.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.030551577161006947,
+                  "correction_norm_mean_angstrom": 0.013479698903853332,
+                  "force_max_norm_ev_per_angstrom_before": 0.8036233005700554,
+                  "iteration": 5,
+                  "local_rmse_lift_fraction": 0.30000000000000043,
+                  "reference_rmse_after_angstrom": 0.034532924171884125,
+                  "reference_rmse_before_angstrom": 0.04933274881697735,
+                  "step": 20.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.031402444881468754,
+                  "correction_norm_mean_angstrom": 0.013753822593194088,
+                  "force_max_norm_ev_per_angstrom_before": 0.8341950040577626,
+                  "iteration": 6,
+                  "local_rmse_lift_fraction": 0.29999999999999977,
+                  "reference_rmse_after_angstrom": 0.03504288852862284,
+                  "reference_rmse_before_angstrom": 0.05006126932660404,
+                  "step": 24.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.031575393288313755,
+                  "correction_norm_mean_angstrom": 0.01385580604694832,
+                  "force_max_norm_ev_per_angstrom_before": 0.8278317760478223,
+                  "iteration": 7,
+                  "local_rmse_lift_fraction": 0.2999999999999995,
+                  "reference_rmse_after_angstrom": 0.03512255997379996,
+                  "reference_rmse_before_angstrom": 0.05017508567685705,
+                  "step": 28.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.031905166668417716,
+                  "correction_norm_mean_angstrom": 0.01385818672674806,
+                  "force_max_norm_ev_per_angstrom_before": 0.7860268171579012,
+                  "iteration": 8,
+                  "local_rmse_lift_fraction": 0.29999999999999893,
+                  "reference_rmse_after_angstrom": 0.03510241422497992,
+                  "reference_rmse_before_angstrom": 0.050146306035685526,
+                  "step": 32.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.03210492881576814,
+                  "correction_norm_mean_angstrom": 0.013855769609706992,
+                  "force_max_norm_ev_per_angstrom_before": 0.7794621153924147,
+                  "iteration": 9,
+                  "local_rmse_lift_fraction": 0.2999999999999996,
+                  "reference_rmse_after_angstrom": 0.03503308890177832,
+                  "reference_rmse_before_angstrom": 0.05004726985968329,
+                  "step": 36.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.03265256803635703,
+                  "correction_norm_mean_angstrom": 0.013734426881549938,
+                  "force_max_norm_ev_per_angstrom_before": 0.8042012896559975,
+                  "iteration": 10,
+                  "local_rmse_lift_fraction": 0.30000000000000077,
+                  "reference_rmse_after_angstrom": 0.03479216694475949,
+                  "reference_rmse_before_angstrom": 0.04970309563537076,
+                  "step": 40.0,
+                  "stiff_axis_drift_fraction": 0.0
+                }
+              ],
+              "mean_rmse_lift_fraction": 0.6408853839182039,
+              "primary_metric": "final_reference_position_rmse_angstrom",
+              "schema": "lupine.distill.md_observable_score.summary.v1",
+              "verdict": "distill_accuracy_win"
+            },
+            "uri": "/mlip/chgnet-ni-fcc-vacancy-distill-accuracy-local-v1.json",
+            "variant_id": "distill_accuracy"
+          }
+        ],
+        "primary_metrics": [
+          "vacancy_hop_count",
+          "activation_energy_proxy_or_locked_reference_error",
+          "energy_drift_ev_per_atom",
+          "force_explosion_rate",
+          "local_order_recovery",
+          "paired_accuracy_delta"
+        ],
+        "required_artifact_schemas": [
+          "lupine.mlip.md_trajectory.v1",
+          "lupine.distill.md_observable_score.v1"
+        ],
+        "status": "local_paired_distill_accuracy_measured"
+      },
+      "title": "FCC Ni vacancy diffusion from perturbed lattice to Arrhenius observable",
+      "viewer": {
+        "initial_scene": "Ni vacancy is highlighted as the missing-site field; atom paths show baseline and Distill side by side with hop events and local-neighbor distortion overlays.",
+        "measured_artifacts": [
+          {
+            "artifact_role": "measured_baseline_trajectory",
+            "label": "CHGNet baseline vacancy MD",
+            "mlip_id": "chgnet",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "uri": "/mlip/chgnet-ni-fcc-vacancy-md-local-v1.json",
+            "variant_id": "baseline"
+          },
+          {
+            "artifact_role": "measured_distill_accuracy_trajectory",
+            "label": "CHGNET Distill Accuracy Ni-fcc-vacancy MD",
+            "mlip_id": "chgnet",
+            "paired_score_uri": "/mlip/chgnet-ni-fcc-vacancy-paired-distill-accuracy-score-local-v1.json",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "score_summary": {
+              "anytime_curve": [
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.0,
+                  "baseline_force_max_norm_ev_per_angstrom": 0.49350046672715836,
+                  "baseline_reference_position_rmse_angstrom": 0.0307655183624804,
+                  "distill_energy_drift_ev_per_atom": 0.0,
+                  "distill_force_max_norm_ev_per_angstrom": 0.4935002576347903,
+                  "distill_intervention_count": 0,
+                  "distill_reference_position_rmse_angstrom": 0.0307655183624804,
+                  "frame_index": 0,
+                  "rmse_lift_fraction": 0.0,
+                  "step": 0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.0013594627380371094,
+                  "baseline_force_max_norm_ev_per_angstrom": 0.5173660832905285,
+                  "baseline_reference_position_rmse_angstrom": 0.037100156290311104,
+                  "distill_energy_drift_ev_per_atom": -0.0008521080017089844,
+                  "distill_force_max_norm_ev_per_angstrom": 0.35408969000428303,
+                  "distill_intervention_count": 1,
+                  "distill_reference_position_rmse_angstrom": 0.025970109427843384,
+                  "frame_index": 1,
+                  "rmse_lift_fraction": 0.29999999933623966,
+                  "step": 4.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.004945278167724609,
+                  "baseline_force_max_norm_ev_per_angstrom": 0.8170128531519557,
+                  "baseline_reference_position_rmse_angstrom": 0.0501326896774221,
+                  "distill_energy_drift_ev_per_atom": -0.0006012916564941406,
+                  "distill_force_max_norm_ev_per_angstrom": 0.385677544858651,
+                  "distill_intervention_count": 2,
+                  "distill_reference_position_rmse_angstrom": 0.0277077613758892,
+                  "frame_index": 2,
+                  "rmse_lift_fraction": 0.4473114936746004,
+                  "step": 8.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.010819435119628906,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.2863604373028965,
+                  "baseline_reference_position_rmse_angstrom": 0.06512655589645877,
+                  "distill_energy_drift_ev_per_atom": -7.009506225585938e-05,
+                  "distill_force_max_norm_ev_per_angstrom": 0.45413550307829553,
+                  "distill_intervention_count": 3,
+                  "distill_reference_position_rmse_angstrom": 0.03063292068515936,
+                  "frame_index": 3,
+                  "rmse_lift_fraction": 0.5296400943746972,
+                  "step": 12.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.018785953521728516,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.767430967605573,
+                  "baseline_reference_position_rmse_angstrom": 0.08045174903729246,
+                  "distill_energy_drift_ev_per_atom": 0.0004134178161621094,
+                  "distill_force_max_norm_ev_per_angstrom": 0.4743029671155853,
+                  "distill_intervention_count": 4,
+                  "distill_reference_position_rmse_angstrom": 0.03308698682289846,
+                  "frame_index": 4,
+                  "rmse_lift_fraction": 0.5887350216890701,
+                  "step": 16.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.028187274932861328,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.2484705614491745,
+                  "baseline_reference_position_rmse_angstrom": 0.09496910180804148,
+                  "distill_energy_drift_ev_per_atom": 0.0006918907165527344,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5238350376782207,
+                  "distill_intervention_count": 5,
+                  "distill_reference_position_rmse_angstrom": 0.034532924171884125,
+                  "frame_index": 5,
+                  "rmse_lift_fraction": 0.6363772688754643,
+                  "step": 20.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.03792238235473633,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.50933141652957,
+                  "baseline_reference_position_rmse_angstrom": 0.10788882334391783,
+                  "distill_energy_drift_ev_per_atom": 0.0007710456848144531,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5440587429597407,
+                  "distill_intervention_count": 6,
+                  "distill_reference_position_rmse_angstrom": 0.03504288852862284,
+                  "frame_index": 6,
+                  "rmse_lift_fraction": 0.6751944507086113,
+                  "step": 24.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.0471196174621582,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.7143982382185015,
+                  "baseline_reference_position_rmse_angstrom": 0.11916473037128693,
+                  "distill_energy_drift_ev_per_atom": 0.0007519721984863281,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5414609431402881,
+                  "distill_intervention_count": 7,
+                  "distill_reference_position_rmse_angstrom": 0.03512255997379996,
+                  "frame_index": 7,
+                  "rmse_lift_fraction": 0.7052604418743111,
+                  "step": 28.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.05528593063354492,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.691898061217817,
+                  "baseline_reference_position_rmse_angstrom": 0.1290001165660979,
+                  "distill_energy_drift_ev_per_atom": 0.0007281303405761719,
+                  "distill_force_max_norm_ev_per_angstrom": 0.512131879215057,
+                  "distill_intervention_count": 8,
+                  "distill_reference_position_rmse_angstrom": 0.03510241422497992,
+                  "frame_index": 8,
+                  "rmse_lift_fraction": 0.727888507705387,
+                  "step": 32.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.06169319152832031,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.677278083453138,
+                  "baseline_reference_position_rmse_angstrom": 0.13746023403854396,
+                  "distill_energy_drift_ev_per_atom": 0.0006804466247558594,
+                  "distill_force_max_norm_ev_per_angstrom": 0.49191058358092826,
+                  "distill_intervention_count": 9,
+                  "distill_reference_position_rmse_angstrom": 0.03503308890177832,
+                  "frame_index": 9,
+                  "rmse_lift_fraction": 0.7451401916575013,
+                  "step": 36.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.06557559967041016,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.8975633819582796,
+                  "baseline_reference_position_rmse_angstrom": 0.14424983181746776,
+                  "distill_energy_drift_ev_per_atom": 0.0005726814270019531,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5063057172039829,
+                  "distill_intervention_count": 10,
+                  "distill_reference_position_rmse_angstrom": 0.03479216694475949,
+                  "frame_index": 10,
+                  "rmse_lift_fraction": 0.758806187110255,
+                  "step": 40.0
+                }
+              ],
+              "baseline_final_reference_position_rmse_angstrom": 0.14424983,
+              "distill_final_reference_position_rmse_angstrom": 0.03479217,
+              "distill_intervention_count": 10,
+              "final_rmse_lift_fraction": 0.7588061628911452,
+              "intervention_curve": [
+                {
+                  "correction_norm_max_angstrom": 0.023811854116954405,
+                  "correction_norm_mean_angstrom": 0.010081433527358557,
+                  "force_max_norm_ev_per_angstrom_before": 0.5173675875043912,
+                  "iteration": 1,
+                  "local_rmse_lift_fraction": 0.2999999999999997,
+                  "reference_rmse_after_angstrom": 0.025970109427843384,
+                  "reference_rmse_before_angstrom": 0.03710015632549053,
+                  "step": 4.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.022305460352958977,
+                  "correction_norm_mean_angstrom": 0.01088743730571646,
+                  "force_max_norm_ev_per_angstrom_before": 0.6036722812974471,
+                  "iteration": 2,
+                  "local_rmse_lift_fraction": 0.29999999999999954,
+                  "reference_rmse_after_angstrom": 0.0277077613758892,
+                  "reference_rmse_before_angstrom": 0.03958251625127026,
+                  "step": 8.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.02686758091115817,
+                  "correction_norm_mean_angstrom": 0.011976429162128531,
+                  "force_max_norm_ev_per_angstrom_before": 0.7348062247147942,
+                  "iteration": 3,
+                  "local_rmse_lift_fraction": 0.2999999999999983,
+                  "reference_rmse_after_angstrom": 0.03063292068515936,
+                  "reference_rmse_before_angstrom": 0.04376131526451327,
+                  "step": 12.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.028710420010863595,
+                  "correction_norm_mean_angstrom": 0.012922138394677313,
+                  "force_max_norm_ev_per_angstrom_before": 0.7790768491165555,
+                  "iteration": 4,
+                  "local_rmse_lift_fraction": 0.29999999999999855,
+                  "reference_rmse_after_angstrom": 0.03308698682289846,
+                  "reference_rmse_before_angstrom": 0.047267124032711993,
+                  "step": 16.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.030551577161006947,
+                  "correction_norm_mean_angstrom": 0.013479698903853332,
+                  "force_max_norm_ev_per_angstrom_before": 0.8036233005700554,
+                  "iteration": 5,
+                  "local_rmse_lift_fraction": 0.30000000000000043,
+                  "reference_rmse_after_angstrom": 0.034532924171884125,
+                  "reference_rmse_before_angstrom": 0.04933274881697735,
+                  "step": 20.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.031402444881468754,
+                  "correction_norm_mean_angstrom": 0.013753822593194088,
+                  "force_max_norm_ev_per_angstrom_before": 0.8341950040577626,
+                  "iteration": 6,
+                  "local_rmse_lift_fraction": 0.29999999999999977,
+                  "reference_rmse_after_angstrom": 0.03504288852862284,
+                  "reference_rmse_before_angstrom": 0.05006126932660404,
+                  "step": 24.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.031575393288313755,
+                  "correction_norm_mean_angstrom": 0.01385580604694832,
+                  "force_max_norm_ev_per_angstrom_before": 0.8278317760478223,
+                  "iteration": 7,
+                  "local_rmse_lift_fraction": 0.2999999999999995,
+                  "reference_rmse_after_angstrom": 0.03512255997379996,
+                  "reference_rmse_before_angstrom": 0.05017508567685705,
+                  "step": 28.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.031905166668417716,
+                  "correction_norm_mean_angstrom": 0.01385818672674806,
+                  "force_max_norm_ev_per_angstrom_before": 0.7860268171579012,
+                  "iteration": 8,
+                  "local_rmse_lift_fraction": 0.29999999999999893,
+                  "reference_rmse_after_angstrom": 0.03510241422497992,
+                  "reference_rmse_before_angstrom": 0.050146306035685526,
+                  "step": 32.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.03210492881576814,
+                  "correction_norm_mean_angstrom": 0.013855769609706992,
+                  "force_max_norm_ev_per_angstrom_before": 0.7794621153924147,
+                  "iteration": 9,
+                  "local_rmse_lift_fraction": 0.2999999999999996,
+                  "reference_rmse_after_angstrom": 0.03503308890177832,
+                  "reference_rmse_before_angstrom": 0.05004726985968329,
+                  "step": 36.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.03265256803635703,
+                  "correction_norm_mean_angstrom": 0.013734426881549938,
+                  "force_max_norm_ev_per_angstrom_before": 0.8042012896559975,
+                  "iteration": 10,
+                  "local_rmse_lift_fraction": 0.30000000000000077,
+                  "reference_rmse_after_angstrom": 0.03479216694475949,
+                  "reference_rmse_before_angstrom": 0.04970309563537076,
+                  "step": 40.0,
+                  "stiff_axis_drift_fraction": 0.0
+                }
+              ],
+              "mean_rmse_lift_fraction": 0.6408853839182039,
+              "primary_metric": "final_reference_position_rmse_angstrom",
+              "schema": "lupine.distill.md_observable_score.summary.v1",
+              "verdict": "distill_accuracy_win"
+            },
+            "uri": "/mlip/chgnet-ni-fcc-vacancy-distill-accuracy-local-v1.json",
+            "variant_id": "distill_accuracy"
+          }
+        ],
+        "required_artifact_schemas": [
+          "lupine.mlip.md_trajectory.v1",
+          "lupine.distill.md_observable_score.v1"
+        ],
+        "status": "measured_baseline_and_distill_available",
+        "visual_requirements": [
+          "No synthetic atom drift",
+          "vacancy site marker derived from measured positions",
+          "baseline and Distill trajectories use the same camera and time scale",
+          "Arrhenius or hop-rate curve only appears after measured data exists",
+          "intervention markers align to real Distill event timestamps"
+        ]
+      },
+      "why_we_care": "This is an EAM home-turf problem: a classical potential should be strong, so any Distill gain must be earned against a tough baseline rather than by exploiting an easy failure."
+    },
+    {
+      "claim_gate": {
+        "next_evidence_step": "Run the paired Distill Accuracy artifact against this same measured protocol before public accuracy claims.",
+        "scientific_claim_allowed": false,
+        "viewer_claim_allowed": true
+      },
+      "demo_class": "mechanics_defect",
+      "id": "hcp-mg-slip-stacking-fault-v1",
+      "material_family": "hcp alloy prototype",
+      "primary_material_id": "Mg-hcp",
+      "reference_plan": {
+        "preferred_sources": [
+          "published DFT stacking-fault energy curves for hcp Mg",
+          "OpenKIM or NIST Mg EAM/MEAM model records for a classical baseline",
+          "experimentally grounded elastic constants used only as secondary checks"
+        ],
+        "reference_lock_required_before_claim": true,
+        "reference_values_locked": false
+      },
+      "scientific_distill": {
+        "baseline_methods": [
+          "MEAM or EAM reference lane where available",
+          "MACE",
+          "ORB",
+          "SevenNet",
+          "CHGNet or UMA candidate if the backend imports cleanly"
+        ],
+        "distill_objective": "Improve the path-shape error to DFT-like stacking-fault or shear response while refusing corrections that violate stiff-axis cell stability.",
+        "hyperribbon_questions": [
+          "Does the complement residual signal appear in shear/defect coordinates, not only energy-volume?",
+          "Does projected correction improve a full path rather than a single scalar endpoint?",
+          "Can Distill refuse unstable shear cases before they collapse?"
+        ],
+        "initial_protocol": "Build hcp Mg supercells with basal and prismatic shear offsets, relax or short-run MD under paired baseline and Distill Accuracy, then score stacking-fault energy shape, stress response, and failure modes.",
+        "measured_artifacts": [
+          {
+            "artifact_role": "measured_baseline_trajectory",
+            "label": "CHGNet baseline shear MD",
+            "mlip_id": "chgnet",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "uri": "/mlip/chgnet-mg-hcp-slip-md-local-v1.json",
+            "variant_id": "baseline"
+          }
+        ],
+        "primary_metrics": [
+          "stacking_fault_energy_curve_error",
+          "stress_path_rmse_gpa",
+          "relaxation_convergence_rate",
+          "stiff_axis_drift_fraction",
+          "projection_tube_refusal_rate",
+          "paired_accuracy_delta"
+        ],
+        "required_artifact_schemas": [
+          "lupine.mlip.equilibrium_trajectory.v1",
+          "lupine.distill.equilibrium_solve_score.v1",
+          "lupine.distill.subspace_diagnostic.v1"
+        ],
+        "status": "local_baseline_measured_reference_claim_blocked"
+      },
+      "title": "HCP Mg slip and stacking-fault response under controlled shear",
+      "viewer": {
+        "initial_scene": "A measured hcp cell shears through the slip path with plane guides, force vectors, and a synchronized stacking-fault energy curve.",
+        "measured_artifacts": [
+          {
+            "artifact_role": "measured_baseline_trajectory",
+            "label": "CHGNet baseline shear MD",
+            "mlip_id": "chgnet",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "uri": "/mlip/chgnet-mg-hcp-slip-md-local-v1.json",
+            "variant_id": "baseline"
+          }
+        ],
+        "required_artifact_schemas": [
+          "lupine.mlip.equilibrium_viewer.v1",
+          "lupine.distill.equilibrium_solve_score.v1"
+        ],
+        "status": "measured_baseline_available",
+        "visual_requirements": [
+          "No invented slip-plane motion",
+          "cell and atom positions read from measured trajectory frames",
+          "baseline and Distill paths show identical applied shear offsets",
+          "stiff-axis violation is visually flagged only from scored diagnostics",
+          "reference curve is hidden until source values are locked"
+        ]
+      },
+      "why_we_care": "HCP slip and stacking-fault behavior exposes anisotropic mechanics where simple potentials often fit easy elastic observables but miss the defect pathway."
+    },
+    {
+      "claim_gate": {
+        "local_claim_scope": "CHGNet Distill Accuracy improves the sealed local Ni vacancy offset-recovery canary.",
+        "local_paired_claim_allowed": true,
+        "next_evidence_step": "Promote this paired local win into a locked cloud canary with external reference values.",
+        "scientific_claim_allowed": false,
+        "viewer_claim_allowed": true
+      },
+      "demo_class": "battery_transport",
+      "id": "lifepo4-li-channel-migration-v1",
+      "material_family": "polyanion battery cathode",
+      "primary_material_id": "LiFePO4",
+      "reference_plan": {
+        "preferred_sources": [
+          "published DFT Li migration barrier references for olivine LiFePO4",
+          "materials-project or equivalent structure provenance selected before the run",
+          "open MLIP benchmark references for Li-ion transport if available"
+        ],
+        "reference_lock_required_before_claim": true,
+        "reference_values_locked": false
+      },
+      "scientific_distill": {
+        "baseline_methods": [
+          "MACE",
+          "ORB",
+          "SevenNet",
+          "CHGNet",
+          "UMA candidate if the backend imports cleanly"
+        ],
+        "distill_objective": "Improve migration-path or site-occupancy accuracy while refusing corrections that create nonphysical Li jumps, bad cells, or exploding forces.",
+        "hyperribbon_questions": [
+          "Does a ribbon learned from simpler lattice observables transfer to multi-element ionic pathways?",
+          "Are useful corrections concentrated in soft migration coordinates rather than global cell axes?",
+          "Does the refusal policy catch chemically implausible jumps?"
+        ],
+        "initial_protocol": "Use a locked LiFePO4 structure, perturb Li site occupancy or migration coordinate, run paired baseline and Distill Accuracy trajectories, then score migration-path energy, site recovery, and nonphysical event rate.",
+        "measured_artifacts": [
+          {
+            "artifact_role": "measured_baseline_trajectory",
+            "label": "CHGNet baseline Li-channel MD",
+            "mlip_id": "chgnet",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "uri": "/mlip/chgnet-lifepo4-li-channel-md-local-v1.json",
+            "variant_id": "baseline"
+          },
+          {
+            "artifact_role": "measured_distill_accuracy_trajectory",
+            "label": "CHGNET Distill Accuracy LiFePO4-li-channel MD",
+            "mlip_id": "chgnet",
+            "paired_score_uri": "/mlip/chgnet-lifepo4-li-channel-paired-distill-accuracy-score-local-v1.json",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "score_summary": {
+              "anytime_curve": [
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.0,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.6505025434532803,
+                  "baseline_reference_position_rmse_angstrom": 0.09835182438895047,
+                  "distill_energy_drift_ev_per_atom": 0.0,
+                  "distill_force_max_norm_ev_per_angstrom": 1.6504971211638104,
+                  "distill_intervention_count": 0,
+                  "distill_reference_position_rmse_angstrom": 0.09835182438895047,
+                  "frame_index": 0,
+                  "rmse_lift_fraction": 0.0,
+                  "step": 0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.002270221710205078,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.9012292506566841,
+                  "baseline_reference_position_rmse_angstrom": 0.10185226365978105,
+                  "distill_energy_drift_ev_per_atom": -0.0004401206970214844,
+                  "distill_force_max_norm_ev_per_angstrom": 1.645183731736915,
+                  "distill_intervention_count": 1,
+                  "distill_reference_position_rmse_angstrom": 0.09366590178376911,
+                  "frame_index": 1,
+                  "rmse_lift_fraction": 0.08037486435605383,
+                  "step": 4.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.005758762359619141,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.033626338244779,
+                  "baseline_reference_position_rmse_angstrom": 0.10653229451577319,
+                  "distill_energy_drift_ev_per_atom": -0.0012025833129882812,
+                  "distill_force_max_norm_ev_per_angstrom": 1.5293674689898467,
+                  "distill_intervention_count": 2,
+                  "distill_reference_position_rmse_angstrom": 0.08869247605154325,
+                  "frame_index": 2,
+                  "rmse_lift_fraction": 0.1674592530398242,
+                  "step": 8.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.009563446044921875,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.5035164500859177,
+                  "baseline_reference_position_rmse_angstrom": 0.11118642795368351,
+                  "distill_energy_drift_ev_per_atom": -0.002556324005126953,
+                  "distill_force_max_norm_ev_per_angstrom": 1.3297796572991423,
+                  "distill_intervention_count": 3,
+                  "distill_reference_position_rmse_angstrom": 0.08240849845408751,
+                  "frame_index": 3,
+                  "rmse_lift_fraction": 0.2588259199367742,
+                  "step": 12.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.013046741485595703,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.910520930764539,
+                  "baseline_reference_position_rmse_angstrom": 0.11574353755569426,
+                  "distill_energy_drift_ev_per_atom": -0.00428009033203125,
+                  "distill_force_max_norm_ev_per_angstrom": 1.125916571733012,
+                  "distill_intervention_count": 4,
+                  "distill_reference_position_rmse_angstrom": 0.07508601165825185,
+                  "frame_index": 4,
+                  "rmse_lift_fraction": 0.3512725354353244,
+                  "step": 16.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.015981197357177734,
+                  "baseline_force_max_norm_ev_per_angstrom": 3.145035881282813,
+                  "baseline_reference_position_rmse_angstrom": 0.12029163337552837,
+                  "distill_energy_drift_ev_per_atom": -0.005947113037109375,
+                  "distill_force_max_norm_ev_per_angstrom": 0.990703634610507,
+                  "distill_intervention_count": 5,
+                  "distill_reference_position_rmse_angstrom": 0.06729587110941224,
+                  "frame_index": 5,
+                  "rmse_lift_fraction": 0.44056066726330917,
+                  "step": 20.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.017652034759521484,
+                  "baseline_force_max_norm_ev_per_angstrom": 3.0045943064748917,
+                  "baseline_reference_position_rmse_angstrom": 0.12451501576312604,
+                  "distill_energy_drift_ev_per_atom": -0.007588386535644531,
+                  "distill_force_max_norm_ev_per_angstrom": 0.7646326966305889,
+                  "distill_intervention_count": 6,
+                  "distill_reference_position_rmse_angstrom": 0.05907867661383513,
+                  "frame_index": 6,
+                  "rmse_lift_fraction": 0.5255297021668071,
+                  "step": 24.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.017963409423828125,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.345573427551125,
+                  "baseline_reference_position_rmse_angstrom": 0.12808222744343659,
+                  "distill_energy_drift_ev_per_atom": -0.009051799774169922,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5282917602012727,
+                  "distill_intervention_count": 7,
+                  "distill_reference_position_rmse_angstrom": 0.05042235972267171,
+                  "frame_index": 7,
+                  "rmse_lift_fraction": 0.6063282101731162,
+                  "step": 28.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.017780780792236328,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.834481846313348,
+                  "baseline_reference_position_rmse_angstrom": 0.1308696761759656,
+                  "distill_energy_drift_ev_per_atom": -0.010233402252197266,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5254461217699689,
+                  "distill_intervention_count": 8,
+                  "distill_reference_position_rmse_angstrom": 0.041784397172647834,
+                  "frame_index": 8,
+                  "rmse_lift_fraction": 0.6807175016123284,
+                  "step": 32.0
+                }
+              ],
+              "baseline_final_reference_position_rmse_angstrom": 0.13086968,
+              "distill_final_reference_position_rmse_angstrom": 0.0417844,
+              "distill_intervention_count": 8,
+              "final_rmse_lift_fraction": 0.6807174893374844,
+              "intervention_curve": [
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.00822141442825799,
+                  "force_max_norm_ev_per_angstrom_before": 1.9012296115445486,
+                  "iteration": 1,
+                  "local_rmse_lift_fraction": 0.08037487406410308,
+                  "reference_rmse_after_angstrom": 0.09366590178376911,
+                  "reference_rmse_before_angstrom": 0.10185226473498742,
+                  "step": 4.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.03500000000000001,
+                  "correction_norm_mean_angstrom": 0.009898253020818,
+                  "force_max_norm_ev_per_angstrom_before": 1.7695161874973464,
+                  "iteration": 2,
+                  "local_rmse_lift_fraction": 0.09423197326848945,
+                  "reference_rmse_after_angstrom": 0.08869247605154325,
+                  "reference_rmse_before_angstrom": 0.09791963663322556,
+                  "step": 8.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.011037743741553807,
+                  "force_max_norm_ev_per_angstrom_before": 1.7393504742295574,
+                  "iteration": 3,
+                  "local_rmse_lift_fraction": 0.11013800574248132,
+                  "reference_rmse_after_angstrom": 0.08240849845408751,
+                  "reference_rmse_before_angstrom": 0.09260817855565048,
+                  "step": 12.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.011765726007375545,
+                  "force_max_norm_ev_per_angstrom_before": 1.6880371598506685,
+                  "iteration": 4,
+                  "local_rmse_lift_fraction": 0.12854752803112326,
+                  "reference_rmse_after_angstrom": 0.07508601165825185,
+                  "reference_rmse_before_angstrom": 0.0861619125235937,
+                  "step": 16.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.034999999999999996,
+                  "correction_norm_mean_angstrom": 0.012190160016212162,
+                  "force_max_norm_ev_per_angstrom_before": 1.5987490471551447,
+                  "iteration": 5,
+                  "local_rmse_lift_fraction": 0.14940584018326195,
+                  "reference_rmse_after_angstrom": 0.06729587110941224,
+                  "reference_rmse_before_angstrom": 0.07911630985558524,
+                  "step": 20.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.012350742395233816,
+                  "force_max_norm_ev_per_angstrom_before": 1.333741255382596,
+                  "iteration": 6,
+                  "local_rmse_lift_fraction": 0.17442935877441884,
+                  "reference_rmse_after_angstrom": 0.05907867661383513,
+                  "reference_rmse_before_angstrom": 0.07156101932855957,
+                  "step": 24.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.012372665315385193,
+                  "force_max_norm_ev_per_angstrom_before": 0.9465554241291588,
+                  "iteration": 7,
+                  "local_rmse_lift_fraction": 0.2060545276440048,
+                  "reference_rmse_after_angstrom": 0.05042235972267171,
+                  "reference_rmse_before_angstrom": 0.06350859281689178,
+                  "step": 28.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.012175660911980881,
+                  "force_max_norm_ev_per_angstrom_before": 0.9278270100338245,
+                  "iteration": 8,
+                  "local_rmse_lift_fraction": 0.24254481705801695,
+                  "reference_rmse_after_angstrom": 0.041784397172647834,
+                  "reference_rmse_before_angstrom": 0.055164184117607776,
+                  "step": 32.0,
+                  "stiff_axis_drift_fraction": 0.0
+                }
+              ],
+              "mean_rmse_lift_fraction": 0.3669074272337428,
+              "primary_metric": "final_reference_position_rmse_angstrom",
+              "schema": "lupine.distill.md_observable_score.summary.v1",
+              "verdict": "distill_accuracy_win"
+            },
+            "uri": "/mlip/chgnet-lifepo4-li-channel-distill-accuracy-local-v1.json",
+            "variant_id": "distill_accuracy"
+          }
+        ],
+        "primary_metrics": [
+          "migration_barrier_error_ev",
+          "site_occupancy_accuracy",
+          "energy_path_shape_error",
+          "nonphysical_jump_rate",
+          "force_explosion_rate",
+          "paired_accuracy_delta"
+        ],
+        "required_artifact_schemas": [
+          "lupine.mlip.md_trajectory.v1",
+          "lupine.distill.md_observable_score.v1",
+          "lupine.distill.subspace_diagnostic.v1"
+        ],
+        "status": "local_paired_distill_accuracy_measured"
+      },
+      "title": "LiFePO4 lithium-channel migration with energy and occupancy checks",
+      "viewer": {
+        "initial_scene": "The viewer follows measured Li ions through channels, overlays site occupancy states, and shows baseline versus Distill migration-path error once the reference is locked.",
+        "measured_artifacts": [
+          {
+            "artifact_role": "measured_baseline_trajectory",
+            "label": "CHGNet baseline Li-channel MD",
+            "mlip_id": "chgnet",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "uri": "/mlip/chgnet-lifepo4-li-channel-md-local-v1.json",
+            "variant_id": "baseline"
+          },
+          {
+            "artifact_role": "measured_distill_accuracy_trajectory",
+            "label": "CHGNET Distill Accuracy LiFePO4-li-channel MD",
+            "mlip_id": "chgnet",
+            "paired_score_uri": "/mlip/chgnet-lifepo4-li-channel-paired-distill-accuracy-score-local-v1.json",
+            "schema": "lupine.mlip.md_trajectory.v1",
+            "score_summary": {
+              "anytime_curve": [
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.0,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.6505025434532803,
+                  "baseline_reference_position_rmse_angstrom": 0.09835182438895047,
+                  "distill_energy_drift_ev_per_atom": 0.0,
+                  "distill_force_max_norm_ev_per_angstrom": 1.6504971211638104,
+                  "distill_intervention_count": 0,
+                  "distill_reference_position_rmse_angstrom": 0.09835182438895047,
+                  "frame_index": 0,
+                  "rmse_lift_fraction": 0.0,
+                  "step": 0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.002270221710205078,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.9012292506566841,
+                  "baseline_reference_position_rmse_angstrom": 0.10185226365978105,
+                  "distill_energy_drift_ev_per_atom": -0.0004401206970214844,
+                  "distill_force_max_norm_ev_per_angstrom": 1.645183731736915,
+                  "distill_intervention_count": 1,
+                  "distill_reference_position_rmse_angstrom": 0.09366590178376911,
+                  "frame_index": 1,
+                  "rmse_lift_fraction": 0.08037486435605383,
+                  "step": 4.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.005758762359619141,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.033626338244779,
+                  "baseline_reference_position_rmse_angstrom": 0.10653229451577319,
+                  "distill_energy_drift_ev_per_atom": -0.0012025833129882812,
+                  "distill_force_max_norm_ev_per_angstrom": 1.5293674689898467,
+                  "distill_intervention_count": 2,
+                  "distill_reference_position_rmse_angstrom": 0.08869247605154325,
+                  "frame_index": 2,
+                  "rmse_lift_fraction": 0.1674592530398242,
+                  "step": 8.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.009563446044921875,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.5035164500859177,
+                  "baseline_reference_position_rmse_angstrom": 0.11118642795368351,
+                  "distill_energy_drift_ev_per_atom": -0.002556324005126953,
+                  "distill_force_max_norm_ev_per_angstrom": 1.3297796572991423,
+                  "distill_intervention_count": 3,
+                  "distill_reference_position_rmse_angstrom": 0.08240849845408751,
+                  "frame_index": 3,
+                  "rmse_lift_fraction": 0.2588259199367742,
+                  "step": 12.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.013046741485595703,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.910520930764539,
+                  "baseline_reference_position_rmse_angstrom": 0.11574353755569426,
+                  "distill_energy_drift_ev_per_atom": -0.00428009033203125,
+                  "distill_force_max_norm_ev_per_angstrom": 1.125916571733012,
+                  "distill_intervention_count": 4,
+                  "distill_reference_position_rmse_angstrom": 0.07508601165825185,
+                  "frame_index": 4,
+                  "rmse_lift_fraction": 0.3512725354353244,
+                  "step": 16.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.015981197357177734,
+                  "baseline_force_max_norm_ev_per_angstrom": 3.145035881282813,
+                  "baseline_reference_position_rmse_angstrom": 0.12029163337552837,
+                  "distill_energy_drift_ev_per_atom": -0.005947113037109375,
+                  "distill_force_max_norm_ev_per_angstrom": 0.990703634610507,
+                  "distill_intervention_count": 5,
+                  "distill_reference_position_rmse_angstrom": 0.06729587110941224,
+                  "frame_index": 5,
+                  "rmse_lift_fraction": 0.44056066726330917,
+                  "step": 20.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.017652034759521484,
+                  "baseline_force_max_norm_ev_per_angstrom": 3.0045943064748917,
+                  "baseline_reference_position_rmse_angstrom": 0.12451501576312604,
+                  "distill_energy_drift_ev_per_atom": -0.007588386535644531,
+                  "distill_force_max_norm_ev_per_angstrom": 0.7646326966305889,
+                  "distill_intervention_count": 6,
+                  "distill_reference_position_rmse_angstrom": 0.05907867661383513,
+                  "frame_index": 6,
+                  "rmse_lift_fraction": 0.5255297021668071,
+                  "step": 24.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.017963409423828125,
+                  "baseline_force_max_norm_ev_per_angstrom": 2.345573427551125,
+                  "baseline_reference_position_rmse_angstrom": 0.12808222744343659,
+                  "distill_energy_drift_ev_per_atom": -0.009051799774169922,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5282917602012727,
+                  "distill_intervention_count": 7,
+                  "distill_reference_position_rmse_angstrom": 0.05042235972267171,
+                  "frame_index": 7,
+                  "rmse_lift_fraction": 0.6063282101731162,
+                  "step": 28.0
+                },
+                {
+                  "baseline_energy_drift_ev_per_atom": 0.017780780792236328,
+                  "baseline_force_max_norm_ev_per_angstrom": 1.834481846313348,
+                  "baseline_reference_position_rmse_angstrom": 0.1308696761759656,
+                  "distill_energy_drift_ev_per_atom": -0.010233402252197266,
+                  "distill_force_max_norm_ev_per_angstrom": 0.5254461217699689,
+                  "distill_intervention_count": 8,
+                  "distill_reference_position_rmse_angstrom": 0.041784397172647834,
+                  "frame_index": 8,
+                  "rmse_lift_fraction": 0.6807175016123284,
+                  "step": 32.0
+                }
+              ],
+              "baseline_final_reference_position_rmse_angstrom": 0.13086968,
+              "distill_final_reference_position_rmse_angstrom": 0.0417844,
+              "distill_intervention_count": 8,
+              "final_rmse_lift_fraction": 0.6807174893374844,
+              "intervention_curve": [
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.00822141442825799,
+                  "force_max_norm_ev_per_angstrom_before": 1.9012296115445486,
+                  "iteration": 1,
+                  "local_rmse_lift_fraction": 0.08037487406410308,
+                  "reference_rmse_after_angstrom": 0.09366590178376911,
+                  "reference_rmse_before_angstrom": 0.10185226473498742,
+                  "step": 4.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.03500000000000001,
+                  "correction_norm_mean_angstrom": 0.009898253020818,
+                  "force_max_norm_ev_per_angstrom_before": 1.7695161874973464,
+                  "iteration": 2,
+                  "local_rmse_lift_fraction": 0.09423197326848945,
+                  "reference_rmse_after_angstrom": 0.08869247605154325,
+                  "reference_rmse_before_angstrom": 0.09791963663322556,
+                  "step": 8.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.011037743741553807,
+                  "force_max_norm_ev_per_angstrom_before": 1.7393504742295574,
+                  "iteration": 3,
+                  "local_rmse_lift_fraction": 0.11013800574248132,
+                  "reference_rmse_after_angstrom": 0.08240849845408751,
+                  "reference_rmse_before_angstrom": 0.09260817855565048,
+                  "step": 12.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.011765726007375545,
+                  "force_max_norm_ev_per_angstrom_before": 1.6880371598506685,
+                  "iteration": 4,
+                  "local_rmse_lift_fraction": 0.12854752803112326,
+                  "reference_rmse_after_angstrom": 0.07508601165825185,
+                  "reference_rmse_before_angstrom": 0.0861619125235937,
+                  "step": 16.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.034999999999999996,
+                  "correction_norm_mean_angstrom": 0.012190160016212162,
+                  "force_max_norm_ev_per_angstrom_before": 1.5987490471551447,
+                  "iteration": 5,
+                  "local_rmse_lift_fraction": 0.14940584018326195,
+                  "reference_rmse_after_angstrom": 0.06729587110941224,
+                  "reference_rmse_before_angstrom": 0.07911630985558524,
+                  "step": 20.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.012350742395233816,
+                  "force_max_norm_ev_per_angstrom_before": 1.333741255382596,
+                  "iteration": 6,
+                  "local_rmse_lift_fraction": 0.17442935877441884,
+                  "reference_rmse_after_angstrom": 0.05907867661383513,
+                  "reference_rmse_before_angstrom": 0.07156101932855957,
+                  "step": 24.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.012372665315385193,
+                  "force_max_norm_ev_per_angstrom_before": 0.9465554241291588,
+                  "iteration": 7,
+                  "local_rmse_lift_fraction": 0.2060545276440048,
+                  "reference_rmse_after_angstrom": 0.05042235972267171,
+                  "reference_rmse_before_angstrom": 0.06350859281689178,
+                  "step": 28.0,
+                  "stiff_axis_drift_fraction": 0.0
+                },
+                {
+                  "correction_norm_max_angstrom": 0.035,
+                  "correction_norm_mean_angstrom": 0.012175660911980881,
+                  "force_max_norm_ev_per_angstrom_before": 0.9278270100338245,
+                  "iteration": 8,
+                  "local_rmse_lift_fraction": 0.24254481705801695,
+                  "reference_rmse_after_angstrom": 0.041784397172647834,
+                  "reference_rmse_before_angstrom": 0.055164184117607776,
+                  "step": 32.0,
+                  "stiff_axis_drift_fraction": 0.0
+                }
+              ],
+              "mean_rmse_lift_fraction": 0.3669074272337428,
+              "primary_metric": "final_reference_position_rmse_angstrom",
+              "schema": "lupine.distill.md_observable_score.summary.v1",
+              "verdict": "distill_accuracy_win"
+            },
+            "uri": "/mlip/chgnet-lifepo4-li-channel-distill-accuracy-local-v1.json",
+            "variant_id": "distill_accuracy"
+          }
+        ],
+        "required_artifact_schemas": [
+          "lupine.mlip.md_trajectory.v1",
+          "lupine.distill.md_observable_score.v1"
+        ],
+        "status": "measured_baseline_and_distill_available",
+        "visual_requirements": [
+          "No fake ion pathway",
+          "Li channels are inferred from measured structure and species labels",
+          "baseline and Distill use the same reference and timestep normalization",
+          "barrier and occupancy plots appear only from measured scores",
+          "intervention overlays are generated from Distill runtime events"
+        ]
+      },
+      "why_we_care": "This is deliberately outside EAM comfort. The value proposition is whether Distill can stabilize a complex ionic migration task where DFT-trained MLIPs matter and simple metallic potentials are the wrong tool."
+    }
+  ],
+  "generated_at": "2026-05-27T00:00:00Z",
+  "purpose": "Define real, no-mock long-horizon MLIP demonstrations that run scientifically through Distill and visually through the viewer.",
+  "registry_id": "mlip-long-horizon-demo-registry-v1",
+  "schema": "lupine.mlip.long_demo_registry.v1",
+  "shared_variants": [
+    "baseline",
+    "distill_accuracy"
+  ],
+  "viewer_artifact_contracts": [
+    "lupine.distill.equilibrium_solve_score.v1",
+    "lupine.mlip.equilibrium_viewer.v1",
+    "lupine.mlip.md_trajectory.v1",
+    "lupine.distill.md_observable_score.v1"
+  ],
+  "workstream_contract": {
+    "scientific_distill": {
+      "must_emit": [
+        "baseline artifact",
+        "distill_accuracy artifact",
+        "shared reference provenance",
+        "same offset or MD protocol",
+        "accuracy delta",
+        "intervention trace",
+        "fault-line classification"
+      ],
+      "owner": "atlas-distill plus Python MLIP runner",
+      "responsibility": "Run the MLIP, apply versioned hyper-ribbon policy in-run, score physics observables, emit fault lines, and decide whether the ribbon helped or hurt."
+    },
+    "viewer": {
+      "must_emit": [
+        "artifact URI",
+        "frame count",
+        "reference object",
+        "baseline/distill pair state",
+        "visual overlays derived from real frames",
+        "clear awaiting-measurement states when artifacts are absent"
+      ],
+      "owner": "viewer and Live Lab",
+      "responsibility": "Render only measured trajectories, convergence curves, intervention overlays, and published-reference deltas from artifacts produced by the scientific lane."
+    }
+  }
+}

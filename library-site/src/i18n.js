@@ -7,11 +7,12 @@ export const SUPPORTED_LANGS = ['en', 'zh'];
 const STRINGS = {
   en: {
     'brand.title': 'Lupine Library',
-    'meta.description': 'Mobile-first reader for Lupine Materials Science research: UQ, benchmarking, MLIPs, and computational materials theory.',
+    'meta.title': 'Lupine Library — Lupine Science Research',
+    'meta.description': 'Mobile-first reader for Lupine Science research: UQ, benchmarking, MLIPs, and computational materials theory.',
 
     'home.loading': 'Loading library…',
-    'home.hero': 'Lupine <em>Research</em> Library',
-    'home.hero.sub': 'Mobile-first reader for cutting-edge materials science research.',
+    'home.hero': 'Lupine Science <em>Library</em>',
+    'home.hero.sub': 'Mobile-first reader for cutting-edge atomistic prediction research.',
     'home.stats.reports': 'reports',
     'home.stats.words': 'words',
     'home.stats.minutes': 'min of reading',
@@ -57,10 +58,11 @@ const STRINGS = {
 
   zh: {
     'brand.title': 'Lupine 图书馆',
-    'meta.description': '面向移动端的 Lupine 材料科学研究阅读器：不确定性量化、基准测试、MLIP 和计算材料理论。',
+    'meta.title': 'Lupine 图书馆 — Lupine Science 研究',
+    'meta.description': '面向移动端的 Lupine Science 研究阅读器：不确定性量化、基准测试、MLIP 和计算材料理论。',
 
     'home.loading': '正在加载图书馆…',
-    'home.hero': 'Lupine <em>研究</em>图书馆',
+    'home.hero': 'Lupine Science <em>研究</em>图书馆',
     'home.hero.sub': '面向前沿材料科学研究的移动优先阅读器。',
     'home.stats.reports': '篇报告',
     'home.stats.words': '字',

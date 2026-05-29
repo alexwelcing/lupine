@@ -22,7 +22,7 @@ const root = createRoot(document.getElementById('root')!);
 if (loadError) {
   root.render(
     <div style={{ padding: 40, background: '#06080d', color: '#ff5472', height: '100vh', fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}>
-      <h2 style={{ color: '#00c8f0', marginBottom: 16 }}>Lupi - Import Error</h2>
+      <h2 style={{ color: '#00c8f0', marginBottom: 16 }}>LUPI - Import Error</h2>
       {loadError}
     </div>
   );
@@ -38,7 +38,7 @@ if (loadError) {
     console.error('[lupi] Step 3: render FAILED:', err);
     root.render(
       <div style={{ padding: 40, background: '#06080d', color: '#ff5472', height: '100vh', fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}>
-        <h2 style={{ color: '#00c8f0', marginBottom: 16 }}>Lupi - Render Error</h2>
+        <h2 style={{ color: '#00c8f0', marginBottom: 16 }}>LUPI - Render Error</h2>
         {err.message}{'\n'}{err.stack}
       </div>
     );

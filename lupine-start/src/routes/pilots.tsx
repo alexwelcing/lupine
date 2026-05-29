@@ -6,10 +6,10 @@ export const Route = createFileRoute('/pilots')({
   component: PilotsPage,
   head: () => ({
     meta: [
-      { title: 'Pilots — audit, accelerator, three named wedges' },
-      { name: 'description', content: 'Solid-state electrolytes, Ni-base superalloys, electrocatalysts. Three wedges where the cross-potential geometry pays off twice: once as a measured error budget and once as a low-rank retraining target that compresses MLIP fine-tunes to the modes that matter.' },
-      { property: 'og:title', content: 'Pilots — audit, accelerator, three named wedges' },
-      { property: 'og:description', content: 'Pick a wedge. We name the failure modes and hand you the retraining target. No swap-out.' },
+      { title: 'Audits - Lupine Science' },
+      { name: 'description', content: 'Lab-facing MLIP failure-geometry audits: measured error budgets, LUPI evidence routes, and bounded next experiments.' },
+      { property: 'og:title', content: 'Audits - Lupine Science' },
+      { property: 'og:description', content: 'Pick a workflow. Lupine Science maps the failure modes, makes evidence inspectable, and names the next experiment.' },
       { property: 'og:url', content: 'https://lupine.science/pilots' },
     ],
   }),
@@ -24,7 +24,7 @@ const WEDGES = [
     pain:
       'MLIP-driven NEB on Li-ion conductors is unstable exactly where it matters: at the migration saddle, where Deng et al. (2024) showed universal MLIPs systematically soften the PES.',
     deliverable:
-      'Cross-potential audit across the customer-defined MLIP set (typically 6–10 candidates from UMA / MACE-MP / Orb / SevenNet plus internal fine-tunes), localized to migration-barrier curvature, written back as a per-trajectory error budget that travels with every NEB run — and as a 2–3 mode retraining target that compresses fine-tune compute against the modes that actually move test loss (cf. Bordelon, Atanasov & Pehlevan 2025).',
+      'Cross-potential audit across the lab-defined MLIP set (typically 6–10 candidates from UMA / MACE-MP / Orb / SevenNet plus internal fine-tunes), localized to migration-barrier curvature, written back as a per-trajectory error budget that travels with every NEB run — and as a 2–3 mode retraining target that compresses fine-tune compute against the modes that actually move test loss (cf. Bordelon, Atanasov & Pehlevan 2025).',
     metricLabel: 'Migration-barrier spread',
     metricValue: '0.1–0.3 eV',
     metricNote: 'The order of magnitude a typical pilot surfaces — small enough that the aggregate score looks like consensus, large enough that the within-MLIP disagreement flips a screening decision.',
@@ -35,12 +35,12 @@ const WEDGES = [
     title: 'Ni-base γ/γ′ superalloys',
     accent: 'var(--violet-300)',
     pain:
-      'Pooling errors across γ and γ′ phases is a textbook Simpson\'s paradox: a potential that wins in aggregate can be inferior on the property the customer cares about (γ/γ′ misfit strain, anti-phase boundary energy, creep activation enthalpy).',
+      'Pooling errors across γ and γ′ phases is a textbook Simpson\'s paradox: a potential that wins in aggregate can be inferior on the property the lab cares about (γ/γ′ misfit strain, anti-phase boundary energy, creep activation enthalpy).',
     deliverable:
-      'Phase-stratified random-effects meta-analysis with Simpson\'s-paradox detection. We refuse to declare a global winner when the within-phase evidence does not support one, report the within-phase ranking the aggregate would have hidden, and hand the customer a two-mode retraining objective that operates on the misfit-strain residual rather than re-fitting the whole γ/γ′ stack.',
+      'Phase-stratified random-effects meta-analysis with Simpson\'s-paradox detection. We refuse to declare a global winner when the within-phase evidence does not support one, report the within-phase ranking the aggregate would have hidden, and hand the model team a two-mode retraining objective that operates on the misfit-strain residual rather than re-fitting the whole γ/γ′ stack.',
     metricLabel: 'Effective dimensionality',
     metricValue: 'PR/m < 1',
-    metricNote: 'The hyper-ribbon criterion (Transtrum, Machta & Sethna 2011) survives stratification by γ/γ′ phase across the customer\'s composition window. The per-phase ranking is the deliverable.',
+    metricNote: 'The hyper-ribbon criterion (Transtrum, Machta & Sethna 2011) survives stratification by γ/γ′ phase across the lab-defined composition window. The per-phase ranking is the deliverable.',
   },
   {
     id: 'catalysis',
@@ -50,24 +50,24 @@ const WEDGES = [
     pain:
       'GGA / GGA+U inconsistencies in MPtrj and Alexandria training data create spurious metal-oxide repulsion. The result is the cross-potential variance Deng et al. flagged — most damaging in adsorbate binding energies and surface reaction barriers.',
     deliverable:
-      'OOD detection on adsorbate-coverage configurations, plus property-specific uncertainty for binding energies and reaction barriers. The customer keeps their MLIP; we attach a calibrated confidence to every screening prediction, plus a low-rank correction term that targets the binding-energy residual specifically — a small, sample-efficient fine-tune object instead of a full retrain.',
+      'OOD detection on adsorbate-coverage configurations, plus property-specific uncertainty for binding energies and reaction barriers. The lab keeps its MLIP; we attach a calibrated confidence to every screening prediction, plus a low-rank correction term that targets the binding-energy residual specifically — a small, sample-efficient fine-tune object instead of a full retrain.',
     metricLabel: 'Adsorbate OOD detector',
     metricValue: 'calibrated',
-    metricNote: 'A receiver-operator curve on held-out adsorbate sites the universal MLIP was not trained on, calibrated against the customer\'s reference DFT. Per-pilot AUROC depends on coverage, MLIP, and reference quality — we report the curve, not a headline number.',
+    metricNote: 'A receiver-operator curve on held-out adsorbate sites the universal MLIP was not trained on, calibrated against the lab reference DFT. Per-pilot AUROC depends on coverage, MLIP, and reference quality — we report the curve, not a headline number.',
   },
 ]
 
 function PilotsPage() {
   return (
     <PageShell
-      kicker="PILOTS · AUDIT + ACCELERATOR"
-      title="Pick a wedge. Get the audit and the retraining target."
-      subtitle="We do not pilot 'materials informatics in general.' We pilot one named workflow at a time — solid-state electrolytes, Ni-base superalloys, electrocatalysis — and we run the cross-potential geometry against the MLIPs the customer already trusts. The same artifact pays off twice: as a measured error budget, and as a low-rank specification of which modes a fine-tune actually needs to fix. No migration, no swap-out, no synthesis claims."
+      kicker="AUDITS"
+      title="Pick a workflow. Inspect the failure geometry."
+      subtitle="We do not pilot 'materials informatics in general.' We pilot one named workflow at a time — solid-state electrolytes, Ni-base superalloys, electrocatalysis — and we run the cross-potential geometry against the MLIPs the lab already trusts. The same artifact pays off twice: as a measured error budget, and as a low-rank specification of which modes a fine-tune actually needs to fix. No migration, no swap-out, no synthesis claims."
       maxWidth="5xl"
     >
       <div className="space-y-12">
         <p className="text-[12px] font-mono uppercase tracking-[0.08em] text-[var(--on-surface-variant)] opacity-70 -mt-4">
-          Illustrative wedges · the metric values describe the order of magnitude a typical pilot surfaces, not a published measurement on a specific customer's MLIP set.
+          Illustrative wedges · the metric values describe the order of magnitude a typical pilot surfaces, not a published measurement on a specific lab's MLIP set.
         </p>
         {WEDGES.map((w, i) => (
           <section
@@ -121,7 +121,7 @@ function PilotsPage() {
               larger number of negligible ones. That is the same low-effective-dimensionality
               signature that Simon et al. (2026, <em>There Will Be a Scientific Theory of Deep
               Learning</em>) identify as the empirical mark of a learnable system — a "simple
-              empirical law" of learning, in their language. For a customer, that mathematical
+              empirical law" of learning, in their language. For a lab, that mathematical
               shortcut translates to two distinct economic deliverables.
             </p>
           </div>
@@ -130,7 +130,7 @@ function PilotsPage() {
               <span className="mono-label text-[var(--lupine-400)] block mb-3">Deliverable A · the audit</span>
               <h3 className="text-xl mb-3 text-[var(--on-surface)] italic">A measured, citable error budget.</h3>
               <p className="text-sm text-[var(--on-surface-variant)] leading-relaxed mb-3">
-                Per-property residuals across the customer-defined MLIP set, with bootstrap CIs,
+                Per-property residuals across the lab-defined MLIP set, with bootstrap CIs,
                 Simpson's-paradox flags, and OOD detection. Travels as a structured JSON sidecar
                 attached to every MD trajectory. Reviewable by a senior internal scientist or an
                 external regulator.
@@ -163,16 +163,16 @@ function PilotsPage() {
             <h2 className="font-serif tracking-tight text-4xl lg:text-5xl mb-6 leading-[1.05] text-[var(--on-surface)]">Four weeks. One workflow. No migration.</h2>
             <p className="text-[var(--on-surface-variant)] leading-relaxed mb-6">
               Pilots are scoped tight on purpose. We do not promise material discoveries; we
-              promise a measured error budget on the customer's own MLIP candidates, attached to
-              the customer's own production trajectories.
+              promise a measured error budget on the lab's own MLIP candidates, attached to
+              the lab's own production trajectories.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { week: 'Week 1', title: 'Scope', body: 'Customer names the workflow, the MLIP candidates, the property targets, and the reference DFT (or the experimental anchor). Manifest snapshot date locked.' },
-              { week: 'Week 2', title: 'Audit', body: 'Cross-potential PCA, FIM eigenvalues, bootstrap CIs, Simpson\'s-paradox detection, OOD calibration. Runs against the customer\'s benchmark in a single-tenant deployment.' },
-              { week: 'Week 3', title: 'Localize', body: 'Per-property residual loadings, identification of the dominant failure modes, comparison against the customer\'s prior MLIP-selection rationale.' },
-              { week: 'Week 4', title: 'Integrate', body: 'Per-trajectory error-budget sidecar wired into the customer\'s CI / orchestration. Pilot deliverable signed off; conversion to ongoing audit at customer\'s discretion.' },
+              { week: 'Week 1', title: 'Scope', body: 'The lab names the workflow, the MLIP candidates, the property targets, and the reference DFT (or the experimental anchor). Manifest snapshot date locked.' },
+              { week: 'Week 2', title: 'Audit', body: 'Cross-potential PCA, FIM eigenvalues, bootstrap CIs, Simpson\'s-paradox detection, OOD calibration. Runs against the lab benchmark.' },
+              { week: 'Week 3', title: 'Localize', body: 'Per-property residual loadings, identification of the dominant failure modes, comparison against the lab prior MLIP-selection rationale.' },
+              { week: 'Week 4', title: 'Integrate', body: 'Per-trajectory error-budget sidecar and evidence pack. Claim status, LUPI route, and next experiment recorded.' },
             ].map((s, i) => (
               <div
                 key={s.week}
@@ -204,7 +204,7 @@ function PilotsPage() {
               </li>
               <li>
                 <strong className="text-[var(--on-surface)]">Not a migration.</strong> The
-                customer keeps LAMMPS, ASE, KIM, and whichever MLIPs they currently trust. We
+                lab keeps LAMMPS, ASE, KIM, and whichever MLIPs they currently trust. We
                 attach. We do not replace.
               </li>
               <li>

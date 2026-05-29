@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Lupine research library — mobile-first reader for library.lupine.science",
+  "description": "Lupine Science research library — mobile-first reader for library.lupine.science",
   "scripts": {
     "build": "node scripts/build.js",
     "dev": "node scripts/build.js && node scripts/serve.js",

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build the Lupine research library.
+// Build the Lupine Science research library.
 // Reads markdown sources defined in scripts/catalog.js, renders each to HTML,
 // and emits a static site into dist/ ready for nginx on Cloud Run.
 

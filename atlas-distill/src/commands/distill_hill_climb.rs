@@ -89,6 +89,8 @@ struct HillClimbCase {
     schema: Option<String>,
     #[serde(default)]
     case_id: Option<String>,
+    #[serde(default)]
+    group_id: Option<String>,
     row_id: String,
     #[serde(default)]
     mlip_id: Option<String>,
@@ -123,6 +125,7 @@ struct SearchConfigReport {
     support_lift_values: Vec<f64>,
     support_distance_values: Vec<f64>,
     ribbon_feature_distance_values: Vec<f64>,
+    ribbon_support_error_floor_values: Vec<f64>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -139,15 +142,24 @@ struct CandidateReport {
     policy_limits: PolicyLimits,
     objective_score: f64,
     accuracy_delta_mean: f64,
+    accuracy_delta_min: f64,
+    relative_lift_mean: f64,
+    relative_lift_min: f64,
+    group_relative_lift_mean: f64,
+    group_relative_lift_min: f64,
+    group_regression_rate: f64,
+    group_count: usize,
     baseline_error_mean: f64,
     corrected_error_mean: f64,
     corrected_accuracy_mean: f64,
     runtime_proxy_mean: f64,
+    regression_rate: f64,
     refusal_rate: f64,
     blocked_correction_rate: f64,
     intervention_rate: f64,
     case_count: usize,
     scoring_notes: Vec<String>,
+    theorem_development_lanes: Vec<TheoremDevelopmentLane>,
 }
 
 #[derive(Debug, Clone)]
@@ -156,10 +168,18 @@ struct CandidateEvaluation {
     policy_limits: PolicyLimits,
     objective_score: f64,
     accuracy_delta_mean: f64,
+    accuracy_delta_min: f64,
+    relative_lift_mean: f64,
+    relative_lift_min: f64,
+    group_relative_lift_mean: f64,
+    group_relative_lift_min: f64,
+    group_regression_rate: f64,
+    group_count: usize,
     baseline_error_mean: f64,
     corrected_error_mean: f64,
     corrected_accuracy_mean: f64,
     runtime_proxy_mean: f64,
+    regression_rate: f64,
     refusal_rate: f64,
     blocked_correction_rate: f64,
     intervention_rate: f64,
@@ -171,14 +191,33 @@ struct WeightedSums {
     weight: f64,
     objective: f64,
     accuracy_delta: f64,
+    relative_lift: f64,
     baseline_error: f64,
     corrected_error: f64,
     corrected_accuracy: f64,
     runtime_proxy: f64,
+    regressions: f64,
     refusals: f64,
     blocked: f64,
     interventions: f64,
     cases: usize,
+    accuracy_delta_min: Option<f64>,
+    relative_lift_min: Option<f64>,
+}
+
+#[derive(Debug, Default)]
+struct GroupSums {
+    baseline_error: f64,
+    corrected_error: f64,
+    count: usize,
+}
+
+#[derive(Debug, Clone, Serialize)]
+struct TheoremDevelopmentLane {
+    lane: String,
+    signal: String,
+    runtime_proxy: String,
+    why_it_matters: String,
 }
 
 const FACTORS: [f64; 6] = [0.125, 0.25, 0.5, 0.75, 1.25, 1.5];
@@ -188,6 +227,7 @@ const SCALE_VALUES: [f64; 13] = [
 const SUPPORT_LIFT_VALUES: [f64; 6] = [0.0, 0.01, 0.02, 0.05, 0.10, 0.20];
 const SUPPORT_DISTANCE_VALUES: [f64; 6] = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5];
 const RIBBON_FEATURE_DISTANCE_VALUES: [f64; 9] = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 5.0, 10.0];
+const RIBBON_SUPPORT_ERROR_FLOOR_VALUES: [f64; 7] = [0.0, 0.01, 0.02, 0.05, 0.08, 0.10, 0.20];
 
 pub fn run(args: DistillHillClimbArgs) -> Result<()> {
     if args.beam_width == 0 {
@@ -329,6 +369,7 @@ fn hill_climb(cases: &[HillClimbCase], args: &DistillHillClimbArgs) -> Result<Hi
             support_lift_values: SUPPORT_LIFT_VALUES.to_vec(),
             support_distance_values: SUPPORT_DISTANCE_VALUES.to_vec(),
             ribbon_feature_distance_values: RIBBON_FEATURE_DISTANCE_VALUES.to_vec(),
+            ribbon_support_error_floor_values: RIBBON_SUPPORT_ERROR_FLOOR_VALUES.to_vec(),
         },
         cases: summarize_cases(cases),
         best_candidate,
@@ -344,6 +385,7 @@ fn evaluate_candidate(
     objective: HillClimbObjective,
 ) -> Result<CandidateEvaluation> {
     let mut sums = WeightedSums::default();
+    let mut groups: HashMap<String, GroupSums> = HashMap::new();
     for case in cases {
         let mut context = case.context.clone().unwrap_or_else(|| json!({}));
         if let Some(object) = context.as_object_mut() {
@@ -375,19 +417,27 @@ fn evaluate_candidate(
         let baseline_accuracy = normalized_accuracy(baseline_error, tolerance);
         let corrected_accuracy = normalized_accuracy(corrected_error, tolerance);
         let accuracy_delta = corrected_accuracy - baseline_accuracy;
+        let relative_lift = relative_lift(baseline_error, corrected_error);
         let action_summary = summarize_actions(&decision);
         let runtime_proxy = runtime_proxy(&action_summary);
-        let objective_score =
-            case_objective(accuracy_delta, runtime_proxy, &action_summary, objective);
+        let objective_score = case_objective(
+            accuracy_delta,
+            relative_lift,
+            runtime_proxy,
+            &action_summary,
+            objective,
+        );
         let weight = case.weight;
 
         sums.weight += weight;
         sums.objective += objective_score * weight;
         sums.accuracy_delta += accuracy_delta * weight;
+        sums.relative_lift += relative_lift * weight;
         sums.baseline_error += baseline_error * weight;
         sums.corrected_error += corrected_error * weight;
         sums.corrected_accuracy += corrected_accuracy * weight;
         sums.runtime_proxy += runtime_proxy * weight;
+        sums.regressions += if relative_lift < -1e-9 { weight } else { 0.0 };
         sums.refusals += if action_summary.refused { weight } else { 0.0 };
         sums.blocked += if action_summary.blocked { weight } else { 0.0 };
         sums.interventions += if action_summary.intervened {
@@ -396,21 +446,72 @@ fn evaluate_candidate(
             0.0
         };
         sums.cases += 1;
+        sums.accuracy_delta_min = Some(
+            sums.accuracy_delta_min
+                .map_or(accuracy_delta, |current| current.min(accuracy_delta)),
+        );
+        sums.relative_lift_min = Some(
+            sums.relative_lift_min
+                .map_or(relative_lift, |current| current.min(relative_lift)),
+        );
+        let group = groups.entry(group_id(case)).or_default();
+        group.baseline_error += baseline_error;
+        group.corrected_error += corrected_error;
+        group.count += 1;
     }
 
     if sums.weight <= 0.0 {
         bail!("cannot evaluate candidate against zero total case weight");
     }
+    let group_lifts: Vec<f64> = groups
+        .values()
+        .filter(|group| group.count > 0)
+        .map(|group| {
+            relative_lift(
+                group.baseline_error / group.count as f64,
+                group.corrected_error / group.count as f64,
+            )
+        })
+        .collect();
+    let group_count = group_lifts.len();
+    let group_relative_lift_mean = if group_lifts.is_empty() {
+        0.0
+    } else {
+        group_lifts.iter().sum::<f64>() / group_lifts.len() as f64
+    };
+    let group_relative_lift_min = group_lifts.iter().copied().reduce(f64::min).unwrap_or(0.0);
+    let group_regression_rate = if group_lifts.is_empty() {
+        0.0
+    } else {
+        group_lifts.iter().filter(|lift| **lift < -1e-9).count() as f64 / group_lifts.len() as f64
+    };
+    let mean_objective = sums.objective / sums.weight;
+    let group_regression_penalty = 3.0 * group_regression_rate
+        + if group_relative_lift_min < -1e-9 {
+            2.0 * group_relative_lift_min.abs().min(2.0)
+        } else {
+            0.0
+        };
+    let objective_score =
+        mean_objective + 0.55 * group_relative_lift_mean - group_regression_penalty;
 
     Ok(CandidateEvaluation {
         candidate_id,
         policy_limits: limits,
-        objective_score: sums.objective / sums.weight,
+        objective_score,
         accuracy_delta_mean: sums.accuracy_delta / sums.weight,
+        accuracy_delta_min: sums.accuracy_delta_min.unwrap_or(0.0),
+        relative_lift_mean: sums.relative_lift / sums.weight,
+        relative_lift_min: sums.relative_lift_min.unwrap_or(0.0),
+        group_relative_lift_mean,
+        group_relative_lift_min,
+        group_regression_rate,
+        group_count,
         baseline_error_mean: sums.baseline_error / sums.weight,
         corrected_error_mean: sums.corrected_error / sums.weight,
         corrected_accuracy_mean: sums.corrected_accuracy / sums.weight,
         runtime_proxy_mean: sums.runtime_proxy / sums.weight,
+        regression_rate: sums.regressions / sums.weight,
         refusal_rate: sums.refusals / sums.weight,
         blocked_correction_rate: sums.blocked / sums.weight,
         intervention_rate: sums.interventions / sums.weight,
@@ -425,20 +526,32 @@ fn candidate_report(rank: usize, evaluation: &CandidateEvaluation) -> CandidateR
         policy_limits: evaluation.policy_limits.clone(),
         objective_score: round6(evaluation.objective_score),
         accuracy_delta_mean: round6(evaluation.accuracy_delta_mean),
+        accuracy_delta_min: round6(evaluation.accuracy_delta_min),
+        relative_lift_mean: round6(evaluation.relative_lift_mean),
+        relative_lift_min: round6(evaluation.relative_lift_min),
+        group_relative_lift_mean: round6(evaluation.group_relative_lift_mean),
+        group_relative_lift_min: round6(evaluation.group_relative_lift_min),
+        group_regression_rate: round6(evaluation.group_regression_rate),
+        group_count: evaluation.group_count,
         baseline_error_mean: round6(evaluation.baseline_error_mean),
         corrected_error_mean: round6(evaluation.corrected_error_mean),
         corrected_accuracy_mean: round6(evaluation.corrected_accuracy_mean),
         runtime_proxy_mean: round6(evaluation.runtime_proxy_mean),
+        regression_rate: round6(evaluation.regression_rate),
         refusal_rate: round6(evaluation.refusal_rate),
         blocked_correction_rate: round6(evaluation.blocked_correction_rate),
         intervention_rate: round6(evaluation.intervention_rate),
         case_count: evaluation.case_count,
         scoring_notes: vec![
             "accuracy is normalized per row from sealed reference error".to_string(),
+            "relative_lift rewards row-native material error reduction, so larger physical wins dominate small no-ops".to_string(),
+            "any per-case regression carries a large objective penalty and is surfaced as regression_rate/min_relative_lift".to_string(),
+            "group_relative_lift scores the published cell/pair surface, preventing per-structure search from diverging from report evidence".to_string(),
             "runtime_proxy is outer_loop_policy_replay, not backend layer timing".to_string(),
             "refusal, blocked correction, and intervention costs are part of the objective"
                 .to_string(),
         ],
+        theorem_development_lanes: theorem_development_lanes(),
     }
 }
 
@@ -446,6 +559,16 @@ fn compare_evaluations(a: &CandidateEvaluation, b: &CandidateEvaluation) -> Orde
     b.objective_score
         .partial_cmp(&a.objective_score)
         .unwrap_or(Ordering::Equal)
+        .then_with(|| {
+            a.group_regression_rate
+                .partial_cmp(&b.group_regression_rate)
+                .unwrap_or(Ordering::Equal)
+        })
+        .then_with(|| {
+            b.group_relative_lift_mean
+                .partial_cmp(&a.group_relative_lift_mean)
+                .unwrap_or(Ordering::Equal)
+        })
         .then_with(|| {
             b.accuracy_delta_mean
                 .partial_cmp(&a.accuracy_delta_mean)
@@ -491,6 +614,7 @@ fn summarize_actions(decision: &PolicyDecision) -> ActionSummary {
 
 fn case_objective(
     accuracy_delta: f64,
+    relative_lift: f64,
     runtime_proxy: f64,
     action_summary: &ActionSummary,
     objective: HillClimbObjective,
@@ -502,7 +626,14 @@ fn case_objective(
         0.0
     };
     let tighten_penalty = if action_summary.tightened { 0.10 } else { 0.0 };
-    accuracy_delta + objective.speed_weight() * (runtime_proxy - 1.0)
+    let material_lift_reward = 0.35 * relative_lift.max(0.0);
+    let regression_penalty = if relative_lift < -1e-9 {
+        1.25 + relative_lift.abs().min(2.0)
+    } else {
+        0.0
+    };
+    accuracy_delta + material_lift_reward + objective.speed_weight() * (runtime_proxy - 1.0)
+        - regression_penalty
         - refusal_penalty
         - blocked_penalty
         - tighten_penalty
@@ -624,6 +755,14 @@ fn normalized_accuracy(error: f64, tolerance: f64) -> f64 {
     1.0 / (1.0 + error / tolerance)
 }
 
+fn relative_lift(baseline_error: f64, corrected_error: f64) -> f64 {
+    if !baseline_error.is_finite() || !corrected_error.is_finite() || baseline_error.abs() <= 1e-12
+    {
+        return 0.0;
+    }
+    (baseline_error - corrected_error) / baseline_error.abs()
+}
+
 fn row_tolerance(row_id: &str) -> f64 {
     match row_id {
         "energy_volume" => 0.05,
@@ -697,6 +836,11 @@ fn neighbors(limits: &PolicyLimits) -> Vec<PolicyLimits> {
         candidate.max_ribbon_feature_distance_proxy = value;
         out.push(candidate);
     }
+    for value in RIBBON_SUPPORT_ERROR_FLOOR_VALUES {
+        let mut candidate = limits.clone();
+        candidate.min_ribbon_support_error_before = value;
+        out.push(candidate);
+    }
     out
 }
 
@@ -742,12 +886,52 @@ fn case_label(case: &HillClimbCase) -> String {
     })
 }
 
+fn group_id(case: &HillClimbCase) -> String {
+    case.group_id.clone().unwrap_or_else(|| {
+        format!(
+            "{}:{}",
+            case.row_id,
+            case.mlip_id.as_deref().unwrap_or("unknown")
+        )
+    })
+}
+
 fn default_weight() -> f64 {
     1.0
 }
 
 fn round6(value: f64) -> f64 {
     (value * 1_000_000.0).round() / 1_000_000.0
+}
+
+fn theorem_development_lanes() -> Vec<TheoremDevelopmentLane> {
+    vec![
+        TheoremDevelopmentLane {
+            lane: "kimi.vandermonde_decay".to_string(),
+            signal: "residual singular spectrum / participation ratio".to_string(),
+            runtime_proxy: "ribbon_residual_correction_v1.participation_ratio and eigenvalues"
+                .to_string(),
+            why_it_matters:
+                "Search should prefer corrections whose support residuals live on a thin, stable ribbon rather than arbitrary bias."
+                    .to_string(),
+        },
+        TheoremDevelopmentLane {
+            lane: "kimi.two_mode_inference".to_string(),
+            signal: "projection distance versus refusal threshold".to_string(),
+            runtime_proxy: "ribbon_feature_distance_proxy and support_eval_distance_proxy".to_string(),
+            why_it_matters:
+                "A bigger Distill win comes from correcting inside the tube and refusing outside it, not from globally pushing every backend."
+                    .to_string(),
+        },
+        TheoremDevelopmentLane {
+            lane: "lean.accuracy_commitment".to_string(),
+            signal: "per-case accuracy gain and no-regression guard".to_string(),
+            runtime_proxy: "accuracy_delta_min, relative_lift_min, regression_rate".to_string(),
+            why_it_matters:
+                "Lean build-lock commitments become useful when local search optimizes the same falsifiable condition before cloud spend."
+                    .to_string(),
+        },
+    ]
 }
 
 #[cfg(test)]
@@ -773,6 +957,7 @@ mod tests {
         let cases = vec![HillClimbCase {
             schema: Some("lupine.distill.hill_climb_case.v1".to_string()),
             case_id: Some("energy-case".to_string()),
+            group_id: None,
             row_id: "energy_volume".to_string(),
             mlip_id: Some("mace".to_string()),
             prediction: json!({"energy_ev_per_atom": 1.00}),
@@ -801,6 +986,7 @@ mod tests {
         let cases = vec![HillClimbCase {
             schema: Some("lupine.distill.hill_climb_case.v1".to_string()),
             case_id: Some("zero-bias".to_string()),
+            group_id: None,
             row_id: "energy_volume".to_string(),
             mlip_id: Some("chgnet".to_string()),
             prediction: json!({"energy_ev_per_atom": 0.10}),
@@ -820,10 +1006,33 @@ mod tests {
     }
 
     #[test]
+    fn objective_penalizes_case_level_regression_even_when_mean_can_hide_it() {
+        let summary = ActionSummary::default();
+        let improved = case_objective(
+            0.02,
+            0.10,
+            runtime_proxy(&summary),
+            &summary,
+            HillClimbObjective::Accuracy,
+        );
+        let regressed = case_objective(
+            0.02,
+            -0.10,
+            runtime_proxy(&summary),
+            &summary,
+            HillClimbObjective::Accuracy,
+        );
+
+        assert!(improved > regressed + 1.0);
+        assert_eq!(relative_lift(10.0, 8.0), 0.2);
+    }
+
+    #[test]
     fn rejects_unknown_case_schema() {
         let cases = vec![HillClimbCase {
             schema: Some("wrong".to_string()),
             case_id: None,
+            group_id: None,
             row_id: "energy_volume".to_string(),
             mlip_id: None,
             prediction: json!({"energy_ev_per_atom": 0.0}),

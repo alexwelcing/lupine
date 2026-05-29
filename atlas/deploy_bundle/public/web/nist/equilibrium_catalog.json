@@ -1,0 +1,1223 @@
+{
+  "schema": "lupine.nist.equilibrium_catalog.v1",
+  "source_csv": "nist_benchmark.csv",
+  "entry_count": 38,
+  "entries": [
+    {
+      "id": "1987--Ackland-G-J--Ag--LAMMPS--ipr1",
+      "material": "Ag",
+      "potential": "Ackland-1987",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/01418618708204485",
+      "reference": {
+        "lattice_a_angstrom": 4.085,
+        "energy_ev_per_atom": -2.95,
+        "elastic_constants_gpa": {
+          "c11": 124.0,
+          "c12": 93.4,
+          "c44": 46.1
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.08600067212411,
+        "energy_ev_per_atom": -2.96744390102708,
+        "elastic_constants_gpa": {
+          "c11": 172.427923401711,
+          "c12": 141.77678583622,
+          "c44": 86.4148351850066
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1989--Adams-J-B--Ag--LAMMPS--ipr1",
+      "material": "Ag",
+      "potential": "Adams-1989",
+      "pair_style": "eam",
+      "doi": "10.1557/jmr.1989.0102",
+      "reference": {
+        "lattice_a_angstrom": 4.085,
+        "energy_ev_per_atom": -2.95,
+        "elastic_constants_gpa": {
+          "c11": 124.0,
+          "c12": 93.4,
+          "c44": 46.1
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.08999989186543,
+        "energy_ev_per_atom": -2.85000000129742,
+        "elastic_constants_gpa": {
+          "c11": 129.068904250368,
+          "c12": 91.0742101469292,
+          "c44": 56.7434776140681
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1986--Foiles-S-M--Ag--LAMMPS--ipr1",
+      "material": "Ag",
+      "potential": "Foiles-1986",
+      "pair_style": "eam",
+      "doi": "10.1103/physrevb.33.7983",
+      "reference": {
+        "lattice_a_angstrom": 4.085,
+        "energy_ev_per_atom": -2.95,
+        "elastic_constants_gpa": {
+          "c11": 124.0,
+          "c12": 93.4,
+          "c44": 46.1
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.08999992358538,
+        "energy_ev_per_atom": -2.85000000156613,
+        "elastic_constants_gpa": {
+          "c11": 129.136132645198,
+          "c12": 91.0422691235999,
+          "c44": 56.7867003518529
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2006--Williams-P-L--Ag--LAMMPS--ipr1",
+      "material": "Ag",
+      "potential": "Williams-2006",
+      "pair_style": "eam/alloy",
+      "doi": "10.1088/0965-0393/14/5/002",
+      "reference": {
+        "lattice_a_angstrom": 4.085,
+        "energy_ev_per_atom": -2.95,
+        "elastic_constants_gpa": {
+          "c11": 124.0,
+          "c12": 93.4,
+          "c44": 46.1
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.090000144871,
+        "energy_ev_per_atom": -2.84999997472566,
+        "elastic_constants_gpa": {
+          "c11": 124.239179798937,
+          "c12": 93.87369668605,
+          "c44": 46.4193055928319
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2004--Zhou-X-W--Ag--LAMMPS--ipr1",
+      "material": "Ag",
+      "potential": "Zhou-2004",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.69.144113",
+      "reference": {
+        "lattice_a_angstrom": 4.085,
+        "energy_ev_per_atom": -2.95,
+        "elastic_constants_gpa": {
+          "c11": 124.0,
+          "c12": 93.4,
+          "c44": 46.1
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.08964974687949,
+        "energy_ev_per_atom": -2.84999503731192,
+        "elastic_constants_gpa": {
+          "c11": 122.875623800978,
+          "c12": 92.9240393189821,
+          "c44": 45.1238943711337
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2004--Liu-X-Y--Al--LAMMPS--ipr1",
+      "material": "Al",
+      "potential": "Liu-2004",
+      "pair_style": "eam/alloy",
+      "doi": "10.1088/0965-0393/12/4/007",
+      "reference": {
+        "lattice_a_angstrom": 4.05,
+        "energy_ev_per_atom": -3.39,
+        "elastic_constants_gpa": {
+          "c11": 108.2,
+          "c12": 61.3,
+          "c44": 28.5
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.03196044031461,
+        "energy_ev_per_atom": -3.36000036977678,
+        "elastic_constants_gpa": {
+          "c11": 118.93868000055,
+          "c12": 62.8996320228488,
+          "c44": 32.9722106744811
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2008--Mendelev-M-I--Al--LAMMPS--ipr1",
+      "material": "Al",
+      "potential": "Mendelev-2008",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/14786430802206482",
+      "reference": {
+        "lattice_a_angstrom": 4.05,
+        "energy_ev_per_atom": -3.39,
+        "elastic_constants_gpa": {
+          "c11": 108.2,
+          "c12": 61.3,
+          "c44": 28.5
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.04525979341702,
+        "energy_ev_per_atom": -3.41065695371891,
+        "elastic_constants_gpa": {
+          "c11": 105.091714534337,
+          "c12": 59.4628844374693,
+          "c44": 30.6588449403132
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2010--Mendelev-M-I--fictional-Al-1--LAMMPS--ipr1",
+      "material": "Al",
+      "potential": "Mendelev-2010",
+      "pair_style": "eam/fs",
+      "doi": "10.1088/0965-0393/18/7/074002",
+      "reference": {
+        "lattice_a_angstrom": 4.05,
+        "energy_ev_per_atom": -3.39,
+        "elastic_constants_gpa": {
+          "c11": 108.2,
+          "c12": 61.3,
+          "c44": 28.5
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.0440809363764,
+        "energy_ev_per_atom": -3.6047346522245,
+        "elastic_constants_gpa": {
+          "c11": 106.259743575141,
+          "c12": 62.9252405029575,
+          "c44": 30.1717200727219
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1999--Mishin-Y--Al--LAMMPS--ipr1",
+      "material": "Al",
+      "potential": "Mishin-1999",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.59.3393",
+      "reference": {
+        "lattice_a_angstrom": 4.05,
+        "energy_ev_per_atom": -3.39,
+        "elastic_constants_gpa": {
+          "c11": 108.2,
+          "c12": 61.3,
+          "c44": 28.5
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.05000466178543,
+        "energy_ev_per_atom": -3.35999998818269,
+        "elastic_constants_gpa": {
+          "c11": 113.795813300331,
+          "c12": 61.5547453947956,
+          "c44": 31.5945751531879
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2000--Sturgeon-J-B--Al--LAMMPS--ipr1",
+      "material": "Al",
+      "potential": "Sturgeon-2000",
+      "pair_style": "eam/fs",
+      "doi": "10.1103/physrevb.62.14720",
+      "reference": {
+        "lattice_a_angstrom": 4.05,
+        "energy_ev_per_atom": -3.39,
+        "elastic_constants_gpa": {
+          "c11": 108.2,
+          "c12": 61.3,
+          "c44": 28.5
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.05001021751104,
+        "energy_ev_per_atom": -3.3900019328239,
+        "elastic_constants_gpa": {
+          "c11": 94.6182749190722,
+          "c12": 68.1798349332263,
+          "c44": 42.4708883959332
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2010--Winey-J-M--Al--LAMMPS--ipr1",
+      "material": "Al",
+      "potential": "Winey-2009",
+      "pair_style": "eam/alloy",
+      "doi": "10.1088/0965-0393/17/5/055004",
+      "reference": {
+        "lattice_a_angstrom": 4.05,
+        "energy_ev_per_atom": -3.39,
+        "elastic_constants_gpa": {
+          "c11": 108.2,
+          "c12": 61.3,
+          "c44": 28.5
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.02484538561055,
+        "energy_ev_per_atom": -2.6459796171601,
+        "elastic_constants_gpa": {
+          "c11": 113.761286293048,
+          "c12": 61.710175685265,
+          "c44": 31.2492776210758
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2004--Zhou-X-W--Al--LAMMPS--ipr1",
+      "material": "Al",
+      "potential": "Zhou-2004",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.69.144113",
+      "reference": {
+        "lattice_a_angstrom": 4.05,
+        "energy_ev_per_atom": -3.39,
+        "elastic_constants_gpa": {
+          "c11": 108.2,
+          "c12": 61.3,
+          "c44": 28.5
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.05018069032533,
+        "energy_ev_per_atom": -3.58000247151857,
+        "elastic_constants_gpa": {
+          "c11": 112.284286650737,
+          "c12": 63.7972585442165,
+          "c44": 30.9299402944162
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2003--Zope-R-R--Al--LAMMPS--ipr1",
+      "material": "Al",
+      "potential": "Zope-2003",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.68.024102",
+      "reference": {
+        "lattice_a_angstrom": 4.05,
+        "energy_ev_per_atom": -3.39,
+        "elastic_constants_gpa": {
+          "c11": 108.2,
+          "c12": 61.3,
+          "c44": 28.5
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.04999996753358,
+        "energy_ev_per_atom": -3.36000002290445,
+        "elastic_constants_gpa": {
+          "c11": 116.815477508487,
+          "c12": 60.1172244765783,
+          "c44": 31.6596214477491
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1987--Ackland-G-J--Au--LAMMPS--ipr1",
+      "material": "Au",
+      "potential": "Ackland-1987",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/01418618708204485",
+      "reference": {
+        "lattice_a_angstrom": 4.078,
+        "energy_ev_per_atom": -3.81,
+        "elastic_constants_gpa": {
+          "c11": 192.3,
+          "c12": 163.1,
+          "c44": 42.0
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.07800072611969,
+        "energy_ev_per_atom": -3.78904529320799,
+        "elastic_constants_gpa": {
+          "c11": 256.787858247189,
+          "c12": 227.623830237274,
+          "c44": 100.815992238289
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1989--Adams-J-B--Au--LAMMPS--ipr1",
+      "material": "Au",
+      "potential": "Adams-1989",
+      "pair_style": "eam",
+      "doi": "10.1557/jmr.1989.0102",
+      "reference": {
+        "lattice_a_angstrom": 4.078,
+        "energy_ev_per_atom": -3.81,
+        "elastic_constants_gpa": {
+          "c11": 192.3,
+          "c12": 163.1,
+          "c44": 42.0
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.07999996805535,
+        "energy_ev_per_atom": -3.92999999949357,
+        "elastic_constants_gpa": {
+          "c11": 183.247572013356,
+          "c12": 158.711895714718,
+          "c44": 45.2608144201792
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1986--Foiles-S-M--Au--LAMMPS--ipr1",
+      "material": "Au",
+      "potential": "Foiles-1986",
+      "pair_style": "eam",
+      "doi": "10.1103/physrevb.33.7983",
+      "reference": {
+        "lattice_a_angstrom": 4.078,
+        "energy_ev_per_atom": -3.81,
+        "elastic_constants_gpa": {
+          "c11": 192.3,
+          "c12": 163.1,
+          "c44": 42.0
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.08000001830507,
+        "energy_ev_per_atom": -3.93000000017703,
+        "elastic_constants_gpa": {
+          "c11": 183.165779077391,
+          "c12": 158.757218404039,
+          "c44": 44.7253255221637
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2005--Grochola-G--Au--LAMMPS--ipr1",
+      "material": "Au",
+      "potential": "Grochola-2005",
+      "pair_style": "eam/alloy",
+      "doi": "10.1063/1.2124667",
+      "reference": {
+        "lattice_a_angstrom": 4.078,
+        "energy_ev_per_atom": -3.81,
+        "elastic_constants_gpa": {
+          "c11": 192.3,
+          "c12": 163.1,
+          "c44": 42.0
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.07011043949149,
+        "energy_ev_per_atom": -3.92421790603845,
+        "elastic_constants_gpa": {
+          "c11": 201.648483629458,
+          "c12": 169.531929910043,
+          "c44": 45.9689794915927
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2012--Norman-G-E--Au--LAMMPS--ipr1",
+      "material": "Au",
+      "potential": "Norman-2012",
+      "pair_style": "eam/alloy",
+      "doi": "10.1134/s1063776112040115",
+      "reference": {
+        "lattice_a_angstrom": 4.078,
+        "energy_ev_per_atom": -3.81,
+        "elastic_constants_gpa": {
+          "c11": 192.3,
+          "c12": 163.1,
+          "c44": 42.0
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.0685006539571,
+        "energy_ev_per_atom": -4.29936280838569,
+        "elastic_constants_gpa": {
+          "c11": 210.360835543277,
+          "c12": 159.976448458084,
+          "c44": 54.4571839316836
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2010--Olsson-P-A-T--Au--LAMMPS--ipr1",
+      "material": "Au",
+      "potential": "Olsson-2010",
+      "pair_style": "eam/alloy",
+      "doi": "10.1063/1.3460127",
+      "reference": {
+        "lattice_a_angstrom": 4.078,
+        "energy_ev_per_atom": -3.81,
+        "elastic_constants_gpa": {
+          "c11": 192.3,
+          "c12": 163.1,
+          "c44": 42.0
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.07999999990595,
+        "energy_ev_per_atom": -3.80999999999434,
+        "elastic_constants_gpa": {
+          "c11": 201.630057569851,
+          "c12": 169.970030851982,
+          "c44": 45.4400270224961
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2017--Purja-Pun-G-P--Au--LAMMPS--ipr1",
+      "material": "Au",
+      "potential": "Purja-2017",
+      "pair_style": "eam/alloy",
+      "doi": "unknown",
+      "reference": {
+        "lattice_a_angstrom": 4.078,
+        "energy_ev_per_atom": -3.81,
+        "elastic_constants_gpa": {
+          "c11": 192.3,
+          "c12": 163.1,
+          "c44": 42.0
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.07799795103699,
+        "energy_ev_per_atom": -3.93000000007216,
+        "elastic_constants_gpa": {
+          "c11": 205.399430841021,
+          "c12": 167.787699332038,
+          "c44": 48.7761570897886
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2004--Zhou-X-W--Au--LAMMPS--ipr1",
+      "material": "Au",
+      "potential": "Zhou-2004",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.69.144113",
+      "reference": {
+        "lattice_a_angstrom": 4.078,
+        "energy_ev_per_atom": -3.81,
+        "elastic_constants_gpa": {
+          "c11": 192.3,
+          "c12": 163.1,
+          "c44": 42.0
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 4.08006654573515,
+        "energy_ev_per_atom": -3.93000234382081,
+        "elastic_constants_gpa": {
+          "c11": 187.892630583916,
+          "c12": 157.828562311667,
+          "c44": 42.6003130933722
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1987--Ackland-G-J--Cu--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Ackland-1987",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/01418618708204485",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.61500112792192,
+        "energy_ev_per_atom": -3.51935302639108,
+        "elastic_constants_gpa": {
+          "c11": 231.215784136212,
+          "c12": 137.00603577412,
+          "c44": 138.031011103507
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1989--Adams-J-B--Cu--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Adams-1989",
+      "pair_style": "eam",
+      "doi": "10.1557/jmr.1989.0102",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.61499997539867,
+        "energy_ev_per_atom": -3.54000000229462,
+        "elastic_constants_gpa": {
+          "c11": 168.062571830634,
+          "c12": 123.754336198082,
+          "c44": 78.8471469309398
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2015--Borovikov-V--fictional-Cu-1--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Borovikov-2015",
+      "pair_style": "eam/fs",
+      "doi": "10.1088/0965-0393/23/5/055003",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.63922110648869,
+        "energy_ev_per_atom": -3.42533355426007,
+        "elastic_constants_gpa": {
+          "c11": 172.918750954597,
+          "c12": 128.001643032808,
+          "c44": 83.7203372948233
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2016--Borovikov-V--fictional-Cu-31--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Borovikov-2016",
+      "pair_style": "eam/fs",
+      "doi": "10.1088/0965-0393/24/8/085017",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.63856840057982,
+        "energy_ev_per_atom": -3.4066625256964,
+        "elastic_constants_gpa": {
+          "c11": 168.019556051428,
+          "c12": 131.336520692225,
+          "c44": 85.9310810570669
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1986--Foiles-S-M--Cu--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Foiles-1986",
+      "pair_style": "eam",
+      "doi": "10.1103/physrevb.33.7983",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.61499997576462,
+        "energy_ev_per_atom": -3.54000000228145,
+        "elastic_constants_gpa": {
+          "c11": 167.264598078078,
+          "c12": 124.153277823469,
+          "c44": 76.4468176717373
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2008--Mendelev-M-I--Cu--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Mendelev-2008",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/14786430802206482",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.63908745701191,
+        "energy_ev_per_atom": -3.28311620915219,
+        "elastic_constants_gpa": {
+          "c11": 174.475291781671,
+          "c12": 127.838540493126,
+          "c44": 84.4380046054193
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2012--Mendelev-M-I--Cu--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Mendelev-2013",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/14786435.2012.747012",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.63902984582228,
+        "energy_ev_per_atom": -3.42271916296482,
+        "elastic_constants_gpa": {
+          "c11": 174.127924867968,
+          "c12": 127.190062960752,
+          "c44": 83.7176221216318
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2001--Mishin-Y--Cu-1--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Mishin-2001",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.63.224106",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.61500005821549,
+        "energy_ev_per_atom": -3.53999996837948,
+        "elastic_constants_gpa": {
+          "c11": 169.881109635064,
+          "c12": 122.604214854317,
+          "c44": 76.1899581257661
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2004--Zhou-X-W--Cu--LAMMPS--ipr1",
+      "material": "Cu",
+      "potential": "Zhou-2004",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.69.144113",
+      "reference": {
+        "lattice_a_angstrom": 3.615,
+        "energy_ev_per_atom": -3.49,
+        "elastic_constants_gpa": {
+          "c11": 168.4,
+          "c12": 121.4,
+          "c44": 75.4
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.61499316996191,
+        "energy_ev_per_atom": -3.53998241045317,
+        "elastic_constants_gpa": {
+          "c11": 174.436344214511,
+          "c12": 123.659619111962,
+          "c44": 78.5233708553136
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1987--Ackland-G-J--Ni--LAMMPS--ipr1",
+      "material": "Ni",
+      "potential": "Ackland-1987",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/01418618708204485",
+      "reference": {
+        "lattice_a_angstrom": 3.524,
+        "energy_ev_per_atom": -4.44,
+        "elastic_constants_gpa": {
+          "c11": 246.5,
+          "c12": 147.3,
+          "c44": 124.7
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.52422036511869,
+        "energy_ev_per_atom": -4.45899743723961,
+        "elastic_constants_gpa": {
+          "c11": 260.685273751638,
+          "c12": 150.546144603531,
+          "c44": 131.432184713598
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1989--Adams-J-B--Ni--LAMMPS--ipr1",
+      "material": "Ni",
+      "potential": "Adams-1989",
+      "pair_style": "eam",
+      "doi": "10.1557/jmr.1989.0102",
+      "reference": {
+        "lattice_a_angstrom": 3.524,
+        "energy_ev_per_atom": -4.44,
+        "elastic_constants_gpa": {
+          "c11": 246.5,
+          "c12": 147.3,
+          "c44": 124.7
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.51999990988958,
+        "energy_ev_per_atom": -4.45000000382792,
+        "elastic_constants_gpa": {
+          "c11": 235.574884474912,
+          "c12": 153.141344658352,
+          "c44": 133.505081142698
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1986--Foiles-S-M--Ni--LAMMPS--ipr1",
+      "material": "Ni",
+      "potential": "Foiles-1986",
+      "pair_style": "eam",
+      "doi": "10.1103/physrevb.33.7983",
+      "reference": {
+        "lattice_a_angstrom": 3.524,
+        "energy_ev_per_atom": -4.44,
+        "elastic_constants_gpa": {
+          "c11": 246.5,
+          "c12": 147.3,
+          "c44": 124.7
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.5199999217937,
+        "energy_ev_per_atom": -4.45000000357544,
+        "elastic_constants_gpa": {
+          "c11": 233.273125828758,
+          "c12": 154.287321147205,
+          "c44": 127.636559617416
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2012--Mendelev-M-I--Ni--LAMMPS--ipr1",
+      "material": "Ni",
+      "potential": "Mendelev-2012",
+      "pair_style": "eam/fs",
+      "doi": "10.1080/14786435.2012.712220",
+      "reference": {
+        "lattice_a_angstrom": 3.524,
+        "energy_ev_per_atom": -4.44,
+        "elastic_constants_gpa": {
+          "c11": 246.5,
+          "c12": 147.3,
+          "c44": 124.7
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.51812111650558,
+        "energy_ev_per_atom": -4.38550876957346,
+        "elastic_constants_gpa": {
+          "c11": 247.016843310398,
+          "c12": 147.295139583981,
+          "c44": 122.773084555568
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "1999--Mishin-Y--Ni--LAMMPS--ipr1",
+      "material": "Ni",
+      "potential": "Mishin-1999",
+      "pair_style": "eam/alloy",
+      "doi": "10.1103/physrevb.59.3393",
+      "reference": {
+        "lattice_a_angstrom": 3.524,
+        "energy_ev_per_atom": -4.44,
+        "elastic_constants_gpa": {
+          "c11": 246.5,
+          "c12": 147.3,
+          "c44": 124.7
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.51999943754043,
+        "energy_ev_per_atom": -4.44999999834724,
+        "elastic_constants_gpa": {
+          "c11": 247.862330566274,
+          "c12": 147.828379620979,
+          "c44": 124.838117594854
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2026--Oliveira-D-S--Ni--LAMMPS--ipr1",
+      "material": "Ni",
+      "potential": "Oliveira-2026",
+      "pair_style": "adp",
+      "doi": "10.1007/s13538-026-02011-z",
+      "reference": {
+        "lattice_a_angstrom": 3.524,
+        "energy_ev_per_atom": -4.44,
+        "elastic_constants_gpa": {
+          "c11": 246.5,
+          "c12": 147.3,
+          "c44": 124.7
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.50950749150006,
+        "energy_ev_per_atom": -4.4460791696859,
+        "elastic_constants_gpa": {
+          "c11": 292.488662960108,
+          "c12": 166.062593319468,
+          "c44": 116.484799235932
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2016--Stoller-R-E--Ni--LAMMPS--ipr1",
+      "material": "Ni",
+      "potential": "Stoller-2016",
+      "pair_style": "eam/alloy",
+      "doi": "10.1021/acs.jctc.5b01194",
+      "reference": {
+        "lattice_a_angstrom": 3.524,
+        "energy_ev_per_atom": -4.44,
+        "elastic_constants_gpa": {
+          "c11": 246.5,
+          "c12": 147.3,
+          "c44": 124.7
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.51999999914572,
+        "energy_ev_per_atom": -4.44999998574003,
+        "elastic_constants_gpa": {
+          "c11": 240.913567191331,
+          "c12": 150.493462702583,
+          "c44": 127.136927389289
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    },
+    {
+      "id": "2004--Zhou-X-W--Ni--LAMMPS--ipr1",
+      "material": "Ni",
+      "potential": "Zhou-2004",
+      "pair_style": "eam/fs",
+      "doi": "10.1103/physrevb.69.144113",
+      "reference": {
+        "lattice_a_angstrom": 3.524,
+        "energy_ev_per_atom": -4.44,
+        "elastic_constants_gpa": {
+          "c11": 246.5,
+          "c12": 147.3,
+          "c44": 124.7
+        }
+      },
+      "predicted": {
+        "lattice_a_angstrom": 3.51968272664788,
+        "energy_ev_per_atom": -4.44996828171614,
+        "elastic_constants_gpa": {
+          "c11": 249.218020232332,
+          "c12": 147.072758446492,
+          "c44": 126.963385745559
+        }
+      },
+      "available_properties": [
+        "C11",
+        "C12",
+        "C44",
+        "Ecoh",
+        "a0"
+      ]
+    }
+  ]
+}

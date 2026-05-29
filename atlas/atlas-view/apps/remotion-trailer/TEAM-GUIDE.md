@@ -45,7 +45,7 @@ public/audio/hype-track.mp3   # Background music
 ### What to Record
 
 **For webgpu-demo.mp4:**
-1. Open ATLAS Viewer
+1. Open LUPI
 2. Load the 100k atom dataset
 3. Start screen recording
 4. Rotate the camera smoothly for 5 seconds
