@@ -133,11 +133,15 @@ describe('gallery-data.json — curated launch set', () => {
       } else if (e.file.endsWith('.lammpstrj') || e.file.endsWith('.dump')) {
         const timesteps = readFileSync(onDisk, 'utf8').match(/^ITEM:\s+TIMESTEP$/gm)?.length ?? 0;
         expect(timesteps, e.id).toBe(advertisedFrames);
+      } else if (e.file.endsWith('.json') || e.file.endsWith('.glimbin')) {
+        // Binary (.glimbin) and densified MLIP (.json) assets carry their
+        // frame count in the payload, not in a line-countable text format —
+        // so we can't recompute it here. We can still guarantee the bundled
+        // file the entry promises actually ships, which is the failure mode
+        // that turns a curated card into a dead link at runtime.
+        expect(existsSync(onDisk), `missing bundled asset for ${e.id}: ${e.file}`).toBe(true);
       } else {
-        expect(
-          e.file.endsWith('.json') || e.file.endsWith('.glimbin'),
-          `unsupported multi-frame gallery asset for ${e.id}: ${e.file}`,
-        ).toBe(true);
+        throw new Error(`unsupported multi-frame gallery asset for ${e.id}: ${e.file}`);
       }
     }
   });
@@ -169,5 +173,23 @@ describe('GLB hover machinery stays removed (regression guard)', () => {
     expect(src).not.toMatch(/@react-three/);
     expect(src).not.toMatch(/useGLTF/);
     expect(src).not.toMatch(/gallery\/models\//);
+  });
+});
+
+describe('pre-redesign card grid stays removed (regression guard)', () => {
+  const src = readFileSync(GALLERY_TSX, 'utf8');
+
+  // The scene-browser redesign (rail + index + spotlight) supplanted the
+  // card-grid layout. Its components and inline style objects were deleted;
+  // keep them gone so the file does not regrow two parallel layouts.
+  it('does not redefine the dropped grid components', () => {
+    expect(src).not.toMatch(/function PatchCard\b/);
+    expect(src).not.toMatch(/function DomainCard\b/);
+  });
+
+  it('does not reintroduce the dropped inline style objects', () => {
+    expect(src).not.toMatch(/\bsQuilt\b/);
+    expect(src).not.toMatch(/\bsPatch\w*\b/);
+    expect(src).not.toMatch(/\bsRibbon\w*\b/);
   });
 });
