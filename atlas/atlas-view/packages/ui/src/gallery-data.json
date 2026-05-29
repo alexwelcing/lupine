@@ -6,7 +6,7 @@
     "domain": "Metals & Alloys",
     "atoms": "953,312",
     "frames": "1",
-    "file": "gallery/trajectories/massive_1m.glimbin",
+    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/massive_1m.glimbin",
     "available": true,
     "colors": [
       "#b87333",

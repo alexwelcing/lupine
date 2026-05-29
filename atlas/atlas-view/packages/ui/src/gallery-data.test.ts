@@ -113,10 +113,16 @@ describe('gallery-data.json — curated launch set', () => {
     }
   });
 
-  it('available gallery entries do not depend on browser-blocked GCS links', () => {
+  it('available gallery entries do not stream from a CORS-blocked GCS bucket', () => {
+    // The glim-datasets bucket serves no access-control-allow-origin header, so
+    // a browser fetch from the viewer's origin is blocked (curl works — CORS is
+    // not server-enforced — which is what made this a silent "dead link"). The
+    // shed-489901-nist-demos bucket sets `access-control-allow-origin: *`, so
+    // streaming large .glimbin from there is fine and stays out of git.
     for (const e of data) {
       if (!e.available) continue;
-      expect(e.file, e.id).not.toMatch(/^https:\/\/storage\.googleapis\.com\//);
+      expect(e.file, `${e.id} streams from the CORS-blocked glim-datasets bucket`)
+        .not.toMatch(/storage\.googleapis\.com\/glim-datasets\//);
     }
   });
 
