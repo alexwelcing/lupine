@@ -115,10 +115,10 @@
   {
     "id": "mlip_ni_vacancy_playthrough",
     "title": "Ni Vacancy Diffusion Playthrough",
-    "subtitle": "Measured CHGNet molecular dynamics trajectory, densified into a smooth viewer flow.",
+    "subtitle": "CHGNet Langevin MD of a Ni vacancy — 11 measured frames, interpolated on playback for smooth motion.",
     "domain": "Defects & Mechanics",
     "atoms": "107",
-    "frames": "1201",
+    "frames": "11",
     "isTrajectory": true,
     "autoPlay": true,
     "file": "mlip/chgnet-ni-fcc-vacancy-md-local-v1.json",
@@ -133,17 +133,17 @@
       "potential": "CHGNet",
       "temperature": "300 K",
       "ensemble": "Langevin",
-      "reference": "Recovered MLIP long-run viewer artifact; 11 measured frames expanded for playback."
+      "reference": "Recovered MLIP long-run viewer artifact; 11 CHGNet-measured frames."
     },
     "featured": true
   },
   {
     "id": "mlip_mg_slip_playthrough",
     "title": "Mg HCP Slip Playthrough",
-    "subtitle": "Small measured deformation trajectory restored as an immediate playback example.",
+    "subtitle": "CHGNet MD of HCP Mg slip — 13 measured frames, interpolated on playback for smooth motion.",
     "domain": "Metals & Alloys",
     "atoms": "96",
-    "frames": "1441",
+    "frames": "13",
     "isTrajectory": true,
     "autoPlay": true,
     "file": "mlip/chgnet-mg-hcp-slip-md-local-v1.json",
@@ -158,17 +158,17 @@
       "potential": "CHGNet",
       "temperature": "300 K",
       "ensemble": "Molecular dynamics",
-      "reference": "Recovered MLIP long-run viewer artifact; 13 measured frames expanded for playback."
+      "reference": "Recovered MLIP long-run viewer artifact; 13 CHGNet-measured frames."
     },
     "featured": true
   },
   {
     "id": "mlip_lifepo4_li_channel",
     "title": "LiFePO4 Ion Channel Playthrough",
-    "subtitle": "Measured battery-material trajectory with lithium channel motion ready to play.",
+    "subtitle": "CHGNet MD of Li-channel motion in LiFePO4 — 9 measured frames, interpolated on playback for smooth motion.",
     "domain": "Energy Materials",
     "atoms": "28",
-    "frames": "961",
+    "frames": "9",
     "isTrajectory": true,
     "autoPlay": true,
     "file": "mlip/chgnet-lifepo4-li-channel-md-local-v1.json",
@@ -183,7 +183,7 @@
       "potential": "CHGNet",
       "temperature": "300 K",
       "ensemble": "Molecular dynamics",
-      "reference": "Recovered MLIP long-run viewer artifact; 9 measured frames expanded for playback."
+      "reference": "Recovered MLIP long-run viewer artifact; 9 CHGNet-measured frames."
     },
     "featured": true
   },

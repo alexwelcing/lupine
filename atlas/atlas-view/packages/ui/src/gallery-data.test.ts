@@ -157,6 +157,19 @@ describe('gallery-data.json — curated launch set', () => {
     }
   });
 
+  it('MLIP .json entries advertise their measured frame count, not an interpolated one', () => {
+    // The viewer smooths sparse MD frames at render time; it must not pad the
+    // trajectory (and the advertised count) with fabricated in-between frames.
+    // Advertised frames === measured frames in the payload.
+    const jsonEntries = data.filter((e) => e.available && e.file.endsWith('.json'));
+    for (const e of jsonEntries) {
+      const payload = JSON.parse(readFileSync(PUBLIC + e.file, 'utf8'));
+      if (payload.schema !== 'lupine.mlip.md_trajectory.v1') continue;
+      const measured = Array.isArray(payload.frames) ? payload.frames.length : 0;
+      expect(parseFrameLabel(e.frames), `${e.id}: advertised frames must equal measured frames`).toBe(measured);
+    }
+  });
+
   it('colorBy scenes ship a property-carrying dump with that column present', () => {
     // The NIST benchmarks exist to be read through their per-atom `error`
     // field ("color by error to see where potentials fail"). Plain .xyz drops

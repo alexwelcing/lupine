@@ -5,8 +5,11 @@ import { useStore, type LoadedFile } from './store';
 const REGISTRY_URL = '/mlip/mlip-long-demo-registry.json';
 const RIBBON_PREP_URL = '/mlip/mlip-long-demo-ribbon-prep.json';
 const CALIBRATION_ARTIFACT_URL = '/mlip/chgnet-al-fcc-2x2x2-relax-repro-v2-score-default.json';
-const MLIP_VISUAL_SUBFRAMES_PER_SEGMENT = 120;
-const MLIP_VISUAL_FRAME_RATE = 120;
+// MD artifacts hold a handful of measured frames. We advance roughly one
+// measured frame per second and let the render-time interpolator
+// (useSmoothFramePlayback) tween positions to 60/120fps — so playback is
+// smooth without materialising frames the simulation never produced.
+const MLIP_MEASURED_FRAME_RATE = 1;
 
 interface LongDemoRegistry {
   schema: string;
@@ -593,131 +596,19 @@ function equilibriumScoreToLoadedFile(payload: EquilibriumScoreArtifact, sourceU
 }
 
 function mdTrajectoryToLoadedFile(payload: MdTrajectoryArtifact, sourceUrl: string): LoadedFile {
-  const displayFrames = buildCinematicViewerFrames(payload.frames, MLIP_VISUAL_SUBFRAMES_PER_SEGMENT);
-  const frames = viewerFramesToFrames(displayFrames, payload.material_id);
+  // Load the measured frames as-is. Smoothness is a render concern handled by
+  // useSmoothFramePlayback; we do not fabricate in-between frames (and the
+  // energies/forces/temperatures they would carry) just to pad a count.
+  const frames = viewerFramesToFrames(payload.frames, payload.material_id);
   const variant = payload.variant_id ? ` ${payload.variant_id.replaceAll('_', ' ')}` : '';
   return {
-    name: `${payload.material_id} ${payload.mlip_id ?? 'MLIP'}${variant} 120fps measured flow`,
+    name: `${payload.material_id} ${payload.mlip_id ?? 'MLIP'}${variant} measured MD`,
     size: frames.reduce((sum, frame) => sum + frame.positions.byteLength, 0),
     trajectory: framesToTrajectory(frames),
     thermo: null,
     sourceUrl,
-    playbackFrameRate: MLIP_VISUAL_FRAME_RATE,
+    playbackFrameRate: MLIP_MEASURED_FRAME_RATE,
   };
-}
-
-function buildCinematicViewerFrames(viewerFrames: ViewerFrame[], subframesPerSegment: number): ViewerFrame[] {
-  if (viewerFrames.length < 2 || subframesPerSegment <= 1) return viewerFrames;
-  const dense: ViewerFrame[] = [];
-  for (let idx = 0; idx < viewerFrames.length - 1; idx += 1) {
-    const current = viewerFrames[idx];
-    const next = viewerFrames[idx + 1];
-    for (let subframe = 0; subframe < subframesPerSegment; subframe += 1) {
-      dense.push(interpolateViewerFrame(current, next, subframe / subframesPerSegment, idx, subframe));
-    }
-  }
-  dense.push({
-    ...viewerFrames[viewerFrames.length - 1],
-    step: viewerFrames[viewerFrames.length - 1].step ?? dense.length,
-  });
-  return dense;
-}
-
-function interpolateViewerFrame(
-  current: ViewerFrame,
-  next: ViewerFrame,
-  t: number,
-  sourceFrameIndex: number,
-  visualSubframe: number,
-): ViewerFrame {
-  return {
-    ...current,
-    step: interpolateNumeric(current.step, next.step, t) ?? sourceFrameIndex * MLIP_VISUAL_SUBFRAMES_PER_SEGMENT + visualSubframe,
-    time_seconds: interpolateNumeric(current.time_seconds, next.time_seconds, t),
-    cell_angstrom: interpolateCell(current.cell_angstrom, next.cell_angstrom, t),
-    positions_angstrom: interpolatePositionsMinimumImage(current.positions_angstrom, next.positions_angstrom, current.cell_angstrom, t),
-    force_max_norm_ev_per_angstrom: interpolateNumeric(current.force_max_norm_ev_per_angstrom, next.force_max_norm_ev_per_angstrom, t),
-    distance_to_reference: interpolateNumeric(current.distance_to_reference, next.distance_to_reference, t),
-    closeness: interpolateNumeric(current.closeness, next.closeness, t),
-    energy_ev_per_atom: interpolateNumeric(current.energy_ev_per_atom, next.energy_ev_per_atom, t),
-    total_energy_ev_per_atom: interpolateNumeric(current.total_energy_ev_per_atom, next.total_energy_ev_per_atom, t),
-    temperature_k: interpolateNumeric(current.temperature_k, next.temperature_k, t),
-    symbols: current.symbols ?? next.symbols,
-  };
-}
-
-function interpolateNumeric(a: unknown, b: unknown, t: number): number | undefined {
-  const left = Number(a);
-  const right = Number(b);
-  if (!Number.isFinite(left) && !Number.isFinite(right)) return undefined;
-  if (!Number.isFinite(left)) return right;
-  if (!Number.isFinite(right)) return left;
-  return left + (right - left) * t;
-}
-
-function interpolateCell(a: number[][] | undefined, b: number[][] | undefined, t: number): number[][] | undefined {
-  if (!a?.length || !b?.length || a.length !== b.length) return a ?? b;
-  return a.map((row, rowIndex) => row.map((value, colIndex) => interpolateNumeric(value, b[rowIndex]?.[colIndex], t) ?? value));
-}
-
-function interpolatePositionsMinimumImage(
-  currentPositions: number[][] | undefined,
-  nextPositions: number[][] | undefined,
-  cell: number[][] | undefined,
-  t: number,
-): number[][] | undefined {
-  if (!currentPositions?.length || !nextPositions?.length || currentPositions.length !== nextPositions.length) {
-    return currentPositions ?? nextPositions;
-  }
-  const inverseCell = invert3x3(cell);
-  return currentPositions.map((position, idx) => {
-    const next = nextPositions[idx] ?? position;
-    if (inverseCell && cell) {
-      const currentFractional = multiplyRowVectorMatrix(position, inverseCell);
-      const nextFractional = multiplyRowVectorMatrix(next, inverseCell);
-      const deltaFractional = [
-        minimumImageFraction(nextFractional[0] - currentFractional[0]),
-        minimumImageFraction(nextFractional[1] - currentFractional[1]),
-        minimumImageFraction(nextFractional[2] - currentFractional[2]),
-      ];
-      const deltaCartesian = multiplyRowVectorMatrix(deltaFractional, cell);
-      return [
-        position[0] + deltaCartesian[0] * t,
-        position[1] + deltaCartesian[1] * t,
-        position[2] + deltaCartesian[2] * t,
-      ];
-    }
-    return [
-      position[0] + ((next[0] ?? position[0]) - position[0]) * t,
-      position[1] + ((next[1] ?? position[1]) - position[1]) * t,
-      position[2] + ((next[2] ?? position[2]) - position[2]) * t,
-    ];
-  });
-}
-
-function minimumImageFraction(value: number) {
-  return value - Math.round(value);
-}
-
-function multiplyRowVectorMatrix(vector: number[], matrix: number[][]): [number, number, number] {
-  return [
-    (vector[0] ?? 0) * (matrix[0]?.[0] ?? 0) + (vector[1] ?? 0) * (matrix[1]?.[0] ?? 0) + (vector[2] ?? 0) * (matrix[2]?.[0] ?? 0),
-    (vector[0] ?? 0) * (matrix[0]?.[1] ?? 0) + (vector[1] ?? 0) * (matrix[1]?.[1] ?? 0) + (vector[2] ?? 0) * (matrix[2]?.[1] ?? 0),
-    (vector[0] ?? 0) * (matrix[0]?.[2] ?? 0) + (vector[1] ?? 0) * (matrix[1]?.[2] ?? 0) + (vector[2] ?? 0) * (matrix[2]?.[2] ?? 0),
-  ];
-}
-
-function invert3x3(matrix: number[][] | undefined): number[][] | null {
-  if (!matrix || matrix.length !== 3 || matrix.some((row) => row.length !== 3)) return null;
-  const [[a, b, c], [d, e, f], [g, h, i]] = matrix;
-  const det = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
-  if (!Number.isFinite(det) || Math.abs(det) < 1e-12) return null;
-  const invDet = 1 / det;
-  return [
-    [(e * i - f * h) * invDet, (c * h - b * i) * invDet, (b * f - c * e) * invDet],
-    [(f * g - d * i) * invDet, (a * i - c * g) * invDet, (c * d - a * f) * invDet],
-    [(d * h - e * g) * invDet, (b * g - a * h) * invDet, (a * e - b * d) * invDet],
-  ];
 }
 
 function viewerFramesToFrames(viewerFrames: ViewerFrame[], materialId: string): Frame[] {
