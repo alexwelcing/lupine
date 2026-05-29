@@ -539,7 +539,8 @@ export const useStore = create<AppState>()(
       // bonds?" or "what's a good color scheme?" — we decide.
       const sceneDirective = pickSceneDirective(atomCount);
 
-      // Pick a coloring scheme based on what the data carries.
+      // Pick a coloring scheme for the first read. Element identity is the
+      // default; property coloring remains an explicit Molecule Color choice.
       const hasProperty = !!firstFrame?.properties && firstFrame.properties.size > 0;
       const uniqueTypes = firstFrame?.types
         ? new Set(firstFrame.types).size
@@ -562,6 +563,7 @@ export const useStore = create<AppState>()(
         colorScheme: schemeId,
         atomColorSource: scheme.atomColorSource,
         colorMode: scheme.atomColorMode,
+        colorProperty: scheme.atomColorMode === 'property' ? get().colorProperty : null,
         // Legacy mirrors of preset (PresetLegacyBridge re-syncs but writing
         // them here avoids a one-frame flash before the bridge catches up).
         // SSAO follows the same threshold as bond detection / preset

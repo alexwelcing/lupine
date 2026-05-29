@@ -171,6 +171,21 @@ describe('Store — File Loading', () => {
     expect(s.playing).toBe(false);
   });
 
+  it('defaults fresh molecule loads to element coloring even with properties', () => {
+    const traj = createMockTrajectory(1, 10);
+    traj.frames[0].properties.set('energy', new Float32Array(10));
+    getStoreState().setColorProperty('energy');
+    const file = { name: 'property-rich.lmp', size: 2048, trajectory: traj, thermo: null };
+
+    getStoreState().setFile(file);
+    const s = getStoreState();
+
+    expect(s.colorScheme).toBe('element');
+    expect(s.colorMode).toBe('type');
+    expect(s.atomColorSource).toBe('element');
+    expect(s.colorProperty).toBeNull();
+  });
+
   it('disables effects for massive systems', () => {
     const traj = createMockTrajectory(1, 100000); // 100K atoms
     const file = { name: 'big.lmp', size: 9999999, trajectory: traj, thermo: null };
