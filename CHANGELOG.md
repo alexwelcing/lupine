@@ -16,6 +16,28 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-05-29 — Neural-symbolic loop: GPU MLIP curvature → machine-checked Lean (0 sorry)
+
+- **Why.** Close the proof↔physics gap at the tightest coupling — a number measured on the GPU
+  becoming a theorem the Lean kernel checks the next moment — and seed `atlas_theorems` *from the
+  physics*, not by hand.
+- **What.** A three-node continuous loop (`lupine-distill/runtime/python/scripts/neural_symbolic/`):
+  **Node 1** pits MACE-MP-0 vs CHGNet on a pure-shear C44 strain sweep of FCC Ni (the curvature
+  observable) on the A4500; **Node 2** relays T3-REJECT breaches as OpenInference spans (the Python
+  flywheel pattern — entirely off the glim-think `tsc` path; live OTLP when `PHOENIX_OTLP_RELAY_URL`
+  is set, durable local artifact otherwise); **Node 3** authors import-free core-Lean theorems
+  (`by decide`, 0 sorry) encoding the empirical failure as a verified negative constraint, plus an
+  `atlas_theorems` seed.
+- **Results.** On the GPU: MACE-MP-0 elastic C44 **92.4 GPa (−25.9%) → REJECT**, CHGNet **101.2 GPa
+  (−18.8%) → REVIEW** vs the 124.7 GPa literature reference (MACE units cross-validated against the
+  torch_sim elastic run). The MACE breach was authored into
+  `mace_mp_0_curvature_reject : 323*4 > 1247 := by decide` and **independently verified by a fresh
+  `lean` compile (rc 0, 0 sorry)**. 4 theorems synthesized, 4 `atlas_theorems` seed rows
+  (`status='verified'`). Report: `docs/neural-symbolic-curvature-loop.md`.
+- **Next.** (1) Stand up the GCP OTLP relay for live Phoenix streaming (then the loop is fully
+  continuous: GPU → Phoenix → Lean per measurement). (2) Widen Node 1 to the full phonon Hessian.
+  (3) Apply the seed to the live `glim-ledger` D1.
+
 ## 2026-05-29 — Local GPU proof: TorchSim → distill → uplift → formal gate (Ni FCC)
 
 - **Why.** The ATLAS PR wired the rails but ran no train: Track B's TorchSim backend was a
