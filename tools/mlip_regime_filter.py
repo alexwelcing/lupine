@@ -165,6 +165,56 @@ def summarize(decisions: list[CellDecision]) -> dict[str, Any]:
     }
 
 
+def materialize_gated_batches(
+    campaign_path: pathlib.Path,
+    ribbon_path: pathlib.Path,
+    scope: str,
+    out_dir: pathlib.Path,
+    *,
+    reviews_apply: bool = False,
+    gated_subdir: str = "gated",
+) -> list[dict[str, Any]]:
+    """Write gated batch specs (distill-free where refused) ready to upload + fire.
+
+    Each surviving batch is materialized to ``out_dir`` (the ``batch_spec_gcs_url``
+    key stripped, matching the campaign tool) and its gated GCS URL is the
+    original with ``gated_subdir`` inserted before the filename — so firing the
+    gated spec never overwrites the canonical (ungated) batch spec. Returns one
+    manifest entry per written batch.
+    """
+
+    import mlip_evidence_campaign as ct
+
+    campaign = ct.load_campaign(campaign_path)
+    batches = ct.expand_batches(campaign, scope=scope)
+    cells = [cell for batch in batches for cell in batch["cells"]]
+    provenance = load_ribbon(ribbon_path)
+    decisions = decide_cells(campaign, cells, provenance, reviews_apply=reviews_apply)
+    kept, _dropped = filter_batches(batches, decisions)
+
+    out_dir = pathlib.Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    written: list[dict[str, Any]] = []
+    for batch in kept:
+        orig_url = batch["batch_spec_gcs_url"]
+        head, _, name = orig_url.rpartition("/")
+        gated_url = f"{head}/{gated_subdir}/{name}"
+        local = out_dir / name
+        spec = {k: v for k, v in batch.items() if k != "batch_spec_gcs_url"}
+        local.write_text(json.dumps(spec, indent=2, sort_keys=True), encoding="utf-8")
+        written.append(
+            {
+                "batch_id": batch["batch_id"],
+                "local_path": str(local),
+                "gated_gcs_url": gated_url,
+                "target_job": batch["target_job"],
+                "cells": len(batch["cells"]),
+                "distill_cells": sum(1 for c in batch["cells"] if c["variant_id"] != "baseline"),
+            }
+        )
+    return written
+
+
 def gate_campaign(
     campaign_path: pathlib.Path,
     ribbon_path: pathlib.Path,
@@ -201,7 +251,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--reviews-apply", action="store_true")
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--out", type=pathlib.Path, default=None)
+    parser.add_argument("--write-gated", type=pathlib.Path, default=None,
+                        help="materialize gated batch specs to this dir (distill-free where refused)")
     args = parser.parse_args(argv)
+
+    if args.write_gated:
+        manifest = materialize_gated_batches(
+            args.campaign, args.ribbon, args.scope, args.write_gated, reviews_apply=args.reviews_apply
+        )
+        print(json.dumps({"status": "gated_batches_written", "batches": manifest}, indent=2, sort_keys=True))
+        return 0
 
     ledger = gate_campaign(args.campaign, args.ribbon, args.scope, reviews_apply=args.reviews_apply)
     if args.out:
