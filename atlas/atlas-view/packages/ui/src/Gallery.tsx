@@ -7,6 +7,7 @@
 
 import { useCallback, useRef, useEffect, useState, useMemo, useDeferredValue } from 'react';
 import { useStore } from './store';
+import { artifactToLoadedFile } from './MlipArtifactLoader';
 import galleryData from './gallery-data.json';
 import {
   getDeviceProfile,
@@ -1514,7 +1515,6 @@ export function Gallery() {
         const resp = await fetch(url, { cache: 'reload' });
         if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
         const payload = await resp.json();
-        const { artifactToLoadedFile } = await import('./MlipLongRunWorkbench');
         const loaded = artifactToLoadedFile(payload, url);
         const store = useStore.getState();
         store.setFile({

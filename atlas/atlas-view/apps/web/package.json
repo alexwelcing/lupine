@@ -17,6 +17,7 @@
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "@react-three/postprocessing": "^2.16.0",
+    "@rive-app/react-canvas": "^4.28.6",
     "gifenc": "^1.0.3",
     "mp4-muxer": "^5.2.2",
     "postprocessing": "^6.36.0",

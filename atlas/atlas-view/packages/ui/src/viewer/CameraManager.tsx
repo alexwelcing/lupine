@@ -75,5 +75,28 @@ export function CameraManager({
     return unsub;
   }, [camera, controls]);
 
+  // Apply stored camera state on change (saved views write cameraPosition/Target/Fov).
+  useEffect(() => {
+    const applyStoredCamera = () => {
+      const { cameraPosition, cameraTarget, cameraFov } = useStore.getState();
+      camera.position.set(...cameraPosition);
+      camera.lookAt(...cameraTarget);
+      if (camera instanceof THREE.PerspectiveCamera) {
+        camera.fov = cameraFov;
+        camera.updateProjectionMatrix();
+      }
+      if (controls && controls.target) {
+        controls.target.set(...cameraTarget);
+        controls.update();
+      }
+    };
+    const unsubs = [
+      useStore.subscribe((s) => s.cameraPosition, applyStoredCamera),
+      useStore.subscribe((s) => s.cameraTarget, applyStoredCamera),
+      useStore.subscribe((s) => s.cameraFov, applyStoredCamera),
+    ];
+    return () => unsubs.forEach((unsub) => unsub());
+  }, [camera, controls]);
+
   return null;
 }

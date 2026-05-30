@@ -33,6 +33,7 @@ import { getElementSpec } from '@atlas/core';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
 import { ToolButton, CameraPresetButton } from './controls';
 import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
+import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 import {
   IconLook, IconSurface, IconWorld, IconExport,
 } from './viewer/icons';
@@ -47,10 +48,15 @@ import { ViewerScene } from './viewer/ViewerScene';
 import { Timeline } from './viewer/Timeline';
 
 import { Testbed } from './Testbed';
+import EmojiPlayground from './EmojiPlayground';
 
 export default function App() {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('testbed')) {
     return <Testbed />;
+  }
+
+  if (typeof window !== 'undefined' && (new URLSearchParams(window.location.search).has('emoji') || currentHashRoute().split('?')[0] === '/system/emoji')) {
+    return <EmojiPlayground />;
   }
 
   const [hashRoute, setHashRoute] = useState(currentHashRoute);
@@ -60,6 +66,9 @@ export default function App() {
   const hashPath = hashRoute.split('?')[0] || '/';
   const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
   const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
+  const loadedSavedViewSlugRef = useRef<string | null>(null);
+  const savedViewSlug = hashPath.startsWith('/view/') ? slugifySavedViewTitle(decodeURIComponent(hashPath.slice('/view/'.length))) : null;
+  const isSavedViewRoute = Boolean(savedViewSlug);
 
   useEffect(() => {
     const syncRoute = () => setHashRoute(currentHashRoute());
@@ -70,6 +79,24 @@ export default function App() {
       window.removeEventListener('popstate', syncRoute);
     };
   }, []);
+
+  useEffect(() => {
+    if (!savedViewSlug || loadedSavedViewSlugRef.current === savedViewSlug) return undefined;
+    let cancelled = false;
+    loadedSavedViewSlugRef.current = savedViewSlug;
+    useStore.getState().setLoading(true, 0);
+    loadSavedMolecularView(savedViewSlug)
+      .then((saved) => {
+        if (!cancelled) document.title = `${saved.title} - Lupi`;
+      })
+      .catch((err) => {
+        const message = err instanceof Error ? err.message : String(err);
+        if (!cancelled) useStore.getState().setError(message);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [savedViewSlug]);
 
   const file = useStore(s => s.file);
   const ghostFile = useStore(s => s.ghostFile);
@@ -635,7 +662,7 @@ export default function App() {
         {/* Landing page (hero, featured, drop zone, gallery) */}
         {!file && (
           <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
-            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : isMcpViewerRoute ? null : <LandingPage />}
+            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : isMcpViewerRoute || isSavedViewRoute ? null : <LandingPage />}
           </div>
         )}
       </div>

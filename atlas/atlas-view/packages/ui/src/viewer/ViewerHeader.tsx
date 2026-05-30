@@ -1,6 +1,7 @@
 import { useStore } from '../store';
 import { IconClose, IconShare } from './icons';
 import { loadPhononDemo } from '../demos/phononDemo';
+import { LupiAgentDock } from '../LupiAgentDock';
 
 export function ViewerHeader({
   isMobile,
@@ -162,6 +163,22 @@ export function ViewerHeader({
               >
                 MCP
               </a>
+              <a
+                href="#/system/emoji"
+                style={{
+                  display: 'block',
+                  padding: isMobile ? '7px 9px' : '8px 12px',
+                  fontSize: isMobile ? 12 : 13,
+                  fontWeight: 600,
+                  color: 'var(--text-muted)',
+                  background: 'transparent',
+                  border: '1px solid var(--border-default)',
+                  borderRadius: 'var(--radius-sm)',
+                  textDecoration: 'none',
+                }}
+              >
+                Eoji Lab
+              </a>
             </>
           )}
           {!file && (
@@ -213,6 +230,7 @@ export function ViewerHeader({
           >
             GitHub
           </a>
+          <LupiAgentDock compact={isMobile} />
         </div>
       </header>
   );
