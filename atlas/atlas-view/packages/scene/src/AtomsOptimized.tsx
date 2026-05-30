@@ -16,6 +16,7 @@
  */
 
 import { useRef, useMemo, useEffect, useCallback } from 'react';
+import { wrapDelta } from './interpolation';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Frame, ColormapName, RenderStyle } from '@atlas/core/types';
@@ -987,20 +988,14 @@ export function AtomsOptimized({
       posArr[pi + 2] = z;
 
       if (nextPos) {
-        let dx = nextPos[i * 3] - x;
-        let dy = nextPos[i * 3 + 1] - y;
-        let dz = nextPos[i * 3 + 2] - z;
-        if (hasBounds) {
-          if (dx > bsx / 2) dx -= bsx;
-          if (dx < -bsx / 2) dx += bsx;
-          if (dy > bsy / 2) dy -= bsy;
-          if (dy < -bsy / 2) dy += bsy;
-          if (dz > bsz / 2) dz -= bsz;
-          if (dz < -bsz / 2) dz += bsz;
-        }
-        tgtArr[pi]     = x + dx;
-        tgtArr[pi + 1] = y + dy;
-        tgtArr[pi + 2] = z + dz;
+        // PBC-unwrapped target on the SHORT arc across the cell (unit-tested in
+        // interpolation.test.ts). hasBounds === false -> boxSize 0 -> raw delta.
+        const bx = hasBounds ? bsx : 0;
+        const by = hasBounds ? bsy : 0;
+        const bz = hasBounds ? bsz : 0;
+        tgtArr[pi]     = x + wrapDelta(nextPos[i * 3] - x, bx);
+        tgtArr[pi + 1] = y + wrapDelta(nextPos[i * 3 + 1] - y, by);
+        tgtArr[pi + 2] = z + wrapDelta(nextPos[i * 3 + 2] - z, bz);
       } else {
         // No next frame: target == current, so mix() is a no-op for any uProgress.
         tgtArr[pi]     = x;
