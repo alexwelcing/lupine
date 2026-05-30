@@ -1,0 +1,17 @@
+{
+  "schema_version": "lupine.neural_symbolic.curvature_boundary.v1",
+  "model_id": "test-mlip",
+  "observable": "C44_shear",
+  "structure_id": "Ni-fcc-shear-sweep",
+  "reference_gpa": 124.7,
+  "elastic_prediction_gpa": 92.4,
+  "elastic_deviation_pct": -25.9,
+  "validated_strain_max": 0.1,
+  "divergence_strain": 0.13,
+  "max_deviation_pct": 13.0,
+  "reject_threshold_pct": 10.0,
+  "verdict": "reject",
+  "samples": [],
+  "atlas_revision": "c5a10f1a95de31e5476484c8bb3856ee7f164ea0",
+  "mathlib_revision": "8a178386ffc0f5fef0b77738bb5449d50efeea95"
+}
