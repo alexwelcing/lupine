@@ -18,7 +18,7 @@ const PRIMARY_NAV: ReadonlyArray<{
 const MORE_NAV = [
   { to: '/lineage', label: 'Lineage', desc: 'The 22-year citation chain we extend' },
   { to: '/console', label: 'Research Console', desc: 'Tabular browser for the manifest ledger' },
-  { to: '/atlas-viewer', label: 'LUPI', desc: 'WebGPU exploration of the error manifold' },
+  { to: '/lupi', label: 'LUPI', desc: 'WebGPU exploration of the error manifold' },
   { to: '/proof', label: 'Research Defense', desc: 'Response to preprint critique' },
   { to: '/process', label: 'Operating Report', desc: 'Harden stage, run by run' },
   { to: '/investor-relations', label: 'Observer Notes', desc: 'Evidence cadence and diligence context' },

@@ -20,7 +20,7 @@ export default function Footer() {
               <Link to="/research" className="font-mono text-sm text-[var(--on-surface-variant)] uppercase tracking-[0.08em] hover:text-[var(--primary)] transition-colors no-underline">Research</Link>
               <Link to="/lineage" className="font-mono text-sm text-[var(--on-surface-variant)] uppercase tracking-[0.08em] hover:text-[var(--primary)] transition-colors no-underline">Lineage</Link>
               <Link to="/proof" className="font-mono text-sm text-[var(--on-surface-variant)] uppercase tracking-[0.08em] hover:text-[var(--primary)] transition-colors no-underline">Research Defense</Link>
-              <Link to="/atlas-viewer" className="font-mono text-sm text-[var(--on-surface-variant)] uppercase tracking-[0.08em] hover:text-[var(--primary)] transition-colors no-underline">LUPI</Link>
+              <Link to="/lupi" className="font-mono text-sm text-[var(--on-surface-variant)] uppercase tracking-[0.08em] hover:text-[var(--primary)] transition-colors no-underline">LUPI</Link>
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-mono text-[var(--on-surface-variant)] opacity-40 text-[10px] uppercase tracking-[0.08em]">Engagement</span>

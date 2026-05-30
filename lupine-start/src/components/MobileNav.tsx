@@ -30,7 +30,7 @@ const NAV_SECTIONS: NavSection[] = [
     items: [
       { to: '/lineage', label: 'Lineage' },
       { to: '/console', label: 'Research Console' },
-      { to: '/atlas-viewer', label: 'LUPI' },
+      { to: '/lupi', label: 'LUPI' },
       { to: '/proof', label: 'Research Defense' },
       { to: '/process', label: 'Operating Report' },
       { to: '/investor-relations', label: 'Observer Notes' },

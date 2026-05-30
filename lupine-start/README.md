@@ -42,7 +42,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/research` | IMMI preprint and cross-potential geometric error analysis |
 | `/lineage` | Sloppy-models lineage, materials-science context, and learning-mechanics links |
 | `/pilots` | MLIP failure-geometry audit examples and bounded workflow scopes |
-| `/atlas-viewer` | LUPI route for browser-native evidence inspection |
+| `/lupi` | LUPI route for browser-native evidence inspection |
 | `/investor-relations` | Secondary observer notes and diligence context |
 | `/about` | Mission, stack, and milestones |
 | `/proof` | Response to preprint critique |

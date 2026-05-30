@@ -15,13 +15,13 @@ import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProcessRouteImport } from './routes/process'
 import { Route as PilotsRouteImport } from './routes/pilots'
 import { Route as OpsRouteImport } from './routes/ops'
+import { Route as LupiRouteImport } from './routes/lupi'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as LineageRouteImport } from './routes/lineage'
 import { Route as LabStatusRouteImport } from './routes/lab-status'
 import { Route as InvestorRelationsRouteImport } from './routes/investor-relations'
 import { Route as EvolutionRouteImport } from './routes/evolution'
 import { Route as ConsoleRouteImport } from './routes/console'
-import { Route as AtlasViewerRouteImport } from './routes/atlas-viewer'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -55,6 +55,11 @@ const OpsRoute = OpsRouteImport.update({
   path: '/ops',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LupiRoute = LupiRouteImport.update({
+  id: '/lupi',
+  path: '/lupi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LiveRoute = LiveRouteImport.update({
   id: '/live',
   path: '/live',
@@ -85,11 +90,6 @@ const ConsoleRoute = ConsoleRouteImport.update({
   path: '/console',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AtlasViewerRoute = AtlasViewerRouteImport.update({
-  id: '/atlas-viewer',
-  path: '/atlas-viewer',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -104,13 +104,13 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/atlas-viewer': typeof AtlasViewerRoute
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/lab-status': typeof LabStatusRoute
   '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
+  '/lupi': typeof LupiRoute
   '/ops': typeof OpsRoute
   '/pilots': typeof PilotsRoute
   '/process': typeof ProcessRoute
@@ -121,13 +121,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/atlas-viewer': typeof AtlasViewerRoute
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/lab-status': typeof LabStatusRoute
   '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
+  '/lupi': typeof LupiRoute
   '/ops': typeof OpsRoute
   '/pilots': typeof PilotsRoute
   '/process': typeof ProcessRoute
@@ -139,13 +139,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/atlas-viewer': typeof AtlasViewerRoute
   '/console': typeof ConsoleRoute
   '/evolution': typeof EvolutionRoute
   '/investor-relations': typeof InvestorRelationsRoute
   '/lab-status': typeof LabStatusRoute
   '/lineage': typeof LineageRoute
   '/live': typeof LiveRoute
+  '/lupi': typeof LupiRoute
   '/ops': typeof OpsRoute
   '/pilots': typeof PilotsRoute
   '/process': typeof ProcessRoute
@@ -158,13 +158,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
-    | '/atlas-viewer'
     | '/console'
     | '/evolution'
     | '/investor-relations'
     | '/lab-status'
     | '/lineage'
     | '/live'
+    | '/lupi'
     | '/ops'
     | '/pilots'
     | '/process'
@@ -175,13 +175,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
-    | '/atlas-viewer'
     | '/console'
     | '/evolution'
     | '/investor-relations'
     | '/lab-status'
     | '/lineage'
     | '/live'
+    | '/lupi'
     | '/ops'
     | '/pilots'
     | '/process'
@@ -192,13 +192,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
-    | '/atlas-viewer'
     | '/console'
     | '/evolution'
     | '/investor-relations'
     | '/lab-status'
     | '/lineage'
     | '/live'
+    | '/lupi'
     | '/ops'
     | '/pilots'
     | '/process'
@@ -210,13 +210,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AtlasViewerRoute: typeof AtlasViewerRoute
   ConsoleRoute: typeof ConsoleRoute
   EvolutionRoute: typeof EvolutionRoute
   InvestorRelationsRoute: typeof InvestorRelationsRoute
   LabStatusRoute: typeof LabStatusRoute
   LineageRoute: typeof LineageRoute
   LiveRoute: typeof LiveRoute
+  LupiRoute: typeof LupiRoute
   OpsRoute: typeof OpsRoute
   PilotsRoute: typeof PilotsRoute
   ProcessRoute: typeof ProcessRoute
@@ -269,6 +269,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lupi': {
+      id: '/lupi'
+      path: '/lupi'
+      fullPath: '/lupi'
+      preLoaderRoute: typeof LupiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/live': {
       id: '/live'
       path: '/live'
@@ -311,13 +318,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/atlas-viewer': {
-      id: '/atlas-viewer'
-      path: '/atlas-viewer'
-      fullPath: '/atlas-viewer'
-      preLoaderRoute: typeof AtlasViewerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -338,13 +338,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AtlasViewerRoute: AtlasViewerRoute,
   ConsoleRoute: ConsoleRoute,
   EvolutionRoute: EvolutionRoute,
   InvestorRelationsRoute: InvestorRelationsRoute,
   LabStatusRoute: LabStatusRoute,
   LineageRoute: LineageRoute,
   LiveRoute: LiveRoute,
+  LupiRoute: LupiRoute,
   OpsRoute: OpsRoute,
   PilotsRoute: PilotsRoute,
   ProcessRoute: ProcessRoute,
