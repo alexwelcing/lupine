@@ -81,6 +81,26 @@ sorry**. Both models' modules verified (4 theorems total), and a 4-row `atlas_th
 seed (`status='verified'`) is emitted for glim-think to ingest:
 `tmp/neural_symbolic/atlas_theorems_seed.sql`.
 
+## Node 4 — the widening: full curvature (phonon Hessian) [`node4_hessian.py`]
+
+The documented next step, executed. Past the single secant C44 to the **full 3N×3N atomic
+dynamical matrix** and the elastic shear modulus as a stress derivative.
+
+- **Elastic C44** = `dσ_xy/dγ` = **92.42 GPa** (−25.9%) — matches Node 1 exactly (units/convention
+  cross-validated).
+- **Phonon spectrum** (12×12 Hessian, FD of MACE's autograd forces): 3 acoustic modes ≈ 0, then
+  **6 × 5.62 THz** and **3 × 8.12 THz**; **0 imaginary modes → dynamically STABLE** (max optical
+  8.12 THz, Hessian trace 93.0 eV/Å²). Physically correct for FCC Ni.
+
+**Autograd reality (empirically determined, not assumed):** torch_sim's *inference* model
+detaches positions when it rebuilds the neighbor list, so you cannot autograd a curvature
+*through it*. MACE's **own** internal autograd is the source of truth (the forces/stress it is
+trained on). The Hessian is therefore FD of MACE-autograd forces — the standard, robust phonon
+method. This dictates the RLSF path (Node 5): backprop must use MACE's native stress-gradient
+(raw model, `training=True`, second-order, supported), with a LoRA on the **invariant readout**
+(the equivariance-safe injection point). Pure `autograd.functional.hessian` through the
+inference wrapper is *not* available — stated plainly rather than faked.
+
 ## Why this matters
 
 The program's thesis is "proof or reproducible trace." This loop closes that at the
