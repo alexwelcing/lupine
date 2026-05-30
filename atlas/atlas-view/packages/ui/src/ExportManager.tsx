@@ -127,7 +127,7 @@ function VideoCaptureLoop({
   setIsCapturing,
   originalStoreState
 }: any) {
-  const { gl, camera } = useThree();
+  const { gl, camera, setSize, setDpr } = useThree();
 
   useFrame(() => {
     if (!isRecording.current || !encoderRef.current || !muxerRef.current) return;
@@ -306,17 +306,18 @@ function VideoCaptureLoop({
           }
 
           if (originalSize.current) {
-            gl.setSize(originalSize.current.width, originalSize.current.height, false);
+            // Restore THROUGH R3F so the EffectComposer resizes back too.
+            setSize(originalSize.current.width, originalSize.current.height);
             if (camera instanceof THREE.PerspectiveCamera) {
               camera.aspect = originalSize.current.aspect;
               camera.updateProjectionMatrix();
             }
             originalSize.current = null;
           }
-          
-          // Restore Retina super-sampling
+
+          // Restore Retina super-sampling (through R3F so the composer follows)
           if (originalPixelRatio.current) {
-            gl.setPixelRatio(originalPixelRatio.current);
+            setDpr(originalPixelRatio.current);
           }
 
           // Restore Cinematic Mutations
@@ -339,7 +340,7 @@ function VideoCaptureLoop({
 
 // ─── ExportManager component ─────────────────────────────────────
 export function ExportManager() {
-  const { gl, scene, camera, size } = useThree();
+  const { gl, scene, camera, size, setSize, setDpr } = useThree();
   const exportRequest = useStore(s => s.exportRequest);
   const clearExportRequest = useStore(s => s.clearExportRequest);
   const file = useStore(s => s.file);
@@ -830,12 +831,15 @@ export function ExportManager() {
       aspect: (camera as THREE.PerspectiveCamera).aspect
     };
     
-    // EXTREMELY IMPORTANT: Force pixel ratio to exactly 1.0!
+    // Force DPR to 1 and size the engine THROUGH R3F (setDpr/setSize) rather than
+    // a raw gl.setSize(). The postprocessing EffectComposer only resizes its
+    // render targets when R3F's `size` state changes; a raw gl.setSize() leaves
+    // the composer at the old viewport aspect, and its final fullscreen pass then
+    // stretches that across the new export buffer — the squished-molecule bug.
+    // Routing through R3F keeps composer + camera + renderer on one aspect.
     originalPixelRatio.current = gl.getPixelRatio();
-    gl.setPixelRatio(1);
-
-    // Size the engine precisely to export dimensions
-    gl.setSize(width, height, false);
+    setDpr(1);
+    setSize(width, height);
     if (camera instanceof THREE.PerspectiveCamera) {
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
@@ -929,7 +933,7 @@ export function ExportManager() {
       gl.setPixelRatio(originalPixelRatio.current);
       clearExportRequest();
     }
-  }, [exportRequest, camera, gl, size, clearExportRequest]);
+  }, [exportRequest, camera, gl, size, clearExportRequest, setSize, setDpr]);
 
   // ─── Effect: Dispatch export actions ──────────────────────────
   // IMPORTANT: Only depend on exportRequest. We use refs for the handlers
