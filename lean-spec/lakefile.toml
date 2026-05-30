@@ -1,10 +1,28 @@
 name = "OpenDistillationFactory"
 defaultTargets = ["OpenDistillationFactory"]
 
+# ATLAS-Lean integration (Phase 1).
+#
+# We pin mathlib to ATLAS-Lean's exact revision so the whole dependency graph
+# resolves to a SINGLE, reproducible mathlib. ATLAS (facebookresearch/atlas-lean)
+# requires this same rev; matching it lets Lake dedupe mathlib and lets
+# `lake exe cache get` pull prebuilt oleans instead of compiling from source.
+# Toolchain is likewise aligned to ATLAS's v4.29.0 (see lean-toolchain).
+# Ref: ATLAS_Lean_Integration_Review.md §4 (Integration Architecture), §7 (Risks).
 [[require]]
 name = "mathlib"
-scope = "leanprover-community"
-rev = "master"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "8a178386ffc0f5fef0b77738bb5449d50efeea95"
+
+# ATLAS-Lean (Meta) — autoformalized textbook mathematics.
+# We depend on the proved `Atlas` target ONLY. The `Unproved` target carries
+# `sorry`-bearing statements and must never enter our build (would poison the
+# zero-sorry gate). Selective `import Atlas.<Subject>.<Subject>` keeps build
+# cost bounded — Lake only compiles the modules we actually import.
+[[require]]
+name = "Atlas"
+git = "https://github.com/facebookresearch/atlas-lean"
+rev = "c5a10f1a95de31e5476484c8bb3856ee7f164ea0"
 
 [[lean_lib]]
 name = "OpenDistillationFactory"
