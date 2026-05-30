@@ -38,6 +38,7 @@ export function ViewerScene({
   file,
   currentFrame,
   interpState,
+  liveStateRef,
   ghostFrame,
   center,
   cameraDistance,
@@ -61,6 +62,7 @@ export function ViewerScene({
   file: LoadedFile | null;
   currentFrame: Frame | undefined;
   interpState: InterpolatedFrameState;
+  liveStateRef: { readonly current: { readonly effectiveFrame: number } | null };
   ghostFrame: Frame | null;
   center: [number, number, number];
   cameraDistance: number;
@@ -185,8 +187,12 @@ export function ViewerScene({
                 )}
                 <AtomsOptimized
                   frame={file!.trajectory.frames[interpState.frameIndex]}
-                  nextFrame={interpState.isInterpolating ? file!.trajectory.frames[interpState.nextFrameIndex] : undefined}
+                  // Always feed the target frame so the GPU lerp (uProgress) can
+                  // sweep smoothly; mix() is a no-op when uProgress is 0.
+                  nextFrame={file!.trajectory.frames[interpState.nextFrameIndex]}
                   interpolationFactor={interpState.isInterpolating ? interpState.interpolationFactor : 0}
+                  frameIndex={interpState.frameIndex}
+                  liveStateRef={liveStateRef}
                   colorMode={colorMode}
                   colorProperty={colorProperty ?? undefined}
                   colormap={colormap}

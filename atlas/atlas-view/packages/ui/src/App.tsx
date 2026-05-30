@@ -202,7 +202,7 @@ export default function App() {
   const highFidelityPlayback = Boolean(file?.playbackFrameRate && (file?.trajectory.frames[0]?.natoms ?? 0) <= 5000);
 
   // Playback timer (replaced with smooth 60fps interpolator)
-  const { currentState: interpState, setFrame: setSmoothFrame } = useSmoothFramePlayback(playing, {
+  const { currentState: interpState, setFrame: setSmoothFrame, liveStateRef } = useSmoothFramePlayback(playing, {
     frames: file?.trajectory.frames ?? [],
     speed: playbackSpeed,
     targetFPS: highFidelityPlayback ? 120 : 60,
@@ -422,6 +422,7 @@ export default function App() {
               bgProcedural={bg.procedural}
               isExportingQuickLook={isExportingQuickLook}
               onExportQuickLookComplete={() => setIsExportingQuickLook(false)}
+              liveStateRef={liveStateRef}
             />
           </Canvas>
 

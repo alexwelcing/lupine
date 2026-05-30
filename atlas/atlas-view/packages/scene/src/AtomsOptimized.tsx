@@ -79,6 +79,13 @@ interface AtomsOptimizedProps {
   /** How many atoms have been uploaded so far (for progressive streaming).
    *  Defaults to frame.natoms when not set. */
   loadedAtomCount?: number;
+  /** Integer index of the loaded `frame` within its trajectory. Paired with
+   *  `liveStateRef` to drive GPU interpolation progress at display rate. */
+  frameIndex?: number;
+  /** Live playback ref (updated every RAF tick by useSmoothFramePlayback). Its
+   *  `effectiveFrame` minus `frameIndex` gives uProgress at 60fps with no React
+   *  re-render. Falls back to `interpolationFactor` when absent. */
+  liveStateRef?: { readonly current: { readonly effectiveFrame: number } | null };
 }
 
 // ─── GLSL Shaders ────────────────────────────────────────────────────
@@ -86,6 +93,7 @@ interface AtomsOptimizedProps {
 const IMPOSTOR_VERTEX = /* glsl */ `
   // Per-instance attributes
   attribute vec3 instancePosition;
+  attribute vec3 instanceTargetPosition;
   attribute float instanceRadius;
   attribute float instanceTypeId;
   attribute float instancePropValue;
@@ -99,6 +107,7 @@ const IMPOSTOR_VERTEX = /* glsl */ `
   uniform sampler2D uColormap;  // 256×1: propValue [0,1] → color
   uniform int uColorMode;       // 0=type, 1=uniform, 2=property
   uniform vec3 uUniformColor;
+  uniform float uProgress;      // 0..1 GPU lerp: instancePosition -> instanceTargetPosition
 
   // Passed to fragment
   varying vec3 vColor;
@@ -131,8 +140,13 @@ const IMPOSTOR_VERTEX = /* glsl */ `
     vUv = position.xy;
     vRadius = instanceRadius;
 
+    // GPU-side frame interpolation: lerp current -> target by the global progress
+    // uniform. The CPU re-uploads the two position buffers only on a frame change,
+    // not per interpolation substep — uProgress alone sweeps the motion.
+    vec3 lerpedPos = mix(instancePosition, instanceTargetPosition, uProgress);
+
     // Transform sphere center to view space
-    vec4 viewCenter4 = modelViewMatrix * vec4(instancePosition, 1.0);
+    vec4 viewCenter4 = modelViewMatrix * vec4(lerpedPos, 1.0);
     vViewCenter = viewCenter4.xyz;
     vViewRadius = instanceRadius;
 
@@ -618,6 +632,8 @@ export function AtomsOptimized({
   rimLightColor = '#ffffff',
   atomTexture = 'none',
   loadedAtomCount,
+  frameIndex,
+  liveStateRef,
 }: AtomsOptimizedProps) {
   const meshRef = useRef<THREE.Mesh>(null!);
   const spatialHashRef = useRef(new SpatialHash3D(3.0));
@@ -654,6 +670,12 @@ export function AtomsOptimized({
     const posAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
     posAttr.setUsage(THREE.DynamicDrawUsage);
     geo.setAttribute('instancePosition', posAttr);
+
+    // Target positions (next frame, PBC-unwrapped). The vertex shader lerps
+    // instancePosition -> instanceTargetPosition by uProgress on the GPU.
+    const tgtAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
+    tgtAttr.setUsage(THREE.DynamicDrawUsage);
+    geo.setAttribute('instanceTargetPosition', tgtAttr);
 
     const radAttr = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
     radAttr.setUsage(THREE.DynamicDrawUsage);
@@ -703,6 +725,7 @@ export function AtomsOptimized({
         uSurfacePolish: { value: 0.0 },
         uSurfaceClearcoat: { value: 0.0 },
         uLightDir: { value: new THREE.Vector3(0.4, 0.7, 0.6) },
+        uProgress: { value: 0 },
         uFillLightDir: { value: new THREE.Vector3(-0.3, -0.2, 0.8) },
         uRimLightDir: { value: new THREE.Vector3(0.0, 0.0, -1.0) },
         uFillLightColor: { value: new THREE.Color('#8888ff') },
@@ -878,6 +901,16 @@ export function AtomsOptimized({
     u.uLightDir.value.copy(lightScratch.copy(lightWorldDirs.key).transformDirection(inv));
     u.uFillLightDir.value.copy(lightScratch.copy(lightWorldDirs.fill).transformDirection(inv));
     u.uRimLightDir.value.copy(lightScratch.copy(lightWorldDirs.rim).transformDirection(inv));
+
+    // GPU frame-interpolation progress. Read it live (display rate) from the
+    // playback ref so motion is smooth regardless of the React state-sync FPS;
+    // clamp to [0,1] so a lagging React buffer reload can't overshoot the loaded
+    // current->target pair. Falls back to the (slower) prop when no ref is wired.
+    const live = liveStateRef?.current;
+    const prog = (live && frameIndex != null)
+      ? live.effectiveFrame - frameIndex
+      : (interpolationFactor ?? 0);
+    u.uProgress.value = prog < 0 ? 0 : prog > 1 ? 1 : prog;
   });
 
   // ─── Upload frame data to GPU (runs ONCE per frame change) ────────
@@ -898,7 +931,6 @@ export function AtomsOptimized({
     const positions = frame.positions;
     const types = frame.types;
 
-    const t = interpolationFactor ?? 0;
     const hasNextFrame = nextFrame && nextFrame.natoms === frame.natoms;
     const nextPos = hasNextFrame ? nextFrame.positions : null;
 
@@ -922,12 +954,10 @@ export function AtomsOptimized({
       if (atomTypeScales?.[typeId] !== undefined) scaleOverrideLookup[typeId] = atomTypeScales[typeId];
     }
 
-    // Property normalization
-    const hasPropInterpolation = nextFrame && t > 0 && nextFrame.properties && nextFrame.properties.has(colorProperty!);
-    const nextPropData = hasPropInterpolation ? nextFrame.properties!.get(colorProperty!) : null;
 
     // Get instance attribute arrays directly
     const posArr = (geometry.attributes.instancePosition as THREE.InstancedBufferAttribute).array as Float32Array;
+    const tgtArr = (geometry.attributes.instanceTargetPosition as THREE.InstancedBufferAttribute).array as Float32Array;
     const radArr = (geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute).array as Float32Array;
     const typeArr = (geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute).array as Float32Array;
     const propArr = (geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute).array as Float32Array;
@@ -944,16 +974,22 @@ export function AtomsOptimized({
       if (radius === 0) continue;
       if (visibleCount >= capacity) break;
 
-      // Position with interpolation + PBC unwrapping
-      let x = positions[i * 3];
-      let y = positions[i * 3 + 1];
-      let z = positions[i * 3 + 2];
+      // Current position. The GPU lerps current -> target via uProgress, so the
+      // CPU never touches positions per interpolation substep — only on a frame
+      // change. PBC is unwrapped ONCE here into the target, not per substep.
+      const x = positions[i * 3];
+      const y = positions[i * 3 + 1];
+      const z = positions[i * 3 + 2];
 
-      if (nextPos && t > 0) {
+      const pi = visibleCount * 3;
+      posArr[pi]     = x;
+      posArr[pi + 1] = y;
+      posArr[pi + 2] = z;
+
+      if (nextPos) {
         let dx = nextPos[i * 3] - x;
         let dy = nextPos[i * 3 + 1] - y;
         let dz = nextPos[i * 3 + 2] - z;
-
         if (hasBounds) {
           if (dx > bsx / 2) dx -= bsx;
           if (dx < -bsx / 2) dx += bsx;
@@ -962,26 +998,24 @@ export function AtomsOptimized({
           if (dz > bsz / 2) dz -= bsz;
           if (dz < -bsz / 2) dz += bsz;
         }
-
-        x += dx * t;
-        y += dy * t;
-        z += dz * t;
+        tgtArr[pi]     = x + dx;
+        tgtArr[pi + 1] = y + dy;
+        tgtArr[pi + 2] = z + dz;
+      } else {
+        // No next frame: target == current, so mix() is a no-op for any uProgress.
+        tgtArr[pi]     = x;
+        tgtArr[pi + 1] = y;
+        tgtArr[pi + 2] = z;
       }
-
-      const pi = visibleCount * 3;
-      posArr[pi]     = x;
-      posArr[pi + 1] = y;
-      posArr[pi + 2] = z;
 
       radArr[visibleCount] = radius;
       typeArr[visibleCount] = typeId;
 
-      // Normalized property value (for property color mode)
+      // Normalized property value (current frame). Temporal color interpolation
+      // was dropped with the CPU position lerp — a negligible visual effect that
+      // coupled this loop to the live interpolation factor.
       if (propData) {
-        let val = propData[i];
-        if (nextPropData && nextPropData.length > i) {
-          val = val + (nextPropData[i] - val) * t;
-        }
+        const val = propData[i];
         propArr[visibleCount] = pMax > pMin ? (val - pMin) / (pMax - pMin) : 0.5;
       } else {
         propArr[visibleCount] = 0.0;
@@ -1000,18 +1034,21 @@ export function AtomsOptimized({
 
     // Mark attributes for GPU upload
     const posAttr = geometry.attributes.instancePosition as THREE.InstancedBufferAttribute;
+    const tgtAttr = geometry.attributes.instanceTargetPosition as THREE.InstancedBufferAttribute;
     const radAttr = geometry.attributes.instanceRadius as THREE.InstancedBufferAttribute;
     const typeAttr = geometry.attributes.instanceTypeId as THREE.InstancedBufferAttribute;
     const propAttr = geometry.attributes.instancePropValue as THREE.InstancedBufferAttribute;
 
     const atomIdAttr = geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute;
     posAttr.needsUpdate = true;
+    tgtAttr.needsUpdate = true;
     radAttr.needsUpdate = true;
     typeAttr.needsUpdate = true;
     propAttr.needsUpdate = true;
     atomIdAttr.needsUpdate = true;
 
     (posAttr as any).updateRange = { offset: 0, count: visibleCount * 3 };
+    (tgtAttr as any).updateRange = { offset: 0, count: visibleCount * 3 };
     (radAttr as any).updateRange = { offset: 0, count: visibleCount };
     (typeAttr as any).updateRange = { offset: 0, count: visibleCount };
     (propAttr as any).updateRange = { offset: 0, count: visibleCount };
@@ -1019,7 +1056,7 @@ export function AtomsOptimized({
 
     return cleanupIdle;
   }, [
-    frame, nextFrame, interpolationFactor, scale, propData, pMin, pMax,
+    frame, nextFrame, scale, propData, pMin, pMax,
     hiddenAtomTypes, atomTypeScales, botanicalMode,
     onSpatialHash, capacity, colorProperty, geometry,
   ]);
