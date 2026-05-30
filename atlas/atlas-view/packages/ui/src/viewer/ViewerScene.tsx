@@ -284,7 +284,7 @@ export function ViewerScene({
                       blur={2.4}
                       far={Math.max(20, dx * 0.6)}
                       opacity={postprocessPreset === 'cinematic' ? 0.55 : 0.32}
-                      resolution={1024}
+                      resolution={512}
                       color="#04060c"
                     />
                   );

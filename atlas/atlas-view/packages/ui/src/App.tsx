@@ -75,6 +75,7 @@ export default function App() {
   const ghostFile = useStore(s => s.ghostFile);
   const frame = useStore(s => s.frame);
   const playing = useStore(s => s.playing);
+  const flythroughPreview = useStore(s => s.flythroughPreview);
   const playbackSpeed = useStore(s => s.playbackSpeed);
   const colormap = useStore(s => s.colormap);
   const annotations = useStore(s => s.annotations);
@@ -367,6 +368,11 @@ export default function App() {
           transition: 'right 180ms ease, bottom 180ms ease',
         }}>
           <Canvas
+            // Render on demand: a static structure costs 0 frames. We force
+            // "always" only while something is genuinely animating — playback,
+            // a flythrough, or an export capture. OrbitControls (drei) invalidates
+            // on camera change, so interaction stays smooth in demand mode.
+            frameloop={(playing || flythroughPreview || isExportingQuickLook || isBatchExport || activePanel === 'export') ? 'always' : 'demand'}
             camera={{
               position: [center[0], center[1], center[2] + cameraDistance],
               fov: 50,

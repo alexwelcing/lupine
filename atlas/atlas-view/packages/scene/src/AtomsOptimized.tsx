@@ -842,6 +842,28 @@ export function AtomsOptimized({
   // useFrame keeps the material uniform pointing at whatever's current,
   // and recomputes the mip count when the texture identity changes (the
   // PMREM mip count is texture.mipmaps.length - 1, or derived from size).
+  // Light WORLD directions depend only on the azimuth/elevation props, so build
+  // them once per angle change (not per frame). Only the view-space transform is
+  // camera-dependent and stays in useFrame, reusing a single scratch vector — so
+  // the hot path does zero allocation and no trig.
+  const lightWorldDirs = useMemo(() => {
+    const dir = (azDeg: number, elDeg: number) => {
+      const az = (azDeg * Math.PI) / 180;
+      const el = (elDeg * Math.PI) / 180;
+      return new THREE.Vector3(
+        Math.cos(el) * Math.sin(az),
+        Math.sin(el),
+        Math.cos(el) * Math.cos(az),
+      ).normalize();
+    };
+    return {
+      key: dir(keyLightAzimuth ?? 40, keyLightElevation ?? 45),
+      fill: dir(fillLightAzimuth ?? -120, fillLightElevation ?? 10),
+      rim: dir(rimLightAzimuth ?? 160, rimLightElevation ?? 30),
+    };
+  }, [keyLightAzimuth, keyLightElevation, fillLightAzimuth, fillLightElevation, rimLightAzimuth, rimLightElevation]);
+  const lightScratch = useMemo(() => new THREE.Vector3(), []);
+
   useFrame(({ camera }) => {
     const env = (scene as any).environment as THREE.Texture | null;
     const u = material.uniforms;
@@ -850,34 +872,12 @@ export function AtomsOptimized({
       u.uHasEnv.value = env ? 1 : 0;
     }
 
-    // Continuously transform the light directions into view space
-    // so the impostor shader gets them relative to the camera.
-    const kAz = (keyLightAzimuth ?? 40) * Math.PI / 180;
-    const kEl = (keyLightElevation ?? 45) * Math.PI / 180;
-    const kx = Math.cos(kEl) * Math.sin(kAz);
-    const ky = Math.sin(kEl);
-    const kz = Math.cos(kEl) * Math.cos(kAz);
-    const lightWorldDir = new THREE.Vector3(kx, ky, kz).normalize();
-    const lightViewDir = lightWorldDir.clone().transformDirection(camera.matrixWorldInverse).normalize();
-    u.uLightDir.value.copy(lightViewDir);
-
-    const fAz = (fillLightAzimuth ?? -120) * Math.PI / 180;
-    const fEl = (fillLightElevation ?? 10) * Math.PI / 180;
-    const fx = Math.cos(fEl) * Math.sin(fAz);
-    const fy = Math.sin(fEl);
-    const fz = Math.cos(fEl) * Math.cos(fAz);
-    const fillWorldDir = new THREE.Vector3(fx, fy, fz).normalize();
-    const fillViewDir = fillWorldDir.clone().transformDirection(camera.matrixWorldInverse).normalize();
-    u.uFillLightDir.value.copy(fillViewDir);
-
-    const rAz = (rimLightAzimuth ?? 160) * Math.PI / 180;
-    const rEl = (rimLightElevation ?? 30) * Math.PI / 180;
-    const rx = Math.cos(rEl) * Math.sin(rAz);
-    const ry = Math.sin(rEl);
-    const rz = Math.cos(rEl) * Math.cos(rAz);
-    const rimWorldDir = new THREE.Vector3(rx, ry, rz).normalize();
-    const rimViewDir = rimWorldDir.clone().transformDirection(camera.matrixWorldInverse).normalize();
-    u.uRimLightDir.value.copy(rimViewDir);
+    // Transform the precomputed world dirs into view space (camera-relative) for
+    // the impostor shader. One scratch vector, reused — no per-frame allocation.
+    const inv = camera.matrixWorldInverse;
+    u.uLightDir.value.copy(lightScratch.copy(lightWorldDirs.key).transformDirection(inv));
+    u.uFillLightDir.value.copy(lightScratch.copy(lightWorldDirs.fill).transformDirection(inv));
+    u.uRimLightDir.value.copy(lightScratch.copy(lightWorldDirs.rim).transformDirection(inv));
   });
 
   // ─── Upload frame data to GPU (runs ONCE per frame change) ────────

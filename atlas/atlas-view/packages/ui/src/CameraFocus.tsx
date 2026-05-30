@@ -20,7 +20,7 @@ interface CameraFocusProps {
 
 export function CameraFocus({ frame, enabled = true }: CameraFocusProps) {
   const selectedAtoms = useStore(s => s.selectedAtoms);
-  const { camera, controls } = useThree();
+  const { camera, controls, invalidate } = useThree();
   const focusTargetRef = useRef<THREE.Vector3 | null>(null);
   const previousAtomRef = useRef<number | null>(null);
 
@@ -61,6 +61,8 @@ export function CameraFocus({ frame, enabled = true }: CameraFocusProps) {
     }
 
     orbitControls.update?.();
+    // Keep the render loop alive while focusing (frameloop is "demand" when idle).
+    invalidate();
 
     if (orbitTarget.distanceTo(target) < STOP_EPSILON) {
       orbitTarget.copy(target);
