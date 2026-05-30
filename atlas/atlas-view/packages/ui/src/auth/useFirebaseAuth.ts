@@ -81,6 +81,9 @@ function providerFor(provider: LupiAuthProviderId): AuthProvider | null {
 
 const AUTH_OVERRIDE_STORAGE_KEY = 'lupi.authOverride.account';
 const AUTH_OVERRIDE_PROVIDER_ID = 'lupi-dev-override';
+const AUTH_TIMEOUT_CODE = 'lupi/auth-timeout';
+const AUTH_STARTUP_TIMEOUT_MS = 4500;
+const TOKEN_TIMEOUT_MS = 6500;
 const AUTH_OVERRIDE_DEFAULT_ACCOUNT = {
   displayName: 'Codex Test',
   email: 'codex-test@lupi.local',
@@ -108,6 +111,7 @@ let authSnapshot: FirebaseAuthSnapshot = {
 const authSubscribers = new Set<() => void>();
 let authObserverStarted = false;
 let redirectResultStarted = false;
+let authStartupTimer: ReturnType<typeof setTimeout> | null = null;
 
 function getAuthSnapshot() {
   return authSnapshot;
@@ -118,6 +122,40 @@ function setAuthSnapshot(next: Partial<FirebaseAuthSnapshot>) {
   writeAuthHintCookie(authSnapshot.user);
   publishAuthDebugApi();
   authSubscribers.forEach((listener) => listener());
+}
+
+function makeAuthTimeout(message: string) {
+  return Object.assign(new Error(message), { code: AUTH_TIMEOUT_CODE });
+}
+
+function isAuthTimeout(error: unknown) {
+  return typeof error === 'object'
+    && error !== null
+    && 'code' in error
+    && (error as { code?: unknown }).code === AUTH_TIMEOUT_CODE;
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(makeAuthTimeout(message)), ms);
+    promise
+      .then(resolve, reject)
+      .finally(() => clearTimeout(timer));
+  });
+}
+
+function clearAuthStartupTimer() {
+  if (!authStartupTimer) return;
+  clearTimeout(authStartupTimer);
+  authStartupTimer = null;
+}
+
+function scheduleAuthStartupFallback() {
+  clearAuthStartupTimer();
+  authStartupTimer = setTimeout(() => {
+    if (!authSnapshot.loading) return;
+    setAuthSnapshot({ loading: false });
+  }, AUTH_STARTUP_TIMEOUT_MS);
 }
 
 function subscribeAuth(listener: () => void) {
@@ -132,7 +170,7 @@ function ensureAuthObserver() {
   hydrateStoredAuthOverride();
 
   if (!firebaseAuth) {
-    setAuthSnapshot({ loading: false });
+    if (authSnapshot.loading) setAuthSnapshot({ loading: false });
     return;
   }
 
@@ -144,11 +182,13 @@ function ensureAuthObserver() {
         loading: true,
         user: firebaseAuth.currentUser,
       });
+      scheduleAuthStartupFallback();
     }
 
     onIdTokenChanged(firebaseAuth, async (nextUser) => {
       if (authSnapshot.isOverride && !nextUser) return;
       if (nextUser) clearAuthOverride();
+      clearAuthStartupTimer();
 
       setAuthSnapshot({
         error: null,
@@ -163,11 +203,15 @@ function ensureAuthObserver() {
       }
 
       try {
-        const nextToken = await nextUser.getIdToken();
+        const nextToken = await withTimeout(
+          nextUser.getIdToken(),
+          TOKEN_TIMEOUT_MS,
+          'Firebase token refresh timed out.',
+        );
         setAuthSnapshot({ idToken: nextToken, isOverride: false, loading: false, user: nextUser });
       } catch (nextError) {
         setAuthSnapshot({
-          error: toErrorMessage(nextError),
+          error: isAuthTimeout(nextError) ? null : toErrorMessage(nextError),
           idToken: null,
           isOverride: false,
           loading: false,
@@ -179,13 +223,23 @@ function ensureAuthObserver() {
 
   if (!redirectResultStarted) {
     redirectResultStarted = true;
-    getRedirectResult(firebaseAuth)
+    withTimeout(
+      getRedirectResult(firebaseAuth),
+      AUTH_STARTUP_TIMEOUT_MS,
+      'Firebase redirect check timed out.',
+    )
       .then(async (credential) => {
         if (credential?.user) {
           await updateSignedInUser(credential.user);
         }
       })
       .catch((nextError) => {
+        if (isAuthTimeout(nextError)) {
+          if (!authSnapshot.user && !authSnapshot.idToken) {
+            setAuthSnapshot({ loading: false });
+          }
+          return;
+        }
         setAuthSnapshot({
           error: toErrorMessage(nextError),
           loading: false,
@@ -204,14 +258,18 @@ async function updateSignedInUser(nextUser: User) {
   setAuthSnapshot({ error: null, isOverride: false, loading: true, user: nextUser });
   try {
     setAuthSnapshot({
-      idToken: await nextUser.getIdToken(),
+      idToken: await withTimeout(
+        nextUser.getIdToken(),
+        TOKEN_TIMEOUT_MS,
+        'Firebase token refresh timed out.',
+      ),
       isOverride: false,
       loading: false,
       user: nextUser,
     });
   } catch (nextError) {
     setAuthSnapshot({
-      error: toErrorMessage(nextError),
+      error: isAuthTimeout(nextError) ? null : toErrorMessage(nextError),
       idToken: null,
       isOverride: false,
       loading: false,
@@ -225,7 +283,7 @@ function shouldPreferPopupSignIn() {
   const configuredFlow = import.meta.env.VITE_LUPI_AUTH_FLOW;
   if (configuredFlow === 'popup') return true;
   if (configuredFlow === 'redirect') return false;
-  return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  return true;
 }
 
 function shouldFallbackToRedirect(error: unknown) {
@@ -244,6 +302,7 @@ async function prepareAuthPersistence() {
 
 async function startSignIn(providerId: LupiAuthProviderId = 'google') {
   ensureAuthObserver();
+  clearAuthStartupTimer();
   const provider = providerFor(providerId);
   if (!firebaseAuth || !provider) {
     setAuthSnapshot({ error: 'Firebase is not configured for this build.', loading: false });
@@ -276,6 +335,7 @@ async function startSignIn(providerId: LupiAuthProviderId = 'google') {
 }
 
 async function startOverrideSignIn(account?: LupiAuthOverrideInput) {
+  clearAuthStartupTimer();
   if (!authOverrideAvailable()) {
     setAuthSnapshot({
       error: 'Lupi auth override is only available in local dev with VITE_LUPI_AUTH_OVERRIDE_ENABLED=true.',
@@ -328,7 +388,11 @@ async function refreshAuthToken() {
 
   setAuthSnapshot({ error: null, loading: true, user: firebaseAuth.currentUser });
   try {
-    const freshToken = await firebaseAuth.currentUser.getIdToken(true);
+    const freshToken = await withTimeout(
+      firebaseAuth.currentUser.getIdToken(true),
+      TOKEN_TIMEOUT_MS,
+      'Firebase token refresh timed out.',
+    );
     setAuthSnapshot({
       idToken: freshToken,
       isOverride: false,
@@ -338,7 +402,7 @@ async function refreshAuthToken() {
     return freshToken;
   } catch (nextError) {
     setAuthSnapshot({
-      error: toErrorMessage(nextError),
+      error: isAuthTimeout(nextError) ? null : toErrorMessage(nextError),
       loading: false,
     });
     return null;
@@ -381,12 +445,20 @@ function readStoredAuthOverride(): Required<Omit<LupiAuthOverrideInput, 'photoUR
 
 function persistAuthOverride(account: ReturnType<typeof normalizeAuthOverrideAccount>) {
   if (typeof window === 'undefined') return;
-  window.localStorage.setItem(AUTH_OVERRIDE_STORAGE_KEY, JSON.stringify(account));
+  try {
+    window.localStorage.setItem(AUTH_OVERRIDE_STORAGE_KEY, JSON.stringify(account));
+  } catch {
+    // Local override is only a dev convenience; keep the in-memory session alive if storage is blocked.
+  }
 }
 
 function clearAuthOverride() {
   if (typeof window === 'undefined') return;
-  window.localStorage.removeItem(AUTH_OVERRIDE_STORAGE_KEY);
+  try {
+    window.localStorage.removeItem(AUTH_OVERRIDE_STORAGE_KEY);
+  } catch {
+    // Storage can be blocked in hardened browser contexts.
+  }
 }
 
 function normalizeAuthOverrideAccount(account?: LupiAuthOverrideInput) {

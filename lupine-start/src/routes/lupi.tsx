@@ -2,12 +2,11 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '../components/ui/Card'
-import { Badge } from '../components/ui/Badge'
-import { Section, SectionHeader } from '../components/ui/Section'
+import { SectionHeader } from '../components/ui/Section'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { MolecularLattice } from '../components/ui/MolecularLattice'
-import { Play, Pause, RotateCw, RefreshCw, Upload, Check, Zap, Layers, Cpu, Eye, Shield, Terminal, ArrowRight, Clipboard, ExternalLink } from 'lucide-react'
+import { Terminal, ArrowRight, Clipboard, ChevronRight, Layers, Zap, Cpu, Shield, HelpCircle } from 'lucide-react'
 import { generateProceduralLattice } from '../lib/server'
 
 export const Route = createFileRoute('/lupi')({
@@ -23,92 +22,6 @@ export const Route = createFileRoute('/lupi')({
     ],
   }),
 })
-
-/* ─── Embedded XYZ Datasets (Used for parser execution) ─── */
-const XYZ_DATASETS = {
-  caffeine: `24
-Caffeine (C8H10N4O2) molecular coordinate model
-C          -0.1021        0.8711        0.0000
-C           1.1894        0.3129        0.0000
-N           1.2586       -1.0423        0.0000
-C           0.1065       -1.8021        0.0000
-C          -1.1894       -1.1219        0.0000
-C          -1.2586        0.2811        0.0000
-O           2.2711        1.0123        0.0000
-O          -0.1256       -3.0123        0.0000
-N          -2.4012       -0.7812        0.0000
-C          -3.6023       -1.5812        0.0000
-N          -2.4586        0.9876        0.0000
-C          -3.7123        1.7012        0.0000
-C           2.5891       -1.7812        0.0000
-H          -3.4123       -2.6512        0.0000
-H          -4.1235       -1.3123        0.0000
-H          -4.2341       -1.2812        0.0000
-H          -3.5123        2.7812        0.0000
-H          -4.2312        1.4123        0.0000
-H          -4.3412        1.3812        0.0000
-H           2.4123       -2.8512        0.0000
-H           3.1234       -1.4123        0.0000
-H           3.2341       -1.3812        0.0000
-H          -0.1872        1.9542        0.0000
-H          -2.1812       -1.9512        0.2000`,
-
-  aspirin: `21
-Acetylsalicylic acid (Aspirin) geometry
-C          -2.1021       -0.5812        0.1200
-C          -0.9123        0.2100        0.0500
-C          -1.0234        1.6021       -0.0800
-C          -2.2561        2.1812       -0.1200
-C          -3.4123        1.4123       -0.0300
-C          -3.3234        0.0211        0.0900
-O           0.2711       -0.3812        0.1500
-C           1.4123        0.3921        0.0800
-O           1.3921        1.6021       -0.0500
-C           2.6212       -0.4812        0.1800
-O          -2.0234       -1.9021        0.2400
-H          -0.1234        2.1812       -0.1500
-H          -2.3123        3.2561       -0.2200
-H          -4.3812        1.8876       -0.0600
-H          -4.2123       -0.5812        0.1600
-H           3.5412        0.0987        0.1200
-H           2.5123       -1.2123        0.9800
-H           2.7123       -1.0123       -0.7600
-O          -3.1234       -2.5812        0.3100
-H          -3.9012       -2.0123        0.2800
-C          -1.1812       -3.0234        0.3500`,
-
-  water: `18
-6 molecules water cluster
-O          -1.2581        0.1213       -0.3421
-H          -1.8902       -0.5211       -0.7812
-H          -0.6512       -0.4213        0.2100
-O           1.3812       -0.1234       -0.2100
-H           1.8912        0.6542       -0.5812
-H           0.6541        0.1213        0.3812
-O          -0.1213        1.8912        1.1213
-H          -0.8901        2.3123        0.7512
-H           0.5123        2.5412        1.3812
-O          -0.3121       -2.0123       -1.2581
-H           0.4123       -2.4512       -1.7812
-H          -0.9812       -2.6541       -0.9812
-O           2.1213        2.1213       -1.8912
-H           2.8123        2.6541       -1.3412
-H           1.3812        2.6123       -2.1213
-O          -2.5812        2.1213       -1.8912
-H          -3.2123        2.6812       -1.3812
-H          -1.8912        2.6541       -2.1812`,
-}
-
-/* ─── Element Visual Styles ─── */
-const ELEMENT_COLORS = {
-  C: { color: '#2b2c2e', name: 'Carbon', radius: 1.4, fill: '#1b1c1e' },
-  H: { color: '#e2e8f0', name: 'Hydrogen', radius: 0.9, fill: '#cbd5e1' },
-  O: { color: '#f87171', name: 'Oxygen', radius: 1.3, fill: '#ef4444' },
-  N: { color: '#60a5fa', name: 'Nitrogen', radius: 1.4, fill: '#3b82f6' },
-  CU: { color: '#fbbf24', name: 'Copper', radius: 1.6, fill: '#d97706' },
-  FE: { color: '#f97316', name: 'Iron', radius: 1.6, fill: '#ea580c' },
-  DEFAULT: { color: '#c084fc', name: 'Unknown Element', radius: 1.3, fill: '#8b5cf6' },
-}
 
 const MATRIX_ROWS = [
   {
@@ -160,10 +73,10 @@ function LupiLandingPage() {
   const [activePreset, setActivePreset] = useState<'caffeine' | 'aspirin' | 'water'>('caffeine')
 
   /* ══ STATE: active panel tab selection ══ */
-  const [activePanel, setActivePanel] = useState<'agent' | 'json' | 'catalog' | 'log'>('agent')
+  const [activePanel, setActivePanel] = useState<'agent' | 'json' | 'specs' | 'log'>('agent')
 
   /* ══ STATE: theme skin selection ══ */
-  const [themeSkin, setThemeSkin] = useState<'obsidian' | 'manuscript'>('obsidian')
+  const [themeSkin, setThemeSkin] = useState<'obsidian' | 'manuscript'>('manuscript')
 
   /* ══ STATE: Agent Composer & JSON tool editor ══ */
   const [agentCommand, setAgentCommand] = useState(
@@ -442,140 +355,187 @@ function LupiLandingPage() {
     }
   }
 
-  /* ══ STITCH PROTOCOL SPECIFICATION ══ */
-  const stitchSpecText = `Design System creative North Star: "The Cyanotype Field Notebook".
-- Light Mode: Tactile paper base (#fef8f5) rest against stippled dot grid in charcoal at 2%.
-- Display Typography: Rumelaz Gekinsa editorial serif (Regular 400 only, never synthetic bold).
-- Technical Typography: CS Claire Mono data voice (Regular 400 only).
-- Bounds: Crisp 6px maximum rounded corners (no generic SaaS rounded pills).
-- dividers: Avoid 1px lines. Tonal shift surfaces (surface_container rest against base).`
-
   return (
-    <div className={`min-h-screen ${themeSkin === 'manuscript' ? 'light bg-[#fef8f5]' : 'bg-[#0f1114]'} text-[var(--on-surface)] transition-colors duration-500 font-sans antialiased`}>
+    <div className={`min-h-screen ${themeSkin === 'manuscript' ? 'bg-[#fef8f5] text-[#1b1c1e]' : 'bg-[#0a0b0d] text-[#e2e8f0]'} transition-colors duration-500 font-sans antialiased overflow-x-hidden relative`}>
+      {/* ─── Layout Guide Lines (Surveyor Grid Style) ─── */}
+      <div className="absolute inset-y-0 left-12 w-px bg-slate-500/10 pointer-events-none hidden md:block" />
+      <div className="absolute inset-y-0 right-12 w-px bg-slate-500/10 pointer-events-none hidden md:block" />
+      
       <Header />
 
-      <main className="overflow-hidden">
-        {/* ══ SECTION 1: BLUEPRINT HERO ══ */}
-        <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden border-b border-[var(--outline-variant)]">
-          <div className="absolute inset-0 opacity-15 pointer-events-none mix-blend-multiply bg-noise" />
-          <div className="absolute inset-0 pointer-events-none opacity-45">
-            <MolecularLattice className="scale-110 lg:scale-125" />
+      <main className="relative z-10">
+        
+        {/* ═══ SECTION 1: THE ASYMMETRICAL SCIENTIFIC SURVEYOR LOG (DISRUPTED APEX HERO) ═══ */}
+        <section className="relative pt-24 pb-16 lg:py-32 border-b border-slate-500/15 overflow-hidden">
+          {/* Stippled Dot Grid in Warm/Obsidian Contrast */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-noise" />
+          <div className="absolute inset-0 pointer-events-none opacity-[0.25]">
+            <MolecularLattice className="scale-100 lg:scale-110 translate-x-24" />
           </div>
 
-          <div className="container relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24">
-            <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
-              <div>
-                <span className="mono-label text-[var(--primary)] mb-6 block tracking-[0.25em]">LUPI · MODEL CONTEXT PROTOCOL (MCP) INTERFACE</span>
-                <h1 className="font-serif font-light text-5xl lg:text-7xl mb-8 tracking-tight leading-[1.08] text-[var(--on-surface)]">
-                  Bridge agent context,<br />
-                  <em className="italic text-[var(--primary)]">directly</em> to 3D trajectory rendering.
+          <div className="container mx-auto max-w-7xl px-6 lg:px-12">
+            <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start relative z-10">
+              
+              {/* Staggered Title Group (Editorial & Technical Voice) */}
+              <div className="space-y-8 mt-4">
+                <div className="flex items-center gap-3">
+                  <span className="h-px w-8 bg-[var(--primary)]" />
+                  <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#6b8aaf] font-normal">
+                    LOGBOOK NO. 42 // REAL-TIME TRAJECTORIES
+                  </span>
+                </div>
+                
+                <h1 className="font-serif font-light text-5xl lg:text-7xl tracking-tight leading-[1.08] text-current">
+                  Directing molecular shapes, <br />
+                  <em className="font-light italic text-[#6b8aaf]">without</em> the desktop overhead.
                 </h1>
-                <p className="text-[var(--on-surface-variant)] text-lg lg:text-xl mb-12 max-w-2xl leading-relaxed font-light font-sans">
-                  The Lupi MCP server connects LLM Agent context (Claude, Gemini) directly to the active 3D visualization canvas. Let agents generate models, type atoms, and trigger shaders live on the ledger using natural language commands.
-                </p>
 
-                <div className="flex gap-4 flex-wrap">
+                <div className="max-w-xl space-y-6 text-sm font-sans font-light leading-relaxed opacity-85">
+                  <p>
+                    Lupine Science studies where interatomic potential approximations break down. Rather than exporting coordinate matrices to heavy offline desktop systems, drive the visualization directly from your active thinking process.
+                  </p>
+                  <p>
+                    The Lupi Model Context Protocol (MCP) server binds browser-native WebGPU drawing loops directly to language model agents (Claude, Gemini, Codex). Tell the canvas what you need to inspect; it parses, compiles, and renders off-thread instantly.
+                  </p>
+                </div>
+
+                {/* Staggered Anchor CTAs (No generic SaaS buttons) */}
+                <div className="flex flex-wrap gap-8 pt-4 font-mono text-[11px] uppercase tracking-widest">
+                  <a
+                    href="#surveyor-deck"
+                    className="flex items-center gap-2 group text-[#6b8aaf] hover:text-current transition-colors no-underline font-normal cursor-pointer"
+                  >
+                    Open log workstation 
+                    <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+                  </a>
                   <a
                     href="https://lupi.live"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="h-12 inline-flex items-center justify-center px-8 bg-[var(--primary)] text-[var(--primary-foreground)] font-mono text-sm uppercase tracking-widest rounded-md hover:opacity-90 transition-opacity no-underline shadow-lg border-none cursor-pointer"
+                    className="flex items-center gap-1.5 text-current hover:opacity-75 transition-opacity no-underline font-normal cursor-pointer"
                   >
-                    Launch Live LUPI Viewer
-                  </a>
-                  <a
-                    href="#mcp-harness"
-                    className="h-12 inline-flex items-center justify-center px-8 border border-[var(--outline-variant)] text-[var(--on-surface)] bg-transparent font-mono text-sm uppercase tracking-widest rounded-md hover:bg-[var(--surface-container-low)] transition-colors no-underline cursor-pointer"
-                  >
-                    Try Live MCP Harness
+                    Launch Live Standalone
                   </a>
                 </div>
               </div>
 
-              {/* Decorative Blueprint Panel */}
+              {/* Floating "Field Log Sheet" Overlapping Card (Disruptive Element) */}
               <div className="relative justify-self-center lg:justify-self-end w-full max-w-[480px]">
-                <div className="glass-panel p-6 relative overflow-hidden backdrop-blur-md">
-                  <div className="absolute right-4 top-4 font-mono text-[9px] text-[var(--on-surface-variant-mid)] opacity-60">
-                    LUPI.TOOLSET
+                {/* Physical Clipping Plate design */}
+                <div className="absolute inset-0 bg-[#6b8aaf]/5 rounded-md transform rotate-2 pointer-events-none" />
+                
+                <div className="glass-panel p-6 bg-slate-500/5 backdrop-blur-md border border-slate-500/10 rounded-md relative overflow-hidden transition-all duration-300">
+                  <div className="absolute right-4 top-4 font-mono text-[8px] tracking-widest text-[#6b8aaf]/60">
+                    SEC. 09 // FORMULAS
                   </div>
-                  <h3 className="font-mono text-xs uppercase tracking-widest text-[var(--primary)] mb-6">Real MCP Specifications</h3>
                   
-                  <div className="space-y-4 font-mono text-[11px] leading-relaxed text-[var(--on-surface-variant)]">
-                    <div className="p-3 bg-white/5 rounded border border-white/5 flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] mt-1.5 shrink-0" />
-                      <div>
-                        <strong className="text-white block font-semibold">lupi.generate_molecule</strong>
-                        Arguments: `inputType` (template, smiles, xyz, description, procedural), `input`, `atomCount`, `lattice`, `element`.
-                      </div>
-                    </div>
-                    
-                    <div className="p-3 bg-white/5 rounded border border-white/5 flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] mt-1.5 shrink-0" />
-                      <div>
-                        <strong className="text-white block font-semibold">lupi.set_viewer</strong>
-                        Arguments: `showBonds`, `atomScale`, `showCell`, `showAxes`, `renderStyle`, `backgroundPreset`, `postprocessPreset`, `colorScheme`, `colormap`, `cameraPreset`.
-                      </div>
-                    </div>
+                  <div className="border-b border-slate-500/10 pb-4 mb-6">
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-[#6b8aaf] block mb-1">
+                      MATRIX EQUATION
+                    </span>
+                    <span className="font-serif italic text-lg text-current block font-light">
+                      f(r_i) = ∑_j φ( |r_i - r_j| )
+                    </span>
+                  </div>
 
-                    <div className="p-3 bg-white/5 rounded border border-white/5 flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] mt-1.5 shrink-0" />
-                      <div>
-                        <strong className="text-white block font-semibold">lupi.export_xyz</strong>
-                        Arguments: None. Serializes and downloads the active frame coordinates.
-                      </div>
+                  {/* Scientific metadata table */}
+                  <div className="space-y-4 font-mono text-[10px] leading-relaxed text-[#6b8aaf]/80">
+                    <div className="grid grid-cols-[120px_1fr] gap-4 py-1.5 border-b border-slate-500/5">
+                      <span>Lattice Spacing</span>
+                      <span className="text-current font-normal font-mono">Cu (3.61 Å), Fe (2.87 Å)</span>
+                    </div>
+                    <div className="grid grid-cols-[120px_1fr] gap-4 py-1.5 border-b border-slate-500/5">
+                      <span>MCP Operations</span>
+                      <span className="text-current font-normal font-mono">generate_molecule, set_viewer</span>
+                    </div>
+                    <div className="grid grid-cols-[120px_1fr] gap-4 py-1.5 border-b border-slate-500/5">
+                      <span>Compute Hub</span>
+                      <span className="text-current font-normal font-mono">GCP Cloud Run Accelerated</span>
                     </div>
                   </div>
+
+                  {/* SVG Coordinate Mesh diagram */}
+                  <div className="mt-8 h-28 border border-slate-500/10 rounded bg-black/5 relative overflow-hidden flex items-center justify-center">
+                    <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <pattern id="stipple" width="10" height="10" patternUnits="userSpaceOnUse">
+                          <circle cx="2" cy="2" r="1" fill="#6b8aaf" />
+                        </pattern>
+                      </defs>
+                      <rect width="100%" height="100%" fill="url(#stipple)" />
+                      <line x1="0" y1="56" x2="100%" y2="56" stroke="#6b8aaf" strokeWidth="0.5" />
+                      <line x1="240" y1="0" x2="240" y2="100%" stroke="#6b8aaf" strokeWidth="0.5" />
+                    </svg>
+                    <div className="relative font-mono text-[9px] text-[#6b8aaf] uppercase tracking-widest text-center px-4 leading-relaxed font-light">
+                      * Trajectory visualization buffer ready for execution *
+                    </div>
+                  </div>
+
                 </div>
               </div>
+
             </div>
           </div>
         </section>
 
-        {/* ══ SECTION 2: THE REAL MCP HARNESS WORKSTATION ══ */}
-        <section id="mcp-harness" className="py-24 border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+        {/* ═══ SECTION 2: THE PHYSICAL DRAFTING CLIPBOARD (WORKSTATION DECK) ═══ */}
+        <section id="surveyor-deck" className="py-20 border-b border-slate-500/15">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12">
-            <SectionHeader
-              label="Workstation Harness"
-              title="Drive 3D structures with the real MCP."
-              description="This is a fully functioning browser-native 3D molecular sandbox. Use the tabs on the left to write natural language directives (processed using the real Lupi keyword parser), execute direct JSON tools, or inspect response log ledgers."
-            />
+            <div className="max-w-3xl mb-16">
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#6b8aaf] font-normal block mb-4">
+                EXPERIMENTATION DECK
+              </span>
+              <h2 className="font-serif font-light text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
+                Active Trajectory Clipboard
+              </h2>
+              <p className="font-sans font-light text-sm leading-relaxed opacity-80">
+                Write NLP directives or pass direct JSON tools to trigger instantaneous WebGPU renders. A backend GCP Cloud Run microservice intercepts heavy procedural lattice commands, pre-compiles them, and feeds coordinates to the viewport off-thread.
+              </p>
+            </div>
 
-            {/* The Monolith Shell */}
-            <div className="w-full rounded-lg overflow-hidden border border-[var(--outline-variant)] shadow-2xl bg-[#0b0c0f]">
+            {/* The Drafting Board Shell */}
+            <div className="w-full rounded-md border border-slate-500/15 overflow-hidden shadow-2xl bg-[#08090b] relative transition-colors duration-500">
               
+              {/* physical clip element */}
+              <div className="w-40 h-5 bg-slate-700/80 mx-auto absolute top-0 left-1/2 -translate-x-1/2 rounded-b border-x border-b border-slate-500/20 flex items-center justify-center font-mono text-[8px] uppercase tracking-widest text-slate-300 pointer-events-none z-20">
+                CLIP // LUPI_09
+              </div>
+
               {/* Toolbar */}
-              <div className="px-5 py-3 border-b border-[var(--outline-variant)] flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[var(--on-surface-variant)] bg-[#0d0e12]">
+              <div className="px-6 py-4 pt-8 border-b border-slate-500/15 flex flex-wrap items-center justify-between gap-4 font-mono text-[10px] text-slate-400 bg-[#0c0d10] relative z-10">
                 <div className="flex items-center gap-3">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--primary)] animate-[pulse-soft_2.5s_infinite]" />
-                  <span className="font-semibold uppercase tracking-widest text-[var(--on-surface)]">LUPI 3D ENGINE // MCP_HARNESS_ON</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-[pulse-soft_2.5s_infinite]" />
+                  <span className="font-normal uppercase tracking-widest text-slate-300">SYSTEM STATUS: HARNESS ACTIVE</span>
                 </div>
                 
-                {/* Target Visualizer Input */}
-                <div className="flex items-center gap-2 bg-[#12141a] px-3 py-1 border border-[var(--outline-variant)] rounded font-mono text-[10px]">
-                  <span className="uppercase tracking-wider mr-1 text-[var(--on-surface-variant-mid)]">Viewer Target:</span>
-                  <input
-                    type="text"
-                    value={viewerUrl}
-                    onChange={(e) => setViewerUrl(e.target.value)}
-                    className="bg-black/60 border border-white/10 rounded px-2 py-0.5 text-white font-mono text-[10px] w-52 focus:outline-none focus:border-[var(--primary)]"
-                  />
-                </div>
+                <div className="flex flex-wrap items-center gap-4">
+                  {/* Theme Switcher */}
+                  <div className="flex items-center gap-1.5 bg-black/40 px-2 py-0.5 border border-slate-500/10 rounded font-mono text-[9px]">
+                    <span className="text-[#6b8aaf]/70 mr-1 uppercase">Skin:</span>
+                    <button
+                      onClick={() => setThemeSkin('manuscript')}
+                      className={`px-1.5 py-0.5 rounded cursor-pointer transition-colors border-none font-mono ${themeSkin === 'manuscript' ? 'bg-[#6b8aaf] text-[#0a0b0d]' : 'bg-transparent text-slate-400 hover:text-white'}`}
+                    >
+                      Light
+                    </button>
+                    <button
+                      onClick={() => setThemeSkin('obsidian')}
+                      className={`px-1.5 py-0.5 rounded cursor-pointer transition-colors border-none font-mono ${themeSkin === 'obsidian' ? 'bg-[#6b8aaf] text-[#0a0b0d]' : 'bg-transparent text-slate-400 hover:text-white'}`}
+                    >
+                      Dark
+                    </button>
+                  </div>
 
-                {/* Theme selector */}
-                <div className="flex items-center gap-2 bg-[#12141a] px-2 py-1 border border-[var(--outline-variant)] rounded font-mono text-[10px]">
-                  <span className="uppercase tracking-wider mr-1 text-[var(--on-surface-variant-mid)]">Theme Skin:</span>
-                  <button
-                    onClick={() => setThemeSkin('obsidian')}
-                    className={`px-2 py-0.5 rounded cursor-pointer transition-colors border-none ${themeSkin === 'obsidian' ? 'bg-[var(--primary)] text-[#0f1114]' : 'bg-transparent text-[var(--on-surface-variant)] hover:text-white'}`}
-                  >
-                    Obsidian
-                  </button>
-                  <button
-                    onClick={() => setThemeSkin('manuscript')}
-                    className={`px-2 py-0.5 rounded cursor-pointer transition-colors border-none ${themeSkin === 'manuscript' ? 'bg-[var(--primary)] text-[#0f1114]' : 'bg-transparent text-[var(--on-surface-variant)] hover:text-white'}`}
-                  >
-                    Manuscript
-                  </button>
+                  {/* Target Endpoint Input */}
+                  <div className="flex items-center gap-1.5 bg-black/40 px-2 py-0.5 border border-slate-500/10 rounded font-mono text-[9px]">
+                    <span className="text-[#6b8aaf]/70 mr-1 uppercase">Target:</span>
+                    <input
+                      type="text"
+                      value={viewerUrl}
+                      onChange={(e) => setViewerUrl(e.target.value)}
+                      className="bg-transparent border-none text-slate-200 font-mono text-[9px] w-40 focus:outline-none"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -583,23 +543,23 @@ function LupiLandingPage() {
               <div className="grid lg:grid-cols-[380px_1fr] min-h-[580px]">
                 
                 {/* Left Controls & Code Panels */}
-                <div className="border-r border-[var(--outline-variant)] bg-[#0d0e12] flex flex-col">
+                <div className="border-r border-slate-500/15 bg-[#0a0b0d] flex flex-col justify-between">
                   
                   {/* Tab selectors */}
-                  <div className="grid grid-cols-4 border-b border-[var(--outline-variant)] font-mono text-[11px] bg-black/40">
+                  <div className="grid grid-cols-4 border-b border-slate-500/15 font-mono text-[10px] bg-black/35">
                     {[
-                      { id: 'agent', label: 'Agent' },
+                      { id: 'agent', label: 'NLP' },
                       { id: 'json', label: 'JSON' },
-                      { id: 'catalog', label: 'Stitch' },
-                      { id: 'log', label: 'Logs' },
+                      { id: 'specs', label: 'Specs' },
+                      { id: 'log', label: 'Ledger' },
                     ].map((t) => (
                       <button
                         key={t.id}
                         onClick={() => setActivePanel(t.id as any)}
-                        className={`py-3 text-center uppercase tracking-wider transition-all cursor-pointer border-none ${
+                        className={`py-3 text-center uppercase tracking-wider transition-all cursor-pointer border-none font-mono ${
                           activePanel === t.id
-                            ? 'bg-[var(--surface-container)] text-white font-semibold border-b-2 border-b-[var(--primary)]'
-                            : 'text-[var(--on-surface-variant-mid)] hover:text-[var(--on-surface-variant)] bg-transparent'
+                            ? 'bg-[#0f1114] text-white font-normal border-b-2 border-b-[#6b8aaf]'
+                            : 'text-slate-500 hover:text-slate-300 bg-transparent'
                         }`}
                       >
                         {t.label}
@@ -610,33 +570,32 @@ function LupiLandingPage() {
                   {/* Tab Panels */}
                   <div className="p-6 flex-1 flex flex-col justify-between gap-6">
                     
-                    {/* PANEL A: AGENT NLP DIRECTIVE */}
+                    {/* PANEL A: NLP DIRECTIVE */}
                     {activePanel === 'agent' && (
                       <div className="flex-1 flex flex-col justify-between">
                         <div className="space-y-4">
                           <div className="flex justify-between items-center">
-                            <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--on-surface-variant-mid)]">LLM Agent Directive Input</span>
-                            <span className="font-mono text-[9px] uppercase tracking-wider text-green-400">Natural Language</span>
+                            <span className="font-mono text-[9px] uppercase tracking-wider text-[#6b8aaf]">Natural Language Directives</span>
                           </div>
                           <textarea
                             value={agentCommand}
                             onChange={(e) => setAgentCommand(e.target.value)}
-                            placeholder="e.g., generate 500k copper fcc atoms..."
-                            className="w-full h-32 p-3 bg-black/60 border border-[var(--outline-variant)] rounded font-mono text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[var(--primary)]/60"
+                            placeholder="e.g., generate 500k copper fcc atoms, hide bonds..."
+                            className="w-full h-36 p-3 bg-black/50 border border-slate-500/10 rounded font-mono text-[11px] text-slate-300 placeholder-slate-600 focus:outline-none focus:border-[#6b8aaf]/30 leading-relaxed"
                           />
-                          <div className="font-mono text-[10px] text-[var(--on-surface-variant)] leading-relaxed">
-                            <span className="block text-[var(--primary)] uppercase font-semibold mb-1">Interactive presets:</span>
-                            <div className="flex flex-wrap gap-2 mt-1.5">
+                          <div className="font-mono text-[9px] text-[#6b8aaf] leading-relaxed">
+                            <span className="block uppercase font-normal mb-1.5">Lattice Presets:</span>
+                            <div className="flex flex-wrap gap-2">
                               {[
-                                { label: 'Load Caffeine', cmd: 'load caffeine, show bonds, enable bloom, camera perspective' },
-                                { label: 'DoF Aspirin', cmd: 'load aspirin, enable ssao, enable dof, hide bonds' },
+                                { label: 'Cu fcc 500k', cmd: 'generate 500k copper fcc atoms, hide bonds, show cell, diagram look, family color, camera iso' },
+                                { label: 'Fe bcc 75k', cmd: 'generate 75k iron bcc atoms, hide bonds, show cell, diagram look, colormap radial' },
+                                { label: 'Caffeine Template', cmd: 'load caffeine, show bonds, enable bloom, camera perspective' },
                                 { label: 'Water Cluster', cmd: 'load water, show bonds, enable bloom, camera perspective' },
-                                { label: '1M Copper FCC', cmd: 'generate 1M copper fcc atoms, hide bonds, show cell, diagram look, family color, camera iso' },
                               ].map((item) => (
                                 <button
                                   key={item.label}
                                   onClick={() => setAgentCommand(item.cmd)}
-                                  className="px-2.5 py-1 bg-white/5 border border-white/5 hover:border-[var(--primary)]/30 rounded text-[9px] text-[var(--on-surface-variant)] hover:text-white cursor-pointer"
+                                  className="px-2 py-1 bg-white/5 border border-white/5 hover:border-[#6b8aaf]/30 rounded text-[9px] text-slate-400 hover:text-white cursor-pointer transition-colors"
                                 >
                                   {item.label}
                                 </button>
@@ -645,73 +604,70 @@ function LupiLandingPage() {
                           </div>
                         </div>
 
-                        <div className="space-y-3 pt-6 border-t border-[var(--outline-variant)]">
+                        <div className="pt-6 border-t border-slate-500/10">
                           <button
                             onClick={runCompiledMcp}
                             disabled={actionProgress}
-                            className="w-full h-11 bg-[var(--primary)] text-[#0f1114] font-mono text-xs uppercase tracking-widest rounded hover:opacity-90 transition-opacity border-none cursor-pointer font-bold flex items-center justify-center gap-2"
+                            className="w-full h-10 bg-[#6b8aaf] text-[#0a0b0d] font-mono text-[10px] uppercase tracking-widest rounded hover:opacity-90 transition-opacity border-none cursor-pointer font-normal flex items-center justify-center gap-1.5"
                           >
-                            {actionProgress ? 'Dispatching...' : 'Run in Viewer'}
-                            <ArrowRight className="size-3.5" />
+                            {actionProgress ? 'Processing...' : 'Execute Workspace'}
+                            <ChevronRight className="size-3.5" />
                           </button>
                         </div>
                       </div>
                     )}
 
-                    {/* PANEL B: DIRECT JSON SCHEMAS */}
+                    {/* PANEL B: DIRECT JSON PAYLOAD */}
                     {activePanel === 'json' && (
                       <div className="flex-1 flex flex-col justify-between">
                         <div className="space-y-4">
                           <div className="flex justify-between items-center">
-                            <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--on-surface-variant-mid)]">PostMessage Packet Payload</span>
-                            <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--primary)]">JSON Format</span>
+                            <span className="font-mono text-[9px] uppercase tracking-wider text-[#6b8aaf]">JSON Packets</span>
                           </div>
                           <textarea
                             value={jsonCommand}
                             onChange={(e) => setJsonCommand(e.target.value)}
-                            className="w-full h-44 p-3 bg-black/60 border border-[var(--outline-variant)] rounded font-mono text-[10px] text-[var(--primary)] focus:outline-none"
+                            className="w-full h-48 p-3 bg-black/50 border border-slate-500/10 rounded font-mono text-[10px] text-[#6b8aaf] focus:outline-none leading-relaxed"
                           />
                         </div>
 
-                        <div className="space-y-3 pt-6 border-t border-[var(--outline-variant)]">
+                        <div className="pt-6 border-t border-slate-500/10">
                           <button
                             onClick={runJsonMcp}
                             disabled={actionProgress}
-                            className="w-full h-11 bg-[var(--primary)] text-[#0f1114] font-mono text-xs uppercase tracking-widest rounded hover:opacity-90 transition-opacity border-none cursor-pointer font-bold"
+                            className="w-full h-10 bg-[#6b8aaf] text-[#0a0b0d] font-mono text-[10px] uppercase tracking-widest rounded hover:opacity-90 transition-opacity border-none cursor-pointer font-normal"
                           >
-                            Execute JSON Tool
+                            Submit JSON Tool
                           </button>
                         </div>
                       </div>
                     )}
 
-                    {/* PANEL C: STITCH DESIGN SYSTEMwatermark */}
-                    {activePanel === 'catalog' && (
-                      <div className="flex-1 flex flex-col justify-between font-mono">
+                    {/* PANEL C: SPECS & BLUEPRINTS */}
+                    {activePanel === 'specs' && (
+                      <div className="flex-1 flex flex-col justify-between font-mono text-[10px] text-slate-400">
                         <div className="space-y-4">
-                          <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--on-surface-variant-mid)] block">Stitch creative Guidelines</span>
-                          <div className="p-3 bg-black/60 border border-[var(--outline-variant)] rounded text-[10px] leading-relaxed text-[var(--on-surface-variant)] space-y-3">
+                          <span className="font-mono text-[9px] uppercase tracking-wider text-[#6b8aaf] block">Design Blueprint Guidelines</span>
+                          <div className="p-3 bg-black/40 border border-slate-500/10 rounded leading-relaxed space-y-3 font-mono text-[9px]">
                             <div>
-                              <strong className="text-white block mb-1">1. The Cyanotype notebook</strong>
-                              Warm uncoated paper base rest against charcoal stippled grid at 2% opacity. No hard SaaS rounded shapes.
+                              <strong className="text-white block mb-0.5">Asymmetrical margins:</strong>
+                              Controls remain offset and skewed for clear technical scanning.
                             </div>
                             <div>
-                              <strong className="text-white block mb-1">2. Display Contrast</strong>
-                              Rumelaz Gekinsa serif for displays, CS Claire Mono for metadata. Never synthesize bold.
+                              <strong className="text-white block mb-0.5">CS Claire Mono:</strong>
+                              Strict monospace typeface for metrics and coordinates, avoiding synthetic bolds.
                             </div>
                             <div>
-                              <strong className="text-white block mb-1">3. Asymmetrical Ledgers</strong>
-                              Left-aligned controls, right-aligned telemetry.
+                              <strong className="text-white block mb-0.5">Warm manuscript base:</strong>
+                              Switching skins to Light Mode shifts typography contrast to uncoated field journal textures.
                             </div>
                           </div>
                         </div>
 
-                        <div className="space-y-3 pt-6 border-t border-[var(--outline-variant)]">
+                        <div className="pt-6 border-t border-slate-500/10">
                           <button
-                            onClick={() => {
-                              setThemeSkin(themeSkin === 'manuscript' ? 'obsidian' : 'manuscript')
-                            }}
-                            className="w-full h-11 border border-[var(--primary)] text-[var(--primary)] bg-transparent font-mono text-xs uppercase tracking-widest rounded hover:bg-[var(--primary)] hover:text-white transition-all cursor-pointer"
+                            onClick={() => setThemeSkin(themeSkin === 'manuscript' ? 'obsidian' : 'manuscript')}
+                            className="w-full h-10 border border-[#6b8aaf] text-[#6b8aaf] bg-transparent font-mono text-[10px] uppercase tracking-widest rounded hover:bg-[#6b8aaf] hover:text-[#0a0b0d] transition-all cursor-pointer"
                           >
                             Toggle Manuscript Skin
                           </button>
@@ -719,24 +675,24 @@ function LupiLandingPage() {
                       </div>
                     )}
 
-                    {/* PANEL D: RESPONSE LOG */}
+                    {/* PANEL D: LEDGER LOGS */}
                     {activePanel === 'log' && (
                       <div className="flex-1 flex flex-col justify-between font-mono text-[10px]">
                         <div className="space-y-4 flex-1 flex flex-col">
-                          <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--on-surface-variant-mid)] block">Scientific Ledger Log</span>
-                          <div className="flex-1 p-3 bg-black/80 border border-[var(--outline-variant)] rounded text-slate-300 leading-relaxed overflow-y-auto space-y-2.5 max-h-[220px]">
+                          <span className="font-mono text-[9px] uppercase tracking-wider text-[#6b8aaf] block">Scientific Log ledger</span>
+                          <div className="flex-1 p-3 bg-black/60 border border-slate-500/10 rounded text-slate-300 leading-relaxed overflow-y-auto space-y-2 max-h-[220px] font-mono text-[9px]">
                             {responseLogs.map((log, i) => (
-                              <div key={i} className={log.includes('SUCCESS') ? 'text-green-400 font-semibold' : log.includes('ERROR') ? 'text-red-400' : 'text-slate-300'}>
+                              <div key={i} className={log.includes('SUCCESS') || log.includes('Complete') ? 'text-green-400 font-normal' : log.includes('ERROR') ? 'text-red-400' : 'text-slate-300'}>
                                 {log}
                               </div>
                             ))}
                           </div>
                         </div>
 
-                        <div className="pt-6 border-t border-[var(--outline-variant)]">
+                        <div className="pt-6 border-t border-slate-500/10">
                           <button
-                            onClick={() => setResponseLogs(['SYSTEM: Log cleared.'])}
-                            className="w-full py-2.5 border border-white/10 hover:border-white/20 text-[var(--on-surface-variant)] hover:text-white bg-transparent rounded cursor-pointer"
+                            onClick={() => setResponseLogs(['SYSTEM: Ledger logs cleared.'])}
+                            className="w-full py-2 border border-slate-500/10 hover:border-slate-500/20 text-slate-400 hover:text-white bg-transparent rounded cursor-pointer font-mono text-[9px]"
                           >
                             Clear Ledger
                           </button>
@@ -748,32 +704,32 @@ function LupiLandingPage() {
                 </div>
 
                 {/* Right Viewport Screen */}
-                <div className="relative bg-[#06070a] flex flex-col justify-between overflow-hidden">
+                <div className="relative bg-[#050608] flex flex-col justify-between overflow-hidden">
                   
-                  {/* Watermark grid */}
+                  {/* Watermark Grid Lines */}
                   <div className="absolute inset-0 pointer-events-none opacity-5 bg-noise" />
 
-                  {/* Scientific metadata HUD */}
-                  <div className="p-6 relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 bg-gradient-to-b from-black/80 to-transparent">
+                  {/* Telemetry HUD (Monospaced details, strictly no bold) */}
+                  <div className="p-6 relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 bg-gradient-to-b from-black/80 to-transparent font-mono text-[10px] text-slate-400">
                     <div>
-                      <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--on-surface-variant-mid)] block mb-1">Active File / Preset</span>
-                      <span className="text-xs font-semibold text-white tracking-wide uppercase font-mono">{viewerState.fileName ?? activePreset}</span>
+                      <span className="text-[8px] uppercase tracking-wider text-[#6b8aaf] block mb-1">Target Trajectory</span>
+                      <span className="text-white font-normal font-mono uppercase">{viewerState.fileName ?? activePreset}</span>
                     </div>
                     <div>
-                      <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--on-surface-variant-mid)] block mb-1">SSAO Shadow Depth</span>
-                      <span className="text-xs font-semibold text-white tracking-wide font-mono">
+                      <span className="text-[8px] uppercase tracking-wider text-[#6b8aaf] block mb-1">Culling Pipeline</span>
+                      <span className="text-white font-normal font-mono">
                         {viewerState.postprocessPreset === 'diagram' ? 'ACTIVE' : 'OFF'}
                       </span>
                     </div>
                     <div>
-                      <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--on-surface-variant-mid)] block mb-1">Atoms rendered</span>
-                      <span className="text-xs font-semibold text-white tracking-wide font-mono">
+                      <span className="text-[8px] uppercase tracking-wider text-[#6b8aaf] block mb-1">Atoms in Viewport</span>
+                      <span className="text-white font-normal font-mono">
                         {viewerState.atomCount ? viewerState.atomCount.toLocaleString() : '0'}
                       </span>
                     </div>
                     <div>
-                      <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--on-surface-variant-mid)] block mb-1">Bonds Calculated</span>
-                      <span className="text-xs font-semibold text-white tracking-wide font-mono">
+                      <span className="text-[8px] uppercase tracking-wider text-[#6b8aaf] block mb-1">Geometry bonds</span>
+                      <span className="text-white font-normal font-mono">
                         {viewerState.showBonds ? 'Enabled' : 'Disabled'}
                       </span>
                     </div>
@@ -785,28 +741,28 @@ function LupiLandingPage() {
                       ref={iframeRef}
                       src={viewerUrl}
                       allow="autoplay"
-                      className="w-full h-full min-h-[420px] border-none rounded"
+                      className="w-full h-full min-h-[420px] border-none"
                     />
 
                     {/* Viewport UI overlays */}
-                    <div className="absolute top-4 left-6 font-mono text-[9px] text-[var(--on-surface-variant)] uppercase tracking-widest bg-black/60 px-2.5 py-1.5 backdrop-blur-sm rounded">
-                      Focal Target: {viewerState.fileName ?? 'Default'}
+                    <div className="absolute top-4 left-6 font-mono text-[9px] text-[#6b8aaf] uppercase tracking-widest bg-[#0a0b0d]/80 px-2.5 py-1.5 border border-slate-500/10 rounded">
+                      Focal Coordinate: {viewerState.fileName ?? 'Default'}
                     </div>
 
-                    <div className="absolute bottom-4 right-6 font-mono text-[9px] text-[var(--on-surface-variant)] uppercase tracking-widest bg-black/60 px-2.5 py-1.5 backdrop-blur-sm rounded flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-[pulse-soft_1.5s_infinite]" />
+                    <div className="absolute bottom-4 right-6 font-mono text-[9px] text-[#6b8aaf] uppercase tracking-widest bg-[#0a0b0d]/80 px-2.5 py-1.5 border border-slate-500/10 rounded flex items-center gap-1.5">
+                      <span className="w-1 h-1 rounded-full bg-green-500 animate-[pulse-soft_1.5s_infinite]" />
                       Real-Time WebGPU Render
                     </div>
                   </div>
 
                   {/* HUD controls and timeline info */}
-                  <div className="p-6 bg-gradient-to-t from-black/90 to-black/30 border-t border-[var(--outline-variant)]">
-                    <div className="flex flex-col gap-3 font-mono text-[10px] text-[var(--on-surface-variant)] uppercase tracking-wider">
+                  <div className="p-6 bg-gradient-to-t from-black/90 to-black/30 border-t border-slate-500/15">
+                    <div className="flex flex-col gap-3 font-mono text-[9px] text-slate-400 uppercase tracking-wider">
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <span>Style: <strong className="text-white">{viewerState.renderStyle ?? 'standard'}</strong></span>
-                        <span>Postprocess: <strong className="text-white">{viewerState.postprocessPreset ?? 'diagram'}</strong></span>
-                        <span>Background: <strong className="text-white">{viewerState.backgroundPreset ?? 'blueprint'}</strong></span>
-                        <span>Colormap: <strong className="text-white">{viewerState.colormap ?? 'turbo'}</strong></span>
+                        <span>Style: <strong className="text-white font-normal">{viewerState.renderStyle ?? 'standard'}</strong></span>
+                        <span>Postprocess: <strong className="text-white font-normal">{viewerState.postprocessPreset ?? 'diagram'}</strong></span>
+                        <span>Background: <strong className="text-white font-normal">{viewerState.backgroundPreset ?? 'blueprint'}</strong></span>
+                        <span>Colormap: <strong className="text-white font-normal">{viewerState.colormap ?? 'turbo'}</strong></span>
                       </div>
                     </div>
                   </div>
@@ -818,86 +774,94 @@ function LupiLandingPage() {
           </div>
         </section>
 
-        {/* ══ SECTION 3: PARSER COMPILER EXPLAINER ══ */}
-        <section className="py-24 border-b border-[var(--outline-variant)]">
+        {/* ═══ SECTION 3: STAGGERED LAB LOG LEDGER (DISRUPTED SPECIFICATIONS TIMELINE) ═══ */}
+        <section className="py-24 relative border-b border-slate-500/15 overflow-hidden">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12">
-            <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-16 items-start">
-              <div>
-                <span className="mono-label text-[var(--primary)] mb-4 block tracking-[0.2em]">AGENT COMPILER ARCHITECTURE</span>
-                <h2 className="text-4xl lg:text-5xl mb-6">How LLMs write to the canvas.</h2>
-                <p className="text-[var(--on-surface-variant)] text-base leading-relaxed mb-8 font-light">
-                  Lupine Science studies real trajectory evidence. Instead of requiring complex mouse operations, agents query the **Lupi MCP server** directly. 
-                </p>
-                <p className="text-[var(--on-surface-variant)] text-base leading-relaxed mb-8 font-light">
-                  Directives compile into postMessage JSON commands that map directly to viewer store variables (coloring modes, frustum box bounds, and rendering presets).
-                </p>
-              </div>
+            <div className="max-w-2xl mb-20">
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#6b8aaf] font-normal block mb-4">
+                ENGINEERING METRICS
+              </span>
+              <h2 className="font-serif font-light text-4xl lg:text-5xl tracking-tight leading-[1.1]">
+                Under the Hood
+              </h2>
+            </div>
 
-              {/* Dynamic Compiler preview card */}
-              <div className="glass-panel p-6 bg-[#090b0f] relative overflow-hidden backdrop-blur-md">
-                <div className="absolute right-4 top-4 font-mono text-[9px] text-[var(--primary)]">
-                  COMPILER: ACTIVE
-                </div>
-                <h4 className="font-mono text-xs uppercase tracking-widest text-[var(--primary)] mb-6 flex items-center gap-2">
-                  <Terminal className="size-3.5" />
-                  Real-Time NLP-to-JSON Parser Output
-                </h4>
-
-                <div className="space-y-4">
-                  <div className="font-mono text-[10px] text-[var(--on-surface-variant-mid)] uppercase tracking-wider">
-                    Compiled PostMessage JSON Array
+            {/* Staggered Timeline Grid Layout (Disrupted Design) */}
+            <div className="relative border-l border-slate-500/15 ml-4 md:ml-32 space-y-16 py-8">
+              
+              {[
+                {
+                  title: 'Instanced WebGPU Impostors',
+                  eq: 'V_voxel = (x, y, z, r)',
+                  desc: 'Bypasses traditional triangle meshes completely. Spawns screen-aligned quads (2 triangles) and raycasts coordinates in WGSL fragment shaders, rendering 10M+ atoms off-thread at 60fps.'
+                },
+                {
+                  title: 'Off-Thread WebAssembly Parsing',
+                  eq: 't_parse = O(N_atoms) / 10',
+                  desc: 'Decompresses and parses massive LAMMPS coordinates and PDB trajectories off-thread using modular Rust engines compiled into WASM, achieving 10× faster load cycles than main-thread Javascript.'
+                },
+                {
+                  title: 'Compute-Pass Frustum Culling',
+                  eq: 'N_cull = f(Camera_Frustum)',
+                  desc: 'A GPU compute shader filters atoms outside the active camera frustum and outputs indices directly to GPU storage draw buffers, eliminating CPU draw bottlenecks.'
+                },
+                {
+                  title: 'Hardware-Accelerated WebCodecs',
+                  eq: 'Bitrate = constant_60fps',
+                  desc: 'Encodes 4K snapshots and high-fps molecular trajectory walkthrough walk animations directly to hardware-accelerated video containers without interrupting the rendering context.'
+                }
+              ].map((spec, index) => (
+                <div key={index} className="relative pl-8 md:pl-16">
+                  {/* Stippled dot pointer on the timeline */}
+                  <span className="absolute -left-[4.5px] top-1.5 w-2 h-2 rounded-full bg-[#6b8aaf] border border-[#fef8f5]" />
+                  
+                  <div className={`max-w-2xl bg-slate-500/5 p-6 rounded-md border border-slate-500/10 space-y-3 transform transition-transform duration-300 hover:-translate-y-1 ${
+                    index % 2 === 0 ? 'md:translate-x-4' : 'md:-translate-x-4'
+                  }`}>
+                    <span className="font-mono text-[8px] uppercase tracking-widest text-[#6b8aaf] block">
+                      FIG. 0{index + 1} // {spec.eq}
+                    </span>
+                    <h3 className="font-serif font-light text-xl text-current">{spec.title}</h3>
+                    <p className="font-sans font-light text-sm leading-relaxed opacity-80">{spec.desc}</p>
                   </div>
-                  <pre className="p-4 rounded bg-[#030406] border border-[var(--outline-variant)] text-[var(--primary)] font-mono text-[11px] leading-relaxed overflow-x-auto">
-                    {JSON.stringify(compiledMcpRequests, null, 2)}
-                  </pre>
-
-                  <div className="flex gap-4 items-center justify-between font-mono text-[9px] text-[var(--on-surface-variant-mid)] uppercase tracking-wider pt-2 border-t border-white/5">
-                    <span>Target origin: lupi.live</span>
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(JSON.stringify(compiledMcpRequests, null, 2))
-                      }}
-                      className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded border border-white/5 text-[9px] text-white cursor-pointer flex items-center gap-1.5"
-                    >
-                      <Clipboard className="size-3" />
-                      Copy JSON Packet
-                    </button>
-                  </div>
                 </div>
-              </div>
+              ))}
+
             </div>
           </div>
         </section>
 
-        {/* ══ SECTION 4: CAPABILITY MATRIX ══ */}
-        <section className="py-24 bg-[var(--surface-container-low)] border-b border-[var(--outline-variant)]">
+        {/* ═══ SECTION 4: INTERACTIVE BLUEPRINT CAPABILITY MATRIX ═══ */}
+        <section className="py-24 bg-slate-500/5 border-b border-slate-500/15">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12">
-            <SectionHeader
-              label="Capability Comparison"
-              title="Why desktop locks lose."
-              description="See how LUPI fares side-by-side with traditional desktop molecular visualizers."
-              centered
-            />
+            <div className="max-w-2xl mb-16 mx-auto text-center">
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#6b8aaf] font-normal block mb-4">
+                COMPETITIVE SPECS
+              </span>
+              <h2 className="font-serif font-light text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
+                Capability Matrix
+              </h2>
+            </div>
 
-            <div className="max-w-4xl mx-auto overflow-hidden rounded-lg border border-[var(--outline-variant)] bg-[#0f1114]">
+            <div className="max-w-4xl mx-auto overflow-hidden rounded-md border border-slate-500/10 bg-[#08090b]">
               <div className="overflow-x-auto">
-                <table className="w-full font-sans text-sm border-collapse">
+                <table className="w-full font-sans text-sm border-collapse text-left">
                   <thead>
-                    <tr className="bg-[#161a22] border-b border-[var(--outline-variant)]">
-                      <th className="text-left px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-[var(--primary)]">Evaluation Feature</th>
-                      <th className="text-left px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-[var(--primary)] bg-[var(--primary)]/5">LUPI Viewer</th>
-                      <th className="text-left px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-[var(--on-surface-variant-mid)]">Legacy Desktop Tools</th>
+                    <tr className="bg-[#0f1114] border-b border-slate-500/15 font-mono text-[9px] uppercase tracking-widest text-[#6b8aaf]">
+                      <th className="px-6 py-4 font-normal">Feature</th>
+                      <th className="px-6 py-4 font-normal bg-white/5 text-white">LUPI Viewer</th>
+                      <th className="px-6 py-4 font-normal">Legacy Desktop (OVITO/VMD)</th>
                     </tr>
                   </thead>
                   <tbody>
                     {MATRIX_ROWS.map((row, index) => (
                       <tr
                         key={index}
-                        className="transition-colors border-b border-[var(--outline-variant)]/60 hover:bg-white/5"
+                        className="transition-colors border-b border-slate-500/10 hover:bg-white/5 font-sans"
                       >
-                        <td className="px-6 py-4 font-semibold text-white tracking-wide">{row.feature}</td>
-                        <td className="px-6 py-4 font-semibold text-[var(--primary)] bg-[var(--primary)]/5">{row.lupi}</td>
-                        <td className="px-6 py-4 text-[var(--on-surface-variant)]">{row.competitor}</td>
+                        <td className="px-6 py-4 text-white font-normal font-sans text-sm">{row.feature}</td>
+                        <td className="px-6 py-4 font-normal font-sans text-sm bg-white/5 text-[#6b8aaf]">{row.lupi}</td>
+                        <td className="px-6 py-4 font-light text-slate-400 font-sans text-sm">{row.competitor}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -907,81 +871,36 @@ function LupiLandingPage() {
           </div>
         </section>
 
-        {/* ══ SECTION 5: TECHNICAL BLUEPRINT ══ */}
-        <section className="py-24 relative border-b border-[var(--outline-variant)]">
-          <div className="container mx-auto max-w-7xl px-6 lg:px-12">
-            <SectionHeader
-              label="Under the Hood"
-              title="How LUPI achieves 10M atoms at 60fps."
-              description="A breakdown of the browser-native rendering pipeline built for real research."
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  icon: <Layers className="size-5 text-[var(--primary)]" />,
-                  title: 'WebGPU Pipeline',
-                  val: 'Instanced Impostors',
-                  desc: 'Bypasses standard sphere meshes. Spawns screen-aligned quads (2 triangles) and raycasts depth in WGSL fragment shaders, rendering 10M+ atoms at interactive speeds.'
-                },
-                {
-                  icon: <Zap className="size-5 text-[var(--primary)]" />,
-                  title: 'Off-Thread WASM',
-                  val: 'Rust File Parsing',
-                  desc: 'Decompresses and parses massive LAMMPS trajectories or PDB coordinates off-thread using modular Rust engines, executing 10× faster than normal JS frameworks.'
-                },
-                {
-                  icon: <Cpu className="size-5 text-[var(--primary)]" />,
-                  title: 'GPU Frustum Culling',
-                  val: 'Indirect Drawing',
-                  desc: 'A compute shader cull pass filters atoms outside the camera’s view and writes visible index buffers directly to GPU storage buffers, bypassing the CPU draw queue.'
-                },
-                {
-                  icon: <Shield className="size-5 text-[var(--primary)]" />,
-                  title: 'WebCodecs Export',
-                  val: 'Hardware-Accelerated MP4',
-                  desc: 'Encodes 4K snapshots and high-fps molecular trajectory walkthrough animations directly to hardware-accelerated video containers without lagging the viewport.'
-                }
-              ].map((spec, i) => (
-                <Card key={i} className="hover:border-[var(--primary)]/50 transition-colors">
-                  <div className="mb-4">{spec.icon}</div>
-                  <span className="font-mono text-[9px] uppercase tracking-widest text-[var(--on-surface-variant-mid)] block mb-1">{spec.title}</span>
-                  <h4 className="text-lg font-bold text-white tracking-wide mb-3">{spec.val}</h4>
-                  <p className="text-xs text-[var(--on-surface-variant)] leading-relaxed font-sans font-light">{spec.desc}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══ SECTION 6: CALL TO ACTION ══ */}
-        <section className="relative text-center px-6 py-24 lg:py-32 border-t border-[var(--outline-variant)]">
-          <div className="absolute inset-0 pointer-events-none mix-blend-multiply bg-noise" />
+        {/* ═══ SECTION 5: DISRUPTED SIGN-OFF ═══ */}
+        <section className="relative text-center px-6 py-28 lg:py-36 border-t border-slate-500/15">
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-noise" />
           
-          <div className="max-w-3xl mx-auto relative z-10">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--primary)] mb-6 block">EXPLORE LUPI TODAY</span>
-            <h2 className="font-serif tracking-tight text-5xl lg:text-7xl mb-8 leading-[1.08] text-[var(--on-surface)]">
+          <div className="max-w-3xl mx-auto relative z-10 space-y-8">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#6b8aaf] block">
+              EXPLORE LUPI TODAY
+            </span>
+            <h2 className="font-serif tracking-tight text-5xl lg:text-7xl font-light leading-[1.08] text-current">
               Stop installing.<br />
-              Start <em className="italic text-[var(--primary)]">seeing</em>.
+              Start <em className="italic text-[#6b8aaf] font-light">seeing</em>.
             </h2>
-            <p className="text-[var(--on-surface-variant)] text-lg mb-12 max-w-xl mx-auto leading-relaxed font-light">
+            <p className="font-sans font-light text-lg opacity-80 max-w-xl mx-auto leading-relaxed">
               LUPI is free, open-source, and runs entirely in your browser. Your data never leaves your machine. Connect your trajectories to our error analysis.
             </p>
             
-            <div className="flex gap-4 justify-center flex-wrap">
+            <div className="flex gap-8 justify-center flex-wrap pt-4 font-mono text-[11px] uppercase tracking-widest">
               <a
                 href="https://lupi.live"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-12 inline-flex items-center justify-center px-8 bg-[var(--primary)] text-[#0f1114] font-mono text-sm uppercase tracking-widest rounded-md hover:opacity-90 transition-opacity no-underline shadow-lg cursor-pointer border-none font-semibold"
+                className="text-[#6b8aaf] hover:text-current transition-colors no-underline font-normal cursor-pointer"
               >
-                Launch LUPI Viewer
+                Launch Live App
               </a>
               <a
                 href="https://github.com/alexwelcing/lupine"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-12 inline-flex items-center justify-center px-8 border border-[var(--primary)] text-[var(--primary)] bg-transparent font-mono text-sm uppercase tracking-widest rounded-md hover:bg-[var(--primary)] hover:text-white transition-all no-underline cursor-pointer"
+                className="text-current hover:opacity-75 transition-opacity no-underline font-normal cursor-pointer"
               >
                 View Source on GitHub
               </a>
