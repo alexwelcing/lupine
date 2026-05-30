@@ -24,6 +24,8 @@ import { tool } from "ai";
 import { z } from "zod";
 import type { ToolSet } from "ai";
 import { traceAgentCycle } from "../telemetry/rpc";
+import { trace } from "@opentelemetry/api";
+import type { FormalBasis } from "../atlas/theorems";
 
 export class Orchestrator extends GlimThinkAgent {
   /**
@@ -188,12 +190,35 @@ export class Orchestrator extends GlimThinkAgent {
     }
   }
 
-  private async runChildChat(child: { chat: (prompt: string, relay: { onEvent(json: string): void; onDone(): void; onError?(error: string): void }) => Promise<void> }, prompt: string, agentLabel = "subagent"): Promise<string> {
+  private async runChildChat(
+    child: { chat: (prompt: string, relay: { onEvent(json: string): void; onDone(): void; onError?(error: string): void }) => Promise<void> },
+    prompt: string,
+    agentLabel = "subagent",
+    // §8.4: facet-to-facet RPC payloads may carry a formal_basis[] — the ATLAS
+    // theorem references that ground this dispatch. Optional + additive; existing
+    // call sites pass none and are unaffected.
+    formalBasis?: ReadonlyArray<FormalBasis>,
+  ): Promise<string> {
+    // When a formal basis is attached, prepend a compact grounding preamble so
+    // the receiving facet reasons within the proven theorems, and surface the
+    // basis on the span for Phoenix.
+    const groundedPrompt =
+      formalBasis && formalBasis.length > 0
+        ? `${formalGroundingPreamble(formalBasis)}\n\n${prompt}`
+        : prompt;
     // Wrap every sub-agent dispatch in an OpenInference AGENT span so the
     // hypothesis-generation cycle (not just its LLM calls) is visible in Phoenix.
-    return traceAgentCycle(agentLabel, prompt, async () => {
+    return traceAgentCycle(agentLabel, groundedPrompt, async () => {
+      if (formalBasis && formalBasis.length > 0) {
+        const span = trace.getActiveSpan();
+        span?.setAttribute("lupine.formal_basis.count", formalBasis.length);
+        span?.setAttribute(
+          "lupine.formal_basis.theorems",
+          formalBasis.map((b) => b.theorem).join(","),
+        );
+      }
       const events: string[] = [];
-      await child.chat(prompt, {
+      await child.chat(groundedPrompt, {
         onEvent: (json: string) => {
           events.push(json);
         },
@@ -205,4 +230,19 @@ export class Orchestrator extends GlimThinkAgent {
       return events.slice(-8).join("\n");
     });
   }
+}
+
+/**
+ * Render a `formal_basis[]` into a compact natural-language grounding preamble
+ * for a facet-to-facet dispatch. Pure + immutable.
+ */
+function formalGroundingPreamble(basis: ReadonlyArray<FormalBasis>): string {
+  const lines = basis.map((b) => {
+    const helper = b.helper ? ` — ${b.helper}` : "";
+    return `- ${b.theorem} (${b.module} @ ${b.revision}, ${b.status})${helper}`;
+  });
+  return [
+    "Formal basis (ATLAS-Lean theorems underwriting this task; reason within them):",
+    ...lines,
+  ].join("\n");
 }

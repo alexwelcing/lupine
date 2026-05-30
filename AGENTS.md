@@ -58,6 +58,58 @@ deps or config degrade to a logged no-op.
   step, not a passing state.
 - Deps: `pip install -r tools/requirements-telemetry.txt`.
 
+## Formal verification (`lean-spec` + ATLAS-Lean)
+
+`lean-spec` (Lake package `OpenDistillationFactory`, Lean `v4.29.0` — pinned to
+ATLAS's toolchain) is the evidence layer: it holds the proven theorems behind
+the materials-science claims. Treat a green `lake build` with zero `sorry`
+proofs as the gate — a broken or `sorry`-bearing proof is a regression, not
+noise. Current state: **96 theorems, 0 `sorry`, 1502-job build green**.
+
+- Verify proofs with `lake build` in `lean-spec/`. Never introduce a `sorry`
+  into a proof; the only acceptable `sorry` text is inside doc comments that
+  describe a separate mathlib-free conjecture project.
+- ATLAS-Lean (`facebookresearch/atlas-lean`) is consumed as a pinned Lake
+  dependency, not vendored. Keep strict namespace discipline: imported math
+  lives under `Atlas.*`, our formalization stays under
+  `OpenDistillationFactory.*`.
+- Import only the proved `Atlas` target. Do **not** pull in the `Unproved`
+  target — it carries `sorry` statements that would poison the gate.
+- `lean-spec` is pinned to ATLAS's exact toolchain (`v4.29.0`) and Mathlib rev
+  (`8a178386…`) so the whole graph resolves to ONE reproducible Mathlib; ATLAS is
+  pinned at `c5a10f1a…`. `lake exe cache get` then hydrates Mathlib from cache
+  instead of compiling it. Run lake **from inside `lean-spec/`** so elan selects
+  v4.29.0 — running from the repo root picks the global toolchain and silently
+  refuses the cache (`lake version … does not match toolchain`), forcing a
+  from-source Mathlib build that fails on API drift.
+- COST WARNING (hard-won): ATLAS's autoformalized modules elaborate in ~7–9 min
+  EACH; importing a whole subject (e.g. `Atlas.RealAnalysis`, ~85 modules) is
+  ~80 min and will OOM a dev box. Build theorems on the shared cached Mathlib
+  that ATLAS pins to, and reserve direct `Atlas.*` imports for selective single
+  leaf modules behind an offline/opt-in target — never a whole subject in the
+  hot build path.
+- Extend proofs incrementally, module by module (Analysis.Manifold,
+  Theory.ParameterBound, Computation.LammpsTrace, Theory.UniversalityBridge).
+  Each import must preserve existing theorems and add no `sorry`.
+
+## Closed scientific loop & MLIP benchmarking
+
+The intended spine is a closed loop: TorchSim benchmarks (GCP) → glim-think
+hypotheses (CF Durable Objects) → `lean-spec` proofs → tests → back to
+simulation. When adding a workflow, wire it into this loop rather than leaving
+it standalone.
+
+- Benchmark before distilling: capture a `v0` baseline per model, then compute
+  `distill_v_uplift` per distillation version. Promotion through ODF gates on
+  uplift (`promote` > +5%, `review` 0–5%, `reject` < 0%) — never promote a
+  regression.
+- Prefer TorchSim (batched GPU) over serial ASE for MLIP benchmarks; keep a CPU
+  fallback so CI degrades gracefully.
+- Emit OpenInference spans for the loop stages (TOOL for builds/benchmarks, LLM
+  for hypotheses, EVALUATOR for proof checks) through the shared `otlp-relay` to
+  Phoenix, reusing the flywheel telemetry path above. Tracing is opt-in and must
+  never block a run.
+
 ## Shell Execution & Environment Hazards (Windows)
 
 When writing automation scripts, deployment orchestrators, or `justfile` configurations on Windows, you must strictly adhere to the following guardrails to prevent system crashes and zombie processes:

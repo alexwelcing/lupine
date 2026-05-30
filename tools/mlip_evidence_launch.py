@@ -20,7 +20,6 @@ if str(TOOLS_DIR) not in sys.path:
 
 import mlip_evidence_campaign as campaign_tools  # noqa: E402
 
-
 DEFAULT_LEDGER = ROOT / "tmp" / "mlip-evidence" / "ni-fcc-eam-home-turf-paired-accuracy-v1" / "launch-ledger.jsonl"
 GCLOUD = shutil.which("gcloud.cmd") or shutil.which("gcloud") or "C:/gcloud/google-cloud-sdk/bin/gcloud.cmd"
 
@@ -107,9 +106,48 @@ def launch_command(campaign: dict[str, Any], batch: dict[str, Any], wait: bool) 
     ]
 
 
+def apply_gate(args: argparse.Namespace, campaign: dict[str, Any], batches: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Filter batches through the a-priori regime gate, write a decision ledger.
+
+    Refused (out-of-regime) distill cells are dropped before any Cloud Run
+    execution — preventing the harm and saving the wasted compute. Returns the
+    surviving batches; baseline cells always survive.
+    """
+
+    import mlip_regime_filter as gate
+
+    provenance = gate.load_ribbon(args.ribbon or gate.DEFAULT_RIBBON)
+    cells = [cell for batch in batches for cell in batch["cells"]]
+    decisions = gate.decide_cells(campaign, cells, provenance, reviews_apply=args.reviews_apply)
+    kept, _dropped = gate.filter_batches(batches, decisions)
+    summary = gate.summarize(decisions)
+    ledger_path = args.ledger.parent / "gate-decisions.json"
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    ledger_path.write_text(
+        json.dumps(
+            {
+                "ts": utc_now(),
+                "campaign_id": campaign.get("campaign_id"),
+                "reference_family": campaign.get("reference_family"),
+                "ribbon_id": provenance.ribbon_id,
+                "scope": args.scope,
+                "summary": summary,
+                "refused": [gate.asdict(d) for d in decisions if not d.runs],
+            },
+            indent=2,
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+    print(json.dumps({"status": "gated", "summary": summary, "ledger": str(ledger_path)}, indent=2, sort_keys=True))
+    return kept
+
+
 def launch(args: argparse.Namespace) -> int:
     campaign = campaign_tools.load_campaign(args.campaign)
     batches = campaign_tools.expand_batches(campaign, scope=args.scope)
+    if args.gate:
+        batches = apply_gate(args, campaign, batches)
     if args.mlip:
         batches = [batch for batch in batches if batch["mlip_id"] == args.mlip]
     if args.limit is not None:
@@ -159,6 +197,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--submit-delay-seconds", type=float, default=2.0)
     parser.add_argument("--wait", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--gate", action="store_true", help="apply the a-priori regime gate before launching (refuse out-of-regime distill cells)")
+    parser.add_argument("--ribbon", type=pathlib.Path, default=None, help="ribbon provenance JSON (default: lupine-ribbon-v1-mptrj-dft)")
+    parser.add_argument("--reviews-apply", action="store_true", help="treat REVIEW (uncovered row) as run, not defer")
     return parser
 
 

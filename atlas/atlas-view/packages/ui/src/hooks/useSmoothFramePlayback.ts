@@ -245,6 +245,9 @@ export function useSmoothFramePlayback(
     setFrame,
     nextFrame,
     prevFrame,
+    // Live ref (mutated every RAF tick, never triggers a render). AtomsOptimized
+    // reads `effectiveFrame` from this to drive GPU interpolation at display rate.
+    liveStateRef: stateRef,
   };
 }
 

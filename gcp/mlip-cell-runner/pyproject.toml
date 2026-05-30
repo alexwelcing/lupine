@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# ---------------------------------------------------------------------------
+# Unified MLIP cell runner package.
+#
+# This is the single source of truth for runner dependencies. It replaces the
+# fan-out of per-backend requirements-*.txt files (see DECOMMISSION.md). Every
+# universal MLIP backend the managed runner can build is declared here so one
+# CUDA image can be parameterised by the BACKEND build ARG instead of pinning a
+# different torch stack per file.
+#
+# Heavy MLIP wheels (torch, dgl) ship their own CUDA builds from custom indexes.
+# Those index URLs cannot live in [project].dependencies (PEP 621 forbids it),
+# so the Dockerfile passes --extra-index-url / --find-links at install time and
+# the optional-dependency groups below name the packages only.
+# ---------------------------------------------------------------------------
+
+[project]
+name = "mlip-cell-runner"
+version = "2.0.0"
+description = "Managed universal-MLIP benchmark cell runner for Lupine on GCP Cloud Run."
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+readme = "README.md"
+
+# Core deps shared by every backend image and by local tooling. These are the
+# pieces the runner itself imports regardless of which MLIP is selected.
+dependencies = [
+  "ase==3.28.0",
+  "numpy==1.26.4",
+  "requests==2.32.5",
+  "h5py>=3.10,<4",
+  "pymatgen>=2024.5.1",
+  # torch is installed from the CUDA extra-index in the Dockerfile; pinned here
+  # so a non-Docker `pip install .` still resolves a compatible CPU/GPU wheel.
+  "torch==2.4.1",
+  # Unified torch-sim benchmark driver (the consolidation target).
+  "torch-sim-atomistic>=0.2.0",
+]
+
+[project.optional-dependencies]
+# --- Per-backend MLIP stacks. The Docker build installs exactly one of these
+#     via `pip install ".[<backend>]"`, selected by the BACKEND ARG. ---
+mace = ["mace-torch==0.3.16"]
+chgnet = ["chgnet==0.4.2"]
+sevennet = ["sevenn==0.12.1"]
+orb = ["orb-models==0.5.5"]
+# matgl/dgl drive the M3GNet backend; dgl ships Linux-only CUDA wheels.
+matgl = ["matgl==2.0.6", "dgl==2.4.0", "torchdata==0.8.0"]
+uma = ["fairchem-core==2.14.0"]
+
+# --- Telemetry + loop connector. Opt-in: the runner must import and run with
+#     these absent (the patcher/connector degrade to a logged no-op). ---
+telemetry = [
+  "opentelemetry-api>=1.24",
+  "opentelemetry-sdk>=1.24",
+  "opentelemetry-exporter-otlp-proto-http>=1.24",
+  "httpx>=0.27",
+]
+
+# Convenience meta-group: everything needed for a full local dev checkout
+# (default backend + telemetry). CI/Docker should prefer the narrow groups.
+dev = [
+  "mace-torch==0.3.16",
+  "opentelemetry-api>=1.24",
+  "opentelemetry-sdk>=1.24",
+  "opentelemetry-exporter-otlp-proto-http>=1.24",
+  "httpx>=0.27",
+  "pytest>=8",
+]
+
+[tool.setuptools]
+# Flat layout: the runner modules live at the package root plus a src/ helper
+# package for the managed telemetry/connector seams.
+py-modules = ["mlip_cell_runner", "fixture_contract"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]

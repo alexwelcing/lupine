@@ -1,6 +1,7 @@
 {
   "schema": "lupine.mlip.evidence_campaign.v1",
   "campaign_id": "mptrj-dft-broad-kart-race-v1",
+  "reference_family": "mptrj_dft",
   "title": "MPtrj broad-DFT MLIP kart race: baseline vs Distill Accuracy vs Distill Accuracy + Accelerate",
   "objective": "Collect sealed evidence across multiple MLIPs showing the baseline function, the active Distill Accuracy lane, and the guarded Accuracy + Accelerate lane on the same fixture, checkpoint, and row scoring contract.",
   "profile": "lab-gcp-gpu-kart-race",

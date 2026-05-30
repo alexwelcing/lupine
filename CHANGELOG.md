@@ -16,6 +16,90 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-05-29 — Neural-symbolic loop: GPU MLIP curvature → machine-checked Lean (0 sorry)
+
+- **Why.** Close the proof↔physics gap at the tightest coupling — a number measured on the GPU
+  becoming a theorem the Lean kernel checks the next moment — and seed `atlas_theorems` *from the
+  physics*, not by hand.
+- **What.** A three-node continuous loop (`lupine-distill/runtime/python/scripts/neural_symbolic/`):
+  **Node 1** pits MACE-MP-0 vs CHGNet on a pure-shear C44 strain sweep of FCC Ni (the curvature
+  observable) on the A4500; **Node 2** relays T3-REJECT breaches as OpenInference spans (the Python
+  flywheel pattern — entirely off the glim-think `tsc` path; live OTLP when `PHOENIX_OTLP_RELAY_URL`
+  is set, durable local artifact otherwise); **Node 3** authors import-free core-Lean theorems
+  (`by decide`, 0 sorry) encoding the empirical failure as a verified negative constraint, plus an
+  `atlas_theorems` seed.
+- **Results.** On the GPU: MACE-MP-0 elastic C44 **92.4 GPa (−25.9%) → REJECT**, CHGNet **101.2 GPa
+  (−18.8%) → REVIEW** vs the 124.7 GPa literature reference (MACE units cross-validated against the
+  torch_sim elastic run). The MACE breach was authored into
+  `mace_mp_0_curvature_reject : 323*4 > 1247 := by decide` and **independently verified by a fresh
+  `lean` compile (rc 0, 0 sorry)**. 4 theorems synthesized, 4 `atlas_theorems` seed rows
+  (`status='verified'`). Report: `docs/neural-symbolic-curvature-loop.md`.
+- **Next.** (1) Stand up the GCP OTLP relay for live Phoenix streaming (then the loop is fully
+  continuous: GPU → Phoenix → Lean per measurement). (2) Widen Node 1 to the full phonon Hessian.
+  (3) Apply the seed to the live `glim-ledger` D1.
+
+## 2026-05-29 — Local GPU proof: TorchSim → distill → uplift → formal gate (Ni FCC)
+
+- **Why.** The ATLAS PR wired the rails but ran no train: Track B's TorchSim backend was a
+  stub, the formal promotion gate had never scored a real benchmark, and the cloud "~75% Ni
+  zero-point ribbon lift" was unreproduced locally. With a real GPU (RTX A4500) on hand, prove
+  the whole compute loop end to end.
+- **What.** Stood up a CUDA env (torch 2.6.0+cu124, torch_sim 0.6.0, cached MACE-MP-0) and wrote
+  `lupine-distill/runtime/python/scripts/run_ni_gpu_loop.py` — the GPU runner the Track B stub
+  defers to. It benchmarks MACE-MP-0 on the sealed Ni FCC EAM fixture via TorchSim, fits the
+  zero-point distill correction on the *non-overlapping* support set, computes real elastic
+  constants + `distill_v_uplift`, and drives the ATLAS formal gate. Also filled
+  `TorchSimBenchmarkBackend.run()` for real (70 Track-B tests still green; CI-safe without torch_sim).
+- **Results.** 31 eval structures in 5.6 s on the A4500. Energy MAE vs Mishin EAM **1.2803 →
+  0.0037 eV/atom (99.7%)** after the +1.279 eV/atom zero-point correction; stress 0.861 → 0.274 GPa;
+  **overall `distill_v_uplift` 76.0%** — independently reproducing the cloud material-family
+  result. Real elastic constants: MACE-MP-0 **C11=262.9 (+6.7%), C12=166.6 (+13%), C44=92.4
+  (−26%)** GPa vs literature (the EAM-reference recovery returned 246.5/147.3/124.7 exactly,
+  validating the fit). Formal gate, full range on real numbers: in-support certified →
+  **PROMOTE**; out-of-support (the proved T3 negative-transfer regime) → **REVIEW**;
+  marginal+uncertified → **REJECT**. The formal layer demonstrably gates real GPU compute.
+  Report: `docs/mlip-gpu-ni-distill-formal-gate.md`.
+- **Next.** (1) Genuine cross-material negative transfer (second MLIP/material) for a real T3
+  REJECT. (2) Curvature lane — the C44 shear undershoot points straight at the phonon/Hessian
+  frontier. (3) Seed glim-think `atlas_theorems` + emit `lupine.proof.status` spans so this gate
+  decision flows into Phoenix.
+
+## 2026-05-29 — ATLAS-Lean integration: formal foundations + closed-loop scaffolding
+
+- **Why.** Meta open-sourced ATLAS-Lean (autoformalized textbook mathematics) and `torch-sim`.
+  The `ATLAS_Lean_Integration_Review` laid out a 7-phase plan to (a) put `lean-spec` on a shared,
+  reproducible Mathlib by pinning to ATLAS's revision, (b) make the MLIP benchmark/distill loop
+  measurable, and (c) thread formal foundations through glim-think, Phoenix, the ODF promotion
+  gate, and dspy.
+- **What.**
+  - *lean-spec (Phase 1+2).* Pinned the toolchain to ATLAS's `v4.29.0` and Mathlib to `8a178386…`,
+    added `facebookresearch/atlas-lean` as a Lake dependency at `c5a10f1a`. Added 6 ATLAS-backed
+    theorems (Jacobian rank ≤ P / ≤ N / ≤ min(P,N) — the formal core of the Parameter-Bound
+    conjecture — plus ℝ-level hyper-ribbon corollaries) to `Analysis.Manifold` and
+    `Theory.ParameterBound`.
+  - *lupine-distill (Track B).* `TorchSimBenchmarkBackend` (lazy import + Mock fallback), the
+    8-benchmark suite, the canonical `BenchmarkResult`/`BenchmarkMetrics` schema, and the
+    `distill_v_uplift` calculator with promote/review/reject gates; 70 tests.
+  - *gcp/mlip-cell-runner (Track C).* Consolidated the per-backend "lone wolf" sprawl into one
+    `pyproject.toml` + matrixed Dockerfile/cloudbuild, scheduled-run policies, and an OpenInference
+    patcher + loop connector; legacy files retained with a `DECOMMISSION.md` map.
+  - *glim-think (Track D).* `atlas_theorems` D1 migration (`0010`), per-facet ATLAS context loader,
+    OpenInference span-kind + ATLAS-attribute telemetry helpers, and three Phoenix eval runners.
+  - *distiller/ODF + lupine-dspy (Track E).* Formal-verification promotion gate + theorem-aware
+    OperatorPack model card + schema bridge; `TheoremGuidedHypothesis` dspy signature +
+    formal-provenance persistence migration; 40 tests.
+- **Results.** `lake build` green (1502 jobs, **96 theorems, zero `sorry`**) under the
+  aligned/downgraded Mathlib — every existing proof survived the pin. 110 Python tests pass across
+  B/E (independently re-run). **Key finding:** ATLAS's autoformalized modules elaborate at ~7–9 min
+  *each*; importing a whole subject (`Atlas.RealAnalysis`, ~85 modules) is ≈80 min and twice
+  exhausted the dev machine's memory. ATLAS *does* compile cleanly in-workspace (71/85 modules built
+  with zero errors before a reset), so the dependency is wired and viable — but whole-subject imports
+  are cost-prohibitive, so the new theorems build on the shared cached Mathlib that ATLAS pins to.
+- **Next.** (1) Selective ATLAS *leaf-module* imports behind an offline/opt-in build target so CI
+  stays fast. (2) Apply `0010` to the LEDGER D1 and seed real theorem rows from `lean-spec`.
+  (3) Wire `distill_v_uplift` into the ODF promotion gate on a real model pair. (4) Resolve the ORB
+  cu118 / UMA numpy-2 stack split flagged in the GCP `DECOMMISSION.md` before deleting legacy reqs.
+
 ## 2026-05-18 — Fix mislabeled home-page preprint banner
 
 - **Why.** The Library home banner promoted the preprint as *"Immigrant Scientist — The

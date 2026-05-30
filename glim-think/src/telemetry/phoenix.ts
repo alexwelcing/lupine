@@ -12,6 +12,7 @@ import type { ReadableSpan, SpanExporter } from "@opentelemetry/sdk-trace-base";
 import type { ExportResult } from "@opentelemetry/core";
 import type { Env } from "../types";
 import { makeOpenInferencePostProcessor } from "./openinference";
+import { atlasExportHeaders, resolveAtlasTelemetryConfig } from "./atlas";
 
 class PhoenixProtobufExporter implements SpanExporter {
   private url: string;
@@ -182,9 +183,13 @@ export const phoenixConfig: ResolveConfigFn<Env> = (env, _trigger) => {
   const url = useRelay
     ? `${relayUrl!.replace(/\/$/, "")}/v1/traces`
     : directUrl;
+  // ATLAS provenance headers (§9.2): every OTLP export is tagged with the
+  // pinned ATLAS/Mathlib revisions + theorem count when the fleet is provisioned
+  // with an ATLAS build. Absent provisioning, this resolves to {} (no change).
+  const atlasHeaders = atlasExportHeaders(resolveAtlasTelemetryConfig(env));
   const exporterHeaders = useRelay
-    ? { "x-relay-token": relayToken! }
-    : { Authorization: `Bearer ${apiKey}` };
+    ? { "x-relay-token": relayToken!, ...atlasHeaders }
+    : { Authorization: `Bearer ${apiKey}`, ...atlasHeaders };
 
   return {
     exporter: new PhoenixProtobufExporter({

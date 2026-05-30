@@ -235,6 +235,19 @@ export interface Env {
   /** Shared secret authenticating the Worker to the OTLP relay. */
   PHOENIX_RELAY_TOKEN?: string;
   /**
+   * ATLAS-Lean telemetry config as JSON (§9.2): the pinned ATLAS/Mathlib
+   * revisions + theorem inventory rollup the fleet is running against. Shape:
+   * { atlas_revision, mathlib_revision, theorem_inventory_summary:
+   * { total_imported, total_extended, by_facet } }. Stamped onto OTLP exports
+   * as x-lupine-atlas-revision / x-lupine-mathlib-revision /
+   * x-lupine-theorem-count. See telemetry/atlas.ts.
+   */
+  ATLAS_TELEMETRY_CONFIG?: string;
+  /** ATLAS-Lean revision (git sha/tag) — discrete fallback for ATLAS_TELEMETRY_CONFIG. */
+  ATLAS_REVISION?: string;
+  /** Mathlib revision (git sha/tag) — discrete fallback for ATLAS_TELEMETRY_CONFIG. */
+  MATHLIB_REVISION?: string;
+  /**
    * Shared secret authorizing internal queue→Worker subrequests past the
    * Cloudflare Access gate (the queue consumer self-fetches gated routes
    * like POST /run to reuse handler logic). See middleware/access.ts.

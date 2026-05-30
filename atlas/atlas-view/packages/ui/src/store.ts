@@ -49,7 +49,7 @@ export interface BondDataset {
 export interface ExportRequest {
   type: 'image' | 'video' | 'glb' | 'usdz' | 'complete' | null;
   resolution?: { width: number; height: number; flexAspect?: boolean };
-  format?: 'png' | 'jpeg' | 'webp' | 'mp4' | 'webm' | 'gif' | 'glb' | 'usdz';
+  format?: 'png' | 'jpeg' | 'webp' | 'mp4' | 'webm' | 'glb' | 'usdz';
   flythrough?: FlythroughSequence;
   transparent?: boolean;
   durationSeconds?: number;

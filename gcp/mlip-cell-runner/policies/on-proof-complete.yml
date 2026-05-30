@@ -1,0 +1,33 @@
+# Scheduled-run policy: proof-completion webhook.
+#
+# Scheduled-run policy (distinct from the *.json PolicyLimits). See
+# DECOMMISSION.md. Matches the §12.5 policy table row "on-proof-complete".
+schema: lupine.mlip.run_policy.v1
+name: on-proof-complete
+description: >-
+  Fired when a Lean proof closes. Runs a fast level-2 confirmation cell so the
+  freshly proven theorem can be checked against measured MLIP behaviour while
+  the proof context is still warm.
+
+trigger:
+  kind: webhook
+  event: proof.complete
+  # The webhook payload supplies backend/system/suite; the defaults below are
+  # used when the event omits them.
+
+run:
+  level: 2
+  backends:
+    - mace
+  systems:
+    - Cu_fcc
+    - Fe_bcc
+  benchmarks:
+    - static_energy
+    - geometry_opt
+
+results:
+  sink: glim-think-rpc
+  endpoint: https://glim-think.lupine.workers.dev/rpc/benchmark-results
+  method: ingest_benchmark
+  facet: ExperimentFacet

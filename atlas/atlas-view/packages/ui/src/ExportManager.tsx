@@ -1,16 +1,12 @@
 /**
- * ExportManager — Unified pipeline for image, MP4, GLB, and GIF export.
+ * ExportManager — Unified pipeline for image, MP4, GLB, and USDZ export.
  *
  * Architecture:
  *   Image:  Single-frame WebGL readback at arbitrary resolution.
  *   MP4:    WebCodecs VideoEncoder + mp4-muxer → H.264 MP4 download.
- *   GIF:    Same MP4 pipeline → decode via <video> element → gifenc → GIF download.
  *   GLB:    Reconstructs real sphere/cylinder meshes from atomic data and exports
  *           via GLTFExporter for use in Blender, Unity, or any 3D software.
- *
- * The GIF path reuses the exact same recording pipeline as MP4, then converts
- * the finalized MP4 blob client-side. This means one capture loop, one encoder,
- * zero raw-frame memory accumulation.
+ *   USDZ:   Same mesh reconstruction → USDZExporter for AR Quick Look.
  *
  * All video modes support 360° orbit around the structure centroid.
  */
@@ -29,83 +25,6 @@ const MIN_NUMERIC_RANGE = 1e-6;
 const MIN_USDZ_SCALE = 0.0001;
 const MAX_USDZ_SCALE = 2.0;
 
-// Native MediaRecorder requires no dynamic muxer loads
-// ─── MP4 → GIF converter ─────────────────────────────────────────
-/**
- * Decodes an MP4 blob frame-by-frame via a <video> element, then encodes
- * each frame into a GIF using gifenc with per-frame adaptive 256-color palettes.
- *
- * This is memory-efficient: only one decoded frame is held in RAM at a time.
- */
-async function convertMp4ToGif(
-  mp4Blob: Blob,
-  targetFps: number = 30, // Upgraded from 15fps to 30fps for butter-smooth GIF looping
-): Promise<Blob> {
-  const { GIFEncoder, quantize, applyPalette } = await import('gifenc');
-
-  const videoUrl = URL.createObjectURL(mp4Blob);
-  const video = document.createElement('video');
-  video.muted = true;
-  video.playsInline = true;
-  video.preload = 'auto';
-  video.src = videoUrl;
-
-  // Wait for metadata (duration, dimensions)
-  await new Promise<void>((resolve, reject) => {
-    video.onloadedmetadata = () => resolve();
-    video.onerror = () => reject(new Error('Failed to load MP4 for GIF conversion'));
-    // Safety timeout
-    setTimeout(() => reject(new Error('MP4 metadata load timeout')), 10_000);
-  });
-
-  const w = video.videoWidth;
-  const h = video.videoHeight;
-  const duration = video.duration;
-  const frameInterval = 1 / targetFps;
-  const delay = Math.round(1000 / targetFps); // ms per frame for GIF
-  const totalFrames = Math.floor(duration * targetFps);
-
-  // Offscreen canvas for frame extraction
-  const canvas = document.createElement('canvas');
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
-
-  const encoder = GIFEncoder();
-
-  // Seek to each frame time and encode
-  for (let i = 0; i < totalFrames; i++) {
-    const seekTime = Math.min(i * frameInterval, duration - 0.001);
-
-    // Seek and wait
-    await new Promise<void>((resolve) => {
-      const onSeeked = () => {
-        video.removeEventListener('seeked', onSeeked);
-        resolve();
-      };
-      video.addEventListener('seeked', onSeeked);
-      video.currentTime = seekTime;
-    });
-
-    // Draw frame to canvas
-    ctx.drawImage(video, 0, 0, w, h);
-    const imageData = ctx.getImageData(0, 0, w, h);
-
-    // Quantize to 256 colors and encode
-    const palette = quantize(imageData.data, 256);
-    const indexed = applyPalette(imageData.data, palette);
-    encoder.writeFrame(indexed, w, h, { palette, delay });
-  }
-
-  encoder.finish();
-
-  // Cleanup
-  URL.revokeObjectURL(videoUrl);
-  video.remove();
-
-  return new Blob([encoder.bytes().buffer as ArrayBuffer], { type: 'image/gif' });
-}
-
 // ─── Video Capture Loop Component ──────────────────────────────────
 // By isolating the priority=2 useFrame into a conditionally mounted component,
 // we prevent React Three Fiber from permanently disabling its native Priority 0 
@@ -119,7 +38,6 @@ function VideoCaptureLoop({
   originalCameraPosition,
   originalSize,
   originalPixelRatio,
-  outputFormat,
   onCompleteRef,
   clearExportRequest,
   file,
@@ -127,7 +45,7 @@ function VideoCaptureLoop({
   setIsCapturing,
   originalStoreState
 }: any) {
-  const { gl, camera } = useThree();
+  const { gl, camera, setSize, setDpr } = useThree();
 
   useFrame(() => {
     if (!isRecording.current || !encoderRef.current || !muxerRef.current) return;
@@ -250,37 +168,14 @@ function VideoCaptureLoop({
             const finalBuffer = muxerRef.current!.target.buffer;
             const finalBlob = new Blob([finalBuffer], { type: 'video/mp4' });
             const baseName = req.baseName || 'LUPI';
-            const userFormat = outputFormat.current;
 
-            if (userFormat === 'mp4') {
-              if (onCompleteRef.current) {
-                onCompleteRef.current(true, finalBlob, `${baseName}.mp4`);
-              } else {
-                downloadBlob(finalBlob, `${baseName}.mp4`);
-                if (onCompleteRef.current) onCompleteRef.current(true);
-              }
-              success = true;
-            } else if (userFormat === 'gif') {
-              try {
-                const gifBlob = await convertMp4ToGif(finalBlob, 30); 
-                if (onCompleteRef.current) {
-                  onCompleteRef.current(true, gifBlob, `${baseName}.gif`);
-                } else {
-                  downloadBlob(gifBlob, `${baseName}.gif`);
-                  if (onCompleteRef.current) onCompleteRef.current(true);
-                }
-                success = true;
-              } catch (err) {
-                console.error('GIF conversion failed, downloading pristine MP4 fallback:', err);
-                if (onCompleteRef.current) {
-                  onCompleteRef.current(true, finalBlob, `${baseName}.mp4`);
-                } else {
-                  downloadBlob(finalBlob, `${baseName}.mp4`);
-                  if (onCompleteRef.current) onCompleteRef.current(true);
-                }
-                success = true;
-              }
+            if (onCompleteRef.current) {
+              onCompleteRef.current(true, finalBlob, `${baseName}.mp4`);
+            } else {
+              downloadBlob(finalBlob, `${baseName}.mp4`);
+              if (onCompleteRef.current) onCompleteRef.current(true);
             }
+            success = true;
           } // close else
           
           if (!success) {
@@ -306,17 +201,18 @@ function VideoCaptureLoop({
           }
 
           if (originalSize.current) {
-            gl.setSize(originalSize.current.width, originalSize.current.height, false);
+            // Restore THROUGH R3F so the EffectComposer resizes back too.
+            setSize(originalSize.current.width, originalSize.current.height);
             if (camera instanceof THREE.PerspectiveCamera) {
               camera.aspect = originalSize.current.aspect;
               camera.updateProjectionMatrix();
             }
             originalSize.current = null;
           }
-          
-          // Restore Retina super-sampling
+
+          // Restore Retina super-sampling (through R3F so the composer follows)
           if (originalPixelRatio.current) {
-            gl.setPixelRatio(originalPixelRatio.current);
+            setDpr(originalPixelRatio.current);
           }
 
           // Restore Cinematic Mutations
@@ -327,7 +223,6 @@ function VideoCaptureLoop({
             originalStoreState.current = null;
           }
 
-          outputFormat.current = null;
           clearExportRequest();
         }
       })();
@@ -339,7 +234,7 @@ function VideoCaptureLoop({
 
 // ─── ExportManager component ─────────────────────────────────────
 export function ExportManager() {
-  const { gl, scene, camera, size } = useThree();
+  const { gl, scene, camera, size, setSize, setDpr } = useThree();
   const exportRequest = useStore(s => s.exportRequest);
   const clearExportRequest = useStore(s => s.clearExportRequest);
   const file = useStore(s => s.file);
@@ -348,7 +243,6 @@ export function ExportManager() {
   // Recording state
   const isRecording = useRef(false);
   const [isCapturing, setIsCapturing] = useState(false);
-  const outputFormat = useRef<'mp4' | 'gif' | null>(null);
   const onCompleteRef = useRef<((success: boolean) => void) | null>(null);
 
   // WebCodecs / Pipeline state
@@ -793,7 +687,6 @@ export function ExportManager() {
     const req = exportRequest;
     if (!req || isRecording.current) return;
 
-    const userFormat = req.format === 'gif' ? 'gif' : 'mp4';
     const width = req.resolution?.width || 1920;
     const height = req.resolution?.height || 1080;
     const fps = 60; 
@@ -806,7 +699,6 @@ export function ExportManager() {
       return;
     }
 
-    outputFormat.current = userFormat;
     onCompleteRef.current = req.onComplete || null;
     requestRef.current = req;
 
@@ -830,12 +722,15 @@ export function ExportManager() {
       aspect: (camera as THREE.PerspectiveCamera).aspect
     };
     
-    // EXTREMELY IMPORTANT: Force pixel ratio to exactly 1.0!
+    // Force DPR to 1 and size the engine THROUGH R3F (setDpr/setSize) rather than
+    // a raw gl.setSize(). The postprocessing EffectComposer only resizes its
+    // render targets when R3F's `size` state changes; a raw gl.setSize() leaves
+    // the composer at the old viewport aspect, and its final fullscreen pass then
+    // stretches that across the new export buffer — the squished-molecule bug.
+    // Routing through R3F keeps composer + camera + renderer on one aspect.
     originalPixelRatio.current = gl.getPixelRatio();
-    gl.setPixelRatio(1);
-
-    // Size the engine precisely to export dimensions
-    gl.setSize(width, height, false);
+    setDpr(1);
+    setSize(width, height);
     if (camera instanceof THREE.PerspectiveCamera) {
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
@@ -929,7 +824,7 @@ export function ExportManager() {
       gl.setPixelRatio(originalPixelRatio.current);
       clearExportRequest();
     }
-  }, [exportRequest, camera, gl, size, clearExportRequest]);
+  }, [exportRequest, camera, gl, size, clearExportRequest, setSize, setDpr]);
 
   // ─── Effect: Dispatch export actions ──────────────────────────
   // IMPORTANT: Only depend on exportRequest. We use refs for the handlers
@@ -966,7 +861,6 @@ export function ExportManager() {
       originalCameraPosition={originalCameraPosition}
       originalSize={originalSize}
       originalPixelRatio={originalPixelRatio}
-      outputFormat={outputFormat}
       onCompleteRef={onCompleteRef}
       clearExportRequest={clearExportRequest}
       file={file}

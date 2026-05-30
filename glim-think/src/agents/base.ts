@@ -25,6 +25,16 @@ import { PhoenixApi } from "../phoenix/api";
 import { runHeuristics } from "../evals/heuristics";
 import { insertEval, getAgentQualityTrend } from "../evals/store";
 import { traceEnv } from "../telemetry/storage";
+import {
+  loadFacetState,
+  loadFacetTheorems,
+  summarizeInventory,
+  toFormalBasis,
+  type AtlasFacetState,
+  type AtlasTheoremRef,
+  type FormalBasis,
+  type TheoremInventory,
+} from "../atlas/theorems";
 
 export abstract class GlimThinkAgent extends Think<Env> {
   constructor(ctx: DurableObjectState, env: Env) {
@@ -106,6 +116,85 @@ export abstract class GlimThinkAgent extends Think<Env> {
    */
   async getStorageStats(): Promise<Record<string, number>> {
     return {};
+  }
+
+  // ─── ATLAS-Lean formal context (§8.4) ───
+  //
+  // A facet imports/verifies/extends a bounded set of theorems from the
+  // ATLAS-Lean layer. The agent keeps only REFERENCES in memory (name + module
+  // + revision + status) — never proof bodies — so DO state stays bounded.
+
+  /**
+   * The ATLAS facet this agent maps to. Defaults to the agent's class name
+   * (the same key used everywhere else for prompts/evals). Override only if a
+   * facet's theorem inventory is keyed differently from the class name.
+   */
+  getFacet(): string {
+    return this.constructor.name;
+  }
+
+  /**
+   * Bounded in-memory cache of this facet's theorem REFERENCES. Populated by
+   * loadAtlasContext(); intentionally references only (no proofs) so the DO's
+   * heap footprint is bounded by the inventory cap, not by proof size.
+   */
+  private atlasContext: {
+    readonly state: AtlasFacetState | null;
+    readonly theorems: ReadonlyArray<AtlasTheoremRef>;
+    readonly inventory: TheoremInventory;
+  } | null = null;
+
+  /**
+   * Load (and cache) the ATLAS theorem references + per-facet reference state
+   * for this agent's facet from the shared ledger. Idempotent: pass
+   * `{ refresh: true }` to re-read after the inventory changes. Never throws —
+   * an unprovisioned facet resolves to an empty inventory.
+   */
+  async loadAtlasContext(opts?: { refresh?: boolean }): Promise<{
+    readonly state: AtlasFacetState | null;
+    readonly theorems: ReadonlyArray<AtlasTheoremRef>;
+    readonly inventory: TheoremInventory;
+  }> {
+    if (this.atlasContext && !opts?.refresh) return this.atlasContext;
+    const facet = this.getFacet();
+    const [theorems, state] = await Promise.all([
+      loadFacetTheorems(this.env, facet),
+      loadFacetState(this.env, facet),
+    ]);
+    const inventory = summarizeInventory(facet, theorems);
+    this.atlasContext = { state, theorems, inventory };
+    return this.atlasContext;
+  }
+
+  /**
+   * The cached theorem references for this facet, or an empty list if
+   * loadAtlasContext() has not run yet. Synchronous accessor for callers that
+   * have already loaded context (e.g. inside a turn).
+   */
+  getAtlasTheorems(): ReadonlyArray<AtlasTheoremRef> {
+    return this.atlasContext?.theorems ?? [];
+  }
+
+  /**
+   * Build the `formal_basis[]` array for a facet-to-facet RPC payload (§8.4):
+   * compact theorem references (+ optional helper) drawn from this facet's
+   * loaded inventory. Loads context on demand if not already cached.
+   *
+   * Pass `theoremNames` to scope the basis to the theorems actually relied on
+   * for a given dispatch (recommended — keeps payloads minimal); omit to attach
+   * the whole facet inventory. `helpers` maps a theorem name to its grounding
+   * note.
+   */
+  async buildFormalBasis(opts?: {
+    theoremNames?: ReadonlyArray<string>;
+    helpers?: Readonly<Record<string, string>>;
+  }): Promise<FormalBasis[]> {
+    const { theorems } = await this.loadAtlasContext();
+    const wanted = opts?.theoremNames ? new Set(opts.theoremNames) : null;
+    const helpers = opts?.helpers ?? {};
+    return theorems
+      .filter((t) => (wanted ? wanted.has(t.theorem_name) : true))
+      .map((t) => toFormalBasis(t, helpers[t.theorem_name]));
   }
 
   /**

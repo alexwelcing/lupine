@@ -1,0 +1,42 @@
+# Scheduled-run policy: nightly baseline sweep.
+#
+# NOTE: these *.yml files are SCHEDULED-RUN policies (when/what to run on the
+# managed GCP runner) and are distinct from the existing *.json PolicyLimits
+# files in this directory (which tune the distill ribbon). See DECOMMISSION.md.
+#
+# Matches the §12.5 policy table row "nightly-baseline".
+schema: lupine.mlip.run_policy.v1
+name: nightly-baseline
+description: >-
+  Nightly accuracy baseline over the top-3 universal MLIP backends across the
+  canonical single-element reference systems. Establishes the rolling baseline
+  that weekly sweeps and proof-triggered runs are compared against.
+
+trigger:
+  kind: schedule
+  cron: "0 2 * * *"   # 02:00 UTC daily
+  timezone: UTC
+
+run:
+  level: 3
+  backends:
+    - mace
+    - chgnet
+    - sevennet
+  systems:
+    - Cu_fcc
+    - Fe_bcc
+    - Si_diamond
+    - Ni_fcc
+    - Al_fcc
+  benchmarks:
+    - static_energy
+    - geometry_opt
+    - nvt_md_300k
+    - elastic_constants
+
+results:
+  sink: glim-think-rpc
+  endpoint: https://glim-think.lupine.workers.dev/rpc/benchmark-results
+  method: ingest_benchmark
+  facet: ExperimentFacet
