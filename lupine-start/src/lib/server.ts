@@ -51,9 +51,12 @@ function defaultSpacingForElements(elements: string[]): number {
 const latticeCache = new Map<string, string>()
 
 export const generateProceduralLattice = createServerFn({ method: 'POST' })
-  .validator((d: { atomCount: number; lattice: string; elements: string[]; spacing?: number }) => d)
-  .handler(async ({ data }) => {
-    const { atomCount, lattice, elements, spacing: inputSpacing } = data
+  .handler(async (ctx: any) => {
+    const input = ctx?.data || ctx
+    const atomCount = Number(input?.atomCount) || 100000
+    const lattice = String(input?.lattice || 'fcc')
+    const elements = Array.isArray(input?.elements) ? input.elements : ['Cu']
+    const inputSpacing = input?.spacing ? Number(input.spacing) : undefined
     
     const cacheKey = `${atomCount}-${lattice}-${elements.join(',')}-${inputSpacing ?? 'default'}`
     if (latticeCache.has(cacheKey)) {
