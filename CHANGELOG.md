@@ -16,6 +16,42 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-05-29 — ATLAS-Lean integration: formal foundations + closed-loop scaffolding
+
+- **Why.** Meta open-sourced ATLAS-Lean (autoformalized textbook mathematics) and `torch-sim`.
+  The `ATLAS_Lean_Integration_Review` laid out a 7-phase plan to (a) put `lean-spec` on a shared,
+  reproducible Mathlib by pinning to ATLAS's revision, (b) make the MLIP benchmark/distill loop
+  measurable, and (c) thread formal foundations through glim-think, Phoenix, the ODF promotion
+  gate, and dspy.
+- **What.**
+  - *lean-spec (Phase 1+2).* Pinned the toolchain to ATLAS's `v4.29.0` and Mathlib to `8a178386…`,
+    added `facebookresearch/atlas-lean` as a Lake dependency at `c5a10f1a`. Added 6 ATLAS-backed
+    theorems (Jacobian rank ≤ P / ≤ N / ≤ min(P,N) — the formal core of the Parameter-Bound
+    conjecture — plus ℝ-level hyper-ribbon corollaries) to `Analysis.Manifold` and
+    `Theory.ParameterBound`.
+  - *lupine-distill (Track B).* `TorchSimBenchmarkBackend` (lazy import + Mock fallback), the
+    8-benchmark suite, the canonical `BenchmarkResult`/`BenchmarkMetrics` schema, and the
+    `distill_v_uplift` calculator with promote/review/reject gates; 70 tests.
+  - *gcp/mlip-cell-runner (Track C).* Consolidated the per-backend "lone wolf" sprawl into one
+    `pyproject.toml` + matrixed Dockerfile/cloudbuild, scheduled-run policies, and an OpenInference
+    patcher + loop connector; legacy files retained with a `DECOMMISSION.md` map.
+  - *glim-think (Track D).* `atlas_theorems` D1 migration (`0010`), per-facet ATLAS context loader,
+    OpenInference span-kind + ATLAS-attribute telemetry helpers, and three Phoenix eval runners.
+  - *distiller/ODF + lupine-dspy (Track E).* Formal-verification promotion gate + theorem-aware
+    OperatorPack model card + schema bridge; `TheoremGuidedHypothesis` dspy signature +
+    formal-provenance persistence migration; 40 tests.
+- **Results.** `lake build` green (1502 jobs, **96 theorems, zero `sorry`**) under the
+  aligned/downgraded Mathlib — every existing proof survived the pin. 110 Python tests pass across
+  B/E (independently re-run). **Key finding:** ATLAS's autoformalized modules elaborate at ~7–9 min
+  *each*; importing a whole subject (`Atlas.RealAnalysis`, ~85 modules) is ≈80 min and twice
+  exhausted the dev machine's memory. ATLAS *does* compile cleanly in-workspace (71/85 modules built
+  with zero errors before a reset), so the dependency is wired and viable — but whole-subject imports
+  are cost-prohibitive, so the new theorems build on the shared cached Mathlib that ATLAS pins to.
+- **Next.** (1) Selective ATLAS *leaf-module* imports behind an offline/opt-in build target so CI
+  stays fast. (2) Apply `0010` to the LEDGER D1 and seed real theorem rows from `lean-spec`.
+  (3) Wire `distill_v_uplift` into the ODF promotion gate on a real model pair. (4) Resolve the ORB
+  cu118 / UMA numpy-2 stack split flagged in the GCP `DECOMMISSION.md` before deleting legacy reqs.
+
 ## 2026-05-18 — Fix mislabeled home-page preprint banner
 
 - **Why.** The Library home banner promoted the preprint as *"Immigrant Scientist — The
