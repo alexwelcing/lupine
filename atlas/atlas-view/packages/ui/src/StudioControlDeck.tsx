@@ -3,6 +3,7 @@ import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent a
 import type { RenderStyle } from '@atlas/core/types';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { COLOR_SCHEMES, SCHEME_ORDER, type ColorSchemeId } from './coloring';
+import { isClickSoundEnabled, playClick, setClickSoundEnabled, subscribeClickSound } from './lib/clickSound';
 import { useStore } from './store';
 import {
   BG_GRADIENT_PRESETS,
@@ -134,6 +135,15 @@ export function StudioControlDeck({
     setDirLightIntensity(scene.dirLightIntensity);
     setRimLightIntensity(scene.rimLightIntensity);
     setAtomTexture(scene.atomTexture);
+  };
+
+  // Procedural-click preference (module-local, not store state — see lib/clickSound).
+  const [clickSound, setClickSound] = useState(isClickSoundEnabled());
+  useEffect(() => subscribeClickSound(setClickSound), []);
+  const toggleClickSound = () => {
+    const next = !clickSound;
+    setClickSoundEnabled(next);
+    if (next) playClick(); // preview the tick when enabling, inside this user gesture
   };
 
   const title = mode === 'look' ? 'Look' : mode === 'surface' ? 'Surface' : 'World';
@@ -284,6 +294,21 @@ export function StudioControlDeck({
                     />
                   );
                 })}
+              </div>
+            </ControlGroup>
+
+            <ControlGroup
+              title="Feel"
+              note="Procedural click on button presses (off by default). The spring-press animation follows your system 'reduce motion' setting automatically."
+            >
+              <div style={buttonGridStyle}>
+                <RiveButton
+                  label="Click sound"
+                  meta={clickSound ? 'ON' : 'OFF'}
+                  active={clickSound}
+                  onClick={toggleClickSound}
+                  tall
+                />
               </div>
             </ControlGroup>
           </div>

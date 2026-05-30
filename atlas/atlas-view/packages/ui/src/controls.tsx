@@ -8,6 +8,7 @@
  * micro-effects layer were removed entirely.
  */
 import { useEffect, useState, type ReactNode, type InputHTMLAttributes, type ChangeEvent } from 'react';
+import { usePressSpring } from './hooks/usePressSpring';
 
 // ─── Slider ────────────────────────────────────────────────────────────
 interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -86,9 +87,15 @@ function useCompactControls() {
 
 export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
   const compact = useCompactControls();
+  const press = usePressSpring();
   return (
     <button
+      ref={press.ref}
       onClick={onClick}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerLeave={press.onPointerLeave}
+      onPointerCancel={press.onPointerCancel}
       title={label}
       aria-label={label}
       aria-pressed={active}
@@ -115,6 +122,8 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
         boxShadow: active ? '0 0 0 1px rgba(30,220,224,0.5) inset, 0 6px 20px -10px rgba(30,220,224,0.85)' : 'none',
         flexShrink: 1,
         touchAction: 'manipulation',
+        willChange: 'transform',
+        transformOrigin: 'center',
       }}
       onMouseEnter={(e) => {
         if (!active) {
@@ -206,9 +215,15 @@ interface TransportButtonProps {
 }
 
 export function TransportButton({ onClick, title, icon, active = false, width = 32 }: TransportButtonProps) {
+  const press = usePressSpring({ pressedScale: 0.9 });
   return (
     <button
+      ref={press.ref}
       onClick={onClick}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerLeave={press.onPointerLeave}
+      onPointerCancel={press.onPointerCancel}
       title={title}
       style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -219,6 +234,8 @@ export function TransportButton({ onClick, title, icon, active = false, width = 
         borderColor: active ? '#1edce0' : '#334155',
         borderRadius: 0,
         cursor: 'pointer',
+        willChange: 'transform',
+        transformOrigin: 'center',
         transition: 'background 100ms ease-out, border-color 100ms ease-out, color 100ms ease-out',
       }}
       onMouseEnter={(e) => {
