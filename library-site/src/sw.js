@@ -15,7 +15,7 @@ const VERSION = '__VERSION__';
 // regardless of VERSION skew. A escape hatch if a bad build ever ships again.
 // k2: purge caches poisoned by stale cache-first /reports/ assets — a fresh
 // report HTML was served against an old cached report.css, blanking the page.
-const KILL = 'k5';
+const KILL = 'k6';
 const SHELL_CACHE = `ll-shell-${KILL}-${VERSION}`;
 const DATA_CACHE = `ll-data-${KILL}-${VERSION}`;
 

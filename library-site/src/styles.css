@@ -170,10 +170,16 @@ body {
   border-bottom: 1px solid var(--border);
 }
 .topbar .brand { flex: 1; display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; min-width: 0; }
+.topbar .brand img {
+  display: block;
+  max-width: 30px;
+  max-height: 30px;
+}
 .brand-mark {
   position: relative;
   width: 30px; height: 30px; flex: none;
   display: inline-block;
+  overflow: hidden;
 }
 .brand-icon {
   width: 100%;
