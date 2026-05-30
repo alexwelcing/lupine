@@ -141,6 +141,56 @@ def test_gate_band_ceiling_uses_tolerance() -> None:
 
 
 # --------------------------------------------------------------------------- #
+# chemistry coverage (#2) — same family, unseen elements -> REVIEW
+# --------------------------------------------------------------------------- #
+
+# A ribbon that additionally declares the chemical system it was fit on.
+RIBBON_CHEM = RibbonProvenance(
+    ribbon_id="ribbon-chem",
+    reference_families=frozenset({HOME_REFERENCE_FAMILY}),
+    fit_rows=frozenset({"energy_volume", "relaxation_stability"}),
+    calibration_band={"gpa_mae": (0.0, 2.0)},
+    fit_elements=frozenset({"Ni", "O", "Fe"}),
+)
+
+
+def _fp_chem(elements, *, unit="gpa_mae", row="energy_volume", error=0.4) -> CellFingerprint:
+    return CellFingerprint.from_cell(
+        {"accuracy": {"error_unit": unit, "error": error}, "elements": list(elements)},
+        material="X", row=row, mlip="m",
+    )
+
+
+@pytest.mark.unit
+def test_chemistry_within_fit_set_applies() -> None:
+    # Subset of the fit chemistry, in-regime, covered row -> apply.
+    assert regime_gate(RIBBON_CHEM, _fp_chem(["Ni", "O"])).decision == "apply"
+
+
+@pytest.mark.unit
+def test_chemistry_outside_fit_set_reviews() -> None:
+    # Same family, but W is unseen -> REVIEW (transferability unknown), not refuse.
+    d = regime_gate(RIBBON_CHEM, _fp_chem(["Ni", "W"]))
+    assert d.decision == "review"
+    assert d.rule == "chemistry_outside_fit_set"
+
+
+@pytest.mark.unit
+def test_chemistry_rule_inert_without_declaration() -> None:
+    # The base RIBBON declares no fit_elements -> rule never fires (backward compat).
+    assert regime_gate(RIBBON, _fp_chem(["W", "Pu"])).decision == "apply"
+    # And a fingerprint with no elements leaves the rule inert even on RIBBON_CHEM.
+    assert regime_gate(RIBBON_CHEM, _fp(unit="gpa_mae")).decision == "apply"
+
+
+@pytest.mark.unit
+def test_family_mismatch_beats_chemistry() -> None:
+    # Foreign oracle short-circuits to REFUSE before chemistry is considered.
+    d = regime_gate(RIBBON_CHEM, _fp_chem(["Ni", "W"], unit="gpa_mae_vs_mishin_eam"))
+    assert (d.decision, d.rule) == ("refuse", "reference_family_mismatch")
+
+
+# --------------------------------------------------------------------------- #
 # dominance scorer — the property that makes the loop trustworthy
 # --------------------------------------------------------------------------- #
 

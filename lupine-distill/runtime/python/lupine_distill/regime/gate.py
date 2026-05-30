@@ -90,6 +90,10 @@ class RibbonProvenance:
     fit_rows: frozenset[str]
     # metric_kind -> (lo, hi) baseline-error range seen at fit time.
     calibration_band: Mapping[str, tuple[float, float]]
+    # The chemical system the ribbon was fit on (its element coverage). When set,
+    # a target whose elements are not a subset is out-of-chemistry -> REVIEW. None
+    # disables the chemistry rule (the reference-family signal stands alone).
+    fit_elements: frozenset[str] | None = None
 
     def __post_init__(self) -> None:
         # Deep-freeze the band: a plain dict passed in would otherwise stay
@@ -113,10 +117,19 @@ class CellFingerprint:
     reference_family: str
     metric_kind: str
     baseline_error: float | None
+    # The target's chemical system (its element set), when known a-priori from
+    # the fixture. None leaves the chemistry rule inert (current behavior).
+    elements: frozenset[str] | None = None
 
     @classmethod
     def from_cell(
-        cls, cell: Mapping[str, object], *, material: str, row: str, mlip: str
+        cls,
+        cell: Mapping[str, object],
+        *,
+        material: str,
+        row: str,
+        mlip: str,
+        elements: frozenset[str] | None = None,
     ) -> CellFingerprint:
         acc = cell.get("accuracy") or {}
         if not isinstance(acc, Mapping):
@@ -124,6 +137,12 @@ class CellFingerprint:
         unit = str(acc.get("error_unit", "") or "")
         raw_err = acc.get("error")
         err = float(raw_err) if isinstance(raw_err, (int, float)) else None
+        # Elements: explicit arg wins; else read an optional cell "elements" list.
+        els = elements
+        if els is None:
+            raw_els = cell.get("elements")
+            if isinstance(raw_els, (list, tuple, set, frozenset)):
+                els = frozenset(str(x) for x in raw_els)
         return cls(
             material=material,
             row=row,
@@ -131,6 +150,7 @@ class CellFingerprint:
             reference_family=parse_reference_family(unit),
             metric_kind=parse_metric_kind(unit),
             baseline_error=err,
+            elements=els,
         )
 
 
@@ -159,10 +179,15 @@ def regime_gate(
        transfer to (T3). This is the rule that stops Ni-EAM harm a-priori.
     2. ``row_outside_fit_coverage`` -> REVIEW. In-regime, but the ribbon never
        demonstrated uplift on this row; apply only with a human in the loop.
-    3. ``calibration_band_exceeded`` -> REFUSE. Baseline error is far outside the
+    3. ``chemistry_outside_fit_set`` -> REVIEW. Same reference family, but the
+       target has elements the ribbon never saw — the canonical MLIP
+       transferability limit. Uncertain (not proven-harmful), so review rather
+       than refuse. Inert unless both fit_elements and elements are declared, so
+       it never changes a reference-family-only decision.
+    4. ``calibration_band_exceeded`` -> REFUSE. Baseline error is far outside the
        fit distribution — regime drift or a broken backend (catches garbage
        like m3gnet's 30118 GPa elastic error) before it can be "corrected".
-    4. ``in_regime`` -> APPLY.
+    5. ``in_regime`` -> APPLY.
     """
 
     fam = fingerprint.reference_family
@@ -181,6 +206,16 @@ def regime_gate(
             f"row {fingerprint.row!r} is in-regime but outside the ribbon's fit rows "
             f"{sorted(provenance.fit_rows)} — apply only under review",
         )
+
+    if provenance.fit_elements is not None and fingerprint.elements is not None:
+        extra = fingerprint.elements - provenance.fit_elements
+        if extra:
+            return GateDecision(
+                "review",
+                "chemistry_outside_fit_set",
+                f"elements {sorted(extra)} are outside the ribbon's fit chemistry "
+                f"{sorted(provenance.fit_elements)} — transferability unknown, review",
+            )
 
     band = provenance.calibration_band.get(fingerprint.metric_kind)
     err = fingerprint.baseline_error
