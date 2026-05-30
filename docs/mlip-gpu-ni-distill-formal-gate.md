@@ -82,6 +82,29 @@ certification. Applied out-of-scope — the regime where T3 *proves* the correct
 transfer — the identical win is held for human review. The formal layer is load-bearing, not
 decorative: it requires proof-of-scope before auto-promotion.
 
+## Cross-material negative transfer — the gate's full range (real T3 REJECT)
+
+`scripts/run_cross_material_transfer.py` makes the gate's teeth undeniable. The zero-point
+correction is fit on **Pt** (the FCC metal with the largest MACE-vs-EMT per-element offset,
++6.01 eV/atom) using a classical **EMT** reference, then applied across elements. Predictions
+are MACE-MP-0 on the GPU; the metric is energy MAE.
+
+| element | scope | v0 MAE | v1 MAE | uplift | gate |
+|---|---|---|---|---|---|
+| Pt | in-family | 6.0136 | 0.0259 | **+99.6%** | **PROMOTE** |
+| Ni | cross-family | 5.7218 | 0.2918 | +94.9% | REVIEW |
+| Cu | cross-family | 4.0771 | 1.9365 | +52.5% | REVIEW |
+| Au | cross-family | 3.2041 | 2.8096 | +12.3% | REVIEW |
+| Ag | cross-family | 2.8193 | 3.1944 | **−13.3%** | **REJECT** |
+
+A clean monotonic gradient: transfer **degrades with chemical distance** from Pt and **crosses
+zero at Ag**, where the 6.01 eV Pt correction overshoots Ag's small 2.82 eV offset and genuinely
+*regresses*. The formal gate tracks it exactly — PROMOTE (in-scope) → REVIEW (positive but
+unproven out-of-scope) → **REJECT** (measured regression). The Ag reject is the real
+`ContextSpecificProof.context_correction_does_not_transfer` (T3): the gate refuses the correction
+on **measured regression**, precisely where the theorem proves it must not transfer — and holds
+the positive-but-unproven cases for human review rather than auto-promoting them.
+
 ## Caveats (honest scope)
 
 - **Reference is Mishin EAM, not DFT.** This is the controlled "home-turf" test (does the MLIP
@@ -92,13 +115,14 @@ decorative: it requires proof-of-scope before auto-promotion.
   speedup would need Linux/Triton. Fine for 4-atom cells.
 - **One of two distill operators.** This uses the zero-point bias correction; the linear
   `ribbon_residual_correction_v1` operator (`lupine_distill_runtime/session.py`) is the other.
-- **Cross-material negative transfer not shown.** The genuine negative-transfer reject (e.g.
-  CHGNet near-DFT overshoot) needs a second MLIP/material; only MACE-MP-0 weights are cached.
+- **Cross-material negative transfer is now shown** (Pt→Ag, above) using an EMT classical
+  reference and MACE-MP-0 across FCC metals — a real measured-regression REJECT. A *second-model*
+  variant (e.g. CHGNet near-DFT overshoot) would still strengthen it but needs a model download.
 
 ## Next
 
-1. Demonstrate genuine cross-material negative transfer (download a second MLIP / add a second
-   material fixture) → real REJECT from T3, not just the certification contrast.
+1. ~~Cross-material negative transfer~~ **done** (Pt→Ag REJECT, above). Next: a *second-model*
+   variant (CHGNet near-DFT overshoot) once weights are downloaded.
 2. Open the curvature lane: phonon/Hessian sentinel — the C44 shear weakness above suggests the
    second-derivative signal is where MACE-MP-0 diverges most.
 3. Seed `glim-think.atlas_theorems` from these theorem refs and emit `lupine.proof.status`
