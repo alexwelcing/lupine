@@ -5,7 +5,7 @@
  * glassmorphic UI, side panels, and publication-quality rendering.
  */
 
-import { useEffect, useCallback, useState, useMemo } from 'react';
+import { useEffect, useCallback, useRef, useState, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Perf } from 'r3f-perf';
 import { DevProbe } from './DevProbe';
@@ -202,6 +202,11 @@ export default function App() {
   const highFidelityPlayback = Boolean(file?.playbackFrameRate && (file?.trajectory.frames[0]?.natoms ?? 0) <= 5000);
 
   // Playback timer (replaced with smooth 60fps interpolator)
+  // Throttle the store frame-sync during playback to ~20fps. Motion stays at
+  // display rate (uProgress is GPU-driven from the live ref); only the timeline
+  // text + store-frame consumers (bonds, annotations) sync at 20fps, capping
+  // React-tree re-renders on dense trajectories with no perceptible lag.
+  const lastFrameSyncRef = useRef(0);
   const { currentState: interpState, setFrame: setSmoothFrame, liveStateRef } = useSmoothFramePlayback(playing, {
     frames: file?.trajectory.frames ?? [],
     speed: playbackSpeed,
@@ -209,11 +214,12 @@ export default function App() {
     mdFrameRate: playbackFrameRate,
     stateSyncFPS: highFidelityPlayback ? 120 : 15,
     onFrame: (state) => {
-      // Sync UI timeline without forcing expensive React renders unnecessarily
-      // Only sync when playing. When paused, the store (user scrubbing) drives the hook.
-      if (useStore.getState().playing && state.frameIndex !== useStore.getState().frame) {
-        useStore.getState().setFrame(state.frameIndex);
-      }
+      // Paused → the store/scrubber drives the hook, not the reverse.
+      if (!useStore.getState().playing || state.frameIndex === useStore.getState().frame) return;
+      const now = performance.now();
+      if (now - lastFrameSyncRef.current < 50) return; // ~20fps
+      lastFrameSyncRef.current = now;
+      useStore.getState().setFrame(state.frameIndex);
     }
   });
   const ghostFrame = ghostFile
