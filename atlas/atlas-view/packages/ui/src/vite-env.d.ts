@@ -11,6 +11,22 @@ interface ImportMetaEnv {
   /** Base URL for NIST catalog + demo trajectories. Default '/nist'
    *  (bundled). Point at object storage to offload heavy demos. */
   readonly VITE_NIST_BASE_URL?: string;
+  readonly VITE_FIREBASE_API_KEY?: string;
+  readonly VITE_FIREBASE_AUTH_DOMAIN?: string;
+  readonly VITE_FIREBASE_PROJECT_ID?: string;
+  readonly VITE_FIREBASE_APP_ID?: string;
+  readonly VITE_FIREBASE_STORAGE_BUCKET?: string;
+  readonly VITE_FIREBASE_MESSAGING_SENDER_ID?: string;
+  readonly VITE_FIREBASE_MEASUREMENT_ID?: string;
+  readonly VITE_LUPI_MCP_ENDPOINT?: string;
+  readonly VITE_LUPI_MCP_ALLOWED_ORIGINS?: string;
+  readonly VITE_LUPI_AUTH_FLOW?: 'popup' | 'redirect';
+  readonly VITE_LUPI_AUTH_OVERRIDE_DISPLAY_NAME?: string;
+  readonly VITE_LUPI_AUTH_OVERRIDE_EMAIL?: string;
+  readonly VITE_LUPI_AUTH_OVERRIDE_ENABLED?: string;
+  readonly VITE_LUPI_AUTH_OVERRIDE_PHOTO_URL?: string;
+  readonly VITE_LUPI_AUTH_OVERRIDE_TOKEN?: string;
+  readonly VITE_LUPI_AUTH_OVERRIDE_UID?: string;
   readonly [key: string]: string | boolean | undefined;
 }
 

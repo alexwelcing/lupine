@@ -515,6 +515,158 @@ function RiveButton({
   );
 }
 
+// ─── Studio-Quality Spring Physics Hook ───────────────────────────────
+function useStudioSpring(targetValue: number, tension = 220, friction = 14) {
+  const [value, setValue] = useState(targetValue);
+  const velocityRef = useRef(0);
+  const positionRef = useRef(targetValue);
+
+  useEffect(() => {
+    let frameId: number;
+    let lastTime = performance.now();
+
+    const update = () => {
+      const now = performance.now();
+      const dt = Math.min((now - lastTime) / 1000, 0.032);
+      lastTime = now;
+
+      const position = positionRef.current;
+      const velocity = velocityRef.current;
+
+      const force = tension * (targetValue - position);
+      const damping = friction * velocity;
+      const acceleration = force - damping;
+
+      const newVelocity = velocity + acceleration * dt;
+      const newPosition = position + newVelocity * dt;
+
+      positionRef.current = newPosition;
+      velocityRef.current = newVelocity;
+      setValue(newPosition);
+
+      if (Math.abs(targetValue - newPosition) > 0.0005 || Math.abs(newVelocity) > 0.0005) {
+        frameId = requestAnimationFrame(update);
+      }
+    };
+
+    frameId = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(frameId);
+  }, [targetValue, tension, friction]);
+
+  return { value, velocity: velocityRef.current };
+}
+
+// ─── Advanced Physical Modeling Audio Synthesizer ─────────────────────
+const playPhysicalSound = (type: 'leica_click' | 'relay_clank' | 'plasma_crackle' | 'needle_scrape') => {
+  if (typeof window === 'undefined') return;
+  const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+  if (!AudioContext) return;
+
+  try {
+    const ctx = new AudioContext();
+    const now = ctx.currentTime;
+
+    if (type === 'leica_click') {
+      const osc = ctx.createOscillator();
+      const filter = ctx.createBiquadFilter();
+      const gain = ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(3200, now);
+      osc.frequency.exponentialRampToValueAtTime(1200, now + 0.015);
+
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(2800, now);
+      filter.Q.setValueAtTime(8, now);
+
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.018);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.02);
+    }
+    else if (type === 'relay_clank') {
+      const carrier = ctx.createOscillator();
+      const modulator = ctx.createOscillator();
+      const modGain = ctx.createGain();
+      const gain = ctx.createGain();
+
+      carrier.type = 'sine';
+      carrier.frequency.setValueAtTime(95, now);
+      carrier.frequency.exponentialRampToValueAtTime(32, now + 0.18);
+
+      modulator.type = 'sawtooth';
+      modulator.frequency.setValueAtTime(265, now);
+
+      modGain.gain.setValueAtTime(300, now);
+      modGain.gain.exponentialRampToValueAtTime(1, now + 0.12);
+
+      gain.gain.setValueAtTime(0.24, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+      modulator.connect(modGain);
+      modGain.connect(carrier.frequency);
+      carrier.connect(gain);
+      gain.connect(ctx.destination);
+
+      modulator.start(now);
+      carrier.start(now);
+      modulator.stop(now + 0.22);
+      carrier.stop(now + 0.22);
+    }
+    else if (type === 'plasma_crackle') {
+      const bufferSize = ctx.sampleRate * 0.08;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+
+      const noiseNode = ctx.createBufferSource();
+      noiseNode.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(3500, now);
+      filter.Q.value = 12;
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+
+      noiseNode.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      noiseNode.start(now);
+      noiseNode.stop(now + 0.08);
+    }
+    else if (type === 'needle_scrape') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(450, now);
+      osc.frequency.linearRampToValueAtTime(220, now + 0.1);
+
+      gain.gain.setValueAtTime(0.04, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.12);
+    }
+  } catch (e) {
+    // sound synthesis failed
+  }
+};
+
 function RiveKnob({
   label,
   value,
@@ -535,8 +687,27 @@ function RiveKnob({
   const [dragging, setDragging] = useState(false);
   const dragRef = useRef({ y: 0, value });
   const percent = clamp((value - min) / (max - min), 0, 1);
-  const angle = -135 + percent * 270;
+  const targetAngle = -135 + percent * 270;
   const accent = dragging ? '#f59e0b' : '#1edce0';
+
+  // 1. Physical Spring Wobble on Dial Rotation
+  const springAngle = useStudioSpring(targetAngle, 240, 16);
+  const speed = Math.abs(springAngle.velocity);
+
+  // 2. Leica mechanical ticks on notch crossings
+  const lastStepPlayed = useRef(Math.round(value / step));
+  useEffect(() => {
+    const currentStep = Math.round(value / step);
+    if (currentStep !== lastStepPlayed.current) {
+      lastStepPlayed.current = currentStep;
+      playPhysicalSound('leica_click');
+    }
+  }, [value, step]);
+
+  // 3. Disney-quality Squash & Stretch along momentum vector
+  const stretchAmount = Math.min(0.2, speed * 0.0002);
+  const scaleX = 1 + stretchAmount;
+  const scaleY = 1 - stretchAmount;
 
   const setValue = (nextValue: number) => {
     onChange(clamp(snap(nextValue, step), min, max));
@@ -547,6 +718,7 @@ function RiveKnob({
     dragRef.current = { y: event.clientY, value };
     setDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
+    playPhysicalSound('leica_click');
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -562,6 +734,8 @@ function RiveKnob({
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
+    // Snap haptic ring on release
+    playPhysicalSound('leica_click');
   };
 
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -621,21 +795,31 @@ function RiveKnob({
       >
         <div style={{
           position: 'absolute',
-          inset: 5,
+          inset: 4,
           borderRadius: '50%',
-          background: 'radial-gradient(circle at 35% 30%, #334155, #0f172a 72%)',
-          border: '1px solid rgba(255,255,255,0.08)',
-        }} />
-        <div style={{
-          position: 'absolute',
-          left: '50%',
-          top: '50%',
-          width: 3,
-          height: 20,
-          transformOrigin: '50% 0%',
-          transform: `translate(-50%, -1px) rotate(${angle + 180}deg)`,
+          transform: `rotate(${springAngle.value}deg) scale(${scaleX}, ${scaleY})`,
+          boxShadow: speed > 10 ? `0 0 12px ${accent}40` : 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'box-shadow 0.15s ease',
         }}>
-          <div style={{ width: 3, height: 9, borderRadius: 3, background: accent, boxShadow: `0 0 8px ${accent}` }} />
+          <div style={{
+            position: 'absolute',
+            inset: 1,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle at 35% 30%, #334155, #0f172a 72%)',
+            border: '1px solid rgba(255,255,255,0.08)',
+          }} />
+          <div style={{
+            position: 'absolute',
+            top: 2,
+            width: 3,
+            height: 9,
+            borderRadius: 3,
+            background: accent,
+            boxShadow: `0 0 8px ${accent}`,
+          }} />
         </div>
       </div>
       <div style={{ display: 'grid', gap: 1, justifyItems: 'center', minWidth: 0 }}>

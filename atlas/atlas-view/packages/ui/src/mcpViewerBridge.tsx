@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type { ColorMode, ColormapName, Frame, Trajectory, RenderStyle } from '@atlas/core/types';
-import { getAtomicNumberBySymbol, getElementSpec } from '@atlas/core';
+import { getAtomicNumberBySymbol, getElementSpec, getElementSpecBySymbol } from '@atlas/core';
+import type { NistCatalogEntry, NistSummary } from '@atlas/nist';
+import { filterCatalog, loadNistCatalog, summarize } from '@atlas/nist';
 import { useStore, type LoadedFile } from './store';
 import { COLOR_SCHEMES, type ColorSchemeId } from './coloring';
+import { loadMoleculeSource } from './loadMoleculeSource';
+import { useFirebaseAuth } from './auth/useFirebaseAuth';
 
 type LupiMcpToolName =
   | 'lupi.generate_molecule'
@@ -81,7 +85,23 @@ interface LupiMcpResponse {
   transcript: string[];
 }
 
+type LupiMcpExportResult = NonNullable<NonNullable<LupiMcpResponse['result']>['export']>;
+
+interface LupiMcpResponsePayload {
+  command?: string;
+  createdAt: number;
+  ok: boolean;
+  requestId: string | null;
+  requests?: LupiMcpRequest[];
+  responses: LupiMcpResponse[];
+  source?: string;
+  state: ReturnType<typeof readViewerState>;
+  type: 'lupi:mcp:response';
+}
+
 interface LupiMcpDriver {
+  ready: true;
+  version: string;
   execute: (request: LupiMcpRequest) => Promise<LupiMcpResponse>;
   executeBatch: (requests: LupiMcpRequest[]) => Promise<LupiMcpResponse[]>;
   parseCommand: (command: string) => LupiMcpRequest[];
@@ -91,9 +111,18 @@ interface LupiMcpDriver {
 declare global {
   interface Window {
     __lupiViewerMcp?: LupiMcpDriver;
+    __lupiViewerMcpReady?: boolean;
+    __lupiViewerMcpResponses?: LupiMcpResponsePayload[];
     __lupiViewerMcpUrlRunKey?: string;
+    __lupiViewerMcpVersion?: string;
   }
 }
+
+const LUPI_VIEWER_MCP_VERSION = '2026-05-30.catalog-controls';
+const NIST_BASE = String(import.meta.env.VITE_NIST_BASE_URL ?? '/nist').replace(/\/$/, '');
+const MCP_RESPONSE_STORAGE_KEY = 'lupi.viewer.mcp.responses.v1';
+const MAX_PERSISTED_RESPONSE_LOG = 24;
+const MAX_PERSISTED_EXPORT_CHARS = 20_000;
 
 const TEMPLATE_MOLECULES: Array<{
   name: string;
@@ -316,15 +345,42 @@ const MCP_VIEWER_EXAMPLES: Array<{
   },
 ];
 
+type McpHarnessPanel = 'catalog' | 'agent' | 'actions' | 'command' | 'response';
+
+const MCP_HARNESS_PANELS: Array<{ id: McpHarnessPanel; label: string }> = [
+  { id: 'catalog', label: 'Catalog' },
+  { id: 'agent', label: 'Agent' },
+  { id: 'actions', label: 'Tools' },
+  { id: 'command', label: 'JSON' },
+  { id: 'response', label: 'Log' },
+];
+
+const DEFAULT_AGENT_COMMAND = 'generate 250k copper fcc atoms, hide bonds, show cell, diagram look, family color, camera iso';
+const CATALOG_QUICK_FILTERS = ['Cu', 'Fe', 'Ni', 'Al', 'Si', 'C', 'W', 'Co'];
+
+const MCP_TOOL_CAPABILITIES = [
+  { label: 'Search', value: 'NIST catalog' },
+  { label: 'Generate', value: 'small to 1M' },
+  { label: 'Style', value: 'camera + look' },
+  { label: 'Export', value: 'XYZ + state' },
+];
+
+const MAX_VISIBLE_RESPONSE_LOG = 12;
+
 export function McpViewerBridge() {
   useEffect(() => {
     const driver: LupiMcpDriver = {
+      ready: true,
+      version: LUPI_VIEWER_MCP_VERSION,
       execute: executeLupiViewerMcpRequest,
       executeBatch: executeLupiViewerMcpBatch,
       parseCommand: parseViewerAgentCommand,
       state: readViewerState,
     };
     window.__lupiViewerMcp = driver;
+    window.__lupiViewerMcpReady = true;
+    window.__lupiViewerMcpResponses ??= readStoredMcpResponses();
+    window.__lupiViewerMcpVersion = LUPI_VIEWER_MCP_VERSION;
     window.dispatchEvent(new CustomEvent('lupi:mcp:ready', { detail: driver.state() }));
 
     const runUrlRequests = () => {
@@ -333,7 +389,10 @@ export function McpViewerBridge() {
       const runKey = window.location.href;
       if (window.__lupiViewerMcpUrlRunKey === runKey) return;
       window.__lupiViewerMcpUrlRunKey = runKey;
-      driver.executeBatch(requests).then(emitLupiMcpResponse);
+      driver.executeBatch(requests).then((responses) => emitLupiMcpResponse(responses, 'url-bootstrap', {
+        requests,
+        source: 'url',
+      }));
     };
 
     runUrlRequests();
@@ -343,19 +402,27 @@ export function McpViewerBridge() {
       const data = event.data;
       if (!data || data.type !== 'lupi:mcp:execute') return;
 
-      const requests = Array.isArray(data.requests)
-        ? data.requests
-        : data.request
-          ? [data.request]
-            : [];
+      const requestId = typeof data.requestId === 'string' ? data.requestId : null;
+      let requests: LupiMcpRequest[];
+      try {
+        requests = readBridgeMessageRequests(data);
+      } catch (error) {
+        const responses = [errorResponse(requestId ?? 'bridge-message', 'lupi.generate_molecule', error)];
+        const payload = emitLupiMcpResponse(responses, requestId);
+        event.source?.postMessage(payload, { targetOrigin: event.origin || window.location.origin });
+        return;
+      }
       driver.executeBatch(requests).then((responses) => {
-        emitLupiMcpResponse(responses);
-        event.source?.postMessage({
-          type: 'lupi:mcp:response',
-          requestId: data.requestId ?? null,
-          responses,
-          state: driver.state(),
-        }, { targetOrigin: event.origin });
+        const payload = emitLupiMcpResponse(responses, requestId, {
+          command: typeof data.command === 'string' ? data.command : undefined,
+          requests,
+          source: 'postMessage',
+        });
+        event.source?.postMessage(payload, { targetOrigin: event.origin || window.location.origin });
+      }).catch((error) => {
+        const responses = [errorResponse(requestId ?? 'bridge-message', 'lupi.generate_molecule', error)];
+        const payload = emitLupiMcpResponse(responses, requestId);
+        event.source?.postMessage(payload, { targetOrigin: event.origin || window.location.origin });
       });
     };
 
@@ -368,6 +435,7 @@ export function McpViewerBridge() {
       window.removeEventListener('popstate', runUrlRequests);
       if (window.__lupiViewerMcp === driver) {
         delete window.__lupiViewerMcp;
+        window.__lupiViewerMcpReady = false;
       }
     };
   }, []);
@@ -375,184 +443,638 @@ export function McpViewerBridge() {
   return null;
 }
 
+function readBridgeMessageRequests(data: unknown): LupiMcpRequest[] {
+  const record = readRecord(data);
+  if (!record) throw new Error('Lupi MCP bridge message must be an object.');
+
+  if (typeof record.command === 'string') {
+    const requests = parseViewerAgentCommand(record.command);
+    if (requests.length > 0) return requests;
+  }
+
+  if (Array.isArray(record.requests)) return record.requests as LupiMcpRequest[];
+  if (record.request) return [record.request as LupiMcpRequest];
+  throw new Error('Lupi MCP bridge message must include request, requests, or command.');
+}
+
+function readStoredMcpResponses(): LupiMcpResponsePayload[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = window.localStorage.getItem(MCP_RESPONSE_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed)
+      ? parsed
+        .filter((entry): entry is LupiMcpResponsePayload => readRecord(entry)?.type === 'lupi:mcp:response')
+        .map((entry) => ({ ...entry, createdAt: Number(entry.createdAt) || Date.now() }))
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeStoredMcpResponses(entries: LupiMcpResponsePayload[]) {
+  if (typeof window === 'undefined') return;
+  try {
+    const sanitized = entries.slice(-MAX_PERSISTED_RESPONSE_LOG).map(sanitizeMcpPayloadForStorage);
+    window.localStorage.setItem(MCP_RESPONSE_STORAGE_KEY, JSON.stringify(sanitized));
+  } catch {
+    // Persistence is a convenience ledger; bridge execution must not depend on it.
+  }
+}
+
+function sanitizeMcpPayloadForStorage(entry: LupiMcpResponsePayload): LupiMcpResponsePayload {
+  return {
+    ...entry,
+    requests: entry.requests ? cloneMcpRequests(entry.requests) : undefined,
+    responses: entry.responses.map((response) => {
+      const exportResult = response.result?.export;
+      if (!exportResult || exportResult.contents.length <= MAX_PERSISTED_EXPORT_CHARS) return response;
+      return {
+        ...response,
+        result: {
+          ...response.result,
+          export: {
+            ...exportResult,
+            contents: '',
+          },
+        },
+        transcript: [
+          ...response.transcript,
+          `persistent ledger omitted ${formatCount(exportResult.contents.length)} XYZ characters; rerun entry to download`,
+        ],
+      };
+    }),
+  };
+}
+
+function cloneMcpRequests(requests: LupiMcpRequest[]): LupiMcpRequest[] {
+  return JSON.parse(JSON.stringify(requests)) as LupiMcpRequest[];
+}
+
+function executeCommandViaPostMessage(command: string): Promise<LupiMcpResponsePayload> {
+  if (typeof window === 'undefined') return Promise.reject(new Error('Lupi MCP postMessage bridge is only available in the browser.'));
+  const requestId = `agent-postmessage-${Date.now()}`;
+  return new Promise((resolve, reject) => {
+    const timer = window.setTimeout(() => {
+      window.removeEventListener('message', onMessage);
+      reject(new Error('Timed out waiting for lupi:mcp:response.'));
+    }, 8000);
+
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      const payload = event.data as Partial<LupiMcpResponsePayload> | undefined;
+      if (payload?.type !== 'lupi:mcp:response') return;
+      if (payload.requestId !== requestId) return;
+      window.clearTimeout(timer);
+      window.removeEventListener('message', onMessage);
+      resolve(payload as LupiMcpResponsePayload);
+    };
+
+    window.addEventListener('message', onMessage);
+    window.postMessage({ type: 'lupi:mcp:execute', requestId, command }, window.location.origin);
+  });
+}
+
+function makeAgentBootstrapUrl(command: string) {
+  if (typeof window === 'undefined') return '';
+  const url = new URL(window.location.href);
+  url.searchParams.set('mcp', '1');
+  url.searchParams.set('command', command);
+  url.hash = '#/mcp';
+  return url.toString();
+}
+
+function downloadTextFile(filename: string, contents: string, type: string) {
+  const blob = new Blob([contents], { type });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function commandTextFromPayload(entry: LupiMcpResponsePayload): string {
+  if (entry.command) return entry.command;
+  if (entry.requests?.length) {
+    return JSON.stringify(entry.requests.length === 1 ? entry.requests[0] : entry.requests, null, 2);
+  }
+  const fallbackRequests = entry.responses.map((response) => makeRequest(response.tool, {}));
+  return JSON.stringify(fallbackRequests.length === 1 ? fallbackRequests[0] : fallbackRequests, null, 2);
+}
+
+function packetFromPayload(entry: LupiMcpResponsePayload) {
+  const requestId = entry.requestId ? `replay-${entry.requestId}` : `replay-${entry.createdAt}`;
+  if (entry.command) {
+    return {
+      type: 'lupi:mcp:execute',
+      requestId,
+      command: entry.command,
+    };
+  }
+  const requests = entry.requests ?? entry.responses.map((response) => makeRequest(response.tool, {}));
+  return requests.length === 1
+    ? { type: 'lupi:mcp:execute', requestId, request: requests[0] }
+    : { type: 'lupi:mcp:execute', requestId, requests };
+}
+
 export function McpViewerHarness() {
   const file = useStore((state) => state.file);
   const showBonds = useStore((state) => state.showBonds);
   const atomScale = useStore((state) => state.atomScale);
   const loadedAtomCount = useStore((state) => state.loadedAtomCount);
+  const nistCatalog = useStore((state) => state.nistCatalog);
+  const activePotentialId = useStore((state) => state.activePotentialId);
+  const setNistCatalog = useStore((state) => state.setNistCatalog);
+  const setActivePotentialId = useStore((state) => state.setActivePotentialId);
+  const { idToken, isOverride, loading: authLoading, user } = useFirebaseAuth();
   const [command, setCommand] = useState(DEFAULT_COMMAND_TEXT);
+  const [agentCommand, setAgentCommand] = useState(DEFAULT_AGENT_COMMAND);
   const [response, setResponse] = useState<LupiMcpResponse | null>(null);
+  const [responseLog, setResponseLog] = useState<LupiMcpResponsePayload[]>(() =>
+    typeof window === 'undefined'
+      ? []
+      : (window.__lupiViewerMcpResponses ?? readStoredMcpResponses()).slice(-MAX_VISIBLE_RESPONSE_LOG)
+  );
   const [busy, setBusy] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [panel, setPanel] = useState<McpHarnessPanel>('catalog');
+  const [catalogQuery, setCatalogQuery] = useState('Cu');
+  const [catalogBusy, setCatalogBusy] = useState(false);
+  const [catalogError, setCatalogError] = useState<string | null>(null);
+  const [copyStatus, setCopyStatus] = useState<string | null>(null);
 
   useEffect(() => {
     if (file || hasMcpUrlRequests()) return;
-    executeLupiViewerMcpRequest(makeRequest('lupi.generate_molecule', {
+    const defaultRequest = makeRequest('lupi.generate_molecule', {
       inputType: 'template',
       input: 'Benzene',
       viewer: { showBonds: true, atomScale: 1.15 },
-    })).then(setResponse);
+    });
+    executeLupiViewerMcpRequest(defaultRequest).then((nextResponse) => {
+      emitLupiMcpResponse([nextResponse], 'mcp-default-benzene', {
+        command: 'load Benzene with bonds atom scale 1.15',
+        requests: [defaultRequest],
+        source: 'viewer',
+      });
+    });
   }, [file]);
 
   useEffect(() => {
     const onResponse = (event: Event) => {
-      const detail = (event as CustomEvent<{ responses?: LupiMcpResponse[] }>).detail;
+      const detail = (event as CustomEvent<LupiMcpResponsePayload>).detail;
       const responses = detail?.responses ?? [];
       setResponse(responses[responses.length - 1] ?? null);
+      setResponseLog((window.__lupiViewerMcpResponses ?? readStoredMcpResponses()).slice(-MAX_VISIBLE_RESPONSE_LOG));
     };
     window.addEventListener('lupi:mcp:response', onResponse);
     return () => window.removeEventListener('lupi:mcp:response', onResponse);
   }, []);
+
+  useEffect(() => {
+    if (nistCatalog) return;
+    let cancelled = false;
+    setCatalogBusy(true);
+    loadNistCatalog(`${NIST_BASE}/nist_catalog.json`)
+      .then((catalog) => {
+        if (cancelled) return;
+        setNistCatalog(catalog);
+        setCatalogError(null);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setCatalogError(error instanceof Error ? error.message : String(error));
+      })
+      .finally(() => {
+        if (!cancelled) setCatalogBusy(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [nistCatalog, setNistCatalog]);
 
   const responseText = useMemo(
     () => JSON.stringify(response ?? { status: 'ready', state: readViewerState() }, null, 2),
     [response, file?.name, showBonds, atomScale, loadedAtomCount]
   );
 
-  const runCommand = useCallback(async () => {
-    const requests = parseViewerAgentCommand(command);
-    if (requests.length === 0) return;
+  const catalogSummary = useMemo<NistSummary | null>(
+    () => (nistCatalog ? summarize(nistCatalog) : null),
+    [nistCatalog]
+  );
+
+  const catalogResults = useMemo(() => {
+    if (!nistCatalog) return [];
+    return filterCatalog(nistCatalog, {
+      query: catalogQuery,
+      elements: [],
+      pair_styles: [],
+      year_min: null,
+      year_max: null,
+      single_element_only: false,
+    })
+      .sort((a, b) => Number(Boolean(b.demo_path)) - Number(Boolean(a.demo_path)) || b.year - a.year)
+      .slice(0, 8);
+  }, [nistCatalog, catalogQuery]);
+
+  const agentRequests = useMemo(() => parseViewerAgentCommand(agentCommand), [agentCommand]);
+
+  const agentPacketText = useMemo(() => JSON.stringify({
+    type: 'lupi:mcp:execute',
+    requestId: 'lupi-agent-preview',
+    command: agentCommand,
+  }, null, 2), [agentCommand]);
+
+  const agentBootstrapUrl = useMemo(() => makeAgentBootstrapUrl(agentCommand), [agentCommand]);
+
+  const lastExport = useMemo(() => {
+    const loggedResponses = responseLog.flatMap((entry) => entry.responses).reverse();
+    const candidates = response ? [response, ...loggedResponses] : loggedResponses;
+    return candidates.find((entry) => entry.result?.export?.contents)?.result?.export ?? null;
+  }, [response, responseLog]);
+
+  const publishResponses = useCallback((
+    responses: LupiMcpResponse[],
+    requestId: string | null,
+    metadata: Partial<Pick<LupiMcpResponsePayload, 'command' | 'requests' | 'source'>> = {}
+  ) => {
+    emitLupiMcpResponse(responses, requestId, metadata);
+    setResponse(responses[responses.length - 1] ?? null);
+  }, []);
+
+  const runRequests = useCallback(async (
+    requests: LupiMcpRequest[],
+    requestId: string | null,
+    metadata: Partial<Pick<LupiMcpResponsePayload, 'command' | 'source'>> = {}
+  ) => {
+    if (requests.length === 0) return [];
     setBusy(true);
     try {
       const responses = await executeLupiViewerMcpBatch(requests);
-      setResponse(responses[responses.length - 1] ?? null);
+      publishResponses(responses, requestId, { ...metadata, requests });
+      return responses;
     } finally {
       setBusy(false);
     }
-  }, [command]);
+  }, [publishResponses]);
+
+  const runCommandText = useCallback(async (text: string, requestId: string | null) => {
+    const requests = parseViewerAgentCommand(text);
+    return runRequests(requests, requestId, { command: text, source: 'command' });
+  }, [runRequests]);
+
+  const runCommand = useCallback(async () => {
+    await runCommandText(command, 'manual-command');
+  }, [command, runCommandText]);
 
   const runJson = useCallback(async () => {
     try {
       const parsed = JSON.parse(command) as LupiMcpRequest | LupiMcpRequest[];
       const requests = Array.isArray(parsed) ? parsed : [parsed];
-      setBusy(true);
-      const responses = await executeLupiViewerMcpBatch(requests);
-      setResponse(responses[responses.length - 1] ?? null);
+      await runRequests(requests, 'manual-json', { source: 'json' });
     } catch (error) {
-      setResponse(errorResponse('manual-json', 'lupi.generate_molecule', error));
+      publishResponses([errorResponse('manual-json', 'lupi.generate_molecule', error)], 'manual-json');
+    }
+  }, [command, publishResponses, runRequests]);
+
+  const runAgentCommand = useCallback(async () => {
+    setCommand(JSON.stringify(agentRequests.length === 1 ? agentRequests[0] : agentRequests, null, 2));
+    await runRequests(agentRequests, 'agent-direct', { command: agentCommand, source: 'agent' });
+  }, [agentCommand, agentRequests, runRequests]);
+
+  const sendAgentCommand = useCallback(async () => {
+    if (!agentCommand.trim()) return;
+    setBusy(true);
+    try {
+      const payload = await executeCommandViaPostMessage(agentCommand);
+      setResponse(payload.responses[payload.responses.length - 1] ?? null);
+    } catch (error) {
+      publishResponses([errorResponse('agent-postmessage', 'lupi.generate_molecule', error)], 'agent-postmessage');
     } finally {
       setBusy(false);
     }
-  }, [command]);
+  }, [agentCommand, publishResponses]);
+
+  const stagePresetCommand = useCallback((text: string) => {
+    setCommand(text);
+    setPanel('command');
+  }, []);
+
+  const runPresetCommand = useCallback(async (preset: (typeof MCP_VIEWER_EXAMPLES)[number]) => {
+    setCommand(preset.command);
+    await runCommandText(preset.command, `preset-${preset.id}`);
+  }, [runCommandText]);
+
+  const copyText = useCallback(async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyStatus(`${label} copied`);
+    } catch {
+      setCopyStatus('copy unavailable');
+    }
+  }, []);
+
+  const downloadExport = useCallback(() => {
+    if (!lastExport) return;
+    downloadTextFile(lastExport.filename, lastExport.contents, 'chemical/x-xyz');
+  }, [lastExport]);
+
+  const stageLogEntry = useCallback((entry: LupiMcpResponsePayload) => {
+    setCommand(commandTextFromPayload(entry));
+    setPanel('command');
+  }, []);
+
+  const rerunLogEntry = useCallback(async (entry: LupiMcpResponsePayload) => {
+    if (entry.command) {
+      await runCommandText(entry.command, `rerun-${entry.requestId ?? entry.createdAt}`);
+      return;
+    }
+    if (entry.requests?.length) {
+      await runRequests(entry.requests, `rerun-${entry.requestId ?? entry.createdAt}`, { source: 'ledger' });
+    }
+  }, [runCommandText, runRequests]);
+
+  const copyLogPacket = useCallback(async (entry: LupiMcpResponsePayload) => {
+    await copyText(JSON.stringify(packetFromPayload(entry), null, 2), 'packet');
+  }, [copyText]);
+
+  const clearResponseLog = useCallback(() => {
+    if (typeof window !== 'undefined') {
+      window.__lupiViewerMcpResponses = [];
+      window.localStorage.removeItem(MCP_RESPONSE_STORAGE_KEY);
+    }
+    setResponseLog([]);
+  }, []);
+
+  const stageCatalogCommand = useCallback((entry: NistCatalogEntry) => {
+    const request = makeRequest('lupi.generate_molecule', catalogEntryToGenerateArgs(entry));
+    setActivePotentialId(entry.id);
+    setCommand(JSON.stringify(request, null, 2));
+    setPanel('command');
+  }, [setActivePotentialId]);
+
+  const previewCatalogResult = useCallback(async (entry: NistCatalogEntry) => {
+    setActivePotentialId(entry.id);
+    const request = makeRequest('lupi.generate_molecule', catalogEntryToGenerateArgs(entry));
+    await runRequests([request], `catalog-preview-${entry.id}`, { source: 'catalog' });
+  }, [runRequests, setActivePotentialId]);
+
+  const loadCatalogDemo = useCallback(async (entry: NistCatalogEntry) => {
+    if (!entry.demo_path) {
+      await previewCatalogResult(entry);
+      return;
+    }
+    setBusy(true);
+    setActivePotentialId(entry.id);
+    try {
+      await loadMoleculeSource(`${NIST_BASE}/${entry.demo_path}`);
+      publishResponses([okResponse(
+        {
+          id: `catalog-demo-${entry.id}`,
+          tool: 'lupi.viewer_state',
+          arguments: {},
+        },
+        [`loaded NIST demo ${entry.short_label}`],
+        { viewer: readViewerState() }
+      )], `catalog-demo-${entry.id}`, { source: 'catalog-demo' });
+    } catch (error) {
+      publishResponses([errorResponse(`catalog-demo-${entry.id}`, 'lupi.generate_molecule', error)], `catalog-demo-${entry.id}`);
+    } finally {
+      setBusy(false);
+    }
+  }, [previewCatalogResult, publishResponses, setActivePotentialId]);
+
+  const authLabel = authLoading
+    ? 'auth...'
+    : user
+      ? isOverride
+        ? 'local test'
+        : idToken
+          ? 'signed in'
+          : 'signed in'
+      : 'guest';
+
+  if (collapsed) {
+    return (
+      <button
+        data-testid="lupine-mcp-open"
+        type="button"
+        onClick={() => setCollapsed(false)}
+        style={mcpCollapsedStyle}
+      >
+        MCP
+      </button>
+    );
+  }
 
   return (
-    <div
-      data-testid="lupine-mcp-harness"
-      style={{
-        position: 'absolute',
-        top: 72,
-        left: 16,
-        width: 'min(430px, calc(100vw - 32px))',
-        maxHeight: 'calc(100vh - 96px)',
-        overflow: 'auto',
-        zIndex: 260,
-        border: '1px solid rgba(125,211,252,0.36)',
-        background: 'rgba(5,8,13,0.78)',
-        boxShadow: '0 24px 80px rgba(0,0,0,0.45)',
-        backdropFilter: 'blur(18px)',
-        borderRadius: 14,
-        padding: 14,
-        color: '#e5f7ff',
-        fontFamily: 'Inter, system-ui, sans-serif',
-      }}
-    >
+    <div data-testid="lupine-mcp-harness" style={mcpHarnessStyle}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-        <div>
-          <div style={{ fontSize: 11, color: '#67e8f9', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-            Real viewer MCP
-          </div>
-          <div style={{ fontSize: 18, fontWeight: 750, marginTop: 2 }}>Lupine viewer driver</div>
+        <div style={{ minWidth: 0 }}>
+          <div style={mcpKickerStyle}>Viewer MCP</div>
+          <div style={{ fontSize: 18, fontWeight: 780, marginTop: 2, color: '#fff7ed' }}>Lupi controls</div>
         </div>
-        <div
-          data-testid="lupine-mcp-viewer-ready"
-          style={{
-            padding: '5px 8px',
-            borderRadius: 999,
-            border: '1px solid rgba(34,211,238,0.42)',
-            color: '#a5f3fc',
-            fontSize: 11,
-            fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
-          }}
-        >
-          ready
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div data-testid="lupine-mcp-viewer-ready" style={mcpReadyStyle}>ready</div>
+          <button
+            aria-label="Close MCP controls"
+            data-testid="lupine-mcp-collapse"
+            type="button"
+            onClick={() => setCollapsed(true)}
+            style={mcpIconButtonStyle}
+          >
+            x
+          </button>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 70px', gap: 8, marginTop: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 66px 66px 78px', gap: 8, marginTop: 12 }}>
         <Metric label="File" value={file?.name ?? 'none'} testId="lupine-mcp-active-file" />
         <Metric label="Atoms" value={String(loadedAtomCount || 0)} />
         <Metric label="Bonds" value={showBonds ? 'on' : 'off'} />
+        <Metric label="Auth" value={authLabel} />
       </div>
 
-      <textarea
-        data-testid="lupine-mcp-command-input"
-        value={command}
-        onChange={(event) => setCommand(event.target.value)}
-        style={{
-          width: '100%',
-          minHeight: 96,
-          resize: 'vertical',
-          marginTop: 12,
-          padding: 10,
-          borderRadius: 10,
-          border: '1px solid rgba(148,163,184,0.28)',
-          background: 'rgba(2,6,12,0.72)',
-          color: '#f8fafc',
-          outline: 'none',
-          fontSize: 12,
-          lineHeight: 1.5,
-          fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
-        }}
-      />
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 10 }}>
-        <button
-          data-testid="lupine-mcp-run-command"
-          type="button"
-          onClick={runCommand}
-          disabled={busy}
-          style={primaryButtonStyle}
-        >
-          {busy ? 'Running...' : 'Run command'}
-        </button>
-        <button type="button" onClick={runJson} disabled={busy} style={secondaryButtonStyle}>
-          Execute JSON
-        </button>
-      </div>
-
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 10 }}>
-        {MCP_VIEWER_EXAMPLES.map((preset) => (
+      <div style={mcpSegmentStyle}>
+        {MCP_HARNESS_PANELS.map((item) => (
           <button
-            key={preset.id}
-            data-testid={`lupine-mcp-example-${preset.id}`}
+            key={item.id}
+            data-testid={`lupine-mcp-panel-${item.id}`}
             type="button"
-            onClick={() => setCommand(preset.command)}
-            title={preset.summary}
-            style={chipButtonStyle}
+            onClick={() => setPanel(item.id)}
+            style={segmentButtonStyle(panel === item.id)}
           >
-            {preset.label}
+            {item.label}
           </button>
         ))}
       </div>
 
-      <pre
-        data-testid="lupine-mcp-response"
-        style={{
-          maxHeight: 260,
-          overflow: 'auto',
-          margin: '12px 0 0',
-          padding: 10,
-          borderRadius: 10,
-          border: '1px solid rgba(148,163,184,0.2)',
-          background: 'rgba(2,6,12,0.76)',
-          color: '#cbd5e1',
-          fontSize: 11,
-          lineHeight: 1.45,
-          fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
-          whiteSpace: 'pre-wrap',
-        }}
-      >
-        {responseText}
-      </pre>
+      {panel === 'agent' ? (
+        <div style={mcpPanelBodyStyle}>
+          <div style={agentComposerStyle}>
+            <textarea
+              data-testid="lupine-mcp-agent-command"
+              value={agentCommand}
+              onChange={(event) => setAgentCommand(event.target.value)}
+              style={agentTextAreaStyle}
+            />
+            <div style={agentPreviewStyle}>
+              <span style={mcpLabelStyle}>{agentRequests.length} request{agentRequests.length === 1 ? '' : 's'}</span>
+              <span style={agentToolListStyle}>{agentRequests.map((request) => request.tool.replace('lupi.', '')).join(' -> ') || 'idle'}</span>
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 10 }}>
+            <button
+              data-testid="lupine-mcp-run-agent"
+              type="button"
+              onClick={runAgentCommand}
+              disabled={busy || agentRequests.length === 0}
+              style={primaryButtonStyle}
+            >
+              {busy ? 'Running...' : 'Run in viewer'}
+            </button>
+            <button
+              data-testid="lupine-mcp-send-agent"
+              type="button"
+              onClick={sendAgentCommand}
+              disabled={busy || !agentCommand.trim()}
+              style={secondaryButtonStyle}
+            >
+              Send bridge
+            </button>
+          </div>
+          <div style={agentHandoffGridStyle}>
+            <div style={agentHandoffCardStyle}>
+              <div style={agentCardHeaderStyle}>
+                <span style={mcpLabelStyle}>PostMessage packet</span>
+                <button type="button" onClick={() => void copyText(agentPacketText, 'packet')} style={miniButtonStyle(true)}>Copy</button>
+              </div>
+              <pre data-testid="lupine-mcp-agent-packet" style={agentCodeStyle}>{agentPacketText}</pre>
+            </div>
+            <div style={agentHandoffCardStyle}>
+              <div style={agentCardHeaderStyle}>
+                <span style={mcpLabelStyle}>Bootstrap URL</span>
+                <button type="button" onClick={() => void copyText(agentBootstrapUrl, 'url')} style={miniButtonStyle(true)}>Copy</button>
+              </div>
+              <div style={agentUrlStyle}>{agentBootstrapUrl}</div>
+            </div>
+          </div>
+          {copyStatus ? <div style={copyStatusStyle}>{copyStatus}</div> : null}
+        </div>
+      ) : null}
+
+      {panel === 'catalog' ? (
+        <div style={mcpPanelBodyStyle}>
+          <div style={catalogSearchShellStyle}>
+            <input
+              data-testid="lupine-mcp-catalog-search"
+              value={catalogQuery}
+              onChange={(event) => setCatalogQuery(event.target.value)}
+              placeholder="Search NIST potentials"
+              style={catalogSearchInputStyle}
+            />
+            <span style={catalogCountStyle}>{catalogSummary ? formatCount(catalogSummary.total_potentials) : '...'}</span>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
+            {CATALOG_QUICK_FILTERS.map((filter) => (
+              <button key={filter} type="button" onClick={() => setCatalogQuery(filter)} style={chipButtonStyle}>
+                {filter}
+              </button>
+            ))}
+          </div>
+          {catalogError ? <div style={mcpErrorStyle}>{catalogError}</div> : null}
+          <div style={{ marginTop: 10 }}>
+            {catalogBusy && !nistCatalog ? (
+              <div style={{ color: '#cbd5e1', fontSize: 12 }}>Loading catalog...</div>
+            ) : catalogResults.length === 0 ? (
+              <div style={{ color: '#cbd5e1', fontSize: 12 }}>No catalog matches.</div>
+            ) : (
+              catalogResults.map((entry) => (
+                <CatalogResultRow
+                  key={entry.id}
+                  active={entry.id === activePotentialId}
+                  busy={busy}
+                  entry={entry}
+                  onDemo={() => void loadCatalogDemo(entry)}
+                  onPreview={() => void previewCatalogResult(entry)}
+                  onStage={() => stageCatalogCommand(entry)}
+                />
+              ))
+            )}
+          </div>
+        </div>
+      ) : null}
+
+      {panel === 'actions' ? (
+        <div style={mcpPanelBodyStyle}>
+          <div style={capabilityGridStyle}>
+            {MCP_TOOL_CAPABILITIES.map((capability) => (
+              <div key={capability.label} style={capabilityTileStyle}>
+                <span style={mcpLabelStyle}>{capability.label}</span>
+                <strong>{capability.value}</strong>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'grid', gap: 8, marginTop: 10 }}>
+            {MCP_VIEWER_EXAMPLES.map((preset) => (
+              <McpWorkflowRow
+                key={preset.id}
+                busy={busy}
+                preset={preset}
+                onRun={() => void runPresetCommand(preset)}
+                onStage={() => stagePresetCommand(preset.command)}
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {panel === 'command' ? (
+        <div style={mcpPanelBodyStyle}>
+          <textarea
+            data-testid="lupine-mcp-command-input"
+            value={command}
+            onChange={(event) => setCommand(event.target.value)}
+            style={commandTextAreaStyle}
+          />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 10 }}>
+            <button
+              data-testid="lupine-mcp-run-command"
+              type="button"
+              onClick={runCommand}
+              disabled={busy}
+              style={primaryButtonStyle}
+            >
+              {busy ? 'Running...' : 'Run command'}
+            </button>
+            <button type="button" onClick={runJson} disabled={busy} style={secondaryButtonStyle}>
+              Execute JSON
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      {panel === 'response' ? (
+        <div style={mcpPanelBodyStyle}>
+          <McpResponseLog
+            lastExport={lastExport}
+            log={responseLog}
+            onClear={clearResponseLog}
+            onCopyPacket={(entry) => void copyLogPacket(entry)}
+            onCopyState={() => void copyText(JSON.stringify(readViewerState(), null, 2), 'state')}
+            onDownloadExport={downloadExport}
+            onRerun={(entry) => void rerunLogEntry(entry)}
+            onStage={(entry) => stageLogEntry(entry)}
+            responseText={responseText}
+          />
+        </div>
+      ) : (
+        <button type="button" onClick={() => setPanel('response')} style={responsePeekStyle}>
+          {response?.ok === false ? 'Last run failed' : response ? 'Last run ready' : 'Response log'}
+        </button>
+      )}
     </div>
   );
 }
@@ -625,6 +1147,15 @@ function parseViewerAgentCommand(command: string): LupiMcpRequest[] {
   const trimmed = command.trim();
   if (!trimmed) return [];
 
+  if (/^https?:\/\//i.test(trimmed)) {
+    try {
+      const requests = readMcpUrlRequestsFromParams(readParamsFromUrl(trimmed));
+      if (requests.length > 0) return requests;
+    } catch {
+      // Fall through to natural-language parsing.
+    }
+  }
+
   if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
     try {
       const parsed = JSON.parse(trimmed) as LupiMcpRequest | LupiMcpRequest[];
@@ -652,7 +1183,10 @@ function hasMcpUrlRequests() {
 function readMcpUrlRequests(): LupiMcpRequest[] {
   if (typeof window === 'undefined') return [];
 
-  const params = readMergedUrlParams();
+  return readMcpUrlRequestsFromParams(readMergedUrlParams());
+}
+
+function readMcpUrlRequestsFromParams(params: URLSearchParams): LupiMcpRequest[] {
   const command = params.get('mcpCommand') ?? params.get('command');
   if (command) return parseViewerAgentCommand(command);
 
@@ -694,6 +1228,17 @@ function readMcpUrlRequests(): LupiMcpRequest[] {
   }
 
   return requests;
+}
+
+function readParamsFromUrl(value: string) {
+  const url = new URL(value);
+  const params = new URLSearchParams(url.search);
+  const hashQueryIndex = url.hash.indexOf('?');
+  if (hashQueryIndex >= 0) {
+    const hashParams = new URLSearchParams(url.hash.slice(hashQueryIndex + 1));
+    hashParams.forEach((paramValue, key) => params.set(key, paramValue));
+  }
+  return params;
 }
 
 function readMergedUrlParams() {
@@ -788,14 +1333,29 @@ function numberFromUrlParam(value: string | null): number | undefined {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
 }
 
-function emitLupiMcpResponse(responses: LupiMcpResponse[]) {
-  if (typeof window === 'undefined') return;
-  window.dispatchEvent(new CustomEvent('lupi:mcp:response', {
-    detail: {
-      responses,
-      state: readViewerState(),
-    },
-  }));
+function emitLupiMcpResponse(
+  responses: LupiMcpResponse[],
+  requestId: string | null = null,
+  metadata: Partial<Pick<LupiMcpResponsePayload, 'command' | 'requests' | 'source'>> = {}
+) {
+  const payload = {
+    type: 'lupi:mcp:response' as const,
+    command: metadata.command,
+    createdAt: Date.now(),
+    ok: responses.every((response) => response.ok),
+    requestId,
+    requests: metadata.requests ? cloneMcpRequests(metadata.requests) : undefined,
+    responses,
+    source: metadata.source,
+    state: readViewerState(),
+  };
+  if (typeof window === 'undefined') return payload;
+  window.__lupiViewerMcpResponses ??= [];
+  window.__lupiViewerMcpResponses.push(payload);
+  window.__lupiViewerMcpResponses = window.__lupiViewerMcpResponses.slice(-MAX_PERSISTED_RESPONSE_LOG);
+  writeStoredMcpResponses(window.__lupiViewerMcpResponses);
+  window.dispatchEvent(new CustomEvent('lupi:mcp:response', { detail: payload }));
+  return payload;
 }
 
 function resolveMoleculeFromTemplate(templateName: string, inputType: MoleculeInputType): ResolvedMolecule {
@@ -1184,7 +1744,7 @@ function extractMoleculeArgs(command: string): Record<string, unknown> | null {
 function extractProceduralArgs(command: string): Record<string, unknown> | null {
   const normalized = command.toLowerCase();
   const atomCount = parseScaleAtomCount(command);
-  const scaleWords = /\b(scale|stress|gallery|lattice|crystal|alloy|atoms?|molecules?|million|500k|1m)\b/.test(normalized);
+  const scaleWords = /\b(scale\s+test|stress|gallery|lattice|crystal|alloy|molecules?|million|500k|1m)\b/.test(normalized);
   if (!atomCount && !scaleWords) return null;
 
   const elements = inferElementsFromText(command);
@@ -1660,10 +2220,54 @@ function symbolFromAtomicNumber(atomicNumber: number): string {
   return getElementSpec(atomicNumber).symbol;
 }
 
+function catalogEntryToGenerateArgs(entry: NistCatalogEntry): Record<string, unknown> {
+  const elements = entry.elements.slice(0, 6);
+  return {
+    inputType: 'procedural',
+    input: `${entry.short_label} ${elements.join('-')} ${entry.pair_style}`,
+    atomCount: entry.demo_path ? 96_000 : 48_000,
+    elements,
+    lattice: inferCatalogLattice(entry),
+    potentialId: entry.id,
+    viewer: {
+      showBonds: false,
+      atomScale: entry.elements.length > 2 ? 0.36 : 0.48,
+      showCell: true,
+      showAxes: true,
+      renderStyle: 'standard',
+      backgroundPreset: 'blueprint',
+      postprocessPreset: 'diagram',
+      colorScheme: entry.elements.length > 1 ? 'family' : 'element',
+      colormap: 'turbo',
+      cameraPreset: 'iso',
+    },
+  };
+}
+
+function inferCatalogLattice(entry: NistCatalogEntry): keyof typeof LATTICE_BASIS {
+  if (entry.pair_style.includes('meam') || entry.elements.some((element) => ['Fe', 'W', 'Cr', 'Mo', 'Nb', 'Ta', 'V'].includes(element))) {
+    return 'bcc';
+  }
+  if (entry.elements.some((element) => ['Si', 'C'].includes(element))) return 'sc';
+  return 'fcc';
+}
+
+function catalogPairColor(pairStyle: string): string {
+  if (pairStyle.startsWith('eam')) return '#f2aa45';
+  if (pairStyle.startsWith('meam')) return '#84d7ff';
+  if (pairStyle.includes('tersoff') || pairStyle === 'sw') return '#63b879';
+  if (pairStyle.includes('adp') || pairStyle.includes('bop')) return '#f3a9c7';
+  return '#cbd5e1';
+}
+
+function catalogElementColor(symbol: string): string {
+  return getElementSpecBySymbol(symbol)?.color ?? '#94a3b8';
+}
+
 function Metric({ label, value, testId }: { label: string; value: string; testId?: string }) {
   return (
-    <div style={{ minWidth: 0, border: '1px solid rgba(148,163,184,0.2)', borderRadius: 9, padding: '7px 8px', background: 'rgba(15,23,42,0.5)' }}>
-      <div style={{ color: '#94a3b8', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.12em' }}>{label}</div>
+    <div style={{ minWidth: 0, border: '1px solid rgba(250,204,21,0.18)', borderRadius: 8, padding: '7px 8px', background: 'rgba(12,12,14,0.62)' }}>
+      <div style={{ color: '#d6d3d1', fontSize: 10, textTransform: 'uppercase', letterSpacing: 0 }}>{label}</div>
       <div data-testid={testId} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 12, color: '#f8fafc', marginTop: 2 }}>
         {value}
       </div>
@@ -1671,12 +2275,516 @@ function Metric({ label, value, testId }: { label: string; value: string; testId
   );
 }
 
+function CatalogResultRow({
+  active,
+  busy,
+  entry,
+  onDemo,
+  onPreview,
+  onStage,
+}: {
+  active: boolean;
+  busy: boolean;
+  entry: NistCatalogEntry;
+  onDemo: () => void;
+  onPreview: () => void;
+  onStage: () => void;
+}) {
+  const color = catalogPairColor(entry.pair_style);
+  return (
+    <div style={catalogResultStyle(active, color)} data-testid={`lupine-mcp-catalog-result-${entry.id}`}>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0 }}>
+          <span style={{ ...pairBadgeStyle, borderColor: `${color}77`, color }}>{entry.pair_style}</span>
+          <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#f8fafc', fontWeight: 800, fontSize: 12 }}>
+            {entry.short_label}
+          </span>
+          <span style={{ color: '#94a3b8', fontSize: 10, fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace' }}>{entry.year}</span>
+        </div>
+        <div style={{ marginTop: 6, display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+          {entry.elements.slice(0, 6).map((element) => (
+            <span key={element} style={elementPillStyle(catalogElementColor(element))}>{element}</span>
+          ))}
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+        <button type="button" disabled={busy} onClick={onPreview} style={miniButtonStyle(true)}>
+          Preview
+        </button>
+        <button type="button" disabled={busy} onClick={entry.demo_path ? onDemo : onStage} style={miniButtonStyle(Boolean(entry.demo_path))}>
+          {entry.demo_path ? 'Demo' : 'JSON'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function McpWorkflowRow({
+  busy,
+  onRun,
+  onStage,
+  preset,
+}: {
+  busy: boolean;
+  onRun: () => void;
+  onStage: () => void;
+  preset: (typeof MCP_VIEWER_EXAMPLES)[number];
+}) {
+  const parsed = parseViewerAgentCommand(preset.command);
+  return (
+    <div data-testid={`lupine-mcp-example-${preset.id}`} style={workflowRowStyle}>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ color: '#f8fafc', fontSize: 12, fontWeight: 800, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {preset.label}
+        </div>
+        <div style={{ color: '#a8a29e', fontSize: 11, lineHeight: 1.35, marginTop: 4 }}>
+          {preset.summary}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 7 }}>
+          {parsed.slice(0, 3).map((request, index) => (
+            <span key={`${request.id}-${index}`} style={toolPillStyle}>
+              {request.tool.replace('lupi.', '')}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div style={{ display: 'grid', gap: 6 }}>
+        <button type="button" disabled={busy} onClick={onRun} style={miniButtonStyle(true)}>
+          Run
+        </button>
+        <button type="button" disabled={busy} onClick={onStage} style={miniButtonStyle(false)}>
+          JSON
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function McpResponseLog({
+  lastExport,
+  log,
+  onClear,
+  onCopyPacket,
+  onCopyState,
+  onDownloadExport,
+  onRerun,
+  onStage,
+  responseText,
+}: {
+  lastExport: LupiMcpExportResult | null;
+  log: LupiMcpResponsePayload[];
+  onClear: () => void;
+  onCopyPacket: (entry: LupiMcpResponsePayload) => void;
+  onCopyState: () => void;
+  onDownloadExport: () => void;
+  onRerun: (entry: LupiMcpResponsePayload) => void;
+  onStage: (entry: LupiMcpResponsePayload) => void;
+  responseText: string;
+}) {
+  const [rawOpen, setRawOpen] = useState(false);
+  return (
+    <div style={{ display: 'grid', gap: 10 }}>
+      <div style={logActionBarStyle}>
+        <button type="button" onClick={onCopyState} style={miniButtonStyle(true)}>Copy state</button>
+        <button type="button" onClick={onDownloadExport} disabled={!lastExport} style={miniButtonStyle(Boolean(lastExport))}>
+          Download XYZ
+        </button>
+        <button type="button" onClick={onClear} disabled={log.length === 0} style={miniButtonStyle(log.length > 0)}>
+          Clear
+        </button>
+      </div>
+      {log.length > 0 ? (
+        <section style={ledgerShellStyle}>
+          <div style={ledgerSectionHeaderStyle}>
+            <span>Run ledger</span>
+            <span>{log.length}</span>
+          </div>
+          <div style={responseTimelineStyle}>
+            {log.slice().reverse().map((entry, index) => (
+              <McpLedgerEntry
+                key={`${entry.requestId ?? 'local'}-${entry.createdAt}-${index}`}
+                entry={entry}
+                onCopyPacket={() => onCopyPacket(entry)}
+                onRerun={() => onRerun(entry)}
+                onStage={() => onStage(entry)}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
+      <button type="button" onClick={() => setRawOpen((open) => !open)} style={rawToggleStyle}>
+        {rawOpen ? 'Hide raw response' : 'Show raw response'}
+      </button>
+      {rawOpen ? (
+        <pre data-testid="lupine-mcp-response" style={responseLogStyle}>
+          {responseText}
+        </pre>
+      ) : (
+        <div data-testid="lupine-mcp-response" style={rawClosedStyle}>
+          Raw response is tucked away. The ledger above is the working surface.
+        </div>
+      )}
+    </div>
+  );
+}
+
+function McpLedgerEntry({
+  entry,
+  onCopyPacket,
+  onRerun,
+  onStage,
+}: {
+  entry: LupiMcpResponsePayload;
+  onCopyPacket: () => void;
+  onRerun: () => void;
+  onStage: () => void;
+}) {
+  const primaryResponse = entry.responses[entry.responses.length - 1];
+  const canReplay = Boolean(entry.command || entry.requests?.length);
+  const label = entry.command
+    ?? primaryResponse?.result?.molecule?.name
+    ?? primaryResponse?.result?.viewer?.fileName
+    ?? primaryResponse?.tool?.replace('lupi.', '')
+    ?? 'viewer run';
+  const timestamp = new Date(entry.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return (
+    <div data-testid="lupine-mcp-response-entry" style={responseTimelineRowStyle(entry.ok)}>
+      <div style={ledgerHeaderStyle}>
+        <span style={responseDotStyle(entry.ok)} />
+        <span style={ledgerTitleStyle}>{label}</span>
+        <span style={entry.ok ? ledgerTimeStyle : ledgerStatusStyle(false)}>
+          {entry.ok ? timestamp : 'fail'}
+        </span>
+      </div>
+      <div style={ledgerMetaStyle}>
+        <span>{entry.source ?? 'viewer'}</span>
+        <span>{entry.requestId ?? 'local'}</span>
+        <span>{entry.responses.length} response{entry.responses.length === 1 ? '' : 's'}</span>
+        {entry.ok ? <span style={ledgerStatusStyle(true)}>ok</span> : null}
+      </div>
+      <div style={ledgerActionRowStyle}>
+        <button type="button" disabled={!canReplay} onClick={onRerun} style={ledgerButtonStyle(canReplay)}>
+          Run
+        </button>
+        <button type="button" disabled={!canReplay} onClick={onStage} style={ledgerButtonStyle(canReplay)}>
+          JSON
+        </button>
+        <button type="button" onClick={onCopyPacket} style={ledgerButtonStyle(true)}>
+          Packet
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const mcpHarnessStyle: CSSProperties = {
+  position: 'absolute',
+  top: 72,
+  left: 16,
+  width: 'min(430px, calc(100vw - 32px))',
+  maxHeight: 'calc(100vh - 260px)',
+  overflow: 'hidden',
+  zIndex: 260,
+  border: '1px solid rgba(250,204,21,0.25)',
+  background: 'linear-gradient(150deg, rgba(16,15,13,0.88), rgba(5,10,13,0.82) 54%, rgba(17,24,22,0.82))',
+  boxShadow: '0 26px 84px rgba(0,0,0,0.5)',
+  backdropFilter: 'blur(18px)',
+  borderRadius: 12,
+  padding: 14,
+  color: '#fff7ed',
+  fontFamily: 'Inter, system-ui, sans-serif',
+};
+
+const mcpCollapsedStyle: CSSProperties = {
+  position: 'absolute',
+  top: 72,
+  left: 16,
+  zIndex: 260,
+  width: 58,
+  height: 38,
+  borderRadius: 10,
+  border: '1px solid rgba(250,204,21,0.42)',
+  background: 'rgba(12,12,14,0.82)',
+  color: '#fef3c7',
+  boxShadow: '0 18px 50px rgba(0,0,0,0.42)',
+  fontSize: 12,
+  fontWeight: 800,
+  cursor: 'pointer',
+};
+
+const mcpKickerStyle: CSSProperties = {
+  color: '#facc15',
+  fontSize: 11,
+  fontWeight: 800,
+  textTransform: 'uppercase',
+  letterSpacing: 0,
+};
+
+const mcpReadyStyle: CSSProperties = {
+  padding: '5px 8px',
+  borderRadius: 999,
+  border: '1px solid rgba(34,211,238,0.42)',
+  color: '#a5f3fc',
+  background: 'rgba(8,145,178,0.12)',
+  fontSize: 11,
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+};
+
+const mcpIconButtonStyle: CSSProperties = {
+  width: 30,
+  height: 30,
+  borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.16)',
+  background: 'rgba(255,255,255,0.06)',
+  color: '#f5f5f4',
+  cursor: 'pointer',
+  fontSize: 14,
+  fontWeight: 800,
+  lineHeight: 1,
+};
+
+const mcpSegmentStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+  gap: 5,
+  marginTop: 12,
+  padding: 4,
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 10,
+  background: 'rgba(0,0,0,0.22)',
+};
+
+const segmentButtonStyle = (active: boolean): CSSProperties => ({
+  height: 30,
+  minWidth: 0,
+  borderRadius: 7,
+  border: active ? '1px solid rgba(250,204,21,0.42)' : '1px solid transparent',
+  background: active ? 'rgba(250,204,21,0.16)' : 'transparent',
+  color: active ? '#fef3c7' : '#d6d3d1',
+  fontSize: 11,
+  fontWeight: 750,
+  cursor: 'pointer',
+});
+
+const mcpPanelBodyStyle: CSSProperties = {
+  marginTop: 10,
+  maxHeight: 'calc(100vh - 420px)',
+  overflow: 'auto',
+  paddingRight: 2,
+};
+
+const agentComposerStyle: CSSProperties = {
+  border: '1px solid rgba(34,211,238,0.22)',
+  borderRadius: 10,
+  background: 'linear-gradient(145deg, rgba(8,145,178,0.12), rgba(2,6,12,0.58))',
+  overflow: 'hidden',
+};
+
+const agentTextAreaStyle: CSSProperties = {
+  boxSizing: 'border-box',
+  width: '100%',
+  minHeight: 76,
+  border: 0,
+  outline: 'none',
+  resize: 'vertical',
+  background: 'transparent',
+  color: '#f8fafc',
+  padding: 10,
+  fontSize: 13,
+  lineHeight: 1.42,
+  fontFamily: 'Inter, system-ui, sans-serif',
+};
+
+const agentPreviewStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: '92px minmax(0, 1fr)',
+  gap: 8,
+  alignItems: 'center',
+  padding: '7px 10px',
+  borderTop: '1px solid rgba(255,255,255,0.09)',
+  background: 'rgba(0,0,0,0.22)',
+};
+
+const agentToolListStyle: CSSProperties = {
+  minWidth: 0,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  color: '#a5f3fc',
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+  fontSize: 11,
+};
+
+const agentHandoffGridStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  gap: 8,
+  marginTop: 10,
+};
+
+const agentHandoffCardStyle: CSSProperties = {
+  border: '1px solid rgba(255,255,255,0.11)',
+  borderRadius: 8,
+  background: 'rgba(255,255,255,0.035)',
+  overflow: 'hidden',
+};
+
+const agentCardHeaderStyle: CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: 8,
+  padding: '7px 8px',
+  borderBottom: '1px solid rgba(255,255,255,0.08)',
+};
+
+const agentCodeStyle: CSSProperties = {
+  maxHeight: 108,
+  overflow: 'auto',
+  margin: 0,
+  padding: 8,
+  color: '#cbd5e1',
+  background: 'rgba(2,6,12,0.48)',
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+  fontSize: 10,
+  lineHeight: 1.42,
+  whiteSpace: 'pre-wrap',
+  overflowWrap: 'anywhere',
+};
+
+const agentUrlStyle: CSSProperties = {
+  padding: 8,
+  color: '#bae6fd',
+  background: 'rgba(2,6,12,0.48)',
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+  fontSize: 10,
+  lineHeight: 1.42,
+  overflowWrap: 'anywhere',
+};
+
+const copyStatusStyle: CSSProperties = {
+  marginTop: 8,
+  color: '#bbf7d0',
+  fontSize: 11,
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+};
+
+const catalogSearchShellStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'minmax(0, 1fr) auto',
+  alignItems: 'center',
+  gap: 8,
+  border: '1px solid rgba(255,255,255,0.16)',
+  borderRadius: 10,
+  background: 'rgba(0,0,0,0.24)',
+  padding: '7px 8px',
+};
+
+const catalogSearchInputStyle: CSSProperties = {
+  minWidth: 0,
+  border: 0,
+  outline: 'none',
+  background: 'transparent',
+  color: '#fff7ed',
+  fontSize: 13,
+};
+
+const catalogCountStyle: CSSProperties = {
+  color: '#facc15',
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+  fontSize: 11,
+};
+
+const mcpErrorStyle: CSSProperties = {
+  marginTop: 8,
+  border: '1px solid rgba(248,113,113,0.35)',
+  borderRadius: 8,
+  background: 'rgba(127,29,29,0.22)',
+  color: '#fecaca',
+  padding: 8,
+  fontSize: 12,
+};
+
+const capabilityGridStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  gap: 8,
+};
+
+const capabilityTileStyle: CSSProperties = {
+  minHeight: 58,
+  borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.1)',
+  background: 'rgba(255,255,255,0.045)',
+  padding: 10,
+  display: 'grid',
+  alignContent: 'space-between',
+  gap: 8,
+  fontSize: 12,
+};
+
+const workflowRowStyle: CSSProperties = {
+  border: '1px solid rgba(255,255,255,0.105)',
+  padding: 10,
+  borderRadius: 8,
+  background: 'rgba(255,255,255,0.028)',
+  display: 'grid',
+  gridTemplateColumns: 'minmax(0, 1fr) 66px',
+  alignItems: 'center',
+  gap: 12,
+};
+
+const toolPillStyle: CSSProperties = {
+  border: '1px solid rgba(34,211,238,0.22)',
+  borderRadius: 999,
+  color: '#a5f3fc',
+  background: 'rgba(8,145,178,0.1)',
+  padding: '2px 6px',
+  fontSize: 10,
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+};
+
+const mcpLabelStyle: CSSProperties = {
+  color: '#a8a29e',
+  fontSize: 10,
+  textTransform: 'uppercase',
+  letterSpacing: 0,
+};
+
+const commandTextAreaStyle: CSSProperties = {
+  boxSizing: 'border-box',
+  width: '100%',
+  minHeight: 128,
+  resize: 'vertical',
+  padding: 10,
+  borderRadius: 10,
+  border: '1px solid rgba(148,163,184,0.28)',
+  background: 'rgba(2,6,12,0.74)',
+  color: '#f8fafc',
+  outline: 'none',
+  fontSize: 12,
+  lineHeight: 1.5,
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+};
+
+const responsePeekStyle: CSSProperties = {
+  width: '100%',
+  height: 32,
+  marginTop: 10,
+  borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.1)',
+  background: 'rgba(255,255,255,0.045)',
+  color: '#d6d3d1',
+  cursor: 'pointer',
+  fontSize: 11,
+};
+
 const primaryButtonStyle: CSSProperties = {
   height: 36,
-  border: '1px solid rgba(34,211,238,0.58)',
+  border: '1px solid rgba(250,204,21,0.52)',
   borderRadius: 9,
-  background: 'rgba(8,145,178,0.36)',
-  color: '#ecfeff',
+  background: 'rgba(250,204,21,0.18)',
+  color: '#fef3c7',
   fontSize: 12,
   fontWeight: 700,
   cursor: 'pointer',
@@ -1690,11 +2798,196 @@ const secondaryButtonStyle: CSSProperties = {
 };
 
 const chipButtonStyle: CSSProperties = {
-  border: '1px solid rgba(148,163,184,0.22)',
-  borderRadius: 999,
-  background: 'rgba(15,23,42,0.52)',
-  color: '#cbd5e1',
+  border: '1px solid rgba(255,255,255,0.13)',
+  borderRadius: 8,
+  background: 'rgba(255,255,255,0.055)',
+  color: '#e7e5e4',
   padding: '5px 8px',
   fontSize: 11,
   cursor: 'pointer',
+};
+
+const catalogResultStyle = (active: boolean, color: string): CSSProperties => ({
+  border: active ? `1px solid ${color}` : '1px solid rgba(255,255,255,0.105)',
+  padding: 10,
+  borderRadius: 8,
+  background: active ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.025)',
+  display: 'grid',
+  gridTemplateColumns: 'minmax(0, 1fr) 112px',
+  alignItems: 'center',
+  gap: 12,
+  marginBottom: 8,
+});
+
+const pairBadgeStyle: CSSProperties = {
+  border: '1px solid',
+  borderRadius: 4,
+  padding: '1px 4px',
+  fontSize: 10,
+};
+
+const elementPillStyle = (color: string): CSSProperties => ({
+  backgroundColor: color + '22',
+  color,
+  padding: '1px 6px',
+  borderRadius: 999,
+  fontSize: 10,
+  border: `1px solid ${color}44`,
+});
+
+const miniButtonStyle = (active: boolean): CSSProperties => ({
+  height: 28,
+  padding: '0 8px',
+  fontSize: 10,
+  borderRadius: 6,
+  border: '1px solid rgba(255,255,255,0.2)',
+  background: active ? 'rgba(255,255,255,0.1)' : 'transparent',
+  color: active ? '#fff' : '#888',
+  cursor: 'pointer',
+});
+
+const logActionBarStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr 72px',
+  gap: 8,
+};
+
+const responseTimelineStyle: CSSProperties = {
+  display: 'grid',
+  gap: 4,
+};
+
+const ledgerShellStyle: CSSProperties = {
+  border: '1px solid rgba(255,255,255,0.08)',
+  borderRadius: 9,
+  background: 'rgba(0,0,0,0.16)',
+  padding: 6,
+};
+
+const ledgerSectionHeaderStyle: CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  color: '#a8a29e',
+  fontSize: 10,
+  fontWeight: 800,
+  textTransform: 'uppercase',
+  letterSpacing: 0,
+  padding: '1px 3px 7px',
+};
+
+const responseTimelineRowStyle = (ok: boolean): CSSProperties => ({
+  display: 'grid',
+  gap: 6,
+  border: ok ? '1px solid rgba(255,255,255,0.095)' : '1px solid rgba(248,113,113,0.18)',
+  borderRadius: 7,
+  background: ok ? 'rgba(255,255,255,0.026)' : 'rgba(127,29,29,0.075)',
+  color: '#d6d3d1',
+  padding: '7px 8px',
+  fontSize: 10,
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+});
+
+const ledgerHeaderStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: '12px minmax(0, 1fr) auto',
+  alignItems: 'center',
+  gap: 7,
+};
+
+const ledgerTitleStyle: CSSProperties = {
+  minWidth: 0,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  color: '#e7e5e4',
+  fontFamily: 'Inter, system-ui, sans-serif',
+  fontSize: 11,
+  fontWeight: 720,
+};
+
+const ledgerTimeStyle: CSSProperties = {
+  color: '#94a3b8',
+  fontSize: 10,
+};
+
+const ledgerMetaStyle: CSSProperties = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 6,
+  color: '#78716c',
+  minWidth: 0,
+};
+
+const ledgerStatusStyle = (ok: boolean): CSSProperties => ({
+  color: ok ? '#86efac' : '#fecaca',
+  background: ok ? 'rgba(22,163,74,0.08)' : 'rgba(127,29,29,0.18)',
+  border: ok ? '1px solid rgba(34,197,94,0.16)' : '1px solid rgba(248,113,113,0.22)',
+  borderRadius: 999,
+  padding: '1px 6px',
+  fontSize: 9,
+  textTransform: 'uppercase',
+});
+
+const ledgerActionRowStyle: CSSProperties = {
+  display: 'flex',
+  justifyContent: 'flex-end',
+  gap: 6,
+};
+
+const ledgerButtonStyle = (active: boolean): CSSProperties => ({
+  height: 22,
+  minWidth: 54,
+  padding: '0 8px',
+  borderRadius: 6,
+  border: active ? '1px solid rgba(255,255,255,0.16)' : '1px solid rgba(255,255,255,0.08)',
+  background: active ? 'rgba(255,255,255,0.055)' : 'transparent',
+  color: active ? '#d6d3d1' : '#57534e',
+  cursor: active ? 'pointer' : 'default',
+  fontSize: 9,
+  fontWeight: 760,
+});
+
+const responseDotStyle = (ok: boolean): CSSProperties => ({
+  width: 7,
+  height: 7,
+  borderRadius: 999,
+  background: ok ? '#22c55e' : '#fb7185',
+  boxShadow: ok ? '0 0 8px rgba(34,197,94,0.28)' : '0 0 8px rgba(248,113,113,0.24)',
+});
+
+const rawToggleStyle: CSSProperties = {
+  width: '100%',
+  height: 30,
+  borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.1)',
+  background: 'rgba(255,255,255,0.032)',
+  color: '#a8a29e',
+  cursor: 'pointer',
+  fontSize: 11,
+};
+
+const rawClosedStyle: CSSProperties = {
+  border: '1px dashed rgba(255,255,255,0.1)',
+  borderRadius: 8,
+  color: '#78716c',
+  background: 'rgba(0,0,0,0.12)',
+  padding: '8px 10px',
+  fontSize: 11,
+  lineHeight: 1.35,
+};
+
+const responseLogStyle: CSSProperties = {
+  maxHeight: 260,
+  overflow: 'auto',
+  margin: 0,
+  padding: 10,
+  borderRadius: 10,
+  border: '1px solid rgba(255,255,255,0.1)',
+  background: 'rgba(5,5,7,0.78)',
+  color: '#cbd5e1',
+  fontSize: 11,
+  lineHeight: 1.45,
+  fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
+  whiteSpace: 'pre-wrap',
 };

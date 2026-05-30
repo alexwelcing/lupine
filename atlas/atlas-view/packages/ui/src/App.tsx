@@ -105,6 +105,8 @@ import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
 import { ToolButton, CameraPresetButton, TransportButton } from './controls';
 import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
+import { LupiAgentDock } from './LupiAgentDock';
+import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -143,16 +145,6 @@ const IconClose = () => (
     <path d="M18 6L6 18M6 6l12 12" />
   </svg>
 );
-const IconShare = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="18" cy="5" r="3" />
-    <circle cx="6" cy="12" r="3" />
-    <circle cx="18" cy="19" r="3" />
-    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-  </svg>
-);
-
 // ─── Friendly Toolbar Icons ───────────────────────────────────────────
 // Lupi toolbar glyphs: specimen-frame linework, not emoji or generic app art.
 function LupiGlyph({ children }: { children: React.ReactNode }) {
@@ -446,6 +438,28 @@ function CameraManager({
     return unsub;
   }, [camera, controls]);
 
+  useEffect(() => {
+    const applyStoredCamera = () => {
+      const { cameraPosition, cameraTarget, cameraFov } = useStore.getState();
+      camera.position.set(...cameraPosition);
+      camera.lookAt(...cameraTarget);
+      if (camera instanceof THREE.PerspectiveCamera) {
+        camera.fov = cameraFov;
+        camera.updateProjectionMatrix();
+      }
+      if (controls && controls.target) {
+        controls.target.set(...cameraTarget);
+        controls.update();
+      }
+    };
+    const unsubs = [
+      useStore.subscribe((s) => s.cameraPosition, applyStoredCamera),
+      useStore.subscribe((s) => s.cameraTarget, applyStoredCamera),
+      useStore.subscribe((s) => s.cameraFov, applyStoredCamera),
+    ];
+    return () => unsubs.forEach((unsub) => unsub());
+  }, [camera, controls]);
+
   return null;
 }
 
@@ -468,6 +482,7 @@ function PresetLegacyBridge() {
 }
 
 import { Testbed } from './Testbed';
+import EmojiPlayground from './EmojiPlayground';
 
 function currentHashRoute() {
   if (typeof window === 'undefined') return '/';
@@ -480,13 +495,20 @@ export default function App() {
     return <Testbed />;
   }
 
+  if (typeof window !== 'undefined' && (new URLSearchParams(window.location.search).has('emoji') || currentHashRoute().split('?')[0] === '/system/emoji')) {
+    return <EmojiPlayground />;
+  }
+
   const [hashRoute, setHashRoute] = useState(currentHashRoute);
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
   const [studioDeck, setStudioDeck] = useState<StudioDeckMode | null>(null);
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
+  const loadedSavedViewSlugRef = useRef<string | null>(null);
   const hashPath = hashRoute.split('?')[0] || '/';
   const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
   const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
+  const savedViewSlug = hashPath.startsWith('/view/') ? slugifySavedViewTitle(decodeURIComponent(hashPath.slice('/view/'.length))) : null;
+  const isSavedViewRoute = Boolean(savedViewSlug);
 
   useEffect(() => {
     const syncRoute = () => setHashRoute(currentHashRoute());
@@ -497,6 +519,24 @@ export default function App() {
       window.removeEventListener('popstate', syncRoute);
     };
   }, []);
+
+  useEffect(() => {
+    if (!savedViewSlug || loadedSavedViewSlugRef.current === savedViewSlug) return undefined;
+    let cancelled = false;
+    loadedSavedViewSlugRef.current = savedViewSlug;
+    useStore.getState().setLoading(true, 0);
+    loadSavedMolecularView(savedViewSlug)
+      .then((saved) => {
+        if (!cancelled) document.title = `${saved.title} - Lupi`;
+      })
+      .catch((err) => {
+        const message = err instanceof Error ? err.message : String(err);
+        if (!cancelled) useStore.getState().setError(message);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [savedViewSlug]);
 
   const file = useStore(s => s.file);
   const ghostFile = useStore(s => s.ghostFile);
@@ -629,14 +669,6 @@ export default function App() {
     cameraPreset === 'side' ? 'XZ' :
     cameraPreset === 'front' ? 'YZ' :
     cameraPreset === 'iso' ? 'ISO' : 'View';
-
-  const handleShareView = useCallback(() => {
-    if (!file?.sourceUrl) return;
-    const s = useStore.getState().encodeToURL();
-    const link = `${window.location.origin}${window.location.pathname}?load=${encodeURIComponent(file.sourceUrl)}&s=${encodeURIComponent(s)}`;
-    navigator.clipboard.writeText(link);
-    alert('View copied to clipboard! Anyone with this link can view the exact state and orientation.');
-  }, [file?.sourceUrl]);
 
   const openStudioDeck = useCallback((mode: StudioDeckMode) => {
     setActivePanel(null);
@@ -1059,27 +1091,6 @@ export default function App() {
 
         {/* Simple top-right actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 4 : 8 }}>
-          {file?.sourceUrl && (
-            <button
-              onClick={handleShareView}
-              title="Copy shareable link"
-              aria-label="Copy shareable link"
-              style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                width: 36,
-                height: 36,
-                padding: 0,
-                fontSize: 13, fontWeight: 500,
-                color: 'var(--text-primary)',
-                background: 'var(--bg-elevated)',
-                border: '1px solid var(--border-default)',
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer',
-              }}
-            >
-              <IconShare />
-            </button>
-          )}
           {!file && (
             <>
               <a
@@ -1129,6 +1140,22 @@ export default function App() {
                 }}
               >
                 MCP
+              </a>
+              <a
+                href="#/system/emoji"
+                style={{
+                  display: 'block',
+                  padding: isMobile ? '7px 9px' : '8px 12px',
+                  fontSize: isMobile ? 12 : 13,
+                  fontWeight: 600,
+                  color: hashPath === '/system/emoji' ? '#e0f2fe' : 'var(--text-muted)',
+                  background: hashPath === '/system/emoji' ? 'rgba(14,165,233,0.16)' : 'transparent',
+                  border: hashPath === '/system/emoji' ? '1px solid rgba(125,211,252,0.52)' : '1px solid var(--border-default)',
+                  borderRadius: 'var(--radius-sm)',
+                  textDecoration: 'none',
+                }}
+              >
+                Eoji Lab
               </a>
             </>
           )}
@@ -1185,6 +1212,7 @@ export default function App() {
           >
             GitHub
           </a>
+          <LupiAgentDock compact={isMobile} />
         </div>
       </header>
 
@@ -1667,7 +1695,7 @@ export default function App() {
         {/* Landing page (hero, featured, drop zone, gallery) */}
         {!file && (
           <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
-            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : isMcpViewerRoute ? null : <LandingPage />}
+            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : isMcpViewerRoute || isSavedViewRoute ? null : <LandingPage />}
           </div>
         )}
       </div>

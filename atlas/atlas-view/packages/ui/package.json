@@ -29,6 +29,8 @@
     "@react-three/fiber": "^9.6.0",
     "@react-three/postprocessing": "^3.0.0",
     "@react-three/xr": "^6.6.29",
+    "@rive-app/react-canvas": "^4.28.6",
+    "firebase": "^12.14.0",
     "gifenc": "^1.0.3",
     "leva": "^0.10.1",
     "mp4-muxer": "^5.2.2",

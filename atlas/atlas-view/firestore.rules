@@ -1,0 +1,31 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(data) {
+      return signedIn() && data.ownerId == request.auth.uid;
+    }
+
+    match /lupiViews/{slug} {
+      allow get, list: if resource.data.visibility == 'public' || isOwner(resource.data);
+
+      allow create: if signedIn()
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.slug == slug
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.visibility == 'public';
+
+      allow update: if isOwner(resource.data)
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.slug == slug
+        && request.resource.data.ownerId == resource.data.ownerId
+        && request.resource.data.visibility == 'public';
+
+      allow delete: if isOwner(resource.data);
+    }
+  }
+}
