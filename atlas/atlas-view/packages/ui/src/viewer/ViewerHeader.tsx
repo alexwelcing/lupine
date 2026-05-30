@@ -1,5 +1,6 @@
 import { useStore } from '../store';
 import { IconClose, IconShare } from './icons';
+import { loadPhononDemo } from '../demos/phononDemo';
 
 export function ViewerHeader({
   isMobile,
@@ -165,15 +166,11 @@ export function ViewerHeader({
           )}
           {!file && (
             <button
-              onClick={() => {
-                const url = new URL(window.location.href);
-                url.searchParams.set('sim', 'lupine_bluebonnet');
-                window.history.pushState({}, '', url);
-                window.dispatchEvent(new PopStateEvent('popstate'));
-              }}
+              onClick={() => loadPhononDemo()}
+              title="Load a looping crystal phonon and watch the smooth interpolated playback"
               style={{
                 padding: '8px 14px',
-                fontSize: 14, fontWeight: 500,
+                fontSize: 14, fontWeight: 600,
                 color: 'white',
                 background: 'var(--accent)',
                 border: 'none',
@@ -181,7 +178,7 @@ export function ViewerHeader({
                 cursor: 'pointer',
               }}
             >
-              Try a demo
+              {isMobile ? '▶ Demo' : '▶ Watch atoms move'}
             </button>
           )}
           <a
