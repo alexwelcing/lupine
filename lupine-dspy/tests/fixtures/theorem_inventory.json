@@ -1,0 +1,21 @@
+{
+  "atlas_revision": "atlas@a71c031",
+  "generated_at": "2026-05-29T00:00:00Z",
+  "theorems": [
+    {
+      "name": "Atlas.RealAnalysis.Continuity",
+      "kind": "imported",
+      "statement": "Continuous functions on compact sets attain their bounds."
+    },
+    {
+      "name": "Atlas.AlgebraNotes.GroupRepresentation",
+      "kind": "imported",
+      "statement": "Finite group representations decompose into irreducibles."
+    },
+    {
+      "name": "OpenDistillationFactory.Materials.Elasticity.FCC",
+      "kind": "novel",
+      "statement": "FCC elastic tensor satisfies cubic symmetry constraints."
+    }
+  ]
+}
