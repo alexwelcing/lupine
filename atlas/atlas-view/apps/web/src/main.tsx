@@ -7,14 +7,24 @@ console.log('[lupi] Step 1: imports starting');
 let App: any;
 let loadError: string | null = null;
 
+// ?view=compare mounts the Comparison Theater (side-by-side time-lapse of distill
+// relaxing the same crystal) instead of the main viewer. Static branches so Vite
+// code-splits both.
+const isCompare = new URLSearchParams(window.location.search).get('view') === 'compare';
+
 try {
-  // Try to import App - this might fail
-  const mod = await import('@atlas/ui/App');
-  App = mod.default;
-  console.log('[lupi] Step 2: App imported successfully');
+  if (isCompare) {
+    const mod = await import('@atlas/ui/compare/ComparisonTheater');
+    App = mod.default;
+    console.log('[lupi] Step 2: Comparison Theater imported');
+  } else {
+    const mod = await import('@atlas/ui/App');
+    App = mod.default;
+    console.log('[lupi] Step 2: App imported successfully');
+  }
 } catch (err: any) {
   loadError = err.message + '\n' + (err.stack || '');
-  console.error('[lupi] Step 2: App import FAILED:', err);
+  console.error('[lupi] Step 2: import FAILED:', err);
 }
 
 const root = createRoot(document.getElementById('root')!);

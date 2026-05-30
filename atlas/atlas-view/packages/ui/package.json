@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/App.tsx",
     "./App": "./src/App.tsx",
+    "./compare": "./src/compare/ComparisonTheater.tsx",
     "./store": "./src/store.ts",
     "./FileDropZone": "./src/FileDropZone.tsx",
     "./panels/StylePanel": "./src/panels/StylePanel.tsx",
