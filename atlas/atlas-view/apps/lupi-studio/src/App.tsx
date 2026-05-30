@@ -3,6 +3,7 @@ import Layout from './components/Layout'
 import Studio from './pages/Studio'
 import Home from './pages/Home'
 import Gallery from './pages/Gallery'
+import Compare from './pages/Compare'
 import MCP from './pages/MCP'
 import MCPWorkbench from './pages/MCPWorkbench'
 import About from './pages/About'
@@ -13,6 +14,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Studio />} />
         <Route path="/studio" element={<Studio />} />
+        <Route path="/compare" element={<Compare />} />
         <Route path="/home" element={<Home />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/mcp/workbench" element={<MCPWorkbench />} />

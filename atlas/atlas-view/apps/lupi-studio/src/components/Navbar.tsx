@@ -4,6 +4,7 @@ import { Menu, X, Atom, Sun } from 'lucide-react';
 
 const navLinks = [
   { label: 'Studio', path: '/studio' },
+  { label: 'Compare', path: '/compare' },
   { label: 'Home', path: '/home' },
   { label: 'Gallery', path: '/gallery' },
   { label: 'MCP Workbench', path: '/mcp/workbench' },
