@@ -169,19 +169,34 @@ export default function App() {
     alert('View copied to clipboard! Anyone with this link can view the exact state and orientation.');
   }, [file?.sourceUrl]);
 
-  const openStudioDeck = useCallback((mode: StudioDeckMode) => {
+  // One overlay at a time. The deck, the side panels, the potential browser, and
+  // the camera-view menu are mutually exclusive — every opener closes the others
+  // through resetOverlays(), so that rule lives in ONE place instead of being
+  // re-derived (and occasionally forgotten — see the old view-menu toggle) in
+  // each handler and each keyboard shortcut.
+  const resetOverlays = useCallback(() => {
+    setStudioDeck(null);
     setActivePanel(null);
     setShowPotentialBrowser(false);
     setViewMenuOpen(false);
-    setStudioDeck(current => current === mode ? null : mode);
   }, [setActivePanel, setShowPotentialBrowser]);
 
+  const openStudioDeck = useCallback((mode: StudioDeckMode) => {
+    if (studioDeck === mode) { setStudioDeck(null); return; } // click the active deck -> close
+    resetOverlays();
+    setStudioDeck(mode);
+  }, [studioDeck, resetOverlays]);
+
   const openToolPanel = useCallback((panel: 'export' | 'flythrough' | 'equilibrium' | 'mlipLongRun' | 'telemetry') => {
-    setStudioDeck(null);
-    setShowPotentialBrowser(false);
-    setViewMenuOpen(false);
+    resetOverlays();
     setActivePanel(panel as any);
-  }, [setActivePanel, setShowPotentialBrowser]);
+  }, [resetOverlays, setActivePanel]);
+
+  const toggleViewMenu = useCallback(() => {
+    if (viewMenuOpen) { setViewMenuOpen(false); return; }
+    resetOverlays();
+    setViewMenuOpen(true);
+  }, [viewMenuOpen, resetOverlays]);
 
   useEffect(() => {
     if (activePanel || showPotentialBrowser || !file) {
@@ -233,7 +248,7 @@ export default function App() {
     }
   }, [frame, playing, setSmoothFrame, interpState.effectiveFrame]);
 
-  useKeyboardShortcuts({ togglePlay, nextFrame, setActivePanel, setShowPotentialBrowser, setStudioDeck });
+  useKeyboardShortcuts({ togglePlay, nextFrame, resetOverlays, openStudioDeck, openToolPanel });
 
   useUrlAutoLoad(file);
 
@@ -480,10 +495,7 @@ export default function App() {
               zIndex: 150,
             }}>
               <button
-                onClick={() => {
-                  setViewMenuOpen(open => !open);
-                  setStudioDeck(null);
-                }}
+                onClick={toggleViewMenu}
                 title="Camera view"
                 aria-label="Camera view"
                 aria-expanded={viewMenuOpen}
