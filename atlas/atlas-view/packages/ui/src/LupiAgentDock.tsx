@@ -312,7 +312,7 @@ export function LupiAgentDock({ compact = false }: { compact?: boolean }) {
         title="Lupi session"
       >
         <span style={triggerGlyphStyle}>{user?.photoURL ? <img alt="" src={user.photoURL} style={avatarStyle} /> : iconUser()}</span>
-        {!compact && <span style={triggerLabelStyle}>{loading ? 'Checking' : shortName(user)}</span>}
+        {!compact && <span style={triggerLabelStyle}>{loading && user ? 'Checking' : shortName(user)}</span>}
         <span style={{ ...statusDotStyle, background: mcpReady ? '#46e4d4' : '#f2aa45' }} />
       </button>
 

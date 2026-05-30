@@ -105,6 +105,7 @@ import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
 import { ToolButton, CameraPresetButton, TransportButton } from './controls';
 import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
+import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 
@@ -1215,6 +1216,7 @@ export default function App() {
           <LupiAgentDock compact={isMobile} />
         </div>
       </header>
+      <LupiAuthCallout compact={isMobile} />
 
       {/* ─── Main content ─── */}
       <div style={{ flex: 1, minHeight: 0, display: 'flex', position: 'relative' }}>

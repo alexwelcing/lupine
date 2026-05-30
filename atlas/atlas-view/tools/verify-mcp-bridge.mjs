@@ -28,6 +28,7 @@ const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 const screenshotPath = join(ARTIFACTS, `${stamp}-mcp-bridge.png`);
 const catalogScreenshotPath = join(ARTIFACTS, `${stamp}-mcp-catalog-controls.png`);
 const agentDockScreenshotPath = join(ARTIFACTS, `${stamp}-agent-dock.png`);
+const authCalloutScreenshotPath = join(ARTIFACTS, `${stamp}-auth-callout.png`);
 const userMenuScreenshotPath = join(ARTIFACTS, `${stamp}-user-menu.png`);
 
 const browser = await chromium.launch({
@@ -179,6 +180,26 @@ try {
   await page.waitForFunction(() => window.__lupiFirebaseAuth.getState().loading === false, null, { timeout });
   const authState = await page.evaluate(() => window.__lupiFirebaseAuth.getState());
   check('auth exposes settled shared state', authState.loading === false && 'hasToken' in authState, authState);
+  const signedOutAuthTrigger = await page.locator('[data-testid="lupi-agent-dock-button"]').textContent();
+  check(
+    'signed-out auth trigger invites sign in',
+    signedOutAuthTrigger?.includes('Sign in') && !signedOutAuthTrigger.includes('Checking'),
+    signedOutAuthTrigger
+  );
+
+  await page.waitForSelector('[data-testid="lupi-auth-callout"]', { timeout: 8000 });
+  const authCalloutState = await page.evaluate(() => ({
+    text: document.querySelector('[data-testid="lupi-auth-callout"]')?.textContent ?? '',
+    google: Boolean(document.querySelector('[data-testid="lupi-auth-callout-google"]')),
+    github: Boolean(document.querySelector('[data-testid="lupi-auth-callout-github"]')),
+  }));
+  check(
+    'sign-in callout exposes direct providers',
+    authCalloutState.text.includes('Lupi ID') && authCalloutState.google && authCalloutState.github,
+    authCalloutState
+  );
+  await page.screenshot({ path: authCalloutScreenshotPath, fullPage: false });
+  console.log(`[verify:mcp] auth callout screenshot: ${authCalloutScreenshotPath}`);
 
   const overrideState = await page.evaluate(async () => {
     const before = window.__lupiFirebaseAuth.getState();
