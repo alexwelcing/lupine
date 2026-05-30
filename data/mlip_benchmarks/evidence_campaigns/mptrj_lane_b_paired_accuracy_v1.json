@@ -1,6 +1,7 @@
 {
   "schema": "lupine.mlip.evidence_campaign.v1",
   "campaign_id": "mptrj-dft-broad-paired-accuracy-v1",
+  "reference_family": "mptrj_dft",
   "title": "MPtrj broad-DFT paired baseline versus Distill Accuracy",
   "objective": "Collect sealed, paired evidence for whether Lupine Distill Accuracy transfers beyond the Ni material-family lane on broad MPtrj DFT trajectory structures without changing the underlying MLIP.",
   "profile": "lab-gcp-gpu-paired-accuracy",

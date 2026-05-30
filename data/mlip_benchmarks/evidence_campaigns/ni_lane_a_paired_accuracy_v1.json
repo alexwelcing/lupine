@@ -1,6 +1,8 @@
 {
   "schema": "lupine.mlip.evidence_campaign.v1",
   "campaign_id": "ni-fcc-eam-home-turf-paired-accuracy-v1",
+  "reference_family": "mishin_eam",
+  "row_reference_families": {"elastic_constants": "literature_cij"},
   "title": "Ni fcc EAM-home-turf paired baseline versus Distill Accuracy",
   "objective": "Collect sealed, paired evidence for whether Lupine Distill Accuracy improves MLIP accuracy on the Lane A Ni fixture without changing the underlying MLIP.",
   "profile": "lab-gcp-gpu-paired-accuracy",

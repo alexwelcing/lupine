@@ -1,0 +1,13 @@
+{
+  "schema": "lupine.distill.ribbon_provenance.v1",
+  "ribbon_id": "lupine-ribbon-v1-mptrj-dft",
+  "reference_families": ["mptrj_dft"],
+  "fit_rows": ["energy_volume", "relaxation_stability"],
+  "calibration_band": {
+    "ev_per_atom_mae": [0.0, 0.4295],
+    "relaxation_penalty": [0.0, 0.575],
+    "gpa_mae": [0.0, 48.871],
+    "ev_per_angstrom_rmse": [0.0, 0.2644]
+  },
+  "notes": "Declarative provenance for the v1 distill ribbon. Fit on the MPtrj-DFT home regime; demonstrably corrects energy_volume + relaxation_stability (atlas). reference_families is the oracle set the ribbon may apply to; a campaign whose reference_family is outside this set is refused a-priori (T3 negative transfer). calibration_band is the home-regime baseline-error envelope from the v1 atlas (used as the post-hoc drift/garbage guard). See docs/regime_gate_dominance.md."
+}
