@@ -1,0 +1,45 @@
+# Scheduled-run policy: distill-ribbon validation.
+#
+# Scheduled-run policy (distinct from the *.json PolicyLimits). See
+# DECOMMISSION.md. Matches the §12.5 policy table row "distill-validation".
+schema: lupine.mlip.run_policy.v1
+name: distill-validation
+description: >-
+  Fired when a candidate distill ribbon is selected. Re-runs the affected
+  backend over the canonical systems with the candidate PolicyLimits applied and
+  pushes the baseline-vs-distill deltas to the loop so a promotion can be
+  approved or blocked on held-out evidence (not support-set lift).
+
+trigger:
+  kind: webhook
+  event: distill.ribbon.candidate
+  # Webhook payload carries the candidate ribbon's PolicyLimits URL and the
+  # backend it targets; defaults below apply when unspecified.
+
+run:
+  level: 3
+  backends:
+    - mace
+    - chgnet
+    - orb
+  systems:
+    - Cu_fcc
+    - Fe_bcc
+    - Si_diamond
+    - Ni_fcc
+    - Al_fcc
+  benchmarks:
+    - static_energy
+    - geometry_opt
+    - elastic_constants
+  # Validation runs share raw-prediction checkpoints between baseline and the
+  # distill ribbon to isolate the ribbon's effect from backend nondeterminism.
+  distill:
+    share_raw_predictions: true
+    require_material_root_overlap: true
+
+results:
+  sink: glim-think-rpc
+  endpoint: https://glim-think.lupine.workers.dev/rpc/benchmark-results
+  method: ingest_benchmark
+  facet: ExperimentFacet

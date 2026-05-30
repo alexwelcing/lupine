@@ -1,0 +1,66 @@
+# GitHub Actions: build + deploy the managed MLIP runner images via Cloud Build.
+#
+# ONE workflow drives every backend through a matrix, submitting the unified
+# cloudbuild.unified.yaml once per backend with `_BACKEND=<backend>`. This is
+# the managed replacement for hand-running per-backend Cloud Build configs.
+#
+# Auth uses Workload Identity Federation (no long-lived JSON keys). Configure
+# the repo secrets below before enabling on push.
+name: deploy-mlip-runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      backends:
+        description: "Comma-separated backends to build (blank = full matrix)"
+        required: false
+        default: ""
+  push:
+    branches: [main]
+    paths:
+      - gcp/mlip-cell-runner/**
+
+permissions:
+  contents: read
+  id-token: write   # required for Workload Identity Federation
+
+env:
+  GCP_PROJECT_ID: shed-489901
+  GCP_REGION: us-central1
+
+jobs:
+  build:
+    name: "build (${{ matrix.backend }})"
+    runs-on: ubuntu-latest
+    strategy:
+      # Build every backend; one failing stack must not cancel the others.
+      fail-fast: false
+      matrix:
+        backend:
+          - mace
+          - chgnet
+          - sevennet
+          - orb
+          - matgl
+          - uma
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_DEPLOY_SA }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Submit Cloud Build for ${{ matrix.backend }}
+        run: |
+          gcloud builds submit \
+            --project "${GCP_PROJECT_ID}" \
+            --region "${GCP_REGION}" \
+            --config gcp/mlip-cell-runner/cloudbuild.unified.yaml \
+            --substitutions "_BACKEND=${{ matrix.backend }}" \
+            .

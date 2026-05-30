@@ -1,0 +1,34 @@
+# Scheduled-run policy: ATLAS import integrity check.
+#
+# Scheduled-run policy (distinct from the *.json PolicyLimits). See
+# DECOMMISSION.md. Matches the §12.5 policy table row "atlas-import-check".
+schema: lupine.mlip.run_policy.v1
+name: atlas-import-check
+description: >-
+  Lightweight daily guard that the managed runner can still import the ATLAS
+  revision and replay a single canonical cell end-to-end (manifest -> backend
+  -> result beat). Catches dependency drift and broken ATLAS imports before the
+  heavier nightly/weekly sweeps spend GPU time.
+
+trigger:
+  kind: schedule
+  cron: "30 1 * * *"   # 01:30 UTC daily, ahead of the 02:00 nightly baseline
+  timezone: UTC
+
+run:
+  level: 1
+  backends:
+    - mace
+  systems:
+    - Cu_fcc
+  benchmarks:
+    - static_energy
+  atlas:
+    verify_revision: true
+    fail_closed: true
+
+results:
+  sink: glim-think-rpc
+  endpoint: https://glim-think.lupine.workers.dev/rpc/benchmark-results
+  method: ingest_benchmark
+  facet: ExperimentFacet

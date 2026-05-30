@@ -1,0 +1,75 @@
+# ---------------------------------------------------------------------------
+# Unified, matrix-driven Cloud Build for the managed MLIP runner.
+#
+# ONE config builds any backend. The backend is the only required input,
+# supplied via the `_BACKEND` substitution (default: mace). Invoke once per
+# backend from CI (see iac/deploy-mlip-runner.yml) or by hand:
+#
+#   gcloud builds submit --config gcp/mlip-cell-runner/cloudbuild.unified.yaml \
+#       --substitutions=_BACKEND=chgnet .
+#
+# Replaces the hand-maintained per-backend step lists in cloudbuild.yaml,
+# cloudbuild.single.yaml, cloudbuild-m3gnet.yaml, and cloudbuild-orb-m3gnet.yaml
+# (see DECOMMISSION.md). The image is published to the canonical managed repo
+# gcr.io/$PROJECT_ID/mlip-runner:$_BACKEND.
+# ---------------------------------------------------------------------------
+
+substitutions:
+  _BACKEND: mace
+  _REGION: us-central1
+  _RUNNER_SA: atlas-distill-runner@shed-489901.iam.gserviceaccount.com
+  _JOB_PREFIX: mlip-cell
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  # Allow $PROJECT_ID and derived values to flow into substitutions so the
+  # image/job names resolve dynamically from the build's project context.
+  dynamic_substitutions: true
+
+timeout: 7200s
+
+steps:
+  # 1. Build the single CUDA image for the selected backend.
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - gcr.io/${PROJECT_ID}/mlip-runner:${_BACKEND}
+      - --build-arg
+      - BACKEND=${_BACKEND}
+      - -f
+      - gcp/mlip-cell-runner/Dockerfile.unified
+      - .
+
+  # 2. Push to the canonical managed repository.
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - gcr.io/${PROJECT_ID}/mlip-runner:${_BACKEND}
+
+  # 3. Deploy/refresh the matching Cloud Run Job (GPU L4, fail-fast retries).
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - jobs
+      - deploy
+      - ${_JOB_PREFIX}-${_BACKEND}
+      - --image=gcr.io/${PROJECT_ID}/mlip-runner:${_BACKEND}
+      - --region=${_REGION}
+      - --project=${PROJECT_ID}
+      - --service-account=${_RUNNER_SA}
+      - --cpu=4
+      - --memory=16Gi
+      - --gpu=1
+      - --gpu-type=nvidia-l4
+      - --no-gpu-zonal-redundancy
+      - --tasks=1
+      - --max-retries=1
+      - --task-timeout=3600s
+
+images:
+  - gcr.io/${PROJECT_ID}/mlip-runner:${_BACKEND}

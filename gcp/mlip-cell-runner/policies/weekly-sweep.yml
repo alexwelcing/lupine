@@ -1,0 +1,42 @@
+# Scheduled-run policy: weekly full sweep.
+#
+# Scheduled-run policy (distinct from the *.json PolicyLimits). See
+# DECOMMISSION.md. Matches the §12.5 policy table row "weekly-sweep".
+schema: lupine.mlip.run_policy.v1
+name: weekly-sweep
+description: >-
+  Weekly deep sweep across ALL universal MLIP backends at the highest fidelity
+  level. Broadens the nightly baseline to the full backend roster to catch
+  cross-backend regressions and refresh the complete accuracy/speed matrix.
+
+trigger:
+  kind: schedule
+  cron: "0 3 * * 0"   # 03:00 UTC every Sunday
+  timezone: UTC
+
+run:
+  level: 4
+  backends:
+    - mace
+    - chgnet
+    - sevennet
+    - orb
+    - matgl
+    - uma
+  systems:
+    - Cu_fcc
+    - Fe_bcc
+    - Si_diamond
+    - Ni_fcc
+    - Al_fcc
+  benchmarks:
+    - static_energy
+    - geometry_opt
+    - nvt_md_300k
+    - elastic_constants
+
+results:
+  sink: glim-think-rpc
+  endpoint: https://glim-think.lupine.workers.dev/rpc/benchmark-results
+  method: ingest_benchmark
+  facet: ExperimentFacet

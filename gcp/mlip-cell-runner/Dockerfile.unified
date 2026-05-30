@@ -1,0 +1,87 @@
+# syntax=docker/dockerfile:1
+# ---------------------------------------------------------------------------
+# Unified, managed MLIP cell-runner image.
+#
+# ONE image definition for every universal-MLIP backend. The backend is chosen
+# at build time via the BACKEND ARG, which selects the matching optional-deps
+# group from pyproject.toml ([project.optional-dependencies].<backend>). This
+# replaces the per-backend requirements-*.txt + the single CUDA-runtime
+# Dockerfile (see DECOMMISSION.md).
+#
+# Build:  docker build --build-arg BACKEND=mace -f gcp/mlip-cell-runner/Dockerfile.unified -t mlip-runner:mace .
+# Backends: mace | chgnet | sevennet | orb | matgl | uma
+# ---------------------------------------------------------------------------
+
+ARG CUDA_IMAGE=nvidia/cuda:12.1.1-devel-ubuntu22.04
+
+# --- Stage 1: build the atlas-distill policy engine (Rust). -----------------
+FROM rust:1-bullseye AS atlas_distill_builder
+WORKDIR /build
+COPY atlas-distill/Cargo.toml atlas-distill/Cargo.lock ./atlas-distill/
+COPY atlas-distill/src ./atlas-distill/src
+RUN cargo build --release --manifest-path atlas-distill/Cargo.toml --bin atlas-distill
+
+# --- Stage 2: the CUDA runtime image. ---------------------------------------
+FROM ${CUDA_IMAGE}
+
+# BACKEND selects which MLIP optional-deps group is installed and is exported
+# as MLIP_BACKEND for the runner to read at start-up.
+ARG BACKEND=mace
+ENV BACKEND=${BACKEND}
+ENV MLIP_BACKEND=${BACKEND}
+
+ENV PYTHONUNBUFFERED=1
+ENV MATGL_BACKEND=DGL
+ENV ATLAS_DISTILL_BIN=/usr/local/bin/atlas-distill
+ENV MLIP_DISTILL_POLICY_ENGINE=auto
+ENV MLIP_DISTILL_RIBBON_VERSION=hyperribbon-v1
+# Telemetry is opt-in. Left unset, the patcher/connector run as logged no-ops.
+ENV LUPINE_OTEL_ENABLED=0
+
+# CUDA wheel indexes. torch + dgl ship CUDA-specific wheels from custom indexes
+# that PEP 621 forbids inside pyproject; pass them here at install time.
+ENV PIP_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cu121
+ENV DGL_FIND_LINKS=https://data.dgl.ai/wheels/torch-2.4/cu121/repo.html
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        g++ \
+        python3 \
+        python3-dev \
+        python3-pip \
+        python3-venv \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the dependency manifest first so the heavy pip layer caches independently
+# of source edits.
+COPY gcp/mlip-cell-runner/pyproject.toml gcp/mlip-cell-runner/README.md ./
+# Minimal modules referenced by setuptools' py-modules must exist for the
+# editable/metadata install to resolve; the real source is copied just below.
+COPY gcp/mlip-cell-runner/fixture_contract.py gcp/mlip-cell-runner/mlip_cell_runner.py ./
+COPY gcp/mlip-cell-runner/src ./src
+
+# Install core + the selected backend's extra in one resolver pass. The matgl
+# backend additionally needs the DGL find-links index.
+RUN python3 -m pip install --no-cache-dir --upgrade pip \
+    && if [ "${BACKEND}" = "matgl" ]; then \
+         python3 -m pip install --no-cache-dir --find-links "${DGL_FIND_LINKS}" ".[matgl]"; \
+       else \
+         python3 -m pip install --no-cache-dir ".[${BACKEND}]"; \
+       fi
+
+# Application source + runtime + the compiled policy engine.
+COPY lupine-distill/runtime/python/lupine_distill_runtime ./lupine_distill_runtime
+COPY --from=atlas_distill_builder /build/atlas-distill/target/release/atlas-distill /usr/local/bin/atlas-distill
+
+# Fail closed at build time: the policy engine and runner must both answer
+# --help, otherwise the image is broken and we want to know now, not at run.
+RUN /usr/local/bin/atlas-distill distill-policy --help >/dev/null \
+    && python3 /app/mlip_cell_runner.py --help >/dev/null
+
+RUN useradd -m -u 1000 mlip
+USER mlip
+
+ENTRYPOINT ["python3", "/app/mlip_cell_runner.py"]
+CMD ["--help"]
