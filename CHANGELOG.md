@@ -16,6 +16,32 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-05-29 — Local GPU proof: TorchSim → distill → uplift → formal gate (Ni FCC)
+
+- **Why.** The ATLAS PR wired the rails but ran no train: Track B's TorchSim backend was a
+  stub, the formal promotion gate had never scored a real benchmark, and the cloud "~75% Ni
+  zero-point ribbon lift" was unreproduced locally. With a real GPU (RTX A4500) on hand, prove
+  the whole compute loop end to end.
+- **What.** Stood up a CUDA env (torch 2.6.0+cu124, torch_sim 0.6.0, cached MACE-MP-0) and wrote
+  `lupine-distill/runtime/python/scripts/run_ni_gpu_loop.py` — the GPU runner the Track B stub
+  defers to. It benchmarks MACE-MP-0 on the sealed Ni FCC EAM fixture via TorchSim, fits the
+  zero-point distill correction on the *non-overlapping* support set, computes real elastic
+  constants + `distill_v_uplift`, and drives the ATLAS formal gate. Also filled
+  `TorchSimBenchmarkBackend.run()` for real (70 Track-B tests still green; CI-safe without torch_sim).
+- **Results.** 31 eval structures in 5.6 s on the A4500. Energy MAE vs Mishin EAM **1.2803 →
+  0.0037 eV/atom (99.7%)** after the +1.279 eV/atom zero-point correction; stress 0.861 → 0.274 GPa;
+  **overall `distill_v_uplift` 76.0%** — independently reproducing the cloud material-family
+  result. Real elastic constants: MACE-MP-0 **C11=262.9 (+6.7%), C12=166.6 (+13%), C44=92.4
+  (−26%)** GPa vs literature (the EAM-reference recovery returned 246.5/147.3/124.7 exactly,
+  validating the fit). Formal gate, full range on real numbers: in-support certified →
+  **PROMOTE**; out-of-support (the proved T3 negative-transfer regime) → **REVIEW**;
+  marginal+uncertified → **REJECT**. The formal layer demonstrably gates real GPU compute.
+  Report: `docs/mlip-gpu-ni-distill-formal-gate.md`.
+- **Next.** (1) Genuine cross-material negative transfer (second MLIP/material) for a real T3
+  REJECT. (2) Curvature lane — the C44 shear undershoot points straight at the phonon/Hessian
+  frontier. (3) Seed glim-think `atlas_theorems` + emit `lupine.proof.status` spans so this gate
+  decision flows into Phoenix.
+
 ## 2026-05-29 — ATLAS-Lean integration: formal foundations + closed-loop scaffolding
 
 - **Why.** Meta open-sourced ATLAS-Lean (autoformalized textbook mathematics) and `torch-sim`.
