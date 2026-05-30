@@ -210,10 +210,17 @@ export default defineConfig({
       },
     },
     headers: {
-      // Local Firebase popup auth needs opener access; production hosting can
-      // tighten this again for routes that require cross-origin isolation.
+      // Firebase popup/redirect sign-in needs the opener relationship preserved,
+      // so COOP must allow popups. We intentionally do NOT set
+      // Cross-Origin-Embedder-Policy: require-corp here:
+      //   - nothing in this app uses SharedArrayBuffer / cross-origin isolation
+      //     (and with COOP=same-origin-allow-popups the page isn't isolated
+      //     anyway, so require-corp bought zero benefit), and
+      //   - require-corp forces Firebase's cross-origin auth iframe to be
+      //     CORP-eligible, which it isn't — so it silently blocks the popup
+      //     from returning the credential and sign-in "completes" but the app
+      //     stays logged out.
       'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
-      'Cross-Origin-Embedder-Policy': 'require-corp',
     },
   },
 });
