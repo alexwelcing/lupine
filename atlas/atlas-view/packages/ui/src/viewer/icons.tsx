@@ -50,21 +50,17 @@ export const IconShare = () => (
 function LupiGlyph({ children }: { children: React.ReactNode }) {
   return (
     <svg
-      width="20"
-      height="20"
+      width="22"
+      height="22"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.65"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
       focusable="false"
     >
-      <path d="M4.5 7.25V4.5h2.75" opacity="0.46" />
-      <path d="M16.75 4.5h2.75v2.75" opacity="0.46" />
-      <path d="M19.5 16.75v2.75h-2.75" opacity="0.46" />
-      <path d="M7.25 19.5H4.5v-2.75" opacity="0.46" />
       {children}
     </svg>
   );
@@ -72,39 +68,33 @@ function LupiGlyph({ children }: { children: React.ReactNode }) {
 
 export const IconLook = () => (
   <LupiGlyph>
-    <path d="M7 12c1.35-2.15 3.02-3.22 5-3.22S15.65 9.85 17 12c-1.35 2.15-3.02 3.22-5 3.22S8.35 14.15 7 12Z" />
-    <circle cx="12" cy="12" r="1.65" />
-    <path d="M8.4 6.75 7.5 5.5" opacity="0.58" />
-    <path d="M15.6 17.25l.9 1.25" opacity="0.58" />
+    <path d="M2.8 12C5 8.2 8.2 6.3 12 6.3S19 8.2 21.2 12c-2.2 3.8-5.4 5.7-9.2 5.7S5 15.8 2.8 12Z" />
+    <circle cx="12" cy="12" r="2.7" />
+    <circle cx="13.15" cy="10.85" r="0.6" fill="currentColor" stroke="none" />
   </LupiGlyph>
 );
 
 export const IconSurface = () => (
   <LupiGlyph>
-    <path d="M6.7 15.8c2.15-1.35 4.1-1.35 5.85 0 1.4 1.05 3.03 1.05 4.75 0" />
-    <path d="M6.7 11.8c2.15-1.35 4.1-1.35 5.85 0 1.4 1.05 3.03 1.05 4.75 0" opacity="0.72" />
-    <circle cx="8" cy="8" r="0.8" fill="currentColor" stroke="none" opacity="0.72" />
-    <circle cx="12" cy="7" r="0.8" fill="currentColor" stroke="none" opacity="0.72" />
-    <circle cx="16" cy="8" r="0.8" fill="currentColor" stroke="none" opacity="0.72" />
+    <circle cx="12" cy="12" r="7.4" />
+    <path d="M9 7.7a5.1 5.1 0 0 0-2 5" opacity="0.6" />
+    <circle cx="9.5" cy="9.3" r="0.7" fill="currentColor" stroke="none" opacity="0.85" />
   </LupiGlyph>
 );
 
 export const IconWorld = () => (
   <LupiGlyph>
-    <path d="M6.5 14.8c1.75 1.05 3.58 1.58 5.5 1.58s3.75-.53 5.5-1.58" />
-    <path d="M6.5 10.2c1.75-1.05 3.58-1.58 5.5-1.58s3.75.53 5.5 1.58" />
-    <path d="M12 6.5v11" opacity="0.7" />
-    <path d="M8.8 7.2c-.82 3.12-.82 6.48 0 9.6" opacity="0.54" />
-    <path d="M15.2 7.2c.82 3.12.82 6.48 0 9.6" opacity="0.54" />
+    <circle cx="12" cy="12" r="7.4" />
+    <ellipse cx="12" cy="12" rx="3" ry="7.4" />
+    <path d="M4.7 9.6h14.6" opacity="0.85" />
+    <path d="M4.7 14.4h14.6" opacity="0.85" />
   </LupiGlyph>
 );
 
 export const IconExport = () => (
   <LupiGlyph>
-    <path d="M7.1 8.3h6.3c1.28 0 2.32 1.04 2.32 2.32v4.58H7.1V8.3Z" />
-    <path d="M9.1 8.3 10.2 6h3.1l1.1 2.3" opacity="0.7" />
-    <circle cx="11.45" cy="12.05" r="1.45" />
-    <path d="M15.4 6.6h2.5v2.5" />
-    <path d="m17.9 6.6-4.2 4.2" />
+    <path d="M12 4.6v8.2" />
+    <path d="M8.4 9.2 12 12.8l3.6-3.6" />
+    <path d="M5.1 14.4v3.1a1.4 1.4 0 0 0 1.4 1.4h11a1.4 1.4 0 0 0 1.4-1.4v-3.1" />
   </LupiGlyph>
 );

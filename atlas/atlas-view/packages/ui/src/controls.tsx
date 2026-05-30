@@ -97,34 +97,35 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
         flexDirection: compact ? 'column' : 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: compact ? 3 : 8,
+        gap: compact ? 5 : 10,
         width: '100%',
-        minHeight: compact ? 56 : 40,
+        minHeight: compact ? 58 : 48,
         minWidth: 0,
-        padding: compact ? '6px 4px' : '7px 12px',
-        borderRadius: 0,
-        border: active ? '1px solid #1edce0' : '1px solid rgba(255,255,255,0.1)',
-        background: active ? 'rgba(30, 220, 224, 0.16)' : 'rgba(0,0,0,0.42)',
-        color: active ? '#1edce0' : 'rgba(255,255,255,0.9)',
+        padding: compact ? '8px 4px' : '0 16px',
+        borderRadius: 11,
+        border: `1px solid ${active ? '#1edce0' : 'rgba(255,255,255,0.09)'}`,
+        background: active ? 'rgba(30,220,224,0.13)' : 'rgba(255,255,255,0.025)',
+        color: active ? '#1edce0' : 'rgba(255,255,255,0.94)',
         cursor: 'pointer',
-        transition: 'background 100ms ease-out, border-color 100ms ease-out, color 100ms ease-out',
-        fontSize: compact ? 10 : 13,
+        transition: 'background 130ms ease, border-color 130ms ease, color 130ms ease, box-shadow 130ms ease',
+        fontSize: compact ? 11 : 14,
         fontWeight: 600,
-        lineHeight: compact ? 1.05 : 1.2,
+        letterSpacing: '0.01em',
+        lineHeight: 1.1,
+        boxShadow: active ? '0 0 0 1px rgba(30,220,224,0.5) inset, 0 6px 20px -10px rgba(30,220,224,0.85)' : 'none',
         flexShrink: 1,
-        backdropFilter: 'blur(12px)',
         touchAction: 'manipulation',
       }}
       onMouseEnter={(e) => {
         if (!active) {
-          e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-          e.currentTarget.style.border = '1px solid rgba(30, 220, 224, 0.5)';
+          e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+          e.currentTarget.style.borderColor = 'rgba(30,220,224,0.45)';
         }
       }}
       onMouseLeave={(e) => {
         if (!active) {
-          e.currentTarget.style.background = 'rgba(0,0,0,0.4)';
-          e.currentTarget.style.border = '1px solid rgba(255,255,255,0.1)';
+          e.currentTarget.style.background = 'rgba(255,255,255,0.025)';
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.09)';
         }
       }}
     >
@@ -132,13 +133,10 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: compact ? 24 : 28,
-        height: compact ? 22 : 24,
-        flex: compact ? '0 0 22px' : '0 0 28px',
-        color: active ? '#061316' : '#1edce0',
-        background: active ? '#1edce0' : 'rgba(30, 220, 224, 0.06)',
-        border: active ? '1px solid #1edce0' : '1px solid rgba(30, 220, 224, 0.28)',
-        boxShadow: active ? '0 0 18px rgba(30, 220, 224, 0.24)' : 'inset 0 0 0 1px rgba(255,255,255,0.03)',
+        flexShrink: 0,
+        color: '#1edce0',
+        opacity: active ? 1 : 0.82,
+        filter: active ? 'drop-shadow(0 0 6px rgba(30,220,224,0.5))' : 'none',
       }}>
         {icon}
       </span>
