@@ -7,9 +7,12 @@ import { useStore, type LoadedFile } from './store';
 import { COLOR_SCHEMES, type ColorSchemeId } from './coloring';
 import { loadMoleculeSource } from './loadMoleculeSource';
 import { useFirebaseAuth } from './auth/useFirebaseAuth';
+import { MOLECULE_PROVIDERS, searchMolecules, type MoleculeHit, type MoleculeQuery, type MoleculeSourceId } from './molecules';
+import { MoleculeSearch } from './molecules/MoleculeSearch';
 
 type LupiMcpToolName =
   | 'lupi.generate_molecule'
+  | 'lupi.search_molecules'
   | 'lupi.set_viewer'
   | 'lupi.export_xyz'
   | 'lupi.viewer_state';
@@ -77,6 +80,16 @@ interface LupiMcpResponse {
       filename: string;
       contents: string;
     };
+    molecules?: Array<{
+      id: string;
+      source: MoleculeSourceId;
+      title: string;
+      subtitle?: string;
+      formula?: string;
+      elements?: string[];
+      tags?: string[];
+      load: MoleculeHit['load'];
+    }>;
   };
   error?: {
     code: string;
@@ -897,6 +910,13 @@ export function McpViewerHarness() {
         <Metric label="Auth" value={authLabel} />
       </div>
 
+      <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={mcpKickerStyle}>Search molecules</div>
+        <div style={{ marginTop: 8 }}>
+          <MoleculeSearch autoFocus={false} />
+        </div>
+      </div>
+
       <div style={mcpSegmentStyle}>
         {MCP_HARNESS_PANELS.map((item) => (
           <button
@@ -1112,6 +1132,42 @@ async function executeLupiViewerMcpRequest(request: LupiMcpRequest): Promise<Lup
           filename: `${slug(active.name)}.xyz`,
           contents: active.xyz,
         },
+        viewer: readViewerState(),
+      });
+    }
+
+    if (request.tool === 'lupi.search_molecules') {
+      const args = request.arguments ?? {};
+      const text =
+        typeof args.query === 'string' ? args.query
+        : typeof args.text === 'string' ? args.text
+        : '';
+      const elements = Array.isArray(args.elements)
+        ? args.elements.filter((e): e is string => typeof e === 'string')
+        : undefined;
+      const sources = Array.isArray(args.sources)
+        ? (args.sources.filter((s): s is MoleculeSourceId => typeof s === 'string') as MoleculeSourceId[])
+        : undefined;
+      const limit = typeof args.limit === 'number' ? Math.max(1, Math.min(50, args.limit)) : 30;
+      const query: MoleculeQuery = { text, elements, sources, limit };
+
+      const hits = await searchMolecules(query, MOLECULE_PROVIDERS);
+      transcript.push(`searched molecules: ${hits.length} hit(s) for "${text}"`);
+      return okResponse(request, transcript, {
+        // Each hit carries a `load` spec the agent can act on next:
+        //   { kind:'generate', ... } -> call lupi.generate_molecule with those args
+        //   { kind:'url', url }       -> load that trajectory/structure
+        //   { kind:'savedView', slug }-> open /#/view/<slug>
+        molecules: hits.slice(0, limit).map((h) => ({
+          id: h.id,
+          source: h.source,
+          title: h.title,
+          subtitle: h.subtitle,
+          formula: h.formula,
+          elements: h.elements,
+          tags: h.tags,
+          load: h.load,
+        })),
         viewer: readViewerState(),
       });
     }

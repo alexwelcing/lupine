@@ -35,5 +35,14 @@ service cloud.firestore {
       allow read: if signedIn() && resource.data.uid == request.auth.uid;
       allow write: if false;
     }
+
+    // Curated molecule library — public-readable; any signed-in user may add an
+    // owner-stamped entry, and edit/remove only their own. Backs the federated
+    // search 'library' source.
+    match /moleculeLibrary/{id} {
+      allow read: if true;
+      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update, delete: if isOwner(resource.data);
+    }
   }
 }
