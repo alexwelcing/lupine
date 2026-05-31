@@ -26,7 +26,6 @@ export interface SavedMolecularView {
   slug: string;
   title: string;
   ownerId: string;
-  ownerEmail: string | null;
   visibility: 'public';
   molecule: SavedMoleculeSource;
   view: CanonicalMolecularView;
@@ -168,7 +167,6 @@ export async function saveCurrentMolecularView({
     slug: cleanSlug,
     title: title.trim() || defaultSavedViewTitle(useStore.getState().file),
     ownerId: user.uid,
-    ownerEmail: user.email ?? null,
     visibility: 'public',
     molecule: readMoleculeSource(),
     view: captureCanonicalView(),

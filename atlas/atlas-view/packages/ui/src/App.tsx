@@ -109,6 +109,9 @@ import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
+import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
+import { RendererFallback } from './RendererFallback';
+import { CanvasErrorBoundary } from './CanvasErrorBoundary';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -540,7 +543,14 @@ export default function App() {
       })
       .catch((err) => {
         const message = err instanceof Error ? err.message : String(err);
-        if (!cancelled) useStore.getState().setError(message);
+        if (!cancelled) {
+          // Clear the loading flag explicitly so a 404 / permission error can
+          // never leave the viewer stuck on a permanent "Parsing..." spinner,
+          // independent of setError's own loading side effect. The error is
+          // surfaced in the existing dismissible FileDropZone error card.
+          useStore.getState().setLoading(false);
+          useStore.getState().setError(message);
+        }
       });
     return () => {
       cancelled = true;
@@ -708,6 +718,28 @@ export default function App() {
   // phone where the premium shader would freeze the page.
   const deviceMaxAtoms = useMemo(() => getMaxSafeAtomCount(), []);
   const deviceQualityTier = useMemo(() => getDefaultQualityTier(), []);
+
+  // Renderer capability probe — run once at mount (hardware/browser support
+  // doesn't change within a session). When the device can't start a WebGL
+  // context we must NOT mount the <Canvas> (it would paint a silent blank
+  // rect — the single biggest cold-mobile bounce source). Audit findings:
+  // ios-safari-webgpu-silent-fail, android-firefox-no-webgpu-message,
+  // no-canvas-webgl-fallback.
+  const renderCapability = useMemo(() => detectRenderCapability(), []);
+  const canRenderScene = renderCapability.canRenderWebGL;
+
+  // Surface a NON-BLOCKING warning when the optional WebGPU bond accelerator
+  // is unavailable/timed out while the user had it enabled. The scene still
+  // renders via the CPU bond path. Audit finding: no-offline-fallback-webgpu-init.
+  const gpuBondsStatus = useStore(s => s.gpuBondsStatus);
+  useEffect(() => {
+    const setRendererWarning = useStore.getState().setRendererWarning;
+    if (useGpuBonds && gpuBondsStatus === 'unsupported') {
+      setRendererWarning('GPU bond acceleration unavailable on this device — using the slower CPU path.');
+    } else if (gpuBondsStatus === 'ready') {
+      setRendererWarning(null);
+    }
+  }, [useGpuBonds, gpuBondsStatus]);
   const playbackFrameRate = file?.playbackFrameRate ?? 30;
   const highFidelityPlayback = Boolean(file?.playbackFrameRate && (file?.trajectory.frames[0]?.natoms ?? 0) <= 5000);
 
@@ -1240,6 +1272,12 @@ export default function App() {
           zIndex: 0,
           transition: 'right 180ms ease, bottom 180ms ease',
         }}>
+          {!canRenderScene ? (
+            // Capability gate: device can't start a WebGL context. Render the
+            // branded recovery banner INSTEAD of a silent blank canvas.
+            <RendererFallback copy={fallbackCopyFor(renderCapability)} />
+          ) : (
+          <CanvasErrorBoundary capability={renderCapability}>
           <Canvas
             camera={{
               position: [center[0], center[1], center[2] + cameraDistance],
@@ -1515,8 +1553,15 @@ export default function App() {
             <ScenePostprocessing />
             </XR>
           </Canvas>
+          </CanvasErrorBoundary>
+          )}
 
           {import.meta.env.DEV && showDebugHud && <StateInspector />}
+
+          {/* Non-blocking renderer warning (e.g. WebGPU bond accelerator
+              unavailable/timed out → CPU fallback). The scene still renders;
+              this is informational and dismissible. */}
+          <RendererWarningToast />
 
           {/* (removed: GPU-unlock overlay, micro-effects layer, header shimmer) */}
 
@@ -1810,6 +1855,61 @@ export default function App() {
 }
 
 // ─── Helper components ────────────────────────────────────────────────
+
+/** Non-blocking, dismissible toast for renderer warnings (WebGPU accelerator
+ *  unavailable/timed out → CPU fallback). role="status" so it's announced
+ *  politely without stealing focus. The scene keeps rendering underneath. */
+function RendererWarningToast() {
+  const rendererWarning = useStore(s => s.rendererWarning);
+  if (!rendererWarning) return null;
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      style={{
+        position: 'absolute',
+        top: 16,
+        right: 16,
+        maxWidth: 280,
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: 8,
+        padding: '10px 12px',
+        background: 'rgba(20,24,33,0.92)',
+        border: '1px solid rgba(255,255,255,0.14)',
+        borderRadius: 'var(--radius-sm, 8px)',
+        backdropFilter: 'blur(10px)',
+        fontSize: 12,
+        lineHeight: 1.45,
+        color: 'var(--text-muted, #9aa7bd)',
+        zIndex: 160,
+      }}
+    >
+      <span style={{ flex: 1 }}>{rendererWarning}</span>
+      <button
+        type="button"
+        onClick={() => useStore.getState().setRendererWarning(null)}
+        aria-label="Dismiss warning"
+        title="Dismiss"
+        style={{
+          flexShrink: 0,
+          width: 18,
+          height: 18,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'transparent',
+          border: 'none',
+          color: 'var(--text-dim, #6b7688)',
+          cursor: 'pointer',
+          padding: 0,
+        }}
+      >
+        <IconClose />
+      </button>
+    </div>
+  );
+}
 
 /** Inline tab strip rendered at the top of a consolidated drawer. Switches
  *  the active panel without closing the drawer; currently used for the
