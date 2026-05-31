@@ -17,7 +17,7 @@ export function LupiAuthCallout({ compact = false }: { compact?: boolean }) {
   const [dismissed, setDismissed] = useState(() => {
     if (typeof window === 'undefined') return false;
     try {
-      return window.sessionStorage.getItem('lupi.authCallout.dismissed') === '1';
+      return window.localStorage.getItem('lupi.authCallout.dismissed') === '1';
     } catch {
       return false;
     }
@@ -36,7 +36,7 @@ export function LupiAuthCallout({ compact = false }: { compact?: boolean }) {
   const close = () => {
     setDismissed(true);
     try {
-      window.sessionStorage.setItem('lupi.authCallout.dismissed', '1');
+      window.localStorage.setItem('lupi.authCallout.dismissed', '1');
     } catch {
       // Ignore storage failures; the in-memory dismissed state is enough for this page view.
     }
