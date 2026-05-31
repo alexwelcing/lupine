@@ -1,0 +1,61 @@
+name: Deploy Lupi functions + Firestore rules
+
+# Deploys the API-key Cloud Functions (createApiKey / revokeApiKey /
+# exchangeApiKey) and the Firestore rules to the shed-489901 Firebase project.
+#
+# The service account behind GCP_WORKLOAD_IDENTITY_PROVIDER / GCP_SERVICE_ACCOUNT
+# must have, on project shed-489901:
+#   roles/cloudfunctions.admin, roles/run.admin, roles/artifactregistry.writer,
+#   roles/cloudbuild.builds.editor, roles/iam.serviceAccountUser,
+#   roles/firebaserules.admin, roles/serviceusage.serviceUsageConsumer
+# and these APIs enabled: cloudfunctions, run, cloudbuild, artifactregistry,
+# firebaserules. If the first automated deploy fails on perms, run it once
+# locally: `cd atlas/atlas-view && npx firebase-tools deploy --only functions,firestore:rules --project shed-489901`.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'atlas/atlas-view/functions/**'
+      - 'atlas/atlas-view/firebase.json'
+      - 'atlas/atlas-view/firestore.rules'
+      - 'atlas/atlas-view/firestore.indexes.json'
+      - '.github/workflows/deploy-functions.yml'
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    defaults:
+      run:
+        working-directory: atlas/atlas-view
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install + build functions
+        run: |
+          npm ci --prefix functions || npm install --prefix functions
+          npm run build --prefix functions
+
+      - name: Test functions
+        run: npm test --prefix functions
+
+      - name: Google Auth (Workload Identity Federation)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Deploy functions + Firestore rules
+        run: >
+          npx -y firebase-tools@13 deploy
+          --only functions,firestore:rules
+          --project "${{ secrets.GCP_PROJECT_ID }}"
+          --non-interactive --force

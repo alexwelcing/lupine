@@ -27,5 +27,13 @@ service cloud.firestore {
 
       allow delete: if isOwner(resource.data);
     }
+
+    // API keys: written ONLY by the Cloud Functions admin SDK (create/revoke).
+    // Clients may read their own keys to render the management UI, but the raw
+    // key is never stored — only its SHA-256 hash — so a read leaks nothing usable.
+    match /apiKeys/{keyId} {
+      allow read: if signedIn() && resource.data.uid == request.auth.uid;
+      allow write: if false;
+    }
   }
 }
