@@ -26,6 +26,7 @@
     "verify:streaming": "npx -y tsx tools/verify-streaming.mjs",
     "verify:exports": "node tools/verify-exports.mjs",
     "verify:export-colors": "node tools/verify-export-colors.mjs",
+    "verify:configurator": "node tools/verify-configurator.mjs",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
   },
