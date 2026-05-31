@@ -1,9 +1,14 @@
 /**
- * ExportManager — Unified pipeline for image, MP4, GLB, and USDZ export.
+ * ExportManager — Unified pipeline for image, MP4/WebM, GLB, and USDZ export.
  *
  * Architecture:
  *   Image:  Single-frame WebGL readback at arbitrary resolution.
- *   MP4:    WebCodecs VideoEncoder + mp4-muxer → H.264 MP4 download.
+ *   Video:  MP4/WebM via the browser-native MediaRecorder recording
+ *           `gl.domElement.captureStream(fps)`. MediaRecorder encodes natively,
+ *           off the main thread (no UI freeze), on every browser — mp4 on
+ *           Safari/iOS, webm (vp9/vp8) on Chromium/Firefox. The capture loop only
+ *           drives the camera/scene by wall-clock time; the canvas is recorded
+ *           automatically.
  *   GLB:    Reconstructs real sphere/cylinder meshes from atomic data and exports
  *           via GLTFExporter for use in Blender, Unity, or any 3D software.
  *   USDZ:   Same mesh reconstruction → USDZExporter for AR Quick Look.
@@ -27,70 +32,53 @@ const MAX_USDZ_SCALE = 2.0;
 
 // ─── Video Capture Loop Component ──────────────────────────────────
 // By isolating the priority=2 useFrame into a conditionally mounted component,
-// we prevent React Three Fiber from permanently disabling its native Priority 0 
+// we prevent React Three Fiber from permanently disabling its native Priority 0
 // gl.render loop (which happens if any hooked component has priority > 0).
+//
+// MediaRecorder records the canvas in REAL TIME (off the main thread), so this
+// loop drives the camera/scene purely by WALL-CLOCK progress — never by frame
+// count. It posts no frames anywhere; the canvas is captured automatically.
 function VideoCaptureLoop({
-  encoderRef,
-  muxerRef,
-  recorderRef,
   requestRef,
-  frameCount,
   totalFrames,
   originalCameraPosition,
-  originalSize,
-  originalPixelRatio,
-  onCompleteRef,
-  clearExportRequest,
   file,
   isRecording,
   setIsCapturing,
-  originalStoreState
+  recorderRef,
+  recorderStoppedRef,
+  captureStartRef,
 }: any) {
-  const { gl, camera, setSize, setDpr } = useThree();
+  const { invalidate } = useThree();
+  const { camera } = useThree();
 
   useFrame(() => {
     if (!isRecording.current) return;
-    // WebCodecs mode has an encoder+muxer; the MediaRecorder fallback has neither
-    // (it captures the canvas via captureStream, so no per-frame encode here).
-    const webcodecs = !!(encoderRef.current && muxerRef.current);
 
-    // --- Backpressure Protocol (WebCodecs only) ---
-    // If the browser pushes frames into the WebCodecs queue faster than the hardware
-    // encoder can compress them (e.g., 144Hz monitor playing 80Mbps 4K video), RAM fills
-    // instantly and the browser silently crashes with an OOM.
-    // By returning early, we pause frame extraction until the GPU drains the queue.
-    if (webcodecs && encoderRef.current!.encodeQueueSize > 4) {
-      return;
-    }
+    // Keep the demand frameloop alive: the export must drive continuous rendering
+    // even though the app normally renders on demand. Without this, useFrame can
+    // stall after the first frame once the frameloop idles.
+    invalidate();
 
     const req = requestRef.current;
     if (!req) return;
 
-    const i = frameCount.current;
-    const total = totalFrames.current;
-    const fps = 60;
-
-    // 1. Capture the completed canvas frame from the PREVIOUS loop computations.
-    // WebCodecs: grab what EffectComposer just dumped to gl.domElement and encode it.
-    // MediaRecorder fallback: captureStream already records the canvas — nothing to do.
-    if (webcodecs) {
-      try {
-        const frameData = new VideoFrame(gl.domElement, { timestamp: (i * 1e6) / fps });
-        encoderRef.current!.encode(frameData, { keyFrame: i % 60 === 0 });
-        frameData.close();
-      } catch (e) {
-        console.error("Frame encode error", e);
-      }
+    // On the first tick, anchor the wall-clock start. MediaRecorder started a hair
+    // earlier; tying progress to the first rendered frame keeps the motion smooth.
+    if (captureStartRef.current === null) {
+      captureStartRef.current = performance.now();
     }
 
-    frameCount.current++;
+    const elapsed = performance.now() - captureStartRef.current;
+    const durationMs = (req.durationSeconds || 5) * 1000;
+    const progress = Math.min(elapsed / durationMs, 1);
 
-    // 2. Setup the camera strictly for the NEXT loop computation
+    // Drive the camera/scene by wall-clock `progress` (0..1).
     // Flythrough path takes priority over orbit
     if (req.flythrough && req.flythrough.keyframes.length >= 2) {
       const flyDuration = getSequenceDuration(req.flythrough);
-      const flyTime = (frameCount.current / total) * flyDuration;
-      
+      const flyTime = progress * flyDuration;
+
       // Update store for UI progress bar
       useStore.getState().setFlythroughTime(flyTime);
 
@@ -109,9 +97,8 @@ function VideoCaptureLoop({
         (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
       );
       const radius = originalCameraPosition.current.distanceTo(center);
-      
-      // Calculate angle based on the *next* frame about to be rendered
-      const angle = (frameCount.current / total) * Math.PI * 2;
+
+      const angle = progress * Math.PI * 2;
       camera.position.x = center.x + Math.sin(angle) * radius;
       camera.position.z = center.z + Math.cos(angle) * radius;
       camera.position.y = originalCameraPosition.current.y;
@@ -119,8 +106,6 @@ function VideoCaptureLoop({
     }
 
     if (req.cinematic && file) {
-      const progress = frameCount.current / total;
-      
       // Advance trajectory if there is one
       if (file.trajectory.totalFrames > 1) {
         // Run from start to the absolute end frame
@@ -142,104 +127,20 @@ function VideoCaptureLoop({
       useStore.getState().setAtomScale(0.85 + pulse * 0.15);
     }
 
-    // 3. Finalize when finished
-    if (frameCount.current >= total) {
+    // Stop the recorder exactly once when wall-clock duration is reached. The
+    // recorder's onstop handler builds the blob, delivers it, and restores the
+    // scene. Unmount the loop immediately to hand rendering back to Fiber.
+    if (progress >= 1) {
       isRecording.current = false;
-      setIsCapturing(false); // Unmount hook IMMEDIATELY to restore normal Fiber rendering
-
-      if (!webcodecs) {
-        // MediaRecorder fallback: stop the recorder. Its onstop (set in
-        // startVideoRecording) builds the blob, downloads it, and restores the scene.
-        if (recorderRef.current) recorderRef.current.stop();
-        return;
+      setIsCapturing(false);
+      if (
+        !recorderStoppedRef.current &&
+        recorderRef.current &&
+        recorderRef.current.state !== 'inactive'
+      ) {
+        recorderStoppedRef.current = true;
+        recorderRef.current.stop();
       }
-
-      // Detach async completion from the synchronous render thread
-      (async () => {
-        try {
-          await encoderRef.current!.flush();
-          
-          // Finalize the MP4 container. Catch colorSpace crash as a last resort.
-          try {
-            muxerRef.current!.finalize();
-          } catch (finalizeErr: any) {
-            if (finalizeErr?.message?.includes('colorSpace') || finalizeErr?.message?.includes('null')) {
-              console.warn('[ExportManager] finalize() colorSpace fallback — salvaging buffer', finalizeErr);
-            } else {
-              throw finalizeErr;
-            }
-          }
-
-          let success = false;
-
-          // If we streamed to disk, no buffer exists to download. Just close the stream!
-          if (req.fileStream) {
-            await req.fileStream.close();
-            if (onCompleteRef.current) onCompleteRef.current(true);
-            success = true;
-          } else {
-            // Memory target: Pull the array buffer and spawn a client-side download
-            const finalBuffer = muxerRef.current!.target.buffer;
-            const finalBlob = new Blob([finalBuffer], { type: 'video/mp4' });
-            const baseName = req.baseName || 'LUPI';
-
-            if (onCompleteRef.current) {
-              onCompleteRef.current(true, finalBlob, `${baseName}.mp4`);
-            } else {
-              downloadBlob(finalBlob, `${baseName}.mp4`);
-              if (onCompleteRef.current) onCompleteRef.current(true);
-            }
-            success = true;
-          } // close else
-          
-          if (!success) {
-            if (onCompleteRef.current) onCompleteRef.current(false);
-          }
-
-        } catch (err) {
-          console.error("Finalization failed", err);
-          if (onCompleteRef.current) onCompleteRef.current(false);
-        } finally {
-          encoderRef.current = null;
-          muxerRef.current = null;
-          
-          // Restore Scene State securely
-          if (originalCameraPosition.current && file) {
-            const { min, max } = file.trajectory.globalBounds;
-            const center = new THREE.Vector3(
-              (min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2
-            );
-            camera.position.copy(originalCameraPosition.current);
-            camera.lookAt(center);
-            originalCameraPosition.current = null;
-          }
-
-          if (originalSize.current) {
-            // Restore THROUGH R3F so the EffectComposer resizes back too.
-            setSize(originalSize.current.width, originalSize.current.height);
-            if (camera instanceof THREE.PerspectiveCamera) {
-              camera.aspect = originalSize.current.aspect;
-              camera.updateProjectionMatrix();
-            }
-            originalSize.current = null;
-          }
-
-          // Restore Retina super-sampling (through R3F so the composer follows)
-          if (originalPixelRatio.current) {
-            setDpr(originalPixelRatio.current);
-          }
-
-          // Restore Cinematic Mutations
-          if (originalStoreState.current) {
-            useStore.getState().setBondTolerance(originalStoreState.current.bondTolerance);
-            useStore.getState().setAtomScale(originalStoreState.current.atomScale);
-            useStore.getState().setFrame(originalStoreState.current.frame);
-            originalStoreState.current = null;
-          }
-
-          clearExportRequest();
-        }
-      })();
     }
   }, 2); // Priority 2 execution!
 
@@ -248,7 +149,7 @@ function VideoCaptureLoop({
 
 // ─── ExportManager component ─────────────────────────────────────
 export function ExportManager() {
-  const { gl, scene, camera, size, setSize, setDpr } = useThree();
+  const { gl, scene, camera, size, setSize, setDpr, setFrameloop, invalidate } = useThree();
   const exportRequest = useStore(s => s.exportRequest);
   const clearExportRequest = useStore(s => s.clearExportRequest);
   const file = useStore(s => s.file);
@@ -259,9 +160,13 @@ export function ExportManager() {
   const [isCapturing, setIsCapturing] = useState(false);
   const onCompleteRef = useRef<((success: boolean, blob?: Blob, filename?: string) => void) | null>(null);
 
-  // WebCodecs / Pipeline state
-  const encoderRef = useRef<VideoEncoder | null>(null);
-  const muxerRef = useRef<any>(null);
+  // MediaRecorder pipeline state. MediaRecorder records `captureStream()` of the
+  // WebGL canvas natively, off the main thread — no UI freeze, works on every
+  // browser (mp4 on Safari/iOS, webm on Chromium/Firefox).
+  const recorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]); // recorder chunks accumulated via ondataavailable
+  const captureStartRef = useRef<number | null>(null); // wall-clock anchor, set on first VideoCaptureLoop tick
+  const recorderStoppedRef = useRef(false); // ensures recorder.stop() is called exactly once
   const requestRef = useRef<any>(null);
   const totalFrames = useRef(0);
   const frameCount = useRef(0);
@@ -269,12 +174,9 @@ export function ExportManager() {
   const originalCameraPosition = useRef<THREE.Vector3 | null>(null);
   const originalSize = useRef<{ width: number; height: number; aspect: number } | null>(null);
   const originalStoreState = useRef<{ bondTolerance: number; atomScale: number; frame: number } | null>(null);
-  // MediaRecorder fallback (mobile / browsers without WebCodecs VideoEncoder, e.g. iOS Safari).
-  const recorderRef = useRef<MediaRecorder | null>(null);
-  const recordedChunksRef = useRef<Blob[]>([]);
 
-  // Shared scene/camera/size restore after a video export (used by both the
-  // WebCodecs finalize path and the MediaRecorder fallback's onstop).
+  // Shared scene/camera/size/store restore after a video export. Reused for both
+  // the success and failure paths of the MediaRecorder capture.
   const restoreAfterVideo = useCallback(() => {
     if (originalCameraPosition.current && file) {
       const { min, max } = file.trajectory.globalBounds;
@@ -298,8 +200,14 @@ export function ExportManager() {
       useStore.getState().setFrame(originalStoreState.current.frame);
       originalStoreState.current = null;
     }
+    // Hand rendering back to the perf-friendly demand loop now that export is done.
+    setFrameloop('demand');
     clearExportRequest();
-  }, [camera, file, setSize, setDpr, clearExportRequest]);
+  }, [camera, file, setSize, setDpr, setFrameloop, clearExportRequest]);
+
+  // Stable ref so the VideoCaptureLoop always calls the freshest restore closure.
+  const restoreAfterVideoRef = useRef(restoreAfterVideo);
+  restoreAfterVideoRef.current = restoreAfterVideo;
 
   // ─── Image Export ─────────────────────────────────────────────
   const handleImageExport = useCallback(() => {
@@ -727,15 +635,15 @@ export function ExportManager() {
     clearExportRequest();
   }, [exportRequest, clearExportRequest]);
 
-  // ─── Start Video Recording (Post-processing Aware 80Mbps) ─────────
+  // ─── Start Video Recording (MediaRecorder — native, off-thread) ───────
   const startVideoRecording = useCallback(async () => {
     const req = exportRequest;
     if (!req || isRecording.current) return;
 
-    const width = req.resolution?.width || 1920;
-    const height = req.resolution?.height || 1080;
-    const fps = 60; 
-    const duration = req.durationSeconds || 5;
+    // Keep even dimensions (some encoders/players dislike odd dims).
+    const width = (req.resolution?.width || 1920) & ~1;
+    const height = (req.resolution?.height || 1080) & ~1;
+    const fps = 30;
 
     onCompleteRef.current = req.onComplete || null;
     requestRef.current = req;
@@ -759,7 +667,7 @@ export function ExportManager() {
       height: size.height,
       aspect: (camera as THREE.PerspectiveCamera).aspect
     };
-    
+
     // Force DPR to 1 and size the engine THROUGH R3F (setDpr/setSize) rather than
     // a raw gl.setSize(). The postprocessing EffectComposer only resizes its
     // render targets when R3F's `size` state changes; a raw gl.setSize() leaves
@@ -774,151 +682,98 @@ export function ExportManager() {
       camera.updateProjectionMatrix();
     }
 
-    // ── Mobile / no-WebCodecs fallback ────────────────────────────────
-    // iOS Safari (and other mobile browsers) have no WebCodecs VideoEncoder, so
-    // the path below silently produced nothing. Fall back to canvas.captureStream
-    // + MediaRecorder, which DOES work there (mp4/avc on iOS, webm elsewhere).
-    if (typeof VideoEncoder === 'undefined') {
-      const picked = pickRecorderMime();
-      const canCapture = typeof (gl.domElement as HTMLCanvasElement).captureStream === 'function';
-      if (!picked || !canCapture) {
-        useStore.getState().setRendererWarning(
-          'Video export isn’t supported in this browser. Try Chrome or Edge on desktop, or use the PNG snapshot.',
-        );
-        if (onCompleteRef.current) onCompleteRef.current(false);
-        restoreAfterVideo();
-        return;
-      }
-      try {
-        recordedChunksRef.current = [];
-        const stream = (gl.domElement as HTMLCanvasElement).captureStream(fps);
-        const recorder = new MediaRecorder(stream, { mimeType: picked.mime, videoBitsPerSecond: 12_000_000 });
-        recorder.ondataavailable = (e) => {
-          if (e.data && e.data.size > 0) recordedChunksRef.current.push(e.data);
-        };
-        recorder.onstop = () => {
-          try {
-            const blob = new Blob(recordedChunksRef.current, { type: picked.mime.split(';')[0] });
-            const baseName = req.baseName || 'LUPI';
-            const filename = `${baseName}.${picked.ext}`;
-            if (blob.size === 0) {
-              useStore.getState().setRendererWarning('Video export captured no frames in this browser.');
-              if (onCompleteRef.current) onCompleteRef.current(false);
-            } else if (onCompleteRef.current) {
-              onCompleteRef.current(true, blob, filename);
-            } else {
-              downloadBlob(blob, filename);
-            }
-          } finally {
-            recordedChunksRef.current = [];
-            recorderRef.current = null;
-            restoreAfterVideo();
-          }
-        };
-        recorderRef.current = recorder;
-        recorder.start();
-        totalFrames.current = fps * duration;
-        frameCount.current = 0;
-        isRecording.current = true;
-        setIsCapturing(true);
-      } catch (err) {
-        console.error('MediaRecorder fallback failed:', err);
-        useStore.getState().setRendererWarning('Video export failed to start in this browser.');
-        if (onCompleteRef.current) onCompleteRef.current(false);
-        restoreAfterVideo();
-      }
+    // The app runs a demand frameloop (renders only on interaction) for perf, but
+    // the capture loop needs a frame EVERY tick. Force 'always' for the duration of
+    // the export; restoreAfterVideo() hands it back to 'demand'. This is the real
+    // fix for exports stalling when the canvas is otherwise idle.
+    setFrameloop('always');
+
+    // ── MediaRecorder (single durable path) ───────────────────────────
+    // Pick the best supported container/codec, preferring MP4 (Safari/iOS) then
+    // WebM (Chromium/Firefox). MediaRecorder encodes the captured canvas stream
+    // natively and off the main thread, so the UI never freezes.
+    const candidateMimes = [
+      'video/mp4;codecs=avc1.640028',
+      'video/mp4;codecs=avc1',
+      'video/mp4',
+      'video/webm;codecs=vp9',
+      'video/webm;codecs=vp8',
+      'video/webm',
+    ];
+    const canvas = gl.domElement as HTMLCanvasElement;
+    const supportsRecorder =
+      typeof MediaRecorder !== 'undefined' &&
+      typeof MediaRecorder.isTypeSupported === 'function';
+    const mimeType = supportsRecorder
+      ? candidateMimes.find((m) => MediaRecorder.isTypeSupported(m))
+      : undefined;
+
+    if (!supportsRecorder || !mimeType || typeof canvas.captureStream !== 'function') {
+      useStore.getState().setRendererWarning('Video export isn’t supported in this browser.');
+      onCompleteRef.current?.(false);
+      restoreAfterVideo();
       return;
     }
 
-    try {
-      const mp4Muxer = await import('mp4-muxer');
-      const Muxer = mp4Muxer.Muxer || (mp4Muxer as any).default?.Muxer || (mp4Muxer as any).default;
-      const ArrayBufferTarget = mp4Muxer.ArrayBufferTarget || (mp4Muxer as any).default?.ArrayBufferTarget;
-      const FileSystemWritableFileStreamTarget = mp4Muxer.FileSystemWritableFileStreamTarget || (mp4Muxer as any).default?.FileSystemWritableFileStreamTarget;
+    const ext = mimeType.includes('mp4') ? 'mp4' : 'webm';
 
-      const target = req.fileStream 
-        ? new FileSystemWritableFileStreamTarget(req.fileStream) 
-        : new ArrayBufferTarget();
+    const stream = canvas.captureStream(fps);
+    const recorder = new MediaRecorder(stream, {
+      mimeType,
+      videoBitsPerSecond: 12_000_000,
+    });
 
-      const muxer = new Muxer({
-        target,
-        video: { codec: 'avc', width, height },
-        // IMPORTANT: Must be false when streaming to disk with a file stream!
-        fastStart: req.fileStream ? false : 'in-memory',
-      });
-      muxerRef.current = muxer;
+    // Fresh chunk accumulator for this export.
+    recordedChunksRef.current = [];
+    const chunks = recordedChunksRef.current;
+    recorder.ondataavailable = (e) => {
+      if (e.data && e.data.size) chunks.push(e.data);
+    };
 
-      let firstChunkSeen = false;
-      const videoEncoder = new VideoEncoder({
-        output: (chunk, meta) => {
-          // mp4-muxer 5.x crashes in finalize() if track.info.decoderConfig is null
-          // or if decoderConfig.colorSpace is missing. We inject colorSpace on the
-          // first chunk if the encoder doesn't provide it.
-          // CRITICAL: Use muxerRef.current (not local muxer) to avoid stale closure
-          // when React strict mode or HMR causes double-initialization.
-          if (!firstChunkSeen) {
-            firstChunkSeen = true;
-            if (meta?.decoderConfig) {
-              if (!meta.decoderConfig.colorSpace) {
-                meta = {
-                  ...meta,
-                  decoderConfig: {
-                    ...meta.decoderConfig,
-                    colorSpace: {
-                      primaries: 'bt709',
-                      transfer: 'bt709',
-                      matrix: 'bt709',
-                      fullRange: false,
-                    },
-                  },
-                };
-              }
-            } else {
-              meta = {
-                ...(meta || {}),
-                decoderConfig: {
-                  codec: 'avc1.640028',
-                  description: new Uint8Array(0),
-                  colorSpace: {
-                    primaries: 'bt709',
-                    transfer: 'bt709',
-                    matrix: 'bt709',
-                    fullRange: false,
-                  },
-                },
-              } as EncodedVideoChunkMetadata;
-            }
+    recorder.onstop = () => {
+      void (async () => {
+        try {
+          const blob = new Blob(chunks, { type: mimeType.split(';')[0] });
+          const baseName = req.baseName || 'LUPI';
+          const filename = `${baseName}.${ext}`;
+
+          if (blob.size === 0) {
+            useStore.getState().setRendererWarning('Video export captured no frames.');
+            onCompleteRef.current?.(false);
+          } else if (req.fileStream) {
+            // Stream the final video to the user-picked file handle.
+            await req.fileStream.write(blob);
+            await req.fileStream.close();
+            onCompleteRef.current?.(true);
+          } else if (onCompleteRef.current) {
+            onCompleteRef.current(true, blob, filename);
+          } else {
+            downloadBlob(blob, filename);
           }
-          if (muxerRef.current) {
-            muxerRef.current.addVideoChunk(chunk, meta);
-          }
-        },
-        error: (e) => console.error('VideoEncoder error:', e),
-      });
+        } catch (err) {
+          console.error('[ExportManager] Video delivery failed:', err);
+          useStore.getState().setRendererWarning('Video export failed in this browser.');
+          onCompleteRef.current?.(false);
+        } finally {
+          restoreAfterVideoRef.current();
+        }
+      })();
+    };
 
-      videoEncoder.configure({
-        codec: 'avc1.640028',
-        width,
-        height,
-        bitrate: 80_000_000, 
-        framerate: fps,
-        hardwareAcceleration: 'prefer-hardware',
-      } as VideoEncoderConfig);
-      encoderRef.current = videoEncoder;
+    recorderRef.current = recorder;
+    captureStartRef.current = null; // anchored on the first VideoCaptureLoop tick
+    recorderStoppedRef.current = false;
 
-      totalFrames.current = fps * duration;
-      frameCount.current = 0;
-      isRecording.current = true;
-      setIsCapturing(true);
+    recorder.start();
 
-    } catch (err) {
-      console.error('Failed to init WebCodecs video:', err);
-      if (onCompleteRef.current) onCompleteRef.current(false);
-      isRecording.current = false;
-      gl.setPixelRatio(originalPixelRatio.current);
-      clearExportRequest();
-    }
-  }, [exportRequest, camera, gl, size, clearExportRequest, setSize, setDpr, restoreAfterVideo]);
+    totalFrames.current = fps * (req.durationSeconds || 5); // no longer used for completion; harmless
+    frameCount.current = 0;
+    isRecording.current = true;
+    setIsCapturing(true);
+    // Kick the render loop: switching demand→always doesn't restart rAF on its own,
+    // so without this the capture loop can stall before its first tick.
+    invalidate();
+  }, [exportRequest, camera, gl, size, clearExportRequest, setSize, setDpr, setFrameloop, invalidate, restoreAfterVideo]);
 
   // ─── Effect: Dispatch export actions ──────────────────────────
   // IMPORTANT: Only depend on exportRequest. We use refs for the handlers
@@ -947,51 +802,20 @@ export function ExportManager() {
 
   return isCapturing ? (
     <VideoCaptureLoop
-      encoderRef={encoderRef}
-      muxerRef={muxerRef}
-      recorderRef={recorderRef}
       requestRef={requestRef}
-      frameCount={frameCount}
       totalFrames={totalFrames}
       originalCameraPosition={originalCameraPosition}
-      originalSize={originalSize}
-      originalPixelRatio={originalPixelRatio}
-      onCompleteRef={onCompleteRef}
-      clearExportRequest={clearExportRequest}
       file={file}
       isRecording={isRecording}
       setIsCapturing={setIsCapturing}
-      originalStoreState={originalStoreState}
+      recorderRef={recorderRef}
+      recorderStoppedRef={recorderStoppedRef}
+      captureStartRef={captureStartRef}
     />
   ) : null;
 }
 
 // ─── Utility ─────────────────────────────────────────────────────
-// Best MediaRecorder container/codec for this browser. Order matters: prefer
-// mp4/H.264 (iOS Safari + some Chromium) so the asset is shareable everywhere,
-// then fall back to webm. Returns null if MediaRecorder can't encode video here.
-function pickRecorderMime(): { mime: string; ext: string } | null {
-  if (typeof MediaRecorder === 'undefined' || typeof MediaRecorder.isTypeSupported !== 'function') {
-    return null;
-  }
-  const candidates: Array<{ mime: string; ext: string }> = [
-    { mime: 'video/mp4;codecs=avc1.640028', ext: 'mp4' },
-    { mime: 'video/mp4;codecs=avc1', ext: 'mp4' },
-    { mime: 'video/mp4', ext: 'mp4' },
-    { mime: 'video/webm;codecs=vp9', ext: 'webm' },
-    { mime: 'video/webm;codecs=vp8', ext: 'webm' },
-    { mime: 'video/webm', ext: 'webm' },
-  ];
-  for (const c of candidates) {
-    try {
-      if (MediaRecorder.isTypeSupported(c.mime)) return c;
-    } catch {
-      // isTypeSupported can throw on some engines — keep trying.
-    }
-  }
-  return null;
-}
-
 function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
