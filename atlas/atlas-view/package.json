@@ -24,6 +24,8 @@
     "verify:mcp-bridge": "node tools/verify-mcp-bridge.mjs",
     "verify:gallery": "node tools/verify-gallery.mjs",
     "verify:streaming": "npx -y tsx tools/verify-streaming.mjs",
+    "verify:exports": "node tools/verify-exports.mjs",
+    "verify:export-colors": "node tools/verify-export-colors.mjs",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
   },
