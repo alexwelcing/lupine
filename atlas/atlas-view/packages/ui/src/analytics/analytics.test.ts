@@ -79,6 +79,9 @@ describe('analytics track', () => {
     expect(beacon).toHaveBeenCalledTimes(1);
     const [url, blob] = beacon.mock.calls[0] as [string, Blob];
     expect(url).toBe('https://sink.example/collect');
+    // MUST be a CORS-safelisted content type: application/json forces a preflight
+    // that sendBeacon cannot perform, so the browser silently drops the beacon.
+    expect(blob.type).toBe('text/plain');
     const text = await blob.text();
     const payload = JSON.parse(text);
     expect(payload.event).toBe('view_saved');
