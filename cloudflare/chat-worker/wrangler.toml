@@ -21,18 +21,21 @@ id = "REPLACE_WITH_KV_NAMESPACE_ID"          # from `wrangler kv namespace creat
 # preview_id = "REPLACE_WITH_PREVIEW_KV_ID"  # from `... create CHAT_RL --preview`
 
 # ─── Vars ───
-# Optional, non-secret overrides. ANTHROPIC_MODEL and the API key are best
-# set as secrets (see README), but you can pin a model here too.
+# This Worker uses the project's EXISTING MiniMax deployment (OpenAI-compatible
+# api.minimax.io/v1) — NOT Anthropic — so this customer endpoint incurs no
+# Anthropic token costs. The API key must be a secret; a model may be pinned here.
 # [vars]
-# ANTHROPIC_MODEL = "claude-sonnet-4-6"
+# MINIMAX_MODEL = "MiniMax-M2.7"
+# MINIMAX_BASE_URL = "https://api.minimax.io/v1"
 # RATE_LIMIT_MAX = "30"
 # EXTRA_ALLOWED_ORIGINS = "https://preview.example.com"
 
 # ─── Secrets (set via `wrangler secret put`) ───
-# ANTHROPIC_API_KEY   — required. Already configured on this account (shared
-#                       with glim-think). Set with:
-#                         wrangler secret put ANTHROPIC_API_KEY
-# ANTHROPIC_MODEL     — optional override of the Claude model id.
+# MINIMAX_API_KEY   — required. Already configured on this Cloudflare account
+#                     (the glim-think Worker uses the same secret). Set with:
+#                       wrangler secret put MINIMAX_API_KEY
+# MINIMAX_MODEL     — optional override of the MiniMax model id (default MiniMax-M2.7).
+# MINIMAX_BASE_URL  — optional override of the MiniMax base URL.
 
 # ─── Observability ───
 # Off by default for this lightweight public endpoint (logpush disabled).
