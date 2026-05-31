@@ -9,7 +9,7 @@ used, or is waiting on a named migration out of the root.
 | Root | Purpose | Status | Next action |
 | --- | --- | --- | --- |
 | `.github/` | CI, deployment, and benchmark workflows. | Keep | Keep workflows tied to active surfaces only. |
-| `atlas/` | LUPI viewer, atomistic evidence surfaces, web apps, parsers, and visual artifacts. | Keep | Continue pruning nested retired apps; active public viewer work stays here. |
+| `atlas/` | LUPI viewer, atomistic evidence surfaces, web apps, parsers, and visual artifacts. | Keep | The canonical browser app is `atlas/atlas-view/apps/web/`; avoid recreating parallel studio apps. |
 | `atlas-distill/` | Rust Distill scoring, policy, benchmark, and fault-line runtime. | Keep | Treat as the deterministic engine beside `glim-think`. |
 | `cloudflare/` | Edge helpers and Cloudflare infrastructure around the control plane. | Keep | Elevate reusable Workers into `glim-think` when they become first-class control-plane routes. |
 | `data/` | Shared benchmark fixtures and evidence payloads. | Keep | Keep data small and cited; large artifacts should live in GCS/R2 with manifests. |
@@ -35,5 +35,6 @@ used, or is waiting on a named migration out of the root.
 | --- | --- |
 | `lupine-start/` | Retired marketing/start site; duplicated the Library and kept stale launch pages in the main tree. |
 | `atlas/atlas-view/apps/lupine-site/` | Older nested marketing app superseded by `library-site/` and active LUPI apps. |
+| `atlas/atlas-view/apps/lupi-studio/` | Fake/duplicate studio app that misdirected agents away from the real `apps/web/` viewer. |
 | `latest/` | Unreferenced old library snapshot and presentation staging area. |
 | `minimax-mcp` | Empty submodule pointer with no active root purpose. |
