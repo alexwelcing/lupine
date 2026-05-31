@@ -20,6 +20,7 @@ import {
   lupiMcpEndpoint,
 } from './firebase';
 import { useFirebaseAuth } from './useFirebaseAuth';
+import { ApiKeyManager } from './ApiKeyManager';
 
 interface FirebaseUserSettingsProps {
   compact?: boolean;
@@ -139,6 +140,7 @@ export function FirebaseUserSettings({ compact = false }: FirebaseUserSettingsPr
                   <LupiButton onClick={refreshToken}>Refresh</LupiButton>
                   <LupiButton onClick={copyToken} disabled={!idToken}>{copied ? 'Copied' : 'Copy token'}</LupiButton>
                 </div>
+                {!isOverride && <ApiKeyManager uid={user.uid} />}
                 <LupiButton tone="danger" onClick={signOut}>Sign out</LupiButton>
               </>
             ) : (
