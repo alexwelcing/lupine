@@ -61,13 +61,14 @@ const START_PATHS = [
   },
   {
     title: 'Watch the live lab',
-    body: 'Broadcasts, claim movement, and operating cadence without a pitch-first surface.',
+    body: 'Broadcasts, source intake, claim movement, and operating cadence without a pitch-first surface.',
     to: '/live',
   },
 ]
 
 const WATCH_SIGNALS = [
   'Claim status changes',
+  'Research source intake',
   'Refutations and corrections',
   'LUPI evidence routes',
   'Library report updates',
