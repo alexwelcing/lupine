@@ -1,0 +1,7 @@
+{
+  "schema": "lupine.mlip.distill_policy_registry.v1",
+  "description": "Shadow state/phase MPtrj policy routing. This registry intentionally points default_accuracy at the state/phase v5 candidate so a promotion canary can be launched without changing the active broad-MPtrj default registry.",
+  "policies": {
+    "default_accuracy": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-state-phase-v5-accuracy.json"
+  }
+}

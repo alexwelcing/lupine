@@ -1,7 +1,21 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { marked } from 'marked'
 import { useQuery } from '@tanstack/react-query'
-import { Activity, Atom, CheckCircle2, Clock3, FlaskConical, Radio, Sparkles, XCircle } from 'lucide-react'
+import {
+  Activity,
+  Atom,
+  CheckCircle2,
+  Clock3,
+  ExternalLink,
+  FileJson,
+  FlaskConical,
+  Gauge,
+  GitBranch,
+  Radio,
+  ShieldCheck,
+  Sparkles,
+  TriangleAlert,
+  XCircle,
+} from 'lucide-react'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { PageShell } from '../components/ui/PageShell'
@@ -26,6 +40,9 @@ const FEED_RECENT_CLAIMS_URL = `${WORKER_BASE}/feed/recent-claims`
 const FEED_VIGNETTE_URL = `${WORKER_BASE}/feed/vignette`
 const FEED_BEATS_URL = `${WORKER_BASE}/feed/beats?limit=20`
 const BROADCASTS_URL = `${WORKER_BASE}/broadcasts?limit=10`
+const WORKFLOWS_URL = `${WORKER_BASE}/research/workflows`
+const PHOENIX_PACKET_URL = `${WORKER_BASE}/research/workflows/mlip-baseline-grid/campaigns/mlip-baseline-grid-v2-20260522-1155/report?format=phoenix`
+const OBSERVABILITY_PR_URL = 'https://github.com/alexwelcing/lupine/pull/185'
 
 function timeAgo(dateString: string) {
   if (!dateString) return ''
@@ -99,6 +116,41 @@ const MLIP_COVERAGE_ROWS = [
   { label: 'Baseline', detail: '25/25 complete', win: 25, blocked: 0, pending: 0 },
   { label: 'Distill Accuracy', detail: '2 wins, 4 blocked/no-op, 19 not run', win: 2, blocked: 4, pending: 19 },
   { label: 'Accuracy + Accelerate', detail: '2 wins, speed claim pending', win: 2, blocked: 4, pending: 19 },
+] as const
+
+const STATE_PHASE_EVALUATORS = [
+  'mlip.state_condition.coverage',
+  'mlip.phase_change.phase_labels',
+] as const
+
+const MLIP_RIBBON_STATUS = [
+  {
+    label: 'candidate ribbon',
+    value: 'hyperribbon-mptrj-state-phase-v5',
+    detail: 'shadow registry, not default',
+  },
+  {
+    label: 'latest canary',
+    value: 'mlip-cell-chgnet-djcnb',
+    detail: 'v5 CHGNet batch complete',
+  },
+  {
+    label: 'fixture coverage',
+    value: '0.00',
+    detail: 'state/phase labels missing',
+  },
+  {
+    label: 'runner image',
+    value: 'mlip-observability-20260531-36114cc',
+    detail: 'all five Cloud Run jobs rebuilt',
+  },
+] as const
+
+const STATE_PHASE_TEST_PLAN = [
+  'Run mptrj-state-phase-ribbon-v1 as a promotion canary before full-grid spend.',
+  'Require mlip.state_condition.coverage = 1 before crediting pressure/temperature behavior.',
+  'Require mlip.phase_change.phase_labels = 1 before claiming phase-change evaluation.',
+  'Keep force and stress corrections frozen until labeled fixtures produce zero-regression evidence.',
 ] as const
 
 /**
@@ -257,6 +309,26 @@ type Beat = {
   ts: number
 }
 
+type WorkflowDescriptor = {
+  workflow_id: string
+  label?: string
+  cloudflare?: {
+    routes?: string[]
+  }
+  git?: {
+    checks?: string[]
+  }
+  phoenix?: {
+    evaluators?: string[]
+    annotations?: string[]
+    lifecycle_spans?: string[]
+  }
+}
+
+type WorkflowsPayload = {
+  workflows?: WorkflowDescriptor[]
+}
+
 function LiveLabComponent() {
   const swarmQuery = useQuery({
     queryKey: ['feed-swarm'],
@@ -303,6 +375,11 @@ function LiveLabComponent() {
     queryFn: () => fetchJson(BROADCASTS_URL),
     refetchInterval: 60_000,
   })
+  const workflowsQuery = useQuery<WorkflowsPayload>({
+    queryKey: ['research-workflows'],
+    queryFn: () => fetchJson(WORKFLOWS_URL),
+    refetchInterval: 60_000,
+  })
 
   const swarm = MOCK_SWARM as any
   const experiments = experimentsQuery.data
@@ -325,6 +402,7 @@ function LiveLabComponent() {
     latestBroadcastQuery.error && 'broadcast',
     hypothesesQuery.error && 'hypotheses',
     recentClaimsQuery.error && 'claims',
+    workflowsQuery.error && 'research workflows',
   ].filter(Boolean) as string[]
   const broadcastMetrics = latestBroadcast?.metrics
   const data: { swarm_status?: Record<string, unknown> } = { swarm_status: swarm }
@@ -419,7 +497,7 @@ function LiveLabComponent() {
         </div>
       </section>
 
-      <MlipBaselineLivePanel />
+      <MlipBaselineLivePanel workflows={workflowsQuery.data?.workflows ?? []} workflowError={Boolean(workflowsQuery.error)} />
 
       {/* Top Stats Bar — counts straight from hypotheses + claims tables */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -775,7 +853,18 @@ function ClaimRow({ c }: { c: RecentClaim }) {
   )
 }
 
-function MlipBaselineLivePanel() {
+function MlipBaselineLivePanel({
+  workflows,
+  workflowError,
+}: {
+  workflows: WorkflowDescriptor[]
+  workflowError: boolean
+}) {
+  const evaluatorNames = new Set(workflows.flatMap((workflow) => workflow.phoenix?.evaluators ?? []))
+  const routeCount = workflows.reduce((total, workflow) => total + (workflow.cloudflare?.routes?.length ?? 0), 0)
+  const lifecycleCount = workflows.reduce((total, workflow) => total + (workflow.phoenix?.lifecycle_spans?.length ?? 0), 0)
+  const statePhaseOnline = STATE_PHASE_EVALUATORS.every((name) => evaluatorNames.has(name))
+
   return (
     <section className="mb-8 overflow-hidden border border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
       <div className="grid grid-cols-1 2xl:grid-cols-12">
@@ -788,28 +877,56 @@ function MlipBaselineLivePanel() {
             <span className="mono-label text-[var(--on-surface-variant-mid)]">cloud run complete</span>
           </div>
           <h2 className="mb-5 font-serif text-3xl md:text-4xl leading-[1.05] tracking-tight text-[var(--on-surface)]">
-            The first real 5x5 baseline is now part of the live lab.
+            The new state/phase MLIP ribbon is wired, but not claimed yet.
           </h2>
           <p className="mb-6 max-w-2xl text-sm md:text-base leading-relaxed text-[var(--on-surface-variant)]">
-            Five MLIP backends ran across energy, forces, stress, elastic, and relaxation. Distill is now measured against that reference plane as an in-run policy layer: two energy cells are promoted, MACE stress is blocked, and the rest of the 5x5x3 surface stays explicitly unclaimed until the row policies earn it.
+            Phoenix now exposes the evaluators that decide whether a row really covers low/high pressure, low/high temperature, and phase-change labels. The v5 CHGNet canary ran energy, forces, and relaxation through baseline plus Distill Accuracy, then gave the useful answer: the current canonical fixture has no state or phase labels, so the next ribbon must test a labeled fixture before it earns a science claim.
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            <MlipProofMetric label="Baseline" value="25/25" detail="cells complete" color="var(--primary)" />
-            <MlipProofMetric label="Energy wins" value="2" detail="cloud-promoted" color="#5a9e97" />
-            <MlipProofMetric label="Blocked" value="1" detail="MACE stress" color="var(--error)" />
-            <MlipProofMetric label="Speed claim" value="pending" detail="larger warm cells" color="var(--secondary)" />
+          <div className="mb-5 grid grid-cols-2 gap-3">
+            {MLIP_RIBBON_STATUS.map((item) => (
+              <MlipProofMetric
+                key={item.label}
+                label={item.label}
+                value={item.value}
+                detail={item.detail}
+                color={item.label === 'fixture coverage' ? 'var(--error)' : 'var(--primary)'}
+              />
+            ))}
           </div>
-          <a
-            href="https://library-site-edbhtpvina-uc.a.run.app/#/read/mlip-cloud-baseline-distill"
-            target="_blank"
-            rel="noreferrer"
-            className="mt-6 inline-flex border border-[var(--primary)] px-4 py-2 mono-label text-[var(--primary)] hover:bg-[var(--primary-container)] transition-colors"
-          >
-            read the full report
-          </a>
+          <div className="mb-5 border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <span className="mono-label text-[var(--secondary)]">Phoenix gate status</span>
+              {statePhaseOnline ? (
+                <ShieldCheck size={16} className="text-[var(--primary)]" />
+              ) : (
+                <TriangleAlert size={16} className="text-[var(--error)]" />
+              )}
+            </div>
+            <div className="grid grid-cols-1 gap-2">
+              {STATE_PHASE_EVALUATORS.map((name) => (
+                <div key={name} className="grid grid-cols-[1fr_auto] gap-3 border border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-3 py-2">
+                  <span className="font-mono text-[11px] text-[var(--on-surface)]">{name}</span>
+                  <span className="mono-label" style={{ color: evaluatorNames.has(name) ? 'var(--primary)' : 'var(--error)' }}>
+                    {evaluatorNames.has(name) ? 'listed' : 'missing'}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-xs leading-relaxed text-[var(--on-surface-variant)]">
+              {workflowError
+                ? 'The workflow index did not load in this browser pass; static state from the latest deploy is shown above.'
+                : `${workflows.length || 0} research workflows, ${routeCount || 0} Cloudflare routes, and ${lifecycleCount || 0} lifecycle spans are visible from glim-think.`}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <MlipOpsLink href={PHOENIX_PACKET_URL} icon={<FileJson size={14} />} label="Phoenix packet" />
+            <MlipOpsLink href={WORKFLOWS_URL} icon={<Gauge size={14} />} label="Workflow index" />
+            <MlipOpsLink href={OBSERVABILITY_PR_URL} icon={<GitBranch size={14} />} label="PR #185" />
+          </div>
         </div>
 
         <div className="2xl:col-span-7 p-6 md:p-8">
+          <MlipStatePhaseTestPlan statePhaseOnline={statePhaseOnline} />
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
             <MlipBaselineHeatmap />
             <MlipDistillTriplets />
@@ -821,11 +938,54 @@ function MlipBaselineLivePanel() {
   )
 }
 
+function MlipOpsLink({ href, icon, label }: { href: string; icon: ReactNode; label: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex min-h-10 items-center gap-2 border border-[var(--primary)] px-3 py-2 mono-label text-[var(--primary)] hover:bg-[var(--primary-container)] transition-colors"
+    >
+      {icon}
+      <span>{label}</span>
+      <ExternalLink size={12} aria-hidden="true" />
+    </a>
+  )
+}
+
+function MlipStatePhaseTestPlan({ statePhaseOnline }: { statePhaseOnline: boolean }) {
+  return (
+    <div className="mb-5 border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h3 className="mono-label text-[var(--primary)]">state/phase ribbon test</h3>
+          <p className="mt-1 text-xs leading-relaxed text-[var(--on-surface-variant)]">
+            The prepared canary is <span className="font-mono text-[var(--on-surface)]">mptrj-state-phase-ribbon-v1</span>. It should fail honestly until the fixture is labeled.
+          </p>
+        </div>
+        <span className="mono-label" style={{ color: statePhaseOnline ? 'var(--primary)' : 'var(--error)' }}>
+          {statePhaseOnline ? 'evaluators live' : 'workflow check pending'}
+        </span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {STATE_PHASE_TEST_PLAN.map((step, index) => (
+          <div key={step} className="grid grid-cols-[32px_1fr] gap-3 border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-3">
+            <span className="flex h-8 w-8 items-center justify-center border border-[var(--outline-variant)] font-mono text-[10px] text-[var(--secondary)]">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <p className="text-xs leading-relaxed text-[var(--on-surface-variant)]">{step}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function MlipProofMetric({ label, value, detail, color }: { label: string; value: string; detail: string; color: string }) {
   return (
     <div className="border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
       <div className="mb-2 mono-label text-[var(--on-surface-variant-mid)]">{label}</div>
-      <div className="font-mono text-2xl leading-none" style={{ color, fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+      <div className="font-mono text-xl md:text-2xl leading-tight break-words" style={{ color, fontVariantNumeric: 'tabular-nums' }}>{value}</div>
       <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant)]">{detail}</div>
     </div>
   )

@@ -62,6 +62,20 @@ and blocks correction when the complement fraction is low, projection distance
 is high, or stiff-axis signal exceeds the drift budget. This is the next replay
 gate before any Cloud Run spend.
 
+`hyperribbon-mptrj-state-phase-v5-accuracy.json` is the next shadow candidate
+for pressure/temperature and phase-change coverage. It is not the default cloud
+policy. The 2026-05-31 CHGNet Cloud Run canary proved that runner artifacts and
+Phoenix packets can carry `mlip.state_condition.coverage` and
+`mlip.phase_change.phase_labels`, but it also showed the current
+`canonical-structures-v2` fixture has no pressure, temperature, or phase labels
+for the `forces/chgnet` path. The v5 policy keeps energy correction bounded,
+inherits the v4 projected-ribbon gates, and freezes force/stress corrections
+until state/phase-labeled fixtures exist. Use
+`accuracy_policy_registry.mptrj-state-phase-v5.json` plus the
+`mptrj-state-phase-ribbon-v1` evidence campaign for the first canary; do not
+promote it into `default_accuracy` until the state/phase Phoenix gates are
+green and the paired accuracy rows show zero regressions.
+
 `hyperribbon-ni-eam-support-v1-accuracy.json` is the first Lane A
 material-family support ribbon. It is paired with
 `gcp/mlip-cell-runner/fixtures/ni_fcc_eam_distill_support_v1.json`, a generated

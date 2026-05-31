@@ -1,5 +1,11 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000'
+const webServerCommand = process.env.PLAYWRIGHT_WEB_SERVER_COMMAND ?? 'pnpm dev'
+const reuseExistingServer = process.env.PLAYWRIGHT_REUSE_SERVER
+  ? process.env.PLAYWRIGHT_REUSE_SERVER !== '0'
+  : !process.env.CI
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: false,
@@ -10,7 +16,7 @@ export default defineConfig({
   timeout: 90_000,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL,
     trace: 'retain-on-failure',
     navigationTimeout: 60_000,
   },
@@ -23,10 +29,10 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm dev',
-    url: 'http://localhost:3000',
+    command: webServerCommand,
+    url: baseURL,
     timeout: 240_000,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer,
     stdout: 'pipe',
     stderr: 'pipe',
   },

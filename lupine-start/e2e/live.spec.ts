@@ -26,6 +26,9 @@ test('live page renders and polls the worker feed', async ({ page }) => {
   await page.goto('/live')
 
   await expect(page.getByRole('heading', { level: 1, name: 'The lab at work' })).toBeVisible()
+  await expect(page.getByText('hyperribbon-mptrj-state-phase-v5')).toBeVisible()
+  await expect(page.getByText('mlip.state_condition.coverage', { exact: true })).toBeVisible()
+  await expect(page.getByText('mptrj-state-phase-ribbon-v1', { exact: true })).toBeVisible()
 
   // refetchInterval on the swarm feed is 5s — 15s should yield ≥2 hits to it.
   await page.waitForTimeout(15_000)

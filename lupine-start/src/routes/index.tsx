@@ -3,9 +3,9 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 const HERO_PROOF_RAIL = [
-  '14/15 IMMI elements stay on the ribbon',
-  '3 confounded claims refuted in public',
-  'Au foundation-MLIP escape remains open',
+  'Phoenix state/phase gates live on /live',
+  'MPtrj v5 shadow ribbon prepared for canary',
+  'Cloud Run MLIP runner rebuilt and observed',
   'Every claim links back to inspectable evidence',
 ]
 
@@ -27,7 +27,7 @@ const SCIENCE_SPINE = [
   {
     layer: 'Cross-MLIP transfer',
     question: 'Do foundation MLIPs inherit, rotate, or escape the error geometry found in classical potentials?',
-    evidence: 'mlip_immi runs, cross-MLIP alignment payloads, conjecture ledger',
+    evidence: 'mlip_immi runs, Phoenix evaluator packets, Cloud Run canaries',
   },
   {
     layer: 'Causal validity',
@@ -61,7 +61,7 @@ const START_PATHS = [
   },
   {
     title: 'Watch the live lab',
-    body: 'Broadcasts, claim movement, and operating cadence without a pitch-first surface.',
+    body: 'Phoenix gates, MLIP runner status, state/phase canaries, and claim movement.',
     to: '/live',
   },
 ]
@@ -125,7 +125,9 @@ function HomePage() {
                   Lupine Science studies where atomistic models fail, why those failures
                   have structure, and how that structure can guide correction. Built for
                   materials labs, MLIP builders, research software teams, and lab leaders
-                  who need evidence they can inspect.
+                  who need evidence they can inspect. The current MLIP/Phoenix work is
+                  surfaced live: pressure-temperature coverage, phase-label gates, and the
+                  next MPtrj ribbon canary are visible on the live lab page.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-4">
@@ -142,10 +144,10 @@ function HomePage() {
                     Open LUPI
                   </a>
                   <Link
-                    to="/research"
+                    to="/live"
                     className="inline-flex min-h-12 items-center justify-center px-6 py-3 rounded-md border border-[var(--outline-variant)] text-[var(--on-surface-variant)] font-semibold no-underline hover:text-[var(--on-surface)] hover:bg-[var(--surface-container-low)] transition-colors"
                   >
-                    Review the science
+                    Watch live lab
                   </Link>
                 </div>
               </div>
