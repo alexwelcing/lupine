@@ -22,23 +22,7 @@ export const savedViewsProvider: MoleculeProvider = {
   },
 };
 
-/**
- * Meta / FAIR Open Molecules (OMol25) — request #2.
- * TODO: OMol25 is multi-TB (HuggingFace `facebook/OMol25`); it cannot be bundled
- * or queried directly from the browser. Stand up a search index instead:
- *   - precompute a compact index (formula / SMILES / name → structure pointer),
- *   - host it on GCS + expose a Cloud Function `searchOmol(query)` endpoint,
- *   - call that endpoint here and map results → MoleculeHit
- *     (load: { kind:'url', url: <structure file> } or a generate spec).
- */
-export const omolProvider: MoleculeProvider = {
-  id: 'omol',
-  label: 'Meta OMol25',
-  isAvailable: () => false,
-  async search() {
-    return [];
-  },
-};
+// Meta OMol25 (request #2) is now a real provider — see ./omol.ts.
 
 /**
  * Curated Lupi molecule library (Firestore) — request #3.
