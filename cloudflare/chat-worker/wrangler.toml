@@ -1,0 +1,43 @@
+name = "lupi-chat"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+
+# ─── Route ───
+# Bind to chat.lupine.dev once the DNS record is proxied through Cloudflare
+# (orange-cloud). Uncomment after the DNS cutover, mirroring cdn-proxy.
+#
+# [[routes]]
+# pattern = "chat.lupine.dev/*"
+# zone_name = "lupine.dev"
+
+# ─── KV: per-IP rate-limit counters ───
+# Create the namespace once, then paste the returned id below:
+#   wrangler kv namespace create CHAT_RL
+# (and for `wrangler dev` against a local preview namespace:)
+#   wrangler kv namespace create CHAT_RL --preview
+[[kv_namespaces]]
+binding = "CHAT_RL"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"          # from `wrangler kv namespace create CHAT_RL`
+# preview_id = "REPLACE_WITH_PREVIEW_KV_ID"  # from `... create CHAT_RL --preview`
+
+# ─── Vars ───
+# Optional, non-secret overrides. ANTHROPIC_MODEL and the API key are best
+# set as secrets (see README), but you can pin a model here too.
+# [vars]
+# ANTHROPIC_MODEL = "claude-sonnet-4-6"
+# RATE_LIMIT_MAX = "30"
+# EXTRA_ALLOWED_ORIGINS = "https://preview.example.com"
+
+# ─── Secrets (set via `wrangler secret put`) ───
+# ANTHROPIC_API_KEY   — required. Already configured on this account (shared
+#                       with glim-think). Set with:
+#                         wrangler secret put ANTHROPIC_API_KEY
+# ANTHROPIC_MODEL     — optional override of the Claude model id.
+
+# ─── Observability ───
+# Off by default for this lightweight public endpoint (logpush disabled).
+[observability]
+enabled = false
+
+[observability.logs]
+enabled = false
