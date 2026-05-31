@@ -248,6 +248,11 @@ export interface AppState {
   /** Sign-in callout visibility. Defaults CLOSED — the app never auto-prompts
    *  anonymous visitors to sign up; opened only by an explicit user action. */
   authPromptOpen: boolean;
+  /** Landing-page molecule configurator (the on-page MCP demo): whether the
+   *  guided if-this-then-that dialog is open, and the seed text typed into the
+   *  hero search that launched it. */
+  configuratorOpen: boolean;
+  configuratorSeed: string | null;
   activeProfile: 'publication' | 'neon' | 'cinematic' | 'raw' | null;
   equilibriumSolve: EquilibriumSolveState | null;
 
@@ -395,6 +400,8 @@ export interface AppState {
   setRimLightColor: (val: string) => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
   setAuthPromptOpen: (open: boolean) => void;
+  openConfigurator: (seed?: string) => void;
+  closeConfigurator: () => void;
   setEquilibriumSolve: (state: EquilibriumSolveState | null) => void;
   setNistCatalog: (catalog: NistCatalogEntry[] | null) => void;
   setActivePotentialId: (id: string | null) => void;
@@ -512,6 +519,8 @@ const DEFAULTS = {
   colorblindMode: false,
   activePanel: null,
   authPromptOpen: false,
+  configuratorOpen: false,
+  configuratorSeed: null,
   activeProfile: null,
   equilibriumSolve: null,
   nistCatalog: null,
@@ -746,6 +755,8 @@ export const useStore = create<AppState>()(
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),
     setAuthPromptOpen: (authPromptOpen) => set({ authPromptOpen }),
+    openConfigurator: (seed) => set({ configuratorOpen: true, configuratorSeed: seed ?? null }),
+    closeConfigurator: () => set({ configuratorOpen: false }),
     setEquilibriumSolve: (equilibriumSolve) => set({ equilibriumSolve }),
     setNistCatalog: (nistCatalog) => set({ nistCatalog }),
     setActivePotentialId: (activePotentialId) => set({ activePotentialId }),

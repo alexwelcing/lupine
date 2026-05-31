@@ -16,6 +16,10 @@ export interface GalleryExample {
   colors: [string, string, string];
   featured?: boolean;
   metadata?: Record<string, string>;
+  /** Multi-frame trajectory marker + per-atom property to color by, when present. */
+  isTrajectory?: boolean;
+  autoPlay?: boolean;
+  colorBy?: string;
 }
 
 export const ALL_EXAMPLES: GalleryExample[] = galleryData as any[];

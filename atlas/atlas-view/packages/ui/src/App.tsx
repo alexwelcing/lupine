@@ -109,6 +109,7 @@ import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { SavedViewButton } from './SavedViewButton';
 import { HeaderAuthButton } from './HeaderAuthButton';
+import { MoleculeConfigurator } from './molecules/MoleculeConfigurator';
 import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
 import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
@@ -1208,6 +1209,7 @@ export default function App() {
         </div>
       </header>
       <LupiAuthCallout compact={isMobile} />
+      <MoleculeConfigurator />
 
       {/* ─── Main content ─── */}
       <div style={{ flex: 1, minHeight: 0, display: 'flex', position: 'relative' }}>
