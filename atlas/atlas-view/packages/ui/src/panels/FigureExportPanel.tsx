@@ -155,7 +155,9 @@ export function FigureExportPanel() {
   const cameraPosition = useStore(s => s.cameraPosition);
   const cameraTarget = useStore(s => s.cameraTarget);
   const [status, setStatus] = useState<ExportStatus>({ kind: 'idle', label: 'Ready' });
-  const hasWebCodecs = typeof globalThis.VideoEncoder !== 'undefined';
+  // Video export now uses native MediaRecorder (works on every browser incl. iOS
+  // Safari), so it no longer requires WebCodecs/desktop Chrome.
+  const hasVideoExport = typeof globalThis.MediaRecorder !== 'undefined';
   const compact = useCompactExportPanel();
 
   useEffect(() => {
@@ -222,8 +224,27 @@ export function FigureExportPanel() {
     });
   }, [file, triggerExport]);
 
+  const runGlbExport = useCallback(() => {
+    if (!file) return;
+    setStatus({ kind: 'working', label: 'Building GLB' });
+    triggerExport({
+      type: 'glb',
+      format: 'glb',
+      baseName: `Lupi-glb-${safeName(file.name)}`,
+      onComplete: (success, blob, filename) => {
+        if (success && blob && filename) {
+          handoffDownload(blob, filename, 'GLB', setStatus);
+        } else if (success) {
+          setStatus({ kind: 'success', label: 'Exported GLB' });
+        } else {
+          setStatus({ kind: 'error', label: 'GLB failed' });
+        }
+      },
+    });
+  }, [file, triggerExport]);
+
   const runVideoExport = useCallback((motion: 'rotate' | 'flythrough') => {
-    if (!file || !hasWebCodecs) return;
+    if (!file || !hasVideoExport) return;
     const label = motion === 'rotate' ? 'MP4 rotate' : 'MP4 auto flythrough';
     setStatus({ kind: 'working', label: `Recording ${label}` });
     triggerExport({
@@ -243,10 +264,10 @@ export function FigureExportPanel() {
         }
       },
     });
-  }, [cameraPosition, cameraTarget, file, hasWebCodecs, triggerExport]);
+  }, [cameraPosition, cameraTarget, file, hasVideoExport, triggerExport]);
 
   const busy = status.kind === 'working';
-  const videoMeta = hasWebCodecs ? VIDEO_EXPORT.meta : 'Chrome/Edge required';
+  const videoMeta = hasVideoExport ? VIDEO_EXPORT.meta : 'Not supported here';
 
   return (
     <div
@@ -347,11 +368,20 @@ export function FigureExportPanel() {
           compact={compact}
         />
         <ExportAction
+          testId="export-glb"
+          icon={<IconCube />}
+          label="GLB"
+          meta={systemInfo ? `${systemInfo.natoms.toLocaleString()} atoms` : 'glTF 3D model'}
+          disabled={!file || busy}
+          onClick={runGlbExport}
+          compact={compact}
+        />
+        <ExportAction
           testId="export-mp4-rotate"
           icon={<IconVideo />}
           label="MP4 rotate"
           meta={videoMeta}
-          disabled={!file || busy || !hasWebCodecs}
+          disabled={!file || busy || !hasVideoExport}
           onClick={() => runVideoExport('rotate')}
           compact={compact}
         />
@@ -360,7 +390,7 @@ export function FigureExportPanel() {
           icon={<IconVideo />}
           label="MP4 auto flythrough"
           meta={videoMeta}
-          disabled={!file || busy || !hasWebCodecs}
+          disabled={!file || busy || !hasVideoExport}
           onClick={() => runVideoExport('flythrough')}
           compact={compact}
         />
