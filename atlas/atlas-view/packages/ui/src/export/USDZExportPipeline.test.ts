@@ -4,7 +4,8 @@ import { expandInstancedMeshes, restoreInstancedMeshes } from './USDZExportPipel
 
 // Build the same unit cylinder + radiusBT setup used by Bonds.tsx so we can
 // verify the baker applies the per-instance radius taper that the runtime
-// shader normally handles.
+// shader normally handles. Presence of radiusBT forces the vertex-bake path
+// (the geometry is a UNIT cylinder; the real radius lives in the attribute).
 function makeBondLikeMesh(rB: number, rT: number, length: number) {
   const geo = new THREE.CylinderGeometry(1, 1, 1, 5, 1);
   const radiusBT = new Float32Array([rB, rT]);
@@ -22,8 +23,8 @@ function makeBondLikeMesh(rB: number, rT: number, length: number) {
   return mesh;
 }
 
-describe('USDZExportPipeline — radiusBT baking', () => {
-  it('preserves per-instance colors through the baked palette texture', () => {
+describe('USDZExportPipeline — shared-geometry expansion (atoms / pre-sized bonds)', () => {
+  it('preserves per-instance colors as one shared-geometry mesh per color', () => {
     const scene = new THREE.Scene();
     const geo = new THREE.SphereGeometry(1, 6, 4);
     const mat = new THREE.MeshStandardMaterial();
@@ -39,17 +40,64 @@ describe('USDZExportPipeline — radiusBT baking', () => {
     const swaps = expandInstancedMeshes(scene);
     expect(swaps).toHaveLength(1);
 
-    const baked = swaps[0].replacement;
-    const bakedMat = baked.material as THREE.MeshStandardMaterial;
-    const uv = baked.geometry.getAttribute('uv') as THREE.BufferAttribute;
+    // No radiusBT → shared-geometry Group: one child Mesh per instance.
+    const group = swaps[0].replacement as THREE.Group;
+    expect((group as unknown as { isGroup: boolean }).isGroup).toBe(true);
+    expect(group.children).toHaveLength(2);
 
-    expect(uv.count).toBeGreaterThan(0);
-    expect(bakedMat.map).toBeTruthy();
-    expect((bakedMat.map?.image as HTMLCanvasElement).width).toBe(2);
+    const meshes = group.children as THREE.Mesh[];
+
+    // The dedup guarantee: every child references the SAME source geometry
+    // instance, which is exactly what lets USDZExporter emit one USD mesh.
+    expect(meshes[0].geometry.id).toBe(geo.id);
+    expect(meshes[1].geometry.id).toBe(geo.id);
+
+    // Each instance color is carried verbatim on a flat per-color material —
+    // no vertex colors, no palette texture, no quantization.
+    const colors = meshes.map((m) => (m.material as THREE.MeshStandardMaterial).color);
+    const isRed = (c: THREE.Color) => c.r > 0.9 && c.g < 0.1 && c.b < 0.1;
+    const isBlue = (c: THREE.Color) => c.b > 0.9 && c.r < 0.1 && c.g < 0.1;
+    expect(colors.some(isRed)).toBe(true);
+    expect(colors.some(isBlue)).toBe(true);
+    for (const m of meshes) {
+      const sm = m.material as THREE.MeshStandardMaterial;
+      expect(sm.vertexColors).toBe(false);
+      expect(sm.map).toBeFalsy();
+    }
 
     restoreInstancedMeshes(swaps);
   });
 
+  it('shares the base sphere geometry untouched for atoms (no radiusBT, no baking)', () => {
+    const scene = new THREE.Scene();
+    const sphereGeo = new THREE.SphereGeometry(1.5, 8, 6);
+    const mat = new THREE.MeshStandardMaterial();
+    const mesh = new THREE.InstancedMesh(sphereGeo, mat, 1);
+    mesh.setMatrixAt(0, new THREE.Matrix4().identity());
+    mesh.instanceMatrix.needsUpdate = true;
+    scene.add(mesh);
+
+    const swaps = expandInstancedMeshes(scene);
+    const group = swaps[0].replacement as THREE.Group;
+    expect((group as unknown as { isGroup: boolean }).isGroup).toBe(true);
+
+    const child = group.children[0] as THREE.Mesh;
+    // The shared path references the ORIGINAL geometry instance untouched.
+    expect(child.geometry.id).toBe(sphereGeo.id);
+
+    const positions = child.geometry.getAttribute('position').array as Float32Array;
+    let maxR = 0;
+    for (let i = 0; i < positions.length; i += 3) {
+      const r = Math.hypot(positions[i], positions[i + 1], positions[i + 2]);
+      if (r > maxR) maxR = r;
+    }
+    expect(maxR).toBeCloseTo(1.5, 2);
+
+    restoreInstancedMeshes(swaps);
+  });
+});
+
+describe('USDZExportPipeline — radiusBT baking (live-style unit cylinders)', () => {
   it('scales lateral vertex positions by the per-instance radius', () => {
     const scene = new THREE.Scene();
     const mesh = makeBondLikeMesh(0.12, 0.12, 5);
@@ -58,7 +106,8 @@ describe('USDZExportPipeline — radiusBT baking', () => {
     const swaps = expandInstancedMeshes(scene);
     expect(swaps).toHaveLength(1);
 
-    const baked = swaps[0].replacement;
+    // radiusBT present → vertex-bake path → a single Mesh with baked geometry.
+    const baked = swaps[0].replacement as THREE.Mesh;
     const positions = baked.geometry.getAttribute('position').array as Float32Array;
 
     // Sample lateral extent: the unit cylinder has vertices at radius=1 in the
@@ -83,7 +132,8 @@ describe('USDZExportPipeline — radiusBT baking', () => {
     scene.add(mesh);
 
     const swaps = expandInstancedMeshes(scene);
-    const positions = swaps[0].replacement.geometry.getAttribute('position').array as Float32Array;
+    const baked = swaps[0].replacement as THREE.Mesh;
+    const positions = baked.geometry.getAttribute('position').array as Float32Array;
 
     // Find the largest lateral radius near each cap.
     let bottomMax = 0;
@@ -99,29 +149,6 @@ describe('USDZExportPipeline — radiusBT baking', () => {
     }
     expect(bottomMax).toBeCloseTo(0.05, 2);
     expect(topMax).toBeCloseTo(0.20, 2);
-
-    restoreInstancedMeshes(swaps);
-  });
-
-  it('leaves geometry without radiusBT untouched (atoms case)', () => {
-    const scene = new THREE.Scene();
-    const sphereGeo = new THREE.SphereGeometry(1.5, 8, 6);
-    const mat = new THREE.MeshStandardMaterial();
-    const mesh = new THREE.InstancedMesh(sphereGeo, mat, 1);
-    mesh.setMatrixAt(0, new THREE.Matrix4().identity());
-    mesh.instanceMatrix.needsUpdate = true;
-    scene.add(mesh);
-
-    const swaps = expandInstancedMeshes(scene);
-    const positions = swaps[0].replacement.geometry.getAttribute('position').array as Float32Array;
-
-    // Without radiusBT we should see vertices at the original sphere radius.
-    let maxR = 0;
-    for (let i = 0; i < positions.length; i += 3) {
-      const r = Math.hypot(positions[i], positions[i + 1], positions[i + 2]);
-      if (r > maxR) maxR = r;
-    }
-    expect(maxR).toBeCloseTo(1.5, 2);
 
     restoreInstancedMeshes(swaps);
   });

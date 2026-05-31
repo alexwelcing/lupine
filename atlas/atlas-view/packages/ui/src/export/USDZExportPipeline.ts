@@ -257,24 +257,19 @@ function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
 }
 
 /**
- * True when the cylinder InstancedMesh carries a per-instance `radiusBT` lateral
- * taper that actually VARIES (rB !== rT on some instance). Uniform-radius bonds
- * (and bonds with no radiusBT attribute) can use the cheap shared-geometry path,
- * since the per-bond length + orientation already live in the instance matrix.
+ * True when the InstancedMesh carries a `radiusBT` attribute — the live Bonds.tsx
+ * convention where the geometry is a UNIT cylinder and the real lateral radius (and
+ * any bottom→top taper) lives in the attribute, applied by the runtime shader, NOT
+ * by the instance matrix or the geometry. Such meshes MUST be vertex-baked so the
+ * radius is materialized into positions; the shared-geometry path would export the
+ * unit (radius-1) cylinder regardless of radiusBT.
+ *
+ * The actual export bonds (ExportManager) pre-size the cylinder geometry
+ * (`CylinderGeometry(bondRadius, bondRadius, …)`) and carry NO radiusBT, so they
+ * still take the cheap shared path — only live-style meshes fall back to the bake.
  */
-function instanceRadiiVary(im: THREE.InstancedMesh): boolean {
-  const radiusBTAttr = im.geometry.getAttribute('radiusBT') as
-    | THREE.InstancedBufferAttribute
-    | undefined;
-  if (!radiusBTAttr) return false;
-  const arr = radiusBTAttr.array as ArrayLike<number>;
-  const n = im.count;
-  for (let i = 0; i < n; i++) {
-    const rB = arr[i * 2];
-    const rT = arr[i * 2 + 1];
-    if (rB !== rT) return true;
-  }
-  return false;
+function hasRadiusBT(im: THREE.InstancedMesh): boolean {
+  return im.geometry.getAttribute('radiusBT') != null;
 }
 
 /**
@@ -380,10 +375,11 @@ export function expandInstancedMeshes(root: THREE.Object3D): InstancedSwap[] {
   for (const im of targets) {
     if (!im.parent) continue;
 
-    // Spheres (dominant cost) and uniform-radius bonds use the cheap shared
-    // geometry path. Only bonds whose per-instance lateral radius actually
-    // varies fall back to the per-instance vertex bake (correctness over size).
-    const replacement: THREE.Object3D = instanceRadiiVary(im)
+    // Spheres (dominant cost) and pre-sized bonds use the cheap shared-geometry
+    // path. Only live-style meshes carrying a radiusBT attribute (unit cylinder +
+    // shader-applied radius) fall back to the per-instance vertex bake, which
+    // materializes that radius into positions (correctness over size).
+    const replacement: THREE.Object3D = hasRadiusBT(im)
       ? bakeInstancedMesh(im)
       : instanceToSharedMeshes(im);
 
