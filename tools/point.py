@@ -130,7 +130,6 @@ def cmd_build(subsystem: Optional[str]) -> int:
         "atlas-tui": (REPO_ROOT / "atlas-tui", ["cargo", "build", "--release"]),
         "axiom": (REPO_ROOT / "axiom", ["cargo", "build", "--release"]),
         "atlas-view": (REPO_ROOT / "atlas" / "atlas-view", ["pnpm", "install"]),
-        "lupine-start": (REPO_ROOT / "lupine-start", ["pnpm", "install"]),
         "library-site": (REPO_ROOT / "library-site", ["npm", "install"]),
         "lean-spec": (REPO_ROOT / "lean-spec", ["lake", "build"]),
         "distiller": (REPO_ROOT / "distiller", [sys.executable, "-m", "pip", "install", "-r", "requirements.txt"]),
@@ -240,11 +239,6 @@ def cmd_deploy(target: str) -> int:
         return res.returncode
     elif target == "atlas-view":
         res = _run(["npx.cmd", "wrangler", "pages", "deploy", "apps/web/dist", "--project-name", "atlas-view", "--commit-dirty=true"], cwd=REPO_ROOT / "atlas" / "atlas-view")
-        print(res.stdout.encode('cp1252', 'replace').decode('cp1252'))
-        return res.returncode
-    elif target == "lupine-start":
-        short_sha = _run(["git", "rev-parse", "--short", "HEAD"]).stdout.strip()
-        res = _run(["gcloud.cmd", "builds", "submit", "--config", "cloudbuild.yaml", f"--substitutions=SHORT_SHA={short_sha}", "."], cwd=REPO_ROOT / "lupine-start")
         print(res.stdout.encode('cp1252', 'replace').decode('cp1252'))
         return res.returncode
     else:

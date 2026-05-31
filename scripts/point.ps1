@@ -156,7 +156,6 @@ function Invoke-Build {
         "atlas-tui" { Push-Location "$RepoRoot\atlas-tui"; cargo build --release; Pop-Location }
         "axiom" { Push-Location "$RepoRoot\axiom"; cargo build --release; Pop-Location }
         "atlas-view" { Push-Location "$RepoRoot\atlas\atlas-view"; pnpm install; pnpm build; Pop-Location }
-        "lupine-start" { Push-Location "$RepoRoot\lupine-start"; pnpm install; pnpm build; Pop-Location }
         "library-site" { Push-Location "$RepoRoot\library-site"; npm install; npm run build; Pop-Location }
         "glim-think" { Push-Location "$RepoRoot\glim-think"; wrangler deploy --dry-run; Pop-Location }
         "lean-spec" { Push-Location "$RepoRoot\lean-spec"; lake build; Pop-Location }

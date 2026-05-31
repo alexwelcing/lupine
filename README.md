@@ -147,6 +147,9 @@ time, so treat `CHANGELOG.md` and the Library as the live record.
 
 ## Repository Map
 
+For the full root ownership ledger, including keep/elevate/remove-candidate
+decisions, see `ROOTS.md`.
+
 | Path | What it contains |
 | --- | --- |
 | `library-site/` | Static-site generator for the Lupine Library |
@@ -157,7 +160,10 @@ time, so treat `CHANGELOG.md` and the Library as the live record.
 | `atlas/` | LUPI viewer and atomistic evidence surfaces |
 | `atlas-distill/` | Rust runtime for Distill scoring, policy, and fault-line extraction |
 | `glim-think/` | Agentic research control plane, durable agenda, and ledger-backed loop |
-| `lupine-start/` | Public Lupine Science start page |
+
+The old `lupine-start/` marketing/start site has been retired from the repo.
+Public research should surface through the Library, the LUPI viewer, and the
+`glim-think` feed rather than through a second launch site.
 
 ## For Collaborators And Observers
 

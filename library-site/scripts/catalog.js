@@ -280,14 +280,6 @@ export const CATALOG = {
       category: 'foundations',
       tags: ['overview'],
     },
-    {
-      id: 'design-guide',
-      source: 'lupine-start/DESIGN.md',
-      title: 'Atomic Understanding — Design Guide',
-      subtitle: 'Visual identity, tokens, and component architecture for all Lupine UIs.',
-      category: 'foundations',
-      tags: ['design', 'ui'],
-    },
 
     // ── Uncertainty & Error ─────────────────────────────────────────
     {
