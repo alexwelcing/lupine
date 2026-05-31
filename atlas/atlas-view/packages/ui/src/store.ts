@@ -245,6 +245,9 @@ export interface AppState {
 
   // ─── UI ───
   activePanel: 'export' | 'flythrough' | 'telemetry' | 'equilibrium' | 'mlipLongRun' | null;
+  /** Sign-in callout visibility. Defaults CLOSED — the app never auto-prompts
+   *  anonymous visitors to sign up; opened only by an explicit user action. */
+  authPromptOpen: boolean;
   activeProfile: 'publication' | 'neon' | 'cinematic' | 'raw' | null;
   equilibriumSolve: EquilibriumSolveState | null;
 
@@ -391,6 +394,7 @@ export interface AppState {
   setFillLightColor: (val: string) => void;
   setRimLightColor: (val: string) => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
+  setAuthPromptOpen: (open: boolean) => void;
   setEquilibriumSolve: (state: EquilibriumSolveState | null) => void;
   setNistCatalog: (catalog: NistCatalogEntry[] | null) => void;
   setActivePotentialId: (id: string | null) => void;
@@ -507,6 +511,7 @@ const DEFAULTS = {
   showScaleBar: true,
   colorblindMode: false,
   activePanel: null,
+  authPromptOpen: false,
   activeProfile: null,
   equilibriumSolve: null,
   nistCatalog: null,
@@ -740,6 +745,7 @@ export const useStore = create<AppState>()(
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),
+    setAuthPromptOpen: (authPromptOpen) => set({ authPromptOpen }),
     setEquilibriumSolve: (equilibriumSolve) => set({ equilibriumSolve }),
     setNistCatalog: (nistCatalog) => set({ nistCatalog }),
     setActivePotentialId: (activePotentialId) => set({ activePotentialId }),

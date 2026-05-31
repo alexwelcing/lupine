@@ -130,8 +130,21 @@ describe('gallery-data.json — curated launch set', () => {
     for (const e of data) {
       const advertisedFrames = parseFrameLabel(e.frames);
       if (!e.available || advertisedFrames <= 1) continue;
-      if (e.file.startsWith('http') || e.file === 'procedural') {
+      if (e.file === 'procedural') {
         throw new Error(`multi-frame gallery entry must be bundled: ${e.id}`);
+      }
+      if (e.file.startsWith('http')) {
+        // Remote multi-frame assets are allowed ONLY as a streamable .glimbin from
+        // the trusted CORS-enabled bucket: StreamingLoader pulls frames via HTTP
+        // Range requests, so the trajectory plays without bundling a huge file in
+        // git. The frame count lives in the binary payload (not line-countable), so
+        // we assert format + trusted host instead of an on-disk frame recount.
+        // Remote TEXT trajectories (.lammpstrj/.xyz) stay rejected — they'd force a
+        // full multi-MB download and can't be verified here.
+        const trusted = /^https:\/\/storage\.googleapis\.com\/shed-489901-nist-demos\//.test(e.file);
+        expect(e.file.endsWith('.glimbin'), `remote multi-frame ${e.id} must be a streamable .glimbin`).toBe(true);
+        expect(trusted, `remote multi-frame ${e.id} must stream from the trusted CORS bucket`).toBe(true);
+        continue;
       }
 
       const onDisk = PUBLIC + e.file;
