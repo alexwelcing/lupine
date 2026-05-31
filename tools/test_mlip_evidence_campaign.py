@@ -135,6 +135,8 @@ def test_state_phase_shadow_ribbon_campaign_targets_v5_policy() -> None:
 
     assert evidence.validate_campaign(campaign) == []
     assert campaign["ribbon_version"] == "hyperribbon-mptrj-state-phase-v5"
+    assert campaign["local_first_diagnostics"]["probe_script"] == "tools/mlip_state_phase_local_probe.py"
+    assert "Diagnostic plumbing labels only" in campaign["local_first_diagnostics"]["label_contract"]
 
     policy = evidence.load_json(
         evidence.ROOT

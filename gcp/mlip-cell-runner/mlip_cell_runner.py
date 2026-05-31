@@ -9,8 +9,8 @@ instead of fabricating accuracy.
 from __future__ import annotations
 
 import argparse
-import copy
 import contextlib
+import copy
 import hashlib
 import importlib.metadata
 import json
@@ -26,7 +26,7 @@ from typing import Any
 
 import numpy as np
 import requests
-from fixture_contract import run_row, validate_manifest
+from fixture_contract import run_row, select_row, validate_manifest
 
 
 def runtime_import_paths() -> list[pathlib.Path]:
@@ -182,6 +182,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--checkpoint-url",
         default=None,
         help="Optional local or gs:// JSON checkpoint path. Defaults to artifact-prefix/cell_checkpoint.json.",
+    )
+    parser.add_argument(
+        "--checkpoint-only-replay",
+        action="store_true",
+        help="Replay a completed read-only raw-prediction checkpoint without importing the MLIP backend.",
     )
     return parser.parse_args(argv)
 
@@ -374,20 +379,34 @@ class CellCheckpoint:
         if self.mode == "write-only":
             self.cache_misses += 1
             return None
-        key = case_cache_key(row_id, case_index, case)
-        entry = self.payload.get("predictions", {}).get(key)
-        if not isinstance(entry, dict):
-            self.cache_misses += 1
-            return None
-        if entry.get("case_hash") != sha256_hex(case):
-            self.cache_misses += 1
-            return None
-        prediction = entry.get("prediction")
-        if not isinstance(prediction, dict):
+        prediction = self.peek_prediction(row_id, case_index, case)
+        if prediction is None:
             self.cache_misses += 1
             return None
         self.loaded_predictions += 1
         return prediction
+
+    def peek_prediction(self, row_id: str, case_index: int, case: dict[str, Any]) -> dict[str, Any] | None:
+        key = case_cache_key(row_id, case_index, case)
+        entry = self.payload.get("predictions", {}).get(key)
+        if not isinstance(entry, dict):
+            return None
+        if entry.get("case_hash") != sha256_hex(case):
+            return None
+        prediction = entry.get("prediction")
+        return prediction if isinstance(prediction, dict) else None
+
+    def missing_predictions(self, row_id: str, cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        missing = []
+        for case_index, case in enumerate(cases):
+            if self.peek_prediction(row_id, case_index, case) is not None:
+                continue
+            missing.append({
+                "case_index": case_index,
+                "structure_id": case.get("structure_id"),
+                "case_hash": sha256_hex(case),
+            })
+        return missing
 
     def record_prediction(
         self,
@@ -659,7 +678,28 @@ def run_cell(
     policy_limits_tmp = None
     if args.distill_profile != "off" and args.distill_policy_url:
         policy_limits_path, policy_limits_hash, policy_limits_tmp = materialize_distill_policy_url(args.distill_policy_url)
-    if preloaded_calc is None:
+    checkpoint_only_replay = False
+    if args.checkpoint_only_replay:
+        if checkpoint is None or args.checkpoint_mode != "read-only":
+            raise ValueError("--checkpoint-only-replay requires --checkpoint-mode read-only and --checkpoint-url")
+        if args.distill_profile != "off":
+            raise ValueError("--checkpoint-only-replay currently supports baseline cells only")
+        selection = select_row(manifest, args.row_id)
+        missing = checkpoint.missing_predictions(args.row_id, selection.cases)
+        if missing:
+            sample = ", ".join(
+                f"{item.get('case_index')}:{item.get('structure_id')}"
+                for item in missing[:5]
+            )
+            suffix = f"; checkpoint ignored_reason={checkpoint.ignored_reason}" if checkpoint.ignored_reason else ""
+            raise ValueError(
+                f"read-only checkpoint is missing {len(missing)} prediction(s) for {args.row_id}: {sample}{suffix}"
+            )
+        calc = None
+        model_load_s = 0.0
+        model_preloaded = False
+        checkpoint_only_replay = True
+    elif preloaded_calc is None:
         load_started = time.perf_counter()
         calc = load_calculator(args.mlip_id)
         model_load_s = max(time.perf_counter() - load_started, 0.0)
@@ -722,6 +762,7 @@ def run_cell(
         "cloud_run_revision": os.environ.get("K_REVISION"),
         "runner_image_digest": os.environ.get("RUNNER_IMAGE_DIGEST"),
         "model_preloaded": model_preloaded,
+        "checkpoint_only_replay": checkpoint_only_replay,
     }
     distill_events_uri = None
     distill_summary = None

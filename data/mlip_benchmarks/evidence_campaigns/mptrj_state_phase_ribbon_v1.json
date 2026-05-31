@@ -28,6 +28,12 @@
     "distill_accuracy_mode": "read-only",
     "pairing_rule": "baseline and Distill Accuracy for the same row and MLIP must share one checkpoint URL"
   },
+  "local_first_diagnostics": {
+    "probe_script": "tools/mlip_state_phase_local_probe.py",
+    "command": "python tools/mlip_state_phase_local_probe.py --run-runner",
+    "purpose": "Before spending a cloud canary, build the diagnostic state/phase fixture locally and replay read-only reference checkpoints through the runner so pressure/temperature/phase evaluator surfacing, artifacts, and JSONL beats can fail fast.",
+    "label_contract": "Diagnostic plumbing labels only; do not treat this probe as a physical phase-change or MLIP accuracy-improvement claim."
+  },
   "budget": {
     "max_dollars_per_hour": 10.0,
     "max_active_gpu_jobs": 2,
