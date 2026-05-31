@@ -582,6 +582,8 @@ export default function App() {
   const fillLightColor = useStore(s => s.fillLightColor);
   const rimLightColor = useStore(s => s.rimLightColor);
   const colormap = useStore(s => s.colormap);
+  const uniformAtomColor = useStore(s => s.uniformAtomColor);
+  const elementColorOverrides = useStore(s => s.elementColorOverrides);
   const atomColorSource = useStore(s => s.atomColorSource);
   const postprocessPreset = useStore(s => s.postprocessPreset);
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
@@ -1040,15 +1042,13 @@ export default function App() {
     ? 390
     : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320);
   const mobilePanelHeight = 'clamp(232px, 32dvh, 300px)';
-  const mobileStudioDeckHeight = 'clamp(220px, 31dvh, 288px)';
-  const desktopStudioDeckHeight = 'min(38vh, 330px)';
+  const mobileStudioDeckHeight = 'clamp(220px, 30dvh, 268px)';
+  const desktopStudioDeckHeight = 'clamp(218px, 32dvh, 300px)';
   const sceneRightInset = file && activePanel && !isMobile ? panelWidth : 0;
   const sceneBottomInset = file && activePanel && isMobile ? mobilePanelHeight : 0;
   const toolbarBottom = totalFrames > 1 ? 84 : 32;
-  const studioDeckBottom = toolbarBottom + 64;
-  const studioDeckCanvasReserve = file && !activePanel && studioDeck
-    ? `calc(${isMobile ? mobileStudioDeckHeight : desktopStudioDeckHeight} + ${studioDeckBottom + 16}px)`
-    : '0px';
+  const studioDeckBottom = toolbarBottom + (isMobile ? 58 : 64);
+  const studioDeckMaxHeight = isMobile ? mobileStudioDeckHeight : desktopStudioDeckHeight;
 
   return (
     <div style={{
@@ -1249,9 +1249,7 @@ export default function App() {
               background: 'transparent',
               display: 'block',
               width: '100%',
-              height: studioDeckCanvasReserve === '0px' ? '100%' : `calc(100% - ${studioDeckCanvasReserve})`,
-              minHeight: studioDeckCanvasReserve === '0px' ? undefined : 180,
-              transition: 'height 180ms ease',
+              height: '100%',
             }}
           >
             {import.meta.env.DEV && showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
@@ -1324,6 +1322,8 @@ export default function App() {
                   colorMode={colorMode}
                   colorProperty={colorProperty ?? undefined}
                   colormap={colormap}
+                  uniformColor={uniformAtomColor}
+                  elementColorOverrides={elementColorOverrides}
                   atomColorSource={atomColorSource}
                   scale={atomScale}
                   renderStyle={renderStyle}
@@ -1371,6 +1371,8 @@ export default function App() {
                     colormap={colormap}
                     colorMode={colorMode}
                     colorProperty={colorProperty ?? undefined}
+                    uniformColor={uniformAtomColor}
+                    elementColorOverrides={elementColorOverrides}
                     radius={0.12}
                     opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
@@ -1610,6 +1612,7 @@ export default function App() {
               mode={studioDeck}
               onClose={() => setStudioDeck(null)}
               bottomOffset={studioDeckBottom}
+              maxHeight={studioDeckMaxHeight}
             />
           )}
 

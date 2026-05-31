@@ -35,6 +35,25 @@ export interface Annotation {
  *                shader, modulating albedo so it reads as engraved into the surface. */
 export type LabelStyle = 'tag' | 'glyph' | 'halo' | 'etched';
 
+function isHexColor(value: unknown): value is string {
+  return typeof value === 'string' && /^#[0-9a-fA-F]{6}$/.test(value);
+}
+
+function sanitizeHexColor(value: string, fallback = '#1edce0') {
+  return isHexColor(value) ? value : fallback;
+}
+
+function sanitizeElementColorOverrides(value: unknown): Record<number, string> {
+  if (!value || typeof value !== 'object') return {};
+  const next: Record<number, string> = {};
+  for (const [key, color] of Object.entries(value as Record<string, unknown>)) {
+    const atomicNumber = Number(key);
+    if (!Number.isInteger(atomicNumber) || atomicNumber < 1 || atomicNumber > 255 || !isHexColor(color)) continue;
+    next[atomicNumber] = color;
+  }
+  return next;
+}
+
 export interface BondDataset {
   id: string;
   source: 'webgpu' | 'cpu' | 'file';
@@ -119,6 +138,8 @@ export interface AppState {
   colorMode: ColorMode;
   colorProperty: string | null;
   colormap: ColormapName;
+  uniformAtomColor: string;
+  elementColorOverrides: Record<number, string>;
   propRange: [number, number];
 
   // ─── Display ───
@@ -338,6 +359,10 @@ export interface AppState {
   setColorMode: (mode: ColorMode) => void;
   setColorProperty: (prop: string | null) => void;
   setColormap: (map: ColormapName) => void;
+  setUniformAtomColor: (color: string) => void;
+  setElementColorOverride: (atomicNumber: number, color: string) => void;
+  resetElementColorOverride: (atomicNumber: number) => void;
+  resetElementColorOverrides: () => void;
   setAnomalyTracking: (tracking: boolean) => void;
   setPostprocessPreset: (id: AppState['postprocessPreset']) => void;
   setPostprocessIntensity: (v: number) => void;
@@ -438,6 +463,8 @@ const DEFAULTS = {
   colorMode: 'type' as ColorMode,
   colorProperty: null,
   colormap: 'viridis' as ColormapName,
+  uniformAtomColor: '#1edce0',
+  elementColorOverrides: {},
   propRange: [0, 1] as [number, number],
   showCell: true,
   showAxes: true,
@@ -650,6 +677,23 @@ export const useStore = create<AppState>()(
     setColorMode: (colorMode) => set({ colorMode }),
     setColorProperty: (colorProperty) => set({ colorProperty }),
     setColormap: (colormap) => set({ colormap, activeProfile: null }),
+    setUniformAtomColor: (uniformAtomColor) => set({ uniformAtomColor: sanitizeHexColor(uniformAtomColor) }),
+    setElementColorOverride: (atomicNumber, color) => set((state) => {
+      const key = Math.round(atomicNumber);
+      if (!Number.isInteger(key) || key < 1 || key > 255) return {};
+      return {
+        elementColorOverrides: {
+          ...state.elementColorOverrides,
+          [key]: sanitizeHexColor(color, state.elementColorOverrides[key] ?? '#1edce0'),
+        },
+      };
+    }),
+    resetElementColorOverride: (atomicNumber) => set((state) => {
+      const key = Math.round(atomicNumber);
+      const { [key]: _removed, ...elementColorOverrides } = state.elementColorOverrides;
+      return { elementColorOverrides };
+    }),
+    resetElementColorOverrides: () => set({ elementColorOverrides: {} }),
     setAnomalyTracking: (anomalyTracking) => set({ anomalyTracking }),
 
     setPostprocessPreset: (postprocessPreset) => set({ postprocessPreset }),
@@ -980,6 +1024,8 @@ export const useStore = create<AppState>()(
       if (s.colorMode !== 'type')                     delta.cm = s.colorMode;
       if (s.colorProperty !== null)                    delta.cp = s.colorProperty;
       if (s.colormap !== 'viridis')                    delta.cmap = s.colormap;
+      if (s.uniformAtomColor !== '#1edce0')            delta.uac = s.uniformAtomColor;
+      if (Object.keys(s.elementColorOverrides).length > 0) delta.eco = s.elementColorOverrides;
       if (!s.ssao)                                     delta.ssao = 0;
       if (s.bloom)                                     delta.bloom = 1;
       if (s.dof)                                       delta.dof = 1;
@@ -1034,6 +1080,8 @@ export const useStore = create<AppState>()(
           colorMode: s.cm ?? 'type',
           colorProperty: s.cp ?? null,
           colormap: s.cmap ?? 'viridis',
+          uniformAtomColor: sanitizeHexColor(s.uac ?? '#1edce0'),
+          elementColorOverrides: sanitizeElementColorOverrides(s.eco),
           ssao: s.ssao !== 0,
           bloom: s.bloom === 1,
           dof: s.dof === 1,

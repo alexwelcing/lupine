@@ -364,7 +364,7 @@ export function ExportManager() {
           return mapFn(t);
         }
         if (state.colorMode === 'uniform') {
-          return mapFn(0.0);
+          return new THREE.Color(state.uniformAtomColor).toArray() as [number, number, number];
         }
         return resolveTypeColor(atomType);
       };

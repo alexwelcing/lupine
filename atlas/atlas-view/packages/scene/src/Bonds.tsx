@@ -80,6 +80,7 @@ interface BondsProps {
   colormap?: ColormapName;
   colorMode?: 'type' | 'uniform' | 'property';
   colorProperty?: string;
+  uniformColor?: string;
   propRange?: [number, number];
   maxBondLength?: number;
   /** Element-aware bonding tolerance (Å). Added to `r_cov(A) + r_cov(B)` per
@@ -128,6 +129,7 @@ export function Bonds({
   colormap = 'viridis',
   colorMode = 'type',
   colorProperty,
+  uniformColor = '#1edce0',
   propRange,
   maxBondLength = 3.2,
   tolerance = 0.45,
@@ -1130,7 +1132,7 @@ export function Bonds({
         if (isPropMode && propData) {
           tcA = mapFn(normA);
         } else if (colorMode === 'uniform') {
-          tcA = mapFn(0.0);
+          tcA = hexToRgb(uniformColor);
         } else {
           tcA = frame.types ? colorForType(frame.types[a]) : DEFAULT_TYPE_COLOR;
         }
@@ -1139,7 +1141,7 @@ export function Bonds({
         if (isPropMode && propData) {
           tcB = mapFn(normB);
         } else if (colorMode === 'uniform') {
-          tcB = mapFn(0.0);
+          tcB = hexToRgb(uniformColor);
         } else {
           tcB = frame.types ? colorForType(frame.types[b]) : DEFAULT_TYPE_COLOR;
         }
@@ -1187,7 +1189,7 @@ export function Bonds({
     // frame for property coloring. In static modes (type/element/uniform/
     // botanical), propData is null and frame changes don't refire this.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bondPairs, bondDistances, halfCount, capacity, frame.types, frame.natoms, colormap, colorMode, isPropMode, propData, propRange, radius, atomColorSource, botanicalMode, bondColorMode, nextFrame, interpolationFactor, colorProperty]);
+  }, [bondPairs, bondDistances, halfCount, capacity, frame.types, frame.natoms, colormap, colorMode, uniformColor, isPropMode, propData, propRange, radius, atomColorSource, botanicalMode, bondColorMode, nextFrame, interpolationFactor, colorProperty]);
 
   // Matrix upload runs in the rAF loop, NOT in a useEffect. This bypasses
   // React's commit cycle so per-frame matrix updates flow at native rAF
