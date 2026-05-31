@@ -8,6 +8,30 @@
   "project": "shed-489901",
   "region": "us-central1",
   "source_packet_path": "data/mlip_benchmarks/manifest_sources.json",
+  "research_source_registry_path": "data/research_sources/materials_research_sources_v1.json",
+  "research_source_strategy": {
+    "purpose": "Use the generalized registry as the source-of-truth for state, phase, pressure, trajectory, benchmark-context, and backend-comparison claims instead of embedding ad hoc source assumptions in this campaign.",
+    "state_condition_source_ids": [
+      "omat24-aimd-pbe-1000-npt",
+      "omat24-aimd-pbe-3000-npt",
+      "hpcsd-high-pressure-crystal-structures"
+    ],
+    "phase_label_source_ids": [
+      "gst225-cambridge-gap-trajectories",
+      "gst225-crystallization-mlip-2024"
+    ],
+    "broad_support_source_ids": [
+      "lemat-traj",
+      "mptrj-materials-project"
+    ],
+    "comparison_context_source_ids": [
+      "mattersim-v1",
+      "openkim",
+      "colabfit-exchange",
+      "nist-ipr"
+    ],
+    "required_command": "python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels"
+  },
   "fixture_id": "canonical-structures-v2",
   "fixture_path": "gcp/mlip-cell-runner/fixtures/canonical_structures_v2_mptrj.json",
   "fixture_gcs_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json",

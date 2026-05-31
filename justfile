@@ -134,6 +134,12 @@ mlip-source-check:
     python tools/mlip_benchmark_sources.py ni-bulk-results
     python -m pytest tools/test_mlip_benchmark_sources.py
 
+# Validate the generalized materials research source registry.
+research-source-check:
+    python tools/research_source_registry.py validate
+    python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels
+    python -m pytest tools/test_research_source_registry.py
+
 # Build and self-evaluate the fcc Ni EAM-home-turf publication fixture.
 mlip-ni-fixture-check:
     python tools/build_ni_publication_fixture.py --check-only
