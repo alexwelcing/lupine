@@ -27,6 +27,8 @@ interface LupiMcpRequest {
   arguments: Record<string, unknown>;
 }
 
+type BondColorMode = ReturnType<typeof useStore.getState>['bondColorMode'];
+
 interface ViewerPatch extends Record<string, unknown> {
   showBonds?: boolean;
   atomScale?: number;
@@ -40,6 +42,8 @@ interface ViewerPatch extends Record<string, unknown> {
   colorProperty?: string;
   colormap?: ColormapName;
   cameraPreset?: CameraPreset;
+  bondTolerance?: number;
+  bondColorMode?: BondColorMode;
 }
 
 interface MoleculeAtom {
@@ -1709,6 +1713,15 @@ function applyViewerPatch(patch: ViewerPatch, transcript: string[]) {
     applied.cameraPreset = patch.cameraPreset;
   }
 
+  if (patch.bondTolerance !== undefined) {
+    state.setBondTolerance(clamp(patch.bondTolerance, 0, 1.5));
+    applied.bondTolerance = clamp(patch.bondTolerance, 0, 1.5);
+  }
+  if (patch.bondColorMode !== undefined) {
+    state.setBondColorMode(patch.bondColorMode);
+    applied.bondColorMode = patch.bondColorMode;
+  }
+
   if (patch.showBonds !== undefined) next.showBonds = patch.showBonds;
   if (patch.atomScale !== undefined) next.atomScale = clamp(patch.atomScale, 0.2, 3);
   if (patch.showCell !== undefined) next.showCell = patch.showCell;
@@ -1727,6 +1740,14 @@ function applyViewerPatch(patch: ViewerPatch, transcript: string[]) {
   }
 }
 
+function readBondColorMode(value: unknown): BondColorMode | undefined {
+  const raw = String(value ?? '').toLowerCase();
+  if (raw === 'type' || raw === 'length' || raw === 'energy' || raw === 'screening') {
+    return raw as BondColorMode;
+  }
+  return undefined;
+}
+
 function readViewerPatch(args: Record<string, unknown>): ViewerPatch {
   const patch: ViewerPatch = {};
   const showBonds = readBoolean(args.showBonds);
@@ -1741,9 +1762,13 @@ function readViewerPatch(args: Record<string, unknown>): ViewerPatch {
   const colorProperty = readString(args.colorProperty);
   const colormap = readColormap(args.colormap);
   const cameraPreset = readCameraPreset(args.cameraPreset ?? args.camera);
+  const bondTolerance = readNumber(args.bondTolerance);
+  const bondColorMode = readBondColorMode(args.bondColorMode);
 
   if (showBonds !== undefined) patch.showBonds = showBonds;
   if (atomScale !== undefined) patch.atomScale = atomScale;
+  if (bondTolerance !== undefined) patch.bondTolerance = bondTolerance;
+  if (bondColorMode !== undefined) patch.bondColorMode = bondColorMode;
   if (showCell !== undefined) patch.showCell = showCell;
   if (showAxes !== undefined) patch.showAxes = showAxes;
   if (renderStyle !== undefined) patch.renderStyle = renderStyle;
