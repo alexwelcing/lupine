@@ -2,6 +2,11 @@
 """
 One-time OMol25 -> Lupi search-index extract (request #2).
 
+NOTE: superseded for the *served* index by `omol25-structures.py`, which builds
+the index from the colabfit structures parquet AND emits real per-structure .xyz
+geometry (so hits open with true coordinates). This script remains as the compact
+metadata-only path (HDF5 index, no geometry) and as documentation of the source.
+
 The official `facebook/OMol25` dataset is gated + multi-TB. We do NOT need it:
 the public `ameya98/OMol25-Index` repo ships compact HDF5 indices per split with
 exactly the fields a search needs (composition/formula, atom count, charge, spin,

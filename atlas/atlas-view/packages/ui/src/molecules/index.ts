@@ -10,17 +10,20 @@ import { galleryProvider } from './providers/gallery';
 import { nistProvider } from './providers/nist';
 import { pubchemProvider } from './providers/pubchem';
 import { omolProvider } from './providers/omol';
-import { savedViewsProvider, libraryProvider } from './providers/scaffolds';
+import { savedViewsProvider } from './providers/savedViews';
+import { libraryProvider } from './providers/library';
 
-/** Registry order; disabled providers are skipped by searchMolecules(). */
+/** Registry order; providers that aren't available are skipped by searchMolecules(). */
 export const MOLECULE_PROVIDERS: MoleculeProvider[] = [
+  savedViewsProvider, // your own saved views (signed-in) — request #1 ✅
+  libraryProvider, // curated Lupi library (Firestore) — request #3 ✅
   galleryProvider, // curated examples
   nistProvider, // NIST potentials catalog
-  pubchemProvider, // external named compounds
   omolProvider, // Meta OMol25 (neutral-validation index on GCS) — request #2 ✅
-  savedViewsProvider, // scaffold — request #1 (saved-views search)
-  libraryProvider, // scaffold — request #3 (curated library)
+  pubchemProvider, // external named compounds
 ];
+
+export { addToLibrary } from './providers/library';
 
 export * from './types';
 export * from './search';

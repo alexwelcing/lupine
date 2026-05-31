@@ -3,30 +3,36 @@ import type { MoleculeHit, MoleculeProvider, MoleculeQuery } from '../types';
 /**
  * Meta / FAIR Open Molecules 2025 (OMol25) — request #2.
  *
- * Backed by a compact index extracted one-time from the public OMol25 index
- * (ameya98/OMol25-Index, neutral validation split: 27,697 molecules) and hosted
- * on GCS (gs://shed-489901-omol25). Each record carries formula / elements /
- * natoms / charge / spin / HOMO-LUMO gap / source — enough to search and triage.
+ * Backed by a compact index built one-time from the public OMol25 neutral-
+ * validation *structures* (colabfit/OMol25_neutral_validation: 27,697 molecules,
+ * real DFT geometry) and hosted on GCS (gs://shed-489901-omol25). Each record
+ * carries formula / elements / natoms / HOMO-LUMO gap / total energy / source —
+ * enough to search and triage — and a per-structure `.xyz` ships alongside the
+ * index at `structures/xyz/{id}.xyz`, so a hit opens with its TRUE coordinates
+ * through the viewer's normal url -> parseXyzFile path (no resolver guess).
  *
- * Scaling note: this is the neutral-validation slice (~4 MB, fetched + filtered
- * client-side like the NIST catalog). The larger splits (val 620 MB, train 7.5 GB)
- * should move behind a server-side searchOmol endpoint rather than ship to the
- * browser. Exact 3D geometry isn't in the index — loading a hit currently routes
- * through the resolver by formula; pulling real OMol25 coordinates (from the
- * colabfit parquet mirror) is a documented follow-up.
+ * Scaling note: this is the neutral-validation slice (~4 MB index, fetched +
+ * filtered client-side like the NIST catalog; geometry fetched on demand, one
+ * small file per click). The larger splits (val 620 MB, train 7.5 GB) should move
+ * behind a server-side searchOmol endpoint rather than ship to the browser.
  */
+// Versioned filename: the index and the per-structure .xyz files are published as
+// one immutable set, so bumping the version (…_val.v2.json) avoids any stale-edge-
+// cache window where an old index's nval-{i} would mismatch the new geometry.
 const OMOL_INDEX_URL =
   (import.meta.env.VITE_LUPI_OMOL_INDEX as string | undefined)?.trim() ||
-  'https://storage.googleapis.com/shed-489901-omol25/omol25_neutral_val.json';
+  'https://storage.googleapis.com/shed-489901-omol25/omol25_neutral_val.v2.json';
+
+/** Base for per-structure geometry: the index dir + `structures/xyz/{id}.xyz`. */
+const OMOL_STRUCTURES_BASE = OMOL_INDEX_URL.replace(/\/[^/]*$/, '/structures/xyz');
 
 interface OmolRecord {
   id: string;
   formula: string;
   elements: string[];
   natoms: number;
-  charge: number;
-  spin: number;
-  gap: number;
+  gap: number | null;
+  energy?: number | null;
   src: string;
 }
 
@@ -69,12 +75,12 @@ export const omolProvider: MoleculeProvider = {
       id: r.id,
       source: 'omol',
       title: r.formula,
-      subtitle: `${r.natoms} atoms · gap ${r.gap} eV · ${r.src}`,
+      subtitle: `${r.natoms} atoms${r.gap != null ? ` · gap ${r.gap} eV` : ''} · ${r.src}`,
       formula: r.formula,
       elements: r.elements,
       tags: ['omol25', r.src],
-      // Best-effort load via the resolver; exact OMol25 geometry is a follow-up.
-      load: { kind: 'generate', inputType: 'name', input: r.formula },
+      // Real OMol25 DFT geometry, served as a per-structure .xyz alongside the index.
+      load: { kind: 'url', url: `${OMOL_STRUCTURES_BASE}/${r.id}.xyz` },
       score: q && r.formula.toLowerCase() === q ? 0.9 : undefined,
     }));
   },
