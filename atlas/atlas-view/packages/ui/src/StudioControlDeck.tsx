@@ -184,24 +184,24 @@ export function StudioControlDeck({
         .lupi-rive-flash {
           animation: lupi-rive-flash 150ms ease-out forwards;
         }
-        .lupi-studio-deck {
-          --lupi-studio-deck-max-height: min(38vh, 330px);
+        .lupi-control-deck {
+          --lupi-control-deck-max-height: min(38vh, 330px);
         }
         @media (max-width: 768px) {
-          .lupi-studio-deck {
-            --lupi-studio-deck-max-height: clamp(220px, 31dvh, 288px);
+          .lupi-control-deck {
+            --lupi-control-deck-max-height: clamp(220px, 31dvh, 288px);
           }
-          .lupi-studio-knobs {
+          .lupi-control-knobs {
             grid-template-columns: repeat(3, minmax(82px, 1fr));
           }
         }
       `}</style>
       <div
-        className="lupi-studio-deck"
+        className="lupi-control-deck"
         style={{
           pointerEvents: 'auto',
           width: 'min(940px, calc(100vw - 24px))',
-          maxHeight: 'var(--lupi-studio-deck-max-height)',
+          maxHeight: 'var(--lupi-control-deck-max-height)',
           overflowY: 'auto',
           scrollbarWidth: 'none',
           border: '1px solid rgba(255,255,255,0.12)',
@@ -260,7 +260,7 @@ export function StudioControlDeck({
               </div>
             </ControlGroup>
 
-            <div className="lupi-studio-knobs" style={singleKnobRowStyle}>
+            <div className="lupi-control-knobs" style={singleKnobRowStyle}>
               <RiveKnob
                 label="Effect"
                 value={postprocessIntensity}
@@ -354,7 +354,7 @@ export function StudioControlDeck({
               title="Surface x Quality"
               note="Intersection controls: how the molecule surface reads under the chosen R3F quality."
             >
-            <div className="lupi-studio-knobs" style={knobGridStyle}>
+            <div className="lupi-control-knobs" style={knobGridStyle}>
               <RiveKnob label="Atom" value={atomScale} min={0.1} max={2} step={0.05} onChange={setAtomScale} format={value => value.toFixed(2)} />
               <RiveKnob label="Material" value={materialIntensity} min={0} max={1} step={0.02} onChange={setMaterialIntensity} />
               <RiveKnob label="Rough" value={surfaceRoughness} min={-1} max={1} step={0.02} onChange={setSurfaceRoughness} />
