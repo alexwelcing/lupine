@@ -14,6 +14,15 @@ export function HeroSection() {
     return { totalAtoms, totalSims, domains };
   }, []);
 
+  // Primary activation: render a real molecule instantly — no file, no wall.
+  // (Same demo the top-nav CTA loads; the viewer fires molecule_loaded on render.)
+  const viewAMolecule = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sim', 'lupine_bluebonnet');
+    window.history.pushState({}, '', url);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
   return (
     <section
       style={{
@@ -64,7 +73,7 @@ export function HeroSection() {
             opacity: 0,
           }}
         >
-          Molecular dynamics, visualized in your browser. Explore millions of atoms in real time, no installation and no waiting.
+          Click any molecule and explore it in 3D — then save and share your view. No install, and no signup just to look.
         </p>
 
         {/* CTA Buttons */}
@@ -79,8 +88,9 @@ export function HeroSection() {
             opacity: 0,
           }}
         >
-          <a
-            href="#dropzone"
+          <button
+            type="button"
+            onClick={viewAMolecule}
             style={{
               padding: '14px 32px',
               fontSize: 15,
@@ -89,7 +99,6 @@ export function HeroSection() {
               background: 'linear-gradient(135deg, #0f62fe, #7c3aed)',
               border: 'none',
               borderRadius: 100,
-              textDecoration: 'none',
               cursor: 'pointer',
               boxShadow: '0 8px 24px rgba(15,98,254,0.35)',
               transition: 'transform 0.2s, box-shadow 0.2s',
@@ -103,8 +112,8 @@ export function HeroSection() {
               e.currentTarget.style.boxShadow = '0 8px 24px rgba(15,98,254,0.35)';
             }}
           >
-            Drop a File
-          </a>
+            View a molecule →
+          </button>
           <a
             href="#gallery"
             style={{
@@ -130,30 +139,28 @@ export function HeroSection() {
           >
             Browse Gallery
           </a>
+        </div>
+
+        {/* Tertiary: power-users with their own data */}
+        <div
+          style={{
+            marginTop: -36,
+            marginBottom: 56,
+            animation: 'heroFadeIn 1s ease-out 0.7s forwards',
+            opacity: 0,
+          }}
+        >
           <a
-            href="#/system/mlip-flywheel"
+            href="#dropzone"
             style={{
-              padding: '14px 32px',
-              fontSize: 15,
-              fontWeight: 600,
-              color: 'rgba(255,255,255,0.86)',
-              background: 'rgba(14,165,233,0.12)',
-              border: '1px solid rgba(125,211,252,0.34)',
-              borderRadius: 100,
+              fontSize: 13,
+              color: 'rgba(255,255,255,0.5)',
               textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(14,165,233,0.2)';
-              e.currentTarget.style.borderColor = 'rgba(125,211,252,0.6)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(14,165,233,0.12)';
-              e.currentTarget.style.borderColor = 'rgba(125,211,252,0.34)';
+              borderBottom: '1px dashed rgba(255,255,255,0.25)',
+              paddingBottom: 1,
             }}
           >
-            Live Lab
+            or drop your own LAMMPS / XYZ file →
           </a>
         </div>
 

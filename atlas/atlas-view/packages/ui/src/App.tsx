@@ -107,6 +107,7 @@ import { ToolButton, CameraPresetButton, TransportButton } from './controls';
 import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
 import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
+import { SavedViewButton } from './SavedViewButton';
 import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
 import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
@@ -1148,23 +1149,7 @@ export default function App() {
                   textDecoration: 'none',
                 }}
               >
-                {isMobile ? 'Atoms' : 'Lupi Gallery'}
-              </a>
-              <a
-                href="#/system/mlip-flywheel"
-                style={{
-                  display: 'block',
-                  padding: isMobile ? '7px 9px' : '8px 12px',
-                  fontSize: isMobile ? 12 : 13,
-                  fontWeight: 600,
-                  color: isMlipFlywheelRoute ? '#e0f2fe' : 'var(--text-muted)',
-                  background: isMlipFlywheelRoute ? 'rgba(14,165,233,0.16)' : 'transparent',
-                  border: isMlipFlywheelRoute ? '1px solid rgba(125,211,252,0.52)' : '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-sm)',
-                  textDecoration: 'none',
-                }}
-              >
-                {isMobile ? 'Lab' : 'Live Lab'}
+                {isMobile ? 'Atoms' : 'Gallery'}
               </a>
               <a
                 href="#/mcp"
@@ -1181,22 +1166,6 @@ export default function App() {
                 }}
               >
                 MCP
-              </a>
-              <a
-                href="#/system/emoji"
-                style={{
-                  display: 'block',
-                  padding: isMobile ? '7px 9px' : '8px 12px',
-                  fontSize: isMobile ? 12 : 13,
-                  fontWeight: 600,
-                  color: hashPath === '/system/emoji' ? '#e0f2fe' : 'var(--text-muted)',
-                  background: hashPath === '/system/emoji' ? 'rgba(14,165,233,0.16)' : 'transparent',
-                  border: hashPath === '/system/emoji' ? '1px solid rgba(125,211,252,0.52)' : '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-sm)',
-                  textDecoration: 'none',
-                }}
-              >
-                Eoji Lab
               </a>
             </>
           )}
@@ -1218,41 +1187,12 @@ export default function App() {
                 cursor: 'pointer',
               }}
             >
-              Try a demo
+              {isMobile ? 'View' : 'View a molecule'}
             </button>
           )}
-          <a
-            href="https://lupine.science"
-            style={{
-              display: isMobile ? 'none' : 'block',
-              padding: '8px 12px',
-              fontSize: 13, fontWeight: 500,
-              color: 'var(--text-primary)',
-              background: 'transparent',
-              border: '1px solid var(--border-default)',
-              borderRadius: 'var(--radius-sm)',
-              textDecoration: 'none',
-            }}
-          >
-            Lupi Home
-          </a>
-          <a
-            href="https://github.com/alexwelcing/lupine"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: isMobile ? 'none' : 'block',
-              padding: '8px 12px',
-              fontSize: 13, fontWeight: 500,
-              color: 'var(--text-muted)',
-              background: 'transparent',
-              border: '1px solid var(--border-default)',
-              borderRadius: 'var(--radius-sm)',
-              textDecoration: 'none',
-            }}
-          >
-            GitHub
-          </a>
+          {/* Loop step 3: a clear Save entry the moment a molecule is on screen.
+              Anonymous → prompts sign-in (pending draft) → resumes save → share link. */}
+          {file && <SavedViewButton compact={isMobile} />}
           <LupiAgentDock compact={isMobile} />
         </div>
       </header>
