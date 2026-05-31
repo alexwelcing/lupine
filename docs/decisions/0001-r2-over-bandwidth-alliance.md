@@ -21,7 +21,7 @@ Two distinct object stores, each chosen for the workload it serves:
 
 | Store | Bucket | Workload | Consumers |
 |---|---|---|---|
-| Google Cloud Storage | `shed-489901-atlas-artifacts` | Large `.lammpstrj` and `.glimbin` molecular-dynamics trajectories (~0.9 GB across 16 open-data files, plus future user uploads) | `atlas-view` (web), `lupine-site` (marketing video) |
+| Google Cloud Storage | `shed-489901-atlas-artifacts` | Large `.lammpstrj` and `.glimbin` molecular-dynamics trajectories (~0.9 GB across 16 open-data files, plus future user uploads) | `atlas-view` (web) |
 | Cloudflare R2 | `glim-artifacts` (binding `ARTIFACTS`) | Diary entries, search caches, claim snapshots, agent state | `glim-think` Worker (Durable Objects + Workers AI) |
 
 GCS objects are served from `https://storage.googleapis.com/shed-489901-atlas-artifacts/...`
@@ -133,7 +133,6 @@ atlas/atlas-view/scripts/gcs/repoint_sourceurl_to_gcs.py
 atlas/atlas-view/scripts/gcs/pull_open_data.sh
 atlas/atlas-view/packages/ui/src/gallery-data.json
 atlas/atlas-view/apps/web/public/gallery/open_data/README.md
-atlas/atlas-view/apps/lupine-site/src/App.tsx
 ```
 
 The Python and shell tooling rewrites are batched after Worker deploy because they

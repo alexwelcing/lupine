@@ -13,7 +13,7 @@ Read time: 5 minutes.
 The persistent subsystems are already deployed by CI. Nothing to start unless something is broken:
 
 - `glim-think-v1` Worker — auto-deployed via Cloudflare on push to `main`.
-- `lupine-start` Cloud Run service — auto-deployed via Cloud Build on push to `main`.
+- `library-site` Cloud Run service — auto-deployed via Cloud Build on push to `main`.
 - `atlas-distill` Cloud Run Job — triggered on schedule + on demand.
 
 To launch a research round manually:
@@ -41,7 +41,7 @@ curl -X POST https://glim-think-v1.<account>.workers.dev/admin/iterate
 
 ## 2. Architecture at a glance
 
-Five subsystems form a research loop: `glim-think-v1` (Cloudflare Worker) orchestrates agents and writes literature hits; `atlas-distill` (Cloud Run Job, Rust) runs heavy benchmarks and paradox detection; `lupine-start` (Cloud Run service, React) serves the public site including `/live`; `kimi --yolo` (local supervisor) drives the autonomous outer loop; `tasks-consumer` (Cloud Run service) drains the Cloud Tasks queue back into `glim-think-v1` and `atlas-distill`. State of record: D1 + KV in Cloudflare for short-lived rounds; GCS for long-lived artifacts; Vectorize for retrieval.
+Five subsystems form a research loop: `glim-think-v1` (Cloudflare Worker) orchestrates agents and writes literature hits; `atlas-distill` (Cloud Run Job, Rust) runs heavy benchmarks and paradox detection; `library-site` (Cloud Run service, static site) serves the public research library and live lab views; `kimi --yolo` (local supervisor) drives the autonomous outer loop; `tasks-consumer` (Cloud Run service) drains the Cloud Tasks queue back into `glim-think-v1` and `atlas-distill`. State of record: D1 + KV in Cloudflare for short-lived rounds; GCS for long-lived artifacts; Vectorize for retrieval.
 
 Deep dives, in order of usefulness:
 
@@ -71,15 +71,15 @@ pnpm wrangler tail glim-think-v1
 
 The Worker config lives in `glim-think/wrangler.toml`. Secrets are set with `pnpm wrangler secret put <NAME>`.
 
-### `lupine-start` — Cloud Run service
+### `library-site` — Cloud Run service
 
 ```
-gcloud builds submit --config=cloudbuild.yaml lupine-start/
+gcloud builds submit --config=library-site/cloudbuild.yaml .
 ```
 
-The build config is `lupine-start/cloudbuild.yaml`. The service deploys to `us-central1` as `lupine-site` with `--allow-unauthenticated`.
+The build config is `library-site/cloudbuild.yaml`. The service deploys to `us-central1` as `library-site`.
 
-Verify by hitting the live route in a browser: `https://<service-url>/live`. The route source is `lupine-start/src/routes/live.tsx`.
+Verify by opening the Library and the MLIP flywheel route in a browser.
 
 ### `atlas-distill` — Cloud Run Job
 
@@ -137,7 +137,7 @@ Provided by Unit 8 (`tasks-consumer/`, pending). Until it lands, Cloud Tasks tar
 2. Take Cloud Run services off traffic:
 
    ```
-   gcloud run services update lupine-site --region us-central1 --no-traffic
+   gcloud run services update library-site --region us-central1 --no-traffic
    gcloud run services update tasks-consumer --region us-central1 --no-traffic
    ```
 
@@ -167,7 +167,7 @@ Run all four before starting any new work:
    gcloud run jobs executions list --job atlas-distill --region us-central1 --limit 5
    ```
 
-2. Open `/live` in a browser, confirm beats are arriving (timestamps within the last few minutes).
+2. Open the Library live lab and the `glim-think` feed, confirm beats are arriving (timestamps within the last few minutes).
 
 3. Worker log tail (look for errors and paradox alerts):
 
@@ -200,13 +200,13 @@ Recovery:
 2. Force a new revision to warm a container:
 
    ```
-   gcloud run services update lupine-site --region us-central1 --update-env-vars WARM=$(date +%s)
+   gcloud run services update library-site --region us-central1 --update-env-vars WARM=$(date +%s)
    ```
 
 3. If the hang persists, scale min-instances up:
 
    ```
-   gcloud run services update lupine-site --region us-central1 --min-instances 1
+   gcloud run services update library-site --region us-central1 --min-instances 1
    ```
 
 ### Paradox alert from `atlas-distill`
@@ -274,7 +274,7 @@ Recovery:
 | Subsystem | Log destination | Quick access |
 |-----------|----------------|--------------|
 | `glim-think-v1` Worker | Cloudflare dashboard | `pnpm wrangler tail glim-think-v1` |
-| `lupine-start` Cloud Run service | GCP Cloud Logging | `gcloud run services logs read lupine-site --region us-central1 --limit 100` |
+| `library-site` Cloud Run service | GCP Cloud Logging | `gcloud run services logs read library-site --region us-central1 --limit 100` |
 | `atlas-distill` Cloud Run Job | GCP Cloud Logging | `gcloud run jobs executions logs read <execution-id> --region us-central1` |
 | `tasks-consumer` Cloud Run service | GCP Cloud Logging | (after Unit 8 lands) |
 | `kimi --yolo` supervisor | Local stdout | tail the file specified in the supervisor config (Unit 5) |

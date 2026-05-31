@@ -226,7 +226,7 @@ async function renderHome() {
     // MLIP flywheel, not just a prose update.
     const labBanner = el('section', { class: 'callout' });
     const labLink = el('a', { class: 'callout-box callout-featured callout-live-lab', href: '#/system/mlip-flywheel' });
-    labLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--cyan);font-weight:700;letter-spacing:0.05em;' }, 'Lupine Start Live Lab'));
+    labLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--cyan);font-weight:700;letter-spacing:0.05em;' }, 'Library Live Lab'));
     labLink.append(el('strong', { style: 'font-size:1.1rem;' }, 'MLIP Flywheel Visual Review'));
     labLink.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, 'Stage map, 5x5 baseline surface, Distill triplets, evaluator rubric, and physical relaxation imagery.'));
     labBanner.append(labLink);

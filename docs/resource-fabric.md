@@ -40,7 +40,8 @@ GCP should stay mostly cold until the ledger proves pressure:
 
 - Queue depth remains high after local GPU passes.
 - A run needs longer wall time, bigger parallelism, or reproducible cloud artifacts.
-- We need public deployment of a live surface such as `lupine-start`.
+- We need public deployment of a live research surface such as `library-site`
+  or the LUPI viewer.
 - We want formal release candidates built from clean containers.
 
 Use project `shed-489901` as the default gcloud project. Keep GCP as a burst lane,
