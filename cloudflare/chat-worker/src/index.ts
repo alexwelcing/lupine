@@ -4,7 +4,7 @@
 // Powers the LUPI home-page "configure a molecule via chat" experience.
 //
 // Routes:
-//   POST    /chat   → run the Claude tool-use loop, return ChatResponseBody
+//   POST    /chat   → run the MiniMax tool-use loop, return ChatResponseBody
 //   OPTIONS /chat   → CORS preflight
 //   GET     /health → liveness probe (no auth, no rate limit)
 //
@@ -12,7 +12,7 @@
 // fixed-window rate limiter (CHAT_RL), and strict request validation.
 // ═══════════════════════════════════════════════════════════════════
 
-import { runChat } from "./anthropic";
+import { runChat } from "./minimax";
 import { buildCorsHeaders, handlePreflight, jsonResponse } from "./cors";
 import type {
   CatalogEntry,
@@ -53,9 +53,9 @@ export default {
     }
 
     // Fail fast if the secret is missing (misconfiguration, not user error).
-    if (!env.ANTHROPIC_API_KEY) {
+    if (!env.MINIMAX_API_KEY) {
       return jsonResponse(
-        { error: "Server not configured: missing ANTHROPIC_API_KEY." },
+        { error: "Server not configured: missing MINIMAX_API_KEY." },
         500,
         cors,
       );
@@ -84,7 +84,7 @@ export default {
       );
     }
 
-    // ─── Run the Claude tool-use loop ───
+    // ─── Run the MiniMax tool-use loop ───
     try {
       const result = await runChat(env, {
         messages: parsed.messages,

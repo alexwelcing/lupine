@@ -1,187 +1,101 @@
-# lupi-chat
+# lupi-chat — Cloudflare Worker for the LUPI molecule-config chat
 
-A Cloudflare Worker that powers the LUPI home-page **"configure a molecule via
-chat"** experience. The frontend sends the chat transcript, the current viewer
-state, and the molecule catalog; the Worker runs a server-side Claude
-**tool-use loop** and returns an assistant reply plus a set of **MCP actions**
-the client executes against the 3D viewer.
+A Cloudflare Worker that powers the home-page **"configure a molecule via chat"**
+experience. The browser sends the conversation, a snapshot of the current viewer
+state, and the molecule catalog; the Worker runs a server-side **MiniMax**
+tool-use loop and returns a reply plus optional MCP actions for the viewer to
+execute.
 
-The Worker never trusts the client to pick a molecule blindly: Claude is given a
-`search_catalog` tool (executed here against the request's catalog) to ground
-its choice, then interrogates the user — one question at a time — about lattice
-size, coloring, and bonds before emitting the final load + configure actions.
+It uses the project's **existing MiniMax deployment** (OpenAI-compatible
+`api.minimax.io/v1`), the same one `glim-think` already runs — **no Anthropic**,
+so this customer endpoint incurs no Anthropic token costs.
+
+The Worker never trusts the client to pick a molecule blindly: the model is given
+a `search_catalog` tool (executed server-side against the catalog you send) and an
+`apply_configuration` tool whose output becomes the response `actions`.
 
 ## API contract
 
-> The frontend is built against this contract. Do not change it without updating
-> the frontend in lockstep.
+`POST /chat` (and `OPTIONS /chat` preflight; `GET /health` for liveness).
 
-### `POST /chat`
-
-Request JSON:
-
+**Request**
 ```jsonc
 {
   "messages": [{ "role": "user" | "assistant", "content": "string" }],
-  "viewer": {
-    "fileName": "string | null",
-    "atomCount": 0,
-    "colorScheme": "element",
-    "showBonds": true
-    // ...additional forward-compatible viewer fields are preserved
-  },
-  "catalog": [
-    {
-      "id": "string",
-      "title": "string",
-      "subtitle": "string?",
-      "formula": "string?",
-      "elements": ["string"],
-      "tags": ["string"],
-      "domain": "string?"
-    }
-  ]
+  "viewer":  { "fileName": "string|null", "atomCount": 0, "colorScheme": "element", "showBonds": true },
+  "catalog": [{ "id": "string", "title": "string", "subtitle?": "", "formula?": "", "elements?": [], "tags?": [], "domain?": "" }]
 }
 ```
 
-Response JSON:
-
+**Response**
 ```jsonc
 {
   "reply": "string",                 // assistant message to display
-  "actions": [                       // MCP requests for the client (optional)
-    { "id": "string", "tool": "lupi.generate_molecule" | "lupi.set_viewer", "arguments": {} }
+  "actions": [                       // MCP requests for the client to execute (optional)
+    { "id": "load",   "tool": "lupi.generate_molecule", "arguments": { /* ... */ } },
+    { "id": "config", "tool": "lupi.set_viewer",        "arguments": { /* ViewerPatch */ } }
   ],
-  "done": false,                     // true when load+configure is complete
-  "molecule": { "id": "string", "title": "string" } | null
+  "done": true,                      // configuration complete
+  "molecule": { "id": "string", "title": "string" } // chosen catalog entry, or null
 }
 ```
 
-`McpRequest.arguments` shapes the client supports:
-
-- **`lupi.generate_molecule`**:
-  `{ inputType: "name"|"template"|"procedural", input: string, atomCount?, element?, elements?, lattice?: "sc"|"bcc"|"fcc", viewer?: ViewerPatch }`
-- **`lupi.set_viewer`** (`ViewerPatch`):
-  `{ showBonds?, atomScale?, colorScheme?: "element"|"property"|"family"|"botanical"|"uniform", colorProperty?, colormap?, cameraPreset?, postprocessPreset?, bondTolerance?, bondColorMode?: "type"|"length"|"energy"|"screening", latticeReplication?: [number,number,number] }`
-
-### `OPTIONS /chat`
-
-CORS preflight. Returns `204` with the CORS headers.
-
-### `GET /health`
-
-Liveness probe: `{ "ok": true, "service": "lupi-chat" }`. Not rate-limited.
-
 ## How it works
 
-1. Validate the request body (roles, sizes, catalog shape).
-2. Enforce a KV-backed per-IP fixed-window rate limit (30 req/min by default).
-3. Seed Claude with the viewer snapshot + transcript and two server-side tools:
-   - **`search_catalog({ query, elements? })`** — fuzzy-matches the request's
-     `catalog` (title / subtitle / formula / elements / tags / id) and returns
-     the top ~5 candidates. Implemented in `src/catalog.ts`, unit-tested.
-   - **`apply_configuration({ molecule_id?, actions, done })`** — the model's
-     channel to emit the final MCP actions; captured into the HTTP response.
-4. Run the tool loop: call Anthropic → if it requests `search_catalog`, execute
-   it and feed the `tool_result` back → call again. When it calls
-   `apply_configuration`, return `actions` / `done` / `molecule`. Otherwise the
-   assistant text is returned as `reply` (a clarifying question).
+1. The browser POSTs `{ messages, viewer, catalog }` to `/chat`.
+2. The Worker validates + rate-limits, then seeds MiniMax with the viewer
+   snapshot + transcript and two server-side tools (OpenAI function-calling):
+   - `search_catalog(query, elements?)` — matched against the catalog you sent.
+   - `apply_configuration(molecule_id?, actions, done)` — captured into the response.
+3. The model asks one question at a time (molecule → coloring/bonds; lattice only
+   for procedural crystals), then calls `apply_configuration` with a
+   `lupi.generate_molecule` (load) + `lupi.set_viewer` (configure) action.
+4. Tool loop: call MiniMax → if it requests `search_catalog`, execute it
+   server-side and loop; if `apply_configuration`, return its actions.
+5. The browser executes the returned MCP actions against the viewer bridge
+   (`window.__lupiViewerMcp`).
 
-### Model
+## Model
 
-`claude-sonnet-4-6` — the current production-balanced Claude model (200K
-context, tool use). Sourced from the `anthropic-api` skill's
-`references/models.md`; **not** invented. glim-think (the other Anthropic-using
-Worker in this repo) routes Claude only via the AI Gateway and exposes no live
-model id to reuse, so we use the current documented id directly. Override per
-deploy with the `ANTHROPIC_MODEL` secret or `[vars]` entry.
+`MiniMax-M2.7` via the OpenAI-compatible `https://api.minimax.io/v1/chat/completions`
+endpoint — the project's existing deep-tier model (matches
+`glim-think/src/agents/models.ts`). Tool-calling + JSON capable. Override the
+model or base URL per deploy with the `MINIMAX_MODEL` / `MINIMAX_BASE_URL` vars.
 
 ## Files
 
 | File | Purpose |
-|------|---------|
-| `src/index.ts` | Fetch handler, routing, CORS, validation, rate limit |
-| `src/anthropic.ts` | Anthropic Messages API tool-use loop + system prompt |
-| `src/catalog.ts` | `search_catalog` fuzzy matcher (pure, unit-tested) |
-| `src/cors.ts` | CORS policy (echo allowed Origin, `*` fallback) |
-| `src/types.ts` | Shared types + the public request/response contract |
-| `test/catalog.test.ts` | Vitest unit tests for `search_catalog` |
+| --- | --- |
+| `src/index.ts` | Fetch handler: routing, CORS, validation, rate limit |
+| `src/minimax.ts` | MiniMax (OpenAI-compatible) tool-use loop + system prompt |
+| `src/catalog.ts` | `search_catalog` fuzzy matcher (pure) |
+| `src/cors.ts` | CORS helpers |
+| `src/types.ts` | Shared request/response + binding types |
+| `test/catalog.test.ts` | Fuzzy-match unit tests |
 
-## CORS
-
-Permissive (public, read-style endpoint). The request `Origin` is echoed when it
-matches the allow-list — `localhost`/`127.0.0.1` (any port), `https://lupi.live`,
-`https://*.lupine.dev`, and the Cloud Run viewer origin (`https://*.run.app`) —
-otherwise it falls back to `*`. `Vary: Origin` is always set. Add extra exact
-origins via the `EXTRA_ALLOWED_ORIGINS` var (comma-separated).
-
-## Rate limiting
-
-KV-backed fixed window: one counter per `(ip, minute)` in the `CHAT_RL`
-namespace, keyed off `CF-Connecting-IP`. Default **30 requests/minute**
-(override with the `RATE_LIMIT_MAX` var). Over the limit → `429` with a
-`Retry-After` header. KV errors fail **open** (allow) so an infra blip can't
-take chat down.
-
-## Setup & deploy
-
-> Run all commands from `cloudflare/chat-worker/`.
+## Deploy
 
 ```bash
-# 1. Install
-pnpm install        # or: npm install
+cd cloudflare/chat-worker
+npm install
 
-# 2. Create the rate-limit KV namespace and paste the returned id into
-#    wrangler.toml ([[kv_namespaces]] id = "..."). For local `wrangler dev`,
-#    also create a preview namespace and set preview_id.
+# 1. Create the rate-limit KV namespace, paste the id into wrangler.toml
 wrangler kv namespace create CHAT_RL
-wrangler kv namespace create CHAT_RL --preview
 
-# 3. Set the Anthropic secret (already provisioned on this account for
-#    glim-think — set it on this Worker too):
-wrangler secret put ANTHROPIC_API_KEY
-# optional: pin a model
-wrangler secret put ANTHROPIC_MODEL        # e.g. claude-sonnet-4-6
+# 2. Set the MiniMax key (same value glim-think uses — already on this account)
+wrangler secret put MINIMAX_API_KEY
+# optional: wrangler secret put MINIMAX_MODEL   # default MiniMax-M2.7
 
-# 4. Typecheck + test
-npm run typecheck
-npm test
-
-# 5. Deploy
+# 3. Verify, then deploy
+npm run typecheck && npm test
 wrangler deploy
+
+# 4. Point chat.lupine.dev DNS (orange-cloud) + uncomment [[routes]] in wrangler.toml
 ```
 
-After deploy, uncomment the `[[routes]]` block in `wrangler.toml` and set the
-`chat.lupine.dev` DNS record to proxied (orange-cloud) to serve on the custom
-domain. Until then the Worker is reachable at its
-`https://lupi-chat.<account>.workers.dev` URL.
-
-## Local development
-
-```bash
-wrangler dev
-# In another terminal:
-curl -s http://127.0.0.1:8787/health
-curl -s -X POST http://127.0.0.1:8787/chat \
-  -H 'Content-Type: application/json' \
-  -d '{
-        "messages":[{"role":"user","content":"show me water"}],
-        "viewer":{"fileName":null,"atomCount":0,"colorScheme":"element","showBonds":false},
-        "catalog":[{"id":"h2o","title":"Water","formula":"H2O","elements":["H","O"]}]
-      }'
+Then set the frontend env var to the deployed endpoint:
 ```
-
-## Frontend wiring
-
-The frontend points at this Worker via a Vite env var:
-
-```bash
-# .env (frontend)
 VITE_LUPI_CHAT_URL=https://chat.lupine.dev/chat
-# or, before the custom domain is live:
-# VITE_LUPI_CHAT_URL=https://lupi-chat.<account>.workers.dev/chat
 ```
-
-The client POSTs the chat transcript + viewer state + catalog to
-`VITE_LUPI_CHAT_URL`, renders `reply`, and executes any `actions` against the
-viewer's MCP bridge.
+(injected at build time in `.github/workflows/deploy-glim-viewer.yml`, like
+`VITE_LUPI_ANALYTICS_URL`).
