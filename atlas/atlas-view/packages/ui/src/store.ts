@@ -96,6 +96,11 @@ export interface AppState {
   /** id of the gallery card whose dataset is loaded/loading (UI + E2E tracking). */
   activeCardId: string | null;
   error: string | null;
+  /** Non-blocking renderer warning surfaced to the UI (e.g. the optional
+   *  WebGPU bond accelerator failed or timed out, falling back to the CPU
+   *  path). Distinct from `error`: the scene still renders. Audit findings:
+   *  no-offline-fallback-webgpu-init. Null when there's nothing to surface. */
+  rendererWarning: string | null;
   streamingTelemetry: {
     bytesTransferred: number;
     cacheHits: number;
@@ -318,6 +323,7 @@ export interface AppState {
   setLoading: (loading: boolean, progress?: number) => void;
   setActiveCardId: (id: string | null) => void;
   setError: (error: string | null) => void;
+  setRendererWarning: (warning: string | null) => void;
   setStreamingTelemetry: (stats: AppState['streamingTelemetry']) => void;
   setFrame: (frame: number) => void;
   nextFrame: () => void;
@@ -420,6 +426,7 @@ const DEFAULTS = {
   loadProgress: 0,
   activeCardId: null,
   error: null,
+  rendererWarning: null,
   streamingTelemetry: null,
   frame: 0,
   colorScheme: 'element' as ColorSchemeId,
@@ -589,6 +596,7 @@ export const useStore = create<AppState>()(
     setActiveCardId: (id) => set({ activeCardId: id }),
 
     setError: (error) => set({ error, loading: false }),
+    setRendererWarning: (rendererWarning) => set({ rendererWarning }),
     setStreamingTelemetry: (stats) => set({ streamingTelemetry: stats }),
     setViewportMode: (viewportMode) => set({ viewportMode }),
 
