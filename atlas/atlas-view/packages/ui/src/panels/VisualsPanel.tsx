@@ -182,8 +182,8 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     propertyEmissionStrength, setPropertyEmissionStrength,
     annotations, addAnnotation, removeAnnotation, clearAnnotations,
     labelStyle, setLabelStyle,
-    hiddenAtomTypes, toggleAtomType,
-    atomTypeScales, setAtomTypeScale,
+    hiddenAtomTypes, toggleAtomType, showAllAtomTypes, soloAtomType,
+    atomTypeScales, setAtomTypeScale, resetAtomTypeScales,
     // Materials & Lighting
     materialPreset,
     materialScene, applyMaterialScene,
@@ -536,32 +536,62 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                 )}
               </div>
 
-              {systemInfo && systemInfo.types.length > 0 && (
-                <div style={{ borderTop: '1px solid #1f2937', paddingTop: 12 }}>
-                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>Atom Types</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    {systemInfo.types.map(t => (
-                      <div key={t.type} style={{
-                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                        padding: '6px 10px', background: '#121418', border: '1px solid #1f2937'
-                      }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                          <OrbitalToggle label="" active={!hiddenAtomTypes.has(t.type)} onClick={() => toggleAtomType(t.type)} />
-                          <span style={{ color: '#f8fafc', fontSize: 12, fontWeight: 500 }}>{t.spec.symbol}</span>
-                          <span style={{ color: '#64748b', fontSize: 10, fontFamily: 'var(--font-mono)' }}>({t.count})</span>
-                        </div>
-                        <div style={{ width: 80 }}>
-                          <Slider
-                            min={0} max={2} step={0.1}
-                            value={atomTypeScales[t.type] ?? 1.0}
-                            onChange={(e) => setAtomTypeScale(t.type, parseFloat(e.target.value))}
-                          />
-                        </div>
+              {systemInfo && systemInfo.types.length > 0 && (() => {
+                const drifted = systemInfo.types.some(t =>
+                  hiddenAtomTypes.has(t.type) || Math.abs((atomTypeScales[t.type] ?? 1) - 1) > 0.001,
+                );
+                const multi = systemInfo.types.length > 1;
+                return (
+                  <div style={{ borderTop: '1px solid #1f2937', paddingTop: 12 }}>
+                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Atom Types
+                        <span style={{ color: '#475569', marginLeft: 6, textTransform: 'none', letterSpacing: 0 }}>color · size · visibility</span>
                       </div>
-                    ))}
+                      {drifted && (
+                        <button
+                          onClick={() => { resetAtomTypeScales(); showAllAtomTypes(); }}
+                          title="Reset all sizes to 1.0× and reveal hidden elements"
+                          style={{
+                            background: 'transparent', border: '1px solid #334155', borderRadius: 4,
+                            color: '#94a3b8', fontSize: 9, fontWeight: 700, letterSpacing: '0.05em',
+                            textTransform: 'uppercase', padding: '3px 7px', cursor: 'pointer',
+                            transition: 'color 120ms, border-color 120ms',
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#1edce0'; }}
+                          onMouseLeave={e => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = '#334155'; }}
+                        >
+                          Reset
+                        </button>
+                      )}
+                    </div>
+                    {/* Column hints — keep the rows scannable */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr 84px 36px', alignItems: 'center', gap: 8, padding: '0 10px 6px', fontSize: 8.5, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                      <span />
+                      <span>Element</span>
+                      <span style={{ textAlign: 'center' }}>Size</span>
+                      <span />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      {systemInfo.types.map(t => (
+                        <AtomTypeRow
+                          key={t.type}
+                          symbol={t.spec.symbol}
+                          name={t.spec.name}
+                          count={t.count}
+                          color={t.spec.color}
+                          hidden={hiddenAtomTypes.has(t.type)}
+                          scale={atomTypeScales[t.type] ?? 1.0}
+                          canSolo={multi}
+                          onToggle={() => toggleAtomType(t.type)}
+                          onSolo={() => soloAtomType(t.type)}
+                          onScale={(v) => setAtomTypeScale(t.type, v)}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
             </div>
           </QuantumSection>
 
@@ -955,6 +985,115 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
 
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Atom Type Row ────────────────────────────────────────────────────
+/**
+ * One per-element control: a color swatch (the element's identity color) that
+ * doubles as the show/hide toggle, the symbol + name + count, and a size slider
+ * with a live numeric readout. Clicking the element label isolates that type
+ * (solo) when the system has more than one element. Filled swatch = visible;
+ * hollow swatch with a slash = hidden, and the whole row dims.
+ */
+function AtomTypeRow({
+  symbol, name, count, color, hidden, scale, canSolo, onToggle, onSolo, onScale,
+}: {
+  symbol: string;
+  name: string;
+  count: number;
+  color: string;
+  hidden: boolean;
+  scale: number;
+  canSolo: boolean;
+  onToggle: () => void;
+  onSolo: () => void;
+  onScale: (v: number) => void;
+}) {
+  const [hover, setHover] = useState(false);
+  const customized = Math.abs(scale - 1.0) > 0.001;
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '24px 1fr 84px 36px',
+        alignItems: 'center',
+        gap: 8,
+        padding: '7px 10px',
+        background: hidden ? '#0c0e13' : (hover ? '#161b24' : '#121418'),
+        border: `1px solid ${hover && !hidden ? '#2c3a4e' : '#1f2937'}`,
+        borderRadius: 6,
+        opacity: hidden ? 0.6 : 1,
+        transition: 'background 120ms, border-color 120ms, opacity 120ms',
+      }}
+    >
+      {/* Color swatch = show/hide toggle. Filled = visible; hollow + slash = hidden. */}
+      <button
+        onClick={onToggle}
+        title={hidden ? `Show ${name}` : `Hide ${name}`}
+        aria-label={hidden ? `Show ${name}` : `Hide ${name}`}
+        aria-pressed={!hidden}
+        style={{
+          position: 'relative',
+          width: 22, height: 22, padding: 0, flexShrink: 0,
+          borderRadius: 6,
+          border: `1.5px solid ${color}`,
+          background: hidden ? 'transparent' : color,
+          boxShadow: hidden
+            ? (hover ? '0 0 0 2px rgba(255,255,255,0.10)' : 'none')
+            : `inset 0 0 0 1px rgba(0,0,0,0.30), 0 1px 5px ${color}66${hover ? ', 0 0 0 2px rgba(255,255,255,0.13)' : ''}`,
+          cursor: 'pointer',
+          transition: 'background 120ms, box-shadow 120ms',
+        }}
+      >
+        {hidden && (
+          <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" style={{ position: 'absolute', inset: 0 }}>
+            <line x1="5" y1="17" x2="17" y2="5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        )}
+      </button>
+
+      {/* Element identity — click to isolate (solo) when there are multiple types. */}
+      <button
+        onClick={canSolo ? onSolo : undefined}
+        disabled={!canSolo}
+        title={canSolo ? `Isolate ${name} — show only this element` : name}
+        style={{
+          minWidth: 0, textAlign: 'left', background: 'transparent', border: 'none',
+          padding: 0, cursor: canSolo ? 'pointer' : 'default',
+          display: 'flex', flexDirection: 'column', gap: 1,
+        }}
+      >
+        <span style={{ display: 'flex', alignItems: 'baseline', gap: 6, minWidth: 0 }}>
+          <span style={{
+            color: hidden ? '#8a99ad' : (hover && canSolo ? '#ffffff' : '#f1f5f9'),
+            fontSize: 14, fontWeight: 750, fontFamily: 'Space Grotesk, sans-serif',
+            letterSpacing: '0.01em', transition: 'color 120ms',
+          }}>{symbol}</span>
+          <span style={{ color: '#64748b', fontSize: 10, fontFamily: 'var(--font-mono)' }}>×{count}</span>
+        </span>
+        <span style={{
+          color: hover && canSolo ? '#86d8db' : '#6b7689', fontSize: 9, textTransform: 'uppercase',
+          letterSpacing: '0.06em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+          transition: 'color 120ms',
+        }}>{hover && canSolo ? 'Isolate ▸' : name}</span>
+      </button>
+
+      {/* Size slider */}
+      <div style={{ opacity: hidden ? 0.5 : 1, pointerEvents: hidden ? 'none' : 'auto' }}>
+        <Slider min={0} max={2} step={0.1} value={scale} onChange={(e) => onScale(parseFloat(e.target.value))} />
+      </div>
+
+      {/* Size readout — cyan once nudged off 1.0x. */}
+      <span style={{
+        textAlign: 'right', fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-mono)',
+        color: customized ? '#1edce0' : '#64748b',
+      }}>
+        {scale.toFixed(1)}&times;
+      </span>
     </div>
   );
 }
