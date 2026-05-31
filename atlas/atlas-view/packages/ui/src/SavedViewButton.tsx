@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFirebaseAuth, type LupiAuthProviderId } from './auth/useFirebaseAuth';
-import { firebaseConfigured } from './auth/firebase';
+import { firebaseAuth, firebaseConfigured } from './auth/firebase';
 import {
   defaultSavedViewTitle,
   listUserSavedViews,
@@ -115,6 +115,23 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
       cancelled = true;
     };
   }, [user?.uid, open, savedUrl]);
+
+  // Activation nudge: after ~30s of exploring a molecule, gently open the Save
+  // panel for a signed-out visitor (the playbook's "catch the aha moment"). One
+  // soft, dismissible nudge per molecule; never for already-signed-in users.
+  const autoPromptedRef = useRef(false);
+  useEffect(() => {
+    autoPromptedRef.current = false;
+    if (!file || user) return;
+    const timer = setTimeout(() => {
+      if (autoPromptedRef.current) return;
+      // Re-check live state: still a molecule, still signed-out, panel not open.
+      if (!useStore.getState().file || firebaseAuth?.currentUser) return;
+      autoPromptedRef.current = true;
+      setOpen((current) => current || true);
+    }, 30_000);
+    return () => clearTimeout(timer);
+  }, [file?.name, user?.uid]);
 
   const handleTitleChange = (value: string) => {
     setTitle(value);
