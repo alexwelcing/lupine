@@ -108,6 +108,7 @@ import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
 import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { SavedViewButton } from './SavedViewButton';
+import { HeaderAuthButton } from './HeaderAuthButton';
 import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
 import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
@@ -1136,7 +1137,16 @@ export default function App() {
           {!file && (
             <>
               <a
-                href="#/"
+                href="#gallery"
+                onClick={(e) => {
+                  // Smooth-scroll to the Gallery section on the landing page
+                  // instead of mutating the hash route (which #/ left as a no-op).
+                  const el = document.getElementById('gallery');
+                  if (el) {
+                    e.preventDefault();
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
                 style={{
                   display: 'block',
                   padding: isMobile ? '7px 9px' : '8px 12px',
@@ -1167,6 +1177,7 @@ export default function App() {
               >
                 MCP
               </a>
+              <HeaderAuthButton compact={isMobile} />
             </>
           )}
           {!file && (

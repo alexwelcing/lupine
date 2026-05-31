@@ -4,6 +4,7 @@ import {
   firebaseMissingKeys,
 } from './auth/firebase';
 import { useFirebaseAuth, type LupiAuthProviderId } from './auth/useFirebaseAuth';
+import { useStore } from './store';
 
 export function LupiAuthCallout({ compact = false }: { compact?: boolean }) {
   const {
@@ -14,17 +15,14 @@ export function LupiAuthCallout({ compact = false }: { compact?: boolean }) {
     signInWithOverride,
     user,
   } = useFirebaseAuth();
-  const [dismissed, setDismissed] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    try {
-      return window.localStorage.getItem('lupi.authCallout.dismissed') === '1';
-    } catch {
-      return false;
-    }
-  });
+  // Visibility is driven by an explicit store flag that DEFAULTS CLOSED — the app
+  // never auto-prompts anonymous visitors to sign up. It opens only on a deliberate
+  // action (the header "Sign in" button, or a contextual save/share flow).
+  const open = useStore((s) => s.authPromptOpen);
+  const setAuthPromptOpen = useStore((s) => s.setAuthPromptOpen);
   const [busyProvider, setBusyProvider] = useState<LupiAuthProviderId | 'codex' | null>(null);
 
-  if (user || dismissed) return null;
+  if (user || !open) return null;
 
   const disabled = !firebaseConfigured || loading || Boolean(busyProvider);
   const helper = firebaseConfigured
@@ -34,12 +32,7 @@ export function LupiAuthCallout({ compact = false }: { compact?: boolean }) {
     : `Missing Firebase config: ${firebaseMissingKeys.join(', ') || 'unknown'}`;
 
   const close = () => {
-    setDismissed(true);
-    try {
-      window.localStorage.setItem('lupi.authCallout.dismissed', '1');
-    } catch {
-      // Ignore storage failures; the in-memory dismissed state is enough for this page view.
-    }
+    setAuthPromptOpen(false);
   };
 
   const start = async (provider: LupiAuthProviderId) => {
