@@ -111,6 +111,7 @@ import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
 import { RendererFallback } from './RendererFallback';
 import { CanvasErrorBoundary } from './CanvasErrorBoundary';
+import { MoleculeFilterShell } from './MoleculeFilterShell';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -216,7 +217,7 @@ const IconExport = () => (
 import { BG_PRESETS, getBgMedia, type BgMedia, type BgPreset } from './backgroundPresets';
 import { useEquirectMediaTexture } from './hooks/useEquirectMediaTexture';
 import type { BackgroundGradientStyle } from './equirectTexture';
-import { ProceduralBackground, ProceduralMathField } from './ProceduralBackground';
+import { ProceduralBackground, ProceduralMathField, type MathFieldControls } from './ProceduralBackground';
 
 
 function resolveBackground(backgroundPreset: string, colormap: ColormapName): { top: string; bottom: string; media: BgMedia; procedural?: BgPreset['procedural'] } {
@@ -230,13 +231,14 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 }
 
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ top, bottom, style = 'linear', media, procedural, center = [0, 0, 0], distance = 1 }: {
+function SceneBackground({ top, bottom, style = 'linear', media, procedural, center = [0, 0, 0], distance = 1, mathField }: {
   top: string; bottom: string;
   style?: BackgroundGradientStyle;
   media: BgMedia;
   procedural?: BgPreset['procedural'];
   center?: [number, number, number];
   distance?: number;
+  mathField: MathFieldControls;
 }) {
   const { scene } = useThree();
 
@@ -290,8 +292,8 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
     const visible = !isImmersiveAR;
     return (
       <>
-        <ProceduralBackground variant={procedural} top={top} bottom={bottom} visible={visible} />
-        <ProceduralMathField variant={procedural} center={center} radius={distance * 1.46} visible={visible} />
+        <ProceduralBackground variant={procedural} top={top} bottom={bottom} visible={visible} controls={mathField} />
+        <ProceduralMathField variant={procedural} center={center} radius={distance * 1.46} visible={visible} controls={mathField} />
       </>
     );
   }
@@ -642,6 +644,13 @@ export default function App() {
   const activePanel = useStore(s => s.activePanel);
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const backgroundStyle = useStore(s => s.backgroundStyle);
+  const filterShellShape = useStore(s => s.filterShellShape);
+  const filterShellPreset = useStore(s => s.filterShellPreset);
+  const filterShellOpacity = useStore(s => s.filterShellOpacity);
+  const filterShellRadius = useStore(s => s.filterShellRadius);
+  const mathFieldAlpha = useStore(s => s.mathFieldAlpha);
+  const mathFieldBeta = useStore(s => s.mathFieldBeta);
+  const mathFieldGamma = useStore(s => s.mathFieldGamma);
   const ssaoIntensity = useStore(s => s.ssaoIntensity);
   const showScaleBar = useStore(s => s.showScaleBar);
   const cameraPreset = useStore(s => s.cameraPreset);
@@ -680,6 +689,10 @@ export default function App() {
     cameraPreset === 'side' ? 'XZ' :
     cameraPreset === 'front' ? 'YZ' :
     cameraPreset === 'iso' ? 'ISO' : 'View';
+  const mathField = useMemo(
+    () => ({ alpha: mathFieldAlpha, beta: mathFieldBeta, gamma: mathFieldGamma }),
+    [mathFieldAlpha, mathFieldBeta, mathFieldGamma],
+  );
 
   const openStudioDeck = useCallback((mode: StudioDeckMode) => {
     setActivePanel(null);
@@ -1022,6 +1035,13 @@ export default function App() {
         (v, i) => (v + file.trajectory.globalBounds.max[i]) / 2
       ) as [number, number, number]
     : [0, 0, 0] as [number, number, number], [file?.name]);
+  const filterShellBaseRadius = useMemo(() => {
+    if (!file) return 4;
+    const { min, max } = file.trajectory.globalBounds;
+    const dx = max[0] - min[0], dy = max[1] - min[1], dz = max[2] - min[2];
+    const diagonal = Math.hypot(dx, dy, dz);
+    return Math.max(4, diagonal * 0.58);
+  }, [file?.name]);
 
   const bg = resolveBackground(backgroundPreset, colormap);
   const bgMedia = bg.media;
@@ -1308,6 +1328,7 @@ export default function App() {
               procedural={bg.procedural}
               center={center}
               distance={cameraDistance}
+              mathField={mathField}
             />
             <XREnvironmentDome media={bgMedia} top={bg.top} bottom={bg.bottom} style={backgroundStyle} disabled={!!bg.procedural} />
             {/* Real-world light estimation: in AR this takes over scene.environment
@@ -1347,6 +1368,14 @@ export default function App() {
 
             {currentFrame && (
               <SpatialAnchor cameraDistance={cameraDistance}>
+                <MoleculeFilterShell
+                  center={center}
+                  radius={filterShellBaseRadius}
+                  shape={filterShellShape}
+                  preset={filterShellPreset}
+                  opacity={filterShellOpacity}
+                  radiusScale={filterShellRadius}
+                />
                 <AnomalyTracker
                   frame={currentFrame}
                   colorProperty={colorProperty}

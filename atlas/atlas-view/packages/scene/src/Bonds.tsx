@@ -46,6 +46,7 @@ import BondWorkerCtor from './bondWorker.ts?worker';
 const BOND_RECOMPUTE_DISP_THRESHOLD = 0.05;
 const EMPTY_BOND_PAIRS = new Int32Array(0);
 const EMPTY_BOND_DISTANCES = new Float32Array(0);
+const BOND_RADIAL_SEGMENTS = 16;
 
 /** Returns the max |Δposition| between `curr` and `prev`, sampled at most
  *  1000 atoms to keep the check sub-millisecond on million-atom scenes.
@@ -579,7 +580,8 @@ export function Bonds({
   // (Phase-2 prune: colorT/materialBT/tangent attributes removed — bonds are
   // now flat per-half via instanceColor and isotropic, so none were used.)
   const tubeGeo = useMemo(() => {
-    const geo = new THREE.CylinderGeometry(1, 1, 1, 4, 1);
+    const geo = new THREE.CylinderGeometry(1, 1, 1, BOND_RADIAL_SEGMENTS, 1, true);
+    geo.computeVertexNormals();
     geo.setAttribute('radiusBT', new THREE.InstancedBufferAttribute(new Float32Array(capacity * 2), 2));
     return geo;
   }, [capacity]);

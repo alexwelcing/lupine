@@ -34,6 +34,12 @@ export interface Annotation {
  *  - `etched`  : text rasterized to a texture, sampled inside the atom impostor
  *                shader, modulating albedo so it reads as engraved into the surface. */
 export type LabelStyle = 'tag' | 'glyph' | 'halo' | 'etched';
+export type FilterShellShape = 'off' | 'sphere' | 'box';
+export type FilterShellPreset = 'haze' | 'cryo' | 'prism' | 'graphite';
+
+function clampMathFieldParam(value: number) {
+  return Number.isFinite(value) ? Math.max(0.1, Math.min(3, value)) : 1;
+}
 
 export interface BondDataset {
   id: string;
@@ -172,6 +178,13 @@ export interface AppState {
   atomScale: number;
   backgroundPreset: string;
   backgroundStyle: 'linear' | 'radial' | 'spotlight';
+  filterShellShape: FilterShellShape;
+  filterShellPreset: FilterShellPreset;
+  filterShellOpacity: number;
+  filterShellRadius: number;
+  mathFieldAlpha: number;
+  mathFieldBeta: number;
+  mathFieldGamma: number;
   environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none';
   materialPreset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
   /** Active material scene ID. Scenes coordinate material + lighting + env
@@ -369,6 +382,14 @@ export interface AppState {
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
   setBackgroundStyle: (style: AppState['backgroundStyle']) => void;
+  setFilterShellShape: (shape: FilterShellShape) => void;
+  setFilterShellPreset: (preset: FilterShellPreset) => void;
+  setFilterShellOpacity: (opacity: number) => void;
+  setFilterShellRadius: (radius: number) => void;
+  setMathFieldAlpha: (alpha: number) => void;
+  setMathFieldBeta: (beta: number) => void;
+  setMathFieldGamma: (gamma: number) => void;
+  resetMathFieldParams: () => void;
   setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none') => void;
   setArLightEstimationActive: (active: boolean) => void;
   setMaterialPreset: (preset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic') => void;
@@ -462,6 +483,13 @@ const DEFAULTS = {
   atomScale: 1.0,
   backgroundPreset: 'deep',
   backgroundStyle: 'radial' as const,
+  filterShellShape: 'sphere' as FilterShellShape,
+  filterShellPreset: 'haze' as FilterShellPreset,
+  filterShellOpacity: 0.26,
+  filterShellRadius: 1.08,
+  mathFieldAlpha: 1.0,
+  mathFieldBeta: 1.0,
+  mathFieldGamma: 1.0,
   environmentPreset: 'studio' as const,
   materialPreset: 'default' as const,
   materialScene: DEFAULT_SCENE_ID,
@@ -697,6 +725,14 @@ export const useStore = create<AppState>()(
     setAtomScale: (atomScale) => set({ atomScale }),
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
     setBackgroundStyle: (backgroundStyle) => set({ backgroundStyle }),
+    setFilterShellShape: (filterShellShape) => set({ filterShellShape }),
+    setFilterShellPreset: (filterShellPreset) => set({ filterShellPreset }),
+    setFilterShellOpacity: (filterShellOpacity) => set({ filterShellOpacity: Math.max(0, Math.min(0.75, filterShellOpacity)) }),
+    setFilterShellRadius: (filterShellRadius) => set({ filterShellRadius: Math.max(0.75, Math.min(1.8, filterShellRadius)) }),
+    setMathFieldAlpha: (mathFieldAlpha) => set({ mathFieldAlpha: clampMathFieldParam(mathFieldAlpha) }),
+    setMathFieldBeta: (mathFieldBeta) => set({ mathFieldBeta: clampMathFieldParam(mathFieldBeta) }),
+    setMathFieldGamma: (mathFieldGamma) => set({ mathFieldGamma: clampMathFieldParam(mathFieldGamma) }),
+    resetMathFieldParams: () => set({ mathFieldAlpha: 1, mathFieldBeta: 1, mathFieldGamma: 1 }),
     setEnvironmentPreset: (environmentPreset) => set({ environmentPreset }),
     setMaterialPreset: (materialPreset) => set({ materialPreset }),
     setMaterialScene: (materialScene) => set({ materialScene }),
@@ -982,6 +1018,13 @@ export const useStore = create<AppState>()(
       if (r(s.atomScale) !== 1.0)                      delta.as = r(s.atomScale);
       if (s.backgroundPreset !== 'deep')               delta.bg = s.backgroundPreset;
       if (s.backgroundStyle !== 'linear')              delta.bgs = s.backgroundStyle;
+      if (s.filterShellShape !== 'sphere')             delta.fss = s.filterShellShape;
+      if (s.filterShellPreset !== 'haze')              delta.fsp = s.filterShellPreset;
+      if (r(s.filterShellOpacity) !== 0.26)            delta.fso = r(s.filterShellOpacity);
+      if (r(s.filterShellRadius) !== 1.08)             delta.fsr = r(s.filterShellRadius);
+      if (r(s.mathFieldAlpha) !== 1.0)                 delta.mfa = r(s.mathFieldAlpha);
+      if (r(s.mathFieldBeta) !== 1.0)                  delta.mfb = r(s.mathFieldBeta);
+      if (r(s.mathFieldGamma) !== 1.0)                 delta.mfg = r(s.mathFieldGamma);
       if (!arrEq(s.cameraPosition, [0, 0, 50]))       delta.cp3 = rArr(s.cameraPosition);
       if (!arrEq(s.cameraTarget, [0, 0, 0]))          delta.ct = rArr(s.cameraTarget);
       if (s.cameraFov !== 50)                          delta.fov = s.cameraFov;
@@ -1036,6 +1079,13 @@ export const useStore = create<AppState>()(
           atomScale: s.as ?? 1.0,
           backgroundPreset: s.bg ?? 'deep',
           backgroundStyle: s.bgs ?? 'linear',
+          filterShellShape: s.fss ?? 'sphere',
+          filterShellPreset: s.fsp ?? 'haze',
+          filterShellOpacity: s.fso ?? 0.26,
+          filterShellRadius: s.fsr ?? 1.08,
+          mathFieldAlpha: clampMathFieldParam(s.mfa ?? 1),
+          mathFieldBeta: clampMathFieldParam(s.mfb ?? 1),
+          mathFieldGamma: clampMathFieldParam(s.mfg ?? 1),
           cameraPosition: s.cp3 ?? [0, 0, 50],
           cameraTarget: s.ct ?? [0, 0, 0],
           cameraFov: s.fov ?? 50,

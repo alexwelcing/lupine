@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode } from 'react';
-import type { RenderStyle } from '@atlas/core/types';
+import type { ColormapName, RenderStyle } from '@atlas/core/types';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { COLOR_SCHEMES, SCHEME_ORDER, type ColorSchemeId } from './coloring';
 import { isClickSoundEnabled, playClick, setClickSoundEnabled, subscribeClickSound } from './lib/clickSound';
-import { useStore } from './store';
+import { useStore, type FilterShellPreset, type FilterShellShape } from './store';
 import {
   BG_GRADIENT_PRESETS,
   BG_TEXTURE_CATEGORIES,
@@ -30,6 +30,58 @@ const RENDER_OPTIONS: Array<{ id: RenderStyle; label: string; code: string; acce
   { id: 'toon', label: 'Toon', code: 'INK', accent: '#facc15' },
   { id: 'botanical', label: 'Botanical', code: 'BOT', accent: '#69f0ae' },
 ];
+
+const PALETTE_OPTIONS: Array<{ id: ColormapName; label: string; code: string; accent: string }> = [
+  { id: 'viridis', label: 'Viridis', code: 'VIR', accent: '#35d07f' },
+  { id: 'plasma', label: 'Plasma', code: 'PLS', accent: '#f97316' },
+  { id: 'inferno', label: 'Inferno', code: 'INF', accent: '#fb7185' },
+  { id: 'coolwarm', label: 'Coolwarm', code: 'C/W', accent: '#60a5fa' },
+  { id: 'turbo', label: 'Turbo', code: 'TRB', accent: '#facc15' },
+  { id: 'neon', label: 'Neon', code: 'NEO', accent: '#22d3ee' },
+  { id: 'cyberpunk', label: 'Cyber', code: 'CYB', accent: '#e879f9' },
+  { id: 'grayscale', label: 'Gray', code: 'GRY', accent: '#cbd5e1' },
+];
+
+const FILTER_SHELL_SHAPES: Array<{ id: FilterShellShape; label: string; code: string; accent: string }> = [
+  { id: 'off', label: 'Off', code: 'OFF', accent: '#64748b' },
+  { id: 'sphere', label: 'Sphere', code: 'SPH', accent: '#7de9ff' },
+  { id: 'box', label: 'Box', code: 'BOX', accent: '#f59e0b' },
+];
+
+const FILTER_SHELL_PRESETS: Array<{ id: FilterShellPreset; label: string; code: string; accent: string }> = [
+  { id: 'haze', label: 'Haze', code: 'HAZ', accent: '#d9f7ff' },
+  { id: 'cryo', label: 'Cryo', code: 'CRY', accent: '#84c9ff' },
+  { id: 'prism', label: 'Prism', code: 'PRI', accent: '#ff7ab6' },
+  { id: 'graphite', label: 'Graphite', code: 'GRF', accent: '#d1d5db' },
+];
+
+const MATH_FIELD_DNA: Record<string, { code: string; formula: string; accent: string }> = {
+  'manifold-field': {
+    code: 'MNF',
+    formula: 'line(gyroid(p * alpha + beta*t)) * gamma',
+    accent: '#84fbff',
+  },
+  'hopf-current': {
+    code: 'HOP',
+    formula: 'sin(lon * alpha + lat * alpha + beta*t)',
+    accent: '#ffd66f',
+  },
+  'harmonic-bloom': {
+    code: 'HRM',
+    formula: 'sum(sin(k*x + beta*t)) -> bloom(gamma)',
+    accent: '#b184ff',
+  },
+  'reaction-lattice': {
+    code: 'RXN',
+    formula: 'fbm(cells * alpha + beta*t) threshold gamma',
+    accent: '#55f5df',
+  },
+  'moire-crystal': {
+    code: 'MOI',
+    formula: 'interference(dot(axis,p) * alpha + beta*t)',
+    accent: '#f3cf66',
+  },
+};
 
 const FEATURED_SCENE_IDS = [
   'laboratory',
@@ -69,6 +121,10 @@ export function StudioControlDeck({
   const setPostprocessIntensity = useStore(s => s.setPostprocessIntensity);
   const colorScheme = useStore(s => s.colorScheme);
   const setColorScheme = useStore(s => s.setColorScheme);
+  const colormap = useStore(s => s.colormap);
+  const setColormap = useStore(s => s.setColormap);
+  const colorProperty = useStore(s => s.colorProperty);
+  const setColorProperty = useStore(s => s.setColorProperty);
   const renderStyle = useStore(s => s.renderStyle);
   const setRenderStyle = useStore(s => s.setRenderStyle);
 
@@ -99,10 +155,27 @@ export function StudioControlDeck({
 
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const setBackgroundPreset = useStore(s => s.setBackgroundPreset);
+  const filterShellShape = useStore(s => s.filterShellShape);
+  const setFilterShellShape = useStore(s => s.setFilterShellShape);
+  const filterShellPreset = useStore(s => s.filterShellPreset);
+  const setFilterShellPreset = useStore(s => s.setFilterShellPreset);
+  const filterShellOpacity = useStore(s => s.filterShellOpacity);
+  const setFilterShellOpacity = useStore(s => s.setFilterShellOpacity);
+  const filterShellRadius = useStore(s => s.filterShellRadius);
+  const setFilterShellRadius = useStore(s => s.setFilterShellRadius);
+  const mathFieldAlpha = useStore(s => s.mathFieldAlpha);
+  const setMathFieldAlpha = useStore(s => s.setMathFieldAlpha);
+  const mathFieldBeta = useStore(s => s.mathFieldBeta);
+  const setMathFieldBeta = useStore(s => s.setMathFieldBeta);
+  const mathFieldGamma = useStore(s => s.mathFieldGamma);
+  const setMathFieldGamma = useStore(s => s.setMathFieldGamma);
+  const resetMathFieldParams = useStore(s => s.resetMathFieldParams);
   const showAxes = useStore(s => s.showAxes);
   const toggleAxes = useStore(s => s.toggleAxes);
   const showCell = useStore(s => s.showCell);
   const toggleCell = useStore(s => s.toggleCell);
+  const file = useStore(s => s.file);
+  const frame = useStore(s => s.frame);
 
   const materialScenes = useMemo(
     () => MATERIAL_SCENES.filter(scene => FEATURED_SCENE_IDS.includes(scene.id)),
@@ -119,6 +192,22 @@ export function StudioControlDeck({
     () => BG_VIDEO_PRESETS.some(preset => preset.id === backgroundPreset),
     [backgroundPreset],
   );
+  const availableProperties = useMemo(() => {
+    const props = file?.trajectory.frames[frame]?.properties;
+    return props ? Array.from(props.keys()) : [];
+  }, [file, frame]);
+  const activeMathPreset = useMemo(
+    () => mathPresets.find(preset => preset.id === backgroundPreset) ?? mathPresets[0],
+    [backgroundPreset, mathPresets],
+  );
+  const activeMathDna = activeMathPreset ? MATH_FIELD_DNA[activeMathPreset.id] : undefined;
+  const activateMathPreset = (presetId = activeMathPreset?.id) => {
+    if (presetId) setBackgroundPreset(presetId);
+  };
+  const setMathControl = (setter: (value: number) => void) => (value: number) => {
+    activateMathPreset();
+    setter(value);
+  };
 
   const handleRandomVideo = () => {
     if (BG_VIDEO_PRESETS.length === 0) return;
@@ -144,6 +233,13 @@ export function StudioControlDeck({
     const next = !clickSound;
     setClickSoundEnabled(next);
     if (next) playClick(); // preview the tick when enabling, inside this user gesture
+  };
+
+  const applyColorScheme = (scheme: ColorSchemeId) => {
+    setColorScheme(scheme);
+    if (scheme === 'property' && !colorProperty && availableProperties.length > 0) {
+      setColorProperty(availableProperties[0]);
+    }
   };
 
   const title = mode === 'look' ? 'Look' : mode === 'surface' ? 'Surface' : 'World';
@@ -290,12 +386,47 @@ export function StudioControlDeck({
                       meta={scheme.id.slice(0, 3).toUpperCase()}
                       active={colorScheme === scheme.id}
                       accent={scheme.id === 'botanical' ? '#69f0ae' : '#1edce0'}
-                      onClick={() => setColorScheme(scheme.id as ColorSchemeId)}
+                      onClick={() => applyColorScheme(scheme.id as ColorSchemeId)}
                     />
                   );
                 })}
               </div>
             </ControlGroup>
+
+            <ControlGroup title="Palette">
+              <div style={buttonGridStyle}>
+                {PALETTE_OPTIONS.map(option => (
+                  <RiveButton
+                    key={option.id}
+                    label={option.label}
+                    meta={option.code}
+                    active={colormap === option.id}
+                    accent={option.accent}
+                    onClick={() => setColormap(option.id)}
+                  />
+                ))}
+              </div>
+            </ControlGroup>
+
+            {availableProperties.length > 0 && (
+              <ControlGroup title="Property Field">
+                <div style={buttonGridStyle}>
+                  {availableProperties.slice(0, 8).map(property => (
+                    <RiveButton
+                      key={property}
+                      label={property}
+                      meta="PROP"
+                      active={colorProperty === property}
+                      accent="#f59e0b"
+                      onClick={() => {
+                        setColorProperty(property);
+                        setColorScheme('property');
+                      }}
+                    />
+                  ))}
+                </div>
+              </ControlGroup>
+            )}
 
             <ControlGroup
               title="Feel"
@@ -371,11 +502,77 @@ export function StudioControlDeck({
 
         {mode === 'world' && (
           <div style={stackStyle}>
-            <ControlGroup title="Mathematical Fields">
+            <ControlGroup title="Math Engine">
+              <div style={mathEngineLayoutStyle}>
+                <div style={mathLibraryGridStyle}>
+                  {mathPresets.map(preset => (
+                    <MathPresetButton
+                      key={preset.id}
+                      preset={preset}
+                      active={backgroundPreset === preset.id}
+                      dna={MATH_FIELD_DNA[preset.id]}
+                      onClick={() => setBackgroundPreset(preset.id)}
+                    />
+                  ))}
+                </div>
+                {activeMathPreset && activeMathDna && (
+                  <MathDnaTile
+                    title={activeMathPreset.label}
+                    code={activeMathDna.code}
+                    formula={activeMathDna.formula}
+                    accent={activeMathDna.accent}
+                    alpha={mathFieldAlpha}
+                    beta={mathFieldBeta}
+                    gamma={mathFieldGamma}
+                  />
+                )}
+              </div>
+              <div className="lupi-studio-knobs" style={mathKnobRowStyle}>
+                <RiveKnob label="Alpha" value={mathFieldAlpha} min={0.1} max={3} step={0.1} onChange={setMathControl(setMathFieldAlpha)} format={value => value.toFixed(1)} />
+                <RiveKnob label="Beta" value={mathFieldBeta} min={0.1} max={3} step={0.1} onChange={setMathControl(setMathFieldBeta)} format={value => value.toFixed(1)} />
+                <RiveKnob label="Gamma" value={mathFieldGamma} min={0.1} max={3} step={0.1} onChange={setMathControl(setMathFieldGamma)} format={value => value.toFixed(1)} />
+                <RiveButton
+                  label="Reset"
+                  meta="1.0"
+                  active={mathFieldAlpha === 1 && mathFieldBeta === 1 && mathFieldGamma === 1}
+                  accent={activeMathDna?.accent ?? '#1edce0'}
+                  onClick={() => {
+                    activateMathPreset();
+                    resetMathFieldParams();
+                  }}
+                  tall
+                />
+              </div>
+            </ControlGroup>
+
+            <ControlGroup title="Molecule Filter">
               <div style={worldGridStyle}>
-                {mathPresets.map(preset => (
-                  <BackgroundTile key={preset.id} preset={preset} active={backgroundPreset === preset.id} onClick={() => setBackgroundPreset(preset.id)} />
+                {FILTER_SHELL_SHAPES.map(option => (
+                  <RiveButton
+                    key={option.id}
+                    label={option.label}
+                    meta={option.code}
+                    active={filterShellShape === option.id}
+                    accent={option.accent}
+                    onClick={() => setFilterShellShape(option.id)}
+                    tall
+                  />
                 ))}
+                {FILTER_SHELL_PRESETS.map(option => (
+                  <RiveButton
+                    key={option.id}
+                    label={option.label}
+                    meta={option.code}
+                    active={filterShellPreset === option.id}
+                    accent={option.accent}
+                    onClick={() => setFilterShellPreset(option.id)}
+                    tall
+                  />
+                ))}
+              </div>
+              <div className="lupi-studio-knobs" style={filterKnobRowStyle}>
+                <RiveKnob label="Tint" value={filterShellOpacity} min={0} max={0.65} step={0.01} onChange={setFilterShellOpacity} format={value => `${Math.round(value * 100)}%`} />
+                <RiveKnob label="Radius" value={filterShellRadius} min={0.75} max={1.6} step={0.01} onChange={setFilterShellRadius} format={value => value.toFixed(2)} />
               </div>
             </ControlGroup>
 
@@ -908,6 +1105,152 @@ function SceneButton({ scene, active, onClick }: { scene: MaterialScene; active:
   );
 }
 
+function MathPresetButton({
+  preset,
+  active,
+  dna,
+  onClick,
+}: {
+  preset: BgPresetWithId;
+  active: boolean;
+  dna?: { code: string; formula: string; accent: string };
+  onClick: () => void;
+}) {
+  const [pulse, setPulse] = useState(false);
+  const timerRef = useRef<number | null>(null);
+  const accent = dna?.accent ?? '#1edce0';
+
+  useEffect(() => () => {
+    if (timerRef.current !== null) window.clearTimeout(timerRef.current);
+  }, []);
+
+  const handleClick = () => {
+    setPulse(false);
+    window.requestAnimationFrame(() => setPulse(true));
+    if (timerRef.current !== null) window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => setPulse(false), 260);
+    onClick();
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      title={dna?.formula ?? preset.label}
+      className={pulse ? 'lupi-rive-snap' : undefined}
+      style={{
+        position: 'relative',
+        minHeight: 72,
+        display: 'grid',
+        alignContent: 'space-between',
+        gap: 6,
+        padding: 10,
+        overflow: 'hidden',
+        borderRadius: 6,
+        border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.22)',
+        background: preset.preview
+          ? `linear-gradient(180deg, rgba(3,7,18,0.05), rgba(3,7,18,0.78)), ${preset.preview}`
+          : `linear-gradient(135deg, ${preset.top}, ${preset.bottom})`,
+        color: '#f8fafc',
+        boxShadow: active ? `0 0 18px ${accent}34, inset 0 0 14px ${accent}16` : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+        cursor: 'pointer',
+        textAlign: 'left',
+        touchAction: 'manipulation',
+      }}
+    >
+      {pulse && <span className="lupi-rive-flash" style={{ position: 'absolute', inset: 0, background: accent, mixBlendMode: 'screen', pointerEvents: 'none' }} />}
+      <span style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+        <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 12, fontWeight: 800, textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>{preset.label}</span>
+        <span style={{ flexShrink: 0, color: active ? accent : '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800 }}>{dna?.code ?? 'MTH'}</span>
+      </span>
+      <span style={{ position: 'relative', color: '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        {dna?.formula ?? preset.id}
+      </span>
+    </button>
+  );
+}
+
+function MathDnaTile({
+  title,
+  code,
+  formula,
+  accent,
+  alpha,
+  beta,
+  gamma,
+}: {
+  title: string;
+  code: string;
+  formula: string;
+  accent: string;
+  alpha: number;
+  beta: number;
+  gamma: number;
+}) {
+  return (
+    <div style={{
+      minHeight: 150,
+      display: 'grid',
+      alignContent: 'space-between',
+      gap: 10,
+      padding: 12,
+      border: `1px solid ${accent}55`,
+      borderRadius: 6,
+      background: `linear-gradient(135deg, ${accent}18, rgba(9,14,22,0.88))`,
+      boxShadow: `inset 0 0 18px ${accent}10`,
+      color: '#cbd5e1',
+      minWidth: 0,
+    }}>
+      <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', gap: 10, minWidth: 0 }}>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ color: '#f8fafc', fontSize: 12, fontWeight: 820, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>
+          <div style={{ color: accent, fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 820 }}>{code}</div>
+        </div>
+        <div style={{
+          flexShrink: 0,
+          width: 34,
+          height: 34,
+          borderRadius: 6,
+          border: `1px solid ${accent}66`,
+          background: `conic-gradient(from 180deg, ${accent}, rgba(255,255,255,0.08), ${accent})`,
+          boxShadow: `0 0 18px ${accent}24`,
+        }} />
+      </div>
+      <div style={{
+        color: '#e2e8f0',
+        fontSize: 11,
+        lineHeight: 1.45,
+        fontFamily: 'var(--font-mono)',
+        wordBreak: 'break-word',
+      }}>
+        {formula}
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 6 }}>
+        <MathParamChip label="A" value={alpha} accent={accent} />
+        <MathParamChip label="B" value={beta} accent={accent} />
+        <MathParamChip label="C" value={gamma} accent={accent} />
+      </div>
+    </div>
+  );
+}
+
+function MathParamChip({ label, value, accent }: { label: string; value: number; accent: string }) {
+  return (
+    <div style={{
+      display: 'grid',
+      gap: 2,
+      padding: '6px 7px',
+      border: '1px solid rgba(148,163,184,0.18)',
+      borderRadius: 5,
+      background: 'rgba(2,6,23,0.56)',
+      minWidth: 0,
+    }}>
+      <span style={{ color: accent, fontSize: 10, fontWeight: 820, fontFamily: 'var(--font-mono)' }}>{label}</span>
+      <span style={{ color: '#f8fafc', fontSize: 11, fontWeight: 820, fontFamily: 'var(--font-mono)' }}>{value.toFixed(1)}</span>
+    </div>
+  );
+}
+
 function BackgroundTile({ preset, active, onClick }: { preset: BgPresetWithId; active: boolean; onClick: () => void }) {
   const [pulse, setPulse] = useState(false);
   const timerRef = useRef<number | null>(null);
@@ -1012,6 +1355,30 @@ const knobGridStyle: CSSProperties = {
 const singleKnobRowStyle: CSSProperties = {
   display: 'grid',
   gridTemplateColumns: 'minmax(96px, 120px) minmax(180px, 1fr)',
+  gap: 6,
+};
+
+const filterKnobRowStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, minmax(92px, 130px))',
+  gap: 6,
+};
+
+const mathEngineLayoutStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+  gap: 6,
+};
+
+const mathLibraryGridStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(142px, 1fr))',
+  gap: 6,
+};
+
+const mathKnobRowStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(92px, 130px))',
   gap: 6,
 };
 

@@ -91,6 +91,38 @@ describe('Store — Color & Visuals', () => {
     expect(getStoreState().renderStyle).toBe('toon');
   });
 
+  it('sets molecule filter shell controls', () => {
+    const s = getStoreState();
+    s.setFilterShellShape('box');
+    s.setFilterShellPreset('prism');
+    s.setFilterShellOpacity(1);
+    s.setFilterShellRadius(2);
+
+    const next = getStoreState();
+    expect(next.filterShellShape).toBe('box');
+    expect(next.filterShellPreset).toBe('prism');
+    expect(next.filterShellOpacity).toBe(0.75);
+    expect(next.filterShellRadius).toBe(1.8);
+  });
+
+  it('sets math field controls with safe clamps', () => {
+    const s = getStoreState();
+    s.setMathFieldAlpha(3.4);
+    s.setMathFieldBeta(0);
+    s.setMathFieldGamma(2.2);
+
+    let next = getStoreState();
+    expect(next.mathFieldAlpha).toBe(3);
+    expect(next.mathFieldBeta).toBe(0.1);
+    expect(next.mathFieldGamma).toBe(2.2);
+
+    next.resetMathFieldParams();
+    next = getStoreState();
+    expect(next.mathFieldAlpha).toBe(1);
+    expect(next.mathFieldBeta).toBe(1);
+    expect(next.mathFieldGamma).toBe(1);
+  });
+
   it('applies neon visual profile', () => {
     getStoreState().applyVisualProfile('neon');
     const s = getStoreState();
@@ -127,6 +159,44 @@ describe('Store — URL Serialization', () => {
     expect(restored.showBonds).toBe(true);
     expect(restored.bondCutoff).toBeCloseTo(3.2);
     expect(restored.bondTolerance).toBeCloseTo(0.7);
+  });
+
+  it('round-trips molecule filter shell settings through URL', () => {
+    const s = getStoreState();
+    s.setFilterShellShape('box');
+    s.setFilterShellPreset('graphite');
+    s.setFilterShellOpacity(0.42);
+    s.setFilterShellRadius(1.35);
+
+    const encoded = s.encodeToURL();
+    resetStore();
+
+    getStoreState().decodeFromURL(encoded);
+    const restored = getStoreState();
+
+    expect(restored.filterShellShape).toBe('box');
+    expect(restored.filterShellPreset).toBe('graphite');
+    expect(restored.filterShellOpacity).toBeCloseTo(0.42);
+    expect(restored.filterShellRadius).toBeCloseTo(1.35);
+  });
+
+  it('round-trips math field controls through URL', () => {
+    const s = getStoreState();
+    s.setBackgroundPreset('moire-crystal');
+    s.setMathFieldAlpha(1.7);
+    s.setMathFieldBeta(2.4);
+    s.setMathFieldGamma(0.6);
+
+    const encoded = s.encodeToURL();
+    resetStore();
+
+    getStoreState().decodeFromURL(encoded);
+    const restored = getStoreState();
+
+    expect(restored.backgroundPreset).toBe('moire-crystal');
+    expect(restored.mathFieldAlpha).toBeCloseTo(1.7);
+    expect(restored.mathFieldBeta).toBeCloseTo(2.4);
+    expect(restored.mathFieldGamma).toBeCloseTo(0.6);
   });
 });
 
