@@ -10,6 +10,7 @@ import {
   type SavedMolecularView,
 } from './savedViews';
 import { useStore } from './store';
+import { track, ANALYTICS_EVENTS } from './analytics';
 import {
   LupiButton,
   LupiField,
@@ -139,6 +140,14 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
       setSavedUrl(result.url);
       setSlug(result.view.slug);
       setStatus('Saved.');
+      // North Star: a molecule view was persisted. No PII — counts + flags only.
+      track(ANALYTICS_EVENTS.VIEW_SAVED, {
+        atoms: loadedAtomCount || file?.trajectory.frames[0]?.natoms || 0,
+        frame: frame + 1,
+        bonds: showBonds,
+      });
+      // Referral: the shareable canonical link was produced and copied.
+      track(ANALYTICS_EVENTS.VIEW_SHARED, { method: 'auto_copy' });
       await navigator.clipboard.writeText(result.url).catch(() => undefined);
       window.history.pushState({}, '', result.url);
       window.dispatchEvent(new PopStateEvent('popstate'));
@@ -264,7 +273,12 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
                     {busy ? 'Saving' : 'Save'}
                   </LupiButton>
                   {savedUrl && (
-                    <LupiButton onClick={() => navigator.clipboard.writeText(savedUrl)}>
+                    <LupiButton
+                      onClick={() => {
+                        track(ANALYTICS_EVENTS.VIEW_SHARED, { method: 'copy_button' });
+                        void navigator.clipboard.writeText(savedUrl);
+                      }}
+                    >
                       Copy
                     </LupiButton>
                   )}
