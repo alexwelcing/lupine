@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /brand.json
 
 Sitemap: https://lupi.live/sitemap.xml

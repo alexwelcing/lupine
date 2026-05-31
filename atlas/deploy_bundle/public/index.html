@@ -3,35 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>LUPI — WebGPU Molecular Viewer by Lupine Science</title>
-  <meta name="description" content="LUPI is the WebGPU molecular viewer from Lupine Science: publication-quality 3D renders, video export, and real-time atomistic analysis in the browser." />
+  <title>LUPI shows molecules</title>
+  <meta name="description" content="LUPI is a molecular viewer from Lupine Science: publication-quality 3D renders, video export, and real-time atomistic analysis in the browser." />
   <meta name="theme-color" content="#06080d" />
   <meta name="application-name" content="LUPI" />
   <meta name="apple-mobile-web-app-title" content="LUPI" />
   <meta property="og:site_name" content="Lupine Science" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="LUPI — WebGPU Molecular Viewer" />
+  <meta property="og:title" content="LUPI — Molecular Viewer" />
   <meta property="og:description" content="Inspect molecular trajectories in the browser with WebGPU rendering from Lupine Science." />
   <meta property="og:url" content="https://lupi.live/" />
   <meta property="og:image" content="https://lupi.live/og-lupi.png" />
   <meta property="og:image:alt" content="LUPI bluebonnet mark and WebGPU molecular viewer title card." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="LUPI — WebGPU Molecular Viewer" />
-  <meta name="twitter:description" content="WebGPU molecular viewing from Lupine Science." />
+  <meta name="twitter:title" content="LUPI — Molecular Viewer" />
+  <meta name="twitter:description" content="Molecular viewing from Lupine Science." />
   <meta name="twitter:image" content="https://lupi.live/og-lupi.png" />
   <link rel="canonical" href="https://lupi.live/" />
   <link rel="manifest" href="./site.webmanifest" />
+  <link rel="alternate" type="text/plain" href="./llms.txt" title="Agent guide for Lupine Science" />
+  <link rel="alternate" type="text/plain" href="./llms-full.txt" title="Full agent guide for Lupine Science" />
+  <link rel="alternate" type="application/json" href="./brand.json" title="Lupine Science brand metadata" />
   <link rel="icon" href="./favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script type="module" crossorigin src="./assets/index-DoEo2nta.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://lupine.science/#organization",
+        "name": "Lupine Science",
+        "url": "https://lupine.science",
+        "description": "Lupine Science studies the error geometry of interatomic potentials."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://lupi.live/#software",
+        "name": "LUPI",
+        "url": "https://lupi.live",
+        "applicationCategory": "Scientific visualization",
+        "operatingSystem": "Web",
+        "publisher": { "@id": "https://lupine.science/#organization" },
+        "description": "Browser-native WebGPU viewer for atomistic evidence from Lupine Science."
+      }
+    ]
+  }
+  </script>
+  <script type="module" crossorigin src="./assets/index-5-nYDqTF.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/vendor-react-OtmnRBTN.js">
-  <link rel="modulepreload" crossorigin href="./assets/vendor-three-D2ym6CsH.js">
-  <link rel="modulepreload" crossorigin href="./assets/vendor-postprocess-WgxrzeKQ.js">
-  <link rel="modulepreload" crossorigin href="./assets/vendor-react-three-aPBKrKDH.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-three-Bam-DO-L.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-postprocess-qWgy7zq_.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-react-three-BEavodTA.js">
   <link rel="stylesheet" crossorigin href="./assets/index-D6ENtsBQ.css">
 </head>
 <body>
