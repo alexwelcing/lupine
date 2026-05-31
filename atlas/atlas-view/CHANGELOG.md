@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.3.0] - 2026-05-30
+
+### Federated molecule search, in-house OMol25, and agent API keys
+
+### Added
+- **Federated molecule search:** one search box (and the `lupi.search_molecules`
+  MCP tool) fans out across six sources — your saved views, the curated Lupi
+  library, the built-in gallery, the NIST potentials catalog, Meta's OMol25
+  neutral-validation set, and PubChem — then merges and ranks the hits.
+- **Real OMol25 geometry, hosted in-house:** the OMol25 neutral-validation split
+  (27,697 molecules) is mirrored to our GCS bucket as a compact search index plus
+  one `.xyz` per structure carrying true DFT coordinates, total energy, and band
+  gap. An OMol25 hit now opens with its real geometry through the viewer's normal
+  loader instead of a formula-based guess. Reproducible via
+  `tools/omol25-structures.py`.
+- **Curated library:** signed-in users (and agents) can add owner-stamped
+  molecules to a shared, public-readable `moleculeLibrary` that backs the
+  `library` search source.
+- **API keys for agents:** a signed-in user can mint `lupi_pk_…` keys that an
+  agent exchanges for a Firebase custom token — driving the viewer / MCP without
+  Google OAuth. See `docs/api-keys.md`.
+
+### Fixed
+- **Production sign-in:** removed `Cross-Origin-Embedder-Policy: require-corp`
+  from the dev server and prod nginx. require-corp broke Firebase's cross-origin
+  auth iframe (sign-in completed but the app stayed logged out) for no benefit
+  absent SharedArrayBuffer; COOP `same-origin-allow-popups` is retained for popups.
+
 ## [0.2.1] - 2026-04-25
 
 ### Fixed

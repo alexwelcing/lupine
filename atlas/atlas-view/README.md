@@ -100,6 +100,32 @@ pnpm test
 
 ---
 
+## Molecule Search & Data Sources
+
+LUPI ships a **federated molecule search**: a single query fans out across six
+providers and returns merged, ranked hits. The same engine backs the in-app
+search box and the `lupi.search_molecules` MCP tool, so agents and humans hit the
+identical index.
+
+| Source | What it is |
+|---|---|
+| Saved views | your own Firestore-saved `#/view/:slug` states (signed-in) |
+| Library | curated, public `moleculeLibrary` anyone signed-in can add to |
+| Gallery | built-in example structures |
+| NIST | the NIST interatomic-potentials catalog |
+| OMol25 | Meta FAIR Open Molecules 2025, neutral-validation split (27,697 mols) |
+| PubChem | external named compounds |
+
+**OMol25 is hosted in-house.** The neutral-validation split is mirrored to a
+public GCS bucket (`gs://shed-489901-omol25`) as a compact index plus one `.xyz`
+per molecule carrying real DFT coordinates, total energy, and band gap — so an
+OMol25 hit opens with its true geometry, not a formula-based guess. Rebuild the
+index + structures with `tools/omol25-structures.py`.
+
+Agents authenticate with **API keys** (no Google OAuth) — see `docs/api-keys.md`.
+
+---
+
 ## Package Structure
 
 ### `packages/parsers/wasm/` — Rust WASM Parsers
