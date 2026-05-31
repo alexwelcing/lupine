@@ -36,6 +36,13 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Rate-limit counters: written ONLY by the Cloud Functions admin SDK (the
+    // per-IP exchange throttle). Never client-accessible; a TTL policy on the
+    // `expireAt` field reaps stale window docs.
+    match /rateLimits/{windowId} {
+      allow read, write: if false;
+    }
+
     // Curated molecule library — public-readable; any signed-in user may add an
     // owner-stamped entry, and edit/remove only their own. Backs the federated
     // search 'library' source.
