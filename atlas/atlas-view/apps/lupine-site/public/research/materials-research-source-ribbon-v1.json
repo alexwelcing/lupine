@@ -1,0 +1,826 @@
+{
+  "acceptance_gates": {
+    "general_reuse": [
+      "Campaigns cite this registry by path and source_ids rather than retyping source claims.",
+      "Adapters consume source capability/claim metadata before downloading or sampling large datasets.",
+      "Phoenix/Lupine Science reports show claim level and guardrail next to any sourced evidence."
+    ],
+    "registry": [
+      "Every source has source_id, title, source_kind, URL records, citation metadata, license, stewardship, capabilities, claim_support, verification, and ingestion fields.",
+      "Every claim_support entry has a claim_id, known claim level, evidence fields, and guardrail.",
+      "A source cannot support phase_label_reference unless its capabilities.phase_label is truthy.",
+      "A ready_for_sampler source must have at least one verified live or verified local check."
+    ],
+    "state_phase_seed_v1": [
+      "At least one source supports state_condition_coverage.",
+      "At least one distinct source supports phase_change_labels or phase_label_reference.",
+      "Every imported row preserves source_id, citation_key, license note, original id, and source-specific provenance fields.",
+      "State-condition labels and phase labels remain separate fields until an evaluator explicitly joins them."
+    ]
+  },
+  "active_sources": [
+    {
+      "claim_guardrails": [
+        "Use for GST phase-change behavior only. Do not generalize to all crystals or pressure regimes."
+      ],
+      "claim_ids": [
+        "phase_change_labels"
+      ],
+      "domains": [
+        "phase_change",
+        "molecular_dynamics",
+        "crystal_structures"
+      ],
+      "ingestion_status": "needs_archive_inspection",
+      "next_action": "Inspect downloadable files, license, phase labels, and trajectory schema; import only a tiny provenance-preserving sample.",
+      "priority": 1,
+      "source_id": "gst225-cambridge-gap-trajectories",
+      "source_kind": "dataset_archive",
+      "target_artifacts": [
+        "phase-change-seed-gst-v1",
+        "state-phase-seed-v1"
+      ],
+      "title": "Data for modeling Ge2Sb2Te5 phase-change memory material with a machine-learned interatomic potential",
+      "verification": "verified_live"
+    },
+    {
+      "claim_guardrails": [
+        "Supports finite-temperature AIMD/NPT energy-force-stress snapshots. Does not by itself support phase-change labels.",
+        "Treat 1000 K/NPT as source-level state context until row-level metadata is parsed."
+      ],
+      "claim_ids": [
+        "finite_temperature_snapshot_accuracy",
+        "state_condition_coverage"
+      ],
+      "domains": [
+        "mlip_accuracy",
+        "molecular_dynamics",
+        "finite_temperature",
+        "crystal_structures"
+      ],
+      "ingestion_status": "ready_for_sampler",
+      "next_action": "Sample a small element-balanced set from default/train, parse metadata for ensemble/temperature/pressure conventions, and preserve original configuration/property ids.",
+      "priority": 1,
+      "source_id": "omat24-aimd-pbe-1000-npt",
+      "source_kind": "dataset",
+      "target_artifacts": [
+        "state-phase-seed-v1",
+        "finite-temperature-mlip-heldout-v1"
+      ],
+      "title": "OMat24 train AIMD from PBE 1000 NPT",
+      "verification": "verified_live"
+    },
+    {
+      "claim_guardrails": [
+        "Supports hot AIMD/NPT energy-force-stress snapshots. Does not by itself say whether a row is liquid, amorphous, or crystalline.",
+        "Treat 3000 K/NPT as source-level state context until row-level metadata is parsed."
+      ],
+      "claim_ids": [
+        "finite_temperature_snapshot_accuracy",
+        "state_condition_coverage"
+      ],
+      "domains": [
+        "mlip_accuracy",
+        "molecular_dynamics",
+        "finite_temperature",
+        "high_temperature",
+        "crystal_structures"
+      ],
+      "ingestion_status": "ready_for_sampler",
+      "next_action": "Sample a small high-temperature counter-slice and compare order metrics against the 1000 K source before any phase label is assigned.",
+      "priority": 1,
+      "source_id": "omat24-aimd-pbe-3000-npt",
+      "source_kind": "dataset",
+      "target_artifacts": [
+        "state-phase-seed-v1",
+        "high-temperature-mlip-heldout-v1"
+      ],
+      "title": "OMat24 train AIMD from PBE 3000 NPT",
+      "verification": "verified_live"
+    },
+    {
+      "claim_guardrails": [
+        "Use as taxonomy and methodology until data files are resolved."
+      ],
+      "claim_ids": [
+        "phase_label_taxonomy"
+      ],
+      "domains": [
+        "phase_change",
+        "molecular_dynamics",
+        "model_validation"
+      ],
+      "ingestion_status": "metadata_ready_data_needs_resolution",
+      "next_action": "Resolve supplementary data and convert methods into measurable phase-label fields.",
+      "priority": 2,
+      "source_id": "gst225-crystallization-mlip-2024",
+      "source_kind": "paper",
+      "target_artifacts": [
+        "phase-label-taxonomy-v1"
+      ],
+      "title": "Unraveling crystallization kinetics of Ge2Sb2Te5 with a machine-learned interatomic potential",
+      "verification": "verified_live"
+    },
+    {
+      "claim_guardrails": [
+        "Pressure-structure provenance only. Does not provide energy/force/stress evaluator labels unless linked back to calculations."
+      ],
+      "claim_ids": [
+        "pressure_resolved_structure"
+      ],
+      "domains": [
+        "high_pressure",
+        "crystal_structures",
+        "phase_change",
+        "benchmark_design"
+      ],
+      "ingestion_status": "needs_database_access_resolution",
+      "next_action": "Locate database files/API and verify license before treating HPCSD as an ingestable source.",
+      "priority": 2,
+      "source_id": "hpcsd-high-pressure-crystal-structures",
+      "source_kind": "paper",
+      "target_artifacts": [
+        "pressure-structure-seed-v1"
+      ],
+      "title": "High-Pressure Crystal Structure Database",
+      "verification": "verified_live"
+    },
+    {
+      "claim_guardrails": [
+        "Excellent for broad energy/force/stress coverage. Do not infer finite-temperature phase labels.",
+        "Use as a source distribution map and negative-example reservoir, not as the sole state/phase truth source."
+      ],
+      "claim_ids": [
+        "broad_crystal_support_distribution",
+        "support_gap_discovery"
+      ],
+      "domains": [
+        "mlip_accuracy",
+        "molecular_dynamics",
+        "crystal_structures",
+        "benchmark_design"
+      ],
+      "ingestion_status": "ready_for_sampler",
+      "next_action": "Build a tiny stratified sample across compatibility configs, chemistry size, stress magnitude, and relaxation step.",
+      "priority": 2,
+      "source_id": "lemat-traj",
+      "source_kind": "dataset",
+      "target_artifacts": [
+        "broad-crystal-support-v1",
+        "support-gap-map-v1"
+      ],
+      "title": "LeMat-Traj: scalable unified materials trajectories",
+      "verification": "verified_live"
+    },
+    {
+      "claim_guardrails": [
+        "Supports DFT relaxation accuracy and broad MLIP heldout rows, not finite-temperature or phase-change labels."
+      ],
+      "claim_ids": [
+        "relaxation_trajectory_accuracy"
+      ],
+      "domains": [
+        "mlip_accuracy",
+        "crystal_structures",
+        "benchmark_design"
+      ],
+      "ingestion_status": "already_in_use",
+      "next_action": "Retain as the relaxation-control source while using OMat24/GST/HPCSD to fill state and phase gaps.",
+      "priority": 2,
+      "source_id": "mptrj-materials-project",
+      "source_kind": "dataset",
+      "target_artifacts": [
+        "canonical-structures-v2",
+        "canonical-distill-support-mptrj-train-plus-elastic-v1"
+      ],
+      "title": "Materials Project trajectory data used by CHGNet/MPtrj",
+      "verification": "verified_live"
+    }
+  ],
+  "claim_guardrail": "A source may support only the claims listed in its claim_support entries. State-condition evidence, phase labels, model capability, and accuracy-improvement claims must not be collapsed into one another.",
+  "commands": [
+    "python tools/research_source_registry.py validate",
+    "python tools/research_source_registry.py team-queue --max-priority 2",
+    "python tools/research_source_registry.py team-queue --claim state_condition_coverage --claim phase_change_labels --max-priority 2"
+  ],
+  "queue": {
+    "counters": {
+      "roles": {
+        "claim_guardian": 8,
+        "fixture_builder": 1,
+        "phoenix_reporter": 1,
+        "sampler_builder": 6,
+        "source_inspector": 7
+      },
+      "sources": 7,
+      "statuses": {
+        "queued": 15,
+        "ready": 8
+      },
+      "work_units": 23
+    },
+    "priority_units": [
+      {
+        "acceptance_checks": [
+          "Inspection records license, citation key, reusable fields, and source-specific provenance.",
+          "Rows that cannot carry the needed evidence fields are excluded before sampling.",
+          "The source keeps its registered claim level; no derived artifact widens the claim."
+        ],
+        "claim_ids": [
+          "phase_change_labels"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py claim-matrix",
+          "python tools/research_source_registry.py verify-live --timeout-s 15"
+        ],
+        "depends_on": [],
+        "guardrail": "Use for GST phase-change behavior only. Do not generalize to all crystals or pressure regimes.",
+        "inputs": {
+          "adapters": [
+            "archive-trajectory-import"
+          ],
+          "urls": [
+            {
+              "label": "Cambridge repository item",
+              "url": "https://www.repository.cam.ac.uk/items/4c68a564-d620-4c14-ac05-56289d0bc5b9"
+            }
+          ],
+          "verification": "verified_live"
+        },
+        "outputs": [
+          "data/research_sources/inspections/gst225_cambridge_gap_trajectories_inspection_v1.json"
+        ],
+        "priority": 1,
+        "role": "source_inspector",
+        "source_ids": [
+          "gst225-cambridge-gap-trajectories"
+        ],
+        "status": "ready",
+        "summary": "Inspect access, license, schema, and provenance for Data for modeling Ge2Sb2Te5 phase-change memory material with a machine-learned interatomic potential.",
+        "unit_id": "source-intake:gst225-cambridge-gap-trajectories:inspect"
+      },
+      {
+        "acceptance_checks": [
+          "Inspection records license, citation key, reusable fields, and source-specific provenance.",
+          "Rows that cannot carry the needed evidence fields are excluded before sampling.",
+          "The source keeps its registered claim level; no derived artifact widens the claim."
+        ],
+        "claim_ids": [
+          "finite_temperature_snapshot_accuracy",
+          "state_condition_coverage"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py claim-matrix",
+          "python tools/research_source_registry.py verify-live --timeout-s 15"
+        ],
+        "depends_on": [],
+        "guardrail": "Supports finite-temperature AIMD/NPT energy-force-stress snapshots. Does not by itself support phase-change labels. Treat 1000 K/NPT as source-level state context until row-level metadata is parsed.",
+        "inputs": {
+          "adapters": [
+            "hf-dataset-viewer-parquet"
+          ],
+          "urls": [
+            {
+              "label": "Hugging Face dataset",
+              "url": "https://huggingface.co/datasets/colabfit/OMat24_train_aimd_from_PBE_1000_npt"
+            },
+            {
+              "label": "Dataset Viewer size API",
+              "url": "https://datasets-server.huggingface.co/size?dataset=colabfit/OMat24_train_aimd_from_PBE_1000_npt"
+            },
+            {
+              "label": "ColabFit record",
+              "url": "https://materials.colabfit.org/id/DS_jqrkc9e7cgmh_0"
+            },
+            {
+              "label": "OMat24 paper",
+              "url": "https://arxiv.org/abs/2410.12771"
+            }
+          ],
+          "verification": "verified_live"
+        },
+        "outputs": [
+          "data/research_sources/inspections/omat24_aimd_pbe_1000_npt_inspection_v1.json"
+        ],
+        "priority": 1,
+        "role": "source_inspector",
+        "source_ids": [
+          "omat24-aimd-pbe-1000-npt"
+        ],
+        "status": "ready",
+        "summary": "Inspect access, license, schema, and provenance for OMat24 train AIMD from PBE 1000 NPT.",
+        "unit_id": "source-intake:omat24-aimd-pbe-1000-npt:inspect"
+      },
+      {
+        "acceptance_checks": [
+          "Inspection records license, citation key, reusable fields, and source-specific provenance.",
+          "Rows that cannot carry the needed evidence fields are excluded before sampling.",
+          "The source keeps its registered claim level; no derived artifact widens the claim."
+        ],
+        "claim_ids": [
+          "finite_temperature_snapshot_accuracy",
+          "state_condition_coverage"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py claim-matrix",
+          "python tools/research_source_registry.py verify-live --timeout-s 15"
+        ],
+        "depends_on": [],
+        "guardrail": "Supports hot AIMD/NPT energy-force-stress snapshots. Does not by itself say whether a row is liquid, amorphous, or crystalline. Treat 3000 K/NPT as source-level state context until row-level metadata is parsed.",
+        "inputs": {
+          "adapters": [
+            "hf-dataset-viewer-parquet"
+          ],
+          "urls": [
+            {
+              "label": "Hugging Face dataset",
+              "url": "https://huggingface.co/datasets/colabfit/OMat24_train_aimd_from_PBE_3000_npt"
+            },
+            {
+              "label": "Dataset Viewer size API",
+              "url": "https://datasets-server.huggingface.co/size?dataset=colabfit/OMat24_train_aimd_from_PBE_3000_npt"
+            },
+            {
+              "label": "ColabFit record",
+              "url": "https://materials.colabfit.org/id/DS_6xvvh8yl7rfd_0"
+            },
+            {
+              "label": "OMat24 paper",
+              "url": "https://arxiv.org/abs/2410.12771"
+            }
+          ],
+          "verification": "verified_live"
+        },
+        "outputs": [
+          "data/research_sources/inspections/omat24_aimd_pbe_3000_npt_inspection_v1.json"
+        ],
+        "priority": 1,
+        "role": "source_inspector",
+        "source_ids": [
+          "omat24-aimd-pbe-3000-npt"
+        ],
+        "status": "ready",
+        "summary": "Inspect access, license, schema, and provenance for OMat24 train AIMD from PBE 3000 NPT.",
+        "unit_id": "source-intake:omat24-aimd-pbe-3000-npt:inspect"
+      },
+      {
+        "acceptance_checks": [
+          "Sample manifests include source_id, citation_key, license note, original row/file ids, and adapter version.",
+          "Large datasets are sampled through metadata/parquet windows before any full-corpus download.",
+          "State-condition fields, phase labels, and model predictions remain separate columns."
+        ],
+        "claim_ids": [
+          "phase_change_labels"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py ingest-plan",
+          "python -m pytest tools/test_research_source_registry.py"
+        ],
+        "depends_on": [
+          "source-intake:gst225-cambridge-gap-trajectories:inspect"
+        ],
+        "guardrail": "Use for GST phase-change behavior only. Do not generalize to all crystals or pressure regimes.",
+        "inputs": {
+          "adapters": [
+            "archive-trajectory-import"
+          ],
+          "next_action": "Inspect downloadable files, license, phase labels, and trajectory schema; import only a tiny provenance-preserving sample.",
+          "target_artifacts": [
+            "phase-change-seed-gst-v1",
+            "state-phase-seed-v1"
+          ]
+        },
+        "outputs": [
+          "data/research_sources/samples/gst225_cambridge_gap_trajectories_archive_trajectory_importer_v1.json"
+        ],
+        "priority": 1,
+        "role": "sampler_builder",
+        "source_ids": [
+          "gst225-cambridge-gap-trajectories"
+        ],
+        "status": "queued",
+        "summary": "Turn gst225-cambridge-gap-trajectories into a small, reusable archive trajectory importer artifact.",
+        "unit_id": "source-intake:gst225-cambridge-gap-trajectories:archive_trajectory_importer"
+      },
+      {
+        "acceptance_checks": [
+          "Sample manifests include source_id, citation_key, license note, original row/file ids, and adapter version.",
+          "Large datasets are sampled through metadata/parquet windows before any full-corpus download.",
+          "State-condition fields, phase labels, and model predictions remain separate columns."
+        ],
+        "claim_ids": [
+          "finite_temperature_snapshot_accuracy",
+          "state_condition_coverage"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py ingest-plan",
+          "python -m pytest tools/test_research_source_registry.py"
+        ],
+        "depends_on": [
+          "source-intake:omat24-aimd-pbe-1000-npt:inspect"
+        ],
+        "guardrail": "Supports finite-temperature AIMD/NPT energy-force-stress snapshots. Does not by itself support phase-change labels. Treat 1000 K/NPT as source-level state context until row-level metadata is parsed.",
+        "inputs": {
+          "adapters": [
+            "hf-dataset-viewer-parquet"
+          ],
+          "next_action": "Sample a small element-balanced set from default/train, parse metadata for ensemble/temperature/pressure conventions, and preserve original configuration/property ids.",
+          "target_artifacts": [
+            "state-phase-seed-v1",
+            "finite-temperature-mlip-heldout-v1"
+          ]
+        },
+        "outputs": [
+          "data/research_sources/samples/omat24_aimd_pbe_1000_npt_hf_parquet_sampler_v1.json"
+        ],
+        "priority": 1,
+        "role": "sampler_builder",
+        "source_ids": [
+          "omat24-aimd-pbe-1000-npt"
+        ],
+        "status": "queued",
+        "summary": "Turn omat24-aimd-pbe-1000-npt into a small, reusable hf parquet sampler artifact.",
+        "unit_id": "source-intake:omat24-aimd-pbe-1000-npt:hf_parquet_sampler"
+      },
+      {
+        "acceptance_checks": [
+          "Sample manifests include source_id, citation_key, license note, original row/file ids, and adapter version.",
+          "Large datasets are sampled through metadata/parquet windows before any full-corpus download.",
+          "State-condition fields, phase labels, and model predictions remain separate columns."
+        ],
+        "claim_ids": [
+          "finite_temperature_snapshot_accuracy",
+          "state_condition_coverage"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py ingest-plan",
+          "python -m pytest tools/test_research_source_registry.py"
+        ],
+        "depends_on": [
+          "source-intake:omat24-aimd-pbe-3000-npt:inspect"
+        ],
+        "guardrail": "Supports hot AIMD/NPT energy-force-stress snapshots. Does not by itself say whether a row is liquid, amorphous, or crystalline. Treat 3000 K/NPT as source-level state context until row-level metadata is parsed.",
+        "inputs": {
+          "adapters": [
+            "hf-dataset-viewer-parquet"
+          ],
+          "next_action": "Sample a small high-temperature counter-slice and compare order metrics against the 1000 K source before any phase label is assigned.",
+          "target_artifacts": [
+            "state-phase-seed-v1",
+            "high-temperature-mlip-heldout-v1"
+          ]
+        },
+        "outputs": [
+          "data/research_sources/samples/omat24_aimd_pbe_3000_npt_hf_parquet_sampler_v1.json"
+        ],
+        "priority": 1,
+        "role": "sampler_builder",
+        "source_ids": [
+          "omat24-aimd-pbe-3000-npt"
+        ],
+        "status": "queued",
+        "summary": "Turn omat24-aimd-pbe-3000-npt into a small, reusable hf parquet sampler artifact.",
+        "unit_id": "source-intake:omat24-aimd-pbe-3000-npt:hf_parquet_sampler"
+      },
+      {
+        "acceptance_checks": [
+          "Every reported metric maps to a registered claim_id and claim level.",
+          "Unsupported state, phase, pressure, or model-accuracy claims are rejected.",
+          "Phoenix and Lupine.Science summaries display guardrails beside sourced evidence."
+        ],
+        "claim_ids": [
+          "phase_change_labels"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py claim-matrix",
+          "python tools/research_source_registry.py validate"
+        ],
+        "depends_on": [
+          "source-intake:gst225-cambridge-gap-trajectories:archive_trajectory_importer"
+        ],
+        "guardrail": "Use for GST phase-change behavior only. Do not generalize to all crystals or pressure regimes.",
+        "inputs": {
+          "claim_support": [
+            {
+              "claim_id": "phase_change_labels",
+              "evidence_fields": [
+                "phase_state",
+                "trajectory_file",
+                "temperature",
+                "composition",
+                "model_or_potential"
+              ],
+              "guardrail": "Use for GST phase-change behavior only. Do not generalize to all crystals or pressure regimes.",
+              "level": "phase_label_reference"
+            }
+          ]
+        },
+        "outputs": [
+          "data/research_sources/claim_reviews/gst225_cambridge_gap_trajectories_claim_review_v1.json"
+        ],
+        "priority": 1,
+        "role": "claim_guardian",
+        "source_ids": [
+          "gst225-cambridge-gap-trajectories"
+        ],
+        "status": "queued",
+        "summary": "Review claim boundaries for gst225-cambridge-gap-trajectories before it feeds a campaign.",
+        "unit_id": "source-intake:gst225-cambridge-gap-trajectories:claim-review"
+      },
+      {
+        "acceptance_checks": [
+          "Every reported metric maps to a registered claim_id and claim level.",
+          "Unsupported state, phase, pressure, or model-accuracy claims are rejected.",
+          "Phoenix and Lupine.Science summaries display guardrails beside sourced evidence."
+        ],
+        "claim_ids": [
+          "finite_temperature_snapshot_accuracy",
+          "state_condition_coverage"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py claim-matrix",
+          "python tools/research_source_registry.py validate"
+        ],
+        "depends_on": [
+          "source-intake:omat24-aimd-pbe-1000-npt:hf_parquet_sampler"
+        ],
+        "guardrail": "Supports finite-temperature AIMD/NPT energy-force-stress snapshots. Does not by itself support phase-change labels. Treat 1000 K/NPT as source-level state context until row-level metadata is parsed.",
+        "inputs": {
+          "claim_support": [
+            {
+              "claim_id": "finite_temperature_snapshot_accuracy",
+              "evidence_fields": [
+                "energy",
+                "atomic_forces",
+                "cauchy_stress",
+                "cell",
+                "positions",
+                "atomic_numbers",
+                "configuration_id",
+                "property_id"
+              ],
+              "guardrail": "Supports finite-temperature AIMD/NPT energy-force-stress snapshots. Does not by itself support phase-change labels.",
+              "level": "ground_truth_reference"
+            },
+            {
+              "claim_id": "state_condition_coverage",
+              "evidence_fields": [
+                "dataset_id",
+                "configuration_metadata",
+                "property_metadata",
+                "cauchy_stress"
+              ],
+              "guardrail": "Treat 1000 K/NPT as source-level state context until row-level metadata is parsed.",
+              "level": "state_condition_reference"
+            }
+          ]
+        },
+        "outputs": [
+          "data/research_sources/claim_reviews/omat24_aimd_pbe_1000_npt_claim_review_v1.json"
+        ],
+        "priority": 1,
+        "role": "claim_guardian",
+        "source_ids": [
+          "omat24-aimd-pbe-1000-npt"
+        ],
+        "status": "queued",
+        "summary": "Review claim boundaries for omat24-aimd-pbe-1000-npt before it feeds a campaign.",
+        "unit_id": "source-intake:omat24-aimd-pbe-1000-npt:claim-review"
+      },
+      {
+        "acceptance_checks": [
+          "Every reported metric maps to a registered claim_id and claim level.",
+          "Unsupported state, phase, pressure, or model-accuracy claims are rejected.",
+          "Phoenix and Lupine.Science summaries display guardrails beside sourced evidence."
+        ],
+        "claim_ids": [
+          "finite_temperature_snapshot_accuracy",
+          "state_condition_coverage"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py claim-matrix",
+          "python tools/research_source_registry.py validate"
+        ],
+        "depends_on": [
+          "source-intake:omat24-aimd-pbe-3000-npt:hf_parquet_sampler"
+        ],
+        "guardrail": "Supports hot AIMD/NPT energy-force-stress snapshots. Does not by itself say whether a row is liquid, amorphous, or crystalline. Treat 3000 K/NPT as source-level state context until row-level metadata is parsed.",
+        "inputs": {
+          "claim_support": [
+            {
+              "claim_id": "finite_temperature_snapshot_accuracy",
+              "evidence_fields": [
+                "energy",
+                "atomic_forces",
+                "cauchy_stress",
+                "cell",
+                "positions",
+                "atomic_numbers",
+                "configuration_id",
+                "property_id"
+              ],
+              "guardrail": "Supports hot AIMD/NPT energy-force-stress snapshots. Does not by itself say whether a row is liquid, amorphous, or crystalline.",
+              "level": "ground_truth_reference"
+            },
+            {
+              "claim_id": "state_condition_coverage",
+              "evidence_fields": [
+                "dataset_id",
+                "configuration_metadata",
+                "property_metadata",
+                "cauchy_stress"
+              ],
+              "guardrail": "Treat 3000 K/NPT as source-level state context until row-level metadata is parsed.",
+              "level": "state_condition_reference"
+            }
+          ]
+        },
+        "outputs": [
+          "data/research_sources/claim_reviews/omat24_aimd_pbe_3000_npt_claim_review_v1.json"
+        ],
+        "priority": 1,
+        "role": "claim_guardian",
+        "source_ids": [
+          "omat24-aimd-pbe-3000-npt"
+        ],
+        "status": "queued",
+        "summary": "Review claim boundaries for omat24-aimd-pbe-3000-npt before it feeds a campaign.",
+        "unit_id": "source-intake:omat24-aimd-pbe-3000-npt:claim-review"
+      },
+      {
+        "acceptance_checks": [
+          "Fixture rows preserve source_id, citation_key, license note, original id, and source-specific provenance.",
+          "State-condition labels and phase labels remain separate fields in the fixture schema.",
+          "Finite-temperature and pressure-state evidence is not used as a phase-change label.",
+          "At least one state-condition source and one distinct phase-label source are represented."
+        ],
+        "claim_ids": [
+          "state_condition_coverage",
+          "phase_change_labels"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels",
+          "python tools/mlip_state_phase_local_probe.py --checkpoint-only-replay"
+        ],
+        "depends_on": [
+          "source-intake:gst225-cambridge-gap-trajectories:claim-review",
+          "source-intake:omat24-aimd-pbe-1000-npt:claim-review",
+          "source-intake:omat24-aimd-pbe-3000-npt:claim-review"
+        ],
+        "guardrail": "State-condition labels and phase labels remain separate fields until an evaluator explicitly joins them.",
+        "inputs": {
+          "campaign": "data/mlip_benchmarks/evidence_campaigns/mptrj_state_phase_ribbon_v1.json",
+          "registry_path": "data/research_sources/materials_research_sources_v1.json"
+        },
+        "outputs": [
+          "data/mlip_benchmarks/fixtures/state_phase_seed_v1.json",
+          "atlas/atlas-view/apps/lupine-site/public/research/source-intake-state-phase-v1.json"
+        ],
+        "priority": 1,
+        "role": "fixture_builder",
+        "source_ids": [
+          "gst225-cambridge-gap-trajectories",
+          "omat24-aimd-pbe-1000-npt",
+          "omat24-aimd-pbe-3000-npt"
+        ],
+        "status": "queued",
+        "summary": "Assemble the first state/phase seed while keeping OMat state context separate from GST phase labels.",
+        "unit_id": "source-intake:state-phase-seed-v1:assemble"
+      },
+      {
+        "acceptance_checks": [
+          "Report shows source status, claim level, guardrail, and next action for each active source.",
+          "Report distinguishes truth data, benchmark context, model comparison, and metadata-only sources.",
+          "Phoenix/Lupine surfacing links back to the registry path instead of duplicating untracked claims."
+        ],
+        "claim_ids": [
+          "broad_crystal_support_distribution",
+          "finite_temperature_snapshot_accuracy",
+          "phase_change_labels",
+          "phase_label_taxonomy",
+          "pressure_resolved_structure",
+          "relaxation_trajectory_accuracy",
+          "state_condition_coverage",
+          "support_gap_discovery"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py summary",
+          "python tools/research_source_registry.py team-queue --max-priority 2"
+        ],
+        "depends_on": [
+          "source-intake:state-phase-seed-v1:assemble"
+        ],
+        "guardrail": "A source may support only the claims listed in its claim_support entries. State-condition evidence, phase labels, model capability, and accuracy-improvement claims must not be collapsed into one another.",
+        "inputs": {
+          "registry_id": "materials-research-source-registry-v1",
+          "source_count": 7,
+          "team_roles": {
+            "claim_guardian": "Checks that evidence fields support only the claims allowed by the registry guardrails.",
+            "fixture_builder": "Combines approved source slices into campaign fixtures with separate state and phase fields.",
+            "phoenix_reporter": "Surfaces source status, guardrails, and evidence lineage in Phoenix and Lupine.Science.",
+            "sampler_builder": "Builds tiny, provenance-preserving samples without downloading full corpora by default.",
+            "source_inspector": "Resolves source access, license, schema, and row-level provenance before any sampler runs."
+          }
+        },
+        "outputs": [
+          "Phoenix project mlip-flywheel source-intake trace",
+          "Lupine.Science research source ribbon"
+        ],
+        "priority": 1,
+        "role": "phoenix_reporter",
+        "source_ids": [
+          "gst225-cambridge-gap-trajectories",
+          "gst225-crystallization-mlip-2024",
+          "hpcsd-high-pressure-crystal-structures",
+          "lemat-traj",
+          "mptrj-materials-project",
+          "omat24-aimd-pbe-1000-npt",
+          "omat24-aimd-pbe-3000-npt"
+        ],
+        "status": "queued",
+        "summary": "Publish source status, team queue, and claim guardrails to Phoenix and Lupine.Science.",
+        "unit_id": "source-intake:lupine-science:publish-ribbon"
+      },
+      {
+        "acceptance_checks": [
+          "Inspection records license, citation key, reusable fields, and source-specific provenance.",
+          "Rows that cannot carry the needed evidence fields are excluded before sampling.",
+          "The source keeps its registered claim level; no derived artifact widens the claim."
+        ],
+        "claim_ids": [
+          "phase_label_taxonomy"
+        ],
+        "commands": [
+          "python tools/research_source_registry.py claim-matrix",
+          "python tools/research_source_registry.py verify-live --timeout-s 15"
+        ],
+        "depends_on": [],
+        "guardrail": "Use as taxonomy and methodology until data files are resolved.",
+        "inputs": {
+          "adapters": [
+            "article-metadata"
+          ],
+          "urls": [
+            {
+              "label": "npj Computational Materials paper",
+              "url": "https://www.nature.com/articles/s41524-024-01217-6"
+            }
+          ],
+          "verification": "verified_live"
+        },
+        "outputs": [
+          "data/research_sources/inspections/gst225_crystallization_mlip_2024_inspection_v1.json"
+        ],
+        "priority": 2,
+        "role": "source_inspector",
+        "source_ids": [
+          "gst225-crystallization-mlip-2024"
+        ],
+        "status": "ready",
+        "summary": "Inspect access, license, schema, and provenance for Unraveling crystallization kinetics of Ge2Sb2Te5 with a machine-learned interatomic potential.",
+        "unit_id": "source-intake:gst225-crystallization-mlip-2024:inspect"
+      }
+    ],
+    "team_roles": {
+      "claim_guardian": "Checks that evidence fields support only the claims allowed by the registry guardrails.",
+      "fixture_builder": "Combines approved source slices into campaign fixtures with separate state and phase fields.",
+      "phoenix_reporter": "Surfaces source status, guardrails, and evidence lineage in Phoenix and Lupine.Science.",
+      "sampler_builder": "Builds tiny, provenance-preserving samples without downloading full corpora by default.",
+      "source_inspector": "Resolves source access, license, schema, and row-level provenance before any sampler runs."
+    }
+  },
+  "registry_id": "materials-research-source-registry-v1",
+  "registry_path": "data/research_sources/materials_research_sources_v1.json",
+  "schema": "lupine.research.source_ribbon_surface.v1",
+  "summary": {
+    "claims": {
+      "backend_comparison": 1,
+      "broad_crystal_support_distribution": 1,
+      "classical_baseline_provenance": 1,
+      "classical_model_validation": 1,
+      "finite_temperature_snapshot_accuracy": 2,
+      "phase_change_labels": 1,
+      "phase_label_taxonomy": 1,
+      "pressure_resolved_structure": 1,
+      "property_test_catalog": 1,
+      "relaxation_trajectory_accuracy": 1,
+      "source_discovery": 1,
+      "state_condition_coverage": 2,
+      "support_gap_discovery": 1,
+      "temperature_pressure_protocol": 1
+    },
+    "domains": {
+      "benchmark_design": 6,
+      "crystal_structures": 7,
+      "finite_temperature": 3,
+      "high_pressure": 2,
+      "high_temperature": 1,
+      "mlip_accuracy": 5,
+      "model_validation": 4,
+      "molecular_dynamics": 7,
+      "phase_change": 3
+    },
+    "sources_total": 11,
+    "verified_sources": 11
+  }
+}

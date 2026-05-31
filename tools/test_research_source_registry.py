@@ -70,3 +70,69 @@ def test_summary_tracks_ready_queue_and_claims() -> None:
     assert summary["claims"]["state_condition_coverage"] >= 2
     assert summary["claims"]["phase_change_labels"] >= 1
     assert summary["ready_queue"][0]["source_id"] == "gst225-cambridge-gap-trajectories"
+
+
+def test_team_queue_decomposes_priority_sources_into_agent_roles() -> None:
+    registry = registry_tools.load_registry()
+    queue = registry_tools.team_queue(registry, max_priority=2)
+
+    assert queue["schema"] == "lupine.research.source_intake_queue.v1"
+    assert queue["counters"]["sources"] >= 6
+    assert queue["counters"]["work_units"] >= queue["counters"]["sources"] * 3
+    assert {
+        "source_inspector",
+        "sampler_builder",
+        "claim_guardian",
+        "fixture_builder",
+        "phoenix_reporter",
+    }.issubset(queue["counters"]["roles"])
+
+    units = {unit["unit_id"]: unit for unit in queue["work_units"]}
+    omat_sampler = units["source-intake:omat24-aimd-pbe-1000-npt:hf_parquet_sampler"]
+    gst_import = units["source-intake:gst225-cambridge-gap-trajectories:archive_trajectory_importer"]
+    report = units["source-intake:lupine-science:publish-ribbon"]
+
+    assert omat_sampler["role"] == "sampler_builder"
+    assert "source-intake:omat24-aimd-pbe-1000-npt:inspect" in omat_sampler["depends_on"]
+    assert gst_import["status"] == "queued"
+    assert any("Lupine.Science" in output for output in report["outputs"])
+
+
+def test_targeted_team_queue_preserves_state_phase_boundaries() -> None:
+    registry = registry_tools.load_registry()
+    queue = registry_tools.team_queue(
+        registry,
+        claims={"state_condition_coverage", "phase_change_labels"},
+        max_priority=2,
+    )
+
+    source_ids = {source_id for unit in queue["work_units"] for source_id in unit["source_ids"]}
+    assert "omat24-aimd-pbe-1000-npt" in source_ids
+    assert "omat24-aimd-pbe-3000-npt" in source_ids
+    assert "gst225-cambridge-gap-trajectories" in source_ids
+    assert "lemat-traj" not in source_ids
+
+    assemble = next(
+        unit for unit in queue["work_units"] if unit["unit_id"] == "source-intake:state-phase-seed-v1:assemble"
+    )
+    assert assemble["claim_ids"] == ["state_condition_coverage", "phase_change_labels"]
+    assert any("separate fields" in check for check in assemble["acceptance_checks"])
+    assert "claim_guardian" in queue["counters"]["roles"]
+    assert assemble["source_ids"] == [
+        "gst225-cambridge-gap-trajectories",
+        "omat24-aimd-pbe-1000-npt",
+        "omat24-aimd-pbe-3000-npt",
+    ]
+
+
+def test_surface_payload_is_public_ribbon_ready() -> None:
+    registry = registry_tools.load_registry()
+    payload = registry_tools.surface_payload(registry, max_priority=2)
+
+    assert payload["schema"] == "lupine.research.source_ribbon_surface.v1"
+    assert payload["registry_path"] == "data/research_sources/materials_research_sources_v1.json"
+    assert payload["summary"]["verified_sources"] >= 8
+    assert payload["queue"]["counters"]["work_units"] >= 20
+    assert payload["active_sources"][0]["source_id"] == "gst225-cambridge-gap-trajectories"
+    assert any(unit["role"] == "phoenix_reporter" for unit in payload["queue"]["priority_units"])
+    assert "claim_guardrail" in payload

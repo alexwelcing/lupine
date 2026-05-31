@@ -138,6 +138,8 @@ mlip-source-check:
 research-source-check:
     python tools/research_source_registry.py validate
     python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels
+    python tools/research_source_registry.py team-queue --max-priority 2
+    python tools/research_source_registry.py surface-payload --max-priority 2
     python -m pytest tools/test_research_source_registry.py
 
 # Build and self-evaluate the fcc Ni EAM-home-turf publication fixture.

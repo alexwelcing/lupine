@@ -46,6 +46,13 @@ REQUIRED_CLAIM_FIELDS = ("claim_id", "level", "evidence_fields", "guardrail")
 REQUIRED_VERIFICATION_FIELDS = ("status", "checked_at", "methods", "evidence")
 REQUIRED_INGESTION_FIELDS = ("priority", "status", "adapters", "target_artifacts", "next_action")
 LIVE_VERIFIED_STATUSES = {"verified_live", "verified_local", "verified_mixed"}
+TEAM_ROLES = {
+    "source_inspector": "Resolves source access, license, schema, and row-level provenance before any sampler runs.",
+    "sampler_builder": "Builds tiny, provenance-preserving samples without downloading full corpora by default.",
+    "claim_guardian": "Checks that evidence fields support only the claims allowed by the registry guardrails.",
+    "fixture_builder": "Combines approved source slices into campaign fixtures with separate state and phase fields.",
+    "phoenix_reporter": "Surfaces source status, guardrails, and evidence lineage in Phoenix and Lupine.Science.",
+}
 
 
 def load_registry(path: pathlib.Path = DEFAULT_REGISTRY) -> dict[str, Any]:
@@ -320,6 +327,384 @@ def ingest_plan(registry: dict[str, Any], *, claims: set[str] | None = None, max
     return rows
 
 
+def _safe_path_id(value: str) -> str:
+    return "".join(char.lower() if char.isalnum() else "_" for char in value).strip("_")
+
+
+def _matching_claims(source: dict[str, Any], claims: set[str] | None = None) -> list[dict[str, Any]]:
+    rows = []
+    for claim in _as_list(source.get("claim_support")):
+        if not isinstance(claim, dict):
+            continue
+        if claims and claim.get("claim_id") not in claims and claim.get("level") not in claims:
+            continue
+        rows.append(claim)
+    return rows
+
+
+def _claim_ids(source: dict[str, Any], claims: set[str] | None = None) -> list[str]:
+    return [str(claim["claim_id"]) for claim in _matching_claims(source, claims) if _has_text(claim.get("claim_id"))]
+
+
+def _claim_guardrail(source: dict[str, Any], claims: set[str] | None = None) -> str:
+    guardrails = [
+        str(claim["guardrail"])
+        for claim in _matching_claims(source, claims)
+        if _has_text(claim.get("guardrail"))
+    ]
+    return " ".join(guardrails) if guardrails else str(source.get("stewardship") or registry_default_guardrail())
+
+
+def registry_default_guardrail() -> str:
+    return (
+        "Keep source role, claim level, license, citation, and provenance attached to every "
+        "derived artifact."
+    )
+
+
+def _claim_args(claims: set[str] | None = None) -> str:
+    if not claims:
+        return ""
+    return " ".join(f"--claim {claim}" for claim in sorted(claims))
+
+
+def _source_inspection_unit(source: dict[str, Any], claims: set[str] | None = None) -> dict[str, Any]:
+    source_id = str(source["source_id"])
+    ingestion = _as_dict(source.get("ingestion"))
+    priority = int(ingestion.get("priority") or 99)
+    path_id = _safe_path_id(source_id)
+    claim_args = _claim_args(claims)
+    claim_matrix_command = "python tools/research_source_registry.py claim-matrix"
+    if claim_args:
+        claim_matrix_command = f"{claim_matrix_command} {claim_args}"
+    return {
+        "unit_id": f"source-intake:{source_id}:inspect",
+        "role": "source_inspector",
+        "status": "ready",
+        "priority": priority,
+        "source_ids": [source_id],
+        "claim_ids": _claim_ids(source, claims),
+        "summary": f"Inspect access, license, schema, and provenance for {source['title']}.",
+        "guardrail": _claim_guardrail(source, claims),
+        "inputs": {
+            "urls": source.get("urls", []),
+            "adapters": ingestion.get("adapters", []),
+            "verification": _as_dict(source.get("verification")).get("status"),
+        },
+        "outputs": [f"data/research_sources/inspections/{path_id}_inspection_v1.json"],
+        "acceptance_checks": [
+            "Inspection records license, citation key, reusable fields, and source-specific provenance.",
+            "Rows that cannot carry the needed evidence fields are excluded before sampling.",
+            "The source keeps its registered claim level; no derived artifact widens the claim.",
+        ],
+        "commands": [
+            claim_matrix_command,
+            "python tools/research_source_registry.py verify-live --timeout-s 15",
+        ],
+        "depends_on": [],
+    }
+
+
+def _sampler_kind(source: dict[str, Any]) -> str:
+    ingestion = _as_dict(source.get("ingestion"))
+    adapters = set(_as_list(ingestion.get("adapters")))
+    status = str(ingestion.get("status") or "")
+    if "hf-dataset-viewer-parquet" in adapters and status == "ready_for_sampler":
+        return "hf_parquet_sampler"
+    if "archive-trajectory-import" in adapters:
+        return "archive_trajectory_importer"
+    if status in {"metadata_ready_data_needs_resolution", "needs_database_access_resolution"}:
+        return "data_access_resolver"
+    if status == "already_in_use":
+        return "existing_fixture_audit"
+    if status in {"backend_candidate", "metadata_adapter_needed", "discovery_index"}:
+        return "metadata_adapter"
+    return "manual_resolution"
+
+
+def _sampler_unit(source: dict[str, Any], claims: set[str] | None = None) -> dict[str, Any]:
+    source_id = str(source["source_id"])
+    ingestion = _as_dict(source.get("ingestion"))
+    priority = int(ingestion.get("priority") or 99)
+    path_id = _safe_path_id(source_id)
+    sampler_kind = _sampler_kind(source)
+    role = "claim_guardian" if sampler_kind == "existing_fixture_audit" else "sampler_builder"
+    status = "ready" if sampler_kind == "existing_fixture_audit" else "queued"
+    claim_args = _claim_args(claims)
+    ingest_plan_command = "python tools/research_source_registry.py ingest-plan"
+    if claim_args:
+        ingest_plan_command = f"{ingest_plan_command} {claim_args}"
+    return {
+        "unit_id": f"source-intake:{source_id}:{sampler_kind}",
+        "role": role,
+        "status": status,
+        "priority": priority,
+        "source_ids": [source_id],
+        "claim_ids": _claim_ids(source, claims),
+        "summary": f"Turn {source_id} into a small, reusable {sampler_kind.replace('_', ' ')} artifact.",
+        "guardrail": _claim_guardrail(source, claims),
+        "inputs": {
+            "target_artifacts": ingestion.get("target_artifacts", []),
+            "adapters": ingestion.get("adapters", []),
+            "next_action": ingestion.get("next_action"),
+        },
+        "outputs": [f"data/research_sources/samples/{path_id}_{sampler_kind}_v1.json"],
+        "acceptance_checks": [
+            "Sample manifests include source_id, citation_key, license note, original row/file ids, and adapter version.",
+            "Large datasets are sampled through metadata/parquet windows before any full-corpus download.",
+            "State-condition fields, phase labels, and model predictions remain separate columns.",
+        ],
+        "commands": [
+            ingest_plan_command,
+            "python -m pytest tools/test_research_source_registry.py",
+        ],
+        "depends_on": [f"source-intake:{source_id}:inspect"],
+    }
+
+
+def _claim_review_unit(
+    source: dict[str, Any],
+    *,
+    sampler_unit_id: str,
+    claims: set[str] | None = None,
+) -> dict[str, Any]:
+    source_id = str(source["source_id"])
+    ingestion = _as_dict(source.get("ingestion"))
+    priority = int(ingestion.get("priority") or 99)
+    path_id = _safe_path_id(source_id)
+    claim_args = _claim_args(claims)
+    command = "python tools/research_source_registry.py claim-matrix"
+    if claim_args:
+        command = f"{command} {claim_args}"
+    return {
+        "unit_id": f"source-intake:{source_id}:claim-review",
+        "role": "claim_guardian",
+        "status": "queued",
+        "priority": priority,
+        "source_ids": [source_id],
+        "claim_ids": _claim_ids(source, claims),
+        "summary": f"Review claim boundaries for {source_id} before it feeds a campaign.",
+        "guardrail": _claim_guardrail(source, claims),
+        "inputs": {"claim_support": _matching_claims(source, claims)},
+        "outputs": [f"data/research_sources/claim_reviews/{path_id}_claim_review_v1.json"],
+        "acceptance_checks": [
+            "Every reported metric maps to a registered claim_id and claim level.",
+            "Unsupported state, phase, pressure, or model-accuracy claims are rejected.",
+            "Phoenix and Lupine.Science summaries display guardrails beside sourced evidence.",
+        ],
+        "commands": [
+            command,
+            "python tools/research_source_registry.py validate",
+        ],
+        "depends_on": [sampler_unit_id],
+    }
+
+
+def _aggregate_units(
+    registry: dict[str, Any],
+    source_units: list[dict[str, Any]],
+    *,
+    claims: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    source_ids = sorted({source_id for unit in source_units for source_id in unit.get("source_ids", [])})
+    available_claims = sorted({claim_id for unit in source_units for claim_id in unit.get("claim_ids", [])})
+    review_units = [unit["unit_id"] for unit in source_units if unit.get("role") == "claim_guardian"]
+    state_phase_claims = {"state_condition_coverage", "phase_change_labels"}
+    state_phase_units = [
+        unit
+        for unit in source_units
+        if state_phase_claims.intersection(set(unit.get("claim_ids", [])))
+    ]
+    state_phase_source_ids = sorted({
+        source_id
+        for unit in state_phase_units
+        for source_id in unit.get("source_ids", [])
+    })
+    state_phase_review_units = [
+        unit["unit_id"]
+        for unit in state_phase_units
+        if unit.get("role") == "claim_guardian"
+    ]
+    aggregates: list[dict[str, Any]] = []
+    if {"state_condition_coverage", "phase_change_labels"}.issubset(set(available_claims)):
+        aggregates.append({
+            "unit_id": "source-intake:state-phase-seed-v1:assemble",
+            "role": "fixture_builder",
+            "status": "queued",
+            "priority": 1,
+            "source_ids": state_phase_source_ids,
+            "claim_ids": ["state_condition_coverage", "phase_change_labels"],
+            "summary": "Assemble the first state/phase seed while keeping OMat state context separate from GST phase labels.",
+            "guardrail": (
+                "State-condition labels and phase labels remain separate fields until an evaluator "
+                "explicitly joins them."
+            ),
+            "inputs": {
+                "registry_path": DEFAULT_REGISTRY.relative_to(ROOT).as_posix(),
+                "campaign": "data/mlip_benchmarks/evidence_campaigns/mptrj_state_phase_ribbon_v1.json",
+            },
+            "outputs": [
+                "data/mlip_benchmarks/fixtures/state_phase_seed_v1.json",
+                "atlas/atlas-view/apps/lupine-site/public/research/source-intake-state-phase-v1.json",
+            ],
+            "acceptance_checks": [
+                "Fixture rows preserve source_id, citation_key, license note, original id, and source-specific provenance.",
+                "State-condition labels and phase labels remain separate fields in the fixture schema.",
+                "Finite-temperature and pressure-state evidence is not used as a phase-change label.",
+                "At least one state-condition source and one distinct phase-label source are represented.",
+            ],
+            "commands": [
+                "python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels",
+                "python tools/mlip_state_phase_local_probe.py --checkpoint-only-replay",
+            ],
+            "depends_on": state_phase_review_units,
+        })
+
+    reporter_depends = [unit["unit_id"] for unit in aggregates] or review_units
+    aggregates.append({
+        "unit_id": "source-intake:lupine-science:publish-ribbon",
+        "role": "phoenix_reporter",
+        "status": "queued",
+        "priority": 1,
+        "source_ids": source_ids,
+        "claim_ids": available_claims,
+        "summary": "Publish source status, team queue, and claim guardrails to Phoenix and Lupine.Science.",
+        "guardrail": str(registry.get("claim_guardrail") or registry_default_guardrail()),
+        "inputs": {
+            "registry_id": registry.get("registry_id"),
+            "source_count": len(source_ids),
+            "team_roles": TEAM_ROLES,
+        },
+        "outputs": [
+            "Phoenix project mlip-flywheel source-intake trace",
+            "Lupine.Science research source ribbon",
+        ],
+        "acceptance_checks": [
+            "Report shows source status, claim level, guardrail, and next action for each active source.",
+            "Report distinguishes truth data, benchmark context, model comparison, and metadata-only sources.",
+            "Phoenix/Lupine surfacing links back to the registry path instead of duplicating untracked claims.",
+        ],
+        "commands": [
+            "python tools/research_source_registry.py summary",
+            "python tools/research_source_registry.py team-queue --max-priority 2",
+        ],
+        "depends_on": reporter_depends,
+    })
+    return aggregates
+
+
+def team_queue(
+    registry: dict[str, Any],
+    *,
+    claims: set[str] | None = None,
+    max_priority: int | None = None,
+) -> dict[str, Any]:
+    """Expand the source registry into concrete work units for research agents."""
+
+    plan_rows = ingest_plan(registry, claims=claims, max_priority=max_priority)
+    sources = source_map(registry)
+    units: list[dict[str, Any]] = []
+    for row in plan_rows:
+        source = sources[str(row["source_id"])]
+        inspect_unit = _source_inspection_unit(source, claims)
+        sampler_unit = _sampler_unit(source, claims)
+        review_unit = _claim_review_unit(source, sampler_unit_id=sampler_unit["unit_id"], claims=claims)
+        units.extend([inspect_unit, sampler_unit, review_unit])
+    units.extend(_aggregate_units(registry, units, claims=claims))
+    role_counts = Counter(str(unit["role"]) for unit in units)
+    status_counts = Counter(str(unit["status"]) for unit in units)
+    return {
+        "schema": "lupine.research.source_intake_queue.v1",
+        "registry_id": registry.get("registry_id"),
+        "filters": {
+            "claims": sorted(claims) if claims else [],
+            "max_priority": max_priority,
+        },
+        "team_roles": TEAM_ROLES,
+        "work_units": units,
+        "counters": {
+            "sources": len(plan_rows),
+            "work_units": len(units),
+            "roles": dict(sorted(role_counts.items())),
+            "statuses": dict(sorted(status_counts.items())),
+        },
+    }
+
+
+def surface_payload(
+    registry: dict[str, Any],
+    *,
+    claims: set[str] | None = None,
+    max_priority: int | None = None,
+) -> dict[str, Any]:
+    """Build the compact public payload used by Lupine.Science."""
+
+    summary = registry_summary(registry)
+    queue = team_queue(registry, claims=claims, max_priority=max_priority)
+    sources = source_map(registry)
+    plan_rows = ingest_plan(registry, claims=claims, max_priority=max_priority)
+    active_sources = []
+    for row in plan_rows:
+        source = sources[str(row["source_id"])]
+        active_sources.append({
+            "source_id": row["source_id"],
+            "title": row["title"],
+            "source_kind": source.get("source_kind"),
+            "priority": row["priority"],
+            "ingestion_status": row["status"],
+            "verification": _as_dict(source.get("verification")).get("status"),
+            "domains": source.get("domains", []),
+            "claim_ids": row["claim_ids"],
+            "claim_guardrails": row["claim_guardrails"],
+            "target_artifacts": row["target_artifacts"],
+            "next_action": row["next_action"],
+        })
+    role_rank = {
+        "source_inspector": 0,
+        "sampler_builder": 1,
+        "claim_guardian": 2,
+        "fixture_builder": 3,
+        "phoenix_reporter": 4,
+    }
+    status_rank = {"ready": 0, "queued": 1}
+    priority_units = sorted(
+        queue["work_units"],
+        key=lambda unit: (
+            int(unit.get("priority") or 99),
+            status_rank.get(str(unit.get("status")), 9),
+            role_rank.get(str(unit.get("role")), 9),
+            str(unit.get("unit_id")),
+        ),
+    )[:12]
+    return {
+        "schema": "lupine.research.source_ribbon_surface.v1",
+        "registry_id": registry.get("registry_id"),
+        "registry_path": DEFAULT_REGISTRY.relative_to(ROOT).as_posix(),
+        "summary": {
+            "sources_total": summary["sources_total"],
+            "verified_sources": summary["verified_sources"],
+            "domains": summary["domains"],
+            "claims": summary["claims"],
+        },
+        "queue": {
+            "counters": queue["counters"],
+            "team_roles": queue["team_roles"],
+            "priority_units": priority_units,
+        },
+        "active_sources": active_sources,
+        "claim_guardrail": registry.get("claim_guardrail"),
+        "acceptance_gates": registry.get("acceptance_gates"),
+        "commands": [
+            "python tools/research_source_registry.py validate",
+            "python tools/research_source_registry.py team-queue --max-priority 2",
+            (
+                "python tools/research_source_registry.py team-queue "
+                "--claim state_condition_coverage --claim phase_change_labels --max-priority 2"
+            ),
+        ],
+    }
+
+
 def verify_live(registry: dict[str, Any], *, timeout_s: int = 20) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
     for source in _as_list(registry.get("sources")):
@@ -386,6 +771,14 @@ def main(argv: Iterable[str] | None = None) -> int:
     plan_parser.add_argument("--claim", action="append", default=[])
     plan_parser.add_argument("--max-priority", type=int, default=None)
     plan_parser.add_argument("--json", action="store_true", dest="as_json")
+    queue_parser = sub.add_parser("team-queue", help="Expand registry entries into agent-ready source intake work")
+    queue_parser.add_argument("--claim", action="append", default=[])
+    queue_parser.add_argument("--max-priority", type=int, default=None)
+    queue_parser.add_argument("--json", action="store_true", dest="as_json")
+    surface_parser = sub.add_parser("surface-payload", help="Build the compact Lupine.Science source ribbon payload")
+    surface_parser.add_argument("--claim", action="append", default=[])
+    surface_parser.add_argument("--max-priority", type=int, default=None)
+    surface_parser.add_argument("--output", type=pathlib.Path, default=None)
     verify_parser = sub.add_parser("verify-live", help="Fetch source URLs and report live status")
     verify_parser.add_argument("--timeout-s", type=int, default=20)
     verify_parser.add_argument("--json", action="store_true", dest="as_json")
@@ -424,6 +817,38 @@ def main(argv: Iterable[str] | None = None) -> int:
             print(json.dumps(rows, indent=2, sort_keys=True))
         else:
             _print_table(rows, ["source_id", "priority", "status", "target_artifacts", "next_action"])
+        return 0
+    if args.command == "team-queue":
+        queue = team_queue(
+            registry,
+            claims=set(args.claim) if args.claim else None,
+            max_priority=args.max_priority,
+        )
+        if args.as_json:
+            print(json.dumps(queue, indent=2, sort_keys=True))
+        else:
+            print(
+                f"{queue['registry_id']}: {queue['counters']['work_units']} work units "
+                f"for {queue['counters']['sources']} sources"
+            )
+            _print_table(
+                queue["work_units"],
+                ["unit_id", "role", "priority", "status", "source_ids", "summary"],
+            )
+        return 0
+    if args.command == "surface-payload":
+        payload = surface_payload(
+            registry,
+            claims=set(args.claim) if args.claim else None,
+            max_priority=args.max_priority,
+        )
+        if args.output:
+            output_path = args.output if args.output.is_absolute() else ROOT / args.output
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            output_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            print(json.dumps({"status": "written", "path": str(output_path)}, indent=2, sort_keys=True))
+        else:
+            print(json.dumps(payload, indent=2, sort_keys=True))
         return 0
     if args.command == "verify-live":
         rows = verify_live(registry, timeout_s=args.timeout_s)

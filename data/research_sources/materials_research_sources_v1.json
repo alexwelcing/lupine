@@ -1035,7 +1035,19 @@
       "command": "python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels"
     },
     {
-      "id": "rs2-build-omat24-sampler",
+      "id": "rs2-team-source-intake-queue",
+      "status": "ready",
+      "command": "python tools/research_source_registry.py team-queue --max-priority 2",
+      "purpose": "Fan out registry work across source inspection, sampler building, claim review, fixture assembly, and Phoenix/Lupine.Science reporting."
+    },
+    {
+      "id": "rs3-refresh-lupine-source-ribbon",
+      "status": "ready",
+      "command": "python tools/research_source_registry.py surface-payload --max-priority 2 --output atlas/atlas-view/apps/lupine-site/public/research/materials-research-source-ribbon-v1.json",
+      "purpose": "Publish the compact source status and team queue payload consumed by Lupine.Science."
+    },
+    {
+      "id": "rs4-build-omat24-sampler",
       "status": "next",
       "source_ids": [
         "omat24-aimd-pbe-1000-npt",
@@ -1044,7 +1056,7 @@
       "artifact": "tools/omat24_state_sampler.py"
     },
     {
-      "id": "rs3-inspect-gst-archive",
+      "id": "rs5-inspect-gst-archive",
       "status": "next",
       "source_ids": [
         "gst225-cambridge-gap-trajectories"

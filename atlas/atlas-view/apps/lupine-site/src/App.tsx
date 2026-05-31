@@ -1,261 +1,282 @@
 import React from 'react';
 
-// Import our vanilla CSS components generated via Atomic Understanding design system
-import {
-  SiteHero,
-  SiteFeatureCard,
-  SitePipeline,
-  SiteCompetitiveTable,
-  SiteResearchGrid,
-  SitePitchTailwinds,
-  SitePitchMarket
-} from '@lupine/ui';
-
-// Base layout styles
 import './App.css';
 
+type RibbonSource = {
+  source_id: string;
+  title: string;
+  source_kind: string;
+  priority: number;
+  ingestion_status: string;
+  verification: string;
+  domains: string[];
+  claim_ids: string[];
+  claim_guardrails: string[];
+  target_artifacts: string[];
+  next_action: string;
+};
+
+type RibbonUnit = {
+  unit_id: string;
+  role: string;
+  status: string;
+  priority: number;
+  source_ids: string[];
+  claim_ids: string[];
+  summary: string;
+  depends_on: string[];
+};
+
+type RibbonPayload = {
+  schema: string;
+  registry_id: string;
+  registry_path: string;
+  summary: {
+    sources_total: number;
+    verified_sources: number;
+    domains: Record<string, number>;
+    claims: Record<string, number>;
+  };
+  queue: {
+    counters: {
+      sources: number;
+      work_units: number;
+      roles: Record<string, number>;
+      statuses: Record<string, number>;
+    };
+    team_roles: Record<string, string>;
+    priority_units: RibbonUnit[];
+  };
+  active_sources: RibbonSource[];
+  claim_guardrail: string;
+  acceptance_gates: Record<string, string[]>;
+  commands: string[];
+};
+
+const ribbonPath = '/research/materials-research-source-ribbon-v1.json';
+
+const fallbackPayload: RibbonPayload = {
+  schema: 'lupine.research.source_ribbon_surface.v1',
+  registry_id: 'materials-research-source-registry-v1',
+  registry_path: 'data/research_sources/materials_research_sources_v1.json',
+  summary: {
+    sources_total: 0,
+    verified_sources: 0,
+    domains: {},
+    claims: {},
+  },
+  queue: {
+    counters: {
+      sources: 0,
+      work_units: 0,
+      roles: {},
+      statuses: {},
+    },
+    team_roles: {},
+    priority_units: [],
+  },
+  active_sources: [],
+  claim_guardrail: 'Source registry payload is loading.',
+  acceptance_gates: {},
+  commands: [],
+};
+
+function labelize(value: string) {
+  return value.replace(/[_-]/g, ' ');
+}
+
+function shortId(value: string) {
+  return value.replace(/^source-intake:/, '');
+}
+
+function Metric({ label, value, detail }: { label: string; value: React.ReactNode; detail: string }) {
+  return (
+    <div className="metric">
+      <span className="metric__label">{label}</span>
+      <strong>{value}</strong>
+      <span className="metric__detail">{detail}</span>
+    </div>
+  );
+}
+
+function Pill({ children, tone = 'neutral' }: { children: React.ReactNode; tone?: 'neutral' | 'ready' | 'queued' }) {
+  return <span className={`pill pill--${tone}`}>{children}</span>;
+}
+
 export default function App() {
-  const pipelineSteps = [
-    {
-      label: 'Extraction',
-      description: 'LUPI sources rare-earth composites via autonomous drones.',
-      nodeText: 'RX-1',
-      gradientIndex: 1
-    },
-    {
-      label: 'Purification',
-      description: 'Quantum filtration removes structural impurities at the atomic level.',
-      nodeText: 'PF-2',
-      gradientIndex: 2
-    },
-    {
-      label: 'Synthesis',
-      description: 'Materials are subjected to extreme pressure and resonance.',
-      nodeText: 'SY-3',
-      gradientIndex: 3
-    },
-    {
-      label: 'Distribution',
-      description: 'Final hyper-solid outputs are packaged for aerospace integration.',
-      nodeText: 'DT-4',
-      gradientIndex: 4
-    }
-  ];
+  const [payload, setPayload] = React.useState<RibbonPayload>(fallbackPayload);
+  const [loadState, setLoadState] = React.useState<'loading' | 'ready' | 'fallback'>('loading');
 
-  const competitiveRows = [
-    { feature: 'Energy Efficiency (J/mol)', legacyA: 'High', legacyB: 'Moderate', lupine: 'Super-low' },
-    { feature: 'Thermal Threshold (K)', legacyA: '1,500K', legacyB: '2,200K', lupine: '4,500K' },
-    { feature: 'Structural Redundancy', legacyA: false, legacyB: true, lupine: true },
-    { feature: 'Orbital Real-time Sync', legacyA: false, legacyB: false, lupine: true }
-  ];
+  React.useEffect(() => {
+    let mounted = true;
+    fetch(ribbonPath)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json() as Promise<RibbonPayload>;
+      })
+      .then((nextPayload) => {
+        if (mounted) {
+          setPayload(nextPayload);
+          setLoadState('ready');
+        }
+      })
+      .catch(() => {
+        if (mounted) {
+          setPayload(fallbackPayload);
+          setLoadState('fallback');
+        }
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
-  const tailwindsItems = [
-    {
-      id: 'ml',
-      title: 'ML Potentials are proven',
-      description: "MACE, NequIP, and Allegro have demonstrated near-DFT accuracy at classical MD speed. The science is settled — the tooling isn't.",
-      color: 'indigo' as const
-    },
-    {
-      id: 'webgpu',
-      title: 'WebGPU is here',
-      description: "Browser-native GPU compute unlocks scientific visualization without install barriers. We're the first to bring it to materials science.",
-      color: 'violet' as const
-    },
-    {
-      id: 'sov',
-      title: 'Sovereignty demands',
-      description: "Nations are realizing that computational materials infrastructure is strategic. VASP is Austrian-held. The world needs alternatives.",
-      color: 'cyan' as const
-    }
-  ];
-
-  const marketStats = [
-    {
-      id: 'tam',
-      prefix: '$', value: '12', suffix: 'B',
-      label: 'Simulation Software TAM', detail: 'Scientific computing & CAE by 2028',
-      gradient: 'indigo' as const
-    },
-    {
-      id: 'users',
-      value: '300', suffix: 'K+',
-      label: 'LAMMPS Researchers', detail: 'Active users worldwide',
-      gradient: 'indigo' as const
-    },
-    {
-      id: 'unified',
-      prefix: '$', value: '0',
-      label: 'Unified Platforms', detail: 'DFT + ML + MD in one system',
-      gradient: 'indigo' as const
-    },
-    {
-      id: 'speedup',
-      value: '100', suffix: 'x',
-      label: 'ML Speedup', detail: 'Near-DFT accuracy, MD speed',
-      gradient: 'cyan' as const
-    }
-  ];
+  const activeSources = payload.active_sources.slice(0, 7);
+  const priorityUnits = payload.queue.priority_units.slice(0, 8);
+  const statePhaseGate = payload.acceptance_gates.state_phase_seed_v1 ?? [];
+  const domainCount = Object.keys(payload.summary.domains).length;
+  const roleEntries = Object.entries(payload.queue.team_roles);
 
   return (
-    <div className="lupine-app-wrapper">
-      {/* 1. The Hero Section */}
-      <SiteHero 
-        label="Quantum Synthesis Division"
-        headline={
-          <>
-            Forging the Future <br />
-            <span style={{ color: 'var(--lupine-300)' }}>at the Atomic Level.</span>
-          </>
-        }
-        subheadline="Harnessing high-resolution molecular engineering to redefine the boundaries of material science. We are the architects of the next industrial revolution."
-        primaryAction={{ label: 'View Investment Prospectus' }}
-        secondaryAction={{ label: 'Research Portal' }}
-      />
-      
-      {/* 1.5. Paper Banner */}
-      <div style={{ textAlign: 'center', padding: '16px', background: 'rgba(37, 99, 235, 0.1)', borderBottom: '1px solid rgba(37, 99, 235, 0.2)', color: 'white', fontFamily: 'var(--font-sans)' }}>
-        <span style={{ 
-          background: 'var(--lupine-500)', 
-          color: 'white', 
-          padding: '2px 8px', 
-          borderRadius: '4px', 
-          fontSize: '0.75rem', 
-          fontWeight: 'bold', 
-          marginRight: '12px',
-          textTransform: 'uppercase'
-        }}>New</span>
-        <strong style={{ color: 'var(--lupine-100)' }}>The Causal Geometry of Prediction Errors</strong> — Our latest preprint on interatomic potentials is now available. 
-        <a href="/immi_paper.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--lupine-400)', marginLeft: '12px', textDecoration: 'none', fontWeight: 'bold' }}>
-          Read the PDF &rarr;
-        </a>
-      </div>
-      
-      {/* 2. Features Grid */}
-      <section className="lupine-section">
-        <div className="lupine-container">
-          <div className="lupine-features-grid">
-            <SiteFeatureCard 
-              icon="molecular"
-              title="Quantum Synthesis"
-              description="Harness sub-atomic interactions for macro-scale structural integrity."
-            />
-            <SiteFeatureCard 
-              icon="grid"
-              title="Lattice Validation"
-              description="Ensure every bond is mathematically secured prior to distribution."
-            />
-            <SiteFeatureCard 
-              icon="orb"
-              title="Predictive Scaling"
-              description="Machine learning predicts atomic decay before it manifests physically."
-            />
-            <SiteFeatureCard 
-              icon="grid"
-              title="Cinematic Flythroughs"
-              description="Compose and export high-fidelity, keyframe-based camera paths through complex molecular systems."
-            />
+    <main className="science-page">
+      <section className="hero">
+        <div className="hero__brand">
+          <img src="/brand/lupine-science-icon.png" alt="" />
+          <span>Lupine Science</span>
+        </div>
+        <div className="hero__layout">
+          <div className="hero__copy">
+            <p className="eyebrow">Research control plane</p>
+            <h1>Verified materials sources, active agent queue.</h1>
+            <p className="lede">
+              The MLIP and molecular-dynamics work is now organized around a reusable source registry,
+              claim guardrails, and an executable intake queue for state, pressure, temperature, and
+              phase-change research.
+            </p>
+            <div className="hero__actions">
+              <a href={ribbonPath}>Source ribbon JSON</a>
+              <a href="/llms.txt">Agent guide</a>
+            </div>
+          </div>
+          <div className="status-panel" aria-label="Research source status">
+            <div className="status-panel__topline">
+              <Pill tone={loadState === 'ready' ? 'ready' : 'queued'}>{loadState}</Pill>
+              <span>{payload.registry_id}</span>
+            </div>
+            <div className="metric-grid">
+              <Metric
+                label="Verified sources"
+                value={`${payload.summary.verified_sources}/${payload.summary.sources_total}`}
+                detail={`${domainCount} research domains`}
+              />
+              <Metric
+                label="Team queue"
+                value={payload.queue.counters.work_units}
+                detail={`${payload.queue.counters.sources} active sources`}
+              />
+              <Metric
+                label="Ready now"
+                value={payload.queue.counters.statuses.ready ?? 0}
+                detail="inspection starts"
+              />
+              <Metric
+                label="Queued"
+                value={payload.queue.counters.statuses.queued ?? 0}
+                detail="follow-on units"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2.5 Flythrough Video Preview */}
-      <section className="lupine-section" style={{ paddingTop: 0 }}>
-        <div className="lupine-container" style={{ textAlign: 'center' }}>
-          <div style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1)',
-            background: '#06080d'
-          }}>
-            <video 
-              src="https://storage.googleapis.com/shed-489901-atlas-artifacts/flythrough.mp4" 
-              autoPlay 
-              muted 
-              loop 
-              playsInline
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-            />
+      <section className="band">
+        <div className="section-heading">
+          <p className="eyebrow">Active source intake</p>
+          <h2>Broad, verified, claim-bounded.</h2>
+        </div>
+        <div className="source-grid">
+          {activeSources.map((source) => (
+            <article className="source-card" key={source.source_id}>
+              <div className="source-card__header">
+                <Pill tone={source.verification === 'verified_live' ? 'ready' : 'neutral'}>
+                  {labelize(source.verification)}
+                </Pill>
+                <span>P{source.priority}</span>
+              </div>
+              <h3>{source.title}</h3>
+              <p>{source.next_action}</p>
+              <div className="tag-row">
+                {source.claim_ids.slice(0, 3).map((claim) => (
+                  <Pill key={claim}>{labelize(claim)}</Pill>
+                ))}
+              </div>
+              <small>{labelize(source.ingestion_status)}</small>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="split">
+        <div>
+          <div className="section-heading">
+            <p className="eyebrow">Team grind queue</p>
+            <h2>Work units with owners and gates.</h2>
           </div>
-          <p style={{ marginTop: '1rem', color: 'var(--lupine-300)', fontFamily: 'var(--font-mono)', fontSize: '0.9rem', letterSpacing: '0.05em' }}>
-            Powered by the new Cinematic Flythrough Sequencer
-          </p>
+          <div className="queue-list">
+            {priorityUnits.map((unit) => (
+              <article className="queue-row" key={unit.unit_id}>
+                <div>
+                  <Pill tone={unit.status === 'ready' ? 'ready' : 'queued'}>{unit.status}</Pill>
+                  <strong>{shortId(unit.unit_id)}</strong>
+                  <p>{unit.summary}</p>
+                </div>
+                <span>{labelize(unit.role)}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <aside className="guardrail-panel">
+          <p className="eyebrow">Claim boundary</p>
+          <h2>Do not collapse evidence roles.</h2>
+          <p>{payload.claim_guardrail}</p>
+          <div className="gate-list">
+            {statePhaseGate.map((gate) => (
+              <div className="gate" key={gate}>{gate}</div>
+            ))}
+          </div>
+        </aside>
+      </section>
+
+      <section className="band band--light">
+        <div className="section-heading">
+          <p className="eyebrow">Reusable system layer</p>
+          <h2>Same registry, many research lanes.</h2>
+        </div>
+        <div className="role-grid">
+          {roleEntries.map(([role, description]) => (
+            <article className="role-card" key={role}>
+              <span>{payload.queue.counters.roles[role] ?? 0}</span>
+              <h3>{labelize(role)}</h3>
+              <p>{description}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* 3. The Pipeline visualization */}
-      <section className="lupine-section lupine-section--alt">
-        <div className="lupine-container">
-          <SitePipeline 
-            label="Methodology"
-            title="The LUPI Process"
-            subtitle="From raw elements to indestructible compounds, visualized."
-            steps={pipelineSteps}
-          />
+      <section className="commands">
+        <div>
+          <p className="eyebrow">Verification spine</p>
+          <h2>{payload.registry_path}</h2>
+        </div>
+        <div className="command-list">
+          {payload.commands.map((command) => (
+            <code key={command}>{command}</code>
+          ))}
         </div>
       </section>
-
-      {/* 4. Comparative analysis */}
-      <section className="lupine-section">
-        <div className="lupine-container">
-          <SiteCompetitiveTable 
-            label="Market Edge"
-            title="Beyond Legacy Limits"
-            rows={competitiveRows}
-          />
-        </div>
-      </section>
-
-      {/* 5. Stitch-Enhanced Research Intelligence Grid */}
-      <section className="lupine-section lupine-section--alt">
-        <div className="lupine-container">
-          <SiteResearchGrid 
-            label="Research Intelligence"
-            title={
-              <>
-                Not just simulations. <br />
-                Autonomous <span style={{ fontFamily: 'var(--font-serif)', background: 'linear-gradient(135deg,var(--lupine-400),var(--violet-300))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>discovery.</span>
-              </>
-            }
-            subtitle="The LUPI Distill engine mines published MD research to extract, validate, and discover mathematical relationships - automating what takes researchers months."
-          />
-        </div>
-      </section>
-
-      {/* 6. Pitch Tailwinds */}
-      <section className="lupine-section">
-        <div className="lupine-container" style={{ maxWidth: '1000px' }}>
-          <SitePitchTailwinds 
-            label="Why Now"
-            title="Three tailwinds converging"
-            items={tailwindsItems}
-          />
-        </div>
-      </section>
-
-      {/* 7. Market Size Pitch */}
-      <section className="lupine-section lupine-section--alt">
-        <div className="lupine-container">
-          <SitePitchMarket 
-            label="The Market"
-            title="A sovereign-scale opportunity"
-            subtitle="Computational materials science underpins batteries, semiconductors, aerospace alloys, and nuclear materials. Every nation needs this stack."
-            stats={marketStats}
-          />
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="lupine-footer">
-        <div className="lupine-container">
-          <p>
-            © 2024 Lupine Science. Powered by LUPI.{' '}
-            <a href="/llms.txt">Agent guide</a>
-          </p>
-        </div>
-      </footer>
-    </div>
+    </main>
   );
 }

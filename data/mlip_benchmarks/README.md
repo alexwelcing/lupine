@@ -48,6 +48,9 @@ python tools/research_source_registry.py validate
 python tools/research_source_registry.py summary
 python tools/research_source_registry.py claim-matrix
 python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels
+python tools/research_source_registry.py team-queue --max-priority 2
+python tools/research_source_registry.py team-queue --claim state_condition_coverage --claim phase_change_labels --max-priority 2
+python tools/research_source_registry.py surface-payload --max-priority 2
 python tools/research_source_registry.py verify-live
 ```
 
@@ -57,6 +60,11 @@ phase-change labels. LeMat-Traj and MPtrj are broad crystal/trajectory support
 sources. MatterSim/OpenKIM/NIST are comparison and validation resources, not
 truth labels unless a specific property record is ingested with its own
 provenance.
+
+Use `team-queue` when assigning the work. It expands registry sources into
+source-inspection, sampler-building, claim-review, fixture-assembly, and
+Phoenix/Lupine.Science reporting units so multiple agents can advance the same
+source registry without widening claims or losing provenance.
 
 Build the sealed fcc Ni fixture:
 
