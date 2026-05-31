@@ -8,6 +8,10 @@ const _bakeMat4 = new THREE.Matrix4();
 const _bakeMat3 = new THREE.Matrix3();
 const _bakeCol = new THREE.Color();
 
+// Scratch objects for the shared-mesh (instance → many cheap Xform) path.
+const _instMat4 = new THREE.Matrix4();
+const _instCol = new THREE.Color();
+
 function toExportSafeMaterial(
   src: THREE.Material,
   paletteTexture?: THREE.Texture,
@@ -29,6 +33,21 @@ function toExportSafeMaterial(
     emissiveIntensity: typeof anySrc.emissiveIntensity === 'number' ? anySrc.emissiveIntensity : 1.0,
   });
   (mat as any).onBeforeCompile = undefined;
+  return mat;
+}
+
+/**
+ * Build a USDZ-safe MeshStandardMaterial whose flat color is a per-group RGB
+ * (no vertex colors / no palette texture). All other surface params are carried
+ * from the source InstancedMesh material so roughness/metalness/opacity match.
+ */
+function toExportSafeMaterialForColor(
+  src: THREE.Material,
+  color: THREE.Color,
+): THREE.MeshStandardMaterial {
+  const mat = toExportSafeMaterial(src);          // vertexColors:true, color white
+  mat.vertexColors = false;                        // group color drives the surface
+  mat.color.copy(color);
   return mat;
 }
 
@@ -237,13 +256,119 @@ function bakeInstancedMesh(im: THREE.InstancedMesh): THREE.Mesh {
   return mesh;
 }
 
+/**
+ * True when the cylinder InstancedMesh carries a per-instance `radiusBT` lateral
+ * taper that actually VARIES (rB !== rT on some instance). Uniform-radius bonds
+ * (and bonds with no radiusBT attribute) can use the cheap shared-geometry path,
+ * since the per-bond length + orientation already live in the instance matrix.
+ */
+function instanceRadiiVary(im: THREE.InstancedMesh): boolean {
+  const radiusBTAttr = im.geometry.getAttribute('radiusBT') as
+    | THREE.InstancedBufferAttribute
+    | undefined;
+  if (!radiusBTAttr) return false;
+  const arr = radiusBTAttr.array as ArrayLike<number>;
+  const n = im.count;
+  for (let i = 0; i < n; i++) {
+    const rB = arr[i * 2];
+    const rT = arr[i * 2 + 1];
+    if (rB !== rT) return true;
+  }
+  return false;
+}
+
+/**
+ * Expand an InstancedMesh into many cheap THREE.Mesh objects that all SHARE the
+ * SAME base geometry instance (`im.geometry`, same `geometry.id`) and a SMALL set
+ * of materials (one per unique instance color). Each mesh carries only its
+ * composed local `matrix`.
+ *
+ * This is the size/speed win for USDZ: USDZExporter dedupes geometry by
+ * `geometry.id` and materials by `material.uuid`, so the unit sphere is written
+ * ONCE and every atom becomes a tiny Xform that references it (≈GLB size), rather
+ * than the old bake which merged all N spheres into one unique mega-geometry that
+ * dedup could never help.
+ *
+ * Transform parity with `bakeInstancedMesh`: USDZExporter's `buildHierarchy` is
+ * recursive and writes each prim's LOCAL `object.matrix`, composing the parent
+ * chain. The returned Group is identity and is added under `im.parent`, so each
+ * child mesh's local `matrix` must be `im.matrix * instanceMatrix_i` (im's OWN
+ * local transform, NOT `im.matrixWorld`) — then the exporter re-applies the
+ * `im.parent` chain exactly once, matching the bake path's
+ * `im.parent.world * im.localTRS * instanceMatrix`. Using `matrixWorld` here would
+ * double-count `im.parent.world` whenever an ancestor carries a transform.
+ */
+function instanceToSharedMeshes(im: THREE.InstancedMesh): THREE.Group {
+  const group = new THREE.Group();
+  group.name = (im.name || 'instanced') + '_shared';
+  // Identity group placed under im.parent; the exporter composes the parent chain,
+  // so children carry only `im.matrix * instanceMatrix` as their local transform.
+  group.matrixAutoUpdate = false;
+  group.visible = im.visible;
+
+  // Share the source geometry directly — DO NOT clone/bake. Matching geometry.id
+  // across all meshes is precisely what makes the exporter emit one USD geometry.
+  const sharedGeo = im.geometry;
+
+  const baseMat = (Array.isArray(im.material) ? im.material[0] : im.material) as THREE.Material;
+  const hasInstanceColor = (im as any).instanceColor != null;
+
+  // One material per unique packed-RGB color (elements → usually < ~10).
+  const matByColor = new Map<number, THREE.MeshStandardMaterial>();
+
+  // im's OWN local transform (matches bakeInstancedMesh, which copies im.position/
+  // quaternion/scale). NOT matrixWorld — the exporter re-applies im.parent's chain.
+  const localBase = im.matrix;
+  const N = im.count;
+
+  for (let i = 0; i < N; i++) {
+    if (hasInstanceColor) im.getColorAt(i, _instCol);
+    else _instCol.setRGB(1, 1, 1);
+
+    const colorKey =
+      (Math.round(_instCol.r * 255) << 16) |
+      (Math.round(_instCol.g * 255) << 8) |
+      Math.round(_instCol.b * 255);
+
+    let material = matByColor.get(colorKey);
+    if (!material) {
+      material = toExportSafeMaterialForColor(baseMat, _instCol);
+      matByColor.set(colorKey, material);
+    }
+
+    const mesh = new THREE.Mesh(sharedGeo, material);
+    mesh.matrixAutoUpdate = false;
+    im.getMatrixAt(i, _instMat4);
+    mesh.matrix.multiplyMatrices(localBase, _instMat4); // im-local transform of instance i
+    mesh.matrixWorldNeedsUpdate = true;
+    group.add(mesh);
+  }
+
+  if (AR_EXPORT_DEBUG) {
+    console.info('[AR export] shared-geometry instanced mesh', {
+      name: im.name || '(unnamed)',
+      instances: N,
+      sharedGeometryId: sharedGeo.id,
+      uniqueColors: matByColor.size,
+      hasInstanceColor,
+      materialType: baseMat.type,
+    });
+  }
+
+  return group;
+}
+
 export type InstancedSwap = {
   parent: THREE.Object3D;
   original: THREE.InstancedMesh;
-  replacement: THREE.Mesh;
+  replacement: THREE.Object3D;
 };
 
 export function expandInstancedMeshes(root: THREE.Object3D): InstancedSwap[] {
+  // Ensure every InstancedMesh's local `matrix` (and TRS) is current before we
+  // read it to compose the replacement meshes' local transforms.
+  root.updateMatrixWorld(true);
+
   const targets: THREE.InstancedMesh[] = [];
   root.traverse(obj => {
     if ((obj as any).isInstancedMesh && obj.parent && (obj as THREE.InstancedMesh).count > 0) {
@@ -254,22 +379,67 @@ export function expandInstancedMeshes(root: THREE.Object3D): InstancedSwap[] {
   const swaps: InstancedSwap[] = [];
   for (const im of targets) {
     if (!im.parent) continue;
-    const baked = bakeInstancedMesh(im);
-    swaps.push({ parent: im.parent, original: im, replacement: baked });
-    im.parent.add(baked);
+
+    // Spheres (dominant cost) and uniform-radius bonds use the cheap shared
+    // geometry path. Only bonds whose per-instance lateral radius actually
+    // varies fall back to the per-instance vertex bake (correctness over size).
+    const replacement: THREE.Object3D = instanceRadiiVary(im)
+      ? bakeInstancedMesh(im)
+      : instanceToSharedMeshes(im);
+
+    swaps.push({ parent: im.parent, original: im, replacement });
+    im.parent.add(replacement);
     im.parent.remove(im);
   }
+
+  // Refresh world matrices so each replacement mesh's matrixWorld matches its
+  // baked local matrix (the shared-mesh Group is identity, the baked Mesh uses
+  // the InstancedMesh's own TRS).
+  root.updateMatrixWorld(true);
   return swaps;
+}
+
+function disposeExportMaterial(mat: THREE.Material | THREE.Material[]) {
+  const list = Array.isArray(mat) ? mat : [mat];
+  for (const m of list) {
+    const std = m as THREE.MeshStandardMaterial;
+    if (std.map) std.map.dispose();
+    std.dispose();
+  }
 }
 
 export function restoreInstancedMeshes(swaps: InstancedSwap[]) {
   for (const swap of swaps) {
     swap.parent.add(swap.original);
     swap.parent.remove(swap.replacement);
-    swap.replacement.geometry.dispose();
-    const mat = swap.replacement.material as THREE.MeshStandardMaterial;
-    if (mat.map) mat.map.dispose();
-    mat.dispose();
+
+    const replacement = swap.replacement;
+    const sharedGeoId = swap.original.geometry.id;
+
+    if ((replacement as THREE.Group).isGroup) {
+      // Shared-geometry path: each child Mesh references im.geometry (do NOT
+      // dispose it — the original InstancedMesh still uses it). Dispose only the
+      // per-color export materials, deduped so each is freed once.
+      const seenMats = new Set<THREE.Material>();
+      (replacement as THREE.Group).children.forEach(child => {
+        const mesh = child as THREE.Mesh;
+        const m = mesh.material;
+        (Array.isArray(m) ? m : [m]).forEach(mat => {
+          if (!seenMats.has(mat)) {
+            seenMats.add(mat);
+            disposeExportMaterial(mat);
+          }
+        });
+      });
+    } else {
+      // Per-instance bake path: replacement owns a unique merged geometry +
+      // material. Dispose both (but never the shared source geometry).
+      const mesh = replacement as THREE.Mesh;
+      if (mesh.geometry && mesh.geometry.id !== sharedGeoId) {
+        mesh.geometry.dispose();
+      }
+      disposeExportMaterial(mesh.material);
+    }
   }
 }
 
