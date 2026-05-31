@@ -14,8 +14,9 @@
  *  - The admin SDK (these functions) is the only writer of `apiKeys`; clients
  *    may read only their own keys (firestore.rules), never write them.
  *  - `exchangeApiKey` is public: the key IS the credential. It is capped with
- *    `maxInstances` to bound denial-of-wallet; put Cloud Armor / a rate limit in
- *    front of it in production for real abuse protection.
+ *    `maxInstances` AND a cheap Firestore per-IP fixed-window throttle (see
+ *    rateLimit.ts) to bound denial-of-wallet. Cloud Armor per-IP at the LB is
+ *    the production-grade follow-up for real abuse protection.
  */
 import { initializeApp } from 'firebase-admin/app';
 import { FieldValue, getFirestore } from 'firebase-admin/firestore';
@@ -28,6 +29,7 @@ import {
   isValidKeyShape,
   keyDisplayPrefix,
 } from './keygen';
+import { checkRateLimit, clientIp } from './rateLimit';
 
 initializeApp();
 const db = getFirestore();
@@ -130,6 +132,19 @@ export const exchangeApiKey = onRequest({ cors: EXCHANGE_CORS, maxInstances: 10 
   }
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'method_not_allowed' });
+    return;
+  }
+
+  // Denial-of-wallet stopgap (finding EXCHANGE_ENDPOINT_MAXINSTANCES_10): cheap
+  // Firestore fixed-window throttle keyed by client IP, BEFORE the key lookup so
+  // a drip attack can't exhaust instances/Firestore reads. Returns a uniform 429
+  // that says nothing about key validity (preserves the anti-oracle posture).
+  // The limiter fails OPEN, so a Firestore hiccup never blocks real agents.
+  // Production-grade follow-up: Cloud Armor per-IP rate limiting at the LB.
+  const limit = await checkRateLimit(clientIp(req));
+  if (!limit.allowed) {
+    res.set('Retry-After', String(limit.retryAfterSec));
+    res.status(429).json({ error: 'rate_limited' });
     return;
   }
 
