@@ -108,6 +108,7 @@ import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
 import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
+import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -519,6 +520,13 @@ export default function App() {
       window.removeEventListener('hashchange', syncRoute);
       window.removeEventListener('popstate', syncRoute);
     };
+  }, []);
+
+  // Analytics: top-of-funnel landing. Mint the session (UTM/returning) and
+  // emit app_landed once per mount. Fire-and-forget; never blocks the app.
+  useEffect(() => {
+    ensureAnalyticsSession();
+    track(ANALYTICS_EVENTS.APP_LANDED);
   }, []);
 
   useEffect(() => {

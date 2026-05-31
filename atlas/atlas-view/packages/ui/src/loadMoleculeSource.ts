@@ -1,4 +1,13 @@
 import { useStore } from './store';
+import { track, ANALYTICS_EVENTS } from './analytics';
+
+/** Coarse, non-PII source classifier so the funnel can compare entry paths. */
+function sourceKind(sourceUrl: string): string {
+  if (sourceUrl === 'inline-firestore') return 'inline';
+  if (sourceUrl.endsWith('.glimbin')) return 'streaming';
+  if (/^https?:/i.test(sourceUrl)) return 'remote';
+  return 'other';
+}
 
 export async function loadMoleculeSource(loadUrl: string): Promise<void> {
   const previousCleanup = (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup;
@@ -70,6 +79,12 @@ export async function loadMoleculeSource(loadUrl: string): Promise<void> {
         unsubFrameWatch();
         loader.dispose();
       };
+
+      // Activation: viewable molecule loaded (streaming path).
+      track(ANALYTICS_EVENTS.MOLECULE_LOADED, {
+        source: 'streaming',
+        frames: meta.totalFrames,
+      });
       return;
     }
 
@@ -107,5 +122,11 @@ async function loadParsedFile(fileObj: File, sourceUrl: string): Promise<void> {
     trajectory: result.trajectory,
     thermo: result.thermo ?? null,
     sourceUrl,
+  });
+
+  // Activation: viewable molecule loaded (parsed/inline/remote path).
+  track(ANALYTICS_EVENTS.MOLECULE_LOADED, {
+    source: sourceKind(sourceUrl),
+    frames: result.trajectory.totalFrames,
   });
 }

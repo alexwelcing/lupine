@@ -15,6 +15,7 @@ import {
   githubAuthProvider,
   googleAuthProvider,
 } from './firebase';
+import { track, ANALYTICS_EVENTS } from '../analytics';
 
 export type LupiAuthProviderId = 'google' | 'github';
 
@@ -255,6 +256,13 @@ function ensureAuthObserver() {
 
 async function updateSignedInUser(nextUser: User) {
   clearAuthOverride();
+  // Activation: a fresh credential resolved (popup success or redirect
+  // result). Provider id is the sign-in method — no PII. Token refreshes
+  // via onIdTokenChanged do NOT route through here, so this won't double-fire
+  // on passive session restores.
+  track(ANALYTICS_EVENTS.SIGNUP_COMPLETE, {
+    provider: nextUser.providerData[0]?.providerId ?? 'unknown',
+  });
   setAuthSnapshot({ error: null, isOverride: false, loading: true, user: nextUser });
   try {
     setAuthSnapshot({
@@ -308,6 +316,10 @@ async function startSignIn(providerId: LupiAuthProviderId = 'google') {
     setAuthSnapshot({ error: 'Firebase is not configured for this build.', loading: false });
     return;
   }
+
+  // Activation: signup/sign-in flow opened (Save-moment gate). Provider id
+  // only — no PII.
+  track(ANALYTICS_EVENTS.SIGNUP_START, { provider: providerId });
 
   setAuthSnapshot({ error: null, loading: true });
   try {
