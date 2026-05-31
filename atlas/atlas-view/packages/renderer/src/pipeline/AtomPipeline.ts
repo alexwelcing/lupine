@@ -350,27 +350,64 @@ function extractFrustumPlanes(m: Float32Array): Float32Array[] {
   return planes;
 }
 
-export async function initWebGPU(): Promise<{ device: GPUDevice; format: GPUTextureFormat } | null> {
+/** Default ceiling (ms) for the whole WebGPU init handshake. On weak networks
+ *  or wedged drivers, requestAdapter/requestDevice can hang indefinitely; that
+ *  froze the bond pipeline's eager init and, on some devices, the page itself.
+ *  Audit finding: no-offline-fallback-webgpu-init. WebGPU here is an OPTIONAL
+ *  accelerator, so timing out and returning null (→ CPU fallback) is always
+ *  safe and far better than a frozen init. */
+export const WEBGPU_INIT_TIMEOUT_MS = 5000;
+
+/** Resolve to `null` after `ms` so a hung handshake can't outlive the budget. */
+function initTimeout(ms: number): Promise<null> {
+  return new Promise((resolve) => setTimeout(() => resolve(null), ms));
+}
+
+/**
+ * Initialize the optional WebGPU compute device. Returns `null` (never throws)
+ * when WebGPU is unavailable, no adapter/device can be acquired, OR the whole
+ * handshake exceeds `timeoutMs` — all of which are treated by callers as a
+ * graceful fall back to the CPU spatial-hash path.
+ */
+export async function initWebGPU(
+  timeoutMs: number = WEBGPU_INIT_TIMEOUT_MS,
+): Promise<{ device: GPUDevice; format: GPUTextureFormat } | null> {
   if (!(navigator as any).gpu) {
     console.warn('WebGPU not supported — falling back');
     return null;
   }
-  const adapter = await (navigator as any).gpu.requestAdapter({
-    powerPreference: 'high-performance',
-  });
-  if (!adapter) {
-    console.warn('No WebGPU adapter found');
-    return null;
+
+  const handshake = (async (): Promise<{ device: GPUDevice; format: GPUTextureFormat } | null> => {
+    try {
+      const adapter = await (navigator as any).gpu.requestAdapter({
+        powerPreference: 'high-performance',
+      });
+      if (!adapter) {
+        console.warn('No WebGPU adapter found');
+        return null;
+      }
+      const device = await adapter.requestDevice({
+        requiredLimits: {
+          maxStorageBufferBindingSize: 512 * 1024 * 1024, // 512MB for large systems
+          maxBufferSize: 512 * 1024 * 1024,
+        },
+      });
+      device.lost.then((info: any) => {
+        console.error('WebGPU device lost:', info.message);
+      });
+      const format = (navigator as any).gpu.getPreferredCanvasFormat();
+      return { device, format };
+    } catch (err: any) {
+      console.warn('WebGPU init threw — falling back:', err?.message ?? err);
+      return null;
+    }
+  })();
+
+  // Promise.race the real handshake against a timeout. If the timeout wins we
+  // return null; a late-resolving device is harmless (it just gets GC'd).
+  const result = await Promise.race([handshake, initTimeout(timeoutMs)]);
+  if (!result) {
+    console.warn(`WebGPU init exceeded ${timeoutMs}ms or failed — falling back to CPU bonds`);
   }
-  const device = await adapter.requestDevice({
-    requiredLimits: {
-      maxStorageBufferBindingSize: 512 * 1024 * 1024, // 512MB for large systems
-      maxBufferSize: 512 * 1024 * 1024,
-    },
-  });
-  device.lost.then((info: any) => {
-    console.error('WebGPU device lost:', info.message);
-  });
-  const format = (navigator as any).gpu.getPreferredCanvasFormat();
-  return { device, format };
+  return result;
 }
