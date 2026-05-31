@@ -54,7 +54,10 @@ function sanitizeEvent(raw: unknown): Record<string, unknown> | null {
 }
 
 export const collectAnalytics = onRequest(
-  { cors: ANALYTICS_CORS, maxInstances: 10 },
+  // minInstances:1 keeps one warm instance so a cold start never drops a beacon
+  // (sendBeacon does not retry) — measurement must survive idle gaps during the
+  // ad push. maxInstances bounds cost/blast-radius at the top end.
+  { cors: ANALYTICS_CORS, maxInstances: 10, minInstances: 1 },
   async (req, res) => {
     if (req.method === 'OPTIONS') {
       res.status(204).send('');
