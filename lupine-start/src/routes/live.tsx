@@ -1,10 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { marked } from 'marked'
 import { useQuery } from '@tanstack/react-query'
-import { Activity, Atom, CheckCircle2, Clock3, FlaskConical, Radio, Sparkles, XCircle } from 'lucide-react'
+import { Activity, Atom, CheckCircle2, Clock3, Database, ExternalLink, FlaskConical, Radio, ShieldCheck, Sparkles, XCircle } from 'lucide-react'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { PageShell } from '../components/ui/PageShell'
+import sourceIntake from '../data/materials-research-source-intake.json'
 
 export const Route = createFileRoute('/live')({
   component: LiveLabComponent,
@@ -257,6 +258,51 @@ type Beat = {
   ts: number
 }
 
+type ResearchSource = {
+  source_id: string
+  title: string
+  role: string
+  status: string
+  claim_ids: string[]
+  next_action: string
+  guardrail: string
+}
+
+type ResearchWorkUnit = {
+  unit_id: string
+  role: string
+  status: string
+  summary: string
+}
+
+type ResearchSourceIntake = {
+  title: string
+  policy: string
+  live_feed: {
+    label: string
+    url: string
+    beat_ingest_route: string
+    surface_policy: string
+  }
+  library_live_lab: {
+    label: string
+    url: string
+  }
+  summary: {
+    active_sources: number
+    priority_one_sources: number
+    ready_inspections: number
+    queued_units: number
+    state_phase_seed_sources: number
+    claim_status: string
+  }
+  active_sources: ResearchSource[]
+  work_units: ResearchWorkUnit[]
+  acceptance_gates: string[]
+}
+
+const RESEARCH_SOURCE_INTAKE = sourceIntake as ResearchSourceIntake
+
 function LiveLabComponent() {
   const swarmQuery = useQuery({
     queryKey: ['feed-swarm'],
@@ -420,6 +466,7 @@ function LiveLabComponent() {
       </section>
 
       <MlipBaselineLivePanel />
+      <ResearchSourceIntakePanel />
 
       {/* Top Stats Bar — counts straight from hypotheses + claims tables */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -772,6 +819,132 @@ function ClaimRow({ c }: { c: RecentClaim }) {
         {c.description}
       </p>
     </div>
+  )
+}
+
+function ResearchSourceIntakePanel() {
+  const intake = RESEARCH_SOURCE_INTAKE
+  const summary = intake.summary
+  return (
+    <section className="mb-8 overflow-hidden border border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+      <div className="grid grid-cols-1 2xl:grid-cols-12">
+        <div className="2xl:col-span-5 border-b 2xl:border-b-0 2xl:border-r border-[var(--outline-variant)] p-6 md:p-8">
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <span className="inline-flex h-9 w-9 items-center justify-center border border-[var(--primary)]/35 bg-[var(--primary-container)] text-[var(--primary)]">
+              <Database size={18} />
+            </span>
+            <span className="mono-label text-[var(--primary)]">RESEARCH SOURCE INTAKE</span>
+            <span className="mono-label text-[var(--on-surface-variant-mid)]">intake only</span>
+          </div>
+          <h2 className="mb-5 font-serif text-3xl md:text-4xl leading-[1.05] tracking-tight text-[var(--on-surface)]">
+            State, pressure, temperature, and phase-change sources are now visible before they become claims.
+          </h2>
+          <p className="mb-6 max-w-2xl text-sm md:text-base leading-relaxed text-[var(--on-surface-variant)]">
+            {intake.policy}
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <MlipProofMetric label="Sources" value={String(summary.active_sources)} detail="active intake" color="var(--primary)" />
+            <MlipProofMetric label="Ready" value={String(summary.ready_inspections)} detail="inspections" color="#5a9e97" />
+            <MlipProofMetric label="Queued" value={String(summary.queued_units)} detail="work units" color="var(--secondary)" />
+            <MlipProofMetric label="State seeds" value={String(summary.state_phase_seed_sources)} detail="not claims" color="var(--error)" />
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href={intake.live_feed.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 border border-[var(--primary)] px-4 py-2 mono-label text-[var(--primary)] hover:bg-[var(--primary-container)] transition-colors"
+            >
+              <Radio size={14} />
+              live feed
+              <ExternalLink size={13} />
+            </a>
+            <a
+              href={intake.library_live_lab.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 border border-[var(--outline-variant)] px-4 py-2 mono-label text-[var(--on-surface-variant)] hover:text-[var(--on-surface)] hover:bg-[var(--surface-container)] transition-colors"
+            >
+              library live lab
+              <ExternalLink size={13} />
+            </a>
+          </div>
+          <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.08em] leading-relaxed text-[var(--on-surface-variant-mid)]">
+            {intake.live_feed.beat_ingest_route} - {intake.live_feed.surface_policy}
+          </p>
+        </div>
+
+        <div className="2xl:col-span-7 p-6 md:p-8">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 className="mono-label text-[var(--secondary)]">Source queue</h3>
+              <p className="mt-2 text-sm text-[var(--on-surface-variant)]">
+                {summary.claim_status}
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-2 mono-label text-[var(--primary)]">
+              <ShieldCheck size={14} />
+              provenance gates
+            </span>
+          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+            {intake.active_sources.map((source) => (
+              <ResearchSourceCard key={source.source_id} source={source} />
+            ))}
+          </div>
+          <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {intake.work_units.map((unit) => (
+              <ResearchWorkUnitCard key={unit.unit_id} unit={unit} />
+            ))}
+          </div>
+          <div className="mt-5 grid gap-2 border-t border-[var(--outline-variant)] pt-5">
+            {intake.acceptance_gates.map((gate) => (
+              <p key={gate} className="border-l-2 border-[var(--secondary)] pl-3 text-xs leading-relaxed text-[var(--on-surface-variant)]">
+                {gate}
+              </p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ResearchSourceCard({ source }: { source: ResearchSource }) {
+  return (
+    <article className="min-w-0 border border-[var(--outline-variant)] bg-[var(--surface-container)] p-4">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <span className="mono-label text-[var(--primary)]">{source.status}</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant-mid)] break-all">
+          {source.source_id}
+        </span>
+      </div>
+      <h4 className="font-serif text-lg leading-tight text-[var(--on-surface)]">{source.title}</h4>
+      <p className="mt-3 text-sm leading-relaxed text-[var(--on-surface-variant)]">{source.next_action}</p>
+      <div className="mt-4 grid gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--on-surface-variant-mid)]">
+        <span>{source.role}</span>
+        <span className="break-words text-[var(--secondary)]">{source.claim_ids.join(', ')}</span>
+      </div>
+      <p className="mt-4 border-t border-[var(--outline-variant)] pt-3 text-xs leading-relaxed text-[var(--on-surface-variant)]">
+        {source.guardrail}
+      </p>
+    </article>
+  )
+}
+
+function ResearchWorkUnitCard({ unit }: { unit: ResearchWorkUnit }) {
+  const ready = unit.status === 'ready'
+  return (
+    <article className={`border p-4 ${ready ? 'border-[var(--primary)]/40 bg-[var(--primary-container)]/15' : 'border-[var(--outline-variant)] bg-[var(--surface-container)]'}`}>
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+        <span className={`mono-label ${ready ? 'text-[var(--primary)]' : 'text-[var(--on-surface-variant)]'}`}>{unit.status}</span>
+        <span className="mono-label text-[var(--on-surface-variant-mid)]">{unit.role}</span>
+      </div>
+      <h4 className="font-mono text-xs uppercase tracking-[0.08em] text-[var(--on-surface)] break-words">
+        {unit.unit_id}
+      </h4>
+      <p className="mt-2 text-sm leading-relaxed text-[var(--on-surface-variant)]">{unit.summary}</p>
+    </article>
   )
 }
 
