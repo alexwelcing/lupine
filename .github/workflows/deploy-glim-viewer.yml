@@ -49,6 +49,9 @@ jobs:
           # NIST catalog + demo trajectories are served from a public GCS
           # bucket (shed-489901), not bundled. Vite inlines VITE_* at build.
           VITE_NIST_BASE_URL: https://storage.googleapis.com/shed-489901-nist-demos/nist
+          # First-party analytics sink (Cloud Function → structured Cloud Logging).
+          # The track() layer no-ops if this is unset; setting it turns measurement on.
+          VITE_LUPI_ANALYTICS_URL: https://us-central1-shed-489901.cloudfunctions.net/collectAnalytics
         run: |
           pip install markdown
           python -c "import deploy_slim; deploy_slim.build_research(); deploy_slim.build_web()"
