@@ -126,6 +126,124 @@ def _reference(record: dict[str, Any], row_spec: dict[str, Any] | None = None) -
     return merged
 
 
+def _metadata(record: dict[str, Any]) -> dict[str, Any]:
+    return _as_record(record.get("metadata"))
+
+
+def _first_finite(*values: Any) -> float | None:
+    for value in values:
+        if _finite(value):
+            return float(value)
+    return None
+
+
+def _first_text(*values: Any) -> str | None:
+    for value in values:
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return None
+
+
+def thermodynamic_condition(record: dict[str, Any], row_spec: dict[str, Any]) -> dict[str, Any]:
+    ref = _reference(record, row_spec)
+    metadata = _metadata(record)
+    state = _as_record(record.get("thermodynamic_state"))
+    spec_state = _as_record(row_spec.get("thermodynamic_state"))
+    out: dict[str, Any] = {}
+    pressure = _first_finite(
+        record.get("pressure_gpa"),
+        record.get("pressure"),
+        metadata.get("pressure_gpa"),
+        metadata.get("pressure"),
+        state.get("pressure_gpa"),
+        ref.get("pressure_gpa"),
+        spec_state.get("pressure_gpa"),
+        row_spec.get("pressure_gpa"),
+    )
+    temperature = _first_finite(
+        record.get("temperature_k"),
+        record.get("temperature"),
+        metadata.get("temperature_k"),
+        metadata.get("temperature"),
+        state.get("temperature_k"),
+        ref.get("temperature_k"),
+        spec_state.get("temperature_k"),
+        row_spec.get("temperature_k"),
+    )
+    phase = _first_text(
+        record.get("phase_label"),
+        record.get("phase"),
+        metadata.get("phase_label"),
+        metadata.get("phase"),
+        state.get("phase_label"),
+        ref.get("phase_label"),
+        spec_state.get("phase_label"),
+        row_spec.get("phase_label"),
+    )
+    if pressure is not None:
+        out["pressure_gpa"] = pressure
+    if temperature is not None:
+        out["temperature_k"] = temperature
+    if phase is not None:
+        out["phase_label"] = phase
+    return out
+
+
+def thermodynamic_condition_coverage(
+    predictions: list[dict[str, Any]],
+    row_spec: dict[str, Any],
+) -> dict[str, Any]:
+    thresholds = _as_record(row_spec.get("thermodynamic_thresholds"))
+    low_pressure_max = float(thresholds.get("low_pressure_gpa_max", 1.0))
+    high_pressure_min = float(thresholds.get("high_pressure_gpa_min", 10.0))
+    low_temperature_max = float(thresholds.get("low_temperature_k_max", 500.0))
+    high_temperature_min = float(thresholds.get("high_temperature_k_min", 1200.0))
+    pressures = sorted({
+        float(pred["pressure_gpa"])
+        for pred in predictions
+        if _finite(pred.get("pressure_gpa"))
+    })
+    temperatures = sorted({
+        float(pred["temperature_k"])
+        for pred in predictions
+        if _finite(pred.get("temperature_k"))
+    })
+    phases = sorted({
+        str(pred["phase_label"])
+        for pred in predictions
+        if isinstance(pred.get("phase_label"), str) and str(pred["phase_label"]).strip()
+    })
+    has_low_pressure = any(value <= low_pressure_max for value in pressures)
+    has_high_pressure = any(value >= high_pressure_min for value in pressures)
+    has_low_temperature = any(value <= low_temperature_max for value in temperatures)
+    has_high_temperature = any(value >= high_temperature_min for value in temperatures)
+    checks = [
+        has_low_pressure,
+        has_high_pressure,
+        has_low_temperature,
+        has_high_temperature,
+        len(phases) >= 1,
+    ]
+    return {
+        "schema": "lupine.mlip.thermodynamic_condition_coverage.v1",
+        "coverage_score": float(sum(1 for value in checks if value) / len(checks)),
+        "pressure_count": len(pressures),
+        "temperature_count": len(temperatures),
+        "phase_count": len(phases),
+        "pressures_gpa": pressures,
+        "temperatures_k": temperatures,
+        "phases": phases,
+        "has_low_pressure": has_low_pressure,
+        "has_high_pressure": has_high_pressure,
+        "has_low_temperature": has_low_temperature,
+        "has_high_temperature": has_high_temperature,
+        "low_pressure_gpa_max": low_pressure_max,
+        "high_pressure_gpa_min": high_pressure_min,
+        "low_temperature_k_max": low_temperature_max,
+        "high_temperature_k_min": high_temperature_min,
+    }
+
+
 def manifest_row_spec(manifest: dict[str, Any], row_id: str) -> dict[str, Any]:
     row_specs = _as_record(manifest.get("row_specs"))
     row_fixtures = _as_record(manifest.get("row_fixtures"))
@@ -272,6 +390,7 @@ def single_point_prediction(record: dict[str, Any], calc: Any, row_spec: dict[st
         "forces_ev_per_angstrom": _forces_ev_per_angstrom(atoms).tolist(),
         "reference": _reference(record, row_spec),
     }
+    prediction.update(thermodynamic_condition(record, row_spec))
     try:
         prediction["stress_gpa"] = _stress_gpa(atoms).tolist()
     except Exception as exc:
@@ -483,6 +602,7 @@ def relaxation_prediction(record: dict[str, Any], calc: Any, row_spec: dict[str,
         "material_id": record.get("material_id", record.get("material")),
         "chemical_system": "-".join(sorted(set(symbols))),
         "symbols": symbols,
+        **thermodynamic_condition(record, row_spec),
         "relaxation_converged": converged,
         "relaxation_steps_limit": max_steps,
         "relaxation_force_threshold": fmax,
@@ -530,6 +650,7 @@ def run_row(
     if runtime_session is not None:
         predictions = runtime_session.apply_row_policy(predictions)
     score, score_unit, metrics = evaluate_row(row_id, predictions, selection.row_spec)
+    metrics["thermodynamic_condition_coverage"] = thermodynamic_condition_coverage(predictions, selection.row_spec)
     return {
         "predictions": predictions,
         "score": score,

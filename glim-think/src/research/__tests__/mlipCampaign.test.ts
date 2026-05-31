@@ -220,6 +220,31 @@ describe("mlipCampaign", () => {
     expect(args[args.indexOf("--distill-policy-url") + 1]).toBe("gs://policies/mace-stress.json");
   });
 
+  it("passes Phoenix trace context through the MLIP Cloud Run payload", () => {
+    const payload = buildMlipCellRunPayload(
+      buildStubEnv({ GCP_PROJECT_ID: "shed-489901" }),
+      {
+        kind: "mlip_cell_run",
+        dedup_key: "d",
+        enqueued_at: "now",
+        hypothesis_id: "h",
+        run_id: "run-a",
+        campaign_id: "run-a",
+        cell_id: "run-a:baseline:forces:chgnet",
+        row_id: "forces",
+        mlip_id: "chgnet",
+        variant_id: "baseline",
+        manifest_url: "gs://inputs/eval.json",
+      },
+      "https://worker.test/feed/beats",
+      { traceId: "trace-dispatch", spanId: "span-dispatch" },
+    );
+
+    const args = payload.args ?? [];
+    expect(args[args.indexOf("--phoenix-trace-id") + 1]).toBe("trace-dispatch");
+    expect(args[args.indexOf("--phoenix-span-id") + 1]).toBe("span-dispatch");
+  });
+
   it("declares Phoenix evaluators for Distill runtime and theorem hooks", () => {
     const names = MLIP_PHOENIX_EVALUATOR_SPECS.map((spec) => spec.name);
 
@@ -233,6 +258,8 @@ describe("mlipCampaign", () => {
     expect(names).toContain("distill.target.v2_promotion_gate");
     expect(names).toContain("theorem.speedup_bound_observed");
     expect(names).toContain("theorem.lean_bridge_ready");
+    expect(names).toContain("mlip.state_condition.coverage");
+    expect(names).toContain("mlip.phase_change.phase_labels");
     expect(distillProfileForVariant("distill_accuracy_accelerate")).toBe("accuracy_accelerate");
   });
 

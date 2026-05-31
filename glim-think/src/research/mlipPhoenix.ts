@@ -380,6 +380,33 @@ export const MLIP_PHOENIX_EVALUATOR_SPECS: MlipPhoenixEvaluatorSpec[] = [
     release_gate: { threshold: 1, label: "v2_ready" },
   },
   {
+    name: "mlip.state_condition.coverage",
+    kind: "CODE",
+    optimization: "maximize",
+    applies_to: ["energy_volume", "forces", "stress", "elastic_constants", "relaxation_stability"],
+    description:
+      "Scores whether the held-out row exercises both low/high pressure and low/high temperature state conditions.",
+    input_mapping: {
+      coverage_score: "output.prediction.metrics.row_metrics.thermodynamic_condition_coverage.coverage_score",
+      pressure_count: "output.prediction.metrics.row_metrics.thermodynamic_condition_coverage.pressure_count",
+      temperature_count: "output.prediction.metrics.row_metrics.thermodynamic_condition_coverage.temperature_count",
+    },
+    release_gate: { threshold: 1, label: "state_condition_covered" },
+  },
+  {
+    name: "mlip.phase_change.phase_labels",
+    kind: "CODE",
+    optimization: "maximize",
+    applies_to: ["energy_volume", "forces", "stress", "elastic_constants", "relaxation_stability"],
+    description:
+      "Credits rows that preserve explicit phase labels so phase-change behavior can be evaluated alongside MLIP accuracy.",
+    input_mapping: {
+      phase_count: "output.prediction.metrics.row_metrics.thermodynamic_condition_coverage.phase_count",
+      phases: "output.prediction.metrics.row_metrics.thermodynamic_condition_coverage.phases",
+    },
+    release_gate: { threshold: 1, label: "phase_change_labeled" },
+  },
+  {
     name: "distill.leakage_guard",
     kind: "CODE",
     optimization: "maximize",
@@ -923,6 +950,37 @@ export function evaluateMlipPhoenixRun(
   const variantId = options.variant_id ?? stringField(metrics, "variant_id") ?? "baseline";
   const distillRuntime = recordField(metrics, "distill_runtime");
   const theoremHooks = recordField(metrics, "theorem_hooks");
+  const rowMetrics = recordField(metrics, "row_metrics");
+  const conditionCoverage = recordField(rowMetrics, "thermodynamic_condition_coverage");
+  const conditionScore = numberField(conditionCoverage, "coverage_score");
+  const pressureCount = numberField(conditionCoverage, "pressure_count");
+  const temperatureCount = numberField(conditionCoverage, "temperature_count");
+  const phaseCount = numberField(conditionCoverage, "phase_count");
+  const phases = (arrayField(conditionCoverage, "phases") ?? [])
+    .filter((phase): phase is string => typeof phase === "string" && phase.trim().length > 0);
+  const conditionLabel = !finiteNumber(conditionScore)
+    ? "missing_state_condition"
+    : conditionScore >= 1
+      ? "state_condition_covered"
+      : conditionScore > 0
+        ? "partial_state_condition"
+        : "missing_state_condition";
+  const phaseScore = finiteNumber(phaseCount)
+    ? phaseCount >= 2
+      ? 1
+      : phaseCount > 0
+        ? 0.5
+        : 0
+    : phases.length >= 2
+      ? 1
+      : phases.length > 0
+        ? 0.5
+        : 0;
+  const phaseLabel = phaseScore >= 1
+    ? "phase_change_labeled"
+    : phaseScore > 0
+      ? "single_phase_labeled"
+      : "missing_phase_labels";
   const readiness = mlipCellReadiness(
     state ?? {
       run: {
@@ -975,6 +1033,39 @@ export function evaluateMlipPhoenixRun(
       label: readiness.label,
       explanation: readiness.explanation,
       metadata: { ...readiness.metadata, row_id: cell.row_id, mlip_id: cell.mlip_id },
+    },
+    {
+      evaluator_name: "mlip.state_condition.coverage",
+      score: finiteNumber(conditionScore) ? conditionScore : 0,
+      label: conditionLabel,
+      explanation: finiteNumber(conditionScore)
+        ? `Thermodynamic coverage score is ${conditionScore.toFixed(2)} for pressure and temperature state coverage.`
+        : "No thermodynamic condition coverage was recorded for this row.",
+      metadata: {
+        row_id: cell.row_id,
+        mlip_id: cell.mlip_id,
+        pressure_count: pressureCount,
+        temperature_count: temperatureCount,
+        phase_count: phaseCount,
+        phases,
+        coverage: conditionCoverage,
+      },
+    },
+    {
+      evaluator_name: "mlip.phase_change.phase_labels",
+      score: phaseScore,
+      label: phaseLabel,
+      explanation: phaseScore >= 1
+        ? `Multiple phase labels are present: ${phases.join(", ")}.`
+        : phaseScore > 0
+          ? `A single phase label is present: ${phases[0]}.`
+          : "No phase labels were recorded, so phase-change behavior cannot be evaluated.",
+      metadata: {
+        row_id: cell.row_id,
+        mlip_id: cell.mlip_id,
+        phase_count: phaseCount,
+        phases,
+      },
     },
   ];
   if (distillRuntime) {

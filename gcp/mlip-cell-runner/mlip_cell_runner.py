@@ -160,6 +160,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--beat-emit-url", default=None)
     parser.add_argument("--operation-name", default=None)
+    parser.add_argument(
+        "--phoenix-trace-id",
+        default=None,
+        help="Cloudflare compute-dispatch trace id to preserve on the result beat.",
+    )
+    parser.add_argument(
+        "--phoenix-span-id",
+        default=None,
+        help="Cloudflare compute-dispatch span id to preserve on the result beat.",
+    )
     parser.add_argument("--dev-mode-bypass", action="store_true")
     parser.add_argument("--local-jsonl", default=None)
     parser.add_argument(
@@ -786,6 +796,8 @@ def run_cell(
         "distill_policy_hash": policy_limits_hash,
         "artifact_uri": artifact_uri,
         "operation_name": args.operation_name,
+        "trace_id": args.phoenix_trace_id,
+        "span_id": args.phoenix_span_id,
         "versions": versions,
         "fixture_contract": row_result["fixture_contract"],
         "row_metrics": accuracy_metrics,
@@ -1060,6 +1072,8 @@ def failure_metrics(args: argparse.Namespace, exc: BaseException) -> dict[str, A
         "fixture_id": getattr(args, "fixture_id", None),
         "manifest_url": getattr(args, "manifest_url", None) or getattr(args, "fixture_url", None),
         "operation_name": getattr(args, "operation_name", None),
+        "trace_id": getattr(args, "phoenix_trace_id", None),
+        "span_id": getattr(args, "phoenix_span_id", None),
         "versions": runtime_versions(),
         "checkpoint": {
             "mode": checkpoint_mode,

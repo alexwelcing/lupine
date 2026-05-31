@@ -601,30 +601,38 @@ function cellArtifactPrefix(run: MlipBaselineRunRecord, cell: MlipBaselineCellRe
   ].join("/");
 }
 
-function buildCellPayload(run: MlipBaselineRunRecord, cell: MlipBaselineCellRecord, env: Env): TaskPayload {
+function buildCellPayload(
+  run: MlipBaselineRunRecord,
+  cell: MlipBaselineCellRecord,
+  env: Env,
+  traceContext?: { traceId: string; spanId: string },
+): TaskPayload {
+  const args = [
+    "--run-id",
+    run.run_id,
+    "--cell-id",
+    cell.cell_id,
+    "--row-id",
+    cell.row_id,
+    "--mlip-id",
+    cell.mlip_id,
+    "--profile",
+    run.profile,
+    "--fixture-id",
+    run.fixture_id,
+    "--manifest-url",
+    run.manifest_url,
+    "--artifact-prefix",
+    cellArtifactPrefix(run, cell),
+  ];
+  if (traceContext?.traceId) args.push("--phoenix-trace-id", traceContext.traceId);
+  if (traceContext?.spanId) args.push("--phoenix-span-id", traceContext.spanId);
   return {
     fixture_url: run.manifest_url,
     target_job: cell.target_job ?? undefined,
     command: "run-cell",
     beat_emit_url: workerBeatEmitUrl(env),
-    args: [
-      "--run-id",
-      run.run_id,
-      "--cell-id",
-      cell.cell_id,
-      "--row-id",
-      cell.row_id,
-      "--mlip-id",
-      cell.mlip_id,
-      "--profile",
-      run.profile,
-      "--fixture-id",
-      run.fixture_id,
-      "--manifest-url",
-      run.manifest_url,
-      "--artifact-prefix",
-      cellArtifactPrefix(run, cell),
-    ],
+    args,
   };
 }
 
@@ -763,8 +771,12 @@ export async function dispatchQueuedMlipBaselineCells(
         },
       },
       async (span) => {
-        const result = await dispatchAtlasJob(env, payload);
         const ctx = span.spanContext();
+        const tracedPayload = buildCellPayload(state.run, cell, env, {
+          traceId: ctx.traceId,
+          spanId: ctx.spanId,
+        });
+        const result = await dispatchAtlasJob(env, tracedPayload);
         await env.LEDGER.prepare(
           `UPDATE mlip_baseline_cells
              SET status = 'enqueued',
@@ -933,6 +945,8 @@ export async function recordMlipBaselineBeat(
     metrics,
     artifact_uri: typeof metrics.artifact_uri === "string" ? metrics.artifact_uri : undefined,
     operation_name: typeof metrics.operation_name === "string" ? metrics.operation_name : undefined,
+    trace_id: typeof metrics.trace_id === "string" ? metrics.trace_id : undefined,
+    span_id: typeof metrics.span_id === "string" ? metrics.span_id : undefined,
     error: typeof metrics.error === "string" ? metrics.error : undefined,
   });
 }
@@ -1118,6 +1132,17 @@ function durationMsForCell(cell: MlipBaselineCellRecord | undefined): number | n
 
 function nStructuresForCell(cell: MlipBaselineCellRecord | undefined): number | null {
   return numberField(metricsForCell(cell), "n_structures");
+}
+
+function conditionCoverageTextForCell(cell: MlipBaselineCellRecord | undefined): string {
+  const coverage = recordField(recordField(metricsForCell(cell), "row_metrics"), "thermodynamic_condition_coverage");
+  if (!coverage) return "not reported";
+  const score = numberField(coverage, "coverage_score");
+  const pressureCount = numberField(coverage, "pressure_count") ?? 0;
+  const temperatureCount = numberField(coverage, "temperature_count") ?? 0;
+  const phaseCount = numberField(coverage, "phase_count") ?? 0;
+  const scoreText = finiteNumber(score) ? `score ${score.toFixed(2)}` : "score pending";
+  return `${scoreText}; P ${pressureCount}; T ${temperatureCount}; phases ${phaseCount}`;
 }
 
 function versionTextForCell(cell: MlipBaselineCellRecord | undefined): string {
@@ -1366,6 +1391,7 @@ export function renderMlipBaselineReportHtml(state: MlipBaselineState): string {
       <td>${htmlEscape(cell.task_name ?? "not enqueued")}</td>
       <td>${htmlEscape(cell.operation_name ?? "not returned")}</td>
       <td>${htmlEscape(cell.trace_id ?? "not traced")}<span class="raw">span ${htmlEscape(cell.span_id ?? "not recorded")}</span></td>
+      <td>${htmlEscape(conditionCoverageTextForCell(cell))}</td>
       <td>${fmtCount(cell.retry_count)}</td>
       <td>${htmlEscape(versionTextForCell(cell))}<span class="raw">${htmlEscape(cudaTextForCell(cell))}</span></td>
       <td>${htmlEscape(modelTextForCell(cell))}</td>
@@ -1469,7 +1495,7 @@ export function renderMlipBaselineReportHtml(state: MlipBaselineState): string {
     .tone-mid .accuracy-bar span { background:var(--blue); }
     .meta { margin-top:10px; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
     .summary-table td:first-child { min-width:190px; }
-    .evidence-table { min-width:1680px; }
+    .evidence-table { min-width:1810px; }
     .evidence-table td { max-width:280px; overflow-wrap:anywhere; font-size:12px; }
     .raw { display:block; margin-top:4px; color:var(--muted); font-size:12px; font-weight:500; font-variant-numeric:tabular-nums; }
     .note { color:var(--muted); line-height:1.55; }
@@ -1607,6 +1633,7 @@ ${MLIP_PHOENIX_EVALUATOR_SPECS.map((spec) => htmlEscape(spec.name)).join("\n")}<
             <th>Cloud Task</th>
             <th>Cloud Run operation</th>
             <th>Phoenix trace/span</th>
+            <th>State coverage</th>
             <th>Retry</th>
             <th>Versions and GPU</th>
             <th>Model</th>
