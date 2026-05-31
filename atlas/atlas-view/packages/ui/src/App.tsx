@@ -535,7 +535,14 @@ export default function App() {
       })
       .catch((err) => {
         const message = err instanceof Error ? err.message : String(err);
-        if (!cancelled) useStore.getState().setError(message);
+        if (!cancelled) {
+          // Clear the loading flag explicitly so a 404 / permission error can
+          // never leave the viewer stuck on a permanent "Parsing..." spinner,
+          // independent of setError's own loading side effect. The error is
+          // surfaced in the existing dismissible FileDropZone error card.
+          useStore.getState().setLoading(false);
+          useStore.getState().setError(message);
+        }
       });
     return () => {
       cancelled = true;
