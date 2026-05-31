@@ -85,12 +85,19 @@ function send(url: string, payload: AnalyticsPayload): void {
   const body = JSON.stringify(payload);
   // sendBeacon is the right tool: queued by the browser, survives unload,
   // and never blocks. Fall back to keepalive fetch where unavailable.
+  //
+  // CRITICAL: the Blob MUST be `text/plain` (a CORS-safelisted content type),
+  // NOT `application/json`. A non-safelisted content type forces a CORS
+  // preflight, and sendBeacon CANNOT perform preflighted requests — the browser
+  // returns `true` (queued) but then silently DROPS the request. Verified live:
+  // application/json beacons never reached the collector; text/plain do. The
+  // collector parses the raw string body, so the wire payload is unchanged.
   try {
     if (
       typeof navigator !== 'undefined' &&
       typeof navigator.sendBeacon === 'function'
     ) {
-      const blob = new Blob([body], { type: 'application/json' });
+      const blob = new Blob([body], { type: 'text/plain' });
       const queued = navigator.sendBeacon(url, blob);
       if (queued) return;
     }
@@ -102,7 +109,8 @@ function send(url: string, payload: AnalyticsPayload): void {
     if (typeof fetch === 'function') {
       void fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        // text/plain keeps the fetch fallback preflight-free too (same parsing).
+        headers: { 'Content-Type': 'text/plain' },
         body,
         keepalive: true,
         // Analytics is best-effort; don't surface CORS/network noise.
