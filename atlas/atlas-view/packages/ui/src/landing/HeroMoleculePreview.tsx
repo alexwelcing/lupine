@@ -6,61 +6,65 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
  * canvas (depth-sorted spheres with radial shading + bonds, simple perspective)
  * — no WebGPU / R3F, so it's light and safe to mount above the fold. Clicking it
  * opens the real viewer with the featured molecule.
+ *
+ * The molecule is a real Buckminsterfullerene (C60): the exact truncated
+ * icosahedron, generated from golden-ratio coordinates — not a decorative
+ * approximation — so the teaser shows genuine chemistry.
  */
 
 interface Atom3 { x: number; y: number; z: number; r: number; c: string }
 interface Bond { a: number; b: number }
 
-// A compact, recognizable cluster (loosely C60-ish cage + core) so the preview
-// reads as "a real molecule" rather than random dots. Coordinates are unit-ish;
-// scaled to the canvas at draw time.
-const PALETTE = ['#6b9fff', '#8ad0ff', '#cbd5e1', '#f8fafc'];
+// Carbon, rendered as a luminous slate that reads as carbon yet pops on the dark
+// hero. (CPK black would vanish on the background.)
+const CARBON = '#9fb4d6';
 
-function buildMolecule(): { atoms: Atom3[]; bonds: Bond[] } {
-  const atoms: Atom3[] = [];
-  // Icosahedron-ish shell (12 vertices) — gives a pleasing symmetric cage.
-  const t = (1 + Math.sqrt(5)) / 2;
-  const shell = [
-    [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
-    [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
-    [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1],
+export function buildC60(): { atoms: Atom3[]; bonds: Bond[] } {
+  const phi = (1 + Math.sqrt(5)) / 2;
+  // Vertices of a truncated icosahedron = all even (cyclic) permutations of
+  // these three sign-varied base triples → 60 unique vertices, 90 equal edges.
+  const bases: Array<[number, number, number]> = [
+    [0, 1, 3 * phi],
+    [1, 2 + phi, 2 * phi],
+    [phi, 2, 2 * phi + 1],
   ];
-  const norm = Math.hypot(1, t);
-  for (let i = 0; i < shell.length; i++) {
-    const [x, y, z] = shell[i];
-    atoms.push({ x: x / norm, y: y / norm, z: z / norm, r: 0.17, c: PALETTE[1] });
-  }
-  // A small bright core.
-  atoms.push({ x: 0, y: 0, z: 0, r: 0.22, c: PALETTE[3] });
-
-  // Bond each shell vertex to its 2 nearest shell neighbors → the cage edges,
-  // plus core→a few shell atoms for visual depth.
-  const bonds: Bond[] = [];
+  const verts: Array<[number, number, number]> = [];
   const seen = new Set<string>();
-  const addBond = (a: number, b: number) => {
-    const k = a < b ? `${a}:${b}` : `${b}:${a}`;
-    if (seen.has(k)) return;
-    seen.add(k);
-    bonds.push({ a, b });
+  const add = (x: number, y: number, z: number) => {
+    const key = `${x.toFixed(3)}|${y.toFixed(3)}|${z.toFixed(3)}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    verts.push([x, y, z]);
   };
-  for (let i = 0; i < 12; i++) {
-    const dists = [];
-    for (let j = 0; j < 12; j++) {
-      if (i === j) continue;
-      const d = (atoms[i].x - atoms[j].x) ** 2 + (atoms[i].y - atoms[j].y) ** 2 + (atoms[i].z - atoms[j].z) ** 2;
-      dists.push({ j, d });
+  for (const [a, b, c] of bases) {
+    const sx = a === 0 ? [0] : [a, -a];
+    const sy = b === 0 ? [0] : [b, -b];
+    const sz = c === 0 ? [0] : [c, -c];
+    for (const x of sx) for (const y of sy) for (const z of sz) {
+      add(x, y, z); add(y, z, x); add(z, x, y); // 3 cyclic (even) permutations
     }
-    dists.sort((p, q) => p.d - q.d);
-    addBond(i, dists[0].j);
-    addBond(i, dists[1].j);
   }
-  const core = 12;
-  for (const j of [0, 3, 5, 8]) addBond(core, j);
-
+  // Normalize onto a unit-ish sphere.
+  const maxR = Math.max(...verts.map(([x, y, z]) => Math.hypot(x, y, z)));
+  const atoms: Atom3[] = verts.map(([x, y, z]) => ({
+    x: x / maxR, y: y / maxR, z: z / maxR, r: 0.082, c: CARBON,
+  }));
+  // Bonds = the cage edges: every vertex pair at the (single, uniform)
+  // nearest-neighbor distance. Archimedean solid → all 90 edges share a length.
+  const d2 = (i: number, j: number) =>
+    (atoms[i].x - atoms[j].x) ** 2 + (atoms[i].y - atoms[j].y) ** 2 + (atoms[i].z - atoms[j].z) ** 2;
+  let minD = Infinity;
+  for (let i = 0; i < atoms.length; i++)
+    for (let j = i + 1; j < atoms.length; j++) minD = Math.min(minD, d2(i, j));
+  const thresh = minD * 1.12;
+  const bonds: Bond[] = [];
+  for (let i = 0; i < atoms.length; i++)
+    for (let j = i + 1; j < atoms.length; j++)
+      if (d2(i, j) <= thresh) bonds.push({ a: i, b: j });
   return { atoms, bonds };
 }
 
-const MOL = buildMolecule();
+const MOL = buildC60();
 
 interface Props {
   onOpen: () => void;
@@ -116,7 +120,7 @@ export function HeroMoleculePreview({ onOpen, style }: Props) {
       ctx.clearRect(0, 0, w, h);
       const cx = w / 2;
       const cy = h / 2;
-      const R = Math.min(w, h) * 0.4;
+      const R = Math.min(w, h) * 0.42;
       const cos = Math.cos(angle), sin = Math.sin(angle);
 
       const pts = MOL.atoms.map((a) => project(a, cos, sin));
@@ -125,12 +129,12 @@ export function HeroMoleculePreview({ onOpen, style }: Props) {
       for (const b of MOL.bonds) {
         const p = pts[b.a], q = pts[b.b];
         const avgDepth = (p.depth + q.depth) / 2;
-        const alpha = 0.22 + (avgDepth + 1) * 0.18;
+        const alpha = 0.16 + (avgDepth + 1) * 0.2;
         ctx.beginPath();
         ctx.moveTo(cx + p.sx * R, cy + p.sy * R);
         ctx.lineTo(cx + q.sx * R, cy + q.sy * R);
         ctx.strokeStyle = `rgba(150, 190, 255, ${alpha})`;
-        ctx.lineWidth = 1.5 + (avgDepth + 1) * 1.1;
+        ctx.lineWidth = 1.1 + (avgDepth + 1) * 0.9;
         ctx.lineCap = 'round';
         ctx.stroke();
       }
@@ -172,7 +176,7 @@ export function HeroMoleculePreview({ onOpen, style }: Props) {
       onClick={onOpen}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      aria-label="Open the live molecular viewer"
+      aria-label="Open the live molecular viewer — Buckminsterfullerene C₆₀"
       style={{
         position: 'relative',
         display: 'block',
@@ -197,6 +201,9 @@ export function HeroMoleculePreview({ onOpen, style }: Props) {
       <span style={liveChipStyle}>
         <span style={liveDotStyle} /> Live viewer
       </span>
+
+      {/* Molecule identity — reinforces "this is a real molecule" */}
+      <span style={molNameStyle}>C₆₀ · Buckminsterfullerene</span>
 
       {/* Hover prompt */}
       <span style={{ ...openHintStyle, opacity: hover ? 1 : 0 }}>Open viewer →</span>
@@ -225,6 +232,11 @@ const liveChipStyle: CSSProperties = {
 const liveDotStyle: CSSProperties = {
   width: 7, height: 7, borderRadius: '50%', background: '#5eead4',
   boxShadow: '0 0 8px #5eead4',
+};
+const molNameStyle: CSSProperties = {
+  position: 'absolute', bottom: 12, left: 14,
+  fontSize: 11, fontWeight: 600, letterSpacing: '0.01em',
+  color: 'rgba(188,211,255,0.72)', pointerEvents: 'none',
 };
 const openHintStyle: CSSProperties = {
   position: 'absolute', bottom: 12, right: 14,
