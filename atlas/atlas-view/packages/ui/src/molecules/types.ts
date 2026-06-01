@@ -13,7 +13,8 @@ export type MoleculeSourceId =
   | 'saved' // user-owned saved views (Firestore lupiViews)
   | 'pubchem' // external PubChem name/SMILES lookup
   | 'omol' // Meta / FAIR Open Molecules dataset (scaffolded)
-  | 'library'; // curated Lupi molecule library (scaffolded)
+  | 'library' // curated Lupi molecule library (scaffolded)
+  | 'social'; // limited social-link QR archive authored as atoms + bonds
 
 /** How to load a hit into the viewer. The UI and agent map this to a loader. */
 export type MoleculeLoadSpec =

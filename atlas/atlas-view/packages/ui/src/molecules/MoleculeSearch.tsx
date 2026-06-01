@@ -9,6 +9,7 @@ const SOURCE_LABELS: Record<MoleculeSourceId, string> = {
   pubchem: 'PubChem',
   omol: 'OMol25',
   library: 'Library',
+  social: 'Social QRs',
 };
 
 const accent = '#1edce0';
@@ -102,7 +103,7 @@ export function MoleculeSearch({ onLoaded, autoFocus = true }: MoleculeSearchPro
         autoFocus={autoFocus}
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Search molecules — Gallery, NIST, PubChem…"
+        placeholder="Search molecules, atom QRs, Gallery, NIST…"
         aria-label="Search molecules"
         style={inputStyle}
       />
