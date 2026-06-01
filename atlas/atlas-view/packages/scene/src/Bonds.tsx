@@ -81,6 +81,7 @@ interface BondsProps {
   colorMode?: 'type' | 'uniform' | 'property';
   colorProperty?: string;
   uniformColor?: string;
+  elementColorOverrides?: Record<number, string>;
   propRange?: [number, number];
   maxBondLength?: number;
   /** Element-aware bonding tolerance (Å). Added to `r_cov(A) + r_cov(B)` per
@@ -130,6 +131,7 @@ export function Bonds({
   colorMode = 'type',
   colorProperty,
   uniformColor = '#1edce0',
+  elementColorOverrides = {},
   propRange,
   maxBondLength = 3.2,
   tolerance = 0.45,
@@ -1122,7 +1124,7 @@ export function Bonds({
             return BOTANICAL_COLORS[typeId] ?? [0.3, 0.5, 0.2];
           }
           if (atomColorSource === 'element') {
-            return hexToRgb(getElementSpec(typeId).color);
+            return hexToRgb(elementColorOverrides[typeId] ?? getElementSpec(typeId).color);
           }
           // 'colormap'
           return mapFn(typeToNorm.get(typeId) ?? 0.5);
@@ -1189,7 +1191,7 @@ export function Bonds({
     // frame for property coloring. In static modes (type/element/uniform/
     // botanical), propData is null and frame changes don't refire this.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bondPairs, bondDistances, halfCount, capacity, frame.types, frame.natoms, colormap, colorMode, uniformColor, isPropMode, propData, propRange, radius, atomColorSource, botanicalMode, bondColorMode, nextFrame, interpolationFactor, colorProperty]);
+  }, [bondPairs, bondDistances, halfCount, capacity, frame.types, frame.natoms, colormap, colorMode, uniformColor, elementColorOverrides, isPropMode, propData, propRange, radius, atomColorSource, botanicalMode, bondColorMode, nextFrame, interpolationFactor, colorProperty]);
 
   // Matrix upload runs in the rAF loop, NOT in a useEffect. This bypasses
   // React's commit cycle so per-frame matrix updates flow at native rAF
