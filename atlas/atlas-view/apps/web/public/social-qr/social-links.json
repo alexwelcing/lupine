@@ -1,0 +1,22 @@
+{
+  "links": [
+    {
+      "id": "lupi_live",
+      "title": "LUPI Live Viewer",
+      "url": "https://lupi.live",
+      "tags": ["viewer", "lupinlive", "lupi.live", "qr"]
+    },
+    {
+      "id": "lupine_science",
+      "title": "Lupine Science",
+      "url": "https://lupine.science",
+      "tags": ["research", "lupine.science", "qr"]
+    },
+    {
+      "id": "lupine_linkedin",
+      "title": "Lupine LinkedIn",
+      "url": "https://www.linkedin.com/company/lupine-science",
+      "tags": ["linkedin", "social", "qr"]
+    }
+  ]
+}

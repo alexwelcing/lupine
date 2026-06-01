@@ -1,4 +1,5 @@
 import { loadMoleculeSource } from '../loadMoleculeSource';
+import { useStore } from '../store';
 import type { MoleculeHit } from './types';
 
 interface ViewerMcp {
@@ -11,6 +12,12 @@ export async function loadMoleculeHit(hit: MoleculeHit): Promise<void> {
   switch (spec.kind) {
     case 'url':
       await loadMoleculeSource(spec.url);
+      if (hit.source === 'social') {
+        const store = useStore.getState();
+        store.setCameraPreset('top');
+        store.setAtomScale(1.15);
+        useStore.setState({ showBonds: true, backgroundPreset: 'white', showAxes: false, showCell: false });
+      }
       return;
     case 'savedView':
       if (typeof window !== 'undefined') window.location.hash = `#/view/${spec.slug}`;
