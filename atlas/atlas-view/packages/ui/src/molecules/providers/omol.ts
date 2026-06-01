@@ -47,6 +47,52 @@ function index(): Promise<OmolRecord[]> {
   return cache;
 }
 
+/** Expose the raw records (cached) so the OMol25 collection page can build its
+ *  own facets without re-fetching the 4 MB index. */
+export function omolRecords(): Promise<OmolRecord[]> {
+  return index();
+}
+
+export interface OmolFacets {
+  /** Total structures in this index slice. */
+  total: number;
+  /** Element symbol → number of structures that contain it, descending. */
+  elementCounts: Array<{ element: string; count: number }>;
+  /** Atom-count distribution across the slice. */
+  natoms: { min: number; max: number; median: number };
+}
+
+/** Pure facet derivation over a record set — exported for unit testing.
+ *  The neutral-validation slice carries no per-record HOMO-LUMO gap (all null)
+ *  and a single internal source id, so neither is derived as a facet here. */
+export function deriveFacets(records: OmolRecord[]): OmolFacets {
+  const counts = new Map<string, number>();
+  for (const r of records) {
+    for (const el of r.elements) counts.set(el, (counts.get(el) ?? 0) + 1);
+  }
+  const elementCounts = [...counts.entries()]
+    .map(([element, count]) => ({ element, count }))
+    .sort((a, b) => b.count - a.count || a.element.localeCompare(b.element));
+  const sizes = records.map((r) => r.natoms).sort((a, b) => a - b);
+  const median = sizes.length ? sizes[Math.floor(sizes.length / 2)] : 0;
+  return {
+    total: records.length,
+    elementCounts,
+    natoms: { min: sizes[0] ?? 0, max: sizes[sizes.length - 1] ?? 0, median },
+  };
+}
+
+let facetCache: Promise<OmolFacets> | null = null;
+
+/** Precompute the dataset facets (element coverage + size range) once over the
+ *  cached index — no extra network. */
+export function omolFacets(): Promise<OmolFacets> {
+  if (!facetCache) {
+    facetCache = index().then(deriveFacets);
+  }
+  return facetCache;
+}
+
 export const omolProvider: MoleculeProvider = {
   id: 'omol',
   label: 'Meta OMol25',
@@ -63,11 +109,12 @@ export const omolProvider: MoleculeProvider = {
       hits = hits.filter((r) => wantElements.every((e) => r.elements.includes(e)));
     }
     if (q) {
+      // The internal `src` id is a single opaque constant across the slice, so
+      // it's not a meaningful search target — match on formula + elements only.
       hits = hits.filter(
         (r) =>
           r.formula.toLowerCase().includes(q) ||
-          r.elements.some((e) => e.toLowerCase() === q) ||
-          r.src.toLowerCase().includes(q),
+          r.elements.some((e) => e.toLowerCase() === q),
       );
     }
 
@@ -75,7 +122,11 @@ export const omolProvider: MoleculeProvider = {
       id: r.id,
       source: 'omol',
       title: r.formula,
-      subtitle: `${r.natoms} atoms${r.gap != null ? ` · gap ${r.gap} eV` : ''} · ${r.src}`,
+      // User-facing subtitle: structure size + (when present) the DFT gap. The
+      // raw `src` id is NOT shown — it's an internal provenance string, kept only
+      // as a hidden tag. gap is null across the neutral-validation slice, so it
+      // simply doesn't render here.
+      subtitle: `${r.natoms} atoms${r.gap != null ? ` · gap ${r.gap.toFixed(2)} eV` : ''}`,
       formula: r.formula,
       elements: r.elements,
       tags: ['omol25', r.src],

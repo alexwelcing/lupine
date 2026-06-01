@@ -2,18 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import { EquilibriumSolveWorkbench } from '../EquilibriumSolveWorkbench';
 import { Gallery } from '../Gallery';
 import { MoleculeBrowser } from '../molecules/MoleculeBrowser';
+import { OmolCollection } from '../molecules/OmolCollection';
 import { PotentialBrowser } from '../panels/PotentialBrowser';
 
 export function GallerySection() {
   const [visible, setVisible] = useState(false);
-  const [tab, setTab] = useState<'simulations' | 'browse' | 'potentials' | 'equilibrium'>('simulations');
+  const [tab, setTab] = useState<'simulations' | 'omol25' | 'browse' | 'potentials' | 'equilibrium'>('simulations');
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Allow deep-linking to research catalog tabs.
     const params = new URLSearchParams(window.location.search);
     const requestedTab = params.get('tab');
-    if (requestedTab === 'browse' || requestedTab === 'potentials' || requestedTab === 'equilibrium') {
+    if (requestedTab === 'omol25' || requestedTab === 'browse' || requestedTab === 'potentials' || requestedTab === 'equilibrium') {
       setTab(requestedTab);
       params.delete('tab');
       const url = new URL(window.location.href);
@@ -58,9 +59,18 @@ export function GallerySection() {
         </button>
         <button
           role="tab"
+          aria-selected={tab === 'omol25'}
+          data-testid="tab-omol25"
+          style={sTab(tab === 'omol25', '#34d399')}
+          onClick={() => setTab('omol25')}
+        >
+          Meta OMol25
+        </button>
+        <button
+          role="tab"
           aria-selected={tab === 'browse'}
           data-testid="tab-browse"
-          style={sTab(tab === 'browse', '#34d399')}
+          style={sTab(tab === 'browse', '#38bdf8')}
           onClick={() => setTab('browse')}
         >
           Browse All
@@ -86,6 +96,7 @@ export function GallerySection() {
       </div>
 
       {tab === 'simulations' && <Gallery />}
+      {tab === 'omol25' && <OmolCollection />}
       {tab === 'browse' && <MoleculeBrowser />}
       {tab === 'potentials' && <PotentialBrowser />}
       {tab === 'equilibrium' && <EquilibriumSolveWorkbench embedded />}
