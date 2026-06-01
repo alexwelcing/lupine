@@ -55,9 +55,34 @@
     ]
   }
   </script>
+  <style>
+    /* Brand-colored canvas from the very first paint, so there is no white
+       flash and no bare "Loading..." text before React mounts. The splash
+       below lives inside #root and is replaced the moment the app renders. */
+    html, body { margin: 0; background: #06080d; }
+    #lupi-splash {
+      position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at center, #0a0e1a 0%, #020204 70%);
+    }
+    #lupi-splash .mark {
+      width: 34px; height: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+      animation: lupiPulse 1.6s ease-in-out infinite;
+    }
+    #lupi-splash .mark span { border-radius: 3px; }
+    @keyframes lupiPulse { 0%,100% { opacity: .55; transform: scale(.96); } 50% { opacity: 1; transform: scale(1.04); } }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <div id="lupi-splash" aria-label="Loading LUPI" role="status">
+      <div class="mark" aria-hidden="true">
+        <span style="background:#f2aa45"></span>
+        <span style="background:#84d7ff"></span>
+        <span style="background:#f3a9c7"></span>
+        <span style="background:#9ff7ae"></span>
+      </div>
+    </div>
+  </div>
   <script type="module" src="./src/main.tsx"></script>
 </body>
 </html>
