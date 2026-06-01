@@ -38,8 +38,12 @@ if (loadError) {
   );
 } else {
   try {
+    // No visible fallback: the brand splash baked into index.html (#lupi-splash)
+    // already covers the load, and createRoot().render() replaces #root's
+    // contents (splash included) the moment <App /> is ready — so there's no
+    // bare "Loading..." flash between the two.
     root.render(
-      <Suspense fallback={<div style={{ color: '#00c8f0', padding: 40 }}>Loading...</div>}>
+      <Suspense fallback={null}>
         <App />
       </Suspense>
     );
