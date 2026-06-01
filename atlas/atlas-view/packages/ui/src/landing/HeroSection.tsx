@@ -1,9 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { ParticleCanvas } from './ParticleCanvas';
 import { AnimatedCounter } from './AnimatedCounter';
 import { ALL_EXAMPLES } from './shared';
+import { useStore } from '../store';
 
 export function HeroSection() {
+  const openConfigurator = useStore((s) => s.openConfigurator);
+  const [heroQuery, setHeroQuery] = useState('');
+  const submitHeroQuery = () => openConfigurator(heroQuery.trim() || undefined);
   const stats = useMemo(() => {
     const totalAtoms = ALL_EXAMPLES.reduce((sum, e) => {
       const n = parseInt(e.atoms.replace(/[^0-9]/g, ''));
@@ -75,6 +79,70 @@ export function HeroSection() {
         >
           Click any molecule and explore it in 3D — then save and share your view. No install, and no signup just to look.
         </p>
+
+        {/* Type-a-molecule search → guided MCP configurator */}
+        <div
+          style={{
+            maxWidth: 540,
+            margin: '0 auto 24px',
+            animation: 'heroFadeIn 1s ease-out 0.5s forwards',
+            opacity: 0,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.16)',
+              borderRadius: 100,
+              padding: '6px 6px 6px 18px',
+              backdropFilter: 'blur(8px)',
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              value={heroQuery}
+              onChange={(e) => setHeroQuery(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') submitHeroQuery(); }}
+              placeholder="Type a molecule — e.g. graphene, LiFePO₄, copper…"
+              aria-label="Type a molecule to configure and view"
+              style={{
+                flex: 1,
+                minWidth: 0,
+                background: 'transparent',
+                border: 'none',
+                outline: 'none',
+                color: '#f8fafc',
+                fontSize: 15,
+              }}
+            />
+            <button
+              type="button"
+              onClick={submitHeroQuery}
+              style={{
+                flexShrink: 0,
+                padding: '10px 20px',
+                fontSize: 14,
+                fontWeight: 700,
+                color: 'white',
+                background: 'linear-gradient(135deg, #0f62fe, #7c3aed)',
+                border: 'none',
+                borderRadius: 100,
+                cursor: 'pointer',
+              }}
+            >
+              Build a view
+            </button>
+          </div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 8 }}>
+            A few quick questions → we assemble the MCP request and load it for you.
+          </div>
+        </div>
 
         {/* CTA Buttons */}
         <div

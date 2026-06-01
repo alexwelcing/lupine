@@ -336,8 +336,6 @@ export function ExportManager() {
           return BOTANICAL_COLORS[typeId] ?? [0.3, 0.5, 0.2];
         }
         if (state.atomColorSource === 'element') {
-          const override = state.elementColorOverrides[typeId];
-          if (override) return new THREE.Color(override).toArray() as [number, number, number];
           return TYPE_COLORS[typeId] ?? DEFAULT_TYPE_COLOR;
         }
         const t = typeToNorm.get(typeId) ?? SINGLE_TYPE_NORM_VALUE;
@@ -366,7 +364,7 @@ export function ExportManager() {
           return mapFn(t);
         }
         if (state.colorMode === 'uniform') {
-          return new THREE.Color(state.uniformAtomColor).toArray() as [number, number, number];
+          return mapFn(0.0);
         }
         return resolveTypeColor(atomType);
       };

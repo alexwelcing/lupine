@@ -35,8 +35,6 @@ interface AtomsOptimizedProps {
   colorMode?: 'type' | 'uniform' | 'property';
   colorProperty?: string;
   colormap?: ColormapName;
-  uniformColor?: string;
-  elementColorOverrides?: Record<number, string>;
   propRange?: [number, number];
   scale?: number;
   renderStyle?: RenderStyle;
@@ -606,8 +604,6 @@ export function AtomsOptimized({
   colorMode = 'type',
   colorProperty,
   colormap = 'viridis',
-  uniformColor = '#1edce0',
-  elementColorOverrides = {},
   propRange,
   scale = 1.0,
   renderStyle = 'standard',
@@ -814,8 +810,8 @@ export function AtomsOptimized({
     uniforms.uHasEtch.value = (etchTexture && etchAtomId != null && etchAtomId >= 0) ? 1 : 0;
 
     if (colorMode === 'uniform') {
-      const color = new THREE.Color(uniformColor);
-      uniforms.uUniformColor.value.set(color.r, color.g, color.b);
+      const [r, g, b] = mapFn(0.0);
+      uniforms.uUniformColor.value.set(r, g, b);
     }
 
     // Rebuild the 256×1 type palette (768 bytes, instant)
@@ -836,7 +832,7 @@ export function AtomsOptimized({
       // material identity for a chemically-honest read.
       uniforms.uPalette.value = buildPaletteTexture((typeId) => {
         const spec = getElementSpec(typeId);
-        return hexToRgb(elementColorOverrides[typeId] ?? spec.color);
+        return hexToRgb(spec.color);
       });
     } else {
       // 'colormap' — types mapped through the active colormap by rank.
@@ -862,7 +858,7 @@ export function AtomsOptimized({
     oldColormap.dispose();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorMode, colormap, mapFn, uniformColor, elementColorOverrides, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength, etchTexture, etchAtomId, materialIntensity, rimLightIntensity, surfaceRoughness, surfacePolish, surfaceClearcoat, fillLightColor, rimLightColor]);
+  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength, etchTexture, etchAtomId, materialIntensity, rimLightIntensity, surfaceRoughness, surfacePolish, surfaceClearcoat, fillLightColor, rimLightColor]);
 
   // ─── PMREM env sync and dynamic lighting ───────────────────────────────────────────────
   // scene.environment is set by drei's <Environment> in App.tsx; it can
