@@ -301,24 +301,33 @@ export function StudioControlDeck({
       }}
     >
       <style>{`
-        @keyframes lupi-rive-snap {
+        @keyframes lupi-press-snap {
           0% { transform: scale(1); box-shadow: 0 0 16px rgba(30, 220, 224, 0.42); }
           38% { transform: scale(0.97); }
           100% { transform: scale(1); }
         }
-        @keyframes lupi-rive-flash {
+        @keyframes lupi-press-flash {
           0% { opacity: 0.78; transform: scale(0.96); }
           100% { opacity: 0; transform: scale(1.06); }
         }
-        .lupi-rive-snap {
-          animation: lupi-rive-snap 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        .lupi-press-snap {
+          animation: lupi-press-snap 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .lupi-rive-flash {
-          animation: lupi-rive-flash 150ms ease-out forwards;
+        .lupi-press-flash {
+          animation: lupi-press-flash 150ms ease-out forwards;
         }
         .lupi-rive-dial:focus-visible {
           outline: 2px solid rgba(30, 220, 224, 0.85);
           outline-offset: 2px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .lupi-press-snap,
+          .lupi-press-flash {
+            animation: none;
+          }
+          .lupi-press-flash {
+            display: none;
+          }
         }
         .lupi-deck-grid {
           display: grid;
@@ -718,7 +727,7 @@ function SegmentButton({
       title={label}
       aria-label={meta ? `${label} ${meta}` : label}
       aria-pressed={active}
-      className={pulse ? 'lupi-rive-snap' : undefined}
+      className={pulse ? 'lupi-press-snap' : undefined}
       style={{
         position: 'relative',
         minWidth: 0,
@@ -729,7 +738,8 @@ function SegmentButton({
         justifyContent: 'space-between',
         gap: 5,
         padding: '6px 7px',
-        overflow: 'hidden',
+        height: 'auto',
+        overflow: 'visible',
         borderRadius: 6,
         border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.2)',
         background: active
@@ -746,7 +756,7 @@ function SegmentButton({
         touchAction: 'manipulation',
       }}
     >
-      {pulse && <span className="lupi-rive-flash" style={{ position: 'absolute', inset: 0, background: accent, mixBlendMode: 'screen', pointerEvents: 'none' }} />}
+      {pulse && <span className="lupi-press-flash" style={{ position: 'absolute', inset: 0, borderRadius: 6, background: accent, mixBlendMode: 'screen', pointerEvents: 'none' }} />}
       <span style={{ minWidth: 0, overflow: 'visible', textOverflow: 'clip', whiteSpace: 'normal', position: 'relative' }}>
         {label}
       </span>
@@ -910,6 +920,8 @@ function RiveKnob({
         style={{
           width: 44,
           height: 44,
+          aspectRatio: '1 / 1',
+          flexShrink: 0,
           borderRadius: '50%',
           position: 'relative',
           cursor: 'ns-resize',
