@@ -609,6 +609,7 @@ export const useStore = create<AppState>()(
       // can change anything after, but they should never see "should I enable
       // bonds?" or "what's a good color scheme?" — we decide.
       const sceneDirective = pickSceneDirective(atomCount);
+      const materialScene = getScene(sceneDirective.materialScene) ?? getScene(DEFAULT_SCENE_ID);
 
       // Pick a coloring scheme for the first read. Element identity is the
       // default; property coloring remains an explicit Molecule Color choice.
@@ -628,8 +629,25 @@ export const useStore = create<AppState>()(
         loading: false,
         loadProgress: 1,
         showBonds: sceneDirective.showBonds,
+        showCell: sceneDirective.showCell,
+        showAxes: sceneDirective.showAxes,
         postprocessPreset: sceneDirective.preset,
         postprocessIntensity: sceneDirective.intensity,
+        materialScene: materialScene?.id ?? DEFAULT_SCENE_ID,
+        materialPreset: materialScene?.materialPreset ?? DEFAULTS.materialPreset,
+        materialIntensity: materialScene?.materialIntensity ?? DEFAULTS.materialIntensity,
+        environmentPreset: materialScene?.environmentPreset ?? DEFAULTS.environmentPreset,
+        ambientLightIntensity: materialScene?.ambientIntensity ?? DEFAULTS.ambientLightIntensity,
+        dirLightIntensity: materialScene?.dirLightIntensity ?? DEFAULTS.dirLightIntensity,
+        rimLightIntensity: sceneDirective.rimLightIntensity,
+        toneMapping: materialScene?.toneMapping ?? DEFAULTS.toneMapping,
+        backgroundPreset: sceneDirective.backgroundPreset,
+        atomTexture: materialScene?.atomTexture ?? DEFAULTS.atomTexture,
+        surfaceRoughness: sceneDirective.surfaceRoughness,
+        surfacePolish: sceneDirective.surfacePolish,
+        surfaceClearcoat: sceneDirective.surfaceClearcoat,
+        fillLightColor: sceneDirective.fillLightColor,
+        rimLightColor: sceneDirective.rimLightColor,
         // Coloring directive — visible default, easy to override in UI.
         colorScheme: schemeId,
         atomColorSource: scheme.atomColorSource,
@@ -1192,30 +1210,113 @@ export const useStore = create<AppState>()(
 
 /**
  * Pick the opening-frame visual directive for a freshly-loaded file. This
- * is the place to encode editorial defaults: small systems get the polished
- * "studio" look, medium ones stay there with bonds, large ones step down to
- * "paper" (cheaper effects), and very-large drop to "diagram" (no postprocess,
+ * is the place to encode editorial defaults: small molecules open as a
+ * polished showcase, medium systems keep the studio read with bonds, large
+ * ones step down to paper, and very-large systems drop to diagram.
  * bonds off — performance over polish). The user can override in the panels.
  */
 function pickSceneDirective(atomCount: number): {
   showBonds: boolean;
+  showCell: boolean;
+  showAxes: boolean;
   preset: AppState['postprocessPreset'];
   intensity: number;
+  materialScene: string;
+  backgroundPreset: string;
+  surfaceRoughness: number;
+  surfacePolish: number;
+  surfaceClearcoat: number;
+  rimLightIntensity: number;
+  fillLightColor: string;
+  rimLightColor: string;
 } {
   if (atomCount === 0) {
-    return { showBonds: false, preset: 'studio', intensity: 1.0 };
+    return {
+      showBonds: false,
+      showCell: false,
+      showAxes: false,
+      preset: 'studio',
+      intensity: 1.0,
+      materialScene: DEFAULT_SCENE_ID,
+      backgroundPreset: 'deep',
+      surfaceRoughness: 0,
+      surfacePolish: 0,
+      surfaceClearcoat: 0,
+      rimLightIntensity: 0.3,
+      fillLightColor: '#8888ff',
+      rimLightColor: '#ffffff',
+    };
+  }
+  if (atomCount < 300) {
+    return {
+      showBonds: true,
+      showCell: false,
+      showAxes: false,
+      preset: 'editorial',
+      intensity: 0.92,
+      materialScene: DEFAULT_SCENE_ID,
+      backgroundPreset: 'xray-lagoon',
+      surfaceRoughness: -0.08,
+      surfacePolish: 0.22,
+      surfaceClearcoat: 0.18,
+      rimLightIntensity: 0.48,
+      fillLightColor: '#90b4ff',
+      rimLightColor: '#7de9ff',
+    };
   }
   if (atomCount < 25_000) {
-    return { showBonds: true, preset: 'studio', intensity: 1.0 };
+    return {
+      showBonds: true,
+      showCell: true,
+      showAxes: false,
+      preset: 'studio',
+      intensity: 1.0,
+      materialScene: DEFAULT_SCENE_ID,
+      backgroundPreset: 'deep',
+      surfaceRoughness: -0.04,
+      surfacePolish: 0.14,
+      surfaceClearcoat: 0.12,
+      rimLightIntensity: 0.36,
+      fillLightColor: '#8888ff',
+      rimLightColor: '#c7f9ff',
+    };
   }
   if (atomCount < 200_000) {
     // 30k-class gallery pieces can infer 60k-180k bonds. Start atoms-first
     // and let the user opt into bonds once oriented.
-    return { showBonds: false, preset: 'paper', intensity: 0.85 };
+    return {
+      showBonds: false,
+      showCell: true,
+      showAxes: false,
+      preset: 'paper',
+      intensity: 0.85,
+      materialScene: 'laboratory',
+      backgroundPreset: 'white',
+      surfaceRoughness: 0,
+      surfacePolish: 0,
+      surfaceClearcoat: 0,
+      rimLightIntensity: 0,
+      fillLightColor: '#8888ff',
+      rimLightColor: '#ffffff',
+    };
   }
   // Very-large systems — performance over polish on the first frame. User
   // can flip back into 'studio' if their machine handles it.
-  return { showBonds: false, preset: 'diagram', intensity: 1.0 };
+  return {
+    showBonds: false,
+    showCell: true,
+    showAxes: false,
+    preset: 'diagram',
+    intensity: 1.0,
+    materialScene: 'blueprint',
+    backgroundPreset: 'slate',
+    surfaceRoughness: 0,
+    surfacePolish: 0,
+    surfaceClearcoat: 0,
+    rimLightIntensity: 0,
+    fillLightColor: '#8888ff',
+    rimLightColor: '#ffffff',
+  };
 }
 
 // Dev-only window probe. Lets Needle Tools / Three.js DevTools / a paste-and-
