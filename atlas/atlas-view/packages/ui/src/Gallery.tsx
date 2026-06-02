@@ -1977,7 +1977,7 @@ function GallerySceneRow({
       aria-label={`${example.title} - ${example.domain}, ${example.atoms} atoms, ${frameCount > 1 ? `${example.frames} frames` : 'snapshot'}`}
     >
       <span className="lupi-gallery-row-swatch" aria-hidden="true">
-        {example.colors.map((color) => <i key={color} style={{ background: color }} />)}
+        {example.colors.map((color, index) => <i key={`${color}-${index}`} style={{ background: color }} />)}
       </span>
       <span className="lupi-gallery-row-main">
         <strong>{example.title}</strong>
