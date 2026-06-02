@@ -1535,39 +1535,6 @@ export function Gallery() {
         return;
       }
 
-      if (example.id === 'lupine_brand_asset') {
-        const scientificUrl = publicAssetUrl('gallery/curated/lupine_bluebonnet.xyz');
-        const resp = await fetch(scientificUrl);
-        const blob = await resp.blob();
-        const fileObj = new File([blob], 'lupine_bluebonnet.xyz');
-        const { parseFile } = await import('@atlas/parsers');
-        const parseResult = await parseFile(fileObj);
-        if (!parseResult.trajectory) throw new Error('No trajectory found in scientific prefab');
-        const scientificFrame = parseResult.trajectory.frames[0];
-        const { generateLupineFrame } = await import('@atlas/core');
-        const frame = generateLupineFrame(scientificFrame);
-
-        useStore.getState().setFile({
-          name: example.title,
-          size: 1024,
-          trajectory: {
-            frames: [frame],
-            totalFrames: 1,
-            atomTypes: parseResult.trajectory.atomTypes,
-            globalBounds: {
-              min: [frame.boxBounds[0], frame.boxBounds[2], frame.boxBounds[4]] as any,
-              max: [frame.boxBounds[1], frame.boxBounds[3], frame.boxBounds[5]] as any,
-            },
-          },
-          thermo: null,
-          sourceUrl: 'procedural',
-        });
-        useStore.getState().setRenderStyle('botanical');
-        useStore.getState().setAtomScale(1.4);
-        setLoadingId(null);
-        return;
-      }
-
       // ── Streaming path for .glimbin files (GCS CDN) ──
       const { isGlimbinUrl } = await import('@atlas/parsers/StreamingLoader');
       if (isGlimbinUrl(url)) {

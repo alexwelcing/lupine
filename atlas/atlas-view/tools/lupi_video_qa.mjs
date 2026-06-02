@@ -86,7 +86,7 @@ function encodeState(state) {
 
 function presetUrl(baseUrl, presetId) {
   const url = new URL(baseUrl);
-  url.searchParams.set('sim', 'lupine_bluebonnet');
+  url.searchParams.set('sim', 'c60_buckyball');
   url.searchParams.set('s', encodeState({ bg: presetId }));
   return url.toString();
 }
@@ -169,7 +169,7 @@ async function qaPreset(browser, args, preset) {
 
   const url = presetUrl(args.url, preset.id);
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForFunction(() => document.body.innerText.includes('Lupine Bluebonnet'), null, { timeout: 60000 });
+  await page.waitForFunction(() => document.body.innerText.includes('Buckminster'), null, { timeout: 60000 });
   await page.waitForFunction(() => document.querySelector('canvas'), null, { timeout: 60000 });
   await page.waitForFunction(
     fileName => (window.__lupiVideoPlayCalls ?? []).some(call => call.src.includes(fileName)),

@@ -47,7 +47,6 @@ const MOLECULES = [
   'mlip_mg_slip_playthrough',    // ~96 atoms
   'mlip_ni_vacancy_playthrough', // ~107 atoms
   'coudert_mof_flexibility',     // ~540 atoms
-  'lupine_bluebonnet',           // ~930 atoms
 ];
 
 // Distinct geometric views: changing bondTolerance adds/removes bond cylinders,

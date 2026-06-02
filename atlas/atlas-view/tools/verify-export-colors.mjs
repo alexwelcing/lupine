@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIR = resolve(__dirname, '..', '.verify-artifacts', 'exports');
-const MOLECULES = ['mlip_lifepo4_li_channel', 'mlip_ni_vacancy_playthrough', 'lupine_bluebonnet'];
+const MOLECULES = ['mlip_lifepo4_li_channel', 'mlip_ni_vacancy_playthrough'];
 const VIEW = 'atoms';
 
 const q = (x) => Math.round(x * 255); // 8-bit key
