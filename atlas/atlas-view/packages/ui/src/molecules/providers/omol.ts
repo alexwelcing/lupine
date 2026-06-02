@@ -26,7 +26,7 @@ const OMOL_INDEX_URL =
 /** Base for per-structure geometry: the index dir + `structures/xyz/{id}.xyz`. */
 const OMOL_STRUCTURES_BASE = OMOL_INDEX_URL.replace(/\/[^/]*$/, '/structures/xyz');
 
-interface OmolRecord {
+export interface OmolRecord {
   id: string;
   formula: string;
   elements: string[];
@@ -51,6 +51,10 @@ function index(): Promise<OmolRecord[]> {
  *  own facets without re-fetching the 4 MB index. */
 export function omolRecords(): Promise<OmolRecord[]> {
   return index();
+}
+
+export function omolStructureUrl(id: string): string {
+  return `${OMOL_STRUCTURES_BASE}/${id}.xyz`;
 }
 
 export interface OmolFacets {
@@ -131,7 +135,7 @@ export const omolProvider: MoleculeProvider = {
       elements: r.elements,
       tags: ['omol25', r.src],
       // Real OMol25 DFT geometry, served as a per-structure .xyz alongside the index.
-      load: { kind: 'url', url: `${OMOL_STRUCTURES_BASE}/${r.id}.xyz` },
+      load: { kind: 'url', url: omolStructureUrl(r.id) },
       score: q && r.formula.toLowerCase() === q ? 0.9 : undefined,
     }));
   },

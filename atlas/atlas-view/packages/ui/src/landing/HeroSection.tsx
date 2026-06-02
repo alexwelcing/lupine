@@ -4,6 +4,7 @@ import { AnimatedCounter } from './AnimatedCounter';
 import { HeroMoleculePreview } from './HeroMoleculePreview';
 import { ALL_EXAMPLES } from './shared';
 import { useStore } from '../store';
+import { openRandomOmol25Molecule } from '../molecules/randomOmol';
 
 export function HeroSection() {
   const openConfigurator = useStore((s) => s.openConfigurator);
@@ -19,14 +20,8 @@ export function HeroSection() {
     return { totalAtoms, totalSims, domains };
   }, []);
 
-  // Primary activation: render a real molecule instantly — no file, no wall.
-  // (Same demo the top-nav CTA loads; the viewer fires molecule_loaded on render.)
-  const viewAMolecule = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sim', 'lupine_bluebonnet');
-    window.history.pushState({}, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
+  // Primary activation: load a random real OMol25 geometry — no file, no wall.
+  const viewAMolecule = () => void openRandomOmol25Molecule();
 
   return (
     <section
