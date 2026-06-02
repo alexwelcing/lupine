@@ -216,13 +216,12 @@ public static roots.
 ## Citation
 
 ```bibtex
-@article{welcing2026causal,
+@unpublished{welcing2026causal,
   author  = {Welcing, Alexander},
   title   = {The Causal Geometry of Prediction Errors in Interatomic Potentials:
              A Hyper-Ribbon Manifold Analysis},
-  journal = {Integrating Materials and Manufacturing Innovation},
   year    = {2026},
-  note    = {In press}
+  note    = {Working paper, in preparation}
 }
 ```
 
