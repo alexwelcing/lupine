@@ -1240,7 +1240,6 @@ export default function App() {
           zIndex: 0,
         }}>
           <style>{`
-            .lupi-main-viewport > div,
             .lupi-main-viewport canvas {
               width: 100% !important;
               height: 100% !important;
