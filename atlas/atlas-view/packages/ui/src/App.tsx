@@ -108,8 +108,8 @@ import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
 import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { SavedViewButton } from './SavedViewButton';
-import { HeaderAuthButton } from './HeaderAuthButton';
 import { MoleculeConfigurator } from './molecules/MoleculeConfigurator';
+import { openRandomOmol25Molecule } from './molecules/randomOmol';
 import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
 import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
@@ -1182,33 +1182,11 @@ export default function App() {
               >
                 {isMobile ? 'Atoms' : 'Gallery'}
               </a>
-              <a
-                href="#/mcp"
-                style={{
-                  display: 'block',
-                  padding: isMobile ? '7px 9px' : '8px 12px',
-                  fontSize: isMobile ? 12 : 13,
-                  fontWeight: 600,
-                  color: isMcpViewerRoute ? '#e0f2fe' : 'var(--text-muted)',
-                  background: isMcpViewerRoute ? 'rgba(14,165,233,0.16)' : 'transparent',
-                  border: isMcpViewerRoute ? '1px solid rgba(125,211,252,0.52)' : '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-sm)',
-                  textDecoration: 'none',
-                }}
-              >
-                MCP
-              </a>
-              <HeaderAuthButton compact={isMobile} />
             </>
           )}
           {!file && (
             <button
-              onClick={() => {
-                const url = new URL(window.location.href);
-                url.searchParams.set('sim', 'lupine_bluebonnet');
-                window.history.pushState({}, '', url);
-                window.dispatchEvent(new PopStateEvent('popstate'));
-              }}
+              onClick={() => void openRandomOmol25Molecule()}
               style={{
                 padding: '8px 14px',
                 fontSize: 14, fontWeight: 500,
