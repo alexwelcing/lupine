@@ -373,9 +373,9 @@
     "title": "Cu₆₄Zr₃₆ Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
     "domain": "Metals & Alloys",
-    "atoms": "5,000",
+    "atoms": "13,500",
     "frames": "1",
-    "file": "dump.CuZr_melt.lammpstrj",
+    "file": "gallery/curated/cuzr_melt.xyz",
     "available": true,
     "colors": [
       "#4da6ff",

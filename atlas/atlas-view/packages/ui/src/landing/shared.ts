@@ -28,6 +28,7 @@ export const FEATURED_IDS = [
   'c60_buckyball',
   'cnt_6_6',
   'graphene_ribbon',
+  'elliott_gst_crystallization',
   'diamond_crystal',
   'aspirin',
   'brilliant_diamond_macro',

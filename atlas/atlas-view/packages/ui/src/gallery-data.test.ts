@@ -16,6 +16,7 @@ import { readFileSync } from 'node:fs';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import galleryData from './gallery-data.json';
+import { FEATURED_IDS } from './landing/shared';
 
 const PUBLIC = fileURLToPath(new URL('../../../apps/web/public/', import.meta.url));
 const GALLERY_TSX = fileURLToPath(new URL('./Gallery.tsx', import.meta.url));
@@ -173,6 +174,23 @@ describe('gallery-data.json — curated launch set', () => {
         existsSync(snap) || (Array.isArray(e.colors) && e.colors.length === 3),
         `missing thumbnail path and fallback colors for ${e.id}`,
       ).toBe(true);
+    }
+  });
+
+  it('landing featured entries ship concrete thumbnails and loadable assets', () => {
+    for (const id of FEATURED_IDS) {
+      const e = data.find((entry) => entry.id === id);
+      expect(e, `featured entry missing from gallery-data.json: ${id}`).toBeTruthy();
+      if (!e) continue;
+
+      expect(
+        existsSync(`${PUBLIC}gallery/snapshots/${id}.jpg`),
+        `missing landing featured snapshot for ${id}`,
+      ).toBe(true);
+
+      if (!e.file.startsWith('http') && e.file !== 'procedural') {
+        expect(existsSync(PUBLIC + e.file), `missing landing featured file for ${id}: ${e.file}`).toBe(true);
+      }
     }
   });
 
