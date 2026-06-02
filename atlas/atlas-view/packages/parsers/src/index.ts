@@ -414,50 +414,60 @@ export {
   type PotentialFormat,
 } from './potentialDetector';
 
-/** Auto-parse a file based on detected type */
+/**
+ * Sniff the molecular format from the file's head, independent of its name.
+ * Filenames lie — e.g. several gallery fixtures are extended-XYZ content saved
+ * as `*.lammpstrj` — and trusting the extension routes them to the wrong parser,
+ * which is how a perfectly good structure surfaces as "No frames parsed" / "No
+ * valid XYZ frames found". Returns null when the head is inconclusive, so the
+ * caller can fall back to the extension.
+ */
+export function detectFormatFromContent(head: string): 'dump' | 'xyz' | 'data' | null {
+  const text = head.replace(/^﻿/, ''); // strip BOM
+  // LAMMPS dump — the section markers are unmistakable.
+  if (/^\s*ITEM:\s/m.test(text)) return 'dump';
+  // LAMMPS data file — atom count plus a section keyword near the top.
+  if (/^\s*\d+\s+atoms\b/m.test(text) && /^\s*(Atoms|Masses|Velocities)\b/m.test(text)) {
+    return 'data';
+  }
+  // XYZ / extended-XYZ — first non-empty line is a bare atom count, and the
+  // next line is a comment (anything that is not another ITEM: marker).
+  const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  if (lines.length >= 2 && /^\d+$/.test(lines[0]) && !/^ITEM:/.test(lines[1])) {
+    return 'xyz';
+  }
+  return null;
+}
+
+/** Auto-parse a file: sniff content first, fall back to the filename. */
 export async function parseFile(file: File): Promise<{
   trajectory?: Trajectory;
   thermo?: ThermoData;
 }> {
-  const type = detectFileType(file.name);
-
-  if (type === 'xyz') {
-    const trajectory = await parseXyzFile(file);
-    return { trajectory };
+  // Content beats extension. Extensions are frequently wrong in the corpus
+  // (extended-XYZ stored as .lammpstrj), so route by what the bytes actually are.
+  let sniffed: 'dump' | 'xyz' | 'data' | null = null;
+  try {
+    sniffed = detectFormatFromContent(await file.slice(0, 4096).text());
+  } catch {
+    // non-text / unreadable head — fall back to the extension below
   }
+  const type = sniffed ?? detectFileType(file.name);
 
-  if (type === 'dump') {
-    const trajectory = await parseDumpFile(file);
-    return { trajectory };
-  }
+  if (type === 'xyz') return { trajectory: await parseXyzFile(file) };
+  if (type === 'dump') return { trajectory: await parseDumpFile(file) };
+  if (type === 'data') return { trajectory: await parseDataFile(file) };
+  if (type === 'log') return { thermo: await parseLogFile(file) };
 
-  if (type === 'unknown') {
-    // Unknown extensions can still be dumps, logs, or xyz files.
-    try {
-      const trajectory = await parseDumpFile(file);
-      return { trajectory };
-    } catch {
-      try {
-        const thermo = await parseLogFile(file);
-        return { thermo };
-      } catch {
-        const trajectory = await parseXyzFile(file);
-        return { trajectory };
-      }
-    }
-  }
-
-  if (type === 'log') {
-    const thermo = await parseLogFile(file);
-    return { thermo };
-  }
-
-  if (type === 'data') {
-    const trajectory = await parseDataFile(file);
-    return { trajectory };
-  }
-
-  throw new Error(`Unsupported file type: ${file.name}`);
+  // Unknown: try each parser, but surface a clear, format-agnostic error rather
+  // than letting the last attempt's misleading "No valid XYZ frames found" win.
+  try { return { trajectory: await parseDumpFile(file) }; } catch { /* not a dump */ }
+  try { return { thermo: await parseLogFile(file) }; } catch { /* not a log */ }
+  try { return { trajectory: await parseXyzFile(file) }; } catch { /* not xyz */ }
+  throw new Error(
+    `Unrecognized molecular file format: ${file.name}. Supported: LAMMPS dump ` +
+    `(.lammpstrj/.dump), XYZ / extended-XYZ (.xyz), LAMMPS data (.data), and .glimbin.`,
+  );
 }
 
 /**
