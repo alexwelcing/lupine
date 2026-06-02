@@ -1,0 +1,44 @@
+name: Pitch content validation
+
+# Guards against the recurring false claims in public/investor-facing materials:
+#   - the paper is NOT published / in press / accepted / a preprint (no journal)
+#   - there is ONE founder (no team / co-founders)
+# See tools/validate_pitch_claims.py and brand.config.json (single source of truth).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'brand.config.json'
+      - 'docs/brand/**'
+      - 'library-site/**'
+      - 'atlas/lupine-vc/**'
+      - 'atlas/manifesto/**'
+      - 'atlas/atlas-view/apps/web/public/llms*.txt'
+      - 'atlas/atlas-view/apps/web/public/brand.json'
+      - 'paper/README.md'
+      - 'tools/validate_pitch_claims.py'
+      - '.github/workflows/pitch-content-validation.yml'
+  pull_request:
+    paths:
+      - 'brand.config.json'
+      - 'docs/brand/**'
+      - 'library-site/**'
+      - 'atlas/lupine-vc/**'
+      - 'atlas/manifesto/**'
+      - 'atlas/atlas-view/apps/web/public/llms*.txt'
+      - 'atlas/atlas-view/apps/web/public/brand.json'
+      - 'paper/README.md'
+      - 'tools/validate_pitch_claims.py'
+      - '.github/workflows/pitch-content-validation.yml'
+
+jobs:
+  validate-pitch-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate pitch claims
+        run: python tools/validate_pitch_claims.py
