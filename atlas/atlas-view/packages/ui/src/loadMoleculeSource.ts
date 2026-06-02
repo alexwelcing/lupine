@@ -9,6 +9,26 @@ function sourceKind(sourceUrl: string): string {
   return 'other';
 }
 
+/**
+ * Guard against the classic silent load failure: a 200 response whose body is
+ * NOT molecule data — an empty file, or an HTML/XML page (a 404 served back as
+ * the SPA app shell, or a missing CDN/bucket object). Without this, that content
+ * reaches the WASM parser and surfaces as a cryptic "No valid XYZ frames found".
+ * No valid molecule format (.xyz/.lammpstrj/.json) begins with '<'.
+ */
+async function assertLooksLikeMoleculeData(blob: Blob, url: string): Promise<void> {
+  if (blob.size === 0) {
+    throw new Error(`Empty response for ${url} — the molecule file is missing or unreadable.`);
+  }
+  const head = (await blob.slice(0, 256).text()).trimStart();
+  if (head.startsWith('<')) {
+    throw new Error(
+      `Expected molecule data at ${url} but received an HTML/XML page — likely a 404 ` +
+      `served as the app shell, or the object is missing.`,
+    );
+  }
+}
+
 export async function loadMoleculeSource(loadUrl: string): Promise<void> {
   const previousCleanup = (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup;
   if (typeof previousCleanup === 'function') previousCleanup();
@@ -91,6 +111,7 @@ export async function loadMoleculeSource(loadUrl: string): Promise<void> {
     const resp = await fetch(loadUrl);
     if (!resp.ok) throw new Error(`Failed to fetch ${loadUrl}: ${resp.status}`);
     const blob = await resp.blob();
+    await assertLooksLikeMoleculeData(blob, loadUrl);
     const name = loadUrl.split('/').pop() ?? 'file.dump';
     await loadParsedFile(new File([blob], name), loadUrl);
   } catch (err) {
