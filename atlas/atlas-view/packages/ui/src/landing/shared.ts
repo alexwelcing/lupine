@@ -26,7 +26,6 @@ export const ALL_EXAMPLES: GalleryExample[] = galleryData as any[];
 
 export const FEATURED_IDS = [
   'c60_buckyball',
-  'lupine_bluebonnet',
   'cnt_6_6',
   'graphene_ribbon',
   'diamond_crystal',

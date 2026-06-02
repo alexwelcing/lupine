@@ -20,52 +20,6 @@
     "featured": true
   },
   {
-    "id": "lupine_bluebonnet",
-    "title": "Lupine Bluebonnet (Scientific)",
-    "subtitle": "Lupinus texensis scientific molecular model (.xyz dataset) showing strict atomic arrangement.",
-    "domain": "Nanomaterials",
-    "atoms": "930",
-    "frames": "1",
-    "file": "gallery/curated/lupine_bluebonnet.xyz",
-    "available": true,
-    "colors": [
-      "#3050f8",
-      "#1ff01f",
-      "#ffffff"
-    ],
-    "metadata": {
-      "method": "Ab Initio Assembly",
-      "potential": "Lennard-Jones",
-      "temperature": "0 K",
-      "reference": "Lupine Science - lupine.science"
-    },
-    "featured": true
-  },
-  {
-    "id": "lupine_genesis",
-    "title": "Lupine Bluebonnet — From a Seed",
-    "subtitle": "A 4D botanical time-series: the Lupinus texensis architecture unfurling from a single carbon seed into a blossomed plant across 200 frames.",
-    "domain": "Nanomaterials",
-    "atoms": "9,595",
-    "frames": "200",
-    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/lupine_genesis.glimbin",
-    "isTrajectory": true,
-    "autoPlay": true,
-    "available": true,
-    "colors": [
-      "#1a7a3a",
-      "#3050f8",
-      "#ffffff"
-    ],
-    "metadata": {
-      "method": "Procedural Botanical Growth Engine",
-      "potential": "Golden Ratio (Phyllotaxis)",
-      "temperature": "Time-Series Evolution",
-      "reference": "Lupine Science - lupine.science"
-    },
-    "featured": true
-  },
-  {
     "id": "research_cu",
     "title": "Cu Potential Benchmark",
     "subtitle": "NIST evaluation of 9 interatomic potentials. Max error: 83.1%. Color by error to see where potentials fail.",
