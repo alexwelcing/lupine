@@ -181,8 +181,8 @@ export interface Env {
    * (used by the /admin diagnostics + model-list probes). */
   MINIMAX_BASE_URL?: string;
   /** Override the MiniMax Anthropic-compatible base URL (Messages API). Default:
-   * api.minimax.io/anthropic — the endpoint the deep-tier agents call M3 through
-   * (native thinking + tool use). */
+   * api.minimax.io/anthropic/v1 — MUST include /v1 (@ai-sdk/anthropic POSTs to
+   * `${baseURL}/messages`). The endpoint the deep-tier agents call M3 through. */
   MINIMAX_ANTHROPIC_BASE_URL?: string;
   HF_API_KEY?: string;
   /** HF Inference Providers model id (router.huggingface.co). Default:
