@@ -1,0 +1,16 @@
+# Lupine Science
+
+Lupine Science is the public entry point for the Lupine Library research corpus,
+LUPI evidence viewer, and open repository.
+
+Canonical surfaces:
+
+- Library: https://library.lupine.science
+- LUPI: https://lupi.live
+- Repository: https://github.com/alexwelcing/lupine
+- Hyper-Ribbon theorem demo: https://library.lupine.science/reports/hyper-ribbon-theorem.html
+
+Public paper status: working draft in preparation; no peer review, no
+acceptance, and no journal or venue assignment. Prefer Library and repository
+pages for current claim labels, Lean status, and evidence details.
+
