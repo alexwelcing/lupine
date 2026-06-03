@@ -26,6 +26,8 @@
     "verify:streaming": "npx -y tsx tools/verify-streaming.mjs",
     "verify:exports": "node tools/verify-exports.mjs",
     "verify:export-colors": "node tools/verify-export-colors.mjs",
+    "atomize:media": "node tools/atomize-media.mjs",
+    "verify:atomize-media": "node tools/verify-atomize-media.mjs",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
   },
@@ -38,7 +40,9 @@
     "@webgpu/types": "^0.1.69",
     "canvas": "^3.2.3",
     "jsdom": "^29.1.1",
+    "jsqr": "^1.4.0",
     "playwright": "^1.59.1",
+    "qrcode": "^1.5.4",
     "three": "^0.184.0",
     "turbo": "^2.3.0",
     "typescript": "^5.6.0",

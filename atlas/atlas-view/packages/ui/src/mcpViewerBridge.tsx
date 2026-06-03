@@ -9,9 +9,12 @@ import { loadMoleculeSource } from './loadMoleculeSource';
 import { useFirebaseAuth } from './auth/useFirebaseAuth';
 import { MOLECULE_PROVIDERS, searchMolecules, type MoleculeHit, type MoleculeQuery, type MoleculeSourceId } from './molecules';
 import { MoleculeSearch } from './molecules/MoleculeSearch';
+import { recognizeLupiUrlPayload } from './lupiUrlRecognition';
 
 type LupiMcpToolName =
   | 'lupi.generate_molecule'
+  | 'lupi.load_molecule_url'
+  | 'lupi.open_saved_view'
   | 'lupi.search_molecules'
   | 'lupi.set_viewer'
   | 'lupi.export_xyz'
@@ -1120,6 +1123,22 @@ async function executeLupiViewerMcpRequest(request: LupiMcpRequest): Promise<Lup
       return okResponse(request, transcript, { viewer: readViewerState() });
     }
 
+    if (request.tool === 'lupi.load_molecule_url') {
+      const url = readString(request.arguments.url);
+      if (!url) throw new Error('lupi.load_molecule_url requires a URL.');
+      await loadMoleculeSource(url);
+      transcript.push(`loaded molecule URL: ${url}`);
+      return okResponse(request, transcript, { viewer: readViewerState() });
+    }
+
+    if (request.tool === 'lupi.open_saved_view') {
+      const slug = readString(request.arguments.slug);
+      if (!slug) throw new Error('lupi.open_saved_view requires a saved-view slug.');
+      window.location.hash = `#/view/${encodeURIComponent(slug)}`;
+      transcript.push(`opened saved Lupi view: ${slug}`);
+      return okResponse(request, transcript, { viewer: readViewerState() });
+    }
+
     if (request.tool === 'lupi.set_viewer') {
       const patch = readViewerPatch(request.arguments);
       applyViewerPatch(patch, transcript);
@@ -1206,6 +1225,14 @@ async function executeLupiViewerMcpRequest(request: LupiMcpRequest): Promise<Lup
 function parseViewerAgentCommand(command: string): LupiMcpRequest[] {
   const trimmed = command.trim();
   if (!trimmed) return [];
+
+  const recognizedUrl = recognizeLupiUrlPayload(trimmed, typeof window !== 'undefined' ? window.location.href : undefined);
+  if (recognizedUrl?.kind === 'loadUrl') {
+    return [makeRequest('lupi.load_molecule_url', { url: recognizedUrl.url })];
+  }
+  if (recognizedUrl?.kind === 'savedView') {
+    return [makeRequest('lupi.open_saved_view', { slug: recognizedUrl.slug })];
+  }
 
   if (/^https?:\/\//i.test(trimmed)) {
     try {
