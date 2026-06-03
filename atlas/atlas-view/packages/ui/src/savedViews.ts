@@ -56,7 +56,7 @@ export type SavedMoleculeSource =
 
 export interface CanonicalMolecularView {
   frame: number;
-  color: Pick<AppState, 'colorScheme' | 'atomColorSource' | 'colorMode' | 'colorProperty' | 'colormap' | 'propRange'>;
+  color: Pick<AppState, 'colorScheme' | 'atomColorSource' | 'colorMode' | 'colorProperty' | 'colormap' | 'uniformAtomColor' | 'elementColorOverrides' | 'propRange'>;
   display: Pick<AppState,
     | 'showCell'
     | 'showAxes'
@@ -241,7 +241,7 @@ function captureCanonicalView(): CanonicalMolecularView {
   const s = useStore.getState();
   return cleanJson({
     frame: s.frame,
-    color: pick(s, ['colorScheme', 'atomColorSource', 'colorMode', 'colorProperty', 'colormap', 'propRange']),
+    color: pick(s, ['colorScheme', 'atomColorSource', 'colorMode', 'colorProperty', 'colormap', 'uniformAtomColor', 'elementColorOverrides', 'propRange']),
     display: pick(s, [
       'showCell',
       'showAxes',
