@@ -183,7 +183,7 @@ That is a different deliverable from "an automated literature reviewer" or "a fa
 
 - [`/evolution`](https://lupine.science/evolution) — public TanStack route mirroring this report.
 - [`/process`](https://lupine.science/process) — the original operating report (rounds 1–3).
-- [`/research`](https://lupine.science/research) — the IMMI preprint summary.
+- [`/research`](https://lupine.science/research) — the working-paper summary.
 - [`docs/plans/grand_finale_gcp.md`](./plans/grand_finale_gcp.md) — detailed BigQuery + GCP migration plan.
-- [`paper/immi-paper.tex`](../paper/immi-paper.tex) — IMMI manuscript (currently marked WORK IN PROGRESS).
+- [`paper/immi-paper.tex`](../paper/immi-paper.tex) — working-paper source (currently marked WORK IN PROGRESS).
 - Public ledger: `https://glim-think-v1.aw-ab5.workers.dev/hypotheses`

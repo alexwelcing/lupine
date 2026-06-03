@@ -1,6 +1,6 @@
 # IMMI Paper: The Causal Geometry of Prediction Errors in Interatomic Potentials
 
-This directory contains the LaTeX source, figures, and build infrastructure for the paper submitted to *Integrating Materials and Manufacturing Innovation* (IMMI).
+This directory contains the LaTeX source, figures, and build infrastructure for a working paper in preparation.
 
 ## Building the Paper
 
@@ -72,11 +72,10 @@ cargo run --bin atlas-distill -- detect-paradox --bcc  # produces paradox_detect
 ## Citation
 
 ```bibtex
-@article{welcing2026causal,
+@unpublished{welcing2026causal,
   author  = {Welcing, Alexander},
   title   = {The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection},
-  journal = {Integrating Materials and Manufacturing Innovation},
   year    = {2026},
-  note    = {In press}
+  note    = {Working paper, in preparation}
 }
 ```
