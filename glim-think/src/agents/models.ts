@@ -64,7 +64,10 @@ const MINIMAX_DEFAULT_BASE_URL = "https://api.minimax.io/v1";
 // MiniMax through @ai-sdk/anthropic pointed here — instead of the OpenAI-chat shape,
 // which forced the <think>…</think> regex band-aid scattered across the agents.
 // Per-deployment override: MINIMAX_ANTHROPIC_BASE_URL.
-const MINIMAX_ANTHROPIC_DEFAULT_BASE_URL = "https://api.minimax.io/anthropic";
+// NOTE: must include the /v1 — @ai-sdk/anthropic POSTs to `${baseURL}/messages`
+// (its default baseURL is https://api.anthropic.com/v1). Without /v1 the request
+// 404s at api.minimax.io/anthropic/messages.
+const MINIMAX_ANTHROPIC_DEFAULT_BASE_URL = "https://api.minimax.io/anthropic/v1";
 // Deep-tier hypothesis-generation model. Per-deployment override: MINIMAX_MODEL
 // secret. Per-call override: selectDeepRoute({ modelOverride }). The documented
 // pre-upgrade baseline (for A/B comparison) is MINIMAX_BASELINE_MODEL below.
