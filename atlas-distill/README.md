@@ -187,12 +187,11 @@ atlas-distill/
 If you use `atlas-distill` in your research, please cite:
 
 ```bibtex
-@article{welcing2026causal,
+@unpublished{welcing2026causal,
   author  = {Welcing, Alexander},
   title   = {The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection},
-  journal = {Integrating Materials and Manufacturing Innovation},
   year    = {2026},
-  note    = {In press}
+  note    = {Working paper, in preparation}
 }
 ```
 

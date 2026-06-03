@@ -116,7 +116,7 @@
     "status": "in preparation",
     "statusLabel": "Working paper",
     "venue": null,
-    "note": "Single source of truth for the paper's public status. The paper is an unpublished work-in-progress draft; do not describe it as published, reviewed, or assigned to any journal or venue. Public surfaces must derive status from this field."
+    "note": "Single source of truth for the paper's public status. The paper is an unpublished work-in-progress draft; do not describe it as published, submitted, reviewed, accepted, or assigned to any journal or venue. Public surfaces must derive status from this field."
   },
   "founder": {
     "name": "Alex Welcing",

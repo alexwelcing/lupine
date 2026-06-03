@@ -100,19 +100,19 @@ Newest first. Dates are absolute.
   (3) Wire `distill_v_uplift` into the ODF promotion gate on a real model pair. (4) Resolve the ORB
   cu118 / UMA numpy-2 stack split flagged in the GCP `DECOMMISSION.md` before deleting legacy reqs.
 
-## 2026-05-18 — Fix mislabeled home-page preprint banner
+## 2026-05-18 — Fix mislabeled home-page working-paper banner
 
-- **Why.** The Library home banner promoted the preprint as *"Immigrant Scientist — The
+- **Why.** The Library home banner promoted the paper link as *"Immigrant Scientist — The
   Invisible Foundation — a data-driven analysis of immigrant contributions to US science."*
   The author is not an immigrant and that is not the paper. The copy was a confused
-  misreading of **IMMI** (*Integrating Materials and Manufacturing Innovation*, the target
-  journal) as "immigrant."
+  misreading of an internal IMMI working label as "immigrant."
 - **What.** Verified `/immi_paper.pdf` is in fact *The Causal Geometry of Prediction Errors
   in Interatomic Potentials* (Welcing, Lupine Science). Corrected the
   `home.preprint.*` strings (EN + ZH) in `i18n.js` to the real title/abstract; the link was
   always correct.
-- **Results.** Banner now reads "IMMI Preprint — The Causal Geometry of Prediction Errors in
-  Interatomic Potentials." No "immigrant" copy remains in the build.
+- **Results.** Banner now identifies the paper as a working paper in preparation:
+  *The Causal Geometry of Prediction Errors in Interatomic Potentials*. No "immigrant" copy
+  remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
 ## 2026-05-19 — paper-build auto-dispatches the Library deploy
@@ -130,7 +130,7 @@ Newest first. Dates are absolute.
   result; 0 raw-LaTeX leaks).
 - **Next.** None — the paper pipeline is closed-loop and opt-in.
 
-## 2026-05-18 — Opt-in CI to rebuild the preprint PDF
+## 2026-05-18 — Opt-in CI to rebuild the working-paper PDF
 
 - **Why.** The broken-PDF fix was a one-time swap; the root cause — a stale/broken
   local PDF can be the served artifact — remained. But the paper shouldn't rebuild on
@@ -148,7 +148,7 @@ Newest first. Dates are absolute.
 - **Next.** Optionally regenerate figures in the same run once the `atlas-distill`
   JSON inputs are present in CI.
 
-## 2026-05-18 — Fix the broken preprint PDF
+## 2026-05-18 — Fix the broken working-paper PDF
 
 - **Why.** The linked `/immi_paper.pdf` was the stale `immi-paper-local.pdf` build: the
   abstract contained **raw, unrendered LaTeX** (`\noindent\textbf{Purpose:}`, `$C_{11}$`,
@@ -159,7 +159,7 @@ Newest first. Dates are absolute.
   science (includes the d-band sample-size-confounder result). No LaTeX engine in this
   environment to recompile the 1-day-newer `.tex`, so swapped in the clean `-latest`
   build as `library-site/src/immi_paper.pdf`.
-- **Results.** The preprint now renders as a proper paper, ~785 KB smaller. Verified the
+- **Results.** The working paper now renders as a proper paper, ~785 KB smaller. Verified the
   built `dist/immi_paper.pdf` has 0 raw-LaTeX leaks.
 - **Next.** Rebuild from `paper/immi-paper.tex` via `make` in a LaTeX environment if the
   one-day-newer source has changes worth shipping; wire the paper build into CI so a
@@ -168,7 +168,7 @@ Newest first. Dates are absolute.
 ## 2026-05-18 — Remove Entity Graph; fix callout/filter alignment
 
 - **Why.** The Entity Graph (force-graph) was unwanted weight, and the status-filter
-  pills and the preprint/featured callouts hugged the left edge while the rest of the
+  pills and the paper/featured callouts hugged the left edge while the rest of the
   page is a centered 720px column — they used hardcoded inline `margin:0 16px` that
   overrode the column's `margin:0 auto`.
 - **What.** Deleted the Entity Graph end to end: the topbar button and `<dialog>` from

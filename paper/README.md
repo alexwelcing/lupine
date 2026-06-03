@@ -1,6 +1,6 @@
 # IMMI Paper: The Causal Geometry of Prediction Errors in Interatomic Potentials
 
-This directory contains the LaTeX source, figures, and build infrastructure for the paper submitted to *Integrating Materials and Manufacturing Innovation* (IMMI).
+This directory contains the LaTeX source, figures, and build infrastructure for a working paper in preparation.
 
 ## Building the Paper
 
