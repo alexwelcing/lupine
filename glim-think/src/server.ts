@@ -532,6 +532,12 @@ const baseHandler = {
           body.provider === "minimax" || body.provider === "zai" || body.provider === "openai"
             ? (body.provider as DeepProvider)
             : undefined;
+        // Model axis (M2.7→M3 A/B): pin a specific MiniMax model id for this
+        // call. Implies the minimax provider inside selectDeepRoute. Kept
+        // distinct from `provider` so the oracle can sweep ids without changing
+        // provider credentials.
+        const modelOverride =
+          typeof body.model === "string" && body.model.trim() ? body.model.trim() : undefined;
         const promptVariant =
           typeof body.promptVariant === "string" ? body.promptVariant : undefined;
         const system =
@@ -549,6 +555,7 @@ const baseHandler = {
             system,
             agentClass,
             forceProvider: provider,
+            modelOverride,
           });
           return Response.json(
             { ...out, variant: promptVariant ?? "active", dataset: body.dataset ?? null },

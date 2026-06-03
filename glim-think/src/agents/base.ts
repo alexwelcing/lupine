@@ -257,9 +257,9 @@ export abstract class GlimThinkAgent extends Think<Env> {
    * Literaturist) automatically. The wrapped model also runs through
    * spendMiddleware so /budget ticks on each call.
    *
-   * Strips the <think>...</think> reasoning prefix that M2.7 emits so
-   * callers get the clean assistant text only. Caller can keep
-   * `text_with_reasoning` if they want the full output.
+   * MiniMax now runs over the Anthropic Messages API, so thinking arrives as a
+   * structured field rather than an inline <think> prefix: `text` is the clean
+   * answer; `text_with_reasoning` carries the reasoning chain when present.
    */
   async synthesize(opts: {
     systemPrompt?: string;
@@ -329,8 +329,10 @@ export abstract class GlimThinkAgent extends Think<Env> {
             metadata: { agent: this.constructor.name },
           },
         });
-        const raw = result.text ?? "";
-        const cleaned = raw.replace(/<think>[\s\S]*?<\/think>\s*/g, "").trim();
+        // Anthropic Messages API: text is already clean; thinking is structured.
+        const cleaned = (result.text ?? "").trim();
+        const reasoningText = (result.reasoningText ?? "").trim();
+        const raw = reasoningText ? `<think>${reasoningText}</think>\n${cleaned}` : cleaned;
 
         // Direct spend recording — the spendMiddleware closure from
         // selectModel() doesn't fire in DO context (silent KV write failure
@@ -397,8 +399,9 @@ export abstract class GlimThinkAgent extends Think<Env> {
                   metadata: { agent: this.constructor.name, retry_reason: evalResult.explanation },
                 },
               });
-              finalRaw = retryResult.text ?? "";
-              finalText = finalRaw.replace(/<think>[\s\S]*?<\/think>\s*/g, "").trim();
+              finalText = (retryResult.text ?? "").trim();
+              const retryReasoning = (retryResult.reasoningText ?? "").trim();
+              finalRaw = retryReasoning ? `<think>${retryReasoning}</think>\n${finalText}` : finalText;
 
               const retryEval = runHeuristics(finalText);
               await phoenix.annotateTraces([{

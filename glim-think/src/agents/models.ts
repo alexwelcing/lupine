@@ -5,10 +5,13 @@
  *                  Free, zero egress, ~hundred-ms latency.
  *                  Use for ingestion, summarization, light reasoning.
  *
- * - `deep` tier  → MiniMax (M2) via OpenAI-compatible endpoint.
+ * - `deep` tier  → MiniMax (M3) via OpenAI-compatible endpoint.
  *                  Strong reasoning, paid. Used for Theorist hypothesis
  *                  generation, Causal paradox detection, Orchestrator
- *                  strategic dispatch.
+ *                  strategic dispatch. The exact MiniMax model id is a
+ *                  per-deployment (MINIMAX_MODEL) and per-call
+ *                  (selectDeepRoute modelOverride) knob — see the model
+ *                  axis below, used by the M2.7→M3 A/B comparison.
  *
  * Falls back to fast tier when:
  *   - MINIMAX_API_KEY is unset
@@ -21,7 +24,8 @@
 import { createWorkersAI } from "workers-ai-provider";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { createOpenAI } from "@ai-sdk/openai";
-import { generateText, wrapLanguageModel, type LanguageModel, type LanguageModelV2Middleware } from "ai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { generateText, wrapLanguageModel, type LanguageModel, type LanguageModelMiddleware } from "ai";
 import type { Env } from "../types";
 import { getModelQualityTrend } from "../evals/store";
 
@@ -31,9 +35,23 @@ export type ReasoningTier = "fast" | "deep";
 // model line for our Max-plan key (api.minimax.chat/v1 and api.minimaxi.com/v1
 // returned authentication-success but empty model lists).
 //
-// Models available on this route (verified via GET /v1/models):
-//   MiniMax-M2.7, MiniMax-M2.7-highspeed       (latest, top-tier)
-//   MiniMax-M2.5, MiniMax-M2.5-highspeed       (previous gen)
+// 2026-06-02 upgrade — MiniMax-M3 (released 2026-06-01) is the new deep-tier
+// default for hypothesis generation. It serves on the SAME OpenAI-compatible
+// route (api.minimax.io/v1, POST /chat/completions), so the swap is a model-id
+// change only — no endpoint, auth, or adapter change. M3 vs M2.7 (per the
+// public release notes + model catalog; confirm on THIS key before trusting):
+//   - 1M-token context (vs 256K) → whole-corpus + literature in one turn
+//   - MiniMax Sparse Attention (MSA): ~1/20 per-token cost at long context
+//   - ~$0.60 / 1M input tokens under the 512K tier (cheaper deep reasoning)
+// Pre-deploy check: GET /v1/models (admin route → listMiniMaxModels) must list
+// "MiniMax-M3" for this account. Until the M2.7→M3 A/B has signal, pin either
+// id per call via the model axis (selectDeepRoute modelOverride / ab-oracle
+// --axis model) so quality is measured, not assumed.
+//
+// Models on this route (GET /v1/models, 2026-06-02):
+//   MiniMax-M3                                  (latest, top-tier — DEFAULT)
+//   MiniMax-M2.7, MiniMax-M2.7-highspeed        (prior top-tier — A/B baseline)
+//   MiniMax-M2.5, MiniMax-M2.5-highspeed        (previous gen)
 //   MiniMax-M2.1, MiniMax-M2.1-highspeed
 //   MiniMax-M2                                  (legacy)
 //
@@ -41,7 +59,19 @@ export type ReasoningTier = "fast" | "deep";
 // for the Orchestrator (many short dispatch calls); use the base variant
 // for Theorist + Causal (one-shot deep reasoning per turn).
 const MINIMAX_DEFAULT_BASE_URL = "https://api.minimax.io/v1";
-const MINIMAX_DEFAULT_MODEL = "MiniMax-M2.7";
+// Anthropic-compatible endpoint (Messages API). M3 is an agentic reasoning model;
+// the Messages API gives native thinking blocks + tool use, so the deep tier drives
+// MiniMax through @ai-sdk/anthropic pointed here — instead of the OpenAI-chat shape,
+// which forced the <think>…</think> regex band-aid scattered across the agents.
+// Per-deployment override: MINIMAX_ANTHROPIC_BASE_URL.
+const MINIMAX_ANTHROPIC_DEFAULT_BASE_URL = "https://api.minimax.io/anthropic";
+// Deep-tier hypothesis-generation model. Per-deployment override: MINIMAX_MODEL
+// secret. Per-call override: selectDeepRoute({ modelOverride }). The documented
+// pre-upgrade baseline (for A/B comparison) is MINIMAX_BASELINE_MODEL below.
+const MINIMAX_DEFAULT_MODEL = "MiniMax-M3";
+/** The pre-upgrade deep-tier model, kept as the canonical A/B baseline id so the
+ * eval harness and docs reference one source of truth. */
+export const MINIMAX_BASELINE_MODEL = "MiniMax-M2.7";
 // 500M tokens/month for the Max plan. Budget guard kicks in once monthly
 // usage exceeds it and falls back to Workers AI.
 const MINIMAX_MONTHLY_TOKEN_BUDGET = 500_000_000;
@@ -145,7 +175,7 @@ export function extractMiniMaxTokens(usage: unknown): number {
   return numericOrZero(u.totalTokens);
 }
 
-function spendMiddleware(env: Env): LanguageModelV2Middleware {
+function spendMiddleware(env: Env): LanguageModelMiddleware {
   return {
     wrapGenerate: async ({ doGenerate }) => {
       const result = await doGenerate();
@@ -180,13 +210,16 @@ function spendMiddleware(env: Env): LanguageModelV2Middleware {
 }
 
 export function miniMaxModel(env: Env, modelOverride?: string) {
-  const { baseURL, model: defaultModel } = miniMaxConfig(env);
-  const model = modelOverride ?? defaultModel;
-  const base = createOpenAICompatible({
+  const model = modelOverride ?? miniMaxConfig(env).model;
+  // Drive MiniMax via the Anthropic Messages API (native thinking + tool use)
+  // through the AI SDK's anthropic provider, so the spend middleware, Phoenix
+  // spans, and the eval scorecard all keep working — only the wire format changes.
+  const baseURL =
+    env.MINIMAX_ANTHROPIC_BASE_URL?.trim() || MINIMAX_ANTHROPIC_DEFAULT_BASE_URL;
+  const base = createAnthropic({
     baseURL,
     apiKey: env.MINIMAX_API_KEY!,
-    name: "minimax",
-  }).chatModel(model);
+  }).languageModel(model);
   return wrapLanguageModel({
     model: base,
     middleware: spendMiddleware(env),
@@ -210,6 +243,7 @@ export async function testMiniMaxCall(
   latency_ms: number;
   status?: number;
   response_text?: string;
+  reasoning?: string;
   usage?: { promptTokens?: number; completionTokens?: number; totalTokens?: number };
   error?: string;
 }> {
@@ -233,7 +267,12 @@ export async function testMiniMaxCall(
           { role: "system", content: "Reply with the single word OK." },
           { role: "user", content: "ping" },
         ],
-        max_tokens: 8,
+        // M3 is a reasoning model — use the modern ("3.0") request shape every
+        // current reasoning API expects: max_completion_tokens (not max_tokens)
+        // and reasoning_split, so thinking returns in a separate `reasoning`
+        // field instead of inline <think>…</think>. Non-reasoning ids ignore these.
+        max_completion_tokens: 64,
+        reasoning_split: true,
         temperature: 0,
       }),
     });
@@ -250,16 +289,27 @@ export async function testMiniMaxCall(
       };
     }
     const json = JSON.parse(text) as {
-      choices?: Array<{ message?: { content?: string } }>;
+      choices?: Array<{
+        message?: { content?: string; reasoning_details?: unknown; reasoning_content?: unknown };
+      }>;
       usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number };
     };
+    const msg = json.choices?.[0]?.message;
+    const rawReasoning = msg?.reasoning_details ?? msg?.reasoning_content;
+    const reasoning =
+      typeof rawReasoning === "string"
+        ? rawReasoning.slice(0, 200)
+        : rawReasoning
+          ? JSON.stringify(rawReasoning).slice(0, 200)
+          : undefined;
     return {
       ok: true,
       model,
       base_url: baseURL,
       latency_ms: latency,
       status: res.status,
-      response_text: json.choices?.[0]?.message?.content?.trim(),
+      response_text: msg?.content?.trim(),
+      reasoning,
       usage: {
         promptTokens: json.usage?.prompt_tokens,
         completionTokens: json.usage?.completion_tokens,
@@ -435,7 +485,7 @@ export async function sweepMiniMaxEndpoints(
  * Synchronous selector. Use when the caller can't await
  * (e.g. inside @cloudflare/think `getModel()`).
  *
- *   tier "deep" → MiniMax-M2.7 (or env override via MINIMAX_MODEL)
+ *   tier "deep" → MiniMax-M3 (or env override via MINIMAX_MODEL)
  *   tier "fast" → Workers AI (free, llama-4-scout)
  */
 export function selectModel(env: Env, tier: ReasoningTier) {
@@ -533,14 +583,18 @@ function availableDeepProviders(env: Env): DeepProvider[] {
   return out;
 }
 
-function buildDeepRoute(env: Env, p: DeepProvider): DeepRoute {
+function buildDeepRoute(env: Env, p: DeepProvider, modelOverride?: string): DeepRoute {
   switch (p) {
     case "zai":
       return { model: zaiModel(env), provider: "zai", modelId: env.ZAI_MODEL?.trim() || "glm-5.1" };
     case "openai":
       return { model: openaiModel(env), provider: "openai", modelId: env.OPENAI_MODEL?.trim() || "gpt-5.5" };
-    default:
-      return { model: miniMaxModel(env), provider: "minimax", modelId: miniMaxConfig(env).model };
+    default: {
+      // modelOverride pins a specific MiniMax id (e.g. the M2.7→M3 A/B). Model
+      // ids are provider-specific, so the override only applies to MiniMax.
+      const modelId = modelOverride?.trim() || miniMaxConfig(env).model;
+      return { model: miniMaxModel(env, modelId), provider: "minimax", modelId };
+    }
   }
 }
 
@@ -554,11 +608,25 @@ function buildDeepRoute(env: Env, p: DeepProvider): DeepRoute {
  */
 export async function selectDeepRoute(
   env: Env,
-  opts?: { force?: DeepProvider },
+  opts?: { force?: DeepProvider; modelOverride?: string },
 ): Promise<DeepRoute> {
   const candidates = availableDeepProviders(env);
   if (candidates.length === 0) {
     return { model: fastModel(env), provider: "workers-ai", modelId: FAST_MODEL };
+  }
+
+  // Pinned MiniMax model (controlled M2.7→M3 A/B via /ops/experiment-generate):
+  // honor it when MiniMax is credentialed, bypassing scorecard/budget so the
+  // experiment measures exactly the requested id. Model ids are
+  // provider-specific, so an override implies the minimax provider; an explicit
+  // non-minimax `force` still wins (handled just below).
+  const modelOverride = opts?.modelOverride?.trim();
+  if (
+    modelOverride &&
+    candidates.includes("minimax") &&
+    (!opts?.force || opts.force === "minimax")
+  ) {
+    return buildDeepRoute(env, "minimax", modelOverride);
   }
 
   // Forced provider (controlled A/B via /ops/experiment-generate): honor it
@@ -605,6 +673,10 @@ export interface ResearchTextOpts {
   temperature?: number;
   /** Controlled A/B: pin the deep-tier provider (bypasses scorecard). */
   forceProvider?: DeepProvider;
+  /** Controlled A/B: pin a specific MiniMax model id (e.g. "MiniMax-M2.7" vs
+   * "MiniMax-M3"). Implies the minimax provider; bypasses scorecard/budget so
+   * the M2.7→M3 quality delta is measured on exactly the requested id. */
+  modelOverride?: string;
 }
 
 /**
@@ -621,7 +693,7 @@ export async function generateResearchText(
   const tier = opts.tier ?? "deep";
   const route: DeepRoute =
     tier === "deep"
-      ? await selectDeepRoute(env, { force: opts.forceProvider })
+      ? await selectDeepRoute(env, { force: opts.forceProvider, modelOverride: opts.modelOverride })
       : { model: fastModel(env), provider: "workers-ai", modelId: FAST_MODEL };
 
   try {
@@ -646,7 +718,7 @@ export async function generateResearchText(
     // proven MiniMax path once before surfacing the error.
     if (route.provider !== "minimax" && env.MINIMAX_API_KEY) {
       const fb = await generateText({
-        model: miniMaxModel(env),
+        model: miniMaxModel(env, opts.modelOverride),
         system: opts.system,
         prompt: opts.prompt,
         maxOutputTokens: opts.maxOutputTokens ?? 2048,
@@ -656,7 +728,7 @@ export async function generateResearchText(
       return {
         text: (fb.text ?? "").trim(),
         provider: "minimax",
-        model: miniMaxConfig(env).model,
+        model: opts.modelOverride?.trim() || miniMaxConfig(env).model,
       };
     }
     throw e;
