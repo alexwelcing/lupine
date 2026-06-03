@@ -1,0 +1,31 @@
+{
+  "name": "pulse-grid-atomized",
+  "mode": "frames",
+  "source": [
+    "C:\\Users\\alexw\\Downloads\\shed\\atlas\\atlas-view\\apps\\web\\public\\generated\\atomized\\frame-sources\\pulse-grid\\pulse-000.png",
+    "C:\\Users\\alexw\\Downloads\\shed\\atlas\\atlas-view\\apps\\web\\public\\generated\\atomized\\frame-sources\\pulse-grid\\pulse-001.png",
+    "C:\\Users\\alexw\\Downloads\\shed\\atlas\\atlas-view\\apps\\web\\public\\generated\\atomized\\frame-sources\\pulse-grid\\pulse-002.png",
+    "C:\\Users\\alexw\\Downloads\\shed\\atlas\\atlas-view\\apps\\web\\public\\generated\\atomized\\frame-sources\\pulse-grid\\pulse-003.png",
+    "C:\\Users\\alexw\\Downloads\\shed\\atlas\\atlas-view\\apps\\web\\public\\generated\\atomized\\frame-sources\\pulse-grid\\pulse-004.png",
+    "C:\\Users\\alexw\\Downloads\\shed\\atlas\\atlas-view\\apps\\web\\public\\generated\\atomized\\frame-sources\\pulse-grid\\pulse-005.png"
+  ],
+  "width": 18,
+  "height": 18,
+  "frameCount": 6,
+  "atomsPerFrame": 2916,
+  "bondsFirstFrame": 432,
+  "moduleAtoms": 3,
+  "atomSpacing": 0.3,
+  "moduleSpacing": 1.3,
+  "quietZone": 0,
+  "darkElement": "C",
+  "lightElement": "H",
+  "lightMode": "filled",
+  "recommendedViewerParams": {
+    "camera": "top",
+    "bonds": "off",
+    "background": "pub-figure-neutral",
+    "renderStyle": "standard",
+    "colorScheme": "element"
+  }
+}

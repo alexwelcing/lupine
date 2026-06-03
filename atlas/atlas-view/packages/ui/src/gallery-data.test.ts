@@ -31,6 +31,7 @@ const DOMAINS = [
   'Defects & Mechanics',
   'Methods',
   'Fluids & Solvents',
+  'Atomized Media',
   'Advanced Theory & Validation',
 ];
 

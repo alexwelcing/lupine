@@ -42,6 +42,52 @@
     "featured": true
   },
   {
+    "id": "lupi_live_qr_atomized",
+    "title": "LUPI Live QR Molecule",
+    "subtitle": "A standards-derived QR code translated into a dense carbon atom grid that scans to https://lupi.live from a clean top view.",
+    "domain": "Atomized Media",
+    "atoms": "21,364",
+    "frames": "1",
+    "file": "generated/atomized/lupi-live-qr-atomized.xyz",
+    "available": true,
+    "colors": [
+      "#111111",
+      "#ffffff",
+      "#d8dee9"
+    ],
+    "metadata": {
+      "method": "Phone-Readable QR Matrix to Atomic XYZ",
+      "payload": "https://lupi.live",
+      "matrix": "37x37",
+      "bonds": "36,624"
+    },
+    "featured": true
+  },
+  {
+    "id": "pulse_grid_atomized",
+    "title": "Atomized Pulse Grid",
+    "subtitle": "A six-frame image sequence translated into a stable atom lattice for molecular point-art playback.",
+    "domain": "Atomized Media",
+    "atoms": "2,916",
+    "frames": "6",
+    "file": "generated/atomized/pulse-grid-atomized.xyz",
+    "isTrajectory": true,
+    "autoPlay": true,
+    "available": true,
+    "colors": [
+      "#111111",
+      "#f7f9fb",
+      "#7aa2c7"
+    ],
+    "metadata": {
+      "method": "Image Frames to Atomic XYZ",
+      "matrix": "18x18",
+      "sourceFrames": "6",
+      "lammpsDump": "generated/atomized/pulse-grid-atomized.lammpstrj"
+    },
+    "featured": true
+  },
+  {
     "id": "lupine_genesis",
     "title": "Lupine Bluebonnet — From a Seed",
     "subtitle": "A 4D botanical time-series: the Lupinus texensis architecture unfurling from a single carbon seed into a blossomed plant across 200 frames.",

@@ -27,6 +27,7 @@ type Domain =
   | 'Defects & Mechanics'
   | 'Methods'
   | 'Fluids & Solvents'
+  | 'Atomized Media'
   | 'Advanced Theory & Validation';
 
 interface GalleryExample {
@@ -73,6 +74,7 @@ const DOMAIN_COLORS: Record<Domain, string> = {
   'Defects & Mechanics': '#f0d9a8',
   'Methods': '#d4d4e8',
   'Fluids & Solvents': '#a8c8e8',
+  'Atomized Media': '#e7edf3',
   'Advanced Theory & Validation': '#d9c4e8',
 };
 
@@ -86,6 +88,7 @@ const DOMAIN_THREAD: Record<Domain, string> = {
   'Defects & Mechanics': '#d0b888',
   'Methods': '#b8b8d0',
   'Fluids & Solvents': '#88a8c8',
+  'Atomized Media': '#c7d0da',
   'Advanced Theory & Validation': '#b8a4c8',
 };
 
