@@ -58,7 +58,7 @@
   body.theorem-demo .series{
     flex:0 1 auto;
     max-width:100%;
-    overflow-x:auto;
+    overflow:hidden;
     border-radius:12px;
   }
   body.theorem-demo .seg{
@@ -442,7 +442,10 @@
   .math-object{
     padding:18px;
     overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
   }
+  .math-object::-webkit-scrollbar{display:none}
   .math-object .katex-display{
     margin:0;
     padding:0;
@@ -480,7 +483,10 @@
     margin-top:18px;
     border:1px solid var(--rule);
     border-radius:14px;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
   }
+  .mini-table::-webkit-scrollbar{display:none}
   .mini-table table{
     min-width:680px;
   }
@@ -494,7 +500,10 @@
     border:1px solid var(--rule);
     background:var(--code-bg);
     overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
   }
+  .proof-code::-webkit-scrollbar{display:none}
   .proof-code pre{
     margin:0;
     border:0;
@@ -557,17 +566,24 @@
     body.theorem-demo .seg{
       width:100%;
       max-width:100%;
-      overflow-x:auto;
+      overflow:hidden;
     }
-    body.theorem-demo .series a{
-      flex:0 0 auto;
+    body.theorem-demo .series{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
     }
+    body.theorem-demo .seg{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+    body.theorem-demo .series a,
     body.theorem-demo .seg button{
-      flex:1 1 0;
+      flex:none;
       justify-content:center;
       min-width:0;
       padding-left:8px;
       padding-right:8px;
+      white-space:normal;
     }
     body.theorem-demo p{font-size:1.04rem}
     main.theorem-shell{padding-left:16px;padding-right:16px}
@@ -595,6 +611,11 @@
     }
   }
   @media(max-width:520px){
+    body.theorem-demo .seg{
+      grid-template-columns:1fr;
+      width:min(100%,220px);
+      justify-self:center;
+    }
     .mode-tabs,
     .readout-grid{
       grid-template-columns:1fr;
