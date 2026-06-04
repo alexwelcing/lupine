@@ -1,0 +1,76 @@
+name: Deploy Investor Deck to Cloud Run
+
+# Serves the Lupine seed investor deck as a standalone Cloud Run static site.
+
+on:
+  push:
+    branches:
+      - deck
+    paths:
+      - 'deck/**'
+      - '.github/workflows/deploy-deck.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Required for Workload Identity Federation
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Secrets Pre-flight
+        run: |
+          if [ -z "${{ secrets.GCP_PROJECT_ID }}" ]; then
+            echo "::error::MISSING SECRET: GCP_PROJECT_ID is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_REGION }}" ]; then
+            echo "::error::MISSING SECRET: GCP_REGION is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          source: 'deck'
+          service: 'deck'
+          region: '${{ secrets.GCP_REGION }}'
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+          flags: '--allow-unauthenticated'
+
+      - name: Smoke test
+        run: |
+          url="${{ steps.deploy.outputs.url }}"
+          health=$(curl -s -o /dev/null -w "%{http_code}" "$url/health")
+          echo "health=$health (want 200)"
+          if [ "$health" != "200" ]; then
+            echo "::error::Health check failed (got $health)"
+            exit 1
+          fi
+          access=$(curl -s -o /dev/null -w "%{http_code}" "$url/access.html")
+          echo "access=$access (want 200)"
+          if [ "$access" != "200" ]; then
+            echo "::error::Access page failed (got $access)"
+            exit 1
+          fi
+          gated=$(curl -s -o /dev/null -w "%{http_code}" "$url/deck.html")
+          echo "deck.html=$gated (want 303 redirect to access gate)"
+          if [ "$gated" != "303" ]; then
+            echo "::error::Deck route is not gated (got $gated)"
+            exit 1
+          fi
+
+      - name: Show URL
+        run: echo "Deck deployed at ${{ steps.deploy.outputs.url }}"
