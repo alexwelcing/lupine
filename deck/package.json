@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "codes": "node tools/generate-access-codes.mjs",
     "start": "node server.mjs",
     "test": "node --test server.test.mjs"
   },

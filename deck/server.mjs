@@ -43,9 +43,11 @@ export function normalizeDeckPath(value) {
   return pathname;
 }
 
-export function hashPassword(password) {
-  return createHash('sha256').update(password, 'utf8').digest('hex');
+export function hashAccessCode(accessCode) {
+  return createHash('sha256').update(accessCode, 'utf8').digest('hex');
 }
+
+export const hashPassword = hashAccessCode;
 
 export function loadAccessRules(env = process.env) {
   const rules = [];
@@ -62,52 +64,66 @@ export function loadAccessRules(env = process.env) {
       }
 
       const id = String(item.id || `investor-${index + 1}`);
+      const investor = firstString(item.investor, item.name, id);
       const deckPath = normalizeDeckPath(item.deck || item.deckPath || DEFAULT_DECK_PATH);
-      const passwordHash = normalizePasswordHash(item.passwordHash || item.sha256 || item.hash);
-      const password = typeof item.password === 'string' ? item.password : '';
+      const accessCodeHash = normalizeAccessCodeHash(
+        item.accessCodeHash || item.codeHash || item.passwordHash || item.sha256 || item.hash,
+      );
+      const accessCode = firstString(item.accessCode, item.code, item.password);
 
-      if (!passwordHash && !password) {
-        throw new Error(`Access rule "${id}" needs passwordHash or password`);
+      if (!accessCodeHash && !accessCode) {
+        throw new Error(`Access rule "${id}" needs accessCodeHash/codeHash or accessCode/code`);
       }
 
       rules.push({
         id,
+        investor,
         deckPath,
-        passwordHash: passwordHash || hashPassword(password),
+        accessCodeHash: accessCodeHash || hashAccessCode(accessCode),
       });
     }
   }
 
-  const singleHash = normalizePasswordHash(env.INVESTOR_DECK_PASSWORD_HASH);
+  const singleHash = normalizeAccessCodeHash(env.INVESTOR_DECK_ACCESS_CODE_HASH || env.INVESTOR_DECK_PASSWORD_HASH);
   if (singleHash) {
     rules.push({
       id: env.INVESTOR_DECK_ACCESS_ID || 'seed',
+      investor: env.INVESTOR_DECK_ACCESS_NAME || env.INVESTOR_DECK_ACCESS_ID || 'seed',
       deckPath: DEFAULT_DECK_PATH,
-      passwordHash: singleHash,
+      accessCodeHash: singleHash,
     });
   }
 
-  if (env.INVESTOR_DECK_PASSWORD) {
+  const singleCode = env.INVESTOR_DECK_ACCESS_CODE || env.INVESTOR_DECK_PASSWORD;
+  if (singleCode) {
     rules.push({
       id: env.INVESTOR_DECK_ACCESS_ID || 'seed',
+      investor: env.INVESTOR_DECK_ACCESS_NAME || env.INVESTOR_DECK_ACCESS_ID || 'seed',
       deckPath: DEFAULT_DECK_PATH,
-      passwordHash: hashPassword(env.INVESTOR_DECK_PASSWORD),
+      accessCodeHash: hashAccessCode(singleCode),
     });
   }
 
   return dedupeRules(rules);
 }
 
-function normalizePasswordHash(value) {
+function normalizeAccessCodeHash(value) {
   if (typeof value !== 'string') return '';
   const trimmed = value.trim().toLowerCase();
   return /^[a-f0-9]{64}$/.test(trimmed) ? trimmed : '';
 }
 
+function firstString(...values) {
+  for (const value of values) {
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+  return '';
+}
+
 function dedupeRules(rules) {
   const seen = new Set();
   return rules.filter((rule) => {
-    const key = `${rule.id}:${rule.deckPath}:${rule.passwordHash}`;
+    const key = `${rule.id}:${rule.deckPath}:${rule.accessCodeHash}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -164,11 +180,11 @@ function safeEqual(left, right) {
   return a.length === b.length && timingSafeEqual(a, b);
 }
 
-function matchPassword(password) {
-  const candidateHash = hashPassword(password || '');
+function matchAccessCode(accessCode) {
+  const candidateHash = hashAccessCode(accessCode || '');
 
   for (const rule of accessRules) {
-    if (safeEqual(candidateHash, rule.passwordHash)) return rule;
+    if (safeEqual(candidateHash, rule.accessCodeHash)) return rule;
   }
 
   return null;
@@ -284,12 +300,12 @@ async function handleAccessPost(req, res) {
     return;
   }
 
-  const password = formValue(body, 'password');
+  const accessCode = formValue(body, 'code') || formValue(body, 'password');
   const nextPath = safeNextPath(formValue(body, 'next'));
-  const rule = matchPassword(password);
+  const rule = matchAccessCode(accessCode);
 
   if (!rule) {
-    writeHtml(res, 401, accessErrorPage('That password did not match. Please check it and try again.'));
+    writeHtml(res, 401, accessErrorPage('That access code did not match. Please check it and try again.'));
     return;
   }
 
@@ -320,7 +336,7 @@ function accessErrorPage(message) {
   <main>
     <h1>Deck access</h1>
     <p>${escaped}</p>
-    <p><a href="/access.html">Return to password entry</a></p>
+    <p><a href="/access.html">Return to access-code entry</a></p>
   </main>
 </body>
 </html>`;
@@ -416,8 +432,8 @@ export function createDeckServer() {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   if (accessRules.length === 0) {
-    console.warn('[deck] No investor deck password configured; /deck.html will stay locked.');
-    console.warn('[deck] Set INVESTOR_DECK_PASSWORD_HASH or INVESTOR_DECK_PASSWORD via Cloud Run secrets.');
+    console.warn('[deck] No investor deck access codes configured; /deck.html will stay locked.');
+    console.warn('[deck] Set INVESTOR_DECK_ACCESS_JSON or INVESTOR_DECK_ACCESS_CODE_HASH via Cloud Run secrets.');
   }
 
   createDeckServer().listen(PORT, () => {
