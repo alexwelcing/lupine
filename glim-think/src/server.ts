@@ -59,6 +59,7 @@ import {
 } from "./research/dispatch";
 import { handleResearchWorkflowRoute } from "./research/workflows";
 import { MLIP_PHOENIX_DATASET_NAME } from "./research/mlipPhoenix";
+import { normalizeBenchmarkRecord } from "./research/benchmarkRecords";
 import { MlipBaselineGridWorkflow as MlipBaselineGridWorkflowBase } from "./research/mlipBaselineCloudflareWorkflow";
 import { runOrchestratorTick } from "./research/orchestrator";
 import { handleFeedRoute } from "./feed/split";
@@ -104,7 +105,6 @@ async function sha256(input: string): Promise<string> {
     .join("");
 }
 import type {
-  BenchmarkRecord,
   ClaimRecord,
   Critique,
   CritiqueStatus,
@@ -956,14 +956,20 @@ ${narrative}
       // Batch record ingestion
       if (url.pathname === "/ingest/batch" && request.method === "POST") {
         const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
-        const records = Array.isArray(body.records) ? body.records as BenchmarkRecord[] : [];
+        const records = Array.isArray(body.records) ? body.records : [];
         if (records.length === 0) {
           return Response.json({ ingested: 0 }, { status: 400 });
         }
 
         let inserted = 0;
+        let skippedExisting = 0;
         let rejected = 0;
-        for (const r of records) {
+        for (const rawRecord of records) {
+          const r = normalizeBenchmarkRecord(rawRecord);
+          if (!r) {
+            rejected++;
+            continue;
+          }
           // Contamination guard: physically impossible elastic-constant
           // predictions (unit errors / non-converged sentinels) corrupt every
           // downstream pooled/correlation metric. Metallic Cij are < ~1500
@@ -982,7 +988,7 @@ ${narrative}
             continue;
           }
           try {
-            await env.LEDGER.prepare(
+            const result = await env.LEDGER.prepare(
               `INSERT INTO records (record_id, element, potential_id, potential_label, pair_style, property, reference, predicted, unit, provenance, agent_id, timestamp)
                VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
                ON CONFLICT(record_id) DO NOTHING`
@@ -991,12 +997,13 @@ ${narrative}
               r.pairStyle, r.property, r.reference, r.predicted,
               r.unit, JSON.stringify(r.provenance), r.agentId, r.timestamp
             ).run();
-            inserted++;
+            if ((result.meta?.changes ?? 0) > 0) inserted++;
+            else skippedExisting++;
           } catch (e) {
             console.error("Ingest error for record", r.recordId, e);
           }
         }
-        return Response.json({ ingested: inserted, rejected, total: records.length });
+        return Response.json({ ingested: inserted, skipped_existing: skippedExisting, rejected, total: records.length });
       }
 
       // Diary narrative generation
