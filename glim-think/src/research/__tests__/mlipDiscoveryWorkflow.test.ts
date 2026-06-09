@@ -67,6 +67,14 @@ function envWithRecords(onPrepare?: (sql: string, bindings: readonly unknown[]) 
       onPrepare,
       queries: [
         {
+          match: "GROUP BY discovery_campaign_id",
+          first: {
+            discovery_campaign_id: null,
+            github_run_id: "27206839783",
+            latest_timestamp: "2026-06-09T12:42:33Z",
+          },
+        },
+        {
           match: "FROM records",
           all: records,
         },
@@ -150,5 +158,32 @@ describe("MLIP discovery workflow", () => {
     expect(body.agenda.task_ids[0]).toContain("workflow:mlip-discovery-loop:github:27206839783");
     expect(body.counters.records_total).toBe(4);
     expect(prepared.some((sql) => sql.includes("INSERT OR IGNORE INTO intelligence_tasks"))).toBe(true);
+  });
+
+  it("serves a compact public progress packet for the latest benchmark run", async () => {
+    const response = await handleResearchWorkflowRoute(
+      envWithRecords(),
+      new URL("https://worker.test/research/mlip-discovery/progress"),
+      "GET",
+      "",
+    );
+    const body = await response?.json() as {
+      campaign_id: string;
+      headline: string;
+      progress: { records: number; sentinels: number; agenda_actions: number };
+      latest_run: { github_run_id: string | null };
+      steps: Array<{ id: string; state: string }>;
+      links: { ops: string | null };
+    };
+
+    expect(response?.status).toBe(200);
+    expect(body.campaign_id).toBe("github:27206839783");
+    expect(body.latest_run.github_run_id).toBe("27206839783");
+    expect(body.progress.records).toBe(4);
+    expect(body.progress.sentinels).toBeGreaterThan(0);
+    expect(body.progress.agenda_actions).toBeGreaterThan(0);
+    expect(body.headline).toContain("sentinels");
+    expect(body.steps.map((step) => step.id)).toEqual(["evidence", "analyzer", "agenda"]);
+    expect(body.links.ops).toContain("/research/workflows/mlip-discovery-loop/campaigns/");
   });
 });

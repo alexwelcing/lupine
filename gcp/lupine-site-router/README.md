@@ -10,6 +10,12 @@ the canonical surfaces:
 - `lupi.live` for the browser-native viewer.
 - `github.com/alexwelcing/lupine` for source, specs, and payloads.
 
+The homepage also polls the public `glim-think` progress API for a compact MLIP
+discovery-loop status packet:
+
+```text
+https://glim-think-v1.aw-ab5.workers.dev/research/mlip-discovery/progress
+```
+
 Public paper status here must stay minimal: working draft in preparation; no
 peer review, no acceptance, and no journal or venue assignment.
-

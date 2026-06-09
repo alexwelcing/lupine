@@ -5,6 +5,7 @@ import {
   benchmarkRelativeError,
 } from "./benchmarkRecords";
 import {
+  buildMlipDiscoveryProgress,
   buildMlipDiscoverySnapshot,
   buildMlipDiscoveryUnits,
   MLIP_DISCOVERY_DESCRIPTOR,
@@ -81,6 +82,37 @@ async function loadCampaignRecords(env: Env, campaignId: string): Promise<Benchm
     .map(dbRowToRecord)
     .filter((record): record is BenchmarkRecord => Boolean(record))
     .filter((record) => provenanceCampaignId(record) === campaignId);
+}
+
+async function latestCampaignId(env: Env): Promise<string | null> {
+  const row = await env.LEDGER.prepare(`
+    SELECT
+      json_extract(provenance, '$.discovery_campaign_id') AS discovery_campaign_id,
+      json_extract(provenance, '$.github_run_id') AS github_run_id,
+      MAX(timestamp) AS latest_timestamp
+    FROM records
+    WHERE pair_style = 'mlip'
+      AND (
+        json_extract(provenance, '$.discovery_campaign_id') IS NOT NULL
+        OR json_extract(provenance, '$.github_run_id') IS NOT NULL
+      )
+    GROUP BY discovery_campaign_id, github_run_id
+    ORDER BY latest_timestamp DESC
+    LIMIT 1
+  `).first();
+  if (!row) return null;
+  const discovery = row.discovery_campaign_id;
+  if (typeof discovery === "string" && discovery.trim()) return discovery.trim();
+  const runId = row.github_run_id;
+  if (typeof runId === "string" && runId.trim()) return `github:${runId.trim()}`;
+  if (typeof runId === "number" && Number.isFinite(runId)) return `github:${Math.trunc(runId)}`;
+  return null;
+}
+
+async function loadLatestCampaignRecords(env: Env): Promise<{ campaignId: string | null; records: BenchmarkRecord[] }> {
+  const campaignId = await latestCampaignId(env);
+  if (!campaignId) return { campaignId: null, records: [] };
+  return { campaignId, records: await loadCampaignRecords(env, campaignId) };
 }
 
 function campaignBody(records: BenchmarkRecord[], campaignId: string) {
@@ -196,6 +228,13 @@ export const mlipDiscoveryWorkflowAdapter: ResearchWorkflowAdapter = {
     return buildMlipDiscoverySnapshot(env, campaignId, records);
   },
 
+  async reportCampaign(env, campaignId, url) {
+    const records = await loadCampaignRecords(env, campaignId);
+    const format = url.searchParams.get("format") ?? "progress";
+    if (format === "ops") return workflowJson(buildMlipDiscoverySnapshot(env, campaignId, records));
+    return workflowJson(buildMlipDiscoveryProgress(env, campaignId, records));
+  },
+
   async maintainCampaign(env, campaignId, bodyText) {
     const body = JSON.parse(bodyText || "{}") as { mode?: "agenda"; limit?: number };
     const mode = body.mode ?? "agenda";
@@ -212,5 +251,26 @@ export const mlipDiscoveryWorkflowAdapter: ResearchWorkflowAdapter = {
       counters: snapshot.counters,
       next_actions: snapshot.next_actions.slice(0, Math.max(1, Math.trunc(body.limit ?? 10))),
     });
+  },
+
+  async handleLegacyRoute(env, url, method) {
+    if (method !== "GET") return null;
+    if (url.pathname === "/research/mlip-discovery/progress" ||
+        url.pathname === "/research/workflows/mlip-discovery-loop/progress") {
+      const requested = url.searchParams.get("campaign_id")?.trim();
+      if (requested) {
+        const records = await loadCampaignRecords(env, requested);
+        return workflowJson(buildMlipDiscoveryProgress(env, requested, records));
+      }
+      const latest = await loadLatestCampaignRecords(env);
+      return workflowJson(buildMlipDiscoveryProgress(env, latest.campaignId, latest.records));
+    }
+    const legacyMatch = url.pathname.match(/^\/research\/mlip-discovery\/progress\/([^/]+)$/);
+    if (legacyMatch) {
+      const campaignId = decodeURIComponent(legacyMatch[1]);
+      const records = await loadCampaignRecords(env, campaignId);
+      return workflowJson(buildMlipDiscoveryProgress(env, campaignId, records));
+    }
+    return null;
   },
 };

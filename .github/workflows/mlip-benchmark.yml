@@ -52,8 +52,6 @@ jobs:
       DO_INGEST: ${{ github.event.inputs.ingest != 'false' }}
       GLIM_API_URL: ${{ secrets.GLIM_API_URL || 'https://glim-think-v1.aw-ab5.workers.dev' }}
       GLIM_HF_SPACE: ${{ secrets.GLIM_HF_SPACE || 'https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench' }}
-      GLIM_BENCHMARK_RUN_ID: ${{ github.run_id }}
-      GLIM_BENCHMARK_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
 
@@ -94,6 +92,9 @@ jobs:
       - name: Predict via HF Space
         if: env.USE_SPACE == 'true'
         working-directory: tools
+        env:
+          GLIM_BENCHMARK_RUN_ID: ${{ github.run_id }}
+          GLIM_BENCHMARK_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           python glim_mlip.py batch \
             --elements "$ELEMENT_SET" \
@@ -132,6 +133,8 @@ jobs:
         working-directory: tools
         env:
           INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+          GLIM_BENCHMARK_RUN_ID: ${{ github.run_id }}
+          GLIM_BENCHMARK_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: python glim_mlip.py ingest ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
 
       - name: Open glim-think MLIP discovery loop
@@ -139,6 +142,8 @@ jobs:
         working-directory: tools
         env:
           INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+          GLIM_BENCHMARK_RUN_ID: ${{ github.run_id }}
+          GLIM_BENCHMARK_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           python glim_mlip.py discovery-loop \
             ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl \

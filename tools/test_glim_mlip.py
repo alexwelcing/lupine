@@ -132,7 +132,7 @@ def test_batch_attaches_github_run_provenance(runner: CliRunner, monkeypatch: py
         glim_mlip.mlip,
         ["batch", "--elements", "Al", "--references-from", str(refs), "--out", str(out)],
         env={
-            "GITHUB_RUN_ID": "27206839783",
+            "GLIM_BENCHMARK_RUN_ID": "27206839783",
             "GITHUB_REPOSITORY": "alexwelcing/lupine",
             "GITHUB_SERVER_URL": "https://github.com",
             "GITHUB_WORKFLOW": "MLIP elastic-constant benchmark",

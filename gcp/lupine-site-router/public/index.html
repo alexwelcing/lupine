@@ -156,6 +156,66 @@
       padding-top: 0;
     }
 
+    .live-loop {
+      display: grid;
+      gap: 12px;
+    }
+
+    .live-head {
+      color: var(--ink);
+      font-weight: 720;
+    }
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .progress-cell {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      min-height: 66px;
+    }
+
+    .progress-cell strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1.15rem;
+      line-height: 1.1;
+    }
+
+    .progress-cell span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 6px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .step-list li {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .step-list b {
+      color: var(--accent);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
     dt {
       color: var(--accent-2);
       font-size: 12px;
@@ -274,6 +334,29 @@
             <dt>Formal layer</dt>
             <dd>The Lean evidence layer and theorem claims belong in the repository and Library pages, not in a stale homepage counter.</dd>
           </div>
+          <div class="live-loop">
+            <dt>Live discovery loop</dt>
+            <dd>
+              <span id="mlip-headline" class="live-head">Checking MLIP benchmark progress.</span>
+            </dd>
+            <div class="progress-grid" aria-label="MLIP discovery progress counters">
+              <div class="progress-cell">
+                <strong id="mlip-records">--</strong>
+                <span>records</span>
+              </div>
+              <div class="progress-cell">
+                <strong id="mlip-sentinels">--</strong>
+                <span>sentinels</span>
+              </div>
+              <div class="progress-cell">
+                <strong id="mlip-actions">--</strong>
+                <span>agenda items</span>
+              </div>
+            </div>
+            <ul id="mlip-steps" class="step-list" aria-label="MLIP discovery loop stages">
+              <li><span>Awaiting analyzer feedback</span><b>loading</b></li>
+            </ul>
+          </div>
         </dl>
       </aside>
     </section>
@@ -313,6 +396,52 @@
   <footer>
     <div class="wrap">Lupine Science. Public research status is canonical in Library and the repository.</div>
   </footer>
+  <script>
+    (() => {
+      const endpoint = "https://glim-think-v1.aw-ab5.workers.dev/research/mlip-discovery/progress";
+      const ids = {
+        headline: document.getElementById("mlip-headline"),
+        records: document.getElementById("mlip-records"),
+        sentinels: document.getElementById("mlip-sentinels"),
+        actions: document.getElementById("mlip-actions"),
+        steps: document.getElementById("mlip-steps"),
+      };
+
+      function setText(node, value) {
+        if (node) node.textContent = value;
+      }
+
+      function renderSteps(steps) {
+        if (!ids.steps) return;
+        ids.steps.innerHTML = "";
+        for (const step of steps.slice(0, 3)) {
+          const item = document.createElement("li");
+          const label = document.createElement("span");
+          const state = document.createElement("b");
+          label.textContent = step.label || step.id || "loop stage";
+          state.textContent = step.state || "pending";
+          item.append(label, state);
+          ids.steps.appendChild(item);
+        }
+      }
+
+      fetch(endpoint, { cache: "no-store" })
+        .then((response) => response.ok ? response.json() : Promise.reject(new Error(String(response.status))))
+        .then((data) => {
+          setText(ids.headline, data.headline || "MLIP discovery loop is online.");
+          setText(ids.records, String(data.progress?.records ?? 0));
+          setText(ids.sentinels, String(data.progress?.sentinels ?? 0));
+          setText(ids.actions, String(data.progress?.agenda_actions ?? 0));
+          renderSteps(Array.isArray(data.steps) ? data.steps : []);
+        })
+        .catch(() => {
+          setText(ids.headline, "MLIP discovery loop status is temporarily unavailable.");
+          setText(ids.records, "0");
+          setText(ids.sentinels, "0");
+          setText(ids.actions, "0");
+          renderSteps([{ label: "Analyzer API", state: "offline" }]);
+        });
+    })();
+  </script>
 </body>
 </html>
-

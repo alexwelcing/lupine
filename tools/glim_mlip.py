@@ -45,7 +45,7 @@ def _auth_headers(token: str) -> dict[str, str]:
 
 def _run_provenance_from_env() -> dict[str, str]:
     env = os.environ
-    run_id = env.get("GLIM_BENCHMARK_RUN_ID") or env.get("GITHUB_RUN_ID")
+    run_id = env.get("GLIM_BENCHMARK_RUN_ID")
     repository = env.get("GITHUB_REPOSITORY")
     server_url = env.get("GITHUB_SERVER_URL", "https://github.com")
     run_url = env.get("GLIM_BENCHMARK_RUN_URL")
@@ -201,7 +201,7 @@ def batch(ctx: click.Context, elements: str, mlips: str,
 @click.pass_context
 def ingest(ctx: click.Context, jsonl_path: Path, internal_token: str) -> None:
     """POST a JSONL of BenchmarkRecords to the worker's /ingest/batch."""
-    records = _load_jsonl(jsonl_path)
+    records = [_with_run_provenance(row, _run_provenance_from_env()) for row in _load_jsonl(jsonl_path)]
     if not records:
         raise click.ClickException("no records in JSONL")
     api = ctx.obj["api_url"].rstrip("/")
