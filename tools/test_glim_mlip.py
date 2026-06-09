@@ -104,7 +104,15 @@ def test_batch_with_refs_writes_jsonl(runner: CliRunner, monkeypatch: pytest.Mon
     out = tmp_path / "records.jsonl"
     result = runner.invoke(glim_mlip.mlip, [
         "batch", "--elements", "Al", "--references-from", str(refs), "--out", str(out),
-    ])
+    ], env={
+        "GLIM_BENCHMARK_RUN_ID": "",
+        "GLIM_BENCHMARK_RUN_URL": "",
+        "GITHUB_REPOSITORY": "",
+        "GITHUB_SERVER_URL": "",
+        "GITHUB_WORKFLOW": "",
+        "GITHUB_SHA": "",
+        "GITHUB_REF": "",
+    })
     assert result.exit_code == 0, result.output
     assert out.exists()
     written = [json.loads(line) for line in out.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -136,6 +144,8 @@ def test_batch_attaches_github_run_provenance(runner: CliRunner, monkeypatch: py
             "GITHUB_REPOSITORY": "alexwelcing/lupine",
             "GITHUB_SERVER_URL": "https://github.com",
             "GITHUB_WORKFLOW": "MLIP elastic-constant benchmark",
+            "GITHUB_SHA": "c1b20742b7c781c454063d647d6350f58a476c17",
+            "GITHUB_REF": "refs/heads/main",
         },
     )
     assert result.exit_code == 0, result.output
@@ -146,6 +156,8 @@ def test_batch_attaches_github_run_provenance(runner: CliRunner, monkeypatch: py
         "github_run_url": "https://github.com/alexwelcing/lupine/actions/runs/27206839783",
         "github_repository": "alexwelcing/lupine",
         "github_workflow": "MLIP elastic-constant benchmark",
+        "github_sha": "c1b20742b7c781c454063d647d6350f58a476c17",
+        "github_ref": "refs/heads/main",
     }
 
 
