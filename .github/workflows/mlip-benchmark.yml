@@ -52,7 +52,6 @@ jobs:
       DO_INGEST: ${{ github.event.inputs.ingest != 'false' }}
       GLIM_API_URL: ${{ secrets.GLIM_API_URL || 'https://glim-think-v1.aw-ab5.workers.dev' }}
       GLIM_HF_SPACE: ${{ secrets.GLIM_HF_SPACE || 'https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench' }}
-      INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -129,11 +128,15 @@ jobs:
       - name: Push to glim-think /ingest/batch
         if: env.DO_INGEST == 'true'
         working-directory: tools
+        env:
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
         run: python glim_mlip.py ingest ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
 
       - name: Trigger /run analysis (per element)
         if: env.DO_INGEST == 'true'
         working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        env:
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
         run: |
           python - <<'PY'
           import json, os, urllib.request

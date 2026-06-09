@@ -146,7 +146,11 @@ def test_ingest_posts_to_worker(runner: CliRunner, monkeypatch: pytest.MonkeyPat
         return _Resp({"ingested": 2, "total": 2})
 
     monkeypatch.setattr(httpx, "post", fake_post)
-    result = runner.invoke(glim_mlip.mlip, ["ingest", str(jsonl)])
+    result = runner.invoke(
+        glim_mlip.mlip,
+        ["ingest", str(jsonl)],
+        env={"GLIM_INGEST_TOKEN": "", "GLIM_INTERNAL_TOKEN": "", "INTERNAL_TASK_TOKEN": ""},
+    )
     assert result.exit_code == 0, result.output
     assert "ingested 2 records" in result.output
     assert rec[0]["url"].endswith("/ingest/batch")
@@ -170,7 +174,11 @@ def test_ingest_sends_internal_token_from_env(runner: CliRunner, monkeypatch: py
         return _Resp()
 
     monkeypatch.setattr(httpx, "post", fake_post)
-    result = runner.invoke(glim_mlip.mlip, ["ingest", str(jsonl)], env={"INTERNAL_TASK_TOKEN": "secret-token"})
+    result = runner.invoke(
+        glim_mlip.mlip,
+        ["ingest", str(jsonl)],
+        env={"GLIM_INGEST_TOKEN": "", "GLIM_INTERNAL_TOKEN": "", "INTERNAL_TASK_TOKEN": "secret-token"},
+    )
     assert result.exit_code == 0, result.output
     assert rec[0]["headers"] == {"X-Internal-Token": "secret-token"}
 
