@@ -11,12 +11,15 @@ inputs, so this page is deliberately explicit.
 | **NIST Interatomic Potentials Repository (IPR)** | Cross-reference and ground-truth anchor for potential identity and reference properties. |
 | **MLIP provenance records** | Lattice constants ($a_0$) recovered from the originating MLIP runs — the basis for the de-myopization that proved the ribbon is not a $C_{ij}$ artifact. |
 | **Phase-D compute lane** | Real LAMMPS runs (not cache) that produce $E_\text{coh}$/$B_0$ and surface recipe bugs the cached pipeline masked. |
+| **Kimi 2026-06-07 MLIP evidence import** | Cloud Run MACE/CHGNet/SevenNet elastic constants, Vandermonde checks, real early-exit timing, and MLIP/MD refusal evidence curated under `data/mlip_benchmarks/kimi_2026_06_07/`. |
 
 ## Scope of the corpus
 
 - **559 interatomic potentials** spanning 13 `pair_style` families.
 - **15 benchmark metals** — 8 FCC, 7 BCC (the IMMI element set).
 - Plus the foundation-MLIP trio added on top: **MACE-MP-0, CHGNet, Orb-v3**.
+- Plus the Kimi v7 Cloud Run trio: **MACE-MP-0, CHGNet, SevenNet** across the
+  same 15-metal IMMI set.
 - Properties: elastic constants $C_{11}, C_{12}, C_{44}$ (primary); lattice constant
   $a_0$ (de-myopization); $E_\text{coh}, B_0$ (Phase-D, in progress).
 
@@ -30,6 +33,10 @@ These exist because we got burned — see
   re-run. The contamination event removed 19 corrupt records → **1231 clean records**.
 - **Matched-n discipline:** any cross-element correlation is reported alongside its
   sample-size-matched control (see [Methodology](methodology.md)).
+- **Kimi import contract:** the curated import is checked by
+  `python tools/mlip_kimi_evidence.py --check`, preserving low-correlation
+  sentinels, physical-instability flags, the irrep threshold failure, and the
+  real early-exit gap from the idealized speedup bound.
 
 ## What we do *not* claim
 

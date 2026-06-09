@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "model": "mace-mp-0-medium",
+    "device": "cuda:0",
+    "n_structures": 50,
+    "n_timed": 20,
+    "n_layers": 5,
+    "timestamp": "2026-06-06T15:59:47Z"
+  },
+  "timing": {
+    "mean_full_inference_ms": 18.29986500006271,
+    "std_full_inference_ms": 1.4209989824971345,
+    "per_layer_ms": [
+      3.3044799998606322,
+      3.3044799998606322,
+      3.3044799998606322,
+      3.3044799998606322,
+      3.3044799998606322
+    ]
+  },
+  "speedup_by_stop_layer": {
+    "1": {
+      "mean_speedup": 4.0,
+      "median_speedup": 4.0,
+      "std_speedup": 5.254534392573277e-16,
+      "min_speedup": 3.999999999999999,
+      "max_speedup": 4.000000000000001
+    },
+    "2": {
+      "mean_speedup": 2.2222222222222223,
+      "median_speedup": 2.2222222222222223,
+      "std_speedup": 2.432376777795247e-16,
+      "min_speedup": 2.222222222222222,
+      "max_speedup": 2.2222222222222228
+    },
+    "3": {
+      "mean_speedup": 1.5384615384615385,
+      "median_speedup": 1.5384615384615385,
+      "std_speedup": 1.790180836524724e-16,
+      "min_speedup": 1.538461538461538,
+      "max_speedup": 1.5384615384615388
+    },
+    "4": {
+      "mean_speedup": 1.176470588235294,
+      "median_speedup": 1.1764705882352942,
+      "std_speedup": 1.9229626863835638e-16,
+      "min_speedup": 1.176470588235294,
+      "max_speedup": 1.1764705882352942
+    }
+  },
+  "theoretical_bounds": {
+    "1": 4.166666666666667,
+    "2": 2.3255813953488373,
+    "3": 1.6129032258064515,
+    "4": 1.234567901234568
+  }
+}

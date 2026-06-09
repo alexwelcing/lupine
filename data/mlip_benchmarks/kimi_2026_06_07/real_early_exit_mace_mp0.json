@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "model": "mace-mp-0-medium",
+    "device": "cuda:0",
+    "n_structures": 50,
+    "n_interactions": 2,
+    "n_readouts": 2,
+    "mean_full_time_ms": 21.312130000296747
+  },
+  "speedup_by_stop_layer": {
+    "1": {
+      "mean_speedup": 1.4127956114675577,
+      "median_speedup": 1.3264354514067735,
+      "std_speedup": 0.44829609362740896,
+      "min_speedup": 0.7754163844781371,
+      "max_speedup": 2.5951810595084477,
+      "mean_time_ms": 15.558280000113882,
+      "median_time_ms": 14.716699999553384
+    },
+    "2": {
+      "mean_speedup": 1.1258362151222456,
+      "median_speedup": 0.9894282256911631,
+      "std_speedup": 0.49268457886093214,
+      "min_speedup": 0.42622871815184665,
+      "max_speedup": 2.4495687419776377,
+      "mean_time_ms": 20.493978000158677,
+      "median_time_ms": 19.019750001461944
+    }
+  },
+  "energy_error_by_stop_layer": {
+    "1": {
+      "mae_ev": 0.6027191829681396,
+      "max_error_ev": 1.5888347625732422,
+      "std_error_ev": 0.3666152835455696
+    },
+    "2": {
+      "mae_ev": 0.7923166799545288,
+      "max_error_ev": 2.1469736099243164,
+      "std_error_ev": 0.6105775274468696
+    }
+  },
+  "adaptive": {
+    "mean_speedup": 1.7070219216976446,
+    "median_speedup": 1.0,
+    "std_speedup": 2.6153910763339816,
+    "mae_ev": 0.2253814172744751,
+    "max_error_ev": 2.697133779525757,
+    "mean_chosen_layer": 1.84,
+    "layer_distribution": {
+      "0": 3,
+      "1": 2,
+      "2": 45
+    }
+  },
+  "theoretical_bounds": {
+    "1": 3.3684210526315788,
+    "2": 1.8823529411764706
+  },
+  "distance_thresholds": [
+    6.551162123680112,
+    1.8085065543651582
+  ],
+  "distance_means": [
+    3.8756904458999633,
+    1.4899587988853455
+  ]
+}

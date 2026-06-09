@@ -71,6 +71,23 @@ Accuracy cell depends on the paired baseline cell and consumes the same
 raw-prediction checkpoint URL in read-only mode, so an accuracy claim can be
 traced to the exact MLIP prediction surface it modified.
 
+## Kimi 2026-06-07 Evidence Import
+
+`kimi_2026_06_07/` stores the curated subset of Kimi's MLIP universality export:
+Cloud Run cross-MLIP v7 results, irrep Vandermonde evidence, real early-exit
+timing, MLIP/MD refusal-policy data, and a deterministic follow-up agenda.
+
+Validate it with:
+
+```powershell
+python tools/mlip_kimi_evidence.py --check
+python -m pytest tools/test_mlip_kimi_evidence.py
+python tools/mlip_kimi_evidence.py --write-agenda
+```
+
+Use `docs/science/kimi-mlip-universality-import.md` for the review decision and
+`docs/runbooks/cross-mlip-cloud-experiment.md` for the cloud rerun hazards.
+
 ## Policy
 
 - Every publication result must point back to a source packet.
