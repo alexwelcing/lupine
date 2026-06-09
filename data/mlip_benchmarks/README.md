@@ -88,6 +88,14 @@ python tools/mlip_kimi_evidence.py --write-agenda
 Use `docs/science/kimi-mlip-universality-import.md` for the review decision and
 `docs/runbooks/cross-mlip-cloud-experiment.md` for the cloud rerun hazards.
 
+## Discovery Loop
+
+The scheduled elastic benchmark now feeds the Cloudflare analyzer workflow
+`mlip-discovery-loop`. Each GitHub run annotates records with provenance,
+ingests them into the D1 ledger, opens a workflow campaign, and asks
+`/maintain` to materialize follow-up agenda tasks. See
+`docs/runbooks/mlip-discovery-loop.md`.
+
 ## Policy
 
 - Every publication result must point back to a source packet.

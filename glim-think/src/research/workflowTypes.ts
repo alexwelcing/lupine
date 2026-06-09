@@ -3,7 +3,7 @@ import type { Env } from "../types";
 export const WORKFLOW_JSON_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Headers": "Content-Type, X-Internal-Token",
 } as const;
 
 export function workflowJson(data: unknown, init?: ResponseInit): Response {

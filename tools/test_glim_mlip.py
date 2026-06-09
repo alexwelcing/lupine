@@ -113,6 +113,42 @@ def test_batch_with_refs_writes_jsonl(runner: CliRunner, monkeypatch: pytest.Mon
     assert rec[0]["json"]["data"][2] == '{"Al": {"C11": 108.2}}'
 
 
+def test_batch_attaches_github_run_provenance(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,
+                                               tmp_path: Path) -> None:
+    refs = tmp_path / "references.json"
+    refs.write_text('{"Al": {"C11": 108.2}}', encoding="utf-8")
+    rec: list[dict[str, Any]] = []
+    _patch_gradio_flow(monkeypatch, rec, [[{
+        "record_id": "r1",
+        "element": "Al",
+        "property": "C11",
+        "predicted": 110.0,
+        "reference": 108.2,
+        "potential_id": "chgnet",
+        "provenance": {"source": "hf-space"},
+    }]])
+    out = tmp_path / "records.jsonl"
+    result = runner.invoke(
+        glim_mlip.mlip,
+        ["batch", "--elements", "Al", "--references-from", str(refs), "--out", str(out)],
+        env={
+            "GITHUB_RUN_ID": "27206839783",
+            "GITHUB_REPOSITORY": "alexwelcing/lupine",
+            "GITHUB_SERVER_URL": "https://github.com",
+            "GITHUB_WORKFLOW": "MLIP elastic-constant benchmark",
+        },
+    )
+    assert result.exit_code == 0, result.output
+    written = [json.loads(line) for line in out.read_text(encoding="utf-8").splitlines() if line.strip()]
+    assert written[0]["provenance"] == {
+        "source": "hf-space",
+        "github_run_id": "27206839783",
+        "github_run_url": "https://github.com/alexwelcing/lupine/actions/runs/27206839783",
+        "github_repository": "alexwelcing/lupine",
+        "github_workflow": "MLIP elastic-constant benchmark",
+    }
+
+
 def test_batch_without_refs_prints_to_stdout(runner: CliRunner, monkeypatch: pytest.MonkeyPatch) -> None:
     rec: list[dict[str, Any]] = []
     _patch_gradio_flow(monkeypatch, rec, [[{"element": "Al", "c11": 108.0}]])
@@ -181,6 +217,52 @@ def test_ingest_sends_internal_token_from_env(runner: CliRunner, monkeypatch: py
     )
     assert result.exit_code == 0, result.output
     assert rec[0]["headers"] == {"X-Internal-Token": "secret-token"}
+
+
+def test_discovery_loop_opens_and_maintains_campaign(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,
+                                                      tmp_path: Path) -> None:
+    jsonl = tmp_path / "records.jsonl"
+    jsonl.write_text('{"record_id": "r1", "element": "Al"}\n', encoding="utf-8")
+    import httpx
+    calls: list[dict[str, Any]] = []
+
+    class _Resp:
+        def __init__(self, payload: Any):
+            self._payload = payload
+            self.status_code = 200
+            self.text = json.dumps(payload)
+
+        def json(self) -> Any:
+            return self._payload
+
+    def fake_post(url: str, json=None, headers=None, timeout=None, **kw: Any):  # noqa: ARG001
+        calls.append({"url": url, "json": json, "headers": headers})
+        if url.endswith("/campaigns"):
+            return _Resp({"campaign_id": "github:27206839783"})
+        return _Resp({"agenda": {"attempted": 1}})
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    result = runner.invoke(
+        glim_mlip.mlip,
+        [
+            "discovery-loop",
+            str(jsonl),
+            "--campaign-id",
+            "github:27206839783",
+            "--github-run-id",
+            "27206839783",
+            "--run-url",
+            "https://github.com/alexwelcing/lupine/actions/runs/27206839783",
+        ],
+        env={"INTERNAL_TASK_TOKEN": "secret-token"},
+    )
+    assert result.exit_code == 0, result.output
+    assert len(calls) == 2
+    assert calls[0]["url"].endswith("/research/workflows/mlip-discovery-loop/campaigns")
+    assert calls[0]["headers"] == {"X-Internal-Token": "secret-token"}
+    assert calls[0]["json"]["campaign_id"] == "github:27206839783"
+    assert calls[0]["json"]["github_run_id"] == "27206839783"
+    assert calls[1]["url"].endswith("/campaigns/github:27206839783/maintain")
 
 
 def test_ingest_empty_jsonl_fails(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,

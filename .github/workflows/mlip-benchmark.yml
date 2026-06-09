@@ -52,6 +52,8 @@ jobs:
       DO_INGEST: ${{ github.event.inputs.ingest != 'false' }}
       GLIM_API_URL: ${{ secrets.GLIM_API_URL || 'https://glim-think-v1.aw-ab5.workers.dev' }}
       GLIM_HF_SPACE: ${{ secrets.GLIM_HF_SPACE || 'https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench' }}
+      GLIM_BENCHMARK_RUN_ID: ${{ github.run_id }}
+      GLIM_BENCHMARK_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
 
@@ -131,6 +133,19 @@ jobs:
         env:
           INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
         run: python glim_mlip.py ingest ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
+
+      - name: Open glim-think MLIP discovery loop
+        if: env.DO_INGEST == 'true'
+        working-directory: tools
+        env:
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+        run: |
+          python glim_mlip.py discovery-loop \
+            ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl \
+            --campaign-id "github:${GITHUB_RUN_ID}" \
+            --github-run-id "$GITHUB_RUN_ID" \
+            --run-url "$GLIM_BENCHMARK_RUN_URL" \
+            --artifact-name "mlip-records-${GITHUB_RUN_ID}"
 
       - name: Trigger /run analysis (per element)
         if: env.DO_INGEST == 'true'
