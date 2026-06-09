@@ -1,0 +1,25 @@
+============================================================
+REAL EARLY-EXIT SUMMARY -- MACE-MP-0 MEDIUM
+============================================================
+Device:              cuda:0
+Structures:          50 bulk crystals
+Mean full time:      21.31 ms
+Interactions:        2
+Readouts:            2
+
+Per-Stop-Layer Results:
+  Stop layer 1:  speedup=1.41x (median 1.33x), MAE=0.6027 eV, max_err=1.5888 eV
+  Stop layer 2:  speedup=1.13x (median 0.99x), MAE=0.7923 eV, max_err=2.1470 eV
+
+Adaptive Refusal Policy:
+  Mean speedup:      1.71x
+  Median speedup:    1.00x
+  MAE:               0.2254 eV
+  Max error:         2.6971 eV
+  Mean chosen layer: 1.84
+  Layer distribution: {'0': 3, '1': 2, '2': 45}
+
+Theoretical Lower Bounds (Causal Acceleration Theorem):
+  k*=1: 3.37x
+  k*=2: 1.88x
+============================================================

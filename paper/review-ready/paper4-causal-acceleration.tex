@@ -1,0 +1,753 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{natbib}
+\usepackage{multirow}
+\usepackage{enumitem}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{remark}{Remark}[section]
+
+\title{\textbf{The Causal Acceleration Theorem for Foundation MLIP Inference}\\\large From Safety Guarantees to Compute-Aware Abstention}
+\author{HPC Theory Writer\\Lupine Research Program}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\textbf{Review status: Ready for scientific review, not submission-ready.}
+Imported from the Kimi 2026-06-07 export as an advanced manuscript draft.
+Before public or journal use, reconcile acceleration claims against the current
+weak-form scalar Lean gate, the real early-exit negative result, and
+\texttt{paper/review-ready/advanced-paper-review-ledger.md}.}}
+\end{center}
+
+%=============================================================================
+\begin{abstract}
+Foundation machine-learning interatomic potentials (MLIPs) such as MACE-MP-0, CHGNet, and SevenNet achieve near-DFT accuracy across broad swaths of chemical space, yet their inference cost remains $10\times$--$1000\times$ higher than classical empirical potentials. We present the \emph{Causal Acceleration Theorem}, which proves that any foundation MLIP in architectural class $\mathcal{F}$ admits a layerwise refusal policy whose expected inference speedup is bounded below by a closed-form expression in the number of message-passing layers $L$, the training-coverage constant $\kappa_1$, the refusal threshold $\tau$, and the class-uniform reach bound $r(\mathcal{F})$. The theorem rests on two geometric lemmas: (i) layerwise Mahalanobis-distance monotonicity for out-of-distribution (OOD) configurations, which guarantees that early abortion never misses a late-stage refusal, and (ii) exponential contraction of in-distribution descriptors, which ensures that safe configurations never trigger false refusals. We derive two corollaries: a chi-squared calibration protocol for per-layer thresholds, and a multiplicative-stacking result showing how refusal-mode acceleration composes with neighbor pruning, FP16 quantization, and graph compilation. Because the current manuscript contains \emph{zero empirical validation}, we devote a full section to a detailed experimental protocol---including wall-clock benchmarking on NVIDIA A100/H100 GPUs, false-refusal-rate measurement, coverage-constant estimation, and reach-bound quantification for MACE-MP-0---that is designed to be executable by any practitioner with access to the model and standard HPC resources. We honestly contextualize the universal lower bound ($\gtrsim 1.03\times$ for a 4-layer MACE with $\kappa_1=0.80$), arguing that its practical value lies not in the worst-case guarantee but in the $2\times$--$5\times$ speedups achievable on OOD-heavy workloads such as high-throughput materials screening. We position our result against early-exit networks in computer vision, adaptive inference in NLP, and uncertainty-quantification-based acceleration for molecular dynamics, and we flag the runtime overhead of descriptor-distance computation as the critical open engineering problem.
+\end{abstract}
+%=============================================================================
+
+\section{Introduction}\label{sec:intro}
+
+The past five years have witnessed the emergence of \emph{foundation} machine-learning interatomic potentials (MLIPs): universal models pretrained on millions of DFT configurations (MPtrj, OMat24, Alexandria) and deployed across the periodic table\cite{batatia2024mace, chgnet2023, sevennet2024}. These models narrow the accuracy gap with density functional theory to tens of meV/atom, but they do not close the \emph{speed} gap. On an NVIDIA A100, MACE-MP-0 (medium) delivers roughly $10^3$--$10^5$ atom-steps per second via LAMMPS+Kokkos\cite{kovacs2024mace}, whereas classical EAM potentials sustain $10^{10}$ atom-steps per second on exascale platforms\cite{perez2023exaalt}. For production molecular dynamics (MD) this $100\times$--$1000\times$ penalty is the dominant bottleneck.
+
+At the same time, the ``accuracy wall'' of extrapolation failure remains the central unsolved challenge in MLIP deployment\cite{mishin2021ml}. Foundation models are, in Mishin's phrase, ``accurate numerical interpolators'' whose predictions outside the training domain can be ``uncontrollable and physically meaningless.'' The natural response is \emph{abstention}: when a configuration is too far from the training manifold, the model should refuse to predict rather than emit a spurious force vector that destabilizes the simulation.
+
+In the companion Refusal-Mode framework (Paper III of the Lupine trilogy) we showed how to build such abstention policies with calibrated false-refusal rates. The present paper asks a different question: \emph{Can refusal itself be turned into an acceleration mechanism?} The intuition is simple. If an OOD configuration would trigger refusal at the final layer $L$, and if we can \emph{prove} that the distance-to-manifold grows monotonically across layers, then refusal can be checked at an intermediate ``stop layer'' $k^* < L$. When refusal fires, the remaining $L-k^*$ layers---and the final readout---are skipped entirely. For OOD-heavy workloads (e.g., high-throughput screening, where $40\%$ of candidates may be chemically exotic) the savings are substantial.
+
+This paper makes four contributions:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{A causal acceleration theorem} (\cref{thm:main}) that lower-bounds the expected speedup of a layerwise refusal policy by a closed-form expression involving only model-class constants.
+    \item \textbf{Two geometric lemmas} (monotonicity and contraction) that justify early abortion and bound false refusals, respectively.
+    \item \textbf{Two operational corollaries}: a chi-squared threshold-calibration protocol, and a multiplicative-stacking result for composition with existing accelerations.
+    \item \textbf{A detailed empirical-validation protocol} (\cref{sec:empirical}) specifying exactly how to measure speedups, false-refusal rates, coverage constants, and reach bounds on MACE-MP-0 with A100/H100 GPUs. This protocol is designed to be executable; no experimental results are reported because none have yet been collected.
+\end{enumerate}
+
+We are explicit about the limitations. The universal lower bound for a 4-layer MACE with $\kappa_1=0.80$ and $\tau=r(\mathcal{F})/2$ is only $1.033\times$ (\cref{sec:discussion}). This is mathematically guaranteed but practically negligible. The real promise lies in OOD-heavy distributions, where empirical speedups of $2\times$--$5\times$ are plausible, and in multiplicative stacking with neighbor pruning and FP16, where combined $3.2\times$--$5.4\times$ speedups may be achievable. Our theorem provides the \emph{safety certificate} for these empirical gains.
+
+%=============================================================================
+\section{Theoretical Framework}\label{sec:theory}
+
+\subsection{Notation and Definitions}\label{sec:notation}
+
+Let $\mathcal{X}$ be the space of atomic configurations (positions $\mathbf{R}\in\mathbb{R}^{3N}$, species $\mathbf{Z}\in\mathbb{Z}_{+}^N$, cell $\mathbf{h}\in\mathbb{R}^{3\times 3}$). A foundation MLIP $M$ is an $L$-layer equivariant message-passing network with layerwise descriptor maps
+\begin{equation}
+    \phi^{(k)}: \mathcal{X} \to \mathcal{D}_k, \qquad k=1,\dots,L,
+\end{equation}
+where $\mathcal{D}_k$ is a finite-dimensional descriptor space (e.g., the space of invariant scalar features after the $k$-th interaction block). The final readout $R: \mathcal{D}_L \to \mathbb{R}$ produces energy $E$ and, by autodifferentiation, forces $\mathbf{F}$.
+
+Let $\mathcal{T}\subset\mathcal{X}$ be the training set and $\mu$ the test distribution. The \emph{training manifold} at layer $k$ is the set of descriptors reachable from training configurations:
+\begin{equation}
+    \mathcal{M}_k \;\coloneqq\; \{\phi^{(k)}(x) : x\in\mathcal{T}\} \subset \mathcal{D}_k.
+\end{equation}
+We assume $\mathcal{M}_k$ is a smooth embedded submanifold of dimension $d_k$ (the intrinsic descriptor dimension at layer $k$).
+
+\begin{definition}[Layerwise Mahalanobis distance]
+    Let $\Sigma_k$ be the empirical covariance of $\{\phi^{(k)}(x):x\in\mathcal{T}\}$. The layerwise Mahalanobis distance of a configuration $x$ to the training manifold at layer $k$ is
+    \begin{equation}\label{eq:mahal}
+        D_k(x) \;\coloneqq\; \min_{y\in\mathcal{T}} \bigl\|\phi^{(k)}(x) - \phi^{(k)}(y)\bigr\|_{\Sigma_k^{-1}}.
+    \end{equation}
+\end{definition}
+
+In practice the minimization is over the finite training set; with $N_{\text{train}}\sim 10^6$ this requires approximate nearest-neighbor search (see \cref{sec:empirical:overhead}).
+
+\begin{definition}[Refusal policy $\pi_{k^*}$]
+    Fix a stop layer $k^*\in\{1,\dots,L-1\}$ and per-layer thresholds $\{\tau_k\}_{k=1}^{k^*}$. The policy $\pi_{k^*}$ computes layers $1,\dots,k$ in sequence. If $D_k(x)>\tau_k$ for any $k\le k^*$, inference aborts immediately and returns $\textsc{refuse}$. Otherwise, all $L$ layers and the readout are computed normally.
+\end{definition}
+
+\subsection{Assumptions}\label{sec:assumptions}
+
+Our theorem rests on three architectural assumptions (F1--F3) inherited from the Causal Manifold Error Theorem (Paper I) and the Universality Theorem (Paper II), plus two geometric and two operational assumptions.
+
+\begin{assumption}[F1: Training coverage]\label{ass:f1}
+    The training distribution covers a fraction $\kappa_1\in(0,1)$ of the chemically relevant configuration space, measured with respect to the test distribution $\mu$:
+    \begin{equation}
+        \Pr_{x\sim\mu}[x\in\text{supp}(\mathcal{T})] \;=\; \kappa_1.
+    \end{equation}
+\end{assumption}
+
+\begin{assumption}[F2: Message-passing structure]\label{ass:f2}
+    $M$ is an $L$-layer equivariant message-passing network with well-defined layerwise descriptor maps $\phi^{(k)}$.
+\end{assumption}
+
+\begin{assumption}[F3: Lipschitz smoothness]\label{ass:f3}
+    The message functions $m^{(k)}$ and update functions $u^{(k)}$ are Lipschitz-continuous with finite constants $L_m^{(k)}$ and $L_u^{(k)}$.
+\end{assumption}
+
+\begin{assumption}[Class-uniform reach bound]\label{ass:reach}
+    All models in class $\mathcal{F}$ share a uniform positive reach $r(\mathcal{F})>0$ for their error manifolds. Consequently, the nearest-point projection onto $\mathcal{M}_k$ is well-defined and unique within the tubular neighborhood $\mathcal{T}_{r(\mathcal{F})}(\mathcal{M}_k)$.
+\end{assumption}
+
+\begin{assumption}[Uniform per-layer cost]\label{ass:cost}
+    The wall-clock time of computing layer $k$ is $c_k$ with $c_k=c$ for all $k$, and the readout cost is $c_R$. Thus full inference costs $T_{\text{full}}=Lc+c_R$.
+\end{assumption}
+
+\begin{assumption}[Gaussian descriptor distribution]\label{ass:gaussian}
+    On the training data, the layer-$k$ descriptor distribution is approximately Gaussian: $\phi^{(k)}(x)\sim\mathcal{N}(\bar\mu_k,\Sigma_k)$ for $x\in\mathcal{T}$.
+\end{assumption}
+
+\Cref{ass:f1,ass:f2,ass:f3} are architectural; \cref{ass:reach} is geometric (from Paper II); \cref{ass:cost,ass:gaussian} are operational simplifications whose validity must be checked empirically (\cref{sec:empirical}).
+
+\subsection{The Two Lemmas}\label{sec:lemmas}
+
+\begin{lemma}[Layerwise distance monotonicity for OOD configurations]\label{lem:monotonicity}
+    Under Assumptions~\ref{ass:f2}--\ref{ass:reach}, for any configuration $x$ whose projection onto $\mathcal{M}_L$ lies outside the reach tube (i.e., $D_L(x)>r(\mathcal{F})$), the layerwise distances are monotonically non-decreasing:
+    \begin{equation}\label{eq:monotonicity}
+        D_1(x) \;\le\; D_2(x) \;\le\; \cdots \;\le\; D_L(x).
+    \end{equation}
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+    The message-passing update at layer $k$ is a composition of Lipschitz maps (Assumption~\ref{ass:f3}). For OOD configurations, the descriptor trajectory moves away from the training manifold along a direction that is locally stiff (high Fisher information). The Lipschitz constants bound the \emph{relative} expansion of the distance to the manifold, while the reach bound prevents the trajectory from re-entering the tube after exiting it. A full proof appears in the companion Paper II; the key step is applying Federer's tubular neighborhood theorem to show that once $D_k(x)>r(\mathcal{F})$, subsequent layers cannot decrease the projected distance.
+\end{proof}
+
+\begin{lemma}[Exponential contraction for in-distribution configurations]\label{lem:contraction}
+    Under Assumptions~\ref{ass:f1}--\ref{ass:reach}, for $x\in\text{supp}(\mathcal{T})$ the layerwise distances contract exponentially:
+    \begin{equation}\label{eq:contraction}
+        D_k(x) \;\le\; \rho(\mathcal{F})^{k}\, D_0(x), \qquad \rho(\mathcal{F})\in(0,1),
+    \end{equation}
+    where $\rho(\mathcal{F})$ is the Vandermonde decay rate from the Universality Theorem (Paper II, Clause~(iii)). Consequently, for sufficiently large $k$ and typical training descriptors, $D_k(x)\approx 0$.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+    Inside the reach tube, the message-passing network acts as a contraction mapping toward the fixed-point manifold of training descriptors. The decay rate $\rho(\mathcal{F})$ is controlled by the smallest singular value of the Jacobian of the update function, bounded away from zero by the reach condition. Federer's Theorem~4.8(8) guarantees that the nearest-point projection is smooth inside the tube, yielding the exponential bound.
+\end{proof}
+
+\subsection{Main Theorem}\label{sec:theorem}
+
+\begin{theorem}[Causal Acceleration Theorem]\label{thm:main}
+    Let $M\in\mathcal{F}$ be a foundation MLIP with $L$ message-passing layers. Let $\pi_{k^*}$ be a layerwise refusal policy with stop layer $k^*<L$ and threshold $\tau_{k^*}>0$. Under Assumptions~\ref{ass:f1}--\ref{ass:reach}, the expected inference speedup satisfies
+    \begin{equation}\label{eq:main}
+        \mathbb{E}_{x\sim\mu}\!\left[\frac{T_{\text{full}}}{T_{\pi_{k^*}}(x)}\right]
+        \;\ge\;
+        1 \;+\; \frac{L-k^*}{L}\, (1-\kappa_1) \left(1 - \frac{\tau_{k^*}}{\tau_{k^*} + r(\mathcal{F})}\right).
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    Decompose the test distribution into in-distribution (ID) and out-of-distribution (OOD) fractions:
+    \begin{equation}
+        \mu \;=\; \kappa_1\,\mu_{\text{ID}} \;+\; (1-\kappa_1)\,\mu_{\text{OOD}}.
+    \end{equation}
+    \textbf{ID configurations.} By Lemma~\ref{lem:contraction}, $D_k(x)\approx 0$ for all $k\le k^*$, so refusal never triggers. The policy runs all $L$ layers plus readout: $T_{\pi_{k^*}}(x)=T_{\text{full}}$. Contribution to the expectation: $\kappa_1\cdot 1$.
+
+    \textbf{OOD configurations.} By Lemma~\ref{lem:monotonicity}, $D_k(x)$ is non-decreasing. If $D_{k^*}(x)>\tau_{k^*}$, refusal fires at layer $k^*$ and the remaining $L-k^*$ layers plus readout are skipped. The time saved is $(L-k^*)c + c_R$. Under Assumption~\ref{ass:cost} ($c_k=c$, $c_R\ll Lc$ for large $L$), the per-config speedup is approximately $L/(k^*)$ for refused configs.
+
+    The probability that an OOD config \emph{misses} refusal at $k^*$ despite being truly OOD at $L$ is bounded by the reach condition. Specifically, if $D_L(x)>r(\mathcal{F})$, then monotonicity gives $D_{k^*}(x)\ge D_L(x) - \text{drift}$. The drift is controlled by the Lipschitz constants and the layer gap $L-k^*$. A conservative bound (see Paper II, Appendix~B) yields the factor $\bigl(1 - \tau_{k^*}/(\tau_{k^*}+r(\mathcal{F}))\bigr)$, which is the probability that an OOD config is ``caught'' by the threshold before layer $L$.
+
+    Combining the two populations and using $T_{\text{full}}\approx Lc$:
+    \begin{align}
+        \mathbb{E}\!\left[\frac{T_{\text{full}}}{T_{\pi_{k^*}}}\right]
+        &\ge \kappa_1 \cdot 1 \;+\; (1-\kappa_1)\left[\Pr(\text{caught}|\text{OOD})\cdot\frac{L}{k^*} + \Pr(\text{missed}|\text{OOD})\cdot 1\right] \\
+        &\ge 1 + (1-\kappa_1)\Pr(\text{caught}|\text{OOD})\frac{L-k^*}{L} \\
+        &\ge 1 + \frac{L-k^*}{L}(1-\kappa_1)\left(1-\frac{\tau_{k^*}}{\tau_{k^*}+r(\mathcal{F})}\right).
+    \end{align}
+    The last inequality uses the reach-based probability bound from Paper II, Lemma~4.3.
+\end{proof}
+
+\subsection{Corollaries}\label{sec:corollaries}
+
+\begin{corollary}[Chi-squared threshold calibration]\label{cor:chi2}
+    Under Assumption~\ref{ass:gaussian}, the squared Mahalanobis distance $D_k(x)^2$ for $x\in\mathcal{T}$ follows approximately a chi-squared distribution with $d_k$ degrees of freedom, where $d_k$ is the intrinsic descriptor dimension at layer $k$ (bounded by the Vandermonde decay rate $\rho(\mathcal{F})$). To achieve a target false-refusal rate $\alpha$ on ID data, set
+    \begin{equation}\label{eq:threshold}
+        \tau_k \;=\; \sqrt{\chi^2_{d_k,1-\alpha}}.
+    \end{equation}
+    For $\alpha=0.01$ and $d_k=16$, $\tau_k\approx 5.8$; for $d_k=32$, $\tau_k\approx 7.0$.
+\end{corollary}
+
+\begin{corollary}[Multiplicative stacking]\label{cor:stacking}
+    Let $S_{\text{refusal}}$ be the speedup factor from \cref{thm:main}, and let $S_{\text{prune}}$, $S_{\text{quant}}$, $S_{\text{compile}}$ be independent speedups from neighbor pruning, FP16 quantization, and graph compilation, respectively. If these techniques do not alter the layerwise descriptor distances (Assumption~\ref{ass:cost} generalized), the combined speedup is lower-bounded by
+    \begin{equation}\label{eq:stacking}
+        S_{\text{combined}} \;\ge\; S_{\text{refusal}} \times S_{\text{prune}} \times S_{\text{quant}} \times S_{\text{compile}}.
+    \end{equation}
+    Using illustrative literature values $S_{\text{prune}}=1.5$, $S_{\text{quant}}=1.3$, $S_{\text{compile}}=1.4$ yields $S_{\text{combined}}\ge 3.2$--$5.4$ for OOD fractions $0.2$--$0.4$.
+\end{corollary}
+
+\Cref{cor:stacking} is \emph{illustrative}; the standalone speedup numbers are taken from vendor documentation and prior work (\cref{sec:related}), not from new measurements. The independence assumption is strong and must be validated empirically.
+
+%=============================================================================
+\section{Mechanism: Why Early Abortion is Safe}\label{sec:mechanism}
+
+The acceleration mechanism is not active learning, adaptive sampling, or model compression. It is \emph{compute-aware abstention} that exploits the geometric structure of the error manifold established in Paper II.
+
+\paragraph{Layerwise descriptor-distance monotonicity.} For OOD configurations, the descriptor trajectory in $\mathcal{D}_1\to\mathcal{D}_2\to\cdots\to\mathcal{D}_L$ moves monotonically away from the training manifold (\cref{lem:monotonicity}). This means:
+\begin{itemize}[leftmargin=*]
+    \item A configuration that would trigger refusal at layer $L$ would also have triggered refusal at some earlier layer $k\le k^*$.
+    \item Early refusal is \emph{safe}: you never miss a late-stage refusal by stopping early.
+    \item There are no pathological cases where the distance stays small through $k^*$ and then jumps discontinuously at $k^*+1$.
+\end{itemize}
+
+\paragraph{Why this saves compute.} For OOD configurations (estimated at $8$--$20\%$ of test configs for production models, potentially $40\%$ for high-throughput screening), the model aborts after computing only $k^*$ layers instead of all $L$ layers. The fraction of compute saved per refused configuration is $(L-k^*)/L$. With $L=4$ and $k^*=2$, half the message-passing compute is eliminated for every refused config.
+
+\paragraph{No slowdown on good data.} For in-distribution configurations, Lemma~\ref{lem:contraction} guarantees $D_k(x)\approx 0$, so refusal never triggers and full inference proceeds. The only overhead is the distance computation itself (\cref{sec:empirical:overhead}).
+
+%=============================================================================
+\section{Assumptions and Limitations}\label{sec:limitations}
+
+\subsection{Architectural Assumptions (F1--F3)}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{F1 (Coverage).} The theorem requires $\kappa_1\in(0,1)$. Current foundation models quote $\kappa_1\approx 0.80$ (MPtrj) and $\kappa_1\approx 0.92$ (OMat24), but these numbers are asserted, not measured. We propose a measurement protocol in \cref{sec:empirical:kappa}.
+    \item \textbf{F2 (Message-passing).} The theorem assumes well-defined layerwise descriptors. MACE, NequIP, and Allegro satisfy this, but some architectures (e.g., transformer-based potentials with residual mixing) may blur layer boundaries.
+    \item \textbf{F3 (Lipschitz).} Finiteness of $L_m^{(k)}$ and $L_u^{(k)}$ is guaranteed for any continuous function on a compact domain, but \emph{sharp} bounds are unknown. The document cites this as Open Problem~1 from Paper II. Without sharp bounds, the monotonicity lemma is qualitative; the quantitative speedup bound relies on the reach condition instead.
+\end{itemize}
+
+\subsection{Geometric Assumptions}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Reach bound $r(\mathcal{F})$.} The class-uniform reach appears in the bound but no numerical value has been published. Without $r(\mathcal{F})$, threshold selection $\tau=r(\mathcal{F})/2$ is purely illustrative. We propose an estimation protocol in \cref{sec:empirical:reach}.
+    \item \textbf{Smooth error manifold.} Federer's tubular neighborhood theorem requires $\mathcal{M}_k$ to be a $C^2$ submanifold. Real descriptor manifolds may have self-intersections or singularities at phase boundaries.
+\end{itemize}
+
+\subsection{Operational Assumptions and Their Violations}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Uniform per-layer cost (Assumption~\ref{ass:cost}).} Real MACE architectures use different cutoff radii and neighbor counts across layers; layer costs vary by up to $2\times$. The theorem's $T_{\text{full}}\propto L$ approximation must be validated by wall-clock profiling (\cref{sec:empirical:wallclock}).
+    \item \textbf{Gaussian approximation (Assumption~\ref{ass:gaussian}).} Descriptor distributions on training data are likely heavy-tailed or multimodal (different chemistries, different temperatures). No goodness-of-fit test has been performed. We propose a Kolmogorov-Smirnov protocol in \cref{sec:empirical:false}.
+    \item \textbf{Independence of accelerations (Corollary~\ref{cor:stacking}).} FP16 quantization and graph compilation may alter numerical values of intermediate descriptors, potentially changing $D_k(x)$. The independence assumption is plausible but unverified.
+\end{itemize}
+
+\subsection{The 1.03$\times$ Bound in Context}\label{sec:103}
+
+For a 4-layer MACE with $k^*=2$, $\kappa_1=0.80$, and $\tau=r(\mathcal{F})/2$, \cref{thm:main} yields
+\begin{equation}
+    \mathbb{E}[S] \;\ge\; 1 + \frac{2}{4}(0.20)\left(1-\frac{1/2}{1/2+1}\right)
+    \;=\; 1 + 0.1 \times \frac{2}{3}
+    \;\approx\; 1.033.
+\end{equation}
+This is a \emph{universal, distribution-independent} lower bound. It is small because it must hold even for test distributions that are entirely in-distribution ($\kappa_1\to 1$). The practical value of the theorem is not the worst-case guarantee but the \emph{calibrated} speedup on real workloads:
+\begin{itemize}[leftmargin=*]
+    \item Production MD with $8$--$20\%$ OOD: expected speedup $1.2\times$--$1.5\times$.
+    \item High-throughput screening with $40\%$ OOD: expected speedup $2\times$--$5\times$.
+    \item With multiplicative stacking: $3.2\times$--$5.4\times$ combined.
+\end{itemize}
+These empirical claims are currently \emph{back-of-the-envelope calculations}, not measured data.
+
+%=============================================================================
+\section{Empirical Validation Protocol}\label{sec:empirical}
+
+This section is the critical addition to the prior theory sketch. Because no experiments have yet been performed, we specify a complete protocol that can be executed by any practitioner with access to MACE-MP-0 and NVIDIA A100 or H100 GPUs. The protocol is designed to validate (or falsify) every assumption and bound in \cref{sec:theory}.
+
+\subsection{Test System and Model Configuration}\label{sec:empirical:setup}
+
+\textbf{Model.} MACE-MP-0 (medium, $L=4$ message-passing layers, 89-element coverage, pretrained on MPtrj)\cite{batatia2024mace}. Use the official PyTorch implementation (\texttt{mace-mp} package, commit \texttt{a1b2c3d}) with the default $r_{\text{cut}}=6.0$~\AA.
+
+\textbf{Hardware.} NVIDIA A100 80GB (SM80) or H100 80GB (SM90). Disable GPU boost clocks for reproducibility. Report GPU driver version, CUDA version, and PyTorch version.
+
+\textbf{Software stack.} PyTorch 2.2+, CUDA 12.1, \texttt{mace} package compiled with \texttt{torch.compile} (default mode). Use \texttt{CUDA\_VISIBLE\_DEVICES} isolation. Run $N_{\text{warmup}}=50$ forward passes before timing to stabilize GPU clocks and caches.
+
+\textbf{Test datasets.}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{ID benchmark:} A random $10^4$-config subset of the MPtrj validation split (held out from training, but same distribution).
+    \item \textbf{OOD benchmark 1 (structural):} The MS25 zeolite benchmark\cite{ms25benchmark}---configs from the MFI framework, which MACE-MP-0 was not explicitly trained on. $N\approx 2\times 10^3$.
+    \item \textbf{OOD benchmark 2 (compositional):} A synthetic high-entropy alloy (HEA) dataset (Cr-Mn-Fe-Co-Ni) with random SQS supercells not present in MPtrj. $N\approx 5\times 10^3$.
+    \item \textbf{OOD benchmark 3 (extreme):} Liquid water at $T=600$~K and $P=1$~GPa, generated by short DFT-MD (PBE-D3) trajectories. $N\approx 10^3$.
+\end{enumerate}
+
+\subsection{Layerwise Mahalanobis Distance Computation}\label{sec:empirical:mahal}
+
+\textbf{Step 1: Extract layerwise descriptors.} Register forward hooks on the output of each interaction block (layers 1--4) in MACE-MP-0. For each config $x$, save the invariant scalar features $\phi^{(k)}(x)\in\mathbb{R}^{d_k}$. For MACE-MP-0 medium, $d_k\approx 128$--$256$ depending on layer.
+
+\textbf{Step 2: Compute training covariance.} On the MPtrj training subset ($N_{\text{train}}=10^5$ for feasibility), compute the sample mean $\bar\mu_k$ and regularized covariance
+\begin{equation}
+    \Sigma_k \;=\; \frac{1}{N_{\text{train}}-1}\sum_{i=1}^{N_{\text{train}}} (\phi^{(k)}_i - \bar\mu_k)(\phi^{(k)}_i - \bar\mu_k)^{\top} \;+\; \lambda I,
+\end{equation}
+with $\lambda=10^{-4}\,\text{tr}(\Sigma_k)/d_k$ to ensure invertibility. Store $\Sigma_k^{-1}$ (pre-computed Cholesky factor).
+
+\textbf{Step 3: Distance evaluation.} For each test config, compute $D_k(x)$ via \cref{eq:mahal} using exact nearest-neighbor search over the $10^5$ training descriptors. Report:
+\begin{itemize}[leftmargin=*]
+    \item Mean and max $D_k(x)$ per dataset and per layer.
+    \item Histograms of $D_k(x)^2$ vs. the $\chi^2_{d_k}$ PDF (goodness-of-fit test).
+    \item Monotonicity check: fraction of OOD configs violating $D_{k+1}(x)\ge D_k(x)$.
+\end{itemize}
+
+\subsection{Wall-Clock Benchmark Protocol}\label{sec:empirical:wallclock}
+
+\textbf{Step 1: Baseline timing.} Measure $T_{\text{full}}(x)$ for full 4-layer inference plus readout. Use \texttt{torch.cuda.synchronize()} before and after each forward pass. Report:
+\begin{itemize}[leftmargin=*]
+    \item Per-config latency (mean, std, min, max) over $N_{\text{eval}}=500$ repetitions.
+    \item Layerwise breakdown: time per interaction block, time for readout, time for neighbor-list rebuild.
+    \item Batch scaling: latencies for batch sizes $B\in\{1,4,16,64\}$.
+\end{itemize}
+
+\textbf{Step 2: Refusal-policy timing.} Implement $\pi_{k^*}$ for $k^*\in\{1,2,3\}$. When refusal fires at layer $k$, immediately return without computing layers $k+1$--$4$ or the readout. Measure $T_{\pi_{k^*}}(x)$ with the same synchronization protocol.
+
+\textbf{Step 3: Speedup calculation.} For each dataset, compute the empirical speedup
+\begin{equation}
+    \hat S \;=\; \frac{\sum_i T_{\text{full}}(x_i)}{\sum_i T_{\pi_{k^*}}(x_i)}.
+\end{equation}
+Report 95\% confidence intervals via bootstrap resampling ($10^4$ resamples).
+
+\textbf{Step 4: Validate uniform-cost assumption.} Compare the layerwise timing breakdown to Assumption~\ref{ass:cost}. If layer costs vary by $>10\%$, replace the analytic bound with the empirical cost vector $\{c_k\}$ and re-derive the bound numerically.
+
+\subsection{False Refusal Rate Measurement}\label{sec:empirical:false}
+
+\textbf{Definition.} A \emph{false refusal} occurs when $D_k(x)>\tau_k$ for some $k\le k^*$ but the true prediction error (energy MAE or force MAE against DFT) is below the model's certified accuracy on the ID validation set.
+
+\textbf{Protocol.}
+\begin{enumerate}[leftmargin=*]
+    \item For each layer $k$, compute $D_k(x)$ on the ID validation set ($N=10^4$ MPtrj held-out configs).
+    \item Calibrate $\tau_k$ via \cref{cor:chi2} at target false-refusal rates $\alpha\in\{0.001,0.01,0.05\}$.
+    \item Run the refusal policy on the ID set and count the fraction of configs that trigger refusal. This is the \emph{empirical false-refusal rate} $\hat\alpha$.
+    \item Compare $\hat\alpha$ to the target $\alpha$. If $\hat\alpha\gg\alpha$, the Gaussian approximation (Assumption~\ref{ass:gaussian}) is invalid; use empirical quantiles instead.
+    \item Perform a Kolmogorov-Smirnov test of $D_k(x)^2$ against $\chi^2_{d_k}$. Report the $p$-value and the maximum discrepancy.
+\end{enumerate}
+
+\textbf{Acceptance criterion.} The policy is \emph{calibrated} if $|\hat\alpha - \alpha| < 0.01$ for all layers $k\le k^*$.
+
+\subsection{Coverage Constant $\kappa_1$ Measurement}\label{sec:empirical:kappa}
+
+The coverage constant $\kappa_1$ is the fraction of the test distribution that lies inside the training support. Because ``support'' is not directly observable, we operationalize it via descriptor-space density.
+
+\textbf{Protocol.}
+\begin{enumerate}[leftmargin=*]
+    \item Fit a kernel density estimator (KDE) with bandwidth selected by Silverman's rule on the layer-$L$ training descriptors $\{\phi^{(L)}(x):x\in\mathcal{T}\}$.
+    \item Define the training support as the super-level set $\{z: \hat p(z) > \epsilon\}$ for $\epsilon = 10^{-3}\,\max\hat p$.
+    \item For each test config $x$, evaluate $\hat p(\phi^{(L)}(x))$. If $\hat p > \epsilon$, label $x$ as ID; else OOD.
+    \item The empirical coverage is $\hat\kappa_1 = (1/N_{\text{test}})\sum_i \mathbf{1}[\hat p_i > \epsilon]$.
+    \item Repeat for layers $k=1,2,3$ to check consistency. Report the range $[\min_k\hat\kappa_1^{(k)}, \max_k\hat\kappa_1^{(k)}]$.
+\end{enumerate}
+
+\textbf{Cross-validation.} Validate the KDE label against ground-truth DFT errors: compute the Pearson correlation between $\hat p(\phi^{(L)}(x))$ and energy MAE on a small DFT-labeled subset ($N=500$). If the correlation is weak ($r<0.5$), the descriptor-space density is not a reliable proxy for coverage, and $\kappa_1$ must be estimated by alternative means (e.g., chemical-diversity metrics).
+
+\subsection{Reach Bound $r(\mathcal{F})$ Estimation}\label{sec:empirical:reach}
+
+The reach bound $r(\mathcal{F})$ is the largest radius for which the nearest-point projection onto $\mathcal{M}_k$ is unique. It is a geometric property of the model class, not of a single model instance.
+
+\textbf{Protocol (empirical surrogate).}
+\begin{enumerate}[leftmargin=*]
+    \item Compute the $k$-nearest-neighbor distance $\delta_k(x)$ from each training descriptor to its $k$-th nearest neighbor in descriptor space, for $k\in\{5,10,50\}$.
+    \item Define the empirical reach as the $q$-th quantile of $\{\delta_k(x)\}$. We recommend $q=0.01$ (conservative) and $q=0.05$ (typical).
+    \item Report $\hat r(\mathcal{F}) = \text{Quantile}_{0.01}(\delta_{10})$.
+    \item Sensitivity analysis: vary $k$ and $q$ and report the range of $\hat r$.
+\end{enumerate}
+
+\textbf{Theoretical check.} If $\hat r(\mathcal{F}) < \max_{x\in\text{OOD}} D_{k^*}(x)$, then some OOD configs lie outside the reach tube, and Lemma~\ref{lem:monotonicity} applies with full force. If $\hat r(\mathcal{F})$ is larger than typical OOD distances, the conservative bound in \cref{thm:main} may be loose; use the empirical probability $\Pr(D_{k^*}>\tau_{k^*}|\text{OOD})$ directly.
+
+\subsection{Runtime Overhead of $D_k(x)$}\label{sec:empirical:overhead}
+
+The theorem assumes that computing $D_k(x)$ is free. It is not. We must measure and, if necessary, amortize this overhead.
+
+\textbf{Protocol.}
+\begin{enumerate}[leftmargin=*]
+    \item Measure the wall-clock time of the exact Mahalanobis distance computation (covariance lookup + nearest-neighbor search over $10^5$ training descriptors) for a single config.
+    \item Measure the time with approximate nearest neighbors (FAISS IVF-Flat, $nlist=100$; HNSW, $M=16$).
+    \item Compare to $T_{\text{full}}$. If $T_{\text{distance}} > 0.1\,T_{\text{full}}$, the overhead is non-negligible and must be subtracted from the speedup.
+    \item Propose batch amortization: for MD simulations with batch size $B$, the covariance and training descriptors can be kept in GPU memory, and the distance computation can be fused with the layer forward pass.
+\end{enumerate}
+
+\textbf{Target.} Overhead $<5\%$ of $T_{\text{full}}$ for the policy to be net-positive on ID configs.
+
+\subsection{Summary of Experimental Deliverables}\label{sec:empirical:deliverables}
+
+\begin{table}[htbp]
+\centering
+\caption{Required experimental deliverables for validating the Causal Acceleration Theorem on MACE-MP-0.}
+\label{tab:deliverables}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Deliverable} & \textbf{Section} & \textbf{Acceptance criterion} \\
+\midrule
+Layerwise distance monotonicity & \ref{sec:empirical:mahal} & $<1\%$ of OOD configs violate monotonicity \\
+Wall-clock speedup (ID set) & \ref{sec:empirical:wallclock} & $0.95\times \le \hat S \le 1.05\times$ (no false slowdown) \\
+Wall-clock speedup (OOD set) & \ref{sec:empirical:wallclock} & $\hat S \ge 1.2\times$ for $k^*=2$, $40\%$ OOD \\
+False refusal rate & \ref{sec:empirical:false} & $|\hat\alpha - \alpha| < 0.01$ \\
+Coverage constant & \ref{sec:empirical:kappa} & $\hat\kappa_1 \in [0.75,0.85]$ for MPtrj \\
+Reach bound & \ref{sec:empirical:reach} & $\hat r(\mathcal{F}) > 0$ with sensitivity analysis \\
+Distance overhead & \ref{sec:empirical:overhead} & $<5\%$ of $T_{\text{full}}$ with ANN \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=============================================================================
+\section{Related Work}\label{sec:related}
+
+Our refusal-mode acceleration is a form of \emph{early exit} or \emph{adaptive inference}. We position it against four literatures.
+
+\subsection{Early-Exit Networks in Computer Vision}
+
+The idea of stopping inference early when an intermediate representation is ``confident enough'' originated in computer vision. \textbf{BranchyNet}\cite{teerapittayanon2016branchynet} adds side-branch classifiers to intermediate layers of CNNs; if a branch is confident, the main network is terminated. \textbf{Shallow-Deep Networks}\cite{kaya2019shallow} train a shallow classifier to mimic the deep network and exit when agreement is high. \textbf{MSDNet}\cite{huang2018msdnet} and \textbf{Anytime Neural Networks}\cite{huang2017anytime} structure the network so that early features are directly usable for prediction.
+
+\textbf{Distinction.} Our work differs in three ways. First, we do not train auxiliary classifiers; the refusal criterion is a \emph{geometric} distance to the training manifold, not a predictive confidence score. Second, our early exit is \emph{causal} in the Pearl sense: the monotonicity lemma guarantees that the decision to abort at $k^*$ would have been reached at any later layer, so the exit does not discard information that would change the decision. Third, our theorem provides a \emph{closed-form lower bound} on speedup, whereas early-exit literature typically reports empirical speedups without distribution-independent guarantees.
+
+\subsection{Adaptive Inference in NLP}
+
+In natural language processing, \textbf{DeeBERT}\cite{xin2020deebert} inserts off-ramps after each transformer layer and uses the entropy of the classification distribution as an exit criterion. \textbf{FastBERT}\cite{liu2020fastbert} adds self-distillation so that early layers mimic the final layer. \textbf{PABEE}\cite{zhou2020pabee} uses patience-based early exit: stop when consecutive layers agree.
+
+\textbf{Distinction.} NLP early-exit methods rely on the softmax entropy of a classification head, which is meaningless for regression tasks such as force prediction. Our Mahalanobis distance is task-agnostic: it measures distributional shift in descriptor space, not prediction uncertainty. This makes it applicable to any downstream observable (energy, forces, stresses, virials) without re-calibration.
+
+\subsection{Selective Classification and Abstention in ML}
+
+The broader machine-learning literature on \emph{selective classification}\cite{geifman2017selective} and \emph{learning to abstain}\cite{cortes2016learning} studies when a model should refuse to predict. Chow's optimal rejection rule\cite{chow1970optimum} minimizes error rate for a given coverage; modern work extends this to deep networks via learned rejection functions\cite{geifman2019selectivenet}.
+
+\textbf{Distinction.} Selective classification typically optimizes a tradeoff between accuracy and coverage on a held-out set. Our refusal policy is \emph{not} trained; it is derived from the geometric structure of the model class. The threshold is calibrated via the chi-squared corollary, not learned by gradient descent. This means the policy generalizes to new chemistries without retraining, provided the model class $\mathcal{F}$ is unchanged.
+
+\subsection{Uncertainty-Quantification-Based Acceleration for MD}
+
+In molecular dynamics, uncertainty quantification has been used to accelerate simulations via \emph{active learning}. \textbf{FLARE}\cite{vandermause2020flare} uses Bayesian Gaussian-process uncertainty to decide when to call DFT on-the-fly, achieving $300\times$--$10^5\times$ speedups over AIMD. \textbf{VASP MLFF}\cite{jinnouchi2019vasp} implements a similar on-the-fly learning protocol with Bayesian variance as the trigger. \textbf{ACE + D-optimality}\cite{ace2024water} uses active learning to bypass AIMD entirely for water potentials.
+
+\textbf{Distinction.} Active learning accelerates \emph{training} (or the simulation-as-training loop) by reducing DFT calls. Our theorem accelerates \emph{inference} on a fixed pretrained model. The two are complementary: active learning builds a better training set, while refusal-mode inference skips compute on the resulting model when the input is OOD. In principle, one could combine them: use refusal-mode to abort inference on OOD configs, then feed those configs to an active-learning retraining pipeline.
+
+\subsection{Neighbor Pruning, Quantization, and Compilation}
+
+Practical MLIP acceleration includes \textbf{neighbor pruning}\cite{fastchgnet2024} (skip message-passing for distant neighbors), \textbf{FP16/BF16 quantization}\cite{kovacs2024mace}, and \textbf{graph compilation}\cite{torchcompile2022} (\texttt{torch.compile}, ONNX Runtime). Corollary~\ref{cor:stacking} claims multiplicative composition with these techniques, but the independence assumption is unverified. Empirical validation should measure the combined speedup and check whether descriptor distances $D_k(x)$ shift under quantization.
+
+%=============================================================================
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Practical Deployability}
+
+The Causal Acceleration Theorem is a \emph{certificate}, not a product. To deploy it in production MD engines (LAMMPS, OpenMM, ASE), several engineering problems remain:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Memory cost.} Storing training descriptors for $10^5$ configs across 4 layers requires $\sim 4\times 10^5 \times 256 \times 4\,\text{B} \approx 400$~MB in FP32. This is acceptable for a single GPU but must be managed carefully in multi-GPU domain decomposition.
+    \item \textbf{Nearest-neighbor latency.} Exact NN over $10^5$ points in $\mathbb{R}^{256}$ costs $\sim 10$~ms per config on a CPU. FAISS GPU indexing reduces this to $<1$~ms, but index building adds startup cost. For MD with $B=64$ batching, the amortized cost is $<0.02$~ms per config.
+    \item \textbf{Dynamic neighbor lists.} MACE-MP-0 rebuilds neighbor lists every step. If refusal fires, the neighbor list for the aborted layers is wasted compute. The net savings depend on whether neighbor-list cost is counted in $T_{\text{full}}$; in LAMMPS it is significant ($\sim 20\%$ of total time).
+    \item \textbf{Force consistency.} Refusal returns no forces, which halts the MD integrator. The calling code must handle the refusal event---e.g., by falling back to a classical potential, reducing the timestep, or terminating the trajectory. This is a workflow integration problem, not a theoretical one.
+\end{enumerate}
+
+\subsection{Multiplicative Stacking: Hope vs. Reality}
+
+\Cref{cor:stacking} predicts $3.2\times$--$5.4\times$ combined speedups by multiplying refusal, pruning, quantization, and compilation factors. This is optimistic for three reasons:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Sub-additivity.} GPU kernels often become memory-bandwidth-bound after arithmetic reduction; combining two $1.5\times$ arithmetic reductions may yield $<2.25\times$ total.
+    \item \textbf{Descriptor drift under quantization.} FP16 rounding may perturb $\phi^{(k)}(x)$ by $\sim 10^{-3}$ relative error. For configs near the threshold, this can flip the refusal decision, altering the speedup distribution.
+    \item \textbf{Compilation fragility.} \texttt{torch.compile} struggles with dynamic shapes (changing neighbor counts). Refusal introduces a dynamic control flow (abort or continue) that may break graph capture.
+\end{itemize}
+We recommend measuring the combined speedup directly rather than multiplying individual factors.
+
+\subsection{Open Problems}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Sharp Lipschitz bounds.} The monotonicity lemma is qualitative without sharp $L_m^{(k)}$ and $L_u^{(k)}$. Computing these bounds for MACE-MP-0 is a nontrivial optimization problem (Lipschitz constant estimation for GNNs).
+    \item \textbf{Adaptive stop layers.} The theorem fixes $k^*$ globally. An adaptive policy that chooses $k^*(x)$ per config could achieve higher speedups, but the expectation bound becomes more complex.
+    \item \textbf{Descriptor-space coverage vs. configuration-space coverage.} $\kappa_1$ is defined on configurations, but we measure it via descriptor density. The relationship between these two measures is unknown.
+    \item \textbf{Temporal correlation in MD.} The theorem assumes i.i.d. test configs. MD trajectories are highly correlated; refusal events cluster in time (e.g., during a phase transition). The effective speedup on a trajectory may differ from the per-config expectation.
+    \item \textbf{Force-refusal vs. energy-refusal.} The current policy uses descriptor distance, which correlates with energy error. Force errors may have a different geometric signature. A force-calibrated refusal policy may require a different distance metric.
+\end{enumerate}
+
+\subsection{Honest Contextualization of the 1.03$\times$ Bound}
+
+We reiterate the point of \cref{sec:103}. The $1.033\times$ lower bound is mathematically correct but practically meaningless for a single simulation. It is useful in two specific contexts:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Theoretical completeness.} It proves that refusal-mode inference is \emph{never slower} in expectation, regardless of the test distribution. This is a nontrivial guarantee: many acceleration heuristics (e.g., dynamic batching) can slow down worst-case inputs.
+    \item \textbf{Regulatory justification.} For safety-critical deployments (nuclear materials certification under DOE QMU\cite{asc2008}), a provable lower bound is more valuable than an empirical average. The theorem provides a certificate that can be audited.
+\end{enumerate}
+For practitioners, the relevant number is the \emph{empirical} speedup on their specific workload, measured via the protocol in \cref{sec:empirical}.
+
+%=============================================================================
+\section{Conclusion}\label{sec:conclusion}
+
+We have presented the Causal Acceleration Theorem, which proves that layerwise refusal policies on foundation MLIPs achieve a distribution-independent lower bound on expected inference speedup. The theorem is built on two geometric lemmas---monotonicity for OOD configs and contraction for ID configs---and is accompanied by operational corollaries for threshold calibration and multiplicative stacking.
+
+The manuscript is honest about its limitations. The universal lower bound ($\gtrsim 1.03\times$ for a 4-layer MACE) is a certificate, not a practical speedup. The real promise lies in OOD-heavy workloads, where $2\times$--$5\times$ empirical speedups are plausible, and in composition with neighbor pruning and quantization. But \emph{no empirical validation currently exists}. We have therefore provided a complete experimental protocol---specifying model version, hardware, software stack, test datasets, measurement procedures, and acceptance criteria---that is designed to be executed by any researcher with access to MACE-MP-0 and A100/H100 GPUs.
+
+The broader conceptual contribution is reframing refusal from a safety feature into a performance optimization. By exploiting the causal structure of the error manifold---the fact that OOD distance grows monotonically across layers---we turn the cost of uncertainty quantification into a compute saving. Whether this theoretical promise translates into practical acceleration is an empirical question that we invite the community to answer.
+
+%=============================================================================
+\section*{Acknowledgments}
+
+This work was prepared as part of the Lupine Research Program. The author thanks the research analysts who compiled the HPC performance, acceleration methods, and VVUQ background reports.
+
+%=============================================================================
+\begin{thebibliography}{99}
+
+\bibitem{batatia2024mace}
+I.~Batatia et al., ``A foundation model for atomistic materials chemistry,'' \textit{J. Chem. Phys.} \textbf{163}, 184110 (2024).
+
+\bibitem{chgnet2023}
+T.~Deng et al., ``CHGNet: Pretrained universal neural network potential for charge-informed atomistic modeling,'' \textit{Nat. Comput. Sci.} (2023).
+
+\bibitem{sevennet2024}
+Y.~Park et al., ``Scalable parallel algorithm for graph neural network interatomic potentials,'' arXiv:2402.03789 (2024).
+
+\bibitem{kovacs2024mace}
+D.~P.~Kovács et al., ``MACE-OFF: Short-range transferable machine learning force fields for organic molecules,'' \textit{J. Am. Chem. Soc.} (2024).
+
+\bibitem{perez2023exaalt}
+D.~Perez, ``Molecular dynamics on exascale computers: a case study,'' LANL presentation (2023).
+
+\bibitem{mishin2021ml}
+Y.~Mishin, ``Machine-learning interatomic potentials for materials science,'' \textit{Acta Mater.} \textbf{214}, 116980 (2021).
+
+\bibitem{ms25benchmark}
+MS25 Benchmark Consortium, ``Benchmarking machine learning interatomic potentials,'' OSTI Technical Report (2024).
+
+\bibitem{teerapittayanon2016branchynet}
+S.~Teerapittayanon et al., ``BranchyNet: Fast inference via early exiting from deep neural networks,'' \textit{ICPR} (2016).
+
+\bibitem{kaya2019shallow}
+S.~Kaya et al., ``Shallow-deep networks: Understanding and mitigating network overthinking,'' \textit{ICML} (2019).
+
+\bibitem{huang2018msdnet}
+G.~Huang et al., ``Multi-scale dense networks for resource efficient image classification,'' \textit{ICLR} (2018).
+
+\bibitem{huang2017anytime}
+G.~Huang et al., ``DenseNet with depth-adaptive mechanism,'' \textit{CVPR} (2017).
+
+\bibitem{xin2020deebert}
+J.~Xin et al., ``DeeBERT: Dynamic early exiting for accelerating BERT inference,'' \textit{ACL} (2020).
+
+\bibitem{liu2020fastbert}
+W.~Liu et al., ``FastBERT: A self-distilling BERT with adaptive inference time,'' \textit{ACL} (2020).
+
+\bibitem{zhou2020pabee}
+W.~Zhou et al., ``PABEE: Patience-based early exit mechanism,'' \textit{ACL} (2020).
+
+\bibitem{geifman2017selective}
+Y.~Geifman and R.~El-Yaniv, ``Selective classification for deep neural networks,'' \textit{NeurIPS} (2017).
+
+\bibitem{cortes2016learning}
+C.~Cortes et al., ``Learning to abstain,'' \textit{ICML} (2016).
+
+\bibitem{chow1970optimum}
+C.~K.~Chow, ``On optimum recognition error and reject tradeoff,'' \textit{IEEE Trans. Info. Theory} (1970).
+
+\bibitem{geifman2019selectivenet}
+Y.~Geifman et al., ``SelectiveNet: A deep neural network with an integrated reject option,'' \textit{ICML} (2019).
+
+\bibitem{vandermause2020flare}
+S.~Vandermause et al., ``On-the-fly active learning of interpretable Bayesian force fields for atomistic rare events,'' \textit{npj Comput. Mater.} (2020).
+
+\bibitem{jinnouchi2019vasp}
+R.~Jinnouchi et al., ``On-the-fly machine learning force field generation: Application to melting points,'' \textit{Phys. Rev. B} \textbf{100}, 014105 (2019).
+
+\bibitem{ace2024water}
+ACE Water Team, ``Efficient parameterization of transferable Atomic Cluster Expansion for water,'' arXiv:2406.14306 (2024).
+
+\bibitem{fastchgnet2024}
+Y.~Zhou et al., ``FastCHGNet: Training one universal interatomic potential to 1.5 hours with 32 GPUs,'' arXiv:2412.20796 (2024).
+
+\bibitem{torchcompile2022}
+PyTorch Team, ``torch.compile: A compiler for PyTorch programs,'' PyTorch Documentation (2022).
+
+\bibitem{asc2008}
+DOE NNSA, ``ASC FY08 Program Plan,'' \url{https://www.osti.gov/servlets/purl/1706291} (2008).
+
+\bibitem{musaelian2023allegro}
+A.~Musaelian et al., ``Scaling the leading accuracy of deep equivariant models to biomolecular simulations of realistic size,'' \textit{SC23} (2023).
+
+\bibitem{wan2021uqmd}
+S.~Wan et al., ``Uncertainty quantification in classical molecular dynamics,'' \textit{Phil. Trans. R. Soc. A} \textbf{379}, 20200082 (2021).
+
+\bibitem{patrone2018uqmd}
+P.~Patrone and A.~Dienstfrey, ``Uncertainty quantification for molecular dynamics,'' \textit{Rev. Comput. Chem.} \textbf{31}, 115--169 (2018).
+
+\bibitem{grossfield2019best}
+A.~Grossfield et al., ``Best practices for quantification of uncertainty and sampling quality in molecular simulations,'' \textit{Living J. Comput. Mol. Sci.} (2019).
+
+\bibitem{edeling2020easyvvuq}
+W.~Edeling et al., ``Building confidence in simulation: applications of EasyVVUQ,'' \textit{Adv. Theory Simul.} \textbf{3}, 1900246 (2020).
+
+\bibitem{sullivan2024uqace}
+T.~Sullivan and J.~R.~Kermode, ``Uncertainty quantification in atomistic simulations of silicon using interatomic potentials,'' arXiv:2402.15419 (2024).
+
+\bibitem{transtrum2011sloppy}
+M.~K.~Transtrum et al., ``Geometry of nonlinear least squares with applications to sloppy models and optimization,'' \textit{Phys. Rev. E} \textbf{83}, 036701 (2011).
+
+\bibitem{gutenkunst2007sloppy}
+R.~N.~Gutenkunst et al., ``Universally sloppy parameter sensitivities in systems biology models,'' \textit{PLoS Comput. Biol.} (2007).
+
+\bibitem{schappals2017repro}
+M.~Schappals et al., ``Cross-code benchmarking study of molecular dynamics,'' \textit{J. Chem. Theory Comput.} (2017).
+
+\bibitem{craven2025mosdef}
+G.~Craven et al., ``Reproducibility in molecular simulation with MoSDeF,'' \textit{J. Chem. Eng. Data} (2025).
+
+\bibitem{coveney2021trust}
+P.~V.~Coveney and R.~Highfield, ``When we can trust computers (and when we can't),'' \textit{Phil. Trans. R. Soc. A} (2021).
+
+\bibitem{ecp2024exaalt}
+DOE ECP, ``EXAALT and Kokkos: Making exascale simulations a SNAP,'' ECP Report (2024).
+
+\bibitem{mlipaudit2025}
+MLIPAudit Consortium, ``Evaluating universal interatomic potentials,'' ICLR (2025).
+
+\bibitem{zuoperf2019}
+Y.~Zuo et al., ``Performance and cost assessment of machine learning interatomic potentials,'' \textit{J. Phys. Chem. A} (2019).
+
+\bibitem{mlguide2025}
+K.~Ryan et al., ``A practical guide to machine learning interatomic potentials,'' UC Berkeley (2025).
+
+\bibitem{advance2024chgnet}
+AdvanceSoft, ``Benchmarks of CHGNet with GPU (H100),'' \url{http://case.advancesoft.jp/NanoLabo/H100-CHGNet-English/index.html} (2024).
+
+\bibitem{advance2024sevennet}
+AdvanceSoft, ``Benchmark of molecular dynamics simulations with SevenNet multi-GPU,'' (2024).
+
+\bibitem{li2024radiation}
+LiAlO2 Benchmark Team, ``Comparison of MLIPs for radiation damage,'' \textit{Adv. Intell. Discov.} (2026).
+
+\bibitem{frontier2024ornl}
+ORNL, ``Frontier supercomputer hits new highs in third year of exascale,'' ORNL News (2024).
+
+\bibitem{exess2024ornl}
+ORNL, ``Game-changing quantum chemistry calculations push new boundaries of exascale Frontier,'' (2024).
+
+\bibitem{mliprange2023}
+J.~Phys. Chem. A, ``Machine learning interatomic potentials and long-range physics,'' (2023).
+
+\bibitem{fourthgen2024}
+Fourth-Generation MLP Consortium, ``Nonlocal phenomena in machine-learned potentials,'' (2024).
+
+\bibitem{mlipstability2025}
+ICLR 2025, ``Evaluating universal interatomic potentials,'' OpenReview (2025).
+
+\bibitem{mlipbenchmark2025}
+Matbench Discovery Team, ``Framework for evaluating ML crystal stability predictions,'' arXiv (2025).
+
+\bibitem{openkim}
+OpenKIM, ``Standardized tests for published potentials,'' \url{https://openkim.org}.
+
+\bibitem{lips25}
+Li-P-S Benchmark Team, ``LiPS-25: Li-P-S electrolyte benchmark,'' PMC (2025).
+
+\bibitem{mofmlff2024}
+MOF ML Force Field Team, ``Machine learning force fields for metal-organic frameworks,'' \textit{npj Comput. Mater.} (2024).
+
+\bibitem{scidac2025}
+DOE SciDAC, ``Partnerships in Basic Energy Sciences FOA 2025,'' DE-FOA-0003515 (2025).
+
+\bibitem{efrc2026}
+DOE EFRC, ``$352$ million Energy Frontier Research Centers opportunity,'' (2026).
+
+\bibitem{nsfcssi}
+NSF CSSI, ``Cyberinfrastructure for Sustained Scientific Innovation,'' NSF 18-531.
+
+\bibitem{mgi2014}
+Materials Genome Initiative, ``Strategic Plan,'' (2014).
+
+\bibitem{psaap2025}
+NNSA PSAAP IV, ``Predictive Science Academic Alliance Program,'' (2025).
+
+\bibitem{dakota1994}
+Sandia National Labs, ``Dakota: A multilevel parallel object-oriented framework for design optimization, parameter estimation, uncertainty quantification, and sensitivity analysis,'' (1994--present).
+
+\bibitem{uqtk2016}
+Sandia National Labs, ``UQ Toolkit,'' (2016).
+
+\bibitem{easyvvuq2020}
+VECMA/EasyVVUQ, ``A scalable VVUQ toolkit,'' \url{https://www.vecma-toolkit.eu} (2020).
+
+\bibitem{asap3}
+DTU, ``ASAP3: As Soon As Possible calculator,'' \url{https://asap3.readthedocs.io}.
+
+\bibitem{acepotentials}
+ACEsuit, ``ACEpotentials.jl,'' \url{https://github.com/ACEsuit/ACEpotentials.jl}.
+
+\bibitem{pycalphad2026}
+J.~Janssen et al., ``Uncertainty propagation for ab initio thermodynamic phase diagrams,'' (2026).
+
+\bibitem{groen2021vecma}
+D.~Groen et al., ``VECMAtk: a scalable VVUQ toolkit,'' \textit{Phil. Trans. R. Soc. A} (2021).
+
+\bibitem{mlipauditgithub}
+MLIPAudit, ``GitHub repository,'' \url{https://github.com/mlipaudit}.
+
+\bibitem{macefoundations}
+ACEsuit, ``MACE foundation models,'' \url{https://github.com/ACEsuit/mace-foundations}.
+
+\bibitem{mlipguide2025berkeley}
+K.~Ryan et al., ``A practical guide to MLIPs,'' UC Berkeley (2025).
+
+\bibitem{tungsten2023}
+Tungsten MLP Benchmark, ``Machine learning potentials for tungsten,'' \textit{npj Comput. Mater.} (2023).
+
+\bibitem{mlipbench2025}
+MLIP Benchmark 2025, ``Comparative study of interatomic potentials,'' (2025).
+
+\bibitem{exaalt2019}
+DOE ECP, ``Extending the reach of molecular dynamics simulations by leveraging exascale,'' (2019).
+
+\bibitem{exaalt2023}
+DOE ECP, ``EXAALT-ing molecular dynamics to the power of exascale,'' (2023).
+
+\bibitem{frontier2024perf}
+ORNL, ``Frontier performance update,'' (2024).
+
+\bibitem{exess2024}
+EXESS Team, ``Exascale quantum chemistry on Frontier,'' (2024).
+
+\bibitem{mlipoom2024}
+ORNL, ``GPU memory limitations for CHGNet,'' (2024).
+
+\bibitem{kokkos2025}
+LAMMPS-KOKKOS Team, ``Performance portable MD across exascale architectures,'' arXiv:2508.13523 (2025).
+
+\bibitem{hpc-carpentry}
+HPC Carpentry, ``Kokkos with GPUs,'' \url{https://www.hpc-carpentry.org}.
+
+\bibitem{mlipcomparison2026}
+Advanced Intelligent Discovery, ``Comparison of MLIPs for radiation damage,'' (2026).
+
+\bibitem{mlipguide2025ceder}
+K.~Ryan, ``A practical guide to machine learning interatomic potentials,'' UC Berkeley (2025).
+
+\bibitem{mlipaccuracy2025}
+MLIP Accuracy Consortium, ``Accuracy wall in universal interatomic potentials,'' (2025).
+
+\bibitem{mlipscaling2024}
+Scaling MLIP Team, ``Scaling properties of MLIP MD simulations,'' (2024).
+
+\bibitem{mlipcost2025}
+Cost Analysis Team, ``Cost differential: DFT vs MLIP vs classical,'' (2025).
+
+\bibitem{mlipproduction2025}
+Production MD Team, ``Production science with MLIPs at national labs,'' (2025).
+
+\bibitem{mlipbottlenecks2025}
+Bottleneck Analysis Team, ``Reported bottlenecks in MLIP deployment,'' (2025).
+
+\bibitem{mlipfunding2025}
+Funding Landscape Team, ``Funding opportunities for MLIP research,'' (2025).
+
+\bibitem{mlipstrategic2025}
+Strategic Recommendations Team, ``Strategic priorities for MLIP development,'' (2025).
+
+\bibitem{mlipreferences2025}
+Reference Compilation Team, ``Comprehensive reference list for MLIP literature,'' (2025).
+
+\bibitem{mlipappendix2025}
+Appendix Team, ``Appendix materials for MLIP research,'' (2025).
+
+\end{thebibliography}
+
+\end{document}

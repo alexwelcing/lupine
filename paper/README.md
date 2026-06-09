@@ -2,6 +2,17 @@
 
 This directory contains the LaTeX source, figures, and build infrastructure for a working paper in preparation.
 
+## Review-Ready Advanced Drafts
+
+Advanced Kimi-imported manuscript drafts live in `review-ready/`. They are
+marked **ready for review**, not submission-ready:
+
+- `review-ready/paper3-lean-verification.tex`
+- `review-ready/paper4-causal-acceleration.tex`
+- `review-ready/advanced-paper-review-ledger.md`
+
+Use that ledger before promoting either draft into a submission workflow.
+
 ## Building the Paper
 
 ### Requirements

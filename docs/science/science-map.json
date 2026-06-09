@@ -1,6 +1,6 @@
 {
   "$schema": "https://lupine.science/schemas/lupine-science-map.v1.json",
-  "updated": "2026-05-29",
+  "updated": "2026-06-08",
   "program": "Lupine Science",
   "firstPrinciple": "Interatomic potentials are necessary and wrong in structured ways; Lupine Science studies that structure as evidence.",
   "intendedReaders": [
@@ -40,6 +40,7 @@
       "evidenceSurfaces": [
         "mlip_immi/",
         "cross-MLIP alignment payloads",
+        "data/mlip_benchmarks/kimi_2026_06_07/",
         "docs/conjectures/ledger.md"
       ]
     },
@@ -71,7 +72,18 @@
       "evidenceSurfaces": [
         "lean-spec/",
         "formal proof ledger",
+        "docs/science/kimi-mlip-universality-import.md",
         "publication templates"
+      ]
+    },
+    {
+      "id": "review-ready-manuscripts",
+      "name": "Review-ready manuscripts",
+      "question": "Which advanced paper drafts are mature enough for human review but not yet submission-ready?",
+      "evidenceSurfaces": [
+        "paper/review-ready/",
+        "paper/review-ready/advanced-paper-review-ledger.md",
+        "docs/formal-proof-ledger.md"
       ]
     },
     {

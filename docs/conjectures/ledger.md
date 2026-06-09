@@ -28,6 +28,20 @@ Each hypothesis is its own entry with a lifecycle **status**. The status legend:
 | BCC/FCC "causal shield" | **Self-corrected** | The dramatic r 0.90 vs 0.04 was 1.5 % data contamination. |
 | Simpson's paradox in BCC elastic constants | **Refuted by us · Lean** | `noSimpsonsInBccEam`: the causal graph has no bypass. |
 
+## 2026-06-07 Kimi MLIP Import
+
+| Hypothesis | Status | One-line resolution |
+|------------|--------|---------------------|
+| Parameter-basis Vandermonde decay in foundation MLIPs | **Refuted by us** | The 4-model Fisher sweep fails rho >= 1.5; MACE parameter-basis rho is flat while CHGNet/SchNet only reach about rho 0.4. |
+| MACE irrep-basis Vandermonde threshold | **Refuted by us** | Irrep coefficients show real geometric decay (rho 0.3865, R2 0.9807), but still fail the pre-registered rho >= 1.5 threshold. |
+| Weak-form acceleration/refusal theorem | Open | Scalar weak-form gate now builds in Lean; full Lipschitz/reach formalization and deeper-model runtime evidence remain open. |
+| Layerwise distance as MLIP/MD uncertainty signal | Open | Layer-0 distance correlates with force error and helps mixed-reference refusal, but Cu-only reference tuning failed and force-calibrated follow-up is needed. |
+| Kimi Cloud Run cross-MLIP v7 | Supported | 45 MACE/CHGNet/SevenNet elastic calculations are preserved; Fe is a MACE-disagreement sentinel, while Ta/V/Pt have the highest 3-MLIP PR values. |
+
+See also:
+[Kimi MLIP Universality Import](../science/kimi-mlip-universality-import.md) ·
+[Cross-MLIP Cloud Experiment Runbook](../runbooks/cross-mlip-cloud-experiment.md).
+
 ## Why this shelf exists
 
 The most defensible thing Lupine produces is not a single result — it is a *method that

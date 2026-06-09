@@ -1,0 +1,49 @@
+CROSS-MLIP ERROR CORRELATION ANALYSIS
+======================================================================
+
+Timestamp: 2026-06-07T18:20:59.541248
+Elements: Al, Cu, Ni, Ag, Au, Pt, Pd, Pb, Fe, Cr, Mo, W, V, Nb, Ta
+Models: mace, chgnet, sevennet
+
+CROSS-MLIP CORRELATIONS
+pair     chgnet-sevennet  mace-chgnet  mace-sevennet
+element
+Ag              0.999986     0.999422       0.999227
+Al              0.889909     0.919816       0.997518
+Au              0.998262     0.996251       0.999618
+Cr              0.978704     0.999444       0.971314
+Cu              0.999305     0.999923       0.999691
+Fe              0.999966     0.753811       0.759170
+Mo              0.996824     0.997998       0.999865
+Nb              0.982095     0.976428       0.999607
+Ni              0.999964     0.999891       0.999981
+Pb              0.997881     0.997220       0.999955
+Pd              0.999358     0.998887       0.999936
+Pt              0.999208     0.999071       0.999995
+Ta              0.999997     0.998094       0.997938
+V               0.990175     0.999873       0.987817
+W               0.949368     0.974797       0.995529
+
+MEAN CORRELATIONS BY PAIR
+  chgnet-sevennet: 0.9854
+  mace-sevennet: 0.9805
+  mace-chgnet: 0.9741
+
+ENSEMBLE PR VALUES (3-MLIP)
+combo         all
+element
+Ag       1.055792
+Al       1.009220
+Au       1.009539
+Cr       1.184170
+Cu       1.023318
+Fe       1.021017
+Mo       1.016071
+Nb       1.043230
+Ni       1.082538
+Pb       1.000614
+Pd       1.034931
+Pt       1.192953
+Ta       1.323983
+V        1.300943
+W        1.028664

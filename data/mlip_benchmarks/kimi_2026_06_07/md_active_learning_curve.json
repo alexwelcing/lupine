@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "device": "cuda"
+  },
+  "curve": [
+    {
+      "n_train": 40,
+      "max_pool_distance": 8.744643688201904,
+      "mean_pool_distance": 5.182745015621185,
+      "pool_size": 10
+    },
+    {
+      "n_train": 41,
+      "max_pool_distance": 5.723568558692932,
+      "mean_pool_distance": 4.827809015909831,
+      "pool_size": 9
+    },
+    {
+      "n_train": 42,
+      "max_pool_distance": 5.587293267250061,
+      "mean_pool_distance": 4.679579496383667,
+      "pool_size": 8
+    },
+    {
+      "n_train": 43,
+      "max_pool_distance": 4.946277618408203,
+      "mean_pool_distance": 4.53203068460737,
+      "pool_size": 7
+    },
+    {
+      "n_train": 44,
+      "max_pool_distance": 4.888763666152954,
+      "mean_pool_distance": 4.46866899728775,
+      "pool_size": 6
+    },
+    {
+      "n_train": 45,
+      "max_pool_distance": 4.780124068260193,
+      "mean_pool_distance": 4.362119865417481,
+      "pool_size": 5
+    },
+    {
+      "n_train": 46,
+      "max_pool_distance": 4.598555684089661,
+      "mean_pool_distance": 4.258784383535385,
+      "pool_size": 4
+    },
+    {
+      "n_train": 47,
+      "max_pool_distance": 4.608294486999512,
+      "mean_pool_distance": 4.1609229644139605,
+      "pool_size": 3
+    },
+    {
+      "n_train": 48,
+      "max_pool_distance": 3.947428345680237,
+      "mean_pool_distance": 3.947428286075592,
+      "pool_size": 2
+    },
+    {
+      "n_train": 49,
+      "max_pool_distance": 3.8668686151504517,
+      "mean_pool_distance": 3.8668686151504517,
+      "pool_size": 1
+    }
+  ]
+}

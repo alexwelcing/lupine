@@ -16,6 +16,7 @@ The authoritative artifact is the [Formal Audit Report](formal-audit.md) — gen
 | Simpson's paradox in BCC elastic constants | `noSimpsonsInBccEam` (`Materials/Analysis/Causal`) | **Claim fabricated.** The causal graph has no bypass from element to error, so elemental stratification cannot produce Simpson's paradox in real data. |
 | Parameter / sloppiness bound | `Materials/Theory/ParameterBound` | Proven structural bound (analytic, not data-dependent). |
 | Validation scope & rank gate | `Materials/Scope/Validity`, `Materials/Validation/RankGate` | Proven guard conditions used by the live loop. |
+| Weak acceleration/refusal scalar gate | `Materials/Theory/WeakAcceleration` | Proven theorem-shaped guard: the scalar speedup lower bound stays >= 1 under coverage/reach/threshold conditions and does not depend on a spectral rho threshold. Full Lipschitz/reach formalization remains open. |
 
 ## How to read this
 

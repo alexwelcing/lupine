@@ -1,0 +1,256 @@
+{
+  "generated_from": "data/mlip_benchmarks/kimi_2026_06_07",
+  "schema": "lupine.kimi.followup_agenda.v1",
+  "session_date": "2026-06-07",
+  "source_summary_schema": "lupine.kimi.evidence_summary.v1",
+  "summary_sentinels": {
+    "irrep_passes_threshold": false,
+    "irrep_rho": 0.38652574665712314,
+    "lowest_cross_mlip_correlation": {
+      "key": "Fe:mace-chgnet",
+      "r": 0.7538110973796054
+    },
+    "mixed_total_youden_j": 0.3421052631578947,
+    "real_stop1_mean_speedup": 1.4127956114675577,
+    "top_ensemble_pr": {
+      "element": "Ta",
+      "pr": 1.3239827778178161
+    }
+  },
+  "tasks": [
+    {
+      "control_plane_payload": {
+        "hypothesis_id": "h_kimi_weak_form_acceleration_20260607",
+        "id": "rq_kimi_weak_form_lean_20260607",
+        "kind": "research_question",
+        "priority": 1
+      },
+      "evidence_paths": [
+        "data/mlip_benchmarks/kimi_2026_06_07/irrep_vandermonde_mace_mp0.json",
+        "data/mlip_benchmarks/kimi_2026_06_07/simulated_acceleration_mace_mp0.json",
+        "data/mlip_benchmarks/kimi_2026_06_07/real_early_exit_mace_mp0.json"
+      ],
+      "gates": [
+        "lake build in lean-spec",
+        "zero sorry outside documented conjecture comments",
+        "no claim that rho >= 1.5 holds for MACE or CHGNet"
+      ],
+      "lane": "formal-verification",
+      "next_action": "WeakAcceleration.lean now states the weak-form assumptions and proves the speedup/refusal skeleton that current evidence supports. Next extension is to replace scalar certificate fields with Lipschitz/reach definitions.",
+      "priority": 1,
+      "rationale": "The parameter and irrep Vandermonde thresholds both fail, so the theorem lane should move to Lipschitz/reach/coverage assumptions rather than rho >= 1.5.",
+      "status": "done",
+      "suggested_surfaces": [
+        "lean-spec/",
+        "docs/conjectures/ledger.md",
+        "docs/science/kimi-mlip-universality-import.md"
+      ],
+      "task_id": "kimi-20260607-weak-form-lean",
+      "title": "Formalize the weak acceleration/refusal theorem",
+      "verification_commands": [
+        "cd lean-spec && lake build"
+      ]
+    },
+    {
+      "control_plane_payload": {
+        "hypothesis_id": "h_kimi_layerwise_distance_uq_20260607",
+        "id": "rq_kimi_force_refusal_20260607",
+        "kind": "research_question",
+        "priority": 1
+      },
+      "evidence_paths": [
+        "data/mlip_benchmarks/kimi_2026_06_07/md_force_error_correlation.json",
+        "data/mlip_benchmarks/kimi_2026_06_07/md_hybrid_decision.json",
+        "data/mlip_benchmarks/kimi_2026_06_07/md_element_specific_hybrid.json"
+      ],
+      "gates": [
+        "must preserve mixed-reference baseline",
+        "must report TPR/FPR and calibration sample size",
+        "must not use classical fallback labels as DFT truth"
+      ],
+      "lane": "mlip-md-interface",
+      "next_action": "A repo-native force-MAE threshold sweep now exists for the imported data. Next extension is a production scorer with material-scale force labels and mixed, structure-specific, and chemistry-specific references.",
+      "priority": 1,
+      "rationale": "Layer-0 distance correlates with force error, but the current hybrid policy uses energy disagreement and a mixed reference set.",
+      "status": "running",
+      "suggested_surfaces": [
+        "tools/",
+        "mlip_immi/",
+        "gcp/mlip-cell-runner/"
+      ],
+      "task_id": "kimi-20260607-force-calibrated-refusal",
+      "title": "Build force-calibrated refusal metric from layerwise distance",
+      "verification_commands": [
+        "python tools/mlip_kimi_evidence.py --check",
+        "python -m pytest tools/test_mlip_kimi_evidence.py"
+      ]
+    },
+    {
+      "control_plane_payload": {
+        "hypothesis_id": "h_kimi_real_early_exit_deeper_models_20260607",
+        "id": "rq_kimi_deeper_early_exit_20260607",
+        "kind": "research_question",
+        "priority": 2
+      },
+      "evidence_paths": [
+        "data/mlip_benchmarks/kimi_2026_06_07/real_early_exit_mace_mp0.json",
+        "data/mlip_benchmarks/kimi_2026_06_07/simulated_acceleration_mace_mp0.json"
+      ],
+      "gates": [
+        "report graph construction and model-forward time separately",
+        "accuracy gate must be force-aware, not energy-only",
+        "median speedup must improve, not just mean speedup"
+      ],
+      "lane": "runtime-acceleration",
+      "next_action": "Port only the reusable timing harness, then evaluate deeper models with native readout support and explicit accuracy gates.",
+      "priority": 2,
+      "rationale": "MACE-MP-0 medium stop layer 1 averaged 1.41x with material energy error, below the idealized bound.",
+      "status": "queued",
+      "suggested_surfaces": [
+        "tools/",
+        "gcp/mlip-cell-runner/",
+        "docs/runbooks/"
+      ],
+      "task_id": "kimi-20260607-deeper-early-exit",
+      "title": "Retest real early-exit on deeper MACE/SevenNet before acceleration claims",
+      "verification_commands": [
+        "python tools/mlip_kimi_evidence.py --check",
+        "python -m pytest tools/test_mlip_kimi_evidence.py"
+      ]
+    },
+    {
+      "control_plane_payload": {
+        "hypothesis_id": "h_kimi_cross_mlip_v7_reproducibility_20260607",
+        "id": "rq_kimi_cross_mlip_cloud_rerun_20260607",
+        "kind": "research_question",
+        "priority": 2
+      },
+      "evidence_paths": [
+        "data/mlip_benchmarks/kimi_2026_06_07/cross_mlip_cloud_v7_results.json",
+        "data/mlip_benchmarks/kimi_2026_06_07/cross_mlip_cloud_v7_analysis.txt"
+      ],
+      "gates": [
+        "versioned GCS result path",
+        "exception-safe torch dtype restoration",
+        "physical-instability warnings retained in output",
+        "no SevenNet/e3nn patch without pinned image provenance"
+      ],
+      "lane": "cloud-reproducibility",
+      "next_action": "Refactor the cloud script into shared strain logic plus model wrappers, then rerun on a versioned GCS prefix.",
+      "priority": 2,
+      "rationale": "The v7 evidence is useful, but future reruns must not overwrite results.json and should keep the Fe/Al/W sentinels visible.",
+      "status": "queued",
+      "suggested_surfaces": [
+        "gcp/",
+        "tools/",
+        "docs/runbooks/cross-mlip-cloud-experiment.md"
+      ],
+      "task_id": "kimi-20260607-cross-mlip-rerun",
+      "title": "Reproduce Cloud Run cross-MLIP v7 with timestamped artifacts",
+      "verification_commands": [
+        "python tools/mlip_kimi_evidence.py --check",
+        "just engine-test"
+      ]
+    },
+    {
+      "control_plane_payload": {
+        "hypothesis_id": "h_kimi_cross_mlip_pr_stability_20260607",
+        "id": "rq_kimi_pr_bootstrap_20260607",
+        "kind": "research_question",
+        "priority": 3
+      },
+      "evidence_paths": [
+        "data/mlip_benchmarks/kimi_2026_06_07/cross_mlip_cloud_v7_results.json"
+      ],
+      "gates": [
+        "bootstrap CI reported for every element:all PR",
+        "rank-stability summary for Ta, V, Pt, Cr, and Fe",
+        "explicit note that Fe is a correlation sentinel, not a high-PR sentinel"
+      ],
+      "lane": "statistical-validation",
+      "next_action": "The evidence analyzer now emits bootstrap PR intervals and rank-stability checks for the three-MLIP ensembles. Next extension is paper-table formatting.",
+      "priority": 3,
+      "rationale": "The v7 PR ranking is useful, but Ta/V/Pt rankings need uncertainty before publication or policy promotion.",
+      "status": "done",
+      "suggested_surfaces": [
+        "tools/mlip_kimi_evidence.py",
+        "paper/"
+      ],
+      "task_id": "kimi-20260607-pr-bootstrap",
+      "title": "Add bootstrap confidence intervals to Kimi ensemble PR claims",
+      "verification_commands": [
+        "python tools/mlip_kimi_evidence.py --check",
+        "python -m pytest tools/test_mlip_kimi_evidence.py"
+      ]
+    },
+    {
+      "control_plane_payload": {
+        "hypothesis_id": "h_kimi_formal_verification_paper_review_20260607",
+        "id": "rq_kimi_paper3_lean_review_20260607",
+        "kind": "research_question",
+        "priority": 2
+      },
+      "evidence_paths": [
+        "paper/review-ready/paper3-lean-verification.tex",
+        "paper/review-ready/advanced-paper-review-ledger.md",
+        "docs/formal-proof-ledger.md"
+      ],
+      "gates": [
+        "current theorem inventory attached or cited",
+        "Lean toolchain and Mathlib/ATLAS pins match lean-spec",
+        "synthetic proof claims separated from empirical validation claims"
+      ],
+      "lane": "publication-review",
+      "next_action": "Run a theorem inventory pass over current lean-spec, then revise the manuscript so synthetic, theorem-shaped, and empirically grounded claims are separated in the text.",
+      "priority": 2,
+      "rationale": "The exported Lean-verification manuscript is strategically valuable, but its theorem counts, T-number references, and Lean toolchain details must be reconciled against the current lean-spec build before promotion.",
+      "status": "ready_for_review",
+      "suggested_surfaces": [
+        "paper/review-ready/",
+        "lean-spec/",
+        "docs/formal-proof-ledger.md"
+      ],
+      "task_id": "kimi-20260607-paper3-lean-verification-review",
+      "title": "Review Paper 3 Lean verification manuscript",
+      "verification_commands": [
+        "cd lean-spec && lake build OpenDistillationFactory",
+        "python tools/mlip_kimi_evidence.py --check"
+      ]
+    },
+    {
+      "control_plane_payload": {
+        "hypothesis_id": "h_kimi_causal_acceleration_paper_review_20260607",
+        "id": "rq_kimi_paper4_acceleration_review_20260607",
+        "kind": "research_question",
+        "priority": 2
+      },
+      "evidence_paths": [
+        "paper/review-ready/paper4-causal-acceleration.tex",
+        "paper/review-ready/advanced-paper-review-ledger.md",
+        "data/mlip_benchmarks/kimi_2026_06_07/real_early_exit_mace_mp0.json",
+        "data/mlip_benchmarks/kimi_2026_06_07/simulated_acceleration_mace_mp0.json"
+      ],
+      "gates": [
+        "real early-exit negative result cited in the manuscript",
+        "2x-5x speedups framed as target or hypothesis unless new evidence passes",
+        "proof language synchronized with WeakAcceleration.lean"
+      ],
+      "lane": "publication-review",
+      "next_action": "Revise the manuscript to cite the real early-exit negative result and frame 2x-5x speedups as a review hypothesis until deeper-model evidence passes.",
+      "priority": 2,
+      "rationale": "The acceleration manuscript captures the right weak-form direction, but production acceleration claims must be downgraded to match the scalar Lean gate and the mixed real early-exit evidence.",
+      "status": "ready_for_review",
+      "suggested_surfaces": [
+        "paper/review-ready/",
+        "lean-spec/OpenDistillationFactory/Materials/Theory/WeakAcceleration.lean",
+        "docs/science/kimi-mlip-universality-import.md"
+      ],
+      "task_id": "kimi-20260607-paper4-acceleration-review",
+      "title": "Review Paper 4 causal acceleration manuscript",
+      "verification_commands": [
+        "python tools/mlip_kimi_evidence.py --check",
+        "python -m pytest tools/test_mlip_kimi_evidence.py"
+      ]
+    }
+  ]
+}
