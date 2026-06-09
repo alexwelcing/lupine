@@ -5,10 +5,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+import glim_mlip
 import pytest
 from click.testing import CliRunner
-
-import glim_mlip
 
 
 @pytest.fixture
@@ -142,8 +141,8 @@ def test_ingest_posts_to_worker(runner: CliRunner, monkeypatch: pytest.MonkeyPat
         def json(self) -> Any:
             return self._payload
 
-    def fake_post(url: str, json=None, timeout=None, **kw: Any):  # noqa: ARG001
-        rec.append({"url": url, "json": json})
+    def fake_post(url: str, json=None, headers=None, timeout=None, **kw: Any):  # noqa: ARG001
+        rec.append({"url": url, "json": json, "headers": headers})
         return _Resp({"ingested": 2, "total": 2})
 
     monkeypatch.setattr(httpx, "post", fake_post)
@@ -152,6 +151,28 @@ def test_ingest_posts_to_worker(runner: CliRunner, monkeypatch: pytest.MonkeyPat
     assert "ingested 2 records" in result.output
     assert rec[0]["url"].endswith("/ingest/batch")
     assert len(rec[0]["json"]["records"]) == 2
+    assert rec[0]["headers"] == {}
+
+
+def test_ingest_sends_internal_token_from_env(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,
+                                                tmp_path: Path) -> None:
+    jsonl = tmp_path / "records.jsonl"
+    jsonl.write_text('{"recordId": "r1", "element": "Al"}\n', encoding="utf-8")
+    import httpx
+    rec: list[dict[str, Any]] = []
+
+    class _Resp:
+        status_code = 200
+        text = '{"ingested": 1}'
+
+    def fake_post(url: str, json=None, headers=None, timeout=None, **kw: Any):  # noqa: ARG001
+        rec.append({"url": url, "json": json, "headers": headers})
+        return _Resp()
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    result = runner.invoke(glim_mlip.mlip, ["ingest", str(jsonl)], env={"INTERNAL_TASK_TOKEN": "secret-token"})
+    assert result.exit_code == 0, result.output
+    assert rec[0]["headers"] == {"X-Internal-Token": "secret-token"}
 
 
 def test_ingest_empty_jsonl_fails(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,

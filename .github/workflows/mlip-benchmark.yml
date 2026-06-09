@@ -13,7 +13,7 @@ name: MLIP elastic-constant benchmark
 #
 # The Space URL is read from the GLIM_HF_SPACE secret; defaults to
 # https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench. Worker URL from
-# GLIM_API_URL secret.
+# GLIM_API_URL secret. Gated Worker writes use INTERNAL_TASK_TOKEN.
 
 on:
   workflow_dispatch:
@@ -52,6 +52,7 @@ jobs:
       DO_INGEST: ${{ github.event.inputs.ingest != 'false' }}
       GLIM_API_URL: ${{ secrets.GLIM_API_URL || 'https://glim-think-v1.aw-ab5.workers.dev' }}
       GLIM_HF_SPACE: ${{ secrets.GLIM_HF_SPACE || 'https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench' }}
+      INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -137,14 +138,18 @@ jobs:
           python - <<'PY'
           import json, os, urllib.request
           api = os.environ["GLIM_API_URL"].rstrip("/")
+          token = os.environ.get("INTERNAL_TASK_TOKEN", "").strip()
           elements = sorted({json.loads(line)["element"]
                              for line in open("mlip_records.jsonl") if line.strip()})
           for el in elements:
               body = json.dumps({"element": el, "analysis_types": ["manifold", "causal"],
                                  "only_styles": ["mlip"]}).encode()
+              headers = {"Content-Type": "application/json"}
+              if token:
+                  headers["X-Internal-Token"] = token
               req = urllib.request.Request(
                   f"{api}/run", data=body,
-                  headers={"Content-Type": "application/json"},
+                  headers=headers,
                   method="POST",
               )
               try:

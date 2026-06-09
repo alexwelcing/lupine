@@ -15,15 +15,15 @@ Usage:
 
 Reads HF Space URL from GLIM_HF_SPACE env (default:
 https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench). Reads worker URL
-from GLIM_API_URL (default: https://glim-think-v1.aw-ab5.workers.dev).
+from GLIM_API_URL (default: https://glim-think-v1.aw-ab5.workers.dev). Reads
+the gated-worker internal token from GLIM_INGEST_TOKEN, GLIM_INTERNAL_TOKEN, or
+INTERNAL_TASK_TOKEN.
 """
 from __future__ import annotations
 
 import json
-import os
-import sys
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import click
 import httpx
@@ -130,7 +130,7 @@ def predict(ctx: click.Context, element: str, mlip_id: str) -> None:
               default=None, help="Write JSONL to this path (else print to stdout)")
 @click.pass_context
 def batch(ctx: click.Context, elements: str, mlips: str,
-          references_path: Optional[Path], out_path: Optional[Path]) -> None:
+          references_path: Path | None, out_path: Path | None) -> None:
     """Batch predict elements × mlips. With --references-from, output is JSONL of
     BenchmarkRecord dicts ready for `ingest`."""
     refs_json = "{}"
@@ -152,20 +152,32 @@ def batch(ctx: click.Context, elements: str, mlips: str,
 
 @mlip.command()
 @click.argument("jsonl_path", type=click.Path(exists=True, dir_okay=False, path_type=Path))
+@click.option(
+    "--internal-token",
+    envvar=["GLIM_INGEST_TOKEN", "GLIM_INTERNAL_TOKEN", "INTERNAL_TASK_TOKEN"],
+    default="",
+    help="Token for the worker X-Internal-Token gate.",
+)
 @click.pass_context
-def ingest(ctx: click.Context, jsonl_path: Path) -> None:
+def ingest(ctx: click.Context, jsonl_path: Path, internal_token: str) -> None:
     """POST a JSONL of BenchmarkRecords to the worker's /ingest/batch."""
     records = [json.loads(line) for line in jsonl_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     if not records:
         raise click.ClickException("no records in JSONL")
     api = ctx.obj["api_url"].rstrip("/")
+    token = internal_token.strip()
+    headers = {"X-Internal-Token": token} if token else {}
     try:
         r = httpx.post(f"{api}/ingest/batch",
-                       json={"records": records}, timeout=120.0)
+                       json={"records": records}, headers=headers,
+                       timeout=120.0)
     except httpx.RequestError as e:
         raise click.ClickException(f"worker unreachable at {api}: {e}") from e
     if r.status_code >= 400:
-        raise click.ClickException(f"ingest failed: {r.status_code}: {r.text[:300]}")
+        hint = ""
+        if r.status_code == 403 and not token:
+            hint = " (set GLIM_INGEST_TOKEN or INTERNAL_TASK_TOKEN for gated workers)"
+        raise click.ClickException(f"ingest failed: {r.status_code}: {r.text[:300]}{hint}")
     click.echo(f"ingested {len(records)} records: {r.text}")
 
 
