@@ -32,6 +32,7 @@
  */
 
 import type { Frame } from '@atlas/core/types';
+import { analyzeDumpHead } from './dumpContract';
 
 /** Yield-after-this-many-atoms granularity. Sized so each chunk fits
  *  comfortably in a single animation frame's parse budget on a phone
@@ -498,29 +499,13 @@ export function readableStreamToAsyncIterable(
 }
 
 /** Fast pre-flight: is this content a LAMMPS dump file the streaming
- *  parser can handle (orthogonal box, supported columns, single frame)?
- *  Only inspects the first few hundred bytes — does NOT scan the
- *  full atom block. Caller falls back to WASM when this returns false. */
+ *  parser can handle (orthogonal box, supported columns)? Only inspects
+ *  the head — does NOT scan the full atom block. Caller falls back to
+ *  WASM when this returns false.
+ *
+ *  Thin wrapper over the executable compatibility contract in
+ *  `dumpContract.ts` — use `analyzeDumpHead` directly when you need the
+ *  *reasons* (and user-actionable fixes), not just the verdict. */
 export function canStreamDump(textHead: string): boolean {
-  // Must start with ITEM: TIMESTEP (allow leading whitespace/BOM).
-  const head = textHead.trimStart();
-  if (!head.startsWith('ITEM: TIMESTEP')) return false;
-
-  // Quick check for triclinic box (3-number bound lines).
-  const bbIdx = head.indexOf('ITEM: BOX BOUNDS');
-  if (bbIdx === -1) return false;
-  const bbHeaderEnd = head.indexOf('\n', bbIdx);
-  if (bbHeaderEnd === -1) return false;
-  // Tilt indicator is the `xy xz yz` token in the header.
-  const bbHeader = head.slice(bbIdx, bbHeaderEnd);
-  if (/\bxy\b|\bxz\b|\byz\b/.test(bbHeader)) return false;
-
-  // Required columns present in the ATOMS spec.
-  const atIdx = head.indexOf('ITEM: ATOMS');
-  if (atIdx === -1) return false;
-  const atEnd = head.indexOf('\n', atIdx);
-  if (atEnd === -1) return false;
-  const colsLine = head.slice(atIdx + 'ITEM: ATOMS'.length, atEnd).trim();
-  const cols = colsLine.split(/\s+/);
-  return cols.includes('type') && cols.includes('x') && cols.includes('y') && cols.includes('z');
+  return analyzeDumpHead(textHead).tier === 'streamable';
 }

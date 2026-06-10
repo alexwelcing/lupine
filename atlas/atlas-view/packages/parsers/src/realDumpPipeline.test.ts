@@ -57,9 +57,11 @@ async function transcode(text: string) {
 }
 
 describe.each([
-  // ≥30% of atoms past one Cu lattice constant ⇒ the transformation is real.
+  // Thresholds mirror each scenario's manifest `expected.min_moved_fraction`
+  // (fraction of atoms past one Cu lattice constant ⇒ transformation real).
   { fixture: 'cu-melt-ci.lammpstrj.gz', label: 'Cu(100) slab melting', minMovedFraction: 0.3 },
   { fixture: 'cu-solidify-ci.lammpstrj.gz', label: 'liquid Cu rapid quench', minMovedFraction: 0.2 },
+  { fixture: 'cu-sinter-ci.lammpstrj.gz', label: 'Cu nanoparticle sintering', minMovedFraction: 0.04 },
 ])('real LAMMPS trajectory: $label', ({ fixture, minMovedFraction }) => {
   it('passes the streaming gate, transcodes, and reads back', async () => {
     const text = loadFixture(fixture);

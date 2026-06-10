@@ -109,11 +109,21 @@ for (const filePath of files) {
 
     // ── Physics: did a transformation actually happen? ──
     // Fraction of atoms displaced > 1 lattice spacing between the first
-    // and last frame. A phase change moves most of the system; a rigid
-    // crystal at temperature moves almost none of it. (Periodic wrap can
-    // alias a large displacement back to small — fine, this is a lower
-    // bound and still discriminates sharply.)
+    // and last frame. The threshold comes from the generator's sidecar
+    // manifest when present (sintering legitimately moves far fewer atoms
+    // than melting — the expectation is part of the scenario's
+    // provenance); 0.3 is the default for unattributed files.
     if (first && last && first.natoms === last.natoms) {
+      let minMoved = 0.3;
+      const manifestPath = `${filePath}.manifest.json`;
+      if (fs.existsSync(manifestPath)) {
+        try {
+          const m = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+          if (typeof m?.expected?.min_moved_fraction === 'number') {
+            minMoved = m.expected.min_moved_fraction;
+          }
+        } catch { /* unreadable manifest — keep the default */ }
+      }
       const CUTOFF = 3.6; // Å ≈ one Cu lattice constant
       let moved = 0;
       for (let i = 0; i < first.natoms; i++) {
@@ -124,8 +134,8 @@ for (const filePath of files) {
       }
       const frac = moved / first.natoms;
       check(
-        'transformation visible (atoms displaced > 1 lattice constant)',
-        frac > 0.3,
+        `transformation visible (≥${(minMoved * 100).toFixed(0)}% of atoms past 1 lattice constant)`,
+        frac >= minMoved,
         `${(frac * 100).toFixed(0)}% of ${first.natoms} atoms`,
       );
     }

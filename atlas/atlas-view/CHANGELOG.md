@@ -19,6 +19,27 @@
   text, never the whole trajectory. This replaces the previous "fast-paint frame
   0, then re-parse the entire file in memory" fallback.
 
+### The dump contract as a system: doctor CLI + declarative scenarios
+
+### Added
+- **Executable compatibility contract** (`@atlas/parsers` →
+  `analyzeDumpHead`): the rules for "which dump dialect gets which viewer
+  path" now live in one module with structured findings (tier, reason,
+  actionable fix) instead of being implicit in parser internals.
+  `canStreamDump` delegates to it, so the gate and the explanation can
+  never disagree. Human-readable mirror: `docs/lammps-dump-contract.md`.
+- **`lupi-doctor`** (`npm run doctor -- [--deep] <file>`): tells a real
+  LAMMPS user exactly how their file will behave in Lupi — which tier,
+  why, and the `dump` command change that gets the fast path. `--deep`
+  adds frames/throughput/type-range stats and a transformation metric.
+- **Declarative scenario system** in `tools/sims/`: a scenario is
+  `setup × protocol` data, not a script. Every output now carries a
+  `<name>.manifest.json` with full provenance (potential, protocol,
+  seed, LAMMPS version) and verification hints that
+  `verify-real-trajectory` consumes. New third scenario proves the
+  abstraction: `cu-sinter` — two misoriented Cu nanoparticles coalescing
+  at 0.75 T_m with a real grain boundary in the neck.
+
 ### Real phase-change demo trajectories
 
 ### Added
