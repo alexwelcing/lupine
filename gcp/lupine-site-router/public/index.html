@@ -3,295 +3,303 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lupine Science</title>
-  <meta name="description" content="Lupine Science is the public entry point for the Lupine Library research corpus, LUPI evidence viewer, and open repository.">
+  <title>Lupine Science — Evidence before claim</title>
+  <meta name="description" content="Lupine Science builds the audit substrate for matter: measuring the structured geometry of interatomic-potential errors, publishing the evidence, and keeping every claim inspectable. Step 1 of a real-world Replicator.">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="Lupine Science">
-  <meta property="og:description" content="Public entry point for the Lupine Library research corpus, LUPI evidence viewer, and open repository.">
+  <meta property="og:title" content="Lupine Science — Evidence before claim">
+  <meta property="og:description" content="The audit substrate for matter. Prediction errors form low-dimensional geometry, not random scatter — Lupine measures it, tests it, and publishes the trail.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lupine.science/">
-  <meta name="twitter:card" content="summary">
-  <meta name="theme-color" content="#0b1014">
+  <meta property="og:image" content="https://lupine.science/og-lupine-science.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0a1628">
   <style>
     :root {
-      color-scheme: light dark;
-      --bg: #f6f4ef;
-      --ink: #151719;
-      --muted: #5f666b;
-      --panel: #ffffff;
-      --line: rgba(21, 23, 25, 0.16);
-      --accent: #245e57;
-      --accent-2: #7d5f2d;
-      --max: 1040px;
+      --ink: #eaf2ff;
+      --ink-dim: #9db4d6;
+      --ink-faint: #5f7699;
+      --abyss: #060d1a;
+      --navy: #0a1628;
+      --prussian: #11305e;
+      --steel: #1e4f8f;
+      --glow: #7fd4ff;
+      --glow-2: #4ecdc4;
+      --gold: #d5b878;
+      --line: rgba(127, 212, 255, 0.16);
+      --max: 1120px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b1014;
-        --ink: #eef0ed;
-        --muted: #a3aba6;
-        --panel: #121a1f;
-        --line: rgba(238, 240, 237, 0.16);
-        --accent: #8ed1c4;
-        --accent-2: #d5b878;
-      }
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      min-height: 100vh;
-      background:
-        linear-gradient(90deg, transparent 0 95%, rgba(36, 94, 87, 0.08) 95% 100%),
-        linear-gradient(0deg, transparent 0 95%, rgba(125, 95, 45, 0.08) 95% 100%),
-        var(--bg);
-      background-size: 48px 48px, 48px 48px, auto;
+      background: var(--abyss);
       color: var(--ink);
       font-size: 18px;
-      line-height: 1.55;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-
     a { color: inherit; }
-    .wrap {
-      width: min(100% - 40px, var(--max));
-      margin: 0 auto;
-    }
+    .wrap { width: min(100% - 44px, var(--max)); margin: 0 auto; }
 
+    ::selection { background: rgba(127, 212, 255, 0.35); }
+
+    /* ── header ─────────────────────────────────────────────── */
     header {
-      border-bottom: 1px solid var(--line);
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 2;
+      position: fixed; inset: 0 0 auto 0; z-index: 40;
+      background: linear-gradient(rgba(6, 13, 26, 0.85), rgba(6, 13, 26, 0));
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
-
     nav {
-      min-height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 0; gap: 16px;
     }
-
     .brand {
-      font-weight: 760;
-      letter-spacing: 0.01em;
-      text-decoration: none;
+      font-weight: 800; letter-spacing: 0.02em; text-decoration: none;
+      font-size: 1.05rem; display: flex; align-items: center; gap: 10px;
     }
-
-    .navlinks {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      font-size: 14px;
-      color: var(--muted);
+    .brand::before {
+      content: ""; width: 10px; height: 10px; border-radius: 50%;
+      background: var(--glow);
+      box-shadow: 0 0 12px 2px rgba(127, 212, 255, 0.8);
     }
-
+    .navlinks { display: flex; gap: 6px 22px; flex-wrap: wrap; font-size: 14.5px; }
     .navlinks a {
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
+      text-decoration: none; color: var(--ink-dim);
+      transition: color 140ms ease;
     }
+    .navlinks a:hover { color: var(--glow); }
 
-    .navlinks a:hover { border-color: currentColor; }
-
-    main {
-      padding: clamp(56px, 8vw, 96px) 0 64px;
-    }
-
+    /* ── hero ───────────────────────────────────────────────── */
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-      gap: clamp(28px, 5vw, 56px);
-      align-items: end;
+      position: relative; min-height: 100svh;
+      display: grid; place-items: center;
+      isolation: isolate;
+      overflow: hidden;
     }
-
+    .hero-bg {
+      position: absolute; inset: 0; z-index: -2;
+      background:
+        linear-gradient(180deg, rgba(6,13,26,0.55) 0%, rgba(6,13,26,0.35) 45%, var(--abyss) 100%),
+        url("/hero-cyanotype.png") center 30% / cover no-repeat,
+        var(--navy);
+      filter: saturate(1.15);
+      animation: heroDrift 36s ease-in-out infinite alternate;
+    }
+    @keyframes heroDrift {
+      from { transform: scale(1.0) translateY(0); }
+      to   { transform: scale(1.06) translateY(-1.5%); }
+    }
+    #atoms {
+      position: absolute; inset: 0; z-index: -1;
+      width: 100%; height: 100%;
+    }
+    .hero-inner {
+      text-align: center; padding: 120px 0 96px;
+      max-width: 880px; margin: 0 auto;
+      position: relative;
+    }
+    .hero-inner::before {
+      content: ""; position: absolute; inset: -8% -22%; z-index: -1;
+      background: radial-gradient(closest-side, rgba(6, 13, 26, 0.78), rgba(6, 13, 26, 0.5) 55%, transparent 100%);
+      filter: blur(2px);
+    }
+    h1 { text-shadow: 0 2px 28px rgba(6, 13, 26, 0.9); }
+    .hero .lead { color: #c4d6f2; text-shadow: 0 1px 14px rgba(6, 13, 26, 0.95); }
     .eyebrow {
-      color: var(--accent);
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 750;
-      margin: 0 0 18px;
+      letter-spacing: 0.34em; text-transform: uppercase; font-size: 12.5px;
+      color: var(--glow); font-weight: 700; margin: 0 0 22px;
+      text-shadow: 0 0 18px rgba(127, 212, 255, 0.55);
     }
-
     h1 {
-      font-size: clamp(3.2rem, 9vw, 6.8rem);
-      line-height: 0.88;
-      letter-spacing: 0;
-      margin: 0;
-      max-width: 10ch;
+      font-size: clamp(2.6rem, 7.2vw, 4.9rem);
+      line-height: 1.04; letter-spacing: -0.02em;
+      margin: 0 0 10px; font-weight: 800;
     }
-
+    .h1-sub {
+      display: block; margin-top: 14px;
+      background: linear-gradient(92deg, var(--glow) 0%, #b9e8ff 35%, var(--glow-2) 70%, var(--glow) 100%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 7s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: -220% 0; } }
     .lead {
-      color: var(--muted);
-      font-size: clamp(1.08rem, 2vw, 1.35rem);
-      max-width: 42rem;
-      margin: 26px 0 0;
+      color: var(--ink-dim); font-size: clamp(1.02rem, 2.1vw, 1.22rem);
+      max-width: 640px; margin: 22px auto 38px;
     }
-
-    .panel {
-      background: color-mix(in srgb, var(--panel) 86%, transparent);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: clamp(20px, 3vw, 28px);
+    .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; text-decoration: none; font-weight: 700;
+      padding: 14px 26px; border-radius: 10px; font-size: 1rem;
+      transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
     }
-
-    .status {
-      display: grid;
-      gap: 14px;
-      margin: 0;
+    .btn-primary {
+      background: linear-gradient(135deg, var(--steel), var(--prussian));
+      border: 1px solid rgba(127, 212, 255, 0.45);
+      box-shadow: 0 0 28px rgba(127, 212, 255, 0.22), inset 0 0 18px rgba(127, 212, 255, 0.12);
     }
-
-    .status div {
-      border-top: 1px solid var(--line);
-      padding-top: 14px;
-    }
-
-    .status div:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .live-loop {
-      display: grid;
-      gap: 12px;
-    }
-
-    .live-head {
-      color: var(--ink);
-      font-weight: 720;
-    }
-
-    .progress-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .progress-cell {
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 8px;
-      min-height: 66px;
-    }
-
-    .progress-cell strong {
-      display: block;
-      color: var(--ink);
-      font-size: 1.15rem;
-      line-height: 1.1;
-    }
-
-    .progress-cell span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .step-list {
-      display: grid;
-      gap: 6px;
-      padding: 0;
-      margin: 0;
-      list-style: none;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .step-list li {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .step-list b {
-      color: var(--accent);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    dt {
-      color: var(--accent-2);
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-weight: 760;
-      margin-bottom: 6px;
-    }
-
-    dd {
-      color: var(--muted);
-      margin: 0;
-    }
-
-    .routes {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: clamp(36px, 6vw, 64px);
-    }
-
-    .route {
-      min-height: 168px;
-      background: color-mix(in srgb, var(--panel) 86%, transparent);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 18px;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 140ms ease, border-color 140ms ease;
-    }
-
-    .route:hover {
+    .btn-primary:hover {
       transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+      box-shadow: 0 6px 40px rgba(127, 212, 255, 0.4), inset 0 0 22px rgba(127, 212, 255, 0.2);
+    }
+    .btn-ghost {
+      border: 1px solid var(--line); color: var(--ink-dim);
+      background: rgba(10, 22, 40, 0.4);
+    }
+    .btn-ghost:hover { color: var(--ink); border-color: rgba(127, 212, 255, 0.5); transform: translateY(-2px); }
+    .scroll-cue {
+      position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+      color: var(--ink-faint); font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+      animation: bob 2.4s ease-in-out infinite;
+    }
+    @keyframes bob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+
+    /* ── live strip ─────────────────────────────────────────── */
+    .live-strip {
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(17, 48, 94, 0.35), rgba(10, 22, 40, 0.55));
+      padding: 26px 0;
+    }
+    .live-grid {
+      display: grid; grid-template-columns: 1.4fr repeat(3, minmax(0, 0.55fr));
+      gap: 18px; align-items: center;
+    }
+    .live-label {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--ink-dim); font-size: 15px;
+    }
+    .pulse {
+      width: 9px; height: 9px; border-radius: 50%; background: var(--glow-2); flex: none;
+      box-shadow: 0 0 0 0 rgba(78, 205, 196, 0.7);
+      animation: pulse 2.2s cubic-bezier(0.66, 0, 0, 1) infinite;
+    }
+    @keyframes pulse { to { box-shadow: 0 0 0 12px rgba(78, 205, 196, 0); } }
+    .live-cell { text-align: center; }
+    .live-cell strong {
+      display: block; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800;
+      color: var(--glow); font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 16px rgba(127, 212, 255, 0.45);
+    }
+    .live-cell span {
+      color: var(--ink-faint); font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase;
     }
 
-    .route strong {
-      display: block;
-      font-size: 1.05rem;
-      margin-bottom: 10px;
+    /* ── sections ───────────────────────────────────────────── */
+    section.block { padding: clamp(72px, 11vw, 130px) 0; position: relative; }
+    .kicker {
+      color: var(--glow-2); letter-spacing: 0.3em; text-transform: uppercase;
+      font-size: 12px; font-weight: 700; margin: 0 0 14px;
     }
+    h2 {
+      font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: 1.1;
+      letter-spacing: -0.015em; margin: 0 0 18px; font-weight: 800;
+    }
+    .block .lead { margin: 0 0 44px; text-align: left; max-width: 700px; }
 
-    .route span {
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 700ms ease, transform 700ms ease; }
+    .reveal.in { opacity: 1; transform: none; }
 
-    .tag {
-      color: var(--accent);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-weight: 750;
+    /* ── the arc ────────────────────────────────────────────── */
+    .arc {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;
+      counter-reset: phase;
     }
+    .phase {
+      position: relative; border: 1px solid var(--line); border-radius: 12px;
+      padding: 26px 20px 22px; background: rgba(10, 22, 40, 0.55);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+    .phase:hover { transform: translateY(-4px); }
+    .phase::before {
+      counter-increment: phase;
+      content: "0" counter(phase);
+      display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.22em;
+      color: var(--ink-faint); margin-bottom: 14px;
+    }
+    .phase strong { display: block; font-size: 1.12rem; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .phase p { margin: 0; color: var(--ink-dim); font-size: 14.5px; }
+    .phase .when {
+      display: inline-block; margin-top: 16px; font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--ink-faint);
+    }
+    .phase.now {
+      border-color: rgba(127, 212, 255, 0.55);
+      background: linear-gradient(170deg, rgba(30, 79, 143, 0.5), rgba(10, 22, 40, 0.7));
+      box-shadow: 0 0 36px rgba(127, 212, 255, 0.16), inset 0 0 26px rgba(127, 212, 255, 0.07);
+    }
+    .phase.now::before { color: var(--glow); text-shadow: 0 0 12px rgba(127, 212, 255, 0.6); }
+    .phase.now .when { color: var(--glow-2); }
+
+    /* ── routes ─────────────────────────────────────────────── */
+    .routes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .route {
+      position: relative; overflow: hidden;
+      border: 1px solid var(--line); border-radius: 14px; text-decoration: none;
+      padding: 28px 26px; min-height: 180px;
+      background: rgba(10, 22, 40, 0.55);
+      display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+    .route::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(560px 200px at var(--mx, 50%) var(--my, 0%), rgba(127, 212, 255, 0.12), transparent 60%);
+      opacity: 0; transition: opacity 220ms ease;
+    }
+    .route:hover { transform: translateY(-4px); border-color: rgba(127, 212, 255, 0.5); box-shadow: 0 14px 48px rgba(6, 13, 26, 0.8); }
+    .route:hover::after { opacity: 1; }
+    .route .tag {
+      color: var(--glow-2); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      font-weight: 800;
+    }
+    .route strong { font-size: 1.3rem; display: block; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .route span { color: var(--ink-dim); font-size: 15px; }
+    .route .go { color: var(--glow); font-size: 14px; font-weight: 700; }
+
+    /* ── science / status ───────────────────────────────────── */
+    .split { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
+    .ribbon-fig {
+      border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+      background: rgba(10, 22, 40, 0.55);
+    }
+    .ribbon-fig video { display: block; width: 100%; height: auto; }
+    .ribbon-fig figcaption { padding: 14px 18px; color: var(--ink-faint); font-size: 13.5px; }
+    .status {
+      border: 1px solid var(--line); border-radius: 14px; padding: 26px;
+      background: rgba(10, 22, 40, 0.55); margin: 0;
+    }
+    .status dt {
+      font-size: 11.5px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--glow-2); font-weight: 800; margin-bottom: 6px;
+    }
+    .status dd { margin: 0 0 20px; color: var(--ink-dim); font-size: 15px; }
+    .status dd:last-child { margin-bottom: 0; }
 
     footer {
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      padding: 24px 0;
-      font-size: 14px;
+      border-top: 1px solid var(--line); padding: 34px 0 44px;
+      color: var(--ink-faint); font-size: 14px;
     }
+    footer .wrap { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    footer a { color: var(--ink-dim); }
 
-    @media (max-width: 820px) {
+    @media (max-width: 880px) {
       body { font-size: 16px; }
-      nav { align-items: flex-start; flex-direction: column; padding: 16px 0; }
-      .navlinks { justify-content: flex-start; }
-      .hero { grid-template-columns: 1fr; }
-      .routes { grid-template-columns: 1fr 1fr; }
+      .live-grid { grid-template-columns: 1fr 1fr; row-gap: 22px; }
+      .live-label { grid-column: 1 / -1; justify-content: center; }
+      .arc { grid-template-columns: 1fr 1fr; }
+      .split { grid-template-columns: 1fr; }
     }
-
     @media (max-width: 560px) {
-      .wrap { width: min(100% - 28px, var(--max)); }
-      .routes { grid-template-columns: 1fr; }
+      .wrap { width: min(100% - 30px, var(--max)); }
+      .arc, .routes { grid-template-columns: 1fr; }
+      .navlinks { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-bg, .h1-sub, .pulse, .scroll-cue { animation: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
@@ -308,138 +316,290 @@
     </nav>
   </header>
 
-  <main class="wrap">
+  <main>
+    <!-- ════════ HERO ════════ -->
     <section class="hero" aria-labelledby="title">
-      <div>
-        <p class="eyebrow">Research entry point</p>
-        <h1 id="title">Evidence before claim.</h1>
+      <div class="hero-bg" aria-hidden="true"></div>
+      <canvas id="atoms" aria-hidden="true"></canvas>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Lupine Science</p>
+        <h1 id="title">
+          Evidence before claim.
+          <span class="h1-sub">The audit substrate for matter.</span>
+        </h1>
         <p class="lead">
-          Lupine Science points readers to the public research corpus, the LUPI evidence viewer,
-          and the open repository. The scientific record is maintained where claims, corrections,
-          code, and status labels can be inspected together.
+          Machine-learned interatomic potentials are necessary — and wrong in structured
+          ways. Their prediction errors form low-dimensional geometry, not random scatter.
+          Lupine measures that geometry, tests it, and publishes the whole trail.
         </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://lupi.live">Launch the LUPI viewer →</a>
+          <a class="btn btn-ghost" href="https://library.lupine.science">Read the research</a>
+        </div>
       </div>
+      <div class="scroll-cue" aria-hidden="true">Scroll</div>
+    </section>
 
-      <aside class="panel" aria-label="Current public status">
-        <dl class="status">
+    <!-- ════════ LIVE LOOP ════════ -->
+    <section class="live-strip" aria-label="Live discovery loop status">
+      <div class="wrap live-grid">
+        <div class="live-label">
+          <span class="pulse" aria-hidden="true"></span>
+          <span id="mlip-headline">Checking the live MLIP discovery loop…</span>
+        </div>
+        <div class="live-cell"><strong id="mlip-records">—</strong><span>records</span></div>
+        <div class="live-cell"><strong id="mlip-sentinels">—</strong><span>sentinels</span></div>
+        <div class="live-cell"><strong id="mlip-actions">—</strong><span>agenda items</span></div>
+      </div>
+    </section>
+
+    <!-- ════════ THE ARC ════════ -->
+    <section class="block" aria-labelledby="arc-title">
+      <div class="wrap">
+        <p class="kicker reveal">Where this is going</p>
+        <h2 id="arc-title" class="reveal">Step 1 of a real-world Replicator.</h2>
+        <p class="lead reveal">
+          Simulation that can be <em>trusted</em> is the gate to everything after it:
+          machines that design matter, then make it, then reprogram it. Nobody crosses
+          that gate without an audit layer. That layer is what we are building — in public.
+        </p>
+        <div class="arc">
+          <div class="phase now reveal">
+            <strong>Audit substrate</strong>
+            <p>Trustworthy atomistic prediction: where models fail, why the failures have
+               structure, and corrections you can inspect.</p>
+            <span class="when">Now — live below</span>
+          </div>
+          <div class="phase reveal">
+            <strong>Generative matter</strong>
+            <p>Design loops that propose new materials — kept honest by the audit layer
+               underneath them.</p>
+            <span class="when">Next</span>
+          </div>
+          <div class="phase reveal">
+            <strong>Closed-loop synthesis</strong>
+            <p>Autonomous labs that make what the loops design, with evidence flowing
+               back into the record.</p>
+            <span class="when">Later</span>
+          </div>
+          <div class="phase reveal">
+            <strong>Programmable matter</strong>
+            <p>The long horizon: matter specified the way software is specified —
+               auditable all the way down.</p>
+            <span class="when">The arc</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ ROUTES ════════ -->
+    <section class="block" aria-labelledby="routes-title" style="padding-top: 0;">
+      <div class="wrap">
+        <p class="kicker reveal">Running right now</p>
+        <h2 id="routes-title" class="reveal">Not a roadmap. Software you can open.</h2>
+        <div class="routes">
+          <a class="route reveal" href="https://lupi.live">
+            <span class="tag">Inspect</span>
+            <div>
+              <strong>LUPI</strong>
+              <span>A WebGPU molecular viewer in your browser. Watch a 26,400-atom copper
+                slab melt, a liquid quench into glass, and two nanoparticles sinter —
+                real molecular dynamics, streamed frame by frame.</span>
+            </div>
+            <span class="go">lupi.live →</span>
+          </a>
+          <a class="route reveal" href="https://library.lupine.science">
+            <span class="tag">Read</span>
+            <div>
+              <strong>Lupine Library</strong>
+              <span>The research corpus: reports, evidence notes, refutations, corrections,
+                and a public changelog that records what was learned — including what
+                turned out to be wrong.</span>
+            </div>
+            <span class="go">library.lupine.science →</span>
+          </a>
+          <a class="route reveal" href="https://library.lupine.science/reports/hyper-ribbon-theorem.html">
+            <span class="tag">View</span>
+            <div>
+              <strong>Hyper-ribbon theorem demo</strong>
+              <span>The core geometric claim, demonstrated interactively: error spectra
+                concentrate on far fewer directions than the ambient space allows.</span>
+            </div>
+            <span class="go">Theorem demo →</span>
+          </a>
+          <a class="route reveal" href="https://github.com/alexwelcing/lupine">
+            <span class="tag">Audit</span>
+            <div>
+              <strong>Open repository</strong>
+              <span>The analysis engines, formal specs, evidence payloads, agents, and this
+                very page. If a claim is made anywhere, the machinery behind it is here.</span>
+            </div>
+            <span class="go">github.com/alexwelcing/lupine →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ SCIENCE + STATUS ════════ -->
+    <section class="block" aria-labelledby="science-title" style="padding-top: 0;">
+      <div class="wrap split">
+        <div>
+          <p class="kicker reveal">The science</p>
+          <h2 id="science-title" class="reveal">Errors with a shape.</h2>
+          <p class="lead reveal" style="margin-bottom: 22px;">
+            Compare many interatomic potentials against many materials and the errors don't
+            scatter — they collapse onto a thin, ribbon-like manifold. That shape is the
+            discovery: it means failure is predictable, and predictable failure can be
+            corrected. The viewer, the library, the agents, and the formal layer all exist
+            to measure, stress-test, and publish that one geometric object.
+          </p>
+          <figure class="ribbon-fig reveal" style="margin: 0;">
+            <video preload="none" controls muted playsinline poster="/og-lupine-science.png" src="https://storage.googleapis.com/shed-489901-nist-demos/media/atlas-launch-final.mp4"></video>
+            <figcaption>ATLAS launch reel — the evidence viewer that became LUPI.</figcaption>
+          </figure>
+        </div>
+        <dl class="status reveal" aria-label="Current public status">
           <div>
             <dt>Working paper</dt>
-            <dd>The causal-geometry paper is a draft in preparation: no peer review, no acceptance, and no journal or venue assignment.</dd>
+            <dd>The causal-geometry paper is a draft in preparation: no peer review, no
+              acceptance, and no journal or venue assignment.</dd>
           </div>
           <div>
             <dt>Research corpus</dt>
-            <dd>Reports, evidence notes, refutations, and status labels live in Lupine Library.</dd>
+            <dd>Reports, evidence notes, refutations, and status labels live in the
+              Lupine Library — including the public record of corrected mistakes.</dd>
           </div>
           <div>
             <dt>Formal layer</dt>
-            <dd>The Lean evidence layer and theorem claims belong in the repository and Library pages, not in a stale homepage counter.</dd>
+            <dd>Machine-checked claims live in the repository and Library pages, where
+              their status can be verified rather than advertised.</dd>
           </div>
-          <div class="live-loop">
-            <dt>Live discovery loop</dt>
-            <dd>
-              <span id="mlip-headline" class="live-head">Checking MLIP benchmark progress.</span>
-            </dd>
-            <div class="progress-grid" aria-label="MLIP discovery progress counters">
-              <div class="progress-cell">
-                <strong id="mlip-records">--</strong>
-                <span>records</span>
-              </div>
-              <div class="progress-cell">
-                <strong id="mlip-sentinels">--</strong>
-                <span>sentinels</span>
-              </div>
-              <div class="progress-cell">
-                <strong id="mlip-actions">--</strong>
-                <span>agenda items</span>
-              </div>
-            </div>
-            <ul id="mlip-steps" class="step-list" aria-label="MLIP discovery loop stages">
-              <li><span>Awaiting analyzer feedback</span><b>loading</b></li>
-            </ul>
+          <div>
+            <dt>Posture</dt>
+            <dd>Watch the evidence trail. Every surface linked from this page updates as
+              the work happens, and nothing here outruns what the record supports.</dd>
           </div>
         </dl>
-      </aside>
-    </section>
-
-    <section class="routes" aria-label="Canonical Lupine surfaces">
-      <a class="route" href="https://library.lupine.science">
-        <span class="tag">Read</span>
-        <div>
-          <strong>Lupine Library</strong>
-          <span>Human-readable reports, evidence, labels, and changelog.</span>
-        </div>
-      </a>
-      <a class="route" href="https://library.lupine.science/reports/hyper-ribbon-theorem.html">
-        <span class="tag">View</span>
-        <div>
-          <strong>Hyper-Ribbon Theorem Demo</strong>
-          <span>A tablet-first mathematical demonstration page.</span>
-        </div>
-      </a>
-      <a class="route" href="https://lupi.live">
-        <span class="tag">Inspect</span>
-        <div>
-          <strong>LUPI</strong>
-          <span>Browser-native molecular viewer and evidence surface.</span>
-        </div>
-      </a>
-      <a class="route" href="https://github.com/alexwelcing/lupine">
-        <span class="tag">Audit</span>
-        <div>
-          <strong>Repository</strong>
-          <span>Analysis engine, specs, evidence payloads, and notes.</span>
-        </div>
-      </a>
+      </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">Lupine Science. Public research status is canonical in Library and the repository.</div>
+    <div class="wrap">
+      <span>Lupine Science. Public research status is canonical in the Library and the repository.</span>
+      <span><a href="https://lupi.live">LUPI</a> · <a href="https://library.lupine.science">Library</a> · <a href="https://github.com/alexwelcing/lupine">Repository</a></span>
+    </div>
   </footer>
+
   <script>
+    // ── Molecular constellation: atoms drift, bonds connect by distance ──
+    (() => {
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const canvas = document.getElementById("atoms");
+      if (!canvas || reduced) { if (canvas) canvas.remove(); return; }
+      const ctx = canvas.getContext("2d");
+      let w, h, dpr, atoms = [], raf;
+      const N = () => Math.min(90, Math.round((w * h) / 16000));
+      const BOND = 120;
+
+      function resize() {
+        dpr = Math.min(devicePixelRatio || 1, 2);
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const n = N();
+        while (atoms.length < n) atoms.push(spawn());
+        atoms.length = n;
+      }
+      function spawn() {
+        return {
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18,
+          r: 1.2 + Math.random() * 2.2,
+          tw: Math.random() * Math.PI * 2,
+        };
+      }
+      let mx = -1e4, my = -1e4;
+      addEventListener("pointermove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mx = e.clientX - rect.left; my = e.clientY - rect.top;
+      }, { passive: true });
+
+      function frame(t) {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < atoms.length; i++) {
+          const a = atoms[i];
+          for (let j = i + 1; j < atoms.length; j++) {
+            const b = atoms[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < BOND * BOND) {
+              const alpha = (1 - Math.sqrt(d2) / BOND) * 0.32;
+              ctx.strokeStyle = `rgba(127, 212, 255, ${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+            }
+          }
+        }
+        for (const a of atoms) {
+          const dx = a.x - mx, dy = a.y - my;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < 22500) { a.vx += (dx / d2) * 6; a.vy += (dy / d2) * 6; }
+          a.vx *= 0.995; a.vy *= 0.995;
+          a.x += a.vx; a.y += a.vy;
+          if (a.x < -10) a.x = w + 10; else if (a.x > w + 10) a.x = -10;
+          if (a.y < -10) a.y = h + 10; else if (a.y > h + 10) a.y = -10;
+          const glow = 0.55 + 0.45 * Math.sin(t / 900 + a.tw);
+          ctx.fillStyle = `rgba(185, 232, 255, ${0.35 + glow * 0.45})`;
+          ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
+        }
+        raf = requestAnimationFrame(frame);
+      }
+      resize();
+      addEventListener("resize", resize, { passive: true });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) cancelAnimationFrame(raf);
+        else raf = requestAnimationFrame(frame);
+      });
+      raf = requestAnimationFrame(frame);
+    })();
+
+    // ── Scroll reveals ──
+    (() => {
+      const els = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      }, { threshold: 0.12 });
+      els.forEach((el) => io.observe(el));
+    })();
+
+    // ── Route-card hover spotlight follows the pointer ──
+    (() => {
+      document.querySelectorAll(".route").forEach((card) => {
+        card.addEventListener("pointermove", (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+          card.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+        }, { passive: true });
+      });
+    })();
+
+    // ── Live MLIP discovery loop counters (glim-think control plane) ──
     (() => {
       const endpoint = "https://glim-think-v1.aw-ab5.workers.dev/research/mlip-discovery/progress";
-      const ids = {
-        headline: document.getElementById("mlip-headline"),
-        records: document.getElementById("mlip-records"),
-        sentinels: document.getElementById("mlip-sentinels"),
-        actions: document.getElementById("mlip-actions"),
-        steps: document.getElementById("mlip-steps"),
-      };
-
-      function setText(node, value) {
-        if (node) node.textContent = value;
-      }
-
-      function renderSteps(steps) {
-        if (!ids.steps) return;
-        ids.steps.innerHTML = "";
-        for (const step of steps.slice(0, 3)) {
-          const item = document.createElement("li");
-          const label = document.createElement("span");
-          const state = document.createElement("b");
-          label.textContent = step.label || step.id || "loop stage";
-          state.textContent = step.state || "pending";
-          item.append(label, state);
-          ids.steps.appendChild(item);
-        }
-      }
-
+      const $ = (id) => document.getElementById(id);
+      const set = (node, v) => { if (node) node.textContent = v; };
       fetch(endpoint, { cache: "no-store" })
-        .then((response) => response.ok ? response.json() : Promise.reject(new Error(String(response.status))))
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
         .then((data) => {
-          setText(ids.headline, data.headline || "MLIP discovery loop is online.");
-          setText(ids.records, String(data.progress?.records ?? 0));
-          setText(ids.sentinels, String(data.progress?.sentinels ?? 0));
-          setText(ids.actions, String(data.progress?.agenda_actions ?? 0));
-          renderSteps(Array.isArray(data.steps) ? data.steps : []);
+          set($("mlip-headline"), data.headline || "The MLIP discovery loop is online.");
+          set($("mlip-records"), String(data.progress?.records ?? 0));
+          set($("mlip-sentinels"), String(data.progress?.sentinels ?? 0));
+          set($("mlip-actions"), String(data.progress?.agenda_actions ?? 0));
         })
         .catch(() => {
-          setText(ids.headline, "MLIP discovery loop status is temporarily unavailable.");
-          setText(ids.records, "0");
-          setText(ids.sentinels, "0");
-          setText(ids.actions, "0");
-          renderSteps([{ label: "Analyzer API", state: "offline" }]);
+          set($("mlip-headline"), "Discovery-loop status is temporarily unavailable — the record lives in the Library.");
+          set($("mlip-records"), "·"); set($("mlip-sentinels"), "·"); set($("mlip-actions"), "·");
         });
     })();
   </script>
