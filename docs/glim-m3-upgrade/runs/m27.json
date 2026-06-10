@@ -1,0 +1,96 @@
+{
+  "model": "MiniMax-M2.7",
+  "agent": "Theorist",
+  "records": [
+    {
+      "example_id": "T1:0",
+      "anchor": "T1",
+      "target_theorem": "hyper_ribbon_bound_3d",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": ""
+    },
+    {
+      "example_id": "T2:1",
+      "anchor": "T2",
+      "target_theorem": "empirical_hyper_ribbon_holds",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": "**Competing hypotheses about the “survival’’ of the empirical hyper‑ribbon**"
+    },
+    {
+      "example_id": "T3:2",
+      "anchor": "T3",
+      "target_theorem": "eamFccElasticConjecture",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": ""
+    },
+    {
+      "example_id": "T4:3",
+      "anchor": "T4",
+      "target_theorem": "broad_commitment_is_open",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": "**Competing hypotheses for when per‑cell distillation will *not* beat the baseline**  \nEach hypothesis is tied to a named **Target Theorem** so that the claim it makes can be formally tested.\n\n| # | Target Theorem (label) | Hypothesis (failure mode) | Why it could make distill under‑perform |\n|---|------------------------|----------------------------|------------------------------------------|\n| H1 | **T1 – Δ‑ML correction transferability breakdown** | *If the correction learned on one architecture (e.g. MACE) cannot be transferred to a different architecture (e.g. SevenNet) for out‑of‑distribution (OOD) chemistries, the distilled model will inherit a systematic bias that the baseline does not.* | Rare‑earth elements, high‑temperature phases, or novel stoichiometries may exhibit energy surface curvatures that the Δ‑ML correction never saw during training. The transferred Δ will be stale, causing an error larger than the baseline’s native error. |\n| H2 | **T2 – Residual‑learning baseline over‑correction** | *When the residual‑learning baseline is already very close to the DFT reference (error < 0.05 eV/atom), adding a distilled correction can introduce noise, leading to a net increase in MAE.* | In “easy” regions the baseline already captures > 95 % of the physics. The distillation step may over‑fit to training noise, creating a correction that is slightly anti‑correlated with the true residual, flipping the sign of the error. |\n| H3 | **T3 – Foundation‑MLIP benchmark systematic bias** | *If the foundation‑MLIP benchmark error for a material class exceeds a critical threshold (e.g. > 0.30 eV/atom), the distilled model will inherit this bias and fail to beat the baseline on that class.* | Strong electron‑correlation (e.g. 3d‑transition‑metal oxides) often leads to systematic errors in the underlying MLIP. The distillation can only propagate this bias; the baseline’s error may be more symmetric, resulting in lower MAE after averaging. |\n| H4 | **T4 – Low‑data / low‑diversity coverage failure** | *When the training set lacks coverage of a bonding motif (e.g. multi‑center bonding in clathrates, ionic liquids), the distilled correction will be under‑determined and may degrade performance relative to the baseline.* | The per‑cell distillation relies on a dense set of corrections for each local environment. Sparse coverage leads to a poorly‑estimated correction surface; the baseline, which does not rely on a correction, may be more robust. |\n| H5 | **T5 – Distillation over‑fitting to training set size** | *If the training set is below a critical size (e.g. < 20 k structures) the distilled model will over‑fit to the training noise, yielding a higher test error than the baseline.* | Small datasets amplify the variance of the correction term; the baseline, being a simpler model with fewer parameters, will have lower variance on unseen data. |\n| H6 | **T6 – Computational budget mismatch** | *If the inference budget for the distilled model is constrained (e.g. < 10 ms per cell), the distilled model may be forced to truncate its correction pipeline, leading to an incomplete correction that under‑performs the baseline.* | The baseline (MACE/SevenNet) can run with a fixed, pre‑trained architecture. The distilled version may need additional fine‑tuning steps that cannot be afforded in a production environment, effectively dropping the correction at runtime. |\n\n---\n\n### Held‑out test design to promote or block the **broad_commitment_is_open** claim\n\n1. **Test‑set construction**  \n   - **Diverse material corpus**: Assemble a held‑out set of **≥ 10 000** structures spanning:\n     - 5 % each of: pure elements, binary oxides, ternary oxides, sulfides, nitrides, halides, 2D materials, high‑entropy alloys, molecular crystals, and clathrate‑type frameworks.  \n     - **Unseen** in any training split (no overlap with MACE/SevenNet training data).  \n   - **Label quality**: All"
+    },
+    {
+      "example_id": "T5:4",
+      "anchor": "T5",
+      "target_theorem": "hyper_ribbon_survives_context_correction",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": ""
+    },
+    {
+      "example_id": "T2:5",
+      "anchor": "T2",
+      "target_theorem": "empirical_hyper_ribbon_holds",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": ""
+    },
+    {
+      "example_id": "T1:6",
+      "anchor": "T1",
+      "target_theorem": "hyper_ribbon_bound_3d",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": "We have a request: \"Au escapes the hyper-ribbon specifically under MLIPs (not classical potentials). Propose competing hypotheses for whether Au escape is MLIP-architecture-specific or a general late-5d noble-metal effect, with a discriminating test across MACE/CHGNet/Orb.\"\n\nWe need to propose competing hypotheses regarding whether Au escape from hyper-ribbon (something like a nanoribbon structure) is specific to MLIP (machine learning interatomic potential) architecture or is a general effect of late-5d noble metals (like Au, Pt, etc.). They want to anchor on T1/T2 ribbon membership, and seed hypotheses: h_au_specific_mlip_escape, h_mlip_escape_Au. Grounding: relativistic effects in Au; d-band filling; foundation-MLIP training composition bias.\n\nThus the answer should propose two or more hypotheses, possibly more: (1) Au escape is MLIP architecture-specific; (2) Au escape is a general late-5d noble metal effect; (3) a hybrid or confounding hypothesis (maybe due to training bias). Also we need to propose discriminating tests across MACE, CHGNet, Orb (three different MLIP frameworks). Should discuss what would differentiate between these hypotheses.\n\nThe user wants to use rigorous materials-science research approach, attach each hypothesis to a named target theorem, etc. Provide discriminating tests that involve comparing predictions across MLIPs and possibly classical potentials. Use cross-validation across architectures, training data composition, etc.\n\nWe need to propose experimental design: compute Au migration barrier in hyper-ribbon using MACE, CHGNet, Orb; compare with DFT and classical potentials (e.g., EAM, MEAM). Also propose analysis of d-band center, relativistic effects, spin-orbit coupling. Could also propose test with isoelectronic late-5d metals (Pt, Ir) to see if they also escape; if they escape under MLIPs but not classical potentials, that supports general late-5d effect; if they don't, then it's Au-specific.\n\nAlso propose test of training composition bias: retrain MACE with heavy emphasis on Au-containing configurations, see if escape persists.\n\nAlso propose a test of MLIP architecture: MACE is message-passing, CHGNet uses graph neural network, Orb is maybe an equivariant (e.g., NequIP or Allegro). Compare predictions.\n\nWe also need to incorporate theory for relativistic effects: increased s-d hybridization, stronger spin-orbit coupling, deeper d-band.\n\nAlso d-band filling: Au is d^10, full d-shell, leads to less cohesive energy? Actually Au's d-band is full, but still high cohesive energy due to s-p conduction.\n\nAlso training bias: if MLIPs were trained more on early transition metals, they may poorly represent Au.\n\nThus propose hypotheses:\n\nH1: Au escape is MLIP-architecture-specific (h_au_specific_mlip_escape). Means that only certain MLIP frameworks (maybe those using message-passing with certain cutoff) produce spurious low barriers for Au migration, while classical potentials and other MLIPs do not. This could be due to insufficient representation of relativistic effects or training data lacking Au-heavy configurations.\n\nH2: Au escape is a general late-5d noble-metal effect (h_mlip_escape_Au). Means that all late-5d metals (Au, Pt, Ir) will show escape from hyper-ribbon under MLIPs due to underlying physics not captured by classical potentials (maybe spin-orbit coupling, scalar relativistic DFT). So MLIPs will predict similar escape behavior for these elements, while classical potentials may suppress it.\n\nAlternatively H3: Hybrid: the escape arises from a combination of MLIP architecture limitations and genuine relativistic effects in Au; thus the effect is more pronounced for Au but may appear for other late-5d metals if training data includes them.\n\nAlso we might propose H4: Training composition bias leads to spurious low migration barriers for Au because the training set underrepresents Au's bonding characteristics, causing MLIPs to underestimate the barrier.\n\nNow, for discriminating tests across MACE/CHGNet/Orb: we need to design tests that can differentiate between these hypotheses. Use consistent hyper-ribbon structure (T1/T2). Compute migration energy barrier using each MLIP, also using DFT (as ground truth). Compare barrier heights; see if all MLIPs give low barriers for Au, while classical potentials give high barriers. Then test Pt and Ir. If MLIPs all give low barriers for all late-5d, then it's a general effect. If only MACE gives low barriers, architecture-specific. Also can test with retrained models with more Au data; if barrier increases, training bias.\n\nWe need to propose quantitative criteria: e.g., if barrier <0.5 eV for Au in MACE but >1.0 eV in DFT, then suggests spurious escape; if similar across all MLIPs, suggests MLIP architecture issue; if also appears for Pt/Ir, suggests general effect.\n\nAlso test with different cutoff radii, radial basis sets, and architecture properties: MACE uses equivariant messages, CHGNet uses message passing with node embeddings, Orb maybe uses atomic cluster expansion. Compare invariance/equivariance.\n\nAdditionally, propose analyzing local environment descriptors: for Au, the d-band center is deeper, maybe cause larger electron density gradients that MLIPs misinterpret. Use spectral analysis of local environment, e.g., SOAP descriptors.\n\nAlso propose analyzing spin-orbit coupling inclusion: If MLIPs are trained on scalar relativistic DFT data lacking spin-orbit coupling, they may not capture relativistic effects.\n\nThus propose a test: compute Au migration barrier with DFT including spin-orbit coupling (DFT+SOC) and compare with MLIP predictions. If MLIPs approximate SOC well, barrier may be similar. If not, discrepancy.\n\nWe also propose to test hyper-ribbon geometry: T1/T2 membership classification. Could use graph connectivity metrics to see if Au is classified as boundary or interior. Check if MLIPs predict Au to be at ribbon edge.\n\nAlso propose a test of transferability: evaluate MLIP predictions on Au bulk, surface, cluster properties; see if errors correlate with escape behavior.\n\nNow, in the answer we need to be clear: propose hypotheses with names, attach to target theorems (maybe something like Theorem 1: Au escape due to MLIP architecture deficiency; Theorem 2: Au escape due to relativistic effect of late-5d). Provide discriminating test plan, including specifics for MACE/CHGNet/Orb. Provide expected outcomes for each hypothesis.\n\nThus structure:\n\n1. Introduction: context and need for discriminating hypotheses.\n\n2. Hypothesis definitions:\n   - H1 (h_au_specific_mlip_escape): Au escape is MLIP-architecture-specific.\n   - H2 (h_mlip_escape_Au): Au escape is a general late-5d noble-metal effect.\n   - H3 (h_training_bias): Au escape due to training composition bias.\n   - H4 (h_relativistic_mlip_deficiency): Relativistic effects not captured by MLIPs.\n\nBut perhaps limit to two main competing hypotheses plus a nuance.\n\n3. Grounding: relativistic effects, d-band filling, training composition bias.\n\n4. Discriminating test design:\n   - Test 1: Cross-architecture MLIP comparison (MACE, CHGNet, Orb) for Au, Pt, Ir.\n   - Test 2: Classical potentials (EAM, MEAM, ADP) baseline.\n   - Test 3: Retrain MACE with Au-rich dataset (composition bias test).\n   - Test 4: DFT reference (scalar relativistic vs SOC).\n   - Test 5: Analyze d-band center, electron density, SOAP descriptors.\n\n5. Expected outcomes per hypothesis:\n   - If H1 true: only specific MLIP shows low barrier for Au, others high; retraining resolves.\n   - If H2 true: all MLIPs show low barrier for Au, Pt, Ir; classical potentials show high barrier.\n   - If H3 true: retraining improves barrier; composition bias evident.\n   - If H4 true: DFT+SOC predicts low barrier, but scalar DFT high; MLIPs trained on scalar DFT mispredict.\n\n6. Implementation details: computational setup, supercell sizes, NEB calculations, metrics.\n\n7. Conclusion: recommended next steps.\n\nAdd references to known literature: MACE (Multipolar Adaptive Composition Expansions), CHGNet (Charge History Graph Network?), Orb (maybe ORB, an equivariant model). Also references to relativistic DFT and spin-orbit coupling.\n\nWe should also mention the concept of hyper-ribbon, T1/T2 membership: a hyper-ribbon may be a quasi-1D nanostructure; T1/T2 refer to classification of atomic sites based on topology.\n\nAlso, propose to use hyper-ribbon geometry from a specific dataset (e.g., from Materials Project). Use consistent atomic configuration.\n\nNow, format answer: maybe bullet points or sections with headings. Provide clear naming.\n\nAlso include some quantitative predictions: e.g., barrier thresholds.\n\nPotential pitfalls: need to ensure that the tests are feasible with current computational resources.\n\nNow, produce answer.\n\nGiven the request: \"Propose competing hypotheses for whether Au escape is MLIP-architecture-specific or a general late-5d noble-metal effect, with a discriminating test across MACE/CHGNet/Orb.\"\n\nThus we should propose the competing hypotheses (maybe 2) and a discriminating test across MACE/CHGNet/Orb.\n\nBetter to give explicit test plan: run MACE, CHGNet, Orb on same geometry, compute migration barrier for Au and also for Pt, Ir. Compare to DFT reference.\n\nThus propose:\n\n- Hypothesis A: MLIP-architecture-specific.\n- Hypothesis B: General late-5d effect.\n\nDiscriminating test: compute barrier for Au, Pt, Ir across three MLIPs and classical potentials; see if all MLIPs predict"
+    },
+    {
+      "example_id": "T1:7",
+      "anchor": "T1",
+      "target_theorem": "hyper_ribbon_bound_3d",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": "**Competing hypotheses (seeded from your notation)**  \n\n| # | Hypothesis label | Statement | Target theorem (named) |\n|---|------------------|-----------|------------------------|\n| **H₁** | `h_meam_intrinsically_2d` | The 2‑D ribbon reported for the full‑\\(n\\) MEAM dataset is a **real structural signature** – i.e. the atomic network possesses an intrinsic dimensionality ≈ 2 that is captured correctly by the MEAM potential. | **T₂ – PR‑based dimensionality inference** (states that a participation‑ratio (PR) whose bootstrap confidence interval lies wholly above 1 and whose centre is ≈ 2 is evidence of a low‑dimensional sub‑space). |\n| **H₂** | `h_sample_size_confounder_meam` | The apparent ribbon is a **sampling artefact** caused by the limited number of configurations at small‑\\(n\\). Small‑\\(n\\) inflates the variance of the PR, producing a spuriously low‑dimensional projection that the classifier mistakenly treats as a signal. | **T₃ – Finite‑sample PR bound** (gives an explicit upper bound on the false‑positive rate of the PR when the sample size is below a critical threshold; the bound decays as \\(1/\\sqrt{n}\\)). |\n\nBoth hypotheses are anchored to **T₁ – PR‑bound validity**, which guarantees that the PR statistic is well‑defined for the MEAM ensemble provided the underlying covariance matrix satisfies the isotropy assumptions used in its derivation.\n\n---\n\n## Why the current evidence is ambiguous  \n\n| Observation | What it suggests | Why it is insufficient |\n|-------------|------------------|------------------------|\n| **Full‑\\(n\\) CI = [1.58, 2.39]** (PR≈2) | Consistent with a 2‑D manifold. | CI width ≈ 0.8 – large enough to be compatible with a noisy 3‑D embedding if the sample is small. |\n| **Small‑\\(n\\) classifier passes 44–96 % of isotropic null datasets** | Classifier has an alarming false‑positive rate. | The rate varies widely across nulls, indicating a strong dependence on the particular draw; it does not prove the signal is absent in the full dataset. |\n| **Participation‑ratio false‑positive rate vs. \\(n\\)** (you have shown a monotonic decline) | Suggests sampling is indeed a driver. | Does not tell us whether the full‑\\(n\\) case has escaped the artefact or merely reduced it to a non‑significant level. |\n\nConsequently we need a **stronger, quantitative test** that can discriminate the two hypotheses in a single framework.\n\n---\n\n## A stronger discriminative test – **Bootstrap Null‑Significance Test with Cross‑Potential Validation (BNST‑CPV)**  \n\n###"
+    },
+    {
+      "example_id": "B:8",
+      "anchor": "B",
+      "target_theorem": "cellValue",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": ""
+    },
+    {
+      "example_id": "T3:9",
+      "anchor": "T3",
+      "target_theorem": "eamFccElasticConjecture",
+      "model_requested": "MiniMax-M2.7",
+      "model_used": "MiniMax-M2.7",
+      "provider": "minimax",
+      "text": "**Competing Hypotheses**\n\n1. **H₁ (h_noble_vs_refractory_split):**"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "baseline_model": "MiniMax-M2.7",
+  "candidate_model": "MiniMax-M3",
+  "n": 10,
+  "deltas": {
+    "falsifiability": 0.75,
+    "competing_hypotheses": 0.7,
+    "physical_grounding": 0.6,
+    "discriminative_power": 0.75,
+    "theorem_linkage": 0.75
+  },
+  "aggregate_delta": 0.71,
+  "regression": false,
+  "verdict": "adopt",
+  "thresholds": {
+    "epsilon": 0.03,
+    "min_n": 8,
+    "regression": 0.05
+  }
+}
