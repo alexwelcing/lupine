@@ -19,6 +19,34 @@
   text, never the whole trajectory. This replaces the previous "fast-paint frame
   0, then re-parse the entire file in memory" fallback.
 
+### Full dump-dialect support on the streaming fast path
+
+### Added
+- **The streaming parser now takes what LAMMPS actually writes**, instead of
+  demoting it to the slow in-memory path: triclinic (tilted) cells with the
+  proper bound correction for unscaling, scaled (`xs ys zs`) and unwrapped
+  (`xu yu zu`) coordinates, extra per-atom columns parsed as named properties
+  (color the melt front by `c_pe` on a streamed file), per-frame NPT boxes,
+  and transparent gzip (magic-sniffed in the ingest worker, not by extension).
+- **glimbin v2**: frame records can carry their own box
+  (`FLAG_PER_FRAME_BOX`), so NPT / deforming-cell trajectories round-trip
+  exactly — including LAMMPS tilt flips. v1 files (the remote gallery
+  fixtures) read unchanged.
+- **Hot-loop rewrite**: atom rows are scanned by charCode (no slice / split /
+  parseFloat, zero allocations per row), with buffer-shift amplification
+  fixed. Measured on real 28 MB EAM trajectories: ~60–75 MB/s parse+transcode
+  (from ~45), off the main thread.
+- Verified against a real LAMMPS torture case generated for the purpose —
+  triclinic prism, NPT, scaled coordinates, four property columns — committed
+  as a fixture: exact lattice-site reconstruction, properties and per-frame
+  boxes preserved end-to-end.
+
+### Changed
+- The compatibility contract findings for triclinic / scaled / unwrapped /
+  extra-columns / gzip flipped from blockers to informational notes;
+  `lupi-doctor` now reports capabilities, not refusals. Blockers remaining:
+  missing coordinates, missing `type`, not-a-dump, malformed head.
+
 ### The dump contract as a system: doctor CLI + declarative scenarios
 
 ### Added

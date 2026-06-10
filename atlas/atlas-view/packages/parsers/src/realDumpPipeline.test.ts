@@ -56,6 +56,54 @@ async function transcode(text: string) {
   return { blob, meta: fin.meta, natoms, firstPositions, lastPositions };
 }
 
+describe('real LAMMPS trajectory: triclinic NPT with scaled coords + properties', () => {
+  // The full-dialect case: tilted prism cell, xs/ys/zs coordinates, NPT
+  // (box changes every frame, including a LAMMPS tilt flip), and four
+  // extra per-atom columns. One fixture proves the whole new surface.
+  it('streams, transcodes, and preserves properties + per-frame boxes', async () => {
+    const text = loadFixture('cu-triclinic-npt-props.lammpstrj.gz');
+    expect(canStreamDump(text.slice(0, 4096))).toBe(true);
+
+    const writer = new GlimbinStreamWriter();
+    const records: ArrayBuffer[] = [];
+    let frame0: Frame | null = null;
+    let lastBox: Float64Array | null = null;
+    for await (const ev of parseDumpStream(text, { multiFrame: true })) {
+      if (ev.type === 'header') frame0 = ev.frame;
+      else if (ev.type === 'frame') {
+        if (frame0) { records.push(writer.addFrame(frame0)); frame0 = null; }
+        records.push(writer.addFrame(ev.frame));
+        lastBox = ev.frame.boxBounds;
+      }
+    }
+    const fin = writer.finalize();
+    expect(fin.meta.totalFrames).toBeGreaterThan(10);
+    expect(fin.meta.triclinic).toBe(true);
+
+    const source = new LocalGlimbinSource(new Blob([fin.header, ...records, fin.index]));
+    const meta = await source.open();
+    const f0 = await source.fetchFrame(0);
+    const fN = await source.fetchFrame(meta.totalFrames - 1);
+
+    // Scaled→Cartesian with the bound correction: atom 2 sits at a known
+    // FCC lattice site, x = y = a/2 = 1.8075 Å.
+    expect(f0.positions[3]).toBeCloseTo(1.8075, 3);
+    expect(f0.positions[4]).toBeCloseTo(1.8075, 3);
+
+    // Property columns survive the transcode.
+    for (const name of ['vx', 'vy', 'vz', 'c_peat']) {
+      expect(fN.properties.has(name)).toBe(true);
+    }
+
+    // Per-frame boxes (v2): the NPT cell of the last frame differs from
+    // frame 0 and matches what the parser saw.
+    expect(fN.boxBounds[1]).not.toBeCloseTo(f0.boxBounds[1], 3);
+    expect(fN.boxBounds[1]).toBeCloseTo(lastBox![1], 9);
+    expect(f0.triclinic).toBe(true);
+    source.dispose();
+  });
+});
+
 describe.each([
   // Thresholds mirror each scenario's manifest `expected.min_moved_fraction`
   // (fraction of atoms past one Cu lattice constant ⇒ transformation real).

@@ -409,6 +409,7 @@ export async function* parseDumpFileStreamingFromFile(
 export { canStreamDump } from './dumpStreamParser';
 export {
   analyzeDumpHead,
+  readDumpHead,
   RECOMMENDED_DUMP_COMMAND,
   type DumpCompatibility,
   type DumpFinding,

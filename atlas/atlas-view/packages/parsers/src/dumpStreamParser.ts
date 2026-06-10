@@ -1,34 +1,33 @@
 /**
- * Streaming LAMMPS dump parser (single-frame focus).
+ * Streaming LAMMPS dump parser.
  *
  * Two transport modes share one parsing core (`parseDumpStreamCore`):
- *   - `parseDumpStream(text)` — caller has the whole file in memory
- *     (current Phase 2a behavior). Wraps the string in a one-shot
- *     async source.
- *   - `parseDumpStreamFromBytes(byteIter)` — Phase 2b. Caller has a
- *     ReadableStream / async iterable of byte chunks (from
- *     `Response.body.getReader()` or `File.stream()`). Bytes are
- *     decoded incrementally with TextDecoder; atoms render before
- *     the file finishes downloading.
+ *   - `parseDumpStream(text)` — caller has the whole file in memory.
+ *   - `parseDumpStreamFromBytes(byteIter)` — caller has a ReadableStream /
+ *     async iterable of byte chunks (from `Response.body.getReader()` or
+ *     `File.stream()`). Bytes are decoded incrementally; atoms render
+ *     before the file finishes downloading.
  *
- * Why a JS parser at all: the Rust/WASM parser is faster per-atom but
- * all-or-nothing — for the 1M-atom test it produces ~500 ms of parse
- * work followed by silence, then the full Frame lands and the renderer
- * starts. This parser trades a constant-factor of per-atom speed
- * (~3-5× slower than Rust) for progressive yield: it yields the
- * Frame's TypedArrays as soon as the header is parsed, then fills
- * them in chunks of ATOM_CHUNK_SIZE atoms, yielding `progress`
- * events. The renderer (Phase 1 partial-frame-aware) grows
- * `geometry.instanceCount` to whatever count is loaded so far.
+ * Dialect coverage — the full common dump space, not a happy-path subset:
+ *   - orthogonal AND triclinic boxes (tilt factors carried per frame),
+ *   - unscaled (x y z), scaled (xs ys zs), and unwrapped (xu yu zu)
+ *     coordinates — scaled coordinates are mapped to Cartesian with the
+ *     proper triclinic transform (x = xlo + xs·lx + ys·xy + zs·xz),
+ *   - extra per-atom columns (vx, c_pe, …) parsed into named Float32Array
+ *     properties so property coloring works on streamed files,
+ *   - variable atom counts and per-frame boxes (NPT) — every frame
+ *     carries its own box.
  *
- * Scope: handles the dialect of LAMMPS dump that the gallery / public/
- * test fixtures use — single TIMESTEP, NUMBER OF ATOMS, BOX BOUNDS pp,
- * ATOMS id type x y z (any column order keyed by name). Multi-frame
- * dumps stop at the first `ITEM: TIMESTEP` past the initial frame and
- * report what they have. Scaled coordinates (`xs/ys/zs`), tilt factors,
- * triclinic boxes, and per-atom properties are intentionally NOT
- * supported here — they fall through to the existing WASM path via
- * `canStreamDump()`'s pre-flight check.
+ * Performance: the per-row hot loop scans numbers directly by charCode —
+ * no slice, no split, no parseFloat, zero allocations per row. That is
+ * what lets a multi-GB trajectory ingest at memory-bandwidth-ish rates
+ * while holding only the frame in flight.
+ *
+ * Multi-frame mode (`{ multiFrame: true }`) yields each frame past
+ * frame 0 whole, one at a time, so a consumer (the transcode worker)
+ * can process and release them — O(1 frame) memory for the initial
+ * parse of a simulation over time. Frame 0 keeps the progressive
+ * header/progress contract for the viewer's first paint.
  */
 
 import type { Frame } from '@atlas/core/types';
@@ -36,24 +35,22 @@ import { analyzeDumpHead } from './dumpContract';
 
 /** Yield-after-this-many-atoms granularity. Sized so each chunk fits
  *  comfortably in a single animation frame's parse budget on a phone
- *  (parse cost on JS for 10K atoms is ~10-15 ms — under the 16.6 ms
- *  rAF budget) so the renderer keeps painting between chunks. */
+ *  so the renderer keeps painting between chunks. */
 export const ATOM_CHUNK_SIZE = 10_000;
 
 export interface DumpStreamHeaderEvent {
   type: 'header';
-  /** Pre-allocated Frame with positions / types / ids sized to natoms
-   *  but populated only up to `loadedAtoms` (initially 0). The renderer
-   *  takes ownership immediately so it can grow geometry.instanceCount
-   *  as `loadedAtoms` increases on subsequent progress events. */
+  /** Pre-allocated Frame with positions / types / ids / properties sized
+   *  to natoms but populated only up to `loadedAtoms` (initially 0). The
+   *  renderer takes ownership immediately so it can grow
+   *  geometry.instanceCount as `loadedAtoms` increases. */
   frame: Frame;
 }
 
 export interface DumpStreamProgressEvent {
   type: 'progress';
-  /** Number of atoms populated so far in `frame.positions / types / ids`.
-   *  Indices in [0, loadedAtoms) are valid; [loadedAtoms, frame.natoms)
-   *  is uninitialized memory. */
+  /** Number of atoms populated so far in the frame's arrays. Indices in
+   *  [0, loadedAtoms) are valid; the tail is uninitialized memory. */
   loadedAtoms: number;
 }
 
@@ -92,39 +89,112 @@ export type DumpStreamEvent =
   | DumpStreamCompleteEvent;
 
 /** A puller that returns the next chunk of text from some source.
- *  Returns `null` when the source is exhausted. The core parser calls
- *  this whenever it needs more data; the puller is what differentiates
- *  the in-memory text adapter from the byte-stream adapter. */
+ *  Returns `null` when the source is exhausted. */
 type TextPuller = () => Promise<string | null>;
 
 /** Options for the parsing core (and its public wrappers). */
 export interface DumpStreamOptions {
-  /** Parse every frame in the trajectory, not just frame 0. Frame 0 keeps
-   *  the progressive header/progress contract; frames 1..N each arrive as
-   *  one `frame` event with freshly-allocated TypedArrays, so a consumer
-   *  can hand them off (e.g. transcode + release) one at a time. The
-   *  parser itself never retains more than the frame being parsed —
-   *  this is what keeps the initial parse of a long simulation O(1 frame)
-   *  in memory instead of O(trajectory). */
+  /** Parse every frame in the trajectory, not just frame 0. */
   multiFrame?: boolean;
 }
 
+// ─── Fast ASCII number scanning ──────────────────────────────────────
+// LAMMPS dumps are pure ASCII, whitespace-separated. Scanning by
+// charCode removes the slice + split(/\s+/) + parseFloat allocation
+// storm that capped the previous loop. `scanEnd` is a module-level
+// cursor-out so the scanner returns a value without allocating a tuple.
+
+let scanEnd = 0;
+
+const POW10 = new Float64Array(23);
+for (let i = 0; i < 23; i++) POW10[i] = Math.pow(10, i);
+
+/** Parse a float starting at `i`. Handles sign, decimals, and e-notation
+ *  (LAMMPS writes both `1.73148` and `2.169e+01` styles). Non-numeric
+ *  tokens (e.g. an `element` column) yield NaN, with the cursor advanced
+ *  past the token either way. Within float32 precision — where every
+ *  parsed coordinate/property lands — results match parseFloat. */
+function scanFloat(s: string, i: number, end: number): number {
+  let c = s.charCodeAt(i);
+  let neg = false;
+  if (c === 45 /* - */) {
+    neg = true;
+    c = s.charCodeAt(++i);
+  } else if (c === 43 /* + */) {
+    c = s.charCodeAt(++i);
+  }
+  let mant = 0;
+  let exp10 = 0;
+  let any = false;
+  while (c >= 48 && c <= 57) {
+    mant = mant * 10 + (c - 48);
+    any = true;
+    c = s.charCodeAt(++i);
+  }
+  if (c === 46 /* . */) {
+    c = s.charCodeAt(++i);
+    while (c >= 48 && c <= 57) {
+      mant = mant * 10 + (c - 48);
+      exp10--;
+      any = true;
+      c = s.charCodeAt(++i);
+    }
+  }
+  if (!any) {
+    // Not a number — skip the rest of the token so the caller stays in sync.
+    while (i < end && c !== 32 && c !== 9 && c !== 13 && c !== 10 && !Number.isNaN(c)) {
+      c = s.charCodeAt(++i);
+    }
+    scanEnd = i;
+    return NaN;
+  }
+  if (c === 101 || c === 69 /* e E */) {
+    c = s.charCodeAt(++i);
+    let eneg = false;
+    if (c === 45) {
+      eneg = true;
+      c = s.charCodeAt(++i);
+    } else if (c === 43) {
+      c = s.charCodeAt(++i);
+    }
+    let e = 0;
+    while (c >= 48 && c <= 57) {
+      e = e * 10 + (c - 48);
+      c = s.charCodeAt(++i);
+    }
+    exp10 += eneg ? -e : e;
+  }
+  scanEnd = i;
+  let v: number;
+  if (exp10 === 0) v = mant;
+  else if (exp10 > 0) v = exp10 <= 22 ? mant * POW10[exp10] : mant * Math.pow(10, exp10);
+  else v = exp10 >= -22 ? mant / POW10[-exp10] : mant * Math.pow(10, exp10);
+  return neg ? -v : v;
+}
+
+const isWs = (c: number) => c === 32 || c === 9 || c === 13;
+
+// Per-column write targets for the row loop. Small ints dispatch faster
+// than string comparisons and let one loop serve every dialect.
+const T_SKIP = 0;
+const T_ID = 1;
+const T_TYPE = 2;
+const T_X = 3;
+const T_Y = 4;
+const T_Z = 5;
+const T_PROP = 6; // property index lives in a parallel slot array
+
 /** Shared core. Pulls text from `puller` into a sliding buffer, parses
- *  header then atom rows incrementally per frame, yields progress events
- *  as frame 0's TypedArrays fill and (in multi-frame mode) whole-frame
- *  events for every frame after it. */
+ *  header then atom rows incrementally per frame. */
 async function* parseDumpStreamCore(
   puller: TextPuller,
   opts: DumpStreamOptions = {},
 ): AsyncGenerator<DumpStreamEvent> {
   const multiFrame = opts.multiFrame === true;
 
-  // Sliding text buffer. Grown via `pull()`; consumed prefix is dropped
-  // periodically to bound memory growth on a multi-MB stream.
   let buffer = '';
   let sourceDone = false;
 
-  /** Pull more text into `buffer`. Returns true if anything new arrived. */
   async function pull(): Promise<boolean> {
     if (sourceDone) return false;
     const next = await puller();
@@ -136,46 +206,42 @@ async function* parseDumpStreamCore(
     return true;
   }
 
-  const SHIFT_THRESHOLD = 64 * 1024; // shift after this much consumed
+  // Drop the consumed prefix only once it dominates the buffer: slicing
+  // copies the *unconsumed* remainder, so shifting eagerly (every 64 KB)
+  // re-copied the tail ~7× on a steady 256 KB-chunk stream. Waiting until
+  // the prefix is ≥ half the buffer caps amplification at ~1× while still
+  // bounding memory to a couple of chunks.
+  const SHIFT_THRESHOLD = 64 * 1024;
+  const shouldShift = (cursor: number, len: number) =>
+    cursor >= SHIFT_THRESHOLD && cursor * 2 >= len;
   let frameIndex = 0;
   let frame0Loaded = 0;
   let hasMoreFrames = false;
 
-  // ─── Per-frame loop ──────────────────────────────────────────────
-  // Each iteration parses one complete frame (header + atom block). In
-  // single-frame mode we exit after frame 0, flagging `hasMoreFrames`
-  // if another ITEM block follows; in multi-frame mode we keep going
-  // until the source is exhausted.
   frames: while (true) {
     // ─── Header phase ────────────────────────────────────────────
-    // We need the whole header through `ITEM: ATOMS …\n` before we can
-    // pre-allocate the Frame and start filling atoms. Pull until that
-    // line is present — usually the first chunk on a network stream
-    // is large enough (~64 KB) that this is one iteration.
     let timestep = 0;
     let natoms = -1;
     const boxBounds = new Float64Array(6);
+    const boxTilt = new Float64Array(3);
+    let triclinic = false;
     let boxBoundsSeen = 0;
     let columns: string[] | null = null;
     let atomBlockStart = -1;
 
     while (atomBlockStart < 0) {
-      // Are all the header pieces we need present in `buffer`?
       const itemAtomsIdx = buffer.indexOf('ITEM: ATOMS');
       const itemAtomsEol = itemAtomsIdx >= 0 ? buffer.indexOf('\n', itemAtomsIdx) : -1;
       if (itemAtomsEol < 0) {
-        // Need more bytes before we have the full header. Pull and retry.
         if (!(await pull())) {
           if (frameIndex > 0 && buffer.trim().length === 0) {
-            // Clean end-of-trajectory after the previous frame.
-            break frames;
+            break frames; // clean end-of-trajectory
           }
           throw new Error('streaming parser: stream ended before ATOMS header');
         }
         continue;
       }
 
-      // We have everything through `ITEM: ATOMS …\n`. Walk it linearly.
       let lineStart = 0;
       while (lineStart < itemAtomsEol) {
         const lineEnd = buffer.indexOf('\n', lineStart);
@@ -184,29 +250,34 @@ async function* parseDumpStreamCore(
 
         if (line === 'ITEM: TIMESTEP') {
           const tsEnd = buffer.indexOf('\n', nextLineStart);
-          const tsLine = (tsEnd === -1 ? buffer.slice(nextLineStart) : buffer.slice(nextLineStart, tsEnd)).trim();
-          timestep = parseInt(tsLine, 10) | 0;
+          timestep = parseInt(
+            (tsEnd === -1 ? buffer.slice(nextLineStart) : buffer.slice(nextLineStart, tsEnd)).trim(),
+            10,
+          ) | 0;
           lineStart = tsEnd === -1 ? buffer.length : tsEnd + 1;
         } else if (line === 'ITEM: NUMBER OF ATOMS') {
           const naEnd = buffer.indexOf('\n', nextLineStart);
-          const naLine = (naEnd === -1 ? buffer.slice(nextLineStart) : buffer.slice(nextLineStart, naEnd)).trim();
-          natoms = parseInt(naLine, 10) | 0;
+          natoms = parseInt(
+            (naEnd === -1 ? buffer.slice(nextLineStart) : buffer.slice(nextLineStart, naEnd)).trim(),
+            10,
+          ) | 0;
           lineStart = naEnd === -1 ? buffer.length : naEnd + 1;
         } else if (line.startsWith('ITEM: BOX BOUNDS')) {
-          // Three bound lines follow. Triclinic boxes have 3 numbers per
-          // line (lo hi tilt) — we only support the 2-number orthogonal
-          // case here; triclinic falls through to the WASM path via
-          // `canStreamDump()`'s pre-flight rejection.
+          // Triclinic headers carry tilt tokens (xy xz yz) and a third
+          // number per bounds line. Same raw-bounds-plus-tilt convention
+          // as the WASM parser.
+          triclinic = /\bxy\b|\bxz\b|\byz\b/.test(line);
           let cursor = nextLineStart;
           for (let i = 0; i < 3; i++) {
             const e = buffer.indexOf('\n', cursor);
             const bbLine = (e === -1 ? buffer.slice(cursor) : buffer.slice(cursor, e)).trim();
             const parts = bbLine.split(/\s+/);
-            if (parts.length > 2) {
-              throw new Error('streaming parser: triclinic box bounds not supported (use WASM path)');
-            }
             boxBounds[i * 2] = parseFloat(parts[0]);
             boxBounds[i * 2 + 1] = parseFloat(parts[1]);
+            if (parts.length > 2) {
+              boxTilt[i] = parseFloat(parts[2]);
+              triclinic = true;
+            }
             boxBoundsSeen++;
             cursor = e === -1 ? buffer.length : e + 1;
           }
@@ -225,27 +296,65 @@ async function* parseDumpStreamCore(
       throw new Error('streaming parser: incomplete LAMMPS dump header');
     }
 
-    // Resolve column indices. We support id, type, x/y/z. Scaled
-    // coordinates (xs/ys/zs) and unwrapped (xu/yu/zu) are rejected to
-    // keep the per-atom loop tight and predictable.
+    // ─── Column resolution ────────────────────────────────────────
+    // Coordinates: unscaled (x y z), scaled (xs ys zs / xsu ysu zsu), or
+    // unwrapped (xu yu zu) — scaled values are mapped to Cartesian below.
+    const colIdx = (names: string[]) => {
+      for (const n of names) {
+        const i = columns!.indexOf(n);
+        if (i >= 0) return i;
+      }
+      return -1;
+    };
     const idIdx = columns.indexOf('id');
     const typeIdx = columns.indexOf('type');
-    const xIdx = columns.indexOf('x');
-    const yIdx = columns.indexOf('y');
-    const zIdx = columns.indexOf('z');
+    const xIdx = colIdx(['x', 'xu', 'xs', 'xsu']);
+    const yIdx = colIdx(['y', 'yu', 'ys', 'ysu']);
+    const zIdx = colIdx(['z', 'zu', 'zs', 'zsu']);
     if (xIdx < 0 || yIdx < 0 || zIdx < 0 || typeIdx < 0) {
       throw new Error(`streaming parser: required columns missing (got [${columns.join(', ')}])`);
     }
+    const scaled =
+      columns[xIdx].startsWith('xs') || columns[yIdx].startsWith('ys') || columns[zIdx].startsWith('zs');
 
-    // Pre-allocate the Frame's TypedArrays at full natoms. For frame 0
-    // the renderer reads only up to `loadedAtomCount` so the unfilled
-    // tail is invisible; later frames are yielded only once complete.
+    // Box vectors for the scaled→Cartesian map. LAMMPS triclinic BOX
+    // BOUNDS lines are *bounding-box* extents (xlo_bound = xlo +
+    // min(0,xy,xz,xy+xz), etc.) — recover the true cell edges before
+    // unscaling, or tilted cells reconstruct with sheared positions.
+    // Tilt is zero for orthogonal boxes, so one formula covers both.
+    const xy = boxTilt[0], xz = boxTilt[1], yz = boxTilt[2];
+    let xlo = boxBounds[0], xhi = boxBounds[1];
+    let ylo = boxBounds[2], yhi = boxBounds[3];
+    const zlo = boxBounds[4];
+    if (triclinic) {
+      xlo -= Math.min(0, xy, xz, xy + xz);
+      xhi -= Math.max(0, xy, xz, xy + xz);
+      ylo -= Math.min(0, yz);
+      yhi -= Math.max(0, yz);
+    }
+    const lx = xhi - xlo;
+    const ly = yhi - ylo;
+    const lz = boxBounds[5] - boxBounds[4];
+
+    // Extra columns become named per-atom properties. Whether a column is
+    // numeric (c_pe: yes, element: no) is decided from the first data row.
+    const ncols = columns.length;
+    const targets = new Int8Array(ncols).fill(T_SKIP);
+    const propSlot = new Int32Array(ncols).fill(-1);
+    if (idIdx >= 0) targets[idIdx] = T_ID;
+    targets[typeIdx] = T_TYPE;
+    targets[xIdx] = T_X;
+    targets[yIdx] = T_Y;
+    targets[zIdx] = T_Z;
+    const extraCols: number[] = [];
+    for (let c = 0; c < ncols; c++) if (targets[c] === T_SKIP) extraCols.push(c);
+
     const frame: Frame = {
       timestep,
       natoms,
       boxBounds,
-      boxTilt: new Float64Array(3),
-      triclinic: false,
+      boxTilt,
+      triclinic,
       columns,
       ids: new Int32Array(natoms),
       types: new Int32Array(natoms),
@@ -253,19 +362,34 @@ async function* parseDumpStreamCore(
       bonds: new Int32Array(0),
       properties: new Map(),
     };
+    const propArrays: Float32Array[] = [];
+
+    buffer = buffer.slice(atomBlockStart);
+
+    // Numeric-probe the first complete data row to finalize property
+    // columns before allocating their arrays.
+    if (extraCols.length > 0 && natoms > 0) {
+      let probeEnd = buffer.indexOf('\n');
+      while (probeEnd === -1 && (await pull())) probeEnd = buffer.indexOf('\n');
+      if (probeEnd > 0) {
+        const probe = buffer.slice(0, probeEnd).trim().split(/\s+/);
+        for (const c of extraCols) {
+          if (c < probe.length && Number.isFinite(parseFloat(probe[c]))) {
+            const arr = new Float32Array(natoms);
+            frame.properties.set(columns[c], arr);
+            propSlot[c] = propArrays.length;
+            propArrays.push(arr);
+            targets[c] = T_PROP;
+          }
+        }
+      }
+    }
 
     if (frameIndex === 0) {
       yield { type: 'header', frame };
     }
 
-    // Drop the consumed header prefix; the atom loop walks from buffer[0].
-    buffer = buffer.slice(atomBlockStart);
-
-    // ─── Atom phase ──────────────────────────────────────────────
-    // We carry an in-buffer cursor so we don't re-search from index 0
-    // on every line; periodically we shift the buffer to keep its size
-    // bounded (the streamed data could be tens of MB total — accumulating
-    // it in one string would defeat the point of streaming).
+    // ─── Atom phase: the hot loop ────────────────────────────────
     const positions = frame.positions;
     const types = frame.types;
     const ids = frame.ids;
@@ -273,19 +397,14 @@ async function* parseDumpStreamCore(
     let i = 0;
     let lastYieldAt = 0;
     let cursor = 0;
-    // Set when we hit another `ITEM:` block — the next frame starts there.
     let nextFrameFollows = false;
 
     while (i < natoms) {
       const lineEnd = buffer.indexOf('\n', cursor);
 
       if (lineEnd === -1) {
-        // No complete line in buffer. Either pull more, or end if source
-        // is exhausted (last partial row, if any, is parsed below).
         if (sourceDone) break;
-        // Shift consumed prefix out before pulling — keeps buffer size
-        // bounded by the largest single chunk plus one line.
-        if (cursor >= SHIFT_THRESHOLD) {
+        if (shouldShift(cursor, buffer.length)) {
           buffer = buffer.slice(cursor);
           cursor = 0;
         }
@@ -293,40 +412,55 @@ async function* parseDumpStreamCore(
         continue;
       }
 
-      // Cheap prefix check for the next-frame `ITEM:` marker (avoids
-      // slicing the row to test it).
+      // Next-frame `ITEM:` marker check (cheap prefix test).
       if (
         buffer.charCodeAt(cursor) === 73 /* I */ &&
         buffer.charCodeAt(cursor + 1) === 84 /* T */ &&
         buffer.charCodeAt(cursor + 2) === 69 /* E */ &&
         buffer.charCodeAt(cursor + 3) === 77 /* M */
       ) {
-        // A new ITEM block before we filled natoms — the next frame
-        // starts here.
         nextFrameFollows = true;
         break;
       }
 
-      // Skip blank lines (some files have a trailing newline before the
-      // next ITEM block).
       if (lineEnd === cursor) {
         cursor = lineEnd + 1;
         continue;
       }
 
-      // Parse the row. split-by-whitespace is faster than a regex split
-      // for short rows; we restrict to the column count to skip trailing
-      // junk if any.
-      const row = buffer.slice(cursor, lineEnd);
-      const parts = row.split(/\s+/);
-      const baseOffset = parts[0] === '' ? 1 : 0;
+      // Scan the row in place: per column, skip whitespace then parse the
+      // token straight out of the buffer. No slicing, no split, no
+      // intermediate strings.
+      let p = cursor;
+      let rx = 0, ry = 0, rz = 0;
+      for (let c = 0; c < ncols && p < lineEnd; c++) {
+        let ch = buffer.charCodeAt(p);
+        while (p < lineEnd && isWs(ch)) ch = buffer.charCodeAt(++p);
+        if (p >= lineEnd) break;
+        const v = scanFloat(buffer, p, lineEnd);
+        p = scanEnd;
+        switch (targets[c]) {
+          case T_ID: ids[i] = v | 0; break;
+          case T_TYPE: types[i] = v | 0; break;
+          case T_X: rx = v; break;
+          case T_Y: ry = v; break;
+          case T_Z: rz = v; break;
+          case T_PROP: propArrays[propSlot[c]][i] = v; break;
+        }
+      }
 
-      if (idIdx >= 0) ids[i] = parseInt(parts[idIdx + baseOffset], 10) | 0;
-      types[i] = parseInt(parts[typeIdx + baseOffset], 10) | 0;
       const pi = i * 3;
-      positions[pi]     = parseFloat(parts[xIdx + baseOffset]);
-      positions[pi + 1] = parseFloat(parts[yIdx + baseOffset]);
-      positions[pi + 2] = parseFloat(parts[zIdx + baseOffset]);
+      if (scaled) {
+        // General (triclinic) fractional→Cartesian map; tilt terms vanish
+        // for orthogonal boxes.
+        positions[pi]     = xlo + rx * lx + ry * xy + rz * xz;
+        positions[pi + 1] = ylo + ry * ly + rz * yz;
+        positions[pi + 2] = zlo + rz * lz;
+      } else {
+        positions[pi]     = rx;
+        positions[pi + 1] = ry;
+        positions[pi + 2] = rz;
+      }
 
       i++;
       cursor = lineEnd + 1;
@@ -335,50 +469,60 @@ async function* parseDumpStreamCore(
         yield { type: 'progress', loadedAtoms: i };
         lastYieldAt = i;
       }
-      // Shift the buffer if we've accumulated a lot of consumed prefix.
-      // This caps memory growth on slow networks / large frames.
-      if (cursor >= SHIFT_THRESHOLD) {
+      if (shouldShift(cursor, buffer.length)) {
         buffer = buffer.slice(cursor);
         cursor = 0;
       }
     }
 
-    // Final partial-row handling: if the last line lacked a trailing
-    // newline AND we haven't hit natoms yet, parse it as the last atom.
+    // Final partial row (file truncated mid-line without trailing \n).
     if (i < natoms && cursor < buffer.length && !sourceDone) {
-      // Pull once more in case the trailing newline is just behind.
       await pull();
       const tailEnd = buffer.indexOf('\n', cursor);
       const tailEffectiveEnd = tailEnd === -1 ? buffer.length : tailEnd;
       if (tailEffectiveEnd > cursor) {
         const row = buffer.slice(cursor, tailEffectiveEnd).trim();
         if (row && !row.startsWith('ITEM:')) {
-          const parts = row.split(/\s+/);
-          const baseOffset = parts[0] === '' ? 1 : 0;
-          if (idIdx >= 0) ids[i] = parseInt(parts[idIdx + baseOffset], 10) | 0;
-          types[i] = parseInt(parts[typeIdx + baseOffset], 10) | 0;
+          let p = cursor;
+          let rx = 0, ry = 0, rz = 0;
+          for (let c = 0; c < ncols && p < tailEffectiveEnd; c++) {
+            let ch = buffer.charCodeAt(p);
+            while (p < tailEffectiveEnd && isWs(ch)) ch = buffer.charCodeAt(++p);
+            if (p >= tailEffectiveEnd) break;
+            const v = scanFloat(buffer, p, tailEffectiveEnd);
+            p = scanEnd;
+            switch (targets[c]) {
+              case T_ID: ids[i] = v | 0; break;
+              case T_TYPE: types[i] = v | 0; break;
+              case T_X: rx = v; break;
+              case T_Y: ry = v; break;
+              case T_Z: rz = v; break;
+              case T_PROP: propArrays[propSlot[c]][i] = v; break;
+            }
+          }
           const pi = i * 3;
-          positions[pi]     = parseFloat(parts[xIdx + baseOffset]);
-          positions[pi + 1] = parseFloat(parts[yIdx + baseOffset]);
-          positions[pi + 2] = parseFloat(parts[zIdx + baseOffset]);
+          if (scaled) {
+            positions[pi]     = xlo + rx * lx + ry * xy + rz * xz;
+            positions[pi + 1] = ylo + ry * ly + rz * yz;
+            positions[pi + 2] = zlo + rz * lz;
+          } else {
+            positions[pi] = rx;
+            positions[pi + 1] = ry;
+            positions[pi + 2] = rz;
+          }
           i++;
           cursor = tailEffectiveEnd + 1;
         }
       }
     }
 
-    // If we filled the frame cleanly (didn't already trip the in-loop
-    // marker), look just past it for the next frame's `ITEM:` so a
-    // trajectory whose frames align exactly to natoms is still
-    // recognized. Skips whitespace, pulling as needed.
+    // Filled the frame cleanly — look just past it for the next frame's
+    // `ITEM:` so trajectories whose frames align exactly are recognized.
     if (!nextFrameFollows) {
       while (true) {
-        // Advance cursor over whitespace without slicing the buffer.
         while (cursor < buffer.length && /\s/.test(buffer[cursor])) cursor++;
         if (cursor < buffer.length) {
-          // Don't conclude on a partial marker: a tiny network chunk can
-          // leave just "ITE" in the buffer. Wait until the full "ITEM:"
-          // could be present (5 chars) or the source is truly done.
+          // Don't conclude on a partial marker ("ITE" at a chunk edge).
           if (buffer.length - cursor >= 5 || sourceDone) {
             nextFrameFollows = buffer.startsWith('ITEM:', cursor);
             break;
@@ -397,13 +541,11 @@ async function* parseDumpStreamCore(
     if (frameIndex === 0) {
       frame0Loaded = i;
     } else if (i > 0) {
-      // A truncated final frame (killed simulation, partial download)
-      // reports the atoms it actually has; readers honor frame.natoms.
+      // A truncated final frame reports the atoms it actually has.
       frame.natoms = i;
       yield { type: 'frame', frameIndex, frame };
     } else {
-      // Empty trailing frame (header but no rows) — drop it.
-      frameIndex--;
+      frameIndex--; // empty trailing frame — drop it
     }
 
     frameIndex++;
@@ -413,16 +555,13 @@ async function* parseDumpStreamCore(
       hasMoreFrames = true;
       break;
     }
-    // Multi-frame: drop everything consumed and parse the next frame.
     buffer = buffer.slice(cursor);
   }
 
   yield { type: 'complete', loadedAtoms: frame0Loaded, hasMoreFrames, totalFrames: frameIndex };
 }
 
-/** Parse a fully-buffered LAMMPS dump string. The whole-text path: used
- *  by the WASM-fallback FileReader.text() flow and by tests. Phase 2b
- *  callers prefer the byte-streaming variant below. */
+/** Parse a fully-buffered LAMMPS dump string. */
 export async function* parseDumpStream(
   text: string,
   opts: DumpStreamOptions = {},
@@ -435,14 +574,9 @@ export async function* parseDumpStream(
   }, opts);
 }
 
-/** Parse from an async iterable of byte chunks (e.g. a fetch response
- *  body or `File.stream()`). Atoms render before the file finishes
- *  downloading.
- *
- *  The puller decodes incrementally via `TextDecoder({ stream: true })`
- *  so multi-byte characters split across chunks are handled correctly,
- *  and emits a final `decoder.decode()` to flush any trailing partial
- *  sequence. */
+/** Parse from an async iterable of byte chunks (fetch body, File.stream()).
+ *  Bytes are decoded incrementally via TextDecoder({ stream: true }) so
+ *  multi-byte sequences split across chunks are handled correctly. */
 export async function* parseDumpStreamFromBytes(
   source: AsyncIterable<Uint8Array>,
   opts: DumpStreamOptions = {},
@@ -462,10 +596,7 @@ export async function* parseDumpStreamFromBytes(
   }, opts);
 }
 
-/** Adapt a `ReadableStream<Uint8Array>` to an `AsyncIterable<Uint8Array>`.
- *  Modern browsers expose `ReadableStream`'s own `[Symbol.asyncIterator]`,
- *  but it's still flagged experimental in some runtimes — we wrap the
- *  reader manually so the parser's iteration contract is consistent. */
+/** Adapt a `ReadableStream<Uint8Array>` to an `AsyncIterable<Uint8Array>`. */
 export function readableStreamToAsyncIterable(
   stream: ReadableStream<Uint8Array>,
 ): AsyncIterable<Uint8Array> {
@@ -487,8 +618,6 @@ export function readableStreamToAsyncIterable(
           }
         },
         async return(): Promise<IteratorResult<Uint8Array>> {
-          // Caller broke out of the for-await early; cancel the stream
-          // so the network/file source can be released.
           try { await reader.cancel(); } catch { /* ignore */ }
           try { reader.releaseLock(); } catch { /* ignore */ }
           return { value: undefined, done: true };
@@ -498,14 +627,10 @@ export function readableStreamToAsyncIterable(
   };
 }
 
-/** Fast pre-flight: is this content a LAMMPS dump file the streaming
- *  parser can handle (orthogonal box, supported columns)? Only inspects
- *  the head — does NOT scan the full atom block. Caller falls back to
- *  WASM when this returns false.
- *
- *  Thin wrapper over the executable compatibility contract in
+/** Fast pre-flight: can the streaming parser take this content? Thin
+ *  wrapper over the executable compatibility contract in
  *  `dumpContract.ts` — use `analyzeDumpHead` directly when you need the
- *  *reasons* (and user-actionable fixes), not just the verdict. */
+ *  reasons, not just the verdict. */
 export function canStreamDump(textHead: string): boolean {
   return analyzeDumpHead(textHead).tier === 'streamable';
 }

@@ -123,7 +123,13 @@ self.onmessage = async (e: MessageEvent) => {
   try {
     sink = (opfs && (await openOpfsSink(opfs.dir, opfs.name))) || memorySink();
 
-    const byteIter = readableStreamToAsyncIterable(file.stream() as ReadableStream<Uint8Array>);
+    // Transparent gzip: detect by magic, not extension — users rename files.
+    let stream = file.stream() as ReadableStream<Uint8Array>;
+    const magic = new Uint8Array(await file.slice(0, 2).arrayBuffer());
+    if (magic.length === 2 && magic[0] === 0x1f && magic[1] === 0x8b) {
+      stream = stream.pipeThrough(new DecompressionStream('gzip'));
+    }
+    const byteIter = readableStreamToAsyncIterable(stream);
     const writer = new GlimbinStreamWriter();
 
     let frame0: Frame | null = null;

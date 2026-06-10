@@ -11,14 +11,20 @@ import type { Frame, Trajectory } from './types';
 /** Magic bytes identifying a .glimbin file */
 export const GLIMBIN_MAGIC = new Uint8Array([0x47, 0x4C, 0x49, 0x4D]); // "GLIM"
 
-/** Current format version */
-export const GLIMBIN_VERSION = 1;
+/** Current format version. v2 adds the per-frame box block
+ *  (FLAG_PER_FRAME_BOX) so NPT / deforming-cell trajectories are exact;
+ *  v1 files (the remote gallery fixtures) read unchanged. */
+export const GLIMBIN_VERSION = 2;
 
 /** Fixed header size in bytes */
 export const HEADER_SIZE = 256;
 
 /** Size of each frame index entry in bytes */
 export const FRAME_ENTRY_SIZE = 24;
+
+/** Size of the optional per-frame box block (FLAG_PER_FRAME_BOX):
+ *  6×f64 bounds + 3×f64 tilt + u8 triclinic + 3 pad. */
+export const FRAME_BOX_BLOCK_SIZE = 76;
 
 // ─── Flags ──────────────────────────────────────────────────────────
 
@@ -27,6 +33,7 @@ export const FLAG_LITTLE_ENDIAN = 0x0002; // Data is little-endian (default)
 export const FLAG_VARIABLE_ATOMS = 0x0004; // Atom count varies per frame
 export const FLAG_HAS_BONDS    = 0x0008; // Frames include bond data
 export const FLAG_HAS_PROPERTIES = 0x0010; // Frames include per-atom properties
+export const FLAG_PER_FRAME_BOX = 0x0020; // Each frame record starts with its own box
 
 // ─── Types ──────────────────────────────────────────────────────────
 
@@ -244,9 +251,27 @@ export function parseFrameData(
   positions: Float32Array;
   bonds: Int32Array;
   properties: Map<string, Float32Array>;
+  /** Present when the file carries per-frame boxes (FLAG_PER_FRAME_BOX,
+   *  v2) — exact cells for NPT / deforming trajectories. */
+  boxBounds?: Float64Array;
+  boxTilt?: Float64Array;
+  triclinic?: boolean;
 } {
   let offset = 0;
   const view = new DataView(buffer);
+
+  // Optional per-frame box block (v2).
+  let boxBounds: Float64Array | undefined;
+  let boxTilt: Float64Array | undefined;
+  let triclinic: boolean | undefined;
+  if (flags & FLAG_PER_FRAME_BOX) {
+    boxBounds = new Float64Array(6);
+    for (let i = 0; i < 6; i++) boxBounds[i] = view.getFloat64(offset + i * 8, true);
+    boxTilt = new Float64Array(3);
+    for (let i = 0; i < 3; i++) boxTilt[i] = view.getFloat64(offset + 48 + i * 8, true);
+    triclinic = view.getUint8(offset + 72) !== 0;
+    offset += FRAME_BOX_BLOCK_SIZE;
+  }
 
   // ids: Int32Array(natoms)
   const ids = new Int32Array(buffer, offset, natoms);
@@ -292,7 +317,7 @@ export function parseFrameData(
     }
   }
 
-  return { ids, types, positions, bonds, properties };
+  return { ids, types, positions, bonds, properties, boxBounds, boxTilt, triclinic };
 }
 
 // ─── Header writing (for conversion tools) ──────────────────────────
@@ -400,6 +425,7 @@ export function writeFrameData(frame: Frame, flags: number): ArrayBuffer {
   const natoms = frame.natoms;
   const hasBonds = (flags & FLAG_HAS_BONDS) !== 0;
   const hasProps = (flags & FLAG_HAS_PROPERTIES) !== 0;
+  const hasBox = (flags & FLAG_PER_FRAME_BOX) !== 0;
 
   const propEntries: Array<[string, Float32Array, Uint8Array]> = [];
   if (hasProps && frame.properties) {
@@ -410,7 +436,8 @@ export function writeFrameData(frame: Frame, flags: number): ArrayBuffer {
   const nbonds = hasBonds ? ((frame.bonds?.length ?? 0) >> 1) : 0;
 
   // ── Size pass (mirrors the reader's offset walk exactly) ──
-  let size = natoms * 4; // ids i32
+  let size = hasBox ? FRAME_BOX_BLOCK_SIZE : 0;
+  size += natoms * 4; // ids i32
   size += natoms; // types u8
   size = align4(size);
   size += natoms * 3 * 4; // positions f32
@@ -426,6 +453,13 @@ export function writeFrameData(frame: Frame, flags: number): ArrayBuffer {
   const buffer = new ArrayBuffer(size);
   const view = new DataView(buffer);
   let offset = 0;
+
+  if (hasBox) {
+    for (let i = 0; i < 6; i++) view.setFloat64(offset + i * 8, frame.boxBounds?.[i] ?? 0, true);
+    for (let i = 0; i < 3; i++) view.setFloat64(offset + 48 + i * 8, frame.boxTilt?.[i] ?? 0, true);
+    view.setUint8(offset + 72, frame.triclinic ? 1 : 0);
+    offset += FRAME_BOX_BLOCK_SIZE;
+  }
 
   const ids = new Int32Array(buffer, offset, natoms);
   for (let i = 0; i < natoms; i++) ids[i] = frame.ids?.[i] ?? i + 1;
@@ -533,7 +567,9 @@ export class GlimbinStreamWriter {
   private max: [number, number, number] = [-Infinity, -Infinity, -Infinity];
 
   constructor(opts: GlimbinWriterOptions = {}) {
-    this.flags = opts.flags ?? null;
+    // v2 writer policy: every frame record carries its own box, so NPT /
+    // deforming-cell trajectories round-trip exactly (76 bytes/frame).
+    this.flags = opts.flags != null ? opts.flags | FLAG_PER_FRAME_BOX : null;
     this.unitStyle = opts.unitStyle ?? 0;
     this.boundsOverride = opts.globalBounds;
     this.typesOverride = opts.atomTypes;
@@ -571,7 +607,7 @@ export class GlimbinStreamWriter {
 
     if (this.entries.length === 0) {
       // Lock layout flags and the file-level box from the first frame.
-      if (this.flags === null) this.flags = computeGlimbinFlags([frame]);
+      if (this.flags === null) this.flags = computeGlimbinFlags([frame]) | FLAG_PER_FRAME_BOX;
       if (frame.boxBounds) this.boxBounds.set(frame.boxBounds.subarray(0, 6));
       if (frame.boxTilt) this.boxTilt.set(frame.boxTilt.subarray(0, 3));
       this.triclinic = frame.triclinic ?? false;

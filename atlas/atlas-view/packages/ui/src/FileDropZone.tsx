@@ -95,8 +95,10 @@ export function FileDropZone() {
       const profile = getDeviceProfile();
       if (sorted.length === 1 && detectFileType(sorted[0].name) === 'dump' && sorted[0].size > STREAMING_BYTES_THRESHOLD) {
         const f = sorted[0];
-        const head = await f.slice(0, 4096).text();
-        const { canStreamDump } = await import('@atlas/parsers');
+        const { canStreamDump, readDumpHead } = await import('@atlas/parsers');
+        // readDumpHead decompresses gzip transparently, so .gz dumps take
+        // the streaming fast path too (the worker gunzips while parsing).
+        const head = await readDumpHead(f);
         const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
         const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
         if (canStreamDump(head)) {

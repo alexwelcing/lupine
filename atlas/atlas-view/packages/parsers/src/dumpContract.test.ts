@@ -25,20 +25,27 @@ describe('analyzeDumpHead', () => {
     expect(r.natoms).toBe(1000);
   });
 
-  it('flags triclinic boxes as standard-path with an actionable reason', () => {
-    const r = analyzeDumpHead(GOOD.replace('BOX BOUNDS pp pp ff', 'BOX BOUNDS xy xz yz pp pp ff'));
-    expect(r.tier).toBe('standard');
-    expect(codes(GOOD.replace('BOX BOUNDS pp pp ff', 'BOX BOUNDS xy xz yz pp pp ff'))).toContain('triclinic-box');
+  it('streams triclinic boxes, noting the tilt handling', () => {
+    const head = GOOD.replace('BOX BOUNDS pp pp ff', 'BOX BOUNDS xy xz yz pp pp ff');
+    const r = analyzeDumpHead(head);
+    expect(r.tier).toBe('streamable');
+    expect(r.findings.find((f) => f.code === 'triclinic-box')?.severity).toBe('info');
   });
 
-  it('flags scaled and unwrapped coordinates distinctly', () => {
+  it('streams scaled and unwrapped coordinates, noting the conversion', () => {
     const scaled = analyzeDumpHead(GOOD.replace('id type x y z', 'id type xs ys zs'));
-    expect(scaled.tier).toBe('standard');
-    expect(scaled.findings.find((f) => f.code === 'scaled-coords')?.fix).toContain(RECOMMENDED_DUMP_COMMAND);
+    expect(scaled.tier).toBe('streamable');
+    expect(scaled.findings.find((f) => f.code === 'scaled-coords')?.severity).toBe('info');
 
     const unwrapped = analyzeDumpHead(GOOD.replace('id type x y z', 'id type xu yu zu'));
-    expect(unwrapped.tier).toBe('standard');
+    expect(unwrapped.tier).toBe('streamable');
     expect(codes(GOOD.replace('id type x y z', 'id type xu yu zu'))).toContain('unwrapped-coords');
+  });
+
+  it('still blocks files with no usable coordinates, pointing at the fix', () => {
+    const r = analyzeDumpHead(GOOD.replace('id type x y z', 'id type q mol'));
+    expect(r.tier).toBe('standard');
+    expect(r.findings.find((f) => f.code === 'missing-coords')?.fix).toContain(RECOMMENDED_DUMP_COMMAND);
   });
 
   it('treats a missing id as informational, not a blocker', () => {
@@ -47,15 +54,18 @@ describe('analyzeDumpHead', () => {
     expect(r.findings.find((f) => f.code === 'missing-id')?.severity).toBe('info');
   });
 
-  it('warns that extra per-atom columns are ignored on the fast path', () => {
+  it('reports extra per-atom columns as streamed properties', () => {
     const r = analyzeDumpHead(GOOD.replace('id type x y z', 'id type x y z vx vy vz c_pe'));
     expect(r.tier).toBe('streamable');
-    expect(r.findings.find((f) => f.code === 'extra-columns')?.message).toContain('vx vy vz c_pe');
+    const f = r.findings.find((x) => x.code === 'extra-columns');
+    expect(f?.severity).toBe('info');
+    expect(f?.message).toContain('vx vy vz c_pe');
   });
 
-  it('recognizes gzip bytes and non-dump text', () => {
-    expect(analyzeDumpHead('\x1f\x8b\x08\x00rest').tier).toBe('standard');
-    expect(codes('\x1f\x8b\x08\x00rest')).toContain('gzip-compressed');
+  it('treats gzip as streamable (worker decompresses) and rejects non-dump text', () => {
+    const gz = analyzeDumpHead('\x1f\x8b\x08\x00rest');
+    expect(gz.tier).toBe('streamable');
+    expect(gz.findings.find((f) => f.code === 'gzip-compressed')?.severity).toBe('info');
 
     const xyz = analyzeDumpHead('3\ncomment\nCu 0 0 0\n');
     expect(xyz.tier).toBe('not-a-dump');
