@@ -32,10 +32,18 @@
   (`FLAG_PER_FRAME_BOX`), so NPT / deforming-cell trajectories round-trip
   exactly — including LAMMPS tilt flips. v1 files (the remote gallery
   fixtures) read unchanged.
-- **Hot-loop rewrite**: atom rows are scanned by charCode (no slice / split /
-  parseFloat, zero allocations per row), with buffer-shift amplification
-  fixed. Measured on real 28 MB EAM trajectories: ~60–75 MB/s parse+transcode
-  (from ~45), off the main thread.
+- **Byte-level parser core** — the step change. Profiling (committed as
+  `tools/bench-ingest.mjs`) showed the parser, not the transcode writer, was
+  94% of ingest time, and the cost was the string layer itself: TextDecoder
+  over every byte plus rope/slice management. The core now parses raw bytes
+  in a recycled Uint8Array (consumed space reclaimed by copyWithin — a
+  memmove, not an allocation); the only strings ever materialized are the
+  ~9 header lines per frame. Measured on a 113 MB real EAM trajectory
+  (376 frames): **171 MB/s parse, 156 MB/s parse+transcode — 2.0× the string
+  core, ~3.5× the original** (45 MB/s). A 1 GB trajectory ingests in ~6.5 s,
+  off the main thread, one frame resident.
+- Unterminated final rows (torn writes from killed runs) are now explicitly
+  dropped rather than parsed as half-written numbers.
 - Verified against a real LAMMPS torture case generated for the purpose —
   triclinic prism, NPT, scaled coordinates, four property columns — committed
   as a fixture: exact lattice-site reconstruction, properties and per-frame

@@ -462,7 +462,11 @@ export function writeFrameData(frame: Frame, flags: number): ArrayBuffer {
   }
 
   const ids = new Int32Array(buffer, offset, natoms);
-  for (let i = 0; i < natoms; i++) ids[i] = frame.ids?.[i] ?? i + 1;
+  if (frame.ids && frame.ids.length >= natoms) {
+    ids.set(frame.ids.subarray(0, natoms)); // bulk memcpy, not per-element
+  } else {
+    for (let i = 0; i < natoms; i++) ids[i] = i + 1;
+  }
   offset += natoms * 4;
 
   const types = new Uint8Array(buffer, offset, natoms);
