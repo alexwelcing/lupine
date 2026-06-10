@@ -461,6 +461,72 @@
     "featured": true
   },
   {
+    "id": "cu_melt",
+    "title": "Cu(100) slab melting",
+    "subtitle": "Copper slab heated 300→1700 K. Melting nucleates at the free surfaces near Tm (~1340 K for Cu_u3) and the disorder front propagates inward until the crystal dissolves.",
+    "domain": "Metals & Alloys",
+    "atoms": "26,400",
+    "frames": "101",
+    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-melt-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#ff6b35",
+      "#ffd28a"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 700 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "300 K → 1700 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-melt (showcase), seed 4928459, LAMMPS 20260330"
+    }
+  },
+  {
+    "id": "cu_solidify",
+    "title": "Liquid Cu rapid quench",
+    "subtitle": "Bulk liquid copper quenched 2000→300 K at ~4×10^13 K/s — far too fast for crystallization, so the melt vitrifies into an amorphous solid.",
+    "domain": "Metals & Alloys",
+    "atoms": "19,652",
+    "frames": "101",
+    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-solidify-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#5b8dd9",
+      "#9fb6cc"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 600 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "2000 K → 300 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-solidify (showcase), seed 2384793, LAMMPS 20260330"
+    }
+  },
+  {
+    "id": "cu_sinter",
+    "title": "Cu nanoparticle sintering",
+    "subtitle": "Two misoriented copper nanoparticles at 1000 K (0.75 Tm) coalesce: a neck forms by surface diffusion and grows, with a grain boundary where the lattice orientations meet.",
+    "domain": "Metals & Alloys",
+    "atoms": "33,524",
+    "frames": "101",
+    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-sinter-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#d98e48",
+      "#8a5a2b"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 933 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "300 K → 1000 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-sinter (showcase), seed 7771234, LAMMPS 20260330"
+    }
+  },
+  {
     "id": "sio2_glass",
     "title": "SiO₂ Amorphous Silica",
     "subtitle": "Vitreous silica with tetrahedral network structure",

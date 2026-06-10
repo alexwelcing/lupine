@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+### Phase-change trajectories published to the gallery
+
+### Added
+- **Gallery bake CLI** (`npm run bake:glimbin -- <file.lammpstrj[.gz]>`,
+  `tools/bake-glimbin.mjs`): the Scenario-1 write path of
+  `docs/trajectory-architecture.md` as a CI-runnable command — the same
+  parse → `GlimbinStreamWriter` pipeline as the in-browser ingest worker,
+  writing the `.glimbin` v2 + manifest pair to disk with one frame in
+  flight. The bake augments the generator's sidecar manifest with a
+  `glimbin` block (bytes, frames, atoms/frame) that gallery cards read.
+- **Three streamed gallery cards** — `cu_melt`, `cu_solidify`, `cu_sinter`:
+  showcase-size (~26–33k atoms, 100 frames) real EAM copper MD from
+  `tools/sims/make_phase_trajectories.py`, baked to `.glimbin` v2 and
+  streamed from the CORS-enabled `shed-489901-nist-demos` GCS bucket via
+  Range requests. Card metadata is derived from the bake manifests.
+
+### Changed
+- `docs/trajectory-architecture.md` Scenario-1 write path now names the
+  bake command and the correct publication bucket
+  (`shed-489901-nist-demos`; the legacy `glim-datasets` bucket has no
+  CORS policy and stays rejected by `gallery-data.test.ts`).
+
 ### Off-main-thread transcode: the initial parse no longer blocks the viewer
 
 ### Added

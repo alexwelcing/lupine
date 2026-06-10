@@ -72,12 +72,17 @@ scenarios reuse.
 - Produce or obtain the trajectory (e.g.
   `tools/sims/make_phase_trajectories.py` — real LAMMPS MD with a
   sidecar manifest).
-- Transcode to `.glimbin` v2. The encoder (`GlimbinStreamWriter`) runs
+- Transcode to `.glimbin` v2: `npm run bake:glimbin -- <file.lammpstrj>`
+  (`tools/bake-glimbin.mjs`). The encoder (`GlimbinStreamWriter`) runs
   in Node as well as the browser, so baking belongs in CI, not in a
-  human's hands.
-- Upload `name.glimbin` + `name.manifest.json` to the `glim-datasets`
-  GCS bucket (CDN in front; Range support is the one hard requirement —
-  `npm run verify:streaming` checks it end to end).
+  human's hands. The bake augments the sidecar manifest with a
+  `glimbin` block (bytes, frames, atoms/frame) for the gallery card.
+- Upload `name.glimbin` + `name.manifest.json` to the
+  `shed-489901-nist-demos` GCS bucket under `sims/`. Two hard
+  requirements, both enforced: Range support (`npm run verify:streaming`
+  checks it end to end) and CORS (`access-control-allow-origin: *` —
+  the legacy `glim-datasets` bucket has no CORS policy, which is why
+  `gallery-data.test.ts` rejects it for browser-streamed entries).
 - Add the gallery card. Card metadata (atoms, frames, title, physics
   blurb) should come from the manifest, not be hand-typed.
 
@@ -232,4 +237,5 @@ promotion ladder again.
 | Orchestration | `packages/ui/src/loadMoleculeSource.ts` (`importDumpFileStreaming`, `openSavedTrajectory`) |
 | Auth / Firestore precedents | `packages/ui/src/auth/`, `savedViews.ts`, `firestore.rules` |
 | Perf + correctness harnesses | `tools/bench-ingest.mjs`, `verify-real-trajectory.mjs`, `verify-streaming.mjs`, `lupi-doctor.mjs` |
+| Gallery bake CLI | `tools/bake-glimbin.mjs` (`npm run bake:glimbin`) |
 | Reference data generator | `tools/sims/make_phase_trajectories.py` |

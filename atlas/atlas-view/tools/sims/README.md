@@ -46,6 +46,11 @@ into the viewer: frame 0 paints progressively while the worker transcodes
 the trajectory to `.glimbin` in OPFS, then the timeline appears and the
 file shows up under “Your library” for next time.
 
+To publish a run to the gallery, bake it first —
+`npm run bake:glimbin -- tools/sims/output/<name>.lammpstrj` — then
+follow the Scenario-1 write path in `docs/trajectory-architecture.md`
+(upload `.glimbin` + manifest to GCS, card metadata from the manifest).
+
 ## Verify and diagnose
 
 ```bash
