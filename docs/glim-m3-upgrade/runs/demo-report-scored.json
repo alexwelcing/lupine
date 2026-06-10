@@ -1,0 +1,17 @@
+{
+  "_note": "Demonstration input for `glim_model_eval.py report`. A single REAL paired comparison on anchor T1 (weak-fixture response as baseline, strong Opus response as candidate) using the blind scores in scored-calibration.json. Shows the deterministic aggregation + the min_n guardrail. This is a rubric-discrimination check, NOT a MiniMax M2.7/M3 result.",
+  "baseline_model": "weak-fixture (rubric floor)",
+  "candidate_model": "opus-reference (rubric ceiling)",
+  "pairs": [
+    {
+      "example_id": "T1:0",
+      "anchor": "T1",
+      "target_theorem": "hyper_ribbon_bound_3d",
+      "scores": {
+        "baseline": { "falsifiability": 0, "competing_hypotheses": 0, "physical_grounding": 0, "discriminative_power": 0, "theorem_linkage": 0 },
+        "candidate": { "falsifiability": 2, "competing_hypotheses": 2, "physical_grounding": 2, "discriminative_power": 2, "theorem_linkage": 2 }
+      },
+      "notes": "weak vs strong response to the same T1 prompt"
+    }
+  ]
+}

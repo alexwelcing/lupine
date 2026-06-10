@@ -1,0 +1,27 @@
+{
+  "schema": "glim.mlip.sim_matrix_score.v1",
+  "speed_metric": "speed_score",
+  "baseline": {
+    "error": 0.4116,
+    "cell_value": 1.0,
+    "mlip": "mace-mp-0",
+    "row": "energy_volume"
+  },
+  "tiers": [
+    {
+      "tier": "distill_accuracy",
+      "row": "energy_volume",
+      "mlip": "mace-mp-0",
+      "baseline_error": 0.4116,
+      "tier_error": 0.2038,
+      "error_unit": "ev_per_atom_mae",
+      "accuracy_gain": 0.2078,
+      "accuracy_gain_pct": 50.5,
+      "speedup": 1.0252,
+      "cell_value": 1.2383,
+      "meets_commitment": true,
+      "improves_baseline": true
+    }
+  ],
+  "best_tier": "distill_accuracy"
+}

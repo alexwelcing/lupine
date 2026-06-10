@@ -1,0 +1,14 @@
+{
+  "schema": "glim.model_eval.scored_calibration.v1",
+  "note": "Independent local-Opus evaluator scores (blind to source) over the generations in local-opus-generations.json. Blind labels S1-S4 mapped back to set_ids. Purpose: validate that the rubric DISCRIMINATES (weak fixture must score far below the strong sets) before it judges real M2.7/M3 outputs. NOT an M2.7/M3 result.",
+  "rubric_max": 2,
+  "blind_map": { "S1": "weak-fixture-T1", "S2": "opus-T1", "S3": "opus-T3", "S4": "opus-T4" },
+  "scores": {
+    "weak-fixture-T1": { "falsifiability": 0, "competing_hypotheses": 0, "physical_grounding": 0, "discriminative_power": 0, "theorem_linkage": 0, "total_0_10": 0, "rationale": "Vague non-tests ('look at the errors'); both hypotheses restate 'PR is low'; no mechanism; no separating observable; no theorem named." },
+    "opus-T1": { "falsifiability": 2, "competing_hypotheses": 2, "physical_grounding": 2, "discriminative_power": 2, "theorem_linkage": 2, "total_0_10": 10, "rationale": "Cauchy-relation/EAM-embedding, Brown-Sethna sloppiness, and strain-basis rank are real, distinct mechanisms with matched-cohort tests and clean separators (Cauchy pressure, Fisher ratio, elastic-constant count); targets the PR<2 bound with an explicit falsifier." },
+    "opus-T3": { "falsifiability": 2, "competing_hypotheses": 2, "physical_grounding": 2, "discriminative_power": 2, "theorem_linkage": 2, "total_0_10": 10, "rationale": "Jacobian-rank vs observable-rank vs Born-stability-softening are genuinely different correct mechanisms; autodiff-rank / observable-count / min-Born-eigenvalue separate them; targets the open PR<=rank conjecture with a single-crossing falsifier." },
+    "opus-T4": { "falsifiability": 2, "competing_hypotheses": 2, "physical_grounding": 2, "discriminative_power": 2, "theorem_linkage": 2, "total_0_10": 10, "rationale": "Bonding-type offset vs energy/mechanical orthogonality vs curvature-regularisation make divergent sign-flip predictions with distinct descriptors; bounds the open distill-beats-baseline claim." }
+  },
+  "ranking_best_to_worst": ["opus-T3", "opus-T1", "opus-T4", "weak-fixture-T1"],
+  "conclusion": "Rubric discriminates cleanly: weak fixture 0/10 vs strong sets 10/10. The evaluator + rubric are validated and ready to judge real MiniMax-M2.7 vs M3 generations once a key is present."
+}

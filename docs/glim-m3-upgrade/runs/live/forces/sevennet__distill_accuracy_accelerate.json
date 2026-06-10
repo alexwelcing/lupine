@@ -1,0 +1,2666 @@
+{
+  "accuracy": {
+    "error": 0.19567683726128046,
+    "error_unit": "ev_per_angstrom_rmse",
+    "primary_metric": "force_rmse_ev_per_angstrom",
+    "score": 0.021615813693597774,
+    "score_tolerance": 0.2,
+    "thermodynamic_condition_coverage": {
+      "coverage_score": 0.0,
+      "has_high_pressure": false,
+      "has_high_temperature": false,
+      "has_low_pressure": false,
+      "has_low_temperature": false,
+      "high_pressure_gpa_min": 10.0,
+      "high_temperature_k_min": 1200.0,
+      "low_pressure_gpa_max": 1.0,
+      "low_temperature_k_max": 500.0,
+      "phase_count": 0,
+      "phases": [],
+      "pressure_count": 0,
+      "pressures_gpa": [],
+      "schema": "lupine.mlip.thermodynamic_condition_coverage.v1",
+      "temperature_count": 0,
+      "temperatures_k": []
+    },
+    "unit": "row_native_physical_score"
+  },
+  "campaign_id": null,
+  "cell_id": "sm-20260602a:distill_accuracy_accelerate:forces:sevennet",
+  "checkpoint": {
+    "cache_misses": 5,
+    "flush_count": 1,
+    "ignored_reason": null,
+    "loaded_predictions": 0,
+    "mode": "read-write",
+    "pending_flush_predictions": 0,
+    "schema": "lupine.mlip.cell_checkpoint.summary.v1",
+    "stored_predictions": 5,
+    "url": "gs://shed-489901-atlas-outputs/model-sim-matrix/sm-20260602a/_ckpt/distill_accuracy_accelerate_forces_sevennet/cell_checkpoint.json",
+    "written_predictions": 5
+  },
+  "distill_policy_engine": "auto",
+  "distill_policy_hash": null,
+  "distill_policy_url": null,
+  "distill_profile": "accuracy_accelerate",
+  "distill_runtime": {
+    "cell_id": "sm-20260602a:distill_accuracy_accelerate:forces:sevennet",
+    "enabled": true,
+    "events_uri": "gs://shed-489901-atlas-outputs/model-sim-matrix/sm-20260602a/distill_accuracy_accelerate/forces/sevennet/distill_events.jsonl",
+    "interventions": [
+      {
+        "action": "delta_correct",
+        "field": "forces_ev_per_angstrom",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:fe19b9596b292672203e5a015c2b4549a2c07a73a287ca592c653946e5275049",
+        "policy_engine": "rust",
+        "prediction_index": 0,
+        "reason": "support_gate_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-1178784-step9-forces-0",
+        "value": [
+          7.416136362444697e-10,
+          5.2973665337729006e-09,
+          3.574335027322923e-10
+        ]
+      },
+      {
+        "action": "accept",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:fe19b9596b292672203e5a015c2b4549a2c07a73a287ca592c653946e5275049",
+        "policy_engine": "rust",
+        "prediction_index": 0,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-1178784-step9-forces-0"
+      },
+      {
+        "action": "delta_correct",
+        "field": "forces_ev_per_angstrom",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:8a593563535d39458c9f7f4bef16d3fd0fbd942beff67ec9c7b82cd504dd0495",
+        "policy_engine": "rust",
+        "prediction_index": 1,
+        "reason": "support_gate_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-863035-step0-forces-1",
+        "value": [
+          1.6302155558850553e-08,
+          1.4892194887568736e-08,
+          6.022760417328093e-10
+        ]
+      },
+      {
+        "action": "accept",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:8a593563535d39458c9f7f4bef16d3fd0fbd942beff67ec9c7b82cd504dd0495",
+        "policy_engine": "rust",
+        "prediction_index": 1,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-863035-step0-forces-1"
+      },
+      {
+        "action": "delta_correct",
+        "field": "forces_ev_per_angstrom",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:d5704e454c2e88e73e0a0f8ed66b05c69fe631a9ac1704912a96230c0d12aa62",
+        "policy_engine": "rust",
+        "prediction_index": 2,
+        "reason": "support_gate_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-759876-step4-forces-2",
+        "value": [
+          -1.9468384535459613e-08,
+          -6.7247595192274586e-09,
+          -3.39651136844123e-09
+        ]
+      },
+      {
+        "action": "accept",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:d5704e454c2e88e73e0a0f8ed66b05c69fe631a9ac1704912a96230c0d12aa62",
+        "policy_engine": "rust",
+        "prediction_index": 2,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-759876-step4-forces-2"
+      },
+      {
+        "action": "delta_correct",
+        "field": "forces_ev_per_angstrom",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:3f9e3df96d3ec899aa5516c18468c0f6a29e03794d53ddeacbdd8632f59740cb",
+        "policy_engine": "rust",
+        "prediction_index": 3,
+        "reason": "support_gate_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-559535-step1-forces-3",
+        "value": [
+          1.1363927117564068e-07,
+          -3.4317081726944542e-09,
+          -1.4084467492819585e-09
+        ]
+      },
+      {
+        "action": "accept",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:3f9e3df96d3ec899aa5516c18468c0f6a29e03794d53ddeacbdd8632f59740cb",
+        "policy_engine": "rust",
+        "prediction_index": 3,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-559535-step1-forces-3"
+      },
+      {
+        "action": "delta_correct",
+        "field": "forces_ev_per_angstrom",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:cfa12cb5dff034667cb1e3b13e017c991ccb0a365b6fb8c17fb7f56b50434634",
+        "policy_engine": "rust",
+        "prediction_index": 4,
+        "reason": "support_gate_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-555706-step95-forces-4",
+        "value": [
+          3.4589426585053817e-09,
+          5.7094649514161855e-09,
+          -9.910793385919787e-09
+        ]
+      },
+      {
+        "action": "accept",
+        "mlip_id": "sevennet",
+        "policy_decision_id": "sha256:cfa12cb5dff034667cb1e3b13e017c991ccb0a365b6fb8c17fb7f56b50434634",
+        "policy_engine": "rust",
+        "prediction_index": 4,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "structure_id": "mptrj-mp-555706-step95-forces-4"
+      }
+    ],
+    "leakage_guard": {
+      "eval_structures": 57,
+      "overlap_count": 0,
+      "overlaps": [],
+      "passed": true,
+      "schema": "lupine.distill.leakage_guard.v1",
+      "support_structures": 69
+    },
+    "mlip_id": "sevennet",
+    "policy_batches": [
+      {
+        "decision_count": 5,
+        "mlip_id": "sevennet",
+        "policy_engine": "rust",
+        "prediction_count": 5,
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "forces",
+        "schema": "lupine.distill.policy_batch.v1"
+      }
+    ],
+    "policy_decisions": [
+      {
+        "actions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              7.416136362444697e-10,
+              5.2973665337729006e-09,
+              3.574335027322923e-10
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:fe19b9596b292672203e5a015c2b4549a2c07a73a287ca592c653946e5275049",
+        "policy_engine": "rust",
+        "prediction_index": 0,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-1178784-step9-forces-0",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-ae652c6a83872228",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 1.0,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 5000.0,
+            "max_stress_bias_gpa": 25.0,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.02,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 1.0
+          },
+          "policy_limits_id": "ribbon-ae652c6a83872228",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              1.6302155558850553e-08,
+              1.4892194887568736e-08,
+              6.022760417328093e-10
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:8a593563535d39458c9f7f4bef16d3fd0fbd942beff67ec9c7b82cd504dd0495",
+        "policy_engine": "rust",
+        "prediction_index": 1,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-863035-step0-forces-1",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-ae652c6a83872228",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 1.0,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 5000.0,
+            "max_stress_bias_gpa": 25.0,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.02,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 1.0
+          },
+          "policy_limits_id": "ribbon-ae652c6a83872228",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              -1.9468384535459613e-08,
+              -6.7247595192274586e-09,
+              -3.39651136844123e-09
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:d5704e454c2e88e73e0a0f8ed66b05c69fe631a9ac1704912a96230c0d12aa62",
+        "policy_engine": "rust",
+        "prediction_index": 2,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-759876-step4-forces-2",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-ae652c6a83872228",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 1.0,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 5000.0,
+            "max_stress_bias_gpa": 25.0,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.02,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 1.0
+          },
+          "policy_limits_id": "ribbon-ae652c6a83872228",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              1.1363927117564068e-07,
+              -3.4317081726944542e-09,
+              -1.4084467492819585e-09
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:3f9e3df96d3ec899aa5516c18468c0f6a29e03794d53ddeacbdd8632f59740cb",
+        "policy_engine": "rust",
+        "prediction_index": 3,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-559535-step1-forces-3",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-ae652c6a83872228",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 1.0,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 5000.0,
+            "max_stress_bias_gpa": 25.0,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.02,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 1.0
+          },
+          "policy_limits_id": "ribbon-ae652c6a83872228",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              3.4589426585053817e-09,
+              5.7094649514161855e-09,
+              -9.910793385919787e-09
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:cfa12cb5dff034667cb1e3b13e017c991ccb0a365b6fb8c17fb7f56b50434634",
+        "policy_engine": "rust",
+        "prediction_index": 4,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-555706-step95-forces-4",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-ae652c6a83872228",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 1.0,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 5000.0,
+            "max_stress_bias_gpa": 25.0,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.02,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 1.0
+          },
+          "policy_limits_id": "ribbon-ae652c6a83872228",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      }
+    ],
+    "policy_engine": "rust",
+    "policy_limits_path": null,
+    "profile": "accuracy_accelerate",
+    "refusals": [],
+    "ribbon_version": "hyperribbon-v1",
+    "row_id": "forces",
+    "run_id": "sm-20260602a",
+    "schema": "lupine.distill.runtime_summary.v1",
+    "support_manifest_hash": "sha256:755d69e522227d5d9cd3566fde697b7c30d395b6b5ff30212b5758bf6708148c",
+    "support_model": {
+      "candidate_correction": {
+        "force_bias_ev_per_angstrom": [
+          1.2937922657127466e-09,
+          -3.6576863112028246e-10,
+          -8.21105297719275e-09
+        ],
+        "ribbon_projected_residual_correction_v1": {
+          "basis_space": "feature",
+          "coefficients": [
+            [
+              -1.974718240233726e-08,
+              1.816966528288742e-10,
+              8.222572840502853e-10,
+              1.1174116899408949e-10
+            ],
+            [
+              -1.202397986009875e-08,
+              4.822404086712727e-10,
+              -4.3091375517754e-09,
+              7.410885397785502e-11
+            ],
+            [
+              8.80269505551116e-11,
+              -1.588396303274374e-08,
+              -1.461010411243671e-10,
+              -3.077099040606164e-10
+            ]
+          ],
+          "complement_basis": [
+            [
+              -0.8704985665793873,
+              -0.45466486515993587,
+              0.16172288043078514,
+              0.09673580473381707
+            ],
+            [
+              0.1866451275787974,
+              -0.5664197474692286,
+              -0.11236009366517959,
+              -0.7948002738924678
+            ],
+            [
+              0.41469188924126,
+              -0.47320358124113643,
+              0.7011051791912104,
+              0.3355004253489683
+            ]
+          ],
+          "complement_residual_fraction": 0.899571602667235,
+          "feature_mean": [
+            2.723516113113802e-09,
+            5.007918323921854e-09,
+            0.19274901402542038,
+            -5.507326684561319
+          ],
+          "feature_names": [
+            "force_mean:0",
+            "force_mean:2",
+            "force_rms",
+            "scalar:energy_ev_per_atom"
+          ],
+          "feature_scale": [
+            1.968455610136768e-08,
+            1.6057974931234463e-08,
+            0.24867151140738258,
+            1.8032237247192955
+          ],
+          "field": "forces_ev_per_angstrom",
+          "intercept": [
+            -2.460278348381184e-09,
+            1.310584162021156e-09,
+            -5.019288154115909e-09
+          ],
+          "matrix_rank": 3,
+          "metric": "rmse",
+          "observable_dim": 3,
+          "participation_ratio": 3.4766369217486655,
+          "projected_support_lift_fraction": 0.3650842610465704,
+          "projection_distance_proxy": 0.508352732082245,
+          "row_id": "forces",
+          "sample_count": 20,
+          "schema": "lupine.distill.ribbon_projected_residual_correction.v1",
+          "singular_values": [
+            5.564812430828719,
+            4.689032813584034,
+            4.191438092136885,
+            3.0785841880010794
+          ],
+          "stiff_axis_basis": [
+            [
+              0.18821923103615368,
+              -0.4985247243282483,
+              -0.6853265258312881,
+              0.4963609304665509
+            ]
+          ],
+          "stiff_axis_drift_fraction": 0.10042839733276518,
+          "stiff_axis_residual_fraction": 0.10042839733276518,
+          "support_error_after": 1.2504025449927358e-08,
+          "support_error_before": 1.9693991946929063e-08,
+          "support_lift_fraction": 0.3650842610465704
+        },
+        "ribbon_residual_correction_v1": {
+          "coefficients": [
+            [
+              -1.974718240233726e-08,
+              1.816966528288742e-10,
+              8.222572840502853e-10,
+              1.1174116899408949e-10
+            ],
+            [
+              -1.202397986009875e-08,
+              4.822404086712727e-10,
+              -4.3091375517754e-09,
+              7.410885397785502e-11
+            ],
+            [
+              8.80269505551116e-11,
+              -1.588396303274374e-08,
+              -1.461010411243671e-10,
+              -3.077099040606164e-10
+            ]
+          ],
+          "eigenvalues": [],
+          "feature_mean": [
+            2.723516113113802e-09,
+            5.007918323921854e-09,
+            0.19274901402542038,
+            -5.507326684561319
+          ],
+          "feature_names": [
+            "force_mean:0",
+            "force_mean:2",
+            "force_rms",
+            "scalar:energy_ev_per_atom"
+          ],
+          "feature_scale": [
+            1.968455610136768e-08,
+            1.6057974931234463e-08,
+            0.24867151140738258,
+            1.8032237247192955
+          ],
+          "field": "forces_ev_per_angstrom",
+          "intercept": [
+            -2.460278348381184e-09,
+            1.310584162021156e-09,
+            -5.019288154115909e-09
+          ],
+          "matrix_rank": 3,
+          "metric": "rmse",
+          "observable_dim": 3,
+          "participation_ratio": null,
+          "rank_limited": false,
+          "row_id": "forces",
+          "sample_count": 20,
+          "schema": "lupine.distill.ribbon_residual_correction.v1",
+          "support_error_after": 1.0702602083182466e-08,
+          "support_error_before": 1.9693991946929063e-08,
+          "support_lift_fraction": 0.45655496803169193
+        }
+      },
+      "correction": {},
+      "diagnostics": {
+        "applicability_gate": "passed_global_residual_no_material_overlap",
+        "eval_material_roots": [
+          "al-h-li-o-si",
+          "c-cl-h-o",
+          "mp-20974",
+          "mp-555706",
+          "mp-559535",
+          "mp-759876",
+          "mp-863035",
+          "na-o-sb",
+          "o-v",
+          "pu-sb"
+        ],
+        "force_bias_candidate_ev_per_angstrom": [
+          1.2937922657127466e-09,
+          -3.6576863112028246e-10,
+          -8.21105297719275e-09
+        ],
+        "force_complement_basis": [
+          [
+            -0.8704985665793873,
+            -0.45466486515993587,
+            0.16172288043078514,
+            0.09673580473381707
+          ],
+          [
+            0.1866451275787974,
+            -0.5664197474692286,
+            -0.11236009366517959,
+            -0.7948002738924678
+          ],
+          [
+            0.41469188924126,
+            -0.47320358124113643,
+            0.7011051791912104,
+            0.3355004253489683
+          ]
+        ],
+        "force_complement_residual_fraction": 0.899571602667235,
+        "force_correction_gate": "blocked_no_support_lift",
+        "force_participation_ratio": 3.4766369217486655,
+        "force_projected_support_error_after": 1.2504025449927358e-08,
+        "force_projected_support_lift_fraction": 0.3650842610465704,
+        "force_projection_distance_proxy": 0.508352732082245,
+        "force_residual_ribbon_eigenvalues": [],
+        "force_residual_ribbon_feature_names": [
+          "force_mean:0",
+          "force_mean:2",
+          "force_rms",
+          "scalar:energy_ev_per_atom"
+        ],
+        "force_residual_ribbon_field": "forces_ev_per_angstrom",
+        "force_residual_ribbon_matrix_rank": 3,
+        "force_residual_ribbon_observable_dim": 3,
+        "force_residual_ribbon_participation_ratio": null,
+        "force_residual_ribbon_rank_limited": false,
+        "force_residual_ribbon_sample_count": 20,
+        "force_residual_ribbon_status": "fit",
+        "force_residual_ribbon_support_error_after": 1.0702602083182466e-08,
+        "force_residual_ribbon_support_error_before": 1.9693991946929063e-08,
+        "force_residual_ribbon_support_lift_fraction": 0.45655496803169193,
+        "force_singular_values": [
+          5.564812430828719,
+          4.689032813584034,
+          4.191438092136885,
+          3.0785841880010794
+        ],
+        "force_stiff_axis_basis": [
+          [
+            0.18821923103615368,
+            -0.4985247243282483,
+            -0.6853265258312881,
+            0.4963609304665509
+          ]
+        ],
+        "force_stiff_axis_drift_fraction": 0.10042839733276518,
+        "force_stiff_axis_residual_fraction": 0.10042839733276518,
+        "force_subspace_basis_space": "feature",
+        "force_subspace_output_field": "forces_ev_per_angstrom",
+        "force_subspace_schema": "lupine.distill.subspace_diagnostic.v1",
+        "force_subspace_status": "fit",
+        "force_support_rmse_after": 0.09770942776296115,
+        "force_support_rmse_before": 0.09770942776296117,
+        "force_theorem_development_lanes": [
+          {
+            "lane": "stiff_axis_preservation",
+            "runtime_proxy": "stiff_axis_drift_fraction",
+            "status": "measured"
+          },
+          {
+            "lane": "orthogonal_complement_lift",
+            "runtime_proxy": "complement_residual_fraction",
+            "status": "measured"
+          },
+          {
+            "lane": "projection_tube_refusal",
+            "runtime_proxy": "projection_distance_proxy",
+            "status": "measured"
+          },
+          {
+            "lane": "vandermonde_decay",
+            "runtime_proxy": "singular_values",
+            "status": "measured"
+          }
+        ],
+        "n_support_predictions": 20,
+        "projection_distance_proxy": 0.4357141887113985,
+        "ribbon_feature_distance_proxy": 0.6695145212011828,
+        "support_eval_distance_proxy": 1.0,
+        "support_material_roots": [
+          "ag-in-o-p",
+          "al-f-li",
+          "al-f-sm",
+          "al-in-se",
+          "al-nb-o-p",
+          "ba-cr-s",
+          "bi-mg-ti",
+          "c-co-na-o-s",
+          "c-k-o",
+          "c-n-s",
+          "ca-o-p",
+          "cd-k-mg",
+          "f-li-mn",
+          "f-li-ni-o",
+          "fe-o-zn",
+          "ga-ni-y",
+          "la-o-w",
+          "mg-mn-o-ti",
+          "mg-sn",
+          "mp-1021320",
+          "mp-1026829",
+          "mp-1041394",
+          "mp-1094529",
+          "mp-1104829",
+          "mp-1182147",
+          "mp-1201076",
+          "mp-1220763",
+          "mp-1221959",
+          "mp-1228706",
+          "mp-34296",
+          "mp-555746",
+          "mp-556020",
+          "mp-559985",
+          "mp-572537",
+          "mp-674357",
+          "mp-764280",
+          "mp-772117",
+          "mp-862787",
+          "mp-863383",
+          "nb-se-sn"
+        ]
+      }
+    }
+  },
+  "duration_s": 7.807821720000007,
+  "execution": {
+    "cloud_run_job": "mlip-cell-sevennet",
+    "cloud_run_revision": null,
+    "cold_total_seconds": 24.95563353,
+    "model_load_seconds": 16.803764056999995,
+    "model_preloaded": false,
+    "runner_image_digest": null,
+    "warm_inference_seconds": 7.807821720000007
+  },
+  "fixture_contract": {
+    "blockers": [],
+    "fixture_id": "canonical-structures-v2",
+    "manifest_hash": "sha256:5f9cde3b94a44f030eb449b548440e6cbb6aac1d53db1d7698682e8a3a321b4c",
+    "reference_provenance": {
+      "elastic_constants": {
+        "elements": [
+          "Al",
+          "Cu",
+          "Mo"
+        ],
+        "source": "Simmons and Wang 1971 / Materials Project values encoded in mlip_immi/elastic_constants.py"
+      },
+      "mptrj": {
+        "config": "default",
+        "dataset": "nimashoghi/mptrj",
+        "figshare": "https://figshare.com/articles/dataset/Materials_Project_Trjectory_MPtrj_Dataset/23713842",
+        "materials_project_docs": "https://docs.materialsproject.org/services/ml-and-ai-applications/mptrj",
+        "notes": "MPtrj collates Materials Project ionic-step energies, forces, stresses, and structures.",
+        "split": "test",
+        "via": "Hugging Face Dataset Viewer rows API"
+      }
+    },
+    "release_ready": true,
+    "row_blockers": {
+      "elastic_constants": [],
+      "energy_volume": [],
+      "forces": [],
+      "relaxation_stability": [],
+      "stress": []
+    },
+    "row_counts": {
+      "elastic_constants": 39,
+      "energy_volume": 5,
+      "forces": 5,
+      "relaxation_stability": 3,
+      "stress": 5
+    },
+    "schema": "lupine.mlip.fixture_manifest.v2"
+  },
+  "interventions": [
+    {
+      "action": "delta_correct",
+      "field": "forces_ev_per_angstrom",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:fe19b9596b292672203e5a015c2b4549a2c07a73a287ca592c653946e5275049",
+      "policy_engine": "rust",
+      "prediction_index": 0,
+      "reason": "support_gate_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-1178784-step9-forces-0",
+      "value": [
+        7.416136362444697e-10,
+        5.2973665337729006e-09,
+        3.574335027322923e-10
+      ]
+    },
+    {
+      "action": "accept",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:fe19b9596b292672203e5a015c2b4549a2c07a73a287ca592c653946e5275049",
+      "policy_engine": "rust",
+      "prediction_index": 0,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-1178784-step9-forces-0"
+    },
+    {
+      "action": "delta_correct",
+      "field": "forces_ev_per_angstrom",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:8a593563535d39458c9f7f4bef16d3fd0fbd942beff67ec9c7b82cd504dd0495",
+      "policy_engine": "rust",
+      "prediction_index": 1,
+      "reason": "support_gate_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-863035-step0-forces-1",
+      "value": [
+        1.6302155558850553e-08,
+        1.4892194887568736e-08,
+        6.022760417328093e-10
+      ]
+    },
+    {
+      "action": "accept",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:8a593563535d39458c9f7f4bef16d3fd0fbd942beff67ec9c7b82cd504dd0495",
+      "policy_engine": "rust",
+      "prediction_index": 1,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-863035-step0-forces-1"
+    },
+    {
+      "action": "delta_correct",
+      "field": "forces_ev_per_angstrom",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:d5704e454c2e88e73e0a0f8ed66b05c69fe631a9ac1704912a96230c0d12aa62",
+      "policy_engine": "rust",
+      "prediction_index": 2,
+      "reason": "support_gate_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-759876-step4-forces-2",
+      "value": [
+        -1.9468384535459613e-08,
+        -6.7247595192274586e-09,
+        -3.39651136844123e-09
+      ]
+    },
+    {
+      "action": "accept",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:d5704e454c2e88e73e0a0f8ed66b05c69fe631a9ac1704912a96230c0d12aa62",
+      "policy_engine": "rust",
+      "prediction_index": 2,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-759876-step4-forces-2"
+    },
+    {
+      "action": "delta_correct",
+      "field": "forces_ev_per_angstrom",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:3f9e3df96d3ec899aa5516c18468c0f6a29e03794d53ddeacbdd8632f59740cb",
+      "policy_engine": "rust",
+      "prediction_index": 3,
+      "reason": "support_gate_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-559535-step1-forces-3",
+      "value": [
+        1.1363927117564068e-07,
+        -3.4317081726944542e-09,
+        -1.4084467492819585e-09
+      ]
+    },
+    {
+      "action": "accept",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:3f9e3df96d3ec899aa5516c18468c0f6a29e03794d53ddeacbdd8632f59740cb",
+      "policy_engine": "rust",
+      "prediction_index": 3,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-559535-step1-forces-3"
+    },
+    {
+      "action": "delta_correct",
+      "field": "forces_ev_per_angstrom",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:cfa12cb5dff034667cb1e3b13e017c991ccb0a365b6fb8c17fb7f56b50434634",
+      "policy_engine": "rust",
+      "prediction_index": 4,
+      "reason": "support_gate_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-555706-step95-forces-4",
+      "value": [
+        3.4589426585053817e-09,
+        5.7094649514161855e-09,
+        -9.910793385919787e-09
+      ]
+    },
+    {
+      "action": "accept",
+      "mlip_id": "sevennet",
+      "policy_decision_id": "sha256:cfa12cb5dff034667cb1e3b13e017c991ccb0a365b6fb8c17fb7f56b50434634",
+      "policy_engine": "rust",
+      "prediction_index": 4,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "forces",
+      "structure_id": "mptrj-mp-555706-step95-forces-4"
+    }
+  ],
+  "manifest_hash": "sha256:5054e67420575ae38710cd837e09b2d5eefd41239aa6e89654b4a43bb5ea5b02",
+  "manifest_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json",
+  "mlip_id": "sevennet",
+  "operation_name": null,
+  "predictions": [
+    {
+      "chemical_system": "O-V",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              7.416136362444697e-10,
+              5.2973665337729006e-09,
+              3.574335027322923e-10
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:fe19b9596b292672203e5a015c2b4549a2c07a73a287ca592c653946e5275049",
+        "policy_engine": "rust",
+        "profile": "accuracy_accelerate",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -7.700336456298828,
+      "forces_ev_per_angstrom": [
+        [
+          -0.0001050207798354528,
+          0.05383941315859929,
+          -0.1248617019655264
+        ],
+        [
+          -0.017078045014011136,
+          -0.09652346587925777,
+          -0.12461802327652342
+        ],
+        [
+          -0.015210661295520534,
+          -0.14226912922411783,
+          0.1418277773855173
+        ],
+        [
+          -0.035955100509988534,
+          0.088331287436191,
+          0.09775418078879947
+        ],
+        [
+          0.0022940687335111,
+          -0.18253188795595984,
+          0.11771632021646136
+        ],
+        [
+          0.0051078570972211456,
+          -0.15154155559092386,
+          -0.1184343543054617
+        ],
+        [
+          -0.01462974697695898,
+          0.10366362863034383,
+          -0.01581814849396115
+        ],
+        [
+          0.04063584729684664,
+          0.10360324912518636,
+          0.02696625924090976
+        ],
+        [
+          0.07415655329479051,
+          0.051774257503453644,
+          0.01388172841052646
+        ],
+        [
+          -0.009721843715476262,
+          0.1022695877477564,
+          -0.012569620847896394
+        ],
+        [
+          0.012438331540954839,
+          0.015033328615132723,
+          -0.022570877909854705
+        ],
+        [
+          -0.04193224311219381,
+          0.054351685278121384,
+          0.020726465046211427
+        ]
+      ],
+      "material_id": "mp-20974",
+      "reference": {
+        "corrected_total_energy_ev": -104.71700286865234,
+        "energy_ev_per_atom": -8.72641658782959,
+        "forces_ev_per_angstrom": [
+          [
+            -0.021224409341812137,
+            0.0017667600186541677,
+            -0.03713246062397957
+          ],
+          [
+            0.01065296959131956,
+            -0.24518424272537231,
+            -0.1250111758708954
+          ],
+          [
+            -0.0549057200551033,
+            -0.39324530959129333,
+            0.12008675932884216
+          ],
+          [
+            -0.12571851909160614,
+            -0.024587929248809814,
+            0.006640919949859381
+          ],
+          [
+            0.13469551503658295,
+            -0.26400360465049744,
+            0.0783652514219284
+          ],
+          [
+            0.04338514059782028,
+            -0.19335228204727173,
+            -0.15080690383911133
+          ],
+          [
+            -0.10329753160476685,
+            0.18267369270324707,
+            -0.009618760086596012
+          ],
+          [
+            0.15211695432662964,
+            0.19579949975013733,
+            0.13001622259616852
+          ],
+          [
+            0.15497247874736786,
+            0.13174840807914734,
+            -0.02089493907988071
+          ],
+          [
+            -0.102303609251976,
+            0.2931397557258606,
+            0.023663589730858803
+          ],
+          [
+            0.0031329600606113672,
+            0.1642417162656784,
+            -0.11295437812805176
+          ],
+          [
+            -0.091506227850914,
+            0.15100349485874176,
+            0.09764587134122849
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -8.751558303833008,
+        "stress_gpa": [
+          0.15171101694585576,
+          -1.9283082185497695,
+          0.7248760312207603,
+          -0.19364003725492648,
+          -0.4663774320714104,
+          0.15351609994558185
+        ]
+      },
+      "row_id": "forces",
+      "strain_voigt": null,
+      "stress_gpa": [
+        -0.9034730448974349,
+        -2.2272350962772083,
+        -1.4910311611038798,
+        -0.0371559268172541,
+        0.019923474445826133,
+        0.025024827796477453
+      ],
+      "structure_id": "mptrj-mp-1178784-step9-forces-0",
+      "symbols": [
+        "V",
+        "V",
+        "V",
+        "V",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "volume_scale": null
+    },
+    {
+      "chemical_system": "Pu-Sb",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              1.6302155558850553e-08,
+              1.4892194887568736e-08,
+              6.022760417328093e-10
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:8a593563535d39458c9f7f4bef16d3fd0fbd942beff67ec9c7b82cd504dd0495",
+        "policy_engine": "rust",
+        "profile": "accuracy_accelerate",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -6.776632785797119,
+      "forces_ev_per_angstrom": [
+        [
+          2.7814149152249933e-05,
+          4.140286741079943e-05,
+          -1.1009049471694961e-06
+        ],
+        [
+          -3.790944529469226e-06,
+          -1.9271867002824374e-05,
+          8.840636014711128e-07
+        ],
+        [
+          3.1380954256699343e-06,
+          0.14889894424972358,
+          6.637039491679535e-07
+        ],
+        [
+          -0.12896023550601093,
+          -0.07444460690918145,
+          1.0222631403949127e-06
+        ],
+        [
+          0.1289604469242564,
+          -0.0744330957621592,
+          6.283136913325653e-07
+        ],
+        [
+          -2.5365523097575742e-05,
+          -0.14885081351700005,
+          -7.865108186606302e-07
+        ],
+        [
+          0.12892870745091348,
+          0.07441410421428504,
+          -6.105454217404111e-07
+        ],
+        [
+          -0.12893071630568592,
+          0.07439343630370918,
+          -6.993484844215198e-07
+        ]
+      ],
+      "material_id": "mp-863035",
+      "reference": {
+        "corrected_total_energy_ev": -53.00749969482422,
+        "energy_ev_per_atom": -6.625937461853027,
+        "forces_ev_per_angstrom": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            9.99999993922529e-09,
+            0.11657150089740752,
+            0.0
+          ],
+          [
+            -0.10095389187335968,
+            -0.058285750448703766,
+            0.0
+          ],
+          [
+            0.10095387697219849,
+            -0.058285750448703766,
+            0.0
+          ],
+          [
+            -9.99999993922529e-09,
+            -0.11657150089740752,
+            0.0
+          ],
+          [
+            0.10095389187335968,
+            0.058285750448703766,
+            0.0
+          ],
+          [
+            -0.10095387697219849,
+            0.058285750448703766,
+            0.0
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -7.149293899536133,
+        "stress_gpa": [
+          3.330652949978707,
+          3.3306523531214047,
+          1.1497071963799192,
+          -0.0,
+          -0.0,
+          2.920000040314562e-07
+        ]
+      },
+      "row_id": "forces",
+      "strain_voigt": null,
+      "stress_gpa": [
+        2.566807210212082,
+        2.566801838496362,
+        1.4913097442496763,
+        8.315573415590364e-07,
+        -1.1473096088440306e-06,
+        -7.866863459528093e-06
+      ],
+      "structure_id": "mptrj-mp-863035-step0-forces-1",
+      "symbols": [
+        "Pu",
+        "Pu",
+        "Sb",
+        "Sb",
+        "Sb",
+        "Sb",
+        "Sb",
+        "Sb"
+      ],
+      "volume_scale": null
+    },
+    {
+      "chemical_system": "Na-O-Sb",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              -1.9468384535459613e-08,
+              -6.7247595192274586e-09,
+              -3.39651136844123e-09
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:d5704e454c2e88e73e0a0f8ed66b05c69fe631a9ac1704912a96230c0d12aa62",
+        "policy_engine": "rust",
+        "profile": "accuracy_accelerate",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -4.765138799493963,
+      "forces_ev_per_angstrom": [
+        [
+          -0.04440349797161177,
+          0.06740220708711488,
+          0.020170923651218125
+        ],
+        [
+          0.008631398990732878,
+          0.0637528903589998,
+          -0.117398600696564
+        ],
+        [
+          0.0154400357007806,
+          0.08390501959188325,
+          0.06693052905893297
+        ],
+        [
+          -0.03727091187985495,
+          -0.01017950775162834,
+          0.10076449471807451
+        ],
+        [
+          -0.04552545855196074,
+          0.02862627131803375,
+          0.0868335034260747
+        ],
+        [
+          0.07170802643148348,
+          -0.019063738380237998,
+          -0.2364200834622386
+        ],
+        [
+          0.004602412782592027,
+          -0.0347491681768145,
+          0.0061884488472935635
+        ],
+        [
+          0.07288552363960192,
+          -0.006309834514423788,
+          0.011669751585483258
+        ],
+        [
+          0.030711810193938465,
+          0.019044118727878152,
+          -0.03386265379095107
+        ],
+        [
+          -0.06351538459213331,
+          -0.06180314647094864,
+          -0.012492183267116838
+        ],
+        [
+          -0.013263956554251463,
+          -0.1306252397789206,
+          0.10761586982107134
+        ]
+      ],
+      "material_id": "mp-759876",
+      "reference": {
+        "corrected_total_energy_ev": -55.80337905883789,
+        "energy_ev_per_atom": -5.073034763336182,
+        "forces_ev_per_angstrom": [
+          [
+            -0.04800540953874588,
+            0.0962233915925026,
+            0.04224994033575058
+          ],
+          [
+            0.026324639096856117,
+            0.07247518748044968,
+            -0.10418248176574708
+          ],
+          [
+            0.012152929790318012,
+            0.09388502687215804,
+            0.044299621134996414
+          ],
+          [
+            -0.04421871900558472,
+            -0.012196829542517662,
+            0.10686425119638444
+          ],
+          [
+            -0.06053527072072029,
+            0.02099226973950863,
+            0.08297058939933777
+          ],
+          [
+            0.0880996584892273,
+            -0.01595447026193142,
+            -0.24016866087913513
+          ],
+          [
+            -0.040999170392751694,
+            -0.04609692841768265,
+            0.004875900223851204
+          ],
+          [
+            0.04853612929582596,
+            -0.010745559819042684,
+            -0.010668249800801275
+          ],
+          [
+            0.056259218603372574,
+            0.010874499566853046,
+            -0.004731419961899519
+          ],
+          [
+            -0.01681699976325035,
+            -0.07064317166805267,
+            -0.021365970373153687
+          ],
+          [
+            -0.020797019824385643,
+            -0.13881340622901917,
+            0.09985648095607758
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -5.07560396194458,
+        "stress_gpa": [
+          0.033285698900163814,
+          0.6930127295362446,
+          0.05931437306618169,
+          0.06958137249000448,
+          -0.06450668653709705,
+          0.04403083930988582
+        ]
+      },
+      "row_id": "forces",
+      "strain_voigt": null,
+      "stress_gpa": [
+        -0.07809745837722251,
+        0.27723988113449916,
+        0.048452208990175445,
+        0.07307981892615086,
+        0.1336360235537516,
+        0.037880061607660914
+      ],
+      "structure_id": "mptrj-mp-759876-step4-forces-2",
+      "symbols": [
+        "Na",
+        "Na",
+        "Na",
+        "Na",
+        "Na",
+        "Sb",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "volume_scale": null
+    },
+    {
+      "chemical_system": "C-Cl-H-O",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              1.1363927117564068e-07,
+              -3.4317081726944542e-09,
+              -1.4084467492819585e-09
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:3f9e3df96d3ec899aa5516c18468c0f6a29e03794d53ddeacbdd8632f59740cb",
+        "policy_engine": "rust",
+        "profile": "accuracy_accelerate",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -4.138454437255859,
+      "forces_ev_per_angstrom": [
+        [
+          3.641070717963612,
+          0.5876657332435543,
+          1.5495207295638433
+        ],
+        [
+          3.2890864554971815,
+          -2.3306555782302922,
+          -1.9862930788773188
+        ],
+        [
+          0.32741325536671867,
+          -3.7974369560226506,
+          0.27227568485559134
+        ],
+        [
+          3.6477781478494764,
+          -0.5866205726608341,
+          1.5580347762328497
+        ],
+        [
+          0.3278287891477703,
+          3.7972738708511287,
+          0.267651824734818
+        ],
+        [
+          -3.2890876587301134,
+          -2.330654624555976,
+          1.9862925992232674
+        ],
+        [
+          -0.32782772740420113,
+          3.797273155595391,
+          -0.267652095772613
+        ],
+        [
+          -3.6410704906850695,
+          0.5876662696853573,
+          -1.5495201363342892
+        ],
+        [
+          -2.372127180901134,
+          3.4151225055709773,
+          -0.14787240467249246
+        ],
+        [
+          -2.375348454323375,
+          -3.420887950514228,
+          -0.15008248529611917
+        ],
+        [
+          2.3721269313425184,
+          3.415121313478082,
+          0.1478732959252706
+        ],
+        [
+          -0.32741201480921517,
+          -3.7974388633712834,
+          -0.2722777440327296
+        ],
+        [
+          -3.6477779205709338,
+          -0.5866199766143864,
+          -1.5580350174683224
+        ],
+        [
+          -1.7619336899190785,
+          -0.5905712877258366,
+          -3.6685566916245116
+        ],
+        [
+          3.29373347202245,
+          2.338395830537408,
+          -1.9905554070252072
+        ],
+        [
+          1.764240378531849,
+          0.5897445644393856,
+          3.668584345362793
+        ],
+        [
+          -3.293732052651012,
+          2.3383948768630916,
+          1.9905536160689703
+        ],
+        [
+          -1.7642387207418324,
+          0.5897434915557797,
+          -3.668584586598266
+        ],
+        [
+          2.3753503505319715,
+          -3.4208877120956487,
+          0.1500812307816854
+        ],
+        [
+          1.7619334403604625,
+          -0.5905708704933231,
+          3.668556450389039
+        ],
+        [
+          12.988177413138782,
+          -0.4494133625968999,
+          2.0830275998336187
+        ],
+        [
+          9.687479132804311,
+          -8.633322719190986,
+          -2.2720046057480463
+        ],
+        [
+          9.683528060111438,
+          8.624999996568292,
+          -2.227329017140258
+        ],
+        [
+          -9.687476998177136,
+          -8.633322719190986,
+          2.27200531818689
+        ],
+        [
+          12.97292148509923,
+          0.45354291453513446,
+          2.0765953049880377
+        ],
+        [
+          -12.972926979866589,
+          0.4535408879772121,
+          -2.0765922083634027
+        ],
+        [
+          -9.683528786507214,
+          8.624999996568292,
+          2.2273371205550543
+        ],
+        [
+          -12.98819339832362,
+          -0.4494133625968999,
+          -2.083029748417724
+        ],
+        [
+          0.8949351255029797,
+          -0.8464567099556034,
+          -1.1170105948227533
+        ],
+        [
+          0.8939378205865979,
+          0.8370107974067623,
+          -1.1256191744583735
+        ],
+        [
+          -0.894936030712688,
+          -0.846457604025275,
+          1.1170063004714361
+        ],
+        [
+          -0.8939378913312793,
+          0.8370112146392757,
+          1.1256194100600594
+        ],
+        [
+          0.10523905793133966,
+          3.0910222496047908,
+          2.6197564587813726
+        ],
+        [
+          -0.09323749503191718,
+          -3.0794115100845403,
+          -2.589823008992065
+        ],
+        [
+          -0.10522452553805123,
+          3.0910217727676326,
+          -2.6197555079239496
+        ],
+        [
+          0.09323846736851922,
+          -3.0794098411544866,
+          2.5898213372451178
+        ]
+      ],
+      "material_id": "mp-559535",
+      "reference": {
+        "corrected_total_energy_ev": -154.79898071289062,
+        "energy_ev_per_atom": -4.299971580505371,
+        "forces_ev_per_angstrom": [
+          [
+            3.65716814994812,
+            0.6338490843772888,
+            1.71634840965271
+          ],
+          [
+            2.8777410984039307,
+            -2.246098518371582,
+            -1.9882118701934817
+          ],
+          [
+            0.17242670059204102,
+            -3.7717745304107666,
+            0.11255688220262527
+          ],
+          [
+            3.65716814994812,
+            -0.6338490843772888,
+            1.71634840965271
+          ],
+          [
+            0.17242670059204102,
+            3.7717745304107666,
+            0.11255688220262527
+          ],
+          [
+            -2.8777410984039307,
+            -2.246098518371582,
+            1.9882118701934817
+          ],
+          [
+            -0.17242670059204102,
+            3.7717745304107666,
+            -0.11255688220262527
+          ],
+          [
+            -3.65716814994812,
+            0.6338490843772888,
+            -1.71634840965271
+          ],
+          [
+            -2.366774797439575,
+            3.43232798576355,
+            -0.0029721700120717287
+          ],
+          [
+            -2.366774797439575,
+            -3.43232798576355,
+            -0.0029721700120717287
+          ],
+          [
+            2.366774797439575,
+            3.43232798576355,
+            0.0029721700120717287
+          ],
+          [
+            -0.17242670059204102,
+            -3.7717745304107666,
+            -0.11255688220262527
+          ],
+          [
+            -3.65716814994812,
+            -0.6338490843772888,
+            -1.71634840965271
+          ],
+          [
+            -1.7643680572509766,
+            -0.6318554282188416,
+            -3.683349132537842
+          ],
+          [
+            2.8777410984039307,
+            2.246098518371582,
+            -1.9882118701934817
+          ],
+          [
+            1.7643680572509766,
+            0.6318554282188416,
+            3.683349132537842
+          ],
+          [
+            -2.8777410984039307,
+            2.246098518371582,
+            1.9882118701934817
+          ],
+          [
+            -1.7643680572509766,
+            0.6318554282188416,
+            -3.683349132537842
+          ],
+          [
+            2.366774797439575,
+            -3.43232798576355,
+            0.0029721700120717287
+          ],
+          [
+            1.7643680572509766,
+            -0.6318554282188416,
+            3.683349132537842
+          ],
+          [
+            12.208789825439451,
+            -0.2384357452392578,
+            1.7541643381118774
+          ],
+          [
+            10.233701705932615,
+            -9.208290100097656,
+            -2.0800912380218506
+          ],
+          [
+            10.233701705932615,
+            9.208290100097656,
+            -2.0800912380218506
+          ],
+          [
+            -10.233701705932615,
+            -9.208290100097656,
+            2.0800912380218506
+          ],
+          [
+            12.208789825439451,
+            0.2384357452392578,
+            1.7541643381118774
+          ],
+          [
+            -12.208789825439451,
+            0.2384357452392578,
+            -1.7541643381118774
+          ],
+          [
+            -10.233701705932615,
+            9.208290100097656,
+            2.0800912380218506
+          ],
+          [
+            -12.208789825439451,
+            -0.2384357452392578,
+            -1.7541643381118774
+          ],
+          [
+            0.8526371121406555,
+            -0.8406530618667603,
+            -0.6929495930671692
+          ],
+          [
+            0.8526371121406555,
+            0.8406530618667603,
+            -0.6929495930671692
+          ],
+          [
+            -0.8526371121406555,
+            -0.8406530618667603,
+            0.6929495930671692
+          ],
+          [
+            -0.8526371121406555,
+            0.8406530618667603,
+            0.6929495930671692
+          ],
+          [
+            -0.7909464240074158,
+            3.4202027320861816,
+            2.9150731563568115
+          ],
+          [
+            0.7909464240074158,
+            -3.4202027320861816,
+            -2.9150731563568115
+          ],
+          [
+            0.7909464240074158,
+            3.4202027320861816,
+            -2.9150731563568115
+          ],
+          [
+            -0.7909464240074158,
+            -3.4202027320861816,
+            2.9150731563568115
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -5.177320957183838,
+        "stress_gpa": [
+          0.1053685726193308,
+          13.70806702052682,
+          8.759701588412225,
+          -0.0,
+          6.376147177262542,
+          -0.0
+        ]
+      },
+      "row_id": "forces",
+      "strain_voigt": null,
+      "stress_gpa": [
+        0.1260436909153627,
+        12.736672211497591,
+        10.252100895667049,
+        2.568070048462057e-06,
+        5.082722188838424,
+        -7.337342690673299e-07
+      ],
+      "structure_id": "mptrj-mp-559535-step1-forces-3",
+      "symbols": [
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "Cl",
+        "Cl",
+        "Cl",
+        "Cl",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "volume_scale": null
+    },
+    {
+      "chemical_system": "Al-H-Li-O-Si",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct",
+            "field": "forces_ev_per_angstrom",
+            "reason": "support_gate_passed",
+            "value": [
+              3.4589426585053817e-09,
+              5.7094649514161855e-09,
+              -9.910793385919787e-09
+            ]
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:cfa12cb5dff034667cb1e3b13e017c991ccb0a365b6fb8c17fb7f56b50434634",
+        "policy_engine": "rust",
+        "profile": "accuracy_accelerate",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -5.883349227905273,
+      "forces_ev_per_angstrom": [
+        [
+          0.003526176990951783,
+          -0.041401097429458696,
+          -0.1285714904234124
+        ],
+        [
+          0.007833447041000611,
+          0.031949257599647445,
+          -0.126690516845913
+        ],
+        [
+          0.007833566250290162,
+          -0.0319500918216153,
+          0.12668902180936806
+        ],
+        [
+          0.0035254393834726876,
+          0.041401716070707244,
+          0.12857072554376595
+        ],
+        [
+          0.00013993281313348492,
+          0.017605399834449694,
+          0.13927452765253057
+        ],
+        [
+          0.00013698238321710308,
+          -0.017600992572967603,
+          -0.13926323749277122
+        ],
+        [
+          -0.00635320347360205,
+          -0.01600255991286476,
+          0.13559482000616066
+        ],
+        [
+          -0.006352883098636382,
+          0.016002697991664813,
+          -0.13559577860090263
+        ],
+        [
+          0.1765811477918284,
+          -0.03209804917639931,
+          -0.189133475200863
+        ],
+        [
+          0.20032722103783057,
+          -0.03851502562827309,
+          0.20065106950548167
+        ],
+        [
+          0.17657915103622843,
+          0.03209712927275459,
+          0.18912084899690623
+        ],
+        [
+          0.2003269826192515,
+          0.03851553623610298,
+          -0.2006542632744027
+        ],
+        [
+          -0.058734499184404126,
+          0.13630652998619835,
+          0.3670497139528083
+        ],
+        [
+          -0.10685334753802846,
+          -0.0612854676968499,
+          0.022133966310291207
+        ],
+        [
+          -0.10346740883401465,
+          -0.0625160726434632,
+          -0.02179132647964486
+        ],
+        [
+          -0.058735061703239194,
+          -0.13631636823481758,
+          -0.3670523861810876
+        ],
+        [
+          -0.10685833942702842,
+          0.06128391076856415,
+          -0.022128962577910506
+        ],
+        [
+          -0.057912223307405225,
+          0.1362441537254409,
+          -0.36954093970510493
+        ],
+        [
+          -0.05791164961269926,
+          -0.13623384560412605,
+          0.36953937016275396
+        ],
+        [
+          -0.10347729575446676,
+          0.06251342420512002,
+          0.021782857699661172
+        ],
+        [
+          -0.17738362800887655,
+          0.07287339692049782,
+          -0.18528903521749507
+        ],
+        [
+          -0.04559728157332968,
+          -0.060057727498476106,
+          0.03354038797166816
+        ],
+        [
+          0.14380100715347696,
+          0.2790836748951034,
+          -0.3031531373426629
+        ],
+        [
+          -0.17738511812499594,
+          -0.0728739070422097,
+          0.1852891942098426
+        ],
+        [
+          0.20384690511413978,
+          0.09748973523312372,
+          -0.03230819352123269
+        ],
+        [
+          -0.17697350334933828,
+          0.07487652276688378,
+          0.19665135942247383
+        ],
+        [
+          0.21808129894920755,
+          0.09677627508574288,
+          0.026831371112136758
+        ],
+        [
+          -0.1687002743463857,
+          0.02162036870652001,
+          -0.32382048167440425
+        ],
+        [
+          0.14381309199520517,
+          -0.27907180215186317,
+          0.30316482983377446
+        ],
+        [
+          -0.16657337200454306,
+          -0.023929873359863355,
+          -0.3295969466135217
+        ],
+        [
+          -0.16657490682414602,
+          0.02393138979607384,
+          0.32959722481515874
+        ],
+        [
+          -0.16870340359023642,
+          -0.02161771978205879,
+          0.32382862768915166
+        ],
+        [
+          0.14496934759804178,
+          -0.2770917656547471,
+          -0.30405254163000117
+        ],
+        [
+          -0.17696681272796225,
+          -0.07488125736779411,
+          -0.19666191436502467
+        ],
+        [
+          0.21807833361812998,
+          -0.09677892352408608,
+          -0.026828790681095206
+        ],
+        [
+          0.20385085392185617,
+          -0.09748982812232217,
+          0.03230860955861083
+        ],
+        [
+          -0.030552294371639005,
+          -0.06201287905639847,
+          -0.029110784308643424
+        ],
+        [
+          -0.04559442800096106,
+          0.06005515356593887,
+          -0.033536965625019156
+        ],
+        [
+          -0.030554909525428525,
+          0.06201555405789177,
+          0.029113580806522283
+        ],
+        [
+          0.1449649666566508,
+          0.2770835814350204,
+          0.3040490647390174
+        ]
+      ],
+      "material_id": "mp-555706",
+      "reference": {
+        "corrected_total_energy_ev": -249.4246826171875,
+        "energy_ev_per_atom": -6.235617160797119,
+        "forces_ev_per_angstrom": [
+          [
+            -0.012421170249581335,
+            -0.06351470202207565,
+            -0.19595764577388763
+          ],
+          [
+            -0.012421170249581335,
+            0.06351470202207565,
+            -0.19595764577388763
+          ],
+          [
+            -0.012421170249581335,
+            -0.06351470202207565,
+            0.19595764577388763
+          ],
+          [
+            -0.012421170249581335,
+            0.06351470202207565,
+            0.19595764577388763
+          ],
+          [
+            -0.03959893062710762,
+            -0.0696653425693512,
+            0.1300952434539795
+          ],
+          [
+            -0.03959893062710762,
+            0.0696653425693512,
+            -0.1300952434539795
+          ],
+          [
+            -0.03959893062710762,
+            0.0696653425693512,
+            0.1300952434539795
+          ],
+          [
+            -0.03959893062710762,
+            -0.0696653425693512,
+            -0.1300952434539795
+          ],
+          [
+            0.14900819957256317,
+            -0.055662620812654495,
+            -0.27299830317497253
+          ],
+          [
+            0.14900819957256317,
+            -0.055662620812654495,
+            0.27299830317497253
+          ],
+          [
+            0.14900819957256317,
+            0.055662620812654495,
+            0.27299830317497253
+          ],
+          [
+            0.14900819957256317,
+            0.055662620812654495,
+            -0.27299830317497253
+          ],
+          [
+            -0.05890338867902756,
+            0.10608801990747452,
+            0.37966129183769226
+          ],
+          [
+            -0.1141279712319374,
+            -0.053175780922174454,
+            -0.006462479941546917
+          ],
+          [
+            -0.1141279712319374,
+            -0.053175780922174454,
+            0.006462479941546917
+          ],
+          [
+            -0.05890338867902756,
+            -0.10608801990747452,
+            -0.37966129183769226
+          ],
+          [
+            -0.1141279712319374,
+            0.053175780922174454,
+            0.006462479941546917
+          ],
+          [
+            -0.05890338867902756,
+            0.10608801990747452,
+            -0.37966129183769226
+          ],
+          [
+            -0.05890338867902756,
+            -0.10608801990747452,
+            0.37966129183769226
+          ],
+          [
+            -0.1141279712319374,
+            0.053175780922174454,
+            -0.006462479941546917
+          ],
+          [
+            -0.2646191120147705,
+            0.00850262027233839,
+            -0.21426330506801605
+          ],
+          [
+            -0.07256457209587097,
+            -0.05275576934218407,
+            0.011919249780476092
+          ],
+          [
+            0.1233021318912506,
+            0.25962138175964355,
+            -0.27817681431770325
+          ],
+          [
+            -0.2646191120147705,
+            -0.00850262027233839,
+            0.21426330506801605
+          ],
+          [
+            0.34089910984039307,
+            0.017504669725894928,
+            0.13450151681900024
+          ],
+          [
+            -0.2646191120147705,
+            0.00850262027233839,
+            0.21426330506801605
+          ],
+          [
+            0.34089910984039307,
+            0.017504669725894928,
+            -0.13450151681900024
+          ],
+          [
+            -0.05097430944442749,
+            0.009367380291223526,
+            -0.4060398936271667
+          ],
+          [
+            0.1233021318912506,
+            -0.25962138175964355,
+            0.27817681431770325
+          ],
+          [
+            -0.05097430944442749,
+            -0.009367380291223526,
+            -0.4060398936271667
+          ],
+          [
+            -0.05097430944442749,
+            0.009367380291223526,
+            0.4060398936271667
+          ],
+          [
+            -0.05097430944442749,
+            -0.009367380291223526,
+            0.4060398936271667
+          ],
+          [
+            0.1233021318912506,
+            -0.25962138175964355,
+            -0.27817681431770325
+          ],
+          [
+            -0.2646191120147705,
+            -0.00850262027233839,
+            -0.21426330506801605
+          ],
+          [
+            0.34089910984039307,
+            -0.017504669725894928,
+            0.13450151681900024
+          ],
+          [
+            0.34089910984039307,
+            -0.017504669725894928,
+            -0.13450151681900024
+          ],
+          [
+            -0.07256457209587097,
+            -0.05275576934218407,
+            -0.011919249780476092
+          ],
+          [
+            -0.07256457209587097,
+            0.05275576934218407,
+            -0.011919249780476092
+          ],
+          [
+            -0.07256457209587097,
+            0.05275576934218407,
+            0.011919249780476092
+          ],
+          [
+            0.1233021318912506,
+            0.25962138175964355,
+            0.27817681431770325
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -6.260658264160156,
+        "stress_gpa": [
+          -0.8941933313844904,
+          -1.1577006077994838,
+          -0.2662586207119679,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "row_id": "forces",
+      "strain_voigt": null,
+      "stress_gpa": [
+        -0.6695355713761335,
+        -1.6041562114455967,
+        -0.8459454014689368,
+        0.0034647003924000996,
+        -1.8287005541951872e-06,
+        -1.5481063118533653e-07
+      ],
+      "structure_id": "mptrj-mp-555706-step95-forces-4",
+      "symbols": [
+        "Li",
+        "Li",
+        "Li",
+        "Li",
+        "Al",
+        "Al",
+        "Al",
+        "Al",
+        "Si",
+        "Si",
+        "Si",
+        "Si",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "volume_scale": null
+    }
+  ],
+  "refusals": [],
+  "ribbon_version": "hyperribbon-v1",
+  "row_id": "forces",
+  "row_spec": {
+    "error_tolerance": 0.2,
+    "error_unit": "ev_per_angstrom_rmse",
+    "min_cases": 5,
+    "reference_keys": [
+      "forces_ev_per_angstrom",
+      "forces"
+    ]
+  },
+  "run_id": "sm-20260602a",
+  "schema": "lupine.mlip.cell_artifact.v1",
+  "speed": {
+    "score": 0.6403834743296362,
+    "unit": "structures_per_second"
+  },
+  "support_manifest_hash": "sha256:755d69e522227d5d9cd3566fde697b7c30d395b6b5ff30212b5758bf6708148c",
+  "support_manifest_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-distill-support-mptrj-train-plus-elastic-v1/manifest.json",
+  "theorem_hooks": {
+    "bridge": "outer_loop_proxy",
+    "false_refusal_estimate": null,
+    "kappa1_hat": 0.5476190476190477,
+    "layerwise_exact": false,
+    "observed_speedup": null,
+    "p2_residual_pca": {
+      "metrics": {
+        "force_residual_ribbon_matrix_rank": 3,
+        "force_residual_ribbon_participation_ratio": null,
+        "force_residual_ribbon_rank_limited": false,
+        "force_residual_ribbon_support_lift_fraction": 0.45655496803169193,
+        "ribbon_feature_distance_proxy": 0.6695145212011828
+      },
+      "status": "computed_from_support_residuals",
+      "top_k": 5
+    },
+    "policy_engine": "rust",
+    "refusal_threshold_proxy": 200.0,
+    "ribbon_version": "hyperribbon-v1",
+    "schema": "lupine.distill.theorem_hooks.v1",
+    "support_eval_distance_proxy": 1.0
+  },
+  "variant_id": "distill_accuracy_accelerate",
+  "versions": {
+    "ase": "3.28.0",
+    "chgnet": null,
+    "cuda_available": true,
+    "cuda_device": "NVIDIA L4",
+    "fairchem-core": null,
+    "mace-torch": null,
+    "matgl": null,
+    "numpy": "1.26.4",
+    "orb-models": null,
+    "python": "3.10.12",
+    "sevenn": "0.12.1",
+    "torch": "2.4.1+cu121",
+    "uma_model_name": null,
+    "uma_task_name": null
+  }
+}

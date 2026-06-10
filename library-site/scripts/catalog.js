@@ -399,6 +399,14 @@ export const CATALOG = {
       tags: ['sloppy', 'fim'],
     },
     {
+      id: 'error-geometry-objects',
+      source: 'docs/science/objects.md',
+      title: 'The Three Error-Geometry Objects',
+      subtitle: 'Model manifold vs. participation-ratio measure vs. configuration-space core — kept straight.',
+      category: 'theory',
+      tags: ['hyper-ribbon', 'sloppy-models', 'disambiguation'],
+    },
+    {
       id: 'info-theoretic',
       source: 'docs/info_theoretic_report.md',
       title: 'Information-Theoretic Bounds on Model Error',
