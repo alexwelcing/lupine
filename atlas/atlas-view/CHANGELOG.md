@@ -19,6 +19,24 @@
   text, never the whole trajectory. This replaces the previous "fast-paint frame
   0, then re-parse the entire file in memory" fallback.
 
+### Real phase-change demo trajectories
+
+### Added
+- **`tools/sims/make_phase_trajectories.py`**: generates genuine LAMMPS MD
+  trajectories (EAM `Cu_u3` copper) sized for the multi-frame streaming path —
+  `cu-melt` (a Cu(100) slab whose surfaces melt at T_m and the disorder front
+  propagates inward) and `cu-solidify` (liquid Cu quenched into a glass).
+  `npm run sims:phase-change` builds the >5 MB demo pair; `--size showcase`
+  scales to ~26k atoms.
+- **Real-data regression tests**: gzipped `ci`-size runs of both scenarios are
+  committed under `packages/parsers/src/__fixtures__/` and driven through the
+  full parse → transcode → read-back pipeline by `realDumpPipeline.test.ts`,
+  including a physics assertion that the transformation is actually present
+  (fraction of atoms displaced beyond one lattice constant).
+- **`tools/verify-real-trajectory.mjs`** (`npm run verify:real-trajectory`):
+  pushes any real `.lammpstrj` through the exact viewer pipeline and reports
+  frames, throughput, transcode size, and peak RSS.
+
 ### Reliable bring-your-own-data: streaming + persistent local library
 
 ### Added
