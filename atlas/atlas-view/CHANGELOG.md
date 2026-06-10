@@ -1,5 +1,33 @@
 # Changelog
 
+## [Unreleased]
+
+### Reliable bring-your-own-data: streaming + persistent local library
+
+### Added
+- **`.glimbin` encoder** (`@atlas/core/glimbin`): `assembleGlimbinBlob`,
+  `writeFrameData`, `writeFrameIndex`, `computeGlimbinFlags`, `canEncodeGlimbin`.
+  Closes the loop on the binary trajectory format — a trajectory parsed in the
+  browser can now be re-emitted as a frame-indexed `.glimbin`, not just decoded
+  from a pre-baked bucket fixture.
+- **`LocalGlimbinSource`** (`@atlas/parsers/LocalGlimbinSource`): the Blob-backed
+  twin of `StreamingLoader`. Reads a local `.glimbin` (an in-memory encode or an
+  OPFS file) frame-by-frame via `blob.slice()` with the same LRU cache + prefetch,
+  so an uploaded trajectory streams instead of being pinned whole in the store.
+- **Local trajectory library** (`trajectoryLibrary.ts`): uploaded trajectories are
+  transcoded to `.glimbin` and persisted in OPFS, content-addressed by hash, with
+  a Firestore-shaped manifest. A new "Your library" list on the landing page
+  re-opens them with no re-upload or re-parse. This is the local-first foundation
+  for the planned Firebase Storage sync.
+
+### Fixed
+- **Multi-frame trajectories no longer silently lose frames.** Large dumps that
+  took the within-frame streaming fast path were rendered as frame 0 only — the
+  simulation's time dimension was dropped. The streaming dump parser now reports
+  `hasMoreFrames`, and the uploader falls back to a full parse that captures every
+  frame, then streams it through the substrate above with bounded steady-state
+  memory.
+
 ## [0.3.0] - 2026-05-30
 
 ### Federated molecule search, in-house OMol25, and agent API keys

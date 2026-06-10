@@ -61,6 +61,13 @@ export interface DumpStreamCompleteEvent {
   /** Final atom count actually parsed (≤ frame.natoms — a truncated or
    *  multi-frame file may stop short). */
   loadedAtoms: number;
+  /** True when the source contained at least one more `ITEM: TIMESTEP`
+   *  block after the frame we parsed. The streaming parser is
+   *  single-frame by design; this flag lets the caller recognize a
+   *  trajectory ("simulation over time") and fall back to a full parse
+   *  that captures every frame, instead of silently rendering only
+   *  frame 0. */
+  hasMoreFrames: boolean;
 }
 
 export type DumpStreamEvent =
@@ -215,6 +222,9 @@ async function* parseDumpStreamCore(puller: TextPuller): AsyncGenerator<DumpStre
   let i = 0;
   let lastYieldAt = 0;
   let cursor = 0;
+  // Set when we hit another `ITEM:` block before exhausting the source —
+  // i.e. this is a multi-frame trajectory and we've only parsed frame 0.
+  let hasMoreFrames = false;
 
   while (i < natoms) {
     const lineEnd = buffer.indexOf('\n', cursor);
@@ -241,6 +251,9 @@ async function* parseDumpStreamCore(puller: TextPuller): AsyncGenerator<DumpStre
       buffer.charCodeAt(cursor + 2) === 69 /* E */ &&
       buffer.charCodeAt(cursor + 3) === 77 /* M */
     ) {
+      // A new ITEM block before we filled natoms — the next frame starts
+      // here. Mark the trajectory as multi-frame and stop.
+      hasMoreFrames = true;
       break;
     }
 
@@ -304,7 +317,24 @@ async function* parseDumpStreamCore(puller: TextPuller): AsyncGenerator<DumpStre
     }
   }
 
-  yield { type: 'complete', loadedAtoms: i };
+  // If we filled the frame cleanly (didn't already trip the in-loop
+  // marker), look just past it for the next frame's `ITEM:` so a
+  // trajectory whose frames align exactly to natoms is still recognized.
+  if (!hasMoreFrames) {
+    while (true) {
+      const rest = buffer.slice(cursor).replace(/^\s+/, '');
+      if (rest.startsWith('ITEM:')) {
+        hasMoreFrames = true;
+        break;
+      }
+      // Need a non-whitespace lead to decide; pull a bit more if the
+      // source still has bytes, otherwise it's genuinely single-frame.
+      if (rest.length > 0 || sourceDone) break;
+      if (!(await pull())) break;
+    }
+  }
+
+  yield { type: 'complete', loadedAtoms: i, hasMoreFrames };
 }
 
 /** Parse a fully-buffered LAMMPS dump string. The whole-text path: used

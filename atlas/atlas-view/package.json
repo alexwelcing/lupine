@@ -26,6 +26,7 @@
     "verify:streaming": "npx -y tsx tools/verify-streaming.mjs",
     "verify:exports": "node tools/verify-exports.mjs",
     "verify:export-colors": "node tools/verify-export-colors.mjs",
+    "verify:local-trajectory": "npx -y tsx tools/verify-local-trajectory.mjs",
     "atomize:media": "node tools/atomize-media.mjs",
     "verify:atomize-media": "node tools/verify-atomize-media.mjs",
     "lint": "turbo run lint",

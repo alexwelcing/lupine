@@ -298,7 +298,7 @@ export async function parseDataFile(file: File): Promise<Trajectory> {
 export async function* parseDumpFileStreaming(text: string): AsyncGenerator<
   | { type: 'header'; trajectory: Trajectory; frame: Frame }
   | { type: 'progress'; loadedAtoms: number }
-  | { type: 'complete'; loadedAtoms: number }
+  | { type: 'complete'; loadedAtoms: number; hasMoreFrames: boolean }
 > {
   let trajectory: Trajectory | null = null;
   for await (const event of parseDumpStream(text)) {
@@ -316,7 +316,7 @@ export async function* parseDumpFileStreaming(text: string): AsyncGenerator<
     } else if (event.type === 'progress') {
       yield { type: 'progress', loadedAtoms: event.loadedAtoms };
     } else if (event.type === 'complete') {
-      yield { type: 'complete', loadedAtoms: event.loadedAtoms };
+      yield { type: 'complete', loadedAtoms: event.loadedAtoms, hasMoreFrames: event.hasMoreFrames };
     }
   }
 }
@@ -338,7 +338,7 @@ export async function* parseDumpResponseStreaming(
 ): AsyncGenerator<
   | { type: 'header'; trajectory: Trajectory; frame: Frame }
   | { type: 'progress'; loadedAtoms: number }
-  | { type: 'complete'; loadedAtoms: number }
+  | { type: 'complete'; loadedAtoms: number; hasMoreFrames: boolean }
 > {
   if (!response.body) {
     const text = await response.text();
@@ -362,7 +362,7 @@ export async function* parseDumpResponseStreaming(
     } else if (event.type === 'progress') {
       yield { type: 'progress', loadedAtoms: event.loadedAtoms };
     } else if (event.type === 'complete') {
-      yield { type: 'complete', loadedAtoms: event.loadedAtoms };
+      yield { type: 'complete', loadedAtoms: event.loadedAtoms, hasMoreFrames: event.hasMoreFrames };
     }
   }
 }
@@ -379,7 +379,7 @@ export async function* parseDumpFileStreamingFromFile(
 ): AsyncGenerator<
   | { type: 'header'; trajectory: Trajectory; frame: Frame }
   | { type: 'progress'; loadedAtoms: number }
-  | { type: 'complete'; loadedAtoms: number }
+  | { type: 'complete'; loadedAtoms: number; hasMoreFrames: boolean }
 > {
   const stream = file.stream() as ReadableStream<Uint8Array>;
   const byteIter = readableStreamToAsyncIterable(stream);
@@ -399,7 +399,7 @@ export async function* parseDumpFileStreamingFromFile(
     } else if (event.type === 'progress') {
       yield { type: 'progress', loadedAtoms: event.loadedAtoms };
     } else if (event.type === 'complete') {
-      yield { type: 'complete', loadedAtoms: event.loadedAtoms };
+      yield { type: 'complete', loadedAtoms: event.loadedAtoms, hasMoreFrames: event.hasMoreFrames };
     }
   }
 }
