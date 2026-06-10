@@ -128,7 +128,13 @@ def generate_one(
     req = urllib.request.Request(
         f"{api_url.rstrip('/')}/ops/experiment-generate",
         data=body,
-        headers={"Content-Type": "application/json", "X-Internal-Token": token},
+        headers={
+            "Content-Type": "application/json",
+            "X-Internal-Token": token,
+            # Cloudflare bot rules 403 (error 1010) the default Python-urllib
+            # user agent before the request ever reaches the worker.
+            "User-Agent": "glim-model-eval/1 (+https://github.com/alexwelcing/lupine)",
+        },
         method="POST",
     )
     try:
