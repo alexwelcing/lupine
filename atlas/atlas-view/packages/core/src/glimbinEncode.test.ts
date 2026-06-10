@@ -4,6 +4,7 @@ import {
   canEncodeGlimbin,
   computeGlimbinFlags,
   writeFrameData,
+  GlimbinStreamWriter,
   parseHeader,
   parseFrameIndex,
   parseFrameData,
@@ -151,5 +152,74 @@ describe('glimbin encoder round-trip', () => {
     const frame = makeFrame({ timestep: 0, natoms: 3, withProps: true });
     const buf = writeFrameData(frame, FLAG_HAS_PROPERTIES);
     expect(buf.byteLength % 4).toBe(0);
+  });
+});
+
+describe('GlimbinStreamWriter (incremental encode)', () => {
+  it('produces the same bytes as assembleGlimbinBlob given matching metadata', async () => {
+    const frames = [
+      makeFrame({ timestep: 0, natoms: 5 }),
+      makeFrame({ timestep: 100, natoms: 5, base: 1 }),
+      makeFrame({ timestep: 200, natoms: 5, base: 2 }),
+    ];
+    const traj = makeTrajectory(frames);
+
+    // Reference: the batch encoder (which feeds the writer the trajectory's
+    // declared bounds + types).
+    const reference = await assembleGlimbinBlob(traj).blob.arrayBuffer();
+
+    // Incremental: same overrides, frames fed one at a time.
+    const writer = new GlimbinStreamWriter({
+      globalBounds: traj.globalBounds,
+      atomTypes: traj.atomTypes,
+    });
+    const recs = frames.map((f) => writer.addFrame(f));
+    const { header, index, indexOffset } = writer.finalize();
+    const streamed = await new Blob([header, ...recs, index]).arrayBuffer();
+
+    expect(streamed.byteLength).toBe(reference.byteLength);
+    expect(new Uint8Array(streamed)).toEqual(new Uint8Array(reference));
+    expect(indexOffset).toBe(HEADER_SIZE + recs.reduce((s, r) => s + r.byteLength, 0));
+  });
+
+  it('accumulates global bounds and atom types from the frames themselves', () => {
+    // No overrides: bounds/types must come from the positions/types fed in.
+    const frames = [
+      makeFrame({ timestep: 0, natoms: 4, base: 5 }),
+      makeFrame({ timestep: 1, natoms: 4, base: -3 }),
+    ];
+    const writer = new GlimbinStreamWriter();
+    frames.forEach((f) => writer.addFrame(f));
+    const { meta } = writer.finalize();
+    expect(meta.totalFrames).toBe(2);
+    // base -3 frame has the smallest x (= -3); base 5 frame the largest.
+    expect(meta.globalBounds.min[0]).toBe(-3);
+    expect(meta.globalBounds.max[0]).toBe(5 + 3); // base 5, atom index 3
+    expect(meta.atomTypes).toEqual([1, 2, 3]);
+  });
+
+  it('decodes back through the standard reader', async () => {
+    const frames = [
+      makeFrame({ timestep: 0, natoms: 4, withProps: true, withBonds: true }),
+      makeFrame({ timestep: 9, natoms: 6, base: 2, withProps: true, withBonds: true }),
+    ];
+    const writer = new GlimbinStreamWriter();
+    const recs = frames.map((f) => writer.addFrame(f));
+    const { header, index, meta } = writer.finalize();
+    const blob = new Blob([header, ...recs, index]);
+
+    // Variable atom count must be detected from the frames themselves.
+    expect(meta.atomsPerFrame).toBe(0);
+    const { header: h, frames: decoded } = await decodeAllFrames(blob);
+    expect(h.totalFrames).toBe(2);
+    expect(decoded[1].positions).toHaveLength(6 * 3);
+    expect(Array.from(decoded[0].positions)).toEqual(Array.from(frames[0].positions));
+  });
+
+  it('rejects an out-of-range atom type when adding a frame', () => {
+    const writer = new GlimbinStreamWriter();
+    const bad = makeFrame({ timestep: 0, natoms: 2 });
+    bad.types = new Int32Array([1, 999]);
+    expect(() => writer.addFrame(bad)).toThrow(/u8 range/);
   });
 });

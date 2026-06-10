@@ -18,7 +18,11 @@
 import type { DatasetMeta } from '@atlas/core/glimbin';
 
 export const TRAJECTORY_LIBRARY_SCHEMA_VERSION = 1;
-const DIR_NAME = 'lupi-trajectories';
+/** OPFS directory holding the library. Exported so the transcode worker
+ *  (which writes .glimbin files directly via a sync-access handle) can be
+ *  pointed at the same location the reader expects. */
+export const OPFS_LIBRARY_DIR = 'lupi-trajectories';
+const DIR_NAME = OPFS_LIBRARY_DIR;
 const MANIFEST_NAME = 'index.json';
 
 /** Metadata for one stored trajectory. JSON-only (no typed arrays) so it
@@ -155,6 +159,51 @@ export async function saveTrajectory(args: {
   };
   await writeManifest(dir, upsertRecord(existing, record));
   return record;
+}
+
+/** Register a trajectory whose .glimbin bytes were already written into
+ *  the library directory (by the transcode worker's sync-access handle).
+ *  Only the manifest entry is created here — no byte copy. The id is the
+ *  caller's content key (hash of the source file's identity), which also
+ *  names the OPFS file: `${id}.glimbin`. */
+export async function registerTranscodedTrajectory(args: {
+  id: string;
+  name: string;
+  sizeBytes: number;
+  totalFrames: number;
+  atomsPerFrame: number;
+  atomTypes: number[];
+}): Promise<SavedTrajectoryRecord> {
+  const dir = await libraryDir();
+  const now = Date.now();
+  const existing = await readManifest(dir);
+  const prior = existing.find((r) => r.id === args.id);
+  const record: SavedTrajectoryRecord = {
+    schemaVersion: TRAJECTORY_LIBRARY_SCHEMA_VERSION,
+    id: args.id,
+    name: args.name,
+    sizeBytes: args.sizeBytes,
+    totalFrames: args.totalFrames,
+    atomsPerFrame: args.atomsPerFrame,
+    atomTypes: args.atomTypes,
+    createdAt: prior?.createdAt ?? now,
+    updatedAt: now,
+    storage: 'opfs',
+    remoteUrl: prior?.remoteUrl,
+  };
+  await writeManifest(dir, upsertRecord(existing, record));
+  return record;
+}
+
+/** Stable id for a source file: a re-dropped identical file maps to the
+ *  same library entry (and OPFS filename) instead of duplicating it.
+ *  Cheap — hashes the identity tuple, not the bytes. */
+export async function sourceFileId(file: {
+  name: string;
+  size: number;
+  lastModified?: number;
+}): Promise<string> {
+  return hashBlob(new Blob([`${file.name}:${file.size}:${file.lastModified ?? 0}`]));
 }
 
 /** List stored trajectories, newest first. Empty (never throws) when the

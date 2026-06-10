@@ -89,11 +89,9 @@ export function FileDropZone() {
     }
 
     try {
-      // Single-dump-file fast path: probe streaming. Multi-file drops
-      // (e.g. dump + log) and non-dump types fall through to the
-      // existing iterate-and-parse-each loop.
+      // Single-dump-file fast path. Multi-file drops (e.g. dump + log) and
+      // non-dump types fall through to the iterate-and-parse-each loop.
       const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;
-      const STREAMING_ATOM_THRESHOLD = 100_000;
       const profile = getDeviceProfile();
       if (sorted.length === 1 && detectFileType(sorted[0].name) === 'dump' && sorted[0].size > STREAMING_BYTES_THRESHOLD) {
         const f = sorted[0];
@@ -101,7 +99,7 @@ export function FileDropZone() {
         const { canStreamDump } = await import('@atlas/parsers');
         const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
         const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
-        if (canStreamDump(head) && headerAtoms >= STREAMING_ATOM_THRESHOLD) {
+        if (canStreamDump(head)) {
           if (headerAtoms > profile.maxAtoms) {
             throw new Error(
               `This trajectory has ${formatAtomCount(headerAtoms)} atoms, ` +
@@ -110,60 +108,16 @@ export function FileDropZone() {
               `Try a smaller frame or a chunked trajectory.`,
             );
           }
-          // Phase 2b: byte-stream parse via File.stream(). Some browsers
-          // deliver the whole blob in one chunk for local files (no
-          // network round-trip to spread across), but the parser's
-          // progress events still drive the renderer's incremental
-          // upload — the user sees atoms appear as they're decoded
-          // instead of waiting for the full TextDecoder pass to finish.
-          const { parseDumpFileStreamingFromFile } = await import('@atlas/parsers');
-          const store = useStore.getState();
-          let multiFrame = false;
-          for await (const event of parseDumpFileStreamingFromFile(f)) {
-            if (event.type === 'header') {
-              store.setFile({
-                name: f.name,
-                size: f.size,
-                trajectory: event.trajectory,
-                thermo: null,
-              });
-              // Reset loadedAtomCount that setFile defaulted to natoms
-              // — see Gallery.tsx for the same dance.
-              store.setLoadedAtomCount(0);
-            } else if (event.type === 'progress') {
-              store.setLoadedAtomCount(event.loadedAtoms);
-              await new Promise<void>((r) => requestAnimationFrame(() => r()));
-            } else if (event.type === 'complete') {
-              store.setLoadedAtomCount(event.loadedAtoms);
-              multiFrame = event.hasMoreFrames;
-            }
-          }
-          // The streaming parser paints frame 0 fast but parses only that
-          // first frame. If this is a trajectory (a simulation over time),
-          // its later frames would be silently dropped — so re-parse the
-          // whole file and route it through the streaming + persistence
-          // pipeline, which captures every frame and keeps memory bounded.
-          if (multiFrame) {
-            const result = await parseFile(f);
-            if (result.trajectory) {
-              const atoms = result.trajectory.frames[0]?.natoms ?? 0;
-              if (atoms > profile.maxAtoms) {
-                throw new Error(
-                  `This trajectory has ${formatAtomCount(atoms)} atoms, ` +
-                  `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
-                  `single-scene ceiling (${profile.reason}). ` +
-                  `Try a smaller frame or a chunked trajectory.`,
-                );
-              }
-              await importParsedTrajectory({
-                name: f.name,
-                trajectory: result.trajectory,
-                thermo: result.thermo ?? null,
-                size: f.size,
-              });
-            }
-          }
-          return;
+          // Worker-driven streaming import: the dump is parsed and (when
+          // multi-frame) transcoded to .glimbin off the main thread, so
+          // the React Three Fiber canvas never blocks. Frame 0 paints
+          // progressively from transferred slabs; the full trajectory is
+          // then streamed in place with bounded memory. Returns
+          // handled:false for dialects the streaming parser can't take —
+          // we fall through to the WASM parse below.
+          const { importDumpFileStreaming } = await import('./loadMoleculeSource');
+          const { handled } = await importDumpFileStreaming(f);
+          if (handled) return;
         }
       }
 

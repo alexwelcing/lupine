@@ -484,6 +484,166 @@ export interface GlimbinEncodeResult {
   meta: DatasetMeta;
 }
 
+export interface GlimbinWriterOptions {
+  unitStyle?: number;
+  /** Pre-computed flag word (e.g. from `computeGlimbinFlags` when all
+   *  frames are already in hand). When omitted, layout flags are locked
+   *  from the first frame added — correct for LAMMPS dumps, whose
+   *  columns are constant across frames. */
+  flags?: number;
+  /** Override the accumulated global bounds (callers that already know
+   *  them, e.g. `assembleGlimbinBlob` from a parsed Trajectory). */
+  globalBounds?: { min: [number, number, number]; max: [number, number, number] };
+  /** Override the accumulated atom-type list. */
+  atomTypes?: number[];
+}
+
+/**
+ * Incremental .glimbin encoder — accepts frames one at a time so a long
+ * trajectory can be transcoded as it is parsed, holding only the frame
+ * in flight. This is what makes the *initial* parse of a simulation
+ * over time O(1 frame) in memory instead of O(trajectory).
+ *
+ * Usage:
+ *   const w = new GlimbinStreamWriter();
+ *   for each frame: write(w.addFrame(frame)) at the current offset;
+ *   const { header, index, indexOffset, meta } = w.finalize();
+ *   write `index` at indexOffset, then `header` at offset 0.
+ *
+ * The caller owns the byte sink (OPFS sync-access handle, Blob parts,
+ * file descriptor); the writer only produces buffers and bookkeeping.
+ * The header slot (first 256 bytes) is reserved up front and written
+ * last, once totalFrames / bounds / index offset are known.
+ */
+export class GlimbinStreamWriter {
+  private entries: FrameIndexEntry[] = [];
+  private offset = HEADER_SIZE;
+  private flags: number | null;
+  private readonly unitStyle: number;
+  private readonly boundsOverride?: GlimbinWriterOptions['globalBounds'];
+  private readonly typesOverride?: number[];
+
+  private boxBounds = new Float64Array(6);
+  private boxTilt = new Float64Array(3);
+  private triclinic = false;
+  private natoms0 = 0;
+  private variableAtoms = false;
+  private atomTypeSet = new Set<number>();
+  private min: [number, number, number] = [Infinity, Infinity, Infinity];
+  private max: [number, number, number] = [-Infinity, -Infinity, -Infinity];
+
+  constructor(opts: GlimbinWriterOptions = {}) {
+    this.flags = opts.flags ?? null;
+    this.unitStyle = opts.unitStyle ?? 0;
+    this.boundsOverride = opts.globalBounds;
+    this.typesOverride = opts.atomTypes;
+  }
+
+  get frameCount(): number {
+    return this.entries.length;
+  }
+
+  /** Bytes of payload emitted so far, including the reserved header slot. */
+  get bytesWritten(): number {
+    return this.offset;
+  }
+
+  /** Serialize one frame; returns the record to append at `bytesWritten`
+   *  (before this call). Throws if an atom type wouldn't survive the u8
+   *  round-trip — the caller should fall back to a non-glimbin path. */
+  addFrame(frame: Frame): ArrayBuffer {
+    for (let i = 0; i < frame.natoms; i++) {
+      const t = frame.types[i];
+      if (!Number.isInteger(t) || t < 0 || t > 255) {
+        throw new Error(`glimbin: atom type ${t} exceeds the format's u8 range`);
+      }
+      this.atomTypeSet.add(t);
+      const x = frame.positions[i * 3];
+      const y = frame.positions[i * 3 + 1];
+      const z = frame.positions[i * 3 + 2];
+      if (x < this.min[0]) this.min[0] = x;
+      if (y < this.min[1]) this.min[1] = y;
+      if (z < this.min[2]) this.min[2] = z;
+      if (x > this.max[0]) this.max[0] = x;
+      if (y > this.max[1]) this.max[1] = y;
+      if (z > this.max[2]) this.max[2] = z;
+    }
+
+    if (this.entries.length === 0) {
+      // Lock layout flags and the file-level box from the first frame.
+      if (this.flags === null) this.flags = computeGlimbinFlags([frame]);
+      if (frame.boxBounds) this.boxBounds.set(frame.boxBounds.subarray(0, 6));
+      if (frame.boxTilt) this.boxTilt.set(frame.boxTilt.subarray(0, 3));
+      this.triclinic = frame.triclinic ?? false;
+      this.natoms0 = frame.natoms;
+    } else if (frame.natoms !== this.natoms0) {
+      this.variableAtoms = true;
+    }
+
+    const buf = writeFrameData(frame, this.flags!);
+    this.entries.push({
+      offset: BigInt(this.offset),
+      compressedSize: buf.byteLength,
+      rawSize: buf.byteLength,
+      timestep: frame.timestep >>> 0,
+      natoms: frame.natoms,
+    });
+    this.offset += buf.byteLength;
+    return buf;
+  }
+
+  finalize(): {
+    header: ArrayBuffer;
+    index: ArrayBuffer;
+    /** Byte offset at which `index` must land (== payload end). */
+    indexOffset: number;
+    meta: DatasetMeta;
+  } {
+    if (this.entries.length === 0) {
+      throw new Error('GlimbinStreamWriter.finalize: no frames added');
+    }
+    const flags =
+      (this.flags ?? FLAG_LITTLE_ENDIAN) | (this.variableAtoms ? FLAG_VARIABLE_ATOMS : 0);
+    const atomsPerFrame = this.variableAtoms ? 0 : this.natoms0;
+    const globalBounds = this.boundsOverride ?? { min: [...this.min], max: [...this.max] };
+    const atomTypes =
+      this.typesOverride ?? Array.from(this.atomTypeSet).sort((a, b) => a - b);
+    const indexOffset = this.offset;
+
+    const header = writeHeader({
+      version: GLIMBIN_VERSION,
+      flags,
+      totalFrames: this.entries.length,
+      atomsPerFrame,
+      atomTypes: atomTypes.slice(0, 32),
+      globalBounds,
+      boxBounds: this.boxBounds,
+      boxTilt: this.boxTilt,
+      triclinic: this.triclinic,
+      unitStyle: this.unitStyle,
+      frameIndexOffset: BigInt(indexOffset),
+    });
+    const index = writeFrameIndex(this.entries);
+
+    const meta: DatasetMeta = {
+      totalFrames: this.entries.length,
+      atomsPerFrame,
+      atomTypes,
+      globalBounds,
+      boxBounds: this.boxBounds,
+      boxTilt: this.boxTilt,
+      triclinic: this.triclinic,
+      compressed: false,
+      hasBonds: (flags & FLAG_HAS_BONDS) !== 0,
+      hasProperties: (flags & FLAG_HAS_PROPERTIES) !== 0,
+      fileSize: indexOffset + index.byteLength,
+      timesteps: this.entries.map((e) => e.timestep),
+    };
+
+    return { header, index, indexOffset, meta };
+  }
+}
+
 /**
  * Assemble a whole trajectory into an uncompressed .glimbin Blob:
  * `[header | frame0 | frame1 | … | frameIndex]`. Returns the Blob plus
@@ -495,10 +655,9 @@ export interface GlimbinEncodeResult {
  * varies per frame (NPT) keep the cell wireframe of frame 0; positions,
  * which is what playback renders, are exact per frame.
  *
- * This buffers every frame once to build the Blob. That bounds *steady
- * state* memory — once persisted, frames are read back on demand instead
- * of all living in the store — and is the substrate the local library +
- * eventual cloud sync read from.
+ * Convenience wrapper over `GlimbinStreamWriter` for callers that already
+ * hold every frame; streaming callers (the transcode worker) drive the
+ * writer directly and never materialize the whole file.
  */
 export function assembleGlimbinBlob(
   trajectory: Trajectory,
@@ -507,63 +666,19 @@ export function assembleGlimbinBlob(
   const frames = trajectory.frames.filter(Boolean);
   if (frames.length === 0) throw new Error('assembleGlimbinBlob: trajectory has no frames');
 
-  const flags = computeGlimbinFlags(frames);
-  const variableAtoms = (flags & FLAG_VARIABLE_ATOMS) !== 0;
+  const writer = new GlimbinStreamWriter({
+    unitStyle: opts.unitStyle,
+    flags: computeGlimbinFlags(frames),
+    globalBounds: trajectory.globalBounds,
+    atomTypes: trajectory.atomTypes,
+  });
 
   const frameBuffers: ArrayBuffer[] = [];
-  const entries: FrameIndexEntry[] = [];
-  let offset = HEADER_SIZE;
-  for (const frame of frames) {
-    const buf = writeFrameData(frame, flags);
-    frameBuffers.push(buf);
-    entries.push({
-      offset: BigInt(offset),
-      compressedSize: buf.byteLength,
-      rawSize: buf.byteLength,
-      timestep: frame.timestep >>> 0,
-      natoms: frame.natoms,
-    });
-    offset += buf.byteLength;
-  }
-  const frameIndexOffset = offset;
+  for (const frame of frames) frameBuffers.push(writer.addFrame(frame));
+  const { header, index, meta } = writer.finalize();
 
-  const boxBounds = frames[0].boxBounds ?? new Float64Array(6);
-  const boxTilt = frames[0].boxTilt ?? new Float64Array(3);
-  const atomTypes = trajectory.atomTypes.slice(0, 32);
-
-  const header = writeHeader({
-    version: GLIMBIN_VERSION,
-    flags,
-    totalFrames: frames.length,
-    atomsPerFrame: variableAtoms ? 0 : frames[0].natoms,
-    atomTypes,
-    globalBounds: trajectory.globalBounds,
-    boxBounds,
-    boxTilt,
-    triclinic: frames[0].triclinic ?? false,
-    unitStyle: opts.unitStyle ?? 0,
-    frameIndexOffset: BigInt(frameIndexOffset),
-  });
-
-  const indexBuffer = writeFrameIndex(entries);
-  const blob = new Blob([header, ...frameBuffers, indexBuffer], {
+  const blob = new Blob([header, ...frameBuffers, index], {
     type: 'application/octet-stream',
   });
-
-  const meta: DatasetMeta = {
-    totalFrames: frames.length,
-    atomsPerFrame: variableAtoms ? 0 : frames[0].natoms,
-    atomTypes: trajectory.atomTypes,
-    globalBounds: trajectory.globalBounds,
-    boxBounds,
-    boxTilt,
-    triclinic: frames[0].triclinic ?? false,
-    compressed: false,
-    hasBonds: (flags & FLAG_HAS_BONDS) !== 0,
-    hasProperties: (flags & FLAG_HAS_PROPERTIES) !== 0,
-    fileSize: blob.size,
-    timesteps: frames.map((f) => f.timestep >>> 0),
-  };
-
-  return { blob, meta };
+  return { blob, meta: { ...meta, fileSize: blob.size } };
 }

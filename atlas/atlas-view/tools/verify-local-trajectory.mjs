@@ -11,9 +11,9 @@
  * Exit 0 = pass, 1 = fail. No network required.
  */
 
-import { assembleGlimbinBlob, canEncodeGlimbin } from '../packages/core/src/glimbin.ts';
+import { assembleGlimbinBlob, canEncodeGlimbin, GlimbinStreamWriter } from '../packages/core/src/glimbin.ts';
 import { LocalGlimbinSource, isGlimbinBlob } from '../packages/parsers/src/LocalGlimbinSource.ts';
-import { parseDumpStream } from '../packages/parsers/src/dumpStreamParser.ts';
+import { parseDumpStream, parseDumpStreamFromBytes } from '../packages/parsers/src/dumpStreamParser.ts';
 import { parseManifest, upsertRecord, hashBlob } from '../packages/ui/src/trajectoryLibrary.ts';
 
 const results = [];
@@ -144,6 +144,66 @@ ITEM: ATOMS id type x y z
   const multiEvents = await collect(parseDumpStream(multi));
   const multiLast = multiEvents[multiEvents.length - 1];
   check('multi-frame: hasMoreFrames=true', multiLast.type === 'complete' && multiLast.hasMoreFrames === true);
+
+  // ── 5b. Full worker-equivalent path: stream-parse multi-frame →
+  //         incremental writer → local source read-back, holding ≤1 frame ──
+  const traj3 = (ts, base) => `ITEM: TIMESTEP
+${ts}
+ITEM: NUMBER OF ATOMS
+4
+ITEM: BOX BOUNDS pp pp pp
+0 10
+0 10
+0 10
+ITEM: ATOMS id type x y z
+1 1 ${base + 1}.0 2.0 3.0
+2 2 ${base + 2}.0 5.0 6.0
+3 1 ${base + 3}.0 8.0 9.0
+4 2 ${base + 4}.0 1.0 2.0
+`;
+  const dumpText = traj3(0, 0) + traj3(50, 10) + traj3(100, 20) + traj3(150, 30);
+  const dumpBytes = new TextEncoder().encode(dumpText);
+  const byteSource = {
+    async *[Symbol.asyncIterator]() {
+      // 13-byte chunks: force frame/header boundaries to split across reads.
+      for (let i = 0; i < dumpBytes.length; i += 13) yield dumpBytes.subarray(i, i + 13);
+    },
+  };
+  const txRecs = [];
+  let laterFrameCount = 0;
+  for await (const ev of parseDumpStreamFromBytes(byteSource, { multiFrame: true })) {
+    if (ev.type === 'frame') laterFrameCount++; // arrives whole, one at a time
+  }
+  check('multi-frame stream emitted 3 later-frame events', laterFrameCount === 3);
+
+  // Re-run, this time driving the writer exactly as the worker does: frame 0
+  // (the now-complete header frame) first, then each later frame as it lands.
+  const w2 = new GlimbinStreamWriter();
+  let f0 = null;
+  for await (const ev of parseDumpStreamFromBytes({
+    async *[Symbol.asyncIterator]() {
+      for (let i = 0; i < dumpBytes.length; i += 13) yield dumpBytes.subarray(i, i + 13);
+    },
+  }, { multiFrame: true })) {
+    if (ev.type === 'header') f0 = ev.frame;
+    else if (ev.type === 'frame') {
+      if (f0) { txRecs.push(w2.addFrame(f0)); f0 = null; } // flush frame 0 first
+      txRecs.push(w2.addFrame(ev.frame));
+    }
+  }
+  const fin = w2.finalize();
+  const glimblob = new Blob([fin.header, ...txRecs, fin.index]);
+  const src2 = new LocalGlimbinSource(glimblob);
+  const m2 = await src2.open();
+  check('transcoded trajectory reports 4 frames', m2.totalFrames === 4);
+  let streamReadOk = true;
+  const expectedX = [0, 10, 20, 30]; // base per frame, atom 0 x = base+1
+  for (let fi = 0; fi < 4; fi++) {
+    const fr = await src2.fetchFrame(fi);
+    if (fr.positions[0] !== expectedX[fi] + 1) streamReadOk = false;
+  }
+  check('every transcoded frame reads back correctly via LocalGlimbinSource', streamReadOk);
+  src2.dispose();
 
   // ── 6. Library manifest helpers + content hash ──
   check('parseManifest drops malformed entries',
