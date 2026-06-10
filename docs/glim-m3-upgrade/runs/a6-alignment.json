@@ -1,0 +1,119 @@
+{
+  "schema": "glim.a6_alignment.v1",
+  "field": "forces",
+  "models": [
+    "chgnet",
+    "mace-mp-0",
+    "sevennet"
+  ],
+  "shared_structures": [
+    "mptrj-mp-1178784-step9-forces-0",
+    "mptrj-mp-555706-step95-forces-4",
+    "mptrj-mp-559535-step1-forces-3",
+    "mptrj-mp-759876-step4-forces-2",
+    "mptrj-mp-863035-step0-forces-1"
+  ],
+  "pooled_atoms": 107,
+  "permutations": 5000,
+  "pairs": {
+    "chgnet|mace-mp-0": {
+      "field_cos": {
+        "observed": 0.1066,
+        "null_mean": 0.0021,
+        "null_sd": 0.0773,
+        "z": 1.35,
+        "p_one_sided": 0.09138
+      },
+      "atom_cos": {
+        "observed": 0.1963,
+        "null_mean": 0.0061,
+        "null_sd": 0.0569,
+        "z": 3.35,
+        "p_one_sided": 0.0006
+      },
+      "mag_corr": {
+        "observed": 0.8495,
+        "null_mean": 0.324,
+        "null_sd": 0.0763,
+        "z": 6.89,
+        "p_one_sided": 0.0002
+      }
+    },
+    "chgnet|sevennet": {
+      "field_cos": {
+        "observed": 0.1878,
+        "null_mean": 0.001,
+        "null_sd": 0.0823,
+        "z": 2.27,
+        "p_one_sided": 0.0114
+      },
+      "atom_cos": {
+        "observed": 0.2886,
+        "null_mean": 0.0058,
+        "null_sd": 0.0602,
+        "z": 4.7,
+        "p_one_sided": 0.0002
+      },
+      "mag_corr": {
+        "observed": 0.7001,
+        "null_mean": 0.3556,
+        "null_sd": 0.0704,
+        "z": 4.89,
+        "p_one_sided": 0.0002
+      }
+    },
+    "mace-mp-0|sevennet": {
+      "field_cos": {
+        "observed": 0.7101,
+        "null_mean": 0.0004,
+        "null_sd": 0.1015,
+        "z": 6.99,
+        "p_one_sided": 0.0002
+      },
+      "atom_cos": {
+        "observed": 0.2715,
+        "null_mean": -0.0033,
+        "null_sd": 0.0582,
+        "z": 4.72,
+        "p_one_sided": 0.0002
+      },
+      "mag_corr": {
+        "observed": 0.8586,
+        "null_mean": 0.362,
+        "null_sd": 0.0845,
+        "z": 5.88,
+        "p_one_sided": 0.0002
+      }
+    }
+  },
+  "aggregate_fisher": {
+    "field_cos": {
+      "pair_ps": [
+        0.0914,
+        0.0114,
+        0.0002
+      ],
+      "fisher_chi2": 30.77,
+      "df": 6
+    },
+    "atom_cos": {
+      "pair_ps": [
+        0.0006,
+        0.0002,
+        0.0002
+      ],
+      "fisher_chi2": 48.91,
+      "df": 6
+    },
+    "mag_corr": {
+      "pair_ps": [
+        0.0002,
+        0.0002,
+        0.0002
+      ],
+      "fisher_chi2": 51.1,
+      "df": 6
+    }
+  },
+  "caveat": "Pilot scale: 5 structures / 107 atoms / 3 models from one campaign manifest. A definitive A6 test needs MatPES/MPtrj/OMat24 with blocked bootstrap over materials (paper Statistical Diagnostics). This establishes the METHOD and a first signal."
+}
