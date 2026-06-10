@@ -68,6 +68,88 @@ describe('parseDumpStream (text transport)', () => {
   });
 });
 
+describe('parseDumpStream multi-frame mode', () => {
+  const frameText = (ts: number, base: number) => `ITEM: TIMESTEP
+${ts}
+ITEM: NUMBER OF ATOMS
+3
+ITEM: BOX BOUNDS pp pp pp
+0 10
+0 10
+0 10
+ITEM: ATOMS id type x y z
+1 1 ${base + 1}.0 2.0 3.0
+2 2 ${base + 4}.0 5.0 6.0
+3 1 ${base + 7}.0 8.0 9.0
+`;
+
+  it('yields every frame past frame 0 as a whole-frame event', async () => {
+    const text = frameText(0, 0) + frameText(100, 10) + frameText(200, 20);
+    const events = await collect(parseDumpStream(text, { multiFrame: true }));
+
+    expect(events[0].type).toBe('header');
+    const frameEvents = events.filter((e) => e.type === 'frame');
+    expect(frameEvents).toHaveLength(2);
+    if (frameEvents[0].type === 'frame' && frameEvents[1].type === 'frame') {
+      expect(frameEvents[0].frameIndex).toBe(1);
+      expect(frameEvents[0].frame.timestep).toBe(100);
+      expect(frameEvents[0].frame.positions[0]).toBe(11);
+      expect(frameEvents[1].frame.timestep).toBe(200);
+      expect(frameEvents[1].frame.positions[0]).toBe(21);
+    }
+
+    const last = events[events.length - 1];
+    expect(last.type).toBe('complete');
+    if (last.type === 'complete') {
+      expect(last.totalFrames).toBe(3);
+      // Multi-frame mode consumes everything: nothing is left over.
+      expect(last.hasMoreFrames).toBe(false);
+    }
+  });
+
+  it('parses all frames when bytes arrive in tiny chunks', async () => {
+    const text = frameText(0, 0) + frameText(50, 5) + frameText(75, 30);
+    const enc = new TextEncoder();
+    const bytes = enc.encode(text);
+    const source: AsyncIterable<Uint8Array> = {
+      async *[Symbol.asyncIterator]() {
+        for (let i = 0; i < bytes.length; i += 7) {
+          yield bytes.subarray(i, Math.min(i + 7, bytes.length));
+        }
+      },
+    };
+    const events = await collect(parseDumpStreamFromBytes(source, { multiFrame: true }));
+    const frameEvents = events.filter((e) => e.type === 'frame');
+    expect(frameEvents).toHaveLength(2);
+    if (frameEvents[1].type === 'frame') {
+      expect(frameEvents[1].frame.positions[0]).toBe(31);
+    }
+  });
+
+  it('reports a truncated final frame with its actual atom count', async () => {
+    // Second frame cut off after one atom row (killed simulation).
+    const truncated = frameText(0, 0) + frameText(10, 10).split('\n').slice(0, 11).join('\n');
+    const events = await collect(parseDumpStream(truncated, { multiFrame: true }));
+    const frameEvents = events.filter((e) => e.type === 'frame');
+    expect(frameEvents).toHaveLength(1);
+    if (frameEvents[0].type === 'frame') {
+      expect(frameEvents[0].frame.natoms).toBe(1);
+      expect(frameEvents[0].frame.positions[0]).toBe(11);
+    }
+  });
+
+  it('single-frame mode still stops at frame 0 and flags the rest', async () => {
+    const text = frameText(0, 0) + frameText(100, 10);
+    const events = await collect(parseDumpStream(text));
+    expect(events.filter((e) => e.type === 'frame')).toHaveLength(0);
+    const last = events[events.length - 1];
+    if (last.type === 'complete') {
+      expect(last.hasMoreFrames).toBe(true);
+      expect(last.totalFrames).toBe(1);
+    }
+  });
+});
+
 describe('parseDumpStreamFromBytes (network/file transport)', () => {
   function chunks(text: string, size: number): AsyncIterable<Uint8Array> {
     const enc = new TextEncoder();

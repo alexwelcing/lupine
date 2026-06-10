@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+### Off-main-thread transcode: the initial parse no longer blocks the viewer
+
+### Added
+- **Transcode worker** (`@atlas/parsers` → `transcodeDumpFile`): a dropped
+  multi-frame LAMMPS dump is now parsed *and* transcoded to `.glimbin` entirely
+  off the main thread. The React Three Fiber canvas never blocks during the
+  initial parse of a long simulation. Frame 0 still paints progressively (atoms
+  stream in via transferable slabs); the full trajectory is written straight to
+  OPFS via a sync-access handle as it parses, then the view swaps onto the
+  streaming substrate **in place** — no scene reset, no camera jump.
+- **Single-pass, O(1-frame) memory:** `parseDumpStream`/`parseDumpStreamFromBytes`
+  gained a `multiFrame` mode that yields each later frame whole, one at a time,
+  and `GlimbinStreamWriter` encodes frames incrementally. Peak memory during the
+  initial parse is one frame plus the parser's sliding buffer — never the whole
+  text, never the whole trajectory. This replaces the previous "fast-paint frame
+  0, then re-parse the entire file in memory" fallback.
+
 ### Reliable bring-your-own-data: streaming + persistent local library
 
 ### Added

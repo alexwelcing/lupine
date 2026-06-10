@@ -5,6 +5,9 @@ import {
   isTrajectoryLibrarySupported,
   saveTrajectory,
   openTrajectoryBlob,
+  registerTranscodedTrajectory,
+  sourceFileId,
+  OPFS_LIBRARY_DIR,
 } from './trajectoryLibrary';
 
 /** Trajectories at or above this many frames are worth moving onto the
@@ -181,14 +184,25 @@ export async function openLocalTrajectoryBlob(
   name: string,
   sourceUrl: string,
   thermo: import('@atlas/core/types').ThermoData | null = null,
+  opts: {
+    /** Swap the trajectory into the already-mounted file instead of going
+     *  through setFile. Used after the transcode worker finishes: the user
+     *  has been looking at (and possibly styling) frame 0 the whole time,
+     *  so re-running scene directives / resetting the camera would yank
+     *  the viewer out from under them. */
+    preserveScene?: boolean;
+    /** Already-parsed frame 0 (from the worker's progressive slabs) so the
+     *  swap doesn't need to read it back from the blob. */
+    seedFrame?: Frame;
+  } = {},
 ): Promise<void> {
   clearPreviousStreaming();
-  useStore.getState().setLoading(true, 0);
+  if (!opts.preserveScene) useStore.getState().setLoading(true, 0);
 
   const { LocalGlimbinSource } = await import('@atlas/parsers/LocalGlimbinSource');
   const source = new LocalGlimbinSource(blob);
   const meta = await source.open();
-  const frame0 = await source.fetchFrame(0);
+  const frame0 = opts.seedFrame ?? (await source.fetchFrame(0));
 
   const placeholderFrames = new Array<Frame>(meta.totalFrames);
   placeholderFrames[0] = frame0;
@@ -199,33 +213,48 @@ export async function openLocalTrajectoryBlob(
     globalBounds: meta.globalBounds,
   };
 
-  useStore.getState().setFile({
-    name,
-    size: meta.fileSize,
-    trajectory,
-    thermo,
-    sourceUrl,
-  });
+  const mounted = useStore.getState().file;
+  if (opts.preserveScene && mounted) {
+    useStore.setState({
+      file: { ...mounted, name, size: meta.fileSize, trajectory, thermo, sourceUrl },
+      loadedAtomCount: frame0.natoms,
+      loading: false,
+      loadProgress: 1,
+      isStreamingFrames: false,
+      fullTrajectoryReady: true,
+      streamingProgress: 1,
+    });
+  } else {
+    useStore.getState().setFile({
+      name,
+      size: meta.fileSize,
+      trajectory,
+      thermo,
+      sourceUrl,
+    });
+  }
 
-  const unsubFrameWatch = useStore.subscribe(
-    (s) => s.frame,
-    async (frameIndex) => {
-      const currentFile = useStore.getState().file;
-      if (!currentFile || currentFile.trajectory.frames[frameIndex]) return;
-      try {
-        const frame = await source.fetchFrame(frameIndex);
-        const file = useStore.getState().file;
-        if (file) {
-          file.trajectory.frames[frameIndex] = frame;
-          useStore.setState({ file: { ...file } });
-        }
-        const isPlaying = useStore.getState().playing;
-        source.prefetch(frameIndex, isPlaying ? 1 : 0, isPlaying ? 8 : 3);
-      } catch (err) {
-        console.warn(`[local-streaming] frame ${frameIndex} failed:`, err);
+  const fetchAndSplice = async (frameIndex: number) => {
+    const currentFile = useStore.getState().file;
+    if (!currentFile || currentFile.trajectory.frames[frameIndex]) return;
+    try {
+      const frame = await source.fetchFrame(frameIndex);
+      const file = useStore.getState().file;
+      if (file) {
+        file.trajectory.frames[frameIndex] = frame;
+        useStore.setState({ file: { ...file } });
       }
-    },
-  );
+      const isPlaying = useStore.getState().playing;
+      source.prefetch(frameIndex, isPlaying ? 1 : 0, isPlaying ? 8 : 3);
+    } catch (err) {
+      console.warn(`[local-streaming] frame ${frameIndex} failed:`, err);
+    }
+  };
+
+  const unsubFrameWatch = useStore.subscribe((s) => s.frame, fetchAndSplice);
+  // The subscription only fires on *change* — if the user already scrubbed
+  // to a frame that wasn't available during the transcode, backfill it now.
+  void fetchAndSplice(useStore.getState().frame);
 
   (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup = () => {
     unsubFrameWatch();
@@ -285,6 +314,156 @@ export async function importParsedTrajectory(args: {
   const sourceUrl = persistedId ? `opfs://${persistedId}` : `local://${name}`;
   await openLocalTrajectoryBlob(blob, name, sourceUrl, thermo);
   return { persistedId };
+}
+
+/**
+ * Worker-driven import for a dropped LAMMPS dump File — the path that
+ * makes the *initial* parse of a large simulation cheap on the
+ * lupi-viewer.
+ *
+ * A worker stream-parses the file and, the instant it sees a second
+ * frame, transcodes the whole trajectory to .glimbin (straight into OPFS
+ * via a sync-access handle when available). The main thread never parses
+ * and never holds the trajectory: it only receives frame-0 slabs to paint
+ * progressively (so the canvas lights up immediately), then a growing
+ * frame count for the timeline, then a single "done" that swaps the view
+ * onto the streaming substrate in place — no scene reset, no camera jump.
+ *
+ * Returns `{ handled: false }` for non-dump inputs and for files the
+ * format can't represent, so the caller falls back to its parse path.
+ */
+export async function importDumpFileStreaming(file: File): Promise<{
+  handled: boolean;
+  persistedId?: string | null;
+}> {
+  const { detectFileType, transcodeDumpFile } = await import('@atlas/parsers');
+  if (detectFileType(file.name) !== 'dump') return { handled: false };
+
+  clearPreviousStreaming();
+  const store = useStore.getState();
+  store.setLoading(true, 0);
+
+  // Stable id → OPFS filename; a re-dropped identical file reuses it.
+  const useOpfs = isTrajectoryLibrarySupported();
+  const id = useOpfs ? await sourceFileId(file) : null;
+  const opfs = id ? { dir: OPFS_LIBRARY_DIR, name: `${id}.glimbin` } : null;
+
+  let headerNatoms = 0;
+  let frame0: Frame | null = null;
+  let mountedFrame0 = false;
+
+  const ensureFrame0Mounted = () => {
+    if (mountedFrame0 || !frame0) return;
+    mountedFrame0 = true;
+    const trajectory: Trajectory = {
+      frames: [frame0],
+      totalFrames: 1,
+      atomTypes: [],
+      globalBounds: {
+        min: [frame0.boxBounds[0], frame0.boxBounds[2], frame0.boxBounds[4]],
+        max: [frame0.boxBounds[1], frame0.boxBounds[3], frame0.boxBounds[5]],
+      },
+    };
+    useStore.getState().setFile({ name: file.name, size: file.size, trajectory, thermo: null });
+    useStore.getState().setLoadedAtomCount(0);
+  };
+
+  try {
+    const result = await transcodeDumpFile(file, opfs, {
+      onFrame0Header: (h) => {
+        headerNatoms = h.natoms;
+        frame0 = {
+          timestep: h.timestep,
+          natoms: h.natoms,
+          boxBounds: h.boxBounds,
+          boxTilt: new Float64Array(3),
+          triclinic: false,
+          columns: h.columns,
+          ids: new Int32Array(h.natoms),
+          types: new Int32Array(h.natoms),
+          positions: new Float32Array(h.natoms * 3),
+          bonds: new Int32Array(0),
+          properties: new Map(),
+        };
+        ensureFrame0Mounted();
+      },
+      onFrame0Chunk: (c) => {
+        if (!frame0) return;
+        frame0.positions.set(c.positions, c.start * 3);
+        frame0.types.set(c.types, c.start);
+        frame0.ids.set(c.ids, c.start);
+        ensureFrame0Mounted();
+        useStore.getState().setLoadedAtomCount(Math.min(c.start + c.count, headerNatoms));
+      },
+      onFrame0Complete: (loaded) => {
+        useStore.getState().setLoadedAtomCount(loaded);
+      },
+      onProgress: ({ framesParsed }) => {
+        // Surface trajectory growth on the loading affordance without a
+        // known total (the file isn't fully parsed yet).
+        useStore.getState().setStreamingProgress(framesParsed);
+      },
+    });
+
+    if (result.kind === 'single') {
+      // One structure — the in-memory frame 0 is the whole thing.
+      useStore.getState().setLoadedAtomCount(headerNatoms);
+      track(ANALYTICS_EVENTS.MOLECULE_LOADED, { source: 'memory', frames: 1 });
+      return { handled: true, persistedId: null };
+    }
+
+    // Multi-frame: the .glimbin now exists (OPFS file or returned Blob).
+    let persistedId: string | null = null;
+    let blob: Blob;
+    if (result.storage === 'opfs') {
+      // The worker streamed the .glimbin straight to OPFS; just register
+      // the manifest entry (no byte copy) and read it back to stream from.
+      if (!id) throw new Error('transcode: OPFS result without a library id');
+      try {
+        await registerTranscodedTrajectory({
+          id,
+          name: file.name,
+          sizeBytes: result.meta.fileSize,
+          totalFrames: result.meta.totalFrames,
+          atomsPerFrame: result.meta.atomsPerFrame,
+          atomTypes: result.meta.atomTypes,
+        });
+        persistedId = id;
+      } catch (err) {
+        console.warn('[trajectory-library] manifest registration failed:', err);
+      }
+      blob = await openTrajectoryBlob(id);
+    } else {
+      // In-memory fallback (no worker sync-access handle). Persist the
+      // assembled Blob through the normal save path when OPFS is otherwise
+      // available, so "come back later" still works on these browsers.
+      blob = result.blob;
+      if (isTrajectoryLibrarySupported()) {
+        try {
+          const record = await saveTrajectory({ name: file.name, blob, meta: result.meta });
+          persistedId = record.id;
+        } catch (err) {
+          console.warn('[trajectory-library] blob save failed, streaming unpersisted:', err);
+        }
+      }
+    }
+
+    const sourceUrl = persistedId ? `opfs://${persistedId}` : `local://${file.name}`;
+    await openLocalTrajectoryBlob(blob, file.name, sourceUrl, null, {
+      preserveScene: mountedFrame0,
+      seedFrame: frame0 ?? undefined,
+    });
+    track(ANALYTICS_EVENTS.MOLECULE_LOADED, {
+      source: 'local-streaming',
+      frames: result.meta.totalFrames,
+    });
+    return { handled: true, persistedId };
+  } catch (err) {
+    // Transcode failed (unsupported dialect, OPFS quota, etc.). Signal the
+    // caller to fall back to the WASM parse path rather than erroring out.
+    console.warn('[transcode] streaming import failed, falling back:', err);
+    return { handled: false };
+  }
 }
 
 /** Re-open a trajectory previously stored in the local library. */
