@@ -449,9 +449,11 @@ export async function importDumpFileStreaming(file: File): Promise<{
     }
 
     const sourceUrl = persistedId ? `opfs://${persistedId}` : `local://${file.name}`;
+    // Deliberately no seedFrame: frame 0 re-read from the .glimbin carries
+    // per-atom properties and its per-frame box, which the progressive
+    // paint slabs don't. The read is local and instant.
     await openLocalTrajectoryBlob(blob, file.name, sourceUrl, null, {
       preserveScene: mountedFrame0,
-      seedFrame: frame0 ?? undefined,
     });
     track(ANALYTICS_EVENTS.MOLECULE_LOADED, {
       source: 'local-streaming',

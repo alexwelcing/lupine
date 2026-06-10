@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+### Phase-change trajectories published to the gallery
+
+### Added
+- **Gallery bake CLI** (`npm run bake:glimbin -- <file.lammpstrj[.gz]>`,
+  `tools/bake-glimbin.mjs`): the Scenario-1 write path of
+  `docs/trajectory-architecture.md` as a CI-runnable command — the same
+  parse → `GlimbinStreamWriter` pipeline as the in-browser ingest worker,
+  writing the `.glimbin` v2 + manifest pair to disk with one frame in
+  flight. The bake augments the generator's sidecar manifest with a
+  `glimbin` block (bytes, frames, atoms/frame) that gallery cards read.
+- **Three streamed gallery cards** — `cu_melt`, `cu_solidify`, `cu_sinter`:
+  showcase-size (~26–33k atoms, 100 frames) real EAM copper MD from
+  `tools/sims/make_phase_trajectories.py`, baked to `.glimbin` v2 and
+  streamed from the CORS-enabled `shed-489901-nist-demos` GCS bucket via
+  Range requests. Card metadata is derived from the bake manifests.
+
+### Changed
+- `docs/trajectory-architecture.md` Scenario-1 write path now names the
+  bake command and the correct publication bucket
+  (`shed-489901-nist-demos`; the legacy `glim-datasets` bucket has no
+  CORS policy and stays rejected by `gallery-data.test.ts`).
+
 ### Off-main-thread transcode: the initial parse no longer blocks the viewer
 
 ### Added
@@ -18,6 +40,81 @@
   initial parse is one frame plus the parser's sliding buffer — never the whole
   text, never the whole trajectory. This replaces the previous "fast-paint frame
   0, then re-parse the entire file in memory" fallback.
+
+### Full dump-dialect support on the streaming fast path
+
+### Added
+- **The streaming parser now takes what LAMMPS actually writes**, instead of
+  demoting it to the slow in-memory path: triclinic (tilted) cells with the
+  proper bound correction for unscaling, scaled (`xs ys zs`) and unwrapped
+  (`xu yu zu`) coordinates, extra per-atom columns parsed as named properties
+  (color the melt front by `c_pe` on a streamed file), per-frame NPT boxes,
+  and transparent gzip (magic-sniffed in the ingest worker, not by extension).
+- **glimbin v2**: frame records can carry their own box
+  (`FLAG_PER_FRAME_BOX`), so NPT / deforming-cell trajectories round-trip
+  exactly — including LAMMPS tilt flips. v1 files (the remote gallery
+  fixtures) read unchanged.
+- **Byte-level parser core** — the step change. Profiling (committed as
+  `tools/bench-ingest.mjs`) showed the parser, not the transcode writer, was
+  94% of ingest time, and the cost was the string layer itself: TextDecoder
+  over every byte plus rope/slice management. The core now parses raw bytes
+  in a recycled Uint8Array (consumed space reclaimed by copyWithin — a
+  memmove, not an allocation); the only strings ever materialized are the
+  ~9 header lines per frame. Measured on a 113 MB real EAM trajectory
+  (376 frames): **171 MB/s parse, 156 MB/s parse+transcode — 2.0× the string
+  core, ~3.5× the original** (45 MB/s). A 1 GB trajectory ingests in ~6.5 s,
+  off the main thread, one frame resident.
+- Unterminated final rows (torn writes from killed runs) are now explicitly
+  dropped rather than parsed as half-written numbers.
+- Verified against a real LAMMPS torture case generated for the purpose —
+  triclinic prism, NPT, scaled coordinates, four property columns — committed
+  as a fixture: exact lattice-site reconstruction, properties and per-frame
+  boxes preserved end-to-end.
+
+### Changed
+- The compatibility contract findings for triclinic / scaled / unwrapped /
+  extra-columns / gzip flipped from blockers to informational notes;
+  `lupi-doctor` now reports capabilities, not refusals. Blockers remaining:
+  missing coordinates, missing `type`, not-a-dump, malformed head.
+
+### The dump contract as a system: doctor CLI + declarative scenarios
+
+### Added
+- **Executable compatibility contract** (`@atlas/parsers` →
+  `analyzeDumpHead`): the rules for "which dump dialect gets which viewer
+  path" now live in one module with structured findings (tier, reason,
+  actionable fix) instead of being implicit in parser internals.
+  `canStreamDump` delegates to it, so the gate and the explanation can
+  never disagree. Human-readable mirror: `docs/lammps-dump-contract.md`.
+- **`lupi-doctor`** (`npm run doctor -- [--deep] <file>`): tells a real
+  LAMMPS user exactly how their file will behave in Lupi — which tier,
+  why, and the `dump` command change that gets the fast path. `--deep`
+  adds frames/throughput/type-range stats and a transformation metric.
+- **Declarative scenario system** in `tools/sims/`: a scenario is
+  `setup × protocol` data, not a script. Every output now carries a
+  `<name>.manifest.json` with full provenance (potential, protocol,
+  seed, LAMMPS version) and verification hints that
+  `verify-real-trajectory` consumes. New third scenario proves the
+  abstraction: `cu-sinter` — two misoriented Cu nanoparticles coalescing
+  at 0.75 T_m with a real grain boundary in the neck.
+
+### Real phase-change demo trajectories
+
+### Added
+- **`tools/sims/make_phase_trajectories.py`**: generates genuine LAMMPS MD
+  trajectories (EAM `Cu_u3` copper) sized for the multi-frame streaming path —
+  `cu-melt` (a Cu(100) slab whose surfaces melt at T_m and the disorder front
+  propagates inward) and `cu-solidify` (liquid Cu quenched into a glass).
+  `npm run sims:phase-change` builds the >5 MB demo pair; `--size showcase`
+  scales to ~26k atoms.
+- **Real-data regression tests**: gzipped `ci`-size runs of both scenarios are
+  committed under `packages/parsers/src/__fixtures__/` and driven through the
+  full parse → transcode → read-back pipeline by `realDumpPipeline.test.ts`,
+  including a physics assertion that the transformation is actually present
+  (fraction of atoms displaced beyond one lattice constant).
+- **`tools/verify-real-trajectory.mjs`** (`npm run verify:real-trajectory`):
+  pushes any real `.lammpstrj` through the exact viewer pipeline and reports
+  frames, throughput, transcode size, and peak RSS.
 
 ### Reliable bring-your-own-data: streaming + persistent local library
 

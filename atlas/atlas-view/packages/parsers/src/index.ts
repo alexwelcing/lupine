@@ -408,6 +408,15 @@ export async function* parseDumpFileStreamingFromFile(
  *  digging into the implementation module. */
 export { canStreamDump } from './dumpStreamParser';
 export {
+  analyzeDumpHead,
+  readDumpHead,
+  RECOMMENDED_DUMP_COMMAND,
+  type DumpCompatibility,
+  type DumpFinding,
+  type DumpFindingCode,
+  type DumpTier,
+} from './dumpContract';
+export {
   transcodeDumpFile,
   type TranscodeResult,
   type TranscodeCallbacks,

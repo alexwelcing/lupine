@@ -157,9 +157,11 @@ export class LocalGlimbinSource {
     const frame: Frame = {
       timestep: entry.timestep,
       natoms: entry.natoms,
-      boxBounds: this.header!.boxBounds,
-      boxTilt: this.header!.boxTilt,
-      triclinic: this.header!.triclinic,
+      // v2 records carry their own box (exact for NPT / deforming cells);
+      // v1 falls back to the file-level box from the header.
+      boxBounds: parsed.boxBounds ?? this.header!.boxBounds,
+      boxTilt: parsed.boxTilt ?? this.header!.boxTilt,
+      triclinic: parsed.triclinic ?? this.header!.triclinic,
       columns,
       ids: parsed.ids,
       types: new Int32Array(parsed.types),

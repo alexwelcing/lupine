@@ -12,3 +12,6 @@ tools/lupi-panorama-runs.jsonl
 .env.*.local
 apps/*/.env.local
 apps/*/.env.*.local
+
+# Generated MD trajectories (regenerate via tools/sims/make_phase_trajectories.py)
+tools/sims/output/
