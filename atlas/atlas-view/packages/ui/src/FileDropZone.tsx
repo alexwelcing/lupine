@@ -8,7 +8,9 @@
 import { useCallback, useRef, useState, useEffect } from 'react';
 import { parseFile, detectFileType, isPotentialFile, guessPairStyle } from '@atlas/parsers';
 import { useStore } from './store';
+import { importParsedTrajectory } from './loadMoleculeSource';
 import { Gallery } from './Gallery';
+import { SavedTrajectories } from './SavedTrajectories';
 import {
   getDeviceProfile,
   formatAtomCount,
@@ -45,7 +47,7 @@ const IconWarning = () => (
 export function FileDropZone() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
-  const { file, loading, loadProgress, error, setFile, setLoading, setError } = useStore();
+  const { file, loading, loadProgress, error, setLoading, setError } = useStore();
   const setShowPotentialBrowser = useStore((s) => s.setShowPotentialBrowser);
 
   useEffect(() => {
@@ -116,6 +118,7 @@ export function FileDropZone() {
           // instead of waiting for the full TextDecoder pass to finish.
           const { parseDumpFileStreamingFromFile } = await import('@atlas/parsers');
           const store = useStore.getState();
+          let multiFrame = false;
           for await (const event of parseDumpFileStreamingFromFile(f)) {
             if (event.type === 'header') {
               store.setFile({
@@ -132,6 +135,32 @@ export function FileDropZone() {
               await new Promise<void>((r) => requestAnimationFrame(() => r()));
             } else if (event.type === 'complete') {
               store.setLoadedAtomCount(event.loadedAtoms);
+              multiFrame = event.hasMoreFrames;
+            }
+          }
+          // The streaming parser paints frame 0 fast but parses only that
+          // first frame. If this is a trajectory (a simulation over time),
+          // its later frames would be silently dropped — so re-parse the
+          // whole file and route it through the streaming + persistence
+          // pipeline, which captures every frame and keeps memory bounded.
+          if (multiFrame) {
+            const result = await parseFile(f);
+            if (result.trajectory) {
+              const atoms = result.trajectory.frames[0]?.natoms ?? 0;
+              if (atoms > profile.maxAtoms) {
+                throw new Error(
+                  `This trajectory has ${formatAtomCount(atoms)} atoms, ` +
+                  `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
+                  `single-scene ceiling (${profile.reason}). ` +
+                  `Try a smaller frame or a chunked trajectory.`,
+                );
+              }
+              await importParsedTrajectory({
+                name: f.name,
+                trajectory: result.trajectory,
+                thermo: result.thermo ?? null,
+                size: f.size,
+              });
             }
           }
           return;
@@ -162,7 +191,11 @@ export function FileDropZone() {
             `Try a smaller frame or a chunked trajectory.`,
           );
         }
-        setFile({
+        // Multi-frame trajectories are transcoded to .glimbin, persisted to
+        // the local library, and streamed frame-by-frame; single/few-frame
+        // structures stay in memory. Either way the store ends up with a
+        // viewable file.
+        await importParsedTrajectory({
           name: sorted[0].name,
           size: sorted.reduce((s, f) => s + f.size, 0),
           trajectory,
@@ -174,7 +207,7 @@ export function FileDropZone() {
     } catch (err: any) {
       setError(err.message || 'Failed to parse file');
     }
-  }, [setFile, setLoading, setError]);
+  }, [setLoading, setError]);
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -364,8 +397,9 @@ export function FileDropZone() {
             </div>
           </div>
 
-          {/* ─── Gallery ─── */}
+          {/* ─── Your library (saved uploads) + Gallery ─── */}
           <div onClick={(e) => e.stopPropagation()} style={{ cursor: 'default' }}>
+            <SavedTrajectories />
             <Gallery />
           </div>
         </div>

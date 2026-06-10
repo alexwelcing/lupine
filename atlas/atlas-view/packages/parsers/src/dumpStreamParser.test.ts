@@ -45,6 +45,27 @@ describe('parseDumpStream (text transport)', () => {
     expect(last.type).toBe('complete');
     if (last.type === 'complete') expect(last.loadedAtoms).toBe(3);
   });
+
+  it('flags a single-frame dump as having no more frames', async () => {
+    const events = await collect(parseDumpStream(SIMPLE_3_ATOMS));
+    const last = events[events.length - 1];
+    expect(last.type).toBe('complete');
+    if (last.type === 'complete') expect(last.hasMoreFrames).toBe(false);
+  });
+
+  it('flags a multi-frame trajectory so the caller can do a full parse', async () => {
+    // Two frames back-to-back: the streaming parser only fills frame 0, so
+    // it must signal hasMoreFrames or the trajectory's time dimension is
+    // silently lost.
+    const multi = SIMPLE_3_ATOMS + SIMPLE_3_ATOMS.replace('TIMESTEP\n1', 'TIMESTEP\n2');
+    const events = await collect(parseDumpStream(multi));
+    const last = events[events.length - 1];
+    expect(last.type).toBe('complete');
+    if (last.type === 'complete') {
+      expect(last.loadedAtoms).toBe(3);
+      expect(last.hasMoreFrames).toBe(true);
+    }
+  });
 });
 
 describe('parseDumpStreamFromBytes (network/file transport)', () => {

@@ -1,5 +1,23 @@
+import type { Frame, Trajectory } from '@atlas/core/types';
 import { useStore } from './store';
 import { track, ANALYTICS_EVENTS } from './analytics';
+import {
+  isTrajectoryLibrarySupported,
+  saveTrajectory,
+  openTrajectoryBlob,
+} from './trajectoryLibrary';
+
+/** Trajectories at or above this many frames are worth moving onto the
+ *  streaming substrate: the in-memory store would otherwise pin every
+ *  frame. Single/few-frame structures stay in memory (simpler, and the
+ *  per-frame box fidelity of the in-memory path is preserved). */
+const STREAMING_FRAME_THRESHOLD = 12;
+
+function clearPreviousStreaming(): void {
+  const previousCleanup = (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup;
+  if (typeof previousCleanup === 'function') previousCleanup();
+  delete (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup;
+}
 
 /** Coarse, non-PII source classifier so the funnel can compare entry paths. */
 function sourceKind(sourceUrl: string): string {
@@ -30,9 +48,7 @@ async function assertLooksLikeMoleculeData(blob: Blob, url: string): Promise<voi
 }
 
 export async function loadMoleculeSource(loadUrl: string): Promise<void> {
-  const previousCleanup = (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup;
-  if (typeof previousCleanup === 'function') previousCleanup();
-  delete (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup;
+  clearPreviousStreaming();
 
   useStore.getState().setLoading(true, 0);
 
@@ -150,4 +166,136 @@ async function loadParsedFile(fileObj: File, sourceUrl: string): Promise<void> {
     source: sourceKind(sourceUrl),
     frames: result.trajectory.totalFrames,
   });
+}
+
+/**
+ * Open a local .glimbin Blob through the streaming substrate: header +
+ * index + frame 0 up front, then frames fetched on demand as the user
+ * scrubs/plays. This is the read side of the bring-your-own-data
+ * pipeline — the same store wiring the remote gallery uses, pointed at a
+ * Blob (OPFS file or in-memory encode) instead of a URL. Bounds resident
+ * memory to a small LRU window regardless of trajectory length.
+ */
+export async function openLocalTrajectoryBlob(
+  blob: Blob,
+  name: string,
+  sourceUrl: string,
+  thermo: import('@atlas/core/types').ThermoData | null = null,
+): Promise<void> {
+  clearPreviousStreaming();
+  useStore.getState().setLoading(true, 0);
+
+  const { LocalGlimbinSource } = await import('@atlas/parsers/LocalGlimbinSource');
+  const source = new LocalGlimbinSource(blob);
+  const meta = await source.open();
+  const frame0 = await source.fetchFrame(0);
+
+  const placeholderFrames = new Array<Frame>(meta.totalFrames);
+  placeholderFrames[0] = frame0;
+  const trajectory: Trajectory = {
+    frames: placeholderFrames,
+    totalFrames: meta.totalFrames,
+    atomTypes: meta.atomTypes,
+    globalBounds: meta.globalBounds,
+  };
+
+  useStore.getState().setFile({
+    name,
+    size: meta.fileSize,
+    trajectory,
+    thermo,
+    sourceUrl,
+  });
+
+  const unsubFrameWatch = useStore.subscribe(
+    (s) => s.frame,
+    async (frameIndex) => {
+      const currentFile = useStore.getState().file;
+      if (!currentFile || currentFile.trajectory.frames[frameIndex]) return;
+      try {
+        const frame = await source.fetchFrame(frameIndex);
+        const file = useStore.getState().file;
+        if (file) {
+          file.trajectory.frames[frameIndex] = frame;
+          useStore.setState({ file: { ...file } });
+        }
+        const isPlaying = useStore.getState().playing;
+        source.prefetch(frameIndex, isPlaying ? 1 : 0, isPlaying ? 8 : 3);
+      } catch (err) {
+        console.warn(`[local-streaming] frame ${frameIndex} failed:`, err);
+      }
+    },
+  );
+
+  (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup = () => {
+    unsubFrameWatch();
+    source.dispose();
+  };
+
+  track(ANALYTICS_EVENTS.MOLECULE_LOADED, { source: 'local-streaming', frames: meta.totalFrames });
+}
+
+/**
+ * Bring-your-own-data entry point for an already-parsed trajectory.
+ *
+ * Multi-frame trajectories (simulations over time) are transcoded to
+ * .glimbin, persisted in the local library when supported, and opened
+ * through the streaming substrate so only the frames in view stay
+ * resident — the reliability win for large files. Single/few-frame
+ * structures, or trajectories the binary format can't represent
+ * losslessly (atom type ids beyond a byte), stay on the in-memory path.
+ *
+ * Returns the persisted record id when the trajectory was stored, so the
+ * caller can deep-link to it; null when it stayed in memory.
+ */
+export async function importParsedTrajectory(args: {
+  name: string;
+  trajectory: Trajectory;
+  thermo?: import('@atlas/core/types').ThermoData | null;
+  size: number;
+  persist?: boolean;
+}): Promise<{ persistedId: string | null }> {
+  const { name, trajectory, thermo = null, size, persist = true } = args;
+  const frames = trajectory.frames.filter(Boolean);
+
+  const { canEncodeGlimbin, assembleGlimbinBlob } = await import('@atlas/core/glimbin');
+  const shouldStream =
+    trajectory.totalFrames >= STREAMING_FRAME_THRESHOLD && canEncodeGlimbin(frames);
+
+  if (!shouldStream) {
+    clearPreviousStreaming();
+    useStore.getState().setFile({ name, size, trajectory, thermo });
+    track(ANALYTICS_EVENTS.MOLECULE_LOADED, { source: 'memory', frames: trajectory.totalFrames });
+    return { persistedId: null };
+  }
+
+  const { blob, meta } = assembleGlimbinBlob(trajectory);
+
+  let persistedId: string | null = null;
+  if (persist && isTrajectoryLibrarySupported()) {
+    try {
+      const record = await saveTrajectory({ name, blob, meta });
+      persistedId = record.id;
+    } catch (err) {
+      // Persistence is best-effort; still stream from the in-memory Blob.
+      console.warn('[trajectory-library] save failed, streaming without persisting:', err);
+    }
+  }
+
+  const sourceUrl = persistedId ? `opfs://${persistedId}` : `local://${name}`;
+  await openLocalTrajectoryBlob(blob, name, sourceUrl, thermo);
+  return { persistedId };
+}
+
+/** Re-open a trajectory previously stored in the local library. */
+export async function openSavedTrajectory(id: string, name: string): Promise<void> {
+  useStore.getState().setLoading(true, 0);
+  try {
+    const blob = await openTrajectoryBlob(id);
+    await openLocalTrajectoryBlob(blob, name, `opfs://${id}`);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    useStore.getState().setError(message);
+    throw err;
+  }
 }
