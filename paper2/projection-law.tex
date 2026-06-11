@@ -1,0 +1,424 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[round]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=cyan}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newcommand{\inn}[2]{\langle #1, #2 \rangle}
+
+\title{\bfseries The Projection Law: Model-Ensemble Errors Point at Their Binding Constraint}
+\author{Alex Welcing\\ \small Lupine Science\\ \small \texttt{alex@lupine.io}}
+\date{Draft of June 11, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent When many independently constructed models agree, the agreement is
+routinely read as confidence. We formalize and test the opposite reading: a
+model family is a projection operator, fitting drives every member toward the
+point of the family's reachable set nearest the truth, and the shared residual
+--- one direction in observable space --- is a fingerprint of whatever
+constraint binds the family. We prove the core as machine-checked theorems
+(Lean~4, zero unproven obligations): on any convex family, best approximations
+are unique and share one residual lying in the family's normal cone; the
+resulting bias-plus-noise ensembles have participation ratio
+$\mathrm{PR}(d,\rho) = (\rho+d)^2/((\rho+1)^2+(d-1))$, collapsing to 1 at
+explicit rate $3(d-1)/\rho$; and the participation ratio is provably blind to
+sign structure that pairwise alignment detects. We then test the law's sharpest
+consequence --- \emph{errors organize by constraint, not by implementation} ---
+with pre-registered factorial experiments at three layers of one epistemic
+stack. Classical interatomic potentials (559 models): within-family error
+correlation $0.95$, error dimensionality invariant over forty years. Foundation
+machine-learned potentials (8 MatPES models $\times$ 2 functionals $\times$ 4
+architectures): errors cluster by training functional, not architecture
+($S_{\mathrm{func}}{=}{+}0.317$ vs.\ $S_{\mathrm{arch}}{=}{-}0.093$,
+permutation $p{=}0.029$). DFT implementations (12 ACWF methods, 384 systems):
+errors cluster by pseudopotential table, not simulation code
+($S_{\mathrm{table}}{=}{+}0.526$ vs.\ $S_{\mathrm{code}}{=}{+}0.265$,
+$p{=}0.017$). Each registered test carried an explicit refutation condition;
+neither was triggered. Across paradigm replacements the error anisotropy is
+conserved while its direction rotates to the next constraint upstream ---
+a conservation law for the geometry of ignorance, with a practical corollary:
+a single shared correction vector removes ${\sim}96\%$ of foundation-model
+elastic-constant error, and cross-model alignment is a zero-cost detector of
+when such calibration is trustworthy.
+\end{abstract}
+
+\section{Introduction}
+
+Every field that builds models in families uses inter-model agreement as
+evidence. The practice has long been questioned qualitatively: climate
+ensembles share construction and history, so their consensus may reflect
+common structure rather than truth \citep{pirtle2010,parker2011}, and
+error correlations between members quantify that dependence
+\citep{bishop2013,annan2011,knutti2013}. In machine learning, independently
+trained networks agree far beyond what their accuracy predicts
+\citep{mania2019,geirhos2020}, ensemble members cluster in prediction space
+\citep{fort2019}, and disagreement tracks the shared bias of the training
+procedure rather than correctness \citep{jiang2021}. What these literatures
+establish qualitatively, this paper makes geometric, formal, and---in the
+specific sense of identifying \emph{which} constraint binds---operational.
+
+The central object is the \emph{error vector}: for model $i$ in family $F$
+evaluated on observables with reference values, $e_i \in \mathbb{R}^d$ is the
+vector of (relative) errors. The law has three parts:
+
+\textbf{(i) Projection.} A model family is a projection operator. Fitting,
+however performed and by whomever, drives predictions toward the point of the
+family's reachable set nearest the truth; the residual is a property of the
+\emph{(family, target)} pair, not of any individual model or modeler. All
+well-fitted members therefore share one residual direction
+(Theorems~\ref{thm:cone}--\ref{thm:consensus}).
+
+\textbf{(ii) Gauge.} The ensemble's error second moment is a shared bias plus
+fitting noise; its participation ratio is a closed-form gauge of the
+systematic fraction (Theorem~\ref{thm:gauge}), so low error dimensionality is
+not a curiosity but a necessity for any converged family, at an explicit rate.
+
+\textbf{(iii) Conservation and rotation.} When a modeling paradigm is replaced
+--- when the binding constraint is removed --- the error anisotropy does not
+dissolve into isotropic scatter. It is conserved, and its direction rotates to
+the next constraint upstream in the epistemic stack. This is the part of the
+law for which we find no antecedent in the climate, forecasting, machine
+learning, or materials literatures, and it is the part we test hardest.
+
+We instantiate the law at three layers of a single epistemic stack ---
+classical interatomic potentials, foundation machine-learned interatomic
+potentials (MLIPs), and the density-functional-theory (DFT) implementations
+that generate their training data --- because this stack offers what few
+domains can: large open model ensembles, factorial structure (the same
+architecture trained on two functionals; the same simulation code run with two
+pseudopotential families), and references at every layer. The empirical
+discovery paper for the first layer is reported separately
+\citep{welcing2026instance}; here that layer serves as the observational base
+of a cross-layer test.
+
+Three methodological commitments distinguish this work. The theory core is
+\emph{machine-checked}: every theorem below is verified in Lean~4 with zero
+unproven obligations, and a written contract maps each theorem to the
+statistic that instantiates it. The two new experiments are
+\emph{pre-registered}, with thresholds and explicit refutation conditions
+committed to version control before any model was executed; we report all
+threshold misses as failures. And the entire evidence chain is packaged for
+\emph{tiered replication}: the analysis layer verifies from committed raw data
+with no machine-learning dependencies in seconds, and the physics layer
+re-derives the raw data from public checkpoints bit-exactly.
+
+\section{The formal core}
+\label{sec:theory}
+
+The mathematics of best approximation is classical
+\citep{deutsch2001,kinderlehrer1980}; we claim only its epistemic application
+to model ensembles and the machine-checked instantiation chain. Throughout,
+$E$ is a real inner-product space (observable space), $s \subseteq E$ a model
+family's reachable set, $T \in E$ the truth.
+
+\begin{theorem}[Normal-cone criterion]\label{thm:cone}
+Let $s$ be convex and $p$ a best approximation of $T$ in $s$
+(i.e.\ $p \in s$ and $\|T-p\| \le \|T-q\|$ for all $q \in s$). Then the
+residual $T - p$ lies in the normal cone of $s$ at $p$:
+$\inn{T-p}{q-p} \le 0$ for every $q \in s$.
+\end{theorem}
+
+\begin{theorem}[Consensus]\label{thm:consensus}
+Best approximations onto a convex family are unique; consequently any two best
+approximations of the same target share an \emph{identical} residual. The
+residual --- hence any agreement among independently fitted members --- is
+determined by the (family, target) pair alone, and vanishes exactly when the
+truth lies in the family.
+\end{theorem}
+
+Agreement among models sharing a constraint is therefore a measurement of the
+constraint, not evidence of truth: the formal content of the qualitative
+warnings of \citet{parker2011} and \citet{pirtle2010}, and a strengthening of
+error-correlation dependence measures \citep{bishop2013} in that, combined
+with the factorial designs of \S\ref{sec:mlip}--\ref{sec:dft}, it identifies
+\emph{which} constraint binds.
+
+\begin{theorem}[Gauge]\label{thm:gauge}
+Model errors $e = b + \xi$ with shared bias $b$ and isotropic noise of scale
+$\sigma$ in $d$ dimensions have error second moment with one eigenvalue
+$\|b\|^2 + \sigma^2$ (bias axis) and $d{-}1$ eigenvalues $\sigma^2$, and
+participation ratio
+\[
+\mathrm{PR}(d,\rho) \;=\; \frac{(\rho+d)^2}{(\rho+1)^2 + (d-1)},
+\qquad \rho = \|b\|^2/\sigma^2 ,
+\]
+with $\mathrm{PR}(d,0)=d$, $1 \le \mathrm{PR} \le d$, strict decrease in
+$\rho$, and the explicit collapse bound
+$\mathrm{PR}-1 \le 3(d-1)/\rho$ for $\rho \ge d$.
+\end{theorem}
+
+The algebra is a one-line corollary of spiked-covariance theory and the
+participation ratio is a standard effective-dimension metric; the value here
+is the consilience it enables (\S\ref{sec:classical}) and the machine-checked
+monotonicity that licenses inverting measured PR into a systematic fraction
+$\alpha = \rho/(\rho+1)$.
+
+\begin{theorem}[Ribbon/consensus decoupling]\label{thm:decouple}
+The participation ratio of a shared-axis ensemble $\{c_i u\}$ is $1$ for every
+sign pattern of the coefficients $c_i$, while mean pairwise alignment
+distinguishes them (e.g.\ $1$ vs.\ $-1/3$ for three members). PR detects the
+\emph{axis}; alignment detects \emph{sign coherence}; they are distinct order
+parameters.
+\end{theorem}
+
+All four theorems (and the supporting lemmas, $\sim$29 statements) are
+machine-checked in Lean~4 against a pinned Mathlib, with zero \texttt{sorry}
+and zero new axioms; the artifact and the theorem-to-statistic contract ship
+with the replication kit (\S\ref{sec:repro}).
+
+\section{Layer 1: classical interatomic potentials}
+\label{sec:classical}
+
+The observational base \citep{welcing2026instance}: elastic-constant
+($C_{11}, C_{12}, C_{44}$) errors of 559 classical potentials across 15 cubic
+metals. Three facts matter for the law. First, error dimensionality is low and
+\emph{stationary}: participation ratios of multi-element potentials occupy
+$[1.0, 2.1]$ out of 3 with median $1.28$, with no trend across forty years of
+potential development --- accuracy improved; geometry did not. You cannot fit
+your way off a constraint surface. Second, within a functional-form family the
+errors are nearly identical (within-family reference--prediction correlation
+$r = 0.95$ across families vs.\ $0.82$ pooled). Third, the gauge locks: the
+median PR of $1.28$ inverts (Theorem~\ref{thm:gauge}, $d{=}3$) to a systematic
+fraction $\alpha \approx 0.93$, independently estimated as $0.95$ by
+within-family correlation and $0.96$ by rank-one share --- three estimators,
+one parameter, no tuning. The binding constraint at this layer is the
+functional form itself; the oldest example is exact: central-force pair
+potentials satisfy the Cauchy relation $C_{12}=C_{44}$ identically, so for any
+material violating it, every pair potential's error necessarily contains the
+same forced component --- the constraint dictates the direction.
+
+We emphasize the distinction from parameter-space sloppiness: hyper-ribbon
+geometry was introduced for the parameter manifolds of \emph{single} models
+\citep{transtrum2011,machta2013,quinn2023,kurniawan2022}. The object here is
+different --- error vectors of an ensemble of \emph{distinct} models in
+observable space --- though the two pictures are related through the
+projection of parameter manifolds into data space.
+
+\section{Layer 2: foundation MLIPs --- functional vs.\ architecture}
+\label{sec:mlip}
+
+Foundation MLIPs replace the functional-form constraint with expressive neural
+networks trained on DFT corpora. The law predicts the anisotropy survives and
+rotates: the binding constraint becomes the training reference theory.
+Qualitative inheritance of Perdew--Burke--Ernzerhof (PBE) bias --- systematic
+softening shared by universal MLIPs --- has been reported
+\citep{deng2025softening,yu2024}; the contributions here are the directional
+quantification and the factorial attribution.
+
+\textbf{Observation.} Three PBE-lineage models of unrelated architecture
+(MACE-MP-0 \citep{batatia2024}, CHGNet \citep{deng2023}, Orb-v3
+\citep{rhodes2025}) commit \emph{the same} elastic-constant errors on FCC
+metals against experimental references: all-negative, $C_{44}$-dominant
+(Au: $-32\%,-27\%,-79\%$), with cross-architecture cosines $0.95$--$0.99$ for
+Au, Pt, Ta, Ag. An internal control excludes harness artifacts: Ni, through
+the identical pipeline, has near-zero error. Across $8$--$11$ models per
+element the rank-one share of squared error is $0.56$--$0.94$ --- and where
+models ``disagree'' (V, Cr), they disagree by \emph{sign along the same axis}
+(cosine $-0.88$), exactly the structure Theorem~\ref{thm:decouple}
+distinguishes.
+
+\textbf{Pre-registered factorial test.} The MatPES release \citep{kaplan2025}
+provides one curated training distribution in two functionals (PBE, r$^2$SCAN)
+with four architectures trained on each (M3GNet, TensorNet, CHGNet, QET) ---
+a $4{\times}2$ crossing of constraint against implementation. We registered
+thresholds and a refutation condition (``errors cluster by architecture'')
+before executing any model, ran all eight cells through one Born-screened
+strain-energy harness, and obtained: clustering by functional
+$S_{\mathrm{func}} = +0.317$ (exact permutation $p = 0.029$ over all 70
+labelings) versus clustering by architecture $S_{\mathrm{arch}} = -0.093$;
+the registered rotation prediction confirmed on Au ($C_{44}$ error
+$-0.33 \to -0.07$) and Pt ($-0.46 \to -0.31$) under r$^2$SCAN; and the
+dataset-control confirmed (MatPES-PBE models align with MPtrj/OMat-PBE
+anchors, median cosine $0.66$). Two auxiliary thresholds failed as registered
+(within-functional median $0.654$ vs.\ $0.70$; separation $0.085$ vs.\
+$0.30$): the data revealed \emph{nested} constraints --- Cu, Ni, Al errors
+reorganize by functional (between-functional cosine down to $-0.49$, the
+predicted crossover), while the $5d$ noble metals retain a shared direction
+across both functionals, bound by correlation physics deeper than the
+PBE/r$^2$SCAN distinction. The refutation condition was not triggered.
+
+\section{Layer 3: DFT implementations --- pseudopotential vs.\ code}
+\label{sec:dft}
+
+One layer further up, the functional itself is held fixed. The ACWF
+verification effort \citep{bosoni2024,lejaeghere2016} provides equation-of-state
+parameters $(V_0, B_0, B_1)$ for 384 unary crystals from eleven
+pseudopotential-based methods and two all-electron codes, all PBE. Against
+the all-electron average, with the FLEUR--WIEN2k split as the per-system noise
+floor, the law predicts errors organize by \emph{pseudopotential table} (the
+approximation actually shared), not by \emph{simulation code} (the
+implementation). The dataset's factorial structure makes the test sharp:
+ABINIT appears with three pseudopotential families, Quantum ESPRESSO and
+CASTEP with two each, while the PseudoDojo-0.4 table is implemented by four
+independent plane-wave codes.
+
+Pre-registered outcome: same-table--different-code alignment
+$S_{\mathrm{table}} = +0.526$ versus same-code--different-family
+$S_{\mathrm{code}} = +0.265$; separation $+0.261$, permutation $p = 0.017$;
+refutation condition (clustering by code) not triggered. At pair level, four
+independent codes sharing PseudoDojo-0.4 align at $0.70$--$0.87$, while
+ABINIT-with-JTH versus ABINIT-with-PseudoDojo --- the same code --- drops to
+$0.21$. Two auxiliary predictions failed as registered, both informatively:
+the within-table consensus median ($0.459$ vs.\ $0.50$) was dragged down
+solely by SIESTA, the one localized-orbital-basis code in the group, whose
+binding constraint is evidently the basis set rather than the shared
+pseudopotential --- the nested-constraint phenomenon again; and the registered
+regime prediction had the wrong sign because between-family divergence grows
+on difficult elements, which the pooled statistic conflated. A secondary
+observation sharpens the law: PAW codes with \emph{different} PAW tables align
+at only $+0.20$ --- the constraint is the specific frozen-core construction,
+not the formalism label. Scalar reproducibility metrics
+\citep{lejaeghere2016,bosoni2024} cannot see any of this structure; it lives
+in the directions.
+
+\section{The conservation--rotation law}
+\label{sec:law}
+
+Table~\ref{tab:layers} assembles the stack. Three layers, three different
+binding constraints, one geometric law; the two new layers tested under
+pre-registration with explicit kill conditions, neither triggered. Between
+layers, the direction \emph{rotates}: classical cross-family alignment has no
+predictive power for MLIP alignment (Spearman $\rho = 0.26$, $p = 0.34$ across
+elements), because the constraint moved from functional form to training
+functional; and the MLIP-layer bias direction is precisely the
+reference-theory error that layer 3 isolates. Within layers, constraints
+\emph{nest}: when the registered constraint is removed (r$^2$SCAN for PBE;
+plane-wave pseudopotential sharing for SIESTA), residual alignment reveals the
+next constraint in line (5d correlation physics; basis set). Anisotropy is
+conserved throughout: at no layer, in no ensemble, under no intervention did
+errors approach isotropy --- participation ratios remained far below ambient
+dimension in every case, as Theorem~\ref{thm:gauge} requires of any family
+whose systematic error dominates its fitting scatter.
+
+\begin{table}[t]
+\centering
+\caption{The projection law across one epistemic stack. Each row: an ensemble
+of models, the constraint the law identifies as binding, the clustering
+evidence (constraint vs.\ implementation), and the registered refutation
+condition's status.}
+\label{tab:layers}
+\small
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Layer & Ensemble & Binding constraint & Evidence & Kill condition \\
+\midrule
+Classical IPs & 559 potentials & functional form & within-family $r{=}0.95$; PR invariant 40 yr & (observational) \\
+Foundation MLIPs & $4{\times}2$ MatPES $+$ anchors & training functional & $S_{\mathrm{func}}{=}{+}0.317$ vs ${-}0.093$, $p{=}0.029$ & not triggered \\
+DFT codes & 12 ACWF methods & pseudopotential table & $S_{\mathrm{table}}{=}{+}0.526$ vs ${+}0.265$, $p{=}0.017$ & not triggered \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The closest antecedents are the persistence of shared biases across climate
+model generations \citep{tian2020,knutti2013}, the convergence of training
+trajectories onto shared low-dimensional manifolds \citep{mao2024}, and
+representation convergence across architectures \citep{huh2024}; none states
+conservation-plus-rotation as a law, and none possesses the factorial
+constraint-vs-implementation evidence presented here.
+
+\section{Related work}
+\label{sec:related}
+
+That ensembles share errors is established: error consistency across networks
+\citep{geirhos2020}, model similarity beyond accuracy \citep{mania2019},
+prediction-space clustering \citep{fort2019}, accuracy- and
+agreement-on-the-line \citep{baek2022}. That consensus is not verification is
+the qualitative lesson of \citet{pirtle2010} and \citet{parker2011},
+operationalized as error correlation by \citet{bishop2013}; low-dimensional
+structure of multi-model bias appears in EOF analyses
+\citep{sanderson2015,brands2022}. The participation ratio and the
+spiked-covariance algebra behind Theorem~\ref{thm:gauge} are standard. In
+materials simulation, shared softening of universal MLIPs is documented
+\citep{deng2025softening,yu2024}, reproducibility of DFT codes is measured by
+scalar metrics \citep{lejaeghere2016,bosoni2024}, and parameter-space
+sloppiness of single potentials is well developed
+\citep{transtrum2011,kurniawan2022,quinn2023}. Relative to all of the above,
+the contributions here are: the error-vector geometry of model ensembles in
+observable space as the measured object; the factorial
+constraint-vs-implementation designs and their pre-registered outcomes; the
+conservation--rotation law; and the machine-checked theory chain with a
+two-tier replication kit.
+
+\section{Implications}
+\label{sec:implications}
+
+\textbf{Calibration without retraining.} Because the shared error is one
+direction, one correction vector per (element, observable) repairs every model
+in the family at once: a rank-one correction removes ${\sim}96\%$ (median) of
+foundation-MLIP elastic error. The correction is family-level intellectual
+property --- it transfers to models not yet trained, so long as they share the
+constraint.
+
+\textbf{A trust rule for ensembles.} Cross-model alignment is a zero-cost
+diagnostic: high alignment $\Rightarrow$ the ensemble is constraint-bound,
+calibratable, and its spread \emph{understates} uncertainty; low alignment at
+the noise floor $\Rightarrow$ genuine convergence (the Ni control); low
+alignment far above the floor $\Rightarrow$ the constraint is heterogeneous
+(magnetic BCC metals; difficult elements across pseudopotential tables) and no
+shared correction exists.
+
+\textbf{Benchmark design.} Leaderboards that pool across families average away
+the very direction that identifies what to fix. Reporting error
+\emph{directions} stratified by candidate constraints --- the factorial
+pattern used here --- converts benchmarking from scoring into diagnosis.
+
+\textbf{Reading consensus.} Where ground truth is delayed (climate
+projections, materials discovery), inter-model agreement should be priced as a
+measurement of shared constraint; the factorial designs show how to estimate
+\emph{which} constraint, today, from models alone.
+
+\section{Limitations}
+\label{sec:limits}
+
+The formal chain covers convex reachable sets and deterministic
+bias-plus-noise spectra; smooth non-convex families (local normal cones) and
+the finite-sample step from noisy ensembles to the exact second moment are
+standard but unformalized. The MLIP layer uses one validated harness, fifteen
+cubic elemental metals, and elastic observables; the DFT layer inherits
+ACWF's protocol choices. Four of nine registered auxiliary thresholds across
+the two experiments failed and are reported as failures; in each case post-hoc
+analysis attributes the miss to nested constraints, and those attributions are
+hypotheses for the next registration round, not confirmed claims. The law
+itself makes its next predictions cheap to test: an r$^2$SCAN-trained model
+from a fourth architecture must join the r$^2$SCAN cluster; a plane-wave
+implementation of any new pseudopotential table must align with its table,
+not its code; and axis-based statistics (mandated by
+Theorem~\ref{thm:decouple}) should replace signed-cosine thresholds.
+
+\section{Reproducibility}
+\label{sec:repro}
+
+Both experiments were pre-registered with thresholds and refutation conditions
+committed to version control before execution (commits \texttt{dffbe595} and
+\texttt{ebf39e33}); all analysis is replayable from a two-tier kit in which
+Tier~1 verifies every statistic in this paper from committed raw data using
+only NumPy/SciPy in seconds, and Tier~2 re-derives the raw elastic constants
+from public checkpoints through a frozen harness (bit-exact on revalidation).
+The Lean~4 artifact (four theory files, $\sim$29 machine-checked statements,
+zero \texttt{sorry}, zero new axioms, pinned Mathlib) and the
+theorem-to-statistic contract accompany the kit. The harness was validated by
+independent energy- vs.\ stress-method agreement ($\le 2.4\%$), bit-exact
+regression, and strain-window stability. ACWF data are from the public
+archive of \citet{bosoni2024}; MatPES checkpoints from \citet{kaplan2025}.
+
+\section*{Acknowledgments}
+This work was supported by Lupine Science. AI assistance (Anthropic Claude)
+was used under the author's direction for statistical verification and
+recomputation, Lean proof engineering, literature triage, and drafting; all
+scientific claims and decisions were reviewed and approved by the author, who
+takes sole responsibility for the content.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
