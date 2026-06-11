@@ -5,10 +5,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+import glim_mlip
 import pytest
 from click.testing import CliRunner
-
-import glim_mlip
 
 
 @pytest.fixture
@@ -105,13 +104,61 @@ def test_batch_with_refs_writes_jsonl(runner: CliRunner, monkeypatch: pytest.Mon
     out = tmp_path / "records.jsonl"
     result = runner.invoke(glim_mlip.mlip, [
         "batch", "--elements", "Al", "--references-from", str(refs), "--out", str(out),
-    ])
+    ], env={
+        "GLIM_BENCHMARK_RUN_ID": "",
+        "GLIM_BENCHMARK_RUN_URL": "",
+        "GITHUB_REPOSITORY": "",
+        "GITHUB_SERVER_URL": "",
+        "GITHUB_WORKFLOW": "",
+        "GITHUB_SHA": "",
+        "GITHUB_REF": "",
+    })
     assert result.exit_code == 0, result.output
     assert out.exists()
     written = [json.loads(line) for line in out.read_text(encoding="utf-8").splitlines() if line.strip()]
     assert written == records
     assert rec[0]["json"]["data"][0] == "Al"
     assert rec[0]["json"]["data"][2] == '{"Al": {"C11": 108.2}}'
+
+
+def test_batch_attaches_github_run_provenance(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,
+                                               tmp_path: Path) -> None:
+    refs = tmp_path / "references.json"
+    refs.write_text('{"Al": {"C11": 108.2}}', encoding="utf-8")
+    rec: list[dict[str, Any]] = []
+    _patch_gradio_flow(monkeypatch, rec, [[{
+        "record_id": "r1",
+        "element": "Al",
+        "property": "C11",
+        "predicted": 110.0,
+        "reference": 108.2,
+        "potential_id": "chgnet",
+        "provenance": {"source": "hf-space"},
+    }]])
+    out = tmp_path / "records.jsonl"
+    result = runner.invoke(
+        glim_mlip.mlip,
+        ["batch", "--elements", "Al", "--references-from", str(refs), "--out", str(out)],
+        env={
+            "GLIM_BENCHMARK_RUN_ID": "27206839783",
+            "GITHUB_REPOSITORY": "alexwelcing/lupine",
+            "GITHUB_SERVER_URL": "https://github.com",
+            "GITHUB_WORKFLOW": "MLIP elastic-constant benchmark",
+            "GITHUB_SHA": "c1b20742b7c781c454063d647d6350f58a476c17",
+            "GITHUB_REF": "refs/heads/main",
+        },
+    )
+    assert result.exit_code == 0, result.output
+    written = [json.loads(line) for line in out.read_text(encoding="utf-8").splitlines() if line.strip()]
+    assert written[0]["provenance"] == {
+        "source": "hf-space",
+        "github_run_id": "27206839783",
+        "github_run_url": "https://github.com/alexwelcing/lupine/actions/runs/27206839783",
+        "github_repository": "alexwelcing/lupine",
+        "github_workflow": "MLIP elastic-constant benchmark",
+        "github_sha": "c1b20742b7c781c454063d647d6350f58a476c17",
+        "github_ref": "refs/heads/main",
+    }
 
 
 def test_batch_without_refs_prints_to_stdout(runner: CliRunner, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -142,16 +189,92 @@ def test_ingest_posts_to_worker(runner: CliRunner, monkeypatch: pytest.MonkeyPat
         def json(self) -> Any:
             return self._payload
 
-    def fake_post(url: str, json=None, timeout=None, **kw: Any):  # noqa: ARG001
-        rec.append({"url": url, "json": json})
+    def fake_post(url: str, json=None, headers=None, timeout=None, **kw: Any):  # noqa: ARG001
+        rec.append({"url": url, "json": json, "headers": headers})
         return _Resp({"ingested": 2, "total": 2})
 
     monkeypatch.setattr(httpx, "post", fake_post)
-    result = runner.invoke(glim_mlip.mlip, ["ingest", str(jsonl)])
+    result = runner.invoke(
+        glim_mlip.mlip,
+        ["ingest", str(jsonl)],
+        env={"GLIM_INGEST_TOKEN": "", "GLIM_INTERNAL_TOKEN": "", "INTERNAL_TASK_TOKEN": ""},
+    )
     assert result.exit_code == 0, result.output
     assert "ingested 2 records" in result.output
     assert rec[0]["url"].endswith("/ingest/batch")
     assert len(rec[0]["json"]["records"]) == 2
+    assert rec[0]["headers"] == {}
+
+
+def test_ingest_sends_internal_token_from_env(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,
+                                                tmp_path: Path) -> None:
+    jsonl = tmp_path / "records.jsonl"
+    jsonl.write_text('{"recordId": "r1", "element": "Al"}\n', encoding="utf-8")
+    import httpx
+    rec: list[dict[str, Any]] = []
+
+    class _Resp:
+        status_code = 200
+        text = '{"ingested": 1}'
+
+    def fake_post(url: str, json=None, headers=None, timeout=None, **kw: Any):  # noqa: ARG001
+        rec.append({"url": url, "json": json, "headers": headers})
+        return _Resp()
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    result = runner.invoke(
+        glim_mlip.mlip,
+        ["ingest", str(jsonl)],
+        env={"GLIM_INGEST_TOKEN": "", "GLIM_INTERNAL_TOKEN": "", "INTERNAL_TASK_TOKEN": "secret-token"},
+    )
+    assert result.exit_code == 0, result.output
+    assert rec[0]["headers"] == {"X-Internal-Token": "secret-token"}
+
+
+def test_discovery_loop_opens_and_maintains_campaign(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,
+                                                      tmp_path: Path) -> None:
+    jsonl = tmp_path / "records.jsonl"
+    jsonl.write_text('{"record_id": "r1", "element": "Al"}\n', encoding="utf-8")
+    import httpx
+    calls: list[dict[str, Any]] = []
+
+    class _Resp:
+        def __init__(self, payload: Any):
+            self._payload = payload
+            self.status_code = 200
+            self.text = json.dumps(payload)
+
+        def json(self) -> Any:
+            return self._payload
+
+    def fake_post(url: str, json=None, headers=None, timeout=None, **kw: Any):  # noqa: ARG001
+        calls.append({"url": url, "json": json, "headers": headers})
+        if url.endswith("/campaigns"):
+            return _Resp({"campaign_id": "github:27206839783"})
+        return _Resp({"agenda": {"attempted": 1}})
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    result = runner.invoke(
+        glim_mlip.mlip,
+        [
+            "discovery-loop",
+            str(jsonl),
+            "--campaign-id",
+            "github:27206839783",
+            "--github-run-id",
+            "27206839783",
+            "--run-url",
+            "https://github.com/alexwelcing/lupine/actions/runs/27206839783",
+        ],
+        env={"INTERNAL_TASK_TOKEN": "secret-token"},
+    )
+    assert result.exit_code == 0, result.output
+    assert len(calls) == 2
+    assert calls[0]["url"].endswith("/research/workflows/mlip-discovery-loop/campaigns")
+    assert calls[0]["headers"] == {"X-Internal-Token": "secret-token"}
+    assert calls[0]["json"]["campaign_id"] == "github:27206839783"
+    assert calls[0]["json"]["github_run_id"] == "27206839783"
+    assert calls[1]["url"].endswith("/campaigns/github:27206839783/maintain")
 
 
 def test_ingest_empty_jsonl_fails(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,

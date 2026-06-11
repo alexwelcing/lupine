@@ -8,7 +8,9 @@
 import { useCallback, useRef, useState, useEffect } from 'react';
 import { parseFile, detectFileType, isPotentialFile, guessPairStyle } from '@atlas/parsers';
 import { useStore } from './store';
+import { importParsedTrajectory } from './loadMoleculeSource';
 import { Gallery } from './Gallery';
+import { SavedTrajectories } from './SavedTrajectories';
 import {
   getDeviceProfile,
   formatAtomCount,
@@ -45,7 +47,7 @@ const IconWarning = () => (
 export function FileDropZone() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
-  const { file, loading, loadProgress, error, setFile, setLoading, setError } = useStore();
+  const { file, loading, loadProgress, error, setLoading, setError } = useStore();
   const setShowPotentialBrowser = useStore((s) => s.setShowPotentialBrowser);
 
   useEffect(() => {
@@ -87,19 +89,19 @@ export function FileDropZone() {
     }
 
     try {
-      // Single-dump-file fast path: probe streaming. Multi-file drops
-      // (e.g. dump + log) and non-dump types fall through to the
-      // existing iterate-and-parse-each loop.
+      // Single-dump-file fast path. Multi-file drops (e.g. dump + log) and
+      // non-dump types fall through to the iterate-and-parse-each loop.
       const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;
-      const STREAMING_ATOM_THRESHOLD = 100_000;
       const profile = getDeviceProfile();
       if (sorted.length === 1 && detectFileType(sorted[0].name) === 'dump' && sorted[0].size > STREAMING_BYTES_THRESHOLD) {
         const f = sorted[0];
-        const head = await f.slice(0, 4096).text();
-        const { canStreamDump } = await import('@atlas/parsers');
+        const { canStreamDump, readDumpHead } = await import('@atlas/parsers');
+        // readDumpHead decompresses gzip transparently, so .gz dumps take
+        // the streaming fast path too (the worker gunzips while parsing).
+        const head = await readDumpHead(f);
         const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
         const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
-        if (canStreamDump(head) && headerAtoms >= STREAMING_ATOM_THRESHOLD) {
+        if (canStreamDump(head)) {
           if (headerAtoms > profile.maxAtoms) {
             throw new Error(
               `This trajectory has ${formatAtomCount(headerAtoms)} atoms, ` +
@@ -108,33 +110,16 @@ export function FileDropZone() {
               `Try a smaller frame or a chunked trajectory.`,
             );
           }
-          // Phase 2b: byte-stream parse via File.stream(). Some browsers
-          // deliver the whole blob in one chunk for local files (no
-          // network round-trip to spread across), but the parser's
-          // progress events still drive the renderer's incremental
-          // upload — the user sees atoms appear as they're decoded
-          // instead of waiting for the full TextDecoder pass to finish.
-          const { parseDumpFileStreamingFromFile } = await import('@atlas/parsers');
-          const store = useStore.getState();
-          for await (const event of parseDumpFileStreamingFromFile(f)) {
-            if (event.type === 'header') {
-              store.setFile({
-                name: f.name,
-                size: f.size,
-                trajectory: event.trajectory,
-                thermo: null,
-              });
-              // Reset loadedAtomCount that setFile defaulted to natoms
-              // — see Gallery.tsx for the same dance.
-              store.setLoadedAtomCount(0);
-            } else if (event.type === 'progress') {
-              store.setLoadedAtomCount(event.loadedAtoms);
-              await new Promise<void>((r) => requestAnimationFrame(() => r()));
-            } else if (event.type === 'complete') {
-              store.setLoadedAtomCount(event.loadedAtoms);
-            }
-          }
-          return;
+          // Worker-driven streaming import: the dump is parsed and (when
+          // multi-frame) transcoded to .glimbin off the main thread, so
+          // the React Three Fiber canvas never blocks. Frame 0 paints
+          // progressively from transferred slabs; the full trajectory is
+          // then streamed in place with bounded memory. Returns
+          // handled:false for dialects the streaming parser can't take —
+          // we fall through to the WASM parse below.
+          const { importDumpFileStreaming } = await import('./loadMoleculeSource');
+          const { handled } = await importDumpFileStreaming(f);
+          if (handled) return;
         }
       }
 
@@ -162,7 +147,11 @@ export function FileDropZone() {
             `Try a smaller frame or a chunked trajectory.`,
           );
         }
-        setFile({
+        // Multi-frame trajectories are transcoded to .glimbin, persisted to
+        // the local library, and streamed frame-by-frame; single/few-frame
+        // structures stay in memory. Either way the store ends up with a
+        // viewable file.
+        await importParsedTrajectory({
           name: sorted[0].name,
           size: sorted.reduce((s, f) => s + f.size, 0),
           trajectory,
@@ -174,7 +163,7 @@ export function FileDropZone() {
     } catch (err: any) {
       setError(err.message || 'Failed to parse file');
     }
-  }, [setFile, setLoading, setError]);
+  }, [setLoading, setError]);
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -364,8 +353,9 @@ export function FileDropZone() {
             </div>
           </div>
 
-          {/* ─── Gallery ─── */}
+          {/* ─── Your library (saved uploads) + Gallery ─── */}
           <div onClick={(e) => e.stopPropagation()} style={{ cursor: 'default' }}>
+            <SavedTrajectories />
             <Gallery />
           </div>
         </div>

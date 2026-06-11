@@ -16,6 +16,136 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-06-02 — CORRECTION: retracting / bounding the day's ribbon overclaims
+
+- **Why.** A working session produced several confident claims that do **not** hold up.
+  Logging the retraction here because self-correction is the method, and the entries below
+  (and a now-removed framing) overstated results — mostly because the work was done against a
+  **stale CSV export and the MPtrj MLIP-energy lane, disconnected from the live D1 ledger
+  corpus** the program actually runs on (OpenKIM/NIST elastic constants). Orientation to the
+  live system is now captured in the `lupine-system-architecture` skill + `docs/science/objects.md`.
+- **Retracted / bounded:**
+  1. *"Generalised the ribbon, first-principles" (`RibbonProjection.lean`)* — **withdrawn.** That
+     module is a **generic scalar operative-value lemma** (the same parabola already in
+     `ContextSpecificProof`), **not** a formalization of the hyper-ribbon (model manifold), the
+     participation-ratio measure, or the keystone configuration-space core. Its docstring is
+     corrected to say so; it does not "generalise the ribbon."
+  2. *"`broad_commitment_is_open` is TRUE under per-backend policy selection"* — **bounded to
+     near-meaningless.** That campaign measured **energy-MAE on MPtrj DFT rows**, a different lane
+     from the OpenKIM/NIST elastic-constant corpus the ribbon is built on; the distill "win" is an
+     **energy-block recalibration that leaves forces/stress/elastic unchanged**, so it does not
+     improve the potential for any force-driven use. Not a model improvement. See the banner on
+     `docs/glim-m3-upgrade/runs/live-campaign-results.md`.
+  3. *"A6 has real but conditional support"* — **demoted to untrusted.** The A6 test was a
+     5-structure MLIP-force pilot on the wrong lane **without the mandatory coupling-aware null**
+     (Cauchy relation / mechanical stability — Jackson–Somers / Archie). Suggestive at most; must
+     be redone on the live corpus with the coupling-aware null before it is believed.
+  4. *"category error, verified in code"* — **overstated** (corrected in the banner atop
+     `docs/science/keystone-reconciliation.md`): the repo's PR-of-error-covariance is the standard
+     sloppy-model effective-dimensionality measure, not an elementary mistake.
+- **What still stands:** the MiniMax M2.7→M3 **model-axis** engineering (typechecked, tested); the
+  **documentation architecture** (`docs/navigation.md`, `docs/science/objects.md`, ADR-0002); and
+  the reusable analysis **tools** (they were just pointed at the wrong data).
+- **Next.** Redo Q1/Q2/Q3 on the **live D1 ledger + GCS lake** (not exports), per-element /
+  matched-n, with coupling-aware nulls, writing results back into the ledger.
+
+## 2026-06-02 — Back to the keystone paper: the category error, and the first test of A6
+
+- **Why.** The "promote per-backend distill" framing was disinterested box-ticking — it ignored
+  that forces never moved. Went back and actually read *A Conditional Universality Theorem for
+  Error Geometry in MLIPs* (repo-root PDF) to ground the program in its own theory.
+- **What.** A reconciliation of the repo's ribbon claims against the paper
+  (`docs/science/keystone-reconciliation.md`), plus the **first direct empirical test of the paper's
+  load-bearing assumption A6** ("common-spatial-mode separability") — `tools/a6_alignment_test.py`,
+  run on the force-error field (3 MLIPs × 5 shared structures = 107 atoms, 5000 stratified
+  permutations), with three statistics vs a within-structure permutation null.
+- **Results.** Two findings. (1) **Category error, verified in code.** The repo computes the
+  participation ratio of the error-*vector* covariance in *observable* space
+  (`manifold.rs:43-112`, 3×3 over C11/C12/C44) and calls it a low-dimensional "error manifold." The
+  paper's theorem is about a *configuration-space* core `H ⊂ ℝᵐ`; its error *boundary* is dimension
+  `m−1`, **not** low; and a measure-theoretic concentration must not be called a manifold. The
+  bridge between the two (A6) was **assumed, never stated** — including in my own
+  `RibbonProjection.lean`, which formalizes the wrong (toy) object. (2) **A6 has real but
+  conditional support.** All three MLIPs concentrate force error on the **same atoms**
+  (`mag_corr` 0.70–0.86, p≤0.0002, well above the stratified null ~0.34) and err in correlated
+  directions (`atom_cos` 0.2–0.3, sig) — first force-level evidence for shared structure. But it's
+  heterogeneous: **CHGNet is a partial outlier** (whole-field alignment with MACE n.s., p=0.09),
+  independently echoing that CHGNet is the backend distill regressed. So it's the paper's
+  *perturbative/conditional* regime, not the unrestricted ribbon claim.
+- **Next.** Scale the A6 test to MatPES/MPtrj/OMat24 with a blocked bootstrap over materials (the
+  paper's protocol); estimate per-model perturbation `δ_M` (CHGNet largest); and formalize the
+  paper's actual `exact_tubular_universality` skeleton (reach + 1-D monotonicity) instead of the
+  `RibbonProjection` toy.
+
+## 2026-06-02 — Live 3-tier sim campaign: distill is energy-only + per-backend-policy-gated
+
+- **Why.** The M3 upgrade work configured a 3-tier Cloud-Run sim matrix (baseline /
+  distill-accuracy / distill-accuracy+speed) but had not *run* it. Run it for real on
+  GPUs to test the local-Opus T4 hypotheses about where the ribbon distill correction
+  fails, and to put hard numbers on `broad_commitment_is_open`.
+- **What.** 23 cells on `shed-489901` L4 jobs (`mlip-cell-{mace,chgnet,sevennet}`),
+  3 tiers × 3 backends × {energy_volume, forces}, plus global-tuned and per-backend-tuned
+  re-runs. Scored by `tools/mlip_sim_matrix.py` (Lean `cellValue`). Surfaced + fixed a real
+  bug (runner wants catalog id `mace-mp-0`, not `mace`). Cost ≈ $2. Full table:
+  `docs/glim-m3-upgrade/runs/live-campaign-results.md`.
+- **Results.** (1) **Baselines reproduce exactly** (MACE 0.41161, SevenNet 0.3997) and the
+  tuned MACE cell returns **0.2038** — the committed `maceEnergyDistill` to 4 decimals, same
+  policy hash. The harness is faithful. (2) **Distill is energy-only:** on `forces` the
+  correction changes the error by **0.0%** for all three backends — an exact confirmation of
+  the pre-registered local-Opus hypothesis **T4-H2** (energy/mechanical orthogonality).
+  (3) **Distill is policy-gated, not automatic:** a generic policy regresses the
+  already-accurate CHGNet (0.1035 → 0.1429, −38%); the global tuned policy still regresses it
+  (−28%); but CHGNet's **own** `signed-orientation` policy flips it to **+6.1%** (0.0971).
+  Net: distill beats baseline on all three backends **iff each uses its own policy** — TRUE
+  under per-backend selection, FALSE under any single global policy.
+- **Next / done same session.** **Generalised the ribbon, first-principles** —
+  `lean-spec/.../Theory/RibbonProjection.lean`. Rather than encode the campaign as per-backend
+  cases (the exception handling we explicitly avoid), it proves all three findings as corollaries
+  of one model-independent geometry: error = ribbon-parallel `par` ⟂ orthogonal `orth`, a scalar
+  correction `κ` acts only on `par`, and `ribbonGain = κ·(2·par − κ)` (the orthogonal sector
+  cancels). Corollaries: `orthogonal_error_gain_nonpos` (energy-only / forces 0%),
+  `ribbonGain_neg_of_antialigned` (CHGNet regression = misaligned κ, same parabola — no model
+  axiom), `ribbonGain_strictly_valuable` (MACE/SevenNet), and the capstone
+  `broad_value_no_model_exception` (two backends, same `par`, aligned κ ⇒ equal positive gain).
+  All proofs are `ring`/`nlinarith` over arbitrary reals; algebraic identities independently
+  verified in sympy (all green) **and the module is kernel-verified locally** — `lake build`
+  green, 0 sorry, after fetching the Mathlib cache. A second live result sharpened "energy-only"
+  to **"support-set-only"**: a stress-targeted policy also left stress ≈ unchanged, and the
+  `elastic_constants` distill cell *refused* (`requires ≥6 cases; found 0`) — the correction can
+  only move a property the support manifold covers, exactly `RibbonProjection`'s
+  orthogonal-sector law. Open: accelerate speed axis on `elastic_constants` with the
+  elastic-covering `train-plus-elastic-v1` support (re-running).
+
+## 2026-06-02 — Theorist deep-tier model upgrade: MiniMax M2.7 → M3, gated on a measured A/B
+
+- **Why.** MiniMax-M3 (released 2026-06-01) is the new top-tier deep model behind Theorist
+  hypothesis generation — 1M context, ~1/20 cost at long context, same `api.minimax.io/v1`
+  route. But a model swap is only trustworthy if the quality lift is *measured* against a fixed
+  research target, not assumed. The worker could pin a provider but not a specific MiniMax model,
+  so M2.7-vs-M3 was not even expressible.
+- **What.** (1) Added a **model axis**: `selectDeepRoute({modelOverride})` →
+  `generateResearchText({modelOverride})` → `miniMaxModel(env, id)`; `/ops/experiment-generate`
+  accepts `body.model`; `ab-oracle.ts --axis model`. Default flips to `MiniMax-M3` with
+  `MINIMAX_BASELINE_MODEL = "MiniMax-M2.7"` kept as the canonical A/B baseline (rollback = a
+  `MINIMAX_MODEL` secret change, no redeploy). (2) Pinned the **ribbon target theorem set**
+  (T1 `hyper_ribbon_bound_3d`, T2 `empirical_hyper_ribbon_holds`, T3 `ParameterBound`, T4
+  `broad_commitment_is_open`, the `cellValue` bridge) and a per-theorem **research strategy**.
+  (3) Built the **eval harness**: `glim-ribbon-theorems` dataset + `tools/glim_model_eval.py`
+  (generate→compare→report, mirrors ab-oracle's adopt/reject) with a **local-Opus** rubric.
+  (4) Configured the **3-tier Cloud-Run sim matrix** (`policies/model-sim-matrix.yml` +
+  `tools/mlip_sim_matrix.py`) — baseline / distill-accuracy / distill-accuracy+speed, cost-bounded
+  and `cellValue`-scored. Full process in `docs/glim-m3-upgrade/`.
+- **Results.** Model-axis change typechecks with **0 new type errors** (proven against the committed
+  original) and existing tests stay green (6/6); repo `lint:fast` clean. The **local Opus agent**,
+  run for real, generated rigorous competing hypotheses for T1/T3/T4 and — judging blind — scored
+  them 10/10 against a deliberately weak fixture at 0/10 (rubric discriminates). The sim driver,
+  scored on the committed MACE-energy artifacts, returns **cellValue 1.238** for distill_accuracy
+  (50.5% MAE cut, speedup 1.025) and reproduces the `AccuracyCommitment.lean` constants from the raw
+  artifact. No M2.7/M3 generation numbers were fabricated (this checkout has no MiniMax key).
+- **Next.** (1) With `INTERNAL_TASK_TOKEN` + a live key, run the M2.7→M3 generation and let the same
+  local-Opus judge emit the real verdict. (2) Launch the canary sim matrix on `Cu_fcc`/`Si_diamond`/
+  `Fe_bcc` to test the T4 "where does distill fail?" hypotheses and bound `broad_commitment_is_open`.
+
 ## 2026-05-29 — Neural-symbolic loop: GPU MLIP curvature → machine-checked Lean (0 sorry)
 
 - **Why.** Close the proof↔physics gap at the tightest coupling — a number measured on the GPU

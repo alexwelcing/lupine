@@ -168,7 +168,8 @@ export async function comprehendPaper(
     "for the paper's actual claims.",
   ].join("\n");
 
-  const model = (await selectDeepRoute(env)).model;
+  const route = await selectDeepRoute(env);
+  const model = route.model;
   let raw = "";
   let tokens_spent = 0;
   try {
@@ -179,9 +180,7 @@ export async function comprehendPaper(
       experimental_telemetry: { isEnabled: true, functionId: "research.comprehend-paper" },
     });
     tokens_spent = extractMiniMaxTokens(result.usage);
-    raw = (result.text ?? "")
-      .replace(/<think>[\s\S]*?<\/think>\s*/g, "")
-      .trim();
+    raw = (result.text ?? "").trim();
   } catch (e) {
     return {
       ok: false,
@@ -217,7 +216,7 @@ export async function comprehendPaper(
       extracted.relevance_score,
       extracted.agrees_or_refutes,
       new Date().toISOString(),
-      "MiniMax-M2.7",
+      route.modelId,
       raw.slice(0, 4000),
     )
     .run()
@@ -416,8 +415,8 @@ export async function reasonOnHypothesis(
   let raw = "";
   let tokens_spent = 0;
   try {
-    // M2.7 spends ~half the token budget on <think> before producing the
-    // visible narrative. Default 3000 → effectively ~1500 visible tokens.
+    // Reasoning models spend part of the budget thinking before the visible
+    // narrative; maxOutputTokens caps the visible content. Default 3000.
     const result = await generateText({
       model,
       prompt,
@@ -425,9 +424,7 @@ export async function reasonOnHypothesis(
       experimental_telemetry: { isEnabled: true, functionId: "research.reason-on-hypothesis" },
     });
     tokens_spent = extractMiniMaxTokens(result.usage);
-    raw = (result.text ?? "")
-      .replace(/<think>[\s\S]*?<\/think>\s*/g, "")
-      .trim();
+    raw = (result.text ?? "").trim();
   } catch (e) {
     return {
       ok: false,

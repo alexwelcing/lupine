@@ -65,38 +65,6 @@ async function loadGalleryExample(example: GalleryExample): Promise<boolean> {
     const cleanBase = base.endsWith('/') ? base : `${base}/`;
     const url = `${cleanBase}${cleanFile}`;
 
-    if (example.id === 'lupine_brand_asset') {
-      const scientificUrl = `${cleanBase}gallery/curated/lupine_bluebonnet.xyz`.replace(/([^:]\/)\/+/g, "$1");
-      const resp = await fetch(scientificUrl);
-      const blob = await resp.blob();
-      const fileObj = new File([blob], 'lupine_bluebonnet.xyz');
-      const { parseFile } = await import('@atlas/parsers');
-      const parseResult = await parseFile(fileObj);
-      if (!parseResult.trajectory) return false;
-      const scientificFrame = parseResult.trajectory.frames[0];
-      const { generateLupineFrame } = await import('@atlas/core');
-      const frame = generateLupineFrame(scientificFrame);
-
-      state.setFile({
-        name: example.title,
-        size: 1024,
-        trajectory: {
-          frames: [frame],
-          totalFrames: 1,
-          atomTypes: parseResult.trajectory.atomTypes,
-          globalBounds: {
-            min: [frame.boxBounds[0], frame.boxBounds[2], frame.boxBounds[4]] as any,
-            max: [frame.boxBounds[1], frame.boxBounds[3], frame.boxBounds[5]] as any,
-          },
-        },
-        thermo: null,
-        sourceUrl: 'procedural',
-      });
-      state.setRenderStyle('botanical');
-      state.setAtomScale(1.4);
-      return true;
-    }
-
     const resp = await fetch(url);
     if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
     const blob = await resp.blob();

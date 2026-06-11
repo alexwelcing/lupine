@@ -20,28 +20,6 @@
     "featured": true
   },
   {
-    "id": "lupine_bluebonnet",
-    "title": "Lupine Bluebonnet (Scientific)",
-    "subtitle": "Lupinus texensis scientific molecular model (.xyz dataset) showing strict atomic arrangement.",
-    "domain": "Nanomaterials",
-    "atoms": "930",
-    "frames": "1",
-    "file": "gallery/curated/lupine_bluebonnet.xyz",
-    "available": true,
-    "colors": [
-      "#3050f8",
-      "#1ff01f",
-      "#ffffff"
-    ],
-    "metadata": {
-      "method": "Ab Initio Assembly",
-      "potential": "Lennard-Jones",
-      "temperature": "0 K",
-      "reference": "Lupine Science - lupine.science"
-    },
-    "featured": true
-  },
-  {
     "id": "lupi_live_qr_atomized",
     "title": "LUPI Live QR Molecule",
     "subtitle": "A standards-derived QR code translated into a dense carbon atom grid that scans to https://lupi.live from a clean top view.",
@@ -84,30 +62,6 @@
       "matrix": "18x18",
       "sourceFrames": "6",
       "lammpsDump": "generated/atomized/pulse-grid-atomized.lammpstrj"
-    },
-    "featured": true
-  },
-  {
-    "id": "lupine_genesis",
-    "title": "Lupine Bluebonnet — From a Seed",
-    "subtitle": "A 4D botanical time-series: the Lupinus texensis architecture unfurling from a single carbon seed into a blossomed plant across 200 frames.",
-    "domain": "Nanomaterials",
-    "atoms": "9,595",
-    "frames": "200",
-    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/lupine_genesis.glimbin",
-    "isTrajectory": true,
-    "autoPlay": true,
-    "available": true,
-    "colors": [
-      "#1a7a3a",
-      "#3050f8",
-      "#ffffff"
-    ],
-    "metadata": {
-      "method": "Procedural Botanical Growth Engine",
-      "potential": "Golden Ratio (Phyllotaxis)",
-      "temperature": "Time-Series Evolution",
-      "reference": "Lupine Science - lupine.science"
     },
     "featured": true
   },
@@ -465,9 +419,9 @@
     "title": "Cu₆₄Zr₃₆ Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
     "domain": "Metals & Alloys",
-    "atoms": "5,000",
+    "atoms": "13,500",
     "frames": "1",
-    "file": "dump.CuZr_melt.lammpstrj",
+    "file": "gallery/curated/cuzr_melt.xyz",
     "available": true,
     "colors": [
       "#4da6ff",
@@ -505,6 +459,72 @@
       "reference": "Cubic polycrystal with 8 grains"
     },
     "featured": true
+  },
+  {
+    "id": "cu_melt",
+    "title": "Cu(100) slab melting",
+    "subtitle": "Copper slab heated 300→1700 K. Melting nucleates at the free surfaces near Tm (~1340 K for Cu_u3) and the disorder front propagates inward until the crystal dissolves.",
+    "domain": "Metals & Alloys",
+    "atoms": "26,400",
+    "frames": "101",
+    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-melt-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#ff6b35",
+      "#ffd28a"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 700 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "300 K → 1700 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-melt (showcase), seed 4928459, LAMMPS 20260330"
+    }
+  },
+  {
+    "id": "cu_solidify",
+    "title": "Liquid Cu rapid quench",
+    "subtitle": "Bulk liquid copper quenched 2000→300 K at ~4×10^13 K/s — far too fast for crystallization, so the melt vitrifies into an amorphous solid.",
+    "domain": "Metals & Alloys",
+    "atoms": "19,652",
+    "frames": "101",
+    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-solidify-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#5b8dd9",
+      "#9fb6cc"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 600 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "2000 K → 300 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-solidify (showcase), seed 2384793, LAMMPS 20260330"
+    }
+  },
+  {
+    "id": "cu_sinter",
+    "title": "Cu nanoparticle sintering",
+    "subtitle": "Two misoriented copper nanoparticles at 1000 K (0.75 Tm) coalesce: a neck forms by surface diffusion and grows, with a grain boundary where the lattice orientations meet.",
+    "domain": "Metals & Alloys",
+    "atoms": "33,524",
+    "frames": "101",
+    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-sinter-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#d98e48",
+      "#8a5a2b"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 933 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "300 K → 1000 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-sinter (showcase), seed 7771234, LAMMPS 20260330"
+    }
   },
   {
     "id": "sio2_glass",
@@ -728,6 +748,54 @@
       "method": "Procedural faceted lattice",
       "potential": "XYZ coordinates",
       "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "social_qr_lupi_live",
+    "title": "LUPI Live - Atom QR",
+    "subtitle": "Scannable QR for lupi.live, authored as carbon atoms with inferred C-C bonds.",
+    "domain": "Methods",
+    "atoms": "319",
+    "frames": "1",
+    "file": "social-qr/lupi_live.xyz",
+    "available": true,
+    "colors": ["#111827", "#1edce0", "#ffffff"],
+    "metadata": {
+      "method": "Atom QR (ECC-M, byte mode)",
+      "potential": "C-C adjacency (1.55 A)",
+      "reference": "Lupine Science - lupi.live"
+    }
+  },
+  {
+    "id": "social_qr_lupine_science",
+    "title": "Lupine Science - Atom QR",
+    "subtitle": "Scannable QR for lupine.science, authored as carbon atoms with inferred C-C bonds.",
+    "domain": "Methods",
+    "atoms": "331",
+    "frames": "1",
+    "file": "social-qr/lupine_science.xyz",
+    "available": true,
+    "colors": ["#111827", "#1edce0", "#ffffff"],
+    "metadata": {
+      "method": "Atom QR (ECC-M, byte mode)",
+      "potential": "C-C adjacency (1.55 A)",
+      "reference": "Lupine Science - lupine.science"
+    }
+  },
+  {
+    "id": "social_qr_lupine_linkedin",
+    "title": "Lupine LinkedIn - Atom QR",
+    "subtitle": "Scannable QR for the Lupine Science LinkedIn, authored as carbon atoms with inferred C-C bonds.",
+    "domain": "Methods",
+    "atoms": "547",
+    "frames": "1",
+    "file": "social-qr/lupine_linkedin.xyz",
+    "available": true,
+    "colors": ["#111827", "#1edce0", "#ffffff"],
+    "metadata": {
+      "method": "Atom QR (ECC-M, byte mode)",
+      "potential": "C-C adjacency (1.55 A)",
+      "reference": "Lupine Science - linkedin.com/company/lupine-science"
     }
   }
 ]

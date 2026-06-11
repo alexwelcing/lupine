@@ -1,0 +1,96 @@
+# Scheduled-run policy: 3-tier model simulation matrix (affordable + accurate).
+#
+# Scheduled-run policy (lupine.mlip.run_policy.v1), distinct from the *.json
+# PolicyLimits files. See DECOMMISSION.md. Driven by tools/mlip_sim_matrix.py;
+# scored by the Lean UniversalityBridge.cellValue. Closes the loop from the
+# hyper-ribbon hypotheses (docs/glim-m3-upgrade/01-target-theorems.md, anchor
+# T4 broad_commitment_is_open) to held-out simulation evidence.
+schema: lupine.mlip.run_policy.v1
+name: model-sim-matrix
+description: >-
+  Run the three distill simulation tiers — baseline, distilled-accuracy, and
+  distilled-accuracy+speed — over the SAME sealed evaluation manifold so the
+  baseline-vs-distill deltas are honest. Affordable by construction (small canary
+  system set, cheap rows, shared raw-prediction checkpoints, scale-to-zero L4
+  Jobs, a hard cell cap); accurate by construction (every tier reuses the
+  baseline's raw predictions, so the only thing that varies between tiers is the
+  distill policy, not MLIP nondeterminism). Scored by cellValue = speedup *
+  (1 + accuracyGain).
+
+trigger:
+  kind: manual           # also wired to webhook event distill.ribbon.candidate
+  # cron: "0 4 * * SUN"  # optional weekly; left manual to control spend
+
+run:
+  level: 3
+  # backend_catalog.json mlip_ids (NOT job names — mace-mp-0 → job mlip-cell-mace).
+  # mace + sevennet have measured baseline/distill/accelerate numbers in
+  # AccuracyCommitment.lean; chgnet is the cheapest canary. Add orb-v3 deliberately.
+  backends:
+    - mace-mp-0
+    - chgnet
+    - sevennet
+  # Canary system set: cheap, diverse, and chosen to probe the T4 failure axes
+  # the local-Opus hypotheses predicted (bonding-distance, anharmonicity).
+  systems:
+    - Cu_fcc          # in-distribution metal (distill should win)
+    - Si_diamond      # covalent — bonding-distance failure probe (T4 H1)
+    - Fe_bcc          # ribbon outlier + anharmonic probe (T5 / T4 H3)
+  # Cheapest rows first; elastic_constants (39 cases) is intentionally excluded
+  # from the canary to keep cost down — promote to it only after a clean canary.
+  rows:
+    - energy_volume
+    - forces
+
+  # The three tiers map 1:1 onto the runner's variant flags.
+  variants:
+    - id: baseline
+      distill_profile: off
+      note: cellValue == 1 by construction (cellValue_baseline)
+    - id: distill_accuracy
+      distill_profile: accuracy
+      support_manifest_url: gs://shed-489901-atlas-inputs/mlip-baseline/canonical-distill-support-mptrj-train-plus-elastic-v1/manifest.json
+      note: accuracyGain > 0 required to promote (meetsCommitment)
+    - id: distill_accuracy_accelerate
+      distill_profile: accuracy_accelerate
+      support_manifest_url: gs://shed-489901-atlas-inputs/mlip-baseline/canonical-distill-support-mptrj-train-plus-elastic-v1/manifest.json
+      note: refusal speedup >= 1 (speedup_ge_one) on top of accuracy
+
+  # Cloud targets (verified present in shed-489901 / us-central1 on 2026-06-02):
+  #   jobs:    mlip-cell-{mace,chgnet,m3gnet,orb,sevennet,uma} (nvidia-l4, 4cpu/16Gi, taskCount 1)
+  #   inputs:  gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json
+  #            gs://shed-489901-atlas-inputs/mlip-baseline/canonical-distill-support-mptrj-train-plus-elastic-v1/manifest.json
+  manifest_url: gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json
+  output_prefix: gs://shed-489901-atlas-outputs/model-sim-matrix
+
+  # Affordability guards. The driver enforces max_cells before launching.
+  cost:
+    gpu_flavor: nvidia-l4         # matches the deployed mlip-cell-* job accelerator
+    scale_to_zero: true
+    max_cells: 18                 # 3 tiers x 2 backends x 3 systems x 1 row caps here
+    share_raw_predictions: true   # tiers reuse the baseline checkpoint (also the accuracy guard)
+    checkpoint_mode: read-write
+    seconds_per_cell_estimate: 60
+    usd_per_gpu_hour_estimate: 0.65
+    abort_over_budget: true
+
+  # Accuracy guards: isolate the ribbon's effect from backend nondeterminism.
+  distill:
+    share_raw_predictions: true
+    require_material_root_overlap: true
+    policy_engine: auto           # Rust canonical ribbon engine when present
+    ribbon_version: hyperribbon-v1
+
+  # Scoring: faithful to lean-spec/.../UniversalityBridge.lean + AccuracyCommitment.lean
+  scoring:
+    function: cellValue           # speedup * (1 + accuracyGain)
+    accuracy_gain: baselineErr_minus_tierErr      # native error units (eV/atom MAE, GPa)
+    speedup: tier_structures_per_second_over_baseline
+    promote_if: meetsCommitment   # tierErr <= baselineErr AND cellValue >= 1
+    driver: tools/mlip_sim_matrix.py
+
+results:
+  sink: glim-think-rpc
+  endpoint: https://glim-think.lupine.workers.dev/rpc/benchmark-results
+  method: ingest_benchmark
+  facet: ExperimentFacet

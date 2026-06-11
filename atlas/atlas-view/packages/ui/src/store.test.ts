@@ -186,6 +186,23 @@ describe('Store — File Loading', () => {
     expect(s.colorProperty).toBeNull();
   });
 
+  it('opens small molecules with the polished visual default', () => {
+    const traj = createMockTrajectory(1, 61);
+    const file = { name: 'showcase.xyz', size: 4096, trajectory: traj, thermo: null };
+
+    getStoreState().setFile(file);
+    const s = getStoreState();
+
+    expect(s.showBonds).toBe(true);
+    expect(s.showCell).toBe(false);
+    expect(s.showAxes).toBe(false);
+    expect(s.postprocessPreset).toBe('editorial');
+    expect(s.backgroundPreset).toBe('xray-lagoon');
+    expect(s.rimLightColor).toBe('#7de9ff');
+    expect(s.surfacePolish).toBeGreaterThan(0);
+    expect(s.surfaceClearcoat).toBeGreaterThan(0);
+  });
+
   it('disables effects for massive systems', () => {
     const traj = createMockTrajectory(1, 100000); // 100K atoms
     const file = { name: 'big.lmp', size: 9999999, trajectory: traj, thermo: null };

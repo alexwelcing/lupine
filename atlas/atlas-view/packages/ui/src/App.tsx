@@ -103,13 +103,13 @@ import { getElementSpec } from '@atlas/core';
 import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
-import { ToolButton, CameraPresetButton, TransportButton } from './controls';
+import { CameraPresetButton, TransportButton } from './controls';
 import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
 import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { SavedViewButton } from './SavedViewButton';
-import { HeaderAuthButton } from './HeaderAuthButton';
 import { MoleculeConfigurator } from './molecules/MoleculeConfigurator';
+import { openRandomOmol25Molecule } from './molecules/randomOmol';
 import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
 import { loadMoleculeSource } from './loadMoleculeSource';
 import { recognizeLupiUrlPayload } from './lupiUrlRecognition';
@@ -117,6 +117,9 @@ import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
 import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
 import { RendererFallback } from './RendererFallback';
 import { CanvasErrorBoundary } from './CanvasErrorBoundary';
+import { MoleculeFilterShell } from './MoleculeFilterShell';
+
+type ViewerControlMode = StudioDeckMode | 'export';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -216,6 +219,16 @@ const IconExport = () => (
     <circle cx="11.45" cy="12.05" r="1.45" />
     <path d="M15.4 6.6h2.5v2.5" />
     <path d="m17.9 6.6-4.2 4.2" />
+  </LupiGlyph>
+);
+const IconControls = () => (
+  <LupiGlyph>
+    <path d="M7 8.2h10" />
+    <path d="M7 12h10" opacity="0.82" />
+    <path d="M7 15.8h10" opacity="0.64" />
+    <circle cx="10" cy="8.2" r="1.15" fill="currentColor" stroke="none" />
+    <circle cx="14.2" cy="12" r="1.15" fill="currentColor" stroke="none" />
+    <circle cx="11.7" cy="15.8" r="1.15" fill="currentColor" stroke="none" />
   </LupiGlyph>
 );
 // ─── Background presets ───────────────────────────────────────────────
@@ -511,7 +524,7 @@ export default function App() {
 
   const [hashRoute, setHashRoute] = useState(currentHashRoute);
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
-  const [studioDeck, setStudioDeck] = useState<StudioDeckMode | null>(null);
+  const [studioDeck, setStudioDeck] = useState<ViewerControlMode | null>(null);
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
   const loadedSavedViewSlugRef = useRef<string | null>(null);
   const hashPath = hashRoute.split('?')[0] || '/';
@@ -585,6 +598,8 @@ export default function App() {
   const fillLightColor = useStore(s => s.fillLightColor);
   const rimLightColor = useStore(s => s.rimLightColor);
   const colormap = useStore(s => s.colormap);
+  const uniformAtomColor = useStore(s => s.uniformAtomColor);
+  const elementColorOverrides = useStore(s => s.elementColorOverrides);
   const atomColorSource = useStore(s => s.atomColorSource);
   const postprocessPreset = useStore(s => s.postprocessPreset);
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
@@ -655,6 +670,10 @@ export default function App() {
   const activePanel = useStore(s => s.activePanel);
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const backgroundStyle = useStore(s => s.backgroundStyle);
+  const filterShellShape = useStore(s => s.filterShellShape);
+  const filterShellPreset = useStore(s => s.filterShellPreset);
+  const filterShellOpacity = useStore(s => s.filterShellOpacity);
+  const filterShellRadius = useStore(s => s.filterShellRadius);
   const ssaoIntensity = useStore(s => s.ssaoIntensity);
   const showScaleBar = useStore(s => s.showScaleBar);
   const cameraPreset = useStore(s => s.cameraPreset);
@@ -694,23 +713,25 @@ export default function App() {
     cameraPreset === 'front' ? 'YZ' :
     cameraPreset === 'iso' ? 'ISO' : 'View';
 
-  const openStudioDeck = useCallback((mode: StudioDeckMode) => {
-    setActivePanel(null);
+  const openStudioDeck = useCallback((mode: ViewerControlMode) => {
     setShowPotentialBrowser(false);
     setViewMenuOpen(false);
-    setStudioDeck(current => current === mode ? null : mode);
-  }, [setActivePanel, setShowPotentialBrowser]);
+    setStudioDeck(mode);
+    if (activePanel !== 'studio') setActivePanel('studio');
+  }, [activePanel, setActivePanel, setShowPotentialBrowser]);
 
-  const openToolPanel = useCallback((panel: 'export' | 'flythrough' | 'equilibrium' | 'mlipLongRun' | 'telemetry') => {
-    setStudioDeck(null);
+  const toggleControlsPanel = useCallback(() => {
     setShowPotentialBrowser(false);
     setViewMenuOpen(false);
-    setActivePanel(panel as any);
+    setStudioDeck(current => current ?? 'look');
+    setActivePanel('studio');
   }, [setActivePanel, setShowPotentialBrowser]);
 
   useEffect(() => {
-    if (activePanel || showPotentialBrowser || !file) {
+    if (showPotentialBrowser || !file) {
       setStudioDeck(null);
+      setViewMenuOpen(false);
+    } else if (activePanel && activePanel !== 'studio') {
       setViewMenuOpen(false);
     }
   }, [activePanel, showPotentialBrowser, file?.name]);
@@ -944,22 +965,21 @@ export default function App() {
       ) as [number, number, number]
     : [0, 0, 0] as [number, number, number], [file?.name]);
 
+  const filterShellBaseRadius = useMemo(() => {
+    if (!file) return 4;
+    const { min, max } = file.trajectory.globalBounds;
+    const diagonal = Math.hypot(max[0] - min[0], max[1] - min[1], max[2] - min[2]);
+    return Math.max(4, diagonal * 0.58);
+  }, [file?.name]);
+
   const bg = resolveBackground(backgroundPreset, colormap);
   const bgMedia = bg.media;
   const isBatchExport = new URLSearchParams(window.location.search).get('batchExport') === 'true';
   const panelWidth = activePanel === 'mlipLongRun'
     ? 390
-    : (activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320);
+    : (activePanel === 'studio' || activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320);
   const mobilePanelHeight = 'clamp(232px, 32dvh, 300px)';
-  const mobileStudioDeckHeight = 'clamp(220px, 31dvh, 288px)';
-  const desktopStudioDeckHeight = 'min(38vh, 330px)';
-  const sceneRightInset = file && activePanel && !isMobile ? panelWidth : 0;
-  const sceneBottomInset = file && activePanel && isMobile ? mobilePanelHeight : 0;
-  const toolbarBottom = totalFrames > 1 ? 84 : 32;
-  const studioDeckBottom = toolbarBottom + 64;
-  const studioDeckCanvasReserve = file && !activePanel && studioDeck
-    ? `calc(${isMobile ? mobileStudioDeckHeight : desktopStudioDeckHeight} + ${studioDeckBottom + 16}px)`
-    : '0px';
+  const activeMobilePanelHeight = activePanel === 'studio' ? 'clamp(420px, 68dvh, 620px)' : mobilePanelHeight;
 
   return (
     <div style={{
@@ -1072,33 +1092,11 @@ export default function App() {
               >
                 {isMobile ? 'Atoms' : 'Gallery'}
               </a>
-              <a
-                href="#/mcp"
-                style={{
-                  display: 'block',
-                  padding: isMobile ? '7px 9px' : '8px 12px',
-                  fontSize: isMobile ? 12 : 13,
-                  fontWeight: 600,
-                  color: isMcpViewerRoute ? '#e0f2fe' : 'var(--text-muted)',
-                  background: isMcpViewerRoute ? 'rgba(14,165,233,0.16)' : 'transparent',
-                  border: isMcpViewerRoute ? '1px solid rgba(125,211,252,0.52)' : '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-sm)',
-                  textDecoration: 'none',
-                }}
-              >
-                MCP
-              </a>
-              <HeaderAuthButton compact={isMobile} />
             </>
           )}
           {!file && (
             <button
-              onClick={() => {
-                const url = new URL(window.location.href);
-                url.searchParams.set('sim', 'lupine_bluebonnet');
-                window.history.pushState({}, '', url);
-                window.dispatchEvent(new PopStateEvent('popstate'));
-              }}
+              onClick={() => void openRandomOmol25Molecule()}
               style={{
                 padding: '8px 14px',
                 fontSize: 14, fontWeight: 500,
@@ -1126,15 +1124,20 @@ export default function App() {
         <McpViewerBridge />
         {isMcpViewerRoute && <McpViewerHarness />}
         {/* 3D viewport */}
-        <div style={{ 
+        <div className="lupi-main-viewport" style={{
           position: file ? 'absolute' : 'fixed', 
           top: file ? 0 : 56, // below header when fixed
-          right: sceneRightInset,
-          bottom: sceneBottomInset,
+          right: 0,
+          bottom: 0,
           left: 0,
           zIndex: 0,
-          transition: 'right 180ms ease, bottom 180ms ease',
         }}>
+          <style>{`
+            .lupi-main-viewport canvas {
+              width: 100% !important;
+              height: 100% !important;
+            }
+          `}</style>
           {!canRenderScene ? (
             // Capability gate: device can't start a WebGL context. Render the
             // branded recovery banner INSTEAD of a silent blank canvas.
@@ -1161,9 +1164,7 @@ export default function App() {
               background: 'transparent',
               display: 'block',
               width: '100%',
-              height: studioDeckCanvasReserve === '0px' ? '100%' : `calc(100% - ${studioDeckCanvasReserve})`,
-              minHeight: studioDeckCanvasReserve === '0px' ? undefined : 180,
-              transition: 'height 180ms ease',
+              height: '100%',
             }}
           >
             {import.meta.env.DEV && showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
@@ -1218,6 +1219,14 @@ export default function App() {
 
             {currentFrame && (
               <SpatialAnchor cameraDistance={cameraDistance}>
+                <MoleculeFilterShell
+                  center={center}
+                  radius={filterShellBaseRadius}
+                  shape={filterShellShape}
+                  preset={filterShellPreset}
+                  opacity={filterShellOpacity}
+                  radiusScale={filterShellRadius}
+                />
                 <AnomalyTracker
                   frame={currentFrame}
                   colorProperty={colorProperty}
@@ -1236,6 +1245,8 @@ export default function App() {
                   colorMode={colorMode}
                   colorProperty={colorProperty ?? undefined}
                   colormap={colormap}
+                  uniformColor={uniformAtomColor}
+                  elementColorOverrides={elementColorOverrides}
                   atomColorSource={atomColorSource}
                   scale={atomScale}
                   renderStyle={renderStyle}
@@ -1283,6 +1294,8 @@ export default function App() {
                     colormap={colormap}
                     colorMode={colorMode}
                     colorProperty={colorProperty ?? undefined}
+                    uniformColor={uniformAtomColor}
+                    elementColorOverrides={elementColorOverrides}
                     radius={0.12}
                     opacity={0.85}
                     botanicalMode={renderStyle === 'botanical'}
@@ -1517,47 +1530,46 @@ export default function App() {
             </div>
           )}
 
-          {file && !activePanel && studioDeck && (
-            <StudioControlDeck
-              mode={studioDeck}
-              onClose={() => setStudioDeck(null)}
-              bottomOffset={studioDeckBottom}
-            />
-          )}
-
-          {/* Floating toolbar */}
-          {file && !activePanel && (
+          {/* Top-right controls launcher */}
+          {file && !showPotentialBrowser && (
             <div style={{
               position: 'absolute',
-              bottom: toolbarBottom,
-              left: 0,
-              right: 0,
+              top: 64,
+              right: activePanel && !isMobile ? panelWidth + 16 : 16,
               display: 'flex',
-              justifyContent: 'center',
-              pointerEvents: 'none',
+              justifyContent: 'flex-end',
               zIndex: 150,
-              padding: '0 16px',
             }}>
-              <div style={{
-                pointerEvents: 'auto',
-                position: 'relative',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-                gap: 6,
-                padding: 8,
-                background: 'rgba(0,0,0,0.5)',
-                borderRadius: 12,
-                backdropFilter: 'blur(12px)',
-                width: 'min(640px, calc(100vw - 32px))',
-                WebkitOverflowScrolling: 'touch',
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none'
-              }}>
-                <ToolButton icon={<IconLook />} label="Look" active={studioDeck === 'look'} onClick={() => openStudioDeck('look')} />
-                <ToolButton icon={<IconSurface />} label={isMobile ? 'Surf' : 'Surface'} active={studioDeck === 'surface'} onClick={() => openStudioDeck('surface')} />
-                <ToolButton icon={<IconWorld />} label="World" active={studioDeck === 'world'} onClick={() => openStudioDeck('world')} />
-                <ToolButton icon={<IconExport />} label={isMobile ? 'Save' : 'Export'} active={activePanel === 'export' || activePanel === 'flythrough'} onClick={() => openToolPanel('export')} />
-              </div>
+              <button
+                type="button"
+                aria-label="Controls"
+                aria-expanded={activePanel === 'studio'}
+                title="Controls"
+                onClick={toggleControlsPanel}
+                style={{
+                  minWidth: 116,
+                  height: 42,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  padding: '0 12px',
+                  color: activePanel === 'studio' ? '#f8fafc' : '#dbeafe',
+                  background: activePanel === 'studio' ? 'rgba(30,220,224,0.18)' : 'rgba(0,0,0,0.56)',
+                  border: activePanel === 'studio' ? '1px solid rgba(30,220,224,0.7)' : '1px solid rgba(148,163,184,0.28)',
+                  borderRadius: 8,
+                  boxShadow: activePanel === 'studio' ? '0 0 22px rgba(30,220,224,0.2)' : '0 12px 32px rgba(0,0,0,0.28)',
+                  backdropFilter: 'blur(14px)',
+                  WebkitBackdropFilter: 'blur(14px)',
+                  cursor: 'pointer',
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: 0,
+                }}
+              >
+                <IconControls />
+                Controls
+              </button>
             </div>
           )}
 
@@ -1576,8 +1588,8 @@ export default function App() {
             bottom: 0,
             left: isMobile ? 0 : 'auto',
             width: isMobile ? '100%' : panelWidth,
-            height: isMobile ? mobilePanelHeight : 'auto',
-            maxHeight: isMobile ? mobilePanelHeight : 'none',
+            height: isMobile ? activeMobilePanelHeight : 'auto',
+            maxHeight: isMobile ? activeMobilePanelHeight : 'none',
             boxSizing: 'border-box',
             borderLeft: isMobile ? 'none' : '1px solid var(--border-subtle)',
             borderTop: isMobile ? '1px solid var(--border-subtle)' : 'none',
@@ -1588,13 +1600,20 @@ export default function App() {
             WebkitBackdropFilter: isMobile ? 'blur(16px)' : 'none',
             display: 'flex',
             flexDirection: 'column',
-            overflowY: activePanel === 'export' ? 'hidden' : 'auto',
+            overflowY: activePanel === 'export' || activePanel === 'studio' ? 'hidden' : 'auto',
             paddingBottom: isMobile ? 'env(safe-area-inset-bottom)' : 0,
             boxShadow: isMobile ? '0 -18px 48px rgba(0,0,0,0.45)' : 'none',
             zIndex: 100,
             animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
           }}>
             <ErrorBoundary>
+              {activePanel === 'studio' && (
+                <ViewerControlsDrawer
+                  activeMode={studioDeck ?? 'look'}
+                  onModeChange={openStudioDeck}
+                  onClose={() => setActivePanel('studio')}
+                />
+              )}
               {activePanel === 'export' && <FigureExportPanel />}
               {activePanel === 'flythrough' && <FlythroughPanel />}
               {activePanel === 'telemetry' && (
@@ -1773,6 +1792,127 @@ function RendererWarningToast() {
     </div>
   );
 }
+
+function ViewerControlsDrawer({
+  activeMode,
+  onModeChange,
+  onClose,
+}: {
+  activeMode: ViewerControlMode;
+  onModeChange: (mode: ViewerControlMode) => void;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      data-testid="viewer-controls-drawer"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        minHeight: 0,
+      }}
+    >
+      <div style={{
+        flexShrink: 0,
+        display: 'grid',
+        gap: 8,
+        padding: '10px 10px 8px',
+        borderBottom: '1px solid var(--border-subtle)',
+        background: 'linear-gradient(180deg, rgba(15,23,42,0.72), rgba(15,23,42,0.2))',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
+            <span style={{ color: '#1edce0', display: 'flex', flexShrink: 0 }}><IconControls /></span>
+            <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 800, letterSpacing: 0 }}>Controls</span>
+          </div>
+          <button
+            type="button"
+            aria-label="Close controls"
+            title="Close"
+            onClick={onClose}
+            style={drawerIconButtonStyle}
+          >
+            <IconClose />
+          </button>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 5 }}>
+          <ControlModeTab icon={<IconLook />} label="Look" active={activeMode === 'look'} onClick={() => onModeChange('look')} />
+          <ControlModeTab icon={<IconSurface />} label="Surface" active={activeMode === 'surface'} onClick={() => onModeChange('surface')} />
+          <ControlModeTab icon={<IconWorld />} label="World" active={activeMode === 'world'} onClick={() => onModeChange('world')} />
+          <ControlModeTab icon={<IconExport />} label="Export" active={activeMode === 'export'} onClick={() => onModeChange('export')} />
+        </div>
+      </div>
+      <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+        {activeMode === 'export' ? (
+          <FigureExportPanel />
+        ) : (
+          <StudioControlDeck
+            mode={activeMode}
+            onClose={onClose}
+            variant="drawer"
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ControlModeTab({
+  icon,
+  label,
+  active,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      aria-pressed={active}
+      title={label}
+      onClick={onClick}
+      style={{
+        minWidth: 0,
+        height: 48,
+        display: 'grid',
+        placeItems: 'center',
+        gap: 1,
+        padding: '4px 2px',
+        color: active ? '#f8fafc' : '#94a3b8',
+        background: active ? 'rgba(30,220,224,0.16)' : 'rgba(2,6,23,0.54)',
+        border: active ? '1px solid rgba(30,220,224,0.66)' : '1px solid rgba(148,163,184,0.18)',
+        borderRadius: 7,
+        boxShadow: active ? '0 0 16px rgba(30,220,224,0.18)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+        cursor: 'pointer',
+        fontSize: 10,
+        fontWeight: 760,
+        lineHeight: 1,
+        letterSpacing: 0,
+      }}
+    >
+      <span style={{ display: 'flex', width: 20, height: 20 }}>{icon}</span>
+      <span style={{ whiteSpace: 'normal', maxWidth: '100%' }}>{label}</span>
+    </button>
+  );
+}
+
+const drawerIconButtonStyle: React.CSSProperties = {
+  width: 28,
+  height: 28,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexShrink: 0,
+  color: 'var(--text-secondary)',
+  background: 'rgba(15,23,42,0.72)',
+  border: '1px solid rgba(148,163,184,0.22)',
+  borderRadius: 6,
+  cursor: 'pointer',
+};
 
 /** Inline tab strip rendered at the top of a consolidated drawer. Switches
  *  the active panel without closing the drawer; currently used for the

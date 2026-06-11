@@ -69,6 +69,9 @@ Useful local entry points:
 
 | Path | Use it for |
 | --- | --- |
+| `docs/navigation.md` | **Start here** — the map: the 60-second path to the real science, the error-geometry objects disambiguated, and honest status of recent additions |
+| `swarm_preprint_review/research/immi_dim01_sloppy_theory.md` | The literature foundation: sloppy models, the hyper-ribbon, primary sources (Transtrum, Waterfall, Frederiksen, Kurniawan) |
+| `lit-review.md` | Assembled review: sloppy theory + Simpson's-paradox/permutation methodology + benchmarking |
 | `CHANGELOG.md` | The fastest way to see what changed, what was learned, and what was corrected |
 | `docs/conjectures/ledger.md` | Current supported, refuted, and open hypotheses |
 | `docs/research_evolution_2026_05_05.md` | Narrative of the research loop and corpus growth |

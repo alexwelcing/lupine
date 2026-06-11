@@ -25,7 +25,7 @@
  *                          a DO (proves env propagates to DOs the same
  *                          way it does to the request handler)
  */
-import { generateText, streamText, tool, wrapLanguageModel, type LanguageModelV2Middleware } from "ai";
+import { generateText, streamText, tool, wrapLanguageModel, type LanguageModelMiddleware } from "ai";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { z } from "zod";
 import type { Env } from "../types";
@@ -59,7 +59,7 @@ async function timed<T>(
 function envConfig(env: Env): { base_url: string; model: string; key_prefix: string | null } {
   return {
     base_url: env.MINIMAX_BASE_URL?.trim() || "https://api.minimax.io/v1",
-    model: env.MINIMAX_MODEL?.trim() || "MiniMax-M2.7",
+    model: env.MINIMAX_MODEL?.trim() || "MiniMax-M3",
     key_prefix: env.MINIMAX_API_KEY ? env.MINIMAX_API_KEY.slice(0, 8) : null,
   };
 }
@@ -72,7 +72,7 @@ const middlewareCounters = {
   lastUsage: null as unknown,
 };
 
-function diagMiddleware(): LanguageModelV2Middleware {
+function diagMiddleware(): LanguageModelMiddleware {
   return {
     wrapGenerate: async ({ doGenerate }) => {
       middlewareCounters.wrapGenerate += 1;

@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
 import { ParticleCanvas } from './ParticleCanvas';
 import { AnimatedCounter } from './AnimatedCounter';
+import { HeroMoleculePreview } from './HeroMoleculePreview';
 import { ALL_EXAMPLES } from './shared';
 import { useStore } from '../store';
+import { openRandomOmol25Molecule } from '../molecules/randomOmol';
 
 export function HeroSection() {
   const openConfigurator = useStore((s) => s.openConfigurator);
@@ -18,14 +20,8 @@ export function HeroSection() {
     return { totalAtoms, totalSims, domains };
   }, []);
 
-  // Primary activation: render a real molecule instantly — no file, no wall.
-  // (Same demo the top-nav CTA loads; the viewer fires molecule_loaded on render.)
-  const viewAMolecule = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sim', 'lupine_bluebonnet');
-    window.history.pushState({}, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
+  // Primary activation: load a random real OMol25 geometry — no file, no wall.
+  const viewAMolecule = () => void openRandomOmol25Molecule();
 
   return (
     <section
@@ -151,7 +147,7 @@ export function HeroSection() {
             gap: 12,
             justifyContent: 'center',
             flexWrap: 'wrap',
-            marginBottom: 56,
+            marginBottom: 32,
             animation: 'heroFadeIn 1s ease-out 0.6s forwards',
             opacity: 0,
           }}
@@ -207,6 +203,19 @@ export function HeroSection() {
           >
             Browse Gallery
           </a>
+        </div>
+
+        {/* Live viewer preview — a small, always-on rotating molecule that opens
+            the real viewer on click. */}
+        <div
+          style={{
+            margin: '0 auto 44px',
+            width: 'min(440px, 84vw)',
+            animation: 'heroFadeIn 1s ease-out 0.75s forwards',
+            opacity: 0,
+          }}
+        >
+          <HeroMoleculePreview onOpen={viewAMolecule} style={{ width: '100%', aspectRatio: '16 / 10' }} />
         </div>
 
         {/* Tertiary: power-users with their own data */}

@@ -26,6 +26,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # Investor-facing surfaces: the journal acronym must not appear at all. "IMMI" is
 # matched case-sensitively so the lowercase asset path /immi_paper.pdf is not flagged.
 SURFACES_STRICT = [
+    "gcp/lupine-site-router/public/index.html",
+    "gcp/lupine-site-router/public/llms.txt",
     "library-site/src/i18n.js",
     "library-site/src/app.js",
     "atlas/lupine-vc/deck.html",
@@ -65,6 +67,15 @@ CLAIM_PHRASES = [
     "founding team",
 ]
 
+STRICT_ONLY_PHRASES = [
+    "welcing2026causal",
+    "BibTeX key",
+    "manuscript status",
+    "47 theorems",
+    "1,499 build targets",
+    "Lean 4 specification",
+]
+
 
 def _scan(rel: str, *, forbid_immi: bool) -> list[str]:
     path = ROOT / rel
@@ -78,6 +89,10 @@ def _scan(rel: str, *, forbid_immi: bool) -> list[str]:
                 out.append(f"{rel}:{line_no}: forbidden claim {phrase!r} in: {line.strip()[:100]}")
         if forbid_immi and "IMMI" in line:
             out.append(f"{rel}:{line_no}: journal acronym 'IMMI' in public surface: {line.strip()[:100]}")
+        if forbid_immi:
+            for phrase in STRICT_ONLY_PHRASES:
+                if phrase.lower() in low:
+                    out.append(f"{rel}:{line_no}: stale homepage/publication block {phrase!r} in: {line.strip()[:100]}")
     return out
 
 

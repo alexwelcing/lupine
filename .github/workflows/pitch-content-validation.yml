@@ -8,6 +8,9 @@ on:
     paths:
       - 'brand.config.json'
       - 'docs/brand/**'
+      - 'gcp/lupine-site-router/**'
+      - 'deck/public/**'
+      - 'raise/**'
       - 'library-site/**'
       - 'atlas/lupine-vc/**'
       - 'atlas/manifesto/**'
@@ -24,6 +27,9 @@ on:
     paths:
       - 'brand.config.json'
       - 'docs/brand/**'
+      - 'gcp/lupine-site-router/**'
+      - 'deck/public/**'
+      - 'raise/**'
       - 'library-site/**'
       - 'atlas/lupine-vc/**'
       - 'atlas/manifesto/**'

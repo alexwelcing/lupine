@@ -1,0 +1,2943 @@
+{
+  "accuracy": {
+    "error": 0.5669397739517912,
+    "error_unit": "gpa_mae",
+    "primary_metric": "stress_mae_gpa",
+    "score": 0.8866120452096418,
+    "score_tolerance": 5.0,
+    "thermodynamic_condition_coverage": {
+      "coverage_score": 0.0,
+      "has_high_pressure": false,
+      "has_high_temperature": false,
+      "has_low_pressure": false,
+      "has_low_temperature": false,
+      "high_pressure_gpa_min": 10.0,
+      "high_temperature_k_min": 1200.0,
+      "low_pressure_gpa_max": 1.0,
+      "low_temperature_k_max": 500.0,
+      "phase_count": 0,
+      "phases": [],
+      "pressure_count": 0,
+      "pressures_gpa": [],
+      "schema": "lupine.mlip.thermodynamic_condition_coverage.v1",
+      "temperature_count": 0,
+      "temperatures_k": []
+    },
+    "unit": "row_native_physical_score"
+  },
+  "campaign_id": null,
+  "cell_id": "sm-20260602b:distill_accuracy:stress:mace-mp-0",
+  "checkpoint": {
+    "cache_misses": 5,
+    "flush_count": 2,
+    "ignored_reason": null,
+    "loaded_predictions": 0,
+    "mode": "read-write",
+    "pending_flush_predictions": 0,
+    "schema": "lupine.mlip.cell_checkpoint.summary.v1",
+    "stored_predictions": 5,
+    "url": "gs://shed-489901-atlas-outputs/model-sim-matrix/sm-20260602b/_ckpt/distill_accuracy_stress/cell_checkpoint.json",
+    "written_predictions": 5
+  },
+  "distill_policy_engine": "rust",
+  "distill_policy_hash": "sha256:1a7b63353fea4bd35670e96d05d54c44d31f4ecc0bbe8031b08abef28b95ae68",
+  "distill_policy_url": "gs://shed-489901-atlas-inputs/mlip-policies/hyperribbon-mptrj-mace-stress-v1/policy_limits_accuracy.json",
+  "distill_profile": "accuracy",
+  "distill_runtime": {
+    "cell_id": "sm-20260602b:distill_accuracy:stress:mace-mp-0",
+    "enabled": true,
+    "events_uri": "gs://shed-489901-atlas-outputs/model-sim-matrix/sm-20260602b/distill_accuracy/stress/mace-mp-0/distill_events.jsonl",
+    "interventions": [
+      {
+        "action": "delta_correct_blocked",
+        "field": "stress_gpa",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:257c5100c5c8625f70276aa5b0abdaacce5d7889cf2fd728221388adb3eeef45",
+        "policy_engine": "rust",
+        "prediction_index": 0,
+        "reason": "blocked_nonpositive_support_lift",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-559535-step1-stress-0",
+        "value": 0.0
+      },
+      {
+        "action": "accept",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:257c5100c5c8625f70276aa5b0abdaacce5d7889cf2fd728221388adb3eeef45",
+        "policy_engine": "rust",
+        "prediction_index": 0,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-559535-step1-stress-0"
+      },
+      {
+        "action": "delta_correct_blocked",
+        "field": "stress_gpa",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:40c1560be84461d660fa647eba0e81829dfd30351854f47b1c7219a642d0724e",
+        "policy_engine": "rust",
+        "prediction_index": 1,
+        "reason": "blocked_nonpositive_support_lift",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-1201644-step1-stress-1",
+        "value": 0.0
+      },
+      {
+        "action": "accept",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:40c1560be84461d660fa647eba0e81829dfd30351854f47b1c7219a642d0724e",
+        "policy_engine": "rust",
+        "prediction_index": 1,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-1201644-step1-stress-1"
+      },
+      {
+        "action": "delta_correct_blocked",
+        "field": "stress_gpa",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:b0d105532ad57a2b01619f67cd46b64b0106474336732cefd9a7ff567e683739",
+        "policy_engine": "rust",
+        "prediction_index": 2,
+        "reason": "blocked_nonpositive_support_lift",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-23339-step0-stress-2",
+        "value": 0.0
+      },
+      {
+        "action": "accept",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:b0d105532ad57a2b01619f67cd46b64b0106474336732cefd9a7ff567e683739",
+        "policy_engine": "rust",
+        "prediction_index": 2,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-23339-step0-stress-2"
+      },
+      {
+        "action": "delta_correct_blocked",
+        "field": "stress_gpa",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:be20eb6401b0c8aecff8c04539238be440c3e7d7c2f5bc24b1f157d3653d06c4",
+        "policy_engine": "rust",
+        "prediction_index": 3,
+        "reason": "blocked_nonpositive_support_lift",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-601292-step1-stress-3",
+        "value": 0.0
+      },
+      {
+        "action": "accept",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:be20eb6401b0c8aecff8c04539238be440c3e7d7c2f5bc24b1f157d3653d06c4",
+        "policy_engine": "rust",
+        "prediction_index": 3,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-601292-step1-stress-3"
+      },
+      {
+        "action": "delta_correct_blocked",
+        "field": "stress_gpa",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:2ad1fce68e76c30ae5cfaf7ba6c52c5f624ad6a4749364de07d8a37356fa2fad",
+        "policy_engine": "rust",
+        "prediction_index": 4,
+        "reason": "blocked_nonpositive_support_lift",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-1176493-step2-stress-4",
+        "value": 0.0
+      },
+      {
+        "action": "accept",
+        "mlip_id": "mace-mp-0",
+        "policy_decision_id": "sha256:2ad1fce68e76c30ae5cfaf7ba6c52c5f624ad6a4749364de07d8a37356fa2fad",
+        "policy_engine": "rust",
+        "prediction_index": 4,
+        "reason": "runtime_guards_passed",
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "structure_id": "mptrj-mp-1176493-step2-stress-4"
+      }
+    ],
+    "leakage_guard": {
+      "eval_structures": 57,
+      "overlap_count": 0,
+      "overlaps": [],
+      "passed": true,
+      "schema": "lupine.distill.leakage_guard.v1",
+      "support_structures": 63
+    },
+    "mlip_id": "mace-mp-0",
+    "policy_batches": [
+      {
+        "decision_count": 5,
+        "mlip_id": "mace-mp-0",
+        "policy_engine": "rust",
+        "prediction_count": 5,
+        "ribbon_version": "hyperribbon-v1",
+        "row_id": "stress",
+        "schema": "lupine.distill.policy_batch.v1"
+      }
+    ],
+    "policy_decisions": [
+      {
+        "actions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:257c5100c5c8625f70276aa5b0abdaacce5d7889cf2fd728221388adb3eeef45",
+        "policy_engine": "rust",
+        "prediction_index": 0,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-559535-step1-stress-0",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-1051f241493a38e8",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 0.75,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 625.0,
+            "max_stress_bias_gpa": 3.125,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.0,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 0.25
+          },
+          "policy_limits_id": "ribbon-1051f241493a38e8",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:40c1560be84461d660fa647eba0e81829dfd30351854f47b1c7219a642d0724e",
+        "policy_engine": "rust",
+        "prediction_index": 1,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-1201644-step1-stress-1",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-1051f241493a38e8",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 0.75,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 625.0,
+            "max_stress_bias_gpa": 3.125,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.0,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 0.25
+          },
+          "policy_limits_id": "ribbon-1051f241493a38e8",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:b0d105532ad57a2b01619f67cd46b64b0106474336732cefd9a7ff567e683739",
+        "policy_engine": "rust",
+        "prediction_index": 2,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-23339-step0-stress-2",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-1051f241493a38e8",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 0.75,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 625.0,
+            "max_stress_bias_gpa": 3.125,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.0,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 0.25
+          },
+          "policy_limits_id": "ribbon-1051f241493a38e8",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:be20eb6401b0c8aecff8c04539238be440c3e7d7c2f5bc24b1f157d3653d06c4",
+        "policy_engine": "rust",
+        "prediction_index": 3,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-601292-step1-stress-3",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-1051f241493a38e8",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 0.75,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 625.0,
+            "max_stress_bias_gpa": 3.125,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.0,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 0.25
+          },
+          "policy_limits_id": "ribbon-1051f241493a38e8",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      },
+      {
+        "actions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "decision": "accept",
+        "decision_id": "sha256:2ad1fce68e76c30ae5cfaf7ba6c52c5f624ad6a4749364de07d8a37356fa2fad",
+        "policy_engine": "rust",
+        "prediction_index": 4,
+        "refused": false,
+        "ribbon_version": "hyperribbon-v1",
+        "structure_id": "mptrj-mp-1176493-step2-stress-4",
+        "theorem_hooks": {
+          "base_policy_limits_id": "ribbon-1051f241493a38e8",
+          "bridge": "outer_loop_proxy",
+          "layerwise_exact": false,
+          "policy_engine": "atlas-distill",
+          "policy_limits": {
+            "energy_correction_scale": 0.75,
+            "force_correction_scale": 1.0,
+            "max_energy_bias_ev_per_atom": 0.5,
+            "max_energy_zero_point_shift_ev_per_atom": 0.0,
+            "max_force_bias_ev_per_angstrom": 1.0,
+            "max_force_norm_ev_per_angstrom": 200.0,
+            "max_projection_distance_proxy": 1000000000.0,
+            "max_ribbon_feature_distance_proxy": 1000000000.0,
+            "max_stiff_axis_drift_fraction": 0.05,
+            "max_stress_abs_gpa": 625.0,
+            "max_stress_bias_gpa": 3.125,
+            "max_support_eval_distance_proxy": 1.0,
+            "min_complement_residual_fraction": 0.0,
+            "min_energy_zero_point_support_lift_fraction": 0.95,
+            "min_projected_support_lift_fraction": 0.02,
+            "min_ribbon_support_error_before": 0.0,
+            "min_support_lift_fraction": 0.0,
+            "require_material_root_overlap": false,
+            "stress_correction_scale": 0.25
+          },
+          "policy_limits_id": "ribbon-1051f241493a38e8",
+          "ribbon_version": "hyperribbon-v1",
+          "schema": "lupine.distill.theorem_hooks.v1",
+          "support_diagnostics_present": true,
+          "theorem_development_lanes": [
+            {
+              "lane": "stiff_axis_preservation",
+              "runtime_proxy": "feature_space_projection",
+              "status": "not_applied"
+            },
+            {
+              "lane": "orthogonal_complement_lift",
+              "runtime_proxy": "projected_support_lift_fraction",
+              "status": "not_applied"
+            },
+            {
+              "lane": "projection_tube_refusal",
+              "runtime_proxy": "projection_distance_proxy",
+              "status": "policy_gate"
+            },
+            {
+              "lane": "vandermonde_decay",
+              "runtime_proxy": "singular_values_and_participation_ratio",
+              "status": "diagnostic"
+            }
+          ]
+        }
+      }
+    ],
+    "policy_engine": "rust",
+    "policy_limits_path": "/tmp/lupine-distill-policy-wmj9tsy4/policy_limits.json",
+    "profile": "accuracy",
+    "refusals": [],
+    "ribbon_version": "hyperribbon-v1",
+    "row_id": "stress",
+    "run_id": "sm-20260602b",
+    "schema": "lupine.distill.runtime_summary.v1",
+    "support_manifest_hash": "sha256:ce1fc645226b2b94aa53e35ad2271acf5c6b8e62a5307ef90354af3add864365",
+    "support_model": {
+      "candidate_correction": {
+        "ribbon_projected_residual_correction_v1": {
+          "basis_space": "feature",
+          "coefficients": [
+            [
+              -0.24479454545988827,
+              -0.1892161023286102,
+              0.059949172493461864,
+              -1.5846240570418288
+            ],
+            [
+              0.15722970831706432,
+              -0.022965690136485667,
+              -0.4654239689392291,
+              -2.3036038934227627
+            ],
+            [
+              0.29886496682054187,
+              -0.09829541209397741,
+              -0.09893498222269179,
+              -1.3842805107952871
+            ],
+            [
+              -0.05449606535212859,
+              -0.019783189341149667,
+              -0.01109553513887867,
+              -0.052778685067181745
+            ],
+            [
+              0.07476913607037326,
+              0.12626875036328836,
+              -0.11904200375450925,
+              -0.09912861193091033
+            ],
+            [
+              -0.16653922917093794,
+              -0.1123346660999582,
+              0.07593320926183939,
+              -0.036133141730756574
+            ]
+          ],
+          "complement_basis": [
+            [
+              0.3696574437491482,
+              -0.7108149662217421,
+              -0.5101435257268588,
+              0.31280831388407626
+            ],
+            [
+              0.7227782041990879,
+              0.5129215234412978,
+              0.08788047823759725,
+              0.45473090929706017
+            ],
+            [
+              0.21930365470861327,
+              0.34238508978353205,
+              -0.6872612516522958,
+              -0.6019554213583327
+            ]
+          ],
+          "complement_residual_fraction": 0.7021579673069742,
+          "feature_mean": [
+            -5.278981950298939,
+            2.0410286285602703,
+            -6.158716308867262e-09,
+            -6.179071127938859
+          ],
+          "feature_names": [
+            "component:stress_gpa:1",
+            "force_max_norm",
+            "force_mean:1",
+            "scalar:energy_ev_per_atom"
+          ],
+          "feature_scale": [
+            13.373673286082067,
+            3.9707093809433287,
+            2.592405769405872e-08,
+            1.8863074723595845
+          ],
+          "field": "stress_gpa",
+          "intercept": [
+            0.7192459121939099,
+            1.3900621337045482,
+            1.433650563030819,
+            0.02614459575200855,
+            -0.08800367200918666,
+            0.16270749445829552
+          ],
+          "matrix_rank": 6,
+          "metric": "mae",
+          "observable_dim": 6,
+          "participation_ratio": 2.707311859754276,
+          "projected_support_lift_fraction": 0.0,
+          "projection_distance_proxy": 0.5627248105896501,
+          "row_id": "stress",
+          "sample_count": 20,
+          "schema": "lupine.distill.ribbon_projected_residual_correction.v1",
+          "singular_values": [
+            6.375558334845133,
+            4.946486163468784,
+            2.9173946957489365,
+            2.524547235211609
+          ],
+          "stiff_axis_basis": [
+            [
+              -0.5411570463802835,
+              0.33826918996527744,
+              -0.5096102203459235,
+              0.5770792229773849
+            ]
+          ],
+          "stiff_axis_drift_fraction": 0.2978420326930261,
+          "stiff_axis_residual_fraction": 0.2978420326930261,
+          "support_error_after": 1.592439131186637,
+          "support_error_before": 1.3376326335595248,
+          "support_lift_fraction": 0.0
+        },
+        "ribbon_residual_correction_v1": {
+          "coefficients": [
+            [
+              -0.24479454545988827,
+              -0.1892161023286102,
+              0.059949172493461864,
+              -1.5846240570418288
+            ],
+            [
+              0.15722970831706432,
+              -0.022965690136485667,
+              -0.4654239689392291,
+              -2.3036038934227627
+            ],
+            [
+              0.29886496682054187,
+              -0.09829541209397741,
+              -0.09893498222269179,
+              -1.3842805107952871
+            ],
+            [
+              -0.05449606535212859,
+              -0.019783189341149667,
+              -0.01109553513887867,
+              -0.052778685067181745
+            ],
+            [
+              0.07476913607037326,
+              0.12626875036328836,
+              -0.11904200375450925,
+              -0.09912861193091033
+            ],
+            [
+              -0.16653922917093794,
+              -0.1123346660999582,
+              0.07593320926183939,
+              -0.036133141730756574
+            ]
+          ],
+          "eigenvalues": [
+            96.61382129557607,
+            2.924763247700524,
+            0.8677328552817265,
+            0.098267820766735,
+            0.07763191487511037,
+            0.0046058745946674536
+          ],
+          "feature_mean": [
+            -5.278981950298939,
+            2.0410286285602703,
+            -6.158716308867262e-09,
+            -6.179071127938859
+          ],
+          "feature_names": [
+            "component:stress_gpa:1",
+            "force_max_norm",
+            "force_mean:1",
+            "scalar:energy_ev_per_atom"
+          ],
+          "feature_scale": [
+            13.373673286082067,
+            3.9707093809433287,
+            2.592405769405872e-08,
+            1.8863074723595845
+          ],
+          "field": "stress_gpa",
+          "intercept": [
+            0.7192459121939099,
+            1.3900621337045482,
+            1.433650563030819,
+            0.02614459575200855,
+            -0.08800367200918666,
+            0.16270749445829552
+          ],
+          "matrix_rank": 6,
+          "metric": "mae",
+          "observable_dim": 6,
+          "participation_ratio": 1.0828545160648317,
+          "rank_limited": false,
+          "row_id": "stress",
+          "sample_count": 20,
+          "schema": "lupine.distill.ribbon_residual_correction.v1",
+          "support_error_after": 1.7193029929741506,
+          "support_error_before": 1.3376326335595248,
+          "support_lift_fraction": 0.0
+        },
+        "stress_bias_gpa": [
+          0.7192459121939099,
+          1.3900621337045482,
+          1.433650563030819,
+          0.02614459575200855,
+          -0.08800367200918666,
+          0.16270749445829552
+        ]
+      },
+      "correction": {},
+      "diagnostics": {
+        "applicability_gate": "passed_global_residual_no_material_overlap",
+        "eval_material_roots": [
+          "br-na-o",
+          "c-cl-h-o",
+          "h-o-p-pr-rb",
+          "in-s-sc",
+          "mg-o-re",
+          "mp-1176493",
+          "mp-1201644",
+          "mp-23339",
+          "mp-559535",
+          "mp-601292"
+        ],
+        "n_support_predictions": 20,
+        "projection_distance_proxy": 0.28871460709915814,
+        "ribbon_feature_distance_proxy": 1.9217143373556034,
+        "stress_bias_candidate_gpa": [
+          0.7192459121939099,
+          1.3900621337045482,
+          1.433650563030819,
+          0.02614459575200855,
+          -0.08800367200918666,
+          0.16270749445829552
+        ],
+        "stress_complement_basis": [
+          [
+            0.3696574437491482,
+            -0.7108149662217421,
+            -0.5101435257268588,
+            0.31280831388407626
+          ],
+          [
+            0.7227782041990879,
+            0.5129215234412978,
+            0.08788047823759725,
+            0.45473090929706017
+          ],
+          [
+            0.21930365470861327,
+            0.34238508978353205,
+            -0.6872612516522958,
+            -0.6019554213583327
+          ]
+        ],
+        "stress_complement_residual_fraction": 0.7021579673069742,
+        "stress_correction_gate": "blocked_no_support_lift",
+        "stress_participation_ratio": 2.707311859754276,
+        "stress_projected_support_error_after": 1.592439131186637,
+        "stress_projected_support_lift_fraction": 0.0,
+        "stress_projection_distance_proxy": 0.5627248105896501,
+        "stress_residual_ribbon_eigenvalues": [
+          96.61382129557607,
+          2.924763247700524,
+          0.8677328552817265,
+          0.098267820766735,
+          0.07763191487511037,
+          0.0046058745946674536
+        ],
+        "stress_residual_ribbon_feature_names": [
+          "component:stress_gpa:1",
+          "force_max_norm",
+          "force_mean:1",
+          "scalar:energy_ev_per_atom"
+        ],
+        "stress_residual_ribbon_field": "stress_gpa",
+        "stress_residual_ribbon_matrix_rank": 6,
+        "stress_residual_ribbon_observable_dim": 6,
+        "stress_residual_ribbon_participation_ratio": 1.0828545160648317,
+        "stress_residual_ribbon_rank_limited": false,
+        "stress_residual_ribbon_sample_count": 20,
+        "stress_residual_ribbon_status": "fit",
+        "stress_residual_ribbon_support_error_after": 1.7193029929741506,
+        "stress_residual_ribbon_support_error_before": 1.3376326335595248,
+        "stress_residual_ribbon_support_lift_fraction": 0.0,
+        "stress_singular_values": [
+          6.375558334845133,
+          4.946486163468784,
+          2.9173946957489365,
+          2.524547235211609
+        ],
+        "stress_stiff_axis_basis": [
+          [
+            -0.5411570463802835,
+            0.33826918996527744,
+            -0.5096102203459235,
+            0.5770792229773849
+          ]
+        ],
+        "stress_stiff_axis_drift_fraction": 0.2978420326930261,
+        "stress_stiff_axis_residual_fraction": 0.2978420326930261,
+        "stress_subspace_basis_space": "feature",
+        "stress_subspace_output_field": "stress_gpa",
+        "stress_subspace_schema": "lupine.distill.subspace_diagnostic.v1",
+        "stress_subspace_status": "fit",
+        "stress_support_mae_after_gpa": 1.5381887650657358,
+        "stress_support_mae_before_gpa": 1.3376326335595248,
+        "stress_theorem_development_lanes": [
+          {
+            "lane": "stiff_axis_preservation",
+            "runtime_proxy": "stiff_axis_drift_fraction",
+            "status": "measured"
+          },
+          {
+            "lane": "orthogonal_complement_lift",
+            "runtime_proxy": "complement_residual_fraction",
+            "status": "measured"
+          },
+          {
+            "lane": "projection_tube_refusal",
+            "runtime_proxy": "projection_distance_proxy",
+            "status": "measured"
+          },
+          {
+            "lane": "vandermonde_decay",
+            "runtime_proxy": "singular_values",
+            "status": "measured"
+          }
+        ],
+        "support_eval_distance_proxy": 1.0,
+        "support_material_roots": [
+          "ag-pt",
+          "al-ba-mg-o",
+          "al-fe-mo",
+          "b-gd-mn",
+          "ca-o-p",
+          "ce-o-sn",
+          "cl-cu-h-o",
+          "co-cs-cu-f",
+          "co-fe-o",
+          "eu-ni-s",
+          "fe-o",
+          "fe-o-zn",
+          "ga-ni-y",
+          "la-n-th",
+          "mg-sn",
+          "mo-o-u",
+          "mp-1008676",
+          "mp-1037958",
+          "mp-1094529",
+          "mp-1094800",
+          "mp-1201076",
+          "mp-1218017",
+          "mp-1222707",
+          "mp-1225979",
+          "mp-1226901",
+          "mp-1229032",
+          "mp-1392923",
+          "mp-34296",
+          "mp-34501",
+          "mp-504890",
+          "mp-505546",
+          "mp-559985",
+          "mp-672259",
+          "mp-695771",
+          "mp-705416",
+          "mp-705846",
+          "o-w",
+          "s-ta",
+          "s-ti"
+        ]
+      }
+    }
+  },
+  "duration_s": 14.772100852999984,
+  "execution": {
+    "cloud_run_job": "mlip-cell-mace",
+    "cloud_run_revision": null,
+    "cold_total_seconds": 70.594119165,
+    "model_load_seconds": 55.399498349000005,
+    "model_preloaded": false,
+    "runner_image_digest": null,
+    "warm_inference_seconds": 14.772100852999984
+  },
+  "fixture_contract": {
+    "blockers": [],
+    "fixture_id": "canonical-structures-v2",
+    "manifest_hash": "sha256:5f9cde3b94a44f030eb449b548440e6cbb6aac1d53db1d7698682e8a3a321b4c",
+    "reference_provenance": {
+      "elastic_constants": {
+        "elements": [
+          "Al",
+          "Cu",
+          "Mo"
+        ],
+        "source": "Simmons and Wang 1971 / Materials Project values encoded in mlip_immi/elastic_constants.py"
+      },
+      "mptrj": {
+        "config": "default",
+        "dataset": "nimashoghi/mptrj",
+        "figshare": "https://figshare.com/articles/dataset/Materials_Project_Trjectory_MPtrj_Dataset/23713842",
+        "materials_project_docs": "https://docs.materialsproject.org/services/ml-and-ai-applications/mptrj",
+        "notes": "MPtrj collates Materials Project ionic-step energies, forces, stresses, and structures.",
+        "split": "test",
+        "via": "Hugging Face Dataset Viewer rows API"
+      }
+    },
+    "release_ready": true,
+    "row_blockers": {
+      "elastic_constants": [],
+      "energy_volume": [],
+      "forces": [],
+      "relaxation_stability": [],
+      "stress": []
+    },
+    "row_counts": {
+      "elastic_constants": 39,
+      "energy_volume": 5,
+      "forces": 5,
+      "relaxation_stability": 3,
+      "stress": 5
+    },
+    "schema": "lupine.mlip.fixture_manifest.v2"
+  },
+  "interventions": [
+    {
+      "action": "delta_correct_blocked",
+      "field": "stress_gpa",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:257c5100c5c8625f70276aa5b0abdaacce5d7889cf2fd728221388adb3eeef45",
+      "policy_engine": "rust",
+      "prediction_index": 0,
+      "reason": "blocked_nonpositive_support_lift",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-559535-step1-stress-0",
+      "value": 0.0
+    },
+    {
+      "action": "accept",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:257c5100c5c8625f70276aa5b0abdaacce5d7889cf2fd728221388adb3eeef45",
+      "policy_engine": "rust",
+      "prediction_index": 0,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-559535-step1-stress-0"
+    },
+    {
+      "action": "delta_correct_blocked",
+      "field": "stress_gpa",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:40c1560be84461d660fa647eba0e81829dfd30351854f47b1c7219a642d0724e",
+      "policy_engine": "rust",
+      "prediction_index": 1,
+      "reason": "blocked_nonpositive_support_lift",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-1201644-step1-stress-1",
+      "value": 0.0
+    },
+    {
+      "action": "accept",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:40c1560be84461d660fa647eba0e81829dfd30351854f47b1c7219a642d0724e",
+      "policy_engine": "rust",
+      "prediction_index": 1,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-1201644-step1-stress-1"
+    },
+    {
+      "action": "delta_correct_blocked",
+      "field": "stress_gpa",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:b0d105532ad57a2b01619f67cd46b64b0106474336732cefd9a7ff567e683739",
+      "policy_engine": "rust",
+      "prediction_index": 2,
+      "reason": "blocked_nonpositive_support_lift",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-23339-step0-stress-2",
+      "value": 0.0
+    },
+    {
+      "action": "accept",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:b0d105532ad57a2b01619f67cd46b64b0106474336732cefd9a7ff567e683739",
+      "policy_engine": "rust",
+      "prediction_index": 2,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-23339-step0-stress-2"
+    },
+    {
+      "action": "delta_correct_blocked",
+      "field": "stress_gpa",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:be20eb6401b0c8aecff8c04539238be440c3e7d7c2f5bc24b1f157d3653d06c4",
+      "policy_engine": "rust",
+      "prediction_index": 3,
+      "reason": "blocked_nonpositive_support_lift",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-601292-step1-stress-3",
+      "value": 0.0
+    },
+    {
+      "action": "accept",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:be20eb6401b0c8aecff8c04539238be440c3e7d7c2f5bc24b1f157d3653d06c4",
+      "policy_engine": "rust",
+      "prediction_index": 3,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-601292-step1-stress-3"
+    },
+    {
+      "action": "delta_correct_blocked",
+      "field": "stress_gpa",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:2ad1fce68e76c30ae5cfaf7ba6c52c5f624ad6a4749364de07d8a37356fa2fad",
+      "policy_engine": "rust",
+      "prediction_index": 4,
+      "reason": "blocked_nonpositive_support_lift",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-1176493-step2-stress-4",
+      "value": 0.0
+    },
+    {
+      "action": "accept",
+      "mlip_id": "mace-mp-0",
+      "policy_decision_id": "sha256:2ad1fce68e76c30ae5cfaf7ba6c52c5f624ad6a4749364de07d8a37356fa2fad",
+      "policy_engine": "rust",
+      "prediction_index": 4,
+      "reason": "runtime_guards_passed",
+      "ribbon_version": "hyperribbon-v1",
+      "row_id": "stress",
+      "structure_id": "mptrj-mp-1176493-step2-stress-4"
+    }
+  ],
+  "manifest_hash": "sha256:5054e67420575ae38710cd837e09b2d5eefd41239aa6e89654b4a43bb5ea5b02",
+  "manifest_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json",
+  "mlip_id": "mace-mp-0",
+  "operation_name": null,
+  "predictions": [
+    {
+      "chemical_system": "C-Cl-H-O",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:257c5100c5c8625f70276aa5b0abdaacce5d7889cf2fd728221388adb3eeef45",
+        "policy_engine": "rust",
+        "profile": "accuracy",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -4.147551642523871,
+      "forces_ev_per_angstrom": [
+        [
+          3.928783178329468,
+          0.3191635012626648,
+          1.7876558303833008
+        ],
+        [
+          3.0992178916931152,
+          -2.181948184967041,
+          -1.9612939357757568
+        ],
+        [
+          0.659233033657074,
+          -3.858120918273926,
+          0.07003035396337509
+        ],
+        [
+          3.9287829399108887,
+          -0.31916505098342896,
+          1.7876553535461426
+        ],
+        [
+          0.6592333912849426,
+          3.85811996459961,
+          0.07003074139356613
+        ],
+        [
+          -3.0992188453674316,
+          -2.1819472312927246,
+          1.961293578147888
+        ],
+        [
+          -0.6592321991920471,
+          3.858118772506714,
+          -0.07003048062324524
+        ],
+        [
+          -3.928783178329468,
+          0.3191644549369812,
+          -1.787656545639038
+        ],
+        [
+          -2.2767670154571533,
+          3.370203971862793,
+          0.002948939800262451
+        ],
+        [
+          -2.2767672538757324,
+          -3.3702034950256348,
+          0.002947971224784851
+        ],
+        [
+          2.276766777038574,
+          3.3702025413513184,
+          -0.002948462963104248
+        ],
+        [
+          -0.6592328548431396,
+          -3.858121633529663,
+          -0.07003168016672134
+        ],
+        [
+          -3.928781986236572,
+          -0.319163054227829,
+          -1.7876551151275637
+        ],
+        [
+          -1.6821869611740112,
+          -0.6753865480422974,
+          -3.8052594661712646
+        ],
+        [
+          3.0992186069488525,
+          2.181947708129883,
+          -1.9612929821014404
+        ],
+        [
+          1.68218731880188,
+          0.6753865480422974,
+          3.8052587509155273
+        ],
+        [
+          -3.09921932220459,
+          2.1819474697113037,
+          1.961292386054993
+        ],
+        [
+          -1.6821857690811155,
+          0.6753848791122437,
+          -3.805258274078369
+        ],
+        [
+          2.276766538619995,
+          -3.3702025413513184,
+          -0.002948954701423645
+        ],
+        [
+          1.6821858882904053,
+          -0.6753854155540466,
+          3.805257797241211
+        ],
+        [
+          13.25944995880127,
+          -0.4536654949188232,
+          1.9702364206314087
+        ],
+        [
+          9.723793983459473,
+          -8.499796867370605,
+          -1.566162347793579
+        ],
+        [
+          9.723796844482422,
+          8.499802589416504,
+          -1.5661665201187134
+        ],
+        [
+          -9.72379207611084,
+          -8.499797821044922,
+          1.5661680698394775
+        ],
+        [
+          13.259469985961914,
+          0.4536680579185486,
+          1.970238447189331
+        ],
+        [
+          -13.259469032287598,
+          0.4536668658256531,
+          -1.9702379703521729
+        ],
+        [
+          -9.723804473876951,
+          8.499805450439453,
+          1.5661773681640625
+        ],
+        [
+          -13.259466171264648,
+          -0.45366621017456055,
+          -1.970235824584961
+        ],
+        [
+          0.6139007210731506,
+          -0.7759618759155273,
+          -0.4630438089370727
+        ],
+        [
+          0.6139013767242432,
+          0.7759623527526855,
+          -0.4630439281463623
+        ],
+        [
+          -0.613901674747467,
+          -0.7759639620780945,
+          0.4630405902862549
+        ],
+        [
+          -0.6139014959335327,
+          0.7759625315666199,
+          0.4630433917045593
+        ],
+        [
+          0.3276357054710388,
+          3.395512104034424,
+          2.750082492828369
+        ],
+        [
+          -0.32762953639030457,
+          -3.3955206871032715,
+          -2.7500953674316406
+        ],
+        [
+          -0.32762065529823303,
+          3.3955111503601074,
+          -2.7500853538513184
+        ],
+        [
+          0.32763248682022095,
+          -3.3955159187316895,
+          2.750088691711426
+        ]
+      ],
+      "material_id": "mp-559535",
+      "reference": {
+        "corrected_total_energy_ev": -154.79898071289062,
+        "energy_ev_per_atom": -4.299971580505371,
+        "forces_ev_per_angstrom": [
+          [
+            3.65716814994812,
+            0.6338490843772888,
+            1.71634840965271
+          ],
+          [
+            2.8777410984039307,
+            -2.246098518371582,
+            -1.9882118701934817
+          ],
+          [
+            0.17242670059204102,
+            -3.7717745304107666,
+            0.11255688220262527
+          ],
+          [
+            3.65716814994812,
+            -0.6338490843772888,
+            1.71634840965271
+          ],
+          [
+            0.17242670059204102,
+            3.7717745304107666,
+            0.11255688220262527
+          ],
+          [
+            -2.8777410984039307,
+            -2.246098518371582,
+            1.9882118701934817
+          ],
+          [
+            -0.17242670059204102,
+            3.7717745304107666,
+            -0.11255688220262527
+          ],
+          [
+            -3.65716814994812,
+            0.6338490843772888,
+            -1.71634840965271
+          ],
+          [
+            -2.366774797439575,
+            3.43232798576355,
+            -0.0029721700120717287
+          ],
+          [
+            -2.366774797439575,
+            -3.43232798576355,
+            -0.0029721700120717287
+          ],
+          [
+            2.366774797439575,
+            3.43232798576355,
+            0.0029721700120717287
+          ],
+          [
+            -0.17242670059204102,
+            -3.7717745304107666,
+            -0.11255688220262527
+          ],
+          [
+            -3.65716814994812,
+            -0.6338490843772888,
+            -1.71634840965271
+          ],
+          [
+            -1.7643680572509766,
+            -0.6318554282188416,
+            -3.683349132537842
+          ],
+          [
+            2.8777410984039307,
+            2.246098518371582,
+            -1.9882118701934817
+          ],
+          [
+            1.7643680572509766,
+            0.6318554282188416,
+            3.683349132537842
+          ],
+          [
+            -2.8777410984039307,
+            2.246098518371582,
+            1.9882118701934817
+          ],
+          [
+            -1.7643680572509766,
+            0.6318554282188416,
+            -3.683349132537842
+          ],
+          [
+            2.366774797439575,
+            -3.43232798576355,
+            0.0029721700120717287
+          ],
+          [
+            1.7643680572509766,
+            -0.6318554282188416,
+            3.683349132537842
+          ],
+          [
+            12.208789825439451,
+            -0.2384357452392578,
+            1.7541643381118774
+          ],
+          [
+            10.233701705932615,
+            -9.208290100097656,
+            -2.0800912380218506
+          ],
+          [
+            10.233701705932615,
+            9.208290100097656,
+            -2.0800912380218506
+          ],
+          [
+            -10.233701705932615,
+            -9.208290100097656,
+            2.0800912380218506
+          ],
+          [
+            12.208789825439451,
+            0.2384357452392578,
+            1.7541643381118774
+          ],
+          [
+            -12.208789825439451,
+            0.2384357452392578,
+            -1.7541643381118774
+          ],
+          [
+            -10.233701705932615,
+            9.208290100097656,
+            2.0800912380218506
+          ],
+          [
+            -12.208789825439451,
+            -0.2384357452392578,
+            -1.7541643381118774
+          ],
+          [
+            0.8526371121406555,
+            -0.8406530618667603,
+            -0.6929495930671692
+          ],
+          [
+            0.8526371121406555,
+            0.8406530618667603,
+            -0.6929495930671692
+          ],
+          [
+            -0.8526371121406555,
+            -0.8406530618667603,
+            0.6929495930671692
+          ],
+          [
+            -0.8526371121406555,
+            0.8406530618667603,
+            0.6929495930671692
+          ],
+          [
+            -0.7909464240074158,
+            3.4202027320861816,
+            2.9150731563568115
+          ],
+          [
+            0.7909464240074158,
+            -3.4202027320861816,
+            -2.9150731563568115
+          ],
+          [
+            0.7909464240074158,
+            3.4202027320861816,
+            -2.9150731563568115
+          ],
+          [
+            -0.7909464240074158,
+            -3.4202027320861816,
+            2.9150731563568115
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -5.177320957183838,
+        "stress_gpa": [
+          0.1053685726193308,
+          13.70806702052682,
+          8.759701588412225,
+          -0.0,
+          6.376147177262542,
+          -0.0
+        ]
+      },
+      "row_id": "stress",
+      "strain_voigt": null,
+      "stress_gpa": [
+        -2.141506094534612,
+        12.627140540543705,
+        6.515951450583451,
+        2.669977255771238e-06,
+        6.072773563419471,
+        3.520905439372353e-06
+      ],
+      "structure_id": "mptrj-mp-559535-step1-stress-0",
+      "symbols": [
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "Cl",
+        "Cl",
+        "Cl",
+        "Cl",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "volume_scale": null
+    },
+    {
+      "chemical_system": "In-S-Sc",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:40c1560be84461d660fa647eba0e81829dfd30351854f47b1c7219a642d0724e",
+        "policy_engine": "rust",
+        "profile": "accuracy",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -6.026985931396484,
+      "forces_ev_per_angstrom": [
+        [
+          0.28058966994285583,
+          0.00600820779800415,
+          -0.007039752788841724
+        ],
+        [
+          -0.28059232234954834,
+          -0.006010212004184723,
+          -0.007039434276521206
+        ],
+        [
+          0.28059080243110657,
+          -0.006012178957462311,
+          0.00703990226611495
+        ],
+        [
+          -0.2805899679660797,
+          0.006010040640830994,
+          0.007039690390229225
+        ],
+        [
+          -0.17088156938552856,
+          0.3034559488296509,
+          -0.018325552344322205
+        ],
+        [
+          0.17088216543197632,
+          -0.30345436930656433,
+          -0.01832578517496586
+        ],
+        [
+          -0.17088384926319122,
+          -0.3034570813179016,
+          0.018325749784708023
+        ],
+        [
+          0.17088204622268677,
+          0.3034549355506897,
+          0.018326032906770703
+        ],
+        [
+          0.024694114923477173,
+          -0.019005145877599716,
+          -0.01752058044075966
+        ],
+        [
+          -0.024695709347724915,
+          0.019008856266736984,
+          -0.01752055063843727
+        ],
+        [
+          0.02469491958618164,
+          0.01900496333837509,
+          0.017519716173410416
+        ],
+        [
+          -0.024693235754966736,
+          -0.019005246460437775,
+          0.017520345747470856
+        ],
+        [
+          -3.22055711876601e-07,
+          -1.2848036021750886e-06,
+          0.026219207793474197
+        ],
+        [
+          1.1630509106907994e-06,
+          -1.5436103240062948e-06,
+          -0.02622358873486519
+        ],
+        [
+          6.652582669630647e-06,
+          -6.716902134940028e-06,
+          0.9070643186569214
+        ],
+        [
+          2.932385541498661e-06,
+          1.7139100236818194e-06,
+          -0.9070645570755004
+        ],
+        [
+          -1.2227110862731934,
+          1.269662380218506,
+          -0.898629367351532
+        ],
+        [
+          1.2227020263671875,
+          -1.2696572542190552,
+          -0.8986233472824097
+        ],
+        [
+          -1.222705602645874,
+          -1.269658088684082,
+          0.8986260890960693
+        ],
+        [
+          1.2227009534835815,
+          1.269659399986267,
+          0.8986238241195679
+        ],
+        [
+          0.2663646936416626,
+          1.677309274673462,
+          0.01231864094734192
+        ],
+        [
+          -0.266366571187973,
+          -1.677308201789856,
+          0.012318234890699388
+        ],
+        [
+          0.266367107629776,
+          -1.677309513092041,
+          -0.012318040244281292
+        ],
+        [
+          -0.26636579632759094,
+          1.6773114204406738,
+          -0.01231800764799118
+        ],
+        [
+          1.5487053394317627,
+          -1.250130295753479,
+          -0.45585203170776367
+        ],
+        [
+          -1.548701286315918,
+          1.250126600265503,
+          -0.45585185289382935
+        ],
+        [
+          1.5487053394317627,
+          1.2501322031021118,
+          0.4558528661727905
+        ],
+        [
+          -1.5487072467803955,
+          -1.2501308917999268,
+          0.45585331320762634
+        ],
+        [
+          0.142304927110672,
+          -0.18787474930286407,
+          -0.004423590376973152
+        ],
+        [
+          -0.14230668544769287,
+          0.18787549436092377,
+          -0.004423166625201702
+        ],
+        [
+          0.14230887591838837,
+          0.1878768801689148,
+          0.004423466511070728
+        ],
+        [
+          -0.14230471849441528,
+          -0.18787412345409393,
+          0.004423465579748154
+        ],
+        [
+          0.055671244859695435,
+          0.1041317880153656,
+          0.006948923692107201
+        ],
+        [
+          -0.05566781759262085,
+          -0.10413364320993423,
+          0.006948994938284159
+        ],
+        [
+          0.055668555200099945,
+          -0.10413451492786407,
+          -0.006948746740818024
+        ],
+        [
+          -0.05566966533660889,
+          0.10413388907909392,
+          -0.006949402391910553
+        ],
+        [
+          -2.1189639568328857,
+          -0.24850578606128693,
+          -0.018206749111413956
+        ],
+        [
+          2.118963718414306,
+          0.24850590527057648,
+          -0.018206801265478138
+        ],
+        [
+          -2.1189627647399902,
+          0.24850565195083615,
+          0.01820884272456169
+        ],
+        [
+          2.1189627647399902,
+          -0.24850448966026303,
+          0.01820896193385124
+        ]
+      ],
+      "material_id": "mp-1201644",
+      "reference": {
+        "corrected_total_energy_ev": -252.9210968017578,
+        "energy_ev_per_atom": -6.323027610778809,
+        "forces_ev_per_angstrom": [
+          [
+            0.48835793137550354,
+            -0.07339548319578171,
+            0.031897928565740585
+          ],
+          [
+            -0.48835793137550354,
+            0.07339548319578171,
+            0.031897928565740585
+          ],
+          [
+            0.48835793137550354,
+            0.07339548319578171,
+            -0.031897928565740585
+          ],
+          [
+            -0.48835793137550354,
+            -0.07339548319578171,
+            -0.031897928565740585
+          ],
+          [
+            -0.09407880157232285,
+            0.21496319770812988,
+            -0.04094817861914635
+          ],
+          [
+            0.09407880157232285,
+            -0.21496319770812988,
+            -0.04094817861914635
+          ],
+          [
+            -0.09407880157232285,
+            -0.21496319770812988,
+            0.04094817861914635
+          ],
+          [
+            0.09407880157232285,
+            0.21496319770812988,
+            0.04094817861914635
+          ],
+          [
+            0.04798750951886177,
+            0.16778932511806488,
+            -0.02209910005331039
+          ],
+          [
+            -0.04798750951886177,
+            -0.16778932511806488,
+            -0.02209910005331039
+          ],
+          [
+            0.04798750951886177,
+            -0.16778932511806488,
+            0.02209910005331039
+          ],
+          [
+            -0.04798750951886177,
+            0.16778932511806488,
+            0.02209910005331039
+          ],
+          [
+            -0.0,
+            0.0,
+            0.02774582058191299
+          ],
+          [
+            -0.0,
+            0.0,
+            -0.02774582058191299
+          ],
+          [
+            0.0,
+            0.0,
+            1.010834574699402
+          ],
+          [
+            0.0,
+            0.0,
+            -1.010834574699402
+          ],
+          [
+            -1.5464979410171509,
+            1.2327955961227417,
+            -0.970684051513672
+          ],
+          [
+            1.5464979410171509,
+            -1.2327955961227417,
+            -0.970684051513672
+          ],
+          [
+            -1.5464979410171509,
+            -1.2327955961227417,
+            0.970684051513672
+          ],
+          [
+            1.5464979410171509,
+            1.2327955961227417,
+            0.970684051513672
+          ],
+          [
+            0.28001871705055237,
+            1.783058524131775,
+            0.008637039922177792
+          ],
+          [
+            -0.28001871705055237,
+            -1.783058524131775,
+            0.008637039922177792
+          ],
+          [
+            0.28001871705055237,
+            -1.783058524131775,
+            -0.008637039922177792
+          ],
+          [
+            -0.28001871705055237,
+            1.783058524131775,
+            -0.008637039922177792
+          ],
+          [
+            1.717563509941101,
+            -1.140208125114441,
+            -0.5021189451217651
+          ],
+          [
+            -1.717563509941101,
+            1.140208125114441,
+            -0.5021189451217651
+          ],
+          [
+            1.717563509941101,
+            1.140208125114441,
+            0.5021189451217651
+          ],
+          [
+            -1.717563509941101,
+            -1.140208125114441,
+            0.5021189451217651
+          ],
+          [
+            -0.03225931152701378,
+            -0.23479022085666656,
+            0.015234029851853848
+          ],
+          [
+            0.03225931152701378,
+            0.23479022085666656,
+            0.015234029851853848
+          ],
+          [
+            -0.03225931152701378,
+            0.23479022085666656,
+            -0.015234029851853848
+          ],
+          [
+            0.03225931152701378,
+            -0.23479022085666656,
+            -0.015234029851853848
+          ],
+          [
+            0.14685526490211487,
+            0.1794968545436859,
+            -0.004291070159524679
+          ],
+          [
+            -0.14685526490211487,
+            -0.1794968545436859,
+            -0.004291070159524679
+          ],
+          [
+            0.14685526490211487,
+            -0.1794968545436859,
+            0.004291070159524679
+          ],
+          [
+            -0.14685526490211487,
+            0.1794968545436859,
+            0.004291070159524679
+          ],
+          [
+            -2.1075005531311035,
+            -0.23641788959503177,
+            -0.019839279353618625
+          ],
+          [
+            2.1075005531311035,
+            0.23641788959503177,
+            -0.019839279353618625
+          ],
+          [
+            -2.1075005531311035,
+            0.23641788959503177,
+            0.019839279353618625
+          ],
+          [
+            2.1075005531311035,
+            -0.23641788959503177,
+            0.019839279353618625
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -6.396519660949707,
+        "stress_gpa": [
+          -7.403925305057645,
+          -6.28881859795008,
+          -5.4774328756354596,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "row_id": "stress",
+      "strain_voigt": null,
+      "stress_gpa": [
+        -7.1518408329062675,
+        -6.303189728072183,
+        -5.670275082543475,
+        2.9473563296642168e-06,
+        -1.4039304686142014e-06,
+        -1.2460022880627832e-06
+      ],
+      "structure_id": "mptrj-mp-1201644-step1-stress-1",
+      "symbols": [
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "Sc",
+        "In",
+        "In",
+        "In",
+        "In",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "volume_scale": null
+    },
+    {
+      "chemical_system": "Br-Na-O",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:b0d105532ad57a2b01619f67cd46b64b0106474336732cefd9a7ff567e683739",
+        "policy_engine": "rust",
+        "profile": "accuracy",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -3.7696739196777345,
+      "forces_ev_per_angstrom": [
+        [
+          3.383291006088257,
+          -6.661398887634277,
+          2.5388455390930176
+        ],
+        [
+          3.3832855224609375,
+          6.661390781402588,
+          -2.53884220123291
+        ],
+        [
+          -3.383286237716675,
+          -6.6613898277282715,
+          -2.5388426780700684
+        ],
+        [
+          6.6613898277282715,
+          -2.538841485977173,
+          3.3832850456237793
+        ],
+        [
+          -2.5388412475585938,
+          -3.3832852840423584,
+          -6.6613898277282715
+        ],
+        [
+          -2.5388455390930176,
+          3.383290529251098,
+          6.661400318145752
+        ],
+        [
+          -6.6613993644714355,
+          2.5388455390930176,
+          3.383291482925415
+        ],
+        [
+          2.5388453006744385,
+          3.383291006088257,
+          -6.661398410797119
+        ],
+        [
+          -3.3832859992980957,
+          6.661388397216797,
+          2.53884220123291
+        ],
+        [
+          2.538841724395752,
+          -3.3832859992980957,
+          6.661389350891113
+        ],
+        [
+          6.661388874053955,
+          2.538841724395752,
+          -3.383286237716675
+        ],
+        [
+          -6.66139030456543,
+          -2.538841485977173,
+          -3.3832857608795166
+        ],
+        [
+          -0.17454349994659424,
+          -0.17454367876052856,
+          -0.17454373836517334
+        ],
+        [
+          0.17454366385936737,
+          0.17454296350479126,
+          -0.17454351484775543
+        ],
+        [
+          -0.17454354465007782,
+          0.17454375326633453,
+          0.17454342544078827
+        ],
+        [
+          0.1745433360338211,
+          -0.17454342544078827,
+          0.1745436191558838
+        ],
+        [
+          -5.865355491638184,
+          -5.865355491638184,
+          -5.865356922149658
+        ],
+        [
+          5.865355491638184,
+          5.865362167358398,
+          -5.86536979675293
+        ],
+        [
+          -5.865358352661133,
+          5.865351676940918,
+          5.8653669357299805
+        ],
+        [
+          5.865365982055664,
+          -5.865360736846924,
+          5.865349769592285
+        ]
+      ],
+      "material_id": "mp-23339",
+      "reference": {
+        "corrected_total_energy_ev": -83.65154266357422,
+        "energy_ev_per_atom": -4.182577133178711,
+        "forces_ev_per_angstrom": [
+          [
+            3.4758176803588867,
+            -6.894408226013184,
+            2.6586267948150635
+          ],
+          [
+            3.4758176803588867,
+            6.894408226013184,
+            -2.6586267948150635
+          ],
+          [
+            -3.4758176803588867,
+            -6.894408226013184,
+            -2.6586267948150635
+          ],
+          [
+            6.894408226013184,
+            -2.6586267948150635,
+            3.4758176803588867
+          ],
+          [
+            -2.6586267948150635,
+            -3.4758176803588867,
+            -6.894408226013184
+          ],
+          [
+            -2.6586267948150635,
+            3.4758176803588867,
+            6.894408226013184
+          ],
+          [
+            -6.894408226013184,
+            2.6586267948150635,
+            3.4758176803588867
+          ],
+          [
+            2.6586267948150635,
+            3.4758176803588867,
+            -6.894408226013184
+          ],
+          [
+            -3.4758176803588867,
+            6.894408226013184,
+            2.6586267948150635
+          ],
+          [
+            2.6586267948150635,
+            -3.4758176803588867,
+            6.894408226013184
+          ],
+          [
+            6.894408226013184,
+            2.6586267948150635,
+            -3.4758176803588867
+          ],
+          [
+            -6.894408226013184,
+            -2.6586267948150635,
+            -3.4758176803588867
+          ],
+          [
+            -0.1325758993625641,
+            -0.1325758993625641,
+            -0.1325758993625641
+          ],
+          [
+            0.1325758993625641,
+            0.1325758993625641,
+            -0.1325758993625641
+          ],
+          [
+            -0.1325758993625641,
+            0.1325758993625641,
+            0.1325758993625641
+          ],
+          [
+            0.1325758993625641,
+            -0.1325758993625641,
+            0.1325758993625641
+          ],
+          [
+            -6.158067226409912,
+            -6.158067226409912,
+            -6.158067226409912
+          ],
+          [
+            6.158067226409912,
+            6.158067226409912,
+            -6.158067226409912
+          ],
+          [
+            -6.158067226409912,
+            6.158067226409912,
+            6.158067226409912
+          ],
+          [
+            6.158067226409912,
+            -6.158067226409912,
+            6.158067226409912
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -4.563571453094482,
+        "stress_gpa": [
+          -27.596165302827472,
+          -27.596165302827472,
+          -27.596165302827472,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "row_id": "stress",
+      "strain_voigt": null,
+      "stress_gpa": [
+        -25.861640684365597,
+        -25.861647846653224,
+        -25.861655008940847,
+        3.647812239188072e-06,
+        8.70958822493239e-06,
+        4.425171779062213e-06
+      ],
+      "structure_id": "mptrj-mp-23339-step0-stress-2",
+      "symbols": [
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "Na",
+        "Na",
+        "Na",
+        "Na",
+        "Br",
+        "Br",
+        "Br",
+        "Br"
+      ],
+      "volume_scale": null
+    },
+    {
+      "chemical_system": "H-O-P-Pr-Rb",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:be20eb6401b0c8aecff8c04539238be440c3e7d7c2f5bc24b1f157d3653d06c4",
+        "policy_engine": "rust",
+        "profile": "accuracy",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -6.644499778747559,
+      "forces_ev_per_angstrom": [
+        [
+          -0.24803967773914337,
+          0.3190724849700928,
+          0.012651506811380386
+        ],
+        [
+          0.2480392754077911,
+          -0.31907230615615845,
+          -0.01264989748597145
+        ],
+        [
+          0.35649362206459045,
+          -0.4237915277481079,
+          -0.11499843001365662
+        ],
+        [
+          -0.3564944267272949,
+          0.4237905740737915,
+          0.11499851197004318
+        ],
+        [
+          -0.9972003102302552,
+          2.262392997741699,
+          5.881459712982178
+        ],
+        [
+          4.2518310546875,
+          7.159929275512695,
+          -16.40679359436035
+        ],
+        [
+          -4.251836776733398,
+          -7.1599531173706055,
+          16.4068660736084
+        ],
+        [
+          3.3549680709838867,
+          1.5218567848205566,
+          -1.676177978515625
+        ],
+        [
+          0.9972017407417296,
+          -2.262385368347168,
+          -5.881462097167969
+        ],
+        [
+          -3.3549814224243164,
+          -1.5218582153320312,
+          1.676182746887207
+        ],
+        [
+          -1.814395785331726,
+          -1.138649821281433,
+          0.42830926179885864
+        ],
+        [
+          1.8143997192382812,
+          1.138654112815857,
+          -0.4283097982406616
+        ],
+        [
+          -6.333270072937012,
+          -9.072650909423828,
+          19.571712493896484
+        ],
+        [
+          -2.33719801902771,
+          -1.1461774110794067,
+          -2.51236891746521
+        ],
+        [
+          2.6508798599243164,
+          -2.456544876098633,
+          0.13956794142723083
+        ],
+        [
+          -2.0945703983306885,
+          1.4901360273361206,
+          0.3936259150505066
+        ],
+        [
+          0.4574976861476898,
+          3.2128639221191406,
+          0.240099236369133
+        ],
+        [
+          0.7819314002990723,
+          1.1084336042404177,
+          -1.1278722286224363
+        ],
+        [
+          0.3789707124233246,
+          -0.2844257056713104,
+          0.7300010919570923
+        ],
+        [
+          -1.015955090522766,
+          0.1520993560552597,
+          1.931954264640808
+        ],
+        [
+          -0.781929612159729,
+          -1.1084338426589966,
+          1.1278680562973022
+        ],
+        [
+          -2.6508712768554688,
+          2.456538438796997,
+          -0.13957062363624573
+        ],
+        [
+          -0.37896907329559326,
+          0.28442585468292236,
+          -0.7300010919570923
+        ],
+        [
+          -0.4574964046478271,
+          -3.212860345840454,
+          -0.24009940028190613
+        ],
+        [
+          0.019786834716796875,
+          -0.45788124203681946,
+          1.818232774734497
+        ],
+        [
+          1.015954852104187,
+          -0.15210092067718506,
+          -1.931954860687256
+        ],
+        [
+          -0.22699034214019775,
+          0.4085777997970581,
+          0.8077880144119263
+        ],
+        [
+          0.22699064016342163,
+          -0.40857356786727905,
+          -0.8077940344810486
+        ],
+        [
+          2.337197780609131,
+          1.1461758613586426,
+          2.5123708248138428
+        ],
+        [
+          2.0945706367492676,
+          -1.490137815475464,
+          -0.3936263918876648
+        ],
+        [
+          -0.019791483879089355,
+          0.4578801095485687,
+          -1.8182318210601809
+        ],
+        [
+          6.333277702331543,
+          9.072669982910156,
+          -19.5717716217041
+        ]
+      ],
+      "material_id": "mp-601292",
+      "reference": {
+        "corrected_total_energy_ev": -226.2772674560547,
+        "energy_ev_per_atom": -7.071164608001709,
+        "forces_ev_per_angstrom": [
+          [
+            -0.27780675888061523,
+            0.31558412313461304,
+            -0.008030329830944538
+          ],
+          [
+            0.27780675888061523,
+            -0.31558412313461304,
+            0.008030329830944538
+          ],
+          [
+            0.5591887831687927,
+            -0.6332705616950989,
+            -0.03081654012203217
+          ],
+          [
+            -0.5591887831687927,
+            0.6332705616950989,
+            0.03081654012203217
+          ],
+          [
+            -0.7522808909416199,
+            2.3212645053863525,
+            6.024333477020264
+          ],
+          [
+            4.708768367767334,
+            7.5974040031433105,
+            -17.112001419067383
+          ],
+          [
+            -4.708768367767334,
+            -7.5974040031433105,
+            17.112001419067383
+          ],
+          [
+            2.9350082874298096,
+            1.6856824159622192,
+            -1.8636797666549685
+          ],
+          [
+            0.7522808909416199,
+            -2.3212645053863525,
+            -6.024333477020264
+          ],
+          [
+            -2.9350082874298096,
+            -1.6856824159622192,
+            1.8636797666549685
+          ],
+          [
+            -1.9448896646499632,
+            -1.3044984340667725,
+            0.28677913546562195
+          ],
+          [
+            1.9448896646499632,
+            1.3044984340667725,
+            -0.28677913546562195
+          ],
+          [
+            -6.315766334533691,
+            -9.495490074157717,
+            19.85411071777344
+          ],
+          [
+            -2.317978858947754,
+            -1.1392608880996704,
+            -2.578505754470825
+          ],
+          [
+            2.439337968826294,
+            -2.310068130493164,
+            0.20599527657032013
+          ],
+          [
+            -1.960162043571472,
+            1.4745957851409912,
+            0.40064090490341187
+          ],
+          [
+            0.4315814077854157,
+            3.1804888248443604,
+            0.2305980622768402
+          ],
+          [
+            0.6607571840286255,
+            1.1431196928024292,
+            -1.1604176759719849
+          ],
+          [
+            0.5472220182418823,
+            -0.2162504345178604,
+            0.6681064963340759
+          ],
+          [
+            -0.974040150642395,
+            0.1017894595861435,
+            1.8282231092453003
+          ],
+          [
+            -0.6607571840286255,
+            -1.1431196928024292,
+            1.1604176759719849
+          ],
+          [
+            -2.439337968826294,
+            2.310068130493164,
+            -0.20599527657032013
+          ],
+          [
+            -0.5472220182418823,
+            0.2162504345178604,
+            -0.6681064963340759
+          ],
+          [
+            -0.4315814077854157,
+            -3.1804888248443604,
+            -0.2305980622768402
+          ],
+          [
+            0.4624328911304474,
+            -0.3362654447555542,
+            1.5232529640197754
+          ],
+          [
+            0.974040150642395,
+            -0.1017894595861435,
+            -1.8282231092453003
+          ],
+          [
+            -0.1226101815700531,
+            0.4680538475513458,
+            0.731550931930542
+          ],
+          [
+            0.1226101815700531,
+            -0.4680538475513458,
+            -0.731550931930542
+          ],
+          [
+            2.317978858947754,
+            1.1392608880996704,
+            2.578505754470825
+          ],
+          [
+            1.960162043571472,
+            -1.4745957851409912,
+            -0.40064090490341187
+          ],
+          [
+            -0.4624328911304474,
+            0.3362654447555542,
+            -1.5232529640197754
+          ],
+          [
+            6.315766334533691,
+            9.495490074157717,
+            -19.85411071777344
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -7.483492851257324,
+        "stress_gpa": [
+          9.042932462021026,
+          6.816108600425026,
+          -13.868465258202452,
+          5.65290414762057,
+          3.8721714336805344,
+          -0.28941450177738504
+        ]
+      },
+      "row_id": "stress",
+      "strain_voigt": null,
+      "stress_gpa": [
+        8.51702239362874,
+        6.6001065396201755,
+        -13.658981475994803,
+        6.003106588536078,
+        4.3748148107188936,
+        -1.0059489672534978
+      ],
+      "structure_id": "mptrj-mp-601292-step1-stress-3",
+      "symbols": [
+        "Rb",
+        "Rb",
+        "Pr",
+        "Pr",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "H",
+        "H",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "volume_scale": null
+    },
+    {
+      "chemical_system": "Mg-O-Re",
+      "distill": {
+        "decision": "accept",
+        "interventions": [
+          {
+            "action": "delta_correct_blocked",
+            "field": "stress_gpa",
+            "reason": "blocked_nonpositive_support_lift",
+            "value": 0.0
+          },
+          {
+            "action": "accept",
+            "reason": "runtime_guards_passed"
+          }
+        ],
+        "policy_decision_id": "sha256:2ad1fce68e76c30ae5cfaf7ba6c52c5f624ad6a4749364de07d8a37356fa2fad",
+        "policy_engine": "rust",
+        "profile": "accuracy",
+        "ribbon_version": "hyperribbon-v1"
+      },
+      "energy_ev_per_atom": -7.4943695068359375,
+      "forces_ev_per_angstrom": [
+        [
+          -2.2034555513528176e-08,
+          -4.2323654270148836e-07,
+          5.964875526842661e-08
+        ],
+        [
+          -1.2785835679096638e-07,
+          5.144102033227682e-07,
+          2.0521110855042937e-07
+        ],
+        [
+          1.959563970565796,
+          1.413068275724072e-07,
+          -5.3827534429728985e-08
+        ],
+        [
+          1.1653116871457315e-07,
+          0.8567812442779541,
+          7.706694304943086e-08
+        ],
+        [
+          -1.2647640801333182e-07,
+          -0.8567813634872437,
+          -1.752050593495369e-07
+        ],
+        [
+          -1.9595646858215332,
+          5.609035724774004e-08,
+          -7.088283382472582e-08
+        ]
+      ],
+      "material_id": "mp-1176493",
+      "reference": {
+        "corrected_total_energy_ev": -47.64126205444336,
+        "energy_ev_per_atom": -7.940210342407227,
+        "forces_ev_per_angstrom": [
+          [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            2.2724177837371826,
+            -0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.8953483700752258,
+            0.0
+          ],
+          [
+            -0.0,
+            -0.8953483700752258,
+            -0.0
+          ],
+          [
+            -2.2724177837371826,
+            0.0,
+            0.0
+          ]
+        ],
+        "relaxation_force_threshold": 0.05,
+        "relaxed_energy_ev_per_atom": -8.001851081848145,
+        "stress_gpa": [
+          10.349835085185871,
+          -10.378657324308572,
+          -0.017246851553843274,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "row_id": "stress",
+      "strain_voigt": null,
+      "stress_gpa": [
+        9.082193138501708,
+        -11.186896414926052,
+        -0.8909726147747165,
+        7.73599568716331e-08,
+        1.4479472830160814e-06,
+        5.050632041707593e-06
+      ],
+      "structure_id": "mptrj-mp-1176493-step2-stress-4",
+      "symbols": [
+        "Mg",
+        "Re",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "volume_scale": null
+    }
+  ],
+  "refusals": [],
+  "ribbon_version": "hyperribbon-v1",
+  "row_id": "stress",
+  "row_spec": {
+    "error_tolerance": 5.0,
+    "error_unit": "gpa_mae",
+    "min_cases": 5,
+    "reference_keys": [
+      "stress_gpa"
+    ]
+  },
+  "run_id": "sm-20260602b",
+  "schema": "lupine.mlip.cell_artifact.v1",
+  "speed": {
+    "score": 0.33847589112448945,
+    "unit": "structures_per_second"
+  },
+  "support_manifest_hash": "sha256:ce1fc645226b2b94aa53e35ad2271acf5c6b8e62a5307ef90354af3add864365",
+  "support_manifest_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-distill-support-mptrj-train-v1/manifest.json",
+  "theorem_hooks": {
+    "bridge": "outer_loop_proxy",
+    "false_refusal_estimate": null,
+    "kappa1_hat": 0.525,
+    "layerwise_exact": false,
+    "observed_speedup": null,
+    "p2_residual_pca": {
+      "metrics": {
+        "ribbon_feature_distance_proxy": 1.9217143373556034,
+        "stress_residual_ribbon_matrix_rank": 6,
+        "stress_residual_ribbon_participation_ratio": 1.0828545160648317,
+        "stress_residual_ribbon_rank_limited": false,
+        "stress_residual_ribbon_support_lift_fraction": 0.0
+      },
+      "status": "computed_from_support_residuals",
+      "top_k": 5
+    },
+    "policy_engine": "rust",
+    "refusal_threshold_proxy": 200.0,
+    "ribbon_version": "hyperribbon-v1",
+    "schema": "lupine.distill.theorem_hooks.v1",
+    "support_eval_distance_proxy": 1.0
+  },
+  "variant_id": "distill_accuracy",
+  "versions": {
+    "ase": "3.28.0",
+    "chgnet": null,
+    "cuda_available": true,
+    "cuda_device": "NVIDIA L4",
+    "fairchem-core": null,
+    "mace-torch": "0.3.16",
+    "matgl": null,
+    "numpy": "1.26.4",
+    "orb-models": null,
+    "python": "3.10.12",
+    "sevenn": null,
+    "torch": "2.4.1+cu121",
+    "uma_model_name": null,
+    "uma_task_name": null
+  }
+}

@@ -147,7 +147,7 @@ async function buildSwarmStatus(env: Env): Promise<Record<string, SwarmAgentStat
         ? "Synthesizing eval narrative"
         : "Awaiting evaluation enqueue",
       last_seen: lastTheoristClaim?.created_at ?? fallback,
-      model: theoristActive ? "MiniMax-M2.7" : undefined,
+      model: theoristActive ? "MiniMax-M3" : undefined,
     },
     experiment: {
       status: pending > 0 ? "active" : "idle",

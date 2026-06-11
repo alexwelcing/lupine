@@ -29,6 +29,7 @@ const SOURCE_CHIPS: { id: MoleculeSourceId | null; label: string; note?: string 
   { id: 'nist', label: 'NIST' },
   { id: 'pubchem', label: 'PubChem' },
   { id: 'library', label: 'Library' },
+  { id: 'social', label: 'Social QRs' },
   { id: 'saved', label: 'Saved' },
 ];
 
@@ -44,6 +45,7 @@ const SOURCE_COLOR: Record<MoleculeSourceId, string> = {
   pubchem: '#38bdf8',
   omol: '#34d399',
   library: '#fb7185',
+  social: '#111827',
 };
 const SOURCE_LABEL: Record<MoleculeSourceId, string> = {
   gallery: 'Gallery',
@@ -52,6 +54,7 @@ const SOURCE_LABEL: Record<MoleculeSourceId, string> = {
   pubchem: 'PubChem',
   omol: 'Meta OMol25',
   library: 'Library',
+  social: 'Social QRs',
 };
 
 const PER_SOURCE_LIMIT = 24;

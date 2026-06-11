@@ -1,0 +1,107 @@
+{
+  "name": "glim-ribbon-theorems",
+  "description": "Theorist hypothesis-generation prompts anchored to the hyper-ribbon Lean theorem set (T1-T5). Held fixed across the MiniMax-M2.7 -> M3 A/B so only the model varies. Each example targets a named theorem and a discriminating test that would move its state. See docs/glim-m3-upgrade/01-target-theorems.md.",
+  "count": 10,
+  "examples": [
+    {
+      "input": {
+        "question": "Observation: across 559 interatomic potentials the C11/C12/C44 error eigenvalue spectrum decays roughly geometrically with ratio q<=1/2, and the participation ratio stays below 2. Propose 2-3 competing physical mechanisms that FORCE q<=1/2, and for each give a discriminating test.",
+        "context": "Anchor: T1 hyper_ribbon_bound_3d (HyperRibbon.lean:17). Target: generalise the hard-coded q=1/2 decay to an arbitrary-q, n-D bound PR<B(q,n). Grounding bundle: sloppy-model participation ratio; Fisher-information eigenvalue decay; Brown-Sethna intensive parameter combinations."
+      },
+      "output": {
+        "reference": "Strong answer names q-setting mechanisms (e.g. angular/many-body term stiffness vs. pair-term softness; Cauchy-relation coupling collapsing C12~C44; cutoff-radius controlled curvature) that are GENUINELY competing (different q for different bonding), each with a concrete measurement (e.g. measure spectrum on a pure-pair vs. angular-dependent family; predict q shifts). Must link to T1 and state how the test would justify the q<=1/2 hypothesis of the generalised bound."
+      },
+      "metadata": { "anchor": "T1", "target_theorem": "hyper_ribbon_bound_3d", "kind": "mechanism", "ribbon_target": "generalise_decay_bound" }
+    },
+    {
+      "input": {
+        "question": "The empirical hyper-ribbon is currently verified on 3 elastic constants only (max fractional dimensionality 0.398 < 0.5). Generate competing hypotheses about whether the ribbon SURVIVES when cohesive energy E_coh and bulk modulus B0 are added to the manifold, and design the experiment that would confirm or refute survival.",
+        "context": "Anchor: T2 empirical_hyper_ribbon_holds (HyperRibbonEmpirical.lean:11). Target: recompute maxEmpiricalFractionalDimensionality over a 4-family basis and re-verify <0.5. Grounding: cohesive energy / bulk modulus / elastic correlation in metals; MLIP systematic-error PCA."
+      },
+      "output": {
+        "reference": "Competing hypotheses: (a) ribbon survives because E_coh and B0 are themselves slaved to the same stiff parameter combination (PR barely rises); (b) ribbon breaks because energy-family errors are orthogonal to elastic errors (PR jumps toward 3-4); (c) partial survival on noble metals but not refractories. Test: joint PCA on the 4-family error matrix from the Phase-D compute lane; discriminative property = fractional dimensionality before/after adding each family. Must link to T2's <0.5 re-verification."
+      },
+      "metadata": { "anchor": "T2", "target_theorem": "empirical_hyper_ribbon_holds", "kind": "robustness", "ribbon_target": "widen_property_basis" }
+    },
+    {
+      "input": {
+        "question": "It is proven that Jacobian rank <= min(P,N), and observed that EAM-FCC elastic PR ~= 1.26. Propose competing hypotheses for WHY the participation ratio is bounded by the Jacobian rank of the prediction map for EAM families, and a test that would let us close the PR<=rank conjecture.",
+        "context": "Anchor: T3 ParameterBound conjecture (ParameterBound.lean:145-201). Target: close PR<=jacobianRank, connecting parameter count -> ribbon dimensionality. Grounding: Jacobian rank model-manifold boundary; EAM identifiability; rank-deficiency sensitivity."
+      },
+      "output": {
+        "reference": "Hypotheses should distinguish (a) rank-deficiency from redundant EAM spline knots (PR tracks effective rank), (b) rank set by symmetry (cubic irreps A1g/Eg/T2g) not parameter count, (c) data-limited rank (N<P regime). Test: compute the numerical Jacobian rank for a parametrised EAM family and correlate with measured PR across families; discriminative property = rank vs PR slope. Must link to T3 and state which sub-hypothesis would make the conjecture provable."
+      },
+      "metadata": { "anchor": "T3", "target_theorem": "eamFccElasticConjecture", "kind": "mechanism", "ribbon_target": "close_parameter_bound" }
+    },
+    {
+      "input": {
+        "question": "Per-cell distill wins are proven (MACE energy 0.4116 -> 0.2038; SevenNet 0.3997 -> 0.3046 -> accelerate 0.2773) but the BROAD commitment that distill beats baseline across materials is open. Propose competing hypotheses for when distill will FAIL to beat baseline, and the held-out test that would let us promote or block the broad claim.",
+        "context": "Anchor: T4 broad_commitment_is_open (AccuracyCommitment.lean:217). Target: accumulate held-out evidence to promote the broad commitment. Grounding: delta-ML correction transferability; residual learning baseline correction; foundation-MLIP benchmark error."
+      },
+      "output": {
+        "reference": "Hypotheses must identify failure regimes (e.g. distill fails where the ribbon breaks: Fe outlier, Au MLIP-escape; or where support set lacks material-root overlap). Test: run baseline vs distill_accuracy on held-out systems NOT in the support manifold; discriminative property = sign of (baselineErr - distillErr) on held-out. Must link to T4 and to the Cloud-Run sim tiers (Part 4) that produce the held-out deltas."
+      },
+      "metadata": { "anchor": "T4", "target_theorem": "broad_commitment_is_open", "kind": "falsification", "ribbon_target": "promote_broad_commitment" }
+    },
+    {
+      "input": {
+        "question": "A context-specific correction closes the residual exactly in-scope but is proven NOT to transfer out-of-scope, and is decoupled from the spectrum. Propose competing hypotheses about whether applying distill corrections degrades or preserves the hyper-ribbon geometry on the REAL corpus, with a discriminating measurement.",
+        "context": "Anchor: T5 hyper_ribbon_survives_context_correction (ContextSpecificProof.lean:218) + correction_decoupled_from_spectrum (209). Target: empirically ground 'survives correction'. Grounding: context-specific correction transferability; local-environment descriptor correction."
+      },
+      "output": {
+        "reference": "Hypotheses: (a) correction is a rigid shift -> PR unchanged (survives); (b) correction is anisotropic in error space -> PR drops further (ribbon tightens); (c) correction overfits support -> PR rises off-support (ribbon damaged). Test: measure PR of the error manifold before vs after distill correction on held-out systems; discriminative property = delta-PR sign and magnitude. Must link to T5 empirical grounding."
+      },
+      "metadata": { "anchor": "T5", "target_theorem": "hyper_ribbon_survives_context_correction", "kind": "robustness", "ribbon_target": "ground_correction_survival" }
+    },
+    {
+      "input": {
+        "question": "Fe is a persistent PR>2 outlier across MACE+CHGNet+Orb-v3 addition while the other 14 elements stay on the ribbon. Generate 2-3 competing physical explanations for the Fe exception and a test that discriminates them.",
+        "context": "Anchor: T2/T1 (ribbon membership). Seed hypothesis h_fe_persistent_outlier. Grounding: BCC vs FCC error structure; magnetism in Fe MLIPs; spin-polarised DFT reference quality."
+      },
+      "output": {
+        "reference": "Competing: (a) magnetism — Fe error is dominated by a magnetic degree of freedom absent in the 3-elastic basis; (b) BCC structural shield — bcc C' softness adds an independent error axis; (c) DFT reference inconsistency for Fe across training sets. Test: add magnetic-moment error axis; compare bcc vs fcc Fe PR; discriminative property = which added axis collapses Fe back onto the ribbon. Must connect the Fe exception to whether T2's bound is basis-dependent."
+      },
+      "metadata": { "anchor": "T2", "target_theorem": "empirical_hyper_ribbon_holds", "kind": "outlier", "ribbon_target": "explain_fe_exception" }
+    },
+    {
+      "input": {
+        "question": "Au escapes the hyper-ribbon specifically under MLIPs (not classical potentials). Propose competing hypotheses for whether Au escape is MLIP-architecture-specific or a general late-5d noble-metal effect, with a discriminating test across MACE/CHGNet/Orb.",
+        "context": "Anchor: T1/T2 ribbon membership. Seed hypotheses h_au_specific_mlip_escape, h_mlip_escape_Au. Grounding: relativistic effects in Au; d-band filling; foundation-MLIP training composition bias."
+      },
+      "output": {
+        "reference": "Hypotheses: (a) architecture-specific — escape direction differs across the 3 MLIPs (training-data artefact); (b) physical — escape direction is shared across all 3 (relativistic/d-band cause). Test: compare Au error-vector direction across MACE/CHGNet/Orb; discriminative property = cross-MLIP cosine of Au error directions. Should reference whether escape is consistent with the parameter-bound mechanism (T3)."
+      },
+      "metadata": { "anchor": "T1", "target_theorem": "hyper_ribbon_bound_3d", "kind": "outlier", "ribbon_target": "explain_au_escape" }
+    },
+    {
+      "input": {
+        "question": "MEAM potentials show an intrinsic 2-D ribbon at full n (CI [1.58, 2.39]) while the small-n classifier passes 44-96% of isotropic null datasets. Propose competing hypotheses distinguishing a TRUE intrinsic-2D ribbon from a small-n sampling artefact, and a stronger test.",
+        "context": "Anchor: T1 (PR bound validity) + critique11 classifier gap. Seed hypotheses h_meam_intrinsically_2d, h_sample_size_confounder_meam. Grounding: participation-ratio false-positive rate vs n; bootstrap CI on PR; null Gaussian benchmark."
+      },
+      "output": {
+        "reference": "Hypotheses: (a) intrinsic — PR stays ~2 as n grows with tight bootstrap CI; (b) artefact — PR drifts toward 3 as n grows, FPR high at small n. Test: matched-n bootstrap with geometric-spacing null, report FPR(n) and PR CI; discriminative property = PR-vs-n trajectory and CI width. Must connect to T1's claim that the bound is meaningful only above a FPR-controlled n."
+      },
+      "metadata": { "anchor": "T1", "target_theorem": "hyper_ribbon_bound_3d", "kind": "statistical", "ribbon_target": "strengthen_classifier" }
+    },
+    {
+      "input": {
+        "question": "The distill cell value is cellValue(speedup, accuracyGain) = speedup*(1+accuracyGain), monotone in both and equal to 1 at baseline. Propose competing hypotheses for whether the accelerate tier (speedup>1) can RAISE cell value without sacrificing accuracyGain, and the simulation that would decide it.",
+        "context": "Anchor: B UniversalityBridge.cellValue (UniversalityBridge.lean:133-165). Target: justify the distill_accuracy_accelerate tier. Grounding: accuracy-speed trade-off in ML potentials; distillation latency."
+      },
+      "output": {
+        "reference": "Hypotheses: (a) complementary — accelerate keeps accuracyGain>=accuracy tier (cellValue strictly up via complementary_improvement); (b) trade-off — accelerate sheds accuracy so cellValue is flat; (c) regime-dependent. Test: the 3-tier sim matrix (baseline/distill_accuracy/distill_accuracy_accelerate) reporting speedup and accuracyGain per cell; discriminative property = cellValue ordering across tiers. Directly drives Part 4."
+      },
+      "metadata": { "anchor": "B", "target_theorem": "cellValue", "kind": "design", "ribbon_target": "justify_accelerate_tier" }
+    },
+    {
+      "input": {
+        "question": "Noble metals (Cu/Ag/Au/Pt/Pd) and refractories (W/Mo/V/Nb/Ta) may form distinct manifold clusters on the hyper-ribbon. Propose competing hypotheses for whether this split is a real physical partition or a property-magnitude confound, with a discriminating test.",
+        "context": "Anchor: T2/T3. Seed hypotheses h_noble_vs_refractory_split, h_property_magnitude_spread_confounds_pearson. Grounding: d-band centre vs error; elastic-magnitude spread; Simpson's paradox in benchmarks."
+      },
+      "output": {
+        "reference": "Hypotheses: (a) physical — clusters persist after magnitude normalisation (d-band driven); (b) confound — clusters vanish once errors are scaled by property magnitude. Test: cluster on magnitude-normalised relative errors; discriminative property = cluster separation pre/post normalisation. Should note whether the split changes the effective rank (T3) of the manifold."
+      },
+      "metadata": { "anchor": "T3", "target_theorem": "eamFccElasticConjecture", "kind": "statistical", "ribbon_target": "test_cluster_partition" }
+    }
+  ]
+}

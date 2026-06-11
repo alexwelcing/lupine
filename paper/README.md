@@ -71,5 +71,6 @@ Simpson's-paradox title is superseded.
             Fallacy Detection},
   year   = {2026},
   note   = {Working paper, in preparation}
+
 }
 ```
