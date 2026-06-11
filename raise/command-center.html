@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Lupine Raise — Command Center (Confidential)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           LUPINE RAISE — FUNDRAISING COMMAND CENTER  ·  INTERNAL / CONFIDENTIAL
+           Private founder tool. NOT in deck/public — never deployed publicly.
+           State (stage / check / notes) saved to your browser's localStorage.
+           ═══════════════════════════════════════════════════════════════ */
+        :root {
+            --lupine-700:#2e3a87; --lupine-600:#3d4db3; --lupine-500:#5565d4;
+            --lupine-400:#7b8ae0; --lupine-300:#9ba6ea; --lupine-200:#c5cdf3;
+            --violet-500:#8b6bc4; --violet-300:#b9a0e0;
+            --slate-950:#0a0b12; --slate-900:#0f1119; --slate-800:#181b28;
+            --slate-700:#252838; --slate-600:#3a3e52; --slate-500:#646880;
+            --slate-400:#9096ab; --slate-300:#b4b9cc; --slate-200:#d4d7e3; --slate-100:#eceef4;
+            --cyan:#4ecdc4; --gold:#d4a843; --warm:#e8834a; --red:#e85454; --green:#4ecd6b;
+            --font-sans:'Inter',-apple-system,sans-serif;
+            --font-serif:'Playfair Display',Georgia,serif;
+            --font-mono:'JetBrains Mono',ui-monospace,monospace;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body { font-family:var(--font-sans); background:var(--slate-950); color:var(--slate-200); line-height:1.6; -webkit-font-smoothing:antialiased; }
+        ::selection { background:var(--lupine-600); color:#fff; }
+        a { color:var(--lupine-400); }
+        .wrap { max-width:1180px; margin:0 auto; padding:0 28px; }
+
+        /* header */
+        header.top { border-bottom:1px solid rgba(255,255,255,0.07); background:radial-gradient(ellipse 70% 120% at 30% 0%, rgba(46,58,135,0.18), transparent 70%); padding:40px 0 34px; }
+        .conf-badge { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--warm); border:1px solid rgba(232,131,74,0.3); background:rgba(232,131,74,0.08); padding:4px 10px; border-radius:6px; margin-bottom:20px; }
+        header.top h1 { font-family:var(--font-serif); font-size:clamp(30px,4.5vw,46px); font-weight:400; color:var(--slate-100); line-height:1.1; margin-bottom:12px; }
+        header.top h1 em { font-style:italic; background:linear-gradient(135deg,var(--lupine-300),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        header.top .sub { font-size:16px; color:var(--slate-400); max-width:760px; font-weight:300; }
+
+        /* in-page nav */
+        nav.toc { position:sticky; top:0; z-index:50; background:rgba(10,11,18,0.9); backdrop-filter:blur(16px); border-bottom:1px solid rgba(255,255,255,0.06); }
+        nav.toc .wrap { display:flex; gap:4px; overflow-x:auto; padding:10px 28px; font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.1em; scrollbar-width:none; }
+        nav.toc .wrap::-webkit-scrollbar { display:none; }
+        nav.toc a { white-space:nowrap; padding:5px 9px; border-radius:6px; color:var(--slate-400); text-decoration:none; }
+        nav.toc a:hover { color:var(--cyan); background:rgba(255,255,255,0.04); }
+
+        section { padding:56px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+        .eyebrow { font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--cyan); margin-bottom:12px; }
+        h2.sec { font-family:var(--font-serif); font-size:clamp(24px,3vw,34px); font-weight:400; color:var(--slate-100); margin-bottom:10px; line-height:1.15; }
+        h2.sec em { font-style:italic; color:var(--lupine-300); }
+        .sec-lead { font-size:15px; color:var(--slate-400); max-width:760px; margin-bottom:28px; font-weight:300; }
+
+        /* coach callout */
+        .coach { border-radius:14px; padding:24px 26px; background:rgba(212,168,67,0.07); border:1px solid rgba(212,168,67,0.22); border-left:3px solid var(--gold); margin:22px 0; }
+        .coach .cl { font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+        .coach p { font-size:14.5px; color:var(--slate-300); margin-bottom:8px; }
+        .coach p:last-child { margin-bottom:0; }
+        .coach strong { color:var(--slate-100); }
+
+        /* stat strip */
+        .strip { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:8px 0 4px; }
+        .stat { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; text-align:center; }
+        .stat.hl { border-color:var(--cyan); }
+        .stat .v { font-family:var(--font-serif); font-size:30px; color:var(--slate-100); }
+        .stat.hl .v { color:var(--cyan); }
+        .stat .l { font-size:12px; color:var(--slate-400); margin-top:4px; }
+        .stat .d { font-size:11px; color:var(--slate-600); margin-top:2px; }
+
+        /* tables */
+        .tbl-wrap { overflow-x:auto; border:1px solid var(--slate-700); border-radius:12px; }
+        table { width:100%; border-collapse:collapse; font-size:13px; min-width:560px; }
+        th { text-align:left; padding:11px 15px; font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--slate-500); background:var(--slate-800); border-bottom:1px solid var(--slate-700); }
+        td { padding:11px 15px; border-bottom:1px solid rgba(255,255,255,0.03); color:var(--slate-400); }
+        td:first-child { color:var(--slate-200); font-weight:500; }
+        tr.hl td { background:rgba(78,205,196,0.06); color:var(--cyan); }
+        tr.hl td:first-child { color:var(--cyan); font-weight:600; }
+        tr.dim td { color:var(--slate-600); }
+        .mono { font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+
+        /* pipeline summary */
+        .pipe-summary { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-bottom:18px; }
+        .pcount { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:12px 8px; text-align:center; }
+        .pcount .n { font-family:var(--font-serif); font-size:24px; color:var(--slate-100); }
+        .pcount .s { font-family:var(--font-mono); font-size:9px; text-transform:uppercase; letter-spacing:0.06em; color:var(--slate-500); margin-top:3px; }
+        .progress-shell { margin:16px 0 6px; }
+        .progress-track { height:14px; background:rgba(255,255,255,0.04); border-radius:7px; overflow:hidden; border:1px solid rgba(255,255,255,0.06); }
+        .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--lupine-500),var(--cyan)); border-radius:7px; transition:width 0.3s; }
+        .progress-meta { display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:var(--slate-400); margin-top:6px; }
+
+        /* investor cards */
+        .tier-head { display:flex; align-items:baseline; gap:12px; margin:30px 0 14px; }
+        .tier-head h3 { font-size:16px; color:var(--slate-100); font-weight:600; }
+        .tier-head .tag { font-family:var(--font-mono); font-size:11px; color:var(--slate-500); }
+        .inv-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+        .inv { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:16px 18px; }
+        .inv.committed { border-color:var(--green); background:rgba(78,205,107,0.05); }
+        .inv.passed { opacity:0.5; }
+        .inv .ih { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+        .inv .nm { font-size:15px; font-weight:600; color:var(--slate-100); }
+        .inv .chk { font-family:var(--font-mono); font-size:11px; color:var(--cyan); white-space:nowrap; }
+        .inv .fit { font-size:12.5px; color:var(--slate-400); margin:7px 0 11px; line-height:1.5; }
+        .inv .reach { font-family:var(--font-mono); font-size:10px; color:var(--slate-600); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:11px; }
+        .inv .reach b { color:var(--lupine-400); }
+        .inv-controls { display:grid; grid-template-columns:1.2fr 0.8fr; gap:7px; }
+        .inv select, .inv input { font-family:var(--font-mono); font-size:11px; background:var(--slate-900); color:var(--slate-200); border:1px solid var(--slate-700); border-radius:6px; padding:6px 8px; width:100%; }
+        .inv input::placeholder { color:var(--slate-600); }
+        .inv .note { margin-top:7px; }
+        .inv .note input { font-family:var(--font-sans); }
+
+        /* template / copy blocks */
+        .tpl { background:var(--slate-900); border:1px solid var(--slate-700); border-radius:12px; padding:0; margin:14px 0; overflow:hidden; }
+        .tpl-head { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:rgba(255,255,255,0.02); border-bottom:1px solid var(--slate-700); }
+        .tpl-head .t { font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--lupine-300); letter-spacing:0.04em; }
+        .copy-btn { font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--cyan); background:rgba(78,205,196,0.08); border:1px solid rgba(78,205,196,0.25); border-radius:6px; padding:5px 12px; cursor:pointer; transition:all 0.2s; }
+        .copy-btn:hover { background:rgba(78,205,196,0.16); }
+        .tpl pre { padding:18px 16px; font-family:var(--font-mono); font-size:12.5px; color:var(--slate-300); line-height:1.7; white-space:pre-wrap; word-wrap:break-word; }
+        .tpl pre .slot { color:var(--gold); }
+
+        /* timeline */
+        .timeline { display:flex; flex-direction:column; gap:0; }
+        .twk { display:grid; grid-template-columns:120px 1fr; gap:20px; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .twk .wk { font-family:var(--font-mono); font-size:12px; color:var(--cyan); font-weight:600; }
+        .twk .wk small { display:block; color:var(--slate-600); font-size:10px; margin-top:2px; }
+        .twk h4 { font-size:14px; color:var(--slate-100); margin-bottom:5px; }
+        .twk p { font-size:13px; color:var(--slate-400); }
+
+        /* checklist */
+        .check-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+        .ck { display:flex; gap:10px; align-items:flex-start; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:9px; padding:11px 13px; font-size:13px; color:var(--slate-300); cursor:pointer; }
+        .ck input { margin-top:3px; accent-color:var(--cyan); flex-shrink:0; }
+        .ck .x { color:var(--slate-600); font-size:11px; display:block; margin-top:2px; }
+
+        /* objections */
+        .obj { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px 22px; margin-bottom:12px; }
+        .obj .q { font-size:15px; color:var(--slate-100); font-weight:600; margin-bottom:8px; }
+        .obj .q::before { content:"“"; color:var(--warm); }
+        .obj .q::after { content:"”"; color:var(--warm); }
+        .obj .a { font-size:13.5px; color:var(--slate-400); line-height:1.65; }
+        .obj .a b { color:var(--cyan); font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.1em; }
+        .obj .a strong { color:var(--slate-200); }
+
+        .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:16px; }
+        .toolbar button { font-family:var(--font-mono); font-size:11px; color:var(--slate-400); background:rgba(255,255,255,0.03); border:1px solid var(--slate-700); border-radius:7px; padding:8px 14px; cursor:pointer; }
+        .toolbar button:hover { color:var(--slate-200); border-color:var(--slate-500); }
+        .saved-dot { font-family:var(--font-mono); font-size:11px; color:var(--green); opacity:0; transition:opacity 0.3s; }
+        .saved-dot.show { opacity:1; }
+
+        footer { padding:40px 0 60px; }
+        footer .fi { font-family:var(--font-mono); font-size:12px; color:var(--slate-600); line-height:1.8; }
+        footer code { color:var(--slate-400); background:rgba(255,255,255,0.04); padding:1px 6px; border-radius:4px; }
+
+        @media (max-width:860px) {
+            .strip { grid-template-columns:repeat(2,1fr); }
+            .pipe-summary { grid-template-columns:repeat(4,1fr); }
+            .inv-grid, .check-grid { grid-template-columns:1fr; }
+            .twk { grid-template-columns:1fr; gap:6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top">
+        <div class="wrap">
+            <div class="conf-badge">● Confidential · Internal — not for distribution</div>
+            <h1>Lupine Raise — <em>Command Center</em></h1>
+            <p class="sub">The operating system for an $8M seed: one primary lead at $3M+, three to four participants, run as a tight time-boxed process. Everything you need to close — round math, live pipeline, targets, outreach, and the objection bank — on one page. Your pipeline edits save to this browser.</p>
+        </div>
+    </header>
+
+    <nav class="toc">
+        <div class="wrap">
+            <a href="#round">00 · The round</a>
+            <a href="#math">01 · Cap-table math</a>
+            <a href="#pipeline">02 · Pipeline</a>
+            <a href="#outreach">03 · Outreach kit</a>
+            <a href="#process">04 · Process</a>
+            <a href="#dataroom">05 · Data room</a>
+            <a href="#objections">06 · Objection bank</a>
+        </div>
+    </nav>
+
+    <!-- 00 · THE ROUND -->
+    <section id="round"><div class="wrap">
+        <div class="eyebrow">00 / The round at a glance</div>
+        <h2 class="sec">An $8M seed, structured to <em>close fast</em>.</h2>
+        <p class="sec-lead">The whole strategy in one line: get <strong style="color:var(--slate-200)">one credible lead to anchor at $3M+</strong>, use that commitment to compress everyone else's decision, and fill the remaining ~$5M from participants and strategics inside a 3-week window. A round with a lead is "in"; a round without one drifts for months.</p>
+        <div class="strip">
+            <div class="stat hl"><div class="v">$8M</div><div class="l">Target raise</div><div class="d">Seed (priced)</div></div>
+            <div class="stat"><div class="v">~$30M</div><div class="l">Recommended post</div><div class="d">≈27% sold · fundable</div></div>
+            <div class="stat"><div class="v">$3M+</div><div class="l">Lead / primary</div><div class="d">≈10% · 1 board seat</div></div>
+            <div class="stat"><div class="v">4–5</div><div class="l">Total investors</div><div class="d">1 lead + 3–4 fill</div></div>
+        </div>
+        <div class="coach">
+            <div class="cl">⚑ Coach's note — why not the $150M post from the model?</div>
+            <p>The value-model page prices the company at a <strong>$150M post</strong>. That is the right number to <em>show</em> — it's the Series-A trajectory the 30-year arc supports. It is the wrong number to <em>raise the seed on</em>: a $3M lead into a $150M post owns <strong>2%</strong>, and no seed lead accepts 2%. Leads price to own 10–20%.</p>
+            <p>To make a $3M+ lead <strong>easy</strong>, the seed post lands around <strong>$25–32M</strong> — there a $3M check buys ~10–12%, exactly the ownership a deep-tech lead needs to justify the work. Keep the $150M in the room as the ceiling; price the entry where leads can actually win. Show the gap on purpose: "we're pricing the seed conservatively; the model shows where this goes."</p>
+        </div>
+        <div class="coach" style="background:rgba(78,205,196,0.06);border-color:rgba(78,205,196,0.2);border-left-color:var(--cyan);">
+            <div class="cl" style="color:var(--cyan)">★ The single biggest "easy" lever — run two tracks in parallel</div>
+            <p><strong>Track A (equity):</strong> a time-boxed, competitive process — all first meetings in the same 2 weeks so momentum and FOMO compound, not a serial drip that lets each fund wait on the others.</p>
+            <p><strong>Track B (non-dilutive):</strong> NSF/DOE SBIR, ARPA-E, DARPA, AFWERX — this directly delivers your "federal contract in flight" milestone, de-risks the company for every equity investor, and means you're raising from a position of "we don't strictly need it" — the position that closes rounds.</p>
+        </div>
+        <div class="coach">
+            <div class="cl">⚑ Solo-founder reality — plan for it deliberately</div>
+            <p>You're raising solo. Not disqualifying — solo technical founders who have <strong>shipped and published</strong> do get funded — but it sharpens three moves. <strong>(1) Target solo-friendly leads.</strong> Some funds reflexively pass on solo founders; don't burn cycles there. Lux, DCVC, 1517, and Founders Fund are more open to it than most. <strong>(2) Make the early team the explicit use of funds</strong> — name the first 3–4 hires by role, and stack 2–3 advisors now (cheap, fast de-risking). <strong>(3) If an additive second founder is reachable, that's the highest-leverage move available</strong> — it lifts the valuation and removes the single most common reason a seed partner passes. Weigh a 4–8 week pause to close one.</p>
+        </div>
+    </div></section>
+
+    <!-- 01 · CAP TABLE MATH -->
+    <section id="math"><div class="wrap">
+        <div class="eyebrow">01 / The math that makes a $3M lead work</div>
+        <h2 class="sec">What a $3M check <em>owns</em> at each post.</h2>
+        <p class="sec-lead">Why ~$30M post is the recommendation: it's the lowest-dilution price at which a $3M lead still clears the ~10% ownership floor most deep-tech leads require. Higher posts only work with a marquee lead or hard traction; the $150M is a Series-A number.</p>
+        <div class="tbl-wrap">
+            <table>
+                <thead><tr><th>Post-money</th><th>$8M round = sold</th><th>$3M lead owns</th><th>Lead's read</th></tr></thead>
+                <tbody>
+                    <tr><td class="mono">$20M</td><td class="mono">40%</td><td class="mono">15.0%</td><td>Founder-dilutive; only if you need the cash</td></tr>
+                    <tr><td class="mono">$24M</td><td class="mono">33%</td><td class="mono">12.5%</td><td>Lead-friendly; easy yes on ownership</td></tr>
+                    <tr class="hl"><td class="mono">$30M</td><td class="mono">27%</td><td class="mono">10.0%</td><td>★ Recommended — clears the 10% floor, sane dilution</td></tr>
+                    <tr><td class="mono">$40M</td><td class="mono">20%</td><td class="mono">7.5%</td><td>Works only with strong traction / marquee lead</td></tr>
+                    <tr><td class="mono">$50M</td><td class="mono">16%</td><td class="mono">6.0%</td><td>Hard for a lead; needs a hot, competitive round</td></tr>
+                    <tr class="dim"><td class="mono">$150M</td><td class="mono">5.3%</td><td class="mono">2.0%</td><td>The model's ceiling — a Series-A price, not a seed</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="coach">
+            <div class="cl">Recommended terms to walk in with</div>
+            <p><strong>Structure:</strong> priced seed (the $3M+ lead will want it) — or a $30M-cap SAFE if you want to move faster and defer the priced round. <strong>Board:</strong> 2 founders + 1 lead investor seat. <strong>Option pool:</strong> 10–15% (negotiate it into the pre-money, but don't over-build it). <strong>Pro-rata:</strong> grant to the lead and any strategic; that's the right to keep their % in your Series A. <strong>Fill investors:</strong> SAFEs at the same or a modest step-up cap so they're fast to sign once the lead sets the price.</p>
+        </div>
+    </div></section>
+
+    <!-- 02 · PIPELINE -->
+    <section id="pipeline"><div class="wrap">
+        <div class="eyebrow">02 / The live pipeline</div>
+        <h2 class="sec">Targets, by tier — <em>worked as a funnel</em>.</h2>
+        <p class="sec-lead">Set each investor's stage and soft-circled check; the bar tracks progress to $8M and the counts update live (saved in this browser). Rule of thumb: line up <strong>~15 conversations to land 4–5 checks</strong>. Lead with the funds whose thesis already matches yours, and always prefer a warm intro.</p>
+
+        <div class="pipe-summary" id="pipeSummary"></div>
+        <div class="progress-shell">
+            <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+            <div class="progress-meta"><span id="progSoft">$0 soft-circled</span><span>Goal: $8.0M</span></div>
+        </div>
+        <div class="toolbar">
+            <span style="font-family:var(--font-mono);font-size:11px;color:var(--slate-500)">Stages: Research → Contacted → 1st mtg → Partner mtg → Diligence → Committed</span>
+            <button id="resetBtn">Reset my pipeline</button>
+            <span class="saved-dot" id="savedDot">✓ saved</span>
+        </div>
+
+        <div class="coach" style="margin-top:22px;">
+            <div class="cl">⚑ How to read this list — important</div>
+            <p>These are <strong>research starting points</strong>, chosen because their <em>public</em> thesis fits "open-source audit substrate for atomistic ML + sovereignty." They are <strong>not contacts, leads, or commitments</strong>, and nothing here implies a relationship. Before reaching out: confirm the fund's current thesis and check size, find the right partner, and — above all — <strong>map your warm network to them first</strong>. A warm intro converts ~10× a cold email.</p>
+        </div>
+
+        <div class="tier-head"><h3>① Lead candidates</h3><span class="tag">will price & lead · $3M+ · target 1</span></div>
+        <div class="inv-grid" id="leads"></div>
+
+        <div class="tier-head"><h3>② Participants</h3><span class="tag">follow a lead · $250K–$2M · target 2–3</span></div>
+        <div class="inv-grid" id="participants"></div>
+
+        <div class="tier-head"><h3>③ Strategic / corporate</h3><span class="tag">cash + commercial pull · $1–3M · target 1</span></div>
+        <div class="inv-grid" id="strategics"></div>
+
+        <div class="tier-head"><h3>④ Non-dilutive — run in parallel</h3><span class="tag">grants & contracts · de-risks the equity round</span></div>
+        <div class="inv-grid" id="nondilutive"></div>
+    </div></section>
+
+    <!-- 03 · OUTREACH KIT -->
+    <section id="outreach"><div class="wrap">
+        <div class="eyebrow">03 / Outreach kit</div>
+        <h2 class="sec">Copy, paste, personalize, send.</h2>
+        <p class="sec-lead">Edit the <span style="color:var(--gold)">gold slots</span>, then hit copy. The forwardable blurb is the highest-leverage asset: it's what a mutual connection pastes to make the intro — write it so they barely have to think.</p>
+
+        <div class="tpl">
+            <div class="tpl-head"><span class="t">The one-liner (verbal / email subject)</span><button class="copy-btn" data-copy="t-oneliner">Copy</button></div>
+            <pre id="t-oneliner">Lupine is the open-source audit substrate for atomistic ML — the validation layer that makes foundation models for matter trustworthy enough to deploy. We're step 1 of a real-world replicator, and we're raising an $8M seed.</pre>
+        </div>
+
+        <div class="tpl">
+            <div class="tpl-head"><span class="t">Forwardable blurb (give this to your connector)</span><button class="copy-btn" data-copy="t-forward">Copy</button></div>
+<pre id="t-forward">Subject: Intro — Lupine Materials Science (<span class="slot">[your name]</span>)
+
+<span class="slot">[Connector]</span> — would you be open to introducing me to <span class="slot">[partner]</span> at <span class="slot">[fund]</span>?
+
+Lupine is building the open-source <span class="slot">audit substrate</span> for atomistic ML — the validation layer that catches where foundation models for matter (GNoME, MatterSim, OMat24) fail before those predictions hit a lab. Think "observability for materials AI," or the EDA layer for designed matter.
+
+Traction: <span class="slot">[research program: working paper + machine-checked theory + public replication kit — derive paper status from brand.json publication.status only; X design partners / GitHub stars; federal contract status]</span>. We're raising an $8M seed and <span class="slot">[fund]</span> is a strong thesis fit because <span class="slot">[one specific reason]</span>.
+
+Two-line version they can forward is below; deck is a click away. No worries at all if it's not a fit.</pre>
+        </div>
+
+        <div class="tpl">
+            <div class="tpl-head"><span class="t">Cold email (when there's no warm path)</span><button class="copy-btn" data-copy="t-cold">Copy</button></div>
+<pre id="t-cold">Subject: audit substrate for materials AI — $8M seed
+
+<span class="slot">[Partner]</span> — I saw <span class="slot">[fund]</span> backed <span class="slot">[relevant portfolio co / wrote thesis on X]</span>, so this may land.
+
+Foundation models for matter now propose novel structures faster than anyone can check them. Lupine is the open-source layer that names where those predictions fail and feeds the correction back — the trust substrate the whole matter stack is missing. First artifact is a working research paper with a machine-checked formal core (error-geometry methodology 2026); the methodology is Apache-2.0 so sovereign-mandated buyers can actually adopt it.
+
+We're raising $8M to ship phase 1. <span class="slot">[One concrete proof point.]</span> Worth 20 minutes?
+
+Deck: <span class="slot">[link]</span>
+<span class="slot">[name · role · link]</span></pre>
+        </div>
+
+        <div class="tpl">
+            <div class="tpl-head"><span class="t">Follow-up cadence</span><button class="copy-btn" data-copy="t-follow">Copy</button></div>
+<pre id="t-follow">Day 0   — Send (warm intros first, all in the same week).
+Day 3   — If no reply: one-line bump + a fresh proof point ("since I wrote, we [shipped X / signed Y]").
+Day 7   — Final nudge: "closing the round by [date] — want to make sure you saw this." Then stop.
+On a yes — book within 72h while momentum is hot. Send deck + one-pager immediately after.
+After every meeting — same-day thank-you + the one specific thing they asked for. Speed signals operator.</pre>
+        </div>
+    </div></section>
+
+    <!-- 04 · PROCESS -->
+    <section id="process"><div class="wrap">
+        <div class="eyebrow">04 / The process</div>
+        <h2 class="sec">Six to eight weeks, run <em>in parallel</em>.</h2>
+        <p class="sec-lead">A raise feels hard when it's serial and open-ended. It gets easy when it's batched and time-boxed: create a real deadline, stack first meetings into one window, convert a lead, then close the fill on the lead's momentum.</p>
+        <div class="timeline">
+            <div class="twk"><div class="wk">Week 0<small>Prep</small></div><div><h4>Lock the materials & the list</h4><p>Deck, one-pager, the value-model site, data room, and this target list finalized. Map every warm path. Start non-dilutive (SBIR/grant) applications now — they run on their own clock.</p></div></div>
+            <div class="twk"><div class="wk">Week 1–2<small>Open</small></div><div><h4>Fire all warm intros at once</h4><p>Every intro request goes out the same week. Batch first meetings into a tight window so funds sense parallel motion. Aim for ~15 first conversations. Soft-circle interest in the pipeline above.</p></div></div>
+            <div class="twk"><div class="wk">Week 3–4<small>Convert the lead</small></div><div><h4>Drive the most-engaged fund to a partner meeting → term sheet</h4><p>Give your hottest lead candidate a slight head start and a reason to move ("we're seeing strong interest; I'd love you to anchor"). A lead + price unlocks everyone else. This is the gate the whole round hinges on.</p></div></div>
+            <div class="twk"><div class="wk">Week 5–6<small>Fill</small></div><div><h4>Close the remaining ~$5M on the lead's terms</h4><p>Go back to warm participants and strategics: "round's led by [lead] at [terms], closing [date], room for a few more." SAFEs at the same cap sign fast. Allocation pressure does the selling.</p></div></div>
+            <div class="twk"><div class="wk">Week 7–8<small>Sign</small></div><div><h4>Papers, wire, done</h4><p>Counsel runs docs in parallel with the fill. Collect signatures, confirm wires, file. Send a warm "we're funded, here's what's next" note to everyone who helped — they're your Series-A network.</p></div></div>
+        </div>
+    </div></section>
+
+    <!-- 05 · DATA ROOM -->
+    <section id="dataroom"><div class="wrap">
+        <div class="eyebrow">05 / Data room</div>
+        <h2 class="sec">Have it ready <em>before</em> the first yes.</h2>
+        <p class="sec-lead">Diligence speed is a signal. The fund that can say yes fastest often wins the allocation — make it trivial for them. Tick these as you assemble them (saved in this browser).</p>
+        <div class="check-grid" id="checklist"></div>
+    </div></section>
+
+    <!-- 06 · OBJECTIONS -->
+    <section id="objections"><div class="wrap">
+        <div class="eyebrow">06 / Objection bank</div>
+        <h2 class="sec">The hard questions — and the <em>crisp</em> answers.</h2>
+        <p class="sec-lead">Pre-load these. The goal isn't to win the argument; it's to show you've already thought past the objection. Practice each until it's a reflex.</p>
+
+        <div class="obj"><div class="q">Is this a company or a research project?</div><div class="a"><b>Answer</b> A company that started with truth. <strong>The peer-reviewed paper is the wedge, not the product</strong> — it's how we earn the right to be the canonical audit layer. Revenue comes from cloud-hosted validation, federal contracts, and enterprise support; the open-core engine is the adoption flywheel. The research is the moat's foundation, the way a published benchmark made Hugging Face the default.</div></div>
+
+        <div class="obj"><div class="q">You're a solo founder — that's a real concern at $8M.</div><div class="a"><b>Answer — own it, don't flinch</b> <strong>Solo today, and the one person who proved this thesis.</strong> Alex authored the methodology (working paper, machine-checked formal core) and shipped the Rust audit engine alone, before raising — domain authority plus demonstrated execution, the rare combination VCs actually back in a solo founder. <strong>The primary purpose of this round is the early team</strong> — senior MLIP/DFT engineering, scientific software, the first commercial hire — built deliberately around a de-risked thesis, not bolted on for optics. Surround the round with 2–3 named advisors from the materials-ML world; they de-risk you cheaply. <em>If a genuinely additive technical or commercial second founder is reachable, closing them before/during the raise is the single biggest valuation unlock available — worth pausing 4–8 weeks for.</em></div></div>
+
+        <div class="obj"><div class="q">You'll build DFT + MD + ML in 24 months? VASP took 30 years.</div><div class="a"><b>Answer</b> We're not rebuilding VASP. <strong>We're the validation layer on top of the engines that already exist</strong> (MACE, NequIP, LAMMPS, the foundation MLIPs). The 24-month plan ships the audit substrate + an open benchmark + a DFT-engine <em>alpha</em> — not a production replacement for a 30-year codebase. The unified engine is the 10-year arc; the seat we're claiming now is trust, and that's a software-and-methodology problem, not a 30-year physics problem.</div></div>
+
+        <div class="obj"><div class="q">$150M valuation for a seed?</div><div class="a"><b>Answer</b> That's the model's ceiling, not the ask. <strong>We're pricing the seed at ~$30M post</strong> — deliberately conservative — and showing you the $150M because it's where the 30-year arc points. We'd rather you underwrite the floor (a $332M-intrinsic software-of-record DCF that already clears the entry) and treat the ceiling as the option you're getting for free.</div></div>
+
+        <div class="obj"><div class="q">How do you make money before "programmable matter" in 2045?</div><div class="a"><b>Answer</b> Phase 1 is a real business today: validation/UQ tooling and benchmarks for the teams already deploying foundation MLIPs, cloud-hosted simulation, federal contracts (the sovereignty buyers <em>need</em> open-core), and enterprise support. The floor math is built entirely on classical-materials acceleration — zero credit for the moonshot. <strong>The near-term revenue doesn't depend on the far-term vision.</strong></div></div>
+
+        <div class="obj"><div class="q">Why won't Microsoft or Google just build this in-house?</div><div class="a"><b>Answer</b> Two reasons. <strong>(1) Open-core is the architecture, not a license choice</strong> — sovereign and defense buyers can't adopt a closed substrate from a hyperscaler, so an in-house clone can't serve the buyer base we can. <strong>(2) The moat is canonical-ness</strong>: the audit layer is only trusted if it's the neutral place the field agrees on truth. A Microsoft-owned validator isn't neutral. That's also exactly why they'd rather <em>acquire</em> us — see the strategic-acquirer section of the model.</div></div>
+
+        <div class="obj"><div class="q">Open source — how do you capture value if you give it away?</div><div class="a"><b>Answer</b> Same way GitHub, Hugging Face, Datadog, and Databricks did. <strong>The open engine drives adoption; revenue comes from the hosted platform, the benchmark/leaderboard position, enterprise/compliance, and support.</strong> Open-core isn't charity — it's how you become the default, and the default captures 0.1–1.4% of an enormous ecosystem (that's the comps table). Closed loses the sovereign buyers and never becomes canonical.</div></div>
+
+        <div class="obj"><div class="q">Why now, and why you?</div><div class="a"><b>Answer</b> <strong>Now:</strong> foundation MLIPs just crossed the accuracy bar (2024), so the bottleneck moved from "can we simulate?" to "can we trust it?" — the exact gap we fill, and no one owns it yet. <strong>You:</strong> we shipped the methodology (peer-reviewed) and the engine before raising; we measured the physics first. The team that publishes the canonical benchmark owns the category, and we're already doing it.</div></div>
+    </div></section>
+
+    <footer><div class="wrap">
+        <div class="fi">
+            Lupine Raise · Command Center · Confidential — internal founder tool, not for distribution.<br>
+            Investor names are public-thesis research starting points, not contacts or commitments — verify and warm-intro before outreach.<br>
+            Companion assets: <code>deck/public/index.html</code> (Replicator value model) · <code>deck.html</code> (slide deck) · <code>one-pager.html</code>.
+        </div>
+    </div></footer>
+
+    <script>
+        // ───────────────────────── data ─────────────────────────
+        const STAGES = ['Research','Contacted','1st meeting','Partner meeting','Diligence','Committed','Passed'];
+        const SHORT  = ['Research','Contacted','1st mtg','Partner','Diligence','Committed','Passed'];
+
+        const INVESTORS = {
+            leads: [
+                { id:'lux', nm:'Lux Capital', chk:'$3–5M', fit:'Science-driven hard tech; materials, frontier compute, defense-adjacent. Among the most natural leads for a "physics + AI" thesis.', reach:'Warm intro via a Lux portfolio founder in deep tech' },
+                { id:'dcvc', nm:'DCVC', chk:'$3–5M', fit:'"Deep tech" by name — computational + physical sciences, materials, climate. Underwrites long science arcs.', reach:'Thesis-fit cold + warm via comp-bio/materials portfolio' },
+                { id:'playground', nm:'Playground Global', chk:'$3–6M', fit:'Deep tech, advanced materials, quantum, compute infrastructure. Builds long-horizon hardware/science bets.', reach:'Warm via hardware/quantum founders' },
+                { id:'engine', nm:'The Engine (Engine Ventures)', chk:'$3–5M', fit:'MIT "tough tech" — materials, energy, sovereignty-flavored science. Possibly the cleanest thesis match.', reach:'MIT / tough-tech network; apply + warm intro' },
+                { id:'foundersfund', nm:'Founders Fund', chk:'$3–8M', fit:'Contrarian, civilization-scale ambition, sovereignty/defense comfort. Will price big if the vision lands.', reach:'Warm intro essential; very network-driven' },
+                { id:'aff', nm:"America's Frontier Fund", chk:'$3–5M', fit:'National-security deep tech, semiconductors, materials sovereignty (CHIPS-aligned). Directly on your sovereignty thesis.', reach:'Sovereignty / national-lab network' },
+            ],
+            participants: [
+                { id:'fiftyyears', nm:'Fifty Years', chk:'$0.5–1.5M', fit:'"Science for civilization-scale problems." Mission-fit for the replicator framing.', reach:'Warm; mission-aligned founders' },
+                { id:'compound', nm:'Compound', chk:'$0.5–1.5M', fit:'Thesis-driven frontier/deep tech; likes "picks-and-shovels" infrastructure bets.', reach:'Cold works if thesis is sharp; warm better' },
+                { id:'futureventures', nm:'Future Ventures', chk:'$0.5–2M', fit:'Jurvetson deep-science moonshots; long horizons, frontier physics/materials.', reach:'Warm intro' },
+                { id:'root', nm:'Root Ventures', chk:'$0.5–1.5M', fit:'Hard-tech seed for engineers; comfortable with technical risk.', reach:'Engineer-founder network' },
+                { id:'atone', nm:'At One Ventures', chk:'$0.5–2M', fit:'Materials & planet-positive deep tech; strong on novel materials.', reach:'Climate/materials network' },
+                { id:'airstreet', nm:'Air Street Capital', chk:'$0.25–1M', fit:'AI-first; explicit interest in AI-for-science and foundation models. Gets the "audit for ML" framing fast.', reach:'AI research network' },
+                { id:'osscap', nm:'OSS Capital', chk:'$0.25–1M', fit:'Commercial open source specialists — validates the open-core revenue model.', reach:'OSS founder network' },
+                { id:'fund1517', nm:'1517 Fund', chk:'$0.25–1M', fit:'Frontier science, technical founders, contrarian early bets.', reach:'Warm or cold; technical thesis' },
+            ],
+            strategics: [
+                { id:'appliedv', nm:'Applied Ventures (Applied Materials)', chk:'$1–3M', fit:'The materials-equipment strategic. Cash + commercial channel + sovereignty credibility. Near-perfect fit.', reach:'Corp dev / BD intro' },
+                { id:'tdk', nm:'TDK Ventures', chk:'$1–3M', fit:'Materials & deep-tech corporate VC; actively funds frontier materials.', reach:'Corp VC application + warm' },
+                { id:'m12', nm:'M12 (Microsoft)', chk:'$1–3M', fit:'Ties directly to Azure Quantum Elements — your top strategic-acquirer thesis. Validates the buyer.', reach:'Via AQE / MSR materials contacts' },
+                { id:'gv', nm:'GV / Gradient (Alphabet)', chk:'$1–3M', fit:'DeepMind GNoME lineage; strategic interest in deployable generative matter.', reach:'DeepMind materials network' },
+                { id:'toyota', nm:'Toyota Ventures', chk:'$0.5–2M', fit:'Frontier fund covers materials, energy, batteries — direct application pull.', reach:'Corp VC channel' },
+                { id:'inqtel', nm:'In-Q-Tel / Shield Capital', chk:'$1–3M', fit:'IC/defense strategic; sovereignty + ITAR materials angle. Pairs with non-dilutive defense work.', reach:'Defense / national-security network' },
+            ],
+            nondilutive: [
+                { id:'nsf', nm:'NSF SBIR/STTR (America’s Seed Fund)', chk:'$0.3M→$1M+', fit:'Phase I ~$275K, Phase II ~$1M+. Non-dilutive, credibility, no cap-table cost. Start now.', reach:'Direct application; rolling topics' },
+                { id:'doe', nm:'DOE SBIR', chk:'$0.25M→$1M+', fit:'Materials & energy topics map directly to your corpus. Strong sovereignty narrative.', reach:'Direct application' },
+                { id:'arpae', nm:'ARPA-E', chk:'$0.5–3M', fit:'Energy-materials moonshots; larger awards for ambitious programs.', reach:'Program-driven; watch open FOAs' },
+                { id:'darpa', nm:'DARPA', chk:'$0.5M+', fit:'Microelectronics / materials programs; the "named tooling in a federal proposal" milestone.', reach:'PM outreach + teaming' },
+                { id:'afwerx', nm:'AFWERX / SpaceWERX SBIR', chk:'$0.05M→$1.7M', fit:'Fast-moving defense SBIR; quick Phase I, sizable Phase II/STRATFI.', reach:'Open topics; direct application' },
+            ],
+        };
+
+        const CHECKLIST = [
+            ['Pitch deck (the Replicator value model)','Already built — index.html'],
+            ['One-pager / executive summary','Print-to-PDF ready'],
+            ['Financial model','5-yr DCF floor + 30-yr ceiling — from value-model CSVs'],
+            ['Cap table (pre & post)','Current + the $30M-post round model'],
+            ['The 2026 methodology paper','Your "truth before product" proof'],
+            ['Technical / methodology memo','2–3 pp: what the audit substrate is, why it’s defensible'],
+            ['Team bios + hiring plan','Address the team gap head-on'],
+            ['Milestone & use-of-funds plan','The 12/18/24-mo markers from the deck'],
+            ['Customer / design-partner pipeline','Even LOIs or pilot conversations count'],
+            ['Federal / grant status','SBIR / contract pipeline — the de-risk story'],
+            ['Incorporation + IP assignment','C-corp docs, founder IP assigned to co'],
+            ['References','Advisors, collaborators, early users'],
+        ];
+
+        // ───────────────────────── render ─────────────────────────
+        const LS = 'lupine-raise-v1';
+        let state = {};
+        try { state = JSON.parse(localStorage.getItem(LS)) || {}; } catch(e) { state = {}; }
+        function save() {
+            try { localStorage.setItem(LS, JSON.stringify(state)); } catch(e) {}
+            const d = document.getElementById('savedDot'); d.classList.add('show'); setTimeout(()=>d.classList.remove('show'),1100);
+            recompute();
+        }
+        function parseCheck(v) {
+            if (!v) return 0;
+            const m = String(v).replace(/[^0-9.]/g,'');
+            return m ? parseFloat(m) : 0;
+        }
+
+        function card(inv) {
+            const s = state[inv.id] || {};
+            const stage = s.stage || 'Research';
+            const opts = STAGES.map(st => `<option value="${st}" ${st===stage?'selected':''}>${st}</option>`).join('');
+            return `<div class="inv" data-id="${inv.id}" id="card-${inv.id}">
+                <div class="ih"><span class="nm">${inv.nm}</span><span class="chk">${inv.chk}</span></div>
+                <div class="fit">${inv.fit}</div>
+                <div class="reach"><b>Reach:</b> ${inv.reach}</div>
+                <div class="inv-controls">
+                    <select data-id="${inv.id}" data-k="stage">${opts}</select>
+                    <input type="text" data-id="${inv.id}" data-k="check" placeholder="$ soft" value="${s.check||''}">
+                </div>
+                <div class="note"><input type="text" data-id="${inv.id}" data-k="note" placeholder="notes — partner, last touch, next step…" value="${s.note?String(s.note).replace(/"/g,'&quot;'):''}"></div>
+            </div>`;
+        }
+        Object.keys(INVESTORS).forEach(tier => {
+            document.getElementById(tier).innerHTML = INVESTORS[tier].map(card).join('');
+        });
+
+        // checklist
+        document.getElementById('checklist').innerHTML = CHECKLIST.map((c,i)=>{
+            const ck = state['ck'+i] ? 'checked' : '';
+            return `<label class="ck"><input type="checkbox" data-ck="${i}" ${ck}>
+                <span>${c[0]}<span class="x">${c[1]}</span></span></label>`;
+        }).join('');
+
+        // ───────────────────────── interactivity ─────────────────────────
+        document.addEventListener('change', e => {
+            const t = e.target;
+            if (t.dataset.id && t.dataset.k) {
+                const id = t.dataset.id;
+                state[id] = state[id] || {};
+                state[id][t.dataset.k] = t.value;
+                const cardEl = document.getElementById('card-'+id);
+                if (cardEl) { cardEl.classList.toggle('committed', (state[id].stage==='Committed')); cardEl.classList.toggle('passed', (state[id].stage==='Passed')); }
+                save();
+            }
+            if (t.dataset.ck !== undefined) { state['ck'+t.dataset.ck] = t.checked; save(); }
+        });
+        document.addEventListener('input', e => {
+            const t = e.target;
+            if (t.dataset.id && (t.dataset.k==='check' || t.dataset.k==='note')) {
+                state[t.dataset.id] = state[t.dataset.id] || {};
+                state[t.dataset.id][t.dataset.k] = t.value;
+                clearTimeout(window._sv); window._sv = setTimeout(save, 500);
+            }
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (confirm('Clear all pipeline stages, checks, notes, and checklist on this browser?')) {
+                state = {}; try{localStorage.removeItem(LS);}catch(e){}
+                location.reload();
+            }
+        });
+
+        // copy buttons
+        document.querySelectorAll('.copy-btn').forEach(b => {
+            b.addEventListener('click', () => {
+                const el = document.getElementById(b.dataset.copy);
+                const txt = el.innerText;
+                navigator.clipboard?.writeText(txt).then(()=>{ const o=b.textContent; b.textContent='Copied ✓'; setTimeout(()=>b.textContent=o,1400); });
+            });
+        });
+
+        // summary + progress
+        function recompute() {
+            const counts = STAGES.map(()=>0);
+            let soft = 0;
+            const allIds = Object.values(INVESTORS).flat().map(i=>i.id);
+            allIds.forEach(id => {
+                const s = state[id]; if (!s) { counts[0]++; return; }
+                const idx = STAGES.indexOf(s.stage || 'Research');
+                counts[idx >=0 ? idx : 0]++;
+                if (s.stage==='Committed') soft += parseCheck(s.check);
+            });
+            document.getElementById('pipeSummary').innerHTML = SHORT.map((s,i)=>
+                `<div class="pcount"><div class="n">${counts[i]}</div><div class="s">${s}</div></div>`).join('');
+            const pct = Math.min(100, (soft/8)*100);
+            document.getElementById('progFill').style.width = pct+'%';
+            document.getElementById('progSoft').textContent = '$'+soft.toFixed(1)+'M soft-circled';
+        }
+        recompute();
+
+        // smooth toc
+        document.querySelectorAll('nav.toc a').forEach(a=>a.addEventListener('click',e=>{
+            const t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+        }));
+    </script>
+</body>
+</html>

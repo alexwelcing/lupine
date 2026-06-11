@@ -36,6 +36,8 @@ SURFACES_STRICT = [
     "library-site/src/llms-full.txt",
     "atlas/atlas-view/apps/web/public/llms.txt",
     "atlas/atlas-view/apps/web/public/llms-full.txt",
+    "deck/public/index.html",
+    "raise/command-center.html",
 ]
 
 # These developer-facing records can use IMMI as a dataset / working name, so

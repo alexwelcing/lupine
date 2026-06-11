@@ -1,6 +1,18 @@
 # IMMI Paper: The Causal Geometry of Prediction Errors in Interatomic Potentials
 
-This directory contains the LaTeX source, figures, and build infrastructure for a working paper in preparation.
+LaTeX source, figures, and build infrastructure for the working paper
+*"The Causal Geometry of Prediction Errors in Interatomic Potentials: A
+Hyper-Ribbon Manifold Analysis with Ecological Fallacy Detection."*
+
+**Status:** working paper, in preparation (single source of truth:
+`library-site/src/brand.json` → `publication.status`). Do not describe as
+submitted, accepted, or published anywhere until that field changes.
+
+**Canonical source:** `immi-paper.tex` in this directory tracks the corrected
+post-audit manuscript (ecological-fallacy terminology per the Lean audit
+T111; Born-screened MLIP section; verified Table 2). The assembled
+submission package (cover letter, supplementary, compiled PDFs, submission
+log) lives in the research workspace's `immi_submission` packages.
 
 ## Review-Ready Advanced Drafts
 
@@ -13,80 +25,51 @@ marked **ready for review**, not submission-ready:
 
 Use that ledger before promoting either draft into a submission workflow.
 
-## Building the Paper
-
-### Requirements
-
-- LaTeX distribution (TeX Live or MiKTeX) with `natbib`, `siunitx`, `booktabs`
-- Python 3.10+ with packages listed in `figures/requirements.txt`
-
-### Quick Build
+## Building
 
 ```bash
 cd paper
-make
+pdflatex immi-paper.tex && bibtex immi-paper && pdflatex immi-paper.tex && pdflatex immi-paper.tex
+# or: tectonic immi-paper.tex
 ```
 
-### Step-by-Step
+Requires `natbib`, `siunitx`, `booktabs`; figures are pre-rendered PNGs in
+`figures/`.
 
-1. **Generate figures** (requires `atlas-distill` JSON outputs):
-   ```bash
-   cd figures
-   pip install -r requirements.txt
-   python generate_fig1_eigenvalue_spectra.py
-   python generate_fig2_dimensionality.py
-   python generate_fig3_paradox.py
-   python generate_fig4_forest.py
-   cd ..
-   ```
+## Figures
 
-2. **Compile LaTeX**:
-   ```bash
-   pdflatex immi-paper.tex
-   bibtex immi-paper
-   pdflatex immi-paper.tex
-   pdflatex immi-paper.tex
-   ```
+| Figure | File | Description |
+|--------|------|-------------|
+| 1 | `figures/fig1_eigenvalue_spectra.png` | Eigenvalue spectra (sloppy log-linear hierarchy) |
+| 2 | `figures/fig2_dimensionality.png` | Participation-ratio distribution (42 multi-element potentials) |
+| 3 | `figures/fig3_bcc_fcc_dichotomy.png` | BCC/FCC correlation dichotomy |
+| 4 | `figures/fig4_forest.png` | Random-effects meta-analysis forest plot |
+| 5 | `figures/fig5_pairstyle.png` | Pair-style stratification (ecological fallacy) |
+| 6 | `figures/fig6_dband_closure.png` | Cross-style alignment vs d-band / n_pairs confounder |
+| S1–S3 | `figures/year_stratified_*.png`, `figures/observables_5d_pr.png` | Supplementary: temporal invariance, 5D expansion |
 
-3. **Output**: `immi-paper.pdf`
+`figures/fig3_paradox.png` is a superseded artifact from the pre-audit
+draft (Simpson's-paradox framing, replaced by the ecological-fallacy
+analysis); retained for provenance only — do not include in any build.
 
-## Figure Regeneration
+## Provenance and corrections
 
-All figures are generated from `atlas-distill` JSON outputs:
-
-| Figure | Script | Input Data | Description |
-|--------|--------|------------|-------------|
-| 1 | `generate_fig1_eigenvalue_spectra.py` | `manifold_analysis.json` | FCC eigenvalue spectra |
-| 2 | `generate_fig2_dimensionality.py` | `manifold_analysis.json` | Effective dimensionality with CIs |
-| 3 | `generate_fig3_paradox.py` | `paradox_detection.json` | BCC Simpson's paradox |
-| 4 | `generate_fig4_forest.py` | `meta_analysis.json` | Meta-analysis forest plot |
-
-To regenerate inputs:
-```bash
-cd ../atlas-distill
-cargo run --bin atlas-distill -- validate --full    # produces manifold_analysis.json, validation_report.json
-cargo run --bin atlas-distill -- meta-analyze       # produces meta_analysis.json
-cargo run --bin atlas-distill -- detect-paradox --bcc  # produces paradox_detection.json
-```
-
-## Paper Structure
-
-| Section | Content |
-|---------|---------|
-| Abstract | Summary of hyper-ribbon + Simpson's paradox + meta-analysis findings |
-| Introduction | Three traditions convergence, software contribution |
-| Theory | Sloppy models, Simpson's paradox, random-effects meta-analysis |
-| Methods | Benchmark datasets, software implementation, bootstrap UQ |
-| Results | FCC hyper-ribbon, BCC paradox, meta-analysis |
-| Discussion | Implications, limitations, connection to NNIP work |
+The 2026-06-11 audit (see research workspace `SUBMISSION_LOG.md`) replaced
+Simpson's-paradox claims with ecological-fallacy terminology (the strict
+reversal criterion of Kievit et al. was not met; the Lean audit T111 caught
+the overstatement), applied Born stability screening to the foundation-MLIP
+section, and corrected Table 2. Any copy of this paper that uses the
+Simpson's-paradox title is superseded.
 
 ## Citation
 
 ```bibtex
 @unpublished{welcing2026causal,
-  author  = {Welcing, Alexander},
-  title   = {The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection},
-  year    = {2026},
-  note    = {Working paper, in preparation}
+  author = {Welcing, Alex},
+  title  = {The Causal Geometry of Prediction Errors in Interatomic
+            Potentials: A Hyper-Ribbon Manifold Analysis with Ecological
+            Fallacy Detection},
+  year   = {2026},
+  note   = {Working paper, in preparation}
 }
 ```
