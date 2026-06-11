@@ -86,9 +86,26 @@ not a curiosity but a necessity for any converged family, at an explicit rate.
 \textbf{(iii) Conservation and rotation.} When a modeling paradigm is replaced
 --- when the binding constraint is removed --- the error anisotropy does not
 dissolve into isotropic scatter. It is conserved, and its direction rotates to
-the next constraint upstream in the epistemic stack. This is the part of the
-law for which we find no antecedent in the climate, forecasting, machine
-learning, or materials literatures, and it is the part we test hardest.
+the next constraint upstream in the epistemic stack
+(Fig.~\ref{fig:law}a). This is the part of the law for which we find no
+antecedent in the climate, forecasting, machine learning, or materials
+literatures, and it is the part we test hardest (Fig.~\ref{fig:law}b).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig1_law_and_stack.pdf}
+\caption{\textbf{The projection law and its three-layer test.}
+(a)~A model family's reachable set fixes the residual of every well-fitted
+member (Theorems~\ref{thm:cone}--\ref{thm:consensus}); replacing the family
+(paradigm shift) rotates the shared residual rather than removing it.
+(b)~Cluster-by-constraint versus cluster-by-implementation statistics at three
+layers of one epistemic stack. Layer~1 shows within-family vs.\ pooled
+reference--prediction correlation (observational); layers 2--3 show the
+pre-registered cluster statistics with exact permutation $p$-values; the
+registered refutation condition (implementation $>$ constraint) was not
+triggered in either experiment.}
+\label{fig:law}
+\end{figure}
 
 We instantiate the law at three layers of a single epistemic stack ---
 classical interatomic potentials, foundation machine-learned interatomic
@@ -175,7 +192,25 @@ parameters.
 All four theorems (and the supporting lemmas, $\sim$29 statements) are
 machine-checked in Lean~4 against a pinned Mathlib, with zero \texttt{sorry}
 and zero new axioms; the artifact and the theorem-to-statistic contract ship
-with the replication kit (\S\ref{sec:repro}).
+with the replication kit (\S\ref{sec:repro}). Figure~\ref{fig:gauge}
+visualizes the gauge with its classical inversion and the decoupling of the
+two order parameters in live data.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig4_gauge_decoupling.pdf}
+\caption{\textbf{The gauge and the two order parameters.}
+(a)~$\mathrm{PR}(3,\rho)$ (Theorem~\ref{thm:gauge}); inverting the classical
+ensemble's median $\mathrm{PR}=1.28$ gives systematic fraction
+$\alpha = 0.93$, in agreement with two independent estimators
+(\S\ref{sec:classical}). (b)~Per-element foundation-MLIP ensembles
+($n=8$--$11$ models): axis concentration stays high for every element while
+sign coherence spans the full range --- the decoupling of
+Theorem~\ref{thm:decouple}. Elements whose errors split in sign by training
+functional (V, Nb, W) sit low-right; consensus elements (Pt, Ta, Au) sit
+top-right.}
+\label{fig:gauge}
+\end{figure}
 
 \section{Layer 1: classical interatomic potentials}
 \label{sec:classical}
@@ -228,6 +263,20 @@ models ``disagree'' (V, Cr), they disagree by \emph{sign along the same axis}
 (cosine $-0.88$), exactly the structure Theorem~\ref{thm:decouple}
 distinguishes.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\textwidth]{figures/fig2_mlip_matrix.pdf}
+\caption{\textbf{Foundation-MLIP error geometry organizes by training
+functional, not architecture.} Mean pairwise error-vector cosine over
+Born-stable FCC elements for eleven models: four architectures trained on
+MatPES-PBE, three PBE-lineage anchors (MPtrj/OMat training, dotted separator
+= dataset axis with functional held fixed), and the same four architectures
+trained on MatPES-r$^2$SCAN (solid separator). The PBE block coheres across
+architectures \emph{and} datasets; the cross-functional blocks fade;
+within-r$^2$SCAN pairs re-cohere (TensorNet$\times$QET $+0.94$).}
+\label{fig:mlip}
+\end{figure}
+
 \textbf{Pre-registered factorial test.} The MatPES release \citep{kaplan2025}
 provides one curated training distribution in two functionals (PBE, r$^2$SCAN)
 with four architectures trained on each (M3GNet, TensorNet, CHGNet, QET) ---
@@ -262,6 +311,22 @@ implementation). The dataset's factorial structure makes the test sharp:
 ABINIT appears with three pseudopotential families, Quantum ESPRESSO and
 CASTEP with two each, while the PseudoDojo-0.4 table is implemented by four
 independent plane-wave codes.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.78\textwidth]{figures/fig3_acwf_matrix.pdf}
+\caption{\textbf{DFT-implementation errors organize by pseudopotential table,
+not simulation code.} Mean error-vector cosine in $(V_0, B_0, B_1)$ space
+against the all-electron reference, over systems above the
+FLEUR--WIEN2k noise floor (ACWF data, 384 unary crystals). Four independent
+plane-wave codes sharing the PseudoDojo table align at $0.70$--$0.87$ (dark
+block); the same code under a different pseudopotential family drops to
+$0.19$--$0.35$ (e.g.\ ABINIT-JTH vs.\ ABINIT-PD04). SIESTA (red frame), the
+one localized-orbital-basis method, dis-aligns from its own pseudopotential
+group: a different constraint binds first --- the nested-constraint
+phenomenon.}
+\label{fig:acwf}
+\end{figure}
 
 Pre-registered outcome: same-table--different-code alignment
 $S_{\mathrm{table}} = +0.526$ versus same-code--different-family
