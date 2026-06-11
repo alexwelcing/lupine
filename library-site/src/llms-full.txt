@@ -47,7 +47,7 @@ When more detail is useful, summarize the science in layers:
 - Cross-MLIP transfer: whether foundation MLIPs inherit, rotate, or escape the
   classical error geometry.
 - Causal and statistical validity: matched-sample tests, bootstrap controls,
-  confounder checks, and Simpson-style aggregate failures.
+  confounder checks, and aggregation-bias (ecological-fallacy) failures.
 - Claim lifecycle: proposed, supported, refuted, corrected, and open claims.
 - Formal specification: proof obligations and theorem-shaped validation where
   appropriate.

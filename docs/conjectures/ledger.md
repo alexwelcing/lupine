@@ -19,7 +19,8 @@ Each hypothesis is its own entry with a lifecycle **status**. The status legend:
 | Hypothesis | Status | One-line resolution |
 |------------|--------|---------------------|
 | Hyper-ribbon universality (classical potentials) | Supported · Proven | Error vectors occupy a low-dimensional manifold; Lean-grounded. |
-| Hyper-ribbon transfers classical → MLIP | Supported | 14/15 IMMI elements stay on the ribbon when MACE / CHGNet / Orb-v3 are added. |
+| Hyper-ribbon transfers classical → MLIP | Under re-audit (2026-06-11) | Prior evidence: 14/15 on-ribbon under MACE/CHGNet/Orb-v3. Born screening (replication/error-geometry) excludes 7/45 foundation-model tensors (incl. CHGNet-Fe, MACE-V, Orb Al/Nb/Pb/Pt); per-element counts must be recomputed on screened inputs. Directional structure independently confirmed at n=8–11 models (rank-1 share 0.56–0.94). |
+| Projected hyper-ribbon release | Open | New Lean-first release lane: prove projected-ribbon gates, then require replay plus cloud evidence before promotion. |
 | Cross-MLIP orthogonal error modes | Supported | MACE and CHGNet have orthogonal error directions on Ag/Nb/Pd. |
 | Au escapes the ribbon under foundation MLIPs | Open | Confirmed for MACE+CHGNet; Ag escape refuted. |
 | Fe is a persistent outlier | Open | PR > 2 invariant to LAM addition across the trio. |

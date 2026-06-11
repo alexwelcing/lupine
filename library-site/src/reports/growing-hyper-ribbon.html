@@ -52,7 +52,7 @@
 
 <section id="s0">
   <div class="tldr">
-    <p>The Lupine hyper-ribbon is a low-dimensional error manifold (participation ratio <strong>PR ≈ 1.05–1.86</strong> in 3D property space) discovered across <strong>559 classical interatomic potentials</strong> and <strong>15 benchmark metals</strong>. When foundation MLIPs (MACE-MP-0, CHGNet, Orb-v3) are added, <strong>14/15 elements stay on the ribbon</strong> — but <strong>gold (Au) escapes</strong>, its PR jumping from <strong>1.02 → 1.67</strong> under MACE. This document develops the machinery to (1) <strong>grow the manifold to arbitrary N+ properties</strong> while keeping PR bounded via conditional activation, (2) <strong>detect escape events</strong> in real time using a Participation-Ratio statistic, (3) <strong>build a regulator</strong> acting as a configurable mid-run filter (an audio-EQ analogy), and (4) <strong>propagate escape discoveries</strong> through a catalog that automatically improves all future MLIP runs. Gold nanostructure generation is the validation target — each Au structure feeds back into the catalog, tightening the ribbon for everyone downstream.</p>
+    <p>The Lupine hyper-ribbon is a low-dimensional error manifold (participation ratio <strong>PR ≈ 1.05–1.86</strong> in 3D property space) discovered across <strong>559 classical interatomic potentials</strong> and <strong>15 benchmark metals</strong>. When foundation MLIPs (MACE-MP-0, CHGNet, Orb-v3) are added, <strong>14/15 elements stay on the ribbon</strong> <em>(pre-screening count; see re-audit note)</em> — but <strong>gold (Au) escapes</strong>, its PR jumping from <strong>1.02 → 1.67</strong> under MACE. This document develops the machinery to (1) <strong>grow the manifold to arbitrary N+ properties</strong> while keeping PR bounded via conditional activation, (2) <strong>detect escape events</strong> in real time using a Participation-Ratio statistic, (3) <strong>build a regulator</strong> acting as a configurable mid-run filter (an audio-EQ analogy), and (4) <strong>propagate escape discoveries</strong> through a catalog that automatically improves all future MLIP runs. Gold nanostructure generation is the validation target — each Au structure feeds back into the catalog, tightening the ribbon for everyone downstream.</p>
   </div>
 </section>
 
@@ -87,7 +87,7 @@
       <span><i style="background:#e15a5a"></i>Fe (persistent outlier)</span>
       <span style="margin-left:auto">live PR&nbsp; <b class="readout" id="prLive">1.42</b> / 3 · escape ρ <b class="readout" id="rhoLive">0.04</b></span>
     </div>
-    <figcaption>Each point is a potential's prediction-error vector projected to the two leading principal axes; the cloud hugs a near-1D ridge — the hyper-ribbon. Toggle <b>+ MACE-MP-0</b>: 14/15 metals stay bound, but Au is flung orthogonal to the ribbon (PR 1.02 → 1.67) while Fe remains the off-axis outlier. PR and escape ratio are computed live from the displayed covariance.</figcaption>
+    <figcaption>Each point is a potential's prediction-error vector projected to the two leading principal axes; the cloud hugs a near-1D ridge — the hyper-ribbon. Toggle <b>+ MACE-MP-0</b>: 14/15 metals stay bound, but Au is flung orthogonal to the ribbon (PR 1.02 → 1.67) while Fe remains the off-axis outlier. Pre-screening figures, under re-audit (2026-06: Born stability screening excludes 7 of 45 foundation-model elastic tensors). PR and escape ratio are computed live from the displayed covariance.</figcaption>
   </figure>
 
   <div class="tw">

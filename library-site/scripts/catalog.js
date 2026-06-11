@@ -146,7 +146,7 @@ export const CATALOG = {
       id: 'hyp-hyper-ribbon-mlip-transfer',
       source: 'docs/conjectures/hyper-ribbon-mlip-transfer.md',
       title: 'Hyper-Ribbon Transfers Classical → MLIP',
-      subtitle: '14/15 IMMI elements stay on the ribbon under MACE / CHGNet / Orb-v3.',
+      subtitle: 'Cross-paradigm ribbon transfer — per-element counts under re-audit after Born screening (2026-06); directional structure confirmed at 8–11 models.',
       category: 'conjectures',
       tags: ['hyper-ribbon', 'mlip', 'de-myopization'],
       group: 'hypotheses',

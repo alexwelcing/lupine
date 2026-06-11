@@ -9,7 +9,7 @@
  * Sub-agent topology:
  *   Orchestrator
  *     ├── Manifold (α)  — PCA eigenvalue extraction
- *     ├── Causal  (δ)   — Simpson's Paradox detection
+ *     ├── Causal  (δ)   — aggregation-bias detection
  *     ├── Theorist (γ)  — Hypothesis generation
  *     └── Experiment (ε) — LAMMPS experiment design & queueing
  */
@@ -62,14 +62,14 @@ export class Orchestrator extends GlimThinkAgent {
       }),
 
       dispatch_causal: tool({
-        description: "Delegate a causal screening task to the Causal sub-agent (δ). The sub-agent will screen for Simpson's Paradox across grouping variables.",
+        description: "Delegate a causal screening task to the Causal sub-agent (δ). The sub-agent will screen for aggregation bias (strict reversal / ecological fallacy / suppression) across grouping variables.",
         inputSchema: z.object({
           instruction: z.string().optional().describe("Additional instructions for the causal agent"),
         }),
         execute: async ({ instruction }) => {
           const child = await this.subAgent(Causal, "causal-main");
           const prompt = instruction
-            ? `Screen for Simpson's Paradox. ${instruction}`
+            ? `Screen for aggregation bias (classify: strict reversal / ecological fallacy / suppression). ${instruction}`
             : `Screen all grouping variables (element, pair_style, potential_label) for Simpson's Paradox. For each, compute pooled and within-group correlations and report any reversals.`;
           const response = await this.runChildChat(child, prompt, "causal");
           return { agent: "causal", response };

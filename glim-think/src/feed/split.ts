@@ -138,7 +138,7 @@ async function buildSwarmStatus(env: Env): Promise<Record<string, SwarmAgentStat
     },
     causal: {
       status: recordActive ? "active" : "idle",
-      task: recordActive ? "Stratifying for Simpson's paradox" : "Awaiting fresh records",
+      task: recordActive ? "Stratifying for aggregation bias" : "Awaiting fresh records",
       last_seen: lastRecord?.timestamp ?? fallback,
     },
     theorist: {

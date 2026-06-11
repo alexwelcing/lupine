@@ -34,3 +34,17 @@ sub-findings that did not transfer.
 
 Add $E_\text{coh}$ and $B_0$ from the Phase-D compute pipeline so the manifold spans
 four property families, then re-test ribbon stability across the wider basis.
+
+## Re-audit note (2026-06-11)
+
+Born stability screening (see `replication/error-geometry/`, prereg commits
+`dffbe595`/`ebf39e33`) excludes 7 of 45 foundation-model elastic tensors —
+including **CHGNet-Fe** (C11 < |C12|), MACE-V, and Orb-v3 Al/Nb/Pb/Pt — so any
+per-element PR or on-ribbon count computed from unscreened trio inputs is
+contaminated and must be recomputed. Independently, at n = 8–11 Born-stable
+models per element, Fe's cross-model alignment is **+0.80** (not an alignment
+outlier), and the error AXIS is one-dimensional for all 15 elements (rank-1
+share 0.56–0.94). What survives for Fe specifically: one foundation model's
+elastic tensor for Fe fails mechanical stability outright — a failure MODE
+consistent with the magnetism hypothesis, but a different claim than
+"PR > 2 on the ribbon". Recompute before citing this conjecture's evidence.

@@ -64,7 +64,7 @@ EXPLANATION: <one sentence>`
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 1. CAUSAL VALIDITY (Simpson's Paradox detection)
+// 1. CAUSAL VALIDITY (aggregation-bias detection)
 // ═══════════════════════════════════════════════════════════════════
 
 export async function evalCausalValidity(span: SpanInput): Promise<ComboEvalResult | null> {
@@ -117,7 +117,7 @@ export async function evalCausalValidity(span: SpanInput): Promise<ComboEvalResu
 
   // LLM judgment
   const prompt = `
-A research agent detected ${reversal ? "Simpson's Paradox" : "no paradox"} in materials science data.
+A research agent detected ${reversal ? "a strict Simpson-type reversal" : "no reversal"} in materials science data.
 
 Results:
 - Pooled correlation: r = ${pooledR.toFixed(4)}
