@@ -52,6 +52,20 @@ Zenodo DOI bundled with the replication kit, cited from the paper.
    (data-reuse courtesy; check journal conflict rules — data authorship is
    not authorship).
 
+## IMMI-formatted version of Paper 2 (prepared 2026-06-11)
+
+`immi/projection-law-immi.tex` — same content as the master, reformatted to
+IMMI conventions: structured abstract (Purpose/Methods/Results/Conclusion,
+matching Paper 1's house style), keywords, numbered Springer citations
+(unsrtnat), single column, full Declarations block (funding, competing
+interests, data/code availability, author contributions, AI-use disclosure),
+Discussion section retitled toward benchmarking/VVUQ, Huang 2025
+transfer-learning tie-in added to the MLIP section. Keeps the option of
+submitting Papers 1+2 as companions to the same journal. CONTENT SYNC RULE:
+the PRX master (`projection-law.tex`) is canonical; propagate edits to the
+IMMI copy before either submission. ORCID placeholder in the author block
+needs Alex's real ORCID.
+
 ## Paper 1 — IMMI (locked; no change)
 
 Decision already logged. Synergy note: arXiv Paper 1 at the same time as
