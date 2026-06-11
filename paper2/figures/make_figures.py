@@ -234,14 +234,14 @@ def fig4():
     pr = (rho + d) ** 2 / ((rho + 1) ** 2 + (d - 1))
     a.semilogx(rho, pr, color=TEAL, lw=1.8)
     a.axhline(1, color="k", lw=0.6, ls=":")
-    pr_obs, rho_hat = 1.28, 13.6
-    a.plot([1e-2, rho_hat], [pr_obs, pr_obs], color=RED, lw=1.0, ls="--")
+    pr_obs, rho_hat = 1.086, 45.8
+    a.plot([1.2e-2, rho_hat], [pr_obs, pr_obs], color=RED, lw=1.0, ls="--")
     a.plot([rho_hat, rho_hat], [0.9, pr_obs], color=RED, lw=1.0, ls="--")
     a.plot(rho_hat, pr_obs, "o", color=RED, ms=5)
-    a.annotate("median PR = 1.28\n(559 classical potentials)", (0.062, 1.34), fontsize=7, color=RED)
-    a.annotate(r"$\hat{\rho}\approx 13.6 \Rightarrow \alpha = \frac{\rho}{\rho+1} = 0.93$",
+    a.annotate("median PR = 1.09\n(42 multi-element potentials,\npinned dataset)", (0.062, 1.34), fontsize=7, color=RED)
+    a.annotate(r"$\hat{\rho}\approx 45.8 \Rightarrow \alpha = \frac{\rho}{\rho+1} = 0.98$",
                (22, 1.80), fontsize=7.6, color=RED)
-    a.annotate("independent estimators of $\\alpha$:\nPR inversion 0.93 · within-family $r$ 0.95\n· rank-1 share 0.96",
+    a.annotate("independent estimators of $\\alpha$:\nPR inversion 0.98 · within-family $r$ 0.95\n· rank-1 share 0.96",
                (28, 2.42), fontsize=6.8,
                bbox=dict(boxstyle="round,pad=0.32", fc="#fff9db", ec="#e9c46a", lw=0.7))
     a.set_xlabel(r"bias-to-noise ratio $\rho = \|b\|^2/\sigma^2$")

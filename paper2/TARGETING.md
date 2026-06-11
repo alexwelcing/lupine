@@ -61,7 +61,7 @@ matching Paper 1's house style), keywords, numbered Springer citations
 interests, data/code availability, author contributions, AI-use disclosure),
 Discussion section retitled toward benchmarking/VVUQ, Huang 2025
 transfer-learning tie-in added to the MLIP section. Keeps the option of
-submitting Papers 1+2 as companions to the same journal. CONTENT SYNC RULE:
+submitting Papers 1+2 as companions to the same journal. SYNC STATUS 2026-06-11: IMMI copy is OUT OF SYNC with the R2 (post-review) master — regenerate before any IMMI submission. CONTENT SYNC RULE:
 the PRX master (`projection-law.tex`) is canonical; propagate edits to the
 IMMI copy before either submission. ORCID placeholder in the author block
 needs Alex's real ORCID.

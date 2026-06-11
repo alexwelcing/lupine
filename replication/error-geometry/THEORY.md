@@ -29,9 +29,9 @@ Errors modeled as shared bias `b` plus isotropic noise `σ` in `d` dimensions,
 | Theorem | Statement | Empirical face |
 |---|---|---|
 | `prBiasNoise_zero` | PR(d, 0) = d | an immature (variance-dominated) family fills observable space |
-| `one_le_prBiasNoise`, `prBiasNoise_le_dim` | 1 ≤ PR ≤ d | observed PR ∈ [1.05, 2.09] out of 3, every ensemble, every paradigm, 40 years |
-| `prBiasNoise_strictAnti` | PR strictly decreases in ρ (key identity: N₁D₂ − N₂D₁ = (d−1)(ρ₂−ρ₁)(2ρ₁ρ₂ + d(ρ₁+ρ₂))) | PR is a *gauge*: median PR 1.28 inverts to ≈93% systematic error fraction for the classical corpus |
-| `systematicFraction_*` | α = ρ/(ρ+1) ∈ [0, 1) | the three-estimator consilience (PR, within-family r, rank-1 share → 0.93/0.95/0.96) |
+| `one_le_prBiasNoise`, `prBiasNoise_le_dim` | 1 ≤ PR ≤ d | observed PR ∈ [1.00, 2.29] out of 3, every ensemble, every paradigm, 40 years |
+| `prBiasNoise_strictAnti` | PR strictly decreases in ρ (key identity: N₁D₂ − N₂D₁ = (d−1)(ρ₂−ρ₁)(2ρ₁ρ₂ + d(ρ₁+ρ₂))) | PR is a *gauge*: median PR 1.09 (pinned 42-potential dataset) inverts to ≈98% systematic error fraction for the classical corpus |
+| `systematicFraction_*` | α = ρ/(ρ+1) ∈ [0, 1) | the three coupled diagnostics (PR inversion, within-family r, rank-1 share → 0.98/0.95/0.96; algebraically related, read as internal consistency) |
 
 ## Ribbon/consensus decoupling (`ErrorGeometry.lean`)
 

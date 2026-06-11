@@ -18,7 +18,7 @@ measures the constraint, not the truth.
 
 | Layer | Ensemble | Binding constraint | Result | Status |
 |---|---|---|---|---|
-| Classical interatomic potentials | 559 potentials, 15 metals | functional form | within-family r=0.95; PR invariant 40 yr; 3-estimator consilience α≈0.93 | observational (Paper 1) |
+| Classical interatomic potentials | 559 potentials, 15 metals | functional form | within-family r=0.95; PR invariant 40 yr (median 1.09, pinned dataset); coupled-diagnostic consistency α≈0.98 | observational (Paper 1) |
 | Foundation MLIPs | 4 architectures × 2 functionals (MatPES) + 3 anchors | training functional | S_func=+0.317 vs S_arch=−0.093, p=0.029; r²SCAN rotation confirmed | pre-registered @ `dffbe595`, kill condition not triggered |
 | DFT implementations | 12 ACWF methods, 384 crystals | pseudopotential table | S_table=+0.526 vs S_code=+0.265, p=0.017; SIESTA = nested basis-set constraint | pre-registered @ `ebf39e33`, kill condition not triggered |
 
