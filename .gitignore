@@ -3,6 +3,8 @@ target/
 .env
 dist/
 build/
+.output/
+.nuxt/
 .pytest_cache/
 __pycache__/
 wasm-out/

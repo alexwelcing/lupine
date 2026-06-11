@@ -152,6 +152,7 @@ decisions, see `ROOTS.md`.
 
 | Path | What it contains |
 | --- | --- |
+| `docs/working-path.md` | Practical checkout, branch, worktree, and verification path |
 | `library-site/` | Static-site generator for the Lupine Library |
 | `docs/` | Research corpus, reports, plans, runbooks, templates, and hypotheses |
 | `mlip_immi/` | IMMI analysis code, benchmark data, and cross-MLIP evidence payloads |
