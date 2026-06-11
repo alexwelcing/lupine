@@ -45,13 +45,43 @@ PR detects the **axis**; alignment detects **sign coherence**. They are
 provably distinct order parameters — which is why the Tier-1 analysis reports
 both, and why pre-registration round 2 will use axis-based statistics.
 
-## What is NOT yet formalized (honest gaps)
+## The convex generalization (`ConvexProjection.lean`)
 
-- The projection law for *nonlinear* reachable sets (normal-cone version);
-  the subspace case is the linearization.
-- The bias+noise spectrum derivation from vector ensembles (the spectrum is
-  currently taken as the model's definition; the rank-one-update eigenvalue
-  computation is standard but unformalized).
-- Any statement about *which* constraint binds (that is the empirical
-  content; the theorems say only that a shared residual implies a shared
-  constraint).
+The law beyond linear families: convexity of the reachable set suffices.
+
+| Theorem | Statement | Empirical face |
+|---|---|---|
+| `IsBestApproxOn.residual_mem_normalCone` | obtuse-angle criterion: the residual lies in the normal cone of the family at the fitted point | "errors point at the binding constraint" in its general form |
+| `IsBestApproxOn.unique` | best approximations onto a convex family are unique (two variational inequalities sum to `‖p₁−p₂‖² ≤ 0`) | one residual per (family, target) |
+| `IsBestApproxOn.residual_eq` | consensus theorem on convex families | within-family agreement generalizes past linearization |
+
+## The spectrum bridge (`SpectrumBridge.lean`)
+
+Closes the chain from vectors to the gauge.
+
+| Theorem | Statement | Empirical face |
+|---|---|---|
+| `biasNoiseOp_eigen_bias` / `_orth` | the second-moment operator `⟪b,·⟫•b + σ²·id` has eigenvalue `‖b‖²+σ²` on the bias axis and acts as `σ²·id` on the entire orthogonal complement | the "one big eigenvalue + noise floor" spectra of Fig. 1 |
+| `prSpectrumFin_smul` | PR is scale-invariant | the σ² unit drops out of every measurement |
+| `prSpectrumFin_biasNoise` | PR of the bias+noise spectrum **equals** the closed-form gauge: the gauge is a theorem, not a definition | the PR(ρ) inversion (median 1.28 → 93% systematic) is now derived end-to-end |
+| `prBiasNoise_sub_one_le` | quantitative ribbon collapse: `ρ ≥ d ⇒ PR − 1 ≤ 3(d−1)/ρ` | why 40 years of potentials sit at PR ≈ 1.3: mature families are *provably* ribbon-confined at an explicit rate |
+
+## The complete machine-checked chain
+
+    convex family + fitting            (ConvexProjection: normal cone, uniqueness)
+      ⇒ one shared residual            (ConvexProjection/ProjectionLaw: consensus)
+      ⇒ bias-plus-noise second moment  (SpectrumBridge: eigen-structure)
+      ⇒ PR equals the gauge            (SpectrumBridge: prSpectrumFin_biasNoise)
+      ⇒ ribbon collapse at rate 3(d−1)/ρ   (SpectrumBridge: prBiasNoise_sub_one_le)
+      with PR sign-blind vs alignment sign-sensitive  (ErrorGeometry: decoupling)
+
+## What remains OUTSIDE the formal layer (by design)
+
+- Smooth non-convex reachable sets (local normal-cone version): the convex
+  theorem covers the global law; curvature corrections are second-order.
+- The probabilistic step from finite noisy ensembles to the exact
+  second-moment operator (a law-of-large-numbers statement; standard).
+- Any claim about *which* constraint binds — that is empirical content by
+  construction: the theorems say a shared residual implies a shared
+  constraint, and the experiments identify it (functional form, XC
+  functional, or harness).
