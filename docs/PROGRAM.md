@@ -22,8 +22,7 @@ measures the constraint, not the truth.
 | Foundation MLIPs | 4 architectures × 2 functionals (MatPES) + 3 anchors | training functional | S_func=+0.317 vs S_arch=−0.093, p=0.029; r²SCAN rotation confirmed | pre-registered @ `dffbe595`, kill condition not triggered |
 | DFT implementations | 12 ACWF methods, 384 crystals | pseudopotential table | S_table=+0.526 vs S_code=+0.265, p=0.017; SIESTA = nested basis-set constraint | pre-registered @ `ebf39e33`, kill condition not triggered |
 
-All registered threshold misses are reported as failures (4 of 9 auxiliary;
-each post-hoc attributed to nested constraints — hypotheses for round 2).
+All registered misses are reported as failures (4 of 7 registered predictions; 2/4 and 1/3 passing per experiment; nested-constraint attributions are registered round-2 hypotheses). Referee-driven robustness: ordering survives unscreened; ACWF separation grows without B1/whitened; LOMO out-of-sample correction = 69% median.
 
 ## The artifacts
 
@@ -39,7 +38,7 @@ each post-hoc attributed to nested constraints — hypotheses for round 2).
 - **Formal core**: `lean-spec/.../Theory/{ProjectionLaw, ConvexProjection,
   SpectrumBridge, ErrorGeometry}.lean` — normal-cone consensus theorem,
   PR gauge derived as theorem, ribbon collapse ≤ 3(d−1)/ρ, ribbon/consensus
-  decoupling. ~29 statements, 0 sorry, 0 new axioms; full lib builds.
+  decoupling. 27 theorems, 0 sorry, 0 new axioms; full lib builds.
 - **Replication**: `replication/error-geometry/` — Tier 1 (NumPy-only,
   seconds, verifies every headline statistic) and Tier 2 (recompute from
   public checkpoints, bit-exact) both verified; THEORY.md is the
@@ -69,14 +68,7 @@ each post-hoc attributed to nested constraints — hypotheses for round 2).
    requires the per-element classical error-vector buckets (worker D1
    ledger; not in this checkout). Settles the ledger's re-audit entry and
    the Fe conjecture.
-2. **Round-2 pre-registration**: axis-based (sign-agnostic) statistics per
-   the decoupling theorem; PET-MAD PBEsol→r²SCAN dose-response ladder;
-   clean local SevenNet rerun (v7 cloud data is harness-corrupted).
-3. **Paper 1 ship list**: PR-range check vs full `manifold_analysis` data
-   (Fig 2 max ≈ 2.05 vs claimed 1.05–1.86), 600-dpi figure regeneration,
-   Zenodo DOI, ORCID, companion-paper titles.
-4. **Adversarial multi-agent review** of Paper 2, then arXiv
-   (cond-mat.mtrl-sci × stat.ME × cs.LG) + PRX submission.
-5. **Merge & deploy**: `codex/science` → main (deck, library, llms fixes go
-   live via CI); reconcile note: deck/ resolves as ours vs
-   `worktree-agent-a10a40251941ed79b`.
+2. DONE 2026-06-11: round-2 prereg registered (prereg_round2.md: single primary endpoints, axis statistics, symmetric equivalence-bound kills, DFT-PBE anchor test, harness hardening gate). Execution = round 2.
+3. DONE 2026-06-11 (except user steps): PR range settled by pinned dataset (median 1.09, max 2.29; Fig 2 regenerated 600 dpi); companion titles set. USER: Zenodo DOI (eplication/error-geometry/ZENODO_DEPOSIT.md is paste-ready), ORCID.
+4. DONE 2026-06-11: 3-referee adversarial review run; revision R2 incorporates all findings (commit f9e1da40). USER: arXiv + PRX submission clicks; IMMI copy of P2 must be regenerated from R2 master first.
+5. READY: merge dry-run clean (0 conflicts; 28 ahead / 44 behind). USER: git merge codex/science on main + push → CI deploys corrected deck/library/llms. Eyeball the deck render first (new proof section).
