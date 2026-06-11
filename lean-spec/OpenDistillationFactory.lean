@@ -27,6 +27,7 @@ import OpenDistillationFactory.Materials.Theory.AccuracyCommitment
 import OpenDistillationFactory.Materials.Theory.UniversalityBridge
 import OpenDistillationFactory.Materials.Theory.ProjectedRibbon
 import OpenDistillationFactory.Materials.Theory.ErrorGeometry
+import OpenDistillationFactory.Materials.Theory.ProjectionLaw
 import OpenDistillationFactory.Materials.Theory.WeakAcceleration
 
 -- Validation layer: experiment design, integrity checks, and audit
