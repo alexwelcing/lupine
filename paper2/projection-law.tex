@@ -157,10 +157,11 @@ $\rho$, and the explicit collapse bound
 $\mathrm{PR}-1 \le 3(d-1)/\rho$ for $\rho \ge d$.
 \end{theorem}
 
-The algebra is a one-line corollary of spiked-covariance theory and the
-participation ratio is a standard effective-dimension metric; the value here
-is the consilience it enables (\S\ref{sec:classical}) and the machine-checked
-monotonicity that licenses inverting measured PR into a systematic fraction
+The algebra is a one-line corollary of spiked-covariance theory
+\citep{johnstone2001} and the participation ratio is a standard
+effective-dimension metric \citep{gao2015}; the value here is the consilience
+it enables (\S\ref{sec:classical}) and the machine-checked monotonicity that
+licenses inverting measured PR into a systematic fraction
 $\alpha = \rho/(\rho+1)$.
 
 \begin{theorem}[Ribbon/consensus decoupling]\label{thm:decouple}
@@ -329,25 +330,70 @@ constraint-vs-implementation evidence presented here.
 \section{Related work}
 \label{sec:related}
 
-That ensembles share errors is established: error consistency across networks
-\citep{geirhos2020}, model similarity beyond accuracy \citep{mania2019},
-prediction-space clustering \citep{fort2019}, accuracy- and
-agreement-on-the-line \citep{baek2022}. That consensus is not verification is
-the qualitative lesson of \citet{pirtle2010} and \citet{parker2011},
-operationalized as error correlation by \citet{bishop2013}; low-dimensional
-structure of multi-model bias appears in EOF analyses
-\citep{sanderson2015,brands2022}. The participation ratio and the
-spiked-covariance algebra behind Theorem~\ref{thm:gauge} are standard. In
-materials simulation, shared softening of universal MLIPs is documented
-\citep{deng2025softening,yu2024}, reproducibility of DFT codes is measured by
-scalar metrics \citep{lejaeghere2016,bosoni2024}, and parameter-space
-sloppiness of single potentials is well developed
-\citep{transtrum2011,kurniawan2022,quinn2023}. Relative to all of the above,
-the contributions here are: the error-vector geometry of model ensembles in
-observable space as the measured object; the factorial
-constraint-vs-implementation designs and their pre-registered outcomes; the
-conservation--rotation law; and the machine-checked theory chain with a
-two-tier replication kit.
+\textbf{Ensemble dependence across fields.} The climate community has the
+deepest tradition here. \citet{pirtle2010} and \citet{parker2011} argued
+qualitatively that multi-model agreement may reflect shared construction;
+\citet{bishop2013} made dependence operational through pairwise error
+correlation under the replicate-Earth paradigm, with the elegant null that
+truly independent models would correlate at $0.5$ through the shared
+observations; \citet{abramowitz2019} review the resulting weighting and
+sub-selection machinery, \citet{knutti2017} implement
+performance-plus-independence weighting, \citet{boe2018} traces similarity to
+literal component replication across modeling centers, and
+\citet{sanderson2015} and \citet{brands2022} place inter-model error in
+low-dimensional EOF coordinates. Our normal-cone theorem supplies the
+mechanism beneath these practices --- dependence is not merely shared code but
+shared \emph{reachable set} --- and the factorial designs add what error
+correlation alone cannot: identification of \emph{which} shared element binds.
+The persistence of the double-ITCZ bias across three CMIP generations
+\citep{tian2020} reads, in our terms, as a conservation observation awaiting
+its rotation experiment.
+
+\textbf{Machine learning.} That independently trained networks agree beyond
+chance is quantified by error consistency \citep{geirhos2020} and model
+similarity \citep{mania2019}; ensemble members cluster in prediction space
+\citep{fort2019} despite weight-space diversity, which is why deep-ensemble
+uncertainty \citep{lakshminarayanan2017} inherits the shared component as
+unaccounted bias --- the ambiguity decomposition of \citet{krogh1995} already
+showed ensemble spread bounds only the variance term. Disagreement tracks the
+training procedure's shared bias \citep{jiang2021}, and accuracy- and
+agreement-on-the-line \citep{miller2021,baek2022} exhibit one-dimensional
+collective structure under distribution shift. Most complementary is
+underspecification \citep{damour2022}: it studies how equally-fitted models
+\emph{differ} along directions the family and data leave unconstrained --- our
+noise term $\xi$ --- whereas the projection law studies what they
+\emph{share} --- the bias $b$. Theorem~\ref{thm:decouple} is precisely the
+statement that these are separate order parameters, measurable separately.
+Representation convergence across architectures \citep{huh2024} and shared
+training manifolds \citep{mao2024} are the trajectory- and
+representation-space cousins of our observable-space result.
+
+\textbf{Materials simulation.} \citet{frederiksen2004} pioneered ensembles of
+interatomic potentials for error estimation --- spread as uncertainty; the law
+identifies exactly the component spread misses (the shared residual) and
+supplies the diagnostic for when it dominates (alignment). Shared softening of
+universal MLIPs is documented \citep{deng2025softening,yu2024}, and
+\citet{huang2025} report that GGA$\to$r$^2$SCAN transfer is hampered by poor
+inter-functional correlation --- our factorial result gives that observation a
+geometric form: light-metal elastic errors genuinely cross over between
+functionals while noble-metal errors share a deeper constraint.
+DFT reproducibility is measured by scalar and curve metrics
+\citep{lejaeghere2016,bosoni2024}; the directional structure of
+\S\ref{sec:dft} is invisible to those metrics by construction. Parameter-space
+sloppiness of single models \citep{transtrum2011,machta2013,quinn2023,%
+kurniawan2022} is the intellectual ancestor of this work; we re-emphasize that
+the object here --- error vectors of an ensemble of distinct models in
+observable space --- is different from, though related to, the parameter
+manifold of any one of them. The participation ratio is a standard effective
+dimension \citep{gao2015} and the gauge algebra is spiked-covariance theory
+\citep{johnstone2001}; the best-approximation mathematics is classical
+\citep{deutsch2001,kinderlehrer1980}.
+
+\textbf{What is new here} is the combination: the error-vector geometry of
+model ensembles as the measured object; factorial constraint-vs-implementation
+designs with pre-registered refutation conditions at two layers of one stack;
+the conservation--rotation law, which none of the above states; and a
+machine-checked theory chain bound to the measurements by a written contract.
 
 \section{Implications}
 \label{sec:implications}
