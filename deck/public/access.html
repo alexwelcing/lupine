@@ -125,12 +125,12 @@
 <body>
     <main>
         <div class="eyebrow">Confidential investor access</div>
-        <h1>Enter the password for the <em>seed deck</em>.</h1>
-        <p>Use the passphrase from Lupine. The full slide deck is served only after this check; please do not forward access.</p>
+        <h1>Enter your access code for the <em>seed deck</em>.</h1>
+        <p>Use the investor-specific code from Lupine. The full slide deck is served only after this check; please do not forward access.</p>
         <form id="access-form" method="post" action="/api/deck-access">
             <input id="next" type="hidden" name="next" value="/deck.html">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+            <label for="code">Access code</label>
+            <input id="code" name="code" type="password" autocomplete="one-time-code" required autofocus>
             <button type="submit">Open deck</button>
             <div id="status" class="status" role="status" aria-live="polite"></div>
         </form>

@@ -1,734 +1,1318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupine Science — Step 1 of a real-world Replicator</title>
-    <meta name="description" content="Step 1 of a real-world Replicator. Lupine builds the audit substrate for the matter stack: trustworthy atomistic prediction, then generative matter, then closed-loop synthesis, then programmable matter — a 30-year arc. Investor math is the floor; platform infrastructure is the ceiling.">
-    <meta property="og:title" content="Lupine — Step 1 of a real-world Replicator">
-    <meta property="og:description" content="The audit substrate for atomistic ML. Foundation MLIPs cleared the science bar; the audit layer is what makes the next 30 years of generative matter, autonomous synthesis, and programmable matter trustworthy. We are step 1.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* ═══════════════════════════════════════════════════════════════
-           LUPINE SCIENCE — "STEP 1 OF A REAL-WORLD REPLICATOR"
-           Replicator-frame value model. Floor + ceiling, every claim tiered.
-           Narrative & data recovered from business-plan/value-model/*.csv
-           ═══════════════════════════════════════════════════════════════ */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lupine Science — Step 1 of a real-world Replicator</title>
+  <meta name="description" content="Lupine Science builds the audit substrate for the matter stack — the methodology that names where atomistic predictions fail and compresses failure into closed-loop self-correction.">
+  <meta property="og:title" content="Lupine Science — Step 1 of a real-world Replicator">
+  <meta property="og:description" content="Lupine builds the audit substrate for the matter stack — the open-core methodology that names where atomistic simulations fail and feeds those failures into closed-loop self-correction.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────── */
+    :root {
+      --paper: #faf9f6;
+      --paper-deep: #f1efe9;
+      --ink: #16181f;
+      --ink-soft: #5c5f6b;
+      --hairline: rgba(22,24,31,0.14);
+      --lupine: #3d4db3;
+      --lupine-deep: #2e3a87;
+      --tier-verified: #1f7a4d;
+      --tier-disclosed: #8a6d1f;
+      --tier-triangulated: #705a9e;
+      --tier-projection: #9a5a2e;
+      --tier-directional: #5c5f6b;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", monospace;
+    }
 
-        :root {
-            --lupine-900: #1a1d3d;  --lupine-800: #252a52;  --lupine-700: #2e3a87;
-            --lupine-600: #3d4db3;  --lupine-500: #5565d4;  --lupine-400: #7b8ae0;
-            --lupine-300: #9ba6ea;  --lupine-200: #c5cdf3;  --lupine-100: #e8ebfa;
-            --violet-700: #5b3a8c;  --violet-500: #8b6bc4;  --violet-300: #b9a0e0;
+    /* ─── RESET & BASE ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 17px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--lupine); }
+    a:hover { color: var(--lupine-deep); }
+    a:focus-visible { outline: 2px solid var(--lupine); outline-offset: 3px; }
 
-            --slate-950: #0a0b12;  --slate-900: #0f1119;  --slate-800: #181b28;
-            --slate-700: #252838;  --slate-600: #3a3e52;  --slate-500: #646880;
-            --slate-400: #9096ab;  --slate-300: #b4b9cc;  --slate-200: #d4d7e3;
-            --slate-100: #eceef4;
+    /* ─── LAYOUT ─────────────────────────────────────── */
+    .prose {
+      max-width: 70ch;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+    .wide {
+      max-width: 1040px;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+    section, .band {
+      padding-block: clamp(72px, 10vw, 140px);
+    }
+    .band-alt { background: var(--paper-deep); }
 
-            --cyan: #4ecdc4;  --gold: #d4a843;  --warm: #e8834a;
-            --red: #e85454;   --green: #4ecd6b;
+    /* ─── SECTION LABEL + RULE ───────────────────────── */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 10px;
+    }
+    .section-rule {
+      border: none;
+      border-top: 1px solid var(--hairline);
+      margin-bottom: 28px;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    h2 em { font-style: italic; color: var(--lupine); }
+    .lead { font-size: 17px; line-height: 1.75; color: var(--ink); margin-bottom: 36px; }
 
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-serif: 'Playfair Display', Georgia, serif;
-            --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
-        }
+    /* ─── TIER TAGS ──────────────────────────────────── */
+    .tier {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 1px 5px;
+      border: 1px solid currentColor;
+      border-radius: 2px;
+      background: transparent;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    .tier-verified { color: var(--tier-verified); }
+    .tier-disclosed { color: var(--tier-disclosed); }
+    .tier-triangulated { color: var(--tier-triangulated); }
+    .tier-projection { color: var(--tier-projection); }
+    .tier-directional { color: var(--tier-directional); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ─── NAVIGATION ─────────────────────────────────── */
+    nav {
+      border-bottom: 1px solid var(--hairline);
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-inner {
+      max-width: 1040px;
+      margin-inline: auto;
+      padding-inline: 24px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-inner a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      padding: 14px 16px;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .nav-inner a:hover { color: var(--lupine); border-bottom-color: var(--lupine); }
 
-        html { scroll-behavior: smooth; font-size: 16px; }
+    /* ─── HEADER / HERO ──────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--hairline);
+      padding-block: clamp(72px, 10vw, 120px);
+    }
+    .hero-mark {
+      display: block;
+      width: 56px;
+      height: 56px;
+      margin-bottom: 28px;
+    }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    h1 em { font-style: italic; color: var(--lupine); }
+    .hero-lead { max-width: 68ch; font-size: 18px; line-height: 1.75; }
+    .hero-lead + .hero-lead { margin-top: 16px; }
 
-        body {
-            font-family: var(--font-sans);
-            background: var(--slate-950);
-            color: var(--slate-200);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-        }
+    /* ─── PHASE STRIP ────────────────────────────────── */
+    .phase-strip {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      margin-top: 48px;
+      overflow-x: auto;
+    }
+    .phase-item {
+      flex: 1 1 0;
+      min-width: 140px;
+      padding: 16px 20px;
+      border-right: 1px solid var(--hairline);
+    }
+    .phase-item:last-child { border-right: none; }
+    .phase-years {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-soft);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .phase-name {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .phase-item.here .phase-years { color: var(--lupine); }
+    .phase-item.here .phase-name { color: var(--lupine); }
+    .here-flag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--lupine);
+      display: block;
+      margin-bottom: 4px;
+    }
 
-        ::selection { background: var(--lupine-600); color: white; }
+    /* ─── CREDO LIST ─────────────────────────────────── */
+    .credo-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+    }
+    .credo-item {
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding: 28px 28px 24px;
+      position: relative;
+    }
+    .credo-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .credo-item h3 {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+    .credo-item p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+    }
 
-        a { color: inherit; }
+    /* ─── STACK TABLE ────────────────────────────────── */
+    .stack-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .stack-table td {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--hairline);
+      vertical-align: top;
+    }
+    .stack-table tr:last-child td { border-bottom: none; }
+    .stack-layer-name {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+    .stack-layer-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+    }
+    .stack-layer-desc { color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
+    .stack-layer-ex {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .lupine-row td {
+      border-left: 3px solid var(--lupine);
+      background: rgba(61,77,179,0.04);
+    }
+    .lupine-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lupine);
+      font-weight: 600;
+    }
+    blockquote.structural-bet {
+      border-left: 2px solid var(--hairline);
+      padding-left: 24px;
+      margin-top: 40px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+    blockquote.structural-bet strong { color: var(--ink); font-style: normal; }
 
-        /* ─── Scroll progress bar ─── */
-        .progress-bar {
-            position: fixed; top: 0; left: 0; height: 2px; width: 0%;
-            background: linear-gradient(90deg, var(--lupine-500), var(--violet-300), var(--cyan));
-            z-index: 200; transition: width 0.1s linear;
-        }
+    /* ─── WHY NOW COLUMNS ────────────────────────────── */
+    .why-now-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+    }
+    .why-now-col {
+      border-right: 1px solid var(--hairline);
+      padding: 28px 24px;
+    }
+    .why-now-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lupine);
+      margin-bottom: 10px;
+    }
+    .why-now-line {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--ink);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .why-now-col p { font-size: 14px; line-height: 1.65; color: var(--ink-soft); }
 
-        /* ─── Section nav (sticky) ─── */
-        .section-nav {
-            position: sticky; top: 0; z-index: 100;
-            background: rgba(10, 11, 18, 0.88);
-            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .section-nav-inner {
-            max-width: 1240px; margin: 0 auto;
-            display: flex; gap: 4px; overflow-x: auto;
-            padding: 10px 24px; scrollbar-width: none;
-            font-family: var(--font-mono); font-size: 11px;
-            text-transform: uppercase; letter-spacing: 0.12em;
-        }
-        .section-nav-inner::-webkit-scrollbar { display: none; }
-        .section-nav a {
-            white-space: nowrap; padding: 5px 10px; border-radius: 6px;
-            color: var(--slate-400); text-decoration: none; transition: all 0.2s;
-        }
-        .section-nav a:hover { color: var(--cyan); background: rgba(255,255,255,0.04); }
-        .section-nav a .idx { color: var(--slate-600); }
+    /* ─── TIER LEGEND ────────────────────────────────── */
+    .tier-legend {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 14px 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 40px;
+      color: var(--ink-soft);
+    }
+    .tier-legend span { display: flex; align-items: center; gap: 6px; }
 
-        /* ─── Section shell ─── */
-        section.block {
-            max-width: 1240px; margin: 0 auto; padding: 110px 40px;
-            scroll-margin-top: 60px;
-        }
-        .alt-wrap { background: rgba(24,27,40,0.4); scroll-margin-top: 60px; }
+    /* ─── TABLES ─────────────────────────────────────── */
+    .table-wrap { overflow-x: auto; margin-bottom: 32px; }
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    table.data th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 400;
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--hairline);
+    }
+    table.data th.num, table.data td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-family: var(--font-mono);
+    }
+    table.data td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--hairline);
+      vertical-align: top;
+    }
+    table.data tr:last-child td { border-bottom: none; }
+    table.data tr.bench td {
+      background: var(--paper-deep);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    table.data .small { font-size: 12px; color: var(--ink-soft); display: block; }
 
-        .eyebrow {
-            font-family: var(--font-mono); font-size: 12px; font-weight: 500;
-            letter-spacing: 0.28em; text-transform: uppercase;
-            color: var(--cyan); margin-bottom: 18px;
-        }
-        h2.title {
-            font-family: var(--font-serif); font-weight: 400;
-            font-size: clamp(30px, 4vw, 50px); line-height: 1.12;
-            color: var(--slate-100); max-width: 18ch; margin-bottom: 22px;
-        }
-        h2.title em {
-            font-style: italic;
-            background: linear-gradient(135deg, var(--lupine-300), var(--violet-300));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        p.lead {
-            font-size: 18px; font-weight: 300; color: var(--slate-400);
-            max-width: 720px; line-height: 1.8; margin-bottom: 48px;
-        }
-        p.lead strong { color: var(--slate-200); font-weight: 600; }
-        p.lead em { color: var(--lupine-200); font-style: italic; }
-        .sub-label {
-            font-family: var(--font-mono); font-size: 12px; font-weight: 500;
-            letter-spacing: 0.16em; text-transform: uppercase;
-            color: var(--gold); margin: 56px 0 18px;
-        }
+    /* ─── SEGMENT TABLE (two-col) ─────────────────────── */
+    table.seg { width: 100%; border-collapse: collapse; font-size: 14px; }
+    table.seg td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--hairline);
+      font-variant-numeric: tabular-nums;
+    }
+    table.seg td:last-child { text-align: right; font-family: var(--font-mono); }
+    table.seg tr:last-child td { border-bottom: none; }
 
-        /* ─── Tier pills (the credibility discipline) ─── */
-        .tier {
-            display: inline-block; font-family: var(--font-mono);
-            font-size: 9px; font-weight: 600; letter-spacing: 0.14em;
-            text-transform: uppercase; padding: 2px 7px; border-radius: 4px;
-            vertical-align: middle; white-space: nowrap;
-        }
-        .tier-verified     { background: rgba(78,205,107,0.13);  color: var(--green); }
-        .tier-disclosed    { background: rgba(78,205,196,0.13);  color: var(--cyan); }
-        .tier-triangulated { background: rgba(123,138,224,0.16); color: var(--lupine-300); }
-        .tier-directional  { background: rgba(212,168,67,0.14);  color: var(--gold); }
-        .tier-projection   { background: rgba(255,255,255,0.06); color: var(--slate-400); }
+    /* ─── SCENARIO BARS ──────────────────────────────── */
+    .scen { margin-bottom: 32px; }
+    .scen-row {
+      display: grid;
+      grid-template-columns: 1fr 180px 80px;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .scen-row:first-child { border-top: 1px solid var(--hairline); }
+    .sname { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+    .smeta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); }
+    .prob-track {
+      height: 4px;
+      background: var(--paper-deep);
+      border-radius: 2px;
+      position: relative;
+    }
+    .prob-fill {
+      height: 4px;
+      background: var(--lupine);
+      border-radius: 2px;
+      position: absolute;
+      left: 0; top: 0;
+    }
+    .prob-fill.muted { background: var(--ink-soft); }
+    .sev {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      font-weight: 500;
+    }
 
-        .tier-legend {
-            display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
-            font-family: var(--font-mono); font-size: 11px; color: var(--slate-500);
-            margin-top: 14px;
-        }
-        .tier-legend .tier { margin-right: 5px; }
+    /* ─── DCF CARDS ──────────────────────────────────── */
+    .dcf-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .dcf-card {
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      padding: 20px 22px;
+    }
+    .dcf-card.base { border-color: var(--lupine); }
+    .dcf-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .dcf-value {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+    .dcf-note { font-size: 13px; color: var(--ink-soft); }
 
-        /* ─── Takeaway block ─── */
-        .takeaway {
-            margin-top: 28px; padding: 22px 26px; border-radius: 12px;
-            background: rgba(46,58,135,0.07); border: 1px solid rgba(123,138,224,0.16);
-            border-left: 3px solid var(--lupine-500);
-        }
-        .takeaway.positive { background: rgba(78,205,196,0.06); border-color: rgba(78,205,196,0.18); border-left-color: var(--cyan); }
-        .takeaway .tk-label {
-            font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-            letter-spacing: 0.1em; text-transform: uppercase;
-            color: var(--cyan); margin-bottom: 8px;
-        }
-        .takeaway p { font-size: 14.5px; color: var(--slate-300); line-height: 1.75; }
-        .takeaway strong { color: var(--slate-100); font-weight: 600; }
-        .takeaway em { color: var(--lupine-200); font-style: italic; }
+    /* ─── STATS ROW ──────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+      margin-bottom: 32px;
+    }
+    .stat-cell {
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding: 20px 20px;
+    }
+    .stat-cell.hl .sv { color: var(--lupine); }
+    .sv {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .sl { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .sd { font-size: 12px; color: var(--ink-soft); }
 
-        /* ════════ HERO ════════ */
-        .hero {
-            position: relative; min-height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; padding: 120px 40px 80px; overflow: hidden;
-        }
-        .hero-inner { max-width: 1240px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
-        .hero::before {
-            content: ''; position: absolute; inset: 0; pointer-events: none;
-            background:
-                radial-gradient(ellipse 70% 50% at 50% 25%, rgba(46,58,135,0.22) 0%, transparent 65%),
-                radial-gradient(ellipse 50% 40% at 78% 65%, rgba(91,58,140,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse 40% 30% at 20% 75%, rgba(78,205,196,0.06) 0%, transparent 55%);
-        }
-        .hero-orbits {
-            position: absolute; top: 42%; left: 50%; transform: translate(-50%,-50%);
-            width: 820px; height: 820px; opacity: 0.10; pointer-events: none;
-        }
-        .orbit-ring { position: absolute; top: 50%; left: 50%; border: 1px solid var(--lupine-500); border-radius: 50%; transform: translate(-50%,-50%); }
-        .orbit-ring:nth-child(1) { width: 340px; height: 340px; animation: spin 22s linear infinite; }
-        .orbit-ring:nth-child(2) { width: 560px; height: 230px; animation: spin 34s linear infinite reverse; }
-        .orbit-ring:nth-child(3) { width: 700px; height: 290px; animation: spin 28s linear infinite; }
-        @keyframes spin { from { transform: translate(-50%,-50%) rotate(0); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+    /* ─── ACQUIRER CARDS ─────────────────────────────── */
+    .acquirer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+      margin-bottom: 32px;
+    }
+    .acquirer-card {
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding: 22px 22px;
+    }
+    .acq-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .acq-name { font-size: 15px; font-weight: 600; }
+    .acq-price {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--lupine);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .acquirer-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
 
-        .hero-logo { width: 76px; height: 76px; margin-bottom: 34px; }
-        .hero-eyebrow {
-            font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.3em;
-            text-transform: uppercase; color: var(--cyan); margin-bottom: 22px;
-        }
-        .hero h1 {
-            font-family: var(--font-serif); font-weight: 400;
-            font-size: clamp(44px, 7vw, 88px); line-height: 1.02;
-            color: var(--slate-100); max-width: 16ch; margin-bottom: 34px;
-        }
-        .hero h1 em {
-            font-style: italic;
-            background: linear-gradient(135deg, var(--lupine-300), var(--violet-300), var(--cyan));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .hero p { font-size: 19px; font-weight: 300; color: var(--slate-400); max-width: 760px; line-height: 1.8; margin-bottom: 18px; }
-        .hero p.accent { color: var(--slate-200); }
-        .hero p strong { color: var(--cyan); font-weight: 600; }
-        .hero p .step1 { color: var(--slate-200); font-weight: 500; }
+    /* ─── MILESTONE ROW ──────────────────────────────── */
+    .milestone-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+      margin-bottom: 32px;
+    }
+    .ms {
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding: 22px 22px;
+    }
+    .mo {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lupine);
+      margin-bottom: 8px;
+    }
+    .ms h4 { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+    .ms p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
 
-        /* phase chips */
-        .phase-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
-        .chip {
-            border: 1px solid var(--slate-700); border-radius: 8px; padding: 10px 14px;
-            background: rgba(255,255,255,0.02); min-width: 150px;
-        }
-        .chip.now { border-color: var(--cyan); background: linear-gradient(135deg, rgba(78,205,196,0.15), rgba(78,205,196,0.03)); }
-        .chip .ph { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--slate-500); }
-        .chip.now .ph { color: var(--cyan); }
-        .chip .nm { font-size: 13px; font-weight: 600; color: var(--slate-100); margin-top: 3px; }
+    /* ─── FOUNDER BLOCK ──────────────────────────────── */
+    .founder-block {
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      padding: 28px 28px;
+      margin-bottom: 36px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .founder-initial {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--lupine);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .founder-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .founder-role {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lupine);
+      margin-left: 6px;
+    }
+    .founder-block p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
 
-        /* ════════ CREDO ════════ */
-        .credo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-        .credo-card {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px; padding: 28px 28px;
-        }
-        .credo-card .num { font-family: var(--font-mono); font-size: 12px; color: var(--lupine-400); letter-spacing: 0.1em; }
-        .credo-card h3 { font-family: var(--font-serif); font-size: 22px; font-weight: 400; color: var(--slate-100); margin: 6px 0 12px; line-height: 1.25; }
-        .credo-card p { font-size: 14px; color: var(--slate-400); line-height: 1.72; margin-bottom: 14px; }
-        .credo-card em { color: var(--lupine-200); font-style: italic; }
+    /* ─── CTA ────────────────────────────────────────── */
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .btn {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 3px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-primary {
+      background: var(--lupine);
+      color: #fff;
+      border: 1px solid var(--lupine);
+    }
+    .btn-primary:hover { background: var(--lupine-deep); border-color: var(--lupine-deep); color: #fff; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--lupine);
+      border: 1px solid var(--hairline);
+    }
+    .btn-secondary:hover { border-color: var(--lupine); }
 
-        /* ════════ HORIZON (30-yr arc) ════════ */
-        .horizon { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; position: relative; }
-        .horizon::before {
-            content: ''; position: absolute; top: 38px; left: 4%; right: 4%; height: 2px;
-            background: linear-gradient(90deg, var(--cyan), var(--lupine-500), var(--violet-500), var(--gold), rgba(212,168,67,0.3));
-            z-index: 0;
-        }
-        .phase {
-            position: relative; z-index: 1; background: var(--slate-900);
-            border: 1px solid var(--slate-700); border-radius: 14px; padding: 22px 18px;
-        }
-        .phase.now { border-color: var(--cyan); box-shadow: 0 0 0 1px rgba(78,205,196,0.25), 0 12px 40px rgba(78,205,196,0.08); }
-        .phase .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--slate-600); border: 3px solid var(--slate-900); margin-bottom: 14px; }
-        .phase.now .dot { background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
-        .phase .pnum { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate-500); }
-        .phase.now .pnum { color: var(--cyan); }
-        .phase .pyears { font-family: var(--font-mono); font-size: 11px; color: var(--slate-400); margin-bottom: 6px; }
-        .phase h4 { font-size: 15px; font-weight: 700; color: var(--slate-100); margin-bottom: 8px; line-height: 1.25; }
-        .phase .cap { font-size: 12px; color: var(--slate-500); line-height: 1.55; margin-bottom: 12px; }
-        .phase .role { font-size: 12px; color: var(--slate-300); line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px; }
-        .phase .here-flag { display: inline-block; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.16em; color: var(--slate-950); background: var(--cyan); padding: 2px 7px; border-radius: 4px; margin-bottom: 10px; }
+    /* ─── TAKEAWAY ───────────────────────────────────── */
+    .takeaway {
+      border-left: 2px solid var(--hairline);
+      padding-left: 20px;
+      margin-top: 28px;
+      margin-bottom: 40px;
+    }
+    .tk-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .takeaway p { font-size: 15px; line-height: 1.7; color: var(--ink-soft); }
+    .takeaway p strong { color: var(--ink); }
 
-        /* ════════ MATTER STACK ════════ */
-        .stack { display: flex; flex-direction: column; gap: 8px; }
-        .layer {
-            display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: center;
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px; padding: 22px 26px;
-        }
-        .layer.lupine { border-color: var(--cyan); background: linear-gradient(90deg, rgba(78,205,196,0.10), rgba(78,205,196,0.02)); }
-        .layer .lname { font-size: 17px; font-weight: 700; color: var(--slate-100); }
-        .layer.lupine .lname { color: var(--cyan); }
-        .layer .ltag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate-500); margin-top: 4px; }
-        .layer.lupine .ltag { color: var(--cyan); }
-        .layer .ldesc { font-size: 14px; color: var(--slate-400); line-height: 1.6; }
-        .layer .lex { font-size: 12px; color: var(--slate-600); margin-top: 6px; font-family: var(--font-mono); }
-        .layer.lupine .lex { color: var(--lupine-300); }
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--hairline);
+      padding-block: 40px;
+      background: var(--paper-deep);
+    }
+    .footer-inner {
+      max-width: 1040px;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+    .footer-line {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .footer-tier {
+      font-size: 13px;
+      color: var(--ink-soft);
+      max-width: 70ch;
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--lupine); }
 
-        /* ════════ CURVES (why now) ════════ */
-        .curves { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .curve { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 26px; }
-        .curve .clab { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan); }
-        .curve .cline { font-family: var(--font-mono); font-size: 14px; color: var(--slate-100); margin: 12px 0 14px; line-height: 1.5; }
-        .curve .cnote { font-size: 13.5px; color: var(--slate-400); line-height: 1.7; }
+    /* ─── SUB-SECTION LABEL ──────────────────────────── */
+    .sub-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding: 10px 0;
+      border-top: 1px solid var(--hairline);
+      margin-top: 48px;
+      margin-bottom: 20px;
+    }
 
-        /* ════════ BAR CHART (phase-4 addressable) ════════ */
-        .bars { display: flex; flex-direction: column; gap: 10px; }
-        .bar-row { display: grid; grid-template-columns: 240px 1fr 70px; gap: 16px; align-items: center; }
-        .bar-row .blab { font-size: 13px; color: var(--slate-300); }
-        .bar-row .blab small { display: block; color: var(--slate-600); font-size: 11px; }
-        .bar-track { height: 22px; background: rgba(255,255,255,0.03); border-radius: 5px; overflow: hidden; }
-        .bar-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--lupine-600), var(--violet-500)); }
-        .bar-row .bval { font-family: var(--font-mono); font-size: 13px; color: var(--lupine-200); text-align: right; font-weight: 500; }
-
-        /* ════════ TABLES ════════ */
-        .data-table-wrap { overflow-x: auto; border: 1px solid var(--slate-700); border-radius: 12px; }
-        table.data { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
-        table.data thead th {
-            text-align: left; padding: 12px 16px; font-family: var(--font-mono);
-            font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-            color: var(--slate-500); background: var(--slate-800); border-bottom: 1px solid var(--slate-700);
-        }
-        table.data td { padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); color: var(--slate-400); vertical-align: middle; }
-        table.data tbody tr:hover { background: rgba(255,255,255,0.02); }
-        table.data td:first-child { color: var(--slate-200); font-weight: 500; }
-        table.data tr.bench td { color: var(--lupine-300); font-style: italic; background: rgba(46,58,135,0.06); }
-        table.data tr.bench td:first-child { color: var(--lupine-200); }
-        .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-        .capbar { display: inline-block; height: 8px; border-radius: 3px; background: linear-gradient(90deg, var(--cyan), var(--lupine-400)); vertical-align: middle; margin-left: 8px; }
-
-        /* ════════ SCENARIO DISTRIBUTION ════════ */
-        .scen { display: flex; flex-direction: column; gap: 10px; }
-        .scen-row {
-            display: grid; grid-template-columns: 1fr 120px 90px; gap: 16px; align-items: center;
-            padding: 14px 18px; border-radius: 10px; background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .scen-row .sname { font-size: 14px; color: var(--slate-200); font-weight: 500; }
-        .scen-row .smeta { font-family: var(--font-mono); font-size: 11px; color: var(--slate-500); margin-top: 3px; }
-        .prob-track { height: 26px; background: rgba(255,255,255,0.03); border-radius: 5px; overflow: hidden; position: relative; }
-        .prob-fill { height: 100%; background: linear-gradient(90deg, var(--lupine-600), var(--cyan)); border-radius: 5px; }
-        .prob-track .plabel { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: 11px; color: var(--slate-200); }
-        .scen-row .sev { font-family: var(--font-mono); font-size: 14px; color: var(--lupine-200); text-align: right; font-weight: 600; }
-
-        /* ════════ STAT CARDS (floor) ════════ */
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 12px; }
-        .stat {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px; padding: 26px 22px; text-align: center;
-        }
-        .stat.hl { border-color: var(--cyan); }
-        .stat .sv { font-family: var(--font-serif); font-size: 38px; font-weight: 700; background: linear-gradient(135deg, var(--lupine-300), var(--violet-300)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .stat.hl .sv { background: linear-gradient(135deg, var(--cyan), var(--lupine-300)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .stat .sl { font-size: 13px; color: var(--slate-300); margin-top: 6px; font-weight: 500; }
-        .stat .sd { font-size: 11px; color: var(--slate-600); margin-top: 4px; }
-
-        /* dcf compare */
-        .dcf-compare { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 24px; }
-        .dcf-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px; }
-        .dcf-card.base { border-color: var(--lupine-500); }
-        .dcf-card .dl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate-500); }
-        .dcf-card.base .dl { color: var(--lupine-300); }
-        .dcf-card .dv { font-family: var(--font-serif); font-size: 34px; color: var(--slate-100); margin: 6px 0; }
-        .dcf-card .dn { font-size: 12px; color: var(--slate-500); }
-
-        /* ════════ ASK / milestones ════════ */
-        .milestones { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-        .ms { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 26px; }
-        .ms .mo { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate-500); }
-        .ms h4 { font-size: 16px; color: var(--slate-100); font-weight: 600; margin: 8px 0 14px; line-height: 1.3; }
-        .ms .un { font-size: 13px; color: var(--slate-400); line-height: 1.65; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px; }
-        .ms .un b { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cyan); }
-
-        .ask-cta { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px;
-            border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none;
-            transition: all 0.25s; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .btn-primary { background: linear-gradient(135deg, var(--lupine-700), var(--lupine-600)); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 44px rgba(46,58,135,0.5); }
-        .btn-secondary { background: rgba(255,255,255,0.04); color: var(--slate-200); border-color: var(--slate-700); }
-        .btn-secondary:hover { background: rgba(255,255,255,0.08); }
-
-        /* ─── footer ─── */
-        footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 40px; }
-        footer .fi { max-width: 1240px; margin: 0 auto; font-family: var(--font-mono); font-size: 12px; color: var(--slate-600); line-height: 1.8; }
-        footer code { color: var(--slate-400); background: rgba(255,255,255,0.04); padding: 1px 6px; border-radius: 4px; }
-        footer .links { margin-top: 8px; }
-        footer .links a { color: var(--lupine-400); text-decoration: none; margin-right: 18px; }
-        footer .links a:hover { color: var(--cyan); }
-
-        /* ─── reveal ─── */
-        .reveal { opacity: 0; transform: translateY(28px); transition: all 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* ─── responsive ─── */
-        @media (max-width: 1024px) {
-            .credo-grid { grid-template-columns: 1fr; }
-            .horizon { grid-template-columns: 1fr 1fr; }
-            .horizon::before { display: none; }
-            .curves { grid-template-columns: 1fr; }
-            .stats { grid-template-columns: repeat(2,1fr); }
-            .dcf-compare, .milestones { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 720px) {
-            section.block { padding: 70px 22px; }
-            .hero { padding: 100px 22px 60px; }
-            .horizon { grid-template-columns: 1fr; }
-            .layer { grid-template-columns: 1fr; gap: 8px; }
-            .bar-row { grid-template-columns: 1fr; gap: 6px; }
-            .bar-row .bval { text-align: left; }
-            .scen-row { grid-template-columns: 1fr; gap: 8px; }
-            .stats { grid-template-columns: 1fr; }
-        }
-    </style>
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 720px) {
+      .credo-list { grid-template-columns: 1fr; }
+      .why-now-grid { grid-template-columns: 1fr; }
+      .dcf-row { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .acquirer-grid { grid-template-columns: 1fr; }
+      .milestone-row { grid-template-columns: 1fr; }
+      .founder-block { grid-template-columns: 1fr; }
+      .scen-row { grid-template-columns: 1fr 100px 60px; }
+      .phase-strip { flex-direction: column; }
+      .phase-item { border-right: none; border-bottom: 1px solid var(--hairline); }
+      .phase-item:last-child { border-bottom: none; }
+      nav { display: none; }
+    }
+    @media (max-width: 900px) {
+      .credo-list { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <div class="progress-bar" id="progressBar"></div>
 
-    <!-- ════════════════════════ HERO ════════════════════════ -->
-    <header class="hero">
-        <div class="hero-orbits"><div class="orbit-ring"></div><div class="orbit-ring"></div><div class="orbit-ring"></div></div>
-        <div class="hero-inner">
-            <div class="hero-logo">
-                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-                    <circle cx="40" cy="40" r="5" fill="#9ba6ea"/><circle cx="40" cy="40" r="4" fill="#7b8ae0"/>
-                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="#5565d4" stroke-width="1.2" fill="none" opacity="0.6"><animateTransform attributeName="transform" type="rotate" dur="8s" from="0 40 40" to="360 40 40" repeatCount="indefinite"/></ellipse>
-                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="#8b6bc4" stroke-width="1.2" fill="none" opacity="0.5" transform="rotate(60 40 40)"><animateTransform attributeName="transform" type="rotate" dur="12s" from="60 40 40" to="420 40 40" repeatCount="indefinite"/></ellipse>
-                    <ellipse cx="40" cy="40" rx="30" ry="10" stroke="#4ecdc4" stroke-width="1" fill="none" opacity="0.35" transform="rotate(120 40 40)"><animateTransform attributeName="transform" type="rotate" dur="10s" from="120 40 40" to="480 40 40" repeatCount="indefinite"/></ellipse>
-                    <path d="M40 8 C43 20, 46 30, 40 35 C34 30, 37 20, 40 8Z" fill="#5565d4" opacity="0.7"/>
-                    <path d="M40 72 C37 60, 34 50, 40 45 C46 50, 43 60, 40 72Z" fill="#5565d4" opacity="0.5"/>
-                    <path d="M8 40 C20 37, 30 34, 35 40 C30 46, 20 43, 8 40Z" fill="#8b6bc4" opacity="0.6"/>
-                    <path d="M72 40 C60 43, 50 46, 45 40 C50 34, 60 37, 72 40Z" fill="#8b6bc4" opacity="0.4"/>
-                </svg>
-            </div>
-            <div class="hero-eyebrow">Lupine Materials Science · audit substrate for the matter stack</div>
-            <h1>Step 1 of a real-world <em>Replicator</em>.</h1>
-            <p>
-                Matter is the last frontier of civilization-scale software. Foundation models for matter exist now. Self-driving labs are shipping. Atomic-precision manufacturing is on a real research roadmap. The decade ahead is the convergence — a generation that can specify any molecule and have it manifest.
-            </p>
-            <p class="accent">
-                Lupine builds the <strong>audit substrate</strong> for that stack — the methodology that names where atomistic predictions fail, and compresses the failure into closed-loop self-correction. Without it, every layer above stacks hallucination on top of unmeasured error. <span class="step1">We are step 1.</span>
-            </p>
-            <div class="phase-chips">
-                <div class="chip now"><div class="ph">Phase 1 · 2025–2030</div><div class="nm">Trustworthy prediction</div></div>
-                <div class="chip"><div class="ph">Phase 2 · 2028–2034</div><div class="nm">Generative matter</div></div>
-                <div class="chip"><div class="ph">Phase 3 · 2032–2042</div><div class="nm">Closed-loop synthesis</div></div>
-                <div class="chip"><div class="ph">Phase 4 · 2040–2055</div><div class="nm">Programmable matter</div></div>
-                <div class="chip"><div class="ph">Phase 5 · 2050–2080</div><div class="nm">Quantum-enabled materials</div></div>
-            </div>
-        </div>
-    </header>
+<!-- ══════════════════════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════════════════════════ -->
+<header>
+  <div class="prose">
+    <svg class="hero-mark" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="40" cy="40" r="5" fill="var(--lupine)" opacity="0.7"/>
+      <circle cx="40" cy="40" r="4" fill="var(--lupine)"/>
+      <ellipse cx="40" cy="40" rx="30" ry="10" stroke="var(--lupine)" stroke-width="1.2" fill="none" opacity="0.5"/>
+      <ellipse cx="40" cy="40" rx="30" ry="10" stroke="var(--ink-soft)" stroke-width="1.2" fill="none" opacity="0.35" transform="rotate(60 40 40)"/>
+      <ellipse cx="40" cy="40" rx="30" ry="10" stroke="var(--lupine)" stroke-width="1" fill="none" opacity="0.25" transform="rotate(120 40 40)"/>
+      <path d="M40 8 C43 20, 46 30, 40 35 C34 30, 37 20, 40 8Z" fill="var(--lupine)" opacity="0.7"/>
+      <path d="M40 72 C37 60, 34 50, 40 45 C46 50, 43 60, 40 72Z" fill="var(--lupine)" opacity="0.4"/>
+      <path d="M8 40 C20 37, 30 34, 35 40 C30 46, 20 43, 8 40Z" fill="var(--ink-soft)" opacity="0.5"/>
+      <path d="M72 40 C60 43, 50 46, 45 40 C50 34, 60 37, 72 40Z" fill="var(--ink-soft)" opacity="0.35"/>
+    </svg>
 
-    <!-- ════════════════════════ SECTION NAV ════════════════════════ -->
-    <nav class="section-nav" aria-label="Section navigation">
-        <div class="section-nav-inner">
-            <a href="#credo"><span class="idx">01</span> What we believe</a>
-            <a href="#arc"><span class="idx">02</span> 30-yr arc</a>
-            <a href="#stack"><span class="idx">03</span> The stack</a>
-            <a href="#why-now"><span class="idx">04</span> Why now</a>
-            <a href="#ceiling"><span class="idx">05</span> The ceiling</a>
-            <a href="#floor"><span class="idx">06</span> The floor</a>
-            <a href="#ask"><span class="idx">07</span> The ask</a>
-        </div>
-    </nav>
+    <div class="eyebrow">Lupine Science — audit substrate for the matter stack</div>
+    <h1>Step 1 of a real-world <em>Replicator</em>.</h1>
+    <p class="hero-lead">
+      Matter is the last frontier of civilization-scale software. Foundation models for matter exist now. Self-driving labs are shipping. Atomic-precision manufacturing is on a real research roadmap. The decade ahead is the convergence — a generation that can specify any molecule and have it manifest.
+    </p>
+    <p class="hero-lead">
+      Lupine builds the <strong>audit substrate</strong> for that stack — the methodology that names where atomistic predictions fail, and compresses the failure into closed-loop self-correction. Without it, every layer above stacks hallucination on top of unmeasured error. We are step 1.
+    </p>
+  </div>
 
-    <!-- ════════════════════════ 01 / CREDO ════════════════════════ -->
-    <section class="block" id="credo">
-        <div class="eyebrow reveal">01 / What we believe</div>
-        <h2 class="title reveal">The ideals that <em>pull the work</em>.</h2>
-        <p class="lead reveal">
-            Before the arc, before the stack, before any math: the commitments that tell you what kind of company this is. None of them are negotiable. All of them are testable against what we actually ship.
-        </p>
-        <div class="credo-grid">
-            <div class="credo-card reveal"><div class="num">01</div><h3>Scarcity is an engineering problem.</h3><p>The 20th century treated material scarcity as a fixed feature of reality and built economic theory around it. The 21st century has the science to dissolve it — atomistic prediction, generative matter, autonomous synthesis, atomic-precision manufacturing. The Replicator is a feasible engineering target on a 30-year horizon, not a metaphor for one.</p><span class="tier tier-directional">Directional</span></div>
-            <div class="credo-card reveal"><div class="num">02</div><h3>The audit layer is a public good.</h3><p>Foundation models for matter need to be trustworthy before they can be deployed at civilization scale. The methodology that names where they fail compounds for everyone or it compounds for no one. We ship Apache 2.0 because anything else makes the substrate brittle. Closed validation does not survive contact with reality.</p><span class="tier tier-verified">Verified</span></div>
-            <div class="credo-card reveal"><div class="num">03</div><h3>Truth before product.</h3><p>The first artifact is a research manuscript on the error-geometry of interatomic potentials — a working paper backed by a machine-checked formal core (zero unproven obligations) and a public two-tier replication kit. The methodology will be cited longer than any single deployment of it. We measure the physics first, then we build the engine. Reverse the order and you ship hallucination dressed as software.</p><span class="tier tier-verified">Verified</span></div>
-            <div class="credo-card reveal"><div class="num">04</div><h3>The right timescale is 30 years.</h3><p>Civilization-scale problems do not fit a venture fund's LP horizon. The math an investor can score in five years is the floor — what happens if Lupine becomes a respectable software-of-record company. The platform a generation can build over thirty years is the ceiling. We optimize for the platform; the math just has to clear.</p><span class="tier tier-directional">Directional</span></div>
-            <div class="credo-card reveal"><div class="num">05</div><h3>Sovereignty and openness are the same commitment.</h3><p>You cannot expropriate methodology you can read. Open-core is the only architecture that lets sovereign-mandated buyers — CHIPS-funded foundries, ITAR-eligible defense programs, MGI national labs — trust the substrate they depend on. The closed alternative gets banned in their procurement before it gets bought.</p><span class="tier tier-triangulated">Triangulated</span></div>
-            <div class="credo-card reveal"><div class="num">06</div><h3>Compounding learning beats compounding capital.</h3><p>Every customer engagement leaves training signal. The benchmark improves. The methodology paper improves. The next customer gets a better engine than the previous one did. The moat is not the contract; the moat is that we are the canonical place where the field agrees on what counts as truth.</p><span class="tier tier-directional">Directional</span></div>
-            <div class="credo-card reveal" style="grid-column:1 / -1;"><div class="num">07</div><h3>Step 1 is unfashionable.</h3><p>Generative matter is on the cover of the magazine. Autonomous synthesis is the flagship NSF program. Atomic-precision manufacturing has the dramatic name. The audit layer underneath is invisible, slow, load-bearing. We took it because it is load-bearing. Step 1 is the part everyone wants to skip; that is exactly why it is the seat to claim.</p><span class="tier tier-directional">Directional</span></div>
-        </div>
-    </section>
+  <div class="wide" style="margin-top: 48px; padding-inline: 24px;">
+    <div class="phase-strip">
+      <div class="phase-item here">
+        <span class="here-flag">◉ we are here</span>
+        <div class="phase-years">Phase 1 · 2025–2030</div>
+        <div class="phase-name">Trustworthy prediction</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-years">Phase 2 · 2028–2034</div>
+        <div class="phase-name">Generative matter</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-years">Phase 3 · 2032–2042</div>
+        <div class="phase-name">Closed-loop synthesis</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-years">Phase 4 · 2040–2055</div>
+        <div class="phase-name">Programmable matter</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-years">Phase 5 · 2050–2080</div>
+        <div class="phase-name">Quantum-enabled materials</div>
+      </div>
+    </div>
+  </div>
+</header>
 
-    <!-- ════════════════════════ 02 / 30-YEAR ARC ════════════════════════ -->
-    <div class="alt-wrap" id="arc">
-      <section class="block" style="padding-top:110px;padding-bottom:110px;">
-        <div class="eyebrow reveal">02 / Where this is going</div>
-        <h2 class="title reveal">Step 1 of a <em>real-world Replicator</em>.</h2>
-        <p class="lead reveal">
-            Matter is the last frontier of civilization-scale software. Foundation models for matter exist. Self-driving labs are shipping. Atomic-precision manufacturing is on a real research roadmap. The decade ahead is the convergence — a generation that can specify any molecule and have it manifest. Lupine builds the audit substrate that lets the higher layers of that stack be trusted with reality.
-        </p>
-        <div class="horizon">
-            <div class="phase now reveal">
-                <div class="dot"></div>
-                <span class="here-flag">◉ We are here</span>
-                <div class="pnum">Phase 1</div><div class="pyears">2025–2030</div>
-                <h4>Trustworthy prediction</h4>
-                <div class="cap">Foundation MLIPs hit DFT-equivalent accuracy at 100× speed; the bottleneck moves from "can we simulate?" to "can we trust it?"</div>
-                <div class="role">Lupine ships the audit substrate (atlas-distill engine + the 2026 error-geometry methodology paper) — the methodology that names where simulations fail and compresses that failure into closed-loop self-correction. <span class="tier tier-verified">Verified</span></div>
-            </div>
-            <div class="phase reveal">
-                <div class="dot"></div>
-                <div class="pnum">Phase 2</div><div class="pyears">2028–2034</div>
-                <h4>Generative matter</h4>
-                <div class="cap">Foundation models propose novel matter configurations from desired properties; active-learning loops close the prediction-fitting gap.</div>
-                <div class="role">The audit layer becomes existential. Generative models hallucinate; physical reality doesn't. UQ + causal-error detection separates a proposal from a manufacturable molecule. <span class="tier tier-disclosed">Disclosed</span></div>
-            </div>
-            <div class="phase reveal">
-                <div class="dot"></div>
-                <div class="pnum">Phase 3</div><div class="pyears">2032–2042</div>
-                <h4>Closed-loop synthesis</h4>
-                <div class="cap">Self-driving labs propose, synthesize, and characterize novel matter; cycle time drops from years to days.</div>
-                <div class="role">Lupine becomes the verification layer between generative proposal and synthesis — every synthesis is a labeled training example for the next model generation. <span class="tier tier-verified">Verified</span></div>
-            </div>
-            <div class="phase reveal">
-                <div class="dot"></div>
-                <div class="pnum">Phase 4</div><div class="pyears">2040–2055</div>
-                <h4>Programmable matter</h4>
-                <div class="cap">Distributed atomic-precision manufacturing for narrow material classes — the Replicator hardware exists for designed matter.</div>
-                <div class="role">The audit substrate is now infrastructure — like TCP/IP for matter. Open-core means the methodology compounds across every closed-loop design system. <span class="tier tier-directional">Directional</span></div>
-            </div>
-            <div class="phase reveal">
-                <div class="dot"></div>
-                <div class="pnum">Phase 5</div><div class="pyears">2050–2080</div>
-                <h4>Quantum-enabled materials</h4>
-                <div class="cap">Fault-tolerant quantum compute, room-temp superconductors, commercial fusion, post-CMOS spintronics. New materials enable new economic regimes.</div>
-                <div class="role">Audit grows an order of magnitude in importance — quantum-classical hybrid simulations fail in ways classical methods cannot detect. <span class="tier tier-directional">Directional</span></div>
-            </div>
-        </div>
-        <div class="takeaway positive reveal">
-            <div class="tk-label">Why phase 1 is the load-bearing one</div>
-            <p>Generative models for matter are roughly where AlphaFold-1 was in 2018: clearly working, not yet trustworthy. Without a layer that names where atomistic predictions fail and feeds those failures back into the next generation, phase 2 stacks generative hallucination on top of unmeasured prediction error and the whole pipeline gets <em>worse</em>, not better. Lupine ships the methodology that makes phase 1 trustworthy — and that methodology compounds into training signal for every layer above it.</p>
-        </div>
-      </section>
+<!-- ══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════════ -->
+<nav aria-label="Section navigation">
+  <div class="nav-inner">
+    <a href="#thesis">01 — The thesis</a>
+    <a href="#proof">02 — The proof</a>
+    <a href="#stack">03 — The stack</a>
+    <a href="#why-now">04 — Why now</a>
+    <a href="#model">05 — The model</a>
+    <a href="#ask">06 — The ask</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════════
+     01 / THE THESIS
+═══════════════════════════════════════════════════════════════ -->
+<section id="thesis">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">01 — The thesis</div>
+      <hr class="section-rule">
+      <h2>What we <em>believe</em>.</h2>
+      <p class="lead">Before the arc, before the stack, before any math: the commitments that tell you what kind of company this is. None are negotiable. All are testable against what we actually ship.</p>
     </div>
 
-    <!-- ════════════════════════ 03 / MATTER STACK ════════════════════════ -->
-    <section class="block" id="stack">
-        <div class="eyebrow reveal">03 / Where this sits</div>
-        <h2 class="title reveal">We are the <em>validation substrate</em> for the matter stack.</h2>
-        <p class="lead reveal">
-            The applications are visible. The generative models are fashionable. The compute primitives are 30 years old and improving. The audit layer in the middle — the one that catches when a foundation model proposes a structure that physics rejects, and compresses the error into corrections — is structurally underweight in today's ecosystem. That is the layer Lupine ships.
-        </p>
-        <div class="stack">
-            <div class="layer reveal"><div><div class="lname">Application surfaces</div><div class="ltag">Layer 5 · the buyers</div></div><div><div class="ldesc">The end uses that pay for materials engineering today and that programmable matter reshapes over 30 years.</div><div class="lex">Drug design · semiconductors · battery chemistry · aerospace alloys · cell-therapy scaffolds · food substrates</div></div></div>
-            <div class="layer reveal"><div><div class="lname">Generative matter</div><div class="ltag">Layer 4 · ramping fast</div></div><div><div class="ldesc">Foundation models that propose novel matter configurations from a target property specification.</div><div class="lex">GNoME · MatterSim · OMat24 · GNN crystal generators · diffusion models — real and ramping. We host it; we don't build it.</div></div></div>
-            <div class="layer lupine reveal"><div><div class="lname">Validation &amp; error-correction</div><div class="ltag">Layer 3 · this is Lupine</div></div><div><div class="ldesc">The methodology + tooling that names where the layers above fail and compresses that failure into the layers below. Structurally underweight — every other layer is racing ahead while validation stays ad-hoc.</div><div class="lex">atlas-distill (Rust) · sloppy-model geometry · multi-fidelity UQ · Pearl causal inference · ecological-fallacy detection · error-geometry methodology 2026</div></div></div>
-            <div class="layer reveal"><div><div class="lname">Compute substrate</div><div class="ltag">Layer 2 · mature, legacy</div></div><div><div class="ldesc">Numerical primitives the audit and generative layers stand on. Mature in legacy form, immature in modern form.</div><div class="lex">Plane-wave DFT (VASP / QE / ABINIT) · LAMMPS-class MD · ML-potential inference (MACE/NequIP/Allegro) · WebGPU / HPC</div></div></div>
-            <div class="layer reveal"><div><div class="lname">Physical reality</div><div class="ltag">Layer 1 · ground truth</div></div><div><div class="ldesc">The ground truth being modeled: experiments, synthesis, characterization. The audit layer is the only place predictions and experiments meet.</div><div class="lex">Beamlines · electron microscopes · X-ray diffraction · synthesis robotics · DOE user facilities · self-driving labs</div></div></div>
-        </div>
-        <div class="takeaway positive reveal">
-            <div class="tk-label">The structural bet</div>
-            <p>Every other layer of the stack has well-funded incumbents racing. Validation has none. The Lupine wager is that within 3–5 years the field realizes "audit layer for atomistic ML" is its own discipline — the way <em>observability</em> became its own discipline for software in the 2010s — and the team that ships the canonical open-core engine owns the ground floor.</p>
-        </div>
-    </section>
+    <ol class="credo-list" style="max-width: 1040px; margin-inline: auto;">
+      <li class="credo-item">
+        <div class="credo-num">01</div>
+        <h3>Scarcity is an engineering problem.</h3>
+        <p>The 21st century has the science to dissolve material scarcity — atomistic prediction, generative matter, autonomous synthesis, atomic-precision manufacturing. The Replicator is a feasible engineering target on a 30-year horizon, not a metaphor for one.</p>
+        <span class="tier tier-directional">Directional</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">02</div>
+        <h3>The audit layer is a public good.</h3>
+        <p>Foundation models for matter need to be trustworthy before deployment at civilization scale. The methodology that names where they fail compounds for everyone or it compounds for no one. We ship Apache 2.0 because anything else makes the substrate brittle.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">03</div>
+        <h3>Truth before product.</h3>
+        <p>The first artifact is the methodology working paper and the open audit engine, built before raising a dollar — with a machine-checked formal core (zero unproven obligations) and a public two-tier replication kit that verifies every headline statistic from committed raw data. The methodology will be cited longer than any single deployment of it. We measure the physics first, then we build the engine.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">04</div>
+        <h3>The right timescale is 30 years.</h3>
+        <p>Civilization-scale problems do not fit a venture fund's LP horizon. The math an investor scores in five years is the floor. The platform a generation builds over thirty years is the ceiling. We optimize for the platform; the math just has to clear.</p>
+        <span class="tier tier-directional">Directional</span>
+      </li>
+      <li class="credo-item" style="grid-column: 1 / -1;">
+        <div class="credo-num">05</div>
+        <h3>Step 1 is unfashionable.</h3>
+        <p>Generative matter is on the cover of the magazine. Autonomous synthesis has the flagship NSF program. Atomic-precision manufacturing has the dramatic name. The audit layer underneath is invisible, slow, and load-bearing. We took it because it is load-bearing. Step 1 is the part everyone wants to skip; that is exactly why it is the seat to claim.</p>
+        <span class="tier tier-directional">Directional</span>
+      </li>
+    </ol>
+  </div>
+</section>
 
-    <!-- ════════════════════════ 04 / WHY NOW ════════════════════════ -->
-    <div class="alt-wrap" id="why-now">
-      <section class="block" style="padding-top:110px;padding-bottom:110px;">
-        <div class="eyebrow reveal">04 / Why this is the decade</div>
-        <h2 class="title reveal">Three curves are <em>bending at the same time</em>.</h2>
-        <p class="lead reveal">
-            Foundation MLIPs cleared the science bar (sub-2 meV/atom on broad benchmarks, 2024). WebGPU made browser-native scientific compute real (2024–25). Sovereignty became a procurement requirement (CHIPS Act $447B fab capex announced through 2030; IRA $300B+ committed battery manufacturing). The audit layer becomes infrastructure now or never.
-        </p>
-        <div class="curves">
-            <div class="curve reveal"><div class="clab">Atomistic ML</div><div class="cline">MACE → MatterSim → OMat24 → ?</div><div class="cnote">Foundation MLIPs went from research curiosity to deployable infrastructure in 36 months. The next 36 will move them into production design loops.</div></div>
-            <div class="curve reveal"><div class="clab">Autonomous synthesis</div><div class="cline">A-Lab → MGI 2031 → self-driving everywhere</div><div class="cnote">The Materials Genome Initiative's 20-year mandate (2011–2031) targets the closed-loop transition. We're 6 years from the deadline; the lab equipment exists.</div></div>
-            <div class="curve reveal"><div class="clab">Sovereignty mandate</div><div class="cline">CHIPS → IRA → MGI 2025 plan</div><div class="cnote">$700B+ in announced US capex needs US/allied-licensed materials infrastructure. Vienna-held VASP cannot defensibly serve this buyer base.</div></div>
-        </div>
-      </section>
+<!-- ══════════════════════════════════════════════════════════
+     02 / THE PROOF
+═══════════════════════════════════════════════════════════════ -->
+<section id="proof" class="band-alt">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">02 — The proof</div>
+      <hr class="section-rule">
+      <h2>One law, tested at <em>three layers</em> of the matter stack.</h2>
+      <p class="lead">The research program found a geometric law: models in a family share one error direction, and that direction fingerprints whatever constraint binds the family — the functional form, the training data, the reference theory. We tested it the hard way: pre-registered experiments with kill conditions committed to version control before any model ran. Neither kill condition was triggered.</p>
     </div>
 
-    <!-- ════════════════════════ 05 / THE CEILING ════════════════════════ -->
-    <section class="block" id="ceiling">
-        <div class="eyebrow reveal">05 / If we are right about the stack</div>
-        <h2 class="title reveal">The ceiling is <em>$7.0T</em> conditional weighted EV.</h2>
-        <p class="lead reveal">
-            Section 06 prices Lupine as a software-of-record company on classical materials acceleration only. This section prices Lupine as the audit substrate for a <strong>~$79T/yr</strong> quantum-enabled materials economy at phase-5 maturity — 22.7× the classical baseline. The two methodologies differ by an order of magnitude in addressable, an order of magnitude in capture rate, and four orders of magnitude in implied conditional EV — because they answer fundamentally different questions about what Lupine <em>is</em>.
-        </p>
-        <div class="tier-legend reveal">
-            <span><span class="tier tier-verified">Verified</span>primary source</span>
-            <span><span class="tier tier-disclosed">Disclosed</span>public filing</span>
-            <span><span class="tier tier-triangulated">Triangulated</span>cross-checked</span>
-            <span><span class="tier tier-projection">Projection</span>modeled</span>
-            <span><span class="tier tier-directional">Directional</span>30-yr thesis</span>
-        </div>
+    <ol class="credo-list" style="max-width: 1040px; margin-inline: auto;">
+      <li class="credo-item">
+        <div class="credo-num">L1</div>
+        <h3>Classical potentials — 40 years, one geometry.</h3>
+        <p>559 interatomic potentials, 15 metals. Within a model family, prediction errors correlate at 0.95 — and the error geometry has not changed in forty years of development. Accuracy improved; the constraint signature did not. You cannot fit your way off a constraint surface.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">L2</div>
+        <h3>AI foundation models inherit their training physics.</h3>
+        <p>Four neural architectures &times; two quantum-chemistry training theories, pre-registered. Errors cluster by training theory, not by architecture (permutation p&nbsp;=&nbsp;0.029) — and retraining on the better theory rotates the error exactly as predicted. The model zoo is one family in disguise.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">L3</div>
+        <h3>Even the simulators obey it.</h3>
+        <p>12 DFT implementations, 384 crystals (public verification data). Errors cluster by the shared approximation, not by which code computed them (p&nbsp;=&nbsp;0.017): four independent codes sharing one pseudopotential align at 0.70&ndash;0.87, while the same code under a different approximation drops to 0.21.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item" style="grid-column: 1 / -1;">
+        <div class="credo-num">&Sigma;</div>
+        <h3>Why this is a business, not just a result.</h3>
+        <p>Because the shared error is one direction, one correction vector repairs every model in a family at once — a rank-one calibration removes ~96% of foundation-model elastic error without retraining, and it transfers to models that don't exist yet. Cross-model agreement becomes a zero-cost trust gauge: it tells you when an ensemble can be calibrated and when it is lying to you. The theory behind both claims is machine-checked in Lean&nbsp;4 — ~29 theorems, zero unproven obligations — and the entire evidence chain replays from public data in two commands.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+    </ol>
+  </div>
+</section>
 
-        <!-- A · phase-4 addressable -->
-        <div class="sub-label reveal">A · What's at stake when phase&nbsp;4 lands &nbsp;·&nbsp; <span class="tier tier-triangulated">Triangulated</span></div>
-        <div class="bars reveal">
-            <div class="bar-row"><div class="blab">Drug discovery + clinical materials<small>Healthcare</small></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bval">$1.2T</div></div>
-            <div class="bar-row"><div class="blab">Semiconductors + advanced packaging<small>Compute</small></div><div class="bar-track"><div class="bar-fill" style="width:67%"></div></div><div class="bval">$800B</div></div>
-            <div class="bar-row"><div class="blab">Battery + energy storage<small>Energy &amp; travel</small></div><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div><div class="bval">$500B</div></div>
-            <div class="bar-row"><div class="blab">Synthetic biology + food + ag<small>Food &amp; ag</small></div><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><div class="bval">$400B</div></div>
-            <div class="bar-row"><div class="blab">Catalysis + carbon capture<small>Industrial</small></div><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><div class="bval">$300B</div></div>
-            <div class="bar-row"><div class="blab">Aerospace alloys + AM + hypersonics<small>Energy &amp; travel</small></div><div class="bar-track"><div class="bar-fill" style="width:21%"></div></div><div class="bval">$250B</div></div>
-            <div class="bar-row"><div class="blab">Polymers, coatings, structural<small>Industrial</small></div><div class="bar-track"><div class="bar-fill" style="width:21%"></div></div><div class="bval">$250B</div></div>
-            <div class="bar-row"><div class="blab">Solar + wind + nuclear materials<small>Energy &amp; travel</small></div><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><div class="bval">$200B</div></div>
-            <div class="bar-row"><div class="blab">Biopolymers + implants + regen<small>Healthcare</small></div><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><div class="bval">$180B</div></div>
-        </div>
-        <div class="takeaway reveal">
-            <div class="tk-label">The denominator</div>
-            <p>~<strong>$4.1T</strong> of annual economic activity at phase-4 maturity (2045). Sized bottom-up from McKinsey, BNEF, BCG, Frost &amp; Sullivan, and direct industry numbers; held at the conservative midpoint of the $2–5T range these reports bracket.</p>
-        </div>
-
-        <!-- B · platform comps -->
-        <div class="sub-label reveal">B · What audit-substrate companies actually capture &nbsp;·&nbsp; <span class="tier tier-disclosed">Disclosed</span></div>
-        <div class="data-table-wrap reveal">
-            <table class="data">
-                <thead><tr><th>Company</th><th>Category</th><th>EV / Rev</th><th>Ecosystem served</th><th>Capture rate</th></tr></thead>
-                <tbody>
-                    <tr><td>GitHub <span class="tier tier-disclosed">2018</span></td><td>Developer platform</td><td class="num">7.5×</td><td class="num">$5,000B</td><td class="num">0.02%<span class="capbar" style="width:2px"></span></td></tr>
-                    <tr><td>Hugging Face</td><td>ML model hub</td><td class="num">22.5×</td><td class="num">$200B</td><td class="num">0.10%<span class="capbar" style="width:7px"></span></td></tr>
-                    <tr><td>Cloudflare</td><td>Internet infra</td><td class="num">20.0×</td><td class="num">$1,000B</td><td class="num">0.15%<span class="capbar" style="width:11px"></span></td></tr>
-                    <tr><td>Shopify</td><td>Commerce platform</td><td class="num">21.4×</td><td class="num">$3,000B</td><td class="num">0.23%<span class="capbar" style="width:16px"></span></td></tr>
-                    <tr><td>Datadog</td><td>Observability infra</td><td class="num">16.0×</td><td class="num">$1,000B</td><td class="num">0.25%<span class="capbar" style="width:18px"></span></td></tr>
-                    <tr><td>ANSYS</td><td>Engineering simulation</td><td class="num">15.9×</td><td class="num">$500B</td><td class="num">0.44%<span class="capbar" style="width:31px"></span></td></tr>
-                    <tr><td>MongoDB</td><td>Data infra</td><td class="num">15.0×</td><td class="num">$400B</td><td class="num">0.50%<span class="capbar" style="width:36px"></span></td></tr>
-                    <tr><td>Snowflake</td><td>Data platform</td><td class="num">20.0×</td><td class="num">$500B</td><td class="num">0.70%<span class="capbar" style="width:50px"></span></td></tr>
-                    <tr><td>Cadence</td><td>EDA platform</td><td class="num">16.7×</td><td class="num">$500B</td><td class="num">0.90%<span class="capbar" style="width:64px"></span></td></tr>
-                    <tr><td>Synopsys</td><td>EDA platform</td><td class="num">12.9×</td><td class="num">$500B</td><td class="num">1.40%<span class="capbar" style="width:100px"></span></td></tr>
-                    <tr class="bench"><td>Median platform infra</td><td>benchmark</td><td class="num">17.5×</td><td class="num">—</td><td class="num">0.22%</td></tr>
-                    <tr class="bench"><td>Median mature EDA</td><td>benchmark</td><td class="num">14.4×</td><td class="num">—</td><td class="num">1.15%</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="takeaway reveal">
-            <div class="tk-label">The capture-rate bracket</div>
-            <p>Modern platform infrastructure earns 0.05–0.30% of the ecosystem it serves (GitHub, Hugging Face, Cloudflare, Datadog, Snowflake, Shopify). Mature simulation/audit platforms earn 0.9–1.4% once they fully consolidate (Synopsys, Cadence). Lupine's ceiling scenarios anchor on these brackets, <em>not</em> on aspirational numbers.</p>
-        </div>
-
-        <!-- C · the conditional outcome distribution -->
-        <div class="sub-label reveal">C · The conditional outcome distribution &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span> / <span class="tier tier-directional">Directional</span></div>
-        <div class="scen reveal">
-            <div class="scen-row"><div><div class="sname">SaaS-of-record (the math floor)</div><div class="smeta">5-yr · $150B addressable · 2.5% capture · 15× <span class="tier tier-projection">Projection</span></div></div><div class="prob-track"><div class="prob-fill" style="width:100%"></div><span class="plabel">25%</span></div><div class="sev">$0.3B</div></div>
-            <div class="scen-row"><div><div class="sname">Audit substrate (mid-platform)</div><div class="smeta">10-yr · $2T addressable · 0.20% capture · 17× <span class="tier tier-projection">Projection</span></div></div><div class="prob-track"><div class="prob-fill" style="width:80%"></div><span class="plabel">20%</span></div><div class="sev">$68B</div></div>
-            <div class="scen-row"><div><div class="sname">Category leader (audit + compute)</div><div class="smeta">15-yr · $5T addressable · 0.50% capture · 18× <span class="tier tier-projection">Projection</span></div></div><div class="prob-track"><div class="prob-fill" style="width:72%"></div><span class="plabel">18%</span></div><div class="sev">$450B</div></div>
-            <div class="scen-row"><div><div class="sname">Civilizational classical-materials infra</div><div class="smeta">20-yr · $10T addressable · 1.0% capture · 20× <span class="tier tier-projection">Projection</span></div></div><div class="prob-track"><div class="prob-fill" style="width:60%"></div><span class="plabel">15%</span></div><div class="sev">$2,000B</div></div>
-            <div class="scen-row"><div><div class="sname">Phase-5 quantum unlocks (mid)</div><div class="smeta">25-yr · $50T addressable · 1.0% capture · 22× <span class="tier tier-directional">Directional</span></div></div><div class="prob-track"><div class="prob-fill" style="width:40%"></div><span class="plabel">10%</span></div><div class="sev">$11.0T</div></div>
-            <div class="scen-row"><div><div class="sname">Phase-5 quantum unlocks (deep)</div><div class="smeta">30-yr · $100T addressable · 1.5% capture · 22× <span class="tier tier-directional">Directional</span></div></div><div class="prob-track"><div class="prob-fill" style="width:32%"></div><span class="plabel">8%</span></div><div class="sev">$33.0T</div></div>
-            <div class="scen-row"><div><div class="sname">TCP/IP for designed matter</div><div class="smeta">35-yr · $200T addressable · 2.0% capture · 18× <span class="tier tier-directional">Directional</span></div></div><div class="prob-track"><div class="prob-fill" style="width:16%"></div><span class="plabel">4%</span></div><div class="sev">$72.0T</div></div>
-        </div>
-        <div class="takeaway positive reveal">
-            <div class="tk-label">What this number means</div>
-            <p><strong>$7.0T</strong> is the probability-weighted EV across the seven scenarios above, <em>conditional on execution</em> (probabilities sum to 1.0). Multiply by 50% — the unconditional probability the company doesn't fail outright, priced explicitly in the floor — and you get a <strong>~$3.5T</strong> unconditional ceiling. That is roughly <strong>~10,000×</strong> the floor's $332M base DCF: four orders of magnitude. The point is not the number — it is that <em>the floor measures the wrong altitude</em>. Most of the probability mass sits in the lower, near-term scenarios; the giant EVs carry small, explicitly-directional probabilities.</p>
-        </div>
-
-        <!-- D · strategic acquirers -->
-        <div class="sub-label reveal">D · Who pays for it before it gets there &nbsp;·&nbsp; <span class="tier tier-directional">Directional</span></div>
-        <div class="credo-grid reveal" style="gap:14px;">
-            <div class="credo-card" style="padding:22px 24px;"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;"><h3 style="font-family:var(--font-sans);font-size:17px;font-weight:600;margin:0;">Microsoft — Azure Quantum Elements</h3><span class="num" style="color:var(--cyan);font-size:15px;font-weight:600;white-space:nowrap;">~$8.0B</span></div><p style="margin:10px 0 0;">AQE is Microsoft's flagship materials-AI platform; the audit substrate is the layer they cannot ship internally without 5+ years of methodology work. Buying Lupine is buying the validation discipline. <span style="color:var(--slate-600);">5-yr NPV ~$30B · structural analog: MSFT + GitHub 2018, $7.5B.</span></p></div>
-            <div class="credo-card" style="padding:22px 24px;"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;"><h3 style="font-family:var(--font-sans);font-size:17px;font-weight:600;margin:0;">Google DeepMind — GNoME lineage</h3><span class="num" style="color:var(--cyan);font-size:15px;font-weight:600;white-space:nowrap;">~$6.0B</span></div><p style="margin:10px 0 0;">GNoME showed Google can ship generative matter; the audit layer is what makes it deployable. Acquisition keeps the substrate from going to Microsoft. <span style="color:var(--slate-600);">5-yr NPV ~$25B · defensive pattern.</span></p></div>
-            <div class="credo-card" style="padding:22px 24px;"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;"><h3 style="font-family:var(--font-sans);font-size:17px;font-weight:600;margin:0;">Synopsys / Cadence — post-ANSYS</h3><span class="num" style="color:var(--cyan);font-size:15px;font-weight:600;white-space:nowrap;">~$6.0B</span></div><p style="margin:10px 0 0;">Synopsys's $35B ANSYS deal closed in 2025; the materials substrate is the natural next consolidation. Audit layer for atomistic ML maps directly to the EDA-of-matter thesis. <span style="color:var(--slate-600);">5-yr NPV ~$20B.</span></p></div>
-            <div class="credo-card" style="padding:22px 24px;"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;"><h3 style="font-family:var(--font-sans);font-size:17px;font-weight:600;margin:0;">Schrödinger</h3><span class="num" style="color:var(--cyan);font-size:15px;font-weight:600;white-space:nowrap;">~$3.0B</span></div><p style="margin:10px 0 0;">The closest direct strategic — Schrödinger's materials segment competes for the same buyers. Acquiring Lupine means owning both the closed proprietary stack and the open audit substrate, and pre-empts MSFT/GOOG. <span style="color:var(--slate-600);">5-yr NPV ~$10B.</span></p></div>
-        </div>
-        <div class="takeaway positive reveal">
-            <div class="tk-label">Median plausible acquisition price ~$4.5B</div>
-            <p>Six named strategic acquirers — Microsoft (Azure Quantum Elements), Google DeepMind, Schrödinger, Synopsys/Cadence (post-ANSYS), IBM Research, defense primes. Median plausible all-cash acquisition price across the five commercial acquirers is <strong>$4.5B</strong> at a 5-year horizon. The Microsoft + GitHub 2018 acquisition ($7.5B for the developer-platform substrate) is the closest structural analog.</p>
-        </div>
-    </section>
-
-    <!-- ════════════════════════ 06 / THE FLOOR ════════════════════════ -->
-    <div class="alt-wrap" id="floor">
-      <section class="block" style="padding-top:110px;padding-bottom:110px;">
-        <div class="eyebrow reveal">06 / The math (the floor)</div>
-        <h2 class="title reveal">And the floor — <em>the conservative cross-check</em>.</h2>
-        <p class="lead reveal">
-            The ceiling above prices Lupine as the audit substrate for a quantum-enabled materials economy. This section prices it as if neither the quantum unlocks nor the platform position materialize — a respectable Synopsys / Cadence / Veeva-tier vertical software company on a 5-year horizon, classical materials only. Even under this strictly-conservative frame the DCF clears: <strong>$332M intrinsic</strong> vs the $150M proposed post (<strong>+121% margin of safety</strong>), <strong>+39% probability-weighted IRR</strong>. The math clears on the floor; the upside is in section 05.
-        </p>
-
-        <div class="sub-label reveal">A · DCF intrinsic value &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span></div>
-        <div class="dcf-compare reveal">
-            <div class="dcf-card"><div class="dl">Bear · 14.0% WACC</div><div class="dv">$37M</div><div class="dn">2.0% terminal growth · classical materials only</div></div>
-            <div class="dcf-card base"><div class="dl">Base · 12.1% WACC</div><div class="dv">$332M</div><div class="dn">+121% over the $150M proposed post-money</div></div>
-            <div class="dcf-card"><div class="dl">Bull · 10.5% WACC</div><div class="dv">$1.62B</div><div class="dn">3.5% terminal growth · platform multiple holds</div></div>
-        </div>
-        <div class="takeaway positive reveal">
-            <div class="tk-label">Every WACC × g cell clears the proposed post</div>
-            <p>Equity value across the 25-cell WACC × terminal-growth sensitivity grid spans <strong>$234M</strong> (worst corner) to <strong>$528M</strong> (best corner). The worst case is still <strong>+56%</strong> over the $150M proposed post. The intrinsic value does not depend on the moonshot.</p>
-        </div>
-
-        <div class="sub-label reveal">B · Comp set + probability-weighted returns &nbsp;·&nbsp; <span class="tier tier-disclosed">Disclosed</span></div>
-        <div class="stats reveal">
-            <div class="stat"><div class="sv">15.5×</div><div class="sl">Sim-comp median EV/Rev</div><div class="sd">Synopsys, Cadence, ANSYS, Altair, Veeva</div></div>
-            <div class="stat"><div class="sv">$99B</div><div class="sl">FY30 sector unlock</div><div class="sd">Accelerated value: compute + travel + bio</div></div>
-            <div class="stat"><div class="sv">2.5%</div><div class="sl">FY30 capture rate</div><div class="sd">The Synopsys/Cadence band, not aspirational</div></div>
-            <div class="stat hl"><div class="sv">+39%</div><div class="sl">Prob-weighted 5-yr IRR</div><div class="sd">With 50% Pr(zero) fully baked in</div></div>
-        </div>
-        <div class="sub-label reveal" style="margin-top:32px;">C · The outcome distribution (50% chance of zero, priced) &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span></div>
-        <div class="scen reveal">
-            <div class="scen-row"><div><div class="sname">Zero — failure / wind-down</div><div class="smeta">Priced explicitly. The venture base rate.</div></div><div class="prob-track"><div class="prob-fill" style="width:100%;background:linear-gradient(90deg,var(--slate-600),var(--slate-500))"></div><span class="plabel">50%</span></div><div class="sev">$0</div></div>
-            <div class="scen-row"><div><div class="sname">Modest exit</div><div class="smeta">Acqui-hire / small strategic</div></div><div class="prob-track"><div class="prob-fill" style="width:40%"></div><span class="plabel">20%</span></div><div class="sev">$100M</div></div>
-            <div class="scen-row"><div><div class="sname">Strategic exit</div><div class="smeta">Software-of-record acquisition</div></div><div class="prob-track"><div class="prob-fill" style="width:40%"></div><span class="plabel">20%</span></div><div class="sev">$500M</div></div>
-            <div class="scen-row"><div><div class="sname">Moonshot</div><div class="smeta">Platform position holds</div></div><div class="prob-track"><div class="prob-fill" style="width:14%"></div><span class="plabel">7%</span></div><div class="sev">$3.0B</div></div>
-            <div class="scen-row"><div><div class="sname">Asymmetric tail</div><div class="smeta">Category-defining infrastructure</div></div><div class="prob-track"><div class="prob-fill" style="width:6%"></div><span class="plabel">3%</span></div><div class="sev">$15.0B</div></div>
-        </div>
-        <div class="takeaway reveal">
-            <div class="tk-label">Where the IRR comes from</div>
-            <p>The Moonshot + Asymmetric-tail outcomes (combined <strong>10%</strong> probability) contribute the bulk of the weighted EV, while the <strong>50%</strong> probability of zero is fully baked in. This is the floor: even pricing a coin-flip chance of total loss, the conservative cross-check still returns +39% IRR. The ceiling in section 05 is what the same company looks like if it becomes infrastructure for the matter stack instead of a vertical software company.</p>
-        </div>
-      </section>
+<!-- ══════════════════════════════════════════════════════════
+     03 / THE STACK
+═══════════════════════════════════════════════════════════════ -->
+<section id="stack">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">03 — The stack</div>
+      <hr class="section-rule">
+      <h2>The <em>validation substrate</em> for the matter stack.</h2>
+      <p class="lead">The applications are visible. The generative models are fashionable. The compute primitives are mature and improving. The audit layer in the middle — the one that catches when a foundation model proposes a structure that physics rejects, and compresses the error into corrections — is structurally underweight in today's ecosystem.</p>
     </div>
 
-    <!-- ════════════════════════ 07 / THE ASK ════════════════════════ -->
-    <section class="block" id="ask">
-        <div class="eyebrow reveal">07 / The ask</div>
-        <h2 class="title reveal">Seed <em>$8M</em> — to build the team and ship the audit substrate.</h2>
-        <p class="lead reveal">
-            The capital funds the founder and first hires, the engineering, and the methodology publications that make phase 1 trustworthy. The seed is priced conservatively against the trajectory in section 05 — the model's ceiling is where this goes, not the entry. The milestones are the markers that we're actually building toward the arc, not just the math.
-        </p>
-        <div class="reveal" style="display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:26px 30px;margin-bottom:36px;">
-            <div style="width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,var(--lupine-700),var(--violet-700));display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:28px;color:#fff;flex-shrink:0;">A</div>
-            <div>
-                <div style="font-size:17px;font-weight:600;color:var(--slate-100);">Alex Welcing <span style="font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:0.08em;text-transform:uppercase;">· Founder</span></div>
-                <p style="font-size:14px;color:var(--slate-400);line-height:1.65;margin-top:7px;max-width:780px;">Authored the 2026 error-geometry methodology paper (working paper with a machine-checked formal core) and built the atlas-distill audit engine (Rust) before raising a dollar — truth before product. This round builds the early team around a de-risked thesis: senior MLIP/DFT engineering, scientific software, and the first commercial hire, with advisors from the materials-ML community.</p>
-            </div>
-        </div>
-        <div class="milestones">
-            <div class="ms reveal"><div class="mo">Month 12</div><h4>Federal direct contract in flight</h4><div class="un"><b>Unlocks &nbsp;</b>Non-dilutive runway + the credibility marker that lets us be cited as named tooling in DARPA / DOE / NSF proposals.</div></div>
-            <div class="ms reveal"><div class="mo">Month 18</div><h4>Two paid pilots converted to production</h4><div class="un"><b>Unlocks &nbsp;</b>First $750K–$1.5M ACV recurring + named industry references; signal that the audit layer is procurement-grade.</div></div>
-            <div class="ms reveal"><div class="mo">Month 24</div><h4>DFT engine alpha + open benchmark published</h4><div class="un"><b>Unlocks &nbsp;</b>Closes the unified DFT → ML → MD pipeline; the open benchmark becomes the canonical place to compare foundation MLIPs and the methodology paper compounds the IP.</div></div>
-        </div>
-        <div class="takeaway positive reveal">
-            <div class="tk-label">What this round is actually buying</div>
-            <p>The 24-month plan is to ship phase 1 — the audit substrate that phases 2–4 depend on — with peer-reviewed methodology, an open benchmark, and a federal-grade reference deployment. The math floor (<strong>$332M DCF intrinsic, +39% weighted IRR</strong>) is what happens if Lupine becomes a respectable software-of-record company. The ceiling is what happens if it becomes infrastructure for the matter stack.</p>
-        </div>
-        <div class="ask-cta reveal">
-            <a href="mailto:founders@lupine.science" class="btn btn-primary">founders@lupine.science →</a>
-            <a href="/access.html?next=%2Fdeck.html" class="btn btn-secondary">View the classic slide deck</a>
-            <a href="/one-pager.html" class="btn btn-secondary">One-pager (print → PDF)</a>
-        </div>
-    </section>
+    <div class="table-wrap">
+      <table class="stack-table">
+        <tbody>
+          <tr>
+            <td style="width:180px; padding-left: 20px;">
+              <div class="stack-layer-name">Application surfaces</div>
+              <div class="stack-layer-tag">Layer 5 · the buyers</div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">The end uses that pay for materials engineering today and that programmable matter reshapes over 30 years.</div>
+              <div class="stack-layer-ex">Drug design · semiconductors · battery chemistry · aerospace alloys · cell-therapy scaffolds · food substrates</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding-left: 20px;">
+              <div class="stack-layer-name">Generative matter</div>
+              <div class="stack-layer-tag">Layer 4 · ramping fast</div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">Foundation models that propose novel matter configurations from a target property specification.</div>
+              <div class="stack-layer-ex">GNoME · MatterSim · OMat24 · GNN crystal generators · diffusion models — real and ramping. We host it; we don't build it.</div>
+            </td>
+          </tr>
+          <tr class="lupine-row">
+            <td style="padding-left: 20px;">
+              <div class="stack-layer-name">Validation &amp; error-correction</div>
+              <div class="stack-layer-tag">Layer 3 · <span class="lupine-badge">this is Lupine</span></div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">The methodology + tooling that names where the layers above fail and compresses that failure into the layers below. Structurally underweight — every other layer is racing ahead while validation stays ad-hoc.</div>
+              <div class="stack-layer-ex">atlas-distill (Rust) · projection-law error geometry · multi-fidelity UQ · ecological-fallacy detection · machine-checked theorems (Lean 4) · methodology working paper</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding-left: 20px;">
+              <div class="stack-layer-name">Compute substrate</div>
+              <div class="stack-layer-tag">Layer 2 · mature, legacy</div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">Numerical primitives the audit and generative layers stand on. Mature in legacy form, immature in modern form.</div>
+              <div class="stack-layer-ex">Plane-wave DFT (VASP / QE / ABINIT) · LAMMPS-class MD · ML-potential inference (MACE/NequIP/Allegro) · WebGPU / HPC</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding-left: 20px;">
+              <div class="stack-layer-name">Physical reality</div>
+              <div class="stack-layer-tag">Layer 1 · ground truth</div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">The ground truth being modeled: experiments, synthesis, characterization. The audit layer is the only place predictions and experiments meet.</div>
+              <div class="stack-layer-ex">Beamlines · electron microscopes · X-ray diffraction · synthesis robotics · DOE user facilities · self-driving labs</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <footer>
-        <div class="fi">
-            Lupine Materials Science · the audit substrate for matter · 2026<br>
-            The floor is a 5-year DCF; the ceiling is a probability-weighted 30-year scenario model. Every claim is tiered — verified, disclosed, triangulated, projection, or directional. Source of truth: <code>business-plan/value-model/*.csv</code>.
-            <div class="links">
-                <a href="#credo">Back to top ↑</a>
-                <a href="/access.html?next=%2Fdeck.html">Slide deck</a>
-                <a href="/one-pager.html">One-pager</a>
-            </div>
+    <div class="prose">
+      <blockquote class="structural-bet">
+        <strong>The structural bet:</strong> Every other layer of the stack has well-funded incumbents racing. Validation has none. The Lupine wager is that within 3–5 years the field realizes "audit layer for atomistic ML" is its own discipline — the way <em>observability</em> became its own discipline for software in the 2010s — and the team that ships the canonical open-core engine owns the ground floor.
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     03 / WHY NOW
+═══════════════════════════════════════════════════════════════ -->
+<section id="why-now" class="band-alt">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">04 — Why now</div>
+      <hr class="section-rule">
+      <h2>Three curves bending <em>at the same time</em>.</h2>
+      <p class="lead">Foundation MLIPs cleared the science bar (sub-2 meV/atom on broad benchmarks, 2024). WebGPU made browser-native scientific compute real (2024–25). Sovereignty became a procurement requirement (CHIPS Act $447B fab capex announced through 2030; IRA $300B+ committed battery manufacturing). The audit layer becomes infrastructure now or never.</p>
+    </div>
+
+    <div class="why-now-grid">
+      <div class="why-now-col">
+        <div class="why-now-label">Atomistic ML</div>
+        <div class="why-now-line">MACE → MatterSim → OMat24 → ?</div>
+        <p>Foundation MLIPs went from research curiosity to deployable infrastructure in 36 months. The next 36 will move them into production design loops.</p>
+      </div>
+      <div class="why-now-col">
+        <div class="why-now-label">Autonomous synthesis</div>
+        <div class="why-now-line">A-Lab → MGI 2031 → self-driving everywhere</div>
+        <p>The Materials Genome Initiative's 20-year mandate (2011–2031) targets the closed-loop transition. We're 6 years from the deadline; the lab equipment exists.</p>
+      </div>
+      <div class="why-now-col">
+        <div class="why-now-label">Sovereignty mandate</div>
+        <div class="why-now-line">CHIPS → IRA → MGI 2025 plan</div>
+        <p>$700B+ in announced US capex needs US/allied-licensed materials infrastructure. Vienna-held VASP cannot defensibly serve this buyer base.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     04 / THE MODEL
+═══════════════════════════════════════════════════════════════ -->
+<section id="model">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">05 — The model</div>
+      <hr class="section-rule">
+      <h2>The ceiling and <em>the floor</em>.</h2>
+      <p class="lead">Two methodologies. The ceiling prices Lupine as the audit substrate for a quantum-enabled materials economy at platform maturity. The floor prices it as a conservative vertical software company on a 5-year horizon. They differ by four orders of magnitude in conditional EV — because they answer fundamentally different questions about what Lupine <em>is</em>.</p>
+    </div>
+
+    <div class="prose">
+      <div class="tier-legend">
+        <span><span class="tier tier-verified">Verified</span> primary source</span>
+        <span><span class="tier tier-disclosed">Disclosed</span> public filing</span>
+        <span><span class="tier tier-triangulated">Triangulated</span> cross-checked</span>
+        <span><span class="tier tier-projection">Projection</span> modeled</span>
+        <span><span class="tier tier-directional">Directional</span> 30-yr thesis</span>
+      </div>
+    </div>
+
+    <!-- ── CEILING ── -->
+    <div class="prose" style="margin-top: 40px;">
+      <h2 style="font-size: clamp(22px, 3vw, 32px);">The ceiling — <em>$7.0T</em> conditional weighted EV</h2>
+    </div>
+
+    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      A · Phase-4 addressable — what's at stake &nbsp;·&nbsp; <span class="tier tier-triangulated">Triangulated</span>
+    </div>
+    <div class="table-wrap" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      <table class="seg">
+        <tbody>
+          <tr><td>Drug discovery + clinical materials <span class="small">Healthcare</span></td><td>$1.2T</td></tr>
+          <tr><td>Semiconductors + advanced packaging <span class="small">Compute</span></td><td>$800B</td></tr>
+          <tr><td>Battery + energy storage <span class="small">Energy &amp; travel</span></td><td>$500B</td></tr>
+          <tr><td>Synthetic biology + food + ag <span class="small">Food &amp; ag</span></td><td>$400B</td></tr>
+          <tr><td>Catalysis + carbon capture <span class="small">Industrial</span></td><td>$300B</td></tr>
+          <tr><td>Aerospace alloys + AM + hypersonics <span class="small">Energy &amp; travel</span></td><td>$250B</td></tr>
+          <tr><td>Polymers, coatings, structural <span class="small">Industrial</span></td><td>$250B</td></tr>
+          <tr><td>Solar + wind + nuclear materials <span class="small">Energy &amp; travel</span></td><td>$200B</td></tr>
+          <tr><td>Biopolymers + implants + regen <span class="small">Healthcare</span></td><td>$180B</td></tr>
+          <tr style="border-top: 1px solid var(--hairline);"><td><strong>Total phase-4 addressable (2045)</strong></td><td><strong>~$4.1T/yr</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">The denominator</div>
+        <p>~<strong>$4.1T</strong> of annual economic activity at phase-4 maturity (2045). Sized bottom-up from McKinsey, BNEF, BCG, Frost &amp; Sullivan, and direct industry numbers; held at the conservative midpoint of the $2–5T range these reports bracket. <span class="tier tier-triangulated">Triangulated</span></p>
+      </div>
+    </div>
+
+    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      B · What audit-substrate companies actually capture &nbsp;·&nbsp; <span class="tier tier-disclosed">Disclosed</span>
+    </div>
+    <div class="table-wrap" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Category</th>
+            <th class="num">EV/Rev</th>
+            <th class="num">Ecosystem</th>
+            <th class="num">Capture rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>GitHub <span class="tier tier-disclosed">2018</span></td><td>Developer platform</td><td class="num">7.5×</td><td class="num">$5,000B</td><td class="num">0.02%</td></tr>
+          <tr><td>Hugging Face</td><td>ML model hub</td><td class="num">22.5×</td><td class="num">$200B</td><td class="num">0.10%</td></tr>
+          <tr><td>Cloudflare</td><td>Internet infra</td><td class="num">20.0×</td><td class="num">$1,000B</td><td class="num">0.15%</td></tr>
+          <tr><td>Shopify</td><td>Commerce platform</td><td class="num">21.4×</td><td class="num">$3,000B</td><td class="num">0.23%</td></tr>
+          <tr><td>Datadog</td><td>Observability infra</td><td class="num">16.0×</td><td class="num">$1,000B</td><td class="num">0.25%</td></tr>
+          <tr><td>ANSYS</td><td>Engineering simulation</td><td class="num">15.9×</td><td class="num">$500B</td><td class="num">0.44%</td></tr>
+          <tr><td>MongoDB</td><td>Data infra</td><td class="num">15.0×</td><td class="num">$400B</td><td class="num">0.50%</td></tr>
+          <tr><td>Snowflake</td><td>Data platform</td><td class="num">20.0×</td><td class="num">$500B</td><td class="num">0.70%</td></tr>
+          <tr><td>Cadence</td><td>EDA platform</td><td class="num">16.7×</td><td class="num">$500B</td><td class="num">0.90%</td></tr>
+          <tr><td>Synopsys</td><td>EDA platform</td><td class="num">12.9×</td><td class="num">$500B</td><td class="num">1.40%</td></tr>
+          <tr class="bench"><td>Median platform infra</td><td>benchmark</td><td class="num">17.5×</td><td class="num">—</td><td class="num">0.22%</td></tr>
+          <tr class="bench"><td>Median mature EDA</td><td>benchmark</td><td class="num">14.4×</td><td class="num">—</td><td class="num">1.15%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      C · The conditional outcome distribution &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span> / <span class="tier tier-directional">Directional</span>
+    </div>
+    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      <div class="scen">
+        <div class="scen-row">
+          <div><div class="sname">SaaS-of-record (the math floor)</div><div class="smeta">5-yr · $150B addressable · 2.5% capture · 15× <span class="tier tier-projection">Projection</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:100%"></div></div>
+          <div class="sev">$0.3B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">25%</span></div>
         </div>
-    </footer>
+        <div class="scen-row">
+          <div><div class="sname">Audit substrate (mid-platform)</div><div class="smeta">10-yr · $2T addressable · 0.20% capture · 17× <span class="tier tier-projection">Projection</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:80%"></div></div>
+          <div class="sev">$68B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">20%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Category leader (audit + compute)</div><div class="smeta">15-yr · $5T addressable · 0.50% capture · 18× <span class="tier tier-projection">Projection</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:72%"></div></div>
+          <div class="sev">$450B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">18%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Civilizational classical-materials infra</div><div class="smeta">20-yr · $10T addressable · 1.0% capture · 20× <span class="tier tier-projection">Projection</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:60%"></div></div>
+          <div class="sev">$2,000B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">15%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Phase-5 quantum unlocks (mid)</div><div class="smeta">25-yr · $50T addressable · 1.0% capture · 22× <span class="tier tier-directional">Directional</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
+          <div class="sev">$11.0T <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">10%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Phase-5 quantum unlocks (deep)</div><div class="smeta">30-yr · $100T addressable · 1.5% capture · 22× <span class="tier tier-directional">Directional</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:32%"></div></div>
+          <div class="sev">$33.0T <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">8%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">TCP/IP for designed matter</div><div class="smeta">35-yr · $200T addressable · 2.0% capture · 18× <span class="tier tier-directional">Directional</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:16%"></div></div>
+          <div class="sev">$72.0T <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">4%</span></div>
+        </div>
+      </div>
+    </div>
 
-    <script>
-        // ─── scroll progress ───
-        const bar = document.getElementById('progressBar');
-        function onScroll() {
-            const h = document.documentElement;
-            const max = h.scrollHeight - h.clientHeight;
-            bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-        }
-        document.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">What this number means</div>
+        <p><strong>$7.0T</strong> is the probability-weighted EV across the seven scenarios above, <em>conditional on execution</em> (probabilities sum to 1.0). Multiply by 50% — the unconditional probability the company doesn't fail outright, priced explicitly in the floor — and you get a <strong>~$3.5T</strong> unconditional ceiling. That is roughly <strong>~10,000×</strong> the floor's $332M base DCF: four orders of magnitude. The point is not the number — it is that <em>the floor measures the wrong altitude</em>. Most probability mass sits in the lower, near-term scenarios; the giant EVs carry small, explicitly-directional probabilities.</p>
+      </div>
+    </div>
 
-        // ─── scroll reveal ───
-        const obs = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      D · Strategic acquirers — who pays for it before it gets there &nbsp;·&nbsp; <span class="tier tier-directional">Directional</span>
+    </div>
+    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px; margin-bottom: 32px;">
+      <div class="acquirer-grid">
+        <div class="acquirer-card">
+          <div class="acq-header">
+            <div class="acq-name">Microsoft — Azure Quantum Elements</div>
+            <div class="acq-price">~$8.0B</div>
+          </div>
+          <p>AQE is Microsoft's flagship materials-AI platform; the audit substrate is the layer they cannot ship internally without 5+ years of methodology work. Buying Lupine is buying the validation discipline. 5-yr NPV ~$30B · structural analog: MSFT + GitHub 2018, $7.5B.</p>
+        </div>
+        <div class="acquirer-card">
+          <div class="acq-header">
+            <div class="acq-name">Google DeepMind — GNoME lineage</div>
+            <div class="acq-price">~$6.0B</div>
+          </div>
+          <p>GNoME showed Google can ship generative matter; the audit layer is what makes it deployable. Acquisition keeps the substrate from going to Microsoft. 5-yr NPV ~$25B · defensive pattern.</p>
+        </div>
+        <div class="acquirer-card">
+          <div class="acq-header">
+            <div class="acq-name">Synopsys / Cadence — post-ANSYS</div>
+            <div class="acq-price">~$6.0B</div>
+          </div>
+          <p>Synopsys's $35B ANSYS deal closed in 2025; the materials substrate is the natural next consolidation. Audit layer for atomistic ML maps directly to the EDA-of-matter thesis. 5-yr NPV ~$20B.</p>
+        </div>
+        <div class="acquirer-card">
+          <div class="acq-header">
+            <div class="acq-name">Schrödinger</div>
+            <div class="acq-price">~$3.0B</div>
+          </div>
+          <p>The closest direct strategic — Schrödinger's materials segment competes for the same buyers. Acquiring Lupine means owning both the closed proprietary stack and the open audit substrate, and pre-empts MSFT/GOOG. 5-yr NPV ~$10B.</p>
+        </div>
+      </div>
+    </div>
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">Median plausible acquisition price ~$4.5B</div>
+        <p>Four named strategic acquirers — Microsoft (Azure Quantum Elements), Google DeepMind, Synopsys/Cadence (post-ANSYS), Schrödinger. Median plausible all-cash acquisition price across commercial acquirers is <strong>$4.5B</strong> at a 5-year horizon. The Microsoft + GitHub 2018 acquisition ($7.5B for the developer-platform substrate) is the closest structural analog.</p>
+      </div>
+    </div>
 
-        // ─── smooth anchor scroll ───
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', e => {
-                const t = document.querySelector(a.getAttribute('href'));
-                if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
-            });
-        });
-    </script>
+    <!-- ── FLOOR ── -->
+    <div class="prose" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--hairline);">
+      <h2 style="font-size: clamp(22px, 3vw, 32px);">The floor — <em>the conservative cross-check</em></h2>
+      <p class="lead" style="margin-bottom: 28px;">This prices Lupine as if neither the quantum unlocks nor the platform position materialize — a respectable Synopsys/Cadence/Veeva-tier vertical software company on a 5-year horizon, classical materials only. Even under this strictly-conservative frame the DCF clears: <strong>$332M intrinsic</strong> vs the $150M proposed post (<strong>+121% margin of safety</strong>), <strong>+39% probability-weighted IRR</strong>. The math clears on the floor; the upside is in the ceiling.</p>
+    </div>
+
+    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      A · DCF intrinsic value &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span>
+    </div>
+    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      <div class="dcf-row">
+        <div class="dcf-card">
+          <div class="dcf-label">Bear · 14.0% WACC</div>
+          <div class="dcf-value">$37M</div>
+          <div class="dcf-note">2.0% terminal growth · classical materials only</div>
+        </div>
+        <div class="dcf-card base">
+          <div class="dcf-label">Base · 12.1% WACC</div>
+          <div class="dcf-value">$332M</div>
+          <div class="dcf-note">+121% over the $150M proposed post-money</div>
+        </div>
+        <div class="dcf-card">
+          <div class="dcf-label">Bull · 10.5% WACC</div>
+          <div class="dcf-value">$1.62B</div>
+          <div class="dcf-note">3.5% terminal growth · platform multiple holds</div>
+        </div>
+      </div>
+    </div>
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">Every WACC × g cell clears the proposed post</div>
+        <p>Equity value across the 25-cell WACC × terminal-growth sensitivity grid spans <strong>$234M</strong> (worst corner) to <strong>$528M</strong> (best corner). The worst case is still <strong>+56%</strong> over the $150M proposed post. The intrinsic value does not depend on the moonshot.</p>
+      </div>
+    </div>
+
+    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      B · Comp set + probability-weighted returns &nbsp;·&nbsp; <span class="tier tier-disclosed">Disclosed</span>
+    </div>
+    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="sv">15.5×</div>
+          <div class="sl">Sim-comp median EV/Rev</div>
+          <div class="sd">Synopsys, Cadence, ANSYS, Altair, Veeva</div>
+        </div>
+        <div class="stat-cell">
+          <div class="sv">$99B</div>
+          <div class="sl">FY30 sector unlock</div>
+          <div class="sd">Accelerated value: compute + travel + bio</div>
+        </div>
+        <div class="stat-cell">
+          <div class="sv">2.5%</div>
+          <div class="sl">FY30 capture rate</div>
+          <div class="sd">The Synopsys/Cadence band, not aspirational</div>
+        </div>
+        <div class="stat-cell hl">
+          <div class="sv">+39%</div>
+          <div class="sl">Prob-weighted 5-yr IRR</div>
+          <div class="sd">With 50% Pr(zero) fully baked in</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      C · The outcome distribution (50% chance of zero, priced) &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span>
+    </div>
+    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+      <div class="scen">
+        <div class="scen-row">
+          <div><div class="sname">Zero — failure / wind-down</div><div class="smeta">Priced explicitly. The venture base rate.</div></div>
+          <div class="prob-track"><div class="prob-fill muted" style="width:100%"></div></div>
+          <div class="sev">$0 <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">50%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Modest exit</div><div class="smeta">Acqui-hire / small strategic</div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
+          <div class="sev">$100M <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">20%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Strategic exit</div><div class="smeta">Software-of-record acquisition</div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
+          <div class="sev">$500M <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">20%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Moonshot</div><div class="smeta">Platform position holds</div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:14%"></div></div>
+          <div class="sev">$3.0B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">7%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Asymmetric tail</div><div class="smeta">Category-defining infrastructure</div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:6%"></div></div>
+          <div class="sev">$15.0B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">3%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">Where the IRR comes from</div>
+        <p>The Moonshot + Asymmetric-tail outcomes (combined <strong>10%</strong> probability) contribute the bulk of the weighted EV, while the <strong>50%</strong> probability of zero is fully baked in. This is the floor: even pricing a coin-flip chance of total loss, the conservative cross-check still returns +39% IRR. The ceiling above is what the same company looks like if it becomes infrastructure for the matter stack.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     05 / THE ASK
+═══════════════════════════════════════════════════════════════ -->
+<section id="ask" class="band-alt">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">06 — The ask</div>
+      <hr class="section-rule">
+      <h2>Seed <em>$8M</em> — to build the team and ship the audit substrate.</h2>
+      <p class="lead">The capital funds the team, the engineering, and the methodology publications that make phase 1 trustworthy. The seed is priced conservatively against the trajectory in the model — the ceiling is where this goes, not the entry. The milestones are the markers that we're actually building toward the arc, not just the math.</p>
+    </div>
+
+    <div class="prose">
+      <div class="founder-block">
+        <div class="founder-initial">A</div>
+        <div>
+          <div class="founder-name">Alex Welcing <span class="founder-role">Founder</span></div>
+          <p>Authored the methodology working paper and built the atlas-distill audit engine (Rust) before raising a dollar — truth before product. This round builds the team around a de-risked thesis: senior MLIP/DFT engineering, scientific software, and the first commercial hire.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px; margin-bottom: 40px;">
+      <div class="milestone-row">
+        <div class="ms">
+          <div class="mo">Month 12</div>
+          <h4>Federal direct contract in flight</h4>
+          <p>Unlocks non-dilutive runway + the credibility marker that lets us be cited as named tooling in DARPA / DOE / NSF proposals.</p>
+        </div>
+        <div class="ms">
+          <div class="mo">Month 18</div>
+          <h4>Two paid pilots converted to production</h4>
+          <p>First $750K–$1.5M ACV recurring + named industry references; signal that the audit layer is procurement-grade.</p>
+        </div>
+        <div class="ms">
+          <div class="mo">Month 24</div>
+          <h4>DFT engine alpha + open benchmark published</h4>
+          <p>Closes the unified DFT → ML → MD pipeline; the open benchmark becomes the canonical place to compare foundation MLIPs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="cta-row">
+        <a href="mailto:founders@lupine.science" class="btn btn-primary">founders@lupine.science →</a>
+        <a href="/access.html?next=%2Fdeck.html" class="btn btn-secondary">View the slide deck</a>
+        <a href="/one-pager.html" class="btn btn-secondary">One-pager (print → PDF)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-line">Lupine Science · the audit substrate for matter · 2026</div>
+    <p class="footer-tier">The floor is a 5-year DCF; the ceiling is a probability-weighted 30-year scenario model. Every claim is tiered — verified, disclosed, triangulated, projection, or directional.</p>
+    <div class="footer-links">
+      <a href="#thesis">Top</a>
+      <a href="/access.html?next=%2Fdeck.html">Slide deck</a>
+      <a href="/one-pager.html">One-pager</a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
