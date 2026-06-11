@@ -21,6 +21,8 @@ Paper 2's Reproducibility section.
 - Lean artifact: tag `lean-spec` at the current commit; include the four
   Theory files or the repo tarball (27 theorems, 0 sorry)
 
+**Live GCS mirror (already public):** https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/ — add as a related identifier ("is identical to") in the Zenodo form.
+
 ## Metadata (paste into Zenodo form)
 
 - **Title:** Replication kit and formal artifact: The Projection Law —
