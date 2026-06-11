@@ -25,11 +25,14 @@ import OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
 import OpenDistillationFactory.Materials.Theory.ContextSpecificProof
 import OpenDistillationFactory.Materials.Theory.AccuracyCommitment
 import OpenDistillationFactory.Materials.Theory.UniversalityBridge
+import OpenDistillationFactory.Materials.Theory.ProjectedRibbon
+import OpenDistillationFactory.Materials.Theory.ErrorGeometry
 import OpenDistillationFactory.Materials.Theory.WeakAcceleration
 
 -- Validation layer: experiment design, integrity checks, and audit
 import OpenDistillationFactory.Materials.Validation.Experiment
 import OpenDistillationFactory.Materials.Validation.Audit
+import OpenDistillationFactory.Materials.Validation.RankGate
 
 -- Executable vision: the build-locking epistemic contract
 import OpenDistillationFactory.Materials.Vision
