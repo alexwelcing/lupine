@@ -111,6 +111,16 @@ engine-test:
 live-build:
     npm --prefix glim-think run lint:fast
 
+# Initialize the local glim-think D1 ledger used by wrangler dev
+think-d1-init:
+    cd glim-think && npx wrangler d1 execute LEDGER --local --file schema.sql
+    cd glim-think && npx wrangler d1 migrations apply LEDGER --local
+
+# Run the glim-think Worker locally from the root checkout.
+# DEV_MODE only applies to this local command and bypasses Access for write-route smoke tests.
+think-dev port='8787':
+    cd glim-think && npx wrangler dev --local --port {{port}} --var DEV_MODE:true --show-interactive-dev-session=false
+
 # Show checks, workflows, deploys, and observation commands for this diff
 mono-plan:
     python scripts/monorepo.py plan
