@@ -28,6 +28,13 @@ import numpy as np
 import requests
 from lupine_distill.fixture_contract import run_row, validate_manifest
 
+try:
+    from src.openinference_patcher import MLIPRunPatcher
+
+    _TELEMETRY_PATCHER: MLIPRunPatcher | None = MLIPRunPatcher()
+except Exception:  # pragma: no cover - optional if src package not installed
+    _TELEMETRY_PATCHER = None
+
 
 def runtime_import_paths() -> list[pathlib.Path]:
     runner_dir = pathlib.Path(__file__).resolve().parent
@@ -44,6 +51,46 @@ def runtime_import_paths() -> list[pathlib.Path]:
 
 for runtime_path in runtime_import_paths():
     sys.path.insert(0, str(runtime_path))
+
+
+def _float_or_none(value: Any) -> float | None:
+    try:
+        return float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
+
+
+def emit_telemetry(metrics: dict[str, Any]) -> bool:
+    """Emit an OpenInference span for a cell result; never raises."""
+    patcher = _TELEMETRY_PATCHER
+    if patcher is None:
+        return False
+    accuracy = metrics.get("accuracy") or {}
+    row_metrics = metrics.get("row_metrics") or {}
+    execution = metrics.get("execution") or {}
+    extra: dict[str, Any] = {
+        "lupine.cell_id": metrics.get("cell_id"),
+        "lupine.campaign_id": metrics.get("campaign_id"),
+        "lupine.manifest_hash": metrics.get("manifest_hash"),
+        "lupine.distill_profile": metrics.get("distill_profile"),
+        "lupine.ribbon_version": metrics.get("ribbon_version"),
+        "lupine.accuracy_score": _float_or_none(accuracy.get("score")),
+        "lupine.speed_score": _float_or_none((metrics.get("speed") or {}).get("score")),
+    }
+    if metrics.get("trace_id"):
+        extra["lupine.phoenix.trace_id"] = metrics["trace_id"]
+    if metrics.get("span_id"):
+        extra["lupine.phoenix.span_id"] = metrics["span_id"]
+    return patcher.emit_benchmark_span(
+        backend=str(metrics.get("mlip_id") or "unknown"),
+        system=str(metrics.get("row_id") or "unknown"),
+        suite=str(metrics.get("variant_id") or "baseline"),
+        mae_energy=_float_or_none(row_metrics.get("mae_energy")),
+        mae_forces=_float_or_none(row_metrics.get("mae_forces")),
+        wall_time_s=_float_or_none(execution.get("warm_inference_seconds")),
+        run_id=metrics.get("run_id"),
+        extra_attributes=extra,
+    )
 
 try:
     from lupine_distill_runtime import DistillSession, LeakageGuard
@@ -173,6 +220,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=None,
         help="Optional local or gs:// JSON checkpoint path. Defaults to artifact-prefix/cell_checkpoint.json.",
     )
+    parser.add_argument("--phoenix-trace-id", default=None)
+    parser.add_argument("--phoenix-span-id", default=None)
     return parser.parse_args(argv)
 
 
@@ -925,6 +974,8 @@ def run_batch(args: argparse.Namespace) -> dict[str, Any]:
                     cell_args.dev_mode_bypass,
                     cell_args.local_jsonl,
                 )
+            with contextlib.suppress(Exception):
+                emit_telemetry(metrics)
         calc = None
         model_load_s = max(time.perf_counter() - load_started, 0.0)
     if calc is not None:
@@ -948,6 +999,8 @@ def run_batch(args: argparse.Namespace) -> dict[str, Any]:
                     cell_args.dev_mode_bypass,
                     cell_args.local_jsonl,
                 )
+                with contextlib.suppress(Exception):
+                    emit_telemetry(result.metrics)
                 completed.append({
                     "cell_id": result.metrics.get("cell_id"),
                     "row_id": result.metrics.get("row_id"),
@@ -967,6 +1020,8 @@ def run_batch(args: argparse.Namespace) -> dict[str, Any]:
                         cell_args.dev_mode_bypass,
                         cell_args.local_jsonl,
                     )
+                with contextlib.suppress(Exception):
+                    emit_telemetry(metrics)
                 failed.append({
                     "cell_id": metrics.get("cell_id"),
                     "row_id": metrics.get("row_id"),
@@ -1068,6 +1123,8 @@ def failure_metrics(args: argparse.Namespace, exc: BaseException) -> dict[str, A
         "error": str(exc),
         "error_class": exc.__class__.__name__,
         "traceback": traceback.format_exc(limit=8),
+        "trace_id": getattr(args, "phoenix_trace_id", None),
+        "span_id": getattr(args, "phoenix_span_id", None),
         "accuracy": {"score": 0, "unit": "failed"},
         "speed": {"score": 0, "unit": "failed"},
     }
@@ -1102,6 +1159,8 @@ def main() -> int:
             args.dev_mode_bypass,
             args.local_jsonl,
         )
+        with contextlib.suppress(Exception):
+            emit_telemetry(result.metrics)
         print(json.dumps(result.metrics, indent=2, sort_keys=True))
         return 0
     except Exception as exc:
@@ -1116,6 +1175,8 @@ def main() -> int:
             )
         except Exception as beat_exc:
             print(f"failed to emit failure beat: {beat_exc}", file=sys.stderr)
+        with contextlib.suppress(Exception):
+            emit_telemetry(metrics)
         print(json.dumps(metrics, indent=2, sort_keys=True), file=sys.stderr)
         return 1
 
