@@ -26,7 +26,7 @@ from typing import Any
 
 import numpy as np
 import requests
-from fixture_contract import run_row, validate_manifest
+from lupine_distill.fixture_contract import run_row, validate_manifest
 
 
 def runtime_import_paths() -> list[pathlib.Path]:

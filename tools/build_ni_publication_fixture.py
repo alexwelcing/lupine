@@ -29,12 +29,9 @@ from ase.build import bulk
 from ase.calculators.eam import EAM
 from ase.optimize import FIRE
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-RUNNER_DIR = ROOT / "gcp" / "mlip-cell-runner"
-if str(RUNNER_DIR) not in sys.path:
-    sys.path.insert(0, str(RUNNER_DIR))
+from lupine_distill.fixture_contract import validate_manifest
 
-from fixture_contract import validate_manifest  # noqa: E402
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 SOURCE_PACKET = ROOT / "data" / "mlip_benchmarks" / "manifest_sources.json"
 DEFAULT_OUTPUT = ROOT / "data" / "mlip_benchmarks" / "fixtures" / "ni_fcc_eam_home_turf_v1.json"

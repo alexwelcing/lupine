@@ -35,9 +35,9 @@ COPY gcp/mlip-cell-runner/requirements-${BACKEND}.txt ./requirements-backend.txt
 RUN python3 -m pip install --no-cache-dir --upgrade pip \
     && python3 -m pip install --no-cache-dir -r requirements-backend.txt
 
-COPY gcp/mlip-cell-runner/fixture_contract.py ./
 COPY gcp/mlip-cell-runner/mlip_cell_runner.py ./
 COPY python/lupine_distill_runtime ./lupine_distill_runtime
+COPY python/lupine_distill ./lupine_distill
 COPY --from=atlas_distill_builder /build/atlas-distill/target/release/atlas-distill /usr/local/bin/atlas-distill
 
 RUN /usr/local/bin/atlas-distill distill-policy --help >/dev/null \

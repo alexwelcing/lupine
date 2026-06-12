@@ -170,7 +170,7 @@ verify:
     echo "==> Rust check"
     cargo check --workspace --manifest-path atlas-distill/Cargo.toml
     echo "==> Tools smoke tests"
-    PYTHONPATH=python python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py -q
+    python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py -q
     echo "==> Diff hygiene"
     git diff --check
 

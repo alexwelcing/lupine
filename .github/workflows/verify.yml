@@ -108,8 +108,6 @@ jobs:
         run: pip install ./python pytest
 
       - name: Run tool smoke tests
-        env:
-          PYTHONPATH: python
         run: |
           python -m pytest tools/test_mlip_regime_filter.py -q
           python -m pytest gcp/mlip-cell-runner/test_distill_runtime.py -q

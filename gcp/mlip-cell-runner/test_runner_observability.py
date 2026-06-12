@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import mlip_cell_runner as runner
-from fixture_contract import thermodynamic_condition, thermodynamic_condition_coverage
+from lupine_distill.fixture_contract import thermodynamic_condition, thermodynamic_condition_coverage
 
 
 def test_failure_metrics_preserve_phoenix_trace_context() -> None:

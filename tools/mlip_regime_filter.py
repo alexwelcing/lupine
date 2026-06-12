@@ -23,11 +23,12 @@ from dataclasses import asdict, dataclass
 from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-for _p in (ROOT / "python", ROOT / "gcp" / "mlip-cell-runner", ROOT / "tools"):
-    if str(_p) not in sys.path:
-        sys.path.insert(0, str(_p))
+# TODO: retire once mlip_evidence_campaign moves into lupine_distill.
+_TOOLS_DIR = ROOT / "tools"
+if str(_TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_DIR))
 
-import fixture_contract  # noqa: E402
+from lupine_distill import fixture_contract
 from lupine_distill.regime import (  # noqa: E402
     CellFingerprint,
     RibbonProvenance,

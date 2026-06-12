@@ -61,7 +61,7 @@ COPY python/lupine_distill ./lupine_distill
 COPY python/lupine_distill_runtime ./lupine_distill_runtime
 # The runner entrypoint and telemetry/loop seam modules live in the GCP subtree;
 # copy them so the image can run mlip_cell_runner.py directly.
-COPY gcp/mlip-cell-runner/fixture_contract.py gcp/mlip-cell-runner/mlip_cell_runner.py ./
+COPY gcp/mlip-cell-runner/mlip_cell_runner.py ./
 COPY gcp/mlip-cell-runner/src ./src
 
 # Install core + the selected backend's extra in one resolver pass. The matgl

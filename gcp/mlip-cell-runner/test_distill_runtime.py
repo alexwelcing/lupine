@@ -9,10 +9,7 @@ import pytest
 from ase import Atoms
 from ase.calculators.calculator import Calculator, all_changes
 
-RUNTIME = pathlib.Path(__file__).resolve().parents[2] / "python"
-sys.path.insert(0, str(RUNTIME))
-
-from lupine_distill_runtime import (  # noqa: E402
+from lupine_distill_runtime import (
     DistillSession,
     DistillSupportModel,
     InstrumentedCalculator,
