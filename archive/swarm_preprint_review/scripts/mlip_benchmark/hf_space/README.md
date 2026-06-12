@@ -63,7 +63,7 @@ hf repo create <HF_USERNAME>/glim-mlip-bench \
     --repo-type space --space_sdk gradio
 
 # Upload everything in this directory (excluding tests + caches):
-cd swarm_preprint_review/scripts/mlip_benchmark/hf_space
+cd archive/swarm_preprint_review/scripts/mlip_benchmark/hf_space
 hf upload <HF_USERNAME>/glim-mlip-bench . . --repo-type space \
     --exclude "__pycache__/*" --exclude "test_app.py" \
     --commit-message "deploy glim-mlip-bench"
@@ -86,7 +86,7 @@ ZeroGPU shared pool. For heavier MACE-MP-0 / batch sweeps, switch to
 ## Local testing (without ZeroGPU)
 
 ```bash
-cd swarm_preprint_review/scripts/mlip_benchmark/hf_space
+cd archive/swarm_preprint_review/scripts/mlip_benchmark/hf_space
 pip install -r requirements.txt
 python app.py    # opens Gradio on http://127.0.0.1:7860
 ```

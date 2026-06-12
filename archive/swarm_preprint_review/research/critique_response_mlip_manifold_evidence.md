@@ -173,10 +173,10 @@ There are also two minor risks worth flagging: (a) the LAMMPS interface for newe
 A Python harness is being written in a sibling commit at:
 
 ```
-swarm_preprint_review/scripts/mlip_benchmark/
+archive/swarm_preprint_review/scripts/mlip_benchmark/
 ```
 
-The skeleton script `mlip_benchmark_protocol.py` already exists in `swarm_preprint_review/scripts/`; the harness directory will contain per-model wrappers (`run_mace.py`, `run_chgnet.py`, `run_m3gnet.py`, `run_mattersim.py`, `run_orb.py`), a shared elastic-constant driver (`elastic.py`) that reuses the same finite-difference protocol across all backends, and a manifold-analysis caller (`manifold.py`) that imports `analyze_manifold` from atlas-distill. Outputs land in a parallel D1-shaped ledger (`mlip_d1.csv`) so the same analysis pipeline can ingest them without modification.
+The skeleton script `mlip_benchmark_protocol.py` already exists in `archive/swarm_preprint_review/scripts/`; the harness directory will contain per-model wrappers (`run_mace.py`, `run_chgnet.py`, `run_m3gnet.py`, `run_mattersim.py`, `run_orb.py`), a shared elastic-constant driver (`elastic.py`) that reuses the same finite-difference protocol across all backends, and a manifold-analysis caller (`manifold.py`) that imports `analyze_manifold` from atlas-distill. Outputs land in a parallel D1-shaped ledger (`mlip_d1.csv`) so the same analysis pipeline can ingest them without modification.
 
 **Timeline commitment:**
 

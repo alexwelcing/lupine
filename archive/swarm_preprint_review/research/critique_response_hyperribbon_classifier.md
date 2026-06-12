@@ -9,7 +9,7 @@
 
 ## 1. Concession
 
-We thank the reviewer for performing an independent null-model test against the hyper-ribbon classifier as published. The reviewer's analysis is correct, and the conclusion drawn from it is correct: the three-condition rule given in Eq. (X) of the submitted manuscript --- (i) Mann-Kendall τ ≤ -0.8 on the sorted spectrum, (ii) R² > 0.8 for a log-linear fit, (iii) participation-ratio fraction PR/d < 0.9 --- is *too permissive at the small sample sizes that dominate the published benchmark table* (n ∈ {3, 4, 5, …, 12} materials per potential). At those n, the rule does not reliably distinguish a true sloppy-model spectrum from an isotropic-Gaussian null. We reproduced the reviewer's experiment in `swarm_preprint_review/scripts/strengthened_classifier.py` (300 trials, d = 3, isotropic Gaussian null) and recover false-positive rates (FPRs) in the same band the reviewer reports. The reviewer's verdict --- *"the current classifier is too weak to justify a strong universal hyper-ribbon conclusion on its own"* --- stands.
+We thank the reviewer for performing an independent null-model test against the hyper-ribbon classifier as published. The reviewer's analysis is correct, and the conclusion drawn from it is correct: the three-condition rule given in Eq. (X) of the submitted manuscript --- (i) Mann-Kendall τ ≤ -0.8 on the sorted spectrum, (ii) R² > 0.8 for a log-linear fit, (iii) participation-ratio fraction PR/d < 0.9 --- is *too permissive at the small sample sizes that dominate the published benchmark table* (n ∈ {3, 4, 5, …, 12} materials per potential). At those n, the rule does not reliably distinguish a true sloppy-model spectrum from an isotropic-Gaussian null. We reproduced the reviewer's experiment in `archive/swarm_preprint_review/scripts/strengthened_classifier.py` (300 trials, d = 3, isotropic Gaussian null) and recover false-positive rates (FPRs) in the same band the reviewer reports. The reviewer's verdict --- *"the current classifier is too weak to justify a strong universal hyper-ribbon conclusion on its own"* --- stands.
 
 This is a methodological deficiency in the original classifier, not a refutation of the underlying empirical signal (the BCC/FCC correlation split, the I² ≈ 98.6 % heterogeneity, and the warning against pooled benchmarking are all independent of the hyper-ribbon test). But the manuscript's *Claim 1* --- the universal hyper-ribbon framing --- depends specifically on a discriminating classifier, and the original three-part rule is not one. We commit to replacing it in the revision.
 
@@ -51,7 +51,7 @@ A spectrum is classified as a hyper-ribbon if and only if it passes all four geo
 
 ## 3. Reproduction of the reviewer's table, with composite results
 
-We re-ran the reviewer's exact experiment (isotropic Gaussian null, d = 3, 300 trials per n) in `strengthened_classifier.py`. Results are persisted in `swarm_preprint_review/research/strengthened_classifier_results.json`.
+We re-ran the reviewer's exact experiment (isotropic Gaussian null, d = 3, 300 trials per n) in `strengthened_classifier.py`. Results are persisted in `archive/swarm_preprint_review/research/strengthened_classifier_results.json`.
 
 | n  | Reviewer's reported FPR | Original 3-part FPR (our run) | Composite-classifier FPR | Improvement factor |
 |----|---:|---:|---:|---:|
@@ -112,7 +112,7 @@ Concretely, the revision will:
 5. **Discussion §4.x.** Soften the language on universality. The phrase "universal hyper-ribbon" will become "geometrically-decaying error-covariance spectrum, consistent with the sloppy-model prediction of Quinn et al. (2022) and previously demonstrated for parameter manifolds of classical interatomic potentials by Kurniawan et al. (2022)". We will explicitly disclaim any stronger universality statement until tested under the composite rule on a foundation-MLIP corpus.
 6. **Limitations §5.** Add a paragraph acknowledging the reviewer's specific concern about small-n permissiveness, summarise the FPR reduction achieved by the composite rule, and note the residual ~20 % FPR at n = 5-8 against the isotropic Gaussian null.
 
-We will release `strengthened_classifier.py` and the JSON results as part of the revision's supplementary material so the reviewer (and any other reader) can reproduce the table in §3 in seconds. The script is already in the public preprint repository under `swarm_preprint_review/scripts/`.
+We will release `strengthened_classifier.py` and the JSON results as part of the revision's supplementary material so the reviewer (and any other reader) can reproduce the table in §3 in seconds. The script is already in the public preprint repository under `archive/swarm_preprint_review/scripts/`.
 
 ## 7. Self-assessment of remaining weaknesses
 
@@ -126,7 +126,7 @@ We do not claim the composite classifier is bulletproof. Three specific failure 
 
 ## 8. Closing
 
-We thank the reviewer for the targeted null-model experiment and for stating the verdict precisely. The deficiency was real and the original classifier was not an honest test of the hyper-ribbon hypothesis at the sample sizes that dominate the published table. The composite classifier described here, built on the geometric-width prediction of Quinn et al. (2022) and tested directly on the spectra Kurniawan et al. (2022) studied for OpenKIM potentials, addresses the concern, reduces FPR by roughly an order of magnitude on the reviewer's own null at most n, and retains > 95 % TPR at the realistic noise floor for our benchmark. The script `swarm_preprint_review/scripts/strengthened_classifier.py` and the JSON results are available in the preprint repository for direct reproduction. The strengthened test, the softened language, and the Methods/Figures changes outlined in §6 will all appear in the revised manuscript.
+We thank the reviewer for the targeted null-model experiment and for stating the verdict precisely. The deficiency was real and the original classifier was not an honest test of the hyper-ribbon hypothesis at the sample sizes that dominate the published table. The composite classifier described here, built on the geometric-width prediction of Quinn et al. (2022) and tested directly on the spectra Kurniawan et al. (2022) studied for OpenKIM potentials, addresses the concern, reduces FPR by roughly an order of magnitude on the reviewer's own null at most n, and retains > 95 % TPR at the realistic noise floor for our benchmark. The script `archive/swarm_preprint_review/scripts/strengthened_classifier.py` and the JSON results are available in the preprint repository for direct reproduction. The strengthened test, the softened language, and the Methods/Figures changes outlined in §6 will all appear in the revised manuscript.
 
 We are grateful to the reviewer for sharpening the paper.
 

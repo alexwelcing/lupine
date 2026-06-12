@@ -13,7 +13,7 @@ ZeroGPU Space when you have a local GPU with full CUDA support.
 ## Setup
 
 ```bash
-cd swarm_preprint_review/scripts/mlip_benchmark/local_server
+cd archive/swarm_preprint_review/scripts/mlip_benchmark/local_server
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt

@@ -41,7 +41,7 @@ pip install -r requirements.txt
 ## Quick start (smoke test, no MLIP installs)
 
 ```bash
-cd swarm_preprint_review/scripts/mlip_benchmark
+cd archive/swarm_preprint_review/scripts/mlip_benchmark
 pip install ase numpy        # ~50 MB
 python extract_references.py # writes references.json from nist_benchmark.csv
 python run_predictions.py --references references.json \
@@ -90,7 +90,7 @@ on CPU AND ~5 min cold install — net savings ~10x and no per-run install.
 # One-time deploy (see hf_space/README.md). Uses the modern `hf` CLI:
 hf auth login
 hf repo create <HF_USERNAME>/glim-mlip-bench --repo-type space --space_sdk gradio
-cd swarm_preprint_review/scripts/mlip_benchmark/hf_space
+cd archive/swarm_preprint_review/scripts/mlip_benchmark/hf_space
 hf upload <HF_USERNAME>/glim-mlip-bench . . --repo-type space \
     --exclude "__pycache__/*" --exclude "test_app.py"
 
@@ -125,7 +125,7 @@ Schedule fires Tuesday 11:00 UTC after the unit-7 weekly critique drain.
 ### 3. Local install (fallback / debugging)
 
 ```bash
-cd swarm_preprint_review/scripts/mlip_benchmark
+cd archive/swarm_preprint_review/scripts/mlip_benchmark
 pip install ase numpy chgnet                 # in a Python 3.11 / 3.12 venv
 python extract_references.py
 python run_predictions.py --references references.json \
