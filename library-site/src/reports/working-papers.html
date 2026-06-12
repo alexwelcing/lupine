@@ -136,23 +136,27 @@
   </div>
 
   <h3>Abstract</h3>
-  <p class="abstract">Elastic-constant prediction errors (<i>C</i><sub>11</sub>, <i>C</i><sub>12</sub>, <i>C</i><sub>44</sub>) for 15 benchmark metals across 559 interatomic potentials universally occupy hyper-ribbon manifolds with effective dimensionality 1.0–2.3 out of 3 (median 1.09) — the sloppy-model universality class in cross-model error space. A striking crystal-structure dichotomy emerges: all 7 BCC metals show reference–prediction correlations <i>r</i> &gt; 0.70 while 7 of 8 FCC metals show <i>r</i> &lt; 0.40. Meta-analysis reveals extreme between-element heterogeneity (<i>I</i>² = 98.6%), and pooled benchmarking commits ecological fallacy: within-family correlations (mean 0.95) far exceed the pooled value (0.82). A Born-screened extension to three foundation MLIPs shows directionally structured errors with strong cross-architecture alignment for noble metals — the proof-of-concept the companion law paper develops.</p>
+  <p class="abstract">Prediction errors are not noise. Across 559 interatomic potentials and forty years of development — pair potentials through embedded-atom methods to modern functional forms — elastic-constant errors universally occupy low-dimensional hyper-ribbon manifolds (effective dimensionality 1.0–2.3 out of 3, median 1.09), and the geometry has not moved while accuracy improved: the sloppy-model universality class, observed for the first time in <i>cross-model error space</i> rather than single-model parameter space. The methodological consequence is sharp: between-element heterogeneity is extreme (<i>I</i>² = 98.6%), pooled benchmarking commits ecological fallacy (within-family correlation 0.95 vs 0.82 pooled), and the paper demonstrates the repair — stratified evaluation with random-effects meta-analysis. The paper also audits itself: an apparent element-level electronic-structure signal is traced to a fitting-depth confounder, and a Born-screened extension to three foundation MLIPs (with mechanical-stability failures reported, not hidden) provides the proof-of-concept the companion law paper develops. Crystal-structure-dependent correlation patterns are reported among the empirical findings.</p>
 
   <h3>Key results</h3>
   <div class="kr">
-    <div><b>559 potentials</b>The largest systematic elastic-constant error analysis to date; 40 years of potential development, one conserved error geometry.</div>
+    <div><b>40 years, one geometry</b>559 potentials spanning four decades of functional-form evolution; accuracy improved, the error geometry never moved. You cannot fit your way off a constraint surface.</div>
     <div><b>I² = 98.6%</b>Between-element heterogeneity that makes pooled leaderboards statistically meaningless; random-effects meta-analysis is mandatory.</div>
     <div><b>r = 0.95 vs 0.82</b>Within-family vs pooled correlation — the ecological fallacy of cross-family benchmarking, demonstrated and corrected.</div>
-    <div><b>7 of 45 Born-unstable</b>Foundation-model elastic tensors failing mechanical stability out of the box, concentrated in BCC refractory and magnetic metals.</div>
+    <div><b>Self-auditing</b>The paper's own apparent d-band signal is dissolved into a sample-size confounder; 7 of 45 foundation-model tensors fail Born screening and are excluded, not ignored.</div>
   </div>
 
+  <figure>
+    <img src="assets/papers/fig1_eigenvalue_spectra.png" alt="Eigenvalue spectra showing the sloppy log-linear hierarchy" />
+    <figcaption><b>Fig. — The sloppiness signature.</b> Eigenvalue spectra of per-potential error covariance: the log-linear hierarchy of the sloppy-model universality class, appearing in ensemble error space across unrelated functional forms.</figcaption>
+  </figure>
   <figure>
     <img src="assets/papers/fig2_dimensionality.png" alt="Participation-ratio distribution across 42 multi-element potentials" />
     <figcaption><b>Fig. — Hyper-ribbon dimensionality.</b> The participation-ratio distribution across 42 multi-element potentials (pinned dataset): median 1.09, maximum 2.29 — no potential approaches the full 3-dimensional error space.</figcaption>
   </figure>
   <figure>
-    <img src="assets/papers/fig3_bcc_fcc_dichotomy.png" alt="BCC/FCC correlation dichotomy" />
-    <figcaption><b>Fig. — The BCC/FCC dichotomy.</b> Per-element reference–prediction correlations sorted by crystal structure: every BCC metal above 0.70, nearly every FCC metal below 0.40.</figcaption>
+    <img src="assets/papers/fig5_pairstyle.png" alt="Pair-style stratification revealing ecological fallacy" />
+    <figcaption><b>Fig. — The ecological fallacy, shown.</b> Stratifying by potential family: tight within-family agreement (mean r = 0.95) that pooled benchmarking (r = 0.82) systematically obscures — the statistical case for stratified evaluation.</figcaption>
   </figure>
 </section>
 
