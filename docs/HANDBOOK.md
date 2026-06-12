@@ -95,16 +95,18 @@ ADRs are lightweight; prefer one per decision over omnibus documents.
 
 ## Escalation paths
 
-### When to run `just verify`
+### Verification tiers
 
-Run `just verify` for routine, pre-merge checks when the change is limited to:
+Choose the gate that matches the risk and cost of your change:
 
-- Python unit tests
-- Rust compile/test gates
-- Tools smoke tests
-- Diff whitespace hygiene
-
-`just verify` is the fast, local, no-GPU, no-cloud gate.
+- **`just verify-light`** — fastest pre-commit gate. Runs Python unit tests,
+  Rust `cargo check`, and diff hygiene. No optional deps, no GPU, no cloud.
+- **`just verify`** — routine pre-merge gate. Adds Rust `cargo test` and the
+  tools smoke tests (regime filter + runtime). Still no GPU/cloud.
+- **`just verify-heavy`** — run before releases or cloud bursts. Adds Python
+  integration tests, Rust clippy, the Lean `lake build`, and leaves room for
+  the MLIP backend smoke matrix. This can take minutes to hours depending on
+  toolchain cache and local hardware.
 
 ### When to run `lake build`
 

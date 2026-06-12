@@ -33,8 +33,10 @@ just engine-test
 just live-build
 ```
 
-Use `just verify` for the future spine. If a broader lint/test target is noisy,
-bucket the failures by file and cause instead of flattening them into "fails."
+Use `just verify-light` for fast pre-commit checks, `just verify` for routine
+pre-merge validation, and `just verify-heavy` before releases or cloud bursts.
+If a broader lint/test target is noisy, bucket the failures by file and cause
+instead of flattening them into "fails."
 
 ## MLIP flywheel telemetry
 

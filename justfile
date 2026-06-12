@@ -160,8 +160,8 @@ flywheel-telemetry-check:
 
 # --- LOCAL VERIFICATION & BOOTSTRAP ---
 
-# Run all focused local gates: Python unit tests, Rust check, tools smoke, diff hygiene.
-verify:
+# Fastest gate: no optional deps, no GPU, no cloud. Use for quick pre-commit checks.
+verify-light:
     #!/usr/bin/env bash
     set -euo pipefail
     echo "==> Python unit tests"
@@ -169,8 +169,38 @@ verify:
     cd ..
     echo "==> Rust check"
     cargo check --workspace --manifest-path atlas-distill/Cargo.toml
+    echo "==> Diff hygiene"
+    git diff --check
+
+# Run all focused local gates: Python unit tests, Rust check/test, tools smoke, diff hygiene.
+verify:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "==> Python unit tests"
+    cd python && python -m pytest -m unit -q
+    cd ..
+    echo "==> Rust engine"
+    cargo test --workspace --manifest-path atlas-distill/Cargo.toml
     echo "==> Tools smoke tests"
     python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py -q
+    echo "==> Diff hygiene"
+    git diff --check
+
+# Heavy gate: optional deps, Lean build, and (when configured) backend smoke matrix.
+# This is intentionally not run in CI; use it before cloud bursts or releases.
+verify-heavy:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "==> Python unit + integration tests"
+    cd python && python -m pytest -q
+    cd ..
+    echo "==> Rust engine (check/test/clippy)"
+    cargo test --workspace --manifest-path atlas-distill/Cargo.toml
+    cargo clippy --workspace --manifest-path atlas-distill/Cargo.toml -- -D warnings
+    echo "==> Tools smoke tests"
+    python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py -q
+    echo "==> Lean build"
+    cd lean-spec && lake build && cd ..
     echo "==> Diff hygiene"
     git diff --check
 

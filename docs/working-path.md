@@ -68,8 +68,9 @@ just engine-test
 just live-build
 ```
 
-Use `just verify` only when the broader spine is needed. If a broad target is
-noisy, bucket failures by file and cause.
+Use `just verify-light` for quick pre-commit checks, `just verify` for routine
+pre-merge validation, and `just verify-heavy` before releases or cloud bursts.
+If a broad target is noisy, bucket failures by file and cause.
 
 For Lean work:
 
