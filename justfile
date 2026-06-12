@@ -194,11 +194,16 @@ verify-heavy:
     echo "==> Python unit + integration tests"
     cd python && python -m pytest -q
     cd ..
+    echo "==> Neural-symbolic tests"
+    cd python && python -m pytest tests/neural_symbolic -q
+    cd ..
     echo "==> Rust engine (check/test/clippy)"
     cargo test --workspace --manifest-path atlas-distill/Cargo.toml
     cargo clippy --workspace --manifest-path atlas-distill/Cargo.toml -- -D warnings
     echo "==> Tools smoke tests"
-    python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py -q
+    python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py gcp/mlip-cell-runner/test_openinference_patcher.py gcp/mlip-cell-runner/test_runner_observability.py -q
+    echo "==> glim-think tests"
+    npm --prefix glim-think test
     echo "==> Lean build"
     cd lean-spec && lake build && cd ..
     echo "==> Diff hygiene"

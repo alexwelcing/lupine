@@ -29,28 +29,17 @@ import requests
 from lupine_distill.fixture_contract import run_row, validate_manifest
 
 try:
+    from lupine_distill_runtime import DistillSession, LeakageGuard
+except Exception:  # pragma: no cover - optional for baseline-only images
+    DistillSession = None  # type: ignore[assignment]
+    LeakageGuard = None  # type: ignore[assignment]
+
+try:
     from src.openinference_patcher import MLIPRunPatcher
 
     _TELEMETRY_PATCHER: MLIPRunPatcher | None = MLIPRunPatcher()
 except Exception:  # pragma: no cover - optional if src package not installed
     _TELEMETRY_PATCHER = None
-
-
-def runtime_import_paths() -> list[pathlib.Path]:
-    runner_dir = pathlib.Path(__file__).resolve().parent
-    paths = []
-    if (runner_dir / "lupine_distill_runtime").exists():
-        paths.append(runner_dir)
-    for parent in [runner_dir, *runner_dir.parents]:
-        candidate = parent / "python"
-        if candidate.exists() and (candidate / "lupine_distill_runtime").exists():
-            paths.append(candidate)
-            break
-    return paths
-
-
-for runtime_path in runtime_import_paths():
-    sys.path.insert(0, str(runtime_path))
 
 
 def _float_or_none(value: Any) -> float | None:

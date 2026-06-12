@@ -1,15 +1,5 @@
-"""Pytest bootstrap: make the ``lupine_distill`` package importable.
+"""Pytest bootstrap for the python package test suite.
 
-The package lives at ``python/lupine_distill`` with no installed distribution, so
-we prepend this file's package root (``python/``) to ``sys.path``. This lets
-``python -m pytest`` run from the repo root.
+``lupine_distill`` is installed as a package in CI and in the local dev
+environment, so no ``sys.path`` manipulation is required here.
 """
-
-from __future__ import annotations
-
-import pathlib
-import sys
-
-_PKG_ROOT = pathlib.Path(__file__).resolve().parent.parent  # .../python
-if str(_PKG_ROOT) not in sys.path:
-    sys.path.insert(0, str(_PKG_ROOT))
