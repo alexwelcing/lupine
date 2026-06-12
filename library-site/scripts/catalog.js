@@ -78,6 +78,16 @@ export const CATALOG = {
   ],
 
   entries: [
+    // ── Working Papers ──────────────────────────────────────────────
+    {
+      id: 'working-papers',
+      source: 'docs/papers-working.md',
+      title: 'Working Papers: The Projection Law & The Causal Geometry of Prediction Errors',
+      subtitle: 'Both manuscripts as working-paper PDFs, with the public replication kit, pinned datasets, and pre-registrations.',
+      category: 'changelog',
+      tags: ['papers', 'projection-law', 'replication', 'featured'],
+      featured: true,
+    },
     // ── Changelog & Progress ────────────────────────────────────────
     {
       id: 'changelog',
