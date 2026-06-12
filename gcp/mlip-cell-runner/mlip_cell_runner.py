@@ -587,11 +587,13 @@ def load_calculator(mlip_id: str):
         try:
             from matgl.ext.ase import M3GNetCalculator
 
-            return M3GNetCalculator(potential)
+            calc = M3GNetCalculator(potential)
         except ImportError:
             from matgl.ext.ase import PESCalculator
 
-            return PESCalculator(potential)
+            calc = PESCalculator(potential)
+        setattr(calc, "_glim_stress_unit", "GPa")
+        return calc
     if mlip_id == "orb-v3":
         import torch._dynamo
         from orb_models.forcefield import pretrained

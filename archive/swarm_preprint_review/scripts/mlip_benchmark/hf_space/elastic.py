@@ -65,6 +65,13 @@ def _require_ase() -> None:
         )
 
 
+def _stress_to_gpa_factor(calculator) -> float:
+    unit = str(getattr(calculator, "_glim_stress_unit", "eV/A^3")).strip().lower()
+    if unit in {"gpa", "gigapascal", "gigapascals"}:
+        return 1.0
+    return EV_PER_A3_TO_GPA
+
+
 def relax(atoms, calculator, fmax: float = 0.005) -> float:
     """Relax cell + positions; return the new lattice parameter (Å)."""
     from ase.optimize import BFGS
@@ -123,6 +130,7 @@ def elastic_constants(element: str, calculator,
     atoms = bulk(element, struct, a=a_guess, cubic=True)
     a0 = relax(atoms, calculator)
     e0_per_atom = float(atoms.get_potential_energy() / len(atoms))
+    stress_to_gpa = _stress_to_gpa_factor(calculator)
 
     # Uniaxial ±eps along x
     s_plus = stress_for_strain(atoms, calculator, 0, +eps)
@@ -140,8 +148,8 @@ def elastic_constants(element: str, calculator,
         element=element,
         structure=struct,
         a0=a0,
-        c11=float(c11_eVA3 * EV_PER_A3_TO_GPA),
-        c12=float(c12_eVA3 * EV_PER_A3_TO_GPA),
-        c44=float(math.copysign(abs(c44_eVA3) * EV_PER_A3_TO_GPA, c44_eVA3)),
+        c11=float(c11_eVA3 * stress_to_gpa),
+        c12=float(c12_eVA3 * stress_to_gpa),
+        c44=float(math.copysign(abs(c44_eVA3) * stress_to_gpa, c44_eVA3)),
         energy_per_atom=e0_per_atom,
     )

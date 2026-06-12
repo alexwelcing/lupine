@@ -64,7 +64,9 @@ def _m3gnet_factory():
     from matgl.ext.ase import PESCalculator  # type: ignore
     model_name = os.environ.get("M3GNET_MODEL_NAME", DEFAULT_M3GNET_MODEL)
     pot = matgl.load_model(model_name)
-    return PESCalculator(pot)
+    calc = PESCalculator(pot)
+    setattr(calc, "_glim_stress_unit", "GPa")
+    return calc
 
 
 def _emt_factory():

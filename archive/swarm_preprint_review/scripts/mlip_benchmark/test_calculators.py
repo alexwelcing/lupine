@@ -66,6 +66,7 @@ def test_m3gnet_factory_uses_env_model_override(monkeypatch: pytest.MonkeyPatch,
     assert installs == [("matgl==4.0.2", "matgl")]
     assert loaded_models == [override_model]
     assert calc.potential == {"model": override_model}
+    assert calc._glim_stress_unit == "GPa"
 
 
 @pytest.mark.parametrize("module", [calculators, _load_hf_space_calculators()])
