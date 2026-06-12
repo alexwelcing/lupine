@@ -13,7 +13,7 @@ for Node 2 (the relay) to consume.
 
 Run (GPU venv):
     C:/Users/alexw/mlip-gpu/Scripts/python.exe \
-      lupine-distill/runtime/python/scripts/neural_symbolic/node1_curvature.py
+      python/scripts/neural_symbolic/node1_curvature.py
 """
 
 from __future__ import annotations
@@ -54,7 +54,7 @@ REF_C44_GPA = 124.7  # literature/NIST Ni shear constant
 REJECT_THRESHOLD_PCT = 10.0  # secant C44 may drift this far from the elastic value
 ELASTIC_REJECT_PCT = 25.0  # |elastic C44 - ref| beyond this -> model rejected for this observable
 SHEAR_SWEEP = (0.0050, 0.0100, 0.0200, 0.0350, 0.0500, 0.0700, 0.1000, 0.1300)
-OUT_DIR = _HERE.parents[5] / "tmp" / "neural_symbolic"  # parents[5] == repo root
+OUT_DIR = _HERE.parents[3] / "tmp" / "neural_symbolic"  # repo root (python/scripts/neural_symbolic/)
 
 
 def _ni_cell() -> Atoms:

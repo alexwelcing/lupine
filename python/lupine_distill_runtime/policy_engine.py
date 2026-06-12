@@ -15,7 +15,7 @@ from .policy import RuntimePolicy
 
 
 def _repo_root() -> pathlib.Path:
-    return pathlib.Path(__file__).resolve().parents[4]
+    return pathlib.Path(__file__).resolve().parents[2]
 
 
 def _default_atlas_distill_bin() -> pathlib.Path:

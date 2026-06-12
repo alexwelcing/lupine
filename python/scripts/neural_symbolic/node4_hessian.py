@@ -14,7 +14,7 @@ not the torch_sim wrapper.
 
 Run (GPU venv):
     C:/Users/alexw/mlip-gpu/Scripts/python.exe \
-      lupine-distill/runtime/python/scripts/neural_symbolic/node4_hessian.py
+      python/scripts/neural_symbolic/node4_hessian.py
 """
 
 from __future__ import annotations
@@ -50,7 +50,7 @@ THZ_PER_SQRT_EV_AMU_A2 = 15.633
 NI_A0 = 3.524
 NI_MASS = 58.6934
 REF_C44_GPA = 124.7
-OUT_DIR = _HERE.parents[5] / "tmp" / "neural_symbolic"
+OUT_DIR = _HERE.parents[3] / "tmp" / "neural_symbolic"  # repo root (python/scripts/neural_symbolic/)
 
 
 def _calc():

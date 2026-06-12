@@ -16,7 +16,7 @@ Reference = ASE EMT (a real classical potential, offline, supports the FCC metal
 Predictions = MACE-MP-0 via the filled TorchSim backend on the GPU.
 
 Run (Python 3.12 GPU venv):
-    C:/Users/alexw/mlip-gpu/Scripts/python.exe lupine-distill/runtime/python/scripts/run_cross_material_transfer.py
+    C:/Users/alexw/mlip-gpu/Scripts/python.exe python/scripts/run_cross_material_transfer.py
 """
 
 from __future__ import annotations
@@ -41,14 +41,14 @@ from ase.build import bulk
 from ase.calculators.emt import EMT
 
 _HERE = Path(__file__).resolve()
-for _p in (str(_HERE.parents[1]), str(_HERE.parents[4])):
+for _p in (str(_HERE.parents[1]), str(_HERE.parents[2])):  # python/ ; repo root
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
 from lupine_distill.backends.torchsim import TorchSimBenchmarkBackend  # noqa: E402
 from lupine_distill.schemas import BenchmarkMetrics, BenchmarkResult  # noqa: E402
 from lupine_distill.uplift import distill_v_uplift  # noqa: E402
-from distiller.odf.promotion_gate import evaluate_promotion  # noqa: E402
+from lupine_distill.odf.promotion_gate import evaluate_promotion  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(message)s", stream=sys.stdout)
 log = logging.getLogger("xmat")
@@ -177,7 +177,7 @@ def main() -> int:
     log.info("  correction must not transfer, and holds the un-proven (positive) cases for review.")
     log.info("=" * 78)
 
-    out_dir = _HERE.parents[4] / "tmp" / "mlip-gpu-ni"
+    out_dir = _HERE.parents[2] / "tmp" / "mlip-gpu-ni"
     out_dir.mkdir(parents=True, exist_ok=True)
     import json
 

@@ -17,7 +17,7 @@ the relay degrades to a durable, replayable local artifact under
 ``tmp/neural_symbolic/relay_out/`` so no signal is lost offline.
 
 Run:
-    python lupine-distill/runtime/python/scripts/neural_symbolic/node2_relay.py
+    python python/scripts/neural_symbolic/node2_relay.py
 """
 
 from __future__ import annotations
@@ -35,7 +35,7 @@ from neural_symbolic.payload import CurvatureBoundaryPayload  # noqa: E402
 logging.basicConfig(level=logging.INFO, format="%(message)s", stream=sys.stdout)
 log = logging.getLogger("node2")
 
-_REPO = _HERE.parents[5]  # repo root (this file is in scripts/neural_symbolic/)
+_REPO = _HERE.parents[3]  # repo root (python/scripts/neural_symbolic/)
 PAYLOAD_DIR = _REPO / "tmp" / "neural_symbolic"
 RELAY_OUT = PAYLOAD_DIR / "relay_out"
 PROJECT = "mlip-neural-symbolic"

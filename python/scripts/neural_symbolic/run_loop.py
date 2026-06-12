@@ -18,7 +18,7 @@ Run with the GPU venv interpreter (it has torch/mace/chgnet/pydantic; `lean` mus
 be on PATH for Node 3 verification):
 
     C:/Users/alexw/mlip-gpu/Scripts/python.exe \
-      lupine-distill/runtime/python/scripts/neural_symbolic/run_loop.py
+      python/scripts/neural_symbolic/run_loop.py
 """
 
 from __future__ import annotations

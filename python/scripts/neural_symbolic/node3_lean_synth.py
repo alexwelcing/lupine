@@ -13,7 +13,7 @@ project's Lean toolchain. The verified theorem names + revisions are emitted as
 ``atlas_theorems`` seed rows (status ``verified``) for glim-think to ingest.
 
 Run (any python; needs the lean toolchain on PATH for verification):
-    python lupine-distill/runtime/python/scripts/neural_symbolic/node3_lean_synth.py
+    python python/scripts/neural_symbolic/node3_lean_synth.py
 """
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ from neural_symbolic.payload import CurvatureBoundaryPayload  # noqa: E402
 logging.basicConfig(level=logging.INFO, format="%(message)s", stream=sys.stdout)
 log = logging.getLogger("node3")
 
-_REPO = _HERE.parents[5]  # repo root (this file is in scripts/neural_symbolic/)
+_REPO = _HERE.parents[3]  # repo root (python/scripts/neural_symbolic/)
 PAYLOAD_DIR = _REPO / "tmp" / "neural_symbolic"
 LEAN_OUT_DIR = _REPO / "lean-spec" / "OpenDistillationFactory" / "Materials" / "NeuralSymbolic"
 LEAN_SPEC_DIR = _REPO / "lean-spec"

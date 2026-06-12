@@ -9,7 +9,7 @@ grounded in the proved negative-transfer theorem
 (``ContextSpecificProof.context_correction_does_not_transfer``).
 
 Run (Python 3.12 GPU venv):
-    C:/Users/alexw/mlip-gpu/Scripts/python.exe lupine-distill/runtime/python/scripts/run_ni_gpu_loop.py
+    C:/Users/alexw/mlip-gpu/Scripts/python.exe python/scripts/run_ni_gpu_loop.py
 """
 
 from __future__ import annotations
@@ -41,19 +41,19 @@ from torch_sim.io import atoms_to_state
 from torch_sim.models.mace import MaceModel
 
 _HERE = Path(__file__).resolve()
-for _p in (str(_HERE.parents[1]), str(_HERE.parents[4])):  # runtime/python ; repo root
+for _p in (str(_HERE.parents[1]), str(_HERE.parents[2])):  # python/ ; repo root
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
 from lupine_distill.schemas import BenchmarkMetrics, BenchmarkResult  # noqa: E402
 from lupine_distill.uplift import distill_v_uplift  # noqa: E402
-from distiller.odf.promotion_gate import evaluate_promotion  # noqa: E402
+from lupine_distill.odf.promotion_gate import evaluate_promotion  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(message)s", stream=sys.stdout)
 log = logging.getLogger("ni_gpu_loop")
 
 EV_PER_A3_TO_GPA = 160.21766208
-_REPO = _HERE.parents[4]
+_REPO = _HERE.parents[2]
 EVAL_FIXTURE = _REPO / "data/mlip_benchmarks/fixtures/ni_fcc_eam_home_turf_v1.json"
 SUPPORT_FIXTURE = _REPO / "gcp/mlip-cell-runner/fixtures/ni_fcc_eam_distill_support_v1.json"
 REF_CIJ = {"C11": 246.5, "C12": 147.3, "C44": 124.7}
