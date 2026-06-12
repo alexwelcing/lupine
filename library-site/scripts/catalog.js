@@ -83,7 +83,7 @@ export const CATALOG = {
       id: 'working-papers',
       source: 'docs/papers-working.md',
       title: 'Working Papers: The Projection Law & The Causal Geometry of Prediction Errors',
-      subtitle: 'Both manuscripts as working-paper PDFs, with the public replication kit, pinned datasets, and pre-registrations.',
+      subtitle: 'Web + print editions: abstracts, figures, key results, typeset PDFs, and the public replication kit.',
       category: 'changelog',
       tags: ['papers', 'projection-law', 'replication', 'featured'],
       featured: true,
@@ -160,7 +160,7 @@ export const CATALOG = {
       category: 'conjectures',
       tags: ['hyper-ribbon', 'mlip', 'de-myopization'],
       group: 'hypotheses',
-      status: 'supported',
+      status: 'open',
     },
     {
       id: 'hyp-cross-mlip-orthogonal-errors',
