@@ -1,0 +1,250 @@
+# Deep-Valued Handoff Guide: IMMI Paper Submission
+## Mission: Submit "The Causal Geometry of Prediction Errors in Interatomic Potentials" to IMMI Today
+
+**Author:** Alex Welcing (solo)  
+**Target Journal:** Integrating Materials and Manufacturing Innovation (IMMI)  
+**Article Type:** Technical Article  
+**Portal:** [editorialmanager.com/immj](https://www.editorialmanager.com/immj)  
+**Status:** First submission (library typo "in press" must be corrected)  
+**Codebase:** [github.com/alexwelcing/lupine](https://github.com/alexwelcing/lupine)  
+**Data:** Google Cloud + Cloudflare R2  
+**Strategy:** Extract only final approved experiments from massive repo. Do NOT publish the entire corpus.
+
+---
+
+## 1. Swarm Organization & Roles
+
+Assign these roles explicitly. One agent can hold multiple roles, but every role must have an owner.
+
+| Role | Owner | Responsibility |
+|------|-------|---------------|
+| **Mission Commander** | — | Owns the submit button. Makes final call on scope, author list, and what ships. |
+| **Manuscript Curator** | — | Owns the `.tex`/`.md` source. Controls what text lives in the paper vs. supplementary. |
+| **Data Archaeologist** | — | Extracts the final approved experiment dataset from the massive repo. Freezes it. |
+| **Figure Marshal** | — | Exports all figures as separate high-res files. Checks captions, accessibility, colorblind-friendliness. |
+| **Reference Auditor** | — | Verifies every citation resolves. Checks DOIs. Ensures no ghost references. |
+| **Portal Operator** | — | Registers at Editorial Manager, uploads files, tracks submission confirmation. |
+| **Library Fixer** | — | Corrects the "in press" typo on library.lupine.science. Handles public-facing consistency. |
+
+**Communication Protocol:** All decisions get logged in `CHANGELOG.md` or a running `SUBMISSION_LOG.md` in the repo. No decisions in DMs or ephemeral chat.
+
+---
+
+## 2. The Extraction Boundary (What Ships vs. What Stays)
+
+### GOES IN THE PAPER (Manuscript + Supplementary)
+
+| Component | Inclusion Criteria | Where It Lives |
+|-----------|-------------------|----------------|
+| **Core Thesis** | Hyper-ribbon manifold exists across classical potentials and foundation MLIPs for a specific, matched-n element set | Manuscript Abstract + Introduction |
+| **Final Element Set** | The exact subset validated. Name them. Count them. | Methods + Results |
+| **Benchmark Data** | The distilled CSV/JSON that produced the figures | Zenodo release (get DOI), cited in Data Availability Statement |
+| **Figures** | 4–6 main figures, 2–3 supplementary | Separate high-res files + embedded in manuscript |
+| **Methods** | Hyper-ribbon construction, distance metric, dimensionality reduction, statistical controls (matched-n, bootstrap) | Methods section; point to repo for full code |
+| **Compute Summary** | Table of experiments run, not raw logs | Methods or Supplementary |
+| **Data Availability Statement** | Zenodo DOI + GitHub repo URL + Google Cloud/Cloudflare access notes | End of manuscript |
+| **Cover Letter** | 1 page. Novelty claim, no simultaneous submission, no preprint, suggested reviewers | Upload separately in Editorial Manager |
+
+### STAYS IN THE REPO (Cited but Not Published)
+
+| Component | Why It Stays Out | How to Reference It |
+|-----------|-----------------|-------------------|
+| Full 559-potential corpus | Too large, too raw | "Full potential corpus available at [repo]" |
+| Phoenix observability wiring | Infrastructure, not science | Mention in Acknowledgments if helpful |
+| LUPI viewer code (`atlas/`) | Software artifact | Cite `lupi.live` as inspection tool, or write separate software paper |
+| Agentic loop (`glim-think/`) | Methodology infrastructure | Not cited unless the paper itself is about agentic research |
+| Sloppy-models deep-dive (`docs/sloppy_models_report.md`) | Background reading | Cite as related work; move to supplementary only if essential to the argument |
+| Conjecture ledger / changelog | Living document | Freeze a snapshot tag if needed for transparency |
+| Lean proof attempts (`lean-spec/`) | Formalization work in progress | Cite as ongoing work; do not block submission on completion |
+| All intermediate/failed experiments | Clutter, scope creep | Delete or archive in a `scratch/` or `archive/` branch |
+
+**Golden Rule:** The paper tells ONE story. The repo tells the whole research program. Do not confuse the two.
+
+---
+
+## 3. Critical Decisions Requiring Commander Sign-Off
+
+These are blockers. Do not proceed past any of these without explicit approval from the Mission Commander.
+
+### Decision 1: The Final Element Set
+- **Question:** Which elements are in the validated subset?
+- **Why It Matters:** This determines the scope claim. "We tested 12 elements" is different from "we tested 47." The abstract and methods must agree.
+- **Action:** Data Archaeologist extracts the exact list from the approved experiment series. Manuscript Curator locks it in.
+
+### Decision 2: Figure Roster
+- **Question:** Which 4–6 figures tell the story? What is the narrative order?
+- **Suggested Roster:**
+  1. **The Hyper-Ribbon Itself** — 3D or 2D projection of the error manifold
+  2. **Cross-Potential Comparison** — Classical vs. MLIP error geometry overlay
+  3. **Validation Against Ground Truth** — DFT or experimental comparison showing the geometry predicts real error
+  4. **Statistical Robustness** — Bootstrap or matched-n control showing the structure isn't a sampling artifact
+  5. **Element-wise Error Map** — Heatmap or scatter showing which elements drive the geometry
+  6. **Stiff/Sloppy Spectrum** — Eigenvalue or singular value plot showing the dimensionality
+- **Action:** Figure Marshal presents draft roster. Commander approves. No figure gets cut after approval without replacing it.
+
+### Decision 3: The "In Press" Typo Fix
+- **Question:** What does the library site say instead?
+- **Correct Language:** "Submitted to Integrating Materials and Manufacturing Innovation (IMMI)" or simply remove the line until acceptance.
+- **Action:** Library Fixer commits and pushes. Do not submit to IMMI while the public site claims the paper is already accepted.
+
+### Decision 4: Zenodo Release Scope
+- **Question:** What exactly goes into the Zenodo release?
+- **Rule:** Only the data that produced the figures in the paper. Not the full 559-potential dump. Not the raw trajectories. The distilled, analysis-ready dataset.
+- **Action:** Data Archaeologist packages it. Portal Operator gets the DOI.
+
+### Decision 5: Word Count & Supplementary Split
+- **Question:** Is the manuscript >8,000 words? If so, what moves to supplementary?
+- **Heuristic:** Methods deeper than 2,000 words → supplementary. Extended error tables → supplementary. Mathematical proofs → supplementary (unless they are the paper's core contribution).
+- **Action:** Manuscript Curator measures and proposes cuts. Commander approves.
+
+---
+
+## 4. Step-by-Step Submission Workflow
+
+### Phase A: Extraction & Freeze (Hours 0–2)
+
+| Step | Owner | Deliverable | Gate |
+|------|-------|-------------|------|
+| A.1 | Library Fixer | Git commit fixing "in press" typo on library.lupine.science | Site renders correctly |
+| A.2 | Data Archaeologist | Extract final approved experiment dataset from repo | File list matches Decision 1 element set |
+| A.3 | Data Archaeologist | Create Zenodo release with final dataset | DOI acquired. Citation text drafted. |
+| A.4 | Manuscript Curator | Lock manuscript source file. No more text edits without Commander approval. | Frozen version tagged `immi-submission-v1` |
+| A.5 | Figure Marshal | Export all figures as separate files per IMMI spec | All files pass resolution check |
+
+### Phase B: Manuscript Polish (Hours 2–4)
+
+| Step | Owner | Deliverable | Gate |
+|------|-------|-------------|------|
+| B.1 | Manuscript Curator | Finalize abstract (150–250 words, no citations, no undefined acronyms) | Word count verified. Read aloud. |
+| B.2 | Manuscript Curator | Finalize title page (author, affiliation, corresponding email) | No typos. Email is monitored. |
+| B.3 | Reference Auditor | Verify all citations resolve. Check DOIs. | Zero broken links. Zero ghost refs. |
+| B.4 | Manuscript Curator | Insert Data Availability Statement with Zenodo DOI | Statement matches IMMI template. |
+| B.5 | Manuscript Curator | Compile supplementary material PDF | Labeled correctly. Paginated. |
+| B.6 | Manuscript Curator | Draft cover letter (1 page, novelty, no simultaneous submission, suggested reviewers) | Commander reviews and approves. |
+
+### Phase C: Quality Gates (Hours 4–5)
+
+| Step | Owner | Deliverable | Gate |
+|------|-------|-------------|------|
+| C.1 | Manuscript Curator | Read manuscript aloud once. Fix awkward phrasing. | Audio check passes. |
+| C.2 | Figure Marshal | Colorblind check: patterns/labels readable in grayscale. | Figures pass accessibility test. |
+| C.3 | Reference Auditor | Cross-check in-text citations against reference list. | 100% match. |
+| C.4 | Portal Operator | Register account at editorialmanager.com/immj | Login confirmed. |
+| C.5 | Mission Commander | Final scope review. Approve submit. | Green light logged. |
+
+### Phase D: Upload & Submit (Hours 5–6)
+
+| Step | Owner | Deliverable | Gate |
+|------|-------|-------------|------|
+| D.1 | Portal Operator | Upload manuscript PDF | File accepted by system. |
+| D.2 | Portal Operator | Upload figure ZIP (separate high-res files) | All files listed in upload summary. |
+| D.3 | Portal Operator | Upload supplementary material PDF | File accepted. |
+| D.4 | Portal Operator | Upload cover letter | File accepted. |
+| D.5 | Portal Operator | Enter metadata: title, abstract, keywords, author info | Matches manuscript exactly. |
+| D.6 | Portal Operator | Suggest reviewers (optional but recommended) | 3 names with emails and affiliations. |
+| D.7 | Mission Commander | Click submit. | Confirmation email received. Screenshot saved. |
+
+---
+
+## 5. IMMI Technical Requirements Checklist
+
+**Abstract**
+- [ ] 150–250 words
+- [ ] No undefined abbreviations
+- [ ] No citations
+- [ ] Stands alone
+
+**Manuscript**
+- [ ] American English
+- [ ] Title page with author name, affiliation, corresponding email
+- [ ] Figures embedded in manuscript AND uploaded separately
+- [ ] Line art: ≥600 dpi
+- [ ] Photos: ≥300 dpi
+- [ ] Halftone + line art: ≥600 dpi
+- [ ] Figure width: 39–174 mm (column to full page)
+- [ ] Data Availability Statement included
+
+**Cover Letter**
+- [ ] 1 page
+- [ ] States novelty
+- [ ] Confirms no simultaneous submission
+- [ ] Discloses preprint status (none, in this case)
+- [ ] Suggests 3 reviewers (optional but recommended)
+
+**Supplementary Material**
+- [ ] Compiled into single PDF
+- [ ] Labeled: "Supplementary Material for: [Title]"
+- [ ] Includes extra figures, tables, extended methods
+
+**Data**
+- [ ] Deposited in Zenodo with persistent DOI
+- [ ] Cited in Data Availability Statement
+- [ ] GitHub repo referenced for code
+
+---
+
+## 6. Risk Register & Mitigations
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|-----------|--------|------------|
+| Repo is too messy to extract clean dataset in time | Medium | High | Pre-identify the exact file paths now. Do not browse. Know the filenames. |
+| Figures are not export-ready (low-res, wrong format) | Medium | High | Figure Marshal starts exporting immediately. Do not wait for final text. |
+| Abstract is too long or has citations | Low | Medium | Manuscript Curator checks this first. Cut aggressively. |
+| Reference list has broken DOIs or ghost citations | Medium | Medium | Reference Auditor runs automated link checker. |
+| Editorial Manager portal has technical issues | Low | High | Portal Operator registers early. Do not wait until Hour 6. |
+| Commander changes scope mid-process | Medium | High | Lock decisions in Phase A. Any change requires formal override with new tag. |
+| "In press" typo is seen by IMMI editor | Low | Critical | Library Fixer fixes this in Hour 0. Top priority. |
+
+---
+
+## 7. Communication Log Template
+
+Every swarm member logs decisions in this format:
+
+```markdown
+## [Timestamp] — [Role] — [Decision/Action]
+- **What:** [Description]
+- **Why:** [Rationale]
+- **Blockers:** [None / X needs Y]
+- **Next:** [Who does what next]
+- **Tag:** [immi-submission-v1, etc.]
+```
+
+**Example:**
+```markdown
+## 2026-06-04 12:00 — Data Archaeologist — Element Set Frozen
+- **What:** Final element set = [Al, Cu, Fe, Ni, Si, Ti, W, Au, Pt, Pd, Ag, Cr]
+- **Why:** These 12 have complete DFT ground truth and passed matched-n bootstrap.
+- **Blockers:** None
+- **Next:** Package into Zenodo release
+- **Tag:** immi-submission-v1
+```
+
+---
+
+## 8. Post-Submission Actions (Do Not Forget)
+
+| Action | Owner | Timeline |
+|--------|-------|----------|
+| Tag repo with `immi-submitted-2026-06-04` | Manuscript Curator | Immediate |
+| Archive submission files (PDF, figures, cover letter) in `paper/submission/` | Manuscript Curator | Immediate |
+| Update library.lupine.science to "Submitted to IMMI" | Library Fixer | Immediate |
+| Set calendar reminder for 30 days to check Editorial Manager status | Portal Operator | Today |
+| Prepare response-to-reviewers template (anticipate common objections) | Manuscript Curator | Within 48 hours |
+| Notify collaborators/mentors of submission | Mission Commander | Today |
+
+---
+
+## 9. Final Directives
+
+1. **Speed beats perfection.** A good paper submitted today is better than a perfect paper submitted next week.
+2. **The paper is not the repo.** Extract ruthlessly. The repo's value is in the research program; the paper's value is in the single claim.
+3. **No new experiments.** Do not run new code today. Only publish what is already validated.
+4. **No new formal proofs.** The Lean spec is ongoing work. Mention it in the paper as future direction if needed, but do not block submission on proof completion.
+5. **The submit button is sacred.** Only the Mission Commander clicks it. Everyone else prepares the runway.
+
+---
+
+*Handoff Guide compiled: 2026-06-04*  
+*For: Lupine Research Swarm*  
+*Mission: IMMI First Submission — "The Causal Geometry of Prediction Errors in Interatomic Potentials"*

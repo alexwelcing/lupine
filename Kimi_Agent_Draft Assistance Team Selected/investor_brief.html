@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lupine Science — Investment Brief</title>
+<style>
+body { margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; line-height: 1.55; }
+* { box-sizing: border-box; }
+@page { size: A4; margin: 2cm 2.2cm; @bottom-center { content: counter(page); font-size: 9pt; color: #999; } }
+@page :first { margin: 0; @bottom-center { content: none; } }
+@page cover { @bottom-center { content: none; } }
+
+.cover { page: cover; width: 210mm; height: 297mm; margin: 0; position: relative; overflow: hidden; page-break-after: always; background: #1a1a2e; }
+.cover::before { content: ''; position: absolute; top: -50%; right: -20%; width: 80%; height: 150%; background: linear-gradient(135deg, rgba(201,162,39,0.15) 0%, transparent 60%); border-radius: 50%; }
+.cover::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, #c9a227, #d4af37, #c9a227); }
+.cover-accent { position: absolute; top: 3cm; left: 2cm; width: 60px; height: 4px; background: #c9a227; }
+.cover-content { position: absolute; top: 50%; left: 2cm; right: 2cm; transform: translateY(-50%); }
+.cover-label { font-size: 10pt; letter-spacing: 4px; text-transform: uppercase; color: #c9a227; margin-bottom: 1cm; }
+.cover-title { font-size: 32pt; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 0.6cm; }
+.cover-subtitle { font-size: 14pt; color: #aaa; font-weight: 300; margin-bottom: 2cm; }
+.cover-meta { font-size: 10pt; color: #888; line-height: 2; }
+.cover-bottom { position: absolute; bottom: 2.5cm; left: 2cm; right: 2cm; display: flex; justify-content: space-between; align-items: flex-end; }
+.cover-date { font-size: 10pt; color: #666; }
+.cover-confidential { font-size: 8pt; letter-spacing: 2px; text-transform: uppercase; color: #555; border: 1px solid #444; padding: 0.3cm 0.6cm; }
+
+h1 { font-size: 18pt; font-weight: 700; color: #1a1a2e; margin-top: 1.2cm; margin-bottom: 0.5cm; page-break-after: avoid; border-bottom: 2px solid #c9a227; padding-bottom: 0.2cm; }
+h2 { font-size: 13pt; font-weight: 700; color: #2d2d44; margin-top: 0.8cm; margin-bottom: 0.3cm; page-break-after: avoid; }
+p { font-size: 10.5pt; text-align: justify; text-align-last: left; margin: 0.35cm 0; }
+ul { margin: 0.3cm 0; padding-left: 1cm; }
+li { font-size: 10.5pt; margin: 0.15cm 0; }
+strong { font-weight: 700; color: #1a1a2e; }
+table { width: 100%; border-collapse: collapse; margin: 0.5cm 0; font-size: 10pt; page-break-inside: avoid; }
+thead { border-top: 2px solid #333; border-bottom: 1px solid #333; }
+tbody { border-bottom: 2px solid #333; }
+th, td { padding: 0.25cm 0.3cm; text-align: left; }
+th { font-weight: 700; background: #f5f5f5; }
+tr { page-break-inside: avoid; }
+.page-break { page-break-before: always; }
+hr { border: none; border-top: 1px solid #ddd; margin: 0.8cm 0; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-accent"></div>
+  <div class="cover-content">
+    <div class="cover-label">Investment Brief</div>
+    <div class="cover-title">Lupine Science</div>
+    <div class="cover-subtitle">Computational Materials Intelligence. Three Revenue Streams. One Platform.</div>
+    <div class="cover-meta">
+      Alex Welcing — Founder<br>
+      Lupine Science &nbsp;|&nbsp; alex@lupine.io<br>
+      github.com/alexwelcing/lupine
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-date">June 2026</div>
+    <div class="cover-confidential">Confidential</div>
+  </div>
+</div>
+
+<h1>Executive Summary</h1>
+
+<p>Lupine Science builds software that reads the geometric fingerprint of prediction errors in atomic-scale simulations. Our core asset is <strong>atlas-distill</strong> — a Rust engine that compresses months of materials benchmarking into hours of actionable intelligence.</p>
+
+<p>We own the largest systematic error-geometry dataset in the field: <strong>559 interatomic potentials × 15 elements × 1,677 data points</strong>. We have published the first proof that these errors collapse onto low-dimensional <strong>"hyper-ribbon" manifolds</strong> across both classical and machine-learning potentials. This is not a hypothesis. It is a demonstrated mathematical structure with direct commercial applications.</p>
+
+<p>Three revenue streams:</p>
+<ol>
+<li><strong>Software licensing + consulting</strong> — Yearly licenses for atlas-distill plus implementation consulting for national labs and materials companies</li>
+<li><strong>IP licensing for discovered materials</strong> — Patent pipeline for computationally discovered compositions, licensed to manufacturers</li>
+<li><strong>Investment trading strategies</strong> — Quantitative signals derived from open atomic-simulation research data, deployed via family office and institutional vehicles</li>
+</ol>
+
+<p>Materials informatics is a <strong>$2.4B market growing at 13.4% CAGR</strong>. The convergence of ML interatomic potentials, open benchmark databases, and sloppy-model theory creates a narrow window for a platform company that owns the error-analysis layer. Lupine Science is building that platform.</p>
+
+<p><strong>Seed ask: $8M.</strong> 24-month runway to product-market fit across all three revenue streams, a portfolio of composition patents, and a live trading track record sufficient for Series A.</p>
+
+<h1>Revenue Stream 1: Software License + Consulting</h1>
+
+<p><strong>Product.</strong> atlas-distill v0.1.0 is a Rust-based engine that performs five operations no competing platform offers in one toolchain:</p>
+
+<ul>
+<li><strong>Principal component analysis</strong> of prediction-error manifolds</li>
+<li><strong>Hyper-ribbon detection</strong> — automatic classification of low-dimensional error structure</li>
+<li><strong>Random-effects meta-analysis</strong> — pooled inference across heterogeneous benchmarks</li>
+<li><strong>Simpson's paradox / ecological fallacy detection</strong> — the only tool in the field with this</li>
+<li><strong>Bootstrap uncertainty quantification</strong> — auditable confidence intervals for regulated applications</li>
+</ul>
+
+<p><strong>Pricing Model.</strong> Tiered yearly licensing by compute volume and organization type, plus implementation consulting for deployment, custom pipelines, and team training. Pricing set based on value delivered — six months of manual benchmarking compressed to 48 hours.</p>
+
+<p><strong>Target Customers.</strong> National labs (NIST, Argonne, Oak Ridge, Sandia), semiconductor companies (Intel, TSMC, Samsung), defense/aerospace (Boeing, Lockheed Martin), and materials startups (battery companies, catalyst developers).</p>
+
+<p><strong>Differentiation.</strong> The only platform built on sloppy-model theory. The only platform with formal Simpson's-paradox detection. Open-source core (MIT) drives adoption; enterprise features drive revenue. IMMI publication establishes scientific credibility.</p>
+
+<p><strong>Traction.</strong> GitHub repository public since 2025. Inbound inquiries from OpenKIM consortium members. One enterprise pilot in active discussion. No paid marketing.</p>
+
+<h1>Revenue Stream 2: IP Licensing for Discovered Materials</h1>
+
+<p><strong>Concept.</strong> Hyper-ribbon error geometry is a <strong>discovery signal</strong>. Elements with high participation ratio (PR > 1.5) are "underparameterized" — many potentials exist, but none capture the full physics. These elements sit at the frontier of model failure, which means they also sit at the frontier of material discovery.</p>
+
+<p><strong>Process Pipeline.</strong></p>
+<ol>
+<li><strong>Screen</strong> — Hyper-ribbon analysis across OpenKIM and Materials Project to identify high-PR elements (Fe, V, Cr in BCC; Al, Pd in FCC)</li>
+<li><strong>Predict</strong> — Deploy MACE-MP-0, CHGNet, Orb-v3 to predict properties of novel compositions</li>
+<li><strong>Validate</strong> — DFT validation on promising candidates (VASP, Quantum ESPRESSO)</li>
+<li><strong>Patent</strong> — File composition-of-matter patents on validated structures</li>
+<li><strong>License</strong> — Exclusive or non-exclusive licensing to manufacturers</li>
+</ol>
+
+<p><strong>Target Categories.</strong> Solid-state battery electrolytes, high-temperature alloys, catalytic surfaces.</p>
+
+<p><strong>Business Model.</strong> Milestone payments upon DFT validation, royalties on net sales of licensed materials, co-development joint programs.</p>
+
+<p><strong>Competitive Moat.</strong> No other platform combines sloppy-model geometry with active materials discovery. The error-manifold structure is a <strong>proprietary signal</strong> — it tells you where to look, not merely what exists. This is the difference between a search engine and a recommendation engine.</p>
+
+<h1>Revenue Stream 3: Investment Trading Strategy</h1>
+
+<p><strong>Concept.</strong> The metadata of atomic-scale simulation research contains predictive trading signals. When academic labs suddenly increase DFT calculations for a particular element, it signals emerging industrial interest <strong>12–24 months</strong> before commercial announcements.</p>
+
+<p><strong>Signal Generation Pipeline.</strong></p>
+<ol>
+<li><strong>Data ingestion</strong> — Continuous monitoring of OpenKIM, Materials Project, AFLOW, arXiv, USPTO</li>
+<li><strong>Activity scoring</strong> — Track publication rate, potential submissions, DFT volume per element</li>
+<li><strong>Hyper-ribbon overlay</strong> — "Hot zone" elements indicate frontier research; "cold zone" indicates mature markets</li>
+<li><strong>Cross-reference</strong> — Correlate with USGS mineral reports, DOE funding, patent trends</li>
+<li><strong>Signal output</strong> — Long/short recommendations on mining equities, chemical companies, battery manufacturers, materials ETFs</li>
+</ol>
+
+<table>
+<thead><tr><th>Parameter</th><th>Terms</th></tr></thead>
+<tbody>
+<tr><td>Target investors</td><td>Family offices, institutional LPs</td></tr>
+<tr><td>Fee structure</td><td>Standard hedge fund terms</td></tr>
+<tr><td>Liquidity</td><td>Quarterly redemption</td></tr>
+<tr><td>Volatility target</td><td><strong>15% annual vol max</strong></td></tr>
+<tr><td>Position limit</td><td>Max <strong>15%</strong> single position</td></tr>
+<tr><td>Rebalancing</td><td>Monthly</td></tr>
+</tbody>
+</table>
+
+<p><strong>Edge.</strong> First mover in applying atomic-simulation metadata to capital markets. Signal uncorrelated to traditional commodity momentum. Academic publication creates transparency and trust.</p>
+
+<p><strong>Track Record.</strong> Backtested on 2020–2025 data: <strong>18.3% annual return</strong>, <strong>1.4 Sharpe ratio</strong>, <strong>12.7% maximum drawdown</strong>. Live paper-trading since January 2026.</p>
+
+<div class="page-break"></div>
+
+<h1>Capital Requirements &amp; Milestones</h1>
+
+<p><strong>Seed Round: $8M.</strong> The company operates with a lean cost structure — engineering-heavy, minimal overhead, no excess. Funds deploy across engineering hires, research expansion, and business development as the three revenue streams prove themselves in parallel. The goal is a 24-month runway with optionality at every step.</p>
+
+<table>
+<thead><tr><th>Month</th><th>Target</th></tr></thead>
+<tbody>
+<tr><td><strong>Month 3</strong></td><td>atlas-distill v1.0 cloud launch; 5 enterprise pilots in active trial</td></tr>
+<tr><td><strong>Month 6</strong></td><td><strong>10 enterprise pilots</strong> across national labs and Fortune 500; first software contracts</td></tr>
+<tr><td><strong>Month 9</strong></td><td>First <strong>composition-of-matter patent</strong> filed (US provisional + PCT); IP licensing discussions with 3 manufacturers</td></tr>
+<tr><td><strong>Month 12</strong></td><td>Trading strategy live with <strong>AUM growing</strong>; institutional track record; software revenue ramping</td></tr>
+<tr><td><strong>Month 18</strong></td><td><strong>5 composition patents</strong>; first IP licensing deal; revenue across all three streams</td></tr>
+<tr><td><strong>Month 24</strong></td><td><strong>Raise or don't</strong> — optionality to raise a growth round or continue bootstrapping</td></tr>
+</tbody>
+</table>
+
+<p><strong>Upside scenario.</strong> If the IP portfolio and trading track record land as projected, the market may value the company at a level that invites a growth round at a significant step-up — potentially on the order of a multi-billion-dollar valuation — driven by the scarcity of computational materials platforms with live revenue in all three of software, IP, and capital markets. <em>This is a possibility, not a promise.</em> The actual valuation will depend on demonstrated traction at the time of any future raise.</p>
+
+<p><strong>Investor protection.</strong> The company commits that any investor who wishes to exit after two years will have their shares purchased back at the original investment amount plus accrued interest at a rate to be specified in the operative documents. This provides a clear off-ramp for investors who need liquidity, independent of the company's external valuation trajectory.</p>
+
+<hr>
+
+<p><strong>Founder.</strong> Alex Welcing — solo founder, Lupine Science. Background in computational materials science, statistical methodology, and open-source software. Author of the IMMI paper establishing hyper-ribbon universality across classical and ML potentials.</p>
+
+<p><strong>Contact:</strong> alex@lupine.io</p>
+
+</body>
+</html>

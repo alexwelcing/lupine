@@ -199,8 +199,14 @@ hyper-ribbons of single models \citealp{transtrum2011,kurniawan2022};
 \S\ref{sec:classical} details the distinction.)
 \end{theorem}
 
-All four theorems (with supporting lemmas, 27 machine-checked theorems in
-total) are verified in Lean~4 against a pinned Mathlib, with zero \texttt{sorry}
+All four theorems are verified in Lean~4 against a pinned Mathlib as part of
+the program's larger formal corpus --- 180 theorems and lemmas across 35
+source files in the current build, including a conditional hyper-ribbon bound
+(spectral-decay hypotheses $\Rightarrow \mathrm{PR}<2$), a context-correction
+theorem bundle whose ``correction closes the residual'' statement is the formal
+counterpart of the out-of-sample calibration result below, and a formal audit
+module that previously caught an overstatement in the program's own empirical
+work --- with zero \texttt{sorry}
 and zero new axioms; the artifact and the theorem-to-statistic contract ship
 with the replication kit (\S\ref{sec:repro}). Figure~\ref{fig:gauge}
 visualizes the gauge with its classical inversion and the decoupling of the
@@ -580,9 +586,10 @@ NumPy/SciPy in seconds (classical-layer and robustness statistics are
 reproduced by accompanying scripts in the same kit), and Tier~2 re-derives
 the raw elastic constants from public checkpoints through a frozen harness
 (deterministic within 1~GPa; the Gate-0 harness regression is bit-exact).
-The complete kit, pinned datasets, and pre-registrations are publicly served at \url{https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html}. The Lean~4 artifact (four theory files, 27 machine-checked theorems,
-zero \texttt{sorry}, zero new axioms, pinned Mathlib) and the
-theorem-to-statistic contract accompany the kit. The harness was validated by
+The complete kit, pinned datasets, and pre-registrations are publicly served at \url{https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html}. The Lean~4 artifact (180 theorems and lemmas across 35 files at the current
+build, including the four theorems of this paper; zero \texttt{sorry}, zero
+new axioms, pinned Mathlib) and the theorem-to-statistic contract accompany
+the kit. The harness was validated by
 independent energy- vs.\ stress-method agreement ($\le 2.4\%$), bit-exact
 regression, and strain-window stability. ACWF data are from the public
 archive of \citet{bosoni2024}; MatPES checkpoints from \citet{kaplan2025}.

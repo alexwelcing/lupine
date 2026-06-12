@@ -27,7 +27,7 @@
 % Page style
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small The Causal Geometry of Prediction Errors in Interatomic Potentials}
+\fancyhead[L]{\small Forty Years of Interatomic Potentials, One Error Geometry}
 \fancyhead[R]{\small \thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 
@@ -41,7 +41,7 @@
 \begin{document}
 
 % Title and Authors
-\title{\bfseries The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Ecological Fallacy Detection}
+\title{\bfseries Forty Years of Interatomic Potentials, One Error Geometry: Hyper-Ribbon Universality and Why Pooled Benchmarks Mislead}
 \author{Alex Welcing\\
 \small Lupine Science\\
 \small \texttt{alex@lupine.io}}
@@ -50,9 +50,9 @@
 % Abstract
 \begin{abstract}
 \noindent\textbf{Purpose:} Classical force fields for metals exhibit structured, low-dimensional prediction errors that can be understood through the convergence of sloppy model theory, causal inference, and meta-analytic methodology.
-\textbf{Methods:} We analyzed elastic constant prediction errors ($C_{11}$, $C_{12}$, $C_{44}$) for 15 benchmark metals (8 FCC, 7 BCC) across 559 interatomic potentials spanning 13 pair\_style families, using principal component analysis, bootstrap uncertainty quantification, random-effects meta-analysis, and ecological fallacy detection. All predictions were obtained from the OpenKIM repository and cross-referenced against the NIST Interatomic Potentials Repository.
+\textbf{Methods:} We analyzed elastic constant prediction errors ($C_{11}$, $C_{12}$, $C_{44}$) for 15 benchmark metals (8 FCC, 7 BCC) across 559 interatomic potentials spanning 13 pair\_style families, using principal component analysis, bootstrap uncertainty quantification, random-effects meta-analysis, and aggregation-bias detection. All predictions were obtained from the OpenKIM repository and cross-referenced against the NIST Interatomic Potentials Repository.
 \textbf{Results:} Prediction errors universally occupy hyper-ribbon manifolds with effective dimensionality $1.0$--$2.3$ out of 3 (median $1.09$), consistent with the sloppy model universality class. An empirical extension to three foundation machine-learning interatomic potentials (MACE-MP-0, CHGNet, Orb-v3) shows that foundation-model errors are likewise directionally structured: distinct architectures commit strongly aligned errors for several elements (pairwise cosine similarity $\geq 0.95$ for Au, Pt, Ta, Ag), while 7 of 45 element--model elastic tensors fail Born stability screening and the classical cross-style alignment pattern does not transfer across paradigms (Spearman $\rho = 0.26$, $p = 0.34$). A striking crystal-structure dichotomy emerges: all 7 BCC metals show reference--prediction correlations $r>0.70$ (mean $r=0.89$), while 7 of 8 FCC metals show $r<0.40$ (mean $r=0.16$). Meta-analysis across 15 elements ($N=1{,}677$) reveals extreme heterogeneity ($I^2=98.6\%$, $\tau=0.80$), with a 95\% prediction interval spanning $[-0.64, +0.99]$. A direct test of cross-style PC1 alignment finds that the apparent per-element dichotomy is more consistent with a sample-size confounder (Spearman $\rho(n_{\text{pairs}}, \overline{\cos}) = -0.50$, $p = 0.060$) than with $d$-band fullness, with a suggestive residual d-band signal emerging only in exploratory analysis that controls for fitting depth ($\rho = +0.52$, $p = 0.087$, $n=12$); this classical-family-specific dichotomy does not transfer across modeling paradigms.
-\textbf{Conclusions:} Prediction errors are not unstructured noise but occupy strictly bounded, low-dimensional manifolds whose geometry is element- and crystal-structure-dependent. Standard cross-element benchmarking suffers from ecological fallacy; correct analysis requires stratified evaluation and random-effects meta-analysis. All methods are implemented in the open-source \texttt{atlas-distill} engine.
+\textbf{Conclusions:} Prediction errors are not unstructured noise but occupy strictly bounded, low-dimensional manifolds whose geometry is element- and crystal-structure-dependent. Pooled cross-element benchmarking misstates model accuracy --- the aggregation bias known in statistics as the ecological fallacy; correct analysis requires stratified, family-resolved evaluation and random-effects meta-analysis. All methods are implemented in the open-source \texttt{atlas-distill} engine.
 \end{abstract}
 
 \maketitle
@@ -69,7 +69,7 @@ The accelerated discovery of advanced materials depends critically on the predic
 
 Three intellectual traditions converge on this problem. First, \textit{sloppy model theory} establishes that multiparameter models generically have parameter sensitivities spanning many orders of magnitude, with only a few ``stiff'' combinations controlling predictions and many ``sloppy'' directions allowing free variation\cite{brown2003,waterfall2006,gutenkunst2007}. The model manifold---the set of all possible predictions as parameters vary---forms a ``hyper-ribbon'' in data space with a geometric hierarchy of widths\cite{transtrum2010,transtrum2011,machta2013}. Subsequent work formalized model reduction via the Manifold Boundary Approximation Method\cite{transtrum2014} and connected sloppiness to emergent theories across physics and biology\cite{transtrum2015}. Quinn et al.\ provided rigorous mathematical foundations through Chebyshev approximation theory\cite{quinn2019} and a comprehensive review of information geometry for multiparameter models\cite{quinn2023}.
 
-Second, \textit{ecological fallacy} and related aggregation biases warn that correlations computed across heterogeneous groups can invert when confounders are ignored\cite{simpson1951,blyth1972,pearl2014}. The classic demonstration by Bickel et al.\cite{bickel1975} showed how aggregate admissions data could reverse at the department level---a structure directly analogous to pooling elastic constant errors across elements. Robinson\cite{robinson1950} established the closely related ecological fallacy. In materials benchmarking, element identity acts as precisely such a confounder: atomic radius, electron configuration, and bonding character influence both the target elastic constants and the potential's prediction errors\cite{pearl2009}.
+Second, \textit{aggregation bias} warns that correlations computed across heterogeneous groups can invert or mislead when confounders are ignored\cite{simpson1951,blyth1972,pearl2014}. The classic demonstration by Bickel et al.\cite{bickel1975} showed how aggregate admissions data could reverse at the department level---a structure directly analogous to pooling elastic constant errors across elements. Robinson\cite{robinson1950} named the statistical core of this failure the \textit{ecological fallacy}; we use the domain-transparent term aggregation bias throughout. In materials benchmarking, element identity acts as precisely such a confounder: atomic radius, electron configuration, and bonding character influence both the target elastic constants and the potential's prediction errors\cite{pearl2009}.
 
 Third, \textit{meta-analysis} provides rigorous methods for combining correlations across heterogeneous groups, including Fisher z-transformation, DerSimonian-Laird random-effects estimation, and heterogeneity statistics ($Q$, $I^2$, $\tau^2$)\cite{hedges1985,borenstein2009,borenstein2010,dersimonian1986,higgins2003}.
 
@@ -95,7 +95,7 @@ which is the signature of Vandermonde matrix ensembles\cite{waterfall2006}. This
 
 The \textit{hyper-ribbon} classification requires three criteria: (1) strong monotonic decay of eigenvalues (Mann-Kendall $\tau < -0.8$); (2) high log-linearity ($R^2 > 0.8$); and (3) fractional dimensionality $\text{PR}/d < 0.9$.
 
-\subsection{Ecological fallacy and cross-group aggregation bias}
+\subsection{Aggregation bias: when pooled benchmarks mislead}
 
 For grouped bivariate data $\{(x_j, y_j, g_j)\}$, we compute:
 \begin{itemize}
@@ -104,7 +104,7 @@ For grouped bivariate data $\{(x_j, y_j, g_j)\}$, we compute:
 \item \textit{Pooled within-group correlation} $\bar{r}_\text{within} = \frac{\sum_g n_g r_g}{\sum_g n_g}$
 \end{itemize}
 
-Strict sign reversal (the classical Simpson's paradox criterion) is defined when $r_\text{pool}$ and $\bar{r}_\text{within}$ have opposite signs and the reversal magnitude $|r_\text{pool} - \bar{r}_\text{within}| > 0.3$, following the detection framework of Kievit et al.\cite{kievit2013}. The ecological fallacy risk is elevated when between-group variance in both $x$ and $y$ is substantial, even without strict sign reversal. Furthermore, because physical constraints among elastic constants create inherent baseline correlations, the standard null hypothesis $\rho = 0$ is inappropriate\cite{jackson1991,archie1981}; permutation testing is required to establish proper non-zero baselines.
+Strict sign reversal (the classical Simpson's paradox criterion) is defined when $r_\text{pool}$ and $\bar{r}_\text{within}$ have opposite signs and the reversal magnitude $|r_\text{pool} - \bar{r}_\text{within}| > 0.3$, following the detection framework of Kievit et al.\cite{kievit2013}. The aggregation-bias risk is elevated when between-group variance in both $x$ and $y$ is substantial, even without strict sign reversal. Furthermore, because physical constraints among elastic constants create inherent baseline correlations, the standard null hypothesis $\rho = 0$ is inappropriate\cite{jackson1991,archie1981}; permutation testing is required to establish proper non-zero baselines.
 
 \subsection{Random-effects meta-analysis}
 
@@ -137,7 +137,7 @@ All analyses were performed using \texttt{atlas-distill} v0.1.0, a Rust engine b
 \item \texttt{stats.rs} --- PCA/SVD, covariance, Fisher z-transform, bootstrap CI, Mann-Kendall trend test
 \item \texttt{manifold.rs} --- Error vector construction, eigenvalue analysis, hyper-ribbon detection
 \item \texttt{meta\_analysis.rs} --- Fixed/random-effects meta-analysis with DerSimonian-Laird $\tau^2$
-\item \texttt{causal.rs} --- Ecological fallacy detection with reversal magnitude and cross-group aggregation markers
+\item \texttt{causal.rs} --- Aggregation-bias detection with reversal magnitude and cross-group aggregation markers
 \item \texttt{validation.rs} --- Multi-potential benchmark harness with per-material and per-property metrics
 \end{itemize}
 
@@ -235,17 +235,17 @@ The forest plot (Fig.~\ref{fig:forest}) illustrates how individual metal correla
 \label{fig:forest}
 \end{figure}
 
-\subsection{Pair-style stratification and ecological fallacy}
+\subsection{Pair-style stratification: pooled scores understate family accuracy}
 \label{sec:pairstyle}
 
-When benchmark results are stratified by pair\_style family rather than element ($N = 633$ NIST-matched entries with pair\_style provenance), all groups show positive correlations, but the pooled correlation ($r = 0.82$) substantially understates the within-group accuracy (mean $r = 0.95$). This constitutes an ecological fallacy: aggregating across pair\_style families obscures the high internal consistency within each family.
+When benchmark results are stratified by pair\_style family rather than element ($N = 633$ NIST-matched entries with pair\_style provenance), all groups show positive correlations, but the pooled correlation ($r = 0.82$) substantially understates the within-group accuracy (mean $r = 0.95$). This is aggregation bias in its textbook form: pooling across pair\_style families obscures the high internal consistency within each family.
 
 Notably, MEAM potentials show $r = 0.986$ ($n = 270$), EAM/fs shows $r = 0.995$ ($n = 90$), and EAM/alloy shows $r = 0.898$ ($n = 204$). The outlier is BOP ($r = 0.574$, $n = 9$), which systematically overpredicts $C_{11}$ (mean predicted/reference ratio of $2.75$).
 
 \begin{figure*}[htbp]
 \centering
 \includegraphics[width=\textwidth]{paper/figures/fig5_pairstyle.png}
-\caption{Pair\_style stratification reveals ecological fallacy. \textbf{Left:} Reference vs.\ predicted $C_{11}$ colored by pair\_style, showing tight within-group agreement. \textbf{Right:} Per-pair\_style correlations; pooled $r = 0.82$ understates within-group mean $r = 0.95$.}
+\caption{Pair\_style stratification reveals the aggregation bias of pooled benchmarking. \textbf{Left:} Reference vs.\ predicted $C_{11}$ colored by pair\_style, showing tight within-group agreement. \textbf{Right:} Per-pair\_style correlations; pooled $r = 0.82$ understates within-group mean $r = 0.95$.}
 \label{fig:pairstyle}
 \end{figure*}
 
@@ -337,7 +337,7 @@ The natural mechanistic extension of this finding---that closed-shell d-band ful
 
 \textbf{Third, meta-analysis must use random-effects models.} The $I^2 = 98.6\%$ indicates that virtually all variance is between-element rather than within-element. The 95\% prediction interval from the random-effects model spans $[-0.64, +0.99]$, meaning that a new element could show \textit{any} correlation behavior. Fixed-effects models, which assume a single true effect, produce misleadingly narrow intervals ($[0.57, 0.63]$ vs.\ $[0.41, 0.85]$).
 
-\textbf{Fourth, pair-style families show high internal consistency.} When stratified by potential family, within-group correlations average $r = 0.95$ versus a pooled $r = 0.82$---an ecological fallacy where aggregation obscures accuracy. This has practical implications: benchmarking a MEAM potential against EAM results is statistically inappropriate.
+\textbf{Fourth, pair-style families show high internal consistency.} When stratified by potential family, within-group correlations average $r = 0.95$ versus a pooled $r = 0.82$---aggregation bias that obscures real family-level accuracy. This has practical implications: benchmarking a MEAM potential against EAM results is statistically inappropriate.
 
 \textbf{Limitations.} While our dataset of 559 classical potentials is large, the element coverage is restricted to monatomic cubic metals. Extension to alloys, non-cubic structures, and properties beyond elastic constants (phonon spectra, surface energies, defect formation energies) would test the generality of the hyper-ribbon hypothesis. The foundation MLIP extension is based on three pre-trained models (MACE-MP-0, CHGNet, Orb-v3) evaluated without element-specific fine-tuning, and 7 of the 45 element--model elastic tensors failed Born stability screening, so cross-MLIP alignment for the affected elements rests on a single surviving model pair. Reference values for the MLIP comparison mix experimental (Simmons \& Wang) and Materials Project-derived data for BCC metals, whereas the classical analysis uses experimental references throughout. With only three models per element, a participation-ratio test of hyper-ribbon confinement is not meaningful in the MLIP set; the quantitative cross-paradigm test is deferred to a larger ensemble with pre-registered thresholds\cite{welcing2026universality}. The per-element correlations in the meta-analysis also pool three elastic constants per potential, which are not strictly independent observations; the reported standard errors are therefore mildly anti-conservative. Additionally, recent neural network potentials (NNIPs) may exhibit different manifold structure, though Mao et al.\cite{mao2024,mao2026} have reported similar low-dimensional error compression for deep networks.
 
