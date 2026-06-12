@@ -54,11 +54,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the dependency manifest first so the heavy pip layer caches independently
-# of source edits.
-COPY gcp/mlip-cell-runner/pyproject.toml gcp/mlip-cell-runner/README.md ./
-# Minimal modules referenced by setuptools' py-modules must exist for the
-# editable/metadata install to resolve; the real source is copied just below.
+# Copy the dependency manifest and the Python packages first so the heavy pip
+# layer caches independently of source edits.
+COPY python/pyproject.toml python/README.md ./
+COPY python/lupine_distill ./lupine_distill
+COPY python/lupine_distill_runtime ./lupine_distill_runtime
+# The runner entrypoint and telemetry/loop seam modules live in the GCP subtree;
+# copy them so the image can run mlip_cell_runner.py directly.
 COPY gcp/mlip-cell-runner/fixture_contract.py gcp/mlip-cell-runner/mlip_cell_runner.py ./
 COPY gcp/mlip-cell-runner/src ./src
 
@@ -72,7 +74,7 @@ RUN python3 -m pip install --no-cache-dir --upgrade pip \
        fi
 
 # Application source + runtime + the compiled policy engine.
-COPY lupine-distill/runtime/python/lupine_distill_runtime ./lupine_distill_runtime
+COPY python/lupine_distill_runtime ./lupine_distill_runtime
 COPY --from=atlas_distill_builder /build/atlas-distill/target/release/atlas-distill /usr/local/bin/atlas-distill
 
 # Fail closed at build time: the policy engine and runner must both answer

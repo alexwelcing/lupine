@@ -1,7 +1,7 @@
 # Kimi MLIP Evidence Import, 2026-06-07
 
 This directory contains the curated evidence imported from
-`kimi-workspace-export/`. It is intentionally smaller than the export dump:
+`archive/kimi-workspace-export/`. It is intentionally smaller than the export dump:
 cache files, bytecode, nested git metadata, business/relocation notes, and
 immature standalone packages were left in quarantine.
 

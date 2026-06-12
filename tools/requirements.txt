@@ -1,3 +1,5 @@
+# Core tool dependencies + editable install of the python packages.
+-e ./python
 click>=8.1
 httpx>=0.27
 pytest>=7.4

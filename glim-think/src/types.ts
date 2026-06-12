@@ -57,8 +57,8 @@ export interface Critique {
 
 /**
  * Row in the `claims` D1 table — adjudicated discovery claims produced by
- * lupine-distill (Rust) and ingested via POST /claims/ingest. Schema mirrors
- * lupine-distill/src/db/schema.rs so rows round-trip without transform.
+ * the archived lupine-distill Rust crate and ingested via POST /claims/ingest. Schema mirrors
+ * archive/lupine-distill-rust/src/db/schema.rs so rows round-trip without transform.
  * See migrations/0004_claims.sql AND docs/contracts/lupine_distill_to_vectorize.md
  * (the contract doc is the canonical source; this interface and the matching
  * Rust `WorkerSyncClaim` are asserted against it).

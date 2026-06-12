@@ -41,7 +41,7 @@ export const openApiSpec = {
     { name: "hypotheses", description: "Persisted hypothesis tracker (D1)" },
     { name: "critiques", description: "Peer-review critique queue with R2-backed responses" },
     { name: "research-questions", description: "Lab-notebook Q/A queue (D1)" },
-    { name: "claims", description: "Discovery-claim ingestion bridge for lupine-distill verdicts" },
+    { name: "claims", description: "Discovery-claim ingestion bridge for Distill verdicts" },
   ],
   paths: {
     "/health": {
@@ -331,9 +331,9 @@ export const openApiSpec = {
     "/claims/ingest": {
       post: {
         tags: ["claims"],
-        summary: "Bulk-ingest discovery claims from lupine-distill",
+        summary: "Bulk-ingest discovery claims from Distill",
         description:
-          "Mirrors lupine-distill's local `claims` table. Each claim row carries a typed payload (CrossStyleAlignment, DimensionalityRanking, ManifoldEvolution, HyperRibbonConfirmed, ...) and is keyed by claim_id (idempotent on conflict).",
+          "Mirrors the archived lupine-distill Rust crate's local `claims` table. Each claim row carries a typed payload (CrossStyleAlignment, DimensionalityRanking, ManifoldEvolution, HyperRibbonConfirmed, ...) and is keyed by claim_id (idempotent on conflict).",
         requestBody: {
           required: true,
           content: { "application/json": { schema: {

@@ -1,8 +1,10 @@
 # GLIM Project Justfile
 # Accelerating research, benchmarking, and development.
 
-set shell := ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
-set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
+# Use Git Bash on Windows to avoid PowerShell Node/build process-tree hangs.
+# On Unix, fall back to a standard POSIX shell.
+set shell := ["bash", "-c"]
+set windows-shell := ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
 
 default:
     @just --list
@@ -155,6 +157,44 @@ mlip-evidence-campaign-check:
 flywheel-telemetry-check:
     python tools/mlip_phoenix_trace.py --smoke-test --dry-run
     python tools/test_mlip_phoenix_trace.py
+
+# --- LOCAL VERIFICATION & BOOTSTRAP ---
+
+# Run all focused local gates: Python unit tests, Rust check, tools smoke, diff hygiene.
+verify:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "==> Python unit tests"
+    cd python && python -m pytest -m unit -q
+    cd ..
+    echo "==> Rust check"
+    cargo check --manifest-path atlas-distill/Cargo.toml --bin atlas-distill
+    echo "==> Tools smoke tests"
+    PYTHONPATH=python python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py -q
+    echo "==> Diff hygiene"
+    git diff --check
+
+# Bootstrap the dev environment using the platform-appropriate script.
+bootstrap:
+    @if [ "{{ os_family() }}" = "windows" ]; then \
+        powershell.exe -ExecutionPolicy Bypass -File scripts/bootstrap.ps1; \
+    else \
+        bash scripts/bootstrap.sh; \
+    fi
+
+# Bootstrap with heavy MLIP dependencies (torch_sim, MACE, CHGNet).
+bootstrap-heavy:
+    @if [ "{{ os_family() }}" = "windows" ]; then \
+        powershell.exe -ExecutionPolicy Bypass -File scripts/bootstrap.ps1 -InstallHeavyMLIP; \
+    else \
+        bash scripts/bootstrap.sh --heavy-mlip; \
+    fi
+
+# Serve the research library site locally.
+docs-serve:
+    @echo "Installing dependencies if needed, then serving library-site..."
+    npm --prefix library-site install
+    npm --prefix library-site run dev
 
 # --- UTILS ---
 

@@ -13,10 +13,14 @@ moved (the public site and the worker read fixed `docs/` paths).
 - [`docs/resource-fabric.md`](../resource-fabric.md) — the compute/resource fabric.
 
 ## Distill engine + ribbon policies
-- [`atlas-distill/`](../../atlas-distill/) · [`lupine-distill/`](../../lupine-distill/) —
-  the Rust Distill scoring / policy / ribbon engine and its runtime.
+- [`atlas-distill/`](../../atlas-distill/) — the Rust Distill scoring / policy / ribbon engine.
+- [`python/`](../../python/) — the active Python Distill packages (benchmark, uplift, regime gate,
+  instrumented runtime, ODF promotion contracts).
+- [`archive/lupine-distill-rust/`](../../archive/lupine-distill-rust/) — retired Rust crate provenance.
 - [`docs/distill_improvement_atlas.md`](../distill_improvement_atlas.md) ·
-  [`docs/distill_kart_race_live_win.md`](../distill_kart_race_live_win.md) — distill campaigns.
+  [`docs/distill_kart_race_live_win.md`](../distill_kart_race_live_win.md) — **stale**
+  distill campaign snapshots; see the corrected
+  [`docs/glim-m3-upgrade/runs/live-campaign-results.md`](../glim-m3-upgrade/runs/live-campaign-results.md).
 - [`docs/regime_gate_dominance.md`](../regime_gate_dominance.md) ·
   [`docs/regime_gate_clean_rerun.md`](../regime_gate_clean_rerun.md) — the regime gate.
 - [`docs/neural-symbolic-curvature-loop.md`](../neural-symbolic-curvature-loop.md) —
@@ -32,7 +36,7 @@ moved (the public site and the worker read fixed `docs/` paths).
   [`mlip-spectral-v4-foundation.md`](../mlip-spectral-v4-foundation.md).
 - Architecture / plans: [`mlip-distill-gcp-evolution-architecture.md`](../mlip-distill-gcp-evolution-architecture.md),
   [`mlip-distill-real-material-publication-plan.md`](../mlip-distill-real-material-publication-plan.md),
-  [`mlip-distill-local-theory-growth-lane.md`](../mlip-distill-local-theory-growth-lane.md),
+  [`mlip-distill-local-theory-growth-lane.md`](../mlip-distill-local-theory-growth-lane.md) (provisional — replay-only),
   [`mlip-gpu-ni-distill-formal-gate.md`](../mlip-gpu-ni-distill-formal-gate.md),
   [`mlip-flywheel-readiness.md`](../mlip-flywheel-readiness.md),
   [`mlip-long-horizon-demo-workstreams.md`](../mlip-long-horizon-demo-workstreams.md).

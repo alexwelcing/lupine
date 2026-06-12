@@ -19,7 +19,7 @@ The lupine repository contains substantially more research than represented in a
 **What's weak:** Simpson's paradox language is imprecise; needs Lean audit correction.
 
 ### Paper 2: Universality Theorem (STATUS: ~75% complete)
-**Files:** `KIMI_MLIP_UNIVERSAL/manuscript/` (9 sections + appendix, all LaTeX source)
+**Files:** `archive/KIMI_MLIP_UNIVERSAL/manuscript/` (9 sections + appendix, all LaTeX source)
 **What's strong:** 6-clause theorem with formal proof sketches, Cross-Model Vandermonde Lemma, pre-registered predictions with falsification thresholds, escape analysis (3 error classes), CMET framework, falsification report.
 **What's weak:** Central gap — Vandermonde assumption for equivariant networks unproven; voice inconsistent with Paper 1; notation not aligned; proofs deferred to appendix but appendix incomplete.
 
@@ -29,7 +29,7 @@ The lupine repository contains substantially more research than represented in a
 **What's weak:** ALL data is synthetic (NIST scaffold has 9 rows, all predictions missing); no paper has been written around the proofs; the audit caught a Paper 1 overstatement that hasn't been corrected.
 
 ### Paper 4: Acceleration Theorem (STATUS: ~50% complete)
-**Files:** `KIMI_MLIP_UNIVERSAL/acceleration/` (complete theory PDF, 0 empirical validation)
+**Files:** `archive/KIMI_MLIP_UNIVERSAL/acceleration/` (complete theory PDF, 0 empirical validation)
 **What's strong:** Full mathematical structure (Theorem + 2 Lemmas + 2 Corollaries), layerwise early-abortion mechanism, speedup bound formula.
 **What's weak:** No benchmarks, no wall-clock data, no real model deployment, no related work section.
 
@@ -82,8 +82,8 @@ Currently the papers don't explicitly reference each other as a sequence. Each s
 | R1: Expand to 50+ elements | Partial — experiments/ has some data | **In progress** |
 | R2: Formal proof FIM→covariance | `lean-spec/` has T30 + appendix sketch | **Partially done** |
 | R3: Controlled d-band experiment | Not started | Future |
-| R4: Cross-paradigm with 10+ MLIPs | `KIMI_MLIP_UNIVERSAL/manuscript/` has theorem + predictions | **Partially done** |
-| R5: Geometric UQ | `KIMI_MLIP_UNIVERSAL/experiments/` has falsification framework | **Partially done** |
+| R4: Cross-paradigm with 10+ MLIPs | `archive/KIMI_MLIP_UNIVERSAL/manuscript/` has theorem + predictions | **Partially done** |
+| R5: Geometric UQ | `archive/KIMI_MLIP_UNIVERSAL/experiments/` has falsification framework | **Partially done** |
 | R6: Active learning integration | `distiller/` has ODF framework | **Partially done** |
 | R7: Production software | `distiller/` has agents, schemas, tests | **Partially done** |
 | R8: Binary/ternary alloys | Not started | Future |

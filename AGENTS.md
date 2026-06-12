@@ -122,8 +122,11 @@ When writing automation scripts, deployment orchestrators, or `justfile` configu
    ```
    Or in a `justfile`:
    ```justfile
-   set shell := ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
+   set shell := ["bash", "-c"]
+   set windows-shell := ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
    ```
+   The root `justfile` uses `windows-shell` for the explicit Git Bash path and
+   keeps `shell` POSIX for Unix maintainers.
 
 ## Lupi viewer agent surface (MCP + API keys)
 

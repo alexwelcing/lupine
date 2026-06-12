@@ -2,7 +2,7 @@
 
 **Date:** 2025-06-06
 **Analyst:** Research Analyst (HPC / MD Acceleration)
-**Repository:** alexwelcing/lupine / KIMI_MLIP_UNIVERSAL/acceleration/
+**Repository:** alexwelcing/lupine / archive/KIMI_MLIP_UNIVERSAL/acceleration/
 **Files Read:** acceleration_theorem.html (27.7 KB), causal_acceleration_theorem.pdf (839 KB, 8 pages), fig_layerwise.png, fig_speedup_bound.png
 
 ---
@@ -192,7 +192,7 @@ The practical value likely comes from the 2–5× speedups on OOD-heavy workload
 ## Appendix: Repository Structure
 
 ```
-KIMI_MLIP_UNIVERSAL/acceleration/
+archive/KIMI_MLIP_UNIVERSAL/acceleration/
 ├── acceleration_theorem.html       # 27.7 KB — Main HTML document (full theorem, proofs, tables, figs)
 ├── causal_acceleration_theorem.pdf  # 839 KB — PDF rendering of the HTML (8 pages)
 ├── fig_layerwise.png               # 292 KB — Schematic: layerwise distance monotonicity + Pareto frontier

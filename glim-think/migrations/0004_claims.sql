@@ -1,5 +1,5 @@
 -- 0004_claims.sql
--- Bring the existing `claims` table up to parity with lupine-distill's
+-- Bring the existing `claims` table up to parity with the archived lupine-distill Rust crate's
 -- claims schema so the worker can be the canonical home for adjudicated
 -- research verdicts (CrossStyleAlignment, DimensionalityRanking,
 -- ManifoldEvolution, HyperRibbonConfirmed, ...).
@@ -8,7 +8,7 @@
 --   claim_id, agent_id, claim_type, evidence_ids, confidence, status,
 --   timestamp, description
 --
--- lupine-distill writes via columns:
+-- the archived lupine-distill Rust crate wrote via columns:
 --   claim_id, agent_id, claim_type, claim_data, evidence_ids, confidence,
 --   status, description, created_at
 --

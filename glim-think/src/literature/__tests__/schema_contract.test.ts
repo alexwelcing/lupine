@@ -1,11 +1,11 @@
 /**
- * Schema-contract test: lupine-distill claim ingest ↔ glim-think Vectorize metadata.
+ * Schema-contract test: Distill claim ingest ↔ glim-think Vectorize metadata.
  *
  * The canonical contract lives at:
  *   docs/contracts/lupine_distill_to_vectorize.md
  *
  * This file is the TS-side enforcement. The Rust-side counterpart is:
- *   lupine-distill/tests/vectorize_schema.rs
+ *   archive/lupine-distill-rust/tests/vectorize_schema.rs
  *
  * If you add/remove a field in `ClaimRecord` or `VectorizeClaimMetadata`,
  * update the contract doc and the matching constant arrays here. The
@@ -23,7 +23,7 @@ import type {
 
 // ─── Contract enumeration (single source of truth, mirrors the .md table) ─────
 
-/** Required fields on the over-the-wire claim payload from lupine-distill. */
+/** Required fields on the over-the-wire claim payload from Distill. */
 const CONTRACT_CLAIM_FIELDS = [
   "claim_id",
   "agent_id",
@@ -85,7 +85,7 @@ void _subsetAssert;
 
 // ─── Runtime assertions ──────────────────────────────────────────────────────
 
-describe("lupine-distill → Vectorize schema contract", () => {
+describe("archived lupine-distill Rust crate → Vectorize schema contract", () => {
   it("ClaimRecord has the canonical wire fields, no more, no less", () => {
     const sample = sampleClaimRecord();
     const actualKeys = Object.keys(sample).sort();
@@ -132,7 +132,7 @@ describe("lupine-distill → Vectorize schema contract", () => {
     );
   });
 
-  it("ISO-8601 timestamp format matches lupine-distill's worker_sync output", () => {
+  it("ISO-8601 timestamp format matches the archived lupine-distill Rust crate's worker_sync output", () => {
     const claim = sampleClaimRecord();
     expect(claim.created_at).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
   });
@@ -148,7 +148,7 @@ describe("lupine-distill → Vectorize schema contract", () => {
 
 /**
  * Returns a canonical example matching the contract. Kept in sync with the
- * Rust-side canonical example in lupine-distill/tests/vectorize_schema.rs so
+ * Rust-side canonical example in archive/lupine-distill-rust/tests/vectorize_schema.rs so
  * both sides assert against identical bytes.
  */
 function sampleClaimRecord(): ClaimRecord {

@@ -1,5 +1,9 @@
 # Lupine Science
 
+[![Python tests](https://img.shields.io/badge/python%20tests-122%20passed-brightgreen)](#run-or-extend-the-work-locally)
+[![Rust check](https://img.shields.io/badge/rust%20check-passing-brightgreen)](#run-or-extend-the-work-locally)
+[![Lean proofs](https://img.shields.io/badge/lean%20proofs-0%20sorry-brightgreen)](./lean-spec)
+
 **Lupine Science is a public research program for understanding where
 interatomic potentials fail, why those failures have structure, and how that
 structure can guide correction.**
@@ -69,8 +73,12 @@ Useful local entry points:
 
 | Path | Use it for |
 | --- | --- |
-| `docs/navigation.md` | **Start here** — the map: the 60-second path to the real science, the error-geometry objects disambiguated, and honest status of recent additions |
-| `swarm_preprint_review/research/immi_dim01_sloppy_theory.md` | The literature foundation: sloppy models, the hyper-ribbon, primary sources (Transtrum, Waterfall, Frederiksen, Kurniawan) |
+| `docs/ONBOARDING.md` | **Start here if you are new** — research-scientist and software-engineer tracks |
+| `docs/ARCHITECTURE.md` | System map: how the roots connect into a closed scientific loop |
+| `docs/navigation.md` | The 60-second path to the real science, error-geometry objects disambiguated, and honest status of recent additions |
+| `docs/GLOSSARY.md` | Shared vocabulary for the science and the system |
+| `docs/FAQ.md` | Common questions for scientists and engineers |
+| `archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md` | The literature foundation: sloppy models, the hyper-ribbon, primary sources (Transtrum, Waterfall, Frederiksen, Kurniawan) |
 | `lit-review.md` | Assembled review: sloppy theory + Simpson's-paradox/permutation methodology + benchmarking |
 | `CHANGELOG.md` | The fastest way to see what changed, what was learned, and what was corrected |
 | `docs/conjectures/ledger.md` | Current supported, refuted, and open hypotheses |
@@ -155,7 +163,10 @@ decisions, see `ROOTS.md`.
 
 | Path | What it contains |
 | --- | --- |
+| `docs/ONBOARDING.md` | **New contributors start here** — research-scientist and software-engineer tracks |
+| `docs/ARCHITECTURE.md` | System map: control plane, compute plane, evidence plane, and data flow |
 | `docs/working-path.md` | Practical checkout, branch, worktree, and verification path |
+| `archive/` | Retired surfaces and historical exports |
 | `library-site/` | Static-site generator for the Lupine Library |
 | `docs/` | Research corpus, reports, plans, runbooks, templates, and hypotheses |
 | `mlip_immi/` | IMMI analysis code, benchmark data, and cross-MLIP evidence payloads |
@@ -163,11 +174,20 @@ decisions, see `ROOTS.md`.
 | `paper/` | IMMI paper source |
 | `atlas/` | LUPI viewer and atomistic evidence surfaces |
 | `atlas-distill/` | Rust runtime for Distill scoring, policy, and fault-line extraction |
+| `python/` | Active Python Distill packages: benchmarking, uplift, regime gate, instrumented runtime |
 | `glim-think/` | Agentic research control plane, durable agenda, and ledger-backed loop |
 
-The old `lupine-start/` marketing/start site has been retired from the repo.
-Public research should surface through the Library, the LUPI viewer, and the
-`glim-think` feed rather than through a second launch site.
+The old `lupine-start/` marketing/start site, the `distiller/` KB, the
+`lupine-distill/` Rust crate, and the `lupine-dspy/` package have been retired
+and archived under `archive/`. Public research should surface through the
+Library, the LUPI viewer, and the `glim-think` feed rather than through a
+second launch site.
+
+## For Contributors
+
+- [`docs/ONBOARDING.md`](./docs/ONBOARDING.md) — research-scientist and software-engineer tracks
+- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution kinds, workflow, verification commands
+- [`scripts/bootstrap.ps1`](./scripts/bootstrap.ps1) / [`scripts/bootstrap.sh`](./scripts/bootstrap.sh) — install lightweight dev deps and run quick checks
 
 ## For Collaborators And Observers
 

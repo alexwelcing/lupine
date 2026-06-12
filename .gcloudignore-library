@@ -1,6 +1,6 @@
 # Dedicated upload allowlist for the library-site Cloud Build.
 # Passed via `gcloud builds submit --ignore-file=.gcloudignore-library` so it
-# does NOT disturb the shared root .gcloudignore (tailored for lupine-start).
+# does NOT disturb the shared root .gcloudignore.
 #
 # The library build needs exactly two things:
 #   1. library-site/ itself (build scripts, SPA src, Dockerfile, nginx, cloudbuild)
@@ -25,10 +25,8 @@
 !/GLOSSARY.md
 !/lit-review.md
 
-# DESIGN.md lives under lupine-start; pull in that one file, not the whole app.
-!/lupine-start
-/lupine-start/*
-!/lupine-start/DESIGN.md
+# The retired lupine-start app is archived; no upload needed.
+/archive
 
 # Never upload VCS metadata.
 .git/

@@ -17,7 +17,8 @@ serve the shorter crawlable versions at `/llms.txt`, `/llms-full.txt`, and
 
 This repository contains the Lupine Science research corpus, LUPI viewer code,
 Lupine Library static-site generator, glim-think control plane, IMMI paper
-sources, MLIP evidence scripts, and publication/readiness docs.
+sources, active Python Distill packages under `python/`, the `atlas-distill`
+Rust engine, MLIP evidence scripts, and publication/readiness docs.
 
 ## How To Describe The Work
 
@@ -45,13 +46,16 @@ organization, LUPI for the viewer, and https://lupi.live for viewer links.
 
 ## Human Knowledge Route
 
-Start with the Library for durable writing:
+Start with the onboarding and architecture docs, then the Library for durable
+writing:
 
+- [`docs/ONBOARDING.md`](./ONBOARDING.md)
+- [`docs/ARCHITECTURE.md`](./ARCHITECTURE.md)
 - https://library.lupine.science
 - `library-site/`
 - `docs/`
 - `paper/`
-- `swarm_preprint_review/`
+- `archive/swarm_preprint_review/`
 
 ## Science Spine
 

@@ -35,8 +35,8 @@ def runtime_import_paths() -> list[pathlib.Path]:
     if (runner_dir / "lupine_distill_runtime").exists():
         paths.append(runner_dir)
     for parent in [runner_dir, *runner_dir.parents]:
-        candidate = parent / "lupine-distill" / "runtime" / "python"
-        if candidate.exists():
+        candidate = parent / "python"
+        if candidate.exists() and (candidate / "lupine_distill_runtime").exists():
             paths.append(candidate)
             break
     return paths

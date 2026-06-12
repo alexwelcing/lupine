@@ -74,3 +74,20 @@ Simpson's-paradox title is superseded.
 
 }
 ```
+
+## How it connects to the rest of the repo
+
+- Claims and figures are grounded in `lean-spec/` theorems and `mlip_immi/`
+  real-data analyses.
+- `python/lupine_distill/` and `atlas-distill/` supply benchmark metrics and
+  policy decisions cited in the manuscript.
+- The public Library at `library-site/` renders the published version of this
+  work once it leaves working-paper status.
+- The system map is in [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md).
+
+## Related
+
+- [`docs/ONBOARDING.md`](../docs/ONBOARDING.md) — new-contributor tracks
+- [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) — system map
+- [`mlip_immi/README.md`](../mlip_immi/README.md) — local real-data MLIP/IMMI lane
+- [`lean-spec/README.md`](../lean-spec/README.md) — formal proof layer

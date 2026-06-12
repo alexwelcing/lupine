@@ -95,5 +95,5 @@ should later be reconciled to the three-objects vocabulary.
 - `docs/navigation.md` — the map this ADR ratifies.
 - `docs/science/objects.md` — the three-objects canonical.
 - `library-site/scripts/catalog.js` — the coupled public-site interface.
-- `swarm_preprint_review/research/immi_dim01_sloppy_theory.md` — the literature foundation
+- `archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md` — the literature foundation
   that grounds the object definitions.

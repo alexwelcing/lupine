@@ -6,7 +6,7 @@ several in a 2026-06-02 working session). This page is the canonical disambiguat
 everything else should link here rather than re-define the terms.
 
 The literature foundation is
-[`swarm_preprint_review/research/immi_dim01_sloppy_theory.md`](../../swarm_preprint_review/research/immi_dim01_sloppy_theory.md)
+[`archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md`](../../archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md)
 (25+ primary sources). Read it for the full chain; this is the compressed map.
 
 ## At a glance

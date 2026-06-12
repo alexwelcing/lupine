@@ -23,7 +23,7 @@ from dataclasses import asdict, dataclass
 from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-for _p in (ROOT / "lupine-distill" / "runtime" / "python", ROOT / "gcp" / "mlip-cell-runner", ROOT / "tools"):
+for _p in (ROOT / "python", ROOT / "gcp" / "mlip-cell-runner", ROOT / "tools"):
     if str(_p) not in sys.path:
         sys.path.insert(0, str(_p))
 

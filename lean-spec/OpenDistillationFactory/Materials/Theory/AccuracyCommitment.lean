@@ -15,7 +15,7 @@ import Mathlib.Tactic.Ring
     • the RELEVANT / generalizable sector — the universal baseline
       every foundation MLIP in the class reaches. This is the
       subject of the MLIP universality / causal-acceleration theorem
-      (KIMI_MLIP_UNIVERSAL, namespace `MLIP`), the RG statement that
+      (archive/KIMI_MLIP_UNIVERSAL, namespace `MLIP`), the RG statement that
       a whole class flows to the same fixed point. Status:
       conjecture (a separate, mathlib-free Lean project carrying 15
       `sorry` placeholders for measure theory / normed-space lemmas).
@@ -192,7 +192,7 @@ inductive ProofStatus
 structure UniversalityBridge where
   relevantSector : String :=
     "Universal baseline — MLIP universality / causal-acceleration " ++
-    "theorem (KIMI_MLIP_UNIVERSAL, namespace MLIP). RG fixed point " ++
+    "theorem (archive/KIMI_MLIP_UNIVERSAL, namespace MLIP). RG fixed point " ++
     "every foundation MLIP in the class reaches. Status: conjecture " ++
     "(15 sorry; separate mathlib-free project)."
   irrelevantSector : String :=
