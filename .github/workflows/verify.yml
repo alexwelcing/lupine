@@ -111,6 +111,8 @@ jobs:
         run: |
           python -m pytest tools/test_mlip_regime_filter.py -q
           python -m pytest gcp/mlip-cell-runner/test_distill_runtime.py -q
+          python -m pytest gcp/mlip-cell-runner/test_openinference_patcher.py -q
+          python -m pytest gcp/mlip-cell-runner/test_runner_observability.py -q
 
   archive-boundary:
     name: Archive / active root boundary

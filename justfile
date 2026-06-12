@@ -182,7 +182,7 @@ verify:
     echo "==> Rust engine"
     cargo test --workspace --manifest-path atlas-distill/Cargo.toml
     echo "==> Tools smoke tests"
-    python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py -q
+    python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py gcp/mlip-cell-runner/test_openinference_patcher.py gcp/mlip-cell-runner/test_runner_observability.py -q
     echo "==> Diff hygiene"
     git diff --check
 
