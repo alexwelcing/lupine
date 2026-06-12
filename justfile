@@ -41,7 +41,7 @@ bench-tests:
 
 # Build all Rust components
 build-rust:
-    cargo build --workspace
+    cargo build --workspace --manifest-path atlas-distill/Cargo.toml
 
 # --- DEPLOYMENT ---
 
@@ -104,8 +104,8 @@ think-lint-profile:
 
 # Rust engine regression check used by the current atlas-distill path
 engine-test:
-    cargo test --manifest-path atlas-distill/Cargo.toml --bin atlas-distill
-    cargo clippy --manifest-path atlas-distill/Cargo.toml --bin atlas-distill -- -D warnings
+    cargo test --workspace --manifest-path atlas-distill/Cargo.toml
+    cargo clippy --workspace --manifest-path atlas-distill/Cargo.toml -- -D warnings
 
 # Build the local live/worker-facing TypeScript surface without a deploy
 live-build:
@@ -168,7 +168,7 @@ verify:
     cd python && python -m pytest -m unit -q
     cd ..
     echo "==> Rust check"
-    cargo check --manifest-path atlas-distill/Cargo.toml --bin atlas-distill
+    cargo check --workspace --manifest-path atlas-distill/Cargo.toml
     echo "==> Tools smoke tests"
     PYTHONPATH=python python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py -q
     echo "==> Diff hygiene"

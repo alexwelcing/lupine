@@ -64,11 +64,11 @@ jobs:
             atlas-distill/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('atlas-distill/Cargo.lock') }}
 
-      - name: Cargo check
-        run: cargo check --manifest-path atlas-distill/Cargo.toml --bin atlas-distill
+      - name: Cargo check workspace
+        run: cargo check --workspace --manifest-path atlas-distill/Cargo.toml
 
-      - name: Cargo test
-        run: cargo test --manifest-path atlas-distill/Cargo.toml --bin atlas-distill
+      - name: Cargo test workspace
+        run: cargo test --workspace --manifest-path atlas-distill/Cargo.toml
 
   diff-hygiene:
     name: Diff whitespace hygiene

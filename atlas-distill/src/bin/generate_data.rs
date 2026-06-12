@@ -39,7 +39,7 @@ fn gen_arrhenius_diffusion(out: &Path) {
     let temperatures = [300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 900.0, 1000.0];
 
     for &temp in &temperatures {
-        let d = d0 * ((-ea / (kb * temp)) as f64).exp();
+        let d = d0 * f64::exp(-ea / (kb * temp));
         let filename = format!("arrhenius_{}K.log", temp as i32);
         let mut f = fs::File::create(out.join(&filename)).unwrap();
 
@@ -90,7 +90,7 @@ fn gen_arrhenius_diffusion(out: &Path) {
     let mut summary = fs::File::create(out.join("arrhenius_summary.csv")).unwrap();
     writeln!(summary, "# Temperature(K), Diffusion_coefficient").unwrap();
     for &temp in &temperatures {
-        let d = d0 * (-ea / (kb * temp)).exp();
+        let d = d0 * f64::exp(-ea / (kb * temp));
         writeln!(summary, "{}, {:.8e}", temp, d).unwrap();
     }
     eprintln!("  ✦ arrhenius_summary.csv — 8 points for direct fitting");
@@ -187,8 +187,7 @@ fn gen_anomalous_diffusion_trajectory(out: &Path) {
         writeln!(f, "0.0 {}", box_size).unwrap();
         writeln!(f, "ITEM: ATOMS id type xu yu zu").unwrap();
 
-        for i in 0..natoms {
-            let (x0, y0, z0) = positions[i];
+        for (i, &(x0, y0, z0)) in positions.iter().enumerate().take(natoms) {
 
             // Displacement follows MSD ∝ t^β
             // Each atom gets displacement ~ sqrt(2 * D_eff * t^β / 3) per dimension
@@ -200,8 +199,12 @@ fn gen_anomalous_diffusion_trajectory(out: &Path) {
 
             let disp = msd_per_dim.sqrt();
             // Deterministic "random" displacement using seed
-            let phi = (i as f64 * 2.718 + frame as f64 * 1.414) % 6.283;
-            let theta = (i as f64 * 3.14 + frame as f64 * 0.577) % 3.14;
+            let phi = (i as f64 * std::f64::consts::E
+                + frame as f64 * std::f64::consts::SQRT_2)
+                % std::f64::consts::TAU;
+            let theta = (i as f64 * std::f64::consts::PI
+                + frame as f64 * (1.0 / 3.0_f64.sqrt()))
+                % std::f64::consts::PI;
 
             let dx = disp * phi.cos() * theta.sin();
             let dy = disp * phi.sin() * theta.sin();
@@ -389,7 +392,7 @@ fn gen_temperature_sweep_multi(out: &Path) {
     ];
 
     for &temp in &temperatures {
-        let d = d0 * ((-ea / (kb * temp)) as f64).exp();
+        let d = d0 * f64::exp(-ea / (kb * temp));
         let filename = format!("run_{}K.log", temp as i32);
         let mut f = fs::File::create(sweep_dir.join(&filename)).unwrap();
 
