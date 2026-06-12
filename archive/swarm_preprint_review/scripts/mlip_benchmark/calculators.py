@@ -33,10 +33,15 @@ def _patch_torch_load() -> None:
     MACE-MP and other models that load legacy checkpoint pickles.
     We patch it back to False since we only load trusted official weights."""
     import torch
+    if getattr(torch.load, "_glim_weights_only_patch", False):
+        return
     _orig = torch.load
+
     def _load(*args, **kwargs):
         kwargs.setdefault("weights_only", False)
         return _orig(*args, **kwargs)
+
+    _load._glim_weights_only_patch = True
     torch.load = _load
 
 

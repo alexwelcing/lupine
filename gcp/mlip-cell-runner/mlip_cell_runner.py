@@ -541,6 +541,21 @@ def device() -> str:
         return "cpu"
 
 
+def patch_torch_load_for_trusted_checkpoints() -> None:
+    import torch
+
+    if getattr(torch.load, "_glim_weights_only_patch", False):
+        return
+    original_load = torch.load
+
+    def load_trusted_checkpoint(*args, **kwargs):
+        kwargs.setdefault("weights_only", False)
+        return original_load(*args, **kwargs)
+
+    load_trusted_checkpoint._glim_weights_only_patch = True
+    torch.load = load_trusted_checkpoint
+
+
 def load_calculator(mlip_id: str):
     dev = device()
     if mlip_id == "chgnet":
@@ -549,6 +564,7 @@ def load_calculator(mlip_id: str):
 
         return CHGNetCalculator(CHGNet.load(), use_device=dev)
     if mlip_id == "mace-mp-0":
+        patch_torch_load_for_trusted_checkpoints()
         from mace.calculators import mace_mp
 
         return mace_mp(model="medium", device=dev, default_dtype="float32")

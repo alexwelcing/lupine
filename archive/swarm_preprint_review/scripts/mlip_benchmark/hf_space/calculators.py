@@ -34,8 +34,28 @@ def _chgnet_factory():
     return CHGNetCalculator()
 
 
+def _patch_torch_load() -> None:
+    """PyTorch 2.6+ defaults torch.load to weights_only=True.
+
+    MACE-MP currently loads an official legacy checkpoint that needs the older
+    trusted-checkpoint behavior.
+    """
+    import torch
+    if getattr(torch.load, "_glim_weights_only_patch", False):
+        return
+    _orig = torch.load
+
+    def _load(*args, **kwargs):
+        kwargs.setdefault("weights_only", False)
+        return _orig(*args, **kwargs)
+
+    _load._glim_weights_only_patch = True
+    torch.load = _load
+
+
 def _mace_mp0_factory():
     _ensure_installed("mace-torch==0.3.6", "mace")
+    _patch_torch_load()
     from mace.calculators import mace_mp  # type: ignore
     return mace_mp(model="medium", default_dtype="float32")
 

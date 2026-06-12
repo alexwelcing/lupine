@@ -66,3 +66,45 @@ def test_m3gnet_factory_uses_env_model_override(monkeypatch: pytest.MonkeyPatch,
     assert installs == [("matgl==4.0.2", "matgl")]
     assert loaded_models == [override_model]
     assert calc.potential == {"model": override_model}
+
+
+@pytest.mark.parametrize("module", [calculators, _load_hf_space_calculators()])
+def test_mace_factory_uses_trusted_checkpoint_load(monkeypatch: pytest.MonkeyPatch, module: Any) -> None:
+    installs: list[tuple[str, str | None]] = []
+    load_kwargs: list[dict[str, Any]] = []
+
+    monkeypatch.setattr(
+        module,
+        "_ensure_installed",
+        lambda package_spec, import_name=None: installs.append((package_spec, import_name)),
+    )
+
+    fake_torch = types.ModuleType("torch")
+
+    def fake_load(*_args: Any, **kwargs: Any) -> object:
+        load_kwargs.append(dict(kwargs))
+        return object()
+
+    fake_torch.load = fake_load  # type: ignore[attr-defined]
+
+    fake_mace = types.ModuleType("mace")
+    fake_calculators = types.ModuleType("mace.calculators")
+
+    def fake_mace_mp(**kwargs: Any) -> dict[str, Any]:
+        import torch
+
+        torch.load("medium.model")
+        return kwargs
+
+    fake_calculators.mace_mp = fake_mace_mp  # type: ignore[attr-defined]
+    fake_mace.calculators = fake_calculators  # type: ignore[attr-defined]
+    monkeypatch.setitem(sys.modules, "torch", fake_torch)
+    monkeypatch.setitem(sys.modules, "mace", fake_mace)
+    monkeypatch.setitem(sys.modules, "mace.calculators", fake_calculators)
+
+    calc = module._mace_mp0_factory()
+
+    assert installs == [("mace-torch==0.3.6", "mace")]
+    assert load_kwargs == [{"weights_only": False}]
+    assert calc["model"] == "medium"
+    assert calc["default_dtype"] == "float32"
