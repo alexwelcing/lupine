@@ -22,7 +22,7 @@ from typing import Any
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 TOOLS_DIR = ROOT / "tools"
 RUNNER_DIR = ROOT / "gcp" / "mlip-cell-runner"
-RUNTIME_DIR = ROOT / "lupine-distill" / "runtime" / "python"
+RUNTIME_DIR = ROOT / "python"
 for path in [TOOLS_DIR, RUNNER_DIR, RUNTIME_DIR]:
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
