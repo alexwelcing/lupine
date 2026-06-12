@@ -1,2 +1,4 @@
-ase==3.23.0
+ase==3.28.0
 numpy==1.26.4
+huggingface_hub<1.0
+starlette<1.0.0

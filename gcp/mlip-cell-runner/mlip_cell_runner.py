@@ -566,7 +566,7 @@ def load_calculator(mlip_id: str):
             )
         except Exception:
             pass
-        model_name = os.environ.get("M3GNET_MODEL_NAME", "M3GNet-MP-2021.2.8-PES")
+        model_name = os.environ.get("M3GNET_MODEL_NAME", "M3GNet-PES-MatPES-PBE-2025.2")
         potential = matgl.load_model(model_name)
         try:
             from matgl.ext.ase import M3GNetCalculator

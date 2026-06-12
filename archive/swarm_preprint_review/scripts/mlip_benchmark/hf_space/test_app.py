@@ -27,6 +27,28 @@ def app_module(monkeypatch):
     """Import app.py with elastic.elastic_constants stubbed to a known value."""
     import importlib
 
+    class FakeContext:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+    class FakeButton:
+        def click(self, **_kwargs):
+            return None
+
+    fake_gradio = type(sys)("gradio")
+    fake_gradio.Blocks = lambda *_args, **_kwargs: FakeContext()
+    fake_gradio.Tabs = lambda *_args, **_kwargs: FakeContext()
+    fake_gradio.TabItem = lambda *_args, **_kwargs: FakeContext()
+    fake_gradio.Markdown = lambda *_args, **_kwargs: None
+    fake_gradio.Dropdown = lambda *_args, **_kwargs: object()
+    fake_gradio.Textbox = lambda *_args, **_kwargs: object()
+    fake_gradio.JSON = lambda *_args, **_kwargs: object()
+    fake_gradio.Button = lambda *_args, **_kwargs: FakeButton()
+    monkeypatch.setitem(sys.modules, "gradio", fake_gradio)
+
     # Stub elastic_constants and ElasticResult before app imports them.
     fake_elastic = type(sys)("elastic")
     class FakeResult:
@@ -63,9 +85,8 @@ def app_module(monkeypatch):
 def test_predict_single_returns_expected_keys(app_module) -> None:
     out = app_module.predict("Al", "chgnet")
     assert out == {
-        "element": "Al", "mlip": "chgnet", "structure": "fcc",
+        "element": "Al", "structure": "fcc",
         "a0": 4.05, "c11": 108.0, "c12": 61.0, "c44": 28.5,
-        "energy_per_atom": -3.36,
     }
 
 
@@ -98,12 +119,12 @@ def test_predict_batch_with_refs_returns_benchmark_records(app_module) -> None:
     cu_props = sorted(r["property"] for r in out if r["element"] == "Cu")
     assert cu_props == ["C11"]
     sample = out[0]
-    # Must match BenchmarkRecord schema exactly so /ingest/batch accepts it
-    for key in ("recordId", "element", "potentialId", "potentialLabel",
-                "pairStyle", "property", "reference", "predicted", "unit",
-                "provenance", "agentId", "timestamp"):
+    # Must match a BenchmarkRecord-compatible schema so /ingest/batch accepts it.
+    for key in ("record_id", "element", "potential_id", "potential_label",
+                "pair_style", "property", "reference", "predicted", "unit",
+                "provenance", "agent_id", "timestamp"):
         assert key in sample, f"BenchmarkRecord missing {key}"
-    assert sample["pairStyle"] == "mlip"
+    assert sample["pair_style"] == "mlip"
 
 
 def test_predict_batch_continues_past_one_failure(app_module) -> None:

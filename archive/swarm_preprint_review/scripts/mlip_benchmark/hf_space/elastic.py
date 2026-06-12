@@ -24,7 +24,10 @@ try:
     from ase import Atoms  # noqa: F401
     from ase.build import bulk  # noqa: F401
     from ase.optimize import BFGS  # noqa: F401
-    from ase.constraints import UnitCellFilter  # noqa: F401
+    try:
+        from ase.constraints import UnitCellFilter  # ASE < 3.28  # noqa: F401
+    except ImportError:
+        from ase.filters import UnitCellFilter  # ASE >= 3.28  # noqa: F401
     HAS_ASE = True
 except ImportError:
     HAS_ASE = False
@@ -65,7 +68,10 @@ def _require_ase() -> None:
 def relax(atoms, calculator, fmax: float = 0.005) -> float:
     """Relax cell + positions; return the new lattice parameter (Å)."""
     from ase.optimize import BFGS
-    from ase.constraints import UnitCellFilter
+    try:
+        from ase.constraints import UnitCellFilter
+    except ImportError:
+        from ase.filters import UnitCellFilter
 
     atoms.calc = calculator
     ucf = UnitCellFilter(atoms)

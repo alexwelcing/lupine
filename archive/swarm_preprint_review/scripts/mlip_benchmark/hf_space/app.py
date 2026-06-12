@@ -41,6 +41,8 @@ def _result_to_record(result: ElasticResult, mlip_id: str, mlip_label: str,
     records = []
     for prop, pred, unit in pred_map:
         ref = refs.get(prop)
+        if ref is None:
+            continue
         record = {
             "record_id": f"{result.element}_{mlip_id}_{prop}_{ts.replace(':','-').replace('.','-')}",
             "element": result.element,
@@ -127,4 +129,7 @@ with gr.Blocks(title="glim-mlip-bench") as demo:
                             outputs=batch_out, api_name="predict_batch")
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", "7860")),
+    )

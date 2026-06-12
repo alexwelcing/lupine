@@ -35,7 +35,7 @@
     },
     "M3GNet": {
       "library": "matgl",
-      "model_path": "M3GNet-MP-2021.2.8-PES",
+      "model_path": "M3GNet-PES-MatPES-PBE-2025.2",
       "device": "cuda",
       "batch_size": 1
     }

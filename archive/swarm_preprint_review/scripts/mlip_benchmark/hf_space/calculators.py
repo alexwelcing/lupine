@@ -8,9 +8,13 @@ time and pull in heavy deps (~2 GB torch + models) on first use.
 from __future__ import annotations
 
 import importlib.util
+import os
 import subprocess
 import sys
 from typing import Callable
+
+DEFAULT_M3GNET_MODEL = "M3GNet-PES-MatPES-PBE-2025.2"
+DEFAULT_MATGL_PACKAGE = "matgl==4.0.2"
 
 
 def _ensure_installed(package_spec: str, import_name: str | None = None) -> None:
@@ -37,10 +41,11 @@ def _mace_mp0_factory():
 
 
 def _m3gnet_factory():
-    _ensure_installed("matgl==1.1.3", "matgl")
+    _ensure_installed(os.environ.get("M3GNET_MATGL_PACKAGE", DEFAULT_MATGL_PACKAGE), "matgl")
     import matgl  # type: ignore
     from matgl.ext.ase import PESCalculator  # type: ignore
-    pot = matgl.load_model("M3GNet-MP-2021.2.8-PES")
+    model_name = os.environ.get("M3GNET_MODEL_NAME", DEFAULT_M3GNET_MODEL)
+    pot = matgl.load_model(model_name)
     return PESCalculator(pot)
 
 
@@ -53,7 +58,7 @@ def _emt_factory():
 CALCULATORS: dict[str, tuple[str, Callable]] = {
     "chgnet": ("CHGNet (Deng 2023)", _chgnet_factory),
     "mace_mp0": ("MACE-MP-0 (Batatia 2024)", _mace_mp0_factory),
-    "m3gnet": ("M3GNet-MP-2021 (Chen & Ong 2022)", _m3gnet_factory),
+    "m3gnet": ("M3GNet MatPES PBE 2025.2", _m3gnet_factory),
     "emt": ("ASE EMT (smoke-test only)", _emt_factory),
 }
 

@@ -6,6 +6,7 @@ colorTo: purple
 sdk: gradio
 sdk_version: 4.44.1
 app_file: app.py
+python_version: 3.11
 pinned: false
 license: mit
 suggested_hardware: zero-a10g

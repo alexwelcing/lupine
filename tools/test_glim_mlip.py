@@ -74,6 +74,73 @@ def test_direct_subdomain_routes_through_gradio_sse(monkeypatch: pytest.MonkeyPa
     assert out == [{"element": "Al", "c11": 108.0}]
 
 
+def test_gradio4_queue_fallback(monkeypatch: pytest.MonkeyPatch) -> None:
+    import httpx
+
+    calls: list[dict[str, Any]] = []
+
+    class _Resp:
+        def __init__(self, data: Any, status: int = 200, text: str | None = None):
+            self._data = data
+            self.status_code = status
+            self.text = text if text is not None else json.dumps(data)
+
+        def json(self) -> Any:
+            return self._data
+
+    class _Stream:
+        status_code = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def iter_lines(self):
+            yield 'data: {"msg":"process_starts"}'
+            yield 'data: {"msg":"process_completed","success":true,"output":{"data":[[{"element":"Al","mlip":"emt"}]]}}'
+
+    def fake_post(url: str, json=None, timeout=None, **kw: Any):  # noqa: ARG001
+        calls.append({"method": "POST", "url": url, "json": json})
+        if url.endswith("/gradio_api/call/predict_batch"):
+            return _Resp({"detail": "Not Found"}, status=404)
+        if url.endswith("/queue/join"):
+            return _Resp({"event_id": "evt_test"})
+        raise AssertionError(f"unexpected POST {url}")
+
+    def fake_get(url: str, timeout=None, **kw: Any):  # noqa: ARG001
+        calls.append({"method": "GET", "url": url})
+        assert url.endswith("/config")
+        return _Resp({
+            "dependencies": [
+                {"id": 1, "api_name": "predict_batch", "targets": [[14, "click"]]},
+            ],
+        })
+
+    def fake_stream(method: str, url: str, timeout=None, **kw: Any):  # noqa: ARG001
+        calls.append({"method": method, "url": url})
+        assert method == "GET"
+        assert "/queue/data?session_hash=codex_" in url
+        return _Stream()
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    monkeypatch.setattr(httpx, "get", fake_get)
+    monkeypatch.setattr(httpx, "stream", fake_stream)
+
+    out = glim_mlip._call_gradio(
+        "https://AlexWelcing-glim-mlip-bench.hf.space",
+        "predict_batch",
+        ["Al", "emt", "{}"],
+    )
+
+    assert out == [{"element": "Al", "mlip": "emt"}]
+    join = next(call for call in calls if call["url"].endswith("/queue/join"))
+    assert join["json"]["fn_index"] == 1
+    assert join["json"]["trigger_id"] == 14
+    assert join["json"]["data"] == ["Al", "emt", "{}"]
+
+
 def test_is_local_server_classification() -> None:
     assert glim_mlip._is_local_server("http://localhost:7860") is True
     assert glim_mlip._is_local_server("http://127.0.0.1:7860") is True

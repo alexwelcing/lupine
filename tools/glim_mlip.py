@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import os
+import uuid
 from pathlib import Path
 from typing import Any
 
@@ -112,6 +113,8 @@ def _call_gradio(space_url: str, api_name: str, data: list[Any], timeout: float 
         r = httpx.post(call_url, json={"data": data}, timeout=60.0)
     except httpx.RequestError as e:
         raise click.ClickException(f"Space unreachable at {call_url}: {e}") from e
+    if r.status_code == 404:
+        return _call_gradio_queue(base, api_name, data, timeout)
     if r.status_code >= 400:
         raise click.ClickException(f"{call_url} -> {r.status_code}: {r.text[:300]}")
     event_id = r.json()["event_id"]
@@ -130,6 +133,68 @@ def _call_gradio(space_url: str, api_name: str, data: list[Any], timeout: float 
             result = json.loads(line[6:])
     if result is None:
         raise click.ClickException("no data in SSE stream")
+    if isinstance(result, list) and len(result) == 1:
+        return result[0]
+    return result
+
+
+def _call_gradio_queue(base: str, api_name: str, data: list[Any], timeout: float = 300.0) -> Any:
+    """Call a Gradio 4.x queued endpoint using /queue/join + SSE data."""
+    try:
+        cfg = httpx.get(f"{base}/config", timeout=30.0)
+    except httpx.RequestError as e:
+        raise click.ClickException(f"Space config unreachable at {base}/config: {e}") from e
+    if cfg.status_code >= 400:
+        raise click.ClickException(f"{base}/config -> {cfg.status_code}: {cfg.text[:300]}")
+    deps = cfg.json().get("dependencies", [])
+    match = next((dep for dep in deps if dep.get("api_name") == api_name), None)
+    if not isinstance(match, dict):
+        raise click.ClickException(f"Space config does not expose api_name={api_name!r}")
+    fn_index = match.get("id")
+    if not isinstance(fn_index, int):
+        raise click.ClickException(f"Space config has invalid fn_index for api_name={api_name!r}")
+
+    session_hash = f"codex_{uuid.uuid4().hex}"
+    payload: dict[str, Any] = {
+        "data": data,
+        "fn_index": fn_index,
+        "session_hash": session_hash,
+    }
+    targets = match.get("targets")
+    if isinstance(targets, list) and targets and isinstance(targets[0], list) and targets[0]:
+        payload["trigger_id"] = targets[0][0]
+
+    join_url = f"{base}/queue/join"
+    try:
+        joined = httpx.post(join_url, json=payload, timeout=60.0)
+    except httpx.RequestError as e:
+        raise click.ClickException(f"Space queue unreachable at {join_url}: {e}") from e
+    if joined.status_code >= 400:
+        raise click.ClickException(f"{join_url} -> {joined.status_code}: {joined.text[:300]}")
+
+    stream_url = f"{base}/queue/data?session_hash={session_hash}"
+    result = None
+    try:
+        with httpx.stream("GET", stream_url, timeout=timeout) as stream:
+            if stream.status_code >= 400:
+                raise click.ClickException(f"{stream_url} -> {stream.status_code}: {stream.text[:300]}")
+            for line in stream.iter_lines():
+                if not line.startswith("data: "):
+                    continue
+                event = json.loads(line[6:])
+                if event.get("msg") != "process_completed":
+                    continue
+                if event.get("success") is False:
+                    raise click.ClickException(f"Space queue job failed: {json.dumps(event)[:300]}")
+                output = event.get("output")
+                if not isinstance(output, dict):
+                    raise click.ClickException("Space queue completion missing output")
+                result = output.get("data")
+                break
+    except httpx.RequestError as e:
+        raise click.ClickException(f"SSE stream unreachable at {stream_url}: {e}") from e
+    if result is None:
+        raise click.ClickException("no completed event in Gradio queue stream")
     if isinstance(result, list) and len(result) == 1:
         return result[0]
     return result
