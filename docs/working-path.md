@@ -8,17 +8,20 @@ branches, worktrees, or generated experiment folders.
 
 | Need | Start here |
 | --- | --- |
+| New? Pick a track | [`docs/ONBOARDING.md`](./ONBOARDING.md) |
+| System architecture map | [`docs/ARCHITECTURE.md`](./ARCHITECTURE.md) |
 | Research control plane, agenda, claims, evals, traces | `glim-think/` |
 | Formal evidence and Lean proof obligations | `lean-spec/` |
 | Distill policy/runtime scoring | `atlas-distill/` |
+| Python Distill packages (benchmark/uplift/regime/runtime) | `python/` |
 | Local MLIP and IMMI evidence runs | `mlip_immi/` |
 | LUPI viewer and atomistic inspection | `atlas/atlas-view/apps/web/` |
 | Public research/library surface | `library-site/` |
 | Root ownership decisions | `ROOTS.md` |
 
 Do not route new viewer work into `lupi-studio`, `lupi-studio-pr`, or
-`lupine-start`. Those are retired or scratch surfaces; the canonical LUPI app is
-`atlas/atlas-view/apps/web/`.
+`archive/lupine-start`. Those are retired or scratch surfaces; the canonical
+LUPI app is `atlas/atlas-view/apps/web/`.
 
 ## Starting New Work
 
@@ -65,8 +68,9 @@ just engine-test
 just live-build
 ```
 
-Use `just verify` only when the broader spine is needed. If a broad target is
-noisy, bucket failures by file and cause.
+Use `just verify-light` for quick pre-commit checks, `just verify` for routine
+pre-merge validation, and `just verify-heavy` before releases or cloud bursts.
+If a broad target is noisy, bucket failures by file and cause.
 
 For Lean work:
 

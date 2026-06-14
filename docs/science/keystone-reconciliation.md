@@ -6,7 +6,7 @@
 > [`docs/navigation.md`](../navigation.md)) is the *standard* sloppy-model measure of
 > the effective dimensionality of the model manifold ("object A", Transtrum–Sethna) —
 > documented with primary sources in
-> [`swarm_preprint_review/research/immi_dim01_sloppy_theory.md`](../../swarm_preprint_review/research/immi_dim01_sloppy_theory.md).
+> [`archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md`](../../archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md).
 > That is **correct, literature-sanctioned usage**, not an elementary mistake. The
 > keystone paper's configuration-space core ("object C") is a *distinct, more
 > advanced* question, and the genuine open issue is the **A6 bridge** (B/A → C), not

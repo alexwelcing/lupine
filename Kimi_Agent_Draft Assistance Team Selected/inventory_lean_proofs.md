@@ -289,7 +289,7 @@ The `lean-spec` directory of the Lupine repository contains a **formal verificat
 | T71 | `shared_ribbon_premise` | Both systems share Hyper-Ribbon PR<2 | Apply T30 |
 
 - **Dependencies**: `AccuracyCommitment`, `HyperRibbon.hyper_ribbon_bound_3d`, Mathlib `linarith`, `nlinarith`, `ring`
-- **Significance (Paper 2)**: The **reconciliation theorem**. Two formal systems (universality speedup from KIMI_MLIP_UNIVERSAL, context-specific accuracy from ContextSpecificProof) are NOT competing claims — they are orthogonal axes (speed x accuracy) of the same 5x5x3 grid. Both feed one promotion gate. The shared geometric premise is the Hyper-Ribbon: refusal detects in the orthogonal complement; correction acts there. "One geometry, two operations."
+- **Significance (Paper 2)**: The **reconciliation theorem**. Two formal systems (universality speedup from archive/KIMI_MLIP_UNIVERSAL, context-specific accuracy from ContextSpecificProof) are NOT competing claims — they are orthogonal axes (speed x accuracy) of the same 5x5x3 grid. Both feed one promotion gate. The shared geometric premise is the Hyper-Ribbon: refusal detects in the orthogonal complement; correction acts there. "One geometry, two operations."
 
 ---
 
@@ -480,7 +480,7 @@ Mathlib Foundation (Real analysis, linear arithmetic, positivity)
 - **Impact**: Medium — would connect to Paper 2's differential geometry claims
 
 ### Gap 5: Universality Theorem
-- **Status**: Speedup bound ported and proven (T62), but original KIMI_MLIP_UNIVERSAL has 15 `sorry` placeholders
+- **Status**: Speedup bound ported and proven (T62), but original archive/KIMI_MLIP_UNIVERSAL has 15 `sorry` placeholders
 - **What's missing**: Measure theory and normed-space foundations
 - **Impact**: Medium — the speedup bound is verified, but the full universality theorem is not
 

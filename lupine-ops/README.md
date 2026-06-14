@@ -4,6 +4,11 @@ Operational tooling for the Lupine Science fleet — manifest,
 ledger, MLIP deployment shape, plus a periodic Cloud Run health/cost
 reporter binary.
 
+> **Status: keep.** This crate is an active dependency of `atlas-distill`
+> (the Rust agents import `lupine_ops::ledger`, `lupine_ops::elastic`,
+> `lupine_ops::statics`, and `lupine_ops::mlip_ops`). Do not archive or
+> move without updating `atlas-distill/Cargo.toml` and the agent imports.
+
 ## `monitor_cloud_run`
 
 Rust binary that authenticates to GCP, walks Cloud Run services and jobs

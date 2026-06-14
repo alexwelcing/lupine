@@ -26,6 +26,8 @@ from collections.abc import Iterable
 from datetime import datetime, timezone
 from typing import Any
 
+from lupine_distill.odf.promotion_gate import evaluate_promotion
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BACKEND_CATALOG = ROOT / "gcp" / "mlip-cell-runner" / "backend_catalog.json"
 DEFAULT_MANIFEST_URL = "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json"
@@ -545,6 +547,21 @@ def main(argv: Iterable[str] | None = None) -> int:
     parser.add_argument("--allow-downstream-regressions", action="store_true",
                         help="allow cloud canaries even when downstream rows refute the energy-state lift hypothesis")
     parser.add_argument("--canary-limit", type=int, default=3)
+    parser.add_argument("--model-id", default=None, help="model id for the ODF formal-verification promotion gate")
+    parser.add_argument("--distill-version", type=int, default=0, help="distill version for the ODF promotion gate")
+    parser.add_argument("--overall-uplift-pct", type=float, default=None, help="distill_v_uplift composite (percent) for the ODF gate")
+    parser.add_argument(
+        "--atlas-theorem-refs",
+        nargs="*",
+        default=None,
+        help="ATLAS theorem refs required for auto-promote (repeatable)",
+    )
+    parser.add_argument(
+        "--formal-properties",
+        nargs="*",
+        default=None,
+        help="proved formal properties required for auto-promote (repeatable)",
+    )
     parser.add_argument("--phoenix", action="store_true", help="emit the promotion packet to Phoenix via OTLP")
     parser.add_argument("--phoenix-dry-run", action="store_true", help="print Phoenix spans instead of exporting")
     parser.add_argument("--phoenix-endpoint", default=None, help="Phoenix OTLP relay base or .../v1/traces URL")
@@ -571,6 +588,33 @@ def main(argv: Iterable[str] | None = None) -> int:
         require_energy_anchor=not args.allow_without_energy_anchor,
         block_downstream_regressions=not args.allow_downstream_regressions,
     )
+
+    odf_gate: dict[str, Any] | None = None
+    model_id = args.model_id or run_dir.name
+    if model_id:
+        odf_gate = evaluate_promotion(
+            {
+                "model_id": model_id,
+                "distill_version": args.distill_version,
+                "overall_uplift_pct": args.overall_uplift_pct,
+                "atlas_theorem_refs": args.atlas_theorem_refs or [],
+                "formal_properties": args.formal_properties or [],
+            }
+        ).to_dict()
+        # The formal gate must promote for auto-promotion to cloud. Anything else
+        # keeps the packet local for human review.
+        if odf_gate["decision"] == "reject":
+            gate["status"] = "hold_local"
+            gate["blockers"].append(
+                f"ODF formal-verification gate rejected: {', '.join(odf_gate['reasons'])}"
+            )
+        elif odf_gate["decision"] == "review":
+            if gate["status"] == "promote_to_gcp_canary":
+                gate["status"] = "hold_local"
+            gate["warnings"].append(
+                f"ODF formal-verification gate requests review: {', '.join(odf_gate['reasons'])}"
+            )
+
     cloud_run_id = args.cloud_run_id or f"mlip-cloud-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}"
     canaries = []
     if gate["status"] == "promote_to_gcp_canary":
@@ -596,6 +640,7 @@ def main(argv: Iterable[str] | None = None) -> int:
         "local_run_dir": str(run_dir),
         "cloud_run_id": cloud_run_id,
         "gate": gate,
+        "odf_gate": odf_gate,
         "thresholds": {
             "objective": args.objective,
             "required_variants": list(required_variants),

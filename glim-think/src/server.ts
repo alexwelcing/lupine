@@ -1710,7 +1710,7 @@ ${narrative}
       }
 
       // === claims routes (distill verdict bridge) ===
-      // Mirrors lupine-distill's `claims` table; see migrations/0004_claims.sql.
+      // Mirrors the archived lupine-distill Rust crate's `claims` table; see migrations/0004_claims.sql.
       // Distill is the producer (cross-style-pc1, rank-correlation, theorize-cycle, ...);
       // the worker is the consumer for the Theorist agent and /lab dashboard.
       const CLAIM_COLS =

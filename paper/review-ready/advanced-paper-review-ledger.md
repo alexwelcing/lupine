@@ -2,7 +2,7 @@
 
 Date marked ready for review: 2026-06-09
 
-Source import: `kimi-workspace-export/`
+Source import: `archive/kimi-workspace-export/`
 
 Status meaning: **ready for review** means the manuscript is worth advancing
 through human review. It does not mean submission-ready, proven-current, or

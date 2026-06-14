@@ -1,3 +1,9 @@
+> ⚠️ **Historical snapshot — some claims later re-audited.** This report records the
+> 2026-05-05 state of the autonomous research loop. Empirical claims such as "14/15
+> elements stay on the hyper-ribbon" were later Born-screened and placed under re-audit;
+> see [`docs/conjectures/ledger.md`](./conjectures/ledger.md) and
+> [`CHANGELOG.md`](../CHANGELOG.md) for current status.
+
 # The Loop That Caught Itself — Lupine Research Evolution Report
 
 **Date:** 2026-05-05

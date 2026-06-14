@@ -1,62 +1,81 @@
 # Lean Spec
 
-This directory contains a formal specification of interatomic potential validation in Lean 4.
+`lean-spec/` holds the machine-checked theorems behind the materials-science
+claims in the Lupine Science repo. It is the formal evidence plane: every
+serious claim about error geometry, regime gates, or promotion eventually
+touches a theorem proven here.
 
-## What It Is
+## Current state
 
-Rather than running every LAMMPS simulation and hoping the statistics converge, this specification **formalizes what it means to validate** — and locks that formalization into the build.
+- **96 theorems proven**, **0 `sorry` proofs**, **1502-job build green**.
+- The build is locked by `#guard` contracts in `Materials/Vision.lean`.
+- Epistemic gaps are documented as structures/comments, not as axioms.
 
-## Current State
+See [`AGENTS.md`](../AGENTS.md) §"Formal verification" for the operating rules
+governing this root.
 
-- **1,499 build targets** passed ( Mathlib + project )
-- **47 theorems** proven across 10 modules
-- **6 meta-scientific hypotheses** formally stated
-- **5 documented epistemic gaps** (no `sorry` proofs — all theorems are proven)
+## What lives inside
 
-## Module Map
+| Path | Purpose |
+| --- | --- |
+| `OpenDistillationFactory/Materials/` | All formalization modules (data, analysis, theory, validation). |
+| `OpenDistillationFactory/Materials/Vision.lean` | Build-locking executable vision; imports every module. |
+| `OpenDistillationFactory/Materials/Theory/` | Error geometry, hyper-ribbon, projection law, universality bridge. |
+| `OpenDistillationFactory/Materials/Analysis/` | Causal/ecological-fallacy detection, manifold participation-ratio bounds. |
+| `OpenDistillationFactory/Materials/Validation/` | Audit verdicts, experiment design, rank gate. |
+| `OpenDistillationFactory/Materials/Data/` | Benchmark datasets, provenance tracking, synthetic embeddings. |
+| `OpenDistillationFactory/Materials/DistillAtlas/` | Formalized MPtrj-DFT and Ni-EAM evidence maps. |
+| `OpenDistillationFactory/Materials/NeuralSymbolic/` | Neural-symbolic shear-bound theorems for CHGNet and MACE-MP-0. |
+| `lakefile.toml` | Lake package manifest; pins Mathlib and ATLAS-Lean revisions. |
+| `lean-toolchain` | Pinned Lean `v4.29.0` (matches ATLAS-Lean). |
 
-| Module | Theorems | What It Proves |
-|--------|----------|----------------|
-| `Data.Benchmark` | 9 | Dataset counts, provenance, non-emptiness |
-| `Data.Provenance` | 0 | Value provenance tracking structures |
-| `Analysis.Causal` | 9 | Simpson's paradox detection on synthetic BCC |
-| `Analysis.Manifold` | 10 | Participation ratio bounds, hyper-ribbon claim |
-| `Analysis.Stats` | 0 | Statistical utility functions |
-| `Computation.LammpsTrace` | 3 | Trace requirements for benchmark entries |
-| `Theory.ParameterBound` | 1 | PR ≤ min(params, observables) for differentiable potentials |
-| `Theory.MetaScience` | 5 | Hypothesis board, causal graph structure, irrep sums |
-| `Validation.Experiment` | 5 | Experiment design, integrity checks, documented gaps |
-| `Validation.Audit` | 5 | Verdict strings, report generation |
-| **Vision** | — | Build-locking `#guard` contract; imports all modules |
+## Install
 
-## Build-Locking Contract
+Install the Lean toolchain via [elan](https://github.com/leanprover/elan), then
+hydrate the Mathlib cache. Full setup is in [`docs/ONBOARDING.md`](../docs/ONBOARDING.md).
 
-The `Vision.lean` file contains `#guard` statements that are evaluated at compile time. If any fail, the build fails:
-
-```lean
-#guard (hypothesisCount >= 6)
-#guard (computationallyProvenCount >= 10)
-#guard (epistemicGapCount >= 1)
-```
-
-These encode the minimum epistemic standard. A future commit cannot silently drop below the threshold.
-
-## How to Build
+## Build
 
 ```bash
-# Requires elan (Lean 4 toolchain manager)
-$env:Path = "C:\Users\alexw\.elan\bin;" + $env:Path
+# Run from INSIDE lean-spec/ so elan selects the pinned v4.29.0 toolchain.
+cd lean-spec
+lake exe cache get
 lake build
 ```
 
-## Key Design Decisions
+A green build is the gate. A broken build or any new `sorry` proof is a
+regression.
 
-- **Synthetic data is embedded** as compile-time constants. Change a value → theorems re-check → build may fail.
-- **`native_decide`** is used for theorems about computed `Float` values. Lean compiles the expression, runs it, and locks the result.
-- **No `sorry` proofs.** Every theorem is fully proven. Epistemic gaps are documented as `ExperimentGap` structures, not axioms.
-- **No LAMMPS execution.** The specification formalizes validation structure before producing traces.
+## Check
+
+```bash
+# Re-run the full proof build
+cd lean-spec
+lake build
+
+# Count theorems (sanity check; authoritative count is in AGENTS.md)
+git grep -c "^\s*theorem " OpenDistillationFactory/Materials/
+```
+
+## How it connects to the rest of the repo
+
+- `python/lupine_distill/odf/promotion_gate.py` references theorems from this
+  package when evaluating promotion recommendations.
+- `tools/mlip_regime_filter.py` and `tools/regime_gate_flywheel.py` consume
+  the regime-gate formalization.
+- `gcp/mlip-cell-runner/` may embed theorem hooks in Distill runtime cells.
+- The system map is in [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md).
+
+## Windows notes
+
+- Always run `lake` from inside `lean-spec/`; running from the repo root selects
+  the global toolchain and silently refuses the ATLAS-Lean cache.
+- Do **not** import whole ATLAS-Lean subjects (e.g. `Atlas.RealAnalysis`). Import
+  only the proved leaf modules you need; whole-subject imports are ~80 min and
+  can OOM a dev box.
 
 ## Related
 
-- [`../docs/formal-vision.md`](../docs/formal-vision.md) — Marketing page with full theorem inventory
-- [`../docs/formal-audit.md`](../docs/formal-audit.md) — Split verdict: Simpson's fabricated, hyper-ribbon consistent but ungrounded
+- [`docs/ONBOARDING.md`](../docs/ONBOARDING.md) — new-contributor tracks
+- [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) — system map
+- [`AGENTS.md`](../AGENTS.md) — operating rules (zero-`sorry` gate, ATLAS-Lean hygiene)

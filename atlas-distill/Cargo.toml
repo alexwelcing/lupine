@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 description = "Mathematical discovery engine for MD simulation data"
 
+[workspace]
+members = ["."]
+resolver = "2"
+
 [dependencies]
 nalgebra = "0.33"
 serde = { version = "1", features = ["derive"] }
@@ -26,8 +30,24 @@ base64 = "0.22"
 rsa = { version = "0.9", features = ["sha2"] }
 sha2 = "0.10"
 
+# Optional GPU discovery binary. Keep the core engine free of wgpu/bytemuck
+# so that CI and headless builds stay lightweight.
+wgpu = { version = "0.20", optional = true }
+bytemuck = { version = "1", optional = true }
+env_logger = { version = "0.11", optional = true }
+pollster = { version = "0.3", optional = true }
+
 [dev-dependencies]
 approx = "0.5"
+
+[features]
+default = []
+gpu = ["wgpu", "bytemuck", "env_logger", "pollster"]
+
+[[bin]]
+name = "gpu_experiment"
+path = "src/bin/gpu_experiment.rs"
+required-features = ["gpu"]
 
 [profile.release]
 opt-level = 3

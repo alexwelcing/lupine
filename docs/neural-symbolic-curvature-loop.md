@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-29 · **Hardware:** NVIDIA RTX A4500 · **Stack:** torch 2.6.0+cu124,
 MACE-MP-0 + CHGNet, Lean v4.29.0 · **Code:**
-`lupine-distill/runtime/python/scripts/neural_symbolic/`
+`python/scripts/neural_symbolic/`
 
 A working, end-to-end bridge that fuses empirical GPU physics directly into the Lean 4
 formal-verification engine. An MLIP's measured failure (a curvature prediction that
@@ -13,7 +13,7 @@ formally verified negative constraint that seeds `atlas_theorems`.
 Run the whole loop in one command:
 ```
 C:/Users/alexw/mlip-gpu/Scripts/python.exe \
-  lupine-distill/runtime/python/scripts/neural_symbolic/run_loop.py
+  python/scripts/neural_symbolic/run_loop.py
 ```
 
 ## Architecture (three nodes, one payload contract)

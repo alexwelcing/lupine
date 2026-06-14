@@ -364,7 +364,7 @@ def build_summary(evidence_dir: Path = EVIDENCE_DIR) -> dict[str, Any]:
     return {
         "schema": "lupine.kimi.evidence_summary.v1",
         "source": {
-            "imported_from": "kimi-workspace-export",
+            "imported_from": "archive/kimi-workspace-export",
             "session_date": "2026-06-07",
             "evidence_dir": rel(evidence_dir),
         },

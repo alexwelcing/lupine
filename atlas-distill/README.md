@@ -104,6 +104,22 @@ docker build -t atlas-distill .
 docker run --rm atlas-distill validate --full
 ```
 
+## Development
+
+`atlas-distill` is a Cargo workspace. The core engine builds without GPU dependencies:
+
+```bash
+cargo check --workspace
+cargo test --workspace
+cargo clippy --workspace -- -D warnings
+```
+
+The `gpu_experiment` binary is an optional WGPU proof-of-concept and is gated behind the `gpu` feature:
+
+```bash
+cargo run --bin gpu_experiment --features gpu
+```
+
 ## Benchmark Datasets
 
 | Dataset | Metals | Potentials | Properties |

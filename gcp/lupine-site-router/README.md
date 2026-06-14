@@ -1,7 +1,7 @@
 # Lupine Science Start Router
 
 This small Cloud Run service owns `lupine.science` after the retired
-`lupine-start/` marketing app was removed from the main tree.
+`lupine-start/` marketing app was archived under `archive/lupine-start/`.
 
 The page intentionally avoids publication-status counters and routes readers to
 the canonical surfaces:

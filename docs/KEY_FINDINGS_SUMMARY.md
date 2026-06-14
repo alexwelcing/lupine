@@ -1,3 +1,7 @@
+> ⚠️ **Stale / superseded summary.** This is an extraction-process summary of the
+> phonon report with dead `/sessions/...` paths. For the current, complete review, see
+> [`docs/phonon_benchmarking_report.md`](./phonon_benchmarking_report.md).
+
 # Phonon Benchmarking Report: Key Findings Relevant to GLIM
 
 ## Executive Summary

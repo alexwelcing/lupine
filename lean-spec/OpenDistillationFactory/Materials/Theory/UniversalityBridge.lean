@@ -10,7 +10,7 @@ import Mathlib.Tactic.Ring
 
   Two formal systems describe the same 5x5x3 MLIP grid:
 
-    • the UNIVERSALITY model (KIMI_MLIP_UNIVERSAL, namespace `MLIP`):
+    • the UNIVERSALITY model (archive/KIMI_MLIP_UNIVERSAL, namespace `MLIP`):
       `causalAcceleration` lower-bounds the inference SPEEDUP of a
       layerwise refusal policy,
           speedup ≥ 1 + (L - k*)/L · (1 - κ₁) · (1 - τ/(τ + r_F)).
@@ -58,7 +58,7 @@ open OpenDistillationFactory.Materials.Theory
 
 -- ───────────────────────────────────────────────────────────────
 -- AXIS 1 (SPEED): the universality refusal speedup, ported & verified
--- Faithful to MLIP.causalAcceleration (KIMI_MLIP_UNIVERSAL).
+-- Faithful to MLIP.causalAcceleration (archive/KIMI_MLIP_UNIVERSAL).
 -- ───────────────────────────────────────────────────────────────
 
 /-- Refusal mass on uncovered configurations: the fraction `(1-κ₁)`

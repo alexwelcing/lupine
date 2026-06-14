@@ -1,15 +1,13 @@
 # Deep-Research Reports Index
 
-> **Pruned 2026-06-02.** This file previously catalogued a `glim/`-era layout in which
-> the root research docs (`deep-research-report.md`, `ancillary-research-opps.md`,
-> `foundational-research.md`, `example-research-papers.md`), the `atlas/*-project-plan.md`
-> product plans, and the `atlas/*.jsx` presentation artifacts all lived — **all of those
-> files have since been removed**, so their sections were deleted here to stop pointing at
-> ghosts. What remains is the genuinely live content: the external **deep-research
+> ⚠️ **Partly stale.** This file was pruned 2026-06-02 because it catalogued a
+> `glim/`-era layout and pointed to root research docs (`deep-research-report.md`,
+> `ancillary-research-opps.md`, `foundational-research.md`, `example-research-papers.md`)
+> that **no longer exist**. What remains is genuinely live: the external **deep-research
 > reviews** under `docs/`.
 >
-> For the **science**, start at [`navigation.md`](./navigation.md). For the **engineering /
-> control plane**, see [`engineering/README.md`](./engineering/README.md).
+> For the current science map, use [`docs/navigation.md`](./navigation.md). For
+> engineering, use [`docs/engineering/README.md`](./engineering/README.md).
 
 These are imported technical reviews (each distilled from a longer external report) that
 inform the GLIM / Lupine Science program. They are background reading, not primary claims —

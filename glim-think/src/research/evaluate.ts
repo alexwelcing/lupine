@@ -13,7 +13,7 @@
  *   - within-style and pooled both low → weak signal, likely refuted.
  *
  * The full bootstrap + permutation-null analysis remains in
- * lupine-distill (Rust). This worker-side evaluator is a fast
+ * the archived lupine-distill Rust crate. This worker-side evaluator is a fast
  * approximation that runs every hour against the freshest D1 data
  * without needing the local engine. It updates the hypothesis row's
  * confidence + inserts a Claim row capturing the snapshot.

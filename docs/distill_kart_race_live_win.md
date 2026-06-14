@@ -1,3 +1,10 @@
+> ⚠️ **Stale / superseded.** This report pre-dates the 2026-06-02 correction of the
+> MPtrj-DFT live campaign. Its "5–7× faster and up to 50% more accurate" headline
+> overstates the result: the later measured `accelerate` tier produced no speedup, and
+> the distill correction is energy-only (forces/stress/elastic unchanged). For the
+> corrected, status-marked account see
+> [`docs/glim-m3-upgrade/runs/live-campaign-results.md`](./glim-m3-upgrade/runs/live-campaign-results.md).
+
 # Distill kart race — the live win
 
 A fresh, gated, in-regime run of the MPtrj-DFT kart race (the regime where distill

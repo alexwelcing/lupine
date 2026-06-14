@@ -1,8 +1,41 @@
 # glim-think
 
-Project Think integration for Lupine's autoresearch loop. Moves the
-`atlas-distill` Rust engine from an ephemeral CLI into durable,
-serverless, multi-agent infrastructure running on Cloudflare.
+Durable research control plane that owns the agenda, ledger, feed, evals,
+hypotheses, and agent workflows for the Lupine Science closed scientific loop.
+
+## What lives inside
+
+| Path | Purpose |
+| --- | --- |
+| `src/` | Cloudflare Worker / Durable Object source (OrchestratorThink, facets, workflows). |
+| `migrations/` | D1 database migrations. |
+| `evals/` | Evaluator definitions and prompts. |
+| `otlp-relay/` | OpenInference / OTLP trace relay shared with tools and Python packages. |
+| `scripts/` | One-off and maintenance scripts. |
+| `package.json` / `wrangler.toml` | Node/pnpm package and Wrangler deployment config. |
+
+## Install
+
+```bash
+cd glim-think
+pnpm install
+```
+
+Full environment setup is in [`docs/ONBOARDING.md`](../docs/ONBOARDING.md).
+
+## Build / test
+
+```bash
+# Fast focused checks
+npm run lint
+npm test
+
+# Full local dev server
+npx wrangler dev
+```
+
+On Windows, run Node/pnpm tasks through Git Bash or the root `justfile` to
+avoid PowerShell process-tree hangs.
 
 ## Architecture
 
@@ -215,6 +248,25 @@ npm test
 ```bash
 npx wrangler deploy
 ```
+
+## How it connects to the rest of the repo
+
+- `gcp/mlip-cell-runner/` and `gcp/tasks-consumer/` execute cells dispatched by
+  `glim-think` workflows.
+- `atlas-distill/` supplies the Rust policy engine; `glim-think` can dispatch
+  `atlas-distill model-geometry` and `distill-policy` tasks.
+- `python/lupine_distill/` provides benchmark schemas, uplift, and regime gates
+  consumed by campaign evaluators.
+- `lean-spec/` holds the theorems referenced by promotion gates and hypotheses.
+- `tools/glim.py` is the local CLI for the Worker API surface.
+- The system map is in [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md).
+
+## Windows notes
+
+- Do **not** use PowerShell for `pnpm`, `tsc`, `vitest`, or `wrangler`. Use Git
+  Bash or the root `justfile` wrappers.
+- The root `justfile` explicitly routes Node tasks through
+  `C:\Program Files\Git\bin\bash.exe` to prevent zombie processes.
 
 ## Next Steps
 

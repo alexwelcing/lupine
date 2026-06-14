@@ -1,0 +1,125 @@
+name: Verify
+
+# Focused, parallel pre-merge gates. This workflow is intentionally lightweight:
+# no GPU, no cloud credentials, no heavy MLIP benchmarks. Heavy or optional work
+# (CUDA benchmarks, Phoenix telemetry, Lean builds, full atlas-distill deploy)
+# lives in separate workflows that are path-filtered or manually triggered.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  python-distill:
+    name: Python Distill unit + compile
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install package and pytest
+        run: pip install . pytest
+
+      - name: Run unit tests
+        run: python -m pytest -m unit -q
+
+      - name: Compile all Python files
+        run: find . -name '*.py' -print0 | xargs -0 python -m py_compile
+
+  rust-engine:
+    name: Rust engine check + test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            atlas-distill/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('atlas-distill/Cargo.lock') }}
+
+      - name: Cargo check workspace
+        run: cargo check --workspace --manifest-path atlas-distill/Cargo.toml
+
+      - name: Cargo test workspace
+        run: cargo test --workspace --manifest-path atlas-distill/Cargo.toml
+
+  diff-hygiene:
+    name: Diff whitespace hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check diff for whitespace errors
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="origin/${{ github.base_ref }}"
+          elif [ -n "${{ github.event.before }}" ]; then
+            base="${{ github.event.before }}"
+          else
+            base="HEAD~1"
+          fi
+          echo "Checking diff: ${base}...HEAD"
+          git diff --check "${base}"...HEAD
+
+  tools-smoke:
+    name: Tools smoke tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install package and pytest
+        run: pip install ./python pytest
+
+      - name: Run tool smoke tests
+        run: |
+          python -m pytest tools/test_mlip_regime_filter.py -q
+          python -m pytest gcp/mlip-cell-runner/test_distill_runtime.py -q
+          python -m pytest gcp/mlip-cell-runner/test_openinference_patcher.py -q
+          python -m pytest gcp/mlip-cell-runner/test_runner_observability.py -q
+
+  archive-boundary:
+    name: Archive / active root boundary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enforce archive boundary
+        run: python .github/scripts/archive_boundary_check.py

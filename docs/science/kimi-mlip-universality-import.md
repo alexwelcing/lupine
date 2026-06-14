@@ -2,7 +2,7 @@
 
 Date reviewed: 2026-06-08
 
-Source quarantine: `kimi-workspace-export/`
+Source quarantine: `archive/kimi-workspace-export/`
 
 Curated evidence: `data/mlip_benchmarks/kimi_2026_06_07/`
 

@@ -16,6 +16,25 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-06-12 — Repo consolidation and onboarding sprint
+
+- **Why.** The repo had grown three overlapping Distill roots (`distiller/`, `lupine-distill/`, `atlas-distill/`) and a maze of docs that made it hard for new developers and research scientists to find the right entry point. The one-root-one-owner rule was being violated, and stale paths were still referenced by active code.
+- **What.**
+  - Consolidated Distill by runtime/language: `atlas-distill/` is the single Rust engine, `python/` is the single home for active Python packages, and retired material moved to `archive/` (`distiller-kb/`, `lupine-distill-rust/`, `lupine-dspy/`, `tools-retired/`).
+  - Updated every active import path and sys.path hack from the old roots to `python/`.
+  - Added onboarding docs: `docs/ONBOARDING.md`, `docs/ARCHITECTURE.md`, `docs/GLOSSARY.md`, `docs/FAQ.md`, `CONTRIBUTING.md`, `docs/HANDBOOK.md`, and per-root READMEs for `python/`, `gcp/`, `data/`, `atlas/`, `mlip_immi/`, `lean-spec/`, `glim-think/`, `library-site/`, `paper/`, and `tools/`.
+  - Added `scripts/bootstrap.ps1` / `bootstrap.sh`, extended the `justfile` with `verify`, `bootstrap`, `bootstrap-heavy`, and `docs-serve` recipes, and created GitHub issue/PR templates.
+  - Added `.github/workflows/verify.yml` (Python unit tests, Rust check, tools smoke, diff hygiene) and hardened `python/pyproject.toml` with realistic dependency extras matching the MLIP backend images.
+  - Audited `docs/` for stale/provisional files and added honest banners with redirects to current sources.
+- **Results.**
+  - `just verify` passes locally: Python unit tests (92 passed), Rust check, tools smoke tests (18 passed, 4 skipped), and `git diff --check` clean.
+  - `cargo test --manifest-path atlas-distill/Cargo.toml --bin atlas-distill` passes (100 tests).
+  - No hardcoded secrets found in active code; env vars are used for all tokens/keys.
+- **Next.**
+  - Continue migrating any remaining active `lupine-distill` / `distiller` references in historical docs.
+  - Add a Lean-proof CI job (cached) once the `lean-spec` first-build cost is acceptable.
+  - Consider moving reusable `mlip_immi/` logic into `python/lupine_distill/` with tests.
+
 ## 2026-06-02 — CORRECTION: retracting / bounding the day's ribbon overclaims
 
 - **Why.** A working session produced several confident claims that do **not** hold up.
@@ -151,7 +170,7 @@ Newest first. Dates are absolute.
 - **Why.** Close the proof↔physics gap at the tightest coupling — a number measured on the GPU
   becoming a theorem the Lean kernel checks the next moment — and seed `atlas_theorems` *from the
   physics*, not by hand.
-- **What.** A three-node continuous loop (`lupine-distill/runtime/python/scripts/neural_symbolic/`):
+- **What.** A three-node continuous loop (`python/scripts/neural_symbolic/`):
   **Node 1** pits MACE-MP-0 vs CHGNet on a pure-shear C44 strain sweep of FCC Ni (the curvature
   observable) on the A4500; **Node 2** relays T3-REJECT breaches as OpenInference spans (the Python
   flywheel pattern — entirely off the glim-think `tsc` path; live OTLP when `PHOENIX_OTLP_RELAY_URL`
@@ -175,7 +194,7 @@ Newest first. Dates are absolute.
   zero-point ribbon lift" was unreproduced locally. With a real GPU (RTX A4500) on hand, prove
   the whole compute loop end to end.
 - **What.** Stood up a CUDA env (torch 2.6.0+cu124, torch_sim 0.6.0, cached MACE-MP-0) and wrote
-  `lupine-distill/runtime/python/scripts/run_ni_gpu_loop.py` — the GPU runner the Track B stub
+  `python/scripts/run_ni_gpu_loop.py` — the GPU runner the Track B stub
   defers to. It benchmarks MACE-MP-0 on the sealed Ni FCC EAM fixture via TorchSim, fits the
   zero-point distill correction on the *non-overlapping* support set, computes real elastic
   constants + `distill_v_uplift`, and drives the ATLAS formal gate. Also filled

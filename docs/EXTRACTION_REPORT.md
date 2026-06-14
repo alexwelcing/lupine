@@ -1,3 +1,7 @@
+> ⚠️ **Stale process artifact.** This file is a one-time extraction log with dead
+> `/sessions/...` paths. For the actual report, see
+> [`docs/phonon_benchmarking_report.md`](./phonon_benchmarking_report.md).
+
 # Phonon Frequency Spectrum Benchmarking Report - Extraction Complete
 
 ## Extraction Task Summary

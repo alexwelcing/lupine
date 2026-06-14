@@ -1,3 +1,11 @@
+> ⚠️ **Stale campaign snapshot.** This atlas combines earlier MPtrj-DFT and Ni-EAM
+> campaign results before the 2026-06-02 correction. Its "6 accelerate-wins" claim was
+> later nullified (the `accelerate` tier produced no speedup), and the Ni-EAM regressions
+> are the v0 ungated harms now prevented by the regime gate. See the corrected MPtrj
+> account [`docs/glim-m3-upgrade/runs/live-campaign-results.md`](./glim-m3-upgrade/runs/live-campaign-results.md)
+> and the Ni paired result [`docs/mlip-ni-paired-accuracy-live-report.md`](./mlip-ni-paired-accuracy-live-report.md).
+> The Lean atlas theorems remain a historical artifact.
+
 # Distill Improvement Atlas
 
 Unified synthesis of a GCP TorchSim+distill run — 45 paired (baseline↔distill) cells across 2 material lanes. **6 improve, 8 regress, 6 accelerate-wins (faster AND ≥ as accurate).**

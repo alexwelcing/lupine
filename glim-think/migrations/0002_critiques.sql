@@ -1,6 +1,6 @@
 -- 0002_critiques.sql
 -- Persistence for peer-review critiques (gaps surfaced by external reviews,
--- e.g. swarm_preprint_review/critique11.md). Each row is a question that
+-- e.g. archive/swarm_preprint_review/critique11.md). Each row is a question that
 -- the agent fleet should respond to with markdown evidence stored in R2.
 
 CREATE TABLE IF NOT EXISTS critiques (
@@ -19,7 +19,7 @@ CREATE INDEX IF NOT EXISTS idx_critiques_status ON critiques(status);
 CREATE INDEX IF NOT EXISTS idx_critiques_source ON critiques(source);
 CREATE INDEX IF NOT EXISTS idx_critiques_target ON critiques(target_hypothesis_id);
 
--- Seed: 4 gaps extracted from swarm_preprint_review/critique11.md.
+-- Seed: 4 gaps extracted from archive/swarm_preprint_review/critique11.md.
 -- Each maps to one of the four active hypotheses (h1..h4).
 INSERT OR IGNORE INTO critiques
   (id, source, question, target_hypothesis_id, status, created_at)

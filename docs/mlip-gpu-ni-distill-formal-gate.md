@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-29 · **Hardware:** NVIDIA RTX A4500 (20 GB) · **Stack:** torch 2.6.0+cu124,
 torch_sim 0.6.0 (eager), MACE-MP-0 medium (cached) · **Runner:**
-`lupine-distill/runtime/python/scripts/run_ni_gpu_loop.py`
+`python/scripts/run_ni_gpu_loop.py`
 
 First end-to-end run of the full closed compute loop **on real GPU hardware** in this repo:
 a real MLIP benchmark via TorchSim, a support-fitted distillation correction, the
@@ -26,7 +26,7 @@ locally. This run makes the loop concrete and proves the formal layer gates real
   *non-overlapping* `gcp/mlip-cell-runner/fixtures/ni_fcc_eam_distill_support_v1.json`
   support set. MACE-MP-0 sits **+1.279 eV/atom** off the EAM energy reference (a constant
   zero-point offset); the correction removes it (support self-lift **99.7%**).
-- **Uplift + gate:** `lupine_distill.uplift.distill_v_uplift` → `distiller.odf.promotion_gate`.
+- **Uplift + gate:** `lupine_distill.uplift.distill_v_uplift` → `lupine_distill.odf.promotion_gate`.
 
 ## Results — MAE vs Ni Mishin-1999 EAM reference (lower is better)
 
@@ -63,7 +63,7 @@ program (elastic constants are the program's core observables).
 
 ## The formal gate gates real compute
 
-The same measured 76% uplift, evaluated three ways through `distiller/odf/promotion_gate.py`:
+The same measured 76% uplift, evaluated three ways through `python/lupine_distill/odf/promotion_gate.py`:
 
 | scenario | uplift | formal certification | decision |
 |---|---|---|---|
