@@ -107,6 +107,11 @@ type SourceFilter = 'All Sources' | 'Featured' | 'Trajectories' | 'Snapshots' | 
 
 const SOURCE_FILTERS: SourceFilter[] = ['All Sources', 'Featured', 'Trajectories', 'Snapshots', 'Open Data'];
 
+const GENERATED_SNAPSHOT_URLS: Record<string, string> = {
+  lupi_live_qr_atomized: 'generated/atomized/lupi-live-qr-atomized.png',
+  pulse_grid_atomized: 'generated/atomized/pulse-grid-atomized.png',
+};
+
 function publicAssetUrl(path: string): string {
   if (path.startsWith('http://') || path.startsWith('https://')) return path;
   const base = (import.meta as any).env?.BASE_URL || '/';
@@ -116,6 +121,7 @@ function publicAssetUrl(path: string): string {
 }
 
 function gallerySnapshotUrl(id: string): string {
+  if (GENERATED_SNAPSHOT_URLS[id]) return publicAssetUrl(GENERATED_SNAPSHOT_URLS[id]);
   return publicAssetUrl(`gallery/snapshots/${id}.jpg`);
 }
 
