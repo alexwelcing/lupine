@@ -1,8 +1,9 @@
 # Release Notes - Controls Palette
 ## LUPI viewer controls rollout
 
-**Status:** Ship-ready locally  
-**Primary audience:** LUPI users tuning molecular views for inspection, publication, and export  
+**Status:** Ship-ready locally
+
+**Primary audience:** LUPI users tuning molecular views for inspection, publication, and export
 **Verification:** `pnpm --filter @atlas/web build` and `pnpm verify:controls -- --no-screenshot`
 
 ---
