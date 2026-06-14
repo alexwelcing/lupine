@@ -104,6 +104,7 @@ import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
 import { CameraPresetButton, TransportButton } from './controls';
+import { CommandPalette } from './CommandPalette';
 import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
 import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
@@ -702,6 +703,7 @@ export default function App() {
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const showDebugHud = useMemo(() => {
     if (typeof window === 'undefined') return false;
     const params = new URLSearchParams(window.location.search);
@@ -798,6 +800,15 @@ export default function App() {
   // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      // Cmd/Ctrl+K opens the command palette from anywhere.
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen(open => !open);
+        return;
+      }
+
+      if (commandPaletteOpen) return; // palette owns its own keyboard nav
+
       if ((e.target as HTMLElement).tagName === 'INPUT') return;
 
       const currentFile = useStore.getState().file;
@@ -845,7 +856,7 @@ export default function App() {
       window.removeEventListener('keyup', shiftUp);
       window.removeEventListener('blur', blurReset);
     };
-  }, [togglePlay, nextFrame, setActivePanel, setShowPotentialBrowser]);
+  }, [togglePlay, nextFrame, setActivePanel, setShowPotentialBrowser, commandPaletteOpen]);
 
   // URL state restore + auto-load
   useEffect(() => {
@@ -990,38 +1001,46 @@ export default function App() {
       display: 'flex', flexDirection: 'column',
     }}>
       {/* ─── Desktop Header ─── */}
-      <header style={{
-        height: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
-        minHeight: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
-        flexShrink: 0,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: isMobile ? 'env(safe-area-inset-top) 12px 0' : '0 20px',
-        borderBottom: '1px solid var(--border-subtle)',
-        background: 'var(--bg-glass)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        zIndex: 200,
-      }}>
-        {/* Logo */}
+      <header
+        className={file ? 'lupine-glass' : ''}
+        style={{
+          height: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
+          minHeight: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
+          flexShrink: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: isMobile ? 'env(safe-area-inset-top) 12px 0' : '0 16px',
+          margin: file ? (isMobile ? '10px 10px 0' : '14px 16px 0') : 0,
+          borderBottom: file ? 'none' : '1px solid var(--border-subtle)',
+          background: file ? undefined : 'var(--bg-glass)',
+          backdropFilter: file ? undefined : 'blur(12px)',
+          WebkitBackdropFilter: file ? undefined : 'blur(12px)',
+          zIndex: 200,
+        }}
+      >
+        {/* Logo + file breadcrumb */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <button
-            onClick={() => { 
+            onClick={() => {
               if (file) {
-                useStore.getState().clearFile(); 
+                useStore.getState().clearFile();
                 const url = new URL(window.location.href);
                 url.searchParams.delete('sim');
                 window.history.pushState({}, '', url);
               }
             }}
+            className="lupine-btn icon-only"
             style={{
-              display: 'flex', alignItems: 'baseline', gap: 4,
-              background: 'none', border: 'none', padding: 0,
+              background: 'transparent',
+              borderColor: 'transparent',
+              boxShadow: 'none',
+              padding: 6,
+              gap: 4,
               cursor: file ? 'pointer' : 'default',
             }}
           >
             <span style={{
               fontSize: 21, fontWeight: 750, color: 'var(--text-primary)',
-              letterSpacing: '0'
+              letterSpacing: '-0.02em'
             }}>
               Lupi
             </span>
@@ -1029,11 +1048,11 @@ export default function App() {
 
           {file && (
             <>
-              <div style={{ width: 1, height: 18, background: 'var(--border-subtle)', display: isMobile ? 'none' : 'block' }} />
+              <div className="lupine-divider" style={{ display: isMobile ? 'none' : 'block' }} />
 
               <span style={{
-                fontSize: 14, color: 'var(--text-muted)',
-                maxWidth: isMobile ? 80 : 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                fontSize: 13, color: 'var(--text-muted)',
+                maxWidth: isMobile ? 80 : 260, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
               }}>
                 {file.name}
               </span>
@@ -1046,16 +1065,8 @@ export default function App() {
                 }}
                 title="Close"
                 aria-label="Close dataset"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 24, height: 24,
-                  background: 'transparent',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-sm)',
-                  color: 'var(--text-dim)',
-                  cursor: 'pointer',
-                  flexShrink: 0,
-                }}
+                className="lupine-icon-btn"
+                style={{ width: 28, height: 28 }}
               >
                 <IconClose />
               </button>
@@ -1063,8 +1074,8 @@ export default function App() {
           )}
         </div>
 
-        {/* Simple top-right actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 4 : 8 }}>
+        {/* Top-right actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 10 }}>
           {!file && (
             <>
               <a
@@ -1078,16 +1089,10 @@ export default function App() {
                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 }}
+                className="lupine-btn"
                 style={{
-                  display: 'block',
                   padding: isMobile ? '7px 9px' : '8px 12px',
                   fontSize: isMobile ? 12 : 13,
-                  fontWeight: 600,
-                  color: isMlipFlywheelRoute ? 'var(--text-muted)' : 'var(--text-primary)',
-                  background: isMlipFlywheelRoute ? 'transparent' : 'rgba(255,255,255,0.07)',
-                  border: '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-sm)',
-                  textDecoration: 'none',
                 }}
               >
                 {isMobile ? 'Atoms' : 'Gallery'}
@@ -1097,15 +1102,8 @@ export default function App() {
           {!file && (
             <button
               onClick={() => void openRandomOmol25Molecule()}
-              style={{
-                padding: '8px 14px',
-                fontSize: 14, fontWeight: 500,
-                color: 'white',
-                background: 'var(--accent)',
-                border: 'none',
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer',
-              }}
+              className="lupine-btn primary"
+              style={{ padding: '8px 14px', fontSize: 14 }}
             >
               {isMobile ? 'View' : 'View a molecule'}
             </button>
@@ -1477,11 +1475,11 @@ export default function App() {
           {file && (
             <div style={{
               position: 'absolute',
-              top: 72,
-              left: 16,
+              top: file ? 88 : 72,
+              left: 18,
               display: 'flex',
               flexDirection: 'column',
-              gap: 6,
+              gap: 8,
               zIndex: 150,
             }}>
               <button
@@ -1492,35 +1490,13 @@ export default function App() {
                 title="Camera view"
                 aria-label="Camera view"
                 aria-expanded={viewMenuOpen}
-                style={{
-                  width: 52,
-                  height: 34,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: 0,
-                  color: '#1edce0',
-                  background: 'rgba(0,0,0,0.52)',
-                  border: '1px solid rgba(30, 220, 224, 0.45)',
-                  borderRadius: 0,
-                  cursor: 'pointer',
-                  backdropFilter: 'blur(12px)',
-                }}
+                className={`lupine-btn compact icon-only ${viewMenuOpen ? 'active' : ''}`}
+                style={{ width: 52, height: 36 }}
               >
                 {cameraPresetLabel}
               </button>
               {viewMenuOpen && (
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 6,
-                  padding: 6,
-                  background: 'rgba(0,0,0,0.62)',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  backdropFilter: 'blur(12px)',
-                }}>
+                <div className="lupine-glass lupine-glass--menu animate-menu-in">
                   <CameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => { setCameraPreset('top'); setViewMenuOpen(false); }} title="Top view (XY plane)" />
                   <CameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => { setCameraPreset('side'); setViewMenuOpen(false); }} title="Side view (XZ plane)" />
                   <CameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => { setCameraPreset('front'); setViewMenuOpen(false); }} title="Front view (YZ plane)" />
@@ -1534,10 +1510,11 @@ export default function App() {
           {file && !showPotentialBrowser && (
             <div style={{
               position: 'absolute',
-              top: 64,
-              right: activePanel && !isMobile ? panelWidth + 16 : 16,
+              top: file ? 88 : 72,
+              right: activePanel && !isMobile ? panelWidth + 20 : 18,
               display: 'flex',
               justifyContent: 'flex-end',
+              gap: 8,
               zIndex: 150,
             }}>
               <button
@@ -1546,25 +1523,15 @@ export default function App() {
                 aria-expanded={activePanel === 'studio'}
                 title="Controls"
                 onClick={toggleControlsPanel}
+                className={`lupine-btn ${activePanel === 'studio' ? 'active' : ''}`}
                 style={{
                   minWidth: 116,
                   height: 42,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
                   gap: 8,
-                  padding: '0 12px',
-                  color: activePanel === 'studio' ? '#f8fafc' : '#dbeafe',
-                  background: activePanel === 'studio' ? 'rgba(30,220,224,0.18)' : 'rgba(0,0,0,0.56)',
-                  border: activePanel === 'studio' ? '1px solid rgba(30,220,224,0.7)' : '1px solid rgba(148,163,184,0.28)',
-                  borderRadius: 8,
-                  boxShadow: activePanel === 'studio' ? '0 0 22px rgba(30,220,224,0.2)' : '0 12px 32px rgba(0,0,0,0.28)',
-                  backdropFilter: 'blur(14px)',
-                  WebkitBackdropFilter: 'blur(14px)',
-                  cursor: 'pointer',
-                  fontSize: 12,
-                  fontWeight: 800,
-                  letterSpacing: 0,
+                  padding: '0 14px',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: '0.01em',
                 }}
               >
                 <IconControls />
@@ -1732,6 +1699,150 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* Command palette — global quick navigation */}
+      <CommandPalette
+        open={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        actions={useMemo(() => {
+          const list: import('./CommandPalette').CommandAction[] = [
+            {
+              id: 'random-molecule',
+              label: 'View random OMol25 molecule',
+              group: 'Discover',
+              shortcut: 'R',
+              onSelect: () => void openRandomOmol25Molecule(),
+            },
+            {
+              id: 'gallery',
+              label: 'Open gallery',
+              group: 'Discover',
+              shortcut: 'G',
+              onSelect: () => {
+                const el = document.getElementById('gallery');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                else window.location.href = '/#/gallery';
+              },
+            },
+            {
+              id: 'controls-look',
+              label: 'Open Look controls',
+              group: 'Panels',
+              shortcut: 'V',
+              disabled: !file,
+              onSelect: () => openStudioDeck('look'),
+            },
+            {
+              id: 'controls-surface',
+              label: 'Open Surface controls',
+              group: 'Panels',
+              disabled: !file,
+              onSelect: () => openStudioDeck('surface'),
+            },
+            {
+              id: 'controls-world',
+              label: 'Open World controls',
+              group: 'Panels',
+              disabled: !file,
+              onSelect: () => openStudioDeck('world'),
+            },
+            {
+              id: 'export-panel',
+              label: 'Open figure export',
+              group: 'Panels',
+              shortcut: 'X',
+              disabled: !file,
+              onSelect: () => {
+                setShowPotentialBrowser(false);
+                setActivePanel('export');
+              },
+            },
+            {
+              id: 'telemetry-panel',
+              label: 'Open telemetry',
+              group: 'Panels',
+              shortcut: 'T',
+              disabled: !file,
+              onSelect: () => {
+                setShowPotentialBrowser(false);
+                setActivePanel('telemetry');
+              },
+            },
+            {
+              id: 'flythrough-panel',
+              label: 'Open flythrough',
+              group: 'Panels',
+              disabled: !file,
+              onSelect: () => {
+                setShowPotentialBrowser(false);
+                setActivePanel('flythrough');
+              },
+            },
+            {
+              id: 'camera-top',
+              label: 'Camera top view',
+              group: 'Camera',
+              disabled: !file,
+              onSelect: () => setCameraPreset('top'),
+            },
+            {
+              id: 'camera-side',
+              label: 'Camera side view',
+              group: 'Camera',
+              disabled: !file,
+              onSelect: () => setCameraPreset('side'),
+            },
+            {
+              id: 'camera-front',
+              label: 'Camera front view',
+              group: 'Camera',
+              disabled: !file,
+              onSelect: () => setCameraPreset('front'),
+            },
+            {
+              id: 'camera-iso',
+              label: 'Camera isometric view',
+              group: 'Camera',
+              disabled: !file,
+              onSelect: () => setCameraPreset('iso'),
+            },
+            {
+              id: 'toggle-bonds',
+              label: 'Toggle bonds',
+              group: 'Scene',
+              disabled: !file,
+              onSelect: () => useStore.getState().toggleBonds(),
+            },
+            {
+              id: 'toggle-playback',
+              label: 'Play / pause trajectory',
+              group: 'Scene',
+              disabled: !file || totalFrames <= 1,
+              onSelect: () => togglePlay(),
+            },
+            {
+              id: 'close-file',
+              label: 'Close current molecule',
+              group: 'Scene',
+              disabled: !file,
+              onSelect: () => {
+                useStore.getState().clearFile();
+                const url = new URL(window.location.href);
+                url.searchParams.delete('sim');
+                window.history.pushState({}, '', url);
+              },
+            },
+            {
+              id: 'close-panel',
+              label: 'Close side panel',
+              group: 'Scene',
+              disabled: !activePanel,
+              onSelect: () => setActivePanel(null),
+            },
+          ];
+          return list;
+        }, [file, activePanel, totalFrames])}
+      />
     </div>
   );
 }

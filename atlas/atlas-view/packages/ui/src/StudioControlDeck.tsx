@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode } from 'react';
+import { usePressSpring } from './hooks/usePressSpring';
 import { getElementSpec } from '@atlas/core';
 import type { ColormapName, RenderStyle } from '@atlas/core/types';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
@@ -397,7 +398,8 @@ export function StudioControlDeck({
             type="button"
             onClick={onClose}
             title="Close"
-            style={iconButtonStyle}
+            className="lupine-icon-btn"
+            style={{ width: 28, height: 28 }}
           >
             <IconClose />
           </button>
@@ -698,6 +700,7 @@ function SegmentButton({
 }) {
   const [pulse, setPulse] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const press = usePressSpring({ pressedScale: 0.96, sound: false });
 
   useEffect(() => () => {
     if (timerRef.current !== null) window.clearTimeout(timerRef.current);
@@ -713,8 +716,13 @@ function SegmentButton({
 
   return (
     <button
+      ref={press.ref}
       type="button"
       onClick={handleClick}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerLeave={press.onPointerLeave}
+      onPointerCancel={press.onPointerCancel}
       title={label}
       aria-label={meta ? `${label} ${meta}` : label}
       aria-pressed={active}
@@ -789,10 +797,11 @@ function CompactSlider({
       display: 'grid',
       gap: 2,
       minWidth: 0,
-      padding: '4px 5px',
-      borderRadius: 5,
-      border: '1px solid rgba(148,163,184,0.18)',
-      background: 'rgba(9,14,22,0.64)',
+      padding: '5px 6px',
+      borderRadius: 8,
+      border: '1px solid rgba(255,255,255,0.10)',
+      background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.2)',
     }}>
       <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, minWidth: 0 }}>
         <span style={{ color: '#94a3b8', fontSize: 9, fontWeight: 760, textTransform: 'uppercase', lineHeight: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
@@ -1175,12 +1184,18 @@ function SwatchButton({
   background: string;
   onClick: () => void;
 }) {
+  const press = usePressSpring({ pressedScale: 0.92, sound: false });
   return (
     <button
+      ref={press.ref}
       type="button"
       aria-label={label}
       title={label}
       onClick={onClick}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerLeave={press.onPointerLeave}
+      onPointerCancel={press.onPointerCancel}
       style={{
         height: 25,
         flex: '1 1 24px',
@@ -1221,10 +1236,11 @@ const compactFieldStyle: CSSProperties = {
   display: 'grid',
   gap: 3,
   minWidth: 0,
-  padding: '4px 5px',
-  borderRadius: 5,
-  border: '1px solid rgba(148,163,184,0.18)',
-  background: 'rgba(9,14,22,0.64)',
+  padding: '5px 6px',
+  borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.10)',
+  background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.2)',
 };
 
 const compactFieldLabelStyle: CSSProperties = {
@@ -1238,15 +1254,17 @@ const compactFieldLabelStyle: CSSProperties = {
 const compactSelectStyle: CSSProperties = {
   width: '100%',
   minWidth: 0,
-  height: 26,
-  borderRadius: 5,
-  border: '1px solid rgba(148,163,184,0.24)',
-  background: 'rgba(2,6,23,0.82)',
-  color: '#e2e8f0',
-  fontSize: 10,
-  fontWeight: 720,
-  padding: '0 7px',
+  height: 28,
+  borderRadius: 6,
+  border: '1px solid rgba(255,255,255,0.10)',
+  background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+  color: '#f8fafc',
+  fontSize: 11,
+  fontWeight: 600,
+  padding: '0 8px',
   outline: 'none',
+  cursor: 'pointer',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 0 rgba(0,0,0,0.2)',
 };
 
 const paletteRailStyle: CSSProperties = {
