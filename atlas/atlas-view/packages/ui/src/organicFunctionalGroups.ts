@@ -4,9 +4,19 @@ export type FunctionalGroupId =
   | 'alcohol-phenol'
   | 'amine'
   | 'amide'
+  | 'aldehyde'
+  | 'ketone'
   | 'carboxylic-acid'
   | 'ester'
+  | 'anhydride'
+  | 'acyl-halide'
   | 'ether'
+  | 'epoxide'
+  | 'nitrile'
+  | 'nitro'
+  | 'alkyl-halide'
+  | 'thiol'
+  | 'sulfide'
   | 'phosphate-ester'
   | 'heteroaromatic';
 
@@ -33,7 +43,7 @@ export const FUNCTIONAL_GROUPS: FunctionalGroupConcept[] = [
     explore: 'Compare how attached OH, amine, ester, or alkyl groups change the ring edge.',
     firstCourse: 'Aromaticity, resonance, electrophilic aromatic substitution.',
     color: '#38bdf8',
-    exampleIds: ['aspirin', 'dopamine', 'serotonin', 'thc', 'lsd'],
+    exampleIds: ['benzaldehyde', 'benzonitrile', 'nitrobenzene', 'phenol', 'aspirin', 'dopamine', 'serotonin', 'thc', 'lsd'],
     aliases: ['benzene', 'aromatic', 'phenyl', 'ring'],
   },
   {
@@ -69,7 +79,7 @@ export const FUNCTIONAL_GROUPS: FunctionalGroupConcept[] = [
     explore: 'Contrast cholesterol alcohols with phenolic dopamine, serotonin, and THC.',
     firstCourse: 'Hydrogen bonding, acidity, oxidation, protection.',
     color: '#34d399',
-    exampleIds: ['cholesterol', 'dopamine', 'serotonin', 'thc'],
+    exampleIds: ['phenol', 'cholesterol', 'dopamine', 'serotonin', 'thc'],
     aliases: ['hydroxyl', 'phenol', 'oh'],
   },
   {
@@ -97,6 +107,30 @@ export const FUNCTIONAL_GROUPS: FunctionalGroupConcept[] = [
     aliases: ['peptide', 'carbonyl nitrogen', 'lactam'],
   },
   {
+    id: 'aldehyde',
+    label: 'Aldehydes',
+    family: 'Carbonyl groups',
+    short: 'Carbonyls with at least one hydrogen on the carbonyl carbon.',
+    recognize: 'Find C=O where the carbonyl carbon also bonds to H.',
+    explore: 'Compare acetaldehyde with benzaldehyde to see how an arene changes carbonyl context.',
+    firstCourse: 'Oxidation, nucleophilic addition, hemiacetals, aldol reactions.',
+    color: '#fb7185',
+    exampleIds: ['acetaldehyde', 'benzaldehyde'],
+    aliases: ['formyl', 'cho', 'carbonyl hydrogen'],
+  },
+  {
+    id: 'ketone',
+    label: 'Ketones',
+    family: 'Carbonyl groups',
+    short: 'Carbonyls bonded to two carbons; less easily oxidized than aldehydes.',
+    recognize: 'Find C=O with carbon substituents on both sides.',
+    explore: 'Use acetone and cyclohexanone to compare open-chain and cyclic ketone geometry.',
+    firstCourse: 'Nucleophilic addition, enols, enolates, aldol chemistry.',
+    color: '#f472b6',
+    exampleIds: ['acetone', 'cyclohexanone'],
+    aliases: ['carbonyl', 'alkanone', 'enolate'],
+  },
+  {
     id: 'carboxylic-acid',
     label: 'Carboxylic Acids',
     family: 'Carbonyl groups',
@@ -117,8 +151,32 @@ export const FUNCTIONAL_GROUPS: FunctionalGroupConcept[] = [
     explore: 'Use aspirin to compare ester and acid carbonyls in one molecule.',
     firstCourse: 'Nucleophilic acyl substitution, hydrolysis, transesterification.',
     color: '#fb923c',
-    exampleIds: ['aspirin'],
+    exampleIds: ['ethyl_acetate', 'aspirin'],
     aliases: ['acetate', 'carbonyl oxygen'],
+  },
+  {
+    id: 'anhydride',
+    label: 'Anhydrides',
+    family: 'Carbonyl groups',
+    short: 'Two acyl groups joined by an oxygen; reactive acid derivatives.',
+    recognize: 'Look for two C=O groups connected through one bridging oxygen.',
+    explore: 'Acetic anhydride shows the acyl-transfer pattern behind acetylation reactions.',
+    firstCourse: 'Nucleophilic acyl substitution, hydrolysis, ester and amide formation.',
+    color: '#f59e0b',
+    exampleIds: ['acetic_anhydride'],
+    aliases: ['acid anhydride', 'acyl transfer', 'acetylation'],
+  },
+  {
+    id: 'acyl-halide',
+    label: 'Acyl Halides',
+    family: 'Carbonyl groups',
+    short: 'Highly reactive carbonyl derivatives with a halide leaving group.',
+    recognize: 'Find C=O directly bonded to Cl, Br, or another halogen.',
+    explore: 'Acetyl chloride is a small reference for why acid chlorides acylate readily.',
+    firstCourse: 'Nucleophilic acyl substitution, leaving groups, acid chloride reactions.',
+    color: '#f97316',
+    exampleIds: ['acetyl_chloride'],
+    aliases: ['acid chloride', 'acyl chloride', 'carbonyl halide'],
   },
   {
     id: 'ether',
@@ -129,8 +187,80 @@ export const FUNCTIONAL_GROUPS: FunctionalGroupConcept[] = [
     explore: 'THC shows an ether embedded in a larger aromatic-terpenoid scaffold.',
     firstCourse: 'Solvents, crown ethers, acid cleavage, epoxides as strained ethers.',
     color: '#a7f3d0',
-    exampleIds: ['thc'],
+    exampleIds: ['ethylene_oxide', 'thc'],
     aliases: ['oxygen bridge', 'alkoxy'],
+  },
+  {
+    id: 'epoxide',
+    label: 'Epoxides',
+    family: 'Oxygen groups',
+    short: 'Three-membered cyclic ethers whose ring strain drives opening reactions.',
+    recognize: 'Find oxygen as one corner of a three-membered ring.',
+    explore: 'Ethylene oxide is the minimal epoxide for seeing strain and attack trajectory.',
+    firstCourse: 'Ring opening, regioselectivity, anti addition, neighboring oxygen effects.',
+    color: '#5eead4',
+    exampleIds: ['ethylene_oxide'],
+    aliases: ['oxirane', 'strained ether', 'ring opening'],
+  },
+  {
+    id: 'nitrile',
+    label: 'Nitriles',
+    family: 'Nitrogen groups',
+    short: 'Linear C-N triple bonds that act as polar carbon electrophile equivalents.',
+    recognize: 'Look for a straight C-C-N or H-C-N chain ending in C#N.',
+    explore: 'Compare acetonitrile with benzonitrile to see solvent-like and aryl nitrile contexts.',
+    firstCourse: 'Hydrolysis, reduction, Grignard additions, polar aprotic solvents.',
+    color: '#60a5fa',
+    exampleIds: ['acetonitrile', 'benzonitrile'],
+    aliases: ['cyano', 'cyanide', 'triple bond nitrogen'],
+  },
+  {
+    id: 'nitro',
+    label: 'Nitro Groups',
+    family: 'Nitrogen groups',
+    short: 'Strongly electron-withdrawing N-O groups with resonance-delocalized charge.',
+    recognize: 'Find N attached to two oxygens and usually one carbon.',
+    explore: 'Nitrobenzene shows how nitro substitution changes an aromatic ring.',
+    firstCourse: 'Aromatic directing effects, reduction to amines, resonance withdrawal.',
+    color: '#fb923c',
+    exampleIds: ['nitrobenzene'],
+    aliases: ['no2', 'nitrobenzene', 'electron withdrawing'],
+  },
+  {
+    id: 'alkyl-halide',
+    label: 'Alkyl Halides',
+    family: 'Halogen groups',
+    short: 'Carbon-halogen bonds that set up substitution and elimination reactions.',
+    recognize: 'Find Cl, Br, or I attached to an sp3 carbon.',
+    explore: 'Compare primary 1-bromobutane with tertiary tert-butyl chloride.',
+    firstCourse: 'SN1, SN2, E1, E2, leaving groups, steric effects.',
+    color: '#c084fc',
+    exampleIds: ['bromobutane_1', 'tert_butyl_chloride'],
+    aliases: ['haloalkane', 'alkyl chloride', 'alkyl bromide', 'leaving group'],
+  },
+  {
+    id: 'thiol',
+    label: 'Thiols',
+    family: 'Sulfur groups',
+    short: 'Sulfur analogs of alcohols, often more acidic and more nucleophilic.',
+    recognize: 'Find S-H attached to an organic carbon framework.',
+    explore: 'Ethanethiol gives a minimal sulfur case to compare against ethanol-like geometry.',
+    firstCourse: 'Acidity, thiolates, oxidation to disulfides, nucleophilicity.',
+    color: '#facc15',
+    exampleIds: ['ethanethiol'],
+    aliases: ['mercaptan', 'sulfhydryl', 'sh'],
+  },
+  {
+    id: 'sulfide',
+    label: 'Sulfides',
+    family: 'Sulfur groups',
+    short: 'Thioethers with sulfur bonded to two carbons.',
+    recognize: 'Find S connected to carbon on both sides without S-H.',
+    explore: 'Dimethyl sulfide is the compact contrast case for ethers versus thioethers.',
+    firstCourse: 'Thioethers, oxidation to sulfoxides/sulfones, soft nucleophiles.',
+    color: '#eab308',
+    exampleIds: ['dimethyl_sulfide'],
+    aliases: ['thioether', 'sulfur ether', 'sulfanyl'],
   },
   {
     id: 'phosphate-ester',

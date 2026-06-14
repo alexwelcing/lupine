@@ -19,6 +19,8 @@
   - Functional-group filters for arenes, heteroaromatics, alkenes, alcohols and phenols, amines, amides, carboxylic acids, esters, ethers, and phosphate esters.
   - Molecule rows now surface relevant group chips.
   - The selected molecule spotlight explains first-course organic chemistry concepts through real gallery molecules such as aspirin, caffeine, dopamine, serotonin, THC, psilocybin, LSD, cholesterol, and alanine dipeptide.
+- Expanded ochem study examples for aldehydes, ketones, nitriles, alkyl halides, nitro groups, epoxides, thiols, sulfides, anhydrides, and acyl halides, including acetaldehyde, acetone, benzaldehyde, cyclohexanone, acetonitrile, benzonitrile, nitrobenzene, phenol, tert-butyl chloride, 1-bromobutane, ethylene oxide, ethanethiol, dimethyl sulfide, acetic anhydride, acetyl chloride, and ethyl acetate.
+- OMol25 is ready for the same functional-group language: the offline indexer now derives group tags from real coordinates, the OMol provider can facet and filter by those tags, and the OMol collection page will show a functional-group rail as soon as the refreshed v3 index is published.
 
 ## Why It Matters
 
@@ -26,13 +28,14 @@
 - Shared links preserve visual state, making collaboration and support easier.
 - The gallery starts becoming a teaching and exploration system, not just a list of files.
 - The organic chemistry grouping model is data-backed and test-guarded, so future curated molecule sets can grow without silently pointing to unavailable assets.
+- OMol25 can graduate from element/formula browsing into ochem study workflows without fetching every structure in the browser.
 
 ## Verification
 
 Run from `atlas/atlas-view`:
 
 ```bash
-pnpm --filter @atlas/ui test -- gallery-data.test.ts store.test.ts
+pnpm --filter @atlas/ui test -- gallery-data.test.ts omolCollection.test.ts store.test.ts
 pnpm --filter @atlas/ui build
 pnpm --filter @atlas/web build
 pnpm verify:gallery -- --no-screenshot
@@ -42,12 +45,13 @@ pnpm verify:controls:mobile -- --no-screenshot
 
 Local result on 2026-06-14:
 
-- UI focused tests: 38 passing.
+- UI focused tests: 48 passing.
 - UI TypeScript build: clean.
 - Web production build: clean.
-- Gallery verifier: 16/16 checks passing, including functional-group filtering and spotlight education.
+- Gallery verifier: 17/17 checks passing, including expanded functional-group examples and spotlight education.
 - Controls verifier: desktop and mobile profiles passing.
-- Manual visual screenshots checked for desktop functional-group filtering and mobile rail/result/spotlight layout.
+- Manual visual screenshots checked for desktop/mobile gallery grouping and OMol25 functional-group filtering with mocked and live v3 tagged indexes.
+- OMol25 v3 index published to `gs://shed-489901-omol25/omol25_neutral_val.v3.json` and verified over public HTTPS with 27,697 tagged records.
 
 ## Live Verification After Deploy
 

@@ -3,6 +3,7 @@ import { omolFacets, type OmolFacets } from './providers/omol';
 import { searchMolecules, MOLECULE_PROVIDERS, type MoleculeHit } from './index';
 import { loadMoleculeHit } from './load';
 import { PERIODIC_TABLE, type PeriodicCell } from './periodicTable';
+import { FUNCTIONAL_GROUP_BY_ID, type FunctionalGroupId } from '../organicFunctionalGroups';
 
 /**
  * OmolCollection — a dataset-respecting home for Meta FAIR's Open Molecules 2025
@@ -30,6 +31,7 @@ export function OmolCollection() {
   const [facets, setFacets] = useState<OmolFacets | null>(null);
   const [facetError, setFacetError] = useState(false);
   const [selected, setSelected] = useState<string[]>([]); // element symbols (AND)
+  const [selectedGroups, setSelectedGroups] = useState<FunctionalGroupId[]>([]);
   const [text, setText] = useState('');
   const [debounced, setDebounced] = useState('');
   const [hits, setHits] = useState<MoleculeHit[]>([]);
@@ -59,6 +61,7 @@ export function OmolCollection() {
       {
         text: debounced.trim(),
         elements: selected.length ? selected : undefined,
+        functionalGroups: selectedGroups.length ? selectedGroups : undefined,
         sources: ['omol'],
         limit: PER_PAGE,
       },
@@ -67,7 +70,7 @@ export function OmolCollection() {
       .then((r) => { if (id === reqId.current) setHits(r); })
       .catch(() => { if (id === reqId.current) setHits([]); })
       .finally(() => { if (id === reqId.current) setLoading(false); });
-  }, [debounced, selected]);
+  }, [debounced, selected, selectedGroups]);
 
   // element → count, for lighting up the periodic table.
   const countByElement = useMemo(() => {
@@ -76,10 +79,20 @@ export function OmolCollection() {
     return m;
   }, [facets]);
 
+  const groupFacets = facets?.functionalGroupCounts ?? [];
+  const selectedGroupLabels = useMemo(
+    () => selectedGroups.map((groupId) => FUNCTIONAL_GROUP_BY_ID[groupId]?.label ?? groupId),
+    [selectedGroups],
+  );
   const maxCount = facets?.elementCounts[0]?.count ?? 1;
 
   const toggle = (sym: string) =>
     setSelected((prev) => (prev.includes(sym) ? prev.filter((x) => x !== sym) : [...prev, sym]));
+
+  const toggleGroup = (groupId: FunctionalGroupId) =>
+    setSelectedGroups((prev) => (
+      prev.includes(groupId) ? prev.filter((x) => x !== groupId) : [...prev, groupId]
+    ));
 
   const launch = async (hit: MoleculeHit) => {
     setLoadingId(`${hit.source}:${hit.id}`);
@@ -90,10 +103,15 @@ export function OmolCollection() {
     }
   };
 
+  const activeFilterLabel = [
+    selected.length ? `containing ${selected.join(' + ')}` : '',
+    selectedGroupLabels.length ? `with ${selectedGroupLabels.join(' + ')}` : '',
+  ].filter(Boolean).join(' and ');
+
   const resultLabel = loading
     ? 'Searching…'
     : `${hits.length}${hits.length >= PER_PAGE ? '+' : ''} structure${hits.length === 1 ? '' : 's'}`
-      + (selected.length ? ` containing ${selected.join(' + ')}` : '');
+      + (activeFilterLabel ? ` ${activeFilterLabel}` : '');
 
   return (
     <div style={wrapStyle}>
@@ -142,6 +160,38 @@ export function OmolCollection() {
         />
       </section>
 
+      {groupFacets.length > 0 && (
+        <section>
+          <div style={sectionHeadStyle}>
+            <span style={sectionTitleStyle}>Functional groups</span>
+            <span style={sectionHintStyle}>
+              {selectedGroups.length > 0
+                ? <button onClick={() => setSelectedGroups([])} style={clearBtn}>clear {selectedGroups.length}</button>
+                : 'Counts come from geometry-derived OMol25 tags.'}
+            </span>
+          </div>
+          <div style={groupRailStyle}>
+            {groupFacets.map((group) => {
+              const active = selectedGroups.includes(group.id);
+              return (
+                <button
+                  key={group.id}
+                  type="button"
+                  onClick={() => toggleGroup(group.id)}
+                  aria-pressed={active}
+                  title={`${group.label} - ${group.count.toLocaleString()} structures`}
+                  style={groupButtonStyle(active, group.color)}
+                >
+                  <span style={groupSwatchStyle(group.color)} />
+                  <span style={groupButtonLabelStyle}>{group.label}</span>
+                  <span style={groupButtonCountStyle(active)}>{group.count.toLocaleString()}</span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       {/* ─── Search + results ─── */}
       <section>
         <div style={searchRowStyle}>
@@ -160,7 +210,7 @@ export function OmolCollection() {
 
         {hits.length === 0 && !loading ? (
           <div style={emptyStyle}>
-            No structures match{selected.length ? ` with ${selected.join(' + ')}` : ''}. Try fewer elements or a different formula.
+            No structures match{activeFilterLabel ? ` ${activeFilterLabel}` : ''}. Try fewer filters or a different formula.
           </div>
         ) : (
           <div style={gridStyle}>
@@ -176,6 +226,19 @@ export function OmolCollection() {
                       {hit.elements.map((el) => (
                         <span key={el} style={elementPillStyle(selected.includes(el))}>{el}</span>
                       ))}
+                    </span>
+                  )}
+                  {hit.functionalGroups && hit.functionalGroups.length > 0 && (
+                    <span style={cardGroupRowStyle}>
+                      {hit.functionalGroups.slice(0, 3).map((groupId) => {
+                        const group = FUNCTIONAL_GROUP_BY_ID[groupId];
+                        if (!group) return null;
+                        return (
+                          <span key={groupId} style={cardGroupPillStyle(group.color)}>
+                            {group.label}
+                          </span>
+                        );
+                      })}
                     </span>
                   )}
                   {busy && <span style={busyStyle}>Loading…</span>}
@@ -288,6 +351,24 @@ const sectionHeadStyle: CSSProperties = { display: 'flex', alignItems: 'baseline
 const sectionTitleStyle: CSSProperties = { fontSize: 13, fontWeight: 700, color: '#e2e8f0', textTransform: 'uppercase', letterSpacing: '0.08em' };
 const sectionHintStyle: CSSProperties = { fontSize: 11, color: '#64748b' };
 const clearBtn: CSSProperties = { marginLeft: 4, padding: '1px 8px', borderRadius: 100, fontSize: 11, color: ACCENT, background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.4)', cursor: 'pointer' };
+const groupRailStyle: CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 8 };
+const groupButtonStyle = (active: boolean, color: string): CSSProperties => ({
+  display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 30, maxWidth: '100%',
+  padding: '5px 9px', borderRadius: 6, cursor: 'pointer',
+  color: active ? '#07100b' : '#cbd5e1',
+  background: active ? color : 'rgba(255,255,255,0.045)',
+  border: `1px solid ${active ? color : '#1f2937'}`,
+  fontSize: 11, fontWeight: 700,
+});
+const groupSwatchStyle = (color: string): CSSProperties => ({
+  width: 7, height: 7, borderRadius: 999, flex: '0 0 auto', background: color,
+});
+const groupButtonLabelStyle: CSSProperties = { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
+const groupButtonCountStyle = (active: boolean): CSSProperties => ({
+  fontFamily: 'var(--font-mono, ui-monospace), monospace',
+  fontSize: 10,
+  color: active ? 'rgba(7,16,11,0.7)' : '#64748b',
+});
 // 18-column periodic grid; cells place themselves via gridColumn/gridRow.
 const tableGridStyle: CSSProperties = {
   display: 'grid',
@@ -314,5 +395,20 @@ const elementPillStyle = (hot: boolean): CSSProperties => ({
   color: hot ? '#04140d' : '#94a3b8',
   background: hot ? ACCENT : 'rgba(255,255,255,0.04)',
   border: `1px solid ${hot ? ACCENT : '#1f2937'}`,
+});
+const cardGroupRowStyle: CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 3, marginTop: 1 };
+const cardGroupPillStyle = (color: string): CSSProperties => ({
+  fontSize: 9,
+  fontWeight: 700,
+  lineHeight: 1.4,
+  padding: '1px 5px',
+  borderRadius: 4,
+  color: '#dbeafe',
+  background: `${color}22`,
+  border: `1px solid ${color}55`,
+  maxWidth: '100%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 });
 const busyStyle: CSSProperties = { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: ACCENT, fontWeight: 700, background: 'rgba(6,8,13,0.6)', borderRadius: 9 };

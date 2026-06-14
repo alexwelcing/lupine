@@ -1543,9 +1543,8 @@ export function Gallery() {
     return FUNCTIONAL_GROUPS.map(group => ({
       group,
       count: EXAMPLES.filter(ex => group.exampleIds.includes(ex.id)).length,
-      visible: filteredExamples.filter(ex => group.exampleIds.includes(ex.id)).length,
     })).filter(summary => summary.count > 0);
-  }, [filteredExamples]);
+  }, []);
 
   const activeFunctionalGroup = functionalGroupFilter === 'All'
     ? null
@@ -1945,7 +1944,7 @@ export function Gallery() {
                 All
                 <em>{galleryStats.organicMolecules}</em>
               </button>
-              {functionalGroupSummaries.map(({ group, count, visible }) => (
+              {functionalGroupSummaries.map(({ group, count }) => (
                 <button
                   key={group.id}
                   type="button"
@@ -1960,7 +1959,7 @@ export function Gallery() {
                 >
                   <i aria-hidden="true" />
                   {group.label}
-                  <em>{functionalGroupFilter === 'All' ? count : visible}</em>
+                  <em>{count}</em>
                 </button>
               ))}
             </div>

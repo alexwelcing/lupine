@@ -238,7 +238,7 @@ describe('gallery-data.json — curated launch set', () => {
 
   it('organic functional-group curriculum maps only to shipped gallery molecules', () => {
     const galleryIds = new Set(data.map((e) => e.id));
-    expect(FUNCTIONAL_GROUPS.length).toBeGreaterThanOrEqual(8);
+    expect(FUNCTIONAL_GROUPS.length).toBeGreaterThanOrEqual(18);
 
     for (const group of FUNCTIONAL_GROUPS) {
       expect(group.exampleIds.length, `${group.id} needs examples`).toBeGreaterThan(0);
@@ -248,9 +248,21 @@ describe('gallery-data.json — curated launch set', () => {
     }
 
     const organicIds = new Set(FUNCTIONAL_GROUPS.flatMap((group) => group.exampleIds));
-    expect(organicIds.size).toBeGreaterThanOrEqual(8);
+    expect(organicIds.size).toBeGreaterThanOrEqual(20);
     expect(functionalGroupsForMolecule('aspirin').map((group) => group.id)).toEqual(
       expect.arrayContaining(['arene', 'carboxylic-acid', 'ester']),
+    );
+    expect(functionalGroupsForMolecule('benzaldehyde').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['arene', 'aldehyde']),
+    );
+    expect(functionalGroupsForMolecule('acetone').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['ketone']),
+    );
+    expect(functionalGroupsForMolecule('ethylene_oxide').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['ether', 'epoxide']),
+    );
+    expect(functionalGroupsForMolecule('tert_butyl_chloride').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['alkyl-halide']),
     );
   });
 });

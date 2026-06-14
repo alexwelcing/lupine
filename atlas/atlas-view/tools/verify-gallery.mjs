@@ -126,6 +126,22 @@ try {
   check('reset restores the full grid', afterReset === expectedCardCount, `${afterReset} cards`);
 
   // ── 4. Organic functional-group filter ──
+  const aldehydeBtn = page.locator('[data-testid="gallery-group-aldehyde"]');
+  await aldehydeBtn.click();
+  await page.waitForFunction(
+    () => document.querySelectorAll('button[data-testid^="gallery-card-"]').length === 2,
+    null,
+    { timeout },
+  );
+  const aldehydeCount = await page.locator(cardSel).count();
+  const acetaldehydeVisible = await page.locator('[data-testid="gallery-card-acetaldehyde"]').count();
+  const benzaldehydeVisible = await page.locator('[data-testid="gallery-card-benzaldehyde"]').count();
+  check(
+    'expanded functional-group examples are searchable by group',
+    aldehydeCount === 2 && acetaldehydeVisible === 1 && benzaldehydeVisible === 1,
+    `${aldehydeCount} aldehyde results`,
+  );
+
   const acidBtn = page.locator('[data-testid="gallery-group-carboxylic-acid"]');
   await acidBtn.click();
   await page.waitForFunction(

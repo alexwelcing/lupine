@@ -572,6 +572,262 @@
     "featured": true
   },
   {
+    "id": "acetaldehyde",
+    "title": "Acetaldehyde",
+    "subtitle": "Small aldehyde reference: the compact carbonyl-H motif students learn before aldol and oxidation chemistry.",
+    "domain": "Biomolecules",
+    "atoms": "7",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetaldehyde.xyz",
+    "available": true,
+    "colors": ["#fb7185", "#f8fafc", "#94a3b8"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "acetone",
+    "title": "Acetone",
+    "subtitle": "Canonical ketone: a symmetric carbonyl for reading trigonal geometry, polarity, and enolate formation.",
+    "domain": "Biomolecules",
+    "atoms": "10",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetone.xyz",
+    "available": true,
+    "colors": ["#f472b6", "#f8fafc", "#94a3b8"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "benzaldehyde",
+    "title": "Benzaldehyde",
+    "subtitle": "Aromatic aldehyde that ties carbonyl reactivity to conjugation and benzylic substitution patterns.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/benzaldehyde.xyz",
+    "available": true,
+    "colors": ["#38bdf8", "#fb7185", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "cyclohexanone",
+    "title": "Cyclohexanone",
+    "subtitle": "Cyclic ketone for comparing ring conformation with carbonyl planarity and alpha-carbon chemistry.",
+    "domain": "Biomolecules",
+    "atoms": "17",
+    "frames": "1",
+    "file": "gallery/curated/organic/cyclohexanone.xyz",
+    "available": true,
+    "colors": ["#f472b6", "#a3e635", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "acetonitrile",
+    "title": "Acetonitrile",
+    "subtitle": "Linear nitrile and common polar aprotic solvent; a clean case for the C-N triple bond.",
+    "domain": "Biomolecules",
+    "atoms": "6",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetonitrile.xyz",
+    "available": true,
+    "colors": ["#60a5fa", "#f8fafc", "#94a3b8"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "benzonitrile",
+    "title": "Benzonitrile",
+    "subtitle": "Aromatic nitrile for seeing a strongly electron-withdrawing group attached to a phenyl ring.",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/curated/organic/benzonitrile.xyz",
+    "available": true,
+    "colors": ["#38bdf8", "#60a5fa", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "nitrobenzene",
+    "title": "Nitrobenzene",
+    "subtitle": "Aromatic nitro group for resonance withdrawal, directing effects, and reduction-to-aniline pathways.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/nitrobenzene.xyz",
+    "available": true,
+    "colors": ["#38bdf8", "#f97316", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "phenol",
+    "title": "Phenol",
+    "subtitle": "Clean phenol example: aromatic OH, acidity, hydrogen bonding, and ortho/para activation in one scaffold.",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/curated/organic/phenol.xyz",
+    "available": true,
+    "colors": ["#34d399", "#38bdf8", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "tert_butyl_chloride",
+    "title": "tert-Butyl Chloride",
+    "subtitle": "Tertiary alkyl chloride for substitution and elimination comparisons around a crowded carbon center.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/tert_butyl_chloride.xyz",
+    "available": true,
+    "colors": ["#c084fc", "#f8fafc", "#94a3b8"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "bromobutane_1",
+    "title": "1-Bromobutane",
+    "subtitle": "Primary alkyl bromide for SN2 geometry, leaving-group trends, and anti-periplanar elimination setup.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/bromobutane_1.xyz",
+    "available": true,
+    "colors": ["#c084fc", "#f97316", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "ethylene_oxide",
+    "title": "Ethylene Oxide",
+    "subtitle": "Strained epoxide ring for studying ring opening, regioselectivity, and oxygen lone-pair geometry.",
+    "domain": "Biomolecules",
+    "atoms": "7",
+    "frames": "1",
+    "file": "gallery/curated/organic/ethylene_oxide.xyz",
+    "available": true,
+    "colors": ["#a7f3d0", "#f8fafc", "#94a3b8"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "ethanethiol",
+    "title": "Ethanethiol",
+    "subtitle": "Small thiol reference for comparing sulfur acidity, size, and nucleophilicity against alcohols.",
+    "domain": "Biomolecules",
+    "atoms": "9",
+    "frames": "1",
+    "file": "gallery/curated/organic/ethanethiol.xyz",
+    "available": true,
+    "colors": ["#facc15", "#f8fafc", "#94a3b8"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "dimethyl_sulfide",
+    "title": "Dimethyl Sulfide",
+    "subtitle": "Simple sulfide for contrasting thioethers with ethers and recognizing oxidizable sulfur centers.",
+    "domain": "Biomolecules",
+    "atoms": "9",
+    "frames": "1",
+    "file": "gallery/curated/organic/dimethyl_sulfide.xyz",
+    "available": true,
+    "colors": ["#facc15", "#a7f3d0", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "acetic_anhydride",
+    "title": "Acetic Anhydride",
+    "subtitle": "Symmetric acid anhydride for acyl transfer, hydrolysis, and aspirin-style acetylation chemistry.",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetic_anhydride.xyz",
+    "available": true,
+    "colors": ["#fb923c", "#fb7185", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "acetyl_chloride",
+    "title": "Acetyl Chloride",
+    "subtitle": "Acid chloride for high-reactivity acyl substitution and leaving-group comparisons.",
+    "domain": "Biomolecules",
+    "atoms": "7",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetyl_chloride.xyz",
+    "available": true,
+    "colors": ["#fb923c", "#c084fc", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "ethyl_acetate",
+    "title": "Ethyl Acetate",
+    "subtitle": "Small ester and common extraction solvent for comparing carbonyl derivatives and hydrolysis pathways.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/ethyl_acetate.xyz",
+    "available": true,
+    "colors": ["#fb923c", "#34d399", "#f8fafc"],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
     "id": "aspirin",
     "title": "Aspirin",
     "subtitle": "Small-molecule acetylsalicylic acid geometry restored from the popular molecule set.",
