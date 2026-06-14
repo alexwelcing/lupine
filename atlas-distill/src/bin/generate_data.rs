@@ -188,7 +188,6 @@ fn gen_anomalous_diffusion_trajectory(out: &Path) {
         writeln!(f, "ITEM: ATOMS id type xu yu zu").unwrap();
 
         for (i, &(x0, y0, z0)) in positions.iter().enumerate().take(natoms) {
-
             // Displacement follows MSD ∝ t^β
             // Each atom gets displacement ~ sqrt(2 * D_eff * t^β / 3) per dimension
             let msd_per_dim = if t > 0.0 {
@@ -199,11 +198,9 @@ fn gen_anomalous_diffusion_trajectory(out: &Path) {
 
             let disp = msd_per_dim.sqrt();
             // Deterministic "random" displacement using seed
-            let phi = (i as f64 * std::f64::consts::E
-                + frame as f64 * std::f64::consts::SQRT_2)
+            let phi = (i as f64 * std::f64::consts::E + frame as f64 * std::f64::consts::SQRT_2)
                 % std::f64::consts::TAU;
-            let theta = (i as f64 * std::f64::consts::PI
-                + frame as f64 * (1.0 / 3.0_f64.sqrt()))
+            let theta = (i as f64 * std::f64::consts::PI + frame as f64 * (1.0 / 3.0_f64.sqrt()))
                 % std::f64::consts::PI;
 
             let dx = disp * phi.cos() * theta.sin();

@@ -52,8 +52,4 @@ jobs:
 
       - name: Check for sorries
         working-directory: lean-spec
-        run: |
-          if grep -R "sorry" OpenDistillationFactory --include="*.lean"; then
-            echo "error: proofs contain sorry statements"
-            exit 1
-          fi
+        run: sh scripts/check_no_sorry.sh OpenDistillationFactory

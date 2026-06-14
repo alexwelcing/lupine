@@ -1,0 +1,3 @@
+[submodule "atlas/lammps_src"]
+	path = atlas/lammps_src
+	url = https://github.com/lammps/lammps.git
